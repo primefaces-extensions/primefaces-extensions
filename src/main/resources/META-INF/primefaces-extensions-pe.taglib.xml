@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+		version="2.0">
+	<namespace>http://primefaces.prime.com.tr/ui/extensions</namespace>
+	<tag>
+		<tag-name>imageAreaSelect</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
+			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
+			<handler-class>org.primefaces.extensions.component.imageareaselect.ImageAreaSelectHandler</handler-class>
+		</component>
+		<attribute>
+			<description></description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIComponent</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>The target image</description>
+			<name>for</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>update</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>selectListener</name>
+			<required>false</required>
+			<type>javax.el.MethodExpression</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>oncomplete</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>A string of the form "width:height" which represents the aspect ratio to maintain. Example: "4:3"</description>
+			<name>aspectRatio</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>		
+		<attribute>
+			<description>If set to true, selection area will disappear when selection ends. Default: false</description>
+			<name>autoHide</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>		
+		<attribute>
+			<description>If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default: 0</description>
+			<name>fadeSpeed</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default: false</description>
+			<name>handles</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>	
+		<attribute>
+			<description>If set to true, selection area is hidden.</description>
+			<name>hide</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>True height of the image (if scaled with the CSS width and height properties)</description>
+			<name>imageHeight</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>True width of the image (if scaled with the CSS width and height properties)</description>
+			<name>imageWidth</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>Determines whether the selection area should be movable. Default: true</description>
+			<name>movable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default: false</description>
+			<name>persistent</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>Determines whether the selection area should be resizable. Default: true</description>
+			<name>resizable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>If set to true, selection area is shown.</description>
+			<name>show</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>	
+		<attribute>
+			<description>The z-index value to be assigned to plugin elements; normally, imgAreaSelect figures it out automatically, but there are a few cases when it's necessary to set it explicitly</description>
+			<name>zIndex</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>		
+		<attribute>
+			<description>Maximum selection height (in pixels)</description>
+			<name>maxHeight</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>		
+		<attribute>
+			<description>Maximum selection width (in pixels)</description>
+			<name>maxWidth</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>		
+		<attribute>
+			<description>Minimum selection height (in pixels)</description>
+			<name>minHeight</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>Minimum selection width (in pixels)</description>
+			<name>minWidth</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>A JSF component Id - A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default: "body"</description>
+			<name>imageAreaSelectParent</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>Enables/disables keyboard support. Default: false</description>
+			<name>keyboardSupport</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+	</tag>
+	<tag>
+		<tag-name>imageRotateAndResize</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
+			<renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
+			<handler-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeHandler</handler-class>
+		</component>
+		<attribute>
+			<description></description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIComponent</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>The target image</description>
+			<name>for</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>onResizeUpdate</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>onRotateUpdate</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>		
+		<attribute>
+			<description></description>
+			<name>rotateListener</name>
+			<required>false</required>
+			<type>javax.el.MethodExpression</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>resizeListener</name>
+			<required>false</required>
+			<type>javax.el.MethodExpression</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>onResizeComplete</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>onRotationComplete</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>	
+</facelet-taglib>

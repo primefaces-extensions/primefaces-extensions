@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Created-By: Thomas Andraschko
+Bundle-ManifestVersion: 2
+Bundle-Name: primefaces.extensions
+Bundle-Description: Package PrimeFaces Extensions in an OSGi bundle
+Bundle-Version: 0.1-SNAPSHOT
+Bundle-SymbolicName: org.primefaces.extensions

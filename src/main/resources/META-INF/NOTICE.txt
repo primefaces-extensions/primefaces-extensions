@@ -1,0 +1,3 @@
+This product includes software developed by Prime Technology (http://www.prime.com.tr/)
+This product includes software developed by The jQuery Project (http://jquery.com)
+This product includes software developed by Michal Wojciechowski (http://odyniec.net/)
