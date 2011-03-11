@@ -118,6 +118,56 @@
 		</plugins>
 	</build>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+							<excludes>
+								<exclude>**/_svn</exclude>
+								<exclude>_svn</exclude>
+								<exclude>**/_svn/**</exclude>
+							</excludes>                        
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>yuicompressor-maven-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compress</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <nosuffix>true</nosuffix>
+                            <linebreakpos>-1</linebreakpos>
+                            <excludes>
+                                <!-- <exclude>**/*.css</exclude>  -->
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <pluginRepositories>
         <pluginRepository>
             <id>prime-repo</id>
