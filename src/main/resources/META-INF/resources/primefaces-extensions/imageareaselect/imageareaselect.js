@@ -1,8 +1,8 @@
 /*
  * imgAreaSelect jQuery plugin
- * version 0.9.3
+ * version 0.9.4
  *
- * Copyright (c) 2008-2010 Michal Wojciechowski (odyniec.net)
+ * Copyright (c) 2008-2011 Michal Wojciechowski (odyniec.net)
  *
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
@@ -112,10 +112,10 @@ $.imgAreaSelect = function (img, options) {
         var sx = noScale || scaleX, sy = noScale || scaleY;
 
         selection = {
-            x1: round(x1 / sx),
-            y1: round(y1 / sy),
-            x2: round(x2 / sx),
-            y2: round(y2 / sy)
+            x1: round(x1 / sx || 0),
+            y1: round(y1 / sy || 0),
+            x2: round(x2 / sx || 0),
+            y2: round(y2 / sy || 0)
         };
 
         selection.width = selection.x2 - selection.x1;
@@ -128,8 +128,11 @@ $.imgAreaSelect = function (img, options) {
 
         imgOfs = { left: round($img.offset().left), top: round($img.offset().top) };
 
-        imgWidth = $img.width();
-        imgHeight = $img.height();
+        imgWidth = $img.innerWidth();
+        imgHeight = $img.innerHeight();
+
+        imgOfs.top += ($img.outerHeight() - imgHeight) >> 1;
+        imgOfs.left += ($img.outerWidth() - imgWidth) >> 1;
 
         minWidth = options.minWidth || 0;
         minHeight = options.minHeight || 0;
@@ -183,10 +186,10 @@ $.imgAreaSelect = function (img, options) {
 
         switch ($handles.length) {
         case 8:
-            $($handles[4]).css({ left: w / 2 });
-            $($handles[5]).css({ left: w, top: h / 2 });
-            $($handles[6]).css({ left: w / 2, top: h });
-            $($handles[7]).css({ top: h / 2 });
+            $($handles[4]).css({ left: w >> 1 });
+            $($handles[5]).css({ left: w, top: h >> 1 });
+            $($handles[6]).css({ left: w >> 1, top: h });
+            $($handles[7]).css({ top: h >> 1 });
         case 4:
             $handles.slice(1,3).css({ left: w });
             $handles.slice(2,4).css({ top: h });
@@ -234,13 +237,13 @@ $.imgAreaSelect = function (img, options) {
         resize = '';
 
         if (options.resizable) {
-            if (y <= resizeMargin)
+            if (y <= options.resizeMargin)
                 resize = 'n';
-            else if (y >= selection.height - resizeMargin)
+            else if (y >= selection.height - options.resizeMargin)
                 resize = 's';
-            if (x <= resizeMargin)
+            if (x <= options.resizeMargin)
                 resize += 'w';
-            else if (x >= selection.width - resizeMargin)
+            else if (x >= selection.width - options.resizeMargin)
                 resize += 'e';
         }
 
@@ -252,14 +255,13 @@ $.imgAreaSelect = function (img, options) {
 
     function docMouseUp(event) {
         $('body').css('cursor', '');
-
         if (options.autoHide || selection.width * selection.height == 0)
             hide($box.add($outer), function () { $(this).hide(); });
 
-        options.onSelectEnd(img, getSelection());
-
         $(document).unbind('mousemove', selectingMouseMove);
         $box.mousemove(areaMouseMove);
+
+        options.onSelectEnd(img, getSelection());
     }
 
     function areaMouseDown(event) {
@@ -421,8 +423,7 @@ $.imgAreaSelect = function (img, options) {
         $(document).unbind('mousemove', startSelection);
         hide($box.add($outer));
 
-        selection = { x1: selX(x1), y1: selY(y1), x2: selX(x1), y2: selY(y1),
-                width: 0, height: 0 };
+        setSelection(selX(x1), selY(y1), selX(x1), selY(y1));
 
         options.onSelectChange(img, getSelection());
         options.onSelectEnd(img, getSelection());
@@ -451,8 +452,9 @@ $.imgAreaSelect = function (img, options) {
         setOptions(options = $.extend({
             classPrefix: 'imgareaselect',
             movable: true,
-            resizable: true,
             parent: 'body',
+            resizable: true,
+            resizeMargin: 10,
             onInit: function () {},
             onSelectStart: function () {},
             onSelectChange: function () {},
@@ -600,7 +602,7 @@ $.imgAreaSelect = function (img, options) {
         if (o = options.borderColor2)
             $($border[1]).css({ borderStyle: 'dashed', borderColor: o });
 
-        $box.append($area.add($border).add($handles).add($areaOpera));
+        $box.append($area.add($border).add($areaOpera).add($handles));
 
         if ($.browser.msie) {
             if (o = $outer.css('filter').match(/opacity=([0-9]+)/))
