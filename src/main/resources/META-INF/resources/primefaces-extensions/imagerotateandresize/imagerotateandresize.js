@@ -23,14 +23,14 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.refresh = function()
 	this.initializeLazy();
 }
 
-PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateLeft = function() {
+PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateLeft = function(degree) {
 	this.initializeLazy();
 
-	if (this.degree == 0) {
-		this.degree = 270;
-	} 
+	if ((this.degree - degree) <= 0) {
+		this.degree = 360 - ((this.degree - degree) * -1);
+	}
 	else {
-		this.degree -= 90;
+		this.degree -= degree;
 	}
 
 	this.fireRotateEvent();
@@ -38,15 +38,16 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateLeft = functio
 	this.handleOnRotateComplete();
 }
 
-PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateRight = function() {
+PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateRight = function(degree) {
 	this.initializeLazy();
 
-	if (this.degree == 270) {
-		this.degree = 0;
-	} else {
-		this.degree += 90;
+	if ((this.degree + degree) >= 360) {
+		this.degree = (this.degree + degree) - 360;
 	}
-	
+	else {
+		this.degree += degree;
+	}
+
 	this.fireRotateEvent();
 	this.redrawImage();
 	this.handleOnRotateComplete();
