@@ -7,6 +7,7 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotationEvent;
 
@@ -16,7 +17,7 @@ import org.primefaces.extensions.event.RotationEvent;
 	@ResourceDependency(library="primefaces-extensions", name="core/core.js"),
 	@ResourceDependency(library="primefaces-extensions", name="imagerotateandresize/imagerotateandresize.js")
 })
-public class ImageRotateAndResize  extends UIComponentBase {
+public class ImageRotateAndResize extends UIComponentBase implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

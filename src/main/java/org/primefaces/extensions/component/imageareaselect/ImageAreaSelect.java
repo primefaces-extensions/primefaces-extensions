@@ -22,13 +22,15 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.api.Widget;
+
 @ResourceDependencies({
 	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
 	@ResourceDependency(library="primefaces", name="core/core.js"),
 	@ResourceDependency(library="primefaces-extensions", name="core/core.js"),
 	@ResourceDependency(library="primefaces-extensions", name="imageareaselect/imageareaselect.js")
 })
-public class ImageAreaSelect extends UIComponentBase {
+public class ImageAreaSelect extends UIComponentBase implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageAreaSelect";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
