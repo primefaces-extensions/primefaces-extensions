@@ -22,25 +22,25 @@ import javax.faces.event.FacesListener;
 @SuppressWarnings("serial")
 public class ImageAreaSelectionEvent extends FacesEvent {
 
-	private long height;
-	private long width;
-	private long x1;
-	private long x2;
-	private long y1;
-	private long y2;
-	private long imgHeight;
-	private long imgWidth;
+	private int height;
+	private int width;
+	private int x1;
+	private int x2;
+	private int y1;
+	private int y2;
+	private int imgHeight;
+	private int imgWidth;
 	private String imgSrc;
 
 	public ImageAreaSelectionEvent(UIComponent component, 
-			long height,
-			long width,
-			long x1,
-			long x2,
-			long y1,
-			long y2,
-			long imgHeight,
-			long imgWidth,
+			int height,
+			int width,
+			int x1,
+			int x2,
+			int y1,
+			int y2,
+			int imgHeight,
+			int imgWidth,
 			String imgSrc) {
 		super(component);
 		this.x1 = x1;
@@ -67,112 +67,112 @@ public class ImageAreaSelectionEvent extends FacesEvent {
 	/**
 	 * @return the height
 	 */
-	public long getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
 	/**
 	 * @param height the height to set
 	 */
-	public void setHeight(long height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
 	/**
 	 * @return the width
 	 */
-	public long getWidth() {
+	public int getWidth() {
 		return width;
 	}
 
 	/**
 	 * @param width the width to set
 	 */
-	public void setWidth(long width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
 	/**
 	 * @return the x1
 	 */
-	public long getX1() {
+	public int getX1() {
 		return x1;
 	}
 
 	/**
 	 * @param x1 the x1 to set
 	 */
-	public void setX1(long x1) {
+	public void setX1(int x1) {
 		this.x1 = x1;
 	}
 
 	/**
 	 * @return the x2
 	 */
-	public long getX2() {
+	public int getX2() {
 		return x2;
 	}
 
 	/**
 	 * @param x2 the x2 to set
 	 */
-	public void setX2(long x2) {
+	public void setX2(int x2) {
 		this.x2 = x2;
 	}
 
 	/**
 	 * @return the y1
 	 */
-	public long getY1() {
+	public int getY1() {
 		return y1;
 	}
 
 	/**
 	 * @param y1 the y1 to set
 	 */
-	public void setY1(long y1) {
+	public void setY1(int y1) {
 		this.y1 = y1;
 	}
 
 	/**
 	 * @return the y2
 	 */
-	public long getY2() {
+	public int getY2() {
 		return y2;
 	}
 
 	/**
 	 * @param y2 the y2 to set
 	 */
-	public void setY2(long y2) {
+	public void setY2(int y2) {
 		this.y2 = y2;
 	}
 
 	/**
 	 * @return the imgHeight
 	 */
-	public long getImgHeight() {
+	public int getImgHeight() {
 		return imgHeight;
 	}
 
 	/**
 	 * @param imgHeight the imgHeight to set
 	 */
-	public void setImgHeight(long imgHeight) {
+	public void setImgHeight(int imgHeight) {
 		this.imgHeight = imgHeight;
 	}
 
 	/**
 	 * @return the imgWidth
 	 */
-	public long getImgWidth() {
+	public int getImgWidth() {
 		return imgWidth;
 	}
 
 	/**
 	 * @param imgWidth the imgWidth to set
 	 */
-	public void setImgWidth(long imgWidth) {
+	public void setImgWidth(int imgWidth) {
 		this.imgWidth = imgWidth;
 	}
 

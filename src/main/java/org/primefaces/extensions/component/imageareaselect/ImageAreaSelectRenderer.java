@@ -36,15 +36,15 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         String clientId = imageAreaSelect.getClientId(context);
 
         if (params.containsKey(clientId)) {
-            long x1 = Long.parseLong(params.get(clientId + "_x1"));
-            long x2 = Long.parseLong(params.get(clientId + "_x2"));
-            long y1 = Long.parseLong(params.get(clientId + "_y1"));
-            long y2 = Long.parseLong(params.get(clientId + "_y2"));
-            long height = Long.parseLong(params.get(clientId + "_height"));
-            long width = Long.parseLong(params.get(clientId + "_width"));
+        	int x1 = Integer.parseInt(params.get(clientId + "_x1"));
+            int x2 = Integer.parseInt(params.get(clientId + "_x2"));
+            int y1 = Integer.parseInt(params.get(clientId + "_y1"));
+            int y2 = Integer.parseInt(params.get(clientId + "_y2"));
+            int height = Integer.parseInt(params.get(clientId + "_height"));
+            int width = Integer.parseInt(params.get(clientId + "_width"));
 
-            long imgHeight = Long.parseLong(params.get(clientId + "_imgHeight"));
-            long imgWidth = Long.parseLong(params.get(clientId + "_imgWidth"));
+            int imgHeight = Integer.parseInt(params.get(clientId + "_imgHeight"));
+            int imgWidth = Integer.parseInt(params.get(clientId + "_imgWidth"));
             String imgSrc = params.get(clientId + "_imgSrc");
             
             ImageAreaSelectionEvent event =
