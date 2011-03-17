@@ -80,8 +80,6 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageAreaSelect('" + clientId + "', {");
         writer.write("target:'" + target + "'");
 
-        if (imageAreaSelect.getOncomplete() != null) 
-        	writer.write(",oncomplete: function(img, selection) {" + imageAreaSelect.getOncomplete() + ";}");
         if (imageAreaSelect.getAspectRatio() != null)
         	writer.write(",aspectRatio:'" + imageAreaSelect.getAspectRatio() + "'");
         if (imageAreaSelect.isAutoHide() != null)
@@ -111,7 +109,10 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         
         if (imageAreaSelect.getSelectListener() != null) {
         	writer.write(",ajaxSelect:true");
-        	
+ 
+            if (imageAreaSelect.getOncomplete() != null) {
+            	writer.write(",oncomplete:function(xhr, status, args) {" + imageAreaSelect.getOncomplete() + ";}");
+            }
             if (update != null) {
                 writer.write(",update:'" + ComponentUtils.findClientIds(context, imageAreaSelect, update) + "'");    	
             }

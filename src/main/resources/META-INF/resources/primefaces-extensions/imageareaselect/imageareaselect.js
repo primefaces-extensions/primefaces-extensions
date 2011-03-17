@@ -740,6 +740,10 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 				options.update = cfg.update;
 			}
 
+			if (cfg.oncomplete) {
+				options.oncomplete = cfg.oncomplete;
+			}			
+
 			var params = {};
 			params[id + "_x1"] = selection.x1;
 			params[id + "_x2"] = selection.x2;
@@ -755,9 +759,6 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 
 			PrimeFaces.ajax.AjaxRequest(options); 	
         }
-		if (cfg.oncomplete) {
-			cfg.oncomplete.call(img, selection);
-		}
     }
 
 	this.options = {};

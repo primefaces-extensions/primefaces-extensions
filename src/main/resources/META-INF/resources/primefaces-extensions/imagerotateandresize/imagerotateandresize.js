@@ -35,7 +35,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateLeft = functio
 
 	this.fireRotateEvent();
 	this.redrawImage();
-	this.handleOnRotateComplete();
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateRight = function(degree) {
@@ -50,7 +49,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.rotateRight = functi
 
 	this.fireRotateEvent();
 	this.redrawImage();
-	this.handleOnRotateComplete();
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.resize = function(width, height) {
@@ -61,7 +59,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.resize = function(wi
 
 	this.fireResizeEvent();
 	this.redrawImage();
-	this.handleOnResizeComplete();
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.scale = function(scaleFactor) {
@@ -72,7 +69,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.scale = function(sca
 
 	this.fireResizeEvent();
 	this.redrawImage();
-	this.handleOnResizeComplete();
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.restoreDefaults = function() {
@@ -85,8 +81,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.restoreDefaults = fu
 	this.fireResizeEvent();
 	this.fireRotateEvent();
 	this.redrawImage();
-	this.handleOnResizeComplete();
-	this.handleOnRotateComplete();
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = function() {
@@ -145,18 +139,6 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = functi
 	}
 }
 
-PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.handleOnRotateComplete = function() {
-	if (this.cfg.onRotationComplete) {
-		this.cfg.onRotationComplete.call(this.degree);
-	}
-}
-
-PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.handleOnResizeComplete = function() {
-	if (this.cfg.onResizeComplete) {
-		this.cfg.onResizeComplete.call(this.newImageWidth, this.newImageHeight);
-	}
-}
-
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
 	if (this.cfg.ajaxRotate) {
 		var options = {
@@ -169,6 +151,10 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = fu
 			options.update = this.cfg.onRotateUpdate;
 		}
 
+		if (this.cfg.onRotationComplete) {
+			options.oncomplete = this.cfg.onRotationComplete;
+		}
+		
 		var params = {};
 		params[this.id + "_ajaxRotate"] = true;
 		params[this.id + "_degree"] = this.degree;
@@ -191,6 +177,10 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireResizeEvent = fu
 			options.update = this.cfg.onResizeUpdate;
 		}
 
+		if (this.cfg.onResizeComplete) {
+			options.oncomplete = this.cfg.onResizeComplete;
+		}		
+		
 		var params = {};
 		params[this.id + "_ajaxResize"] = true;
 		params[this.id + "_width"] = this.newImageWidth;

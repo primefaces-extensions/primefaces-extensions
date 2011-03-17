@@ -62,28 +62,31 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         String widgetVar = imageRotateAndResize.resolveWidgetVar();
         String onRotateUpdate = imageRotateAndResize.getOnRotateUpdate();
         String onResizeUpdate = imageRotateAndResize.getOnResizeUpdate();
-        
+
         writer.startElement("script", imageRotateAndResize);
         writer.writeAttribute("type", "text/javascript", null);
 
         writer.write("$(function() {");
-        
+
         writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageRotateAndResize('" + clientId + "', {");
         writer.write("target:'" + target + "'");
 
-        if (imageRotateAndResize.getOnResizeComplete() != null) 
-        	writer.write(",onResizeComplete: function(width, height) {" + imageRotateAndResize.getOnResizeComplete() + ";}");
-        if (imageRotateAndResize.getOnRotationComplete() != null) 
-        	writer.write(",onRotationComplete: function(degree) {" + imageRotateAndResize.getOnRotationComplete() + ";}");
-        
         if (imageRotateAndResize.getRotateListener() != null) {
         	writer.write(",ajaxRotate:true");
+
+            if (imageRotateAndResize.getOnRotationComplete() != null) {
+            	writer.write(",onRotationComplete:function(xhr, status, args) {" + imageRotateAndResize.getOnRotationComplete() + ";}");
+            }
             if (onRotateUpdate != null) {
                 writer.write(",onRotateUpdate:'" + ComponentUtils.findClientIds(context, imageRotateAndResize, onRotateUpdate) + "'");    	
             }
         }
         if (imageRotateAndResize.getResizeListener() != null) {
         	writer.write(",ajaxResize:true");
+
+            if (imageRotateAndResize.getOnResizeComplete() != null) {
+            	writer.write(",onResizeComplete:function(xhr, status, args) {" + imageRotateAndResize.getOnResizeComplete() + ";}");
+            }
             if (onRotateUpdate != null) {
                 writer.write(",onResizeUpdate:'" + ComponentUtils.findClientIds(context, imageRotateAndResize, onResizeUpdate) + "'");    	
             }
