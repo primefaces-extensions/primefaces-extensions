@@ -1,0 +1,67 @@
+/*
+ * Copyright 2011 Thomas Andraschko.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.primefaces.extensions.component.dnd;
+
+import java.io.IOException;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+
+import org.primefaces.util.ComponentUtils;
+
+public class DroppableRenderer extends org.primefaces.component.dnd.DroppableRenderer {
+
+    @Override
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        Droppable droppable = (Droppable) component;
+        String target = findTarget(context, droppable).getClientId(context);
+        String clientId = droppable.getClientId(context);
+        String onDropUpdate = droppable.getOnDropUpdate();
+
+        writer.startElement("script", droppable);
+        writer.writeAttribute("type", "text/javascript", null);
+
+        writer.write("$(function() {");
+
+        writer.write(droppable.resolveWidgetVar() + " = new PrimeFaces.Extensions.widget.Droppable('" + clientId + "', {");
+        writer.write("target:'" + target + "'");
+
+        if (droppable.isDisabled()) writer.write(",disabled:true");
+        if (droppable.getHoverStyleClass() != null) writer.write(",hoverClass:'" + droppable.getHoverStyleClass() + "'");
+        if (droppable.getActiveStyleClass() != null) writer.write(",activeClass:'" + droppable.getActiveStyleClass() + "'");
+        if (droppable.getOnDrop() != null) writer.write(",onDrop:" + droppable.getOnDrop());
+        if (droppable.getAccept() != null) writer.write(",accept:'" + droppable.getAccept() + "'");
+        if (droppable.getScope() != null) writer.write(",scope:'" + droppable.getScope() + "'");
+        if (droppable.getTolerance() != null) writer.write(",tolerance:'" + droppable.getTolerance() + "'");
+
+        if(droppable.getDropListener() != null) {
+            writer.write(",ajaxDrop:true");
+            
+            if (droppable.getOncomplete() != null) {
+            	writer.write(",oncomplete:function(xhr, status, args) {" + droppable.getOncomplete() + ";}");
+            }
+            if (onDropUpdate != null) {
+                writer.write(",onDropUpdate:'" + ComponentUtils.findClientIds(context, droppable, onDropUpdate) + "'");
+            }
+        }
+
+        writer.write("});});");
+
+        writer.endElement("script");
+    }	
+}
