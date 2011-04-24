@@ -51,33 +51,10 @@
 		<finalName>primefaces-extensions</finalName>
 		
         <resources>
-			<resource>
-				<directory>src/main/java/META-INF</directory>
-				<targetPath>META-INF/</targetPath>
-				<excludes>
-					<exclude>**/_svn</exclude>
-					<exclude>_svn</exclude>
-					<exclude>**/_svn/**</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>**/_svn</exclude>
-					<exclude>_svn</exclude>
-					<exclude>**/_svn/**</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<excludes>
-					<exclude>**/_svn</exclude>
-					<exclude>_svn</exclude>
-					<exclude>**/_svn/**</exclude>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
 		
 		<plugins>	
 			<plugin>
@@ -136,13 +113,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-							<excludes>
-								<exclude>**/_svn</exclude>
-								<exclude>_svn</exclude>
-								<exclude>**/_svn/**</exclude>
-							</excludes>                        
-                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>net.alchim31.maven</groupId>
