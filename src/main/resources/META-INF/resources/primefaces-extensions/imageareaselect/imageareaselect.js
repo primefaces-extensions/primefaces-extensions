@@ -1,6 +1,6 @@
 /*
  * imgAreaSelect jQuery plugin
- * version 0.9.4
+ * version 0.9.5
  *
  * Copyright (c) 2008-2011 Michal Wojciechowski (odyniec.net)
  *
@@ -39,13 +39,13 @@ $.imgAreaSelect = function (img, options) {
 
         left, top,
 
-        imgOfs,
+        imgOfs = { left: 0, top: 0 },
 
         imgWidth, imgHeight,
 
         $parent,
 
-        parOfs,
+        parOfs = { left: 0, top: 0 },
 
         zIndex = 0,
 
@@ -643,7 +643,7 @@ $.imgAreaSelect = function (img, options) {
     }
 
     this.remove = function () {
-        $img.unbind('mousedown', imgMouseDown);
+        setOptions({ disable: true });
         $box.add($outer).remove();
     };
 
@@ -687,6 +687,9 @@ $.imgAreaSelect = function (img, options) {
 
     img.complete || img.readyState == 'complete' || !$img.is('img') ?
         imgLoad() : $img.one('load', imgLoad);
+
+    if ($.browser.msie && $.browser.version >= 9)
+        img.src = img.src;
 };
 
 $.fn.imgAreaSelect = function (options) {
