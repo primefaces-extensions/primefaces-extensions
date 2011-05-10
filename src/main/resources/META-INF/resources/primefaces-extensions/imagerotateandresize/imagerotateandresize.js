@@ -1,7 +1,6 @@
 PrimeFaces.Extensions.widget.ImageRotateAndResize = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
-	this.cfg.formId = $(PrimeFaces.escapeClientId(this.id)).parents('form:first').attr('id');
 	this.initialized = false;
 }
 
@@ -140,54 +139,20 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = functi
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
-	if (this.cfg.ajaxRotate) {
-		var options = {
-				source: this.id,
-				process: this.id,
-				formId: this.cfg.formId
-		};		        	
-
-		if (this.cfg.onRotateUpdate) {
-			options.update = this.cfg.onRotateUpdate;
-		}
-
-		if (this.cfg.onRotationComplete) {
-			options.oncomplete = this.cfg.onRotationComplete;
-		}
-		
-		var params = {};
-		params[this.id + "_ajaxRotate"] = true;
-		params[this.id + "_degree"] = this.degree;
-
-		options.params = params;
-
-		PrimeFaces.ajax.AjaxRequest(options); 		
-	}	
+    var callback = this.cfg.behaviors['rotate'];
+    if (callback) {
+    	callback.call(this, {
+    		degree: this.degree
+    		});
+    }	
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
-	if (this.cfg.ajaxResize) {
-		var options = {
-				source: this.id,
-				process: this.id,
-				formId: this.cfg.formId
-		};		        	
-
-		if (this.cfg.onResizeUpdate) {
-			options.update = this.cfg.onResizeUpdate;
-		}
-
-		if (this.cfg.onResizeComplete) {
-			options.oncomplete = this.cfg.onResizeComplete;
-		}		
-		
-		var params = {};
-		params[this.id + "_ajaxResize"] = true;
-		params[this.id + "_width"] = this.newImageWidth;
-		params[this.id + "_height"] = this.newImageHeight;
-		
-		options.params = params;
-
-		PrimeFaces.ajax.AjaxRequest(options); 	
-	}
+    var callback = this.cfg.behaviors['resize'];
+    if (callback) {
+    	callback.call(this, {
+        	width: this.newImageWidth, 
+        	height: this.newImageHeight
+        	});
+    }
 }

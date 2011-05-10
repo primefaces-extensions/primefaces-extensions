@@ -1,19 +1,25 @@
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.BehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ResizeEvent;
-import org.primefaces.extensions.event.RotationEvent;
+import org.primefaces.extensions.event.RotateEvent;
 
 @ResourceDependencies({
 	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
@@ -21,23 +27,19 @@ import org.primefaces.extensions.event.RotationEvent;
 	@ResourceDependency(library="primefaces-extensions", name="core/core.js"),
 	@ResourceDependency(library="primefaces-extensions", name="imagerotateandresize/imagerotateandresize.js")
 })
-public class ImageRotateAndResize extends UIComponentBase implements Widget {
+public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";	
-	
+
+    private static final Collection<String> EVENT_NAMES =
+    	Collections.unmodifiableCollection(Arrays.asList("rotate", "resize"));
 	
 	protected enum PropertyKeys {
 		widgetVar,
-		forValue("for"),
-		rotateListener,
-		resizeListener,
-		onResizeUpdate,
-		onRotateUpdate,
-		onResizeComplete,
-		onRotationComplete;
+		forValue("for");
 
 		String toString;
 
@@ -61,41 +63,10 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget {
 		return COMPONENT_FAMILY;
 	}
 
-	public String getOnResizeUpdate() {
-		return (String) getStateHelper().eval(PropertyKeys.onResizeUpdate, null);
+	@Override
+	public Collection<String> getEventNames() {
+		return EVENT_NAMES;
 	}
-
-	public void setOnResizeUpdate(java.lang.String _onResizeUpdate) {
-		getStateHelper().put(PropertyKeys.onResizeUpdate, _onResizeUpdate);
-		handleAttribute("onResizeUpdate", _onResizeUpdate);
-	}
-
-	public String getOnRotateUpdate() {
-		return (String) getStateHelper().eval(PropertyKeys.onRotateUpdate, null);
-	}
-
-	public void setOnRotateUpdate(java.lang.String _onRotateUpdate) {
-		getStateHelper().put(PropertyKeys.onRotateUpdate, _onRotateUpdate);
-		handleAttribute("onRotateUpdate", _onRotateUpdate);
-	}		
-
-	public String getOnResizeComplete() {
-		return (String) getStateHelper().eval(PropertyKeys.onResizeComplete, null);
-	}
-
-	public void setOnResizeComplete(java.lang.String _onResizeComplete) {
-		getStateHelper().put(PropertyKeys.onResizeComplete, _onResizeComplete);
-		handleAttribute("onResizeComplete", _onResizeComplete);
-	}
-	
-	public String getOnRotationComplete() {
-		return (String) getStateHelper().eval(PropertyKeys.onRotationComplete, null);
-	}
-
-	public void setOnRotationComplete(java.lang.String _onRotationComplete) {
-		getStateHelper().put(PropertyKeys.onRotationComplete, _onRotationComplete);
-		handleAttribute("onRotationComplete", _onRotationComplete);
-	}	
 	
 	public java.lang.String getWidgetVar() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
@@ -115,24 +86,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget {
 		handleAttribute("forValue", _for);
 	}
 
-	public MethodExpression getRotateListener() {
-		return (MethodExpression) getStateHelper().eval(PropertyKeys.rotateListener, null);
-	}
-
-	public void setRotateListener(MethodExpression _rotateListener) {
-		getStateHelper().put(PropertyKeys.rotateListener, _rotateListener);
-		handleAttribute("rotateListener", _rotateListener);
-	}
-	
-	public MethodExpression getResizeListener() {
-		return (MethodExpression) getStateHelper().eval(PropertyKeys.resizeListener, null);
-	}
-
-	public void setResizeListener(MethodExpression _resizeListener) {
-		getStateHelper().put(PropertyKeys.resizeListener, _resizeListener);
-		handleAttribute("resizeListener", _resizeListener);
-	}	
-
 	public String resolveWidgetVar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String userWidgetVar = (String) getAttributes().get("widgetVar");
@@ -143,31 +96,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget {
 			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
 	}	
-
-	public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
-		super.broadcast(event);
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		MethodExpression me = null;
-
-		if (event instanceof RotationEvent) {
-			me = getRotateListener();
-		} else if (event instanceof ResizeEvent) {
-			me = getResizeListener();
-		}
-		
-		if (me != null) {
-			me.invoke(facesContext.getELContext(), new Object[] {event});
-		}
-	}
-	
-    public boolean isRotateImageRequest(FacesContext context) {
-		return context.getExternalContext().getRequestParameterMap().containsKey(getClientId(context) + "_ajaxRotate");
-	}
-
-    public boolean isResizeImageRequest(FacesContext context) {
-		return context.getExternalContext().getRequestParameterMap().containsKey(getClientId(context) + "_ajaxResize");
-	}
 
 	@SuppressWarnings("unchecked")
 	public void handleAttribute(String name, Object value) {
@@ -187,6 +115,39 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget {
 				} else if(!setAttributes.contains(name)) {
 					setAttributes.add(name);
 				}
+			}
+		}
+	}
+
+	@Override
+	public void queueEvent(FacesEvent event) {
+		BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+		Map<String,String> map = 
+			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+    	
+		String eventName = map.get("javax.faces.behavior.event");
+		
+		if (eventName != null) {
+			if (eventName.equals("resize")) {
+				double width = Double.parseDouble(map.get("width"));
+	            double height = Double.parseDouble(map.get("height"));
+
+	            ResizeEvent resizeEvent = new ResizeEvent(
+	            		this, 
+	            		behaviorEvent.getBehavior(),
+	            		width, 
+	            		height);
+	            super.queueEvent(resizeEvent);
+			}
+			if (eventName.equals("rotate")) {
+				int degree = Integer.parseInt(map.get("degree"));
+
+				RotateEvent rotateEvent = new RotateEvent(
+						this, 
+						behaviorEvent.getBehavior(), 
+						degree);
+				 
+	            super.queueEvent(rotateEvent);
 			}
 		}
 	}

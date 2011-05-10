@@ -16,42 +16,26 @@
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.event.ResizeEvent;
-import org.primefaces.extensions.event.RotationEvent;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 
 public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
-    @Override
-    public void decode(FacesContext context, UIComponent component) {
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
-        String clientId = imageRotateAndResize.getClientId(context);
-
-        if (imageRotateAndResize.isResizeImageRequest(context)) {
-            double width = Double.parseDouble(params.get(clientId + "_width"));
-            double height = Double.parseDouble(params.get(clientId + "_height"));
-
-            ResizeEvent event = new ResizeEvent(imageRotateAndResize, width, height);
-
-            imageRotateAndResize.queueEvent(event);
-        }
-        else if (imageRotateAndResize.isRotateImageRequest(context)) {
-            int degree = Integer.parseInt(params.get(clientId + "_degree"));
-
-            RotationEvent event = new RotationEvent(imageRotateAndResize, degree);
-
-            imageRotateAndResize.queueEvent(event);
-        }
-    }
+	@Override
+	public void decode(FacesContext context, UIComponent component) {
+		super.decodeBehaviors(context, component);
+	}
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
@@ -60,8 +44,6 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         String target = findTarget(context, imageRotateAndResize).getClientId(context);
         String clientId = imageRotateAndResize.getClientId(context);
         String widgetVar = imageRotateAndResize.resolveWidgetVar();
-        String onRotateUpdate = imageRotateAndResize.getOnRotateUpdate();
-        String onResizeUpdate = imageRotateAndResize.getOnResizeUpdate();
 
         writer.startElement("script", imageRotateAndResize);
         writer.writeAttribute("type", "text/javascript", null);
@@ -71,26 +53,8 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageRotateAndResize('" + clientId + "', {");
         writer.write("target:'" + target + "'");
 
-        if (imageRotateAndResize.getRotateListener() != null) {
-        	writer.write(",ajaxRotate:true");
-
-            if (imageRotateAndResize.getOnRotationComplete() != null) {
-            	writer.write(",onRotationComplete:function(xhr, status, args) {" + imageRotateAndResize.getOnRotationComplete() + ";}");
-            }
-            if (onRotateUpdate != null) {
-                writer.write(",onRotateUpdate:'" + ComponentUtils.findClientIds(context, imageRotateAndResize, onRotateUpdate) + "'");    	
-            }
-        }
-        if (imageRotateAndResize.getResizeListener() != null) {
-        	writer.write(",ajaxResize:true");
-
-            if (imageRotateAndResize.getOnResizeComplete() != null) {
-            	writer.write(",onResizeComplete:function(xhr, status, args) {" + imageRotateAndResize.getOnResizeComplete() + ";}");
-            }
-            if (onRotateUpdate != null) {
-                writer.write(",onResizeUpdate:'" + ComponentUtils.findClientIds(context, imageRotateAndResize, onResizeUpdate) + "'");    	
-            }
-        }        
+        encodeBehaviors(context, imageRotateAndResize);
+        
         writer.write("});});");
         writer.endElement("script");
     }
@@ -109,4 +73,30 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
             throw new FacesException("\"for\" attribute for ImageRotateAndResize can not be null or empty");
         }
     }
+   
+
+    protected void encodeBehaviors(FacesContext context, ImageRotateAndResize imageRotateAndResize) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+        Map<String,List<ClientBehavior>> behaviorEvents = imageRotateAndResize.getClientBehaviors();
+
+        if(!behaviorEvents.isEmpty()) {
+            List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
+
+            writer.write(",behaviors:{");
+
+            for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
+                String event = eventIterator.next();
+                ClientBehavior clientBehavior = behaviorEvents.get(event).get(0);
+                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, imageRotateAndResize, event, imageRotateAndResize.getClientId(context), params);
+
+                writer.write(event + ":");
+                writer.write("function(data) {" + clientBehavior.getScript(cbc) +  "}");
+
+                if(eventIterator.hasNext()) {
+                    writer.write(",");
+                }
+            }
+            writer.write("}");
+        }
+    }  
 }

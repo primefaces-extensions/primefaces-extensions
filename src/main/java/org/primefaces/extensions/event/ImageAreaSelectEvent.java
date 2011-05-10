@@ -16,11 +16,12 @@
 package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
-import javax.faces.event.FacesEvent;
+import javax.faces.component.behavior.Behavior;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesListener;
 
 @SuppressWarnings("serial")
-public class ImageAreaSelectionEvent extends FacesEvent {
+public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
 
 	private int height;
 	private int width;
@@ -32,7 +33,8 @@ public class ImageAreaSelectionEvent extends FacesEvent {
 	private int imgWidth;
 	private String imgSrc;
 
-	public ImageAreaSelectionEvent(UIComponent component, 
+	public ImageAreaSelectEvent(UIComponent component,
+			Behavior behavior,
 			int height,
 			int width,
 			int x1,
@@ -42,7 +44,7 @@ public class ImageAreaSelectionEvent extends FacesEvent {
 			int imgHeight,
 			int imgWidth,
 			String imgSrc) {
-		super(component);
+		super(component, behavior);
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;

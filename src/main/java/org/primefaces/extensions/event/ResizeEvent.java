@@ -1,17 +1,21 @@
 package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
-import javax.faces.event.FacesEvent;
+import javax.faces.component.behavior.Behavior;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesListener;
 
 @SuppressWarnings("serial")
-public class ResizeEvent extends FacesEvent {
+public class ResizeEvent extends AjaxBehaviorEvent {
 
 	private double width;
 	private double height;
 	
-	public ResizeEvent(UIComponent component, double width, double height) {
-		super(component);
+	public ResizeEvent(UIComponent component, 
+			Behavior behavior, 
+			double width, 
+			double height) {
+		super(component, behavior);
 		this.width = width;
 		this.height = height;
 	}

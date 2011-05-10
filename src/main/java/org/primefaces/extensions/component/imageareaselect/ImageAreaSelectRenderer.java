@@ -16,60 +16,33 @@
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.event.ImageAreaSelectionEvent;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 
 public class ImageAreaSelectRenderer extends CoreRenderer {
 
-    @Override
-    public void decode(FacesContext context, UIComponent component) {
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
-        String clientId = imageAreaSelect.getClientId(context);
-
-        if (params.containsKey(clientId)) {
-        	int x1 = Integer.parseInt(params.get(clientId + "_x1"));
-            int x2 = Integer.parseInt(params.get(clientId + "_x2"));
-            int y1 = Integer.parseInt(params.get(clientId + "_y1"));
-            int y2 = Integer.parseInt(params.get(clientId + "_y2"));
-            int height = Integer.parseInt(params.get(clientId + "_height"));
-            int width = Integer.parseInt(params.get(clientId + "_width"));
-
-            int imgHeight = Integer.parseInt(params.get(clientId + "_imgHeight"));
-            int imgWidth = Integer.parseInt(params.get(clientId + "_imgWidth"));
-            String imgSrc = params.get(clientId + "_imgSrc");
-            
-            ImageAreaSelectionEvent event =
-            	new ImageAreaSelectionEvent(imageAreaSelect, 
-            			height, 
-            			width, 
-            			x1, 
-            			x2, 
-            			y1, 
-            			y2, 
-            			imgHeight,
-            			imgWidth,
-            			imgSrc);
-
-            imageAreaSelect.queueEvent(event);
-        }
-    }
-
+	@Override
+	public void decode(FacesContext context, UIComponent component) {
+		super.decodeBehaviors(context, component);
+	}	
+	
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
         String target = findTarget(context, imageAreaSelect).getClientId(context);
         String clientId = imageAreaSelect.getClientId(context);
-        String update = imageAreaSelect.getUpdate();
         String widgetVar = imageAreaSelect.resolveWidgetVar();
 
         writer.startElement("script", imageAreaSelect);
@@ -106,17 +79,9 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         	writer.write(",parent:'" + findParent(context, imageAreaSelect).getClientId(context) + "'");
         if (imageAreaSelect.isKeyboardSupport() != null)
         	writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport() + "");
+
+        encodeBehaviors(context, imageAreaSelect);
         
-        if (imageAreaSelect.getSelectListener() != null) {
-        	writer.write(",ajaxSelect:true");
- 
-            if (imageAreaSelect.getOncomplete() != null) {
-            	writer.write(",oncomplete:function(xhr, status, args) {" + imageAreaSelect.getOncomplete() + ";}");
-            }
-            if (update != null) {
-                writer.write(",update:'" + ComponentUtils.findClientIds(context, imageAreaSelect, update) + "'");    	
-            }
-        }
         writer.write("});});");
         writer.endElement("script");
     }
@@ -145,4 +110,29 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
             return component;
         }
     }
+    
+    protected void encodeBehaviors(FacesContext context, ImageAreaSelect imageAreaSelect) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+        Map<String,List<ClientBehavior>> behaviorEvents = imageAreaSelect.getClientBehaviors();
+
+        if(!behaviorEvents.isEmpty()) {
+            List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
+
+            writer.write(",behaviors:{");
+
+            for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
+                String event = eventIterator.next();
+                ClientBehavior clientBehavior = behaviorEvents.get(event).get(0);
+                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, imageAreaSelect, event, imageAreaSelect.getClientId(context), params);
+
+                writer.write(event + ":");
+                writer.write("function(data) {" + clientBehavior.getScript(cbc) +  "}");
+
+                if(eventIterator.hasNext()) {
+                    writer.write(",");
+                }
+            }
+            writer.write("}");
+        }
+    }    
 }

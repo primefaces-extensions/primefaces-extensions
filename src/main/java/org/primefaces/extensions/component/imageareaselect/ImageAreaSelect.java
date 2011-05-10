@@ -16,17 +16,24 @@
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.BehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.ImageAreaSelectEvent;
 
 @ResourceDependencies({
 	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
@@ -35,19 +42,19 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library="primefaces-extensions", name="imageareaselect/imageareaselect.js"),
 	@ResourceDependency(library="primefaces-extensions", name="imageareaselect/imageareaselect.css")
 })
-public class ImageAreaSelect extends UIComponentBase implements Widget {
+public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageAreaSelect";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 	
+    private static final Collection<String> EVENT_NAMES =
+    	Collections.unmodifiableCollection(Arrays.asList("select"));	
+	
 	protected enum PropertyKeys {
 		widgetVar,
 		forValue("for"),
-		selectListener,
-		update,
-		oncomplete,
 		aspectRatio,
 		autoHide,
 		fadeSpeed,
@@ -87,6 +94,11 @@ public class ImageAreaSelect extends UIComponentBase implements Widget {
 	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
+	}
+	
+	@Override
+	public Collection<String> getEventNames() {
+		return EVENT_NAMES;
 	}
 
 	public java.lang.String getAspectRatio() {
@@ -269,33 +281,6 @@ public class ImageAreaSelect extends UIComponentBase implements Widget {
 		handleAttribute("forValue", _for);
 	}
 
-	public MethodExpression getSelectListener() {
-		return (MethodExpression) getStateHelper().eval(PropertyKeys.selectListener, null);
-	}
-
-	public void setSelectListener(MethodExpression _selectListener) {
-		getStateHelper().put(PropertyKeys.selectListener, _selectListener);
-		handleAttribute("selectListener", _selectListener);
-	}
-
-	public String getOncomplete() {
-		return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
-	}
-
-	public void setOncomplete(java.lang.String _oncomplete) {
-		getStateHelper().put(PropertyKeys.oncomplete, _oncomplete);
-		handleAttribute("oncomplete", _oncomplete);
-	}
-
-	public String getUpdate() {
-		return (String) getStateHelper().eval(PropertyKeys.update, null);
-	}
-
-	public void setUpdate(java.lang.String _update) {
-		getStateHelper().put(PropertyKeys.update, _update);
-		handleAttribute("update", _update);
-	}
-
 	public String resolveWidgetVar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		String userWidgetVar = (String) getAttributes().get("widgetVar");
@@ -306,17 +291,6 @@ public class ImageAreaSelect extends UIComponentBase implements Widget {
 			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
 	}	
-
-	public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
-		super.broadcast(event);
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		MethodExpression me = getSelectListener();
-
-		if (me != null) {
-			me.invoke(facesContext.getELContext(), new Object[] {event});
-		}
-	}
 	
 	@SuppressWarnings("unchecked")
 	public void handleAttribute(String name, Object value) {
@@ -339,4 +313,36 @@ public class ImageAreaSelect extends UIComponentBase implements Widget {
 			}
 		}
 	}
+	
+	@Override
+	public void queueEvent(FacesEvent event) {
+		BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+		Map<String,String> map = 
+			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+    	
+		int x1 = Integer.parseInt(map.get("x1"));
+        int x2 = Integer.parseInt(map.get("x2"));
+        int y1 = Integer.parseInt(map.get("y1"));
+        int y2 = Integer.parseInt(map.get("y2"));
+        int height = Integer.parseInt(map.get("height"));
+        int width = Integer.parseInt(map.get("width"));
+        int imgHeight = Integer.parseInt(map.get("imgHeight"));
+        int imgWidth = Integer.parseInt(map.get("imgWidth"));
+        String imgSrc = map.get("imgSrc");
+        
+        ImageAreaSelectEvent selectEvent =
+        	new ImageAreaSelectEvent(this,
+        			behaviorEvent.getBehavior(),
+        			height, 
+        			width, 
+        			x1, 
+        			x2, 
+        			y1, 
+        			y2, 
+        			imgHeight,
+        			imgWidth,
+        			imgSrc);
+
+		super.queueEvent(selectEvent);
+	}	
 }

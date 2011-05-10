@@ -728,42 +728,8 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
 	
-	if (this.cfg.ajaxSelect) {
-		this.cfg.formId = $(PrimeFaces.escapeClientId(this.id)).parents('form:first').attr('id');	
-	}
-    
-    this.onSelectEnd = function (img, selection) {
-    	if (cfg.ajaxSelect) {
-			var options = {
-					source: id,
-					process: id,
-					formId: cfg.formId
-			};		        	
-			if (cfg.update) {
-				options.update = cfg.update;
-			}
-
-			if (cfg.oncomplete) {
-				options.oncomplete = cfg.oncomplete;
-			}			
-
-			var params = {};
-			params[id + "_x1"] = selection.x1;
-			params[id + "_x2"] = selection.x2;
-			params[id + "_y1"] = selection.y1;
-			params[id + "_y2"] = selection.y2;
-			params[id + "_width"] = selection.width;
-			params[id + "_height"] = selection.height;
-			params[id + "_imgSrc"] = img.src;
-			params[id + "_imgHeight"] = img.height;
-			params[id + "_imgWidth"] = img.width;
-
-			options.params = params;
-
-			PrimeFaces.ajax.AjaxRequest(options); 	
-        }
-    }
-
+	this.bindSelectCallback(this);
+	
 	this.options = {};
 	this.options.instance = true,
 	this.options.onSelectEnd = this.onSelectEnd;
@@ -810,6 +776,24 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 	}
 
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
+}
+
+PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = function(component) {
+	component.onSelectEnd = function (img, selection) {
+	    var selectCallback = component.cfg.behaviors['select'];
+	    if (selectCallback) {
+	    	selectCallback.call(component, {
+	    		x1: selection.x1, 
+	        	x2: selection.x2,
+	        	y1: selection.y1, 
+	        	y2: selection.y2,
+	        	width: selection.width, 
+	        	height: selection.height,
+	        	imgSrc: img.src, 
+	        	imgHeight: img.height, 
+	        	imgWidth: img.width});
+	    }
+    }
 }
 
 PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.update = function(options) {

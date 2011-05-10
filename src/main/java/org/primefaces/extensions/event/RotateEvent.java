@@ -1,17 +1,19 @@
 package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
-import javax.faces.event.FacesEvent;
+import javax.faces.component.behavior.Behavior;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesListener;
 
 @SuppressWarnings("serial")
-public class RotationEvent extends FacesEvent {
+public class RotateEvent extends AjaxBehaviorEvent {
 
 	private int degree;
 
-	public RotationEvent(UIComponent component, 
+	public RotateEvent(UIComponent component,
+			Behavior behavior,
 			int degree) {
-		super(component);
+		super(component, behavior);
 		this.degree = degree;
 	}
 
