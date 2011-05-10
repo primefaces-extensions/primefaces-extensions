@@ -6,7 +6,7 @@
 	<groupId>org.primefaces.extensions</groupId>
 	<artifactId>primefaces-extensions</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 	<name>primefaces-extensions</name>
 	<url>http://code.google.com/p/primefaces-extensions/</url>
 
