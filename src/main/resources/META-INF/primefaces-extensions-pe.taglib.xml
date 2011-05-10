@@ -113,7 +113,6 @@
 		<component>
 			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
 			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
-			<handler-class>org.primefaces.extensions.component.imageareaselect.ImageAreaSelectHandler</handler-class>
 		</component>
 		<attribute>
 			<description></description>
@@ -277,7 +276,6 @@
 		<component>
 			<component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
 			<renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
-			<handler-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeHandler</handler-class>
 		</component>
 		<attribute>
 			<description></description>
