@@ -16,15 +16,9 @@
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -80,7 +74,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         if (imageAreaSelect.isKeyboardSupport() != null)
         	writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport() + "");
 
-        encodeBehaviors(context, imageAreaSelect);
+        encodeClientBehaviors(context, imageAreaSelect);
         
         writer.write("});});");
         writer.endElement("script");
@@ -110,29 +104,4 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
             return component;
         }
     }
-    
-    protected void encodeBehaviors(FacesContext context, ImageAreaSelect imageAreaSelect) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-        Map<String,List<ClientBehavior>> behaviorEvents = imageAreaSelect.getClientBehaviors();
-
-        if(!behaviorEvents.isEmpty()) {
-            List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-
-            writer.write(",behaviors:{");
-
-            for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
-                String event = eventIterator.next();
-                ClientBehavior clientBehavior = behaviorEvents.get(event).get(0);
-                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, imageAreaSelect, event, imageAreaSelect.getClientId(context), params);
-
-                writer.write(event + ":");
-                writer.write("function(data) {" + clientBehavior.getScript(cbc) +  "}");
-
-                if(eventIterator.hasNext()) {
-                    writer.write(",");
-                }
-            }
-            writer.write("}");
-        }
-    }    
 }

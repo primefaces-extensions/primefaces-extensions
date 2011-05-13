@@ -290,8 +290,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		} else {
 			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
-	}	
-	
+	}
+
 	@SuppressWarnings("unchecked")
 	public void handleAttribute(String name, Object value) {
 		List<String> setAttributes = (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
@@ -313,13 +313,13 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 			}
 		}
 	}
-	
+
 	@Override
 	public void queueEvent(FacesEvent event) {
 		BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 		Map<String,String> map = 
 			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    	
+
 		int x1 = Integer.parseInt(map.get("x1"));
         int x2 = Integer.parseInt(map.get("x2"));
         int y1 = Integer.parseInt(map.get("y1"));

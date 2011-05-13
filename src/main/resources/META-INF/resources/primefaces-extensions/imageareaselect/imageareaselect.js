@@ -782,7 +782,7 @@ PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = func
 	component.onSelectEnd = function (img, selection) {
 	    var selectCallback = component.cfg.behaviors['select'];
 	    if (selectCallback) {
-	    	selectCallback.call(component, {
+	    	selectCallback.call(component, null, {
 	    		x1: selection.x1, 
 	        	x2: selection.x2,
 	        	y1: selection.y1, 

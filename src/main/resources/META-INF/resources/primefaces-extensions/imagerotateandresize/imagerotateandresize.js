@@ -141,7 +141,7 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = functi
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
     var callback = this.cfg.behaviors['rotate'];
     if (callback) {
-    	callback.call(this, {
+    	callback.call(this, null, {
     		degree: this.degree
     		});
     }	
@@ -150,7 +150,7 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = fu
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
     var callback = this.cfg.behaviors['resize'];
     if (callback) {
-    	callback.call(this, {
+    	callback.call(this, null, {
         	width: this.newImageWidth, 
         	height: this.newImageHeight
         	});

@@ -16,15 +16,9 @@
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -53,7 +47,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageRotateAndResize('" + clientId + "', {");
         writer.write("target:'" + target + "'");
 
-        encodeBehaviors(context, imageRotateAndResize);
+        encodeClientBehaviors(context, imageRotateAndResize);
         
         writer.write("});});");
         writer.endElement("script");
@@ -73,30 +67,4 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
             throw new FacesException("\"for\" attribute for ImageRotateAndResize can not be null or empty");
         }
     }
-   
-
-    protected void encodeBehaviors(FacesContext context, ImageRotateAndResize imageRotateAndResize) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-        Map<String,List<ClientBehavior>> behaviorEvents = imageRotateAndResize.getClientBehaviors();
-
-        if(!behaviorEvents.isEmpty()) {
-            List<ClientBehaviorContext.Parameter> params = Collections.emptyList();
-
-            writer.write(",behaviors:{");
-
-            for(Iterator<String> eventIterator = behaviorEvents.keySet().iterator(); eventIterator.hasNext();) {
-                String event = eventIterator.next();
-                ClientBehavior clientBehavior = behaviorEvents.get(event).get(0);
-                ClientBehaviorContext cbc = ClientBehaviorContext.createClientBehaviorContext(context, imageRotateAndResize, event, imageRotateAndResize.getClientId(context), params);
-
-                writer.write(event + ":");
-                writer.write("function(data) {" + clientBehavior.getScript(cbc) +  "}");
-
-                if(eventIterator.hasNext()) {
-                    writer.write(",");
-                }
-            }
-            writer.write("}");
-        }
-    }  
 }

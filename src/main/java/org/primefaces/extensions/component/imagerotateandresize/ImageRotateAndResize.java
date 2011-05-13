@@ -20,6 +20,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
+import org.primefaces.util.Constants;
 
 @ResourceDependencies({
 	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
@@ -125,7 +126,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		Map<String,String> map = 
 			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
     	
-		String eventName = map.get("javax.faces.behavior.event");
+		String eventName = map.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 		
 		if (eventName != null) {
 			if (eventName.equals("resize")) {
