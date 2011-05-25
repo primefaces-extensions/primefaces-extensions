@@ -28,7 +28,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
-		super.decodeBehaviors(context, component);
+		decodeBehaviors(context, component);
 	}
 
     @Override

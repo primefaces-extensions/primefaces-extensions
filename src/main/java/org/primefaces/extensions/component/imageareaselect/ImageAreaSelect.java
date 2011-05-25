@@ -34,6 +34,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
+import org.primefaces.util.Constants;
 
 @ResourceDependencies({
 	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
@@ -316,33 +317,46 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
 	@Override
 	public void queueEvent(FacesEvent event) {
-		BehaviorEvent behaviorEvent = (BehaviorEvent) event;
-		Map<String,String> map = 
-			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		if (isRequestSource(context)) {
+			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-		int x1 = Integer.parseInt(map.get("x1"));
-        int x2 = Integer.parseInt(map.get("x2"));
-        int y1 = Integer.parseInt(map.get("y1"));
-        int y2 = Integer.parseInt(map.get("y2"));
-        int height = Integer.parseInt(map.get("height"));
-        int width = Integer.parseInt(map.get("width"));
-        int imgHeight = Integer.parseInt(map.get("imgHeight"));
-        int imgWidth = Integer.parseInt(map.get("imgWidth"));
-        String imgSrc = map.get("imgSrc");
-        
-        ImageAreaSelectEvent selectEvent =
-        	new ImageAreaSelectEvent(this,
-        			behaviorEvent.getBehavior(),
-        			height, 
-        			width, 
-        			x1, 
-        			x2, 
-        			y1, 
-        			y2, 
-        			imgHeight,
-        			imgWidth,
-        			imgSrc);
+			if (eventName.equals("select")) {
+				BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
-		super.queueEvent(selectEvent);
-	}	
+				int x1 = Integer.parseInt(params.get("x1"));
+		        int x2 = Integer.parseInt(params.get("x2"));
+		        int y1 = Integer.parseInt(params.get("y1"));
+		        int y2 = Integer.parseInt(params.get("y2"));
+		        int height = Integer.parseInt(params.get("height"));
+		        int width = Integer.parseInt(params.get("width"));
+		        int imgHeight = Integer.parseInt(params.get("imgHeight"));
+		        int imgWidth = Integer.parseInt(params.get("imgWidth"));
+		        String imgSrc = params.get("imgSrc");
+		        
+		        ImageAreaSelectEvent selectEvent =
+		        	new ImageAreaSelectEvent(this,
+		        			behaviorEvent.getBehavior(),
+		        			height, 
+		        			width, 
+		        			x1, 
+		        			x2, 
+		        			y1, 
+		        			y2, 
+		        			imgHeight,
+		        			imgWidth,
+		        			imgSrc);
+		
+				super.queueEvent(selectEvent);
+			}
+		} else {
+			super.queueEvent(event);
+		}
+	}
+
+	private boolean isRequestSource(FacesContext context) {
+		return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	}
 }

@@ -122,16 +122,17 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
 	@Override
 	public void queueEvent(FacesEvent event) {
-		BehaviorEvent behaviorEvent = (BehaviorEvent) event;
-		Map<String,String> map = 
-			FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    	
-		String eventName = map.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
-		
-		if (eventName != null) {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		if (isRequestSource(context)) {
+			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+			BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+
 			if (eventName.equals("resize")) {
-				double width = Double.parseDouble(map.get("width"));
-	            double height = Double.parseDouble(map.get("height"));
+				double width = Double.parseDouble(params.get("width"));
+	            double height = Double.parseDouble(params.get("height"));
 
 	            ResizeEvent resizeEvent = new ResizeEvent(
 	            		this, 
@@ -139,9 +140,8 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	            		width, 
 	            		height);
 	            super.queueEvent(resizeEvent);
-			}
-			if (eventName.equals("rotate")) {
-				int degree = Integer.parseInt(map.get("degree"));
+			} else if (eventName.equals("rotate")) {
+				int degree = Integer.parseInt(params.get("degree"));
 
 				RotateEvent rotateEvent = new RotateEvent(
 						this, 
@@ -151,6 +151,10 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	            super.queueEvent(rotateEvent);
 			}
 		}
+	}
+
+	private boolean isRequestSource(FacesContext context) {
+		return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 }
 
