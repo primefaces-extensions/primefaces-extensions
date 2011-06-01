@@ -150,6 +150,8 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 				 
 	            super.queueEvent(rotateEvent);
 			}
+		} else {
+			super.queueEvent(event);
 		}
 	}
 

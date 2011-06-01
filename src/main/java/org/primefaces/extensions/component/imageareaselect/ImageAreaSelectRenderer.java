@@ -50,29 +50,29 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         if (imageAreaSelect.getAspectRatio() != null)
         	writer.write(",aspectRatio:'" + imageAreaSelect.getAspectRatio() + "'");
         if (imageAreaSelect.isAutoHide() != null)
-        	writer.write(",autoHide:" + imageAreaSelect.isAutoHide() + "");
+        	writer.write(",autoHide:" + imageAreaSelect.isAutoHide());
         if (imageAreaSelect.getFadeSpeed() != null)
-        	writer.write(",fadeSpeed:" + imageAreaSelect.getFadeSpeed() + "");
+        	writer.write(",fadeSpeed:" + imageAreaSelect.getFadeSpeed());
         if (imageAreaSelect.isHandles() != null)
-        	writer.write(",handles:" + imageAreaSelect.isHandles() + "");
+        	writer.write(",handles:" + imageAreaSelect.isHandles());
         if (imageAreaSelect.isHide() != null)
-        	writer.write(",hide:" + imageAreaSelect.isHide() + "");
+        	writer.write(",hide:" + imageAreaSelect.isHide());
         if (imageAreaSelect.getImageHeight() != null)
-        	writer.write(",imageHeight:" + imageAreaSelect.getImageHeight() + "");
+        	writer.write(",imageHeight:" + imageAreaSelect.getImageHeight());
         if (imageAreaSelect.getImageWidth() != null)
-        	writer.write(",imageWidth:" + imageAreaSelect.getImageWidth() + "");       
+        	writer.write(",imageWidth:" + imageAreaSelect.getImageWidth());       
         if (imageAreaSelect.isMovable() != null)
-        	writer.write(",movable:" + imageAreaSelect.isMovable() + "");
+        	writer.write(",movable:" + imageAreaSelect.isMovable());
         if (imageAreaSelect.isPersistent() != null)
-        	writer.write(",persistent:" + imageAreaSelect.isPersistent() + "");      
+        	writer.write(",persistent:" + imageAreaSelect.isPersistent());      
         if (imageAreaSelect.isResizable() != null)
-        	writer.write(",resizable:" + imageAreaSelect.isResizable() + "");
+        	writer.write(",resizable:" + imageAreaSelect.isResizable());
         if (imageAreaSelect.isShow() != null)
-        	writer.write(",show:" + imageAreaSelect.isShow() + "");
+        	writer.write(",show:" + imageAreaSelect.isShow());
         if (imageAreaSelect.getImageAreaSelectParent() != null)
         	writer.write(",parent:'" + findParent(context, imageAreaSelect).getClientId(context) + "'");
         if (imageAreaSelect.isKeyboardSupport() != null)
-        	writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport() + "");
+        	writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport());
 
         encodeClientBehaviors(context, imageAreaSelect);
         
