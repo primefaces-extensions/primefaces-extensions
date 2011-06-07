@@ -1,3 +1,6 @@
+/**
+ * PrimeFaces Extensions ImageRotateAndResize Widget
+ */
 PrimeFaces.Extensions.widget.ImageRotateAndResize = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
