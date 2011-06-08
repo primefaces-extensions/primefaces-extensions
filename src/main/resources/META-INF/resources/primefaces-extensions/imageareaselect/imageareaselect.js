@@ -727,12 +727,9 @@ $.fn.imgAreaSelect = function (options) {
 PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
-	
-	this.bindSelectCallback(this);
-	
+
 	this.options = {};
 	this.options.instance = true,
-	this.options.onSelectEnd = this.onSelectEnd;
 	this.options.classPrefix = 'ui-imgageareaselect';
 	
 	if (this.cfg.aspectRatio) {
@@ -774,24 +771,33 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 	if (this.cfg.keyboardSupport) {
 		this.options.keys = this.cfg.keyboardSupport;
 	}
-
+	
+	this.bindSelectCallback();
+	
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }
 
-PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = function(component) {
-	component.onSelectEnd = function (img, selection) {
-	    var selectCallback = component.cfg.behaviors['select'];
-	    if (selectCallback) {
-	    	selectCallback.call(component, null, {
-	    		x1: selection.x1, 
-	        	x2: selection.x2,
-	        	y1: selection.y1, 
-	        	y2: selection.y2,
-	        	width: selection.width, 
-	        	height: selection.height,
-	        	imgSrc: img.src, 
-	        	imgHeight: img.height, 
-	        	imgWidth: img.width});
+PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
+    var selectCallback = this.cfg.behaviors['select'];
+    if (selectCallback) {
+    	var _self = this;
+   
+		this.options.onSelectEnd = function (img, selection) {
+	    	var ext = {
+	    			params: {}
+	    	};
+	
+	    	ext.params[_self.id + '_x1'] = selection.x1;
+	    	ext.params[_self.id + '_x2'] = selection.x2;
+	    	ext.params[_self.id + '_y1'] = selection.y1;
+	    	ext.params[_self.id + '_y2'] = selection.y2;
+	    	ext.params[_self.id + '_width'] = selection.width;
+	    	ext.params[_self.id + '_height'] = selection.height;
+	    	ext.params[_self.id + '_imgSrc'] = img.src;
+	    	ext.params[_self.id + '_imgHeight'] = img.height;
+	    	ext.params[_self.id + '_imgWidth'] = img.width;
+	    	
+	    	selectCallback.call(_self, null, ext);
 	    }
     }
 }

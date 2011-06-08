@@ -326,15 +326,17 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 			if (eventName.equals("select")) {
 				BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
-				int x1 = Integer.parseInt(params.get("x1"));
-		        int x2 = Integer.parseInt(params.get("x2"));
-		        int y1 = Integer.parseInt(params.get("y1"));
-		        int y2 = Integer.parseInt(params.get("y2"));
-		        int height = Integer.parseInt(params.get("height"));
-		        int width = Integer.parseInt(params.get("width"));
-		        int imgHeight = Integer.parseInt(params.get("imgHeight"));
-		        int imgWidth = Integer.parseInt(params.get("imgWidth"));
-		        String imgSrc = params.get("imgSrc");
+				String clientId = getClientId(context);
+				
+				int x1 = Integer.parseInt(params.get(clientId + "_x1"));
+		        int x2 = Integer.parseInt(params.get(clientId + "_x2"));
+		        int y1 = Integer.parseInt(params.get(clientId + "_y1"));
+		        int y2 = Integer.parseInt(params.get(clientId + "_y2"));
+		        int height = Integer.parseInt(params.get(clientId + "_height"));
+		        int width = Integer.parseInt(params.get(clientId + "_width"));
+		        int imgHeight = Integer.parseInt(params.get(clientId + "_imgHeight"));
+		        int imgWidth = Integer.parseInt(params.get(clientId + "_imgWidth"));
+		        String imgSrc = params.get(clientId + "_imgSrc");
 		        
 		        ImageAreaSelectEvent selectEvent =
 		        	new ImageAreaSelectEvent(this,

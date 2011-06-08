@@ -129,10 +129,12 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 			BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+			
+			String clientId = getClientId(context);
 
 			if (eventName.equals("resize")) {
-				double width = Double.parseDouble(params.get("width"));
-	            double height = Double.parseDouble(params.get("height"));
+				double width = Double.parseDouble(params.get(clientId + "_width"));
+	            double height = Double.parseDouble(params.get(clientId + "_height"));
 
 	            ResizeEvent resizeEvent = new ResizeEvent(
 	            		this, 
@@ -141,7 +143,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	            		height);
 	            super.queueEvent(resizeEvent);
 			} else if (eventName.equals("rotate")) {
-				int degree = Integer.parseInt(params.get("degree"));
+				int degree = Integer.parseInt(params.get(clientId + "_degree"));
 
 				RotateEvent rotateEvent = new RotateEvent(
 						this, 

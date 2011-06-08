@@ -144,18 +144,26 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = functi
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
     var callback = this.cfg.behaviors['rotate'];
     if (callback) {
-    	callback.call(this, null, {
-    		degree: this.degree
-    		});
+    	var ext = {
+    			params: {}
+    	};
+
+    	ext.params[this.id + '_degree'] = this.degree;
+   
+    	callback.call(this, null, ext);
     }	
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
     var callback = this.cfg.behaviors['resize'];
     if (callback) {
-    	callback.call(this, null, {
-        	width: this.newImageWidth, 
-        	height: this.newImageHeight
-        	});
+    	var ext = {
+    			params: {}
+    	};
+    	
+    	ext.params[this.id + '_width'] = this.newImageWidth;
+    	ext.params[this.id + '_height'] = this.newImageHeight;
+    	
+    	callback.call(this, null, ext);
     }
 }
