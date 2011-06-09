@@ -29,8 +29,8 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
 		decodeBehaviors(context, component);
-	}	
-	
+	}
+
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
@@ -43,7 +43,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
 
         writer.write("$(function() {");
-        
+
         writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageAreaSelect('" + clientId + "', {");
         writer.write("target:'" + target + "'");
 
@@ -60,11 +60,11 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         if (imageAreaSelect.getImageHeight() != null)
         	writer.write(",imageHeight:" + imageAreaSelect.getImageHeight());
         if (imageAreaSelect.getImageWidth() != null)
-        	writer.write(",imageWidth:" + imageAreaSelect.getImageWidth());       
+        	writer.write(",imageWidth:" + imageAreaSelect.getImageWidth());
         if (imageAreaSelect.isMovable() != null)
         	writer.write(",movable:" + imageAreaSelect.isMovable());
         if (imageAreaSelect.isPersistent() != null)
-        	writer.write(",persistent:" + imageAreaSelect.isPersistent());      
+        	writer.write(",persistent:" + imageAreaSelect.isPersistent());
         if (imageAreaSelect.isResizable() != null)
         	writer.write(",resizable:" + imageAreaSelect.isResizable());
         if (imageAreaSelect.isShow() != null)
@@ -75,7 +75,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         	writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport());
 
         encodeClientBehaviors(context, imageAreaSelect);
-        
+
         writer.write("});});");
         writer.endElement("script");
     }
@@ -83,7 +83,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
     protected UIComponent findTarget(FacesContext facesContext, ImageAreaSelect imageAreaSelect) {
         String _for = imageAreaSelect.getFor();
 
-        if(_for != null) {
+        if (_for != null) {
             UIComponent component = imageAreaSelect.findComponent(_for);
             if (component == null) {
                 throw new FacesException("Cannot find component \"" + _for + "\" in view.");
@@ -94,7 +94,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
             throw new FacesException("\"for\" attribute for ImageAreaSelect can not be null or empty");
         }
     }
-    
+
     protected UIComponent findParent(FacesContext facesContext, ImageAreaSelect imageAreaSelect) {
         String parentId = imageAreaSelect.getImageAreaSelectParent();
         UIComponent component = imageAreaSelect.findComponent(parentId);

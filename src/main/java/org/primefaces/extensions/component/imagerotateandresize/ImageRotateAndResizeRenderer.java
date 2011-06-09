@@ -48,7 +48,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         writer.write("target:'" + target + "'");
 
         encodeClientBehaviors(context, imageRotateAndResize);
-        
+
         writer.write("});});");
         writer.endElement("script");
     }
@@ -56,7 +56,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
     protected UIComponent findTarget(FacesContext facesContext, ImageRotateAndResize imageRotate) {
         String _for = imageRotate.getFor();
 
-        if(_for != null) {
+        if (_for != null) {
             UIComponent component = imageRotate.findComponent(_for);
             if (component == null) {
                 throw new FacesException("Cannot find component \"" + _for + "\" in view.");

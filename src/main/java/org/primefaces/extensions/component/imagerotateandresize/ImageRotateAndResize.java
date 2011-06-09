@@ -37,7 +37,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
     private static final Collection<String> EVENT_NAMES =
     	Collections.unmodifiableCollection(Arrays.asList("rotate", "resize"));
-	
+
 	protected enum PropertyKeys {
 		widgetVar,
 		forValue("for");
@@ -50,6 +50,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
 		PropertyKeys() {}
 
+		@Override
 		public String toString() {
 			return ((this.toString != null) ? this.toString : super.toString());
 		}
@@ -68,7 +69,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	public Collection<String> getEventNames() {
 		return EVENT_NAMES;
 	}
-	
+
 	public java.lang.String getWidgetVar() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
@@ -96,7 +97,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		} else {
 			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
-	}	
+	}
 
 	@SuppressWarnings("unchecked")
 	public void handleAttribute(String name, Object value) {
@@ -129,7 +130,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 			BehaviorEvent behaviorEvent = (BehaviorEvent) event;
-			
+
 			String clientId = getClientId(context);
 
 			if (eventName.equals("resize")) {
@@ -137,19 +138,19 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	            double height = Double.parseDouble(params.get(clientId + "_height"));
 
 	            ResizeEvent resizeEvent = new ResizeEvent(
-	            		this, 
+	            		this,
 	            		behaviorEvent.getBehavior(),
-	            		width, 
+	            		width,
 	            		height);
 	            super.queueEvent(resizeEvent);
 			} else if (eventName.equals("rotate")) {
 				int degree = Integer.parseInt(params.get(clientId + "_degree"));
 
 				RotateEvent rotateEvent = new RotateEvent(
-						this, 
-						behaviorEvent.getBehavior(), 
+						this,
+						behaviorEvent.getBehavior(),
 						degree);
-				 
+
 	            super.queueEvent(rotateEvent);
 			}
 		} else {
@@ -161,4 +162,3 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 }
-

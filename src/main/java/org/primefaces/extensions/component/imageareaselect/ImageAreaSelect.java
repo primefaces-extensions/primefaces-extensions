@@ -49,10 +49,10 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
-	
+
     private static final Collection<String> EVENT_NAMES =
-    	Collections.unmodifiableCollection(Arrays.asList("select"));	
-	
+    	Collections.unmodifiableCollection(Arrays.asList("select"));
+
 	protected enum PropertyKeys {
 		widgetVar,
 		forValue("for"),
@@ -83,6 +83,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
 		PropertyKeys() {}
 
+		@Override
 		public String toString() {
 			return ((this.toString != null) ? this.toString : super.toString());
 		}
@@ -118,8 +119,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	public void setImageAreaSelectParent(java.lang.String _parent) {
 		getStateHelper().put(PropertyKeys.imageAreaSelectParent, _parent);
 		handleAttribute("imageAreaSelectParent", _parent);
-	}	
-	
+	}
+
 	public java.lang.Boolean isAutoHide() {
 		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.autoHide, null);
 	}
@@ -191,7 +192,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		getStateHelper().put(PropertyKeys.keyboardSupport, _keyboardSupport);
 		handleAttribute("keyboardSupport", _keyboardSupport);
 	}
-	
+
 	public java.lang.Boolean isPersistent() {
 		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.persistent, null);
 	}
@@ -318,7 +319,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		
+
 		if (isRequestSource(context)) {
 			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
@@ -327,7 +328,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 				BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
 				String clientId = getClientId(context);
-				
+
 				int x1 = Integer.parseInt(params.get(clientId + "_x1"));
 		        int x2 = Integer.parseInt(params.get(clientId + "_x2"));
 		        int y1 = Integer.parseInt(params.get(clientId + "_y1"));
@@ -337,20 +338,20 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		        int imgHeight = Integer.parseInt(params.get(clientId + "_imgHeight"));
 		        int imgWidth = Integer.parseInt(params.get(clientId + "_imgWidth"));
 		        String imgSrc = params.get(clientId + "_imgSrc");
-		        
+
 		        ImageAreaSelectEvent selectEvent =
 		        	new ImageAreaSelectEvent(this,
 		        			behaviorEvent.getBehavior(),
-		        			height, 
-		        			width, 
-		        			x1, 
-		        			x2, 
-		        			y1, 
-		        			y2, 
+		        			height,
+		        			width,
+		        			x1,
+		        			x2,
+		        			y1,
+		        			y2,
 		        			imgHeight,
 		        			imgWidth,
 		        			imgSrc);
-		
+
 				super.queueEvent(selectEvent);
 			}
 		} else {

@@ -27,8 +27,8 @@ public class ResizeEvent extends AjaxBehaviorEvent {
 	private double height;
 	
 	public ResizeEvent(UIComponent component, 
-			Behavior behavior, 
-			double width, 
+			Behavior behavior,
+			double width,
 			double height) {
 		super(component, behavior);
 		this.width = width;
