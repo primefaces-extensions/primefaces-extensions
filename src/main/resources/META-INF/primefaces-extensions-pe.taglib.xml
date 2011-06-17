@@ -5,110 +5,6 @@
 		version="2.0">
 	<namespace>http://primefaces.prime.com.tr/ui/extensions</namespace>
 	<tag>
-		<tag-name>droppable</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Droppable</component-type>
-			<renderer-type>org.primefaces.extensions.component.DroppableRenderer</renderer-type>
-			<handler-class>org.primefaces.component.dnd.DroppableHandler</handler-class>
-		</component>
-		<attribute>
-			<description></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>for</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>disabled</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>hoverStyleClass</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>activeStyleClass</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onDropUpdate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>dropListener</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onDrop</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>accept</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>scope</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>tolerance</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>datasource</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>oncomplete</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
 		<tag-name>imageAreaSelect</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
@@ -142,24 +38,6 @@
 			<description>The target image</description>
 			<name>for</name>
 			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>update</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>selectListener</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>oncomplete</name>
-			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
@@ -305,42 +183,6 @@
 			<description>The target image</description>
 			<name>for</name>
 			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onResizeUpdate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onRotateUpdate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>		
-		<attribute>
-			<description></description>
-			<name>rotateListener</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>resizeListener</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onResizeComplete</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>onRotationComplete</name>
-			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>	
