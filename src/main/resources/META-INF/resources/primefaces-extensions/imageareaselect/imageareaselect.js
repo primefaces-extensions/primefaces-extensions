@@ -1,6 +1,6 @@
 /*
  * imgAreaSelect jQuery plugin
- * version 0.9.5
+ * version 0.9.8
  *
  * Copyright (c) 2008-2011 Michal Wojciechowski (odyniec.net)
  *
@@ -54,8 +54,6 @@ $.imgAreaSelect = function (img, options) {
         startX, startY,
 
         scaleX, scaleY,
-
-        resizeMargin = 10,
 
         resize,
 
@@ -134,10 +132,10 @@ $.imgAreaSelect = function (img, options) {
         imgOfs.top += ($img.outerHeight() - imgHeight) >> 1;
         imgOfs.left += ($img.outerWidth() - imgWidth) >> 1;
 
-        minWidth = options.minWidth || 0;
-        minHeight = options.minHeight || 0;
-        maxWidth = min(options.maxWidth || 1<<24, imgWidth);
-        maxHeight = min(options.maxHeight || 1<<24, imgHeight);
+        minWidth = round(options.minWidth / scaleX) || 0;
+        minHeight = round(options.minHeight / scaleY) || 0;
+        maxWidth = round(min(options.maxWidth / scaleX || 1<<24, imgWidth));
+        maxHeight = round(min(options.maxHeight / scaleY || 1<<24, imgHeight));
 
         if ($().jquery == '1.3.2' && position == 'fixed' &&
             !docElem['getBoundingClientRect'])
@@ -146,7 +144,7 @@ $.imgAreaSelect = function (img, options) {
             imgOfs.left += max(document.body.scrollLeft, docElem.scrollLeft);
         }
 
-        parOfs = $.inArray($parent.css('position'), ['absolute', 'relative']) + 1 ?
+        parOfs = /absolute|relative/.test($parent.css('position')) ?
             { left: round($parent.offset().left) - $parent.scrollLeft(),
                 top: round($parent.offset().top) - $parent.scrollTop() } :
             position == 'fixed' ?
@@ -365,8 +363,8 @@ $.imgAreaSelect = function (img, options) {
     }
 
     function selectingMouseMove(event) {
-        x2 = resize == '' || /w|e/.test(resize) || aspectRatio ? evX(event) : viewX(selection.x2);
-        y2 = resize == '' || /n|s/.test(resize) || aspectRatio ? evY(event) : viewY(selection.y2);
+        x2 = /w|e|^$/.test(resize) || aspectRatio ? evX(event) : viewX(selection.x2);
+        y2 = /n|s|^$/.test(resize) || aspectRatio ? evY(event) : viewY(selection.y2);
 
         doResize();
 
@@ -398,6 +396,7 @@ $.imgAreaSelect = function (img, options) {
     }
 
     function startSelection() {
+        $(document).unbind('mousemove', startSelection);
         adjust();
 
         x2 = x1;
@@ -407,7 +406,7 @@ $.imgAreaSelect = function (img, options) {
 
         resize = '';
 
-        if ($outer.is(':not(:visible)'))
+        if (!$outer.is(':visible'))
             $box.add($outer).hide().fadeIn(options.fadeSpeed||0);
 
         shown = true;
@@ -420,13 +419,16 @@ $.imgAreaSelect = function (img, options) {
     }
 
     function cancelSelection() {
-        $(document).unbind('mousemove', startSelection);
+        $(document).unbind('mousemove', startSelection)
+            .unbind('mouseup', cancelSelection);
         hide($box.add($outer));
 
         setSelection(selX(x1), selY(y1), selX(x1), selY(y1));
 
-        options.onSelectChange(img, getSelection());
-        options.onSelectEnd(img, getSelection());
+        if (!this instanceof $.imgAreaSelect) {
+            options.onSelectChange(img, getSelection());
+            options.onSelectEnd(img, getSelection());
+        }
     }
 
     function imgMouseDown(event) {
@@ -436,8 +438,7 @@ $.imgAreaSelect = function (img, options) {
         startX = x1 = evX(event);
         startY = y1 = evY(event);
 
-        $(document).one('mousemove', startSelection)
-            .one('mouseup', cancelSelection);
+        $(document).mousemove(startSelection).mouseup(cancelSelection);
 
         return false;
     }
@@ -605,9 +606,9 @@ $.imgAreaSelect = function (img, options) {
         $box.append($area.add($border).add($areaOpera).add($handles));
 
         if ($.browser.msie) {
-            if (o = $outer.css('filter').match(/opacity=([0-9]+)/))
+            if (o = $outer.css('filter').match(/opacity=(\d+)/))
                 $outer.css('opacity', o[1]/100);
-            if (o = $border.css('filter').match(/opacity=([0-9]+)/))
+            if (o = $border.css('filter').match(/opacity=(\d+)/))
                 $border.css('opacity', o[1]/100);
         }
 
@@ -655,6 +656,8 @@ $.imgAreaSelect = function (img, options) {
 
     this.setSelection = setSelection;
 
+    this.cancelSelection = cancelSelection;
+
     this.update = doUpdate;
 
     $p = $img;
@@ -688,7 +691,7 @@ $.imgAreaSelect = function (img, options) {
     img.complete || img.readyState == 'complete' || !$img.is('img') ?
         imgLoad() : $img.one('load', imgLoad);
 
-    if ($.browser.msie && $.browser.version >= 9)
+   if ($.browser.msie && $.browser.version >= 7)
         img.src = img.src;
 };
 
