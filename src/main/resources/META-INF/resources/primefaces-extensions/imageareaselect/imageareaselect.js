@@ -781,28 +781,30 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 }
 
 PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
-    var selectCallback = this.cfg.behaviors['select'];
-    if (selectCallback) {
-    	var _self = this;
-   
-		this.options.onSelectEnd = function (img, selection) {
-	    	var ext = {
-	    			params: {}
-	    	};
-	
-	    	ext.params[_self.id + '_x1'] = selection.x1;
-	    	ext.params[_self.id + '_x2'] = selection.x2;
-	    	ext.params[_self.id + '_y1'] = selection.y1;
-	    	ext.params[_self.id + '_y2'] = selection.y2;
-	    	ext.params[_self.id + '_width'] = selection.width;
-	    	ext.params[_self.id + '_height'] = selection.height;
-	    	ext.params[_self.id + '_imgSrc'] = img.src;
-	    	ext.params[_self.id + '_imgHeight'] = img.height;
-	    	ext.params[_self.id + '_imgWidth'] = img.width;
-	    	
-	    	selectCallback.call(_self, null, ext);
+	if (this.cfg.behaviors) {
+		var selectCallback = this.cfg.behaviors['select'];
+	    if (selectCallback) {
+	    	var _self = this;
+	   
+			this.options.onSelectEnd = function (img, selection) {
+		    	var ext = {
+		    			params: {}
+		    	};
+		
+		    	ext.params[_self.id + '_x1'] = selection.x1;
+		    	ext.params[_self.id + '_x2'] = selection.x2;
+		    	ext.params[_self.id + '_y1'] = selection.y1;
+		    	ext.params[_self.id + '_y2'] = selection.y2;
+		    	ext.params[_self.id + '_width'] = selection.width;
+		    	ext.params[_self.id + '_height'] = selection.height;
+		    	ext.params[_self.id + '_imgSrc'] = img.src;
+		    	ext.params[_self.id + '_imgHeight'] = img.height;
+		    	ext.params[_self.id + '_imgWidth'] = img.width;
+		    	
+		    	selectCallback.call(_self, null, ext);
+		    }
 	    }
-    }
+	}
 }
 
 PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.update = function(options) {

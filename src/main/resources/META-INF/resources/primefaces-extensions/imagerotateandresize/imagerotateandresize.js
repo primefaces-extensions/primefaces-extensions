@@ -142,28 +142,32 @@ PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.redrawImage = functi
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
-    var callback = this.cfg.behaviors['rotate'];
-    if (callback) {
-    	var ext = {
-    			params: {}
-    	};
-
-    	ext.params[this.id + '_degree'] = this.degree;
-   
-    	callback.call(this, null, ext);
-    }	
+	if (this.cfg.behaviors) {
+		var callback = this.cfg.behaviors['rotate'];
+	    if (callback) {
+	    	var ext = {
+	    			params: {}
+	    	};
+	
+	    	ext.params[this.id + '_degree'] = this.degree;
+	   
+	    	callback.call(this, null, ext);
+	    }
+	}
 }
 
 PrimeFaces.Extensions.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
-    var callback = this.cfg.behaviors['resize'];
-    if (callback) {
-    	var ext = {
-    			params: {}
-    	};
-    	
-    	ext.params[this.id + '_width'] = this.newImageWidth;
-    	ext.params[this.id + '_height'] = this.newImageHeight;
-    	
-    	callback.call(this, null, ext);
-    }
+	if (this.cfg.behaviors) {
+		var callback = this.cfg.behaviors['resize'];
+	    if (callback) {
+	    	var ext = {
+	    			params: {}
+	    	};
+	    	
+	    	ext.params[this.id + '_width'] = this.newImageWidth;
+	    	ext.params[this.id + '_height'] = this.newImageHeight;
+	    	
+	    	callback.call(this, null, ext);
+	    }
+	}
 }
