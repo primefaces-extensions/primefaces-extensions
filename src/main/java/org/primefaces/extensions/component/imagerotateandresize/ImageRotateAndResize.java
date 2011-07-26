@@ -37,21 +37,30 @@ import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
 import org.primefaces.util.Constants;
 
+/**
+ * Component class for the <code>ImageRotateAndResize</code> component.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 @ResourceDependencies({
-	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
-	@ResourceDependency(library="primefaces", name="core/core.js"),
-	@ResourceDependency(library="primefaces-extensions", name="core/core.js"),
-	@ResourceDependency(library="primefaces-extensions", name="imagerotateandresize/imagerotateandresize.js")
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+		@ResourceDependency(library = "primefaces", name = "core/core.js"),
+		@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+		@ResourceDependency(library = "primefaces-extensions", name = "imagerotateandresize/imagerotateandresize.js")
 })
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";	
+	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-    private static final Collection<String> EVENT_NAMES =
-    	Collections.unmodifiableCollection(Arrays.asList("rotate", "resize"));
+	public static final String EVENT_ROTATE = "rotate";
+	public static final String EVENT_RESIZE = "resize";
+
+	private static final Collection<String> EVENT_NAMES =
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
 
 	protected enum PropertyKeys {
 		widgetVar,
@@ -63,7 +72,8 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 			this.toString = toString;
 		}
 
-		PropertyKeys() {}
+		PropertyKeys() {
+		}
 
 		@Override
 		public String toString() {
@@ -85,95 +95,99 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		return EVENT_NAMES;
 	}
 
-	public java.lang.String getWidgetVar() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	public String getWidgetVar() {
+		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
-	public void setWidgetVar(java.lang.String _widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-		handleAttribute("widgetVar", _widgetVar);
+	public void setWidgetVar(final String widgetVar) {
+		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	public java.lang.String getFor() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.forValue, null);
+	public String getFor() {
+		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	public void setFor(java.lang.String _for) {
-		getStateHelper().put(PropertyKeys.forValue, _for);
-		handleAttribute("forValue", _for);
+	public void setFor(final String forValue) {
+		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
 	public String resolveWidgetVar() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String userWidgetVar = (String) getAttributes().get("widgetVar");
+		final FacesContext context = FacesContext.getCurrentInstance();
+		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
 
 		if (userWidgetVar != null) {
 			return userWidgetVar;
 		} else {
-			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+			return "widget_" + getClientId(context).replaceAll(
+							"-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void handleAttribute(String name, Object value) {
-		List<String> setAttributes = (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if(setAttributes == null) {
-			String cname = this.getClass().getName();
-			if(cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+	public void setAttribute(final PropertyKeys property, final Object value) {
+		getStateHelper().put(property, value);
+
+		List<String> setAttributes = (List<String>) this.getAttributes().get(
+				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		if (setAttributes == null) {
+			final String cname = this.getClass().getName();
+			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+				this.getAttributes().put(
+						"javax.faces.component.UIComponentBase.attributesThatAreSet",
+						setAttributes);
 			}
 		}
-		if(setAttributes != null) {
-			if(value == null) {
-				ValueExpression ve = getValueExpression(name);
-				if(ve == null) {
-					setAttributes.remove(name);
-				} else if(!setAttributes.contains(name)) {
-					setAttributes.add(name);
+		if (setAttributes != null) {
+			if (value == null) {
+				final String attributeName = property.toString();
+				final ValueExpression ve = getValueExpression(attributeName);
+				if (ve == null) {
+					setAttributes.remove(attributeName);
+				} else if (!setAttributes.contains(attributeName)) {
+					setAttributes.add(attributeName);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void queueEvent(FacesEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
+	public void queueEvent(final FacesEvent event) {
+		final FacesContext context = FacesContext.getCurrentInstance();
+		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		final String clientId = getClientId(context);
 
-		if (isRequestSource(context)) {
-			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-			String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+		if (isRequestSource(clientId, params)) {
+			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-			BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+			final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
-			String clientId = getClientId(context);
+			if (eventName.equals(EVENT_RESIZE)) {
+				final double width = Double.parseDouble(params.get(clientId + "_width"));
+				final double height = Double.parseDouble(params.get(clientId + "_height"));
 
-			if (eventName.equals("resize")) {
-				double width = Double.parseDouble(params.get(clientId + "_width"));
-	            double height = Double.parseDouble(params.get(clientId + "_height"));
+				final ResizeEvent resizeEvent = new ResizeEvent(
+						this,
+						behaviorEvent.getBehavior(),
+						width,
+						height);
+				super.queueEvent(resizeEvent);
+			} else if (eventName.equals(EVENT_ROTATE)) {
+				final int degree = Integer.parseInt(params.get(clientId + "_degree"));
 
-	            ResizeEvent resizeEvent = new ResizeEvent(
-	            		this,
-	            		behaviorEvent.getBehavior(),
-	            		width,
-	            		height);
-	            super.queueEvent(resizeEvent);
-			} else if (eventName.equals("rotate")) {
-				int degree = Integer.parseInt(params.get(clientId + "_degree"));
-
-				RotateEvent rotateEvent = new RotateEvent(
+				final RotateEvent rotateEvent = new RotateEvent(
 						this,
 						behaviorEvent.getBehavior(),
 						degree);
 
-	            super.queueEvent(rotateEvent);
+				super.queueEvent(rotateEvent);
 			}
 		} else {
 			super.queueEvent(event);
 		}
 	}
 
-	private boolean isRequestSource(FacesContext context) {
-		return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	private boolean isRequestSource(final String clientId, final Map<String, String> params) {
+		return clientId.equals(params.get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 }

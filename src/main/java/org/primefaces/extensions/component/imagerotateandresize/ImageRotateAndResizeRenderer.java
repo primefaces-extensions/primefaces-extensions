@@ -24,47 +24,53 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.renderkit.CoreRenderer;
 
+/**
+ * Renderer for the {@link ImageRotateAndResize} component.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
 	@Override
-	public void decode(FacesContext context, UIComponent component) {
+	public void decode(final FacesContext context, final UIComponent component) {
 		decodeBehaviors(context, component);
 	}
 
-    @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
-        String target = findTarget(context, imageRotateAndResize).getClientId(context);
-        String clientId = imageRotateAndResize.getClientId(context);
-        String widgetVar = imageRotateAndResize.resolveWidgetVar();
+	@Override
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+		final ResponseWriter writer = context.getResponseWriter();
+		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
+		final String target = findTarget(context, imageRotateAndResize).getClientId(context);
+		final String clientId = imageRotateAndResize.getClientId(context);
+		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
 
-        writer.startElement("script", imageRotateAndResize);
-        writer.writeAttribute("type", "text/javascript", null);
+		writer.startElement("script", imageRotateAndResize);
+		writer.writeAttribute("type", "text/javascript", null);
 
-        writer.write("$(function() {");
+		writer.write("$(function() {");
 
-        writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageRotateAndResize('" + clientId + "', {");
-        writer.write("target:'" + target + "'");
+		writer.write(widgetVar + " = new PrimeFaces.Extensions.widget.ImageRotateAndResize('" + clientId + "', {");
+		writer.write("target:'" + target + "'");
 
-        encodeClientBehaviors(context, imageRotateAndResize);
+		encodeClientBehaviors(context, imageRotateAndResize);
 
-        writer.write("});});");
-        writer.endElement("script");
-    }
+		writer.write("});});");
+		writer.endElement("script");
+	}
 
-    protected UIComponent findTarget(FacesContext facesContext, ImageRotateAndResize imageRotate) {
-        String _for = imageRotate.getFor();
+	protected UIComponent findTarget(final FacesContext facesContext, final ImageRotateAndResize imageRotate) {
+		final String forValue = imageRotate.getFor();
 
-        if (_for != null) {
-            UIComponent component = imageRotate.findComponent(_for);
+        if (forValue != null) {
+        	final UIComponent component = imageRotate.findComponent(forValue);
             if (component == null) {
-                throw new FacesException("Cannot find component \"" + _for + "\" in view.");
+                throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
             } else {
                 return component;
             }
         } else {
             throw new FacesException("\"for\" attribute for ImageRotateAndResize can not be null or empty");
         }
-    }
+	}
 }

@@ -24,20 +24,26 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.renderkit.CoreRenderer;
 
+/**
+ * Renderer for the {@link ImageAreaSelect} component.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 public class ImageAreaSelectRenderer extends CoreRenderer {
 
 	@Override
-	public void decode(FacesContext context, UIComponent component) {
+	public void decode(final FacesContext context, final UIComponent component) {
 		decodeBehaviors(context, component);
 	}
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
-        String target = findTarget(context, imageAreaSelect).getClientId(context);
-        String clientId = imageAreaSelect.getClientId(context);
-        String widgetVar = imageAreaSelect.resolveWidgetVar();
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
+        final String target = findTarget(context, imageAreaSelect).getClientId(context);
+        final String clientId = imageAreaSelect.getClientId(context);
+        final String widgetVar = imageAreaSelect.resolveWidgetVar();
 
         writer.startElement("script", imageAreaSelect);
         writer.writeAttribute("type", "text/javascript", null);
@@ -80,13 +86,13 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         writer.endElement("script");
     }
 
-    protected UIComponent findTarget(FacesContext facesContext, ImageAreaSelect imageAreaSelect) {
-        String _for = imageAreaSelect.getFor();
+    protected UIComponent findTarget(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
+    	final String forValue = imageAreaSelect.getFor();
 
-        if (_for != null) {
-            UIComponent component = imageAreaSelect.findComponent(_for);
+        if (forValue != null) {
+        	final UIComponent component = imageAreaSelect.findComponent(forValue);
             if (component == null) {
-                throw new FacesException("Cannot find component \"" + _for + "\" in view.");
+                throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
             } else {
                 return component;
             }
@@ -95,10 +101,11 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         }
     }
 
-    protected UIComponent findParent(FacesContext facesContext, ImageAreaSelect imageAreaSelect) {
-        String parentId = imageAreaSelect.getImageAreaSelectParent();
-        UIComponent component = imageAreaSelect.findComponent(parentId);
-        if (component == null) {
+    protected UIComponent findParent(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
+    	final String parentId = imageAreaSelect.getImageAreaSelectParent();
+    	final UIComponent component = imageAreaSelect.findComponent(parentId);
+
+    	if (component == null) {
             throw new FacesException("Cannot find component \"" + parentId + "\" in view.");
         } else {
             return component;
