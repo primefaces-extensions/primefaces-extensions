@@ -19,6 +19,13 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
+/**
+ * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
+ * apends the version of Primefaces Extensions in the {@link PrimeFacesExtensionsResource}.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
 	public static final String VERSION = "0.2-SNAPSHOT";
@@ -26,19 +33,18 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	private ResourceHandler resourceHandler;
 
-	public PrimeFacesExtensionsResourceHandler(ResourceHandler resourceHandler) {
+	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
 		this.resourceHandler = resourceHandler;
 	}
 
 	@Override
 	public ResourceHandler getWrapped() {
-		return this.resourceHandler;
+		return resourceHandler;
 	}
 
 	@Override
-	public Resource createResource(String resourceName, String libraryName) {
-		Resource resource =
-			super.createResource(resourceName, libraryName);
+	public Resource createResource(final String resourceName, final String libraryName) {
+		Resource resource = super.createResource(resourceName, libraryName);
 
 		if (resource != null && libraryName != null
 				&& libraryName.equalsIgnoreCase(LIBRARY)) {

@@ -25,27 +25,33 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.extensions.application.PrimeFacesExtensionsResourceHandler;
 
+/**
+ * Renderer for <code>h:head</code> which adds the PrimeFaces Extensions theme.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
 	@Override
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
         super.encodeBegin(context, component);
 
         String theme = null;
-        String themeParamValue = context.getExternalContext().getInitParameter("primefaces.extensions.THEME");
+        final String themeParamValue = context.getExternalContext().getInitParameter("primefaces.extensions.THEME");
 
         if (themeParamValue != null) {
-            ELContext elContext = context.getELContext();
-            ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-            ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+        	final ELContext elContext = context.getELContext();
+        	final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+        	final ValueExpression ve =
+        		expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
 
             theme = (String) ve.getValue(elContext);
         }
 
         if (theme == null || theme.equalsIgnoreCase("default")) {
             encodeTheme(context, PrimeFacesExtensionsResourceHandler.LIBRARY, "themes/default/theme.css");
-        }
-        else if (!theme.equalsIgnoreCase("none")) {
+        } else if (!theme.equalsIgnoreCase("none")) {
             encodeTheme(context, "primefaces-extensions-" + theme, "theme.css");
         }
     }

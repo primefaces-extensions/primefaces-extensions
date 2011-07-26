@@ -18,11 +18,17 @@ package org.primefaces.extensions.application;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
 
+/**
+ * {@link ResourceWrapper} which appends the version of PrimeFaces Extensions to the URL.
+ *
+ * @author Thomas Andraschko
+ * @since 0.1
+ */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
     private Resource resource;
 
-    public PrimeFacesExtensionsResource(Resource resource) {
+    public PrimeFacesExtensionsResource(final Resource resource) {
         this.resource = resource;
     }
 
@@ -52,17 +58,17 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
     }
 
     @Override
-    public void setContentType(String contentType) {
+    public void setContentType(final String contentType) {
         getWrapped().setContentType(contentType);
     }
 
     @Override
-    public void setLibraryName(String libraryName) {
+    public void setLibraryName(final String libraryName) {
         getWrapped().setLibraryName(libraryName);
     }
 
     @Override
-    public void setResourceName(String resourceName) {
+    public void setResourceName(final String resourceName) {
         getWrapped().setResourceName(resourceName);
     }
 
