@@ -15,7 +15,6 @@
 
     <distributionManagement>
         <repository>
-            <uniqueVersion>false</uniqueVersion>
             <id>googlecode</id>
             <url>svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions-maven-repo</url>
         </repository>
