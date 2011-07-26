@@ -186,4 +186,28 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>	
+ 	<tag>
+        <tag-name>javascript</tag-name>
+        <behavior>
+            <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
+        </behavior>
+		<attribute>
+			<description></description>
+			<name>execute</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+        <attribute>
+			<description></description>
+			<name>disabled</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+        <attribute>
+			<description></description>
+			<name>event</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+    </tag>
 </facelet-taglib>

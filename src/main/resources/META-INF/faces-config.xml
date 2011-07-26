@@ -15,6 +15,11 @@
         <resource-handler>org.primefaces.extensions.application.PrimeFacesExtensionsResourceHandler</resource-handler>
     </application>	
 
+    <behavior>
+        <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
+        <behavior-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehavior</behavior-class>
+    </behavior>
+
 	<component>
 		<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
 		<component-class>org.primefaces.extensions.component.imageareaselect.ImageAreaSelect</component-class>
@@ -25,6 +30,10 @@
 	</component>
 
 	<render-kit>
+		<client-behavior-renderer>
+			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
+			<client-behavior-renderer-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
+		</client-behavior-renderer>
 		<renderer>
 			<component-family>org.primefaces.extensions.component</component-family>
 			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
