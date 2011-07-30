@@ -37,11 +37,11 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 			return null;
 		}
 
-		final FacesContext fc = behaviorContext.getFacesContext();
+		final FacesContext context = behaviorContext.getFacesContext();
 		final UIComponent component = behaviorContext.getComponent();
 		String source = behaviorContext.getSourceId();
 		if (source == null) {
-			source = component.getClientId(fc);
+			source = component.getClientId(context);
 		}
 
 		final StringBuilder req = new StringBuilder();
@@ -58,11 +58,11 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 			if (child instanceof UIParameter) {
 				final UIParameter parameter = (UIParameter) child;
 
-				if (!paramWritten) {
+				if (paramWritten) {
+					req.append(",");
+				} else {
 					paramWritten = true;
 					req.append(",params:{");
-				} else {
-					req.append(",");
 				}
 
 				req.append("'").append(parameter.getName()).append("':'").append(

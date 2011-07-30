@@ -299,15 +299,13 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 						setAttributes);
 			}
 		}
-		if (setAttributes != null) {
-			if (value == null) {
-				final String attributeName = property.toString();
-				final ValueExpression ve = getValueExpression(attributeName);
-				if (ve == null) {
-					setAttributes.remove(attributeName);
-				} else if (!setAttributes.contains(attributeName)) {
-					setAttributes.add(attributeName);
-				}
+		if (setAttributes != null && value == null) {
+			final String attributeName = property.toString();
+			final ValueExpression ve = getValueExpression(attributeName);
+			if (ve == null) {
+				setAttributes.remove(attributeName);
+			} else if (!setAttributes.contains(attributeName)) {
+				setAttributes.add(attributeName);
 			}
 		}
 	}

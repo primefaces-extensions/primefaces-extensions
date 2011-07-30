@@ -89,16 +89,16 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
     protected UIComponent findTarget(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
     	final String forValue = imageAreaSelect.getFor();
 
-        if (forValue != null) {
-        	final UIComponent component = imageAreaSelect.findComponent(forValue);
-            if (component == null) {
-                throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-            } else {
-                return component;
-            }
-        } else {
-            throw new FacesException("\"for\" attribute for ImageAreaSelect can not be null or empty");
+		if (forValue == null) {
+			throw new FacesException("\"for\" attribute for ImageAreaSelect can not be null or empty");
+		}
+
+    	final UIComponent component = imageAreaSelect.findComponent(forValue);
+        if (component == null) {
+            throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
         }
+
+        return component;
     }
 
     protected UIComponent findParent(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
@@ -107,8 +107,8 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
     	if (component == null) {
             throw new FacesException("Cannot find component \"" + parentId + "\" in view.");
-        } else {
-            return component;
         }
+
+        return component;
     }
 }

@@ -26,15 +26,16 @@ import javax.faces.application.ResourceWrapper;
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
-    private Resource resource;
+    private Resource wrapped;
 
     public PrimeFacesExtensionsResource(final Resource resource) {
-        this.resource = resource;
+		super();
+        wrapped = resource;
     }
 
     @Override
     public Resource getWrapped() {
-        return this.resource;
+        return wrapped;
     }
 
     @Override

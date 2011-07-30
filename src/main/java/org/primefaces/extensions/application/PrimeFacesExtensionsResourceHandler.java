@@ -31,15 +31,16 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 	public static final String VERSION = "0.2-SNAPSHOT";
 	public static final String LIBRARY = "primefaces-extensions";
 
-	private ResourceHandler resourceHandler;
+	private ResourceHandler wrapped;
 
 	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
-		this.resourceHandler = resourceHandler;
+		super();
+		wrapped = resourceHandler;
 	}
 
 	@Override
 	public ResourceHandler getWrapped() {
-		return resourceHandler;
+		return wrapped;
 	}
 
 	@Override
