@@ -45,7 +45,7 @@ public class JavascriptBehavior extends ClientBehaviorBase {
 		return execute;
 	}
 
-	public final void setExecute(String execute) {
+	public void setExecute(final String execute) {
 		this.execute = execute;
 	}
 
@@ -53,7 +53,7 @@ public class JavascriptBehavior extends ClientBehaviorBase {
 		return disabled;
 	}
 
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
 }
