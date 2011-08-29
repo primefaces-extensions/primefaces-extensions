@@ -210,4 +210,34 @@
 			<type>java.lang.String</type>
 		</attribute>
     </tag>
+	<tag>
+		<tag-name>saveState</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.SaveState</component-type>
+		</component>
+		<attribute>
+			<description>Unique identifier of the component in a naming container.</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>Boolean value to specify the rendering of the component, when set to false component will not be rendered.</description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>An el expression referring to a server side UIComponent instance in a backing bean.</description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIParameter</type>
+		</attribute>
+		<attribute>
+			<description>Data which should be saved in the state.</description>
+			<name>value</name>
+			<required>true</required>
+			<type>java.lang.Object</type>
+		</attribute>
+	</tag>
 </facelet-taglib>

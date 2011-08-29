@@ -28,6 +28,10 @@
 		<component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
 		<component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
 	</component>
+	<component>
+		<component-type>org.primefaces.extensions.component.SaveState</component-type>
+		<component-class>org.primefaces.extensions.component.savestate.SaveState</component-class>
+	</component>
 
 	<render-kit>
 		<client-behavior-renderer>
