@@ -5,6 +5,43 @@
 		version="2.0">
 	<namespace>http://primefaces.prime.com.tr/ui/extensions</namespace>
 	<tag>
+		<tag-name>head</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.Head</component-type>
+			<renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description>Unique identifier of the component in a naming container.</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>Boolean value to specify the rendering of the component, when set to false component will not be rendered.</description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>An el expression referring to a server side UIComponent instance in a backing bean.</description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIOutput</type>
+		</attribute>
+		<attribute>
+			<description>The page title.</description>
+			<name>title</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>The shortcut icon.</description>
+			<name>shortcutIcon</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+	<tag>
 		<tag-name>imageAreaSelect</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
