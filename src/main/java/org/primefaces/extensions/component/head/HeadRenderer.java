@@ -42,9 +42,9 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("head", component);
 
-		final UIComponent first = component.getFacet("before");
-		if (first != null) {
-			first.encodeAll(context);
+		final UIComponent before = component.getFacet("before");
+		if (before != null) {
+			before.encodeAll(context);
 		}
 
 		// Theme
@@ -81,9 +81,9 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		final Head head = (Head) component;
 
-		final UIComponent last = component.getFacet("after");
-		if (last != null) {
-			last.encodeAll(context);
+		final UIComponent after = component.getFacet("after");
+		if (after != null) {
+			after.encodeAll(context);
 		}
 
 		if (head.getTitle() != null) {
