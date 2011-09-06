@@ -46,6 +46,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         final String widgetVar = imageAreaSelect.resolveWidgetVar();
 
         writer.startElement("script", imageAreaSelect);
+        writer.writeAttribute("id", imageAreaSelect.getClientId(), null);
         writer.writeAttribute("type", "text/javascript", null);
 
         writer.write("$(function() {");
