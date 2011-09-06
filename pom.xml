@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>3.0.M3-SNAPSHOT</version>
+			<version>3.0.RC1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -150,9 +150,9 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>prime-repo</id>
-			<name>Prime Technology Maven Repository</name>
-			<url>http://repository.prime.com.tr/</url>
+		    <id>prime-repo</id>
+		    <name>PrimeFaces Maven Repository</name>
+		    <url>http://repository.primefaces.org</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>oss.sonatype.org-github-releases</id>
