@@ -23,9 +23,14 @@ import javax.faces.component.UIOutput;
 
 /**
  * Component class for the <code>Head</code> component.
- * Supported facets:
- * 	- before
- * 	- after
+ * Ordering of rendered resources:
+ * 	- before facet
+ * 	- JSF CSS resources
+ * 	- PF theme
+ *  - middle facet
+ *  - JSF JS resources
+ *  - head content (encoded by super class at encodeChildren)
+ * 	- after facet
  *
  * @author Thomas Andraschko
  * @author Oleg Varaksin

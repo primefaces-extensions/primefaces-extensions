@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.head;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ELContext;
@@ -42,21 +43,43 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		writer.startElement("head", component);
 
+		//encode before facet
 		final UIComponent before = component.getFacet("before");
 		if (before != null) {
 			before.encodeAll(context);
 		}
 
-		// Theme
+		//fill styles and scripts
+		final List<UIComponent> styles = new ArrayList<UIComponent>();
+		final List<UIComponent> scripts = new ArrayList<UIComponent>();
+
+		final UIViewRoot viewRoot = context.getViewRoot();
+		final List<UIComponent> resources = viewRoot.getComponentResources(context, "head");
+
+		for (final UIComponent resource : resources) {
+			final String name = (String) resource.getAttributes().get("name");
+			if (name.contains(".css")) {
+				styles.add(resource);
+			} else if (name.contains(".js")) {
+				scripts.add(resource);
+			}
+		}
+
+		//encode styles
+		for (final UIComponent style : styles) {
+			style.encodeAll(context);
+		}
+
+		//encode theme
 		String theme = null;
 		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.THEME_PARAM);
 
 		if (themeParamValue != null) {
 			final ELContext elContext = context.getELContext();
 			final ExpressionFactory expressionFactory =
-				context.getApplication().getExpressionFactory();
+					context.getApplication().getExpressionFactory();
 			final ValueExpression ve =
-				expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+					expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
 
 			theme = (String) ve.getValue(elContext);
 		}
@@ -67,12 +90,15 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 			encodeTheme(context, "primefaces-" + theme, "theme.css");
 		}
 
-		// Resources
-		final UIViewRoot viewRoot = context.getViewRoot();
-		final List<UIComponent> resources = viewRoot.getComponentResources(context, "head");
-		for (UIComponent resource : resources) {
-			writer.write("\n");
-			resource.encodeAll(context);
+		//encode middle facet
+		final UIComponent middle = component.getFacet("middle");
+		if (middle != null) {
+			middle.encodeAll(context);
+		}
+
+		//encode scripts
+		for (final UIComponent script : scripts) {
+			script.encodeAll(context);
 		}
 	}
 
@@ -81,6 +107,7 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		final Head head = (Head) component;
 
+		//encode after facet
 		final UIComponent after = component.getFacet("after");
 		if (after != null) {
 			after.encodeAll(context);
