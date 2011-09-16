@@ -33,6 +33,14 @@
 		<component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
 	</component>
 	<component>
+		<component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
+		<component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
+	</component>
+	<component>
+		<component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
+		<component-class>org.primefaces.extensions.component.remotecommand.RemoteCommandParameter</component-class>
+	</component>
+	<component>
 		<component-type>org.primefaces.extensions.component.SaveState</component-type>
 		<component-class>org.primefaces.extensions.component.savestate.SaveState</component-class>
 	</component>
@@ -51,6 +59,11 @@
 			<component-family>org.primefaces.extensions.component</component-family>
 			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
 			<renderer-class>org.primefaces.extensions.component.imageareaselect.ImageAreaSelectRenderer</renderer-class>
+		</renderer>
+		<renderer>
+			<component-family>org.primefaces.extensions.component</component-family>
+			<renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
+			<renderer-class>org.primefaces.extensions.component.remotecommand.RemoteCommandRenderer</renderer-class>
 		</renderer>
 		<renderer>
 			<component-family>org.primefaces.extensions.component</component-family>
