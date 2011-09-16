@@ -49,7 +49,7 @@ public class Head extends UIOutput {
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 

@@ -68,7 +68,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
