@@ -369,6 +369,12 @@
 			<required>true</required>
 			<type>javax.el.ValueExpression</type>
 		</attribute>
+		<attribute>
+			<description><![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]></description>
+			<name>converter</name>
+			<required>false</required>
+			<type>java.faces.convert.Converter</type>
+		</attribute>
 	</tag>
 	<tag>
 		<tag-name>saveState</tag-name>
