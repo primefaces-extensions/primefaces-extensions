@@ -44,11 +44,11 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 			source = component.getClientId(context);
 		}
 
-		final StringBuilder req = new StringBuilder();
-		req.append("PrimeFaces.Extensions.behavior.Javascript({");
-		req.append("source:'").append(source).append("'");
-		req.append(",event:'").append(behaviorContext.getEventName()).append("'");
-		req.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute())
+		final StringBuilder script = new StringBuilder();
+		script.append("PrimeFaces.Extensions.behavior.Javascript({");
+		script.append("source:'").append(source).append("'");
+		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
+		script.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute())
 				.append(";}");
 
 		// params
@@ -59,23 +59,23 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 				final UIParameter parameter = (UIParameter) child;
 
 				if (paramWritten) {
-					req.append(",");
+					script.append(",");
 				} else {
 					paramWritten = true;
-					req.append(",params:{");
+					script.append(",params:{");
 				}
 
-				req.append("'").append(parameter.getName()).append("':'").append(
+				script.append("'").append(parameter.getName()).append("':'").append(
 						parameter.getValue()).append("'");
 			}
 		}
 
 		if (paramWritten) {
-			req.append("}");
+			script.append("}");
 		}
 
-		req.append("}, arguments[1]);");
+		script.append("}, arguments[1]);");
 
-		return req.toString();
+		return script.toString();
 	}
 }
