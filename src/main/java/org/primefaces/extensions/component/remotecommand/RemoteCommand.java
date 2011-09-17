@@ -54,7 +54,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
