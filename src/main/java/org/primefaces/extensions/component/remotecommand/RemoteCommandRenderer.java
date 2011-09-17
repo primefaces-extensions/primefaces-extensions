@@ -58,6 +58,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 				event.setPhaseId(PhaseId.INVOKE_APPLICATION);
 			}
 
+			//apply params
 			final ELContext elContext = context.getELContext();
 
 			for (final RemoteCommandParameter param : getParameters(command)) {
