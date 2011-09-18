@@ -83,7 +83,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		imageAreaSelectParent,
 		keyboardSupport;
 
-		String toString;
+		private String toString;
 
 		PropertyKeys(final String toString) {
 			this.toString = toString;

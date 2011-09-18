@@ -47,7 +47,7 @@ public class Head extends UIOutput {
 		title,
 		shortcutIcon;
 
-		String toString;
+		private String toString;
 
 		PropertyKeys(final String toString) {
 			this.toString = toString;

@@ -52,7 +52,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		global,
 		async;
 
-		String toString;
+		private String toString;
 
 		PropertyKeys(final String toString) {
 			this.toString = toString;
