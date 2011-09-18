@@ -13,6 +13,11 @@
 
     <application>
         <resource-handler>org.primefaces.extensions.application.PrimeFacesExtensionsResourceHandler</resource-handler>
+        <system-event-listener>
+            <system-event-listener-class>org.primefaces.extensions.webapp.PostConstructApplicationEventListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+            <source-class>javax.faces.application.Application</source-class>
+        </system-event-listener>
     </application>	
 
     <behavior>
@@ -46,10 +51,6 @@
 	</component>
 
 	<render-kit>
-		<client-behavior-renderer>
-			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
-			<client-behavior-renderer-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
-		</client-behavior-renderer>
 		<renderer>
 			<component-family>org.primefaces.extensions.component</component-family>
 			<renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
@@ -70,5 +71,9 @@
 			<renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
 			<renderer-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeRenderer</renderer-class>
 		</renderer>
+		<client-behavior-renderer>
+			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
+			<client-behavior-renderer-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
+		</client-behavior-renderer>
 	</render-kit>
 </faces-config>
