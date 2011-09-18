@@ -37,7 +37,7 @@ public class RemoteCommandParameter extends UIOutput {
 		name,
 		applyTo;
 
-		String toString;
+		private String toString;
 
 		PropertyKeys(final String toString) {
 			this.toString = toString;
@@ -69,7 +69,11 @@ public class RemoteCommandParameter extends UIOutput {
 	}
 
 	public ValueExpression getApplyTo() {
-		return (ValueExpression) getStateHelper().eval(PropertyKeys.applyTo, null);
+		ValueExpression ve = (ValueExpression) getStateHelper().eval(PropertyKeys.applyTo, null);
+		if (ve == null) {
+			ve = getValueExpression(PropertyKeys.applyTo.toString());
+		}
+		return ve;
 	}
 
 	public void setApplyTo(final ValueExpression applyTo) {
