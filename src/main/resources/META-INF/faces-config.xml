@@ -50,6 +50,11 @@
 		<component-class>org.primefaces.extensions.component.savestate.SaveState</component-class>
 	</component>
 
+	<converter>
+		<converter-id>org.primefaces.extensions.converter.Json</converter-id>
+		<converter-class>org.primefaces.extensions.convert.JsonConverter</converter-class>
+	</converter>
+
 	<render-kit>
 		<renderer>
 			<component-family>org.primefaces.extensions.component</component-family>
