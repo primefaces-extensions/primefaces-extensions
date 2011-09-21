@@ -111,6 +111,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
+	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

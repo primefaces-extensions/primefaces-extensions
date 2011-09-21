@@ -272,6 +272,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
+	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
