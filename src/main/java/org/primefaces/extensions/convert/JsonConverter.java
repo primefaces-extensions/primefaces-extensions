@@ -30,6 +30,7 @@ import com.google.gson.Gson;
  * @author Thomas Andraschko
  * @since 0.2
  */
+//TODO add tag pe:convertJson
 public class JsonConverter implements Converter {
 
 	@Override
