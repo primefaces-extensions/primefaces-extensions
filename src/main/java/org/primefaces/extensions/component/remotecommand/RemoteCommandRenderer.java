@@ -51,7 +51,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final String clientId = command.getClientId(context);
 
 		if (params.containsKey(clientId)) {
-			ActionEvent event = new ActionEvent(command);
+			final ActionEvent event = new ActionEvent(command);
 			if (command.isImmediate()) {
 				event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 			} else {
