@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.primefaces.extensions.convert;
 
 import javax.el.ValueExpression;
@@ -21,40 +22,30 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 import org.primefaces.extensions.component.remotecommand.RemoteCommandParameter;
-
-import com.google.gson.Gson;
+import org.primefaces.extensions.util.GsonConverter;
 
 /**
  * {@link Converter} which converts a JSON string to an object an vice-versa.
  *
- * @author Thomas Andraschko
- * @since 0.2
+ * @author  Thomas Andraschko / last modified by $Author: $
+ * @version $Revision: 1.0 $
  */
-//TODO add tag pe:convertJson
 public class JsonConverter implements Converter {
-
 	@Override
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		final Class<?> expectedClass = getExpectedClass(context, component);
-		final Gson gson = new Gson();
-		return gson.fromJson(value, expectedClass);
+		final ValueExpression ve;
+
+		if (component instanceof RemoteCommandParameter) {
+			ve = ((RemoteCommandParameter) component).getApplyTo();
+		} else {
+			ve = component.getValueExpression("value");
+		}
+
+		return GsonConverter.getGson().fromJson(value, ve.getType(context.getELContext()));
 	}
 
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
-		final Gson gson = new Gson();
-		return gson.toJson(value);
+		return GsonConverter.getGson().toJson(value);
 	}
-
-    private Class<?> getExpectedClass(final FacesContext context, final UIComponent component) {
-        final ValueExpression ve;
-
-    	if (component instanceof RemoteCommandParameter) {
-        	ve = ((RemoteCommandParameter) component).getApplyTo();
-        } else {
-        	ve = component.getValueExpression("value");
-        }
-
-    	return ve.getType(context.getELContext());
-    }
 }
