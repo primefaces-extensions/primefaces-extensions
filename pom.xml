@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <!-- $Id: pom.xml 86 2011-09-11 15:39:17Z ovaraksin@googlemail.com $ -->
+    <!-- $Id$ -->
 	<parent>
 		<groupId>org.primefaces.extensions.buildsystem.maven2</groupId>
 		<artifactId>master</artifactId>
