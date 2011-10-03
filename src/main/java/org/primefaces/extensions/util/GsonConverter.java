@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson.
  *
- * @author  ova / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class GsonConverter {

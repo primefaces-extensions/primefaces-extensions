@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $$Id: $$
+ * $Id$
  */
 
 package org.primefaces.extensions.convert;
@@ -29,8 +29,8 @@ import org.primefaces.extensions.util.GsonConverter;
 /**
  * {@link Converter} which converts a JSON string to an object an vice-versa.
  *
- * @author  Thomas Andraschko / last modified by $Author: $
- * @version $Revision: 1.0 $
+ * @author  Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  */
 public class JsonConverter implements Converter {
 	@Override
