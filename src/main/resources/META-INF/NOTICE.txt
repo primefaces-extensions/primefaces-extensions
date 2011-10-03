@@ -1,3 +1,5 @@
 This product includes software developed by Prime Technology (http://www.prime.com.tr/)
 This product includes software developed by The jQuery Project (http://jquery.com)
 This product includes software developed by Michal Wojciechowski (http://odyniec.net/)
+This product includes software developed by Craig Thompson (http://craigsworks.com/projects/qtip2/)
+This product includes software developed by François Gélinas (https://github.com/fgelinas/timepicker)
