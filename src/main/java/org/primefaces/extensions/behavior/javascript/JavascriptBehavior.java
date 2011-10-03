@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.behavior.javascript;
+
+package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -22,15 +23,23 @@ import javax.faces.component.behavior.ClientBehaviorBase;
 /**
  * Client Behavior class for the <code>Javascript</code> behavior.
  *
- * @author Thomas Andraschko
- * @since 0.2
+ * @author  Thomas Andraschko
+ * @since   0.2
+ * @version $Revision$
  */
-@ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "core/core.js"),
-		@ResourceDependency(library = "primefaces-extensions", name = "core/core.js") 
-})
+@ResourceDependencies(
+                      {
+                          @ResourceDependency(
+                                              library = "primefaces",
+                                              name = "core/core.js"
+                                             ),
+                          @ResourceDependency(
+                                              library = "primefaces-extensions",
+                                              name = "core/core.js"
+                                             )
+                      }
+                     )
 public class JavascriptBehavior extends ClientBehaviorBase {
-
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.JavascriptBehaviorRenderer";
 
 	private String execute;

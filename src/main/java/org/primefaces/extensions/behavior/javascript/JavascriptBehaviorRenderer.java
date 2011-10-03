@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.behavior.javascript;
+
+package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
@@ -25,11 +26,11 @@ import javax.faces.render.ClientBehaviorRenderer;
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
  *
- * @author Thomas Andraschko
- * @since 0.2
+ * @author  Thomas Andraschko
+ * @since   0.2
+ * @version $Revision$
  */
 public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
-
 	@Override
 	public String getScript(final ClientBehaviorContext behaviorContext, final ClientBehavior behavior) {
 		final JavascriptBehavior jsCommand = (JavascriptBehavior) behavior;
@@ -48,8 +49,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 		script.append("PrimeFaces.Extensions.behavior.Javascript({");
 		script.append("source:'").append(source).append("'");
 		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
-		script.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute())
-				.append(";}");
+		script.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute()).append(";}");
 
 		// params
 		boolean paramWritten = false;
@@ -65,8 +65,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 					script.append(",params:{");
 				}
 
-				script.append("'").append(parameter.getName()).append("':'").append(
-						parameter.getValue()).append("'");
+				script.append("'").append(parameter.getName()).append("':'").append(parameter.getValue()).append("'");
 			}
 		}
 

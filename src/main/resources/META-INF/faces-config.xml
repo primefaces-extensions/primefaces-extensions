@@ -23,7 +23,7 @@
     
     <behavior>
         <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
-        <behavior-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehavior</behavior-class>
+        <behavior-class>org.primefaces.extensions.behavior.javascript.JavascriptBehavior</behavior-class>
     </behavior>    
 
 	<component>
@@ -70,7 +70,7 @@
 		</renderer>
 		<client-behavior-renderer>
 			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
-			<client-behavior-renderer-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
+			<client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
 		</client-behavior-renderer>
 	</render-kit>
     
