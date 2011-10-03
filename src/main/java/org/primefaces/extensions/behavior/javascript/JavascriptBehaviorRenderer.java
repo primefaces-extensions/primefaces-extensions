@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 
 package org.primefaces.extensions.behavior.javascript;
@@ -46,7 +48,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 		}
 
 		final StringBuilder script = new StringBuilder();
-		script.append("PrimeFaces.Extensions.behavior.Javascript({");
+		script.append("PrimeFacesExt.behavior.Javascript({");
 		script.append("source:'").append(source).append("'");
 		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
 		script.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute()).append(";}");

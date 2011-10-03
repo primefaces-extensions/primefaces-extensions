@@ -727,7 +727,7 @@ $.fn.imgAreaSelect = function (options) {
 /**
  * PrimeFaces Extensions ImageAreaSelect Widget
  */
-PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
+PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
 
@@ -780,7 +780,7 @@ PrimeFaces.Extensions.widget.ImageAreaSelect = function(id, cfg) {
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }
 
-PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
+PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
 	if (this.cfg.behaviors) {
 		var selectCallback = this.cfg.behaviors['select'];
 	    if (selectCallback) {
@@ -807,12 +807,12 @@ PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.bindSelectCallback = func
 	}
 }
 
-PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.update = function(options) {
+PrimeFacesExt.widget.ImageAreaSelect.prototype.update = function(options) {
 	this.instance.setOptions(options);
 	this.instance.update();
 }
 
-PrimeFaces.Extensions.widget.ImageAreaSelect.prototype.refresh = function() {
+PrimeFacesExt.widget.ImageAreaSelect.prototype.refresh = function() {
 	this.update({remove: true});
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }
