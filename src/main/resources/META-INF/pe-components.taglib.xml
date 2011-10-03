@@ -250,8 +250,8 @@
 		</attribute>
     </tag>
 	<tag>
+        <description><![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]></description>
 		<tag-name>remoteCommand</tag-name>
-		<description><![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]></description>
 		<component>
 			<component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
 			<renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
@@ -354,8 +354,8 @@
 		</attribute>
 	</tag>
 	<tag>
+        <description><![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
 		<tag-name>remoteCommandParameter</tag-name>
-		<description><![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
 		<component>
 			<component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
 		</component>
@@ -375,7 +375,7 @@
 			<description><![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]></description>
 			<name>converter</name>
 			<required>false</required>
-			<type>java.faces.convert.Converter</type>
+			<type>javax.faces.convert.Converter</type>
 		</attribute>
 	</tag>
 	<tag>
