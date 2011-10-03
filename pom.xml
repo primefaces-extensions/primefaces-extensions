@@ -39,10 +39,11 @@
             <url>http://repository.jboss.org/maven2/</url>
         </repository>
         <repository>
-            <id>prime-repo</id>
-            <name>Prime Technology Maven Repository</name>
-            <url>http://repository.prime.com.tr</url>
-        </repository>
+			<id>prime-repo-new</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
     </repositories>
 
     <pluginRepositories>
@@ -101,13 +102,15 @@
 
     <!-- Global build settings -->
     <build>
+		<!--
 		<extensions>
 			<extension>
 				<groupId>org.jvnet.wagon-svn</groupId>
 				<artifactId>wagon-svn</artifactId>
 				<version>1.8</version>
 			</extension>
-		</extensions>	
+		</extensions>
+		-->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -511,6 +514,11 @@
                 <version>2.5</version>
                 <scope>provided</scope>
             </dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>1.7.1</version>
+			</dependency>
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>primefaces-extensions</artifactId>
@@ -524,23 +532,25 @@
         </dependencies>
     </dependencyManagement>
 	
-	<profile>
-		<id>release</id>
-		<build>
-			<pluginManagement>
-				<plugins>
-					<plugin>
-						<groupId>net.alchim31.maven</groupId>
-						<artifactId>yuicompressor-maven-plugin</artifactId>
-						<configuration>
-							<disableOptimizations>false</disableOptimizations>
-							<nomunge>false</nomunge>
-						</configuration>
-					</plugin>
-				</plugins>
-			</pluginManagement>
-		</build>
-	</profile>	
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>net.alchim31.maven</groupId>
+							<artifactId>yuicompressor-maven-plugin</artifactId>
+							<configuration>
+								<disableOptimizations>false</disableOptimizations>
+								<nomunge>false</nomunge>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
 
 	<properties>
         <java.version.source>1.6</java.version.source>
