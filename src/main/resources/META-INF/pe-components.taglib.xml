@@ -225,30 +225,6 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>	
- 	<tag>
-        <tag-name>javascript</tag-name>
-        <behavior>
-            <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
-        </behavior>
-		<attribute>
-			<description><![CDATA[The javascript which should be executed.]]></description>
-			<name>execute</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-        <attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]></description>
-			<name>disabled</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-        <attribute>
-			<description><![CDATA[The name of the event.]]></description>
-			<name>event</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-    </tag>
 	<tag>
         <description><![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]></description>
 		<tag-name>remoteCommand</tag-name>

@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+<?xml version="1.0"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
 
 	<name>primefaces-extensions</name>
 
@@ -18,17 +19,13 @@
             <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
             <source-class>javax.faces.application.Application</source-class>
         </system-event-listener>
-    </application>	
-
+    </application>
+    
     <behavior>
         <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
         <behavior-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehavior</behavior-class>
-    </behavior>
+    </behavior>    
 
-	<component>
-		<component-type>org.primefaces.extensions.component.Head</component-type>
-		<component-class>org.primefaces.extensions.component.head.Head</component-class>
-	</component>
 	<component>
 		<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
 		<component-class>org.primefaces.extensions.component.imageareaselect.ImageAreaSelect</component-class>
@@ -50,17 +47,12 @@
 		<component-class>org.primefaces.extensions.component.savestate.SaveState</component-class>
 	</component>
 
-	<converter>
+    <converter>
 		<converter-id>org.primefaces.extensions.converter.Json</converter-id>
 		<converter-class>org.primefaces.extensions.convert.JsonConverter</converter-class>
 	</converter>
 
 	<render-kit>
-		<renderer>
-			<component-family>org.primefaces.extensions.component</component-family>
-			<renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
-			<renderer-class>org.primefaces.extensions.component.head.HeadRenderer</renderer-class>
-		</renderer>
 		<renderer>
 			<component-family>org.primefaces.extensions.component</component-family>
 			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
@@ -81,4 +73,5 @@
 			<client-behavior-renderer-class>org.primefaces.extensions.component.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
 		</client-behavior-renderer>
 	</render-kit>
+    
 </faces-config>
