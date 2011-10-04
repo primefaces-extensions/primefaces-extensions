@@ -33,11 +33,12 @@
             <name>Java.net Maven2 Repository</name>
             <url>http://download.java.net/maven/2</url>
         </repository>
+        <!-- 
         <repository>
             <id>JBoss</id>
             <name>JBoss Repository</name>
             <url>http://repository.jboss.org/maven2/</url>
-        </repository>
+        </repository>  -->
         <repository>
 			<id>prime-repo-new</id>
 			<name>PrimeFaces Maven Repository</name>
@@ -477,7 +478,7 @@
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
-				<version>3.0.RC1-SNAPSHOT</version>
+				<version>3.0.M4-SNAPSHOT</version>
 				<scope>provided</scope>
 			</dependency>
             <dependency>
