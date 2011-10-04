@@ -27,18 +27,10 @@ import javax.faces.component.behavior.ClientBehaviorBase;
  * @since   0.2
  * @version $Revision$
  */
-@ResourceDependencies(
-                      {
-                          @ResourceDependency(
-                                              library = "primefaces",
-                                              name = "core/core.js"
-                                             ),
-                          @ResourceDependency(
-                                              library = "primefaces-extensions",
-                                              name = "core/core.js"
-                                             )
-                      }
-                     )
+@ResourceDependencies({
+	@ResourceDependency(library = "primefaces", name = "core/core.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js")
+})
 public class JavascriptBehavior extends ClientBehaviorBase {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.JavascriptBehaviorRenderer";
 

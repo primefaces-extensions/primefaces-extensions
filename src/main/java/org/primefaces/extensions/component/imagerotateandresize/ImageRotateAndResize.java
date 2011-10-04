@@ -44,10 +44,10 @@ import org.primefaces.util.Constants;
  * @since 0.1
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-		@ResourceDependency(library = "primefaces", name = "core/core.js"),
-		@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
-		@ResourceDependency(library = "primefaces-extensions", name = "imagerotateandresize/imagerotateandresize.js")
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "core/core.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imagerotateandresize/imagerotateandresize.js")
 })
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
