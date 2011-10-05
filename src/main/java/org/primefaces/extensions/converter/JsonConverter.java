@@ -22,6 +22,7 @@ import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 import org.primefaces.extensions.component.remotecommand.RemoteCommandParameter;
 import org.primefaces.extensions.util.GsonConverter;
@@ -32,6 +33,7 @@ import org.primefaces.extensions.util.GsonConverter;
  * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  */
+@FacesConverter(value = "org.primefaces.extensions.converter.JsonConverter")
 public class JsonConverter implements Converter {
 	@Override
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
