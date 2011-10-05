@@ -608,7 +608,7 @@
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
-                <pe.jsf.version>2.0.4</pe.jsf.version>
+                <pe.jsf.version>2.1.3</pe.jsf.version>
 			</properties>
 		</profile>        
 	</profiles>
