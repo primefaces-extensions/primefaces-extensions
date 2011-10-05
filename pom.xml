@@ -339,8 +339,6 @@
                         </webAppConfig>
                         <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
                         <scanIntervalSeconds>1</scanIntervalSeconds>
-                        <stopPort>9966</stopPort>
-                        <stopKey>foo</stopKey>
                     </configuration>
                     <dependencies>
                         <dependency>
