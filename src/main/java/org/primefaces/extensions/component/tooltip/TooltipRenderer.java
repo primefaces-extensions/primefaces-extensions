@@ -25,8 +25,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * Tooltip renderer.
@@ -50,18 +50,21 @@ public class TooltipRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext facesContext, Tooltip tooltip) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		boolean global = tooltip.isGlobal();
-		String owner = getTarget(facesContext, tooltip);
+		boolean shared = tooltip.isShared();
+		String target = getTarget(facesContext, tooltip);
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write("$(function() {");
 
-		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip({");
+		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip('"
+		             + tooltip.getClientId(facesContext) + "',{");
 		writer.write("global:" + global);
+		writer.write("shared:" + shared);
 
 		if (!global) {
-			writer.write(",forComponent:'" + owner + "'");
+			writer.write(",forTarget:'" + target + "'");
 			writer.write(",content:'");
 			if (tooltip.getValue() == null) {
 				renderChildren(facesContext, tooltip);
@@ -73,18 +76,27 @@ public class TooltipRenderer extends CoreRenderer {
 		}
 
 		//Events
-		writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
-		             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
-		             + ");}}");
-		writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay()
-		             + ",effect:function(){$(this)." + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength()
-		             + ");}}");
+		if (shared && !global) {
+			writer.write(",show:{target:$('" + target + "')}");
+			writer.write(",hide:{target:$('" + target + "')}");
+		} else {
+			writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
+			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
+			             + ");}}");
+			writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay()
+			             + ",effect:function(){$(this)." + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength()
+			             + ");}}");
+		}
 
 		//Position
 		writer.write(",position: {");
-		writer.write("container:$(document.body)");
 		writer.write(",at:'" + tooltip.getTargetPosition() + "'");
 		writer.write(",my:'" + tooltip.getPosition() + "'");
+		if (shared && !global) {
+			writer.write(",target:'event'");
+			writer.write(",effect:false");
+		}
+
 		writer.write("}});});");
 
 		writer.endElement("script");
@@ -93,22 +105,28 @@ public class TooltipRenderer extends CoreRenderer {
 	protected String getTarget(FacesContext facesContext, Tooltip tooltip) {
 		if (tooltip.isGlobal()) {
 			return null;
-		} else {
-			String _for = tooltip.getFor();
+		}
 
-			if (_for != null) {
-				UIComponent forComponent = tooltip.findComponent(_for);
-				if (forComponent == null) {
-					throw new FacesException("Cannot find component \"" + _for + "\" in view.");
-				} else {
-					return forComponent.getClientId(facesContext);
-				}
-			} else if (tooltip.getForElement() != null) {
-				return tooltip.getForElement();
+		String _for = tooltip.getFor();
+		if (_for != null) {
+			UIComponent forComponent = tooltip.findComponent(_for);
+			if (forComponent == null) {
+				throw new FacesException("Cannot find component \"" + _for + "\" in view.");
 			} else {
-				return tooltip.getParent().getClientId(facesContext);
+				return ComponentUtils.escapeJQueryId(forComponent.getClientId(facesContext));
 			}
 		}
+
+		String forSelector = tooltip.getForSelector();
+		if (forSelector != null) {
+			if (forSelector.startsWith("#")) {
+				return ComponentUtils.escapeComponentId(tooltip.getForSelector());
+			} else {
+				return tooltip.getForSelector();
+			}
+		}
+
+		return ComponentUtils.escapeJQueryId(tooltip.getParent().getClientId(facesContext));
 	}
 
 	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {

@@ -1,9 +1,11 @@
-PrimeFacesExt.widget.Tooltip = function(cfg) {
+PrimeFacesExt.widget.Tooltip = function(id, cfg) {
     this.cfg = cfg;
     var _self = this;
 
     if (this.cfg.global) {
-        // Bind the qTip within the event handler
+        this.cfg.position.container = $(document.body);
+
+        // bind the qTip within the event handler
         $('*[title]').die(this.cfg.show.event + ".tooltip").live(this.cfg.show.event + ".tooltip", function(event) {
             var el = $(this);
             if ($.browser.msie) {
@@ -14,14 +16,27 @@ PrimeFacesExt.widget.Tooltip = function(cfg) {
                 return;
             }
 
-            // Show the tooltip as soon as it's bound, vital so it shows up the first time you hover
+            // show the tooltip as soon as it's bound, vital so it shows up the first time you hover
             var extCfg = _self.cfg;
             extCfg.show.ready = true;
             el.qtip(extCfg, event);
         });
+    } else if (this.cfg.shared) {
+        var jqId = PrimeFaces.escapeClientId(id);
+        
+        // remove previous container element to support ajax updates
+        $(document.body).children('#ui-tooltip-shared-' + jqId).remove();
+        // create a new one
+        var sharedDiv = $("<div id='ui-tooltip-shared-" + jqId + "'/>");
+        sharedDiv.appendTo(document.body);
+
+        this.cfg.position.container = sharedDiv;
+        $('<div/>').qtip(this.cfg);
     } else {
+        this.cfg.position.container = $(document.body);
+
         // delete previous tooltip to support ajax updates and create a new one
-        $(PrimeFaces.escapeClientId(this.cfg.forComponent)).qtip('destroy').qtip(this.cfg);
+        $(this.cfg.forTarget).qtip('destroy').qtip(this.cfg);
     }
 }
 

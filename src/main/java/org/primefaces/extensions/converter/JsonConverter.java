@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.convert;
+package org.primefaces.extensions.converter;
 
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;

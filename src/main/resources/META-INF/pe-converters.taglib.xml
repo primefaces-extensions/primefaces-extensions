@@ -9,7 +9,7 @@
     <tag>
 		<tag-name>convertJson</tag-name>
 		<converter>
-        	<converter-id>org.primefaces.extensions.convert.JsonConverter</converter-id>
+        	<converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
 		</converter>
 	</tag>
 

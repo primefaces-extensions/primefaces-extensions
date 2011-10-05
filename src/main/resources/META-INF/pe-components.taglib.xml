@@ -396,6 +396,12 @@
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[A shared tooltip - one tooltip, multiple targets.]]></description>
+			<name>shared</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>        
+		<attribute>
 			<description><![CDATA[The corner of the target element to position the tooltip by.]]></description>
 			<name>targetPosition</name>
 			<required>false</required>
@@ -408,62 +414,62 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Event displaying the tooltip.]]></description>
 			<name>showEvent</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Delay time for displaying the tooltip.]]></description>
 			<name>showDelay</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Effect to be used for displaying.]]></description>
 			<name>showEffect</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Time in milliseconds to display the effect.]]></description>
 			<name>showEffectLength</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Event hiding the tooltip.]]></description>
 			<name>hideEvent</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Delay time for hiding the tooltip.]]></description>
 			<name>hideDelay</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Effect to be used for hiding.]]></description>
 			<name>hideEffect</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Time in milliseconds to process the hide effect.]]></description>
 			<name>hideEffectLength</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
+			<description><![CDATA[Id of the component to attach the tooltip.]]></description>
 			<name>for</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[TODO]]></description>
-			<name>forElement</name>
+			<description><![CDATA[jQuery selector for any elements to attach the tooltip.]]></description>
+			<name>forSelector</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>

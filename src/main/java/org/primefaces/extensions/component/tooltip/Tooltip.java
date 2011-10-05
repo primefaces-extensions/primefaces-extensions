@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ValueExpression;
+import javax.faces.application.ResourceDependencies;
+import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
@@ -32,6 +34,14 @@ import javax.faces.context.FacesContext;
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
+@ResourceDependencies({
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+                      })
 public class Tooltip extends UIOutput implements org.primefaces.component.api.Widget {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
@@ -40,12 +50,12 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	/**
 	 * PropertyKeys
 	 *
-	 * @author  oleg / last modified by $Author$
+	 * @author  Oleg Varaksin / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
-		widgetVar, global, targetPosition, position, showEvent, showDelay, showEffect, showEffectLength, hideEvent, hideDelay,
-		hideEffect, hideEffectLength, forValue("for"), forElement;
+		widgetVar, global, shared, targetPosition, position, showEvent, showDelay, showEffect, showEffectLength, hideEvent,
+		hideDelay, hideEffect, hideEffectLength, forValue("for"), forSelector;
 
 		String toString;
 
@@ -85,6 +95,14 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 		setAttribute(PropertyKeys.global, global);
 	}
 
+	public boolean isShared() {
+		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.shared, false);
+	}
+
+	public void setShared(boolean shared) {
+		setAttribute(PropertyKeys.shared, shared);
+	}
+
 	public java.lang.String getTargetPosition() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.targetPosition, "bottom right");
 	}
@@ -110,7 +128,7 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public int getShowDelay() {
-		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.showDelay, 140);
+		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
 	}
 
 	public void setShowDelay(int showDelay) {
@@ -173,12 +191,12 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 		setAttribute(PropertyKeys.forValue, _for);
 	}
 
-	public java.lang.String getForElement() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.forElement, null);
+	public java.lang.String getForSelector() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
-	public void setForElement(String forElement) {
-		setAttribute(PropertyKeys.forElement, forElement);
+	public void setForSelector(String forSelector) {
+		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
 	protected FacesContext getFacesContext() {

@@ -53,7 +53,7 @@
 
     <converter>
 		<converter-id>org.primefaces.extensions.converter.Json</converter-id>
-		<converter-class>org.primefaces.extensions.convert.JsonConverter</converter-class>
+		<converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
 	</converter>
 
 	<render-kit>
