@@ -49,7 +49,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
 
 		writer.startElement("script", imageRotateAndResize);
-		writer.writeAttribute("id", imageRotateAndResize.getClientId(), null);
+		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write("$(function() {");
