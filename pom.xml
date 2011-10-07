@@ -36,6 +36,7 @@
 		<dependency>
 			<groupId>${pe.jsf.group}</groupId>
 			<artifactId>${pe.jsf.artifact}-api</artifactId>
+            <scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
