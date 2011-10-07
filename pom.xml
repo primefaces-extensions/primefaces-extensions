@@ -13,6 +13,55 @@
 	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
 	<name>primefaces-extensions</name>
+    <description>
+        <![CDATA[PrimeFaces Extensions Project for Maven.]]>
+    </description>
+    <url>http://code.google.com/p/primefaces-extensions</url>
+    
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
+    </issueManagement>
+
+    <inceptionYear>2011</inceptionYear>
+
+    <scm>
+        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</connection>
+        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</developerConnection>
+        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
+    </scm>    
+    
+    <developers>
+        <developer>
+            <id>andraschko</id>
+            <name>Thomas Andraschko</name>
+            <email>zoigln@googlemail.com</email>
+            <roles>
+                <role>Buildmaster</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>	
+        <developer>
+            <id>varaksin</id>
+            <name>Oleg Varaksin</name>
+            <email>ovaraksin@googlemail.com</email>
+            <roles>
+                <role>Buildmaster</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>    
 	
 	<build>
 		<plugins>
@@ -25,6 +74,33 @@
 					</archive>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>${java.version.source}</source>
+                </configuration>
+            </plugin>            
 		</plugins>
 	</build>
 
