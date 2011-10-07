@@ -1,8 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!-- $Id$ -->
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.primefaces.extensions.buildsystem.maven2</groupId>
     <artifactId>master</artifactId>
     <packaging>pom</packaging>
@@ -14,15 +19,14 @@
     </description>
     <url>http://code.google.com/p/primefaces-extensions</url>
 
-    <!--
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>googlecode</id>
-			<url>svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions-maven-repo</url>
-		</repository>
-	</distributionManagement>
-	-->
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <repositories>
         <repository>
@@ -339,6 +343,8 @@
                         </webAppConfig>
                         <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
                         <scanIntervalSeconds>1</scanIntervalSeconds>
+                        <stopPort>9966</stopPort>
+                        <stopKey>foo</stopKey>                        
                     </configuration>
                     <dependencies>
                         <dependency>
