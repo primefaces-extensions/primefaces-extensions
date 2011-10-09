@@ -734,7 +734,7 @@ PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	this.options = {};
 	this.options.instance = true,
 	this.options.classPrefix = 'ui-imgageareaselect';
-	
+
 	if (this.cfg.aspectRatio) {
 		this.options.aspectRatio = this.cfg.aspectRatio;
 	}
@@ -774,9 +774,9 @@ PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	if (this.cfg.keyboardSupport) {
 		this.options.keys = this.cfg.keyboardSupport;
 	}
-	
+
 	this.bindSelectCallback();
-	
+
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }
 
@@ -800,7 +800,7 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
 		    	ext.params[_self.id + '_imgSrc'] = img.src;
 		    	ext.params[_self.id + '_imgHeight'] = img.height;
 		    	ext.params[_self.id + '_imgWidth'] = img.width;
-		    	
+
 		    	selectCallback.call(_self, null, ext);
 		    }
 	    }
