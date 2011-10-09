@@ -112,6 +112,11 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		return EVENT_NAMES;
 	}
 
+    @Override
+    public String getDefaultEventName() {
+        return EVENT_SELECT;
+    }
+
 	public String getAspectRatio() {
 		return (String) getStateHelper().eval(PropertyKeys.aspectRatio, null);
 	}
