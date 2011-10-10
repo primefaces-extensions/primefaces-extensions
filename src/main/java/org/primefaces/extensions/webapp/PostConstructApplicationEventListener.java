@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.webapp;
 
 import java.util.logging.Level;
