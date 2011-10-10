@@ -56,8 +56,21 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	 */
 	protected enum PropertyKeys {
 
-		widgetVar, global, shared, targetPosition, position, showEvent, showDelay, showEffect, showEffectLength, hideEvent,
-		hideDelay, hideEffect, hideEffectLength, forValue("for"), forSelector;
+		widgetVar,
+		global,
+		shared,
+		targetPosition,
+		position,
+		showEvent,
+		showDelay,
+		showEffect,
+		showEffectLength,
+		hideEvent,
+		hideDelay,
+		hideEffect,
+		hideEffectLength,
+		forValue("for"),
+		forSelector;
 
 		String toString;
 
