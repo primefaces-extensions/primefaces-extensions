@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.application;
 
 import javax.faces.application.Resource;

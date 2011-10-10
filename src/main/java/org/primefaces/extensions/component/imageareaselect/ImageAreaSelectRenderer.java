@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import org.primefaces.renderkit.CoreRenderer;
  * @since 0.1
  */
 public class ImageAreaSelectRenderer extends CoreRenderer {
+
 	@Override
 	public void decode(final FacesContext context, final UIComponent component) {
 		decodeBehaviors(context, component);

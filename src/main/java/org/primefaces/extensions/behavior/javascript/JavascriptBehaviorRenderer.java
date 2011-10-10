@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.component.UIComponent;
@@ -32,6 +33,7 @@ import javax.faces.render.ClientBehaviorRenderer;
  * @since 0.2
  */
 public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
+
 	@Override
 	public String getScript(final ClientBehaviorContext behaviorContext, final ClientBehavior behavior) {
 		final JavascriptBehavior jsCommand = (JavascriptBehavior) behavior;

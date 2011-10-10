@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.application.ResourceDependencies;
@@ -33,6 +34,7 @@ import javax.faces.component.behavior.ClientBehaviorBase;
 	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js")
 })
 public class JavascriptBehavior extends ClientBehaviorBase {
+
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.JavascriptBehaviorRenderer";
 
 	private String execute;
