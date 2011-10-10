@@ -25,6 +25,7 @@ package org.primefaces.extensions.util;
  * @version $Revision$
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
+
 	public static String escapeComponentId(String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
