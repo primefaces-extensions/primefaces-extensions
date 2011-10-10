@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 package org.primefaces.extensions.application;
 
@@ -23,7 +25,8 @@ import org.primefaces.extensions.util.Constants;
 /**
  * {@link ResourceWrapper} which appends the version of PrimeFaces Extensions to the URL.
  *
- * @author Thomas Andraschko
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since 0.1
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
