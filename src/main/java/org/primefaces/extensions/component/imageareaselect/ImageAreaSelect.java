@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 package org.primefaces.extensions.component.imageareaselect;
 
@@ -39,7 +41,8 @@ import org.primefaces.util.Constants;
 /**
  * Component class for the <code>ImageAreaSelect</code> component.
  *
- * @author Thomas Andraschko
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since 0.1
  */
 @ResourceDependencies({

@@ -12,8 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
-
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.application.ResourceDependencies;
@@ -23,9 +24,9 @@ import javax.faces.component.behavior.ClientBehaviorBase;
 /**
  * Client Behavior class for the <code>Javascript</code> behavior.
  *
- * @author  Thomas Andraschko
- * @since   0.2
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
+ * @since  0.2
  */
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "core/core.js"),

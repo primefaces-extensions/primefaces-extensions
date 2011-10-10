@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 package org.primefaces.extensions.application;
 
@@ -23,9 +25,10 @@ import org.primefaces.extensions.util.Constants;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
- * apends the version of Primefaces Extensions in the {@link PrimeFacesExtensionsResource}.
+ * appends the version of PrimeFaces Extensions in the {@link PrimeFacesExtensionsResource}.
  *
- * @author Thomas Andraschko
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since 0.1
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {

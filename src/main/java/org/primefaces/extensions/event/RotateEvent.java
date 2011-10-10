@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 package org.primefaces.extensions.event;
 
@@ -25,7 +27,8 @@ import org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndRe
 /**
  * Event which is triggered by the {@link ImageRotateAndResize} component.
  *
- * @author Thomas Andraschko
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since 0.1
  */
 @SuppressWarnings("serial")

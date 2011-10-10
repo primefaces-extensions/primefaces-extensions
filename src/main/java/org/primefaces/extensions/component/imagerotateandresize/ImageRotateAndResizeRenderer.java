@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.io.IOException;
@@ -30,9 +29,9 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link ImageRotateAndResize} component.
  *
- * @author  Thomas Andraschko
- * @since   0.1
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
+ * @since 0.1
  */
 public class ImageRotateAndResizeRenderer extends CoreRenderer {
 	@Override

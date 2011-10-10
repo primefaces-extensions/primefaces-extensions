@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.component.UIComponent;
@@ -28,9 +27,9 @@ import javax.faces.render.ClientBehaviorRenderer;
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
  *
- * @author  Thomas Andraschko
- * @since   0.2
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
+ * @since 0.2
  */
 public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 	@Override

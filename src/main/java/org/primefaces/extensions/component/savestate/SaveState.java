@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
 package org.primefaces.extensions.component.savestate;
 
@@ -24,7 +26,8 @@ import javax.faces.context.FacesContext;
 /**
  * Component class for the <code>SaveState</code> component.
  *
- * @author Thomas Andraschko
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since 0.2
  */
 public class SaveState extends UIParameter {
