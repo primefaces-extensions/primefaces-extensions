@@ -94,8 +94,8 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 		return COMPONENT_FAMILY;
 	}
 
-	public java.lang.String getWidgetVar() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	public String getWidgetVar() {
+		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
 	public void setWidgetVar(String widgetVar) {
@@ -103,7 +103,7 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public boolean isGlobal() {
-		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.global, false);
+		return (Boolean) getStateHelper().eval(PropertyKeys.global, false);
 	}
 
 	public void setGlobal(boolean global) {
@@ -111,31 +111,31 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public boolean isShared() {
-		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.shared, false);
+		return (Boolean) getStateHelper().eval(PropertyKeys.shared, false);
 	}
 
 	public void setShared(boolean shared) {
 		setAttribute(PropertyKeys.shared, shared);
 	}
 
-	public java.lang.String getTargetPosition() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.targetPosition, "bottom right");
+	public String getTargetPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.targetPosition, "bottom right");
 	}
 
 	public void setTargetPosition(String targetPosition) {
 		setAttribute(PropertyKeys.targetPosition, targetPosition);
 	}
 
-	public java.lang.String getPosition() {
-		return (java.lang.String) getStateHelper().eval(Tooltip.PropertyKeys.position, "top left");
+	public String getPosition() {
+		return (String) getStateHelper().eval(Tooltip.PropertyKeys.position, "top left");
 	}
 
 	public void setPosition(String position) {
 		setAttribute(PropertyKeys.position, position);
 	}
 
-	public java.lang.String getShowEvent() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.showEvent, "mouseenter");
+	public String getShowEvent() {
+		return (String) getStateHelper().eval(PropertyKeys.showEvent, "mouseenter");
 	}
 
 	public void setShowEvent(String showEvent) {
@@ -143,15 +143,15 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public int getShowDelay() {
-		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
+		return (Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
 	}
 
 	public void setShowDelay(int showDelay) {
 		setAttribute(PropertyKeys.showDelay, showDelay);
 	}
 
-	public java.lang.String getShowEffect() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.showEffect, "fadeIn");
+	public String getShowEffect() {
+		return (String) getStateHelper().eval(PropertyKeys.showEffect, "fadeIn");
 	}
 
 	public void setShowEffect(String showEffect) {
@@ -159,15 +159,15 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public int getShowEffectLength() {
-		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
+		return (Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
 	}
 
 	public void setShowEffectLength(int showEffectLength) {
 		setAttribute(PropertyKeys.showEffectLength, showEffectLength);
 	}
 
-	public java.lang.String getHideEvent() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.hideEvent, "mouseleave");
+	public String getHideEvent() {
+		return (String) getStateHelper().eval(PropertyKeys.hideEvent, "mouseleave");
 	}
 
 	public void setHideEvent(String hideEvent) {
@@ -175,15 +175,15 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public int getHideDelay() {
-		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
+		return (Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
 	}
 
 	public void setHideDelay(int hideDelay) {
 		setAttribute(PropertyKeys.hideDelay, hideDelay);
 	}
 
-	public java.lang.String getHideEffect() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.hideEffect, "fadeOut");
+	public String getHideEffect() {
+		return (String) getStateHelper().eval(PropertyKeys.hideEffect, "fadeOut");
 	}
 
 	public void setHideEffect(String hideEffect) {
@@ -191,23 +191,23 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	}
 
 	public int getHideEffectLength() {
-		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
+		return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
 	}
 
 	public void setHideEffectLength(int hideEffectLength) {
 		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
-	public java.lang.String getFor() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.forValue, null);
+	public String getFor() {
+		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
 	public void setFor(String _for) {
 		setAttribute(PropertyKeys.forValue, _for);
 	}
 
-	public java.lang.String getForSelector() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.forSelector, null);
+	public String getForSelector() {
+		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
 	public void setForSelector(String forSelector) {
