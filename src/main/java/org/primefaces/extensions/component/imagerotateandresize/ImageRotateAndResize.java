@@ -118,10 +118,10 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
 		if (userWidgetVar != null) {
 			return userWidgetVar;
-		} else {
-			return "widget_" + getClientId(context).replaceAll(
-							"-|" + UINamingContainer.getSeparatorChar(context), "_");
 		}
+
+		return "widget_" + getClientId(context).replaceAll(
+						"-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
 	@SuppressWarnings("unchecked")

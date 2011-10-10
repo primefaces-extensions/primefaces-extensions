@@ -56,6 +56,7 @@ public class RemoteCommandParameter extends UIOutput {
 		setRendererType(null);
 	}
 
+	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
 	}

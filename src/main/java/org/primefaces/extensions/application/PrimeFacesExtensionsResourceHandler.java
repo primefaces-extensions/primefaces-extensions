@@ -48,8 +48,8 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 		if (resource != null && libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 			return new PrimeFacesExtensionsResource(resource);
-		} else {
-			return resource;
 		}
+
+		return resource;
 	}
 }

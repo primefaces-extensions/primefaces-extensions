@@ -71,6 +71,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setRendererType(DEFAULT_RENDERER);
 	}
 
+	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
 	}
@@ -83,6 +84,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.name, name);
 	}
 
+	@Override
 	public String getUpdate() {
 		return (String) getStateHelper().eval(PropertyKeys.update, null);
 	}
@@ -91,6 +93,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.update, update);
 	}
 
+	@Override
 	public String getProcess() {
 		return (String) getStateHelper().eval(PropertyKeys.process, null);
 	}
@@ -99,6 +102,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.process, process);
 	}
 
+	@Override
 	public String getOnstart() {
 		return (String) getStateHelper().eval(PropertyKeys.onstart, null);
 	}
@@ -107,6 +111,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.onstart, onstart);
 	}
 
+	@Override
 	public String getOncomplete() {
 		return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
 	}
@@ -115,6 +120,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.oncomplete, oncomplete);
 	}
 
+	@Override
 	public String getOnerror() {
 		return (String) getStateHelper().eval(PropertyKeys.onerror, null);
 	}
@@ -123,6 +129,7 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.onerror, onerror);
 	}
 
+	@Override
 	public String getOnsuccess() {
 		return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
 	}
@@ -131,18 +138,24 @@ public class RemoteCommand extends UICommand implements org.primefaces.component
 		setAttribute(PropertyKeys.onsuccess, onsuccess);
 	}
 
+	@SuppressWarnings("boxing")
+	@Override
 	public boolean isGlobal() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
 	}
 
+	@SuppressWarnings("boxing")
 	public void setGlobal(final boolean global) {
 		setAttribute(PropertyKeys.global, global);
 	}
 
+	@SuppressWarnings("boxing")
+	@Override
 	public boolean isAsync() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
 	}
 
+	@SuppressWarnings("boxing")
 	public void setAsync(final boolean async) {
 		setAttribute(PropertyKeys.async, async);
 	}
