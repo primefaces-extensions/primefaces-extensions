@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.remotecommand;
 
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ import javax.faces.component.UIOutput;
  */
 public class RemoteCommandParameter extends UIOutput {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.RemoteCommandParameter";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 

@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ import org.primefaces.util.Constants;
 })
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -123,8 +123,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 			return userWidgetVar;
 		}
 
-		return "widget_" + getClientId(context).replaceAll(
-						"-|" + UINamingContainer.getSeparatorChar(context), "_");
+		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
 	@SuppressWarnings("unchecked")

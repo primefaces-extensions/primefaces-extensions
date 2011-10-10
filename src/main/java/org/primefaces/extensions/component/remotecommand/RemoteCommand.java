@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.remotecommand;
 
 import javax.faces.component.UICommand;
@@ -39,7 +40,6 @@ import java.util.ArrayList;
 })
 public class RemoteCommand extends UICommand implements org.primefaces.component.api.AjaxSource {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.RemoteCommand";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.RemoteCommandRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
