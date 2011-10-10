@@ -42,6 +42,135 @@
     
     <!-- Components -->
 	<tag>
+		<description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources:ckeditor:*.jar artifact.]]></description>
+		<tag-name>ckEditor</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.CKEditor</component-type>
+			<renderer-type>org.primefaces.extensions.component.CKEditorRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIComponent</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Name of the client side widget.]]></description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Height of the editor.]]></description>
+			<name>height</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Width of the editor.]]></description>
+			<name>width</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Theme of the editor.]]></description>
+			<name>theme</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Skin of the editor. Valid skins are: kama, office2003 and v2.]]></description>
+			<name>skin</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The toolbar layout.]]></description>
+			<name>toolbar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Defines if the editor is readOnly.]]></description>
+			<name>readOnly</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The color of the interface. For example: #33fc14.]]></description>
+			<name>interfaceColor</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Default language is used in case no language is set using language option and the editor is not able to use the user language.]]></description>
+			<name>language</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[This setting is used to set the CKEditor language. In case this option is not set, the editor will automatically try to load with user language if supported, otherwise the default language will be used.]]></description>
+			<name>defaultLanguage</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[This setting specifies the CSS file to be used to apply style to the contents: .]]></description>
+			<name>contentsCss</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+	<tag>
+        <tag-name>head</tag-name>
+        <component>
+                <component-type>org.primefaces.extensions.component.Head</component-type>
+                <renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
+        </component>
+        <attribute>
+                <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+                <name>id</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+                <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+                <name>rendered</name>
+                <required>false</required>
+                <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+                <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+                <name>binding</name>
+                <required>false</required>
+                <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+                <description><![CDATA[The page title.]]></description>
+                <name>title</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+                <description><![CDATA[The shortcut icon.]]></description>
+                <name>shortcutIcon</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+        </attribute>
+	</tag>
+	<tag>
 		<tag-name>imageAreaSelect</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
