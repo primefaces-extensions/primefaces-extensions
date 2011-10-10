@@ -1,23 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!-- $Id$ -->
-	<parent>
-		<groupId>org.primefaces.extensions.buildsystem.maven2</groupId>
-		<artifactId>master</artifactId>
-		<version>0.2-SNAPSHOT</version>
-	</parent>
-	
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.primefaces.extensions</groupId>
-	<artifactId>primefaces-extensions</artifactId>
-	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
-	<name>primefaces-extensions</name>
+    <parent>
+        <groupId>org.primefaces.extensions.buildsystem.maven2</groupId>
+        <artifactId>master</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <packaging>jar</packaging>
+    <version>0.2-SNAPSHOT</version>
+    <name>primefaces-extensions</name>
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
     </description>
     <url>http://code.google.com/p/primefaces-extensions</url>
-    
+
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -26,7 +26,7 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
-    
+
     <issueManagement>
         <system>Google Code</system>
         <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
@@ -38,8 +38,8 @@
         <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</connection>
         <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</developerConnection>
         <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
-    </scm>    
-    
+    </scm>
+
     <developers>
         <developer>
             <id>andraschko</id>
@@ -50,7 +50,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>	
+        </developer>
         <developer>
             <id>varaksin</id>
             <name>Oleg Varaksin</name>
@@ -61,19 +61,19 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
-    </developers>    
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-				</configuration>
-			</plugin>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -100,38 +100,89 @@
                 <configuration>
                     <source>${java.version.source}</source>
                 </configuration>
-            </plugin>            
-		</plugins>
-	</build>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>closure-compiler-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${project.build.directory}</sourceDirectory>
+                    <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
+                    <compileSets>
+                        <compileSet>
+                            <inputDir>/classes/META-INF/resources/primefaces-extensions</inputDir>
+                            <includes>
+                                <include>**/*.css</include>
+                                <include>**/*.js</include>
+                            </includes>
+                            <excludes>
+                                <exclude>/any_dir/any_file.js</include>  // example of exclude
+                            </excludes>
+                            <aggregation>
+                                <subDirMode>true<subDirMode/>
+                            </aggregation>
+                        </compileSet>
+                        <compileSet>
+                            <inputDir>/webapp/resources/themes/app</inputDir>
+                            <includes>
+                                <include>**/*.css</include>
+                            </includes>
+                            <aggregation>
+                                <outputFile>/webapp/resources/themes/app/${project.artifactId}.css</outputFile>
+                            </aggregation>                
+                        </compileSet>
+                        <compileSet>
+                            <inputDir>/webapp/resources/js/app</inputDir>
+                            <includes>
+                                <include>**/*.js</include>
+                            </includes>
+                            <aggregation>
+                                <outputFile>/webapp/resources/js/app/${project.artifactId}.css</outputFile>
+                            </aggregation>                
+                        </compileSet>            
+                    </compileSets>
+                </configuration>        
+            </plugin>
+            -->
+        </plugins>
+    </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${pe.jsf.group}</groupId>
-			<artifactId>${pe.jsf.artifact}-api</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${pe.jsf.group}</groupId>
+            <artifactId>${pe.jsf.artifact}-api</artifactId>
             <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-		</dependency>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+        </dependency>
 
-		<!-- Component dependencies -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-	</dependencies>
+        <!-- Component dependencies -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
