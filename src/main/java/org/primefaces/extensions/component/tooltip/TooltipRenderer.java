@@ -35,6 +35,7 @@ import org.primefaces.renderkit.CoreRenderer;
  * @version $Revision$
  */
 public class TooltipRenderer extends CoreRenderer {
+
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Tooltip tooltip = (Tooltip) component;
 
