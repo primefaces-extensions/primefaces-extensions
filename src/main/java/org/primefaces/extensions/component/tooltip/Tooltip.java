@@ -43,6 +43,7 @@ import javax.faces.context.FacesContext;
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
                       })
 public class Tooltip extends UIOutput implements org.primefaces.component.api.Widget {
+
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -54,6 +55,7 @@ public class Tooltip extends UIOutput implements org.primefaces.component.api.Wi
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
+
 		widgetVar, global, shared, targetPosition, position, showEvent, showDelay, showEffect, showEffectLength, hideEvent,
 		hideDelay, hideEffect, hideEffectLength, forValue("for"), forSelector;
 
