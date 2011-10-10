@@ -8,7 +8,7 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.primefaces.extensions</groupId>
+	<groupId>org.primefaces</groupId>
 	<artifactId>primefaces-extensions</artifactId>
 	<packaging>jar</packaging>
 	<version>0.2-SNAPSHOT</version>
