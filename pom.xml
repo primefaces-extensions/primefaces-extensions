@@ -114,38 +114,46 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>${project.build.directory}</sourceDirectory>
                     <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
+                    <encoding>UTF-8</encoding>
+                    <removeIncluded>false</removeIncluded>
+                    <suffix>-min</suffix>
                     <compileSets>
                         <compileSet>
-                            <inputDir>/classes/META-INF/resources/primefaces-extensions</inputDir>
-                            <includes>
-                                <include>**/*.css</include>
-                                <include>**/*.js</include>
-                            </includes>
+                            <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
                             <excludes>
-                                <exclude>/any_dir/any_file.js</include>  // example of exclude
+                                <exclude>**/layout/jquery.layout.js</exclude>  // example of file exclude
                             </excludes>
                             <aggregation>
                                 <subDirMode>true<subDirMode/>
+                                <excludes>
+                                    <exclude>jquery</exclude>  // example of directory exclude
+                                    <exclude>yui</exclude>
+                                </excludes>                                
                             </aggregation>
                         </compileSet>
                         <compileSet>
-                            <inputDir>/webapp/resources/themes/app</inputDir>
+                            <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
+                            <inputDir>${project.build.directory}/webapp/resources/themes/app</inputDir>
                             <includes>
                                 <include>**/*.css</include>
                             </includes>
                             <aggregation>
-                                <outputFile>/webapp/resources/themes/app/${project.artifactId}.css</outputFile>
+                                <outputFile>
+                                    ${project.build.directory}/webapp/resources/themes/app/${project.artifactId}.css
+                                </outputFile>
                             </aggregation>                
                         </compileSet>
                         <compileSet>
-                            <inputDir>/webapp/resources/js/app</inputDir>
+                            <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
+                            <inputDir>${project.build.directory}/webapp/resources/js/app</inputDir>
                             <includes>
                                 <include>**/*.js</include>
                             </includes>
                             <aggregation>
-                                <outputFile>/webapp/resources/js/app/${project.artifactId}.css</outputFile>
+                                <outputFile>
+                                    ${project.build.directory}/webapp/resources/js/app/${project.artifactId}.css
+                                </outputFile>
                             </aggregation>                
                         </compileSet>            
                     </compileSets>
