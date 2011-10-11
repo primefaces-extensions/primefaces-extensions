@@ -8,12 +8,11 @@
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.primefaces.extensions.buildsystem.maven2</groupId>
+    <groupId>org.primefaces.extensions</groupId>
     <artifactId>master</artifactId>
     <packaging>pom</packaging>
-
-    <name>PrimeFaces Extensions Master Project</name>
-    <version>0.2-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
+    <name>master</name>
     <description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
     </description>
@@ -162,7 +161,6 @@
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>2.3.2</version>
                     <configuration>
-                        <!-- Remove the Maven POM from the Manifest -->
                         <archive>
                             <addMavenDescriptor>false</addMavenDescriptor>
                             <manifest>
