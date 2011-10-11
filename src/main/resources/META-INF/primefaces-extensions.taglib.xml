@@ -42,7 +42,7 @@
     
     <!-- Components -->
 	<tag>
-		<description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources:ckeditor:*.jar artifact.]]></description>
+		<description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact.]]></description>
 		<tag-name>ckEditor</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.CKEditor</component-type>
