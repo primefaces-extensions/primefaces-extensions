@@ -29,48 +29,40 @@ import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
- * Tooltip renderer.
+ * Renderer for the {@link Tooltip} component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class TooltipRenderer extends CoreRenderer {
 
-	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
-		Tooltip tooltip = (Tooltip) component;
-
-		// dummy markup for ajax update
-		ResponseWriter writer = facesContext.getResponseWriter();
-		writer.startElement("span", tooltip);
-		writer.writeAttribute("id", tooltip.getClientId(facesContext), "id");
-		writer.endElement("span");
-
-		encodeScript(facesContext, tooltip);
-	}
-
-	protected void encodeScript(FacesContext facesContext, Tooltip tooltip) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
-		boolean global = tooltip.isGlobal();
-		boolean shared = tooltip.isShared();
-		String target = getTarget(facesContext, tooltip);
+	@Override
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+		final ResponseWriter writer = context.getResponseWriter();
+		final Tooltip tooltip = (Tooltip) component;
+		final String target = getTarget(context, tooltip);
+		final String clientId = tooltip.getClientId(context);
+		final String widgetVar = tooltip.resolveWidgetVar();
+		final boolean global = tooltip.isGlobal();
+		final boolean shared = tooltip.isShared();
 
 		writer.startElement("script", null);
+		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write("$(function() {");
 
-		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip('"
-		             + tooltip.getClientId(facesContext) + "',{");
+		writer.write(widgetVar + " = new PrimeFacesExt.widget.Tooltip('" + clientId + "',{");
 		writer.write("global:" + global);
-		writer.write("shared:" + shared);
+		writer.write(",shared:" + shared);
 
 		if (!global) {
 			writer.write(",forTarget:'" + target + "'");
 			writer.write(",content:'");
 			if (tooltip.getValue() == null) {
-				renderChildren(facesContext, tooltip);
+				renderChildren(context, tooltip);
 			} else {
-				writer.write(ComponentUtils.getStringValueToRender(facesContext, tooltip).replaceAll("'", "\\\\'"));
+				writer.write(ComponentUtils.getStringValueToRender(context, tooltip).replaceAll("'", "\\\\'"));
 			}
 
 			writer.write("'");
@@ -91,7 +83,7 @@ public class TooltipRenderer extends CoreRenderer {
 
 		//Position
 		writer.write(",position: {");
-		writer.write(",at:'" + tooltip.getTargetPosition() + "'");
+		writer.write("at:'" + tooltip.getTargetPosition() + "'");
 		writer.write(",my:'" + tooltip.getPosition() + "'");
 		if (shared && !global) {
 			writer.write(",target:'event'");
@@ -99,40 +91,42 @@ public class TooltipRenderer extends CoreRenderer {
 		}
 
 		writer.write("}});});");
-
 		writer.endElement("script");
 	}
 
-	protected String getTarget(FacesContext facesContext, Tooltip tooltip) {
+	protected String getTarget(final FacesContext context, final Tooltip tooltip) {
 		if (tooltip.isGlobal()) {
 			return null;
 		}
 
-		String _for = tooltip.getFor();
-		if (_for != null) {
-			UIComponent forComponent = tooltip.findComponent(_for);
+		final String forValue = tooltip.getFor();
+		if (forValue != null) {
+			UIComponent forComponent = tooltip.findComponent(forValue);
 			if (forComponent == null) {
-				throw new FacesException("Cannot find component \"" + _for + "\" in view.");
-			} else {
-				return ComponentUtils.escapeJQueryId(forComponent.getClientId(facesContext));
+				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
 			}
+
+			return ComponentUtils.escapeJQueryId(forComponent.getClientId(context));
 		}
 
-		String forSelector = tooltip.getForSelector();
+		final String forSelector = tooltip.getForSelector();
 		if (forSelector != null) {
 			if (forSelector.startsWith("#")) {
 				return ComponentUtils.escapeComponentId(tooltip.getForSelector());
-			} else {
-				return tooltip.getForSelector();
 			}
+
+			return tooltip.getForSelector();
 		}
 
-		return ComponentUtils.escapeJQueryId(tooltip.getParent().getClientId(facesContext));
+		return ComponentUtils.escapeJQueryId(tooltip.getParent().getClientId(context));
 	}
 
-	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+	@Override
+	public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+		//do nothing
 	}
 
+	@Override
 	public boolean getRendersChildren() {
 		return true;
 	}
