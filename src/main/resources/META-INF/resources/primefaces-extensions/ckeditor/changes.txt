@@ -1,0 +1,52 @@
+------------------------------------------------
+- Removed unused files and sources
+
+skins:
+------------------------------------------------
+- Fixed css background images. For example:
+	background-image:url(images/sprites.png) 
+	background-image:url("#{resource['primefaces-extensions:ckeditor/skins/kama/images/sprites.png']}")
+
+ckeditor.js:
+------------------------------------------------
+- Replaced
+	contentsCss:a.basePath+'contents.css'
+	contentsCss:a.getUrl('contents.css')
+
+- Replaced
+	else{z=t(z,a.getUrl(l[o]));
+	else{z=a.getUrl(t(z,l[o]));
+
+- Replaced (*.png = p.png, h1.png, ...)
+	%1h*.png);
+	background-image: url('+CKEDITOR.getUrl('plugins/showblocks/images/block_p.png')+');
+
+smiley.js:
+------------------------------------------------
+- Replaced
+	' src="',CKEDITOR.tools.htmlEncode(b.smiley_path+d[f]),'"',
+	' src="',CKEDITOR.getUrl(CKEDITOR.tools.htmlEncode(b.smiley_path+d[f])),'"',
+
+- Replaced
+	'" cke_src="',CKEDITOR.tools.htmlEncode(b.smiley_path+d[f]),'
+	'" cke_src="',CKEDITOR.getUrl(CKEDITOR.tools.htmlEncode(b.smiley_path+d[f])),'
+
+about.js:
+------------------------------------------------
+- Replaced
+	background-image:url('+CKEDITOR.plugins.get('about').path+'dialogs/logo_ckeditor.png);'+
+	background-image:url('+CKEDITOR.getUrl(CKEDITOR.plugins.get('about').path+'dialogs/logo_ckeditor.png')+');'+
+
+wsc.js
+------------------------------------------------
+- Replaced
+	o=CKEDITOR.getUrl(a.plugins.wsc.path+'dialogs/'),p=o+'tmpFrameset.html';
+	o=a.plugins.wsc.path+'dialogs/',p=CKEDITOR.getUrl(o+'tmpFrameset.html)';
+
+- Replaced
+	iframePath:o+'ciframe.html',
+	iframePath:CKEDITOR.getUrl(o+'ciframe.html'),
+
+- Replaced
+	schemaURI:o+'wsc.css',
+	schemaURI:CKEDITOR.getUrl(o+'wsc.css'),
