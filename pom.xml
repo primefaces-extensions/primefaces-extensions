@@ -104,59 +104,17 @@
             <!--
             <plugin>
                 <groupId>org.primefaces.extensions</groupId>
-                <artifactId>closure-compiler-maven-plugin</artifactId>
+                <artifactId>resources-optimizer-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>compile</id>
+                        <id>optimize</id>
                         <goals>
-                            <goal>compile</goal>
+                            <goal>optimize</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
-                    <encoding>UTF-8</encoding>
-                    <removeIncluded>false</removeIncluded>
-                    <suffix>-min</suffix>
-                    <compileSets>
-                        <compileSet>
-                            <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
-                            <excludes>
-                                <exclude>**/layout/jquery.layout.js</exclude>  // example of file exclude
-                            </excludes>
-                            <aggregation>
-                                <subDirMode>true<subDirMode/>
-                                <excludes>
-                                    <exclude>jquery</exclude>  // example of directory exclude
-                                    <exclude>yui</exclude>
-                                </excludes>                                
-                            </aggregation>
-                        </compileSet>
-                        <compileSet>
-                            <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
-                            <inputDir>${project.build.directory}/webapp/resources/themes/app</inputDir>
-                            <includes>
-                                <include>**/*.css</include>
-                            </includes>
-                            <aggregation>
-                                <outputFile>
-                                    ${project.build.directory}/webapp/resources/themes/app/${project.artifactId}.css
-                                </outputFile>
-                            </aggregation>                
-                        </compileSet>
-                        <compileSet>
-                            <compilationLevel>ADVANCED_OPTIMIZATIONS</compilationLevel>
-                            <inputDir>${project.build.directory}/webapp/resources/js/app</inputDir>
-                            <includes>
-                                <include>**/*.js</include>
-                            </includes>
-                            <aggregation>
-                                <outputFile>
-                                    ${project.build.directory}/webapp/resources/js/app/${project.artifactId}.css
-                                </outputFile>
-                            </aggregation>                
-                        </compileSet>            
-                    </compileSets>
+                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
                 </configuration>        
             </plugin>
             -->
