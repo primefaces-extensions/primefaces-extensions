@@ -101,7 +101,6 @@
                     <source>${java.version.source}</source>
                 </configuration>
             </plugin>
-            <!--
             <plugin>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
@@ -117,7 +116,6 @@
                     <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
                 </configuration>        
             </plugin>
-            -->
         </plugins>
     </build>
 
