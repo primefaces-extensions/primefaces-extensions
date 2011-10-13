@@ -23,6 +23,8 @@ import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
+import org.primefaces.component.api.AjaxSource;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 	@ResourceDependency(library = "primefaces", name = "core/core.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js")
 })
-public class RemoteCommand extends UICommand implements org.primefaces.component.api.AjaxSource {
+public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.RemoteCommandRenderer";
