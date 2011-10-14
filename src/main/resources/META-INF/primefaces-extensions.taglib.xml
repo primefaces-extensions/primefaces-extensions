@@ -513,6 +513,7 @@
 		<tag-name>remoteCommandParameter</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
+			<handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandParameterHandler</handler-class>
 		</component>
 		<attribute>
 			<description><![CDATA[Name of the parameter.]]></description>
