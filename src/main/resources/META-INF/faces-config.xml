@@ -57,6 +57,14 @@
 	<component>
 		<component-type>org.primefaces.extensions.component.Tooltip</component-type>
 		<component-class>org.primefaces.extensions.component.tooltip.Tooltip</component-class>
+	</component>
+	<component>
+		<component-type>org.primefaces.extensions.component.Layout</component-type>
+		<component-class>org.primefaces.extensions.component.layout.Layout</component-class>
+	</component>
+	<component>
+		<component-type>org.primefaces.extensions.component.LayoutPane</component-type>
+		<component-class>org.primefaces.extensions.component.layout.LayoutPane</component-class>
 	</component>    
 
     <converter>
@@ -94,7 +102,12 @@
 			<component-family>org.primefaces.extensions.component</component-family>
 			<renderer-type>org.primefaces.extensions.component.TooltipRenderer</renderer-type>
 			<renderer-class>org.primefaces.extensions.component.tooltip.TooltipRenderer</renderer-class>
-		</renderer>        
+		</renderer>
+  		<renderer>
+    		<component-family>org.primefaces.extensions.component</component-family>
+    		<renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
+    		<renderer-class>org.primefaces.extensions.component.layout.LayoutRenderer</renderer-class>
+  		</renderer>        
         
 		<client-behavior-renderer>
 			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>

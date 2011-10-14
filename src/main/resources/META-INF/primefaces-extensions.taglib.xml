@@ -690,4 +690,17 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+	<tag>
+		<tag-name>layout</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.Layout</component-type>
+			<renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
+		</component>
+	</tag>    
+	<tag>
+		<tag-name>layoutPane</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.LayoutPane</component-type>
+		</component>
+	</tag>    
 </facelet-taglib>

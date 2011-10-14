@@ -38,21 +38,20 @@ public class TooltipRenderer extends CoreRenderer {
 
 	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final Tooltip tooltip = (Tooltip) component;
-		final String target = getTarget(context, tooltip);
-		final String clientId = tooltip.getClientId(context);
-		final String widgetVar = tooltip.resolveWidgetVar();
-		final boolean global = tooltip.isGlobal();
-		final boolean shared = tooltip.isShared();
+		ResponseWriter writer = context.getResponseWriter();
+		Tooltip tooltip = (Tooltip) component;
+		String target = getTarget(context, tooltip);
+		String clientId = tooltip.getClientId(context);
+		boolean global = tooltip.isGlobal();
+		boolean shared = tooltip.isShared();
 
 		writer.startElement("script", null);
-		writer.writeAttribute("id", clientId, null);
+		writer.writeAttribute("id", clientId + "_script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write("$(function() {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.Tooltip('" + clientId + "',{");
+		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip('" + clientId + "',{");
 		writer.write("global:" + global);
 		writer.write(",shared:" + shared);
 

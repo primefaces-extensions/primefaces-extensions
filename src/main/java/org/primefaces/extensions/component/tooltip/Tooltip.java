@@ -31,19 +31,19 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.api.Widget;
 
 /**
- * Component class for the <code>Tooltip</code> component.
+ * <code>Tooltip</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "core/core.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+                      })
 public class Tooltip extends UIOutput implements Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -51,7 +51,7 @@ public class Tooltip extends UIOutput implements Widget {
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
-	 * PropertyKeys
+	 * Properties that are tracked by state saving.
 	 *
 	 * @author  Oleg Varaksin / last modified by $Author$
 	 * @version $Revision$
@@ -106,22 +106,18 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isGlobal() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.global, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setGlobal(final boolean global) {
 		setAttribute(PropertyKeys.global, global);
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isShared() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.shared, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setShared(final boolean shared) {
 		setAttribute(PropertyKeys.shared, shared);
 	}
@@ -150,12 +146,10 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.showEvent, showEvent);
 	}
 
-	@SuppressWarnings("boxing")
 	public int getShowDelay() {
 		return (Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setShowDelay(final int showDelay) {
 		setAttribute(PropertyKeys.showDelay, showDelay);
 	}
@@ -168,12 +162,10 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.showEffect, showEffect);
 	}
 
-	@SuppressWarnings("boxing")
 	public int getShowEffectLength() {
 		return (Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setShowEffectLength(final int showEffectLength) {
 		setAttribute(PropertyKeys.showEffectLength, showEffectLength);
 	}
@@ -186,12 +178,10 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.hideEvent, hideEvent);
 	}
 
-	@SuppressWarnings("boxing")
 	public int getHideDelay() {
 		return (Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setHideDelay(final int hideDelay) {
 		setAttribute(PropertyKeys.hideDelay, hideDelay);
 	}
@@ -204,7 +194,6 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.hideEffect, hideEffect);
 	}
 
-	@SuppressWarnings("boxing")
 	public int getHideEffectLength() {
 		return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
 	}
@@ -241,7 +230,6 @@ public class Tooltip extends UIOutput implements Widget {
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
