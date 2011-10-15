@@ -32,6 +32,7 @@ import org.primefaces.extensions.util.GsonConverter;
  *
  * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.JsonConverter")
 public class JsonConverter implements Converter {

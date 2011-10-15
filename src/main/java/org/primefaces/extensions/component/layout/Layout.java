@@ -41,6 +41,7 @@ import org.primefaces.component.menuitem.MenuItem;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/ui/jquery-ui.css"),

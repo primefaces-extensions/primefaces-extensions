@@ -26,6 +26,7 @@ import com.google.gson.GsonBuilder;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class GsonConverter {
 

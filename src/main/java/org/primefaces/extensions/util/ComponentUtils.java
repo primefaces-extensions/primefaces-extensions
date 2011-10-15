@@ -21,8 +21,9 @@ package org.primefaces.extensions.util;
 /**
  * Component utils for this project.
  *
- * @author  ova / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 

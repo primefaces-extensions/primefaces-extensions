@@ -29,6 +29,7 @@ import javax.faces.component.UIComponentBase;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class LayoutPane extends UIComponentBase {
 
