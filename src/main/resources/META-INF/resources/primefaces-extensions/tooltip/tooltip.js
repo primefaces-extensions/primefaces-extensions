@@ -5,21 +5,28 @@ PrimeFacesExt.widget.Tooltip = function(id, cfg) {
     if (this.cfg.global) {
         this.cfg.position.container = $(document.body);
 
-        // bind the qTip within the event handler
-        $('*[title]').die(this.cfg.show.event + ".tooltip").live(this.cfg.show.event + ".tooltip", function(event) {
+        $('*[oldtitle]').die(this.cfg.show.event + ".tooltip").live(this.cfg.show.event + ".tooltip", function(event) {
             var el = $(this);
             if (el.is(':disabled')) {
                 return;
             }
 
-            // show the tooltip as soon as it's bound, vital so it shows up the first time you hover
             var extCfg = _self.cfg;
+            extCfg.content.text = el.attr('oldtitle');
             extCfg.show.ready = true;
             el.qtip(extCfg, event);
         });
+
+        var titles = $('*[title]');
+        if (titles.length) {
+            for (var i = 0; i < titles.length; i++) {
+                $.attr(titles[i], 'oldtitle', $.attr(titles[i], 'title'));
+                titles[i].removeAttribute('title');
+            }
+        }
     } else if (this.cfg.shared) {
         var jqId = PrimeFaces.escapeClientId(id);
-        
+
         // remove previous container element to support ajax updates
         $(document.body).children('#ui-tooltip-shared-' + jqId).remove();
         // create a new one
