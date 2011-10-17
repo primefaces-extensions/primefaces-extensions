@@ -8,10 +8,6 @@ PrimeFacesExt.widget.Tooltip = function(id, cfg) {
         // bind the qTip within the event handler
         $('*[title]').die(this.cfg.show.event + ".tooltip").live(this.cfg.show.event + ".tooltip", function(event) {
             var el = $(this);
-            if ($.browser.msie) {
-                el.attr('oldtitle', el.attr('title')).attr('title', '');
-            }
-
             if (el.is(':disabled')) {
                 return;
             }
