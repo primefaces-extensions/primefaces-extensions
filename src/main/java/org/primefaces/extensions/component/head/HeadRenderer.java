@@ -158,9 +158,9 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		for (final UIComponent resource : resources) {
 			final String name = (String) resource.getAttributes().get("name");
 
-			if (EXTENSION_CSS.endsWith(name)) {
+			if (name.endsWith(EXTENSION_CSS)) {
 				styles.add(resource);
-			} else if (EXTENSION_JS.endsWith(name)) {
+			} else if (name.endsWith(EXTENSION_JS)) {
 				scripts.add(resource);
 			}
 		}
