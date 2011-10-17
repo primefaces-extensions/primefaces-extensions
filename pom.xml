@@ -6,12 +6,12 @@
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>master</artifactId>
     <packaging>pom</packaging>
-	<version>0.2-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>master</name>
     <description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
@@ -31,14 +31,14 @@
         <repository>
             <id>Central</id>
             <name>Maven Cental Repository</name>
-			<url>http://repo1.maven.org/maven2/</url>
+            <url>http://repo1.maven.org/maven2/</url>
         </repository>
         <repository>
-			<id>prime-repo-new</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
+            <id>prime-repo-new</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -47,11 +47,11 @@
             <name>Codehaus Repository</name>
             <url>http://snapshots.repository.codehaus.org/</url>
         </pluginRepository>
-		<pluginRepository>
-			<name>oss.sonatype.org - github-releases</name>
-			<id>oss.sonatype.org-github-releases</id>
-			<url>http://oss.sonatype.org/content/repositories/github-releases</url>
-		</pluginRepository>        
+        <pluginRepository>
+            <name>oss.sonatype.org - github-releases</name>
+            <id>oss.sonatype.org-github-releases</id>
+            <url>http://oss.sonatype.org/content/repositories/github-releases</url>
+        </pluginRepository>
     </pluginRepositories>
 
     <issueManagement>
@@ -77,7 +77,7 @@
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>	
+        </developer>
         <developer>
             <id>varaksin</id>
             <name>Oleg Varaksin</name>
@@ -144,13 +144,13 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-idea-plugin</artifactId>
                     <!-- no version, always use latest and greatest -->
-					<configuration>
-						<exclude>target</exclude>
-						<downloadSources>true</downloadSources>
-						<jdkLevel>${java.version.source}</jdkLevel>
-						<jdkName>${java.version.target}</jdkName>
-					</configuration>
-				</plugin>
+                    <configuration>
+                        <exclude>target</exclude>
+                        <downloadSources>true</downloadSources>
+                        <jdkLevel>${java.version.source}</jdkLevel>
+                        <jdkName>${java.version.target}</jdkName>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
@@ -193,23 +193,23 @@
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
                 </plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
-				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.0</version>
-					<executions>
-						<execution>
-							<id>attach-descriptor</id>
-							<goals>
-								<goal>attach-descriptor</goal>
-							</goals>
-						</execution>
-					</executions>					
+                    <executions>
+                        <execution>
+                            <id>attach-descriptor</id>
+                            <goals>
+                                <goal>attach-descriptor</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                     <configuration>
                         <port>8181</port>
                         <tempWebappDirectory>${basedir}/target/website</tempWebappDirectory>
@@ -219,15 +219,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.1.2</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -260,11 +260,12 @@
                             <exclude>**/*IntegrationTestCase.java</exclude>
                             <exclude>**/*IntegrationTestSuite.java</exclude>
                         </excludes>
-						<systemPropertyVariables>
-							<property>
-								<net.sourceforge.cobertura.datafile>target/cobertura/cobertura.ser</net.sourceforge.cobertura.datafile>
-							</property>
-						</systemPropertyVariables>
+                        <systemPropertyVariables>
+                            <property>
+                                <net.sourceforge.cobertura.datafile>target/cobertura/cobertura.ser
+                                </net.sourceforge.cobertura.datafile>
+                            </property>
+                        </systemPropertyVariables>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -273,22 +274,23 @@
                     <version>2.1.1</version>
                     <configuration>
                         <webappDirectory>${project.build.directory}/webapp</webappDirectory>
-                        <packagingExcludes>**/overrideweb-mojarra.xml,**/overrideweb-myfaces.xml,WEB-INF/web.xml</packagingExcludes>
+                        <packagingExcludes>**/overrideweb-mojarra.xml,**/overrideweb-myfaces.xml,WEB-INF/web.xml
+                        </packagingExcludes>
                         <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                         <filters>
                             <filter>${basedir}/src/main/filter/${pe.webapp.filter}-${pe.jsf.impl}.properties</filter>
                         </filters>
-						<nonFilteredFileExtensions>
-							<nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
-							<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
-							<nonFilteredFileExtension>gif</nonFilteredFileExtension>
-							<nonFilteredFileExtension>png</nonFilteredFileExtension>
-							<nonFilteredFileExtension>ico</nonFilteredFileExtension>
-							<nonFilteredFileExtension>bmp</nonFilteredFileExtension>
-							<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
-							<nonFilteredFileExtension>jar</nonFilteredFileExtension>
-							<nonFilteredFileExtension>cab</nonFilteredFileExtension>
-						</nonFilteredFileExtensions>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>jar</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>cab</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
                         <archive>
                             <addMavenDescriptor>false</addMavenDescriptor>
                             <manifest>
@@ -313,7 +315,7 @@
                         <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
                         <scanIntervalSeconds>1</scanIntervalSeconds>
                         <stopPort>9966</stopPort>
-                        <stopKey>foo</stopKey>                        
+                        <stopKey>foo</stopKey>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -372,57 +374,57 @@
                             </exclusions>
                         </dependency>
                     </dependencies>
-                </plugin>                
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
     <reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.4</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>index</report>
-							<report>summary</report>
-							<report>dependencies</report>
-							<report>project-team</report>
-							<report>license</report>
-							<report>issue-tracking</report>
-							<report>scm</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-				<configuration>
-					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.googlecode.maven-overview-plugin</groupId>
-				<artifactId>maven-overview-plugin</artifactId>
-				<version>1.6</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<xmlPath>${basedir}/changes.xml</xmlPath>
-					<escapeHTML>false</escapeHTML>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>changes-report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.4</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>dependencies</report>
+                            <report>project-team</report>
+                            <report>license</report>
+                            <report>issue-tracking</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+                <configuration>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-overview-plugin</groupId>
+                <artifactId>maven-overview-plugin</artifactId>
+                <version>1.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changes-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <xmlPath>${basedir}/changes.xml</xmlPath>
+                    <escapeHTML>false</escapeHTML>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>changes-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <!-- ================================================== -->
     <!-- Define all dependencies with their default version -->
@@ -436,31 +438,31 @@
                 <version>4.6</version>
                 <scope>test</scope>
             </dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-api</artifactId>
-				<version>2.2.1</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-core</artifactId>
-				<version>2.2.1</version>
-			</dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>2.2.1</version>
+            </dependency>
             <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>3.0</version>
-            </dependency>             
-			<dependency>
-				<groupId>com.google.javascript</groupId>
-				<artifactId>closure-compiler</artifactId>
-				<version>r1459</version>
-			</dependency>
-			<dependency>
-				<groupId>com.yahoo.platform.yui</groupId>
-				<artifactId>yuicompressor</artifactId>
-				<version>2.4.6</version>
-			</dependency>
+            </dependency>
+            <dependency>
+                <groupId>com.google.javascript</groupId>
+                <artifactId>closure-compiler</artifactId>
+                <version>r1459</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yahoo.platform.yui</groupId>
+                <artifactId>yuicompressor</artifactId>
+                <version>2.4.6</version>
+            </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
@@ -500,17 +502,17 @@
                 <artifactId>commons-lang</artifactId>
                 <version>2.6</version>
             </dependency>
-			<dependency>
-				<groupId>${pe.jsf.group}</groupId>
-				<artifactId>${pe.jsf.artifact}-api</artifactId>
-		        <version>${pe.jsf.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>jstl</groupId>
-						<artifactId>jstl</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
+            <dependency>
+                <groupId>${pe.jsf.group}</groupId>
+                <artifactId>${pe.jsf.artifact}-api</artifactId>
+                <version>${pe.jsf.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>jstl</groupId>
+                        <artifactId>jstl</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <dependency>
                 <groupId>${pe.jsf.group}</groupId>
                 <artifactId>${pe.jsf.artifact}-impl</artifactId>
@@ -521,12 +523,18 @@
                         <artifactId>jstl</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>            
-			<dependency>
-				<groupId>org.primefaces</groupId>
-				<artifactId>primefaces</artifactId>
-				<version>3.0.M4-SNAPSHOT</version>
-			</dependency>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>aristo</artifactId>
+                <version>1.0.1</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>3.0.M4-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>el-api</artifactId>
@@ -542,7 +550,7 @@
                 <groupId>javax.annotation</groupId>
                 <artifactId>jsr250-api</artifactId>
                 <version>1.0</version>
-                <scope>provided</scope>				
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -561,27 +569,27 @@
                 <version>2.5</version>
                 <scope>provided</scope>
             </dependency>
-			<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>1.7.1</version>
-			</dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>1.7.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-	
-	<profiles>
-		<profile>
-			<id>release</id>
+
+    <profiles>
+        <profile>
+            <id>release</id>
             <activation>
                 <property>
                     <name>performRelease</name>
                     <value>true</value>
                 </property>
-            </activation>            
-			<properties>
-				<pe.webapp.filter>release</pe.webapp.filter>
-			</properties>            
-			<build>
+            </activation>
+            <properties>
+                <pe.webapp.filter>release</pe.webapp.filter>
+            </properties>
+            <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -599,19 +607,19 @@
                     </plugin>
                 </plugins>
             </build>
-		</profile>
-		<profile>
-			<id>myfaces</id>
-			<properties>
+        </profile>
+        <profile>
+            <id>myfaces</id>
+            <properties>
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
                 <pe.jsf.version>2.1.3</pe.jsf.version>
-			</properties>
-		</profile>        
-	</profiles>
+            </properties>
+        </profile>
+    </profiles>
 
-	<properties>
+    <properties>
         <java.version.source>1.6</java.version.source>
         <java.version.target>1.6</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
@@ -620,5 +628,5 @@
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.3</pe.jsf.version>
-	</properties>
+    </properties>
 </project>
