@@ -35,22 +35,32 @@ import org.primefaces.util.Constants;
 /**
  * Renderer for the {@link Head} component.
  *
- * Ordering of rendered resources:
- * - first facet if defined
- * - JSF CSS resources
- * - Theme CSS
- * - middle facet if defined
- * - JSF JS resources
- * - title
- * - shortcut icon
- * - h:head content (encoded by super class at encodeChildren)
- * - last facet if defined
+ * <p>Ordering of rendered resources:</p>
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * <pre>
+   - first facet if defined
+   - Theme CSS
+   - JSF, PF, PF Extensions CSS resources
+   - middle facet if defined
+   - JSF, PF, PF Extensions JS resources
+   - title
+   - shortcut icon
+   - h:head content (encoded by super class at encodeChildren)
+   - last facet if defined
+ * </pre>
+ *
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
+
+	private static final String FACET_FIRST = "first";
+	private static final String FACET_MIDDLE = "middle";
+	private static final String FACET_LAST = "last";
+	private static final String EXTENSION_CSS = ".css";
+	private static final String EXTENSION_JS = ".js";
+	private static final String PREFIX_PRIMEFACES = "primefaces-";
 
 	@Override
 	public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
@@ -63,19 +73,26 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		final List<UIComponent> scripts = new ArrayList<UIComponent>();
 		fillScriptsAndStyles(context, styles, scripts);
 
-		encodeFacet(context, component, "first");
+		// encode first facet
+		encodeFacet(context, component, FACET_FIRST);
 
+		// encode themes
+		encodeTheme(context);
+
+		// encode CSS resources
 		for (final UIComponent style : styles) {
 			style.encodeAll(context);
 		}
 
-		encodeTheme(context);
-		encodeFacet(context, component, "middle");
+		// encode middle facet
+		encodeFacet(context, component, FACET_MIDDLE);
 
+		// encode JS resources
 		for (final UIComponent script : scripts) {
 			script.encodeAll(context);
 		}
 
+		// encode title and shortcut icon
 		encodeTitle(head, writer);
 		encodeShortcutIcon(head, writer);
 	}
@@ -84,8 +101,8 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
 
-		encodeFacet(context, component, "last");
-
+		// encode last facet
+		encodeFacet(context, component, FACET_LAST);
 		writer.endElement("head");
 	}
 
@@ -102,10 +119,10 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 			theme = (String) ve.getValue(elContext);
 		}
 
-		if (theme == null || theme.equalsIgnoreCase("aristo")) {
-			encodeTheme(context, "primefaces", "themes/aristo/theme.css");
+		if (theme == null || theme.equalsIgnoreCase("sam")) {
+			encodeTheme(context, "primefaces", "themes/sam/theme.css");
 		} else if (!theme.equalsIgnoreCase("none")) {
-			encodeTheme(context, "primefaces-" + theme, "theme.css");
+			encodeTheme(context, PREFIX_PRIMEFACES + theme, "theme.css");
 		}
 	}
 
@@ -133,16 +150,17 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		}
 	}
 
-	private void fillScriptsAndStyles(final FacesContext context, final List<UIComponent> styles, final List<UIComponent> scripts) {
+	private void fillScriptsAndStyles(final FacesContext context, final List<UIComponent> styles,
+	                                  final List<UIComponent> scripts) {
 		final UIViewRoot viewRoot = context.getViewRoot();
 		final List<UIComponent> resources = viewRoot.getComponentResources(context, "head");
 
 		for (final UIComponent resource : resources) {
 			final String name = (String) resource.getAttributes().get("name");
 
-			if (name.endsWith(".css")) {
+			if (EXTENSION_CSS.endsWith(name)) {
 				styles.add(resource);
-			} else if (name.endsWith(".js")) {
+			} else if (EXTENSION_JS.endsWith(name)) {
 				scripts.add(resource);
 			}
 		}
