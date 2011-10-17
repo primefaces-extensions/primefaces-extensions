@@ -48,6 +48,7 @@ public class LayoutRenderer extends CoreRenderer {
 	private static final String POSITION_CENTER = "center";
 	private static final String POSITION_WEST = "west";
 	private static final String POSITION_EAST = "east";
+	private static final String POSITION_SEPARATOR = "_";
 	private static final String MAIN_FORM = "form";
 	private static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
 	private static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-layout-pane-header ui-corner-top";
@@ -133,11 +134,11 @@ public class LayoutRenderer extends CoreRenderer {
 		if (hasCenterLayoutOptions) {
 			// write layout options ...
 			writer.write("var centerLayoutOptions = {resizeWhileDragging: false");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + "_" + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + "_" + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + "_" + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + "_" + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + "_" + POSITION_EAST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_WEST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_EAST));
 			writer.write("};\n");
 		}
 
@@ -145,11 +146,11 @@ public class LayoutRenderer extends CoreRenderer {
 		if (hasWestLayoutOptions) {
 			// write layout options ...
 			writer.write("var westLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + "_" + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + "_" + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + "_" + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + "_" + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + "_" + POSITION_EAST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_WEST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_EAST));
 			writer.write("};\n");
 		}
 
@@ -157,11 +158,11 @@ public class LayoutRenderer extends CoreRenderer {
 		if (hasEastLayoutOptions) {
 			// write layout options ...
 			writer.write("var eastLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + "_" + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + "_" + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + "_" + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + "_" + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + "_" + POSITION_EAST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_WEST));
+			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_EAST));
 			writer.write("};\n");
 		}
 
@@ -360,11 +361,11 @@ public class LayoutRenderer extends CoreRenderer {
 
 		// render stuff inside pane(s)
 		if (layoutPane.isExistNestedPanes()) {
-			encodePane(fc, writer, layoutPanes, position + " " + POSITION_NORTH);
-			encodePane(fc, writer, layoutPanes, position + " " + POSITION_CENTER);
-			encodePane(fc, writer, layoutPanes, position + " " + POSITION_SOUTH);
-			encodePane(fc, writer, layoutPanes, position + " " + POSITION_EAST);
-			encodePane(fc, writer, layoutPanes, position + " " + POSITION_WEST);
+			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_NORTH);
+			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_CENTER);
+			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_SOUTH);
+			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_EAST);
+			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_WEST);
 		} else {
 			encodePaneHeader(fc, writer, layoutPane);
 			encodePaneContent(fc, writer, layoutPane);
@@ -433,12 +434,12 @@ public class LayoutRenderer extends CoreRenderer {
 				}
 
 				// layout pane on the second level
-				layoutPanes.put(position + "_" + ((LayoutPane) subChild).getPosition(), subChild);
+				layoutPanes.put(position + POSITION_SEPARATOR + ((LayoutPane) subChild).getPosition(), subChild);
 				hasSubPanes = true;
 			}
 		}
 
-		if (hasSubPanes && layoutPanes.get(position + "_" + POSITION_CENTER) == null) {
+		if (hasSubPanes && layoutPanes.get(position + POSITION_SEPARATOR + POSITION_CENTER) == null) {
 			throw new FacesException("Rendered 'center' layout pane inside of '" + position
 			                         + "' layout pane is missing");
 		}

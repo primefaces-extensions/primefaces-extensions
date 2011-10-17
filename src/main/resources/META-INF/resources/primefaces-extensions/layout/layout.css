@@ -1,11 +1,11 @@
 .ui-layout-pane {
-	padding: 0px;
+	padding: 0;
 	overflow: hidden;
 }
 
 .ui-layout-pane-header {
 	padding: 4px 1em;
-	border-width: 0 0 1px !important;
+	border-width: 0 0 1px;
 }
 
 .ui-layout-pane-content {
@@ -23,83 +23,82 @@
 }
 
 .layout-outer-center {
-	padding: 0px;
+	padding: 0;
 }
 
 .layout-outer-center {
-	background:	transparent !important;
-	border:	0px !important;
-	padding: 0px !important;
+	background:	transparent;
+	border:	0;
+	padding: 0;
 	border-radius: 0;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 }
 
 .layout-tabbuttons {
-	left: auto !important;
-	background:	transparent !important;
-	border:	0px !important;
-	padding: 0px !important;
+	left: auto;
+	background:	transparent;
+	border:	0;
+	padding: 0;
 	border-radius: 0;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 }
 
 .layout-tabbuttons li {
-	border:	0 !important;
-	margin: 0px 0px -1px 5px !important;
+	border:	0;
+	margin: 0 0 -1px 5px;
 }
 
 .layout-tabbuttons li.last-tab {
-	margin-right: 220px !important;
+	margin-right: 220px;
 }
 
 .layout-tabbuttons li a {
 	font-weight: bold;
-	cursor:	pointer !important;
-	padding-left: 0.4em !important;
+	cursor:	pointer;
+	padding-left: 0.4em;
 	border-radius: 0;
 	-moz-border-radius:	0;
 	-webkit-border-radius: 0;
 }
 
 .layout-tabbuttons li table {
-	border-collapse: collapse !important;
+	border-collapse: collapse;
 }
 
 .layout-tabbuttons li table tr td {
-	padding-left: 3px !important;
+	padding-left: 3px;
 }
 
 .layout-tabbuttons li table tr td:first-child {
-	padding-top: 0px !important;
-	padding-left: 0px !important;
+	padding-top: 0;
+	padding-left: 0;
 }
 
 .ui-tabs .ui-tabs-nav li a {
-    padding: 0.5em 0.8em 0.5em 0.5em !important;
+    padding: 0.5em 0.8em 0.5em 0.5em;
 }
 
 .layout-tabpanels {
-	margin-top: 2px !important;
-	padding: 0px 4px 5px 4px !important;
+	margin-top: 2px;
+	padding: 0 4px 5px 4px;
 }
 
 .layout-tabpanels .ui-layout-tab {
 	width: 100%;
 	height: 100%;
-	padding: 0px;
+	padding: 0;
 	overflow: hidden;
 }
 
 .layout-tabpanels .ui-layout-tab .ui-layout-south .statusbar {
 	overflow: hidden;
-	margin: 0px;
-	padding: 5px 0px;
-	font-size: 11px !important;
-	font-weight: bold !important;
+	margin: 0;
+	padding: 5px 20px 0 0;
+	font-size: 11px;
+	font-weight: bold;
 	text-align: right;
-	padding-right: 20px;
 	white-space: nowrap;
 }
 
