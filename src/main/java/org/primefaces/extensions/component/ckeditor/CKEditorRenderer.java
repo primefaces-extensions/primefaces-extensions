@@ -89,8 +89,7 @@ public class CKEditorRenderer extends InputRenderer {
 		final String clientId = ckEditor.getClientId(context);
 		final String widgetVar = ckEditor.resolveWidgetVar();
 
-		writer.startElement("script", ckEditor);
-		writer.writeAttribute("type", "text/javascript", null);
+		startScript(writer, clientId);
 
 		writer.write("$(function() {");
 
@@ -156,7 +155,8 @@ public class CKEditorRenderer extends InputRenderer {
 		encodeClientBehaviors(context, ckEditor);
 
 		writer.write("});});");
-		writer.endElement("script");
+
+		endScript(writer);
 	}
 
     @Override

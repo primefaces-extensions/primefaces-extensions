@@ -122,6 +122,8 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	}
 }
 
+PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
+
 PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	var _self = this;
 	
@@ -160,4 +162,5 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 
 PrimeFacesExt.widget.CKEditor.prototype.initialized = function() {
 	this.instance = this.jq.ckeditorGet();
+	this.postConstruct();
 }
