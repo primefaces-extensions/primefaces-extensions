@@ -49,7 +49,7 @@ import org.primefaces.util.Constants;
  */
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "core/core.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "imagerotateandresize/imagerotateandresize.js")
 })

@@ -44,10 +44,9 @@ import org.primefaces.component.menuitem.MenuItem;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/ui/jquery-ui.css"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/ui/jquery-ui.js"),
-                          @ResourceDependency(library = "primefaces", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/jquery.layout.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/jquery.corner.js"),
