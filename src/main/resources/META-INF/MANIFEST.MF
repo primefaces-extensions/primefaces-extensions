@@ -2,6 +2,5 @@ Manifest-Version: 1.0
 Created-By: PrimeFaces Extensions
 Bundle-ManifestVersion: 2
 Bundle-Name: primefaces.extensions
-Bundle-Description: Package PrimeFaces Extensions in an OSGi bundle
-Bundle-Version: 0.2-SNAPSHOT
+Bundle-Description: PrimeFaces Extensions
 Bundle-SymbolicName: org.primefaces.extensions
