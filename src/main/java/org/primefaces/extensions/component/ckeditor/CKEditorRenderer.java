@@ -18,14 +18,11 @@
 package org.primefaces.extensions.component.ckeditor;
 
 import javax.el.ValueExpression;
-import javax.faces.application.Resource;
-import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.renderkit.InputRenderer;
 
@@ -83,7 +80,6 @@ public class CKEditorRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-		final ResourceHandler resourceHandler = context.getApplication().getResourceHandler();
 		final ResponseWriter writer = context.getResponseWriter();
 		final String clientId = ckEditor.getClientId(context);
 		final String widgetVar = ckEditor.resolveWidgetVar();
@@ -147,7 +143,7 @@ public class CKEditorRenderer extends InputRenderer {
 			return converter.getAsObject(context, ckEditor, value);
 		}
 
-		ValueExpression ve = ckEditor.getValueExpression("value");
+		final ValueExpression ve = ckEditor.getValueExpression("value");
 
 		if (ve != null) {
 		    final Class<?> valueType = ve.getType(context.getELContext());
