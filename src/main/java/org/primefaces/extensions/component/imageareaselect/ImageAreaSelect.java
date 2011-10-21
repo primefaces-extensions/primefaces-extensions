@@ -50,8 +50,9 @@ import org.primefaces.util.Constants;
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/jQuery.imgAreaSelect.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css")
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/jQuery.imgAreaSelect.css")
 })
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
