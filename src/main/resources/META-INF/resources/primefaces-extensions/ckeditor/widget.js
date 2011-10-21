@@ -1,62 +1,41 @@
 CKEDITOR_GETURL = function(resource) {
-	var urlPattern;
-	if (FACES_IS_EXTENSION_MAPPING == true) {
-		// *.jsf -> jsf
-		urlPattern = FACES_URL_PATTERN.substring(2);
-	} else {
-		// /faces/* -> /faces
-		urlPattern = FACES_URL_PATTERN.substring(0, FACES_URL_PATTERN.length - 2);
-	}
-	
-	var jsfResource;
+	var facesResource;
 	
 	// already wrapped?
-	var libraryVersionIndex = resource.indexOf(PrimeFacesExt.LIBRARY_VERSION);
+	var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion());
 	if (libraryVersionIndex !== -1) {
 		// look for appended resource
-		var appendedResource = resource.substring(libraryVersionIndex + PrimeFacesExt.LIBRARY_VERSION.length);
-		
-		// remove append resource from url
-		jsfResource = resource.substring(0, resource.length - appendedResource.length);
+		var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion()).length);
 
-		if (FACES_IS_EXTENSION_MAPPING == true) {
-			// look for extension
-			var extensionsPosition = jsfResource.indexOf('.' + urlPattern);
+		if (appendedResource.length > 0) {
+			// remove append resource from url
+			facesResource = resource.substring(0, resource.length - appendedResource.length);
+
+			var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
 			
-			// insert appended resource
-			jsfResource = jsfResource.substring(0, extensionsPosition)
-				+ appendedResource 
-				+ jsfResource.substring(extensionsPosition);
+			if (PrimeFacesExt.isExtensionMapping()) {
+				var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getExtensionMapping());
+
+				// extract resource
+				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
+
+				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
+			} else {
+				var questionMarkPosition = facesResource.indexOf('?');
+
+				// extract resource
+				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
+
+				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
+			}
 		} else {
-			// look for ?
-			var questionMarkPosition = jsfResource.indexOf('?');
-
-			// insert appended resource
-			jsfResource = jsfResource.substring(0, questionMarkPosition)
-				+ appendedResource 
-				+ jsfResource.substring(questionMarkPosition);
+			facesResource = resource;
 		}
-	} else {
-		// build resource URL
-		jsfResource = CKEDITOR_BASEPATH;
-		
-		if (FACES_IS_EXTENSION_MAPPING == false) {
-			jsfResource = jsfResource + urlPattern;
-		}
-
-		jsfResource = jsfResource + PrimeFacesExt.RESOURCE_IDENTIFIER;
-		jsfResource = jsfResource + '/ckeditor/';
-		jsfResource = jsfResource + resource;
-
-		if (FACES_IS_EXTENSION_MAPPING == true) {
-			jsfResource = jsfResource + '.' + urlPattern;
-		}
-
-		jsfResource = jsfResource + '?ln=' + PrimeFacesExt.RESOURCE_LIBRARY;
-		jsfResource = jsfResource + '&amp;v=' + PrimeFacesExt.LIBRARY_VERSION;
+	} else {		
+		facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/' + resource);
 	}
-
-	return jsfResource;
+	
+	return facesResource;
 };
 
 /**
@@ -64,16 +43,11 @@ CKEDITOR_GETURL = function(resource) {
  */
 PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	var _self = this;
-	
+
 	this.id = id;
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(this.id);
 	this.jq = $(this.jqId);
-
-	// set global variables
-	window.CKEDITOR_BASEPATH = this.cfg.basePath;
-	window.FACES_IS_EXTENSION_MAPPING = this.cfg.isExtensionMapping;
-	window.FACES_URL_PATTERN = this.cfg.mappingUrlPattern;
 
 	this.options = {};
 
@@ -111,9 +85,9 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	// check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {
 		// load ckeditor
-		$.getScript(this.cfg.editorResourceURL, function(data, textStatus) {
+		$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
 			// load jquery adapter
-			$.getScript(_self.cfg.jqueryAdapterResourceURL, function(data, textStatus) {
+			$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
 				_self.resourcesLoaded();
 			});
 		});

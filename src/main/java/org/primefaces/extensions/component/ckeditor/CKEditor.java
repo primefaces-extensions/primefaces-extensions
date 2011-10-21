@@ -106,7 +106,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
     }
 
     public String getHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.height, null);
+        return (String) getStateHelper().eval(PropertyKeys.height, "200px");
     }
 
     public void setHeight(final String height) {
@@ -114,7 +114,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
     }
 
     public String getWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.width, null);
+        return (String) getStateHelper().eval(PropertyKeys.width, "600px");
     }
 
     public void setWidth(final String width) {

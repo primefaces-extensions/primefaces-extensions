@@ -27,7 +27,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.primefaces.extensions.util.FacesServletMapping;
 import org.primefaces.renderkit.InputRenderer;
 
 import java.io.IOException;
@@ -95,30 +94,9 @@ public class CKEditorRenderer extends InputRenderer {
 
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.CKEditor('" + clientId + "', {");
 
-		// required resource stuff
-		writer.write("basePath:'" + getBasePath(context) + "'");
-
-		final Resource ckEditorResource =
-			resourceHandler.createResource("ckeditor/ckeditor.js", "primefaces-extensions");
-		writer.write(",editorResourceURL:'" + ckEditorResource.getRequestPath() + "'");
-
-		final Resource jqueryAdapterResource =
-			resourceHandler.createResource("ckeditor/adapters/jquery.js", "primefaces-extensions");
-		writer.write(",jqueryAdapterResourceURL:'" + jqueryAdapterResource.getRequestPath() + "'");
-
-		final FacesServletMapping facesServletMapping =
-			FacesServletMapping.getFacesServletMapping(context);
-		writer.write(",isExtensionMapping:" + facesServletMapping.isExtensionMapping());
-		writer.write(",mappingUrlPattern:'" + facesServletMapping.getUrlPattern() + "'");
-
 		// options
-		if (ckEditor.getWidth() != null) {
-			writer.write(",width:'" + ckEditor.getWidth() + "'");
-		}
-
-		if (ckEditor.getHeight() != null) {
-			writer.write(",height:'" + ckEditor.getHeight() + "'");
-		}
+		writer.write("width:'" + ckEditor.getWidth() + "'");
+		writer.write(",height:'" + ckEditor.getHeight() + "'");
 
 		if (ckEditor.getSkin() != null) {
 			writer.write(",skin:'" + ckEditor.getSkin() + "'");
@@ -181,22 +159,5 @@ public class CKEditorRenderer extends InputRenderer {
 		}
 
 		return value;
-	}
-
-	private String getBasePath(final FacesContext context) {
-		final Object request = context.getExternalContext().getRequest();
-
-		if (request instanceof HttpServletRequest) {
-			final HttpServletRequest servletRequest = (HttpServletRequest) request;
-
-	        final String requestUrl = servletRequest.getRequestURL().toString();
-	        final String requestUri = servletRequest.getRequestURI();
-	        final String contextPath = servletRequest.getContextPath();
-	        final String basePath = requestUrl.replace(requestUri, contextPath);
-
-	        return basePath;
-		}
-
-		throw new RuntimeException("CKEditor can currently not be used with Portlets");
 	}
 }
