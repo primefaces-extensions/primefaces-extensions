@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Created-By: Thomas Andraschko
+Created-By: PrimeFaces Extensions
 Bundle-ManifestVersion: 2
 Bundle-Name: primefaces.extensions
 Bundle-Description: Package PrimeFaces Extensions in an OSGi bundle
