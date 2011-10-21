@@ -2,7 +2,7 @@ PrimeFacesExt = {
     /**
      * Gets the extension of the current request URL.
      *
-     * @return {String} the URL extensions.
+     * @return {string} The URL extensions.
      */
 	getRequestUrlExtension : function() {
 		return PrimeFacesExt.getUrlExtension(location.href);
@@ -11,7 +11,7 @@ PrimeFacesExt = {
     /**
      * Gets the extension of the given URL.
      *
-     * @return {String} the URL extensions.
+     * @return {string} The URL extensions.
      */
 	getUrlExtension : function(url) {
 		return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).substr(url.lastIndexOf("."));
@@ -20,11 +20,11 @@ PrimeFacesExt = {
     /**
      * Builds a resource URL for given parameters.
      * 
-     * @param {String} name: the name of the resource. For example: /core/core.js
-     * @param {String} library: the library of the resource. For example: primefaces-extensions
-     * @param {String} version: the version of the library. For example: 0.2.0-SNAPSHOT
+     * @param {string} name The name of the resource. For example: /core/core.js
+     * @param {string} library The library of the resource. For example: primefaces-extensions
+     * @param {string} version The version of the library. For example: 0.2.0-SNAPSHOT
      * 
-     * @return {String} the resource URL.
+     * @return {string} The resource URL.
      */
 	getFacesResource : function(name, library, version) {
 		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
@@ -45,7 +45,7 @@ PrimeFacesExt = {
     /**
      * Gets the version if the current PrimeFaces Extensions library.
      *
-     * @return {String} the URL extensions.
+     * @return {string} The URL extensions.
      */
 	getPrimeFacesExtensionsVersion : function() {
 		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
@@ -55,9 +55,9 @@ PrimeFacesExt = {
     /**
      * Builds a resource URL for a PrimeFaces Extensions resource.
      * 
-     * @param {String} name: the name of the resource. For example: /core/core.js
+     * @param {string} name The name of the resource. For example: /core/core.js
      * 
-     * @return {String} the resource URL.
+     * @return {string} The resource URL.
      */
 	getPrimeFacesExtensionsResource : function(name) {
 		return PrimeFacesExt.getFacesResource(
@@ -69,7 +69,7 @@ PrimeFacesExt = {
     /**
      * Checks if the FacesServlet is mapped with extension mapping. For example: .jsf/.xhtml.
      *
-     * @return {boolean} if mapped with extension mapping.
+     * @return {boolean} If mapped with extension mapping.
      */
 	isExtensionMapping : function() {
 		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
@@ -81,7 +81,8 @@ PrimeFacesExt = {
     /**
      * Gets the resource URI of the current included core.js.
      *
-     * @return {String} the resource URI.
+     * @return {string} The resource URI.
+     * @private
      */
 	getCoreJsResourceURI : function() {
 		return $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').attr('src');
@@ -90,6 +91,7 @@ PrimeFacesExt = {
 	/**
 	 * The JSF resource identifier.
 	 *
+	 * @type {string}
 	 * @constant
 	 */
 	RESOURCE_IDENTIFIER : '/javax.faces.resource',
@@ -97,6 +99,7 @@ PrimeFacesExt = {
 	/**
 	 * The name of the PrimeFaces Extensions resource library.
 	 *
+	 * @type {string}
 	 * @constant
 	 */
 	RESOURCE_LIBRARY : 'primefaces-extensions'
