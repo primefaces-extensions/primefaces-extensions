@@ -14,7 +14,7 @@ CKEDITOR_GETURL = function(resource) {
 			var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
 			
 			if (PrimeFacesExt.isExtensionMapping()) {
-				var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getExtensionMapping());
+				var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getRequestUrlExtension());
 
 				// extract resource
 				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
