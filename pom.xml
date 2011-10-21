@@ -11,7 +11,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>master</artifactId>
     <packaging>pom</packaging>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>master</name>
     <description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
@@ -375,6 +375,30 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+	            <plugin>
+	                <groupId>org.apache.felix</groupId>
+	                <artifactId>maven-bundle-plugin</artifactId>
+	                <version>2.3.5</version>
+	                <extensions>true</extensions>
+	                <configuration>
+	                    <supportedProjectTypes>
+	                        <supportedProjectType>jar</supportedProjectType>
+	                    </supportedProjectTypes>
+	                    <instructions>
+	                        <Export-Package>org.primefaces.extensions*;version="${project.version}</Export-Package>
+	                        <Import-Package>javax.*,*;resolution:=optional</Import-Package>
+	                    </instructions>
+	                </configuration>
+	                <executions>
+	                    <execution>
+	                        <id>bundle-manifest</id>
+	                        <phase>process-classes</phase>
+	                        <goals>
+	                            <goal>manifest</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+	            </plugin>
             </plugins>
         </pluginManagement>
     </build>
