@@ -274,8 +274,7 @@
                     <version>2.1.1</version>
                     <configuration>
                         <webappDirectory>${project.build.directory}/webapp</webappDirectory>
-                        <packagingExcludes>**/overrideweb-mojarra.xml,**/overrideweb-myfaces.xml,WEB-INF/web.xml
-                        </packagingExcludes>
+                        <packagingExcludes>**/overrideweb-mojarra.xml,**/overrideweb-myfaces.xml,WEB-INF/web.xml</packagingExcludes>
                         <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                         <filters>
                             <filter>${basedir}/src/main/filter/${pe.webapp.filter}-${pe.jsf.impl}.properties</filter>
