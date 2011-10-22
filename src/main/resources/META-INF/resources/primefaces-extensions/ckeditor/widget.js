@@ -50,7 +50,7 @@ CKEDITOR_GETURL = function(resource) {
  * 
  * @constructor
  */
-PrimeFacesExt.widget.CKEditor = function(id, cfg) {reload
+PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	var _self = this;
 
 	this.id = id;
