@@ -1,5 +1,7 @@
 /**
- * PrimeFaces Extensions ImageRotateAndResize Widget
+ * PrimeFaces Extensions ImageRotateAndResize Widget.
+ *
+ * @constructor
  */
 PrimeFacesExt.widget.ImageRotateAndResize = function(id, cfg) {
 	this.id = id;
@@ -7,6 +9,11 @@ PrimeFacesExt.widget.ImageRotateAndResize = function(id, cfg) {
 	this.initialized = false;
 }
 
+/**
+ * Initializes the settings.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.initializeLazy = function() {
 	if (!this.initialized) {
 		this.target = document.getElementById(this.cfg.target);
@@ -20,11 +27,19 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.initializeLazy = function() 
 	}
 }
 
-PrimeFacesExt.widget.ImageRotateAndResize.prototype.refresh = function() {
+/**
+ * Reloads the widget.
+ */
+PrimeFacesExt.widget.ImageRotateAndResize.prototype.reload = function() {
 	this.initialized = false;
 	this.initializeLazy();
 }
 
+/**
+ * Rotates the image to the left direction.
+ * 
+ * @param {number} degree The degree.
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateLeft = function(degree) {
 	this.initializeLazy();
 
@@ -39,6 +54,11 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateLeft = function(degree
 	this.fireRotateEvent();
 }
 
+/**
+ * Rotates the image to the right direction.
+ * 
+ * @param {number} degree The degree.
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateRight = function(degree) {
 	this.initializeLazy();
 
@@ -53,6 +73,12 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateRight = function(degre
 	this.fireRotateEvent();
 }
 
+/**
+ * Resizes the image to the given width and height.
+ * 
+ * @param {number} width The new width of the image.
+ * @param {number} height The new height of the image.
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.resize = function(width, height) {
 	this.initializeLazy();
 
@@ -63,6 +89,11 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.resize = function(width, hei
 	this.fireResizeEvent();
 }
 
+/**
+ * Scales the image with the given factor.
+ * 
+ * @param {number} scaleFactor The scale factor. For example: 1.1 = scales the image to 110% size.
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.scale = function(scaleFactor) {
 	this.initializeLazy();
 
@@ -73,6 +104,10 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.scale = function(scaleFactor
 	this.fireResizeEvent();
 }
 
+/**
+ * Restores the default image.
+ * It also fires the rotate and resize event with the default values.
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.restoreDefaults = function() {
 	this.initializeLazy();
 
@@ -85,35 +120,50 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.restoreDefaults = function()
 	this.fireRotateEvent();
 }
 
+/**
+ * Redraws the image.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
+	var rotation;
 	if (this.degree >= 0) {
-		var rotation = Math.PI * this.degree / 180;
+		rotation = Math.PI * this.degree / 180;
 	} else {
-		var rotation = Math.PI * (360 + this.degree) / 180;
+		rotation = Math.PI * (360 + this.degree) / 180;
 	}
 
 	var cos = Math.cos(rotation);
 	var sin = Math.sin(rotation);
 
+	// check for < IE9, otherwise use canvas
 	if ($.browser.msie && parseInt($.browser.version) <= 8) {
+		// create new image
 		var image = document.createElement('img');
-		
 		image.src = this.imageSrc;
+		
+		// set new size
 		image.height = this.newImageHeight;
 		image.width = this.newImageWidth;
+
+		// apply rotation for IE
 		image.style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (sin * -1) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')";	
 		
+		// replace old image with new generated one
 		image.id = this.target.id;
 		this.target.parentNode.replaceChild(image, this.target);
 		this.target = image;
 	} else {
+		// create canvas instead of img
 		var canvas = document.createElement('canvas');
 
+		// new image with new size
 		var newImage = new Image();
 		newImage.src = this.imageSrc;
 		newImage.width = this.newImageWidth;
 		newImage.height = this.newImageHeight;
 
+		// rotate
 		canvas.style.width = canvas.width = Math.abs(cos * newImage.width) + Math.abs(sin * newImage.height);
 		canvas.style.height = canvas.height = Math.abs(cos * newImage.height) + Math.abs(sin * newImage.width);
 
@@ -133,7 +183,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 		context.rotate(rotation);
 		context.drawImage(newImage, 0, 0, newImage.width, newImage.height);
 		context.restore();	
-				
+
+		// replace image with canvas and set src attribute
 		canvas.id = this.target.id;
 		canvas.src = this.target.src;
 		this.target.parentNode.replaceChild(canvas, this.target);
@@ -141,6 +192,11 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 	}
 }
 
+/**
+ * Fires the rotate event.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
 	if (this.cfg.behaviors) {
 		var callback = this.cfg.behaviors['rotate'];
@@ -156,6 +212,11 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireRotateEvent = function()
 	}
 }
 
+/**
+ * Fires the resize event.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
 	if (this.cfg.behaviors) {
 		var callback = this.cfg.behaviors['resize'];

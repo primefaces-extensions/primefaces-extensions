@@ -1,5 +1,7 @@
 /**
- * PrimeFaces Extensions ImageAreaSelect Widget
+ * PrimeFaces Extensions ImageAreaSelect Widget.
+ *
+ * @constructor
  */
 PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	this.id = id;
@@ -54,6 +56,11 @@ PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }
 
+/**
+ * Binds the select callback.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
 	if (this.cfg.behaviors) {
 		var selectCallback = this.cfg.behaviors['select'];
@@ -81,12 +88,20 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectCallback = function() {
 	}
 }
 
+/**
+ * Updates the widget with the given options.
+ * 
+ * @param {array} options The options for the widget.
+ */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.update = function(options) {
 	this.instance.setOptions(options);
 	this.instance.update();
 }
 
-PrimeFacesExt.widget.ImageAreaSelect.prototype.refresh = function() {
+/**
+ * Reloads the widget.
+ */
+PrimeFacesExt.widget.ImageAreaSelect.prototype.reload = function() {
 	this.update({remove: true});
 	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
 }

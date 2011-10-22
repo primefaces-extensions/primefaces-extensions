@@ -85,7 +85,19 @@ PrimeFacesExt = {
      * @protected
      */
 	getCoreJsResourceURI : function() {
-		return $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').attr('src');
+		var uri = null;
+		$('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').each(function(index) {
+			var currentURI = $(this).attr('src');
+			if (currentURI.indexOf('ln=' + PrimeFacesExt.RESOURCE_LIBRARY) !== -1) {
+				uri = currentURI;
+			}
+		});
+
+		if (!uri) {
+			PrimeFaces.error('PrimeFaces Extensions core.js not available! Merged? Renamed?');
+		}
+
+		return uri;
 	},
 
 	/**

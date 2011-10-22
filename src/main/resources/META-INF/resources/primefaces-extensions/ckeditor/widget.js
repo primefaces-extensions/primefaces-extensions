@@ -1,3 +1,10 @@
+/**
+ * Resolves the resources for the CKEditor.
+ * 
+ * @param {string} resource The requested resource from CKEditor.
+ * 
+ * @return {string} The faces resource URL.
+ */
 CKEDITOR_GETURL = function(resource) {
 	var facesResource;
 	
@@ -40,8 +47,10 @@ CKEDITOR_GETURL = function(resource) {
 
 /**
  * PrimeFaces Extensions CKEditor Widget
+ * 
+ * @constructor
  */
-PrimeFacesExt.widget.CKEditor = function(id, cfg) {
+PrimeFacesExt.widget.CKEditor = function(id, cfg) {reload
 	var _self = this;
 
 	this.id = id;
@@ -98,6 +107,11 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 
 PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
 
+/**
+ * This method will be called when the resources for the CKEditor are loaded.
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	var _self = this;
 	
@@ -134,6 +148,11 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	this.jq.ckeditor(function() { _self.initialized(); }, _self.options);
 }
 
+/**
+ * This method will be called when the CKEditor was initialized. 
+ *
+ * @protected
+ */
 PrimeFacesExt.widget.CKEditor.prototype.initialized = function() {
 	this.instance = this.jq.ckeditorGet();
 	this.postConstruct();
