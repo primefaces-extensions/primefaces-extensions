@@ -43,13 +43,17 @@ PrimeFacesExt = {
 	},
 
     /**
-     * Gets the version if the current PrimeFaces Extensions library.
+     * Gets the version of the current PrimeFaces Extensions library.
      *
      * @return {string} The PrimeFaces Extensions version.
      */
 	getPrimeFacesExtensionsVersion : function() {
-		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
-		return RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
+		if (!PrimeFacesExt.VERSION) {
+			var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
+			PrimeFacesExt.VERSION = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
+		}
+
+		return PrimeFacesExt.VERSION;
 	},
 
     /**
@@ -72,10 +76,14 @@ PrimeFacesExt = {
      * @return {boolean} If mapped with extension mapping.
      */
 	isExtensionMapping : function() {
-		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
-		var coreJs = 'core.js';
-		
-		return scriptURI.charAt(scriptURI.indexOf(coreJs) + coreJs.length) === '.';
+		if (!PrimeFacesExt.IS_EXTENSION_MAPPING) {
+			var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
+			var coreJs = 'core.js';
+
+			PrimeFacesExt.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(coreJs) + coreJs.length) === '.';
+		}
+
+		return PrimeFacesExt.IS_EXTENSION_MAPPING;
 	},
 
     /**
@@ -85,19 +93,20 @@ PrimeFacesExt = {
      * @protected
      */
 	getCoreJsResourceURI : function() {
-		var uri = null;
-		$('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').each(function(index) {
-			var currentURI = $(this).attr('src');
-			if (currentURI.indexOf('ln=' + PrimeFacesExt.RESOURCE_LIBRARY) !== -1) {
-				uri = currentURI;
+		if (!PrimeFacesExt.CORE_JS_URI) {
+			$('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').each(function(index) {
+				var currentURI = $(this).attr('src');
+				if (currentURI.indexOf('ln=' + PrimeFacesExt.RESOURCE_LIBRARY) !== -1) {
+					PrimeFacesExt.CORE_JS_URI = currentURI;
+				}
+			});
+	
+			if (!PrimeFacesExt.CORE_JS_URI) {
+				PrimeFaces.error('PrimeFaces Extensions core.js not available! Merged? Renamed?');
 			}
-		});
-
-		if (!uri) {
-			PrimeFaces.error('PrimeFaces Extensions core.js not available! Merged? Renamed?');
 		}
 
-		return uri;
+		return PrimeFacesExt.CORE_JS_URI;
 	},
 
 	/**
