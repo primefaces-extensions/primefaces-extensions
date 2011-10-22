@@ -45,7 +45,7 @@ PrimeFacesExt = {
     /**
      * Gets the version if the current PrimeFaces Extensions library.
      *
-     * @return {string} The URL extensions.
+     * @return {string} The PrimeFaces Extensions version.
      */
 	getPrimeFacesExtensionsVersion : function() {
 		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
@@ -82,7 +82,7 @@ PrimeFacesExt = {
      * Gets the resource URI of the current included core.js.
      *
      * @return {string} The resource URI.
-     * @private
+     * @protected
      */
 	getCoreJsResourceURI : function() {
 		return $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').attr('src');
