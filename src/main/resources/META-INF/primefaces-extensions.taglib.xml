@@ -213,19 +213,19 @@
 			<type>java.lang.String</type>
 		</attribute>		
 		<attribute>
-			<description><![CDATA[If set to true, selection area will disappear when selection ends. Default: false.]]></description>
+			<description><![CDATA[If set to true, selection area will disappear when selection ends. Default value: false.]]></description>
 			<name>autoHide</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>		
 		<attribute>
-			<description><![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default: 0.]]></description>
+			<description><![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default value: 0.]]></description>
 			<name>fadeSpeed</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default: false.]]></description>
+			<description><![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default value: false.]]></description>
 			<name>handles</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
@@ -249,19 +249,19 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Determines whether the selection area should be movable. Default: true.]]></description>
+			<description><![CDATA[Determines whether the selection area should be movable. Default value: true.]]></description>
 			<name>movable</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default: false.]]></description>
+			<description><![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]></description>
 			<name>persistent</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Determines whether the selection area should be resizable. Default: true.]]></description>
+			<description><![CDATA[Determines whether the selection area should be resizable. Default value: true.]]></description>
 			<name>resizable</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
@@ -303,13 +303,13 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A JSF component Id - A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default: "body".]]></description>
+			<description><![CDATA[A JSF component Id - A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]></description>
 			<name>imageAreaSelectParent</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Enables/disables keyboard support. Default: false.]]></description>
+			<description><![CDATA[Enables/disables keyboard support. Default value: false.]]></description>
 			<name>keyboardSupport</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
