@@ -73,13 +73,13 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Height of the editor.]]></description>
+			<description><![CDATA[Height of the editor. Default value: 200px.]]></description>
 			<name>height</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Width of the editor.]]></description>
+			<description><![CDATA[Width of the editor. Default value: 600px.]]></description>
 			<name>width</name>
 			<required>false</required>
 			<type>java.lang.String</type>
@@ -496,13 +496,13 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus.]]></description>
+			<description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]></description>
 			<name>global</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[When set to true, ajax requests are not queued.]]></description>
+			<description><![CDATA[When set to true, ajax requests are not queued. Default value: false.]]></description>
 			<name>async</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
