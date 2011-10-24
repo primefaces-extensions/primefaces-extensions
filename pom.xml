@@ -72,6 +72,9 @@
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
+					<excludes>
+						<exclude>**/ckeditor/changes.txt</exclude>
+					</excludes>
                 </configuration>
             </plugin>
             <plugin>
