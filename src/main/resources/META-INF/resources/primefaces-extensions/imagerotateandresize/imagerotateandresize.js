@@ -136,34 +136,34 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 	var cos = Math.cos(rotation);
 	var sin = Math.sin(rotation);
 
-	// check for < IE9, otherwise use canvas
+	//check for < IE9, otherwise use canvas
 	if ($.browser.msie && parseInt($.browser.version) <= 8) {
-		// create new image
+		//create new image
 		var image = document.createElement('img');
 		image.src = this.imageSrc;
 		
-		// set new size
+		//set new size
 		image.height = this.newImageHeight;
 		image.width = this.newImageWidth;
 
-		// apply rotation for IE
+		//apply rotation for IE
 		image.style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (sin * -1) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')";	
 		
-		// replace old image with new generated one
+		//replace old image with new generated one
 		image.id = this.target.id;
 		this.target.parentNode.replaceChild(image, this.target);
 		this.target = image;
 	} else {
-		// create canvas instead of img
+		//create canvas instead of img
 		var canvas = document.createElement('canvas');
 
-		// new image with new size
+		//new image with new size
 		var newImage = new Image();
 		newImage.src = this.imageSrc;
 		newImage.width = this.newImageWidth;
 		newImage.height = this.newImageHeight;
 
-		// rotate
+		//rotate
 		canvas.style.width = canvas.width = Math.abs(cos * newImage.width) + Math.abs(sin * newImage.height);
 		canvas.style.height = canvas.height = Math.abs(cos * newImage.height) + Math.abs(sin * newImage.width);
 
@@ -184,7 +184,7 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 		context.drawImage(newImage, 0, 0, newImage.width, newImage.height);
 		context.restore();	
 
-		// replace image with canvas and set src attribute
+		//replace image with canvas and set src attribute
 		canvas.id = this.target.id;
 		canvas.src = this.target.src;
 		this.target.parentNode.replaceChild(canvas, this.target);

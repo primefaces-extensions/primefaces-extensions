@@ -8,14 +8,14 @@
 CKEDITOR_GETURL = function(resource) {
 	var facesResource;
 	
-	// already wrapped?
+	//already wrapped?
 	var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion());
 	if (libraryVersionIndex !== -1) {
-		// look for appended resource
+		//look for appended resource
 		var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion()).length);
 
 		if (appendedResource.length > 0) {
-			// remove append resource from url
+			//remove append resource from url
 			facesResource = resource.substring(0, resource.length - appendedResource.length);
 
 			var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
@@ -23,14 +23,14 @@ CKEDITOR_GETURL = function(resource) {
 			if (PrimeFacesExt.isExtensionMapping()) {
 				var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getRequestUrlExtension());
 
-				// extract resource
+				//extract resource
 				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
 				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
 			} else {
 				var questionMarkPosition = facesResource.indexOf('?');
 
-				// extract resource
+				//extract resource
 				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
 				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
@@ -91,11 +91,11 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 		this.options.contentsCss = this.cfg.contentsCss;
 	}
 
-	// check if ckeditor is already included
+	//check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {
-		// load ckeditor
+		//load ckeditor
 		$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
-			// load jquery adapter
+			//load jquery adapter
 			$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
 				_self.resourcesLoaded();
 			});
@@ -115,7 +115,7 @@ PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
 PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	var _self = this;
 	
-	// overwrite save button
+	//overwrite save button
 	CKEDITOR.plugins.registered['save'] = {
 		init : function(editor) {
 			var command = editor.addCommand('save', {
@@ -137,14 +137,14 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 		}
 	}
 
-	// remove old instances if required
+	//remove old instances if required
 	var oldInstance = CKEDITOR.instances[this.id];
 	if (oldInstance) {
 		oldInstance.destroy();
 		delete oldInstance;
 	}
 
-	// initialize ckeditor after all resources were loaded
+	//initialize ckeditor after all resources were loaded
 	this.jq.ckeditor(function() { _self.initialized(); }, _self.options);
 }
 
