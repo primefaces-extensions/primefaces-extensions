@@ -30,7 +30,6 @@ import javax.faces.component.behavior.ClientBehaviorBase;
  * @since  0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "core/core.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js")
 })
 public class JavascriptBehavior extends ClientBehaviorBase {
