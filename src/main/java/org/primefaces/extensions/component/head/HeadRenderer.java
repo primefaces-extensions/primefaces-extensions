@@ -119,11 +119,11 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 			theme = (String) ve.getValue(elContext);
 		}
 
-		if (theme == null || theme.equalsIgnoreCase("aristo")) {
-			encodeTheme(context, "primefaces", "themes/aristo/theme.css");
-		} else if (!theme.equalsIgnoreCase("none")) {
-			encodeTheme(context, PREFIX_PRIMEFACES + theme, "theme.css");
+		if (theme == null) {
+			theme = "aristo";
 		}
+
+		encodeTheme(context, "primefaces-" + theme, "theme.css");
 	}
 
 	private void encodeFacet(final FacesContext context, final UIComponent component, final String name) throws IOException {
