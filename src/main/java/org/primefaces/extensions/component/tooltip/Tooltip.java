@@ -40,7 +40,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")

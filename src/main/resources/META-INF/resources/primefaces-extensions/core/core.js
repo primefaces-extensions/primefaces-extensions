@@ -27,9 +27,9 @@ PrimeFacesExt = {
      * @return {string} The resource URL.
      */
 	getFacesResource : function(name, library, version) {
-		var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
+		var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
         
-		scriptURI = scriptURI.replace('/core/core.js', name);
+		scriptURI = scriptURI.replace('/primefaces-extensions.js', name);
 		scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY, 'ln=' + library);
 
 		var extractedVersion = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
@@ -49,7 +49,7 @@ PrimeFacesExt = {
      */
 	getPrimeFacesExtensionsVersion : function() {
 		if (!PrimeFacesExt.VERSION) {
-			var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
+			var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
 			PrimeFacesExt.VERSION = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
 		}
 
@@ -77,36 +77,27 @@ PrimeFacesExt = {
      */
 	isExtensionMapping : function() {
 		if (!PrimeFacesExt.IS_EXTENSION_MAPPING) {
-			var scriptURI = PrimeFacesExt.getCoreJsResourceURI();
-			var coreJs = 'core.js';
+			var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
+			var primeFacesExtensionsScript = 'primefaces-extensions.js';
 
-			PrimeFacesExt.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(coreJs) + coreJs.length) === '.';
+			PrimeFacesExt.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(primeFacesExtensionsScript) + primeFacesExtensionsScript.length) === '.';
 		}
 
 		return PrimeFacesExt.IS_EXTENSION_MAPPING;
 	},
 
     /**
-     * Gets the resource URI of the current included core.js.
+     * Gets the resource URI of the current included primefaces-extensions.js.
      *
      * @return {string} The resource URI.
      * @protected
      */
-	getCoreJsResourceURI : function() {
-		if (!PrimeFacesExt.CORE_JS_URI) {
-			$('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/core/core.js"]').each(function(index) {
-				var currentURI = $(this).attr('src');
-				if (currentURI.indexOf('ln=' + PrimeFacesExt.RESOURCE_LIBRARY) !== -1) {
-					PrimeFacesExt.CORE_JS_URI = currentURI;
-				}
-			});
-	
-			if (!PrimeFacesExt.CORE_JS_URI) {
-				PrimeFaces.error('PrimeFaces Extensions core.js not available! Merged? Renamed?');
-			}
+	getPrimeFacesExtensionsScriptURI : function() {
+		if (!PrimeFacesExt.SCRIPT_URI) {
+			PrimeFacesExt.SCRIPT_URI = $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/primefaces-extensions.js"]').attr('src');
 		}
 
-		return PrimeFacesExt.CORE_JS_URI;
+		return PrimeFacesExt.SCRIPT_URI;
 	},
 
 	/**

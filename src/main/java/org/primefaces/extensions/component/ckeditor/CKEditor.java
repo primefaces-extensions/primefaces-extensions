@@ -44,8 +44,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "ckeditor/widget.js")
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 

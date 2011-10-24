@@ -38,7 +38,7 @@ import java.util.ArrayList;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "core/core.js")
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class RemoteCommand extends UICommand implements AjaxSource {
 
