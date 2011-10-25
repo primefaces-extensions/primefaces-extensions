@@ -64,7 +64,14 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	private static final Collection<String> EVENT_NAMES =
 			Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
 
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	protected enum PropertyKeys {
+
 		widgetVar,
 		forValue("for");
 

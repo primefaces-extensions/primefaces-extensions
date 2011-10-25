@@ -37,7 +37,14 @@ public class Head extends UIOutput {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.HeadRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	protected enum PropertyKeys {
+
 		title,
 		shortcutIcon;
 

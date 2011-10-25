@@ -36,6 +36,12 @@ public class RemoteCommandParameter extends UIOutput {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	protected enum PropertyKeys {
 		name,
 		applyTo;

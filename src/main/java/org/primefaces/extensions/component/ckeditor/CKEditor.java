@@ -58,7 +58,14 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	private static final Collection<String> EVENT_NAMES =
 			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE));
 
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	protected enum PropertyKeys {
+
         widgetVar,
         height,
         width,
