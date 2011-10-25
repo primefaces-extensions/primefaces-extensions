@@ -61,6 +61,7 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	private static final String EXTENSION_CSS = ".css";
 	private static final String EXTENSION_JS = ".js";
 	private static final String PREFIX_PRIMEFACES = "primefaces-";
+	private static final String THEME_DEFAULT = "aristo";
 
 	@Override
 	public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
@@ -120,7 +121,7 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		}
 
 		if (theme == null) {
-			theme = "aristo";
+			theme = THEME_DEFAULT;
 		}
 
 		encodeTheme(context, "primefaces-" + theme, "theme.css");
