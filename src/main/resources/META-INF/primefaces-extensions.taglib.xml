@@ -303,8 +303,8 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[A JSF component Id - A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]></description>
-			<name>imageAreaSelectParent</name>
+			<description><![CDATA[A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]></description>
+			<name>parentSelector</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>

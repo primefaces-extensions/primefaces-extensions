@@ -47,12 +47,12 @@ import org.primefaces.util.Constants;
  * @since   0.1
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
+})
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -64,7 +64,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT));
 
 	/**
-	 * DOCUMENT_ME
+	 * Properties that are tracked by state saving.
 	 *
 	 * @author  ova / last modified by $Author$
 	 * @version $Revision$
@@ -89,7 +89,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		maxWidth,
 		minHeight,
 		minWidth,
-		imageAreaSelectParent,
+		parentSelector,
 		keyboardSupport;
 
 		private String toString;
@@ -134,12 +134,12 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		setAttribute(PropertyKeys.aspectRatio, aspectRatio);
 	}
 
-	public String getImageAreaSelectParent() {
-		return (String) getStateHelper().eval(PropertyKeys.imageAreaSelectParent, null);
+	public String getParentSelector() {
+		return (String) getStateHelper().eval(PropertyKeys.parentSelector, null);
 	}
 
-	public void setImageAreaSelectParent(final String parent) {
-		setAttribute(PropertyKeys.imageAreaSelectParent, parent);
+	public void setParentSelector(final String parentSelector) {
+		setAttribute(PropertyKeys.parentSelector, parentSelector);
 	}
 
 	public Boolean isAutoHide() {

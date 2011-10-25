@@ -102,8 +102,8 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 			writer.write(",show:" + imageAreaSelect.isShow());
 		}
 
-		if (imageAreaSelect.getImageAreaSelectParent() != null) {
-			writer.write(",parent:'" + findParent(context, imageAreaSelect).getClientId(context) + "'");
+		if (imageAreaSelect.getParentSelector() != null) {
+			writer.write(",parent:'" + imageAreaSelect.getParentSelector() + "'");
 		}
 
 		if (imageAreaSelect.isKeyboardSupport() != null) {
@@ -126,17 +126,6 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final UIComponent component = imageAreaSelect.findComponent(forValue);
 		if (component == null) {
 			throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-		}
-
-		return component;
-	}
-
-	protected UIComponent findParent(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
-		final String parentId = imageAreaSelect.getImageAreaSelectParent();
-		final UIComponent component = imageAreaSelect.findComponent(parentId);
-
-		if (component == null) {
-			throw new FacesException("Cannot find component \"" + parentId + "\" in view.");
 		}
 
 		return component;
