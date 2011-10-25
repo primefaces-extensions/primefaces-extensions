@@ -49,6 +49,7 @@ import org.primefaces.util.Constants;
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
                       })
