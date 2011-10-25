@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.ckeditor;
 
 import java.util.ArrayList;
