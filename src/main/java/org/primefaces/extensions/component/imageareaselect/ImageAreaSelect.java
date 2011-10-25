@@ -42,16 +42,16 @@ import org.primefaces.util.Constants;
 /**
  * Component class for the <code>ImageAreaSelect</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
+                      })
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -60,10 +60,16 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
 	public static final String EVENT_SELECT = "select";
 
-	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT));
+	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT));
 
+	/**
+	 * DOCUMENT_ME
+	 *
+	 * @author  ova / last modified by $Author$
+	 * @version $Revision$
+	 */
 	protected enum PropertyKeys {
+
 		widgetVar,
 		forValue("for"),
 		aspectRatio,
@@ -114,10 +120,10 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		return EVENT_NAMES;
 	}
 
-    @Override
-    public String getDefaultEventName() {
-        return EVENT_SELECT;
-    }
+	@Override
+	public String getDefaultEventName() {
+		return EVENT_SELECT;
+	}
 
 	public String getAspectRatio() {
 		return (String) getStateHelper().eval(PropertyKeys.aspectRatio, null);
@@ -295,17 +301,16 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);
@@ -340,17 +345,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 				final String imgSrc = params.get(clientId + "_imgSrc");
 
 				final ImageAreaSelectEvent selectEvent =
-						new ImageAreaSelectEvent(this,
-								behaviorEvent.getBehavior(),
-								height,
-								width,
-								x1,
-								x2,
-								y1,
-								y2,
-								imgHeight,
-								imgWidth,
-								imgSrc);
+				    new ImageAreaSelectEvent(this, behaviorEvent.getBehavior(), height, width, x1, x2, y1, y2, imgHeight,
+				                             imgWidth, imgSrc);
 
 				super.queueEvent(selectEvent);
 			}

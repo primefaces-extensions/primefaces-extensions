@@ -41,8 +41,7 @@ import org.primefaces.component.api.Widget;
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/jquery.qtip.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
                       })
 public class Tooltip extends UIOutput implements Widget {

@@ -117,41 +117,26 @@
                 </executions>
                 <configuration>
                     <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
-                    <!--
-                    <aggregation>
-                        <subDirMode>true</subDirMode>
-                    </aggregation>
-                    -->
 					<resourcesSets>
+                        <resourcesSet>
+                            <includes>
+                                <include>imageareaselect/**</include>
+                                <include>layout/**</include>
+                                <include>tooltip/**</include>
+                            </includes>
+                            <aggregation>
+                                <subDirMode>true</subDirMode>
+                            </aggregation>
+                        </resourcesSet>
 						<resourcesSet>
-							<inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/</inputDir>
 							<includes>
-								<include>core/core.js</include>
-							</includes>
-							<aggregation>
-								<outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js</outputFile>
-							</aggregation>
-						</resourcesSet>
-						<resourcesSet>
-							<inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/</inputDir>
-							<includes>
+                                <include>core/core.js</include>
 								<include>ajaxstatus/ajaxstatus.js</include>
 								<include>ckeditor/widget.js</include>
-								<include>imageareaselect/jquery.imgareaselect.js</include>
-								<include>imageareaselect/imageareaselect.js</include>
 								<include>imagerotateandresize/imagerotateandresize.js</include>
 							</includes>
 							<aggregation>
 								<outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js</outputFile>
-							</aggregation>
-						</resourcesSet>
-						<resourcesSet>
-							<inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/</inputDir>
-							<includes>
-								<include>imageareaselect/jquery.imgareaselect.css</include>
-							</includes>
-							<aggregation>
-								<outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.css</outputFile>
 							</aggregation>
 						</resourcesSet>
 					</resourcesSets>

@@ -48,8 +48,6 @@ import org.primefaces.component.menuitem.MenuItem;
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/jquery.layout.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/jquery.corner.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
                       })
@@ -199,6 +197,7 @@ public class Layout extends UIComponentBase implements Widget {
 		return model;
 	}
 
+	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
