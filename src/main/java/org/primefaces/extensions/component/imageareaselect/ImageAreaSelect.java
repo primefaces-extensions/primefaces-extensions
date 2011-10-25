@@ -59,9 +59,12 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public static final String EVENT_SELECT = "select";
+	public static final String EVENT_SELECT_END = "selectEnd";
+	public static final String EVENT_SELECT_START = "selectStart";
+	public static final String EVENT_SELECT_CHANGE = "selectChange";
 
-	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT));
+	private static final Collection<String> EVENT_NAMES =
+		Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT_END, EVENT_SELECT_START, EVENT_SELECT_CHANGE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -123,7 +126,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
 	@Override
 	public String getDefaultEventName() {
-		return EVENT_SELECT;
+		return EVENT_SELECT_END;
 	}
 
 	public String getAspectRatio() {
@@ -332,7 +335,10 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		if (isRequestSource(clientId, params)) {
 			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-			if (eventName.equals(EVENT_SELECT)) {
+			if (eventName.equals(EVENT_SELECT_END) 
+					|| eventName.equals(EVENT_SELECT_CHANGE)
+					|| eventName.equals(EVENT_SELECT_START)) {
+	
 				final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
 				final int x1 = Integer.parseInt(params.get(clientId + "_x1"));
