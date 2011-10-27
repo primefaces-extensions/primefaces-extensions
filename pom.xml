@@ -130,6 +130,7 @@
                     <!-- no version, always use latest and greatest -->
                     <extensions>true</extensions>
                     <configuration>
+                    	<useProjectReferences>false</useProjectReferences>
                         <downloadSources>true</downloadSources>
                         <wtpversion>2.0</wtpversion>
                         <classpathContainers>
