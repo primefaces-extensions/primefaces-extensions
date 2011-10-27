@@ -108,23 +108,22 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	}
 
 	private void encodeTheme(final FacesContext context) throws IOException {
-		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.THEME_PARAM);
-
 		String theme = null;
 
-		if (themeParamValue != null) {
+		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.THEME_PARAM);
+		if (themeParamValue == null) {
+			theme = THEME_DEFAULT;
+		} else {
 			final ELContext elContext = context.getELContext();
 			final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
 			final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
 
-			theme = (String) ve.getValue(elContext);
+			theme = (String) ve.getValue(elContext);	
 		}
 
-		if (theme == null) {
-			theme = THEME_DEFAULT;
+		if (theme != null && !theme.equalsIgnoreCase("none")) {
+			encodeTheme(context, PREFIX_PRIMEFACES + theme, "theme.css");
 		}
-
-		encodeTheme(context, "primefaces-" + theme, "theme.css");
 	}
 
 	private void encodeFacet(final FacesContext context, final UIComponent component, final String name) throws IOException {
