@@ -44,9 +44,8 @@ public class PaginatorTagHandler extends TagHandler {
 	private final TagAttribute pageLinks;
 	private final TagAttribute paginatorPosition;
 	private final TagAttribute paginatorAlwaysVisible;
-	private final TagAttribute page;
 	private final TagAttribute rows;
-	
+
 	public PaginatorTagHandler(final TagConfig config) {
 		super(config);
 
@@ -56,7 +55,6 @@ public class PaginatorTagHandler extends TagHandler {
 		this.pageLinks = this.getAttribute("pageLinks");
 		this.paginatorPosition = this.getAttribute("paginatorPosition");
 		this.paginatorAlwaysVisible = this.getAttribute("paginatorAlwaysVisible");
-		this.page = this.getAttribute("page");
 		this.rows = this.getAttribute("rows");
 	}
 
@@ -97,12 +95,6 @@ public class PaginatorTagHandler extends TagHandler {
 			dataTable.setPaginatorAlwaysVisible(true);
 		} else {
 			dataTable.setPaginatorAlwaysVisible(Boolean.parseBoolean(this.paginatorAlwaysVisible.getValue(context)));
-		}
-
-		if (this.page == null) {
-			dataTable.setPage(1);
-		} else {
-			dataTable.setPage(Integer.parseInt(this.page.getValue(context)));
 		}
 
 		if (this.rows == null) {
