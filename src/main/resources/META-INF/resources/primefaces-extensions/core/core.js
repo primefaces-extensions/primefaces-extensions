@@ -101,6 +101,23 @@ PrimeFacesExt = {
 	},
 
 	/**
+	 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
+	 * 
+	 * @param {string} url A string containing the URL to which the request is sent.
+	 * @param {function} callback A callback function that is executed if the request succeeds.
+	 * @param {string} cache Appends a unique timestamp if false.
+	 */
+	getScript : function(url, callback, cache) {
+		$.ajax({
+				type: "GET",
+				url: url,
+				success: callback,
+				dataType: "script",
+				cache: cache
+		});
+	},
+
+	/**
 	 * The JSF resource identifier.
 	 *
 	 * @type {string}

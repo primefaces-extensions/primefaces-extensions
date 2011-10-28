@@ -94,12 +94,12 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	//check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {
 		//load ckeditor
-		$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
+		PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
 			//load jquery adapter
-			$.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
+			PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
 				_self.resourcesLoaded();
-			});
-		});
+			}, true);
+		}, true);
 	} else {
 		this.resourcesLoaded();
 	}
