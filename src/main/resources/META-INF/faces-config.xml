@@ -72,8 +72,12 @@
 	</component>    
 
     <converter>
-		<converter-id>org.primefaces.extensions.converter.Json</converter-id>
+		<converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
 		<converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
+	</converter>
+    <converter>
+		<converter-id>org.primefaces.extensions.converter.EnumConverter</converter-id>
+		<converter-class>org.primefaces.extensions.converter.EnumConverter</converter-class>
 	</converter>
 
 	<render-kit>
