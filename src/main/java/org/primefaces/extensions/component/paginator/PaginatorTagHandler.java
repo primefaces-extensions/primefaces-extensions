@@ -66,7 +66,7 @@ public class PaginatorTagHandler extends TagHandler {
 
 		final DataTable dataTable = (DataTable) parent;
 		dataTable.setPaginator(true);
-		
+
 		if (this.paginatorTemplate != null) {
 			dataTable.setPaginatorTemplate(this.paginatorTemplate.getValue(context));
 		}

@@ -38,7 +38,7 @@ import javax.faces.view.facelets.TagAttribute;
 public class RemoteCommandParameterHandler extends ComponentHandler {
 
 	private static final ApplyToMetaRule META_RULE = new ApplyToMetaRule();
-	
+
 	private static final class ApplyToMetaRule extends MetaRule {
 
         @Override
@@ -52,7 +52,7 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
             return null;
         }
     }
-   
+
 	private static final class ApplyToValueExpressionMetadata extends Metadata {
 
 		private final TagAttribute attribute;
@@ -65,7 +65,7 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
 		public void applyMetadata(final FaceletContext context, final Object instance) {
 			final RemoteCommandParameter param = (RemoteCommandParameter) instance;
 			final ValueExpression valueExpression = attribute.getValueExpression(context, Object.class);
-			
+
 			param.setApplyTo(valueExpression);
 		}
 	}
@@ -76,10 +76,10 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) {
+	protected MetaRuleset createMetaRuleset(final Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		metaRuleset.addRule(META_RULE);
 
-		return metaRuleset;  
+		return metaRuleset;
 	}
 }

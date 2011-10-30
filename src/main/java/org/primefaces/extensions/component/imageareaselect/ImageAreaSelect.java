@@ -335,10 +335,10 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		if (isRequestSource(clientId, params)) {
 			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-			if (eventName.equals(EVENT_SELECT_END) 
+			if (eventName.equals(EVENT_SELECT_END)
 					|| eventName.equals(EVENT_SELECT_CHANGE)
 					|| eventName.equals(EVENT_SELECT_START)) {
-	
+
 				final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
 				final int x1 = Integer.parseInt(params.get(clientId + "_x1"));
