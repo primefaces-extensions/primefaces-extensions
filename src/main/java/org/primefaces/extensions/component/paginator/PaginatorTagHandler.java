@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
@@ -64,43 +65,45 @@ public class PaginatorTagHandler extends TagHandler {
 			throw new FacesException("Paginator must be inside a DataTable.");
 		}
 
-		final DataTable dataTable = (DataTable) parent;
-		dataTable.setPaginator(true);
+		if (ComponentHandler.isNew(parent)) {
+			final DataTable dataTable = (DataTable) parent;
+			dataTable.setPaginator(true);
 
-		if (this.paginatorTemplate != null) {
-			dataTable.setPaginatorTemplate(this.paginatorTemplate.getValue(context));
-		}
+			if (this.paginatorTemplate != null) {
+				dataTable.setPaginatorTemplate(this.paginatorTemplate.getValue(context));
+			}
 
-		if (this.rowsPerPageTemplate != null) {
-			dataTable.setRowsPerPageTemplate(this.rowsPerPageTemplate.getValue(context));
-		}
+			if (this.rowsPerPageTemplate != null) {
+				dataTable.setRowsPerPageTemplate(this.rowsPerPageTemplate.getValue(context));
+			}
 
-		if (this.currentPageReportTemplate != null) {
-			dataTable.setCurrentPageReportTemplate(this.currentPageReportTemplate.getValue(context));
-		}
+			if (this.currentPageReportTemplate != null) {
+				dataTable.setCurrentPageReportTemplate(this.currentPageReportTemplate.getValue(context));
+			}
 
-		if (this.pageLinks == null) {
-			dataTable.setPageLinks(10);
-		} else {
-			dataTable.setPageLinks(Integer.parseInt(this.pageLinks.getValue(context)));
-		}
+			if (this.pageLinks == null) {
+				dataTable.setPageLinks(10);
+			} else {
+				dataTable.setPageLinks(Integer.parseInt(this.pageLinks.getValue(context)));
+			}
 
-		if (this.paginatorPosition == null) {
-			dataTable.setPaginatorPosition("both");
-		} else {
-			dataTable.setPaginatorPosition(this.paginatorPosition.getValue(context));
-		}
+			if (this.paginatorPosition == null) {
+				dataTable.setPaginatorPosition("both");
+			} else {
+				dataTable.setPaginatorPosition(this.paginatorPosition.getValue(context));
+			}
 
-		if (this.paginatorAlwaysVisible == null) {
-			dataTable.setPaginatorAlwaysVisible(true);
-		} else {
-			dataTable.setPaginatorAlwaysVisible(Boolean.parseBoolean(this.paginatorAlwaysVisible.getValue(context)));
-		}
+			if (this.paginatorAlwaysVisible == null) {
+				dataTable.setPaginatorAlwaysVisible(true);
+			} else {
+				dataTable.setPaginatorAlwaysVisible(Boolean.parseBoolean(this.paginatorAlwaysVisible.getValue(context)));
+			}
 
-		if (this.rows == null) {
-			dataTable.setRows(0);
-		} else {
-			dataTable.setRows(Integer.parseInt(this.rows.getValue(context)));
+			if (this.rows == null) {
+				dataTable.setRows(0);
+			} else {
+				dataTable.setRows(Integer.parseInt(this.rows.getValue(context)));
+			}
 		}
 	}
 }
