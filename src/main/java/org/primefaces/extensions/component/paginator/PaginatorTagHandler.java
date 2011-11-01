@@ -81,27 +81,19 @@ public class PaginatorTagHandler extends TagHandler {
 				dataTable.setCurrentPageReportTemplate(this.currentPageReportTemplate.getValue(context));
 			}
 
-			if (this.pageLinks == null) {
-				dataTable.setPageLinks(10);
-			} else {
+			if (this.pageLinks != null) {
 				dataTable.setPageLinks(this.pageLinks.getInt(context));
 			}
 
-			if (this.paginatorPosition == null) {
-				dataTable.setPaginatorPosition("both");
-			} else {
+			if (this.paginatorPosition != null) {
 				dataTable.setPaginatorPosition(this.paginatorPosition.getValue(context));
 			}
 
-			if (this.paginatorAlwaysVisible == null) {
-				dataTable.setPaginatorAlwaysVisible(true);
-			} else {
+			if (this.paginatorAlwaysVisible != null) {
 				dataTable.setPaginatorAlwaysVisible(this.paginatorAlwaysVisible.getBoolean(context));
 			}
 
-			if (this.rows == null) {
-				dataTable.setRows(0);
-			} else {
+			if (this.rows != null) {
 				dataTable.setRows(this.rows.getInt(context));
 			}
 		}
