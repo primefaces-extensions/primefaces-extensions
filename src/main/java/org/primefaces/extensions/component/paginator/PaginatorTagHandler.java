@@ -84,7 +84,7 @@ public class PaginatorTagHandler extends TagHandler {
 			if (this.pageLinks == null) {
 				dataTable.setPageLinks(10);
 			} else {
-				dataTable.setPageLinks(Integer.parseInt(this.pageLinks.getValue(context)));
+				dataTable.setPageLinks(this.pageLinks.getInt(context));
 			}
 
 			if (this.paginatorPosition == null) {
@@ -96,13 +96,13 @@ public class PaginatorTagHandler extends TagHandler {
 			if (this.paginatorAlwaysVisible == null) {
 				dataTable.setPaginatorAlwaysVisible(true);
 			} else {
-				dataTable.setPaginatorAlwaysVisible(Boolean.parseBoolean(this.paginatorAlwaysVisible.getValue(context)));
+				dataTable.setPaginatorAlwaysVisible(this.paginatorAlwaysVisible.getBoolean(context));
 			}
 
 			if (this.rows == null) {
 				dataTable.setRows(0);
 			} else {
-				dataTable.setRows(Integer.parseInt(this.rows.getValue(context)));
+				dataTable.setRows(this.rows.getInt(context));
 			}
 		}
 	}
