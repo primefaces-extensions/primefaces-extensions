@@ -99,6 +99,7 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 		PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
 			//load jquery adapter
 			PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
+				_self.overwriteSaveButton();
 				_self.resourcesLoaded();
 			}, true);
 		}, true);
@@ -116,7 +117,24 @@ PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
  */
 PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	var _self = this;
-	
+
+	//remove old instances if required
+	var oldInstance = CKEDITOR.instances[this.id];
+	if (oldInstance) {
+		oldInstance.destroy();
+		delete oldInstance;
+	}
+
+	//initialize ckeditor after all resources were loaded
+	this.jq.ckeditor(function() { _self.initialized(); }, _self.options);
+}
+
+/**
+ * Overwrites the save button.
+ *
+ * @protected
+ */
+PrimeFacesExt.widget.CKEditor.prototype.overwriteSaveButton = function() {
 	//overwrite save button
 	CKEDITOR.plugins.registered['save'] = {
 		init : function(editor) {
@@ -140,16 +158,6 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 			editor.ui.addButton('Save', {label : editor.lang.save, command : 'save' });
 		}
 	}
-
-	//remove old instances if required
-	var oldInstance = CKEDITOR.instances[this.id];
-	if (oldInstance) {
-		oldInstance.destroy();
-		delete oldInstance;
-	}
-
-	//initialize ckeditor after all resources were loaded
-	this.jq.ckeditor(function() { _self.initialized(); }, _self.options);
 }
 
 /**
