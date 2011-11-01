@@ -59,6 +59,8 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	this.jq = $(this.jqId);
 
 	this.options = {};
+	//add widget to ckeditor config, this is required for the save event
+	this.options.widget = this;
 
 	if (this.cfg.skin) {
 		this.options.skin = this.cfg.skin;
@@ -118,17 +120,19 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	//overwrite save button
 	CKEDITOR.plugins.registered['save'] = {
 		init : function(editor) {
+			//get widget
+			var widget = editor.config.widget;
 			var command = editor.addCommand('save', {
 				modes : { wysiwyg:1, source:1 },
 				exec : function(editor) {
-					if (_self.cfg.behaviors) {
-						var saveCallback = _self.cfg.behaviors['save'];
+					if (widget.cfg.behaviors) {
+						var saveCallback = widget.cfg.behaviors['save'];
 					    if (saveCallback) {
 					    	var ext = {
 					    			params: {}
 					    	};
 
-					    	saveCallback.call(_self, null, ext);
+					    	saveCallback.call(widget, null, ext);
 					    }
 					}
 				}
