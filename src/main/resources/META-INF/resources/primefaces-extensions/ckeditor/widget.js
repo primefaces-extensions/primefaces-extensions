@@ -121,7 +121,7 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	//remove old instances if required
 	var oldInstance = CKEDITOR.instances[this.id];
 	if (oldInstance) {
-		oldInstance.destroy();
+		oldInstance.destroy(true);
 		delete oldInstance;
 	}
 
