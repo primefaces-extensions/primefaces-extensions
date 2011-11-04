@@ -43,6 +43,14 @@
 		<component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
 	</component>
 	<component>
+		<component-type>org.primefaces.extensions.component.Message</component-type>
+		<component-class>org.primefaces.extensions.component.message.Message</component-class>
+	</component>
+	<component>
+		<component-type>org.primefaces.extensions.component.Messages</component-type>
+		<component-class>org.primefaces.extensions.component.messages.Messages</component-class>
+	</component>
+	<component>
 		<component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
 		<component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
 	</component>
@@ -120,8 +128,18 @@
     		<component-family>org.primefaces.extensions.component</component-family>
     		<renderer-type>org.primefaces.extensions.component.AjaxStatusRenderer</renderer-type>
     		<renderer-class>org.primefaces.extensions.component.ajaxstatus.AjaxStatusRenderer</renderer-class>
-  		</renderer>         
-        
+  		</renderer>
+  		<renderer>
+    		<component-family>org.primefaces.extensions.component</component-family>
+    		<renderer-type>org.primefaces.extensions.component.MessageRenderer</renderer-type>
+    		<renderer-class>org.primefaces.extensions.component.message.MessageRenderer</renderer-class>
+  		</renderer>
+  		<renderer>
+    		<component-family>org.primefaces.extensions.component</component-family>
+    		<renderer-type>org.primefaces.extensions.component.MessagesRenderer</renderer-type>
+    		<renderer-class>org.primefaces.extensions.component.messages.MessagesRenderer</renderer-class>
+  		</renderer>
+
 		<client-behavior-renderer>
 			<client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
 			<client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
