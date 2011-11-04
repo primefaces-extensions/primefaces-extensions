@@ -69,7 +69,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author  ova / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
