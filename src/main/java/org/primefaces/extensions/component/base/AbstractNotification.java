@@ -16,31 +16,23 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.message;
+package org.primefaces.extensions.component.base;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.el.ValueExpression;
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
-
-import org.primefaces.extensions.component.base.AbstractNotification;
-
-import java.util.List;
-import java.util.ArrayList;
+import javax.faces.component.UIComponentBase;
 
 /**
- * Component class for the <code>Message</code> component.
+ * Base class for all notification components.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since 0.2
  */
-@ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css")
-})
-public class Message extends AbstractNotification {
+public abstract class AbstractNotification extends UIComponentBase {
 
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MessageRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -51,9 +43,9 @@ public class Message extends AbstractNotification {
 	 */
 	protected enum PropertyKeys {
 
-		forValue("for"),
-		redisplay,
-		display;
+		escape,
+		showSummary,
+		showDetail;
 
 		private String toString;
 
@@ -70,39 +62,34 @@ public class Message extends AbstractNotification {
 		}
 	}
 
-	public Message() {
-		setRendererType(DEFAULT_RENDERER);
-	}
-
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
-
-	public String getFor() {
-		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-	}
-
-	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+	@SuppressWarnings("boxing")
+	public boolean isEscape() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.escape, true);
 	}
 
 	@SuppressWarnings("boxing")
-	public boolean isRedisplay() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.redisplay, true);
+	public void setEscape(final boolean escape) {
+		setAttribute(PropertyKeys.escape, escape);
 	}
 
 	@SuppressWarnings("boxing")
-	public void setRedisplay(final boolean redisplay) {
-		setAttribute(PropertyKeys.redisplay, redisplay);
+	public boolean isShowSummary() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showSummary, true);
 	}
 
-	public String getDisplay() {
-		return (String) getStateHelper().eval(PropertyKeys.display, "both");
+	@SuppressWarnings("boxing")
+	public void setShowSummary(final boolean showSummary) {
+		setAttribute(PropertyKeys.showSummary, showSummary);
 	}
 
-	public void setDisplay(final String display) {
-		setAttribute(PropertyKeys.display, display);
+	@SuppressWarnings("boxing")
+	public boolean isShowDetail() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showDetail, false);
+	}
+
+	@SuppressWarnings("boxing")
+	public void setShowDetail(final boolean showDetail) {
+		setAttribute(PropertyKeys.showDetail, showDetail);
 	}
 
 	@SuppressWarnings("unchecked")

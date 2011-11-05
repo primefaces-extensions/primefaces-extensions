@@ -31,6 +31,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.renderkit.CoreRenderer;
+
 /**
  * Renderer for the {@link Messages} component.
  *
@@ -38,7 +40,7 @@ import javax.faces.context.ResponseWriter;
  * @version $Revision$
  * @since 0.2
  */
-public class MessagesRenderer extends org.primefaces.component.messages.MessagesRenderer {
+public class MessagesRenderer extends CoreRenderer {
 
     @Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -89,7 +91,7 @@ public class MessagesRenderer extends org.primefaces.component.messages.Messages
 		writer.endElement("div");
 	}
 
-	private void encodeSeverityMessages(final FacesContext context, final Messages messagesComponent, final String severity,
+	protected void encodeSeverityMessages(final FacesContext context, final Messages messagesComponent, final String severity,
 			final List<FacesMessage> messages) throws IOException {
 
 		final ResponseWriter writer = context.getResponseWriter();
@@ -114,7 +116,7 @@ public class MessagesRenderer extends org.primefaces.component.messages.Messages
 	            writer.startElement("span", null);
 	            writer.writeAttribute("class", styleClassPrefix + "-summary", null);
 
-	            if (messagesComponent.isEscape().equals(Boolean.TRUE)) {
+	            if (messagesComponent.isEscape()) {
 	    			writer.writeText(summary, null);
 	    		} else {
 	    			writer.write(summary);
@@ -127,7 +129,7 @@ public class MessagesRenderer extends org.primefaces.component.messages.Messages
             	writer.startElement("span", null);
             	writer.writeAttribute("class", styleClassPrefix + "-detail", null);
 
-	            if (messagesComponent.isEscape().equals(Boolean.TRUE)) {
+	            if (messagesComponent.isEscape()) {
 	    			writer.writeText(detail, null);
 	    		} else {
 	    			writer.write(detail);

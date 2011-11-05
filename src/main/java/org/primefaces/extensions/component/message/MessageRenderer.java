@@ -28,6 +28,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.renderkit.CoreRenderer;
+
 /**
  * Renderer for the {@link Message} component.
  *
@@ -35,7 +37,7 @@ import javax.faces.context.ResponseWriter;
  * @version $Revision$
  * @since 0.2
  */
-public class MessageRenderer extends org.primefaces.component.message.MessageRenderer {
+public class MessageRenderer extends CoreRenderer {
 
     @Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -106,12 +108,23 @@ public class MessageRenderer extends org.primefaces.component.message.MessageRen
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-message-" + severity, null);
 
-		if (message.isEscape().equals(Boolean.TRUE)) {
+		if (message.isEscape()) {
 			writer.writeText(text, null);
 		} else {
 			writer.write(text);
 		}
 
+		writer.endElement("span");
+	}
+
+    protected void encodeIcon(final ResponseWriter writer, final String severity, final String title, final boolean iconOnly)
+    	throws IOException {
+
+		writer.startElement("span", null);
+		writer.writeAttribute("class", "ui-message-" + severity + "-icon", null);
+        if (iconOnly) {
+            writer.writeAttribute("title", title, null);
+        }
 		writer.endElement("span");
 	}
 }

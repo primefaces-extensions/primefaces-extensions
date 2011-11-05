@@ -22,6 +22,9 @@ import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
+import org.primefaces.component.api.AutoUpdatable;
+import org.primefaces.extensions.component.base.AbstractNotification;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -35,7 +38,7 @@ import java.util.ArrayList;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "primefaces.css")
 })
-public class Messages extends org.primefaces.component.messages.Messages {
+public class Messages extends AbstractNotification implements AutoUpdatable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MessagesRenderer";
@@ -49,7 +52,9 @@ public class Messages extends org.primefaces.component.messages.Messages {
 	 */
 	protected enum PropertyKeys {
 
-		escape;
+		globalOnly,
+		redisplay,
+		autoUpdate;
 
 		private String toString;
 
@@ -75,12 +80,34 @@ public class Messages extends org.primefaces.component.messages.Messages {
 		return COMPONENT_FAMILY;
 	}
 
-	public Boolean isEscape() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.escape, Boolean.TRUE);
+	@SuppressWarnings("boxing")
+	public boolean isGlobalOnly() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.globalOnly, false);
 	}
 
-	public void setEscape(final Boolean escape) {
-		setAttribute(PropertyKeys.escape, escape);
+	@SuppressWarnings("boxing")
+	public void setGlobalOnly(final boolean globalOnly) {
+		setAttribute(PropertyKeys.globalOnly, globalOnly);
+	}
+
+	@SuppressWarnings("boxing")
+	public boolean isRedisplay() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.redisplay, true);
+	}
+
+	@SuppressWarnings("boxing")
+	public void setRedisplay(final boolean redisplay) {
+		setAttribute(PropertyKeys.redisplay, redisplay);
+	}
+
+	@SuppressWarnings("boxing")
+	public boolean isAutoUpdate() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
+	}
+
+	@SuppressWarnings("boxing")
+	public void setAutoUpdate(final boolean autoUpdate) {
+		setAttribute(PropertyKeys.autoUpdate, autoUpdate);
 	}
 
 	@SuppressWarnings("unchecked")
