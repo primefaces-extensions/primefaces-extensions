@@ -28,6 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.application.TargetableFacesMessage;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -64,40 +65,45 @@ public class MessageRenderer extends CoreRenderer {
 				return;
 			}
 
-			final Severity severity = facesMessage.getSeverity();
+			final boolean isTarget = message.isTarget(facesMessage,
+					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.MESSAGE);
 
-			String severityKey = null;
+			if (isTarget) {
+				final Severity severity = facesMessage.getSeverity();
 
-			if (severity.equals(FacesMessage.SEVERITY_ERROR)) {
-				severityKey = "error";
-			} else if (severity.equals(FacesMessage.SEVERITY_INFO)) {
-				severityKey = "info";
-			} else if (severity.equals(FacesMessage.SEVERITY_WARN)) {
-				severityKey = "warn";
-			} else if (severity.equals(FacesMessage.SEVERITY_FATAL)) {
-				severityKey = "fatal";
+				String severityKey = null;
+
+				if (severity.equals(FacesMessage.SEVERITY_ERROR)) {
+					severityKey = "error";
+				} else if (severity.equals(FacesMessage.SEVERITY_INFO)) {
+					severityKey = "info";
+				} else if (severity.equals(FacesMessage.SEVERITY_WARN)) {
+					severityKey = "warn";
+				} else if (severity.equals(FacesMessage.SEVERITY_FATAL)) {
+					severityKey = "fatal";
+				}
+
+				String styleClass = "ui-message-" + severityKey + " ui-widget ui-corner-all";
+				if (iconOnly) {
+				    styleClass = styleClass + " ui-message-icon-only ui-helper-clearfix";
+				}
+
+				writer.writeAttribute("class", styleClass , null);
+
+				if (!display.equals("text")) {
+				    encodeIcon(writer, severityKey, facesMessage.getDetail(), iconOnly);
+				}
+
+				if (!iconOnly) {
+				    if (message.isShowSummary()) {
+				        encodeText(writer, facesMessage.getSummary(), severityKey + "-summary", message);
+				    }
+				    if (message.isShowDetail()) {
+				        encodeText(writer, facesMessage.getDetail(), severityKey + "-detail", message);
+				    }
+				}
+				facesMessage.rendered();
 			}
-
-			String styleClass = "ui-message-" + severityKey + " ui-widget ui-corner-all";
-			if (iconOnly) {
-			    styleClass = styleClass + " ui-message-icon-only ui-helper-clearfix";
-			}
-
-			writer.writeAttribute("class", styleClass , null);
-
-			if (!display.equals("text")) {
-			    encodeIcon(writer, severityKey, facesMessage.getDetail(), iconOnly);
-			}
-
-			if (!iconOnly) {
-			    if (message.isShowSummary()) {
-			        encodeText(writer, facesMessage.getSummary(), severityKey + "-summary", message);
-			    }
-			    if (message.isShowDetail()) {
-			        encodeText(writer, facesMessage.getDetail(), severityKey + "-detail", message);
-			    }
-			}
-			facesMessage.rendered();
 		}
 		writer.endElement("div");
 	}

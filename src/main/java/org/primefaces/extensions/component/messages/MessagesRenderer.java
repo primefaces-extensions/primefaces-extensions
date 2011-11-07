@@ -31,6 +31,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.application.TargetableFacesMessage;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -59,20 +60,26 @@ public class MessagesRenderer extends CoreRenderer {
 
 		while (messagesIterator.hasNext()) {
 			final FacesMessage message = messagesIterator.next();
-			final Severity severity = message.getSeverity();
 
-			if (message.isRendered() && !messagesComponent.isRedisplay()) {
-				continue;
-			}
+			final boolean isTarget = messagesComponent.isTarget(message,
+					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.MESSAGES);
 
-			if (severity.equals(FacesMessage.SEVERITY_INFO)) {
-				messages.get("info").add(message);
-			} else if (severity.equals(FacesMessage.SEVERITY_WARN)) {
-				messages.get("warn").add(message);
-			} else if (severity.equals(FacesMessage.SEVERITY_ERROR)) {
-				messages.get("error").add(message);
-			} else if (severity.equals(FacesMessage.SEVERITY_FATAL)) {
-				messages.get("fatal").add(message);
+			if (isTarget) {
+				final Severity severity = message.getSeverity();
+
+				if (message.isRendered() && !messagesComponent.isRedisplay()) {
+					continue;
+				}
+
+				if (severity.equals(FacesMessage.SEVERITY_INFO)) {
+					messages.get("info").add(message);
+				} else if (severity.equals(FacesMessage.SEVERITY_WARN)) {
+					messages.get("warn").add(message);
+				} else if (severity.equals(FacesMessage.SEVERITY_ERROR)) {
+					messages.get("error").add(message);
+				} else if (severity.equals(FacesMessage.SEVERITY_FATAL)) {
+					messages.get("fatal").add(message);
+				}
 			}
 		}
 

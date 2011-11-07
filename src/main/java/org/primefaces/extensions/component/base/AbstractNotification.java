@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ValueExpression;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponentBase;
+
+import org.primefaces.extensions.application.TargetableFacesMessage;
 
 /**
  * Base class for all notification components.
@@ -115,5 +118,30 @@ public abstract class AbstractNotification extends UIComponentBase {
 				setAttributes.add(attributeName);
 			}
 		}
+	}
+
+	/**
+	 * Checks if the component is target of the given {@link FacesMessage}.
+	 *
+	 * @param message The {@link FacesMessage}.
+	 * @param targets The targets which are supported by the component.
+	 * @return If the component is target of the given {@link FacesMessage}.
+	 */
+	public boolean isTarget(final FacesMessage message, final TargetableFacesMessage.Target... targets) {
+		boolean isTarget = false;
+
+		if (message instanceof TargetableFacesMessage) {
+			final TargetableFacesMessage targetableMessage = (TargetableFacesMessage) message;
+
+			for (TargetableFacesMessage.Target target : targets) {
+				if (!isTarget) {
+					isTarget = targetableMessage.getTarget() == target;
+				}
+			}
+		} else {
+			isTarget = true;
+		}
+
+		return isTarget;
 	}
 }
