@@ -18,14 +18,13 @@
 
 package org.primefaces.extensions.component.base;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.primefaces.extensions.application.TargetableFacesMessage;
 
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponentBase;
-
-import org.primefaces.extensions.application.TargetableFacesMessage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base class for all notification components.
@@ -128,20 +127,18 @@ public abstract class AbstractNotification extends UIComponentBase {
 	 * @return If the component is target of the given {@link FacesMessage}.
 	 */
 	public boolean isTarget(final FacesMessage message, final TargetableFacesMessage.Target... targets) {
-		boolean isTarget = false;
+        if (!(message instanceof TargetableFacesMessage)) {
+            return true;
+        }
+        
+        final TargetableFacesMessage targetableMessage = (TargetableFacesMessage) message;
 
-		if (message instanceof TargetableFacesMessage) {
-			final TargetableFacesMessage targetableMessage = (TargetableFacesMessage) message;
+        for (TargetableFacesMessage.Target target : targets) {
+            if (targetableMessage.getTarget() == target) {
+                return true;
+            }
+        }
 
-			for (TargetableFacesMessage.Target target : targets) {
-				if (!isTarget) {
-					isTarget = targetableMessage.getTarget() == target;
-				}
-			}
-		} else {
-			isTarget = true;
-		}
-
-		return isTarget;
+		return false;
 	}
 }

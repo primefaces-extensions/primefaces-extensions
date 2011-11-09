@@ -27,9 +27,10 @@ import javax.faces.application.FacesMessage;
  * @version $Revision$
  * @since 0.2
  */
-@SuppressWarnings("serial")
 public class TargetableFacesMessage extends FacesMessage {
 
+    private static final long serialVersionUID = 20111109L;
+    
 	/**
 	 * Targets for the {@link TargetableFacesMessage}.
 	 *
