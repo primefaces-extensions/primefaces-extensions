@@ -3,7 +3,7 @@
 * $$Id$$
 */
 
-package com.innflow.ebtam.webapp.jsf.masterdetail;
+package org.primefaces.extensions.component.masterdetail;
 
 import java.io.Serializable;
 

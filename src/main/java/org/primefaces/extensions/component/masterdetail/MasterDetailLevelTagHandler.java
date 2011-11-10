@@ -3,7 +3,7 @@
 * $$Id$$
 */
 
-package com.innflow.ebtam.webapp.jsf.masterdetail;
+package org.primefaces.extensions.component.masterdetail;
 
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
