@@ -689,6 +689,10 @@
 		</attribute>
 	</tag>
 	<tag>
+ 		<tag-name>resetEditableValueHolders</tag-name>
+ 		<handler-class>org.primefaces.extensions.component.reseteditablevalueholders.ResetEditableValueHoldersTagHandler</handler-class>
+	</tag>
+	<tag>
 		<tag-name>saveState</tag-name>
 		<component>
 			<component-type>org.primefaces.extensions.component.SaveState</component-type>

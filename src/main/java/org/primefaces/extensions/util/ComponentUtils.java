@@ -18,6 +18,15 @@
 
 package org.primefaces.extensions.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.faces.application.ProjectStage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+
 /**
  * Component utils for this project.
  *
@@ -27,7 +36,35 @@ package org.primefaces.extensions.util;
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
+	private final static Logger logger = Logger.getLogger(ComponentUtils.class.getName());
+
 	public static String escapeComponentId(String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
+	}
+
+	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
+		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
+
+		final String formattedList = formatKeywords(context, source, list);
+		final String[] ids = formattedList.split("[,\\s]+");
+
+		for (int i = 0; i < ids.length; i++) {
+			final String id = ids[i].trim();
+
+			if (id.equals("@all") || id.equals("@none")) {
+				logger.log(Level.WARNING, "Components @all and @none are not supported.");
+			} else {
+				final UIComponent foundComponent = source.findComponent(id);
+				if (foundComponent != null) {
+					foundComponents.add(foundComponent);
+                } else {
+                    if (context.getApplication().getProjectStage().equals(ProjectStage.Development)) {
+                        logger.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
+                    }
+                }
+			}
+		}
+
+		return foundComponents;
 	}
 }
