@@ -169,7 +169,7 @@ public abstract class AbstractNotification extends UIMessage {
 	protected boolean checkSeverity(final FacesMessage message) {
 		// level has priority over min/max level
 		if (getLevel() != null) {
-			return getLevel().equals(message.getSeverity().toString());
+			return message.getSeverity().toString().contains(getLevel().toUpperCase());
 		}
 
 		final FacesMessage.Severity minLevelSeverity = toSeverity(getMinLevel());
@@ -198,16 +198,16 @@ public abstract class AbstractNotification extends UIMessage {
 			return null;
 		}
 
-		if (FacesMessage.SEVERITY_ERROR.toString().equals(severity)) {
+		if (FacesMessage.SEVERITY_ERROR.toString().contains(severity.toUpperCase())) {
 			return FacesMessage.SEVERITY_ERROR;
 		}
-		if (FacesMessage.SEVERITY_FATAL.toString().equals(severity)) {
+		if (FacesMessage.SEVERITY_FATAL.toString().contains(severity.toUpperCase())) {
 			return FacesMessage.SEVERITY_FATAL;
 		}
-		if (FacesMessage.SEVERITY_INFO.toString().equals(severity)) {
+		if (FacesMessage.SEVERITY_INFO.toString().contains(severity.toUpperCase())) {
 			return FacesMessage.SEVERITY_INFO;
 		}
-		if (FacesMessage.SEVERITY_WARN.toString().equals(severity)) {
+		if (FacesMessage.SEVERITY_WARN.toString().contains(severity.toUpperCase())) {
 			return FacesMessage.SEVERITY_WARN;
 		}
 
