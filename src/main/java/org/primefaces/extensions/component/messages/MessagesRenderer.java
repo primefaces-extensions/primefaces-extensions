@@ -61,10 +61,10 @@ public class MessagesRenderer extends CoreRenderer {
 		while (messagesIterator.hasNext()) {
 			final FacesMessage message = messagesIterator.next();
 
-			final boolean isTarget = messagesComponent.isTarget(message,
+			final boolean shouldRender = messagesComponent.shouldRender(message,
 					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.MESSAGES);
 
-			if (isTarget) {
+			if (shouldRender) {
 				final Severity severity = message.getSeverity();
 
 				if (message.isRendered() && !messagesComponent.isRedisplay()) {

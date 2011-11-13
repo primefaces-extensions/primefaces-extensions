@@ -65,10 +65,10 @@ public class MessageRenderer extends CoreRenderer {
 				return;
 			}
 
-			final boolean isTarget = message.isTarget(facesMessage,
+			final boolean shouldRender = message.shouldRender(facesMessage,
 					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.MESSAGE);
 
-			if (isTarget) {
+			if (shouldRender) {
 				final Severity severity = facesMessage.getSeverity();
 
 				String severityKey = null;

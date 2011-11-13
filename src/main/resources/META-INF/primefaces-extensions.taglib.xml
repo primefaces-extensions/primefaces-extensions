@@ -425,6 +425,24 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
+		<attribute>
+			<description><![CDATA[The supported severity level for this component.]]></description>
+			<name>level</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The minimum severty level which is supported by this component.]]></description>
+			<name>minLevel</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The maximum severty level which is supported by this component.]]></description>
+			<name>maxLevel</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description><![CDATA[Messages is a pre-skinned extended version of the standard JSF messages component.]]></description>
@@ -486,6 +504,24 @@
 			<name>escape</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The supported severity level for this component.]]></description>
+			<name>level</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The minimum severty level which is supported by this component.]]></description>
+			<name>minLevel</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[The maximum severty level which is supported by this component.]]></description>
+			<name>maxLevel</name>
+			<required>false</required>
+			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>

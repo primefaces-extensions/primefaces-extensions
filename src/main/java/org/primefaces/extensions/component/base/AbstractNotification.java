@@ -22,7 +22,9 @@ import org.primefaces.extensions.application.TargetableFacesMessage;
 
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponentBase;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.component.UIMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ import java.util.List;
  * @version $Revision$
  * @since 0.2
  */
-public abstract class AbstractNotification extends UIComponentBase {
+public abstract class AbstractNotification extends UIMessage {
 
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
@@ -46,8 +48,9 @@ public abstract class AbstractNotification extends UIComponentBase {
 	protected enum PropertyKeys {
 
 		escape,
-		showSummary,
-		showDetail;
+		level,
+		minLevel,
+		maxLevel;
 
 		private String toString;
 
@@ -74,24 +77,28 @@ public abstract class AbstractNotification extends UIComponentBase {
 		setAttribute(PropertyKeys.escape, escape);
 	}
 
-	@SuppressWarnings("boxing")
-	public boolean isShowSummary() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showSummary, true);
+	public String getLevel() {
+		return (String) getStateHelper().eval(PropertyKeys.level, null);
 	}
 
-	@SuppressWarnings("boxing")
-	public void setShowSummary(final boolean showSummary) {
-		setAttribute(PropertyKeys.showSummary, showSummary);
+	public void setLevel(final String level) {
+		setAttribute(PropertyKeys.level, level);
 	}
 
-	@SuppressWarnings("boxing")
-	public boolean isShowDetail() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showDetail, false);
+	public String getMinLevel() {
+		return (String) getStateHelper().eval(PropertyKeys.minLevel, null);
 	}
 
-	@SuppressWarnings("boxing")
-	public void setShowDetail(final boolean showDetail) {
-		setAttribute(PropertyKeys.showDetail, showDetail);
+	public void setMinLevel(final String minLevel) {
+		setAttribute(PropertyKeys.minLevel, minLevel);
+	}
+
+	public String getMaxLevel() {
+		return (String) getStateHelper().eval(PropertyKeys.maxLevel, null);
+	}
+
+	public void setMaxLevel(final String maxLevel) {
+		setAttribute(PropertyKeys.maxLevel, maxLevel);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -120,17 +127,28 @@ public abstract class AbstractNotification extends UIComponentBase {
 	}
 
 	/**
+	 * Checks if the given {@link FacesMessage} should be rendered.
+	 *
+	 * @param message The {@link FacesMessage}.
+	 * @param targets The targets which are supported by the component.
+	 * @return If the message should be rendered or not.
+	 */
+	public boolean shouldRender(final FacesMessage message, final TargetableFacesMessage.Target... targets) {
+		return checkSeverity(message) && checkTarget(message, targets);
+	}
+
+	/**
 	 * Checks if the component is target of the given {@link FacesMessage}.
 	 *
 	 * @param message The {@link FacesMessage}.
 	 * @param targets The targets which are supported by the component.
 	 * @return If the component is target of the given {@link FacesMessage}.
 	 */
-	public boolean isTarget(final FacesMessage message, final TargetableFacesMessage.Target... targets) {
+	protected boolean checkTarget(final FacesMessage message, final TargetableFacesMessage.Target... targets) {
         if (!(message instanceof TargetableFacesMessage)) {
             return true;
         }
-        
+
         final TargetableFacesMessage targetableMessage = (TargetableFacesMessage) message;
 
         for (TargetableFacesMessage.Target target : targets) {
@@ -140,5 +158,59 @@ public abstract class AbstractNotification extends UIComponentBase {
         }
 
 		return false;
+	}
+
+	/**
+	 * Check the {@link Severity} of the message and if it should be rendered.
+	 *
+	 * @param message The {@link FacesMessage}.
+	 * @return If the given {@link FacesMessage} should be rendered.
+	 */
+	protected boolean checkSeverity(final FacesMessage message) {
+		// level has priority over min/max level
+		if (getLevel() != null) {
+			return getLevel().equals(message.getSeverity().toString());
+		}
+
+		final FacesMessage.Severity minLevelSeverity = toSeverity(getMinLevel());
+		final FacesMessage.Severity maxLevelSeverity = toSeverity(getMaxLevel());
+
+		int minOrdinal;
+		int maxOrdinal;
+
+		if (minLevelSeverity == null) {
+			minOrdinal = Integer.MIN_VALUE;
+		} else {
+			minOrdinal = minLevelSeverity.getOrdinal();
+		}
+
+		if (maxLevelSeverity == null) {
+			maxOrdinal = Integer.MAX_VALUE;
+		} else {
+			maxOrdinal = maxLevelSeverity.getOrdinal();
+		}
+
+		return message.getSeverity().getOrdinal() >= minOrdinal && message.getSeverity().getOrdinal() <= maxOrdinal;
+	}
+
+	private FacesMessage.Severity toSeverity(final String severity) {
+		if (severity == null) {
+			return null;
+		}
+
+		if (FacesMessage.SEVERITY_ERROR.toString().equals(severity)) {
+			return FacesMessage.SEVERITY_ERROR;
+		}
+		if (FacesMessage.SEVERITY_FATAL.toString().equals(severity)) {
+			return FacesMessage.SEVERITY_FATAL;
+		}
+		if (FacesMessage.SEVERITY_INFO.toString().equals(severity)) {
+			return FacesMessage.SEVERITY_INFO;
+		}
+		if (FacesMessage.SEVERITY_WARN.toString().equals(severity)) {
+			return FacesMessage.SEVERITY_WARN;
+		}
+
+		return null;
 	}
 }
