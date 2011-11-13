@@ -390,31 +390,31 @@
 			<type>javax.faces.component.UIComponent</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[]]></description>
+			<description><![CDATA[Specifies if the summary of the FacesMessage should be displayed.]]></description>
 			<name>showSummary</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[]]></description>
+			<description><![CDATA[Specifies if the detail of the FacesMessage should be displayed.]]></description>
 			<name>showDetail</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[]]></description>
+			<description><![CDATA[Id of the component whose messages to display.]]></description>
 			<name>for</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[]]></description>
+			<description><![CDATA[Defines if already rendered messages should be displayed.]]></description>
 			<name>redisplay</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[]]></description>
+			<description><![CDATA[Defines the display mode.]]></description>
 			<name>display</name>
 			<required>false</required>
 			<type>java.lang.String</type>
