@@ -18,9 +18,8 @@
 
 package org.primefaces.extensions.component.reseteditablevalues;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UICommand;
@@ -29,57 +28,52 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
-
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.util.Constants;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * {@link ComponentSystemEventListener} for the <code>ResetEditableValueHolders</code> component.
+ * {@link ComponentSystemEventListener} for the <code>ResetEditableValues</code> component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class ResetEditableValuesListener implements ComponentSystemEventListener, Serializable {
 
-	private static final long serialVersionUID = 20111114L;
+    private static final long serialVersionUID = 20111114L;
 
-	private UICommand source;
-	private String components;
+    private UICommand source;
+    private String components;
 
-	public ResetEditableValuesListener(final UICommand source, final String components) {
-		super();
-		this.source = source;
-		this.components = components;
-	}
+    public ResetEditableValuesListener(final UICommand source, final String components) {
+        super();
+        this.source = source;
+        this.components = components;
+    }
 
-	@Override
-	public void processEvent(final ComponentSystemEvent event) {
-		final FacesContext context = FacesContext.getCurrentInstance();
+    @Override
+    public void processEvent(final ComponentSystemEvent event) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final String clientId = source.getClientId(context);
 
-		if (isRequestSource(context, source)) {
-			final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
-	
-			for (UIComponent foundComponent : foundComponents) {
-				if (foundComponent instanceof EditableValueHolder) {
-					((EditableValueHolder) foundComponent).resetValue();
-				} else {
-					EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-					foundComponent.visitTree(VisitContext.createVisitContext(context), visitCallback);
-	
-					final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-					for (EditableValueHolder editableValueHolder : editableValueHolders) {
-						editableValueHolder.resetValue();
-					}
-				}
-			}
-		}
-	}
+        if (!clientId.equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM))) {
+            return;
+        }
+        
+        final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
 
-	protected boolean isRequestSource(final FacesContext context, final UIComponent component) {
-		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		final String clientId = component.getClientId(context);
+        for (UIComponent foundComponent : foundComponents) {
+            if (foundComponent instanceof EditableValueHolder) {
+                ((EditableValueHolder) foundComponent).resetValue();
+            } else {
+                EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+                foundComponent.visitTree(VisitContext.createVisitContext(context), visitCallback);
 
-		return clientId.equals(params.get(Constants.PARTIAL_SOURCE_PARAM));
-	}
+                final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+                for (EditableValueHolder editableValueHolder : editableValueHolders) {
+                    editableValueHolder.resetValue();
+                }
+            }
+        }
+    }
 }

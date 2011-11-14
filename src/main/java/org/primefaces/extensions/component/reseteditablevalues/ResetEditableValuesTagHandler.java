@@ -18,8 +18,6 @@
 
 package org.primefaces.extensions.component.reseteditablevalues;
 
-import java.io.IOException;
-
 import javax.faces.FacesException;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
@@ -30,9 +28,10 @@ import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
+import java.io.IOException;
 
 /**
- * {@link TagHandler} for the <code>ResetEditableValueHolders</code> component.
+ * {@link TagHandler} for the <code>ResetEditableValues</code> component.
  *
  * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$

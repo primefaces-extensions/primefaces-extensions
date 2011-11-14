@@ -727,6 +727,12 @@
 	<tag>
  		<tag-name>resetEditableValues</tag-name>
  		<handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
+		<attribute>
+			<description><![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]></description>
+			<name>for</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+		</attribute>        
 	</tag>
 	<tag>
 		<tag-name>saveState</tag-name>
