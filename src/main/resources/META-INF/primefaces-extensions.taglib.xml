@@ -725,7 +725,7 @@
 		</attribute>
 	</tag>
 	<tag>
- 		<tag-name>resetEditableValueHolders</tag-name>
+ 		<tag-name>resetEditableValues</tag-name>
  		<handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
 	</tag>
 	<tag>
