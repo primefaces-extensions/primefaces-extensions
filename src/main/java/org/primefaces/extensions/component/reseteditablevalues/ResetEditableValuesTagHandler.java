@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.reseteditablevalueholders;
+package org.primefaces.extensions.component.reseteditablevalues;
 
 import java.io.IOException;
 
@@ -34,29 +34,28 @@ import javax.faces.view.facelets.TagHandler;
 /**
  * {@link TagHandler} for the <code>ResetEditableValueHolders</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
-public class ResetEditableValueHoldersTagHandler extends TagHandler {
+public class ResetEditableValuesTagHandler extends TagHandler {
 
-	private final TagAttribute value;
+	private final TagAttribute forValue;
 
-    public ResetEditableValueHoldersTagHandler(final TagConfig config) {
-        super(config);
-        this.value = super.getRequiredAttribute("value");
-    }
+	public ResetEditableValuesTagHandler(final TagConfig config) {
+		super(config);
+		this.forValue = super.getRequiredAttribute("for");
+	}
 
 	@Override
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UICommand)) {
-			throw new FacesException("ResetEditableValueHolders must be inside an UICommand.");
+			throw new FacesException("ResetEditableValues must be inside an UICommand.");
 		}
 
 		if (ComponentHandler.isNew(parent)) {
 			final UICommand source = (UICommand) parent;
-			final ComponentSystemEventListener listener =
-				new ResetEditableValueHoldersListener(source, value.getValue(context));
+			final ComponentSystemEventListener listener = new ResetEditableValuesListener(source, forValue.getValue(context));
 
 			parent.subscribeToEvent(PostValidateEvent.class, listener);
 		}
