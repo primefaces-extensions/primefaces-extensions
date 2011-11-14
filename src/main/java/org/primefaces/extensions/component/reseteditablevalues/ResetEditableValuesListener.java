@@ -20,6 +20,7 @@ package org.primefaces.extensions.component.reseteditablevalues;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UICommand;
@@ -30,6 +31,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * {@link ComponentSystemEventListener} for the <code>ResetEditableValueHolders</code> component.
@@ -54,20 +56,30 @@ public class ResetEditableValuesListener implements ComponentSystemEventListener
 	@Override
 	public void processEvent(final ComponentSystemEvent event) {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
 
-		for (UIComponent foundComponent : foundComponents) {
-			if (foundComponent instanceof EditableValueHolder) {
-				((EditableValueHolder) foundComponent).resetValue();
-			} else {
-				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-				foundComponent.visitTree(VisitContext.createVisitContext(context), visitCallback);
-
-				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					editableValueHolder.resetValue();
+		if (isRequestSource(context, source)) {
+			final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
+	
+			for (UIComponent foundComponent : foundComponents) {
+				if (foundComponent instanceof EditableValueHolder) {
+					((EditableValueHolder) foundComponent).resetValue();
+				} else {
+					EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+					foundComponent.visitTree(VisitContext.createVisitContext(context), visitCallback);
+	
+					final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+					for (EditableValueHolder editableValueHolder : editableValueHolders) {
+						editableValueHolder.resetValue();
+					}
 				}
 			}
 		}
+	}
+
+	protected boolean isRequestSource(final FacesContext context, final UIComponent component) {
+		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		final String clientId = component.getClientId(context);
+
+		return clientId.equals(params.get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 }
