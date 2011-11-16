@@ -18,7 +18,10 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import org.primefaces.component.api.AjaxSource;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -31,10 +34,8 @@ import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.primefaces.component.api.AjaxSource;
 
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
@@ -92,7 +93,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 				contextValueVEs = new HashMap<String, ValueExpression>();
 			}
 
-			contextValueVEs.put("contextValueVE_" + parent.getClientId(facesContext), contextValueVE);
+			contextValueVEs.put("contextValue_" + parent.getClientId(facesContext), contextValueVE);
 			masterDetailLevel.getAttributes().put("contextValueVEs", contextValueVEs);
 		}
 

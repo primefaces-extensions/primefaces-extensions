@@ -30,8 +30,10 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <code>MasterDetail</code> component.
@@ -48,8 +50,8 @@ public class MasterDetail extends UIComponentBase {
 
 	private MasterDetailLevel detailLevelToProcess;
 	private MasterDetailLevel detailLevelToGo;
-	private int levelPositionToProcess;
-	private int levelCount;
+	private int levelPositionToProcess = -1;
+	private int levelCount = -1;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -114,6 +116,7 @@ public class MasterDetail extends UIComponentBase {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
@@ -139,7 +142,7 @@ public class MasterDetail extends UIComponentBase {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
-		if (!fc.getPartialViewContext().isAjaxRequest() || !isSelectDetailRequest(fc)) {
+		if (!isSelectDetailRequest(fc)) {
 			return;
 		}
 
@@ -156,7 +159,9 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void processDecodes(final FacesContext fc) {
-		if (isSelectDetailRequest(fc)) {
+		if (!isSelectDetailRequest(fc)) {
+			super.processDecodes(fc);
+		} else {
 			MasterDetailLevel levelToProcess = getDetailLevelToProcess(fc);
 
 			if (isSkipProcessing(fc)) {
@@ -164,57 +169,165 @@ public class MasterDetail extends UIComponentBase {
 			} else {
 				levelToProcess.processDecodes(fc);
 			}
-		} else {
-			super.processDecodes(fc);
 		}
 	}
 
 	public void processValidators(final FacesContext fc) {
-		if (isSelectDetailRequest(fc)) {
-			getDetailLevelToProcess(fc).processValidators(fc);
-		} else {
+		if (!isSelectDetailRequest(fc)) {
 			super.processValidators(fc);
+		} else {
+			getDetailLevelToProcess(fc).processValidators(fc);
 		}
 	}
 
 	public void processUpdates(final FacesContext fc) {
-		if (isSelectDetailRequest(fc)) {
+		if (!isSelectDetailRequest(fc)) {
+			super.processUpdates(fc);
+		} else {
+            final int levelToGo = getDetailLevelToGo(fc).getLevel();
 			ValueExpression levelVE = this.getValueExpression(PropertyKeys.level.toString());
 			if (levelVE != null) {
-				levelVE.setValue(fc.getELContext(), getDetailLevelToGo(fc).getLevel());
+				// update "level"
+				levelVE.setValue(fc.getELContext(), levelToGo);
 				getStateHelper().remove(PropertyKeys.level);
 			}
 
 			// get UICommand caused this ajax request
-			String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
+			final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
 			MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
 			// get resolved context value
-			Object contextValue = mdl.getAttributes().get("contextValue_" + source);
-			if (contextValue != null) {
+			Object contextValue = null;
+			@SuppressWarnings("unchecked")
+			Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get("contextValues");
+			if (contextValues != null) {
+				contextValue = contextValues.get("contextValue_" + source);
 			}
 
-			ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
-			if (flowVE != null) {
-				flowVE.setValue(fc.getELContext(), this.getLevel());
-				getStateHelper().remove(PropertyKeys.flow);
+			if (contextValue != null) {
+				// pass current context value to renderer
+				fc.getAttributes().put("curContextValue_" + getClientId(fc), contextValue);
+
+				// update "flow"
+				ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
+				if (flowVE != null) {
+					Class flowType = flowVE.getType(fc.getELContext());
+
+					if (!flowType.isArray()) {
+				        // we can also check Collection.class.isAssignableFrom(flowType), but a support of collection is too complicate
+						// by reason of lack in Java Generics. The type of elements in a collection is not accessible at runtime.
+						throw new FacesException("Type of the 'flow' attribute must be an Array.");
+                    }
+
+                    Class elementType = flowType.getComponentType();
+                    if (!FlowLevel.class.isAssignableFrom(elementType)) {
+                        throw new FacesException("Elements in the 'flow' array must implement 'FlowLevel' interface.");
+                    }
+
+                    try {
+                        FlowLevel newFlowLevel = (FlowLevel)elementType.newInstance();
+                        newFlowLevel.setLevel(levelToGo);
+                        newFlowLevel.setContextValue(contextValue);
+
+                        FlowLevel[] newFlow;
+                        Object objFlow = flowVE.getValue(fc.getELContext());
+                        
+                        if (objFlow == null) {
+                            newFlow = new FlowLevel[1];
+                            newFlow[0] = newFlowLevel;
+                        } else {
+                            List<FlowLevel> listFlow = new ArrayList<FlowLevel>();
+                            listFlow.add(newFlowLevel);
+
+                            for (FlowLevel fl : (FlowLevel[])objFlow) {
+                               if (fl.getLevel() != levelToGo) {
+                                   listFlow.add(fl);
+                               }
+                            }
+
+                            newFlow = listFlow.toArray((FlowLevel[])Array.newInstance(elementType, listFlow.size()));
+                        }
+
+                        flowVE.setValue(fc.getELContext(), newFlow);
+                        getStateHelper().remove(PropertyKeys.flow);
+                    } catch (Exception e) {
+                        throw new FacesException("Object implementing 'FlowLevel' interface could not be created.");
+                    }
+				}
 			}
 
 			getDetailLevelToProcess(fc).processUpdates(fc);
-		} else {
-			super.processUpdates(fc);
 		}
 	}
 
 	public MasterDetailLevel getDetailLevelToProcess(final FacesContext fc) {
-		if (detailLevelToProcess != null) {
-			return detailLevelToProcess;
+		if (detailLevelToProcess == null) {
+			initDataForLevels(fc);
 		}
 
-		int currentLevel =
-		    Integer.valueOf(fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_currentLevel"));
+		return detailLevelToProcess;
+	}
 
+	public MasterDetailLevel getDetailLevelToGo(final FacesContext fc) {
+		if (detailLevelToGo != null) {
+			return detailLevelToGo;
+		}
+
+		final String strSelectedLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedLevel");
+		final String strSelectedStep = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedStep");
+
+		// selected level != null
+		if (strSelectedLevel != null) {
+            int selectedLevel = Integer.valueOf(strSelectedLevel);
+            detailLevelToGo = getDetailLevelByLevel(selectedLevel);
+            if (detailLevelToGo != null) {
+			    return detailLevelToGo;
+            }
+
+            throw new FacesException("MasterDetailLevel for selected level = " + selectedLevel + " not found.");
+		}
+
+		int step;
+		if (strSelectedStep != null) {
+			// selected step != null
+			step = Integer.valueOf(strSelectedStep);
+		} else {
+			// selected level and selected step are null ==> go to the next level
+			step = 1;
+		}
+
+		detailLevelToGo = getDetailLevelByStep(step);
+
+		return detailLevelToGo;
+	}
+
+    public MasterDetailLevel getDetailLevelByLevel(final int level) {
+        for (UIComponent child : getChildren()) {
+            if (child instanceof MasterDetailLevel) {
+                MasterDetailLevel mdl = (MasterDetailLevel) child;
+                if (mdl.getLevel() == level) {
+                    return mdl;
+                }
+            }
+        }
+
+        return null;
+    }
+
+	public boolean isSelectDetailRequest(final FacesContext fc) {
+		return fc.getPartialViewContext().isAjaxRequest()
+		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + "_selectDetailRequest");
+	}
+
+	private void initDataForLevels(final FacesContext fc) {
+		final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_currentLevel");
+		if (strCurrentLevel == null) {
+			throw new FacesException("Current level is missing in request.");
+		}
+
+		int currentLevel = Integer.valueOf(strCurrentLevel);
 		int count = 0;
+
 		for (UIComponent child : getChildren()) {
 			if (child instanceof MasterDetailLevel) {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
@@ -232,56 +345,9 @@ public class MasterDetail extends UIComponentBase {
 		if (detailLevelToProcess == null) {
 			throw new FacesException("Current MasterDetailLevel to process not found.");
 		}
-
-		return detailLevelToProcess;
 	}
 
-	public MasterDetailLevel getDetailLevelToGo(final FacesContext fc) {
-		if (detailLevelToGo != null) {
-			return detailLevelToGo;
-		}
-
-		String strSelectedLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedLevel");
-		String strSelectedStep = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedStep");
-
-		// selected level != null
-		if (strSelectedLevel != null) {
-			int selectedLevel = Integer.valueOf(strSelectedLevel);
-
-			for (UIComponent child : getChildren()) {
-				if (child instanceof MasterDetailLevel) {
-					MasterDetailLevel mdl = (MasterDetailLevel) child;
-					if (mdl.getLevel() == selectedLevel) {
-						detailLevelToGo = mdl;
-
-						return detailLevelToGo;
-					}
-				}
-			}
-
-			throw new FacesException("MasterDetailLevel for selected level = " + selectedLevel + " not found.");
-		}
-
-		int step;
-		if (strSelectedStep != null) {
-			// selected step != null
-			step = Integer.valueOf(strSelectedStep);
-		} else {
-			// selected level and selected step are null ==> go to the next level
-			step = 1;
-		}
-
-		detailLevelToGo = getDetailLevelByStep(step);
-
-		return detailLevelToGo;
-	}
-
-	public boolean isSelectDetailRequest(final FacesContext fc) {
-		return fc.getPartialViewContext().isAjaxRequest()
-		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + "_selectDetailRequest");
-	}
-
-	protected boolean isSkipProcessing(final FacesContext fc) {
+	private boolean isSkipProcessing(final FacesContext fc) {
 		MasterDetailLevel levelToG = getDetailLevelToGo(fc);
 		int levelPositionToGo = 0;
 		for (UIComponent child : getChildren()) {
@@ -295,15 +361,15 @@ public class MasterDetail extends UIComponentBase {
 			}
 		}
 
-		return (levelPositionToGo <= levelPositionToProcess);
+		return (levelPositionToGo <= getLevelPositionToProcess());
 	}
 
-	protected MasterDetailLevel getDetailLevelByStep(final int step) {
-		int levelPositionToGo = levelPositionToProcess + step;
+	private MasterDetailLevel getDetailLevelByStep(final int step) {
+		int levelPositionToGo = getLevelPositionToProcess() + step;
 		if (levelPositionToGo < 1) {
 			levelPositionToGo = 1;
-		} else if (levelPositionToGo > levelCount) {
-			levelPositionToGo = levelCount;
+		} else if (levelPositionToGo > getLevelCount()) {
+			levelPositionToGo = getLevelCount();
 		}
 
 		int pos = 0;
@@ -320,5 +386,21 @@ public class MasterDetail extends UIComponentBase {
 
 		// should not happen
 		return null;
+	}
+
+	private int getLevelPositionToProcess() {
+		if (levelPositionToProcess == -1) {
+			initDataForLevels(FacesContext.getCurrentInstance());
+		}
+
+		return levelPositionToProcess;
+	}
+
+	private int getLevelCount() {
+		if (levelCount == -1) {
+			initDataForLevels(FacesContext.getCurrentInstance());
+		}
+
+		return levelCount;
 	}
 }

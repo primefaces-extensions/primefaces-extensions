@@ -108,6 +108,7 @@ public class MasterDetailLevel extends UIComponentBase {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {

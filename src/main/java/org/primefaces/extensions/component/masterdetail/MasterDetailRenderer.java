@@ -41,23 +41,19 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 		if (masterDetail.isSelectDetailRequest(fc)) {
 			// component has been navigated via SelectDetailLevel
-
-			// get UICommand caused this ajax request
-			//String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
 			MasterDetailLevel mdl = masterDetail.getDetailLevelToProcess(fc);
 
-			// get context value set by SelectDetailLevel as value expression
-			/*
-			ValueExpression contextValueVE = (ValueExpression) mdl.getAttributes().get("contextValueVE_" + source);
-			if (contextValueVE != null) {
-			    // resolve context value and store in the corresponding MasterDetailLevel component
-			    mdl.getAttributes().put("contextValue_" + source, contextValueVE.getValue(fc.getELContext()));
-			} else {
-			    mdl.getAttributes().remove("contextValue_" + source);
-			}*/
+            // resolve all possible context values for this master detail level
+            evaluateContextValues(fc, mdl);
+
+            // TODO
 		} else {
 			// component has been navigated from outside, e.g. GET request or POST update from another component
-			int levelToProcess = masterDetail.getLevel();
+            MasterDetailLevel mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
+
+            // resolve all possible context values for this master detail level
+            evaluateContextValues(fc, mdl);
+
 			// TODO
 		}
 	}

@@ -18,41 +18,19 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.io.Serializable;
-
 /**
- * Model class for flow state.
+ * Model interface for flow state.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author  ova / last modified by $Author$
  * @version $Revision$
  */
-public class FlowLevel implements Serializable {
+public interface FlowLevel {
 
-	private int level;
+	int getLevel();
 
-	private Object contextValue;
+	void setLevel(final int level);
 
-	public FlowLevel() {
-	}
+	Object getContextValue();
 
-	public FlowLevel(final int level, final Object contextValue) {
-		this.level = level;
-		this.contextValue = contextValue;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(final int level) {
-		this.level = level;
-	}
-
-	public Object getContextValue() {
-		return contextValue;
-	}
-
-	public void setContextValue(final Object contextValue) {
-		this.contextValue = contextValue;
-	}
+	void setContextValue(final Object contextValue);
 }
