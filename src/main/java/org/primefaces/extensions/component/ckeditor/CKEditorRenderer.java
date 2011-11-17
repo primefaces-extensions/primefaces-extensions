@@ -103,8 +103,13 @@ public class CKEditorRenderer extends InputRenderer {
 			writer.write(",theme:'" + ckEditor.getTheme() + "'");
 		}
 
-		if (ckEditor.getToolbar() != null) {
-			writer.write(",toolbar:'" + ckEditor.getToolbar() + "'");
+		final String toolbar = ckEditor.getToolbar();
+		if (toolbar != null) {
+			if (toolbar.trim().startsWith("[")) {
+				writer.write(",toolbar:" + ckEditor.getToolbar());
+			} else {
+				writer.write(",toolbar:\"" + ckEditor.getToolbar() + "\"");
+			}
 		}
 
 		if (ckEditor.IsReadOnly()) {
