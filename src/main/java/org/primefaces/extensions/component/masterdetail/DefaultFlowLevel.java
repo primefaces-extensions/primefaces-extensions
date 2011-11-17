@@ -21,7 +21,7 @@ package org.primefaces.extensions.component.masterdetail;
 import java.io.Serializable;
 
 /**
- * Default implementierung for {@link FlowLevel}.
+ * Default implementation for {@link FlowLevel}.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$

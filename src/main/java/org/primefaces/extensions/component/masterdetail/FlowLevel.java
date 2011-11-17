@@ -21,7 +21,7 @@ package org.primefaces.extensions.component.masterdetail;
 /**
  * Model interface for flow state.
  *
- * @author  ova / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public interface FlowLevel {
