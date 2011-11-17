@@ -63,7 +63,9 @@ public class MasterDetail extends UIComponentBase {
 
 		level,
 		flow,
-		showBreadcrumb;
+		showBreadcrumb,
+        style,
+        styleClass;
 
 		private String toString;
 
@@ -113,6 +115,22 @@ public class MasterDetail extends UIComponentBase {
 		setAttribute(PropertyKeys.showBreadcrumb, showBreadcrumb);
 	}
 
+	public String getStyle() {
+		return (String) getStateHelper().eval(PropertyKeys.style, null);
+	}
+
+	public void setStyle(final String style) {
+	    setAttribute(PropertyKeys.style, style);
+	}
+
+	public String getStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+	}
+
+	public void setStyleClass(final String styleClass) {
+	    setAttribute(PropertyKeys.styleClass, styleClass);
+	}    
+
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
@@ -142,7 +160,7 @@ public class MasterDetail extends UIComponentBase {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
-		if (!isSelectDetailRequest(fc)) {
+		if (!(event instanceof PostRestoreStateEvent) || !isSelectDetailRequest(fc)) {
 			return;
 		}
 
@@ -206,7 +224,7 @@ public class MasterDetail extends UIComponentBase {
 
 			if (contextValue != null) {
 				// pass current context value to renderer
-				fc.getAttributes().put("curContextValue_" + getClientId(fc), contextValue);
+				fc.getAttributes().put(getClientId(fc) + "_curContextValue", contextValue);
 
 				// update "flow"
 				ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());

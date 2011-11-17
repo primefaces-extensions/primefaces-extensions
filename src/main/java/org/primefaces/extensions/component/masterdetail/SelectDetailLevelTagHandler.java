@@ -18,10 +18,7 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import org.primefaces.component.api.AjaxSource;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -34,8 +31,10 @@ import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
-
-import org.primefaces.component.api.AjaxSource;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
@@ -56,7 +55,8 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		this.step = getAttribute("step");
 	}
 
-	public void apply(final FaceletContext fc, final UIComponent parent) throws IOException {
+    @Override
+	public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UICommand)) {
 			throw new FacesException("SelectDetailLevel must be inside an UICommand.");
 		}
@@ -65,7 +65,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 			return;
 		}
 
-		FacesContext facesContext = fc.getFacesContext();
+		FacesContext facesContext = ctx.getFacesContext();
 
 		// find master detail level component
 		MasterDetailLevel masterDetailLevel = findMasterDetailLevel(parent);
@@ -83,7 +83,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		// get value expression for contextValue attribute of this tag handler
 		ValueExpression contextValueVE = null;
 		if (contextValue != null) {
-			contextValueVE = contextValue.getValueExpression(fc, Object.class);
+			contextValueVE = contextValue.getValueExpression(ctx, Object.class);
 
 			// store value expression for contextValue in the masterDetailLevel component
 			@SuppressWarnings("unchecked")
@@ -113,13 +113,13 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		// get value expression for level attribute of this tag handler
 		ValueExpression selectedLevelVE = null;
 		if (level != null) {
-			selectedLevelVE = level.getValueExpression(fc, int.class);
+			selectedLevelVE = level.getValueExpression(ctx, int.class);
 		}
 
 		// get value expression for step attribute of this tag handler
 		ValueExpression selectedStepVE = null;
 		if (step != null) {
-			selectedStepVE = step.getValueExpression(fc, int.class);
+			selectedStepVE = step.getValueExpression(ctx, int.class);
 		}
 
 		String clientId = masterDetail.getClientId(facesContext);

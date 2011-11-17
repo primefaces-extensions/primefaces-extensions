@@ -18,11 +18,10 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <code>MasterDetailLevel</code> component.
