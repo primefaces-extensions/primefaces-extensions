@@ -45,7 +45,7 @@ import java.util.Map;
 public class MasterDetail extends UIComponentBase {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetail";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	private MasterDetailLevel detailLevelToProcess;
