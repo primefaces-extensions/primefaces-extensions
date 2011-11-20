@@ -1,975 +1,1148 @@
 <?xml version="1.0"?>
 <facelet-taglib version="2.0"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+                xmlns="http://java.sun.com/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
 
     <namespace>http://primefaces.org/ui/extensions</namespace>
-    
+
     <!-- Converters -->
     <tag>
-		<tag-name>convertJson</tag-name>
-		<converter>
-        	<converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
-		</converter>
-	</tag>
+        <tag-name>convertJson</tag-name>
+        <converter>
+            <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
+        </converter>
+    </tag>
     <tag>
-		<tag-name>convertEnum</tag-name>
-		<converter>
-        	<converter-id>org.primefaces.extensions.converter.EnumConverter</converter-id>
-		</converter>
-	</tag> 	
-    
+        <tag-name>convertEnum</tag-name>
+        <converter>
+            <converter-id>org.primefaces.extensions.converter.EnumConverter</converter-id>
+        </converter>
+    </tag>
+
     <!-- Behaviors -->
     <tag>
         <tag-name>javascript</tag-name>
         <behavior>
             <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
         </behavior>
-		<attribute>
-			<description><![CDATA[The javascript which should be executed.]]></description>
-			<name>execute</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
         <attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]></description>
-			<name>disabled</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
+            <description><![CDATA[The javascript which should be executed.]]></description>
+            <name>execute</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
-			<description><![CDATA[The name of the event.]]></description>
-			<name>event</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]></description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The name of the event.]]></description>
+            <name>event</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
-    
+
     <!-- Components -->
-	<tag>
-		<description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact.]]></description>
-		<tag-name>ckEditor</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.CKEditor</component-type>
-			<renderer-type>org.primefaces.extensions.component.CKEditorRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the client side widget.]]></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Value of the component.]]></description>
-			<name>value</name>
-			<required>false</required>
-			<type>java.lang.Object</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Height of the editor. Default value: 200px.]]></description>
-			<name>height</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Width of the editor. Default value: 600px.]]></description>
-			<name>width</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Theme of the editor.]]></description>
-			<name>theme</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Skin of the editor. Valid skins are: kama, office2003 and v2.]]></description>
-			<name>skin</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The toolbar layout.]]></description>
-			<name>toolbar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines if the editor is readOnly.]]></description>
-			<name>readOnly</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The color of the interface. For example: #33fc14.]]></description>
-			<name>interfaceColor</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Default language is used in case no language is set using language option and the editor is not able to use the user language.]]></description>
-			<name>language</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[This setting is used to set the CKEditor language. In case this option is not set, the editor will automatically try to load with user language if supported, otherwise the default language will be used.]]></description>
-			<name>defaultLanguage</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[This setting specifies the CSS file to be used to apply style to the contents: .]]></description>
-			<name>contentsCss</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
-        <tag-name>head</tag-name>
+    <tag>
+        <description>
+            <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact.]]></description>
+        <tag-name>ckEditor</tag-name>
         <component>
-                <component-type>org.primefaces.extensions.component.Head</component-type>
-                <renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.CKEditor</component-type>
+            <renderer-type>org.primefaces.extensions.component.CKEditorRenderer</renderer-type>
         </component>
         <attribute>
-                <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-                <name>id</name>
-                <required>false</required>
-                <type>java.lang.String</type>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
-                <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-                <name>rendered</name>
-                <required>false</required>
-                <type>java.lang.Boolean</type>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-                <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
-                <name>binding</name>
-                <required>false</required>
-                <type>javax.faces.component.UIOutput</type>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-                <description><![CDATA[The page title.]]></description>
-                <name>title</name>
-                <required>false</required>
-                <type>java.lang.String</type>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
-                <description><![CDATA[The shortcut icon.]]></description>
-                <name>shortcutIcon</name>
-                <required>false</required>
-                <type>java.lang.String</type>
+            <description><![CDATA[Value of the component.]]></description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
         </attribute>
-	</tag>
-	<tag>
-		<tag-name>imageAreaSelect</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
-			<renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the client side widget.]]></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The target image.]]></description>
-			<name>for</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A string of the form "width:height" which represents the aspect ratio to maintain. Example: "4:3".]]></description>
-			<name>aspectRatio</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>		
-		<attribute>
-			<description><![CDATA[If set to true, selection area will disappear when selection ends. Default value: false.]]></description>
-			<name>autoHide</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>		
-		<attribute>
-			<description><![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default value: 0.]]></description>
-			<name>fadeSpeed</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default value: false.]]></description>
-			<name>handles</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>	
-		<attribute>
-			<description><![CDATA[If set to true, selection area is hidden.]]></description>
-			<name>hide</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[True height of the image (if scaled with the CSS width and height properties).]]></description>
-			<name>imageHeight</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[True width of the image (if scaled with the CSS width and height properties).]]></description>
-			<name>imageWidth</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Determines whether the selection area should be movable. Default value: true.]]></description>
-			<name>movable</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]></description>
-			<name>persistent</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Determines whether the selection area should be resizable. Default value: true.]]></description>
-			<name>resizable</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[If set to true, selection area is shown.]]></description>
-			<name>show</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>	
-		<attribute>
-			<description><![CDATA[The z-index value to be assigned to plugin elements; normally, imgAreaSelect figures it out automatically, but there are a few cases when it's necessary to set it explicitly.]]></description>
-			<name>zIndex</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>		
-		<attribute>
-			<description><![CDATA[Maximum selection height (in pixels).]]></description>
-			<name>maxHeight</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>		
-		<attribute>
-			<description><![CDATA[Maximum selection width (in pixels).]]></description>
-			<name>maxWidth</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>		
-		<attribute>
-			<description><![CDATA[Minimum selection height (in pixels).]]></description>
-			<name>minHeight</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Minimum selection width (in pixels).]]></description>
-			<name>minWidth</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]></description>
-			<name>parentSelector</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Enables/disables keyboard support. Default value: false.]]></description>
-			<name>keyboardSupport</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-	</tag>
-	<tag>
-		<tag-name>imageRotateAndResize</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
-			<renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the client side widget.]]></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The target image.]]></description>
-			<name>for</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
-		<description><![CDATA[Message is a pre-skinned extended version of the standard JSF message component.]]></description>
-		<tag-name>message</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Message</component-type>
-			<renderer-type>org.primefaces.extensions.component.MessageRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Specifies if the summary of the FacesMessage should be displayed.]]></description>
-			<name>showSummary</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Specifies if the detail of the FacesMessage should be displayed.]]></description>
-			<name>showDetail</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Id of the component whose messages to display.]]></description>
-			<name>for</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines if already rendered messages should be displayed.]]></description>
-			<name>redisplay</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines the display mode.]]></description>
-			<name>display</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defined if the detail und summary message should be escaped.]]></description>
-			<name>escape</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The supported severity level for this component.]]></description>
-			<name>level</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The minimum severty level which is supported by this component.]]></description>
-			<name>minLevel</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The maximum severty level which is supported by this component.]]></description>
-			<name>maxLevel</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
-		<description><![CDATA[Messages is a pre-skinned extended version of the standard JSF messages component.]]></description>
-		<tag-name>messages</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Messages</component-type>
-			<renderer-type>org.primefaces.extensions.component.MessagesRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Specifies if the summary of the FacesMessage should be displayed. Default is true.]]></description>
-			<name>showSummary</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Specifies if the detail of the FacesMessage should be displayed. Default is false.]]></description>
-			<name>showDetail</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[When true, only facesmessages with no clientIds are displayed. Default is false.]]></description>
-			<name>globalOnly</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines if already rendered messages should be displayed. Default is true.]]></description>
-			<name>redisplay</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[If the component should be updated automatically.]]></description>
-			<name>autoUpdate</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defined if the detail und summary message should be escaped.]]></description>
-			<name>escape</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The supported severity level for this component.]]></description>
-			<name>level</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The minimum severty level which is supported by this component.]]></description>
-			<name>minLevel</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The maximum severty level which is supported by this component.]]></description>
-			<name>maxLevel</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
- 		<tag-name>paginator</tag-name>
- 		<handler-class>org.primefaces.extensions.component.paginator.PaginatorTagHandler</handler-class>
-		<attribute>
-			<description><![CDATA[Number of rows to display per page. Default value is 0 meaning to display all data available.]]></description>
-			<name>rows</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Template of the paginator.]]></description>
-			<name>paginatorTemplate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Template of the rowsPerPage dropdown.]]></description>
-			<name>rowsPerPageTemplate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Template of the currentPageReport UI.]]></description>
-			<name>currentPageReportTemplate</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Maximum number of page links to display. Default is 10.]]></description>
-			<name>pageLinks</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Position of the paginator. Default is both.]]></description>
-			<name>paginatorPosition</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines if paginator should be hidden if total data count is less than number of rows per page. Default is true.]]></description>
-			<name>paginatorAlwaysVisible</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Index of the current page. Default is 1.]]></description>
-			<name>page</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-	</tag>
-	<tag>
-        <description><![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]></description>
-		<tag-name>remoteCommand</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
-			<renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Label of the component.]]></description>
-			<name>value</name>
-			<required>false</required>
-			<type>java.lang.Object</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An actionlistener to process when command is executed.]]></description>
-			<name>actionListener</name>
-			<required>false</required>
-			<type>javax.faces.event.ActionListener</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A method expression or a string outcome to process when command is executed.]]></description>
-			<name>action</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value that determines the phaseId of the action event, when true actions are processed at "Apply Request Values", when false at "Invoke Application" phase.]]></description>
-			<name>immediate</name>
-			<required>false</required>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the command.]]></description>
-			<name>name</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Component(s) to update with ajax.]]></description>
-			<name>update</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Component(s) to process partially instead of whole view.]]></description>
-			<name>process</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Javascript handler to execute before ajax request is begins.]]></description>
-			<name>onstart</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Javascript handler to execute when ajax request is completed.]]></description>
-			<name>oncomplete</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Javascript handler to execute when ajax request fails.]]></description>
-			<name>onerror</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Javascript handler to execute when ajax request succeeds.]]></description>
-			<name>onsuccess</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]></description>
-			<name>global</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[When set to true, ajax requests are not queued. Default value: false.]]></description>
-			<name>async</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-	</tag>
-	<tag>
-        <description><![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
-		<tag-name>remoteCommandParameter</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
-			<handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandParameterHandler</handler-class>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the parameter.]]></description>
-			<name>name</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[ValueExpression where the parameter will be applied.]]></description>
-			<name>applyTo</name>
-			<required>true</required>
-			<type>javax.el.ValueExpression</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]></description>
-			<name>converter</name>
-			<required>false</required>
-			<type>javax.faces.convert.Converter</type>
-		</attribute>
-	</tag>
-	<tag>
- 		<tag-name>resetEditableValues</tag-name>
- 		<handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
-		<attribute>
-			<description><![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]></description>
-			<name>for</name>
-			<required>true</required>
-			<type>java.lang.String</type>
-		</attribute>        
-	</tag>
-	<tag>
-		<tag-name>saveState</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.SaveState</component-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a naming container.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIParameter</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Data which should be saved in the state.]]></description>
-			<name>value</name>
-			<required>true</required>
-			<type>java.lang.Object</type>
-		</attribute>
-	</tag>
-	<tag>
-		<tag-name>tooltip</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Tooltip</component-type>
-			<renderer-type>org.primefaces.extensions.component.TooltipRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Value of the component than can be either an EL expression of a literal text.]]></description>
-			<name>value</name>
-			<required>false</required>
-			<type>java.lang.Object</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An el expression or a literal text that defines a converter for the component.]]></description>
-			<name>converter</name>
-			<required>false</required>
-			<type>javax.faces.convert.Converter</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the client side widget.]]></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A global tooltip converts each title attribute to a tooltip.]]></description>
-			<name>global</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A shared tooltip - one tooltip, multiple targets.]]></description>
-			<name>shared</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>        
-		<attribute>
-			<description><![CDATA[The corner of the target element to position the tooltip by.]]></description>
-			<name>targetPosition</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[The corner of the tooltip to position the target's position.]]></description>
-			<name>position</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Event displaying the tooltip.]]></description>
-			<name>showEvent</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Delay time for displaying the tooltip.]]></description>
-			<name>showDelay</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Effect to be used for displaying.]]></description>
-			<name>showEffect</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Time in milliseconds to display the effect.]]></description>
-			<name>showEffectLength</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Event hiding the tooltip.]]></description>
-			<name>hideEvent</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Delay time for hiding the tooltip.]]></description>
-			<name>hideDelay</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Effect to be used for hiding.]]></description>
-			<name>hideEffect</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Time in milliseconds to process the hide effect.]]></description>
-			<name>hideEffectLength</name>
-			<required>false</required>
-			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Id of the component to attach the tooltip.]]></description>
-			<name>for</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[jQuery selector for any elements to attach the tooltip.]]></description>
-			<name>forSelector</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
-	<tag>
-		<tag-name>layout</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Layout</component-type>
-			<renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
-		</component>
-	</tag>    
-	<tag>
-		<tag-name>layoutPane</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.LayoutPane</component-type>
-		</component>
-	</tag>
-	<tag>
-		<description><![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]></description>        
-		<tag-name>ajaxStatus</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.AjaxStatus</component-type>
-			<renderer-type>org.primefaces.extensions.component.AjaxStatusRenderer</renderer-type>
-		</component>
-		<attribute>
-			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-			<name>rendered</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
-			<name>binding</name>
-			<required>false</required>
-			<type>javax.faces.component.UIComponent</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Name of the client side widget.]]></description>
-			<name>widgetVar</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute after ajax requests start.]]></description>
-			<name>onstart</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute after ajax requests complete.]]></description>
-			<name>oncomplete</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute before ajax requests start. This callback is only available for PrimeFaces ajax calls.]]></description>
-			<name>onprestart</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute after ajax requests completed succesfully.]]></description>
-			<name>onsuccess</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when an ajax request fails.]]></description>
-			<name>onerror</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Inline style of the container element.]]></description>
-			<name>style</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Style class of the container element.]]></description>
-			<name>styleClass</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-	</tag>
+        <attribute>
+            <description><![CDATA[Height of the editor. Default value: 200px.]]></description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Width of the editor. Default value: 600px.]]></description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Theme of the editor.]]></description>
+            <name>theme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Skin of the editor. Valid skins are: kama, office2003 and v2.]]></description>
+            <name>skin</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The toolbar layout.]]></description>
+            <name>toolbar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if the editor is readOnly.]]></description>
+            <name>readOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The color of the interface. For example: #33fc14.]]></description>
+            <name>interfaceColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Default language is used in case no language is set using language option and the editor is not able to use the user language.]]></description>
+            <name>language</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[This setting is used to set the CKEditor language. In case this option is not set, the editor will automatically try to load with user language if supported, otherwise the default language will be used.]]></description>
+            <name>defaultLanguage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[This setting specifies the CSS file to be used to apply style to the contents: .]]></description>
+            <name>contentsCss</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>head</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Head</component-type>
+            <renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The page title.]]></description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The shortcut icon.]]></description>
+            <name>shortcutIcon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>imageAreaSelect</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
+            <renderer-type>org.primefaces.extensions.component.ImageAreaSelectRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The target image.]]></description>
+            <name>for</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A string of the form "width:height" which represents the aspect ratio to maintain. Example: "4:3".]]></description>
+            <name>aspectRatio</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to true, selection area will disappear when selection ends. Default value: false.]]></description>
+            <name>autoHide</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default value: 0.]]></description>
+            <name>fadeSpeed</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default value: false.]]></description>
+            <name>handles</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If set to true, selection area is hidden.]]></description>
+            <name>hide</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[True height of the image (if scaled with the CSS width and height properties).]]></description>
+            <name>imageHeight</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[True width of the image (if scaled with the CSS width and height properties).]]></description>
+            <name>imageWidth</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Determines whether the selection area should be movable. Default value: true.]]></description>
+            <name>movable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]></description>
+            <name>persistent</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Determines whether the selection area should be resizable. Default value: true.]]></description>
+            <name>resizable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If set to true, selection area is shown.]]></description>
+            <name>show</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The z-index value to be assigned to plugin elements; normally, imgAreaSelect figures it out automatically, but there are a few cases when it's necessary to set it explicitly.]]></description>
+            <name>zIndex</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Maximum selection height (in pixels).]]></description>
+            <name>maxHeight</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Maximum selection width (in pixels).]]></description>
+            <name>maxWidth</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Minimum selection height (in pixels).]]></description>
+            <name>minHeight</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Minimum selection width (in pixels).]]></description>
+            <name>minWidth</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]></description>
+            <name>parentSelector</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Enables/disables keyboard support. Default value: false.]]></description>
+            <name>keyboardSupport</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>imageRotateAndResize</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
+            <renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The target image.]]></description>
+            <name>for</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[Message is a pre-skinned extended version of the standard JSF message component.]]></description>
+        <tag-name>message</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Message</component-type>
+            <renderer-type>org.primefaces.extensions.component.MessageRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies if the summary of the FacesMessage should be displayed.]]></description>
+            <name>showSummary</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies if the detail of the FacesMessage should be displayed.]]></description>
+            <name>showDetail</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component whose messages to display.]]></description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if already rendered messages should be displayed.]]></description>
+            <name>redisplay</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines the display mode.]]></description>
+            <name>display</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defined if the detail und summary message should be escaped.]]></description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The supported severity level for this component.]]></description>
+            <name>level</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The minimum severty level which is supported by this component.]]></description>
+            <name>minLevel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The maximum severty level which is supported by this component.]]></description>
+            <name>maxLevel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[Messages is a pre-skinned extended version of the standard JSF messages component.]]></description>
+        <tag-name>messages</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Messages</component-type>
+            <renderer-type>org.primefaces.extensions.component.MessagesRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies if the summary of the FacesMessage should be displayed. Default is true.]]></description>
+            <name>showSummary</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies if the detail of the FacesMessage should be displayed. Default is false.]]></description>
+            <name>showDetail</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When true, only facesmessages with no clientIds are displayed. Default is false.]]></description>
+            <name>globalOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if already rendered messages should be displayed. Default is true.]]></description>
+            <name>redisplay</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If the component should be updated automatically.]]></description>
+            <name>autoUpdate</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defined if the detail und summary message should be escaped.]]></description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The supported severity level for this component.]]></description>
+            <name>level</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The minimum severty level which is supported by this component.]]></description>
+            <name>minLevel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The maximum severty level which is supported by this component.]]></description>
+            <name>maxLevel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>paginator</tag-name>
+        <handler-class>org.primefaces.extensions.component.paginator.PaginatorTagHandler</handler-class>
+        <attribute>
+            <description>
+                <![CDATA[Number of rows to display per page. Default value is 0 meaning to display all data available.]]></description>
+            <name>rows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Template of the paginator.]]></description>
+            <name>paginatorTemplate</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Template of the rowsPerPage dropdown.]]></description>
+            <name>rowsPerPageTemplate</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Template of the currentPageReport UI.]]></description>
+            <name>currentPageReportTemplate</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Maximum number of page links to display. Default is 10.]]></description>
+            <name>pageLinks</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Position of the paginator. Default is both.]]></description>
+            <name>paginatorPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if paginator should be hidden if total data count is less than number of rows per page. Default is true.]]></description>
+            <name>paginatorAlwaysVisible</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Index of the current page. Default is 1.]]></description>
+            <name>page</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]></description>
+        <tag-name>remoteCommand</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
+            <renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Label of the component.]]></description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An actionlistener to process when command is executed.]]></description>
+            <name>actionListener</name>
+            <required>false</required>
+            <type>javax.faces.event.ActionListener</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression or a string outcome to process when command is executed.]]></description>
+            <name>action</name>
+            <required>false</required>
+            <type>javax.el.MethodExpression</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value that determines the phaseId of the action event, when true actions are processed at "Apply Request Values", when false at "Invoke Application" phase.]]></description>
+            <name>immediate</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the command.]]></description>
+            <name>name</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Component(s) to update with ajax.]]></description>
+            <name>update</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Component(s) to process partially instead of whole view.]]></description>
+            <name>process</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute before ajax request is begins.]]></description>
+            <name>onstart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request is completed.]]></description>
+            <name>oncomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request fails.]]></description>
+            <name>onerror</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request succeeds.]]></description>
+            <name>onsuccess</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]></description>
+            <name>global</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[When set to true, ajax requests are not queued. Default value: false.]]></description>
+            <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
+        <tag-name>remoteCommandParameter</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
+            <handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandParameterHandler</handler-class>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the parameter.]]></description>
+            <name>name</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[ValueExpression where the parameter will be applied.]]></description>
+            <name>applyTo</name>
+            <required>true</required>
+            <type>javax.el.ValueExpression</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]></description>
+            <name>converter</name>
+            <required>false</required>
+            <type>javax.faces.convert.Converter</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>resetEditableValues</tag-name>
+        <handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
+        <attribute>
+            <description>
+                <![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]></description>
+            <name>for</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>saveState</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.SaveState</component-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIParameter</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Data which should be saved in the state.]]></description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>tooltip</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Tooltip</component-type>
+            <renderer-type>org.primefaces.extensions.component.TooltipRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Value of the component than can be either an EL expression of a literal text.]]></description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression or a literal text that defines a converter for the component.]]></description>
+            <name>converter</name>
+            <required>false</required>
+            <type>javax.faces.convert.Converter</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A global tooltip converts each title attribute to a tooltip.]]></description>
+            <name>global</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A shared tooltip - one tooltip, multiple targets.]]></description>
+            <name>shared</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The corner of the target element to position the tooltip by.]]></description>
+            <name>targetPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The corner of the tooltip to position the target's position.]]></description>
+            <name>position</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Event displaying the tooltip.]]></description>
+            <name>showEvent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Delay time for displaying the tooltip.]]></description>
+            <name>showDelay</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Effect to be used for displaying.]]></description>
+            <name>showEffect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Time in milliseconds to display the effect.]]></description>
+            <name>showEffectLength</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Event hiding the tooltip.]]></description>
+            <name>hideEvent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Delay time for hiding the tooltip.]]></description>
+            <name>hideDelay</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Effect to be used for hiding.]]></description>
+            <name>hideEffect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Time in milliseconds to process the hide effect.]]></description>
+            <name>hideEffectLength</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component to attach the tooltip.]]></description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[jQuery selector for any elements to attach the tooltip.]]></description>
+            <name>forSelector</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>layout</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Layout</component-type>
+            <renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
+        </component>
+    </tag>
+    <tag>
+        <tag-name>layoutPane</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.LayoutPane</component-type>
+        </component>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]></description>
+        <tag-name>ajaxStatus</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.AjaxStatus</component-type>
+            <renderer-type>org.primefaces.extensions.component.AjaxStatusRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute after ajax requests start.]]></description>
+            <name>onstart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute after ajax requests complete.]]></description>
+            <name>oncomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback to execute before ajax requests start. This callback is only available for PrimeFaces ajax calls.]]></description>
+            <name>onprestart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute after ajax requests completed succesfully.]]></description>
+            <name>onsuccess</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when an ajax request fails.]]></description>
+            <name>onerror</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Inline style of the container element.]]></description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the container element.]]></description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>masterDetail</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MasterDetail</component-type>
+            <renderer-type>org.primefaces.extensions.component.MasterDetailRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailTagHandler</handler-class>
+        </component>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>level</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>flow</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>showBreadcrumb</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>masterDetailLevel</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MasterDetailLevel</component-type>
+            <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevelTagHandler</handler-class>
+        </component>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>level</name>
+            <required>true</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>contextVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>levelLabel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>levelDisabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>selectDetailLevel</tag-name>
+        <handler-class>org.primefaces.extensions.component.masterdetail.SelectDetailLevelTagHandler</handler-class>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>contextValue</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>level</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[TODO.]]></description>
+            <name>step</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
 </facelet-taglib>
