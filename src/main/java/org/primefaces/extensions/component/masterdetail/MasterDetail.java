@@ -18,7 +18,10 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import org.primefaces.util.Constants;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -30,10 +33,8 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import org.primefaces.util.Constants;
 
 /**
  * <code>MasterDetail</code> component.
@@ -47,6 +48,11 @@ public class MasterDetail extends UIComponentBase {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+
+	public static final String CONTEXT_VALUE_VALUE_EXPRESSION = "mdContextValueVE";
+	public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
+	public static final String SELECTED_STEP_VALUE_EXPRESSION = "selectedStepVE";
+	public static final String CONTEXT_VALUES = "mdContextValues";
 
 	private MasterDetailLevel detailLevelToProcess;
 	private MasterDetailLevel detailLevelToGo;
@@ -64,8 +70,8 @@ public class MasterDetail extends UIComponentBase {
 		level,
 		flow,
 		showBreadcrumb,
-        style,
-        styleClass;
+		style,
+		styleClass;
 
 		private String toString;
 
@@ -120,7 +126,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyle(final String style) {
-	    setAttribute(PropertyKeys.style, style);
+		setAttribute(PropertyKeys.style, style);
 	}
 
 	public String getStyleClass() {
@@ -128,8 +134,8 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyleClass(final String styleClass) {
-	    setAttribute(PropertyKeys.styleClass, styleClass);
-	}    
+		setAttribute(PropertyKeys.styleClass, styleClass);
+	}
 
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
@@ -156,6 +162,7 @@ public class MasterDetail extends UIComponentBase {
 		}
 	}
 
+	@Override
 	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
@@ -176,6 +183,7 @@ public class MasterDetail extends UIComponentBase {
 		pvc.getRenderIds().add(clienId);
 	}
 
+	@Override
 	public void processDecodes(final FacesContext fc) {
 		if (!isSelectDetailRequest(fc)) {
 			super.processDecodes(fc);
@@ -190,6 +198,7 @@ public class MasterDetail extends UIComponentBase {
 		}
 	}
 
+	@Override
 	public void processValidators(final FacesContext fc) {
 		if (!isSelectDetailRequest(fc)) {
 			super.processValidators(fc);
@@ -198,82 +207,11 @@ public class MasterDetail extends UIComponentBase {
 		}
 	}
 
+	@Override
 	public void processUpdates(final FacesContext fc) {
 		if (!isSelectDetailRequest(fc)) {
 			super.processUpdates(fc);
 		} else {
-            final int levelToGo = getDetailLevelToGo(fc).getLevel();
-			ValueExpression levelVE = this.getValueExpression(PropertyKeys.level.toString());
-			if (levelVE != null) {
-				// update "level"
-				levelVE.setValue(fc.getELContext(), levelToGo);
-				getStateHelper().remove(PropertyKeys.level);
-			}
-
-			// get UICommand caused this ajax request
-			final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
-			MasterDetailLevel mdl = getDetailLevelToProcess(fc);
-
-			// get resolved context value
-			Object contextValue = null;
-			@SuppressWarnings("unchecked")
-			Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get("contextValues");
-			if (contextValues != null) {
-				contextValue = contextValues.get("contextValue_" + source);
-			}
-
-			if (contextValue != null) {
-				// pass current context value to renderer
-				fc.getAttributes().put(getClientId(fc) + "_curContextValue", contextValue);
-
-				// update "flow"
-				ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
-				if (flowVE != null) {
-					Class flowType = flowVE.getType(fc.getELContext());
-
-					if (!flowType.isArray()) {
-				        // we can also check Collection.class.isAssignableFrom(flowType), but a support of collection is too complicate
-						// by reason of lack in Java Generics. The type of elements in a collection is not accessible at runtime.
-						throw new FacesException("Type of the 'flow' attribute must be an Array.");
-                    }
-
-                    Class elementType = flowType.getComponentType();
-                    if (!FlowLevel.class.isAssignableFrom(elementType)) {
-                        throw new FacesException("Elements in the 'flow' array must implement 'FlowLevel' interface.");
-                    }
-
-                    try {
-                        FlowLevel newFlowLevel = (FlowLevel)elementType.newInstance();
-                        newFlowLevel.setLevel(levelToGo);
-                        newFlowLevel.setContextValue(contextValue);
-
-                        FlowLevel[] newFlow;
-                        Object objFlow = flowVE.getValue(fc.getELContext());
-                        
-                        if (objFlow == null) {
-                            newFlow = new FlowLevel[1];
-                            newFlow[0] = newFlowLevel;
-                        } else {
-                            List<FlowLevel> listFlow = new ArrayList<FlowLevel>();
-                            listFlow.add(newFlowLevel);
-
-                            for (FlowLevel fl : (FlowLevel[])objFlow) {
-                               if (fl.getLevel() != levelToGo) {
-                                   listFlow.add(fl);
-                               }
-                            }
-
-                            newFlow = listFlow.toArray((FlowLevel[])Array.newInstance(elementType, listFlow.size()));
-                        }
-
-                        flowVE.setValue(fc.getELContext(), newFlow);
-                        getStateHelper().remove(PropertyKeys.flow);
-                    } catch (Exception e) {
-                        throw new FacesException("Object implementing 'FlowLevel' interface could not be created.");
-                    }
-				}
-			}
-
 			getDetailLevelToProcess(fc).processUpdates(fc);
 		}
 	}
@@ -296,13 +234,13 @@ public class MasterDetail extends UIComponentBase {
 
 		// selected level != null
 		if (strSelectedLevel != null) {
-            int selectedLevel = Integer.valueOf(strSelectedLevel);
-            detailLevelToGo = getDetailLevelByLevel(selectedLevel);
-            if (detailLevelToGo != null) {
-			    return detailLevelToGo;
-            }
+			int selectedLevel = Integer.valueOf(strSelectedLevel);
+			detailLevelToGo = getDetailLevelByLevel(selectedLevel);
+			if (detailLevelToGo != null) {
+				return detailLevelToGo;
+			}
 
-            throw new FacesException("MasterDetailLevel for selected level = " + selectedLevel + " not found.");
+			throw new FacesException("MasterDetailLevel for selected level = " + selectedLevel + " not found.");
 		}
 
 		int step;
@@ -319,22 +257,102 @@ public class MasterDetail extends UIComponentBase {
 		return detailLevelToGo;
 	}
 
-    public MasterDetailLevel getDetailLevelByLevel(final int level) {
-        for (UIComponent child : getChildren()) {
-            if (child instanceof MasterDetailLevel) {
-                MasterDetailLevel mdl = (MasterDetailLevel) child;
-                if (mdl.getLevel() == level) {
-                    return mdl;
-                }
-            }
-        }
+	public MasterDetailLevel getDetailLevelByLevel(final int level) {
+		for (UIComponent child : getChildren()) {
+			if (child instanceof MasterDetailLevel) {
+				MasterDetailLevel mdl = (MasterDetailLevel) child;
+				if (mdl.getLevel() == level) {
+					return mdl;
+				}
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 	public boolean isSelectDetailRequest(final FacesContext fc) {
 		return fc.getPartialViewContext().isAjaxRequest()
 		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + "_selectDetailRequest");
+	}
+
+	public void updateModel(final FacesContext fc, final int levelToGo) {
+		ValueExpression levelVE = this.getValueExpression(PropertyKeys.level.toString());
+		if (levelVE != null) {
+			// update "level"
+			levelVE.setValue(fc.getELContext(), levelToGo);
+			getStateHelper().remove(PropertyKeys.level);
+		}
+
+		// get UICommand caused this ajax request
+		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
+		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
+
+		// get resolved context value
+		Object contextValue = null;
+		@SuppressWarnings("unchecked")
+		Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
+		if (contextValues != null) {
+			contextValue = contextValues.get("contextValue_" + source);
+		}
+
+		if (contextValue != null) {
+			// pass current context value to renderer
+			fc.getAttributes().put(getClientId(fc) + "_curContextValue", contextValue);
+
+			// update "flow"
+			ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
+			if (flowVE != null) {
+				Class flowType = flowVE.getType(fc.getELContext());
+
+				if (!flowType.isArray()) {
+					// we can also check Collection.class.isAssignableFrom(flowType), but a support of collection is too complicate
+					// by reason of lack in Java Generics. The type of elements in a collection is not accessible at runtime.
+					throw new FacesException("Type of the 'flow' attribute must be an Array.");
+				}
+
+				Class elementType = flowType.getComponentType();
+				if (!FlowLevel.class.isAssignableFrom(elementType)) {
+					throw new FacesException("Elements in the 'flow' array must implement 'FlowLevel' interface.");
+				}
+
+				try {
+					FlowLevel newFlowLevel = (FlowLevel) elementType.newInstance();
+					newFlowLevel.setLevel(levelToGo);
+					newFlowLevel.setContextValue(contextValue);
+
+					FlowLevel[] newFlow;
+					Object objFlow = flowVE.getValue(fc.getELContext());
+
+					if (objFlow == null) {
+						newFlow = (FlowLevel[]) Array.newInstance(elementType, 1);
+						newFlow[0] = newFlowLevel;
+					} else {
+						List<FlowLevel> listFlow = new ArrayList<FlowLevel>();
+						listFlow.add(newFlowLevel);
+
+						for (FlowLevel fl : (FlowLevel[]) objFlow) {
+							if (fl.getLevel() != levelToGo) {
+								listFlow.add(fl);
+							}
+						}
+
+						newFlow = listFlow.toArray((FlowLevel[]) Array.newInstance(elementType, listFlow.size()));
+					}
+
+					flowVE.setValue(fc.getELContext(), newFlow);
+					getStateHelper().remove(PropertyKeys.flow);
+				} catch (Exception e) {
+					throw new FacesException("Object implementing 'FlowLevel' interface could not be created.");
+				}
+			}
+		}
+	}
+
+	public void resetCalculatedValues() {
+		detailLevelToProcess = null;
+		detailLevelToGo = null;
+		levelPositionToProcess = -1;
+		levelCount = -1;
 	}
 
 	private void initDataForLevels(final FacesContext fc) {

@@ -18,52 +18,51 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import org.primefaces.component.breadcrumb.BreadCrumb;
-
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
 
+import org.primefaces.component.breadcrumb.BreadCrumb;
+
 /**
  * {@link javax.faces.view.facelets.TagHandler} for the <code>MasterDetail</code>.
  *
- * @author Oleg Varaksin / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class MasterDetailTagHandler extends ComponentHandler {
-    
-    public MasterDetailTagHandler(final ComponentConfig config) {
-        super(config);
-    }
 
-    @Override
-    public void onComponentPopulated(final FaceletContext ctx, final UIComponent c, final UIComponent parent) {
-        MasterDetail masterDetail = (MasterDetail) c;
+	public MasterDetailTagHandler(final ComponentConfig config) {
+		super(config);
+	}
 
-        if (!isNew(parent)) {
-            return;
-        }
+	@Override
+	public void onComponentPopulated(final FaceletContext ctx, final UIComponent c, final UIComponent parent) {
+		if (!isNew(parent)) {
+			return;
+		}
 
-        if (!isBreadcrumbAvailable(masterDetail)) {
-            // create BreadCrumb programmatically
-            BreadCrumb breadcrumb = (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
-            FacesContext fc = ctx.getFacesContext();
-            breadcrumb.setId(fc.getViewRoot().createUniqueId(fc, null));
+		MasterDetail masterDetail = (MasterDetail) c;
 
-            // add it to the MasterDetail
-            masterDetail.getChildren().add(breadcrumb);
-        }
-    }
+		if (!isBreadcrumbAvailable(masterDetail)) {
+			// create BreadCrumb programmatically
+			BreadCrumb breadcrumb =
+			    (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
+			breadcrumb.setId(masterDetail.getId() + "_bc");
 
-    private static boolean isBreadcrumbAvailable(final MasterDetail masterDetail) {
-        for (UIComponent child : masterDetail.getChildren()) {
-            if (child instanceof BreadCrumb) {
-                return true;
-            }
-        }
+			// add it to the MasterDetail
+			masterDetail.getChildren().add(breadcrumb);
+		}
+	}
 
-        return false;
-    }
+	private static boolean isBreadcrumbAvailable(final MasterDetail masterDetail) {
+		for (UIComponent child : masterDetail.getChildren()) {
+			if (child instanceof BreadCrumb) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
