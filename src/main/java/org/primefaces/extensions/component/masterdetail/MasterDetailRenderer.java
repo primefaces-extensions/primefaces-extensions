@@ -58,7 +58,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 				mdl = masterDetail.getDetailLevelToGo(fc);
 			}
 
-			masterDetail.updateModel(fc, mdl.getLevel());
+			masterDetail.updateModel(fc, mdl);
 		} else {
 			// component has been navigated from outside, e.g. GET request or POST update from another component
 			mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
@@ -121,10 +121,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		Object contextValue = null;
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar)) {
-			contextValue = fc.getAttributes().get(masterDetail.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
-			if (contextValue == null) {
-				contextValue = getContextValueFromFlow((FlowLevel[]) masterDetail.getFlow(), mdl.getLevel());
-			}
+			contextValue = getContextValueFromFlow((FlowLevel[]) masterDetail.getFlow(), clientId, mdl);
 		}
 
 		if (contextValue != null) {
@@ -158,6 +155,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		// create model from scratch
 		MenuModel model = new DefaultMenuModel();
 		FlowLevel[] flowLevels = (FlowLevel[]) masterDetail.getFlow();
+		String clientId = masterDetail.getClientId(fc);
 
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
@@ -165,7 +163,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 				// create a new menu item and add to the model
 				MenuItem menuItem =
-				    createMenuItem(fc, masterDetail, mdl, getContextValueFromFlow(flowLevels, mdl.getLevel()),
+				    createMenuItem(fc, masterDetail, mdl, getContextValueFromFlow(flowLevels, clientId, mdl),
 				                   mdlToRender.getLevel());
 				model.addMenuItem(menuItem);
 
@@ -178,14 +176,20 @@ public class MasterDetailRenderer extends CoreRenderer {
 		return model;
 	}
 
-	protected Object getContextValueFromFlow(final FlowLevel[] flowLevels, final int level) {
-		if (flowLevels == null || flowLevels.length < 1) {
-			return null;
+	protected Object getContextValueFromFlow(final FlowLevel[] flowLevels, final String mdClientId, final MasterDetailLevel mdl) {
+		// try to get context value from internal storage
+		Object contextValue = mdl.getAttributes().get(mdClientId + MasterDetail.CURRENT_CONTEXT_VALUE);
+		if (contextValue != null) {
+			return contextValue;
 		}
 
-		for (FlowLevel fl : flowLevels) {
-			if (fl.getLevel() == level) {
-				return fl.getContextValue();
+		// try to get context value from external "flow" state
+		if (flowLevels != null && flowLevels.length > 0) {
+			final int level = mdl.getLevel();
+			for (FlowLevel fl : flowLevels) {
+				if (fl.getLevel() == level) {
+					return fl.getContextValue();
+				}
 			}
 		}
 
@@ -235,6 +239,12 @@ public class MasterDetailRenderer extends CoreRenderer {
 		uiParameter.setId(menuItemId + "_sl");
 		uiParameter.setName(clientId + MasterDetail.SELECTED_LEVEL);
 		uiParameter.setValue(mdl.getLevel());
+		menuItem.getChildren().add(uiParameter);
+
+		uiParameter = new UIParameter();
+		uiParameter.setId(menuItemId + "_sp");
+		uiParameter.setName(clientId + MasterDetail.SKIP_PROCESSING_REQUEST);
+		uiParameter.setValue(true);
 		menuItem.getChildren().add(uiParameter);
 
 		return menuItem;

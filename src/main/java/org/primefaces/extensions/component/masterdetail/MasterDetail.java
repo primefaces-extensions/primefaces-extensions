@@ -280,7 +280,8 @@ public class MasterDetail extends UIComponentBase {
 		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
 	}
 
-	public void updateModel(final FacesContext fc, final int levelToGo) {
+	public void updateModel(final FacesContext fc, final MasterDetailLevel mdlToGo) {
+		final int levelToGo = mdlToGo.getLevel();
 		ValueExpression levelVE = this.getValueExpression(PropertyKeys.level.toString());
 		if (levelVE != null) {
 			// update "level"
@@ -301,8 +302,8 @@ public class MasterDetail extends UIComponentBase {
 		}
 
 		if (contextValue != null) {
-			// pass current context value to renderer
-			fc.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
+			// update current context value for corresponding MasterDetailLevel
+			mdlToGo.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
 
 			// update "flow"
 			ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
@@ -347,7 +348,7 @@ public class MasterDetail extends UIComponentBase {
 					flowVE.setValue(fc.getELContext(), newFlow);
 					getStateHelper().remove(PropertyKeys.flow);
 				} catch (Exception e) {
-					throw new FacesException("Object implementing 'FlowLevel' interface could not be created.");
+					throw new FacesException("Update of 'flow' array has failed.");
 				}
 			}
 		}
