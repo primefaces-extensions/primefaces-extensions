@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
+import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -43,6 +44,7 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  */
 @ListenerFor(systemEventClass = PostRestoreStateEvent.class)
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
 public class MasterDetail extends UIComponentBase {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -53,6 +55,13 @@ public class MasterDetail extends UIComponentBase {
 	public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
 	public static final String SELECTED_STEP_VALUE_EXPRESSION = "selectedStepVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
+	public static final String SKIP_PROCESSING = "mdSkipProcessing";
+	public static final String SELECT_DETAIL_REQUEST = "_selectDetailRequest";
+	public static final String CURRENT_LEVEL = "_currentLevel";
+	public static final String SELECTED_LEVEL = "_selectedLevel";
+	public static final String SELECTED_STEP = "_selectedStep";
+	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
+	public static final String SKIP_PROCESSING_REQUEST = "_skipProcessing";
 
 	private MasterDetailLevel detailLevelToProcess;
 	private MasterDetailLevel detailLevelToGo;
@@ -175,7 +184,9 @@ public class MasterDetail extends UIComponentBase {
 		PartialViewContext pvc = fc.getPartialViewContext();
 
 		// process and update the MasterDetail component automatically
-		pvc.getExecuteIds().add(clienId);
+		if (!isSkipProcessing(fc)) {
+			pvc.getExecuteIds().add(clienId);
+		}
 
 		// PF 2.2.1
 		//RequestContext.getCurrentInstance().addPartialUpdateTarget(clienId);
@@ -188,13 +199,7 @@ public class MasterDetail extends UIComponentBase {
 		if (!isSelectDetailRequest(fc)) {
 			super.processDecodes(fc);
 		} else {
-			MasterDetailLevel levelToProcess = getDetailLevelToProcess(fc);
-
-			if (isSkipProcessing(fc)) {
-				fc.renderResponse();
-			} else {
-				levelToProcess.processDecodes(fc);
-			}
+			getDetailLevelToProcess(fc).processDecodes(fc);
 		}
 	}
 
@@ -229,8 +234,8 @@ public class MasterDetail extends UIComponentBase {
 			return detailLevelToGo;
 		}
 
-		final String strSelectedLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedLevel");
-		final String strSelectedStep = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_selectedStep");
+		final String strSelectedLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + SELECTED_LEVEL);
+		final String strSelectedStep = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + SELECTED_STEP);
 
 		// selected level != null
 		if (strSelectedLevel != null) {
@@ -272,7 +277,7 @@ public class MasterDetail extends UIComponentBase {
 
 	public boolean isSelectDetailRequest(final FacesContext fc) {
 		return fc.getPartialViewContext().isAjaxRequest()
-		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + "_selectDetailRequest");
+		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
 	}
 
 	public void updateModel(final FacesContext fc, final int levelToGo) {
@@ -297,7 +302,7 @@ public class MasterDetail extends UIComponentBase {
 
 		if (contextValue != null) {
 			// pass current context value to renderer
-			fc.getAttributes().put(getClientId(fc) + "_curContextValue", contextValue);
+			fc.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
 
 			// update "flow"
 			ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
@@ -356,7 +361,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	private void initDataForLevels(final FacesContext fc) {
-		final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_currentLevel");
+		final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + CURRENT_LEVEL);
 		if (strCurrentLevel == null) {
 			throw new FacesException("Current level is missing in request.");
 		}
@@ -384,20 +389,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	private boolean isSkipProcessing(final FacesContext fc) {
-		MasterDetailLevel levelToG = getDetailLevelToGo(fc);
-		int levelPositionToGo = 0;
-		for (UIComponent child : getChildren()) {
-			if (child instanceof MasterDetailLevel) {
-				MasterDetailLevel mdl = (MasterDetailLevel) child;
-				levelPositionToGo++;
-
-				if (mdl.getLevel() == levelToG.getLevel()) {
-					break;
-				}
-			}
-		}
-
-		return (levelPositionToGo <= getLevelPositionToProcess());
+		return fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SKIP_PROCESSING_REQUEST);
 	}
 
 	private MasterDetailLevel getDetailLevelByStep(final int step) {

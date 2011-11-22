@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
+import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
@@ -43,7 +44,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 
 	@Override
 	public void processEvent(final ComponentSystemEvent event) {
-		UIComponent source = event.getComponent();
+		UICommand source = (UICommand) event.getComponent();
 
 		// find master detail component
 		MasterDetail masterDetail = findMasterDetail(source);
@@ -62,25 +63,36 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		final String masterDetailClientId = masterDetail.getClientId(fc);
 
 		// attach parameters dynamically
-		addUIParameter(fc, source, masterDetailClientId + "_selectDetailRequest", true);
-		addUIParameter(fc, source, masterDetailClientId + "_currentLevel", masterDetailLevel.getLevel());
+		// required basic parameters
+		addUIParameter(fc, source, masterDetailClientId + MasterDetail.SELECT_DETAIL_REQUEST, true);
+		addUIParameter(fc, source, masterDetailClientId + MasterDetail.CURRENT_LEVEL, masterDetailLevel.getLevel());
 
+		// selected level
 		ValueExpression selectedLevelVE =
 		    (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_LEVEL_VALUE_EXPRESSION);
 		Object selectedLevel = selectedLevelVE != null ? selectedLevelVE.getValue(fc.getELContext()) : null;
 		if (selectedLevel != null) {
-			addUIParameter(fc, source, masterDetailClientId + "_selectedLevel", selectedLevel);
+			addUIParameter(fc, source, masterDetailClientId + MasterDetail.SELECTED_LEVEL, selectedLevel);
 		} else {
-			removeUIParameter(source, masterDetailClientId + "_selectedLevel");
+			removeUIParameter(source, masterDetailClientId + MasterDetail.SELECTED_LEVEL);
 		}
 
+		// selected step
 		ValueExpression selectedStepVE =
 		    (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION);
 		Object selectedStep = selectedStepVE != null ? selectedStepVE.getValue(fc.getELContext()) : null;
 		if (selectedStep != null) {
-			addUIParameter(fc, source, masterDetailClientId + "_selectedStep", selectedStep);
+			addUIParameter(fc, source, masterDetailClientId + MasterDetail.SELECTED_STEP, selectedStep);
 		} else {
-			removeUIParameter(source, masterDetailClientId + "_selectedStep");
+			removeUIParameter(source, masterDetailClientId + MasterDetail.SELECTED_STEP);
+		}
+
+		// skip processing flag
+		Boolean skipProcessing = (Boolean) source.getAttributes().get(MasterDetail.SKIP_PROCESSING);
+		if ((skipProcessing != null && skipProcessing) || source.isImmediate()) {
+			addUIParameter(fc, source, masterDetailClientId + MasterDetail.SKIP_PROCESSING_REQUEST, true);
+		} else {
+			removeUIParameter(source, masterDetailClientId + MasterDetail.SKIP_PROCESSING_REQUEST);
 		}
 
 		ValueExpression contextValueVE =

@@ -72,9 +72,9 @@
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
-					<excludes>
-						<exclude>**/ckeditor/changes.txt</exclude>
-					</excludes>
+                    <excludes>
+                        <exclude>**/ckeditor/changes.txt</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -82,7 +82,7 @@
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
                 <configuration>
                     <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
-					<resourcesSets>
+                    <resourcesSets>
                         <resourcesSet>
                             <includes>
                                 <include>imageareaselect/**</include>
@@ -93,18 +93,30 @@
                                 <subDirMode>true</subDirMode>
                             </aggregation>
                         </resourcesSet>
-						<resourcesSet>
-							<includes>
+                        <resourcesSet>
+                            <includes>
+                                <include>masterdetail/masterdetail.css</include>
+                            </includes>
+                            <aggregation>
+                                <outputFile>
+                                    ${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.css
+                                </outputFile>
+                            </aggregation>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
                                 <include>core/core.js</include>
-								<include>ajaxstatus/ajaxstatus.js</include>
-								<include>ckeditor/widget.js</include>
-								<include>imagerotateandresize/imagerotateandresize.js</include>
-							</includes>
-							<aggregation>
-								<outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js</outputFile>
-							</aggregation>
-						</resourcesSet>
-					</resourcesSets>
+                                <include>ajaxstatus/ajaxstatus.js</include>
+                                <include>ckeditor/widget.js</include>
+                                <include>imagerotateandresize/imagerotateandresize.js</include>
+                            </includes>
+                            <aggregation>
+                                <outputFile>
+                                    ${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js
+                                </outputFile>
+                            </aggregation>
+                        </resourcesSet>
+                    </resourcesSets>
                 </configuration>
             </plugin>
         </plugins>

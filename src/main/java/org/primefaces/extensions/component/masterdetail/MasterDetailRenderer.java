@@ -121,7 +121,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		Object contextValue = null;
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar)) {
-			contextValue = fc.getAttributes().get(masterDetail.getClientId(fc) + "_curContextValue");
+			contextValue = fc.getAttributes().get(masterDetail.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
 			if (contextValue == null) {
 				contextValue = getContextValueFromFlow((FlowLevel[]) masterDetail.getFlow(), mdl.getLevel());
 			}
@@ -195,7 +195,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	protected MenuItem createMenuItem(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl,
 	                                  final Object contextValue, final int currentLevel) {
 		String clientId = masterDetail.getClientId(fc);
-		MenuItem menuItem = (MenuItem) fc.getApplication().createComponent(MenuItem.COMPONENT_TYPE);
+		MenuItem menuItem = new MenuItem();
 		menuItem.setId(masterDetail.getId() + "_bcItem_" + mdl.getLevel());
 
 		String contextVar = mdl.getContextVar();
@@ -221,19 +221,19 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 		UIParameter uiParameter = new UIParameter();
 		uiParameter.setId(menuItemId + "_sdr");
-		uiParameter.setName(clientId + "_selectDetailRequest");
+		uiParameter.setName(clientId + MasterDetail.SELECT_DETAIL_REQUEST);
 		uiParameter.setValue(true);
 		menuItem.getChildren().add(uiParameter);
 
 		uiParameter = new UIParameter();
 		uiParameter.setId(menuItemId + "_cl");
-		uiParameter.setName(clientId + "_currentLevel");
+		uiParameter.setName(clientId + MasterDetail.CURRENT_LEVEL);
 		uiParameter.setValue(currentLevel);
 		menuItem.getChildren().add(uiParameter);
 
 		uiParameter = new UIParameter();
 		uiParameter.setId(menuItemId + "_sl");
-		uiParameter.setName(clientId + "_selectedLevel");
+		uiParameter.setName(clientId + MasterDetail.SELECTED_LEVEL);
 		uiParameter.setValue(mdl.getLevel());
 		menuItem.getChildren().add(uiParameter);
 

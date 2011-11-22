@@ -103,6 +103,9 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 				} catch (Exception e) {
 					// ignore
 				}
+			} else if ("@none".equals(ajaxSource.getProcess().trim())) {
+				// mark navigation for skipping all JSF phases except rendering
+				parent.getAttributes().put(MasterDetail.SKIP_PROCESSING, true);
 			}
 		}
 
