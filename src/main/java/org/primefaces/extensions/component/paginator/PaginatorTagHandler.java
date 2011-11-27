@@ -28,7 +28,7 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
-import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.api.UIData;
 
 /**
  * {@link TagHandler} for the <code>Paginator</code> component.
@@ -61,40 +61,40 @@ public class PaginatorTagHandler extends TagHandler {
 
 	@Override
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
-		if (!(parent instanceof DataTable)) {
-			throw new FacesException("Paginator must be inside a DataTable.");
+		if (!(parent instanceof UIData)) {
+			throw new FacesException("Paginator must be inside a UIData.");
 		}
 
 		if (ComponentHandler.isNew(parent)) {
-			final DataTable dataTable = (DataTable) parent;
-			dataTable.setPaginator(true);
+			final UIData uiData = (UIData) parent;
+			uiData.setPaginator(true);
 
 			if (this.paginatorTemplate != null) {
-				dataTable.setPaginatorTemplate(this.paginatorTemplate.getValue(context));
+				uiData.setPaginatorTemplate(this.paginatorTemplate.getValue(context));
 			}
 
 			if (this.rowsPerPageTemplate != null) {
-				dataTable.setRowsPerPageTemplate(this.rowsPerPageTemplate.getValue(context));
+				uiData.setRowsPerPageTemplate(this.rowsPerPageTemplate.getValue(context));
 			}
 
 			if (this.currentPageReportTemplate != null) {
-				dataTable.setCurrentPageReportTemplate(this.currentPageReportTemplate.getValue(context));
+				uiData.setCurrentPageReportTemplate(this.currentPageReportTemplate.getValue(context));
 			}
 
 			if (this.pageLinks != null) {
-				dataTable.setPageLinks(this.pageLinks.getInt(context));
+				uiData.setPageLinks(this.pageLinks.getInt(context));
 			}
 
 			if (this.paginatorPosition != null) {
-				dataTable.setPaginatorPosition(this.paginatorPosition.getValue(context));
+				uiData.setPaginatorPosition(this.paginatorPosition.getValue(context));
 			}
 
 			if (this.paginatorAlwaysVisible != null) {
-				dataTable.setPaginatorAlwaysVisible(this.paginatorAlwaysVisible.getBoolean(context));
+				uiData.setPaginatorAlwaysVisible(this.paginatorAlwaysVisible.getBoolean(context));
 			}
 
 			if (this.rows != null) {
-				dataTable.setRows(this.rows.getInt(context));
+				uiData.setRows(this.rows.getInt(context));
 			}
 		}
 	}
