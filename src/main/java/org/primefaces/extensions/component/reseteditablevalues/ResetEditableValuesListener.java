@@ -25,7 +25,6 @@ import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
@@ -43,11 +42,17 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 
 	private String components;
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
+	public ResetEditableValuesListener() {
+	}
+
 	public ResetEditableValuesListener(final String components) {
 		this.components = components;
 	}
 
-	public void processAction(ActionEvent actionEvent) throws AbortProcessingException {
+	public void processAction(final ActionEvent actionEvent) {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		UIComponent source = actionEvent.getComponent();
 		final String clientId = source.getClientId(context);
@@ -77,18 +82,18 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 		return false;
 	}
 
-	public void restoreState(FacesContext facesContext, Object state) {
+	public void restoreState(final FacesContext facesContext, final Object state) {
 		Object[] values = (Object[]) state;
 		components = (String) values[0];
 	}
 
-	public Object saveState(FacesContext facesContext) {
+	public Object saveState(final FacesContext facesContext) {
 		Object[] values = new Object[1];
 		values[0] = components;
 
 		return values;
 	}
 
-	public void setTransient(boolean value) {
+	public void setTransient(final boolean value) {
 	}
 }
