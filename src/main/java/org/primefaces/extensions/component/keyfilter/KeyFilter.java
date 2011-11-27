@@ -59,7 +59,9 @@ public class KeyFilter extends UIComponentBase implements Widget {
 
 		widgetVar,
 		forValue("for"),
-		regularExpression;
+		regularExpression,
+		mask,
+		testFunction;
 
 		private String toString;
 
@@ -107,6 +109,22 @@ public class KeyFilter extends UIComponentBase implements Widget {
 
 	public void setRegularExpression(final String regularExpression) {
 		setAttribute(PropertyKeys.regularExpression, regularExpression);
+	}
+
+	public String getMask() {
+		return (String) getStateHelper().eval(PropertyKeys.mask, null);
+	}
+
+	public void setMask(final String mask) {
+		setAttribute(PropertyKeys.mask, mask);
+	}
+
+	public String getTestFunction() {
+		return (String) getStateHelper().eval(PropertyKeys.testFunction, null);
+	}
+
+	public void setTestFunction(final String testFunction) {
+		setAttribute(PropertyKeys.testFunction, testFunction);
 	}
 
 	@Override

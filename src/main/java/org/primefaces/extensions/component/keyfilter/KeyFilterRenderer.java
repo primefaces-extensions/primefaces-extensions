@@ -60,6 +60,10 @@ public class KeyFilterRenderer extends CoreRenderer {
 
 		if (keyFilter.getRegularExpression() != null) {
 			writer.write(",regEx:" + keyFilter.getRegularExpression());
+		} else if (keyFilter.getMask() != null) {
+			writer.write(",mask:'" + keyFilter.getMask() + "'");
+		} else if (keyFilter.getTestFunction() != null) {
+			writer.write(",testFunction:function(c){" + keyFilter.getTestFunction() + ";}");
 		}
 
 		writer.write("});});");
