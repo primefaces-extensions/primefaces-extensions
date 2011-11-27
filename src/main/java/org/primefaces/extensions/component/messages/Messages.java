@@ -53,7 +53,6 @@ public class Messages extends AbstractNotification implements AutoUpdatable {
 	protected enum PropertyKeys {
 
 		globalOnly,
-		redisplay,
 		autoUpdate;
 
 		private String toString;
@@ -88,16 +87,6 @@ public class Messages extends AbstractNotification implements AutoUpdatable {
 	@SuppressWarnings("boxing")
 	public void setGlobalOnly(final boolean globalOnly) {
 		setAttribute(PropertyKeys.globalOnly, globalOnly);
-	}
-
-	@SuppressWarnings("boxing")
-	public boolean isRedisplay() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.redisplay, true);
-	}
-
-	@SuppressWarnings("boxing")
-	public void setRedisplay(final boolean redisplay) {
-		setAttribute(PropertyKeys.redisplay, redisplay);
 	}
 
 	@SuppressWarnings("boxing")
