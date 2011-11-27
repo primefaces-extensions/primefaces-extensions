@@ -88,6 +88,7 @@
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>tooltip/**</include>
+                                 <include>keyfilter/**</include>
                             </includes>
                             <aggregation>
                                 <subDirMode>true</subDirMode>

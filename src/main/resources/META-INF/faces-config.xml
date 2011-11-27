@@ -91,6 +91,10 @@
         <component-type>org.primefaces.extensions.component.Growl</component-type>
         <component-class>org.primefaces.extensions.component.growl.Growl</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.KeyFilter</component-type>
+        <component-class>org.primefaces.extensions.component.keyfilter.KeyFilter</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -161,6 +165,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.GrowlRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.growl.GrowlRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.KeyFilterRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.keyfilter.KeyFilterRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
