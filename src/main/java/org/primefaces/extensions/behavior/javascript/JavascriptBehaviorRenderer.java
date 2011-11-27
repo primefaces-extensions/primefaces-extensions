@@ -36,8 +36,8 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 
 	@Override
 	public String getScript(final ClientBehaviorContext behaviorContext, final ClientBehavior behavior) {
-		final JavascriptBehavior jsCommand = (JavascriptBehavior) behavior;
-		if (jsCommand.isDisabled()) {
+		final JavascriptBehavior javascriptBehavior = (JavascriptBehavior) behavior;
+		if (javascriptBehavior.isDisabled()) {
 			return null;
 		}
 
@@ -52,7 +52,8 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 		script.append("PrimeFacesExt.behavior.Javascript({");
 		script.append("source:'").append(source).append("'");
 		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
-		script.append(",execute:function(source, event, params, ext){").append(jsCommand.getExecute()).append(";}");
+		script.append(",execute:function(source, event, params, ext){");
+		script.append(javascriptBehavior.getExecute()).append(";}");
 
 		// params
 		boolean paramWritten = false;
@@ -68,7 +69,9 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 					script.append(",params:{");
 				}
 
-				script.append("'").append(parameter.getName()).append("':'").append(parameter.getValue()).append("'");
+				script.append("'");
+				script.append(parameter.getName()).append("':'").append(parameter.getValue());
+				script.append("'");
 			}
 		}
 
