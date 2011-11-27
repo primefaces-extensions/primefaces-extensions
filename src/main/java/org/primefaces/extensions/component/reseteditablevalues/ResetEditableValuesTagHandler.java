@@ -18,17 +18,17 @@
 
 package org.primefaces.extensions.component.reseteditablevalues;
 
+import java.io.IOException;
+
 import javax.faces.FacesException;
+import javax.faces.component.ActionSource;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
-import javax.faces.event.ComponentSystemEventListener;
-import javax.faces.event.PostValidateEvent;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
-import java.io.IOException;
 
 /**
  * {@link TagHandler} for the <code>ResetEditableValues</code> component.
@@ -53,10 +53,8 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 		}
 
 		if (ComponentHandler.isNew(parent)) {
-			final UICommand source = (UICommand) parent;
-			final ComponentSystemEventListener listener = new ResetEditableValuesListener(source, forValue.getValue(context));
-
-			parent.subscribeToEvent(PostValidateEvent.class, listener);
+			ActionSource actionSource = (ActionSource) parent;
+			actionSource.addActionListener(new ResetEditableValuesListener(forValue.getValue(context)));
 		}
 	}
 }

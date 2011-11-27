@@ -33,6 +33,7 @@ import javax.faces.component.visit.VisitResult;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class EditableValueHoldersVisitCallback implements VisitCallback {
 
