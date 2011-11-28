@@ -19,16 +19,20 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
+import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
 import org.primefaces.extensions.util.StringUtils;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
@@ -52,10 +56,21 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 		if (masterDetail.isSelectDetailRequest(fc)) {
 			// component has been navigated via SelectDetailLevel
+			MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
+
 			if (fc.isValidationFailed()) {
-				mdl = masterDetail.getDetailLevelToProcess(fc);
+				mdl = mdlToProcess;
 			} else {
 				mdl = masterDetail.getDetailLevelToGo(fc);
+
+				// reset last saved validation state and stored values of editable components
+				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
+
+				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+				for (EditableValueHolder editableValueHolder : editableValueHolders) {
+					editableValueHolder.resetValue();
+				}
 			}
 
 			masterDetail.updateModel(fc, mdl);
@@ -162,10 +177,12 @@ public class MasterDetailRenderer extends CoreRenderer {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
 
 				// create a new menu item and add to the model
-				MenuItem menuItem =
-				    createMenuItem(fc, masterDetail, mdl, getContextValueFromFlow(flowLevels, clientId, mdl),
-				                   mdlToRender.getLevel());
-				model.addMenuItem(menuItem);
+				if (child.isRendered()) {
+					MenuItem menuItem =
+					    createMenuItem(fc, masterDetail, mdl, getContextValueFromFlow(flowLevels, clientId, mdl),
+					                   mdlToRender.getLevel());
+					model.addMenuItem(menuItem);
+				}
 
 				if (mdl.getLevel() == mdlToRender.getLevel()) {
 					break;
