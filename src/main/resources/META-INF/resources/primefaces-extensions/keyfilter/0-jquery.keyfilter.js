@@ -136,6 +136,9 @@
 		version: 1.7
 	});
 
+	/* 
+	 * This will be manually done by our wrapper
+	 *  
 	$(document).ready(function()
 	{
 		var tags = $('input[class*=mask],textarea[class*=mask]');
@@ -143,6 +146,6 @@
 		{
 			tags.filter('.mask-' + key).keyfilter($.fn.keyfilter.defaults.masks[key]);
 		}
-	});
+	}); */
 
 })(jQuery);

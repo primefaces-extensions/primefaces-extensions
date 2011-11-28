@@ -14,11 +14,10 @@ PrimeFacesExt.widget.KeyFilter = function(id, cfg) {
 
 PrimeFacesExt.widget.KeyFilter.prototype.applyKeyFilter = function(input) {
 	if (this.cfg.regEx) {
-		this.instance = input.keyfilter(this.cfg.regEx);
+		input.keyfilter(this.cfg.regEx);
 	} else if (this.cfg.testFunction) {
-		this.instance = input.keyfilter(this.cfg.testFunction)
+		input.keyfilter(this.cfg.testFunction);
 	} else if (this.cfg.mask) {
-		input.addClass('mask-' + this.cfg.mask);
-		this.instance = input.keyfilter();
+		input.keyfilter($.fn.keyfilter.defaults.masks[this.cfg.mask]);
 	}
 }
