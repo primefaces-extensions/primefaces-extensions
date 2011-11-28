@@ -58,8 +58,8 @@ public class KeyFilterRenderer extends CoreRenderer {
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.KeyFilter('" + clientId + "', {");
 		writer.write("target:'" + target + "'");
 
-		if (keyFilter.getRegularExpression() != null) {
-			writer.write(",regEx:" + keyFilter.getRegularExpression());
+		if (keyFilter.getRegEx() != null) {
+			writer.write(",regEx:" + keyFilter.getRegEx());
 		} else if (keyFilter.getMask() != null) {
 			writer.write(",mask:'" + keyFilter.getMask() + "'");
 		} else if (keyFilter.getTestFunction() != null) {
