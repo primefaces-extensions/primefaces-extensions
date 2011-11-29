@@ -73,7 +73,7 @@ public class Layout extends UIComponentBase implements Widget {
 
 		private String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
@@ -90,7 +90,7 @@ public class Layout extends UIComponentBase implements Widget {
 	 * The {@link javax.faces.model.DataModel} associated with this component to build tabs dynamically, lazily instantiated if
 	 * requested. This object is not part of the saved and restored state of the component.
 	 */
-	private DataModel<MenuItem> model = null;
+	private DataModel<MenuItem> dataModel = null;
 
 	public Layout() {
 		setRendererType(DEFAULT_RENDERER);
@@ -105,7 +105,7 @@ public class Layout extends UIComponentBase implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
-	public void setWidgetVar(String widgetVar) {
+	public void setWidgetVar(final String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
@@ -133,7 +133,7 @@ public class Layout extends UIComponentBase implements Widget {
 	 *
 	 * @param tabs items new items
 	 */
-	public void setTabs(Object tabs) {
+	public void setTabs(final Object tabs) {
 		setDataModel(null);
 		setAttribute(PropertyKeys.tabs, tabs);
 	}
@@ -142,7 +142,7 @@ public class Layout extends UIComponentBase implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.togglerTipOpen, null);
 	}
 
-	public void setTogglerTipOpen(String togglerTipOpen) {
+	public void setTogglerTipOpen(final String togglerTipOpen) {
 		setAttribute(PropertyKeys.togglerTipOpen, togglerTipOpen);
 	}
 
@@ -150,7 +150,7 @@ public class Layout extends UIComponentBase implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.togglerTipClose, null);
 	}
 
-	public void setTogglerTipClose(String togglerTipClose) {
+	public void setTogglerTipClose(final String togglerTipClose) {
 		setAttribute(PropertyKeys.togglerTipClose, togglerTipClose);
 	}
 
@@ -158,7 +158,7 @@ public class Layout extends UIComponentBase implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
 	}
 
-	public void setResizerTip(String resizerTip) {
+	public void setResizerTip(final String resizerTip) {
 		setAttribute(PropertyKeys.resizerTip, resizerTip);
 	}
 
@@ -167,8 +167,8 @@ public class Layout extends UIComponentBase implements Widget {
 	 *
 	 * @param model data model
 	 */
-	public void setDataModel(DataModel<MenuItem> model) {
-		this.model = model;
+	public void setDataModel(final DataModel<MenuItem> model) {
+		this.dataModel = model;
 	}
 
 	/**
@@ -177,8 +177,8 @@ public class Layout extends UIComponentBase implements Widget {
 	 * @return DataModel
 	 */
 	public DataModel<MenuItem> getDataModel() {
-		if (this.model != null) {
-			return model;
+		if (this.dataModel != null) {
+			return dataModel;
 		}
 
 		Object tabs = getTabs();
@@ -194,7 +194,7 @@ public class Layout extends UIComponentBase implements Widget {
 			setDataModel(new ScalarDataModel<MenuItem>((MenuItem) tabs));
 		}
 
-		return model;
+		return dataModel;
 	}
 
 	@Override
@@ -218,7 +218,9 @@ public class Layout extends UIComponentBase implements Widget {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+				this.getAttributes().put(
+						"javax.faces.component.UIComponentBase.attributesThatAreSet",
+						setAttributes);
 			}
 		}
 
