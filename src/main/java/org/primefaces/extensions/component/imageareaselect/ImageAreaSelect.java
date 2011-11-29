@@ -314,7 +314,9 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+				this.getAttributes().put(
+						"javax.faces.component.UIComponentBase.attributesThatAreSet",
+						setAttributes);
 			}
 		}
 
@@ -355,8 +357,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 				final String imgSrc = params.get(clientId + "_imgSrc");
 
 				final ImageAreaSelectEvent selectEvent =
-				    new ImageAreaSelectEvent(this, behaviorEvent.getBehavior(), height, width, x1, x2, y1, y2, imgHeight,
-				                             imgWidth, imgSrc);
+				    new ImageAreaSelectEvent(this, behaviorEvent.getBehavior(), height, width, x1, x2, y1, y2,
+				    		imgHeight, imgWidth, imgSrc);
 
 				super.queueEvent(selectEvent);
 			}
