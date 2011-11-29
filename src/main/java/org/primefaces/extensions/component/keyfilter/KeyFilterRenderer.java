@@ -47,8 +47,7 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final KeyFilter keyFilter = (KeyFilter) component;
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
-		final String target =
-			ComponentUtils.findTarget(keyFilter, keyFilter.getFor(), keyFilter.getForSelector(), context);
+		final String target = ComponentUtils.findTarget(keyFilter, context);
 
 		writer.startElement("script", keyFilter);
 		writer.writeAttribute("id", clientId, null);

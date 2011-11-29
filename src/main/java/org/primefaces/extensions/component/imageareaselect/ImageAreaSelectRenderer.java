@@ -47,8 +47,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 		final String clientId = imageAreaSelect.getClientId(context);
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
-		final String target =
-			ComponentUtils.findTarget(imageAreaSelect, imageAreaSelect.getFor()).getClientId(context);
+		final String target = ComponentUtils.findTarget(imageAreaSelect, context);
 
 		writer.startElement("script", imageAreaSelect);
 		writer.writeAttribute("id", clientId, null);

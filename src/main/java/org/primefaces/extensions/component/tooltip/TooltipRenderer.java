@@ -46,7 +46,7 @@ public class TooltipRenderer extends CoreRenderer {
 		String target = null;
 
 		if (!tooltip.isGlobal()) {
-			target = ComponentUtils.findTarget(tooltip, tooltip.getFor(), tooltip.getForSelector(), context);
+			target = ComponentUtils.findTarget(tooltip, context);
 		}
 
 		writer.startElement("script", null);

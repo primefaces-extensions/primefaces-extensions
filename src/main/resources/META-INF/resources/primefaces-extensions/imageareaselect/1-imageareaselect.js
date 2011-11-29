@@ -55,7 +55,7 @@ PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
 	this.bindSelectChangeCallback();
 	this.bindSelectEndCallback();
 
-	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
+	this.instance = $(this.cfg.target).imgAreaSelect(this.options);
 }
 
 /**
@@ -163,7 +163,7 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.update = function() {
 PrimeFacesExt.widget.ImageAreaSelect.prototype.reload = function() {
 	this.setOptions({remove: true});
 	this.update();
-	this.instance = $(PrimeFaces.escapeClientId(this.cfg.target)).imgAreaSelect(this.options);
+	this.instance = $(this.cfg.target).imgAreaSelect(this.options);
 }
 
 /**
@@ -212,7 +212,7 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.getOptions = function() {
 /**
  * Set the plugin options.
  * This method only sets the internal representation of selection in the plugin instance, 
- * it does not update the visual interface. 
+ * it does not update the visual interface.
  * If you want the new selection to be shown, call update() right after setSelection(). 
  * Also make sure that the show option is set to true. 
  *

@@ -47,8 +47,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 		final String clientId = imageRotateAndResize.getClientId(context);
 		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
-		final String target =
-			ComponentUtils.findTarget(imageRotateAndResize, imageRotateAndResize.getFor()).getClientId(context);
+		final String target = ComponentUtils.findTarget(imageRotateAndResize, context);
 
 		writer.startElement("script", imageRotateAndResize);
 		writer.writeAttribute("id", clientId, null);

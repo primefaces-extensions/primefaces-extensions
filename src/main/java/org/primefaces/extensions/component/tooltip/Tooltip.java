@@ -29,6 +29,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.EnhancedAttachable;
 
 /**
  * <code>Tooltip</code> component.
@@ -44,7 +45,7 @@ import org.primefaces.component.api.Widget;
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
                       })
-public class Tooltip extends UIOutput implements Widget {
+public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
@@ -202,18 +203,22 @@ public class Tooltip extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
+	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
+	@Override
 	public String getForSelector() {
 		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
+	@Override
 	public void setForSelector(final String forSelector) {
 		setAttribute(PropertyKeys.forSelector, forSelector);
 	}

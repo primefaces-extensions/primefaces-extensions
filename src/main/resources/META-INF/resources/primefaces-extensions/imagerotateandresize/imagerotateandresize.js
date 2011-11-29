@@ -16,7 +16,7 @@ PrimeFacesExt.widget.ImageRotateAndResize = function(id, cfg) {
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.initializeLazy = function() {
 	if (!this.initialized) {
-		this.target = document.getElementById(this.cfg.target);
+		this.target = $(this.cfg.target)[0];
 		this.imageSrc = this.target.src;
 		this.imageWidth = this.target.width;
 		this.imageHeight = this.target.height;

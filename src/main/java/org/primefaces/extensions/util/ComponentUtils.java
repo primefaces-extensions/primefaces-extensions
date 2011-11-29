@@ -28,6 +28,9 @@ import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.extensions.component.base.Attachable;
+import org.primefaces.extensions.component.base.EnhancedAttachable;
+
 /**
  * Component utils for this project.
  *
@@ -69,24 +72,14 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return foundComponents;
 	}
 
-	public static UIComponent findTarget(final UIComponent component, final String forValue) {
-		final UIComponent target;
-
-		if (forValue == null) {
-			target = component.getParent();
-		} else {
-			target = component.findComponent(forValue);
-			if (target == null) {
-				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-			}
+	public static String findTarget(final Attachable attachable, final FacesContext context) {
+		if (!(attachable instanceof UIComponent)) {
+			throw new FacesException("A attachable component must extend from UIComponent.");
 		}
 
-		return target;
-	}
+		UIComponent component = (UIComponent) attachable;
 
-	public static String findTarget(final UIComponent component, final String forValue, final String forSelector,
-			final FacesContext context) {
-
+		String forValue = attachable.getFor();
 		if (forValue != null) {
 			UIComponent forComponent = component.findComponent(forValue);
 			if (forComponent == null) {
@@ -96,12 +89,17 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			return ComponentUtils.escapeJQueryId(forComponent.getClientId(context));
 		}
 
-		if (forSelector != null) {
-			if (forSelector.startsWith("#")) {
-				return ComponentUtils.escapeComponentId(forSelector);
-			}
+		if (attachable instanceof EnhancedAttachable) {
+			EnhancedAttachable enhancedAttachable = (EnhancedAttachable) attachable;
+			String forSelector = enhancedAttachable.getForSelector();
 
-			return forSelector;
+			if (forSelector != null) {
+				if (forSelector.startsWith("#")) {
+					return ComponentUtils.escapeComponentId(forSelector);
+				}
+
+				return forSelector;
+			}
 		}
 
 		return ComponentUtils.escapeJQueryId(component.getParent().getClientId(context));
