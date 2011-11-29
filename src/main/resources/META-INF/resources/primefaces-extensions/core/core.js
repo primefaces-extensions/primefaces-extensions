@@ -36,7 +36,7 @@ PrimeFacesExt = {
 		if (version) {
 			scriptURI = scriptURI.replace('v=' + extractedVersion, 'v=' + version);
 		} else {
-			scriptURI = scriptURI.replace('v=' + extractedVersion, 'v=');
+			scriptURI = scriptURI.replace('v=' + extractedVersion, '');
 		}
 
         return location.protocol + '//' + location.host + scriptURI;
