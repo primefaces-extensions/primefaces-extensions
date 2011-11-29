@@ -50,7 +50,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	private static final String FACET_FOOTER = "footer";
 
 	@Override
-	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		MasterDetail masterDetail = (MasterDetail) component;
 		MasterDetailLevel mdl;
 
@@ -179,8 +179,9 @@ public class MasterDetailRenderer extends CoreRenderer {
 				// create a new menu item and add to the model
 				if (child.isRendered()) {
 					MenuItem menuItem =
-					    createMenuItem(fc, masterDetail, mdl, getContextValueFromFlow(flowLevels, clientId, mdl),
-					                   mdlToRender.getLevel());
+						createMenuItem(fc, masterDetail, mdl,
+								getContextValueFromFlow(flowLevels, clientId, mdl),
+								mdlToRender.getLevel());
 					model.addMenuItem(menuItem);
 				}
 
@@ -193,7 +194,9 @@ public class MasterDetailRenderer extends CoreRenderer {
 		return model;
 	}
 
-	protected Object getContextValueFromFlow(final FlowLevel[] flowLevels, final String mdClientId, final MasterDetailLevel mdl) {
+	protected Object getContextValueFromFlow(final FlowLevel[] flowLevels, final String mdClientId,
+			final MasterDetailLevel mdl) {
+
 		// try to get context value from internal storage
 		Object contextValue = mdl.getAttributes().get(mdClientId + MasterDetail.CURRENT_CONTEXT_VALUE);
 		if (contextValue != null) {
@@ -278,7 +281,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(final FacesContext fc, UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
 		// rendering happens on encodeEnd
 	}
 
