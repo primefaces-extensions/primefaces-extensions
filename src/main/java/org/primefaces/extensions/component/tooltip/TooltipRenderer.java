@@ -44,8 +44,11 @@ public class TooltipRenderer extends CoreRenderer {
 		String clientId = tooltip.getClientId(context);
 		boolean global = tooltip.isGlobal();
 		boolean shared = tooltip.isShared();
-		String target =
+		String target = null;
+
+		if (!tooltip.isGlobal()) {
 			ComponentUtils.findTarget(tooltip, tooltip.getFor(), tooltip.getForSelector(), context);
+		}
 
 		writer.startElement("script", null);
 		writer.writeAttribute("id", clientId + "_script", null);
