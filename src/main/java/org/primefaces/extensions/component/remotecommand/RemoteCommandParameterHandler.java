@@ -39,6 +39,12 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
 
 	private static final ApplyToMetaRule META_RULE = new ApplyToMetaRule();
 
+	/**
+	 * {@link MetaRule} for the <code>applyTo</code> of the {@link RemoteCommandParameter}.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	private static final class ApplyToMetaRule extends MetaRule {
 
         @Override
@@ -53,6 +59,12 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
         }
     }
 
+	/**
+	 * {@link Metadata} for the <code>applyTo</code> of the {@link RemoteCommandParameter}.
+	 *
+	 * @author Thomas Andraschko / last modified by $Author$
+	 * @version $Revision$
+	 */
 	private static final class ApplyToValueExpressionMetadata extends Metadata {
 
 		private final TagAttribute attribute;
