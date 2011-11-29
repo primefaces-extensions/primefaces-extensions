@@ -63,7 +63,7 @@ public class LayoutPane extends UIComponentBase {
 
 		private String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
@@ -91,7 +91,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleHeader, null);
 	}
 
-	public void setStyleHeader(String styleHeader) {
+	public void setStyleHeader(final String styleHeader) {
 		setAttribute(PropertyKeys.styleHeader, styleHeader);
 	}
 
@@ -99,7 +99,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleClassHeader, null);
 	}
 
-	public void setStyleClassHeader(String styleClassHeader) {
+	public void setStyleClassHeader(final String styleClassHeader) {
 		setAttribute(PropertyKeys.styleClassHeader, styleClassHeader);
 	}
 
@@ -107,7 +107,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleContent, null);
 	}
 
-	public void setStyleContent(String styleContent) {
+	public void setStyleContent(final String styleContent) {
 		setAttribute(PropertyKeys.styleContent, styleContent);
 	}
 
@@ -115,7 +115,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleClassContent, null);
 	}
 
-	public void setStyleClassContent(String styleClassContent) {
+	public void setStyleClassContent(final String styleClassContent) {
 		setAttribute(PropertyKeys.styleClassContent, styleClassContent);
 	}
 
@@ -133,7 +133,7 @@ public class LayoutPane extends UIComponentBase {
 	 *
 	 * @param position position to set
 	 */
-	public void setPosition(String position) {
+	public void setPosition(final String position) {
 		setAttribute(PropertyKeys.position, position);
 	}
 
@@ -141,7 +141,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.resizable, true);
 	}
 
-	public void setResizable(boolean resizable) {
+	public void setResizable(final boolean resizable) {
 		setAttribute(PropertyKeys.resizable, resizable);
 	}
 
@@ -149,7 +149,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.closable, true);
 	}
 
-	public void setClosable(boolean closable) {
+	public void setClosable(final boolean closable) {
 		setAttribute(PropertyKeys.closable, closable);
 	}
 
@@ -157,7 +157,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.size, null);
 	}
 
-	public void setSize(String size) {
+	public void setSize(final String size) {
 		setAttribute(PropertyKeys.size, size);
 	}
 
@@ -165,7 +165,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minSize, null);
 	}
 
-	public void setMinSize(String minSize) {
+	public void setMinSize(final String minSize) {
 		setAttribute(PropertyKeys.minSize, minSize);
 	}
 
@@ -173,7 +173,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxSize, null);
 	}
 
-	public void setMaxSize(String maxSize) {
+	public void setMaxSize(final String maxSize) {
 		setAttribute(PropertyKeys.maxSize, maxSize);
 	}
 
@@ -181,7 +181,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minWidth, null);
 	}
 
-	public void setMinWidth(String minWidth) {
+	public void setMinWidth(final String minWidth) {
 		setAttribute(PropertyKeys.minWidth, minWidth);
 	}
 
@@ -189,7 +189,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxWidth, null);
 	}
 
-	public void setMaxWidth(String maxWidth) {
+	public void setMaxWidth(final String maxWidth) {
 		setAttribute(PropertyKeys.maxWidth, maxWidth);
 	}
 
@@ -197,7 +197,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minHeight, null);
 	}
 
-	public void setMinHeight(String minHeight) {
+	public void setMinHeight(final String minHeight) {
 		setAttribute(PropertyKeys.minHeight, minHeight);
 	}
 
@@ -205,7 +205,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxHeight, null);
 	}
 
-	public void setMaxHeight(String maxHeight) {
+	public void setMaxHeight(final String maxHeight) {
 		setAttribute(PropertyKeys.maxHeight, maxHeight);
 	}
 
@@ -213,7 +213,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.initClosed, false);
 	}
 
-	public void setInitClosed(boolean initClosed) {
+	public void setInitClosed(final boolean initClosed) {
 		setAttribute(PropertyKeys.initClosed, initClosed);
 	}
 
@@ -221,7 +221,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.statusbar, false);
 	}
 
-	public void setStatusbar(boolean statusbar) {
+	public void setStatusbar(final boolean statusbar) {
 		setAttribute(PropertyKeys.statusbar, statusbar);
 	}
 
@@ -229,7 +229,7 @@ public class LayoutPane extends UIComponentBase {
 		return existNestedPanes;
 	}
 
-	public void setExistNestedPanes(boolean existNestedPanes) {
+	public void setExistNestedPanes(final boolean existNestedPanes) {
 		this.existNestedPanes = existNestedPanes;
 	}
 
@@ -242,7 +242,9 @@ public class LayoutPane extends UIComponentBase {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+				this.getAttributes().put(
+						"javax.faces.component.UIComponentBase.attributesThatAreSet",
+						setAttributes);
 			}
 		}
 
