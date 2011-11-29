@@ -73,13 +73,15 @@ public class KeyFilterRenderer extends CoreRenderer {
 	protected UIComponent findTarget(final FacesContext facesContext, final KeyFilter keyFilter) {
 		final String forValue = keyFilter.getFor();
 
-		if (forValue == null) {
-			throw new FacesException("\"for\" attribute for KeyFilter can not be null or empty");
-		}
+		final UIComponent component;
 
-		final UIComponent component = keyFilter.findComponent(forValue);
-		if (component == null) {
-			throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
+		if (forValue == null) {
+			component = keyFilter.getParent();
+		} else {
+			component = keyFilter.findComponent(forValue);
+			if (component == null) {
+				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
+			}
 		}
 
 		return component;
