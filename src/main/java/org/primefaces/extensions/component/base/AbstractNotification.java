@@ -34,6 +34,7 @@ import java.util.List;
  * @version $Revision$
  * @since 0.2
  */
+@SuppressWarnings("boxing")
 public abstract class AbstractNotification extends UIMessage {
 
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -66,12 +67,10 @@ public abstract class AbstractNotification extends UIMessage {
 		}
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isEscape() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.escape, true);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setEscape(final boolean escape) {
 		setAttribute(PropertyKeys.escape, escape);
 	}

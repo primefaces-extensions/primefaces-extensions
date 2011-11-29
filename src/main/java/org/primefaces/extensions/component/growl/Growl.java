@@ -43,6 +43,7 @@ import org.primefaces.extensions.component.base.AbstractNotification;
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js")
 })
+@SuppressWarnings("boxing")
 public class Growl extends AbstractNotification implements AutoUpdatable, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -96,42 +97,34 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 		return COMPONENT_FAMILY;
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isGlobalOnly() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.globalOnly, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setGlobalOnly(final boolean globalOnly) {
 		setAttribute(PropertyKeys.globalOnly, globalOnly);
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isSticky() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.sticky, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setSticky(final boolean sticky) {
 		setAttribute(PropertyKeys.sticky, sticky);
 	}
 
-	@SuppressWarnings("boxing")
 	public int getLife() {
 		return (Integer) getStateHelper().eval(PropertyKeys.life, 6000);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setLife(final int life) {
 		getStateHelper().put(PropertyKeys.life, life);
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setAutoUpdate(final boolean autoUpdate) {
 		setAttribute(PropertyKeys.autoUpdate, autoUpdate);
 	}

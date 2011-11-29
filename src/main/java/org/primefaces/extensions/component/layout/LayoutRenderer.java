@@ -55,13 +55,13 @@ public class LayoutRenderer extends CoreRenderer {
 	private static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-pane-content";
 
 	@Override
-	public void decode(FacesContext fc, UIComponent component) {
+	public void decode(final FacesContext fc, final UIComponent component) {
 		Layout layout = (Layout) component;
 		layout.setDataModel(null);
 	}
 
 	@Override
-	public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		Layout layout = (Layout) component;
 
 		Map layoutPanes = pickLayoutPanes(layout);
@@ -79,11 +79,11 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(FacesContext fc, UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
 		// nothing to do
 	}
 
-	protected Map pickLayoutPanes(Layout layout) {
+	protected Map pickLayoutPanes(final Layout layout) {
 		Map<String, UIComponent> layoutPanes = new HashMap<String, UIComponent>();
 		Iterator<UIComponent> iter = layout.getChildren().iterator();
 
@@ -111,7 +111,7 @@ public class LayoutRenderer extends CoreRenderer {
 		return layoutPanes;
 	}
 
-	protected void encodeScript(FacesContext fc, Layout layout, Map layoutPanes) throws IOException {
+	protected void encodeScript(final FacesContext fc, final Layout layout, final Map layoutPanes) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId();
 		String widgetVar = layout.resolveWidgetVar();
@@ -239,7 +239,7 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.write("\n");
 	}
 
-	protected void encodeMarkup(FacesContext fc, Layout layout, Map layoutPanes) throws IOException {
+	protected void encodeMarkup(final FacesContext fc, final Layout layout, final Map layoutPanes) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId();
 
@@ -344,7 +344,9 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodePane(FacesContext fc, ResponseWriter writer, Map layoutPanes, String position) throws IOException {
+	protected void encodePane(final FacesContext fc, final ResponseWriter writer, final Map layoutPanes,
+			final String position) throws IOException {
+
 		LayoutPane layoutPane = (LayoutPane) layoutPanes.get(position);
 		if (layoutPane == null) {
 			return;
@@ -374,7 +376,9 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodePaneHeader(FacesContext fc, ResponseWriter writer, LayoutPane layoutPane) throws IOException {
+	protected void encodePaneHeader(final FacesContext fc, final ResponseWriter writer, final LayoutPane layoutPane)
+			throws IOException {
+
 		UIComponent header = layoutPane.getFacet("header");
 		if (header != null) {
 			writer.startElement("div", null);
@@ -393,7 +397,9 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 	}
 
-	protected void encodePaneContent(FacesContext fc, ResponseWriter writer, LayoutPane layoutPane) throws IOException {
+	protected void encodePaneContent(final FacesContext fc, final ResponseWriter writer, final LayoutPane layoutPane)
+			throws IOException {
+
 		writer.startElement("div", null);
 
 		String styleClass = STYLE_CLASS_PANE_CONTENT;
@@ -415,7 +421,7 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	private void pickLayoutPane(UIComponent child, Map<String, UIComponent> layoutPanes) {
+	private void pickLayoutPane(final UIComponent child, final Map<String, UIComponent> layoutPanes) {
 		if (!child.isRendered()) {
 			return;
 		}
@@ -449,7 +455,9 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 	}
 
-	private void writeLayoutPaneOption(FacesContext fc, ResponseWriter writer, Object objPane) throws IOException {
+	private void writeLayoutPaneOption(final FacesContext fc, final ResponseWriter writer, final Object objPane)
+			throws IOException {
+
 		if (objPane == null) {
 			return;
 		}
@@ -489,7 +497,7 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 	}
 
-	private boolean hasNestedLayoutOptions(LayoutPane layoutPane) {
+	private boolean hasNestedLayoutOptions(final LayoutPane layoutPane) {
 		if (layoutPane == null || !layoutPane.isExistNestedPanes()) {
 			return false;
 		}

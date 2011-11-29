@@ -40,6 +40,7 @@ import java.util.ArrayList;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
+@SuppressWarnings("boxing")
 public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -149,24 +150,20 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.onsuccess, onsuccess);
 	}
 
-	@SuppressWarnings("boxing")
 	@Override
 	public boolean isGlobal() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setGlobal(final boolean global) {
 		setAttribute(PropertyKeys.global, global);
 	}
 
-	@SuppressWarnings("boxing")
 	@Override
 	public boolean isAsync() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setAsync(final boolean async) {
 		setAttribute(PropertyKeys.async, async);
 	}

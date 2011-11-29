@@ -47,6 +47,7 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
+@SuppressWarnings("boxing")
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -152,12 +153,10 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
     	setAttribute(PropertyKeys.interfaceColor, interfaceColor);
     }
 
-    @SuppressWarnings("boxing")
 	public boolean isReadOnly() {
     	return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
     }
 
-    @SuppressWarnings("boxing")
     public void setReadOnly(final boolean readOnly) {
     	setAttribute(PropertyKeys.readOnly, readOnly);
     }

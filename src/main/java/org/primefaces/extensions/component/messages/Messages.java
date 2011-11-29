@@ -38,6 +38,7 @@ import java.util.ArrayList;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "primefaces.css")
 })
+@SuppressWarnings("boxing")
 public class Messages extends AbstractNotification implements AutoUpdatable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -79,22 +80,18 @@ public class Messages extends AbstractNotification implements AutoUpdatable {
 		return COMPONENT_FAMILY;
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isGlobalOnly() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.globalOnly, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setGlobalOnly(final boolean globalOnly) {
 		setAttribute(PropertyKeys.globalOnly, globalOnly);
 	}
 
-	@SuppressWarnings("boxing")
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}
 
-	@SuppressWarnings("boxing")
 	public void setAutoUpdate(final boolean autoUpdate) {
 		setAttribute(PropertyKeys.autoUpdate, autoUpdate);
 	}
