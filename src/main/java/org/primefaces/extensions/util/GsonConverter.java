@@ -28,7 +28,7 @@ import com.google.gson.GsonBuilder;
  * @version $Revision$
  * @since   0.2
  */
-public class GsonConverter {
+public final class GsonConverter {
 
 	private static final GsonConverter INSTANCE = new GsonConverter();
 	private Gson gson;

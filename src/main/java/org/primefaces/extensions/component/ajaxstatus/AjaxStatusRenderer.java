@@ -35,14 +35,14 @@ import org.primefaces.renderkit.CoreRenderer;
 public class AjaxStatusRenderer extends CoreRenderer {
 
 	@Override
-	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		AjaxStatus status = (AjaxStatus) component;
 
 		encodeMarkup(context, status);
 		encodeScript(context, status);
 	}
 
-	protected void encodeScript(FacesContext context, AjaxStatus status) throws IOException {
+	protected void encodeScript(final FacesContext context, final AjaxStatus status) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = status.getClientId(context);
 		String widgetVar = status.resolveWidgetVar();
@@ -60,8 +60,9 @@ public class AjaxStatusRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	protected void encodeCallback(FacesContext context, AjaxStatus status, String var, String event, String callback,
-	                              String facetName) throws IOException {
+	protected void encodeCallback(final FacesContext context, final AjaxStatus status, final String var, final String event,
+			final String callback, final String facetName) throws IOException {
+
 		ResponseWriter writer = context.getResponseWriter();
 		String fn = (String) status.getAttributes().get(callback);
 
@@ -72,7 +73,7 @@ public class AjaxStatusRenderer extends CoreRenderer {
 		}
 	}
 
-	protected void encodeMarkup(FacesContext context, AjaxStatus status) throws IOException {
+	protected void encodeMarkup(final FacesContext context, final AjaxStatus status) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = status.getClientId(context);
 
@@ -103,8 +104,9 @@ public class AjaxStatusRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeFacet(FacesContext facesContext, String clientId, UIComponent facet, String facetName, boolean hidden)
-	    throws IOException {
+	protected void encodeFacet(final FacesContext facesContext, final String clientId, final UIComponent facet,
+			final String facetName, final boolean hidden) throws IOException {
+
 		ResponseWriter writer = facesContext.getResponseWriter();
 
 		writer.startElement("div", null);

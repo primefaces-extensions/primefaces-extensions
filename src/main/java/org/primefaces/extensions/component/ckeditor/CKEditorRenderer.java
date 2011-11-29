@@ -23,7 +23,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 
 import org.primefaces.renderkit.InputRenderer;
 
@@ -43,7 +42,7 @@ public class CKEditorRenderer extends InputRenderer {
 	public void decode(final FacesContext context, final UIComponent component) {
 		final CKEditor ckEditor = (CKEditor) component;
 
-		if (ckEditor.IsReadOnly()) {
+		if (ckEditor.isReadOnly()) {
 			return;
 		}
 
@@ -112,8 +111,8 @@ public class CKEditorRenderer extends InputRenderer {
 			}
 		}
 
-		if (ckEditor.IsReadOnly()) {
-			writer.write(",readOnly:" + ckEditor.IsReadOnly());
+		if (ckEditor.isReadOnly()) {
+			writer.write(",readOnly:" + ckEditor.isReadOnly());
 		}
 
 		if (ckEditor.getInterfaceColor() != null) {
@@ -140,7 +139,7 @@ public class CKEditorRenderer extends InputRenderer {
 	}
 
     @Override
-	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) throws ConverterException {
+	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
     	final CKEditor ckEditor = (CKEditor) component;
     	final String value = (String) submittedValue;
     	final Converter converter = ckEditor.getConverter();

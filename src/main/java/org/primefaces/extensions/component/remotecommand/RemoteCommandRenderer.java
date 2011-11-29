@@ -156,7 +156,9 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
 		//update
 		if (source.getUpdate() != null) {
-			req.append(",update:'").append(ComponentUtils.findClientIds(context, component, source.getUpdate())).append("'");
+			req.append(",update:'");
+			req.append(ComponentUtils.findClientIds(context, component, source.getUpdate()));
+			req.append("'");
 		}
 
 		//async

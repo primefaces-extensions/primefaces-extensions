@@ -24,7 +24,14 @@ package org.primefaces.extensions.util;
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-public class StringUtils {
+public final class StringUtils {
+
+	/**
+	 * Avoid instantiation.
+	 */
+	private StringUtils() {
+
+	}
 
 	/**
 	 * <p>Checks if a String is whitespace, empty ("") or null.</p>
@@ -40,7 +47,7 @@ public class StringUtils {
 	 * @param  str the String to check, may be null
 	 * @return <code>true</code> if the String is null, empty or whitespace
 	 */
-	public static boolean isBlank(String str) {
+	public static boolean isBlank(final String str) {
 		int strLen;
 		if (str == null || (strLen = str.length()) == 0) {
 			return true;
@@ -69,7 +76,7 @@ public class StringUtils {
 	 * @param  str the String to check, may be null
 	 * @return <code>true</code> if the String is not empty and not null and not whitespace
 	 */
-	public static boolean isNotBlank(String str) {
+	public static boolean isNotBlank(final String str) {
 		return !StringUtils.isBlank(str);
 	}
 }

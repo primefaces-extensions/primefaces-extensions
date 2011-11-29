@@ -116,7 +116,8 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		} else {
 			final ELContext elContext = context.getELContext();
 			final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-			final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+			final ValueExpression ve =
+				expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
 
 			theme = (String) ve.getValue(elContext);
 		}

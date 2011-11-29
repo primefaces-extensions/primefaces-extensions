@@ -153,7 +153,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
     }
 
     @SuppressWarnings("boxing")
-	public boolean IsReadOnly() {
+	public boolean isReadOnly() {
     	return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
     }
 

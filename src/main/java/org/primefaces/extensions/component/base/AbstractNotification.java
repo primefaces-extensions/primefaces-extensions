@@ -110,7 +110,9 @@ public abstract class AbstractNotification extends UIMessage {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+				this.getAttributes().put(
+						"javax.faces.component.UIComponentBase.attributesThatAreSet",
+						setAttributes);
 			}
 		}
 

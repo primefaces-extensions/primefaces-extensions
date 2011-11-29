@@ -20,7 +20,6 @@ package org.primefaces.extensions.webapp;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
@@ -43,7 +42,7 @@ public class PostConstructApplicationEventListener implements SystemEventListene
     }
 
     @Override
-    public void processEvent(final SystemEvent event) throws AbortProcessingException {
+    public void processEvent(final SystemEvent event) {
         LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", Constants.VERSION);
     }
 }

@@ -37,9 +37,9 @@ import javax.faces.context.FacesContext;
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
-	private final static Logger logger = Logger.getLogger(ComponentUtils.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ComponentUtils.class.getName());
 
-	public static String escapeComponentId(String id) {
+	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
 
@@ -53,14 +53,14 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			final String id = ids[i].trim();
 
 			if (id.equals("@all") || id.equals("@none")) {
-				logger.log(Level.WARNING, "Components @all and @none are not supported.");
+				LOGGER.log(Level.WARNING, "Components @all and @none are not supported.");
 			} else {
 				final UIComponent foundComponent = source.findComponent(id);
 				if (foundComponent != null) {
 					foundComponents.add(foundComponent);
                 } else {
                     if (context.getApplication().getProjectStage().equals(ProjectStage.Development)) {
-                        logger.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
+                        LOGGER.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
                     }
                 }
 			}
@@ -84,7 +84,9 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return target;
 	}
 
-	public static String findTarget(final UIComponent component, final String forValue, final String forSelector, final FacesContext context) {
+	public static String findTarget(final UIComponent component, final String forValue, final String forSelector,
+			final FacesContext context) {
+
 		if (forValue != null) {
 			UIComponent forComponent = component.findComponent(forValue);
 			if (forComponent == null) {

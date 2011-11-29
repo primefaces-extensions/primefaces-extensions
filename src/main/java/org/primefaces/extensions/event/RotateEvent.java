@@ -23,10 +23,9 @@ import javax.faces.component.behavior.Behavior;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesListener;
 
-import org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize;
-
 /**
- * Event which is triggered by the {@link ImageRotateAndResize} component.
+ * Event which is triggered by the
+ * {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize} component.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
