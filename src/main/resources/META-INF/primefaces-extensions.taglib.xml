@@ -1289,7 +1289,13 @@
         <attribute>
             <description><![CDATA[The target input.]]></description>
             <name>for</name>
-            <required>true</required>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[jQuery selector for any elements to attach the keyfilter.]]></description>
+            <name>forSelector</name>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>

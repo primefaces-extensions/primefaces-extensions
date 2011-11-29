@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -66,5 +67,41 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		}
 
 		return foundComponents;
+	}
+
+	public static UIComponent findTarget(final UIComponent component, final String forValue) {
+		final UIComponent target;
+
+		if (forValue == null) {
+			target = component.getParent();
+		} else {
+			target = component.findComponent(forValue);
+			if (target == null) {
+				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
+			}
+		}
+
+		return target;
+	}
+
+	public static String findTarget(final UIComponent component, final String forValue, final String forSelector, final FacesContext context) {
+		if (forValue != null) {
+			UIComponent forComponent = component.findComponent(forValue);
+			if (forComponent == null) {
+				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
+			}
+
+			return ComponentUtils.escapeJQueryId(forComponent.getClientId(context));
+		}
+
+		if (forSelector != null) {
+			if (forSelector.startsWith("#")) {
+				return ComponentUtils.escapeComponentId(forSelector);
+			}
+
+			return forSelector;
+		}
+
+		return ComponentUtils.escapeJQueryId(component.getParent().getClientId(context));
 	}
 }

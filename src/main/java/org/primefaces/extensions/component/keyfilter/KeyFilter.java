@@ -29,6 +29,7 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.EnhancedAttachable;
 
 /**
  * Component class for the <code>KeyFilter</code> component.
@@ -43,7 +44,7 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
 })
-public class KeyFilter extends UIComponentBase implements Widget {
+public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeyFilterRenderer";
@@ -59,6 +60,7 @@ public class KeyFilter extends UIComponentBase implements Widget {
 
 		widgetVar,
 		forValue("for"),
+		forSelector,
 		regEx,
 		mask,
 		testFunction;
@@ -95,12 +97,24 @@ public class KeyFilter extends UIComponentBase implements Widget {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
+	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
+	}
+
+	@Override
+	public String getForSelector() {
+		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
+	}
+
+	@Override
+	public void setForSelector(final String forSelector) {
+		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
 	public String getRegEx() {

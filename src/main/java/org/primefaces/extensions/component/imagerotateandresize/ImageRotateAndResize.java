@@ -36,6 +36,7 @@ import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
 import org.primefaces.util.Constants;
@@ -52,7 +53,7 @@ import org.primefaces.util.Constants;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
+public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
@@ -112,10 +113,12 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
+	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}

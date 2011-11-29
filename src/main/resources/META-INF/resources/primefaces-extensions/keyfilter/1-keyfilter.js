@@ -2,7 +2,7 @@ PrimeFacesExt.widget.KeyFilter = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
 	
-    var target = $(PrimeFaces.escapeClientId(this.cfg.target));
+    var target = $(this.cfg.target);
 
     if (target.is(':input')) {
     	this.applyKeyFilter(target);

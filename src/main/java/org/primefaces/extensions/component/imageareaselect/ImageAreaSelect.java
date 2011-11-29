@@ -36,6 +36,7 @@ import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
 import org.primefaces.util.Constants;
 
@@ -53,7 +54,7 @@ import org.primefaces.util.Constants;
 	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
 	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
 })
-public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder {
+public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
@@ -281,10 +282,12 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
+	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}

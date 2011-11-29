@@ -23,6 +23,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
 import org.primefaces.extensions.component.base.AbstractNotification;
+import org.primefaces.extensions.component.base.Attachable;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "primefaces.css")
 })
-public class Message extends AbstractNotification {
+public class Message extends AbstractNotification implements Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MessageRenderer";
@@ -79,10 +80,12 @@ public class Message extends AbstractNotification {
 		return COMPONENT_FAMILY;
 	}
 
+	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}

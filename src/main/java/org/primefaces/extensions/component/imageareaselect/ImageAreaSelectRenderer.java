@@ -20,11 +20,11 @@ package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -45,9 +45,10 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
 		final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
-		final String target = findTarget(context, imageAreaSelect).getClientId(context);
 		final String clientId = imageAreaSelect.getClientId(context);
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
+		final String target =
+			ComponentUtils.findTarget(imageAreaSelect, imageAreaSelect.getFor()).getClientId(context);
 
 		writer.startElement("script", imageAreaSelect);
 		writer.writeAttribute("id", clientId, null);
@@ -114,20 +115,5 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
 		writer.write("});});");
 		writer.endElement("script");
-	}
-
-	protected UIComponent findTarget(final FacesContext facesContext, final ImageAreaSelect imageAreaSelect) {
-		final String forValue = imageAreaSelect.getFor();
-
-		if (forValue == null) {
-			throw new FacesException("\"for\" attribute for ImageAreaSelect can not be null or empty");
-		}
-
-		final UIComponent component = imageAreaSelect.findComponent(forValue);
-		if (component == null) {
-			throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-		}
-
-		return component;
 	}
 }

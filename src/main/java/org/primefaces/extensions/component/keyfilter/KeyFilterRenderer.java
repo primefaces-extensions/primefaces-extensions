@@ -20,11 +20,11 @@ package org.primefaces.extensions.component.keyfilter;
 
 import java.io.IOException;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -45,9 +45,10 @@ public class KeyFilterRenderer extends CoreRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
 		final KeyFilter keyFilter = (KeyFilter) component;
-		final String target = findTarget(context, keyFilter).getClientId(context);
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
+		final String target =
+			ComponentUtils.findTarget(keyFilter, keyFilter.getFor(), keyFilter.getForSelector(), context);
 
 		writer.startElement("script", keyFilter);
 		writer.writeAttribute("id", clientId, null);
@@ -68,22 +69,5 @@ public class KeyFilterRenderer extends CoreRenderer {
 
 		writer.write("});});");
 		writer.endElement("script");
-	}
-
-	protected UIComponent findTarget(final FacesContext facesContext, final KeyFilter keyFilter) {
-		final String forValue = keyFilter.getFor();
-
-		final UIComponent component;
-
-		if (forValue == null) {
-			component = keyFilter.getParent();
-		} else {
-			component = keyFilter.findComponent(forValue);
-			if (component == null) {
-				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-			}
-		}
-
-		return component;
 	}
 }

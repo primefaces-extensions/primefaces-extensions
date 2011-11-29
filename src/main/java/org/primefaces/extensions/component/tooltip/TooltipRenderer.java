@@ -41,10 +41,11 @@ public class TooltipRenderer extends CoreRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		Tooltip tooltip = (Tooltip) component;
-		String target = getTarget(context, tooltip);
 		String clientId = tooltip.getClientId(context);
 		boolean global = tooltip.isGlobal();
 		boolean shared = tooltip.isShared();
+		String target =
+			ComponentUtils.findTarget(tooltip, tooltip.getFor(), tooltip.getForSelector(), context);
 
 		writer.startElement("script", null);
 		writer.writeAttribute("id", clientId + "_script", null);
@@ -92,33 +93,6 @@ public class TooltipRenderer extends CoreRenderer {
 
 		writer.write("}});});");
 		writer.endElement("script");
-	}
-
-	protected String getTarget(final FacesContext context, final Tooltip tooltip) {
-		if (tooltip.isGlobal()) {
-			return null;
-		}
-
-		final String forValue = tooltip.getFor();
-		if (forValue != null) {
-			UIComponent forComponent = tooltip.findComponent(forValue);
-			if (forComponent == null) {
-				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
-			}
-
-			return ComponentUtils.escapeJQueryId(forComponent.getClientId(context));
-		}
-
-		final String forSelector = tooltip.getForSelector();
-		if (forSelector != null) {
-			if (forSelector.startsWith("#")) {
-				return ComponentUtils.escapeComponentId(tooltip.getForSelector());
-			}
-
-			return tooltip.getForSelector();
-		}
-
-		return ComponentUtils.escapeJQueryId(tooltip.getParent().getClientId(context));
 	}
 
 	@Override

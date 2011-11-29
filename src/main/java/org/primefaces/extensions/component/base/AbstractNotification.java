@@ -22,7 +22,6 @@ import org.primefaces.extensions.application.TargetableFacesMessage;
 
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIMessage;
 
 import java.util.ArrayList;
