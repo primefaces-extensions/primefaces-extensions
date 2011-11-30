@@ -67,17 +67,15 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectEndCallback = function(
 	if (this.cfg.behaviors) {
 		var selectEndCallback = this.cfg.behaviors['selectEnd'];
 	    if (selectEndCallback) {
-	    	var _self = this;
-	   
-			this.options.onSelectEnd = function (img, selection) {
+			this.options.onSelectEnd = $.proxy(function(img, selection) {
 		    	var ext = {
 		    			params: {}
 		    	};
-		
-		    	_self.fillSelectEventsParameter(img, selection, ext.params);
 
-		    	selectEndCallback.call(_self, null, ext);
-		    }
+		    	this.fillSelectEventsParameter(img, selection, ext.params);
+
+		    	selectEndCallback.call(this, null, ext);
+		    }, this);
 	    }
 	}
 }
@@ -91,17 +89,15 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectStartCallback = functio
 	if (this.cfg.behaviors) {
 		var selectStartCallback = this.cfg.behaviors['selectStart'];
 	    if (selectStartCallback) {
-	    	var _self = this;
-	   
-			this.options.onSelectStart = function (img, selection) {
+			this.options.onSelectStart = $.proxy(function(img, selection) {
 		    	var ext = {
 		    			params: {}
 		    	};
 		
-		    	_self.fillSelectEventsParameter(img, selection, ext.params);
+		    	this.fillSelectEventsParameter(img, selection, ext.params);
 
-		    	selectStartCallback.call(_self, null, ext);
-		    }
+		    	selectStartCallback.call(this, null, ext);
+			}, this);
 	    }
 	}
 }
@@ -115,17 +111,15 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectChangeCallback = functi
 	if (this.cfg.behaviors) {
 		var selectChangeCallback = this.cfg.behaviors['selectChange'];
 	    if (selectChangeCallback) {
-	    	var _self = this;
-	   
-			this.options.onSelectChange = function (img, selection) {
+			this.options.onSelectChange = $.proxy(function(img, selection) {
 		    	var ext = {
 		    			params: {}
 		    	};
 		
-		    	_self.fillSelectEventsParameter(img, selection, ext.params);
+		    	this.fillSelectEventsParameter(img, selection, ext.params);
 
-		    	selectChangeCallback.call(_self, null, ext);
-		    }
+		    	selectChangeCallback.call(this, null, ext);
+			}, this);
 	    }
 	}
 }
