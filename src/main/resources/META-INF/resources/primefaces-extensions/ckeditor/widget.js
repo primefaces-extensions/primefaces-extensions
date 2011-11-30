@@ -51,8 +51,6 @@ CKEDITOR_GETURL = function(resource) {
  * @constructor
  */
 PrimeFacesExt.widget.CKEditor = function(id, cfg) {
-	var _self = this;
-
 	this.id = id;
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(this.id);
@@ -95,6 +93,7 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 
 	//check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {
+		var _self = this;
 		//load ckeditor
 		PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
 			//load jquery adapter
@@ -116,8 +115,6 @@ PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
  * @protected
  */
 PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
-	var _self = this;
-
 	//remove old instances if required
 	var oldInstance = CKEDITOR.instances[this.id];
 	if (oldInstance) {
@@ -126,7 +123,7 @@ PrimeFacesExt.widget.CKEditor.prototype.resourcesLoaded = function() {
 	}
 
 	//initialize ckeditor after all resources were loaded
-	this.jq.ckeditor(function() { _self.initialized(); }, _self.options);
+	this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
 }
 
 /**
@@ -167,5 +164,23 @@ PrimeFacesExt.widget.CKEditor.prototype.overwriteSaveButton = function() {
  */
 PrimeFacesExt.widget.CKEditor.prototype.initialized = function() {
 	this.instance = this.jq.ckeditorGet();
+	this.fireEvent('initialized');
 	this.postConstruct();
+
+    this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
+    this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
 }
+
+PrimeFacesExt.widget.CKEditor.prototype.fireEvent = function(eventName) {
+	if (this.cfg.behaviors) {
+		var callback = this.cfg.behaviors[eventName];
+	    if (callback) {
+	    	var ext = {
+	    			params: {}
+	    	};
+
+	    	callback.call(this, null, ext);
+	    }
+	}
+}
+

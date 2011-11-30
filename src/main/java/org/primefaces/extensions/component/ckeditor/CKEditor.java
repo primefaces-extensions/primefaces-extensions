@@ -55,9 +55,12 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_SAVE = "save";
+	public static final String EVENT_INITIALIZED = "initialized";
+	public static final String EVENT_BLUR = "blur";
+	public static final String EVENT_FOCUS = "focus";
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZED, EVENT_BLUR, EVENT_FOCUS));
 
 	/**
 	 * Properties that are tracked by state saving.
