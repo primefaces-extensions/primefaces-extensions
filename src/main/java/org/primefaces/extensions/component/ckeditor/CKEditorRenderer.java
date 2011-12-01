@@ -93,6 +93,7 @@ public class CKEditorRenderer extends InputRenderer {
 		// options
 		writer.write("width:'" + ckEditor.getWidth() + "'");
 		writer.write(",height:'" + ckEditor.getHeight() + "'");
+		writer.write(",checkDirtyInterval:" + ckEditor.getCheckDirtyInterval());
 
 		if (ckEditor.getSkin() != null) {
 			writer.write(",skin:'" + ckEditor.getSkin() + "'");

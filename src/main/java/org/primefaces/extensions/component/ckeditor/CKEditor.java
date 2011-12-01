@@ -47,7 +47,6 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-@SuppressWarnings("boxing")
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -55,12 +54,26 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_SAVE = "save";
-	public static final String EVENT_INITIALIZED = "initialized";
+	public static final String EVENT_INITIALIZE = "initialize";
 	public static final String EVENT_BLUR = "blur";
 	public static final String EVENT_FOCUS = "focus";
+	public static final String EVENT_WYSIWYG_MODE = "wysiwygMode";
+	public static final String EVENT_SOURCE_MODE = "sourceMode";
+
+	/**
+	 * Event, which will be fired after the content has been changed (without blur before).
+	 */
+	public static final String EVENT_DIRTY = "dirty";
+
+	/**
+	 * Event, which will be fired after blur, when the content has been changed.
+	 */
+	public static final String EVENT_CHANGE = "change";
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZED, EVENT_BLUR, EVENT_FOCUS));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE,
+					EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE, EVENT_DIRTY, EVENT_WYSIWYG_MODE,
+					EVENT_SOURCE_MODE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -80,7 +93,8 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
         interfaceColor,
         language,
         defaultLanguage,
-        contentsCss;
+        contentsCss,
+        checkDirtyInterval;
 
 		private String toString;
 
@@ -202,6 +216,14 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public void setWidgetVar(final String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
+	}
+
+	public int getCheckDirtyInterval() {
+		return (Integer) getStateHelper().eval(PropertyKeys.checkDirtyInterval, 1000);
+	}
+
+	public void setCheckDirtyInterval(final int checkDirtyInterval) {
+		setAttribute(PropertyKeys.checkDirtyInterval, checkDirtyInterval);
 	}
 
 	@Override
