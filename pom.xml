@@ -385,7 +385,7 @@
                 <plugin>
                     <groupId>org.primefaces.extensions</groupId>
                     <artifactId>resources-optimizer-maven-plugin</artifactId>
-                    <version>0.1</version>
+                    <version>0.2-SNAPSHOT</version>
                     <executions>
                         <execution>
                             <id>optimize</id>
@@ -477,7 +477,7 @@
             <dependency>
                 <groupId>com.google.javascript</groupId>
                 <artifactId>closure-compiler</artifactId>
-                <version>r1459</version>
+                <version>r1592</version>
             </dependency>
             <dependency>
                 <groupId>com.yahoo.platform.yui</groupId>
