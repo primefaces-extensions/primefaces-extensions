@@ -34,7 +34,6 @@ import java.util.List;
  * @version $Revision$
  * @since 0.2
  */
-@SuppressWarnings("boxing")
 public abstract class AbstractNotification extends UIMessage {
 
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";

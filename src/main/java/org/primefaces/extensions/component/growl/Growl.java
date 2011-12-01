@@ -43,7 +43,6 @@ import org.primefaces.extensions.component.base.AbstractNotification;
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js")
 })
-@SuppressWarnings("boxing")
 public class Growl extends AbstractNotification implements AutoUpdatable, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

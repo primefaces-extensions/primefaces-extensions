@@ -38,7 +38,6 @@ import java.util.ArrayList;
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "primefaces.css")
 })
-@SuppressWarnings("boxing")
 public class Messages extends AbstractNotification implements AutoUpdatable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

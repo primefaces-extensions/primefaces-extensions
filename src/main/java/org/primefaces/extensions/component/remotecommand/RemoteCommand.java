@@ -40,7 +40,6 @@ import java.util.ArrayList;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-@SuppressWarnings("boxing")
 public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
