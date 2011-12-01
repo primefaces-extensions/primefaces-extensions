@@ -30,7 +30,12 @@ PrimeFacesExt = {
 		var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
         
 		scriptURI = scriptURI.replace('/primefaces-extensions.js', name);
-		scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY, 'ln=' + library);
+		
+		if (PrimeFacesExt.useUncompressedResources) {
+			scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED, 'ln=' + library);
+		} else {
+			scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY, 'ln=' + library);
+		}
 
 		var extractedVersion = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
 		if (version) {
@@ -64,6 +69,25 @@ PrimeFacesExt = {
      * @return {string} The resource URL.
      */
 	getPrimeFacesExtensionsResource : function(name) {
+		var resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY;
+		if (PrimeFacesExt.useUncompressedResources) {
+			resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED;
+		}
+
+		return PrimeFacesExt.getFacesResource(
+				name,
+				resourceLibrary,
+				PrimeFacesExt.getPrimeFacesExtensionsVersion());
+	},
+
+    /**
+     * Builds a resource URL for a PrimeFaces Extensions Compressed resource.
+     * 
+     * @param {string} name The name of the resource. For example: /core/core.js
+     * 
+     * @return {string} The resource URL.
+     */
+	getPrimeFacesExtensionsCompressedResource : function(name) {
 		return PrimeFacesExt.getFacesResource(
 				name,
 				PrimeFacesExt.RESOURCE_LIBRARY,
@@ -84,6 +108,21 @@ PrimeFacesExt = {
 		}
 
 		return PrimeFacesExt.IS_EXTENSION_MAPPING;
+	},
+
+    /**
+     * Checks if the current included scripts are uncompressed.
+     *
+     * @return {boolean} If uncompresed resources are used.
+     */
+	useUncompressedResources : function() {
+		if (!PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES) {
+			var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
+
+			PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES = scriptURI.indexOf(RESOURCE_LIBRARY_UNCOMPRESSED) !== -1;
+		}
+
+		return PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES;
 	},
 
     /**
@@ -131,7 +170,15 @@ PrimeFacesExt = {
 	 * @type {string}
 	 * @constant
 	 */
-	RESOURCE_LIBRARY : 'primefaces-extensions'
+	RESOURCE_LIBRARY : 'primefaces-extensions',
+
+	/**
+	 * The name of the PrimeFaces Extensions Uncompressed resource library.
+	 *
+	 * @type {string}
+	 * @constant
+	 */
+	RESOURCE_LIBRARY_UNCOMPRESSED : 'primefaces-extensions-uncompressed'
 };
 
 PrimeFacesExt.behavior = {};

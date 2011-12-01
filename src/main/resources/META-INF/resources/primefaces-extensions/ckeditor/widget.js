@@ -26,22 +26,22 @@ CKEDITOR_GETURL = function(resource) {
 				//extract resource
 				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
-				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
+				facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
 			} else {
 				var questionMarkPosition = facesResource.indexOf('?');
 
 				//extract resource
 				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-				facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource(extractedResource + appendedResource);
+				facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
 			}
 		} else {
 			facesResource = resource;
 		}
-	} else {		
-		facesResource = PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/' + resource);
+	} else {
+		facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/' + resource);
 	}
-	
+
 	return facesResource;
 }
 
@@ -97,15 +97,23 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 
 	//check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {
-		var _self = this;
+		var ckEditorScriptURI =
+			PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/ckeditor.js');
+		
+		var jQueryAdapterScriptURI =
+			PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/adapters/jquery.js');		
+
 		//load ckeditor
-		PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/ckeditor.js'), function(data, textStatus) {
+		PrimeFacesExt.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
+
 			//load jquery adapter
-			PrimeFacesExt.getScript(PrimeFacesExt.getPrimeFacesExtensionsResource('/ckeditor/adapters/jquery.js'), function(data, textStatus) {
-				_self.overwriteSaveButton();
-				_self.initialize();
-			}, true);
-		}, true);
+			PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+				this.overwriteSaveButton();
+				this.initialize();
+			}, this), true);
+
+		}, this), true);
+
 	} else {
 		this.initialize();
 	}
