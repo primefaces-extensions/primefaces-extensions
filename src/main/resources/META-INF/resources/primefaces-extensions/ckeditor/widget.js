@@ -43,7 +43,7 @@ CKEDITOR_GETURL = function(resource) {
 	}
 	
 	return facesResource;
-};
+}
 
 /**
  * PrimeFaces Extensions CKEditor Widget
@@ -124,7 +124,6 @@ PrimeFacesExt.widget.CKEditor.prototype.initialize = function() {
 	var oldInstance = CKEDITOR.instances[this.id];
 	if (oldInstance) {
 		oldInstance.destroy(true);
-		delete oldInstance;
 	}
 
 	//initialize ckeditor after all resources were loaded
@@ -283,7 +282,7 @@ PrimeFacesExt.widget.CKEditor.prototype.bindChangeEventsForSourceMode = function
  * @protected
  */
 PrimeFacesExt.widget.CKEditor.prototype.checkDirty = function() {
-    if (this.dirtyState || this.instance.checkDirty()) {
+    if (this.isDirty()) {
         this.instance.resetDirty();
 
         if (this.dirtyState === false) {
@@ -341,4 +340,55 @@ PrimeFacesExt.widget.CKEditor.prototype.fireEvent = function(eventName) {
 	    	callback.call(this, null, ext);
 	    }
 	}
+}
+
+/**
+ * Destroys the CKEditor instance.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.destroy = function() {
+	if (this.dirtyCheckInterval) {
+		clearInterval(this.dirtyCheckInterval);
+	}
+
+    if (this.instance) {
+        this.instance.destroy(true);
+        this.instance = null;
+    }
+
+    this.jq.show();
+}
+
+/**
+ * Checks if the editor is in dirty state.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.isDirty = function() {
+	return this.dirtyState || this.instance.checkDirty();
+}
+
+/**
+ * Sets readOnly to the CKEditor.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.setReadOnly = function(readOnly) {
+    this.instance.setReadOnly(readOnly !== false);
+}
+
+/**
+ * Checks if the CKEditor is readOnly.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.isReadOnly = function() {
+    return this.instance.readOnly;
+}
+
+/**
+ * Indicates that the editor instance has focus.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.hasFocus = function() {
+    return this.instance.focusManager.hasFocus;
+}
+
+/**
+ * Returns the CKEditor instance.
+ */
+PrimeFacesExt.widget.CKEditor.prototype.getEditorInstance = function() {
+    return this.instance;
 }
