@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
@@ -35,6 +36,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
 
+import org.primefaces.extensions.util.StringUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -78,6 +80,7 @@ public class MasterDetail extends UIComponentBase {
 
 		level,
 		flow,
+		flowListener,
 		showBreadcrumb,
 		style,
 		styleClass;
@@ -122,6 +125,14 @@ public class MasterDetail extends UIComponentBase {
 		setAttribute(PropertyKeys.flow, flow);
 	}
 
+	public MethodExpression getFlowListener() {
+		return (MethodExpression) getStateHelper().eval(PropertyKeys.flowListener, null);
+	}
+
+	public void setFlowListener(final MethodExpression flowListener) {
+		setAttribute(PropertyKeys.flowListener, flowListener);
+	}
+
 	public boolean isShowBreadcrumb() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.showBreadcrumb, true);
 	}
@@ -156,9 +167,7 @@ public class MasterDetail extends UIComponentBase {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
 
@@ -174,7 +183,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	@Override
-	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
+	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -190,10 +199,15 @@ public class MasterDetail extends UIComponentBase {
 			pvc.getExecuteIds().add(clienId);
 		}
 
-		// PF 2.2.1
-		//RequestContext.getCurrentInstance().addPartialUpdateTarget(clienId);
-		// PF 3.0
 		pvc.getRenderIds().add(clienId);
+
+		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
+		Object contextValue = getContextValueFromFlow(fc, mdl);
+		String contextVar = mdl.getContextVar();
+		if (StringUtils.isNotBlank(contextVar) && contextValue != null) {
+			Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+			requestMap.put(contextVar, contextValue);
+		}
 	}
 
 	@Override
@@ -354,6 +368,27 @@ public class MasterDetail extends UIComponentBase {
 				}
 			}
 		}
+	}
+
+	public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl) {
+		// try to get context value from internal storage
+		Object contextValue = mdl.getAttributes().get(this.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
+		if (contextValue != null) {
+			return contextValue;
+		}
+
+		// try to get context value from external "flow" state
+		FlowLevel[] flowLevels = (FlowLevel[]) this.getFlow();
+		if (flowLevels != null && flowLevels.length > 0) {
+			final int level = mdl.getLevel();
+			for (FlowLevel fl : flowLevels) {
+				if (fl.getLevel() == level) {
+					return fl.getContextValue();
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public void resetCalculatedValues() {

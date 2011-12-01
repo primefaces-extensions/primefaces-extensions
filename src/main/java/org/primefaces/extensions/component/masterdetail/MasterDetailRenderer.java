@@ -50,7 +50,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	private static final String FACET_FOOTER = "footer";
 
 	@Override
-	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
 		MasterDetail masterDetail = (MasterDetail) component;
 		MasterDetailLevel mdl;
 
@@ -63,13 +63,25 @@ public class MasterDetailRenderer extends CoreRenderer {
 			} else {
 				mdl = masterDetail.getDetailLevelToGo(fc);
 
-				// reset last saved validation state and stored values of editable components
-				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
+				boolean changeLevelAllowed = true;
+				if (masterDetail.getFlowListener() != null) {
+					FlowLevelEvent flowLevelEvent = new FlowLevelEvent(masterDetail, mdlToProcess.getLevel(), mdl.getLevel());
+					changeLevelAllowed =
+					    (Boolean) masterDetail.getFlowListener().invoke(fc.getELContext(), new Object[] {flowLevelEvent});
+					if (!changeLevelAllowed) {
+						mdl = mdlToProcess;
+					}
+				}
 
-				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					editableValueHolder.resetValue();
+				if (changeLevelAllowed) {
+					// reset last saved validation state and stored values of editable components
+					EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+					mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
+
+					final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+					for (EditableValueHolder editableValueHolder : editableValueHolders) {
+						editableValueHolder.resetValue();
+					}
 				}
 			}
 
@@ -136,7 +148,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		Object contextValue = null;
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar)) {
-			contextValue = getContextValueFromFlow((FlowLevel[]) masterDetail.getFlow(), clientId, mdl);
+			contextValue = masterDetail.getContextValueFromFlow(fc, mdl);
 		}
 
 		if (contextValue != null) {
@@ -169,8 +181,6 @@ public class MasterDetailRenderer extends CoreRenderer {
 	                                         final MasterDetailLevel mdlToRender) {
 		// create model from scratch
 		MenuModel model = new DefaultMenuModel();
-		FlowLevel[] flowLevels = (FlowLevel[]) masterDetail.getFlow();
-		String clientId = masterDetail.getClientId(fc);
 
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
@@ -179,9 +189,8 @@ public class MasterDetailRenderer extends CoreRenderer {
 				// create a new menu item and add to the model
 				if (child.isRendered()) {
 					MenuItem menuItem =
-						createMenuItem(fc, masterDetail, mdl,
-								getContextValueFromFlow(flowLevels, clientId, mdl),
-								mdlToRender.getLevel());
+					    createMenuItem(fc, masterDetail, mdl, masterDetail.getContextValueFromFlow(fc, mdl),
+					                   mdlToRender.getLevel());
 					model.addMenuItem(menuItem);
 				}
 
@@ -192,28 +201,6 @@ public class MasterDetailRenderer extends CoreRenderer {
 		}
 
 		return model;
-	}
-
-	protected Object getContextValueFromFlow(final FlowLevel[] flowLevels, final String mdClientId,
-			final MasterDetailLevel mdl) {
-
-		// try to get context value from internal storage
-		Object contextValue = mdl.getAttributes().get(mdClientId + MasterDetail.CURRENT_CONTEXT_VALUE);
-		if (contextValue != null) {
-			return contextValue;
-		}
-
-		// try to get context value from external "flow" state
-		if (flowLevels != null && flowLevels.length > 0) {
-			final int level = mdl.getLevel();
-			for (FlowLevel fl : flowLevels) {
-				if (fl.getLevel() == level) {
-					return fl.getContextValue();
-				}
-			}
-		}
-
-		return null;
 	}
 
 	protected MenuItem createMenuItem(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl,
@@ -281,7 +268,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, UIComponent component) throws IOException {
 		// rendering happens on encodeEnd
 	}
 
