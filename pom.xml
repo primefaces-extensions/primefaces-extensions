@@ -78,31 +78,67 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>            
+            <plugin>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
                 <configuration>
-                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>tooltip/**</include>
-                                 <include>keyfilter/**</include>
+                                <include>keyfilter/**</include>
                             </includes>
-                            <aggregation>
-                                <subDirMode>true</subDirMode>
-                            </aggregation>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
+                                    <subDirMode>true</subDirMode>
+                                </aggregation>
+                                <aggregation>
+                                    <withoutCompress>true</withoutCompress>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>
+                                    <subDirMode>true</subDirMode>
+                                </aggregation>
+                            </aggregations>
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
                                 <include>masterdetail/masterdetail.css</include>
                             </includes>
-                            <aggregation>
-                                <outputFile>
-                                    ${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.css
-                                </outputFile>
-                            </aggregation>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
+                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.css</outputFile>
+                                </aggregation>
+                                <aggregation>
+                                    <withoutCompress>true</withoutCompress>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>
+                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed/primefaces-extensions.css</outputFile>
+                                </aggregation>
+                            </aggregations>
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
@@ -111,11 +147,17 @@
                                 <include>ckeditor/widget.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                             </includes>
-                            <aggregation>
-                                <outputFile>
-                                    ${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js
-                                </outputFile>
-                            </aggregation>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>                                
+                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js</outputFile>
+                                </aggregation>
+                                <aggregation>
+                                    <withoutCompress>true</withoutCompress>
+                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>                                
+                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed/primefaces-extensions.js</outputFile>
+                                </aggregation>
+                            </aggregations>
                         </resourcesSet>
                     </resourcesSets>
                 </configuration>
