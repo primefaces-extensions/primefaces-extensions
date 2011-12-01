@@ -18,9 +18,13 @@
 
 package org.primefaces.extensions.application;
 
+import javax.faces.application.Application;
+import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.extensions.util.Constants;
 
@@ -48,12 +52,35 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	@Override
 	public Resource createResource(final String resourceName, final String libraryName) {
-		final Resource resource = super.createResource(resourceName, libraryName);
+		Resource resource = super.createResource(resourceName, libraryName);
 
 		if (resource != null && libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
-			return new PrimeFacesExtensionsResource(resource);
+
+			//get uncompressed resource if project stage == development
+			if (deliverUncompressedFile(resource, resourceName)) {
+				resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+			}
+
+			resource = new PrimeFacesExtensionsResource(resource);
 		}
 
 		return resource;
 	}
+
+	protected boolean deliverUncompressedFile(final Resource resource, final String resourceName) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final Application application = context.getApplication();
+
+        if (application.getProjectStage() == ProjectStage.Development) {
+        	final ExternalContext externalContext = context.getExternalContext();
+	        final String value = externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
+	        final boolean initParamValue = value == null ? true : Boolean.valueOf(value);
+
+			if (initParamValue && (resourceName.endsWith(".css") || resourceName.endsWith(".js"))) {
+				return true;
+			}
+        }
+
+        return false;
+    }
 }
