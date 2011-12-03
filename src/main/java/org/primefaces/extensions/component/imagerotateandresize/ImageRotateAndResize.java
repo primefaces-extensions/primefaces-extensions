@@ -145,9 +145,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
 		if (setAttributes != null && value == null) {
@@ -181,7 +179,9 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 						behaviorEvent.getBehavior(),
 						width,
 						height);
+
 				super.queueEvent(resizeEvent);
+
 			} else if (eventName.equals(EVENT_ROTATE)) {
 				final int degree = Integer.parseInt(params.get(clientId + "_degree"));
 

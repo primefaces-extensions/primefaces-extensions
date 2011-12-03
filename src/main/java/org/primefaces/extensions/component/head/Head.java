@@ -98,9 +98,7 @@ public class Head extends UIOutput {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
 		if (setAttributes != null && value == null) {
