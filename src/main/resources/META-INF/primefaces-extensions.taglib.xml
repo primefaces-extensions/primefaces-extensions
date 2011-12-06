@@ -19,6 +19,12 @@
             <converter-id>org.primefaces.extensions.converter.EnumConverter</converter-id>
         </converter>
     </tag>
+    <tag>
+        <tag-name>convertLocale</tag-name>
+        <converter>
+            <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
+        </converter>
+    </tag>
 
     <!-- Behaviors -->
     <tag>

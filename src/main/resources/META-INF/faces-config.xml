@@ -104,6 +104,10 @@
         <converter-id>org.primefaces.extensions.converter.EnumConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.EnumConverter</converter-class>
     </converter>
+    <converter>
+        <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
+        <converter-class>org.primefaces.extensions.converter.LocaleConverter</converter-class>
+    </converter>
 
     <render-kit>
         <renderer>
