@@ -94,6 +94,9 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 	if (this.cfg.contentsCss) {
 		this.options.contentsCss = this.cfg.contentsCss;
 	}
+	if (this.cfg.customConfig) {
+		this.options.customConfig = this.cfg.customConfig;
+	}
 
 	//check if ckeditor is already included
 	if (typeof(CKEDITOR) == 'undefined') {

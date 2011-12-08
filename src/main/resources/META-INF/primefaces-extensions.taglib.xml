@@ -152,7 +152,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[This setting specifies the CSS file to be used to apply style to the contents: .]]></description>
+                <![CDATA[This setting specifies the CSS file to be used to apply style to the contents.]]></description>
             <name>contentsCss</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -162,6 +162,12 @@
             <name>checkDirtyInterval</name>
             <required>false</required>
             <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Path to a custom CKEditor js config file.]]></description>
+            <name>customConfig</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
     <tag>

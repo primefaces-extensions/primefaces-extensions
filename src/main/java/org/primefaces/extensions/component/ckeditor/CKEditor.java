@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.ckeditor;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -94,7 +93,8 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
         language,
         defaultLanguage,
         contentsCss,
-        checkDirtyInterval;
+        checkDirtyInterval,
+        customConfig;
 
 		private String toString;
 
@@ -224,6 +224,14 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public void setCheckDirtyInterval(final int checkDirtyInterval) {
 		setAttribute(PropertyKeys.checkDirtyInterval, checkDirtyInterval);
+	}
+
+	public String getCustomConfig() {
+		return (String) getStateHelper().eval(PropertyKeys.customConfig, null);
+	}
+
+	public void setCustomConfig(final String customConfig) {
+		setAttribute(PropertyKeys.customConfig, customConfig);
 	}
 
 	@Override

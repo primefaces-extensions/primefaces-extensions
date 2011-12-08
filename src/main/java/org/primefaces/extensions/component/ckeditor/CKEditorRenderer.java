@@ -18,6 +18,9 @@
 
 package org.primefaces.extensions.component.ckeditor;
 
+import java.io.IOException;
+import java.util.Map;
+
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -25,9 +28,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
 import org.primefaces.renderkit.InputRenderer;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * Renderer for the {@link CKEditor} component.
@@ -130,6 +130,10 @@ public class CKEditorRenderer extends InputRenderer {
 
 		if (ckEditor.getContentsCss() != null) {
 			writer.write(",contentsCss:'" + ckEditor.getContentsCss() + "'");
+		}
+
+		if (ckEditor.getCustomConfig() != null) {
+			writer.write(",customConfig:'" + ckEditor.getCustomConfig() + "'");
 		}
 
 		encodeClientBehaviors(context, ckEditor);
