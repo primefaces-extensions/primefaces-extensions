@@ -62,7 +62,7 @@ public class PaginatorTagHandler extends TagHandler {
 	@Override
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UIData)) {
-			throw new FacesException("Paginator must be inside a UIData.");
+			throw new FacesException("Paginator must be inside a component which extends UIData.");
 		}
 
 		if (ComponentHandler.isNew(parent)) {

@@ -19,7 +19,7 @@
 package org.primefaces.extensions.component.base;
 
 /**
- * Interface for components which an be attached to other components.
+ * Interface for components which can be attached to other components.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
