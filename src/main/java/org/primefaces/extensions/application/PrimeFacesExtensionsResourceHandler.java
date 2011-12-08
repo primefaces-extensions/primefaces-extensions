@@ -74,20 +74,17 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
         final Application application = context.getApplication();
 
         if (application.getProjectStage() == ProjectStage.Development) {
+        	if (resourceName.endsWith(".css") || resourceName.endsWith(".js")) {
+	        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
+	        		if (resourceName.contains(exclude)) {
+	        			return false;
+	        		}
+				}
 
-        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
-        		if (resourceName.contains(exclude)) {
-        			return false;
-        		}
-			}
-
-        	final ExternalContext externalContext = context.getExternalContext();
-	        final String value = externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
-	        final boolean initParamValue = value == null ? true : Boolean.valueOf(value);
-
-			if (initParamValue && (resourceName.endsWith(".css") || resourceName.endsWith(".js"))) {
-				return true;
-			}
+	        	final ExternalContext externalContext = context.getExternalContext();
+		        final String value = externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
+		        return value == null ? true : Boolean.valueOf(value);
+	        }
         }
 
         return false;
