@@ -7,39 +7,44 @@
  */
 CKEDITOR_GETURL = function(resource) {
 	var facesResource;
+
+	//do not resolve
+	if (resource.indexOf('?resolve=false') !== -1) {
+		facesResource = resource.replace('?resolve=false', '');
+	} else {
+		//already wrapped?
+		var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion());
+		if (libraryVersionIndex !== -1) {
+			//look for appended resource
+			var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion()).length);
 	
-	//already wrapped?
-	var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion());
-	if (libraryVersionIndex !== -1) {
-		//look for appended resource
-		var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion()).length);
-
-		if (appendedResource.length > 0) {
-			//remove append resource from url
-			facesResource = resource.substring(0, resource.length - appendedResource.length);
-
-			var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
-			
-			if (PrimeFacesExt.isExtensionMapping()) {
-				var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getRequestUrlExtension());
-
-				//extract resource
-				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
-
-				facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+			if (appendedResource.length > 0) {
+				//remove append resource from url
+				facesResource = resource.substring(0, resource.length - appendedResource.length);
+	
+				var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
+				
+				if (PrimeFacesExt.isExtensionMapping()) {
+					var extensionMappingPosition = facesResource.indexOf(PrimeFacesExt.getRequestUrlExtension());
+	
+					//extract resource
+					var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
+	
+					facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+				} else {
+					var questionMarkPosition = facesResource.indexOf('?');
+	
+					//extract resource
+					var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
+	
+					facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+				}
 			} else {
-				var questionMarkPosition = facesResource.indexOf('?');
-
-				//extract resource
-				var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
-
-				facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+				facesResource = resource;
 			}
 		} else {
-			facesResource = resource;
+			facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/' + resource);
 		}
-	} else {
-		facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/' + resource);
 	}
 
 	return facesResource;
@@ -95,7 +100,7 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 		this.options.contentsCss = this.cfg.contentsCss;
 	}
 	if (this.cfg.customConfig) {
-		this.options.customConfig = this.cfg.customConfig;
+		this.options.customConfig = this.cfg.customConfig + "?resolve=false";
 	}
 
 	//check if ckeditor is already included
