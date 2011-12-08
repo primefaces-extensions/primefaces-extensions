@@ -86,6 +86,7 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
 		super(config);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected MetaRuleset createMetaRuleset(final Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
