@@ -30,10 +30,10 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
-import org.primefaces.extensions.util.StringUtils;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import org.primefaces.renderkit.CoreRenderer;

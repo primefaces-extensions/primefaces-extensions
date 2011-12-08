@@ -36,7 +36,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
 
-import org.primefaces.extensions.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.util.Constants;
 
 /**
