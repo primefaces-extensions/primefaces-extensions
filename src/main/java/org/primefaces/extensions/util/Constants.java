@@ -34,6 +34,9 @@ public final class Constants {
 	public static final String DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM =
 		"org.primefaces.extensions.DELIVER_UNCOMPRESSED_RESOURCES";
 
+	public static final String EXTENSION_CSS = ".css";
+	public static final String EXTENSION_JS = ".js";
+
 	/**
 	 * Avoid instantiation.
 	 */

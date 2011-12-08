@@ -74,7 +74,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
         final Application application = context.getApplication();
 
         if (application.getProjectStage() == ProjectStage.Development) {
-        	if (resourceName.endsWith(".css") || resourceName.endsWith(".js")) {
+        	if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
 	        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
 	        		if (resourceName.contains(exclude)) {
 	        			return false;

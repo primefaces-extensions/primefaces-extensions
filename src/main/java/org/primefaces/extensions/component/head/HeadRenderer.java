@@ -58,8 +58,6 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	private static final String FACET_FIRST = "first";
 	private static final String FACET_MIDDLE = "middle";
 	private static final String FACET_LAST = "last";
-	private static final String EXTENSION_CSS = ".css";
-	private static final String EXTENSION_JS = ".js";
 	private static final String PREFIX_PRIMEFACES = "primefaces-";
 	private static final String THEME_DEFAULT = "aristo";
 
@@ -159,9 +157,9 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		for (final UIComponent resource : resources) {
 			final String name = (String) resource.getAttributes().get("name");
 
-			if (name.endsWith(EXTENSION_CSS)) {
+			if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_CSS)) {
 				styles.add(resource);
-			} else if (name.endsWith(EXTENSION_JS)) {
+			} else if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_JS)) {
 				scripts.add(resource);
 			}
 		}
