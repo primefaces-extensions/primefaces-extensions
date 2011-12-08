@@ -116,8 +116,11 @@ PrimeFacesExt.widget.CKEditor = function(id, cfg) {
 
 			//load jquery adapter
 			PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+
+				//overwrite save button and init editor
 				this.overwriteSaveButton();
 				this.initialize();
+
 			}, this), true);
 
 		}, this), true);
