@@ -120,6 +120,7 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 		getStateHelper().put(PropertyKeys.life, life);
 	}
 
+	@Override
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}

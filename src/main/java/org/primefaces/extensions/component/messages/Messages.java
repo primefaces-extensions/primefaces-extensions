@@ -18,15 +18,15 @@
 
 package org.primefaces.extensions.component.messages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
 import org.primefaces.component.api.AutoUpdatable;
 import org.primefaces.extensions.component.base.AbstractNotification;
-
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Component class for the <code>Messages</code> component.
@@ -87,6 +87,7 @@ public class Messages extends AbstractNotification implements AutoUpdatable {
 		setAttribute(PropertyKeys.globalOnly, globalOnly);
 	}
 
+	@Override
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}
