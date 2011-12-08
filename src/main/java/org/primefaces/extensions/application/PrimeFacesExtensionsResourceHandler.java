@@ -38,7 +38,9 @@ import org.primefaces.extensions.util.Constants;
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
-	private ResourceHandler wrapped;
+	public static final String[] UNCOMPRESSED_EXCLUDES = new String[] { "ckeditor/" };
+
+	private final ResourceHandler wrapped;
 
 	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
 		super();
@@ -72,6 +74,13 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
         final Application application = context.getApplication();
 
         if (application.getProjectStage() == ProjectStage.Development) {
+
+        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
+        		if (resourceName.contains(exclude)) {
+        			return false;
+        		}
+			}
+
         	final ExternalContext externalContext = context.getExternalContext();
 	        final String value = externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
 	        final boolean initParamValue = value == null ? true : Boolean.valueOf(value);
