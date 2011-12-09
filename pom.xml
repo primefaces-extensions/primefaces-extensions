@@ -88,9 +88,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed
-                            </outputDirectory>
+                            <outputDirectory>${resources.dir.uncompressed}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
@@ -114,12 +112,12 @@
                             </includes>
                             <aggregations>
                                 <aggregation>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
                                 </aggregation>
                                 <aggregation>
                                     <withoutCompress>true</withoutCompress>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>
+                                    <inputDir>${resources.dir.uncompressed}</inputDir>
                                     <subDirMode>true</subDirMode>
                                 </aggregation>
                             </aggregations>
@@ -130,13 +128,13 @@
                             </includes>
                             <aggregations>
                                 <aggregation>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>
-                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.css</outputFile>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/primefaces-extensions.css</outputFile>
                                 </aggregation>
                                 <aggregation>
                                     <withoutCompress>true</withoutCompress>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>
-                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed/primefaces-extensions.css</outputFile>
+                                    <inputDir>${resources.dir.uncompressed}</inputDir>
+                                    <outputFile>${resources.dir.uncompressed}/primefaces-extensions.css</outputFile>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -149,13 +147,13 @@
                             </includes>
                             <aggregations>
                                 <aggregation>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</inputDir>                                
-                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions/primefaces-extensions.js</outputFile>
+                                    <inputDir>${resources.dir.compressed}</inputDir>                                
+                                    <outputFile>${resources.dir.compressed}/primefaces-extensions.js</outputFile>
                                 </aggregation>
                                 <aggregation>
                                     <withoutCompress>true</withoutCompress>
-                                    <inputDir>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</inputDir>                                
-                                    <outputFile>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed/primefaces-extensions.js</outputFile>
+                                    <inputDir>${resources.dir.uncompressed}</inputDir>                                
+                                    <outputFile>${resources.dir.uncompressed}/primefaces-extensions.js</outputFile>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -198,5 +196,9 @@
 			<artifactId>commons-lang</artifactId>
 		</dependency>
     </dependencies>
-
+    
+    <properties>
+      <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+      <resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
+    </properties>    
 </project>
