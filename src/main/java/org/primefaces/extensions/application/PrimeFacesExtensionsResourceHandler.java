@@ -54,22 +54,26 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	@Override
 	public Resource createResource(final String resourceName, final String libraryName) {
-		Resource resource = super.createResource(resourceName, libraryName);
+		Resource resource;
 
-		if (resource != null && libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+		if (libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 
 			//get uncompressed resource if project stage == development
-			if (deliverUncompressedFile(resource, resourceName)) {
+			if (deliverUncompressedFile(resourceName)) {
 				resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+			} else {
+				resource = super.createResource(resourceName, libraryName);
 			}
 
 			resource = new PrimeFacesExtensionsResource(resource);
+		} else {
+			resource = super.createResource(resourceName, libraryName);
 		}
 
 		return resource;
 	}
 
-	protected boolean deliverUncompressedFile(final Resource resource, final String resourceName) {
+	protected boolean deliverUncompressedFile(final String resourceName) {
         final FacesContext context = FacesContext.getCurrentInstance();
         final Application application = context.getApplication();
 
