@@ -18,7 +18,6 @@
 
 package org.primefaces.extensions.application;
 
-import javax.faces.application.Application;
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
@@ -75,9 +74,8 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	protected boolean deliverUncompressedFile(final String resourceName) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        final Application application = context.getApplication();
 
-        if (application.getProjectStage() == ProjectStage.Development) {
+        if (context.isProjectStage(ProjectStage.Development)) {
         	if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
 	        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
 	        		if (resourceName.contains(exclude)) {
