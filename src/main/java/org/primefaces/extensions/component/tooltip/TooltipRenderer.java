@@ -65,7 +65,7 @@ public class TooltipRenderer extends CoreRenderer {
 			if (tooltip.getValue() == null) {
 				renderChildren(context, tooltip);
 			} else {
-				writer.write(ComponentUtils.getStringValueToRender(context, tooltip).replaceAll("'", "\\\\'"));
+				writer.write(ComponentUtils.getStringValueToRender(context, tooltip, tooltip.getValue()).replaceAll("'", "\\\\'"));
 			}
 
 			writer.write("'");
