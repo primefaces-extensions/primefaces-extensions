@@ -18,16 +18,18 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import javax.el.ValueExpression;
-import javax.faces.component.UIComponentBase;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.el.ValueExpression;
+import javax.faces.component.UIComponentBase;
 
 /**
  * <code>MasterDetailLevel</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class MasterDetailLevel extends UIComponentBase {
 
@@ -114,9 +116,7 @@ public class MasterDetailLevel extends UIComponentBase {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
 

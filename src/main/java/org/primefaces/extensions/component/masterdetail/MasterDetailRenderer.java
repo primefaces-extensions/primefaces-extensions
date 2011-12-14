@@ -45,6 +45,7 @@ import org.primefaces.renderkit.CoreRenderer;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class MasterDetailRenderer extends CoreRenderer {
 

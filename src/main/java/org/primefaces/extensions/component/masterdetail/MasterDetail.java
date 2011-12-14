@@ -45,6 +45,7 @@ import org.primefaces.util.Constants;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 @ListenerFor(systemEventClass = PostRestoreStateEvent.class)
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")

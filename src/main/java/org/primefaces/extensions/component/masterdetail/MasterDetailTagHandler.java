@@ -32,6 +32,7 @@ import org.primefaces.facelets.MethodRule;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class MasterDetailTagHandler extends ComponentHandler {
 

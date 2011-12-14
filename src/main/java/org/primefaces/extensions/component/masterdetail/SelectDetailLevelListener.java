@@ -35,6 +35,7 @@ import javax.faces.event.ActionListener;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class SelectDetailLevelListener implements ActionListener, StateHolder {
 

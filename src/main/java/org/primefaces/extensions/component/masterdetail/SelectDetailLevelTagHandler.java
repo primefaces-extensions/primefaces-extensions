@@ -41,6 +41,7 @@ import org.primefaces.component.api.AjaxSource;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.2
  */
 public class SelectDetailLevelTagHandler extends TagHandler {
 
