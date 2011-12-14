@@ -31,9 +31,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang.StringUtils;
+
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
+import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 import org.primefaces.renderkit.CoreRenderer;
@@ -48,6 +50,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 	private static final String FACET_HEADER = "header";
 	private static final String FACET_FOOTER = "footer";
+	private static final String FACET_LABEL = "label";
 
 	@Override
 	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
@@ -61,27 +64,15 @@ public class MasterDetailRenderer extends CoreRenderer {
 			if (fc.isValidationFailed()) {
 				mdl = mdlToProcess;
 			} else {
-				mdl = masterDetail.getDetailLevelToGo(fc);
+				mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
 
-				boolean changeLevelAllowed = true;
-				if (masterDetail.getFlowListener() != null) {
-					FlowLevelEvent flowLevelEvent = new FlowLevelEvent(masterDetail, mdlToProcess.getLevel(), mdl.getLevel());
-					changeLevelAllowed =
-					    (Boolean) masterDetail.getFlowListener().invoke(fc.getELContext(), new Object[] {flowLevelEvent});
-					if (!changeLevelAllowed) {
-						mdl = mdlToProcess;
-					}
-				}
+				// reset last saved validation state and stored values of editable components
+				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
-				if (changeLevelAllowed) {
-					// reset last saved validation state and stored values of editable components
-					EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-					mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
-
-					final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-					for (EditableValueHolder editableValueHolder : editableValueHolders) {
-						editableValueHolder.resetValue();
-					}
+				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+				for (EditableValueHolder editableValueHolder : editableValueHolders) {
+					editableValueHolder.resetValue();
 				}
 			}
 
@@ -96,6 +87,21 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 		// reset calculated values
 		masterDetail.resetCalculatedValues();
+	}
+
+	protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail masterDetail,
+	                                                   final MasterDetailLevel mdlToProcess, final MasterDetailLevel mdlToGo) {
+		if (masterDetail.getSelectLevelListener() != null) {
+			SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
+			int levelToEncode =
+			    (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] {selectLevelEvent});
+			if (levelToEncode != mdlToGo.getLevel()) {
+				// new MasterDetailLevel to go
+				return masterDetail.getDetailLevelByLevel(levelToEncode);
+			}
+		}
+
+		return mdlToGo;
 	}
 
 	protected void encodeMarkup(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl)
@@ -148,7 +154,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		Object contextValue = null;
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar)) {
-			contextValue = masterDetail.getContextValueFromFlow(fc, mdl);
+			contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
 		}
 
 		if (contextValue != null) {
@@ -178,23 +184,24 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	protected MenuModel buildBreadcrumbModel(final FacesContext fc, final MasterDetail masterDetail,
-	                                         final MasterDetailLevel mdlToRender) {
+	                                         final MasterDetailLevel mdlToRender) throws IOException {
 		// create model from scratch
 		MenuModel model = new DefaultMenuModel();
 
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
+				boolean isLastMdl = mdl.getLevel() == mdlToRender.getLevel();
 
 				// create a new menu item and add to the model
 				if (child.isRendered()) {
 					MenuItem menuItem =
-					    createMenuItem(fc, masterDetail, mdl, masterDetail.getContextValueFromFlow(fc, mdl),
+					    createMenuItem(fc, masterDetail, mdl, masterDetail.getContextValueFromFlow(fc, mdl, isLastMdl),
 					                   mdlToRender.getLevel());
 					model.addMenuItem(menuItem);
 				}
 
-				if (mdl.getLevel() == mdlToRender.getLevel()) {
+				if (isLastMdl) {
 					break;
 				}
 			}
@@ -204,7 +211,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	protected MenuItem createMenuItem(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl,
-	                                  final Object contextValue, final int currentLevel) {
+	                                  final Object contextValue, final int currentLevel) throws IOException {
 		String clientId = masterDetail.getClientId(fc);
 		MenuItem menuItem = new MenuItem();
 		menuItem.setId(masterDetail.getId() + "_bcItem_" + mdl.getLevel());
@@ -216,7 +223,27 @@ public class MasterDetailRenderer extends CoreRenderer {
 			requestMap.put(contextVar, contextValue);
 		}
 
-		menuItem.setValue(mdl.getLevelLabel());
+		final UIComponent facet = mdl.getFacet(FACET_LABEL);
+		if (facet != null) {
+			// swap writers
+			ResponseWriter writer = fc.getResponseWriter();
+			FastStringWriter fsw = new FastStringWriter();
+			ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+			fc.setResponseWriter(clonedWriter);
+
+			// render facet's children
+			facet.encodeAll(fc);
+
+			// restore the original writer
+			fc.setResponseWriter(writer);
+
+			// set menuitem label from facet
+			menuItem.setValue(fsw.toString());
+		} else {
+			// set menuitem label from tag attribute
+			menuItem.setValue(mdl.getLevelLabel());
+		}
+
 		menuItem.setDisabled(mdl.isLevelDisabled());
 
 		if (putContext) {

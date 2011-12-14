@@ -21,8 +21,10 @@ package org.primefaces.extensions.component.masterdetail;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
+import javax.faces.component.ActionSource;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.event.PreRenderComponentEvent;
@@ -43,12 +45,14 @@ import org.primefaces.component.api.AjaxSource;
 public class SelectDetailLevelTagHandler extends TagHandler {
 
 	private final TagAttribute contextValue;
+	private final TagAttribute listener;
 	private final TagAttribute level;
 	private final TagAttribute step;
 
 	public SelectDetailLevelTagHandler(final TagConfig config) {
 		super(config);
 		this.contextValue = getAttribute("contextValue");
+		this.listener = getAttribute("listener");
 		this.level = getAttribute("level");
 		this.step = getAttribute("step");
 	}
@@ -110,7 +114,12 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		}
 
 		// register a ComponentSystemEventListener
-		PreRenderCommandListener listener = new PreRenderCommandListener();
-		parent.subscribeToEvent(PreRenderComponentEvent.class, listener);
+		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderCommandListener());
+
+		// register an ActionListener
+		if (listener != null) {
+			MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
+			((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
+		}
 	}
 }

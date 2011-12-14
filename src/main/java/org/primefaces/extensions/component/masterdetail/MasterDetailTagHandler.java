@@ -22,11 +22,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
+import javax.faces.view.facelets.MetaRuleset;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
+import org.primefaces.facelets.MethodRule;
 
 /**
- * {@link javax.faces.view.facelets.TagHandler} for the <code>MasterDetail</code>.
+ * {@link ComponentHandler} for the <code>MasterDetail</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
@@ -35,6 +37,13 @@ public class MasterDetailTagHandler extends ComponentHandler {
 
 	public MasterDetailTagHandler(final ComponentConfig config) {
 		super(config);
+	}
+
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+		metaRuleset.addRule(new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class}));
+
+		return metaRuleset;
 	}
 
 	@Override

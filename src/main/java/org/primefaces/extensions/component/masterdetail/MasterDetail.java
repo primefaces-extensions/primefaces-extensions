@@ -18,8 +18,8 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +37,7 @@ import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
 
 import org.apache.commons.lang.StringUtils;
+
 import org.primefaces.util.Constants;
 
 /**
@@ -64,6 +65,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String SELECTED_STEP = "_selectedStep";
 	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
 	public static final String SKIP_PROCESSING_REQUEST = "_skipProcessing";
+	public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
 
 	private MasterDetailLevel detailLevelToProcess;
 	private MasterDetailLevel detailLevelToGo;
@@ -79,8 +81,8 @@ public class MasterDetail extends UIComponentBase {
 	protected enum PropertyKeys {
 
 		level,
-		flow,
-		flowListener,
+		contextValue,
+		selectLevelListener,
 		showBreadcrumb,
 		style,
 		styleClass;
@@ -117,20 +119,20 @@ public class MasterDetail extends UIComponentBase {
 		setAttribute(PropertyKeys.level, level);
 	}
 
-	public Object getFlow() {
-		return getStateHelper().eval(PropertyKeys.flow, null);
+	public Object getContextValue() {
+		return getStateHelper().eval(PropertyKeys.contextValue, null);
 	}
 
-	public void setFlow(final Object flow) {
-		setAttribute(PropertyKeys.flow, flow);
+	public void setContextValue(final Object contextValue) {
+		setAttribute(PropertyKeys.contextValue, contextValue);
 	}
 
-	public MethodExpression getFlowListener() {
-		return (MethodExpression) getStateHelper().eval(PropertyKeys.flowListener, null);
+	public MethodExpression getSelectLevelListener() {
+		return (MethodExpression) getStateHelper().eval(PropertyKeys.selectLevelListener, null);
 	}
 
-	public void setFlowListener(final MethodExpression flowListener) {
-		setAttribute(PropertyKeys.flowListener, flowListener);
+	public void setSelectLevelListener(final MethodExpression selectLevelListener) {
+		setAttribute(PropertyKeys.selectLevelListener, selectLevelListener);
 	}
 
 	public boolean isShowBreadcrumb() {
@@ -195,14 +197,18 @@ public class MasterDetail extends UIComponentBase {
 		PartialViewContext pvc = fc.getPartialViewContext();
 
 		// process and update the MasterDetail component automatically
-		if (!isSkipProcessing(fc)) {
+		Collection<String> executeIds = pvc.getExecuteIds();
+		int size = executeIds.size();
+		if (!isSkipProcessing(fc) && (size == 0 || (size == 1 && "@none".equals(executeIds.iterator().next())))) {
 			pvc.getExecuteIds().add(clienId);
 		}
 
-		pvc.getRenderIds().add(clienId);
+		if (pvc.getRenderIds().isEmpty()) {
+			pvc.getRenderIds().add(clienId);
+		}
 
 		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
-		Object contextValue = getContextValueFromFlow(fc, mdl);
+		Object contextValue = getContextValueFromFlow(fc, mdl, true);
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar) && contextValue != null) {
 			Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
@@ -314,78 +320,32 @@ public class MasterDetail extends UIComponentBase {
 		@SuppressWarnings("unchecked")
 		Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
 		if (contextValues != null) {
-			contextValue = contextValues.get("contextValue_" + source);
+			contextValue = contextValues.get(RESOLVED_CONTEXT_VALUE + source);
 		}
 
 		if (contextValue != null) {
 			// update current context value for corresponding MasterDetailLevel
 			mdlToGo.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
 
-			// update "flow"
-			ValueExpression flowVE = this.getValueExpression(PropertyKeys.flow.toString());
-			if (flowVE != null) {
-				Class flowType = flowVE.getType(fc.getELContext());
-
-				if (!flowType.isArray()) {
-					// we can also check Collection.class.isAssignableFrom(flowType), but a support of collection is too complicate
-					// by reason of lack in Java Generics. The type of elements in a collection is not accessible at runtime.
-					throw new FacesException("Type of the 'flow' attribute must be an Array.");
-				}
-
-				Class elementType = flowType.getComponentType();
-				if (!FlowLevel.class.isAssignableFrom(elementType)) {
-					throw new FacesException("Elements in the 'flow' array must implement 'FlowLevel' interface.");
-				}
-
-				try {
-					FlowLevel newFlowLevel = (FlowLevel) elementType.newInstance();
-					newFlowLevel.setLevel(levelToGo);
-					newFlowLevel.setContextValue(contextValue);
-
-					FlowLevel[] newFlow;
-					Object objFlow = flowVE.getValue(fc.getELContext());
-
-					if (objFlow == null) {
-						newFlow = (FlowLevel[]) Array.newInstance(elementType, 1);
-						newFlow[0] = newFlowLevel;
-					} else {
-						List<FlowLevel> listFlow = new ArrayList<FlowLevel>();
-						listFlow.add(newFlowLevel);
-
-						for (FlowLevel fl : (FlowLevel[]) objFlow) {
-							if (fl.getLevel() != levelToGo) {
-								listFlow.add(fl);
-							}
-						}
-
-						newFlow = listFlow.toArray((FlowLevel[]) Array.newInstance(elementType, listFlow.size()));
-					}
-
-					flowVE.setValue(fc.getELContext(), newFlow);
-					getStateHelper().remove(PropertyKeys.flow);
-				} catch (Exception e) {
-					throw new FacesException("Update of 'flow' array has failed.");
-				}
+			ValueExpression contextValueVE = this.getValueExpression(PropertyKeys.contextValue.toString());
+			if (contextValueVE != null) {
+				// update "contextValue"
+				contextValueVE.setValue(fc.getELContext(), contextValue);
+				getStateHelper().remove(PropertyKeys.contextValue);
 			}
 		}
 	}
 
-	public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl) {
+	public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl, final boolean includeModel) {
 		// try to get context value from internal storage
 		Object contextValue = mdl.getAttributes().get(this.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
 		if (contextValue != null) {
 			return contextValue;
 		}
 
-		// try to get context value from external "flow" state
-		FlowLevel[] flowLevels = (FlowLevel[]) this.getFlow();
-		if (flowLevels != null && flowLevels.length > 0) {
-			final int level = mdl.getLevel();
-			for (FlowLevel fl : flowLevels) {
-				if (fl.getLevel() == level) {
-					return fl.getContextValue();
-				}
-			}
+		// try to get context value from external storage (e.g. managed bean)
+		if (includeModel) {
+			return this.getContextValue();
 		}
 
 		return null;

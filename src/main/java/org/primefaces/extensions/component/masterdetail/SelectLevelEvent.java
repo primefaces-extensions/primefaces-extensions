@@ -28,12 +28,12 @@ import javax.faces.event.FacesListener;
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-public class FlowLevelEvent extends FacesEvent {
+public class SelectLevelEvent extends FacesEvent {
 
 	private int currentLevel;
 	private int newLevel;
 
-	public FlowLevelEvent(final UIComponent component, final int currentLevel, final int newLevel) {
+	public SelectLevelEvent(final UIComponent component, final int currentLevel, final int newLevel) {
 		super(component);
 		this.currentLevel = currentLevel;
 		this.newLevel = newLevel;

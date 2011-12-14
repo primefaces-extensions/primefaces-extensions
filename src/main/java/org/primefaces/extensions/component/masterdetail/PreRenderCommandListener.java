@@ -108,12 +108,12 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 			contextValues = new HashMap<String, Object>();
 		}
 
-		// resolve context value and make it available in processUpdates() of MasterDetail component
+		// resolve context value and make it available in MasterDetail component
 		Object contextValue = contextValueVE.getValue(fc.getELContext());
 		if (contextValue != null) {
-			contextValues.put("contextValue_" + source.getClientId(fc), contextValue);
+			contextValues.put(MasterDetail.RESOLVED_CONTEXT_VALUE + source.getClientId(fc), contextValue);
 		} else {
-			contextValues.remove("contextValue_" + source.getClientId(fc));
+			contextValues.remove(MasterDetail.RESOLVED_CONTEXT_VALUE + source.getClientId(fc));
 		}
 
 		masterDetailLevel.getAttributes().put(MasterDetail.CONTEXT_VALUES, contextValues);
@@ -149,7 +149,6 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 
 	private void addUIParameter(final FacesContext fc, final UIComponent source, final String paramName,
 	                            final Object paramValue) {
-		UIParameter uiParameter = null;
 		for (UIComponent child : source.getChildren()) {
 			if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
 				// update value
@@ -159,7 +158,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 			}
 		}
 
-		uiParameter = new UIParameter();
+		UIParameter uiParameter = new UIParameter();
 		uiParameter.setId(fc.getViewRoot().createUniqueId(fc, null));
 		uiParameter.setName(paramName);
 		uiParameter.setValue(paramValue);
