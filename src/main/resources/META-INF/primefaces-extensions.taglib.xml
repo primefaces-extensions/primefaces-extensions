@@ -1000,7 +1000,7 @@
             <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailTagHandler</handler-class>
         </component>
         <attribute>
-            <description><![CDATA[[Unique identifier of the component in a naming container.]]></description>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -1061,7 +1061,7 @@
             <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevelTagHandler</handler-class>
         </component>
         <attribute>
-            <description><![CDATA[[Unique identifier of the component in a naming container.]]></description>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
