@@ -5,25 +5,20 @@ PrimeFacesExt.widget.Tooltip = function(id, cfg) {
     if (this.cfg.global) {
         this.cfg.position.container = $(document.body);
 
-        $('*[oldtitle]').die(this.cfg.show.event + ".tooltip").live(this.cfg.show.event + ".tooltip", function(event) {
+        $('body').undelegate('.tooltip').delegate('*[title]', this.cfg.show.event + '.tooltip', function(event) {
             var el = $(this);
             if (el.is(':disabled')) {
                 return;
             }
+            
+            el.attr('oldtitle', el.attr('title')).attr('title', '');
 
             var extCfg = _self.cfg;
+            extCfg.content = {};
             extCfg.content.text = el.attr('oldtitle');
             extCfg.show.ready = true;
             el.qtip(extCfg, event);
         });
-
-        var titles = $('*[title]');
-        if (titles.length) {
-            for (var i = 0; i < titles.length; i++) {
-                $.attr(titles[i], 'oldtitle', $.attr(titles[i], 'title'));
-                titles[i].removeAttribute('title');
-            }
-        }
     } else if (this.cfg.shared) {
         var jqId = PrimeFaces.escapeClientId(id);
 
