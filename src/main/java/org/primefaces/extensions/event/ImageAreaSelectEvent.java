@@ -21,6 +21,7 @@ package org.primefaces.extensions.event;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.AjaxBehaviorListener;
 import javax.faces.event.FacesListener;
 
 /**
@@ -68,13 +69,15 @@ public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
 	}
 
 	@Override
-	public boolean isAppropriateListener(final FacesListener listener) {
-		return false;
+	public boolean isAppropriateListener(final FacesListener facesListener) {
+		return true;
 	}
 
 	@Override
-	public void processListener(final FacesListener listener) {
-		throw new UnsupportedOperationException();
+	public void processListener(final FacesListener facesListener) {
+		if (facesListener instanceof AjaxBehaviorListener) {
+			((AjaxBehaviorListener) facesListener).processAjaxBehavior(this);
+		}
 	}
 
 	public final int getHeight() {
