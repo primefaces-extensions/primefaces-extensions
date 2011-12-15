@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!-- $Id$ -->
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -111,7 +112,7 @@
                     <!-- no version, always use latest and greatest -->
                     <extensions>true</extensions>
                     <configuration>
-                    	<useProjectReferences>false</useProjectReferences>
+                        <useProjectReferences>false</useProjectReferences>
                         <downloadSources>true</downloadSources>
                         <wtpversion>2.0</wtpversion>
                         <classpathContainers>
@@ -287,77 +288,6 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.mortbay.jetty</groupId>
-                    <artifactId>jetty-maven-plugin</artifactId>
-                    <version>8.0.0.M3</version>
-                    <configuration>
-                        <webAppConfig>
-                            <overrideDescriptor>src/main/resources/overrideweb-${pe.jsf.impl}.xml</overrideDescriptor>
-                        </webAppConfig>
-                        <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
-                        <scanIntervalSeconds>1</scanIntervalSeconds>
-                        <stopPort>9966</stopPort>
-                        <stopKey>foo</stopKey>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>javax.el</groupId>
-                            <artifactId>el-api</artifactId>
-                            <version>2.2</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>${pe.jsf.group}</groupId>
-                            <artifactId>${pe.jsf.artifact}-api</artifactId>
-                            <version>${pe.jsf.version}</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>jstl</groupId>
-                                    <artifactId>jstl</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </dependency>
-                        <dependency>
-                            <groupId>${pe.jsf.group}</groupId>
-                            <artifactId>${pe.jsf.artifact}-impl</artifactId>
-                            <version>${pe.jsf.version}</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>jstl</groupId>
-                                    <artifactId>jstl</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-jcl</artifactId>
-                            <version>1.5.6</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>log4j</groupId>
-                            <artifactId>log4j</artifactId>
-                            <version>1.2.16</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>javax.mail</groupId>
-                                    <artifactId>mail</artifactId>
-                                </exclusion>
-                                <exclusion>
-                                    <groupId>javax.jms</groupId>
-                                    <artifactId>jms</artifactId>
-                                </exclusion>
-                                <exclusion>
-                                    <groupId>com.sun.jdmk</groupId>
-                                    <artifactId>jmxtools</artifactId>
-                                </exclusion>
-                                <exclusion>
-                                    <groupId>com.sun.jmx</groupId>
-                                    <artifactId>jmxri</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>2.3.5</version>
@@ -520,186 +450,6 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>black-tie</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>blitzer</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>bluesky</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>casablanca</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>cupertino</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>dark-hive</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>dot-luv</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>eggplant</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>excite-bike</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>flick</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>glass-x</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>hot-sneaks</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>humanity</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>le-frog</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>midnight</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>mint-choc</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>overcast</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>pepper-grinder</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>redmond</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>rocket</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>sam</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>smoothness</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>south-street</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>start</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>sunny</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>swanky-purse</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>trontastic</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>ui-darkness</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>ui-lightness</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>vader</artifactId>
-                <version>${primefaces.theme.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>3.0.RC1</version>
@@ -786,7 +536,7 @@
                         <configuration>
                             <source>${java.version.source}</source>
                         </configuration>
-                    </plugin>                    
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -812,16 +562,14 @@
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
                 <pe.jsf.version>2.1.3</pe.jsf.version>
             </properties>
-        </profile>
+        </profile>        
     </profiles>
 
     <properties>
         <java.version.source>1.6</java.version.source>
         <java.version.target>1.6</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-        <primefaces.theme.version>1.0.2</primefaces.theme.version>
-        <pe.webapp.filter>development</pe.webapp.filter>
-        <pe.jsf.impl>mojarra</pe.jsf.impl>
+        <pe.jsf.impl>mojarra</pe.jsf.impl>        
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.3</pe.jsf.version>
