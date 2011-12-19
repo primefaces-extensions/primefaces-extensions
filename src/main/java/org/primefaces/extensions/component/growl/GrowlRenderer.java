@@ -38,7 +38,7 @@ import org.primefaces.renderkit.CoreRenderer;
  */
 public class GrowlRenderer extends CoreRenderer {
 
-    @Override
+	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
 		final Growl growl = (Growl) component;
@@ -49,94 +49,94 @@ public class GrowlRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId, "id");
 		writer.endElement("span");
 
-        startScript(writer, clientId);
+		startScript(writer, clientId);
 
-        if (isAjaxRequest(context)) {
-            writer.write(widgetVar + ".show(");
-            encodeMessages(context, growl);
-            writer.write(");");
-        } else {
-            writer.write("$(function(){");
+		if (isAjaxRequest(context)) {
+			writer.write(widgetVar + ".show(");
+			encodeMessages(context, growl);
+			writer.write(");");
+		} else {
+			writer.write("$(function(){");
 
-            writer.write("PrimeFaces.cw('Growl','" + widgetVar + "',{");
-            writer.write("id:'" + clientId + "',msgs:");
-            encodeMessages(context, growl);
-            writer.write("});});");
-        }
+			writer.write("PrimeFaces.cw('Growl','" + widgetVar + "',{");
+			writer.write("id:'" + clientId + "',msgs:");
+			encodeMessages(context, growl);
+			writer.write("});});");
+		}
 
 		endScript(writer);
 	}
 
-    protected void encodeMessages(final FacesContext context, final Growl growl) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
+	protected void encodeMessages(final FacesContext context, final Growl growl) throws IOException {
+		final ResponseWriter writer = context.getResponseWriter();
 		final Iterator<FacesMessage> messages =
 			growl.isGlobalOnly() ? context.getMessages(null) : context.getMessages();
 
-        writer.write("[");
+			writer.write("[");
 
-		while (messages.hasNext()) {
-			final FacesMessage message = messages.next();
-			final boolean shouldRender = growl.shouldRender(message,
-					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.GROWL);
+			while (messages.hasNext()) {
+				final FacesMessage message = messages.next();
+				final boolean shouldRender = growl.shouldRender(message,
+						TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.GROWL);
 
-			if (shouldRender) {
-				final String severityImage = getImage(context, growl, message);
-				final String summary = escapeText(message.getSummary());
-				final String detail = escapeText(message.getDetail());
+				if (shouldRender) {
+					final String severityImage = getImage(context, growl, message);
+					final String summary = escapeText(message.getSummary());
+					final String detail = escapeText(message.getDetail());
 
-	            writer.write("{");
+					writer.write("{");
 
-	            //render summary
-				if (growl.isShowSummary()) {
-					if (growl.isEscape()) {
-						writer.writeText("title:'" + summary + "'", null);
+					//render summary
+					if (growl.isShowSummary()) {
+						if (growl.isEscape()) {
+							writer.writeText("title:\"" + summary + "\"", null);
+						} else {
+							writer.write("title:\"" + summary + "\"");
+						}
 					} else {
-						writer.write("title:'" + summary + "'");
+						writer.write("title:\"\"");
 					}
-				} else {
-					writer.write("title:''");
-				}
 
-				//render detail
-				if (growl.isShowDetail()) {
-					if (growl.isEscape()) {
-						writer.writeText(",text:'" + detail + "'", null);
+					//render detail
+					if (growl.isShowDetail()) {
+						if (growl.isEscape()) {
+							writer.writeText(",text:\"" + detail + "\"", null);
+						} else {
+							writer.write(",text:\"" + detail + "\"");
+						}
 					} else {
-						writer.write(",text:'" + detail + "'");
+						writer.write(",text:\"\"");
 					}
-				} else {
-					writer.write(",text:''");
+
+					if (!isValueBlank(severityImage)) {
+						writer.write(",image:\"" + severityImage + "\"");
+					}
+
+					if (growl.isSticky()) {
+						writer.write(",sticky:true");
+					} else {
+						writer.write(",sticky:false");
+					}
+
+					if (growl.getLife() != 6000) {
+						writer.write(",time:" + growl.getLife());
+					}
+
+					writer.write("}");
+
+					if (messages.hasNext()) {
+						writer.write(",");
+					}
+
+					message.rendered();
 				}
-
-				if (!isValueBlank(severityImage)) {
-					writer.write(",image:'" + severityImage + "'");
-				}
-
-				if (growl.isSticky()) {
-					writer.write(",sticky:true");
-				} else {
-					writer.write(",sticky:false");
-				}
-
-				if (growl.getLife() != 6000) {
-	                writer.write(",time:" + growl.getLife());
-				}
-
-	            writer.write("}");
-
-	            if (messages.hasNext()) {
-	                writer.write(",");
-	            }
-
-				message.rendered();
 			}
-		}
 
-        writer.write("]");
-    }
+			writer.write("]");
+	}
 
 	protected String getImage(final FacesContext facesContext, final Growl growl, final FacesMessage message) {
-        final FacesMessage.Severity severity = message.getSeverity();
+		final FacesMessage.Severity severity = message.getSeverity();
 
 		if (severity != null) {
 			if (severity.equals(FacesMessage.SEVERITY_INFO)) {
