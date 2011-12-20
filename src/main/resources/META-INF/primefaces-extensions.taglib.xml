@@ -51,6 +51,42 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>blockUI</tag-name>
+        <behavior>
+            <behavior-id>org.primefaces.extensions.component.BlockUIBehavior</behavior-id>
+        </behavior>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]></description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]></description>
+            <name>event</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component to be blocked.]]></description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[jQuery selector for any elements to be blocked.]]></description>
+            <name>forSelector</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component to be used as content which is shown during blocking.]]></description>
+            <name>content</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+    </tag>    
 
     <!-- Components -->
     <tag>

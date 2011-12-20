@@ -26,6 +26,10 @@
         <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
         <behavior-class>org.primefaces.extensions.behavior.javascript.JavascriptBehavior</behavior-class>
     </behavior>
+    <behavior>
+        <behavior-id>org.primefaces.extensions.component.BlockUIBehavior</behavior-id>
+        <behavior-class>org.primefaces.extensions.behavior.blockui.BlockUIBehavior</behavior-class>
+    </behavior>    
 
     <component>
         <component-type>org.primefaces.extensions.component.CKEditor</component-type>
@@ -177,11 +181,13 @@
         </renderer>
 
         <client-behavior-renderer>
-            <client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer
-            </client-behavior-renderer-type>
-            <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer
-            </client-behavior-renderer-class>
+            <client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
+            <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
         </client-behavior-renderer>
+        <client-behavior-renderer>
+            <client-behavior-renderer-type>org.primefaces.extensions.component.BlockUIBehaviorRenderer</client-behavior-renderer-type>
+            <client-behavior-renderer-class>org.primefaces.extensions.behavior.blockui.BlockUIBehaviorRenderer</client-behavior-renderer-class>
+        </client-behavior-renderer>        
     </render-kit>
 
 </faces-config>
