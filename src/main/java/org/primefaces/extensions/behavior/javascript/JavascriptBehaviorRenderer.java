@@ -25,6 +25,8 @@ import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ClientBehaviorRenderer;
 
+import org.primefaces.extensions.util.ComponentUtils;
+
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
  *
@@ -50,7 +52,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 
 		final StringBuilder script = new StringBuilder();
 		script.append("PrimeFacesExt.behavior.Javascript({");
-		script.append("source:'").append(source).append("'");
+		script.append("source:'").append(ComponentUtils.escapeComponentId(source)).append("'");
 		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
 		script.append(",execute:function(source, event, params, ext){");
 		script.append(javascriptBehavior.getExecute()).append(";}");
