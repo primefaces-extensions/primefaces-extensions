@@ -23,9 +23,11 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.el.ValueExpression;
+import javax.faces.FacesWrapper;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.event.FacesListener;
 import javax.faces.event.PreRenderComponentEvent;
 import javax.faces.event.SystemEventListener;
 import javax.faces.view.facelets.ComponentConfig;
@@ -79,7 +81,7 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 			    ctx.getFacesContext().getApplication().getExpressionFactory().createValueExpression(0, int.class);
 			uiCommand.getAttributes().put(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION, selectedStepVE);
 
-			if (parent instanceof AjaxSource) {
+			if (uiCommand instanceof AjaxSource) {
 				AjaxSource ajaxSource = (AjaxSource) uiCommand;
 				if (ajaxSource.getProcess() == null) {
 					// set process to @none because PrimeFaces set it to @all
@@ -100,7 +102,7 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 		}
 	}
 
-	boolean isAjaxifiedCommand(final UICommand uiCommand) {
+	private boolean isAjaxifiedCommand(final UICommand uiCommand) {
 		// check for ajax attribute
 		try {
 			Method isAjaxMethod = uiCommand.getClass().getMethod("isAjax");
@@ -130,12 +132,29 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 		return false;
 	}
 
-	boolean isPreRenderCommandListenerRegistred(final UICommand uiCommand) {
+	private boolean isPreRenderCommandListenerRegistred(final UICommand uiCommand) {
 		List<SystemEventListener> systemEventListeners = uiCommand.getListenersForEventClass(PreRenderComponentEvent.class);
 		if (systemEventListeners != null && !systemEventListeners.isEmpty()) {
 			for (SystemEventListener systemEventListener : systemEventListeners) {
 				if (systemEventListener instanceof PreRenderCommandListener) {
 					return true;
+				}
+
+				FacesListener wrapped = null;
+				if (systemEventListener instanceof FacesWrapper<?>) {
+					wrapped = (FacesListener) ((FacesWrapper<?>) systemEventListener).getWrapped();
+				}
+
+				while (wrapped != null) {
+					if (wrapped instanceof PreRenderCommandListener) {
+						return true;
+					}
+
+					if (wrapped instanceof FacesWrapper<?>) {
+						wrapped = (FacesListener) ((FacesWrapper<?>) wrapped).getWrapped();
+					} else {
+						wrapped = null;
+					}
 				}
 			}
 		}
