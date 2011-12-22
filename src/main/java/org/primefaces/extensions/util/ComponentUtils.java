@@ -62,7 +62,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				if (foundComponent != null) {
 					foundComponents.add(foundComponent);
                 } else {
-                    if (context.getApplication().getProjectStage().equals(ProjectStage.Development)) {
+                    if (context.isProjectStage(ProjectStage.Development)) {
                         LOGGER.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
                     }
                 }
