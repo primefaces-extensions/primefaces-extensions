@@ -41,6 +41,10 @@ public class EditableValueHoldersVisitCallback implements VisitCallback {
 
 	@Override
 	public VisitResult visit(final VisitContext context, final UIComponent target) {
+		if (!target.isRendered()) {
+			return VisitResult.REJECT;
+		}
+
 		if (target instanceof EditableValueHolder) {
 			editableValueHolders.add((EditableValueHolder) target);
 		}
