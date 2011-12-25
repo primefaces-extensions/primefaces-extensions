@@ -65,7 +65,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 					id = form.getClientId(context);
 				} else if (context.isProjectStage(ProjectStage.Development)) {
 					LOG.log(Level.INFO, "Cannot find enclosing form for component " + component.getClientId(context));
-					id = null;
+					id = "";
 				}
 			} else if (id.equals("@parent")) {
 				id = component.getParent().getClientId(context);
@@ -75,12 +75,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 					id = comp.getClientId(context);
 				} else if (context.isProjectStage(ProjectStage.Development)) {
 					LOG.log(Level.INFO, "Cannot find component with identifier " + id);
-					id = null;
+					id = "";
 				}
-			}
-
-			if (id == null) {
-				continue;
 			}
 
 			if (i != 0) {
