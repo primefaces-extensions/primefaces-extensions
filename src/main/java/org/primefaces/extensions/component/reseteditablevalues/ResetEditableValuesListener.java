@@ -20,13 +20,15 @@ package org.primefaces.extensions.component.reseteditablevalues;
 
 import java.util.List;
 
-import javax.faces.component.EditableValueHolder;
+import javax.faces.FacesWrapper;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.event.FacesListener;
+import javax.faces.event.PreRenderComponentEvent;
+import javax.faces.event.SystemEventListener;
 
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.util.Constants;
@@ -55,7 +57,7 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 	@Override
 	public void processAction(final ActionEvent actionEvent) {
 		final FacesContext context = FacesContext.getCurrentInstance();
-		UIComponent source = actionEvent.getComponent();
+		final UIComponent source = actionEvent.getComponent();
 		final String clientId = source.getClientId(context);
 
 		if (!clientId.equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM))) {
@@ -63,19 +65,14 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 		}
 
 		final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
-
 		for (UIComponent foundComponent : foundComponents) {
-			if (foundComponent instanceof EditableValueHolder) {
-				((EditableValueHolder) foundComponent).resetValue();
-			} else {
-				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-				foundComponent.visitTree(VisitContext.createVisitContext(context), visitCallback);
-
-				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					editableValueHolder.resetValue();
-				}
+			PreRenderEditableValuesListener ppevListener = getPreRenderEditableValuesListener(foundComponent);
+			if (ppevListener == null) {
+				ppevListener = new PreRenderEditableValuesListener();
+				foundComponent.subscribeToEvent(PreRenderComponentEvent.class, ppevListener);
 			}
+
+			ppevListener.setReset(true);
 		}
 	}
 
@@ -100,5 +97,35 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 
 	@Override
 	public void setTransient(final boolean value) {
+	}
+
+	private PreRenderEditableValuesListener getPreRenderEditableValuesListener(final UIComponent component) {
+		List<SystemEventListener> systemEventListeners = component.getListenersForEventClass(PreRenderComponentEvent.class);
+		if (systemEventListeners != null && !systemEventListeners.isEmpty()) {
+			for (SystemEventListener systemEventListener : systemEventListeners) {
+				if (systemEventListener instanceof PreRenderEditableValuesListener) {
+					return (PreRenderEditableValuesListener) systemEventListener;
+				}
+
+				FacesListener wrapped = null;
+				if (systemEventListener instanceof FacesWrapper<?>) {
+					wrapped = (FacesListener) ((FacesWrapper<?>) systemEventListener).getWrapped();
+				}
+
+				while (wrapped != null) {
+					if (wrapped instanceof PreRenderEditableValuesListener) {
+						return (PreRenderEditableValuesListener) wrapped;
+					}
+
+					if (wrapped instanceof FacesWrapper<?>) {
+						wrapped = (FacesListener) ((FacesWrapper<?>) wrapped).getWrapped();
+					} else {
+						wrapped = null;
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 }
