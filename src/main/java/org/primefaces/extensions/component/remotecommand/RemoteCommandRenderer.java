@@ -26,24 +26,23 @@ import java.util.Map;
 import javax.el.ELContext;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
-import org.primefaces.component.api.AjaxSource;
 
+import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * Renderer for the {@link RemoteCommand} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public class RemoteCommandRenderer extends CoreRenderer {
 
@@ -120,15 +119,14 @@ public class RemoteCommandRenderer extends CoreRenderer {
 	}
 
 	protected String buildAjaxRequest(final FacesContext context, final AjaxSource source,
-			final List<RemoteCommandParameter> parameters) {
-
+	                                  final List<RemoteCommandParameter> parameters) {
 		final UIComponent component = (UIComponent) source;
 		final String clientId = component.getClientId(context);
 		final UIComponent form = ComponentUtils.findParentForm(context, component);
 
 		if (form == null) {
 			throw new FacesException("Component " + component.getClientId(context)
-					+ " must be enclosed in a form.");
+			                         + " must be enclosed in a form.");
 		}
 
 		final StringBuilder req = new StringBuilder();
@@ -152,6 +150,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 				process = process + " " + clientId;
 			}
 		}
+
 		req.append(",process:'").append(process).append("'");
 
 		//update
@@ -175,12 +174,15 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		if (source.getOnstart() != null) {
 			req.append(",onstart:function(){").append(source.getOnstart()).append(";}");
 		}
+
 		if (source.getOnerror() != null) {
 			req.append(",onerror:function(xhr, status, error){").append(source.getOnerror()).append(";}");
 		}
+
 		if (source.getOnsuccess() != null) {
 			req.append(",onsuccess:function(data, status, xhr){").append(source.getOnsuccess()).append(";}");
 		}
+
 		if (source.getOncomplete() != null) {
 			req.append(",oncomplete:function(xhr, status, args){").append(source.getOncomplete()).append(";}");
 		}
@@ -213,6 +215,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 				parameters.add((RemoteCommandParameter) child);
 			}
 		}
+
 		return parameters;
 	}
 }

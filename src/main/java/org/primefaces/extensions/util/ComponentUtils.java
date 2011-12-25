@@ -40,10 +40,57 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
-	private static final Logger LOGGER = Logger.getLogger(ComponentUtils.class.getName());
+	private static final Logger LOG = Logger.getLogger(ComponentUtils.class.getName());
 
 	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
+	}
+
+	public static String findClientIds(final FacesContext context, final UIComponent component, final String list) {
+		if (list == null) {
+			return "@none";
+		}
+
+		StringBuilder newList = new StringBuilder();
+		String[] ids = list.split("[\\s,]+");
+
+		for (int i = 0; i < ids.length; i++) {
+			String id = ids[i];
+
+			if (id.equals("@this")) {
+				id = component.getClientId(context);
+			} else if (id.equals("@form")) {
+				UIComponent form = ComponentUtils.findParentForm(context, component);
+				if (form != null) {
+					id = form.getClientId(context);
+				} else if (context.isProjectStage(ProjectStage.Development)) {
+					LOG.log(Level.INFO, "Cannot find enclosing form for component " + component.getClientId(context));
+					id = null;
+				}
+			} else if (id.equals("@parent")) {
+				id = component.getParent().getClientId(context);
+			} else if (!id.equals("@all") && !id.equals("@none")) {
+				UIComponent comp = component.findComponent(id);
+				if (comp != null) {
+					id = comp.getClientId(context);
+				} else if (context.isProjectStage(ProjectStage.Development)) {
+					LOG.log(Level.INFO, "Cannot find component with identifier " + id);
+					id = null;
+				}
+			}
+
+			if (id == null) {
+				continue;
+			}
+
+			if (i != 0) {
+				newList.append(" ");
+			}
+
+			newList.append(id);
+		}
+
+		return newList.toString();
 	}
 
 	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
@@ -56,16 +103,16 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			final String id = ids[i].trim();
 
 			if (id.equals("@all") || id.equals("@none")) {
-				LOGGER.log(Level.WARNING, "Components @all and @none are not supported.");
+				LOG.log(Level.WARNING, "Components @all and @none are not supported.");
 			} else {
 				final UIComponent foundComponent = source.findComponent(id);
 				if (foundComponent != null) {
 					foundComponents.add(foundComponent);
-                } else {
-                    if (context.isProjectStage(ProjectStage.Development)) {
-                        LOGGER.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
-                    }
-                }
+				} else {
+					if (context.isProjectStage(ProjectStage.Development)) {
+						LOG.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
+					}
+				}
 			}
 		}
 
@@ -74,7 +121,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	public static String findTarget(final Attachable attachable, final FacesContext context) {
 		if (!(attachable instanceof UIComponent)) {
-			throw new FacesException("A attachable component must extend from UIComponent.");
+			throw new FacesException("An attachable component must extend UIComponent.");
 		}
 
 		UIComponent component = (UIComponent) attachable;
