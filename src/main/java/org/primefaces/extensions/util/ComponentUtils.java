@@ -89,7 +89,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return newList.toString();
 	}
 
-
 	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
 		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
 
@@ -100,7 +99,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 			if (id.equals("@this")) {
 				foundComponents.add(source);
-
 			} else if (id.equals("@form")) {
 				final UIComponent form = ComponentUtils.findParentForm(context, source);
 
@@ -109,13 +107,10 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				} else if (context.isProjectStage(ProjectStage.Development)) {
 					LOG.log(Level.INFO, "Cannot find enclosing form for component \"{0}\".", source.getClientId(context));
 				}
-
 			} else if (id.equals("@parent")) {
 				foundComponents.add(source.getParent());
-
 			} else if (id.equals("@all") || id.equals("@none")) {
 				LOG.log(Level.WARNING, "Components @all and @none are not supported.");
-
 			} else {
 				final UIComponent component = source.findComponent(id);
 
@@ -141,7 +136,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		if (forValue != null) {
 			final UIComponent forComponent = component.findComponent(forValue);
 			if (forComponent == null) {
-				throw new FacesException("Cannot find component \"" + forValue + "\" in view.");
+				throw new FacesException("Cannot find component '" + forValue + "'.");
 			}
 
 			return ComponentUtils.escapeJQueryId(forComponent.getClientId(context));

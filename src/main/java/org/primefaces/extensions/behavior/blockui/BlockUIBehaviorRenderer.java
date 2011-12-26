@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.behavior.blockui;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
@@ -44,14 +45,26 @@ public class BlockUIBehaviorRenderer extends ClientBehaviorRenderer {
 
 		final FacesContext context = behaviorContext.getFacesContext();
 		final UIComponent component = behaviorContext.getComponent();
-		String source = behaviorContext.getSourceId();
-		if (source == null) {
-			source = component.getClientId(context);
+		final String source = ComponentUtils.escapeJQueryId(component.getParent().getClientId(context));
+		String content = null;
+		if (blockUIBehavior.getContent() != null) {
+			final UIComponent contentComponent = component.findComponent(blockUIBehavior.getContent());
+			if (contentComponent == null) {
+				throw new FacesException("Cannot find component '" + blockUIBehavior.getContent() + "'.");
+			} else {
+				content = ComponentUtils.escapeJQueryId(contentComponent.getClientId(context));
+			}
 		}
 
 		final StringBuilder script = new StringBuilder();
 		script.append("return PrimeFacesExt.behavior.BlockUI('");
-		script.append(ComponentUtils.escapeComponentId(source)).append("'");
+		script.append(source).append("','");
+		script.append(ComponentUtils.findTarget(blockUIBehavior, context)).append("',");
+		if (content != null) {
+			script.append("'").append(content).append("',");
+		} else {
+			script.append("null,");
+		}
 
 		// TODO
 

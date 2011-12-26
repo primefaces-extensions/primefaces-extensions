@@ -22,6 +22,8 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorBase;
 
+import org.primefaces.extensions.component.base.EnhancedAttachable;
+
 /**
  * Client Behavior class for the <code>BlockUI</code> behavior.
  *
@@ -34,7 +36,7 @@ import javax.faces.component.behavior.ClientBehaviorBase;
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.js")
                       })
-public class BlockUIBehavior extends ClientBehaviorBase {
+public class BlockUIBehavior extends ClientBehaviorBase implements EnhancedAttachable {
 
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.BlockUIBehaviorRenderer";
 
@@ -56,18 +58,22 @@ public class BlockUIBehavior extends ClientBehaviorBase {
 		this.disabled = disabled;
 	}
 
+	@Override
 	public String getFor() {
 		return forValue;
 	}
 
+	@Override
 	public void setFor(final String forValue) {
 		this.forValue = forValue;
 	}
 
+	@Override
 	public String getForSelector() {
 		return forSelector;
 	}
 
+	@Override
 	public void setForSelector(final String forSelector) {
 		this.forSelector = forSelector;
 	}

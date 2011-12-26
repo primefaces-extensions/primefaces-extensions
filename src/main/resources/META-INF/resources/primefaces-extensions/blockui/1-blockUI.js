@@ -1,28 +1,32 @@
 
-PrimeFacesExt.behavior.BlockUI = function(id, source, target, regExp) {
-	var clientId = id;
+PrimeFacesExt.behavior.BlockUI = function(source, target, content, regExp) {
 	var sourceId = source;
 	var targetId = target;
+    var contentId = content;
 	var eventRegExp = regExp;
 	
 	// global settings
-	jQuery.blockUI.defaults.theme = true;
-	jQuery.blockUI.defaults.fadeIn = 0;
-	jQuery.blockUI.defaults.fadeOut = 0;
-	jQuery.blockUI.defaults.applyPlatformOpacityRules = false;
+	$.blockUI.defaults.theme = true;
+	$.blockUI.defaults.fadeIn = 0;
+	$.blockUI.defaults.fadeOut = 0;
+	$.blockUI.defaults.applyPlatformOpacityRules = false;
 	
 	/* public access */
 	
 	this.setupAjaxSend = function () {
-		jQuery(sourceId).ajaxSend(function(event, xhr, ajaxOptions) {
+		$(sourceId).ajaxSend(function(event, xhr, ajaxOptions) {
 			// first, check if event should be handled 
 	        if (isAppropriateEvent(ajaxOptions)) {
-	        	var targetEl = jQuery(targetId);
+	        	var targetEl = $(targetId);
 	        	
 	        	// second, check if the target element has been found
 	        	if (targetEl.length > 0) {
 	        		// block the target element
-		        	targetEl.block({message: jQuery(clientId + "_content").html()});
+                    if (contentId != null) {
+		        	    targetEl.block({message: $(contentId).html()});
+                    } else {
+                        targetEl.block();
+                    }
 
 		        	// get the current counter
 		        	var blocksCount = targetEl.data("blockUI.blocksCount");
@@ -38,10 +42,10 @@ PrimeFacesExt.behavior.BlockUI = function(id, source, target, regExp) {
     }
 	
 	this.setupAjaxComplete = function () {
-		jQuery(sourceId).ajaxComplete(function(event, xhr, ajaxOptions) {
+		$(sourceId).ajaxComplete(function(event, xhr, ajaxOptions) {
 			// first, check if event should be handled
 			if (isAppropriateEvent(ajaxOptions)) {
-				var targetEl = jQuery(targetId);
+				var targetEl = $(targetId);
 				
 				// second, check if the target element has been found
 				if (targetEl.length > 0) {
@@ -52,7 +56,7 @@ PrimeFacesExt.behavior.BlockUI = function(id, source, target, regExp) {
 		        	if (typeof blocksCount !== 'undefined') {
 			        	if (blocksCount == 1) {
 			        		// unblock the target element and reset the counter
-			        		jQuery(targetId).unblock();
+			        		$(targetId).unblock();
 			        		targetEl.data("blockUI.blocksCount", 0);
 			        	} else if (blocksCount > 1) {
 			        		// only decrease the counter
