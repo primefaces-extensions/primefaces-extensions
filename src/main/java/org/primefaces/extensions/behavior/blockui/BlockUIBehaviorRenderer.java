@@ -24,6 +24,8 @@ import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ClientBehaviorRenderer;
 
+import org.primefaces.extensions.util.ComponentUtils;
+
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link BlockUIBehavior}.
  *
@@ -48,8 +50,12 @@ public class BlockUIBehaviorRenderer extends ClientBehaviorRenderer {
 		}
 
 		final StringBuilder script = new StringBuilder();
+		script.append("PrimeFacesExt.behavior.BlockUI('");
+		script.append(ComponentUtils.escapeComponentId(source)).append("'");
 
 		// TODO
+
+		script.append(");");
 
 		return script.toString();
 	}

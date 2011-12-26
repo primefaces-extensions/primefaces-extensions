@@ -105,6 +105,7 @@
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
+                                <include>blockui/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>tooltip/**</include>
