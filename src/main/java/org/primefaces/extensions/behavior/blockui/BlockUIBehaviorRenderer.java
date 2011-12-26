@@ -50,7 +50,7 @@ public class BlockUIBehaviorRenderer extends ClientBehaviorRenderer {
 		}
 
 		final StringBuilder script = new StringBuilder();
-		script.append("PrimeFacesExt.behavior.BlockUI('");
+		script.append("return PrimeFacesExt.behavior.BlockUI('");
 		script.append(ComponentUtils.escapeComponentId(source)).append("'");
 
 		// TODO
