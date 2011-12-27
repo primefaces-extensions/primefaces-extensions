@@ -30,9 +30,9 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link ImageRotateAndResize} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
@@ -47,7 +47,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 		final String clientId = imageRotateAndResize.getClientId(context);
 		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
-		final String target = ComponentUtils.findTarget(imageRotateAndResize, context);
+		final String target = ComponentUtils.findTarget(context, imageRotateAndResize);
 
 		writer.startElement("script", imageRotateAndResize);
 		writer.writeAttribute("id", clientId, null);

@@ -30,9 +30,9 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link KeyFilter} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public class KeyFilterRenderer extends CoreRenderer {
 
@@ -47,12 +47,9 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final KeyFilter keyFilter = (KeyFilter) component;
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
-		final String target = ComponentUtils.findTarget(keyFilter, context);
+		final String target = ComponentUtils.findTarget(context, keyFilter);
 
-		writer.startElement("script", keyFilter);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("type", "text/javascript", null);
-
+		startScript(writer, clientId);
 		writer.write("$(function() {");
 
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.KeyFilter('" + clientId + "', {");
@@ -67,6 +64,6 @@ public class KeyFilterRenderer extends CoreRenderer {
 		}
 
 		writer.write("});});");
-		writer.endElement("script");
+		endScript(writer);
 	}
 }

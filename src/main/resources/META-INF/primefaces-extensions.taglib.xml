@@ -51,42 +51,6 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
-    <tag>
-        <tag-name>blockUI</tag-name>
-        <behavior>
-            <behavior-id>org.primefaces.extensions.component.BlockUIBehavior</behavior-id>
-        </behavior>
-        <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]></description>
-            <name>disabled</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]></description>
-            <name>event</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Id of the component to be blocked.]]></description>
-            <name>for</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[jQuery selector for any elements to be blocked.]]></description>
-            <name>forSelector</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Id of the component to be used as content which is shown during blocking.]]></description>
-            <name>content</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>        
-    </tag>    
 
     <!-- Components -->
     <tag>
@@ -1278,7 +1242,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[They keyFilter filters keyboard input by for a given input field.]]></description>
+        <description><![CDATA[keyFilter filters keyboard input by for a given input field.]]></description>
         <tag-name>keyFilter</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.KeyFilter</component-type>
@@ -1339,4 +1303,72 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <description><![CDATA[blockUI blocks any piece of page during various Ajax calls.]]></description>
+        <tag-name>blockUI</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.BlockUI</component-type>
+            <renderer-type>org.primefaces.extensions.component.BlockUIRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of component in terms of findComponent to specify component which sends an ajax request and triggers blocking. If nothing specified, the parent component is used.]]></description>
+            <name>source</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component in terms of findComponent to be blocked.]]></description>
+            <name>target</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[jQuery selector for any elements to be blocked.]]></description>
+            <name>targetSelector</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Id of the component in terms of findComponent to be used as content shown during blocking. If nothing specified, the content of blockUI component is used.]]></description>
+            <name>content</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]></description>
+            <name>event</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Flag whether the blocking is shown automatically without the need to use JavaScript widget. Default value is false.]]></description>
+            <name>autoShow</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+    </tag>    
 </facelet-taglib>

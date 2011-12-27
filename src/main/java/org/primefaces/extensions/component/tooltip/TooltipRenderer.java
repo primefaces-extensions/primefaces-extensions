@@ -46,13 +46,10 @@ public class TooltipRenderer extends CoreRenderer {
 		String target = null;
 
 		if (!tooltip.isGlobal()) {
-			target = ComponentUtils.findTarget(tooltip, context);
+			target = ComponentUtils.findTarget(context, tooltip);
 		}
 
-		writer.startElement("script", null);
-		writer.writeAttribute("id", clientId + "_script", null);
-		writer.writeAttribute("type", "text/javascript", null);
-
+		startScript(writer, clientId);
 		writer.write("$(function() {");
 
 		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip('" + clientId + "',{");
@@ -65,7 +62,8 @@ public class TooltipRenderer extends CoreRenderer {
 			if (tooltip.getValue() == null) {
 				renderChildren(context, tooltip);
 			} else {
-				writer.write(ComponentUtils.getStringValueToRender(context, tooltip, tooltip.getValue()).replaceAll("'", "\\\\'"));
+				writer.write(ComponentUtils.getStringValueToRender(context, tooltip, tooltip.getValue()).replaceAll("'",
+				                                                                                                    "\\\\'"));
 			}
 
 			writer.write("'");
@@ -94,7 +92,7 @@ public class TooltipRenderer extends CoreRenderer {
 		}
 
 		writer.write("}});});");
-		writer.endElement("script");
+		endScript(writer);
 	}
 
 	@Override

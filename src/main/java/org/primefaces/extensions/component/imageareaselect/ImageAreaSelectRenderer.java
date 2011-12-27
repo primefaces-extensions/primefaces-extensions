@@ -30,9 +30,9 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link ImageAreaSelect} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 public class ImageAreaSelectRenderer extends CoreRenderer {
 
@@ -47,7 +47,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 		final String clientId = imageAreaSelect.getClientId(context);
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
-		final String target = ComponentUtils.findTarget(imageAreaSelect, context);
+		final String target = ComponentUtils.findTarget(context, imageAreaSelect);
 
 		writer.startElement("script", imageAreaSelect);
 		writer.writeAttribute("id", clientId, null);

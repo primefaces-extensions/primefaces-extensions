@@ -26,6 +26,8 @@ import java.util.logging.Logger;
 import javax.faces.FacesException;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.extensions.component.base.Attachable;
@@ -125,13 +127,28 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return foundComponents;
 	}
 
-	public static String findTarget(final Attachable attachable, final FacesContext context) {
+	public static String findTarget(final FacesContext context, final Attachable attachable) {
 		if (!(attachable instanceof UIComponent)) {
-			throw new FacesException("An attachable component must extend UIComponent.");
+			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
 
-		final UIComponent component = (UIComponent) attachable;
+		return findTarget(context, attachable, (UIComponent) attachable);
+	}
 
+	public static String findTarget(final FacesContext context, final Attachable attachable,
+	                                final ClientBehaviorContext cbContext) {
+		if (!(attachable instanceof ClientBehavior)) {
+			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
+		}
+
+		if (cbContext == null) {
+			throw new FacesException("ClientBehaviorContext is null.");
+		}
+
+		return findTarget(context, attachable, cbContext.getComponent());
+	}
+
+	private static String findTarget(final FacesContext context, final Attachable attachable, final UIComponent component) {
 		final String forValue = attachable.getFor();
 		if (forValue != null) {
 			final UIComponent forComponent = component.findComponent(forValue);

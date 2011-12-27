@@ -1,9 +1,9 @@
 
-PrimeFacesExt.behavior.BlockUI = function(source, target, content, regExp) {
-	var sourceId = source;
-	var targetId = target;
-    var contentId = content;
-	var eventRegExp = regExp;
+PrimeFacesExt.widget.BlockUI = function(id, cfg) {
+	var sourceId = cfg.source;
+	var targetId = cfg.target;
+    var contentId = cfg.content;
+	var eventRegEx = cfg.regEx;
 	
 	// global settings
 	$.blockUI.defaults.theme = true;
@@ -81,11 +81,13 @@ PrimeFacesExt.behavior.BlockUI = function(source, target, content, regExp) {
 		
 		// loop over the ajax options and try to match events
 		for (var i = 0; i < params.length; i++) {
-			if (eventRegExp.test(params[i])) {
+			if (eventRegEx.test(params[i])) {
 				return true;
 			}
 		}
 		
 		return false;
     }
+    
+    this.postConstruct();
 }
