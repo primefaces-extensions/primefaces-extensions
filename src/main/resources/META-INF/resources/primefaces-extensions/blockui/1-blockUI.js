@@ -4,6 +4,7 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
 	var targetId = cfg.target;
     var contentId = cfg.content;
 	var eventRegEx = cfg.regEx;
+    var _self = this;
 	
 	// global settings
 	$.blockUI.defaults.theme = true;
@@ -17,26 +18,7 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
 		$(sourceId).ajaxSend(function(event, xhr, ajaxOptions) {
 			// first, check if event should be handled 
 	        if (isAppropriateEvent(ajaxOptions)) {
-	        	var targetEl = $(targetId);
-	        	
-	        	// second, check if the target element has been found
-	        	if (targetEl.length > 0) {
-	        		// block the target element
-                    if (contentId != null) {
-		        	    targetEl.block({message: $(contentId).html()});
-                    } else {
-                        targetEl.block();
-                    }
-
-		        	// get the current counter
-		        	var blocksCount = targetEl.data("blockUI.blocksCount");
-		        	if (typeof blocksCount === 'undefined') {
-		        		blocksCount = 0;
-		        	}
-		        	
-		        	// increase the counter
-		        	targetEl.data("blockUI.blocksCount", blocksCount+1);
-	        	}
+                _self.block();
 	        }
 		});
     }
@@ -45,27 +27,54 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
 		$(sourceId).ajaxComplete(function(event, xhr, ajaxOptions) {
 			// first, check if event should be handled
 			if (isAppropriateEvent(ajaxOptions)) {
-				var targetEl = $(targetId);
-				
-				// second, check if the target element has been found
-				if (targetEl.length > 0) {
-					// get the current counter
-		        	var blocksCount = targetEl.data("blockUI.blocksCount");
-		        	
-		        	// check the counter
-		        	if (typeof blocksCount !== 'undefined') {
-			        	if (blocksCount == 1) {
-			        		// unblock the target element and reset the counter
-			        		$(targetId).unblock();
-			        		targetEl.data("blockUI.blocksCount", 0);
-			        	} else if (blocksCount > 1) {
-			        		// only decrease the counter
-			        		targetEl.data("blockUI.blocksCount", blocksCount-1);
-			        	}
-			        }
-				}
+                _self.unblock();
 			}
 		});
+    }
+    
+    this.block = function () {
+        var targetEl = $(targetId);
+        
+        // second, check if the target element has been found
+        if (targetEl.length > 0) {
+            // block the target element
+            if (contentId != null) {
+                targetEl.block({message: $(contentId).html()});
+            } else {
+                targetEl.block();
+            }
+    
+            // get the current counter
+            var blocksCount = targetEl.data("blockUI.blocksCount");
+            if (typeof blocksCount === 'undefined') {
+                blocksCount = 0;
+            }
+            
+            // increase the counter
+            targetEl.data("blockUI.blocksCount", blocksCount+1);
+        }        
+    }
+    
+    this.unblock = function () {
+        var targetEl = $(targetId);
+        
+        // second, check if the target element has been found
+        if (targetEl.length > 0) {
+            // get the current counter
+            var blocksCount = targetEl.data("blockUI.blocksCount");
+            
+            // check the counter
+            if (typeof blocksCount !== 'undefined') {
+                if (blocksCount == 1) {
+                    // unblock the target element and reset the counter
+                    $(targetId).unblock();
+                    targetEl.data("blockUI.blocksCount", 0);
+                } else if (blocksCount > 1) {
+                    // only decrease the counter
+                    targetEl.data("blockUI.blocksCount", blocksCount-1);
+                }
+            }
+        }
     }
 	
 	/* private access */
@@ -91,3 +100,5 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
     
     this.postConstruct();
 }
+
+PrimeFaces.extend(PrimeFacesExt.widget.BlockUI, PrimeFaces.widget.BaseWidget);
