@@ -46,6 +46,7 @@ import org.primefaces.component.api.AjaxSource;
  */
 public class MasterDetailLevelTagHandler extends ComponentHandler {
 
+	@SuppressWarnings("unused") //check required attribute
 	private final TagAttribute level;
 
 	public MasterDetailLevelTagHandler(final ComponentConfig config) {
