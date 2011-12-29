@@ -40,6 +40,7 @@ public class MasterDetailTagHandler extends ComponentHandler {
 		super(config);
 	}
 
+	@Override
 	protected MetaRuleset createMetaRuleset(Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		metaRuleset.addRule(new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class}));
