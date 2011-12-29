@@ -80,18 +80,18 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 
 			final BeanInfo componentBeanInfo = (BeanInfo) parent.getAttributes().get(UIComponent.BEANINFO_KEY);
 			if (null == componentBeanInfo) {
-				throw new TagException(tag, "Composite component does not have BeanInfo attribute");
+				throw new TagException(tag, "Composite component does not have BeanInfo attribute.");
 			}
 
 			final BeanDescriptor componentDescriptor = componentBeanInfo.getBeanDescriptor();
 			if (null == componentDescriptor) {
-				throw new TagException(tag, "Composite component BeanInfo does not have BeanDescriptor");
+				throw new TagException(tag, "Composite component BeanInfo does not have BeanDescriptor.");
 			}
 
 			final List<AttachedObjectTarget> targetList = (List<AttachedObjectTarget>)
 					componentDescriptor.getValue(AttachedObjectTarget.ATTACHED_OBJECT_TARGETS_KEY);
 			if (targetList == null && !tagApplied) {
-				throw new TagException(tag, "Composite component does not support behavior events");
+				throw new TagException(tag, "Composite component does not support behavior events.");
 			}
 
 			boolean supportedEvent = false;
@@ -112,13 +112,13 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 				getAttachedObjectHandlers(parent).add(this);
 			} else {
 				if (!tagApplied) {
-					throw new TagException(tag, "Composite component does not support event " + eventName);
+					throw new TagException(tag, "Event \"" + eventName + "\" is not supported by composite component.");
 				}
 			}
 		} else if (parent instanceof ClientBehaviorHolder) {
 			applyAttachedObject(faceletContext, parent, eventName);
 		} else {
-			throw new TagException(this.tag, "Unable to attach <p:ajax> to non-ClientBehaviorHolder parent");
+			throw new TagException(this.tag, "Unable to attach <pe:javascript> to non-ClientBehaviorHolder parent.");
 		}
 	}
 
@@ -127,23 +127,22 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 		return (this.event != null) ? this.event.getValue() : null;
 	}
 
-	public void applyAttachedObject(FaceletContext context, UIComponent component, String eventName) {
+	public void applyAttachedObject(final FaceletContext context, final UIComponent component, final String eventName) {
 		final ClientBehaviorHolder holder = (ClientBehaviorHolder) component;
 
-		if (null == eventName) {
-			eventName = holder.getDefaultEventName();
-			if (null == eventName) {
-				throw new TagException(this.tag, "Event attribute could not be determined: " + eventName);
-			}
-		} else {
-			final Collection<String> eventNames = holder.getEventNames();
-			if (!eventNames.contains(eventName)) {
-				throw new TagException(this.tag, "Event:" + eventName + " is not supported.");
-			}
+		final String eventToUse = eventName == null ? holder.getDefaultEventName() : eventName;
+
+		if (eventToUse == null) {
+			throw new TagException(this.tag, "Event attribute and default event could not be determined.");
 		}
 
-		final JavascriptBehavior javascriptBehavior = createJavascriptBehavior(context, eventName);
-		holder.addClientBehavior(eventName, javascriptBehavior);
+		final Collection<String> eventNames = holder.getEventNames();
+		if (!eventNames.contains(eventToUse)) {
+			throw new TagException(this.tag, "Event \"" + eventToUse + "\" is not supported.");
+		}
+
+		final JavascriptBehavior javascriptBehavior = createJavascriptBehavior(context, eventToUse);
+		holder.addClientBehavior(eventToUse, javascriptBehavior);
 	}
 
 	private JavascriptBehavior createJavascriptBehavior(final FaceletContext faceletContext, final String eventName) {
