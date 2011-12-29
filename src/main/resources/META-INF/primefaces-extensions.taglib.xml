@@ -30,7 +30,8 @@
     <tag>
         <tag-name>javascript</tag-name>
         <behavior>
-            <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
+            <behavior-id>org.primefaces.extensions.behavior.JavascriptBehavior</behavior-id>
+            <handler-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorHandler</handler-class>
         </behavior>
         <attribute>
             <description><![CDATA[The javascript which should be executed.]]></description>

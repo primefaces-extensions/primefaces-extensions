@@ -12,18 +12,27 @@
         </after>
     </ordering>
 
-    <application>
-        <resource-handler>org.primefaces.extensions.application.PrimeFacesExtensionsResourceHandler</resource-handler>
-        <system-event-listener>
-            <system-event-listener-class>org.primefaces.extensions.webapp.PostConstructApplicationEventListener
-            </system-event-listener-class>
-            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
-            <source-class>javax.faces.application.Application</source-class>
-        </system-event-listener>
-    </application>
+	<application>
+		<resource-handler>org.primefaces.extensions.application.PrimeFacesExtensionsResourceHandler</resource-handler>
+		<system-event-listener>
+			<system-event-listener-class>org.primefaces.extensions.webapp.PostConstructApplicationEventListener</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+			<source-class>javax.faces.application.Application</source-class>
+		</system-event-listener>
+		<system-event-listener>
+			<system-event-listener-class>org.primefaces.event.AutoUpdateComponentListener</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+			<source-class>org.primefaces.extensions.component.messages.Messages</source-class>
+		</system-event-listener>
+		<system-event-listener>
+			<system-event-listener-class>org.primefaces.event.AutoUpdateComponentListener</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
+			<source-class>org.primefaces.extensions.component.growl.Growl</source-class>
+		</system-event-listener>
+	</application>
 
     <behavior>
-        <behavior-id>org.primefaces.extensions.component.JavascriptBehavior</behavior-id>
+        <behavior-id>org.primefaces.extensions.behavior.JavascriptBehavior</behavior-id>
         <behavior-class>org.primefaces.extensions.behavior.javascript.JavascriptBehavior</behavior-class>
     </behavior>
 
@@ -186,7 +195,7 @@
         </renderer>        
 
         <client-behavior-renderer>
-            <client-behavior-renderer-type>org.primefaces.extensions.component.JavascriptBehaviorRenderer</client-behavior-renderer-type>
+            <client-behavior-renderer-type>org.primefaces.extensions.behavior.JavascriptBehaviorRenderer</client-behavior-renderer-type>
             <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
         </client-behavior-renderer>
     </render-kit>
