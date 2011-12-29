@@ -43,6 +43,7 @@ public class FastStringWriter extends Writer {
 		builder = new StringBuilder(initialCapacity);
 	}
 
+	@Override
 	public void write(char[] cbuf, int off, int len) throws IOException {
 		if ((off < 0) || (off > cbuf.length) || (len < 0)
 		    || ((off + len) > cbuf.length) || ((off + len) < 0)) {
@@ -54,16 +55,20 @@ public class FastStringWriter extends Writer {
 		builder.append(cbuf, off, len);
 	}
 
+	@Override
 	public void flush() throws IOException {
 	}
 
+	@Override
 	public void close() throws IOException {
 	}
 
+	@Override
 	public void write(String str) {
 		builder.append(str);
 	}
 
+	@Override
 	public void write(String str, int off, int len) {
 		builder.append(str.substring(off, off + len));
 	}
@@ -72,6 +77,7 @@ public class FastStringWriter extends Writer {
 		return builder;
 	}
 
+	@Override
 	public String toString() {
 		return builder.toString();
 	}
