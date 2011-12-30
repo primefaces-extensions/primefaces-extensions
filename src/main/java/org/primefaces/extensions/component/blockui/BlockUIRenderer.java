@@ -129,12 +129,15 @@ public class BlockUIRenderer extends CoreRenderer {
 				sb.append(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 				sb.append("=");
 				sb.append(arrEvents[i]);
+
+				/* we don't want to support internal events
 				sb.append("|");
 				sb.append(source);
 				sb.append("_(");
 				sb.append(arrEvents[i]);
 				sb.append("=(.)*");
 				sb.append("$)");
+				 */
 
 				if (i + 1 < arrEvents.length) {
 					sb.append("|");
