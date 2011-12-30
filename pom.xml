@@ -10,7 +10,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>master-pom</artifactId>
     <packaging>pom</packaging>
-    <version>0.3.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <name>master-pom</name>
     <description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
@@ -313,7 +313,7 @@
                 <plugin>
                     <groupId>org.primefaces.extensions</groupId>
                     <artifactId>resources-optimizer-maven-plugin</artifactId>
-                    <version>0.3</version>
+                    <version>0.3-SNAPSHOT</version>
                     <executions>
                         <execution>
                             <id>optimize</id>
