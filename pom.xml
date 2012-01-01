@@ -215,41 +215,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.9</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <forkMode>once</forkMode>
-                        <argLine>-ea</argLine>
-                        <workingDirectory>${basedir}</workingDirectory>
-                        <childDelegation>false</childDelegation>
-                        <useFile>false</useFile>
-                        <includes>
-                            <include>**/*Test.java</include>
-                            <include>**/*TestCase.java</include>
-                            <include>**/*TestSuite.java</include>
-                        </includes>
-                        <excludes>
-                            <exclude>**/Abstract*Test.java</exclude>
-                            <exclude>**/Abstract*TestCase.java</exclude>
-                            <exclude>**/Abstract*TestSuite.java</exclude>
-                            <exclude>**/*$*Test.java</exclude>
-                            <exclude>**/*$*TestCase.java</exclude>
-                            <exclude>**/*$*TestSuite.java</exclude>
-                            <exclude>acceptance/*Test.java</exclude>
-                            <exclude>acceptance/**/*Test.java</exclude>
-                            <exclude>integration/*Test.java</exclude>
-                            <exclude>integration/**/*Test.java</exclude>
-                            <exclude>**/*IntegrationTest.java</exclude>
-                            <exclude>**/*IntegrationTestCase.java</exclude>
-                            <exclude>**/*IntegrationTestSuite.java</exclude>
-                        </excludes>
-                        <systemPropertyVariables>
-                            <property>
-                                <net.sourceforge.cobertura.datafile>target/cobertura/cobertura.ser
-                                </net.sourceforge.cobertura.datafile>
-                            </property>
-                        </systemPropertyVariables>
-                    </configuration>
+                    <version>2.11</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -312,9 +278,82 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>8.0.0.M3</version>
+                    <configuration>
+                        <webAppConfig>
+                            <overrideDescriptor>src/main/resources/overrideweb-${pe.jsf.impl}.xml</overrideDescriptor>
+                        </webAppConfig>
+                        <webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
+                        <scanIntervalSeconds>1</scanIntervalSeconds>
+                        <stopPort>9966</stopPort>
+                        <stopKey>foo</stopKey>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>javax.el</groupId>
+                            <artifactId>el-api</artifactId>
+                            <version>2.2</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>${pe.jsf.group}</groupId>
+                            <artifactId>${pe.jsf.artifact}-api</artifactId>
+                            <version>${pe.jsf.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>jstl</groupId>
+                                    <artifactId>jstl</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>${pe.jsf.group}</groupId>
+                            <artifactId>${pe.jsf.artifact}-impl</artifactId>
+                            <version>${pe.jsf.version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>jstl</groupId>
+                                    <artifactId>jstl</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-jcl</artifactId>
+                            <version>1.5.6</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                            <version>1.2.16</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>javax.mail</groupId>
+                                    <artifactId>mail</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                    <groupId>javax.jms</groupId>
+                                    <artifactId>jms</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                    <groupId>com.sun.jdmk</groupId>
+                                    <artifactId>jmxtools</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                    <groupId>com.sun.jmx</groupId>
+                                    <artifactId>jmxri</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                
+                <!-- dependencies to own plugins -->
+                <plugin>
                     <groupId>org.primefaces.extensions</groupId>
                     <artifactId>resources-optimizer-maven-plugin</artifactId>
-                    <version>0.3-SNAPSHOT</version>
+                    <version>0.2</version>
                     <executions>
                         <execution>
                             <id>optimize</id>
@@ -450,11 +489,6 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>3.0.RC2</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>el-api</artifactId>
                 <version>2.2</version>
@@ -493,8 +527,201 @@
                 <artifactId>gson</artifactId>
                 <version>2.0</version>
             </dependency>
+            
+            <!-- dependencies to PrimeFaces -->
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>3.0.RC2</version>
+            </dependency>            
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>black-tie</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>blitzer</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>bluesky</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>casablanca</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>cupertino</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>dark-hive</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>dot-luv</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>eggplant</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>excite-bike</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>flick</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>glass-x</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>hot-sneaks</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>humanity</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>le-frog</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>midnight</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>mint-choc</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>overcast</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>pepper-grinder</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>redmond</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>rocket</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>sam</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>smoothness</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>south-street</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>start</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>sunny</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>swanky-purse</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>trontastic</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>ui-darkness</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>ui-lightness</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>vader</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>home</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>            
 
-            <!-- dependencies to own plugins -->
+            <!-- dependencies for own plugins -->
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
@@ -519,6 +746,18 @@
                 <groupId>com.yahoo.platform.yui</groupId>
                 <artifactId>yuicompressor</artifactId>
                 <version>2.4.6</version>
+            </dependency>
+            
+            <!-- dependencies to own artefacts -->
+            <dependency>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>primefaces-extensions</artifactId>
+                <version>0.2.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>resources-ckeditor</artifactId>
+                <version>0.2.0-SNAPSHOT</version>
             </dependency>            
         </dependencies>
     </dependencyManagement>
@@ -600,5 +839,7 @@
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.3</pe.jsf.version>
+        <pe.webapp.filter>development</pe.webapp.filter>
+        <primefaces.theme.version>1.0.2</primefaces.theme.version>
     </properties>
 </project>
