@@ -826,7 +826,7 @@
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
-                <pe.jsf.version>2.1.3</pe.jsf.version>
+                <pe.jsf.version>2.1.5</pe.jsf.version>
             </properties>
         </profile>        
     </profiles>
@@ -838,7 +838,7 @@
         <pe.jsf.impl>mojarra</pe.jsf.impl>        
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
-        <pe.jsf.version>2.1.3</pe.jsf.version>
+        <pe.jsf.version>2.1.6</pe.jsf.version>
         <pe.webapp.filter>development</pe.webapp.filter>
         <primefaces.theme.version>1.0.2</primefaces.theme.version>
     </properties>
