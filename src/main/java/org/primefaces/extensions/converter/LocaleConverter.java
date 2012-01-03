@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.converter;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
@@ -38,7 +39,9 @@ import org.apache.commons.lang.StringUtils;
  * @since   0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.LocaleConverter")
-public class LocaleConverter implements Converter {
+public class LocaleConverter implements Converter, Serializable {
+
+	private char seperator = '_';
 
 	@Override
 	public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
@@ -46,39 +49,45 @@ public class LocaleConverter implements Converter {
 			return fc.getApplication().getDefaultLocale();
 		}
 
-		return getLocaleObject(value);
+		return getLocaleObject(value, seperator);
 	}
 
 	@Override
 	public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
 		if (value == null) {
-			Locale defaultLocale = fc.getApplication().getDefaultLocale();
+			final Locale defaultLocale = fc.getApplication().getDefaultLocale();
 			if (defaultLocale == null) {
 				return null;
 			}
 
-			return getLocaleString(defaultLocale);
+			return getLocaleString(defaultLocale, seperator);
 		}
 
 		if (value instanceof String) {
 			return (String) value;
 		} else if (value instanceof Locale) {
-			return getLocaleString((Locale) value);
+			return getLocaleString((Locale) value, seperator);
 		} else {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			                                              "Wrong type: '" + value.getClass().getSimpleName()
-			                                              + "' is not 'Locale'.", StringUtils.EMPTY));
+					"Wrong type: '" + value.getClass().getSimpleName()
+					+ "' is not 'Locale'.", StringUtils.EMPTY));
 		}
 	}
 
-	public static Locale getLocaleObject(final String strLocale) {
-		final String[] parts = strLocale.replace('-', '_').split("_");
+	public static Locale getLocaleObject(final String locale, final char seperator) {
+		String replacedLocale = locale;
+		if (seperator != '-' && seperator != '_') {
+			replacedLocale = replacedLocale.replace(seperator, '_');
+		}
+		replacedLocale = replacedLocale.replace('-', '_');
+
+		final String[] parts = replacedLocale.split("_");
 		if (parts.length == 0
-		    || !parts[0].matches("[a-zA-Z]{2,2}")
-		    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
+				|| !parts[0].matches("[a-zA-Z]{2,2}")
+				|| (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			                                              "'" + strLocale + "' does not represent a valid locale",
-			                                              StringUtils.EMPTY));
+					"'" + locale + "' does not represent a valid locale",
+					StringUtils.EMPTY));
 		}
 
 		switch (parts.length) {
@@ -96,11 +105,19 @@ public class LocaleConverter implements Converter {
 		}
 	}
 
-	public static String getLocaleString(final Locale locale) {
+	public static String getLocaleString(final Locale locale, final char seperator) {
 		if (StringUtils.isBlank(locale.getCountry())) {
 			return locale.getLanguage();
 		}
 
-		return locale.getLanguage() + "_" + locale.getCountry();
+		return locale.getLanguage() + seperator + locale.getCountry();
+	}
+
+	public char getSeperator() {
+		return seperator;
+	}
+
+	public void setSeperator(final char seperator) {
+		this.seperator = seperator;
 	}
 }

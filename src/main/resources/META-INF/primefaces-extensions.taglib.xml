@@ -24,6 +24,12 @@
         <converter>
             <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
         </converter>
+        <attribute>
+        	<description><![CDATA[Character which will be used to seperate the country and language.]]></description>
+            <name>seperator</name>
+            <required>false</required>
+            <type>java.lang.Character</type>
+        </attribute>
     </tag>
 
     <!-- Behaviors -->
