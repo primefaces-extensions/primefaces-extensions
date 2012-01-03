@@ -36,6 +36,8 @@ public class LayoutPane extends UIComponentBase {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
+	private boolean existNestedPanes = false;
+
 	/**
 	 * Properties that are tracked by state saving.
 	 *
@@ -75,8 +77,6 @@ public class LayoutPane extends UIComponentBase {
 			return ((this.toString != null) ? this.toString : super.toString());
 		}
 	}
-
-	private boolean existNestedPanes = false;
 
 	public LayoutPane() {
 		setRendererType(null);
@@ -236,15 +236,14 @@ public class LayoutPane extends UIComponentBase {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
 				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put(
-						"javax.faces.component.UIComponentBase.attributesThatAreSet",
-						setAttributes);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
 

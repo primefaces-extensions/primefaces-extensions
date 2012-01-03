@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.layout;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -43,29 +42,20 @@ import org.primefaces.renderkit.CoreRenderer;
  */
 public class LayoutRenderer extends CoreRenderer {
 
-	private static final String POSITION_NORTH = "north";
-	private static final String POSITION_SOUTH = "south";
-	private static final String POSITION_CENTER = "center";
-	private static final String POSITION_WEST = "west";
-	private static final String POSITION_EAST = "east";
-	private static final String POSITION_SEPARATOR = "_";
-	private static final String MAIN_FORM = "form";
-	private static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
-	private static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-layout-pane-header ui-corner-top";
-	private static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-pane-content";
-
 	@Override
 	public void decode(final FacesContext fc, final UIComponent component) {
 		Layout layout = (Layout) component;
 		layout.setDataModel(null);
+
+		decodeBehaviors(fc, layout);
 	}
 
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		Layout layout = (Layout) component;
 
-		Map layoutPanes = pickLayoutPanes(layout);
-		if (layoutPanes.isEmpty() || layoutPanes.get(POSITION_CENTER) == null) {
+		Map<String, UIComponent> layoutPanes = layout.getLayoutPanes();
+		if (layoutPanes.isEmpty() || layoutPanes.get(Layout.POSITION_CENTER) == null) {
 			throw new FacesException("Full page layout must have at least one rendered layout pane with 'center' position");
 		}
 
@@ -83,93 +73,78 @@ public class LayoutRenderer extends CoreRenderer {
 		// nothing to do
 	}
 
-	protected Map pickLayoutPanes(final Layout layout) {
-		Map<String, UIComponent> layoutPanes = new HashMap<String, UIComponent>();
-		Iterator<UIComponent> iter = layout.getChildren().iterator();
-
-		while (iter.hasNext()) {
-			UIComponent child = (UIComponent) iter.next();
-			if (child instanceof LayoutPane) {
-				// layout pane on the first level
-				pickLayoutPane(child, layoutPanes);
-			} else if (child instanceof UIForm) {
-				// a form is allowed here
-				layoutPanes.put(MAIN_FORM, child);
-
-				Iterator<UIComponent> iter2 = child.getChildren().iterator();
-				while (iter2.hasNext()) {
-					UIComponent child2 = (UIComponent) iter2.next();
-
-					if (child2 instanceof LayoutPane) {
-						// layout pane on the first level
-						pickLayoutPane(child2, layoutPanes);
-					}
-				}
-			}
-		}
-
-		return layoutPanes;
-	}
-
-	protected void encodeScript(final FacesContext fc, final Layout layout, final Map layoutPanes) throws IOException {
+	protected void encodeScript(final FacesContext fc, final Layout layout, final Map<String, UIComponent> layoutPanes)
+	    throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId();
 		String widgetVar = layout.resolveWidgetVar();
 
-		writer.write("\n");
-		writer.startElement("script", null);
-		writer.writeAttribute("id", clientId + "_script", null);
-		writer.writeAttribute("type", "text/javascript", null);
+		startScript(writer, clientId);
 
 		// write layout options ...
 		writer.write("var tabLayoutOptions = {resizeWithWindow: false, south__spacing_open: 3");
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_NORTH));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_SOUTH));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST));
-		writer.write("};\n");
+		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_NORTH));
+		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_SOUTH));
+		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_CENTER));
+		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_WEST));
+		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_EAST));
+		writer.write("};");
 
-		boolean hasCenterLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(POSITION_CENTER));
+		boolean hasCenterLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_CENTER));
 		if (hasCenterLayoutOptions) {
 			// write layout options ...
 			writer.write("var centerLayoutOptions = {resizeWhileDragging: false");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_CENTER + POSITION_SEPARATOR + POSITION_EAST));
-			writer.write("};\n");
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("};");
 		}
 
-		boolean hasWestLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(POSITION_WEST));
+		boolean hasWestLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_WEST));
 		if (hasWestLayoutOptions) {
 			// write layout options ...
 			writer.write("var westLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_WEST + POSITION_SEPARATOR + POSITION_EAST));
-			writer.write("};\n");
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("};");
 		}
 
-		boolean hasEastLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(POSITION_EAST));
+		boolean hasEastLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_EAST));
 		if (hasEastLayoutOptions) {
 			// write layout options ...
 			writer.write("var eastLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_WEST));
-			writeLayoutPaneOption(fc, writer, layoutPanes.get(POSITION_EAST + POSITION_SEPARATOR + POSITION_EAST));
-			writer.write("};\n");
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
+			writeLayoutPaneOption(fc, writer,
+			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("};");
 		}
 
-		writer.write("$(document).ready(function(){");
+		writer.write("$(function() {");
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.Layout('" + clientId + "',");
 
-		DataModel dataModel = layout.getDataModel();
+		DataModel<MenuItem> dataModel = layout.getDataModel();
 		if (dataModel == null || dataModel.getRowCount() < 1) {
 			writer.write("-1,");
 		} else {
@@ -180,9 +155,8 @@ public class LayoutRenderer extends CoreRenderer {
 			}
 
 			int indexTab = 0;
-			Iterator<MenuItem> iter = dataModel.iterator();
-			while (iter.hasNext()) {
-				String url = iter.next().getUrl();
+			for (MenuItem item : dataModel) {
+				String url = item.getUrl();
 				url = url.substring(0, url.lastIndexOf('.'));
 				if (url.startsWith("/")) {
 					url = url.substring(1);
@@ -198,8 +172,8 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.write(indexTab + ",");
 		}
 
-		if (layoutPanes.get(POSITION_NORTH) != null) {
-			writer.write(((LayoutPane) layoutPanes.get(POSITION_NORTH)).getSize() + ",");
+		if (layoutPanes.get(Layout.POSITION_NORTH) != null) {
+			writer.write(((LayoutPane) layoutPanes.get(Layout.POSITION_NORTH)).getSize() + ",");
 		} else {
 			writer.write("0,");
 		}
@@ -235,15 +209,15 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 
 		writer.write("});");
-		writer.endElement("script");
-		writer.write("\n");
+		endScript(writer);
 	}
 
-	protected void encodeMarkup(final FacesContext fc, final Layout layout, final Map layoutPanes) throws IOException {
+	protected void encodeMarkup(final FacesContext fc, final Layout layout, final Map<String, UIComponent> layoutPanes)
+	    throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId();
 
-		LayoutPane layoutPane = (LayoutPane) layoutPanes.get(POSITION_NORTH);
+		LayoutPane layoutPane = (LayoutPane) layoutPanes.get(Layout.POSITION_NORTH);
 		if (layoutPane != null && layoutPane.isRendered()) {
 			writer.startElement("div", null);
 			writer.writeAttribute("id", clientId + "-layout-outer-north", null);
@@ -258,7 +232,7 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "-layout-outer-center", null);
 		writer.writeAttribute("class", "layout-outer-center", null);
 
-		DataModel dataModel = layout.getDataModel();
+		DataModel<MenuItem> dataModel = layout.getDataModel();
 		if (dataModel != null && dataModel.getRowCount() > 0) {
 			// render tabs
 			writer.startElement("ul", null);
@@ -324,16 +298,16 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "ui-layout-tab", null);
 
-		UIForm form = (UIForm) layoutPanes.get(MAIN_FORM);
+		UIForm form = (UIForm) layoutPanes.get("form");
 		if (form != null) {
 			form.encodeBegin(fc);
 		}
 
 		// render current tab panel pane by pane
-		encodePane(fc, writer, layoutPanes, POSITION_SOUTH);
-		encodePane(fc, writer, layoutPanes, POSITION_CENTER);
-		encodePane(fc, writer, layoutPanes, POSITION_WEST);
-		encodePane(fc, writer, layoutPanes, POSITION_EAST);
+		encodePane(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
+		encodePane(fc, writer, layoutPanes, Layout.POSITION_CENTER);
+		encodePane(fc, writer, layoutPanes, Layout.POSITION_WEST);
+		encodePane(fc, writer, layoutPanes, Layout.POSITION_EAST);
 
 		if (form != null) {
 			form.encodeEnd(fc);
@@ -344,9 +318,8 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodePane(final FacesContext fc, final ResponseWriter writer, final Map layoutPanes,
-			final String position) throws IOException {
-
+	protected void encodePane(final FacesContext fc, final ResponseWriter writer, final Map<String, UIComponent> layoutPanes,
+	                          final String position) throws IOException {
 		LayoutPane layoutPane = (LayoutPane) layoutPanes.get(position);
 		if (layoutPane == null) {
 			return;
@@ -358,16 +331,16 @@ public class LayoutRenderer extends CoreRenderer {
 		if (layoutPane.isExistNestedPanes() || layoutPane.isStatusbar()) {
 			writer.writeAttribute("class", "ui-layout-" + layoutPane.getPosition(), null);
 		} else {
-			writer.writeAttribute("class", "ui-layout-" + layoutPane.getPosition() + " " + STYLE_CLASS_PANE, null);
+			writer.writeAttribute("class", "ui-layout-" + layoutPane.getPosition() + " " + Layout.STYLE_CLASS_PANE, null);
 		}
 
 		// render stuff inside pane(s)
 		if (layoutPane.isExistNestedPanes()) {
-			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_NORTH);
-			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_CENTER);
-			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_SOUTH);
-			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_EAST);
-			encodePane(fc, writer, layoutPanes, position + POSITION_SEPARATOR + POSITION_WEST);
+			encodePane(fc, writer, layoutPanes, position + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			encodePane(fc, writer, layoutPanes, position + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			encodePane(fc, writer, layoutPanes, position + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			encodePane(fc, writer, layoutPanes, position + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
+			encodePane(fc, writer, layoutPanes, position + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
 		} else {
 			encodePaneHeader(fc, writer, layoutPane);
 			encodePaneContent(fc, writer, layoutPane);
@@ -377,15 +350,14 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	protected void encodePaneHeader(final FacesContext fc, final ResponseWriter writer, final LayoutPane layoutPane)
-			throws IOException {
-
+	    throws IOException {
 		UIComponent header = layoutPane.getFacet("header");
 		if (header != null) {
 			writer.startElement("div", null);
 			if (layoutPane.getStyleClassHeader() != null) {
-				writer.writeAttribute("class", STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
+				writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
 			} else {
-				writer.writeAttribute("class", STYLE_CLASS_PANE_HEADER, null);
+				writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER, null);
 			}
 
 			if (layoutPane.getStyleHeader() != null) {
@@ -398,11 +370,10 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	protected void encodePaneContent(final FacesContext fc, final ResponseWriter writer, final LayoutPane layoutPane)
-			throws IOException {
-
+	    throws IOException {
 		writer.startElement("div", null);
 
-		String styleClass = STYLE_CLASS_PANE_CONTENT;
+		String styleClass = Layout.STYLE_CLASS_PANE_CONTENT;
 		if (layoutPane.isStatusbar()) {
 			styleClass = styleClass + " ui-state-default statusbar";
 		}
@@ -421,43 +392,8 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	private void pickLayoutPane(final UIComponent child, final Map<String, UIComponent> layoutPanes) {
-		if (!child.isRendered()) {
-			return;
-		}
-
-		String position = ((LayoutPane) child).getPosition();
-		layoutPanes.put(position, child);
-
-		boolean hasSubPanes = false;
-		Iterator<UIComponent> iter = child.getChildren().iterator();
-
-		while (iter.hasNext()) {
-			UIComponent subChild = (UIComponent) iter.next();
-			if (subChild instanceof LayoutPane) {
-				if (!subChild.isRendered()) {
-					continue;
-				}
-
-				// layout pane on the second level
-				layoutPanes.put(position + POSITION_SEPARATOR + ((LayoutPane) subChild).getPosition(), subChild);
-				hasSubPanes = true;
-			}
-		}
-
-		if (hasSubPanes && layoutPanes.get(position + POSITION_SEPARATOR + POSITION_CENTER) == null) {
-			throw new FacesException("Rendered 'center' layout pane inside of '" + position
-			                         + "' layout pane is missing");
-		}
-
-		if (hasSubPanes) {
-			((LayoutPane) child).setExistNestedPanes(true);
-		}
-	}
-
 	private void writeLayoutPaneOption(final FacesContext fc, final ResponseWriter writer, final Object objPane)
-			throws IOException {
-
+	    throws IOException {
 		if (objPane == null) {
 			return;
 		}
@@ -498,10 +434,6 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	private boolean hasNestedLayoutOptions(final LayoutPane layoutPane) {
-		if (layoutPane == null || !layoutPane.isExistNestedPanes()) {
-			return false;
-		}
-
-		return true;
+		return (layoutPane != null && layoutPane.isExistNestedPanes());
 	}
 }

@@ -19,15 +19,26 @@
 package org.primefaces.extensions.component.layout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIForm;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 import javax.faces.model.ArrayDataModel;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -35,6 +46,11 @@ import javax.faces.model.ScalarDataModel;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.extensions.component.base.EnhancedAttachable;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.OpenEvent;
+import org.primefaces.extensions.event.ResizeEvent;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Layout</code> component.
@@ -51,11 +67,28 @@ import org.primefaces.component.menuitem.MenuItem;
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
                       })
-public class Layout extends UIComponentBase implements Widget {
+public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder, EnhancedAttachable {
+
+	private static final Logger LOG = Logger.getLogger(Layout.class.getName());
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+
+	public static final String POSITION_NORTH = "north";
+	public static final String POSITION_SOUTH = "south";
+	public static final String POSITION_CENTER = "center";
+	public static final String POSITION_WEST = "west";
+	public static final String POSITION_EAST = "east";
+	public static final String POSITION_SEPARATOR = "_";
+	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
+	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-layout-pane-header ui-corner-top";
+	public static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-pane-content";
+
+	private static final Collection<String> EVENT_NAMES =
+	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
+
+	private Map<String, UIComponent> layoutPanes;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -66,6 +99,8 @@ public class Layout extends UIComponentBase implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
+		forValue("for"),
+		forSelector,
 		tabs,
 		togglerTipOpen,
 		togglerTipClose,
@@ -107,6 +142,26 @@ public class Layout extends UIComponentBase implements Widget {
 
 	public void setWidgetVar(final String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
+	}
+
+	@Override
+	public String getFor() {
+		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+	}
+
+	@Override
+	public void setFor(final String forValue) {
+		setAttribute(PropertyKeys.forValue, forValue);
+	}
+
+	@Override
+	public String getForSelector() {
+		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
+	}
+
+	@Override
+	public void setForSelector(final String forSelector) {
+		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
 	/**
@@ -176,6 +231,7 @@ public class Layout extends UIComponentBase implements Widget {
 	 *
 	 * @return DataModel
 	 */
+	@SuppressWarnings("unchecked")
 	public DataModel<MenuItem> getDataModel() {
 		if (this.dataModel != null) {
 			return dataModel;
@@ -198,6 +254,140 @@ public class Layout extends UIComponentBase implements Widget {
 	}
 
 	@Override
+	public Collection<String> getEventNames() {
+		return EVENT_NAMES;
+	}
+
+	@Override
+	public void processDecodes(final FacesContext context) {
+		if (isSelfRequest(context)) {
+			this.decode(context);
+		} else {
+			super.processDecodes(context);
+		}
+	}
+
+	@Override
+	public void processValidators(final FacesContext context) {
+		if (!isSelfRequest(context)) {
+			super.processValidators(context);
+		}
+	}
+
+	@Override
+	public void processUpdates(final FacesContext context) {
+		if (!isSelfRequest(context)) {
+			super.processUpdates(context);
+		}
+	}
+
+	@Override
+	public void queueEvent(final FacesEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+		String clientId = this.getClientId(context);
+
+		if (isSelfRequest(context)) {
+			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+			LayoutPane pane = (LayoutPane) getLayoutPanes().get(params.get(clientId + "_pane"));
+			if (pane == null) {
+				LOG.warning("LayoutPane by request parameter '" + params.get(clientId + "_pane") + "' was not found");
+
+				return;
+			}
+
+			if ("open".equals(eventName)) {
+				OpenEvent openEvent = new OpenEvent(pane, behaviorEvent.getBehavior());
+				openEvent.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(openEvent);
+
+				return;
+			} else if ("close".equals(eventName)) {
+				CloseEvent closeEvent = new CloseEvent(pane, behaviorEvent.getBehavior());
+				closeEvent.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(closeEvent);
+
+				return;
+			} else if ("resize".equals(eventName)) {
+				double width = Double.valueOf(params.get(clientId + "_width"));
+				double height = Double.valueOf(params.get(clientId + "_height"));
+
+				ResizeEvent resizeEvent = new ResizeEvent(pane, behaviorEvent.getBehavior(), width, height);
+				event.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(resizeEvent);
+
+				return;
+			}
+		}
+
+		super.queueEvent(event);
+	}
+
+	public Map<String, UIComponent> getLayoutPanes() {
+		if (layoutPanes != null) {
+			return layoutPanes;
+		}
+
+		layoutPanes = new HashMap<String, UIComponent>();
+
+		for (UIComponent child : this.getChildren()) {
+			if (child instanceof LayoutPane) {
+				// layout pane on the first level
+				pickLayoutPane(child, layoutPanes);
+			} else if (child instanceof UIForm) {
+				// a form is allowed here
+				layoutPanes.put("form", child);
+
+				for (UIComponent child2 : child.getChildren()) {
+					if (child2 instanceof LayoutPane) {
+						// layout pane on the first level
+						pickLayoutPane(child2, layoutPanes);
+					}
+				}
+			}
+		}
+
+		return layoutPanes;
+	}
+
+	private void pickLayoutPane(final UIComponent child, final Map<String, UIComponent> layoutPanes) {
+		if (!child.isRendered()) {
+			return;
+		}
+
+		String position = ((LayoutPane) child).getPosition();
+		layoutPanes.put(position, child);
+
+		boolean hasSubPanes = false;
+		for (UIComponent subChild : child.getChildren()) {
+			if (subChild instanceof LayoutPane) {
+				if (!subChild.isRendered()) {
+					continue;
+				}
+
+				// layout pane on the second level
+				layoutPanes.put(position + POSITION_SEPARATOR + ((LayoutPane) subChild).getPosition(), subChild);
+				hasSubPanes = true;
+			}
+		}
+
+		if (hasSubPanes && layoutPanes.get(position + POSITION_SEPARATOR + POSITION_CENTER) == null) {
+			throw new FacesException("Rendered 'center' layout pane inside of '" + position
+			                         + "' layout pane is missing");
+		}
+
+		if (hasSubPanes) {
+			((LayoutPane) child).setExistNestedPanes(true);
+		}
+	}
+
+	private boolean isSelfRequest(final FacesContext context) {
+		return this.getClientId(context)
+		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	}
+
+	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -212,6 +402,7 @@ public class Layout extends UIComponentBase implements Widget {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
