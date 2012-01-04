@@ -31,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.model.DataModel;
 
 import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -51,8 +52,10 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
+		ResponseWriter writer = fc.getResponseWriter();
 		Layout layout = (Layout) component;
+		String clientId = layout.getClientId(fc);
 
 		Map<String, UIComponent> layoutPanes = layout.getLayoutPanes();
 		if (layoutPanes.isEmpty() || layoutPanes.get(Layout.POSITION_CENTER) == null) {
@@ -60,7 +63,31 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 
 		encodeScript(fc, layout, layoutPanes);
+
+		if (!layout.isFullPage()) {
+			writer.startElement("div", layout);
+			writer.writeAttribute("id", clientId, "id");
+
+			if (layout.getStyle() != null) {
+				writer.writeAttribute("style", layout.getStyle(), "style");
+			}
+
+			if (layout.getStyleClass() != null) {
+				writer.writeAttribute("class", layout.getStyleClass(), "styleClass");
+			}
+		}
+
 		encodeMarkup(fc, layout, layoutPanes);
+	}
+
+	@Override
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+		ResponseWriter writer = fc.getResponseWriter();
+		Layout layout = (Layout) component;
+
+		if (!layout.isFullPage()) {
+			writer.endElement("div");
+		}
 	}
 
 	@Override
@@ -142,11 +169,12 @@ public class LayoutRenderer extends CoreRenderer {
 		}
 
 		writer.write("$(function() {");
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.Layout('" + clientId + "',");
+		writer.write(widgetVar + " = new PrimeFacesExt.widget.Layout('" + clientId + "',{");
+		writer.write("indexTab:");
 
 		DataModel<MenuItem> dataModel = layout.getDataModel();
 		if (dataModel == null || dataModel.getRowCount() < 1) {
-			writer.write("-1,");
+			writer.write("-1");
 		} else {
 			String viewId = fc.getViewRoot().getViewId();
 			viewId = viewId.substring(0, viewId.lastIndexOf('.'));
@@ -169,39 +197,52 @@ public class LayoutRenderer extends CoreRenderer {
 				++indexTab;
 			}
 
-			writer.write(indexTab + ",");
+			writer.write(indexTab);
 		}
+
+		writer.write(",northSize:");
 
 		if (layoutPanes.get(Layout.POSITION_NORTH) != null) {
-			writer.write(((LayoutPane) layoutPanes.get(Layout.POSITION_NORTH)).getSize() + ",");
+			writer.write(((LayoutPane) layoutPanes.get(Layout.POSITION_NORTH)).getSize());
 		} else {
-			writer.write("0,");
+			writer.write("0");
 		}
 
-		writer.write("tabLayoutOptions,");
-		writer.write(hasCenterLayoutOptions ? "centerLayoutOptions," : "null,");
-		writer.write(hasWestLayoutOptions ? "westLayoutOptions," : "null,");
-		writer.write(hasEastLayoutOptions ? "eastLayoutOptions," : "null,");
+		writer.write(",tabLayoutOpt:tabLayoutOptions");
+		writer.write(hasCenterLayoutOptions ? ",centerLayoutOpt:centerLayoutOptions" : ",centerLayoutOpt:null");
+		writer.write(hasWestLayoutOptions ? ",westLayoutOpt:westLayoutOptions" : ",westLayoutOpt:null");
+		writer.write(hasEastLayoutOptions ? ",eastLayoutOpt:eastLayoutOptions" : ",eastLayoutOpt:null");
 
+		writer.write(",togglerTipClose:");
 		if (layout.getTogglerTipClose() != null) {
-			writer.write("\"" + layout.getTogglerTipClose() + "\",");
+			writer.write("\"" + escapeText(layout.getTogglerTipClose()) + "\"");
 		} else {
-			writer.write("'Close',");
+			writer.write("'Close'");
 		}
 
+		if (layout.isFullPage()) {
+			writer.write(",forTarget:'body'");
+		} else {
+			writer.write(",forTarget:'" + ComponentUtils.escapeJQueryId(clientId) + "'");
+		}
+
+		writer.write(",togglerTipOpen:");
 		if (layout.getTogglerTipOpen() != null) {
-			writer.write("\"" + layout.getTogglerTipOpen() + "\",");
+			writer.write("\"" + escapeText(layout.getTogglerTipOpen()) + "\"");
 		} else {
-			writer.write("'Open',");
+			writer.write("'Open'");
 		}
 
+		writer.write(",resizerTip:");
 		if (layout.getResizerTip() != null) {
-			writer.write("\"" + layout.getResizerTip() + "\"");
+			writer.write("\"" + escapeText(layout.getResizerTip()) + "\"");
 		} else {
 			writer.write("'Resize'");
 		}
 
-		writer.write(");");
+		encodeClientBehaviors(fc, layout);
+
+		writer.write("});");
 		writer.write(widgetVar + ".buildOuterTabsLayout();");
 		if (dataModel != null && dataModel.getRowCount() > 0) {
 			writer.write("$('#" + getEscapedClientId(clientId)

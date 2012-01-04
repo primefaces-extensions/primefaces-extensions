@@ -46,7 +46,6 @@ import javax.faces.model.ScalarDataModel;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
@@ -67,7 +66,7 @@ import org.primefaces.util.Constants;
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
                       })
-public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder, EnhancedAttachable {
+public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	private static final Logger LOG = Logger.getLogger(Layout.class.getName());
 
@@ -99,8 +98,9 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	protected enum PropertyKeys {
 
 		widgetVar,
-		forValue("for"),
-		forSelector,
+		fullPage,
+		style,
+		styleClass,
 		tabs,
 		togglerTipOpen,
 		togglerTipClose,
@@ -144,24 +144,28 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	@Override
-	public String getFor() {
-		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+	public boolean isFullPage() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.fullPage, true);
 	}
 
-	@Override
-	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+	public void setFullPage(final boolean fullPage) {
+		setAttribute(PropertyKeys.fullPage, fullPage);
 	}
 
-	@Override
-	public String getForSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
+	public String getStyle() {
+		return (String) getStateHelper().eval(PropertyKeys.style, null);
 	}
 
-	@Override
-	public void setForSelector(final String forSelector) {
-		setAttribute(PropertyKeys.forSelector, forSelector);
+	public void setStyle(final String style) {
+		setAttribute(PropertyKeys.style, style);
+	}
+
+	public String getStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+	}
+
+	public void setStyleClass(final String styleClass) {
+		setAttribute(PropertyKeys.styleClass, styleClass);
 	}
 
 	/**

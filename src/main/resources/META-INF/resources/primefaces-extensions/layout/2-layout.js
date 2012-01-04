@@ -1,20 +1,21 @@
 
-PrimeFacesExt.widget.Layout = function(id, indexTab, northSize, tabLayoutOpt, centerLayoutOpt, westLayoutOpt, eastLayoutOpt, togglerTipOpen, togglerTipClose, resizerTip) {
+PrimeFacesExt.widget.Layout = function(id, cfg) {
 	var clientId = PrimeFaces.escapeClientId(id);
-	var indexTab = indexTab;
-	var northSize = northSize;
-	var tabLayoutOptions = tabLayoutOpt;
-	var centerLayoutOptions = centerLayoutOpt;
-	var westLayoutOptions = westLayoutOpt;
-	var eastLayoutOptions = eastLayoutOpt;
+	var indexTab = cfg.indexTab;
+	var northSize = cfg.northSize;
+	var tabLayoutOpt = cfg.tabLayoutOpt;
+	var centerLayoutOpt = cfg.centerLayoutOpt;
+	var westLayoutOpt = cfg.westLayoutOpt;
+	var eastLayoutOpt = cfg.eastLayoutOpt;
+    var forTarget = cfg.forTarget; 
 	
 	var defaultLayoutSettings = {
 		  slidable: false
 		, spacing: 6
 		, contentSelector: '.ui-layout-pane-content'
-		, togglerTip_open: togglerTipOpen
-		, togglerTip_closed: togglerTipClose
-		, resizerTip: resizerTip
+		, togglerTip_open: cfg.togglerTipOpen
+		, togglerTip_closed: cfg.togglerTipClose
+		, resizerTip: cfg.resizerTip
 	};
 	
 	var jtOuterLayout;
@@ -25,7 +26,7 @@ PrimeFacesExt.widget.Layout = function(id, indexTab, northSize, tabLayoutOpt, ce
 	/* public access */
 	
 	this.buildOuterTabsLayout = function () {
-    	jtOuterLayout = $("body").layout({
+    	jtOuterLayout = $(forTarget).layout({
     		  resizeWithWindowDelay: 250
     		, resizable: false
     		, slidable:	false
@@ -116,20 +117,24 @@ PrimeFacesExt.widget.Layout = function(id, indexTab, northSize, tabLayoutOpt, ce
     	if (jtLayoutTabPanel.data("layoutContainer")) {
     		jtLayoutTabPanel.layout().resizeAll();
     	} else {
-    		jtTabLayout = jtLayoutTabPanel.layout($.extend({}, defaultLayoutSettings, tabLayoutOptions));
+    		jtTabLayout = jtLayoutTabPanel.layout($.extend({}, defaultLayoutSettings, tabLayoutOpt));
     		if (jtTabLayout == null) {
     			return;
     		}
     		
-    		if (jtTabLayout.panes.west && westLayoutOptions != null) {
-    			jtTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOptions));
+    		if (jtTabLayout.panes.west && westLayoutOpt != null) {
+    			jtTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
     		}
-    		if (jtTabLayout.panes.east && eastLayoutOptions != null) {
-    			jtTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOptions));
+    		if (jtTabLayout.panes.east && eastLayoutOpt != null) {
+    			jtTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
     		}
-			if (centerLayoutOptions != null) {
-				jtTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOptions));
+			if (centerLayoutOpt != null) {
+				jtTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
 			}
     	}
     }
+    
+    this.postConstruct();
 }
+
+PrimeFaces.extend(PrimeFacesExt.widget.Layout, PrimeFaces.widget.BaseWidget);
