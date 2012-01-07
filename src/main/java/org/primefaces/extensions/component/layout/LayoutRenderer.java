@@ -109,62 +109,62 @@ public class LayoutRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 
 		// write layout options ...
-		writer.write("var tabLayoutOptions = {resizeWithWindow: false, south__spacing_open: 3");
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_NORTH));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_SOUTH));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_CENTER));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_WEST));
-		writeLayoutPaneOption(fc, writer, layoutPanes.get(Layout.POSITION_EAST));
+		writer.write("var tabLayoutOptions = {resizeWithWindow:false,south__spacing_open:3");
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_NORTH);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_CENTER);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_WEST);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_EAST);
 		writer.write("};");
 
 		boolean hasCenterLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_CENTER));
 		if (hasCenterLayoutOptions) {
 			// write layout options ...
-			writer.write("var centerLayoutOptions = {resizeWhileDragging: false");
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("var centerLayoutOptions = {resizeWhileDragging:false");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
 			writer.write("};");
 		}
 
 		boolean hasWestLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_WEST));
 		if (hasWestLayoutOptions) {
 			// write layout options ...
-			writer.write("var westLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("var westLayoutOptions = {resizeWhileDragging:true");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
 			writer.write("};");
 		}
 
 		boolean hasEastLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_EAST));
 		if (hasEastLayoutOptions) {
 			// write layout options ...
-			writer.write("var eastLayoutOptions = {resizeWhileDragging: true");
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST));
-			writeLayoutPaneOption(fc, writer,
-			                      layoutPanes.get(Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST));
+			writer.write("var eastLayoutOptions = {resizeWhileDragging:true");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
 			writer.write("};");
 		}
 
@@ -243,7 +243,6 @@ public class LayoutRenderer extends CoreRenderer {
 		encodeClientBehaviors(fc, layout);
 
 		writer.write("});");
-		writer.write(widgetVar + ".buildOuterTabsLayout();");
 		if (dataModel != null && dataModel.getRowCount() > 0) {
 			writer.write("$('#" + getEscapedClientId(clientId)
 			             + "-layout-tabbuttons').find('.ui-tab').corner('top 6px');");
@@ -433,45 +432,46 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	private void writeLayoutPaneOption(final FacesContext fc, final ResponseWriter writer, final Object objPane)
-	    throws IOException {
-		if (objPane == null) {
+	private void writeLayoutPaneOption(final FacesContext fc, final ResponseWriter writer,
+	                                   final Map<String, UIComponent> layoutPanes, final String position) throws IOException {
+		LayoutPane pane = (LayoutPane) layoutPanes.get(position);
+		if (pane == null) {
 			return;
 		}
 
-		LayoutPane pane = (LayoutPane) objPane;
-
-		writer.write(", " + pane.getPosition() + "__resizable: " + pane.isResizable());
-		writer.write(", " + pane.getPosition() + "__closable: " + pane.isClosable());
-		writer.write(", " + pane.getPosition() + "__initClosed: " + pane.isInitClosed());
+		writer.write("," + pane.getPosition() + "__resizable:" + pane.isResizable());
+		writer.write("," + pane.getPosition() + "__closable:" + pane.isClosable());
+		writer.write("," + pane.getPosition() + "__initClosed:" + pane.isInitClosed());
 
 		if (pane.getSize() != null) {
-			writer.write(", " + pane.getPosition() + "__size: " + pane.getSize());
+			writer.write("," + pane.getPosition() + "__size:" + pane.getSize());
 		}
 
 		if (pane.getMinSize() != null) {
-			writer.write(", " + pane.getPosition() + "__minSize: " + pane.getMinSize());
+			writer.write("," + pane.getPosition() + "__minSize:" + pane.getMinSize());
 		}
 
 		if (pane.getMaxSize() != null) {
-			writer.write(", " + pane.getPosition() + "__maxSize: " + pane.getMaxSize());
+			writer.write("," + pane.getPosition() + "__maxSize:" + pane.getMaxSize());
 		}
 
 		if (pane.getMinWidth() != null) {
-			writer.write(", " + pane.getPosition() + "__minWidth: " + pane.getMinWidth());
+			writer.write("," + pane.getPosition() + "__minWidth:" + pane.getMinWidth());
 		}
 
 		if (pane.getMaxWidth() != null) {
-			writer.write(", " + pane.getPosition() + "__maxWidth: " + pane.getMaxWidth());
+			writer.write("," + pane.getPosition() + "__maxWidth:" + pane.getMaxWidth());
 		}
 
 		if (pane.getMinHeight() != null) {
-			writer.write(", " + pane.getPosition() + "__minHeight: " + pane.getMinHeight());
+			writer.write("," + pane.getPosition() + "__minHeight:" + pane.getMinHeight());
 		}
 
 		if (pane.getMaxHeight() != null) {
-			writer.write(", " + pane.getPosition() + "__maxHeight: " + pane.getMaxHeight());
+			writer.write("," + pane.getPosition() + "__maxHeight:" + pane.getMaxHeight());
 		}
+
+		writer.write("," + pane.getPosition() + "__paneposition:'" + position + "'");
 	}
 
 	private boolean hasNestedLayoutOptions(final LayoutPane layoutPane) {
