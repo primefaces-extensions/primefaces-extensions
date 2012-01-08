@@ -3,13 +3,20 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var clientId = id;
     var jqId = PrimeFaces.escapeClientId(id);
     var indexTab = cfg.indexTab;
-    var northSize = cfg.northSize;
+    
+    var northOpt = $.extend({}, {
+        resizeWithWindowDelay: 250
+        , slidable: false
+        , north__paneSelector: jqId + "-layout-outer-north"
+        , center__paneSelector: jqId + "-layout-outer-center" 
+    }, cfg.northOptions);
+    
     var tabLayoutOpt = cfg.tabLayoutOpt;
     var centerLayoutOpt = cfg.centerLayoutOpt;
     var westLayoutOpt = cfg.westLayoutOpt;
     var eastLayoutOpt = cfg.eastLayoutOpt;
+    
     var jqTarget = $(cfg.forTarget);
-
     var _self = this;
 
     var defaultLayoutSettings = {
@@ -30,26 +37,17 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         , resizerTip: cfg.resizerTip
     };
 
-    var jtOuterLayout;
-    var jtTabsContainerLayout;
-    var jtTabLayout;
-    var jtLayoutTabsLoading = true;
+    var peOuterLayout;
+    var peTabsContainerLayout;
+    var peTabLayout;
+    var peLayoutTabsLoading = true;
 
     /* public access */
 
     this.buildOuterTabsLayout = function() {
-        jtOuterLayout = jqTarget.layout({
-            resizeWithWindowDelay: 250
-            , resizable: false
-            , slidable: false
-            , closable: false
-            , north__paneSelector: jqId + "-layout-outer-north"
-            , center__paneSelector: jqId + "-layout-outer-center"
-            , north__size: northSize
-            , north__spacing: 0
-        });
+        peOuterLayout = jqTarget.layout(northOpt);
 
-        jtTabsContainerLayout = $(jqId + "-layout-outer-center").layout({
+        peTabsContainerLayout = $(jqId + "-layout-outer-center").layout({
             resizable: false
             , slidable: false
             , closable: false
@@ -65,7 +63,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             return;
         }
 
-        jtOuterLayout.panes.center.tabs({
+        peOuterLayout.panes.center.tabs({
             create: function (evt, ui) {
                 $(jqId + "-layout-tabbuttons").find(".ui-tab > a[href^='#']").attr('href', function(i, oldHref) {
                     return oldHref.substring(1);
@@ -121,42 +119,42 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
 
     this.allowOverflow = function(pane) {
         if (pane === 'north') {
-            jtOuterLayout.allowOverflow('north');
-        } else if (pane === 'center' && jtTabLayout) {
-            jtTabLayout.panes.center.allowOverflow('center');
-        } else if (pane === 'west' && jtTabLayout) {
-            jtTabLayout.panes.west.allowOverflow('west');
-        } else if (pane === 'east' && jtTabLayout) {
-            jtTabLayout.panes.east.allowOverflow('east');
-        } else if (pane === 'south' && jtTabLayout) {
-            jtTabLayout.panes.south.allowOverflow('south');
+            peOuterLayout.allowOverflow('north');
+        } else if (pane === 'center' && peTabLayout) {
+            peTabLayout.panes.center.allowOverflow('center');
+        } else if (pane === 'west' && peTabLayout) {
+            peTabLayout.panes.west.allowOverflow('west');
+        } else if (pane === 'east' && peTabLayout) {
+            peTabLayout.panes.east.allowOverflow('east');
+        } else if (pane === 'south' && peTabLayout) {
+            peTabLayout.panes.south.allowOverflow('south');
         }
     }
 
     this.resetOverflow = function(pane) {
         if (pane === 'north') {
-            jtOuterLayout.resetOverflow('north');
-        } else if (pane === 'center' && jtTabLayout) {
-            jtTabLayout.panes.center.resetOverflow('center');
-        } else if (pane === 'west' && jtTabLayout) {
-            jtTabLayout.panes.west.resetOverflow('west');
-        } else if (pane === 'east' && jtTabLayout) {
-            jtTabLayout.panes.east.resetOverflow('east');
-        } else if (pane === 'south' && jtTabLayout) {
-            jtTabLayout.panes.south.resetOverflow('south');
+            peOuterLayout.resetOverflow('north');
+        } else if (pane === 'center' && peTabLayout) {
+            peTabLayout.panes.center.resetOverflow('center');
+        } else if (pane === 'west' && peTabLayout) {
+            peTabLayout.panes.west.resetOverflow('west');
+        } else if (pane === 'east' && peTabLayout) {
+            peTabLayout.panes.east.resetOverflow('east');
+        } else if (pane === 'south' && peTabLayout) {
+            peTabLayout.panes.south.resetOverflow('south');
         }
     }
 
     /* private access */
 
     var resizeOrCreateLayout = function() {
-        if (jtLayoutTabsLoading) {
-            jtLayoutTabsLoading = false;
-            jtTabsContainerLayout.resizeAll();
+        if (peLayoutTabsLoading) {
+            peLayoutTabsLoading = false;
+            peTabsContainerLayout.resizeAll();
         }
         // resize OR create the tab-layout
         resizeTabPanelLayout();
-        jtOuterLayout.panes.center.show();
+        peOuterLayout.panes.center.show();
     }
 
     var resizeTabPanelLayout = function() {
@@ -165,19 +163,19 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         if (jtLayoutTabPanel.data("layoutContainer")) {
             jtLayoutTabPanel.layout().resizeAll();
         } else {
-            jtTabLayout = jtLayoutTabPanel.layout($.extend({}, defaultLayoutSettings, tabLayoutOpt));
-            if (jtTabLayout == null) {
+            peTabLayout = jtLayoutTabPanel.layout($.extend({}, defaultLayoutSettings, tabLayoutOpt));
+            if (peTabLayout == null) {
                 return;
             }
 
-            if (jtTabLayout.panes.west && westLayoutOpt != null) {
-                jtTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
+            if (peTabLayout.panes.west && westLayoutOpt != null) {
+                peTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
             }
-            if (jtTabLayout.panes.east && eastLayoutOpt != null) {
-                jtTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
+            if (peTabLayout.panes.east && eastLayoutOpt != null) {
+                peTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
             }
             if (centerLayoutOpt != null) {
-                jtTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
+                peTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
             }
         }
     }
@@ -185,8 +183,8 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     if (jqTarget.is(':visible')) {
         this.buildOuterTabsLayout();
     } else {
-        var hiddenParent = jqTarget.parents('.ui-hidden-container:first'),
-                hiddenParentWidget = hiddenParent.data('widget');
+        var hiddenParent = jqTarget.parents('.ui-hidden-container:first');
+        var hiddenParentWidget = hiddenParent.data('widget');
 
         if (hiddenParentWidget) {
             hiddenParentWidget.addOnshowHandler(function() {
@@ -194,6 +192,10 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             });
         }
     }
+    
+    $(window).unload(function() {
+        //window.fullState = peTabLayout.getState("north.size,south.size,east.size,west.size,north.isClosed,south.isClosed,east.isClosed,west.isClosed,north.isHidden,south.isHidden,east.isHidden,west.isHidden");
+    });    
 
     this.postConstruct();
 }

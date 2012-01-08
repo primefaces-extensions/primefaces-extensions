@@ -110,7 +110,6 @@ public class LayoutRenderer extends CoreRenderer {
 
 		// write layout options ...
 		writer.write("var tabLayoutOptions = {resizeWithWindow:false,south__spacing_open:3");
-		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_NORTH);
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_CENTER);
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_WEST);
@@ -200,13 +199,13 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.write(indexTab);
 		}
 
-		writer.write(",northSize:");
-
-		if (layoutPanes.get(Layout.POSITION_NORTH) != null) {
-			writer.write(((LayoutPane) layoutPanes.get(Layout.POSITION_NORTH)).getSize());
-		} else {
-			writer.write("0");
+		writer.write(",northOptions:{north__spacing:0");
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_NORTH);
+		if (layoutPanes.get(Layout.POSITION_NORTH) == null) {
+			writer.write(",north__size:0");
 		}
+
+		writer.write("}");
 
 		writer.write(",tabLayoutOpt:tabLayoutOptions");
 		writer.write(hasCenterLayoutOptions ? ",centerLayoutOpt:centerLayoutOptions" : ",centerLayoutOpt:null");
