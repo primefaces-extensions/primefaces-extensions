@@ -5,6 +5,7 @@
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
         <version>0.2.1-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
