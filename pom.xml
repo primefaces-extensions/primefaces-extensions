@@ -39,6 +39,10 @@
         <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</developerConnection>
         <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
     </scm>
+    
+    <prerequisites>
+        <maven>3.0.3</maven>
+    </prerequisites>    
 
     <developers>
         <developer>
