@@ -17,6 +17,8 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var eastLayoutOpt = cfg.eastLayoutOpt;
     
     var jqTarget = $(cfg.forTarget);
+    var manageState = cfg.manageState;
+    
     var _self = this;
 
     var defaultLayoutSettings = {
@@ -40,7 +42,14 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var peOuterLayout;
     var peTabsContainerLayout;
     var peTabLayout;
+    var peWestLayout;
+    var peEastLayout;
+    var peCenterLayout;
     var peLayoutTabsLoading = true;
+    
+    var keysNorth = "north.size,north.isClosed,north.isHidden";
+    var keysAllExceptNorth = "south.size,east.size,west.size,south.isClosed,east.isClosed,west.isClosed,south.isHidden,east.isHidden,west.isHidden";
+    var keysAll = keysNorth + "," + keysAllExceptNorth;
 
     /* public access */
 
@@ -169,17 +178,17 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             }
 
             if (peTabLayout.panes.west && westLayoutOpt != null) {
-                peTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
+                peWestLayout = peTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
             }
             if (peTabLayout.panes.east && eastLayoutOpt != null) {
-                peTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
+                peEastLayout = peTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
             }
             if (centerLayoutOpt != null) {
-                peTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
+                peCenterLayout = peTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
             }
         }
     }
-
+    
     if (jqTarget.is(':visible')) {
         this.buildOuterTabsLayout();
     } else {
@@ -193,9 +202,33 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         }
     }
     
-    $(window).unload(function() {
-        //window.fullState = peTabLayout.getState("north.size,south.size,east.size,west.size,north.isClosed,south.isClosed,east.isClosed,west.isClosed,north.isHidden,south.isHidden,east.isHidden,west.isHidden");
-    });    
+    if (manageState) {
+        $(window).unload(function() {
+            var state = {};
+            if (peOuterLayout) {
+                state.peOuterLayout = peOuterLayout.getState(keysNorth);
+            }
+            if (peTabLayout) {
+                state.peTabLayout = peTabLayout.getState(keysAllExceptNorth); 
+            }
+            if (peWestLayout) {
+                state.peWestLayout = peWestLayout.getState(keysAll); 
+            }
+            if (peEastLayout) {
+                state.peEastLayout = peEastLayout.getState(keysAll); 
+            }
+            if (peCenterLayout) {
+                state.peCenterLayout = peCenterLayout.getState(keysAll); 
+            }
+            
+            // send state via ajax
+            var ext = {
+                params : {}
+            };
+            ext.params[clientId + '_state'] = peOuterLayout.encodeJSON(state);
+            PrimeFaces.ajax.AjaxRequest({source:clientId,process:clientId,update:'@none',global:false,async:true}, ext);
+        });
+    }
 
     this.postConstruct();
 }

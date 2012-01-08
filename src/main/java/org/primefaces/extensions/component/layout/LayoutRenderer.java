@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIForm;
@@ -212,17 +213,26 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.write(hasWestLayoutOptions ? ",westLayoutOpt:westLayoutOptions" : ",westLayoutOpt:null");
 		writer.write(hasEastLayoutOptions ? ",eastLayoutOpt:eastLayoutOptions" : ",eastLayoutOpt:null");
 
+		if (layout.isFullPage()) {
+			writer.write(",forTarget:'body'");
+		} else {
+			writer.write(",forTarget:'" + ComponentUtils.escapeJQueryId(clientId) + "'");
+		}
+
+		writer.write(",manageState:");
+
+		ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
+		if (stateVE != null) {
+			writer.write("true");
+		} else {
+			writer.write("false");
+		}
+
 		writer.write(",togglerTipClose:");
 		if (layout.getTogglerTipClose() != null) {
 			writer.write("\"" + escapeText(layout.getTogglerTipClose()) + "\"");
 		} else {
 			writer.write("'Close'");
-		}
-
-		if (layout.isFullPage()) {
-			writer.write(",forTarget:'body'");
-		} else {
-			writer.write(",forTarget:'" + ComponentUtils.escapeJQueryId(clientId) + "'");
 		}
 
 		writer.write(",togglerTipOpen:");

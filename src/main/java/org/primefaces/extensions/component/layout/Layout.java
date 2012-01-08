@@ -44,6 +44,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.event.CloseEvent;
@@ -104,7 +106,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		tabs,
 		togglerTipOpen,
 		togglerTipClose,
-		resizerTip;
+		resizerTip,
+		state;
 
 		private String toString;
 
@@ -221,6 +224,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		setAttribute(PropertyKeys.resizerTip, resizerTip);
 	}
 
+	public String getState() {
+		return (String) getStateHelper().eval(PropertyKeys.state, null);
+	}
+
+	public void setState(final String state) {
+		setAttribute(PropertyKeys.state, state);
+	}
+
 	/**
 	 * Sets data model.
 	 *
@@ -263,25 +274,38 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	@Override
-	public void processDecodes(final FacesContext context) {
-		if (isSelfRequest(context)) {
-			this.decode(context);
+	public void processDecodes(final FacesContext fc) {
+		if (isSelfRequest(fc)) {
+			String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
+			if (StringUtils.isNotBlank(state)) {
+				ValueExpression stateVE = this.getValueExpression(PropertyKeys.state.toString());
+				if (stateVE != null) {
+					// save "state"
+					stateVE.setValue(fc.getELContext(), state);
+					getStateHelper().remove(PropertyKeys.state);
+				}
+
+				// state management finished ==> no further actions
+				fc.responseComplete();
+			}
+
+			this.decode(fc);
 		} else {
-			super.processDecodes(context);
+			super.processDecodes(fc);
 		}
 	}
 
 	@Override
-	public void processValidators(final FacesContext context) {
-		if (!isSelfRequest(context)) {
-			super.processValidators(context);
+	public void processValidators(final FacesContext fc) {
+		if (!isSelfRequest(fc)) {
+			super.processValidators(fc);
 		}
 	}
 
 	@Override
-	public void processUpdates(final FacesContext context) {
-		if (!isSelfRequest(context)) {
-			super.processUpdates(context);
+	public void processUpdates(final FacesContext fc) {
+		if (!isSelfRequest(fc)) {
+			super.processUpdates(fc);
 		}
 	}
 
