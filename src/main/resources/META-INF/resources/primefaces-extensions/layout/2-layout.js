@@ -18,6 +18,10 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     
     var jqTarget = $(cfg.forTarget);
     var manageState = cfg.manageState;
+    var state = null;
+    if (manageState) {
+        state = $.parseJSON(cfg.state);
+    }
     
     var _self = this;
 
@@ -54,6 +58,13 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     /* public access */
 
     this.buildOuterTabsLayout = function() {
+        if (manageState && state.peOuterLayout) {
+            $.extend(northOpt, {
+                nort__size: state.peOuterLayout.north.size
+                , nort__initClosed: state.peOuterLayout.north.initClosed
+                , nort__initHidden: state.peOuterLayout.north.initHidden
+            });
+        }        
         peOuterLayout = jqTarget.layout(northOpt);
 
         peTabsContainerLayout = $(jqId + "-layout-outer-center").layout({
@@ -172,18 +183,46 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         if (jtLayoutTabPanel.data("layoutContainer")) {
             jtLayoutTabPanel.layout().resizeAll();
         } else {
+            if (manageState && state.peTabLayout) {
+                $.extend(tabLayoutOpt, {
+                    south__size: state.peTabLayout.south.size
+                    , south__initClosed: state.peTabLayout.south.initClosed
+                    , south__initHidden: state.peTabLayout.south.initHidden
+                    , west__size: state.peTabLayout.west.size
+                    , west__initClosed: state.peTabLayout.west.initClosed
+                    , west__initHidden: state.peTabLayout.west.initHidden
+                    , east__size: state.peTabLayout.east.size
+                    , east__initClosed: state.peTabLayout.east.initClosed
+                    , east__initHidden: state.peTabLayout.east.initHidden                    
+                });
+            }
+            
             peTabLayout = jtLayoutTabPanel.layout($.extend({}, defaultLayoutSettings, tabLayoutOpt));
             if (peTabLayout == null) {
                 return;
             }
 
             if (peTabLayout.panes.west && westLayoutOpt != null) {
+                if (manageState && state.peWestLayout) {
+                    $.extend(westLayoutOpt, state.peWestLayout);
+                }
+                
                 peWestLayout = peTabLayout.panes.west.layout($.extend({}, defaultLayoutSettings, westLayoutOpt));
             }
+            
             if (peTabLayout.panes.east && eastLayoutOpt != null) {
+                if (manageState && state.peEastLayout) {
+                    $.extend(eastLayoutOpt, state.peEastLayout);
+                }                
+                
                 peEastLayout = peTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
             }
+            
             if (centerLayoutOpt != null) {
+                if (manageState && state.peCenterLayout) {
+                    $.extend(centerLayoutOpt, state.peCenterLayout);
+                }                
+                
                 peCenterLayout = peTabLayout.panes.center.layout($.extend({}, defaultLayoutSettings, centerLayoutOpt));
             }
         }

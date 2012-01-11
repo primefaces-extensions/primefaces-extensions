@@ -31,6 +31,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.DataModel;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -224,6 +226,11 @@ public class LayoutRenderer extends CoreRenderer {
 		ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
 		if (stateVE != null) {
 			writer.write("true");
+			if (StringUtils.isNotBlank(layout.getState())) {
+				writer.write(",state:'" + layout.getState() + "'");
+			} else {
+				writer.write(",state:'{}'");
+			}
 		} else {
 			writer.write("false");
 		}
