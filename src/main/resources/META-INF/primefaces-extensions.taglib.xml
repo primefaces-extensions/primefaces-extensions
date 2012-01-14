@@ -821,73 +821,73 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A global tooltip converts each title attribute to a tooltip.]]></description>
+            <description><![CDATA[A global tooltip converts each title attribute to a tooltip. Default value is false.]]></description>
             <name>global</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A shared tooltip - one tooltip, multiple targets.]]></description>
+            <description><![CDATA[A shared tooltip - one tooltip, multiple targets. Default value is false.]]></description>
             <name>shared</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The corner of the target element to position the tooltip by.]]></description>
+            <description><![CDATA[The corner of the target element to position the tooltip by. Default value is 'bottom right'.]]></description>
             <name>targetPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The corner of the tooltip to position the target's position.]]></description>
+            <description><![CDATA[The corner of the tooltip to position the target's position. Default value is 'top left'.]]></description>
             <name>position</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Event displaying the tooltip.]]></description>
+            <description><![CDATA[Event displaying the tooltip. Default value is mouseenter.]]></description>
             <name>showEvent</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Delay time for displaying the tooltip.]]></description>
+            <description><![CDATA[Delay time for displaying the tooltip. Default value is 0.]]></description>
             <name>showDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Effect to be used for displaying.]]></description>
+            <description><![CDATA[Effect to be used for displaying. Default value is fadeIn.]]></description>
             <name>showEffect</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Time in milliseconds to display the effect.]]></description>
+            <description><![CDATA[Time in milliseconds to display the effect. Default value is 500.]]></description>
             <name>showEffectLength</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Event hiding the tooltip.]]></description>
+            <description><![CDATA[Event hiding the tooltip. Default value is mouseleave.]]></description>
             <name>hideEvent</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Delay time for hiding the tooltip.]]></description>
+            <description><![CDATA[Delay time for hiding the tooltip. Default value is 0.]]></description>
             <name>hideDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Effect to be used for hiding.]]></description>
+            <description><![CDATA[Effect to be used for hiding. Default value is fadeOut.]]></description>
             <name>hideEffect</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Time in milliseconds to process the hide effect.]]></description>
+            <description><![CDATA[Time in milliseconds to process the hide effect. Default value is 500.]]></description>
             <name>hideEffectLength</name>
             <required>false</required>
             <type>java.lang.Integer</type>
