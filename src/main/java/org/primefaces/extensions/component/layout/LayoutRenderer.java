@@ -111,65 +111,6 @@ public class LayoutRenderer extends CoreRenderer {
 
 		startScript(writer, clientId);
 
-		// write layout options ...
-		writer.write("var tabLayoutOptions = {resizeWithWindow:false,south__spacing_open:3");
-		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
-		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_CENTER);
-		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_WEST);
-		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_EAST);
-		writer.write("};");
-
-		boolean hasCenterLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_CENTER));
-		if (hasCenterLayoutOptions) {
-			// write layout options ...
-			writer.write("var centerLayoutOptions = {resizeWhileDragging:false");
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
-			writer.write("};");
-		}
-
-		boolean hasWestLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_WEST));
-		if (hasWestLayoutOptions) {
-			// write layout options ...
-			writer.write("var westLayoutOptions = {resizeWhileDragging:true");
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
-			writer.write("};");
-		}
-
-		boolean hasEastLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_EAST));
-		if (hasEastLayoutOptions) {
-			// write layout options ...
-			writer.write("var eastLayoutOptions = {resizeWhileDragging:true");
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
-			writeLayoutPaneOption(fc, writer, layoutPanes,
-			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
-			writer.write("};");
-		}
-
 		writer.write("$(function() {");
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.Layout('" + clientId + "',{");
 		writer.write("indexTab:");
@@ -210,10 +151,72 @@ public class LayoutRenderer extends CoreRenderer {
 
 		writer.write("}");
 
-		writer.write(",tabLayoutOpt:tabLayoutOptions");
-		writer.write(hasCenterLayoutOptions ? ",centerLayoutOpt:centerLayoutOptions" : ",centerLayoutOpt:null");
-		writer.write(hasWestLayoutOptions ? ",westLayoutOpt:westLayoutOptions" : ",westLayoutOpt:null");
-		writer.write(hasEastLayoutOptions ? ",eastLayoutOpt:eastLayoutOptions" : ",eastLayoutOpt:null");
+		writer.write(",tabLayoutOpt:{resizeWithWindow:false,south__spacing_open:3");
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_CENTER);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_WEST);
+		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_EAST);
+		writer.write("}");
+
+		writer.write(",centerLayoutOpt:");
+
+		boolean hasCenterLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_CENTER));
+		if (hasCenterLayoutOptions) {
+			writer.write("{resizeWhileDragging:false");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_CENTER + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
+			writer.write("}");
+		} else {
+			writer.write("null");
+		}
+
+		writer.write(",westLayoutOpt:");
+
+		boolean hasWestLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_WEST));
+		if (hasWestLayoutOptions) {
+			writer.write("{resizeWhileDragging:true");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_WEST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
+			writer.write("}");
+		} else {
+			writer.write("null");
+		}
+
+		writer.write(",eastLayoutOpt:");
+
+		boolean hasEastLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_EAST));
+		if (hasEastLayoutOptions) {
+			writer.write("{resizeWhileDragging:true");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_EAST + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
+			writer.write("}");
+		} else {
+			writer.write("null");
+		}
 
 		if (layout.isFullPage()) {
 			writer.write(",forTarget:'body'");

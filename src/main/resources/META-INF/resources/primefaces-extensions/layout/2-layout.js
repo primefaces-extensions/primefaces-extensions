@@ -38,8 +38,8 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         , slidable: false
         , spacing: 6
         , contentSelector: '.ui-layout-pane-content'
-        , togglerTip_open: cfg.togglerTipOpen
-        , togglerTip_closed: cfg.togglerTipClose
+        , togglerTip_open: cfg.togglerTipClose
+        , togglerTip_closed: cfg.togglerTipOpen
         , resizerTip: cfg.resizerTip
     };
 
@@ -174,7 +174,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     }
 
     var resizeTabPanelLayout = function() {
-        var jtLayoutTabPanel = $(jqId + "-layout-tabpanels").find(".ui-layout-tab");
+        var jtLayoutTabPanel = $(jqId + "-layout-tabpanels > div.ui-layout-tab");
 
         if (jtLayoutTabPanel.data("layoutContainer")) {
             jtLayoutTabPanel.layout().resizeAll();
