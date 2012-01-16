@@ -55,7 +55,7 @@
 
     <!-- Components -->
     <tag>
-        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact.]]></description>
+        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (), initialize - fired after the editor was successfully intialized (), focus - (), blur - (), wysiwygMode - fired after switching to the wysiwyg mode (), sourceMode - fired after switching to the source mode (), dirty - fired after the content has been changed wihout leaving the editor focus (), change - fired after blur and if the content has been changed ().]]></description>
         <tag-name>ckEditor</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.CKEditor</component-type>
@@ -202,6 +202,7 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Widget for selecting a rectangular area of an image. Client behavior events: selectEnd - fired after the selection finished (org.primefaces.extensions.event.ImageAreaSelectEvent), selectStart - fired after the selection started (org.primefaces.extensions.event.ImageAreaSelectEvent), selectChange - fired after the selection changed (org.primefaces.extensions.event.ImageAreaSelectEvent).]]></description>
         <tag-name>imageAreaSelect</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
@@ -347,6 +348,7 @@
         </attribute>
     </tag>
     <tag>
+     	<description><![CDATA[Widget for rotating or resizing an image. Client behavior events: rotate - fired after image rotation (org.primefaces.extensions.event.RotateEvent), resize - fired after image resizing (org.primefaces.extensions.event.ResizeEvent).]]></description>
         <tag-name>imageRotateAndResize</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
