@@ -151,7 +151,7 @@ public class LayoutRenderer extends CoreRenderer {
 
 		writer.write("}");
 
-		writer.write(",tabLayoutOpt:{resizeWithWindow:false,south__spacing_open:3");
+		writer.write(",tabLayoutOpt:{resizeWithWindow:false");
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_SOUTH);
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_CENTER);
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_WEST);
@@ -218,13 +218,33 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.write("null");
 		}
 
+		writer.write(",southLayoutOpt:");
+
+		boolean hasSouthLayoutOptions = hasNestedLayoutOptions((LayoutPane) layoutPanes.get(Layout.POSITION_SOUTH));
+		if (hasSouthLayoutOptions) {
+			writer.write("{resizeWhileDragging:true");
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_SOUTH + Layout.POSITION_SEPARATOR + Layout.POSITION_NORTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_SOUTH + Layout.POSITION_SEPARATOR + Layout.POSITION_SOUTH);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_SOUTH + Layout.POSITION_SEPARATOR + Layout.POSITION_CENTER);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_SOUTH + Layout.POSITION_SEPARATOR + Layout.POSITION_WEST);
+			writeLayoutPaneOption(fc, writer, layoutPanes,
+			                      Layout.POSITION_SOUTH + Layout.POSITION_SEPARATOR + Layout.POSITION_EAST);
+			writer.write("}");
+		} else {
+			writer.write("null");
+		}
+
 		if (layout.isFullPage()) {
 			writer.write(",forTarget:'body'");
 		} else {
 			writer.write(",forTarget:'" + ComponentUtils.escapeJQueryId(clientId) + "'");
 		}
 
-		writer.write(",manageState:");
+		writer.write(",serverState:");
 
 		ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
 		if (stateVE != null) {
@@ -234,6 +254,13 @@ public class LayoutRenderer extends CoreRenderer {
 			} else {
 				writer.write(",state:'{}'");
 			}
+		} else {
+			writer.write("false");
+		}
+
+		writer.write(",clientState:");
+		if (layout.isStateCookie()) {
+			writer.write("true");
 		} else {
 			writer.write("false");
 		}
@@ -261,13 +288,7 @@ public class LayoutRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, layout);
 
-		writer.write("});");
-		if (dataModel != null && dataModel.getRowCount() > 0) {
-			writer.write("$('#" + getEscapedClientId(clientId)
-			             + "-layout-tabbuttons').find('.ui-tab').corner('top 6px');");
-		}
-
-		writer.write("});");
+		writer.write("});});");
 		endScript(writer);
 	}
 
@@ -488,6 +509,14 @@ public class LayoutRenderer extends CoreRenderer {
 
 		if (pane.getMaxHeight() != null) {
 			writer.write("," + pane.getPosition() + "__maxHeight:" + pane.getMaxHeight());
+		}
+
+		if (pane.getSpacingOpen() != null) {
+			writer.write("," + pane.getPosition() + "__spacing_open:" + pane.getSpacingOpen());
+		}
+
+		if (pane.getSpacingClose() != null) {
+			writer.write("," + pane.getPosition() + "__spacing_close:" + pane.getSpacingClose());
 		}
 
 		writer.write("," + pane.getPosition() + "__paneposition:'" + position + "'");

@@ -15,12 +15,17 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var centerLayoutOpt = cfg.centerLayoutOpt;
     var westLayoutOpt = cfg.westLayoutOpt;
     var eastLayoutOpt = cfg.eastLayoutOpt;
+    var southLayoutOpt = cfg.southLayoutOpt;
 
     var jqTarget = $(cfg.forTarget);
-    var manageState = cfg.manageState;
+    var clientState = cfg.clientState;
+    var serverState = cfg.serverState;
     var state = null;
-    if (manageState) {
-        state = $.parseJSON(cfg.state);
+    
+    if (clientState) {
+        state = $.parseJSON(PrimeFaces.getCookie('pfext.layout.' + clientId));
+    } else if (serverState) {
+        state = $.parseJSON(cfg.state);        
     }
 
     var _self = this;
@@ -48,6 +53,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var peTabLayout;
     var peWestLayout;
     var peEastLayout;
+    var peSouthLayout;
     var peCenterLayout;
     var peLayoutTabsLoading = true;
 
@@ -58,7 +64,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     /* public access */
 
     this.buildOuterTabsLayout = function() {
-        if (manageState && state.peOuterLayout) {
+        if ((serverState || clientState) && state && state.peOuterLayout) {
             $.extend(northOpt, createOptionsFromSavedState(state.peOuterLayout.north, null, null, null));
         }
         peOuterLayout = jqTarget.layout(northOpt);
@@ -179,7 +185,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
         if (jtLayoutTabPanel.data("layoutContainer")) {
             jtLayoutTabPanel.layout().resizeAll();
         } else {
-            if (manageState && state.peTabLayout) {
+            if ((serverState || clientState) && state && state.peTabLayout) {
                 $.extend(tabLayoutOpt, createOptionsFromSavedState(
                         null, state.peTabLayout.south, state.peTabLayout.west, state.peTabLayout.east));
             }
@@ -190,7 +196,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             }
 
             if (peTabLayout.panes.west && westLayoutOpt != null) {
-                if (manageState && state.peWestLayout) {
+                if ((serverState || clientState) && state && state.peWestLayout) {
                     $.extend(westLayoutOpt, createOptionsFromSavedState(
                         state.peWestLayout.north, state.peWestLayout.south, state.peWestLayout.west, state.peWestLayout.east));
                 }
@@ -199,16 +205,25 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             }
 
             if (peTabLayout.panes.east && eastLayoutOpt != null) {
-                if (manageState && state.peEastLayout) {
+                if ((serverState || clientState) && state && state.peEastLayout) {
                     $.extend(eastLayoutOpt, createOptionsFromSavedState(
                         state.peEastLayout.north, state.peEastLayout.south, state.peEastLayout.west, state.peEastLayout.east));
                 }
 
                 peEastLayout = peTabLayout.panes.east.layout($.extend({}, defaultLayoutSettings, eastLayoutOpt));
             }
+            
+            if (peTabLayout.panes.south && southLayoutOpt != null) {
+                if ((serverState || clientState) && state && state.peSouthLayout) {
+                    $.extend(southLayoutOpt, createOptionsFromSavedState(
+                        state.peSouthLayout.north, state.peSouthLayout.south, state.peSouthLayout.west, state.peSouthLayout.east));
+                }
+
+                peSouthLayout = peTabLayout.panes.south.layout($.extend({}, defaultLayoutSettings, southLayoutOpt));
+            }            
 
             if (centerLayoutOpt != null) {
-                if (manageState && state.peCenterLayout) {
+                if ((serverState || clientState) && state && state.peCenterLayout) {
                     $.extend(centerLayoutOpt, createOptionsFromSavedState(
                         state.peCenterLayout.north, state.peCenterLayout.south, state.peCenterLayout.west, state.peCenterLayout.east));
                 }
@@ -250,18 +265,26 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
 
     if (jqTarget.is(':visible')) {
         this.buildOuterTabsLayout();
+        if (indexTab >= 0) {
+            // tabs
+            $(jqId + '-layout-tabbuttons').find('.ui-tab').corner('top 6px');
+        }
     } else {
         var hiddenParent = jqTarget.parents('.ui-hidden-container:first');
         var hiddenParentWidget = hiddenParent.data('widget');
 
         if (hiddenParentWidget) {
             hiddenParentWidget.addOnshowHandler(function() {
-                return _self.buildOuterTabsLayout();
+                _self.buildOuterTabsLayout();
+                if (indexTab >= 0) {
+                    // tabs
+                    $(_self.jqId + '-layout-tabbuttons').find('.ui-tab').corner('top 6px');
+                }
             });
         }
     }
 
-    if (manageState) {
+    if (clientState) {
         $(window).unload(function() {
             var state = {};
             if (peOuterLayout) {
@@ -276,16 +299,15 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             if (peEastLayout) {
                 state.peEastLayout = peEastLayout.getState(keysAll);
             }
+            if (peSouthLayout) {
+                state.peSouthLayout = peSouthLayout.getState(keysAll);
+            }            
             if (peCenterLayout) {
                 state.peCenterLayout = peCenterLayout.getState(keysAll);
             }
 
-            // send state via ajax
-            var ext = {
-                params : {}
-            };
-            ext.params[clientId + '_state'] = peOuterLayout.encodeJSON(state);
-            PrimeFaces.ajax.AjaxRequest({source:clientId,process:clientId,update:'@none',global:false,async:true}, ext);
+            // the cookie will be a session cookie and will not be retained when the the browser exits
+            PrimeFaces.setCookie('pfext.layout.' + clientId, peOuterLayout.encodeJSON(state));
         });
     }
 

@@ -107,7 +107,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		togglerTipOpen,
 		togglerTipClose,
 		resizerTip,
-		state;
+		state,
+		stateCookie;
 
 		private String toString;
 
@@ -230,6 +231,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 	public void setState(final String state) {
 		setAttribute(PropertyKeys.state, state);
+	}
+
+	public boolean isStateCookie() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.stateCookie, false);
+	}
+
+	public void setStateCookie(final boolean stateCookie) {
+		setAttribute(PropertyKeys.stateCookie, stateCookie);
 	}
 
 	/**
