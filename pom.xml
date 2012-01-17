@@ -537,7 +537,7 @@
             <dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
-                <version>3.0</version>
+                <version>3.0.1</version>
             </dependency>            
             <dependency>
                 <groupId>org.primefaces.themes</groupId>
