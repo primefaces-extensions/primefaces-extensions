@@ -23,7 +23,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var state = null;
     
     if (clientState) {
-        state = $.parseJSON(PrimeFaces.getCookie('pfext.layout.' + clientId));
+        state = $.parseJSON(PrimeFaces.getCookie(encodeURIComponent('pfext.layout.' + clientId)));
     } else if (serverState) {
         state = $.parseJSON(cfg.state);        
     }
@@ -307,7 +307,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             }
 
             // the cookie will be a session cookie and will not be retained when the the browser exits
-            PrimeFaces.setCookie('pfext.layout.' + clientId, peOuterLayout.encodeJSON(state));
+            PrimeFaces.setCookie(encodeURIComponent('pfext.layout.' + clientId), peOuterLayout.encodeJSON(state));
         });
     }
 

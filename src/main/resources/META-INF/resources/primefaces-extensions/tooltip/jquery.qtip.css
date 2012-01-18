@@ -12,6 +12,11 @@
 * Date: Thu Dec 8 19:20:55 2011 +0000
 */
 
+/** avoid collision with PrimeFaces */
+.ui-tooltip {
+    padding: 0;    
+}
+
 /* Core qTip styles */
 .ui-tooltip, .qtip{
 	position: absolute;
