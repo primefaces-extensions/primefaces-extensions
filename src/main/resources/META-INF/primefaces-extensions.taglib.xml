@@ -546,6 +546,7 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Standalone paginator for PrimeFaces' DataTable.]]></description>
         <tag-name>paginator</tag-name>
         <handler-class>org.primefaces.extensions.component.paginator.PaginatorTagHandler</handler-class>
         <attribute>
@@ -702,8 +703,7 @@
         </attribute>
     </tag>
     <tag>
-        <description>
-            <![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
+        <description><![CDATA[RemoteCommandParameter can be used the apply a parameter of the RemoteCommand to a backing bean.]]></description>
         <tag-name>remoteCommandParameter</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
@@ -747,6 +747,7 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Component to reset submitted values and validation state.]]></description>
         <tag-name>resetEditableValues</tag-name>
         <handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
         <attribute>
@@ -781,6 +782,7 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Advanced Tooltip component.]]></description>
         <tag-name>tooltip</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Tooltip</component-type>
@@ -908,17 +910,61 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Page Layout component. Client behavior events: open - fires after a layout pane gets opened (org.primefaces.extensions.event.OpenEvent), close - fires after a layout pane gets closed (org.primefaces.extensions.event.CloseEvent), resize - fires after a layout pane gets resized (org.primefaces.extensions.event.ResizeEvent).]]></description>
         <tag-name>layout</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Layout</component-type>
             <renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
         </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
     </tag>
     <tag>
+        <description><![CDATA[Layout pane within Layout component. 5 regions are supported: 'north', 'south', 'center', 'west' und 'east'.]]></description>
         <tag-name>layoutPane</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.LayoutPane</component-type>
         </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>      
     </tag>
     <tag>
         <description><![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]></description>
