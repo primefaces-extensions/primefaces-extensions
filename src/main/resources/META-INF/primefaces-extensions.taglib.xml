@@ -1109,35 +1109,35 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The javax.faces.model.DataModel associated with this component to build tabs dynamically, lazily instantiated if requested.]]>
+            <description><![CDATA[The javax.faces.model.DataModel<MenuItem> associated with this component to build tabs dynamically.]]>
             </description>
             <name>tabs</name>
             <required>false</required>
             <type>javax.faces.model.DataModel</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[Tip on toggler when pane is Open.]]>
+            <description><![CDATA[Tip on toggler when pane is opened.]]>
             </description>
             <name>togglerTipOpen</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[Tip on toggler when pane is Close.]]>
+            <description><![CDATA[Tip on toggler when pane is closed.]]>
             </description>
             <name>togglerTipClose</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[Tip when resizer-bar can be dragged to resize a pane.]]>
+            <description><![CDATA[Tip when resizer-bar gets dragged to resize a pane.]]>
             </description>
             <name>resizerTip</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[A hash containing the dimensions of all the elements, including the layout container. Dimensions include borders and padding for: top, bottom, left, right, plus outerWidth, outerHeight, innerWidth, innerHeight.]]>
+            <description><![CDATA[A hash containing the dimensions and close, open state of all the layout panes.]]>
             </description>
             <name>state</name>
             <required>false</required>
