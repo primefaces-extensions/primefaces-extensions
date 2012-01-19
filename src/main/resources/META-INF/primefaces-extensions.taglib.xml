@@ -1137,14 +1137,14 @@
             <type>java.lang.String</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[A hash containing the dimensions and close, open state of all the layout panes.]]>
+            <description><![CDATA[Indicates server-side state management. A hash (JSON string) containing all dimensions and close, open state of existing layout panes. It can be bound to a bean.]]>
             </description>
             <name>state</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>          
         <attribute>
-            <description><![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in cookies on window onload. Default is false.]]>
+            <description><![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in cookies on window unload and restored during layout build-up. Default is false.]]>
             </description>
             <name>stateCookie</name>
             <required>false</required>

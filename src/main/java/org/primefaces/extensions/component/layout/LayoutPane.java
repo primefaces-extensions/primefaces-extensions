@@ -60,8 +60,7 @@ public class LayoutPane extends UIComponentBase {
 		maxWidth,
 		minHeight,
 		maxHeight,
-		spacingOpen,
-		spacingClose,
+		spacing,
 		initClosed,
 		statusbar;
 
@@ -211,20 +210,12 @@ public class LayoutPane extends UIComponentBase {
 		setAttribute(PropertyKeys.maxHeight, maxHeight);
 	}
 
-	public String getSpacingOpen() {
-		return (String) getStateHelper().eval(PropertyKeys.spacingOpen, null);
+	public int getSpacing() {
+		return (Integer) getStateHelper().eval(PropertyKeys.spacing, 6);
 	}
 
-	public void setSpacingOpen(final String spacingOpen) {
-		setAttribute(PropertyKeys.spacingOpen, spacingOpen);
-	}
-
-	public String getSpacingClose() {
-		return (String) getStateHelper().eval(PropertyKeys.spacingClose, null);
-	}
-
-	public void setSpacingClose(final String spacingClose) {
-		setAttribute(PropertyKeys.spacingClose, spacingClose);
+	public void setSpacing(final int spacing) {
+		setAttribute(PropertyKeys.spacing, spacing);
 	}
 
 	public boolean isInitClosed() {

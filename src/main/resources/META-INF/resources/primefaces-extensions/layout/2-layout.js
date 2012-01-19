@@ -21,11 +21,13 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var clientState = cfg.clientState;
     var serverState = cfg.serverState;
     var state = null;
+    var stateHiddenField = null;
     
     if (clientState) {
         state = $.parseJSON(PrimeFaces.getCookie(encodeURIComponent('pfext.layout.' + clientId)));
     } else if (serverState) {
-        state = $.parseJSON(cfg.state);        
+        state = $.parseJSON(cfg.state);
+        stateHiddenField = $(jqId + "_state");
     }
 
     var _self = this;
@@ -41,7 +43,6 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             _self.onresize(options.paneposition, state);
         }
         , slidable: false
-        , spacing: 6
         , contentSelector: '.ui-layout-pane-content'
         , togglerTip_open: cfg.togglerTipClose
         , togglerTip_closed: cfg.togglerTipOpen
@@ -103,7 +104,7 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     }
 
     this.onopen = function(paneposition) {
-        var behavior = config.behaviors['open'];
+        var behavior = config.behaviors ? config.behaviors['open'] : null;
         if (behavior) {
             var ext = {
                 params: {}
@@ -111,10 +112,14 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             ext.params[clientId + '_pane'] = paneposition;
             behavior.call(this, paneposition, ext);
         }
+        
+        if (stateHiddenField && stateHiddenField.length > 0) {
+            stateHiddenField.val(getLayoutState());
+        }        
     }
 
     this.onclose = function(paneposition) {
-        var behavior = config.behaviors['close'];
+        var behavior = config.behaviors ? config.behaviors['close'] : null;
         if (behavior) {
             var ext = {
                 params: {}
@@ -122,11 +127,15 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
             ext.params[clientId + '_pane'] = paneposition;
             behavior.call(this, paneposition, ext);
         }
+        
+        if (stateHiddenField && stateHiddenField.length > 0) {
+            stateHiddenField.val(getLayoutState());
+        }        
     }
 
     this.onresize = function(paneposition, state) {
         if (!state.isClosed && !state.isHidden) {
-            var behavior = config.behaviors['resize'];
+            var behavior = config.behaviors ? config.behaviors['resize'] : null;
             if (behavior) {
                 var ext = {
                     params : {}
@@ -136,6 +145,10 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
                 ext.params[clientId + '_height'] = state.innerHeight;
                 behavior.call(this, paneposition, ext);
             }
+            
+            if (stateHiddenField && stateHiddenField.length > 0) {
+                stateHiddenField.val(getLayoutState());
+            }            
         }
     }
 
@@ -262,7 +275,30 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
 
         return opts;
     }
+    
+    var getLayoutState = function() {
+        var state = {};
+        state.peOuterLayout = peOuterLayout.getState(keysNorth);
 
+        if (peTabLayout) {
+            state.peTabLayout = peTabLayout.getState(keysAllExceptNorth);
+        }
+        if (peWestLayout) {
+            state.peWestLayout = peWestLayout.getState(keysAll);
+        }
+        if (peEastLayout) {
+            state.peEastLayout = peEastLayout.getState(keysAll);
+        }
+        if (peSouthLayout) {
+            state.peSouthLayout = peSouthLayout.getState(keysAll);
+        }            
+        if (peCenterLayout) {
+            state.peCenterLayout = peCenterLayout.getState(keysAll);
+        }
+        
+        return peOuterLayout.encodeJSON(state);
+    }
+    
     if (jqTarget.is(':visible')) {
         this.buildOuterTabsLayout();
         if (indexTab >= 0) {
@@ -286,28 +322,8 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
 
     if (clientState) {
         $(window).unload(function() {
-            var state = {};
-            if (peOuterLayout) {
-                state.peOuterLayout = peOuterLayout.getState(keysNorth);
-            }
-            if (peTabLayout) {
-                state.peTabLayout = peTabLayout.getState(keysAllExceptNorth);
-            }
-            if (peWestLayout) {
-                state.peWestLayout = peWestLayout.getState(keysAll);
-            }
-            if (peEastLayout) {
-                state.peEastLayout = peEastLayout.getState(keysAll);
-            }
-            if (peSouthLayout) {
-                state.peSouthLayout = peSouthLayout.getState(keysAll);
-            }            
-            if (peCenterLayout) {
-                state.peCenterLayout = peCenterLayout.getState(keysAll);
-            }
-
             // the cookie will be a session cookie and will not be retained when the the browser exits
-            PrimeFaces.setCookie(encodeURIComponent('pfext.layout.' + clientId), peOuterLayout.encodeJSON(state));
+            PrimeFaces.setCookie(encodeURIComponent('pfext.layout.' + clientId), getLayoutState());
         });
     }
 

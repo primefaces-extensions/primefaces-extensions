@@ -285,19 +285,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	@Override
 	public void processDecodes(final FacesContext fc) {
 		if (isSelfRequest(fc)) {
-			String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
-			if (StringUtils.isNotBlank(state)) {
-				ValueExpression stateVE = this.getValueExpression(PropertyKeys.state.toString());
-				if (stateVE != null) {
-					// save "state"
-					stateVE.setValue(fc.getELContext(), state);
-					getStateHelper().remove(PropertyKeys.state);
-				}
-
-				// state management finished ==> no further actions
-				fc.responseComplete();
-			}
-
 			this.decode(fc);
 		} else {
 			super.processDecodes(fc);
@@ -315,6 +302,16 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public void processUpdates(final FacesContext fc) {
 		if (!isSelfRequest(fc)) {
 			super.processUpdates(fc);
+		}
+
+		String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
+		if (StringUtils.isNotBlank(state)) {
+			ValueExpression stateVE = this.getValueExpression(PropertyKeys.state.toString());
+			if (stateVE != null) {
+				// save "state"
+				stateVE.setValue(fc.getELContext(), state);
+				getStateHelper().remove(PropertyKeys.state);
+			}
 		}
 	}
 

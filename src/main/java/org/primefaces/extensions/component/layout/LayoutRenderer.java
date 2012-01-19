@@ -395,6 +395,24 @@ public class LayoutRenderer extends CoreRenderer {
 
 		writer.endElement("div");
 		writer.endElement("div");
+
+		ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
+		if (stateVE != null) {
+			// render hidden field for server-side state saving
+			writer.startElement("input", null);
+			writer.writeAttribute("type", "hidden", null);
+			writer.writeAttribute("id", clientId + "_state", null);
+			writer.writeAttribute("name", clientId + "_state", null);
+			writer.writeAttribute("autocomplete", "off", null);
+			if (StringUtils.isNotBlank(layout.getState())) {
+				writer.writeAttribute("value", "'" + layout.getState() + "'", null);
+			} else {
+				writer.writeAttribute("value", "'{}'", null);
+			}
+
+			writer.endElement("input");
+		}
+
 		writer.endElement("div");
 	}
 
@@ -482,6 +500,8 @@ public class LayoutRenderer extends CoreRenderer {
 		writer.write("," + pane.getPosition() + "__resizable:" + pane.isResizable());
 		writer.write("," + pane.getPosition() + "__closable:" + pane.isClosable());
 		writer.write("," + pane.getPosition() + "__initClosed:" + pane.isInitClosed());
+		writer.write("," + pane.getPosition() + "__spacing_open:" + pane.getSpacing());
+		writer.write("," + pane.getPosition() + "__spacing_close:" + pane.getSpacing());
 
 		if (pane.getSize() != null) {
 			writer.write("," + pane.getPosition() + "__size:" + pane.getSize());
@@ -509,14 +529,6 @@ public class LayoutRenderer extends CoreRenderer {
 
 		if (pane.getMaxHeight() != null) {
 			writer.write("," + pane.getPosition() + "__maxHeight:" + pane.getMaxHeight());
-		}
-
-		if (pane.getSpacingOpen() != null) {
-			writer.write("," + pane.getPosition() + "__spacing_open:" + pane.getSpacingOpen());
-		}
-
-		if (pane.getSpacingClose() != null) {
-			writer.write("," + pane.getPosition() + "__spacing_close:" + pane.getSpacingClose());
 		}
 
 		writer.write("," + pane.getPosition() + "__paneposition:'" + position + "'");
