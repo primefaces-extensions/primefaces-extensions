@@ -59,7 +59,7 @@
 
     <!-- Components -->
     <tag>
-        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (), initialize - fired after the editor was successfully intialized (), focus - (), blur - (), wysiwygMode - fired after switching to the wysiwyg mode (), sourceMode - fired after switching to the source mode (), dirty - fired after the content has been changed wihout leaving the editor focus (), change - fired after blur and if the content has been changed ().]]>
+        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (javax.faces.event.AjaxBehaviorEvent), initialize - fired after the editor was successfully intialized (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent), wysiwygMode - fired after switching to the wysiwyg mode (javax.faces.event.AjaxBehaviorEvent), sourceMode - fired after switching to the source mode (javax.faces.event.AjaxBehaviorEvent), dirty - fired after the content has been changed wihout leaving the editor focus (javax.faces.event.AjaxBehaviorEvent), change - fired after blur and if the content has been changed (javax.faces.event.AjaxBehaviorEvent).]]>
         </description>
         <tag-name>ckEditor</tag-name>
         <component>
