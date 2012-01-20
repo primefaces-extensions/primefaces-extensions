@@ -302,9 +302,15 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.startElement("div", null);
 			writer.writeAttribute("id", clientId + "-layout-outer-north", null);
 			writer.writeAttribute("class", "layout-outer-north", null);
+			writer.startElement("div", null);
+			writer.writeAttribute("class", "layout-inner-north " + Layout.STYLE_CLASS_PANE, null);
+			writer.startElement("div", null);
+			writer.writeAttribute("class", "ui-layout-pane-content", null);
 
 			renderChildren(fc, layoutPane);
 
+			writer.endElement("div");
+			writer.endElement("div");
 			writer.endElement("div");
 		}
 

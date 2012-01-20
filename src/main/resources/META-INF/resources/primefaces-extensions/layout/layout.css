@@ -1,17 +1,17 @@
 .ui-layout-pane {
-	padding: 0;
-	overflow: hidden;
+    padding: 0;
+    overflow: hidden;
 }
 
 .ui-layout-pane-header {
-	padding: 4px 1em;
-	border-width: 0 0 1px;
+    padding: 4px 1em;
+    border-width: 0 0 1px;
 }
 
 .ui-layout-pane-content {
-	padding: 1ex;
-	overflow: auto;
-	border: none;
+    padding: 1ex;
+    overflow: auto;
+    border: none;
 }
 
 .ui-layout-north,
@@ -19,61 +19,61 @@
 .ui-layout-west,
 .ui-layout-east,
 .ui-layout-center {
-	display: none;
+    display: none;
 }
 
 .layout-outer-center {
-	padding: 0;
+    padding: 0;
 }
 
 .layout-outer-center {
-	background:	transparent;
-	border:	0;
-	padding: 0;
-	border-radius: 0;
-	-moz-border-radius: 0;
-	-webkit-border-radius: 0;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 .layout-tabbuttons {
-	left: auto;
-	background:	transparent;
-	border:	0;
-	padding: 0;
-	border-radius: 0;
-	-moz-border-radius: 0;
-	-webkit-border-radius: 0;
+    left: auto;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 .layout-tabbuttons li {
-	border:	0;
-	margin: 0 0 -1px 5px;
+    border: 0;
+    margin: 0 0 -1px 5px;
 }
 
 .layout-tabbuttons li.last-tab {
-	margin-right: 220px;
+    margin-right: 220px;
 }
 
 .layout-tabbuttons li a {
-	font-weight: bold;
-	cursor:	pointer;
-	padding-left: 0.4em;
-	border-radius: 0;
-	-moz-border-radius:	0;
-	-webkit-border-radius: 0;
+    font-weight: bold;
+    cursor: pointer;
+    padding-left: 0.4em;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 .layout-tabbuttons li table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 .layout-tabbuttons li table tr td {
-	padding-left: 3px;
+    padding-left: 3px;
 }
 
 .layout-tabbuttons li table tr td:first-child {
-	padding-top: 0;
-	padding-left: 0;
+    padding-top: 0;
+    padding-left: 0;
 }
 
 .ui-tabs .ui-tabs-nav li a {
@@ -81,102 +81,105 @@
 }
 
 .layout-tabpanels {
-	margin-top: 2px;
-	padding: 0 4px 5px 4px;
+    margin-top: 2px;
+    padding: 0 4px 5px 4px;
 }
 
 .layout-tabpanels .ui-layout-tab {
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	overflow: hidden;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
 }
 
 .layout-tabpanels .ui-layout-tab .ui-layout-south .statusbar {
-	overflow: hidden;
-	margin: 0;
-	padding: 5px 20px 0 0;
-	font-size: 11px;
-	font-weight: bold;
-	text-align: right;
-	white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px 20px 0 0;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .layout-outer-north {
-	padding: 0.5em 0.5em;
-	overflow: visible;
-	color: #000000;
-	background-color: #FFFFFF;
+    overflow: visible;
+    padding: 4px;
+}
+
+.layout-inner-north {
+    height: 100%;
+    padding-bottom: 2px;
 }
 
 .ui-layout-resizer-west-dragging,
 .ui-layout-resizer-west-open-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
 }
 
 .ui-layout-resizer-west-closed-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-e.gif']}") repeat-y center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-e.gif']}") repeat-y center;
 }
 
 .ui-layout-toggler-west-open {
-	background: url("#{resource['primefaces-extensions:layout/toggle-lt.gif']}") no-repeat scroll left center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-lt.gif']}") no-repeat scroll left center transparent;
 }
 
 .ui-layout-toggler-west-closed {
-	background: url("#{resource['primefaces-extensions:layout/toggle-rt.gif']}") no-repeat scroll right center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-rt.gif']}") no-repeat scroll right center transparent;
 }
 
 .ui-layout-resizer-east-dragging,
 .ui-layout-resizer-east-open-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-e.gif']}") repeat-y center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-e.gif']}") repeat-y center;
 }
 
 .ui-layout-resizer-east-closed-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
 }
 
 .ui-layout-toggler-east-open {
-	background: url("#{resource['primefaces-extensions:layout/toggle-rt.gif']}") no-repeat scroll right center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-rt.gif']}") no-repeat scroll right center transparent;
 }
 
 .ui-layout-toggler-east-closed {
-	background: url("#{resource['primefaces-extensions:layout/toggle-lt.gif']}") no-repeat scroll left center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-lt.gif']}") no-repeat scroll left center transparent;
 }
 
 .ui-layout-resizer-north-dragging,
-.ui-layout-resizer-north-open-hover	{
-	background: url("#{resource['primefaces-extensions:layout/resizable-n.gif']}") repeat-x center;
+.ui-layout-resizer-north-open-hover {
+    background: url("#{resource['primefaces-extensions:layout/resizable-n.gif']}") repeat-x center;
 }
 
 .ui-layout-resizer-north-closed-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-s.gif']}") repeat-x center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-s.gif']}") repeat-x center;
 }
 
 .ui-layout-toggler-north-open {
-	background: url("#{resource['primefaces-extensions:layout/toggle-up.gif']}") no-repeat scroll top center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-up.gif']}") no-repeat scroll top center transparent;
 }
 
 .ui-layout-toggler-north-closed {
-	background: url("#{resource['primefaces-extensions:layout/toggle-dn.gif']}") no-repeat scroll bottom center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-dn.gif']}") no-repeat scroll bottom center transparent;
 }
 
 .ui-layout-resizer-south-dragging,
-.ui-layout-resizer-south-hover	{
-	background: url("#{resource['primefaces-extensions:layout/resizable-s.gif']}") repeat-x center;
+.ui-layout-resizer-south-hover {
+    background: url("#{resource['primefaces-extensions:layout/resizable-s.gif']}") repeat-x center;
 }
 
 .ui-layout-resizer-south-closed-hover {
-	background: url("#{resource['primefaces-extensions:layout/resizable-n.gif']}") repeat-x center;
+    background: url("#{resource['primefaces-extensions:layout/resizable-n.gif']}") repeat-x center;
 }
 
 .ui-layout-toggler-south-open {
-	background: url("#{resource['primefaces-extensions:layout/toggle-dn.gif']}") no-repeat scroll bottom center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-dn.gif']}") no-repeat scroll bottom center transparent;
 }
 
 .ui-layout-toggler-south-closed {
-	background: url("#{resource['primefaces-extensions:layout/toggle-up.gif']}") no-repeat scroll top center transparent;
+    background: url("#{resource['primefaces-extensions:layout/toggle-up.gif']}") no-repeat scroll top center transparent;
 }
 
 .ui-layout-resizer-dragging-limit {
-	border: 1px solid #E27D7D;
+    border: 1px solid #E27D7D;
 }
