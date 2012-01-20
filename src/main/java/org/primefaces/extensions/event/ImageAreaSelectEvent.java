@@ -70,7 +70,7 @@ public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
 
 	@Override
 	public boolean isAppropriateListener(final FacesListener facesListener) {
-		return true;
+		return (facesListener instanceof AjaxBehaviorListener);
 	}
 
 	@Override
