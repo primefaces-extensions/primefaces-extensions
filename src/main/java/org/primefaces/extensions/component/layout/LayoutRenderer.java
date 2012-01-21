@@ -147,6 +147,7 @@ public class LayoutRenderer extends CoreRenderer {
 		writeLayoutPaneOption(fc, writer, layoutPanes, Layout.POSITION_NORTH);
 		if (layoutPanes.get(Layout.POSITION_NORTH) == null) {
 			writer.write(",north__size:0");
+			writer.write(",north__paneposition:'north'");
 		}
 
 		writer.write("}");

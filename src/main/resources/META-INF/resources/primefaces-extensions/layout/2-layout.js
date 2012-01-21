@@ -4,13 +4,6 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     var jqId = PrimeFaces.escapeClientId(id);
     var indexTab = cfg.indexTab;
 
-    var northOpt = $.extend({}, {
-        resizeWithWindowDelay: 250
-        , slidable: false
-        , north__paneSelector: jqId + "-layout-outer-north"
-        , center__paneSelector: jqId + "-layout-outer-center"
-    }, cfg.northOptions);
-
     var tabLayoutOpt = cfg.tabLayoutOpt;
     var centerLayoutOpt = cfg.centerLayoutOpt;
     var westLayoutOpt = cfg.westLayoutOpt;
@@ -31,17 +24,38 @@ PrimeFacesExt.widget.Layout = function(id, cfg) {
     }
 
     var _self = this;
-
-    var defaultLayoutSettings = {
+    var eventCallbacks = {
         onopen: function(panename, pane, state, options) {
-            _self.onopen(options.paneposition);
+            if (options.paneposition) {
+                _self.onopen(options.paneposition);
+            }
         }
         , onclose: function(panename, pane, state, options) {
-            _self.onclose(options.paneposition);
+            if (options.paneposition) {
+                _self.onclose(options.paneposition);
+            }
         }
         , onresize: function(panename, pane, state, options) {
-            _self.onresize(options.paneposition, state);
-        }
+            if (options.paneposition) {
+                _self.onresize(options.paneposition, state);
+            }
+        }        
+    };
+    
+    var northOpt = $.extend({}, {
+        onopen: eventCallbacks.onopen
+        , onclose: eventCallbacks.onclose
+        , onresize: eventCallbacks.onresize
+        , resizeWithWindowDelay: 250
+        , slidable: false
+        , north__paneSelector: jqId + "-layout-outer-north"
+        , center__paneSelector: jqId + "-layout-outer-center"
+    }, cfg.northOptions);    
+
+    var defaultLayoutSettings = {
+        onopen: eventCallbacks.onopen
+        , onclose: eventCallbacks.onclose
+        , onresize: eventCallbacks.onresize
         , slidable: false
         , contentSelector: '.ui-layout-pane-content'
         , togglerTip_open: cfg.togglerTipClose
