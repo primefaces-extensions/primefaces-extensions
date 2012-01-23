@@ -73,7 +73,6 @@
         </developer>
     </developers>
 
-    <!-- Global build settings -->
     <build>
         <pluginManagement>
             <plugins>
@@ -415,10 +414,6 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <!-- ================================================== -->
-    <!-- Define all dependencies with their default version -->
-    <!-- ================================================== -->
 
     <dependencyManagement>
         <dependencies>
