@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
-        <version>0.2.1-SNAPSHOT</version>
+        <version>0.3.0</version>
         <relativePath/>
     </parent>
 
@@ -41,10 +41,6 @@
         <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
     </scm>
     
-    <prerequisites>
-        <maven>3.0.3</maven>
-    </prerequisites>    
-
     <developers>
         <developer>
             <id>andraschko</id>
