@@ -1109,7 +1109,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The javax.faces.model.DataModel<MenuItem> associated with this component to build tabs dynamically.]]>
+            <description><![CDATA[Dynamic tabs for tabbed layout. This object must be either of type javax.faces.model.DataModel<MenuItem>, or an object that can be adapted into a DataModel<MenuItem>. Such possible objects are List and Array of MenuItems.]]>
             </description>
             <name>tabs</name>
             <required>false</required>
@@ -1178,8 +1178,122 @@
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
-        </attribute>  
-        
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style of the pane's header. Default value is null.]]>
+            </description>
+            <name>styleHeader</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the pane's header. Default value is null.]]>
+            </description>
+            <name>styleClassHeader</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style of the pane's content. Default value is null.]]>
+            </description>
+            <name>styleContent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the pane's content. Default value is null.]]>
+            </description>
+            <name>styleClassContent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Position of a pane. Possible values are 'north', 'south', 'west', 'east', 'center'. Default value is 'center'.]]>
+            </description>
+            <name>position</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+			<description><![CDATA[Makes a pane resizable. Default is true.]]></description>
+			<name>resizable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Makes a pane closable. Default is true.]]></description>
+			<name>closable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+        <attribute>
+            <description><![CDATA[Specifies the initial size of a pane in px or %. Default value is null.]]>
+            </description>
+            <name>size</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the minimum-size limit in px or % when resizing a pane. Default value is null.]]>
+            </description>
+            <name>minSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the maximum-size limit in px or % when resizing a pane. Default value is null.]]>
+            </description>
+            <name>maxSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the minimum-width limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            </description>
+            <name>minWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the maximum-width limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            </description>
+            <name>maxWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the minimum-height limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            </description>
+            <name>minHeight</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the maximum-height limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            </description>
+            <name>maxHeight</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Spacing between pane and adjacent pane - when pane is 'open' or 'closed'. Default value is 6.]]>
+            </description>
+            <name>spacing</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+		<attribute>
+			<description><![CDATA[If true, then pane is 'closed' when layout is created. Default is false.]]></description>
+			<name>initClosed</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>        
+		<attribute>
+			<description><![CDATA[If true, then pane is styled as a status bar. It makes sense for 'south' pane. Default is false.]]></description>
+			<name>statusbar</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>        
     </tag>
     <tag>
         <description><![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]>

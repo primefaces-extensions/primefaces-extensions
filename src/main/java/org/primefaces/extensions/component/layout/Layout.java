@@ -191,7 +191,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	/**
-	 * Set tabs of the layout. This items object must either be be of type {@link DataModel}, or a type that can be adapted into a
+	 * Set tabs of the layout. This items object must be either of type {@link DataModel}, or a type that can be adapted into a
 	 * {@link DataModel}.
 	 *
 	 * @param tabs items new items

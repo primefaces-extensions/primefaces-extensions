@@ -140,7 +140,7 @@ public class LayoutRenderer extends CoreRenderer {
 				++indexTab;
 			}
 
-			writer.write(indexTab);
+			writer.write(String.valueOf(indexTab));
 		}
 
 		writer.write(",northOptions:{north__spacing:0");
