@@ -74,6 +74,7 @@
                     </archive>
                     <excludes>
                         <exclude>**/ckeditor/changes.txt</exclude>
+                        <exclude>**/codemirror/changes.txt</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -144,6 +145,7 @@
                                 <include>core/core.js</include>
                                 <include>ajaxstatus/ajaxstatus.js</include>
                                 <include>ckeditor/widget.js</include>
+                                <include>codemirror/widget.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                             </includes>
                             <aggregations>
@@ -197,9 +199,9 @@
 			<artifactId>commons-lang</artifactId>
 		</dependency>
     </dependencies>
-    
+
     <properties>
-      <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-      <resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
-    </properties>    
+      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
+    </properties>
 </project>

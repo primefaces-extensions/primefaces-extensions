@@ -24,8 +24,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.FacesException;
+import javax.faces.application.Application;
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
@@ -174,4 +176,22 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 		return ComponentUtils.escapeJQueryId(component.getParent().getClientId(context));
 	}
+
+	public static void addComponentResource(final FacesContext context, final String name) {
+		addComponentResource(context, name, Constants.LIBRARY, "head");
+	}
+
+    public static void addComponentResource(final FacesContext context, final String name, final String library, final String target) {
+        final Application application = context.getApplication();
+
+        final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
+        componentResource.setRendererType(application.getResourceHandler().getRendererTypeForResourceName(name));
+        componentResource.setTransient(true);
+        componentResource.setId(context.getViewRoot().createUniqueId());
+        componentResource.getAttributes().put("name", name);
+        componentResource.getAttributes().put("library", library);
+        componentResource.getAttributes().put("target", target);
+
+        context.getViewRoot().addComponentResource(context, componentResource, target);
+    }
 }

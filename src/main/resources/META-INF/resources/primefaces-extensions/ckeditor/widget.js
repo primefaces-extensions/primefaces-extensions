@@ -345,7 +345,7 @@ PrimeFacesExt.widget.CKEditor.prototype.handleBlur = function() {
 /**
  * This method fires an event if the behavior was defined.
  *
- * @param {string} eventName The name of the event
+ * @param {string} eventName The name of the event.
  * @protected
  */
 PrimeFacesExt.widget.CKEditor.prototype.fireEvent = function(eventName) {
