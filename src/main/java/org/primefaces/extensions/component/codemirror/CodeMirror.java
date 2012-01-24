@@ -93,8 +93,6 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
         undoDepth,
         tabindex,
         extraKeys;
-        //TODO EVENTS
-        //resource compress
 
 		private String toString;
 
