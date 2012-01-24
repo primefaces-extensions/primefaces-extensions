@@ -64,7 +64,9 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 				resource = super.createResource(resourceName, libraryName);
 			}
 
-			resource = new PrimeFacesExtensionsResource(resource);
+			if (resource != null) {
+				resource = new PrimeFacesExtensionsResource(resource);
+			}
 		} else {
 			resource = super.createResource(resourceName, libraryName);
 		}
