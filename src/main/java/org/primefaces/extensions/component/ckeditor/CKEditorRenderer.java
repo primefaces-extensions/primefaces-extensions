@@ -48,8 +48,7 @@ public class CKEditorRenderer extends InputRenderer {
 
 		// set value
         final String clientId = ckEditor.getClientId(context);
-        final Map<String, String> params =
-        	context.getExternalContext().getRequestParameterMap();
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
         	ckEditor.setSubmittedValue(params.get(clientId));
         }
@@ -73,9 +72,15 @@ public class CKEditorRenderer extends InputRenderer {
 		writer.startElement("textarea", ckEditor);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
+
+		if (ckEditor.getTabindex() != null) {
+			writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
+		}
+
 		if (ckEditor.getValue() != null) {
 			writer.write(ckEditor.getValue().toString());
 		}
+
 		writer.endElement("textarea");
 	}
 
