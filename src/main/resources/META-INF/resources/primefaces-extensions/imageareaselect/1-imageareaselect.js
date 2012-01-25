@@ -3,8 +3,8 @@
  *
  * @constructor
  */
-PrimeFacesExt.widget.ImageAreaSelect = function(id, cfg) {
-	this.id = id;
+PrimeFacesExt.widget.ImageAreaSelect = function(cfg) {
+	this.id = cfg.id;
 	this.cfg = cfg;
 
 	this.options = {};

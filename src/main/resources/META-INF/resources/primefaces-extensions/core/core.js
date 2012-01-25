@@ -156,6 +156,41 @@ PrimeFacesExt = {
 		});
 	},
 
+	cw : function(widgetName, widgetVar, cfg, hasStyleSheet) {
+	    PrimeFacesExt.createWidget(widgetName, widgetVar, cfg, hasStyleSheet);
+	},
+	
+	//Does currently not work with CodeMirror.
+	//PrimeFacesExt.widget.CoreMirror will already be delivered with primefaces-extensions.js.
+	//Therefore -> Widget will be instantiaten but will not load coremirror.js, codemirror.css or modules.
+	createWidget : function(widgetName, widgetVar, cfg, hasStyleSheet) {            
+	    if (PrimeFacesExt.widget[widgetName]) {
+	    	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);
+	    } else {
+	    	if (hasStyleSheet === true) {
+	    		var styleSheet =
+	    			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
+
+	    		//insert stylesheet after primefaces-extensions.js
+	    		var coreScript = $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/primefaces-extensions.js"]');
+	    		coreScript.after('<link type="text/css" rel="stylesheet" href="' + styleSheet + '" />');
+	    	}
+
+    		var script =
+    			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
+
+    		//load script
+	        PrimeFacesExt.getScript(script, function() {
+	            //instantiate widget
+	        	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);
+	        }, true);
+	    }
+	},
+	
+	instantiateWidget : function(widgetName, widgetVar, cfg) {
+		window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+	},
+
 	/**
 	 * The JSF resource identifier.
 	 *

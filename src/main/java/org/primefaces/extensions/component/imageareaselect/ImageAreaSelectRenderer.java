@@ -55,8 +55,10 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
 		writer.write("$(function() {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.ImageAreaSelect('" + clientId + "', {");
-		writer.write("target:'" + target + "'");
+		writer.write("PrimeFacesExt.cw('ImageAreaSelect', '" + widgetVar + "', {");
+
+		writer.write("id:'" + clientId + "'");
+		writer.write(",target:'" + target + "'");
 
 		if (imageAreaSelect.getAspectRatio() != null) {
 			writer.write(",aspectRatio:'" + imageAreaSelect.getAspectRatio() + "'");
@@ -112,7 +114,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(context, imageAreaSelect);
 
-		writer.write("});});");
+		writer.write("}, true);});");
 		writer.endElement("script");
 	}
 }
