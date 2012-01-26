@@ -747,17 +747,17 @@
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>primefaces-extensions</artifactId>
-                <version>0.3.0-SNAPSHOT</version>
+                <version>${pe.impl.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-ckeditor</artifactId>
-                <version>0.3.0-SNAPSHOT</version>
+                <version>${pe.impl.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-codemirror</artifactId>
-                <version>0.3.0-SNAPSHOT</version>
+                <version>${pe.impl.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -832,6 +832,8 @@
     </profiles>
 
     <properties>
+      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
         <java.version.source>1.6</java.version.source>
         <java.version.target>1.6</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
@@ -839,6 +841,7 @@
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.6</pe.jsf.version>
+        <pe.impl.version>0.3.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <primefaces.theme.version>1.0.3</primefaces.theme.version>
     </properties>
