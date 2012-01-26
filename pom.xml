@@ -199,9 +199,4 @@
 			<artifactId>commons-lang</artifactId>
 		</dependency>
     </dependencies>
-
-    <properties>
-      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
-    </properties>
 </project>
