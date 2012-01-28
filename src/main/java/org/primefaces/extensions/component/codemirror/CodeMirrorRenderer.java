@@ -34,6 +34,7 @@ import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
 
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.WidgetUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -104,91 +105,13 @@ public class CodeMirrorRenderer extends InputRenderer implements ComponentSystem
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('CodeMirror', '" + widgetVar + "', {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.CodeMirror('" + clientId + "', {");
-
-		// options
-		writer.write("readOnly:" + codeMirror.isReadOnly());
-
-		if (codeMirror.getMode() != null) {
-			writer.write(",mode:'" + codeMirror.getMode() + "'");
-		}
-
-		if (codeMirror.getFirstLineNumber() != null) {
-			writer.write(",firstLineNumber:" + codeMirror.getFirstLineNumber());
-		}
-
-		if (codeMirror.getIndentUnit() != null) {
-			writer.write(",indentUnit:" + codeMirror.getIndentUnit());
-		}
-
-		if (codeMirror.getKeyMap() != null) {
-			writer.write(",keyMap:'" + codeMirror.getKeyMap() + "'");
-		}
-
-		if (codeMirror.getPollInterval() != null) {
-			writer.write(",pollInterval:" + codeMirror.getPollInterval());
-		}
-
-		if (codeMirror.getTabSize() != null) {
-			writer.write(",tabSize:" + codeMirror.getTabSize());
-		}
-
-		if (codeMirror.getTheme() != null) {
-			writer.write(",theme:'" + codeMirror.getTheme() + "'");
-		}
-
-		if (codeMirror.getUndoDepth() != null) {
-			writer.write(",undoDepth:" + codeMirror.getUndoDepth());
-		}
-
-		if (codeMirror.getWorkDelay() != null) {
-			writer.write(",workDelay:" + codeMirror.getWorkDelay());
-		}
-
-		if (codeMirror.getWorkTime() != null) {
-			writer.write(",workTime:" + codeMirror.getWorkTime());
-		}
-
-		if (codeMirror.isElectricChars() != null) {
-			writer.write(",electricChars:" + codeMirror.isElectricChars());
-		}
-
-		if (codeMirror.isFixedGutter() != null) {
-			writer.write(",fixedGutter:" + codeMirror.isFixedGutter());
-		}
-
-		if (codeMirror.isGutter() != null) {
-			writer.write(",gutter:" + codeMirror.isGutter());
-		}
-
-		if (codeMirror.isIndentWithTabs() != null) {
-			writer.write(",indentWithTabs:" + codeMirror.isIndentWithTabs());
-		}
-
-		if (codeMirror.isLineNumbers() != null) {
-			writer.write(",lineNumbers:" + codeMirror.isLineNumbers());
-		}
-
-		if (codeMirror.isLineWrapping() != null) {
-			writer.write(",lineWrapping:" + codeMirror.isLineWrapping());
-		}
-
-		if (codeMirror.isMatchBrackets() != null) {
-			writer.write(",matchBrackets:" + codeMirror.isMatchBrackets());
-		}
-
-		if (codeMirror.isSmartIndent() != null) {
-			writer.write(",smartIndent:" + codeMirror.isSmartIndent());
-		}
-
-		if (codeMirror.getExtraKeys() != null) {
-			writer.write(",extraKeys:" + codeMirror.getExtraKeys());
-		}
+		WidgetUtils.renderAllOptions(clientId, writer, codeMirror, false);
 
 		encodeClientBehaviors(context, codeMirror);
 
-		writer.write("});});");
+		writer.write("}, true);});");
 
 		endScript(writer);
 	}

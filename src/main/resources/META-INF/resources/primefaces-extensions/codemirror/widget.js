@@ -3,8 +3,8 @@
  * 
  * @constructor
  */
-PrimeFacesExt.widget.CodeMirror = function(id, cfg) {
-	this.id = id;
+PrimeFacesExt.widget.CodeMirror = function(cfg) {
+	this.id = cfg.id;
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(this.id);
 	this.jq = $(this.jqId);
@@ -27,6 +27,8 @@ PrimeFacesExt.widget.CodeMirror = function(id, cfg) {
 		}, this);
 
 	this.instance = CodeMirror.fromTextArea(this.jq[0], this.options);
+
+	this.postConstruct();
 }
 
 PrimeFaces.extend(PrimeFacesExt.widget.CodeMirror, PrimeFaces.widget.BaseWidget);

@@ -19,12 +19,15 @@
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.WidgetUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -49,68 +52,17 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
 		final String target = ComponentUtils.findTarget(context, imageAreaSelect);
 
+		final Map<String, Object> additionalOptions = new Hashtable<String, Object>();
+		additionalOptions.put("target", target);
+
 		writer.startElement("script", imageAreaSelect);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write("$(function() {");
-
 		writer.write("PrimeFacesExt.cw('ImageAreaSelect', '" + widgetVar + "', {");
 
-		writer.write("id:'" + clientId + "'");
-		writer.write(",target:'" + target + "'");
-
-		if (imageAreaSelect.getAspectRatio() != null) {
-			writer.write(",aspectRatio:'" + imageAreaSelect.getAspectRatio() + "'");
-		}
-
-		if (imageAreaSelect.isAutoHide() != null) {
-			writer.write(",autoHide:" + imageAreaSelect.isAutoHide());
-		}
-
-		if (imageAreaSelect.getFadeSpeed() != null) {
-			writer.write(",fadeSpeed:" + imageAreaSelect.getFadeSpeed());
-		}
-
-		if (imageAreaSelect.isHandles() != null) {
-			writer.write(",handles:" + imageAreaSelect.isHandles());
-		}
-
-		if (imageAreaSelect.isHide() != null) {
-			writer.write(",hide:" + imageAreaSelect.isHide());
-		}
-
-		if (imageAreaSelect.getImageHeight() != null) {
-			writer.write(",imageHeight:" + imageAreaSelect.getImageHeight());
-		}
-
-		if (imageAreaSelect.getImageWidth() != null) {
-			writer.write(",imageWidth:" + imageAreaSelect.getImageWidth());
-		}
-
-		if (imageAreaSelect.isMovable() != null) {
-			writer.write(",movable:" + imageAreaSelect.isMovable());
-		}
-
-		if (imageAreaSelect.isPersistent() != null) {
-			writer.write(",persistent:" + imageAreaSelect.isPersistent());
-		}
-
-		if (imageAreaSelect.isResizable() != null) {
-			writer.write(",resizable:" + imageAreaSelect.isResizable());
-		}
-
-		if (imageAreaSelect.isShow() != null) {
-			writer.write(",show:" + imageAreaSelect.isShow());
-		}
-
-		if (imageAreaSelect.getParentSelector() != null) {
-			writer.write(",parent:'" + imageAreaSelect.getParentSelector() + "'");
-		}
-
-		if (imageAreaSelect.isKeyboardSupport() != null) {
-			writer.write(",keyboardSupport:" + imageAreaSelect.isKeyboardSupport());
-		}
+		WidgetUtils.renderAllOptions(clientId, writer, imageAreaSelect, false, additionalOptions);
 
 		encodeClientBehaviors(context, imageAreaSelect);
 
