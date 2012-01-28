@@ -44,8 +44,8 @@ PrimeFacesExt.widget.ImageAreaSelect = function(cfg) {
 	if (this.cfg.show) {
 		this.options.show = this.cfg.show;
 	}
-	if (this.cfg.parent) {
-		this.options.parent = this.cfg.parent;
+	if (this.cfg.parentSelector) {
+		this.options.parent = this.cfg.parentSelector;
 	}
 	if (this.cfg.keyboardSupport) {
 		this.options.keys = this.cfg.keyboardSupport;
