@@ -171,13 +171,13 @@ PrimeFacesExt = {
 	    		var styleSheet =
 	    			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
 
-	    		//insert StyleSheet after last StyleSheet with ln=primefaces
+	    		//insert style sheet after last style sheet with ln=primefaces
 	    		if ($.browser.msie) {
 	    			var indexToInsert;
 	    			for (var i = 0; i < document.styleSheets.length; i++ ) {
 	    				var currentStyleSheetURL = document.styleSheets[i].href.toString();
 	    			    if (currentStyleSheetURL.indexOf('ln=primefaces') !== -1) {
-	    			    	//add +1 to insert after this StyleSheet
+	    			    	//add +1 to insert after this style sheet
 	    			    	indexToInsert = i + 1;
 	    			    }
 	    			}
@@ -185,7 +185,7 @@ PrimeFacesExt = {
 	    			if (indexToInsert) {
 	    				document.createStyleSheet(styleSheet, indexToInsert);
 	    			} else {
-	    				PrimeFaces.error('No stylesheet from PrimeFaces or PrimeFaces Extensions included. StyleSheet for PrimeFaces Extensions Widget ' + widgetName + ' will not be added.');
+	    				PrimeFaces.error('No style sheet from PrimeFaces or PrimeFaces Extensions included. StyleSheet for PrimeFaces Extensions Widget ' + widgetName + ' will not be added.');
 	    			}
 	    		} else {
 		    		var lastStyleSheet = $('link[href*="ln=primefaces"]:last');
@@ -193,7 +193,7 @@ PrimeFacesExt = {
 		    		if (lastStyleSheet.length > 0) {
 		    			lastStyleSheet.after('<link type="text/css" rel="stylesheet" href="' + styleSheet + '" />');
 		    		} else {
-		    			PrimeFaces.error('No stylesheet from PrimeFaces or PrimeFaces Extensions included. StyleSheet for PrimeFaces Extensions Widget ' + widgetName + ' will not be added.');
+		    			PrimeFaces.error('No style sheet from PrimeFaces or PrimeFaces Extensions included. StyleSheet for PrimeFaces Extensions Widget ' + widgetName + ' will not be added.');
 		    		}
 	    		}
 	    	}
