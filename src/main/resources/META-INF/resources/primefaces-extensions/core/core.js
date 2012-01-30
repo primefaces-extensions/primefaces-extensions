@@ -160,9 +160,6 @@ PrimeFacesExt = {
 	    PrimeFacesExt.createWidget(widgetName, widgetVar, cfg, hasStyleSheet);
 	},
 	
-	//Does currently not work with CodeMirror.
-	//PrimeFacesExt.widget.CoreMirror will already be delivered with primefaces-extensions.js.
-	//Therefore -> Widget will be instantiaten but will not load coremirror.js, codemirror.css or modules.
 	createWidget : function(widgetName, widgetVar, cfg, hasStyleSheet) {            
 	    if (PrimeFacesExt.widget[widgetName]) {
 	    	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);

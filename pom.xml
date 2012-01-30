@@ -74,7 +74,6 @@
                     </archive>
                     <excludes>
                         <exclude>**/ckeditor/changes.txt</exclude>
-                        <exclude>**/codemirror/changes.txt</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -145,7 +144,6 @@
                                 <include>ajaxstatus/ajaxstatus.js</include>
                                 <include>blockui/**</include>                                
                                 <include>ckeditor/widget.js</include>
-                                <include>codemirror/widget.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                             </includes>
                             <aggregations>
