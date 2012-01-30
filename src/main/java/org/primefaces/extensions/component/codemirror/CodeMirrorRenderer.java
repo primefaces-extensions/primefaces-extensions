@@ -33,8 +33,8 @@ import javax.faces.event.ComponentSystemEventListener;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
 
+import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.WidgetUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -107,7 +107,7 @@ public class CodeMirrorRenderer extends InputRenderer implements ComponentSystem
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('CodeMirror', '" + widgetVar + "', {");
 
-		WidgetUtils.renderAllOptions(clientId, writer, codeMirror, false);
+		WidgetRenderer.renderOptions(clientId, writer, codeMirror);
 
 		encodeClientBehaviors(context, codeMirror);
 

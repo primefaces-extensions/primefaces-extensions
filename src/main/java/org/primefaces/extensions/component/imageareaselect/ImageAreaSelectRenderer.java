@@ -19,15 +19,13 @@
 package org.primefaces.extensions.component.imageareaselect;
 
 import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.WidgetUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -52,9 +50,6 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
 		final String target = ComponentUtils.findTarget(context, imageAreaSelect);
 
-		final Map<String, Object> additionalOptions = new Hashtable<String, Object>();
-		additionalOptions.put("target", target);
-
 		writer.startElement("script", imageAreaSelect);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("type", "text/javascript", null);
@@ -62,7 +57,9 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('ImageAreaSelect', '" + widgetVar + "', {");
 
-		WidgetUtils.renderAllOptions(clientId, writer, imageAreaSelect, false, additionalOptions);
+		WidgetRenderer.renderOptions(clientId, writer, imageAreaSelect);
+
+		writer.write(",target:'" + target + "'");
 
 		encodeClientBehaviors(context, imageAreaSelect);
 

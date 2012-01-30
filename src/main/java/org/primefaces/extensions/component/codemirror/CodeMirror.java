@@ -33,6 +33,7 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
  * Component class for the <code>CodeMirror</code> component.
@@ -72,27 +73,27 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	protected enum PropertyKeys {
 
         widgetVar,
-        theme,
-        mode,
-        indentUnit,
-        smartIndent,
-        tabSize,
-        indentWithTabs,
-        electricChars,
-        keyMap,
-        lineWrapping,
-        lineNumbers,
-        firstLineNumber,
-        gutter,
-        fixedGutter,
-        readOnly,
-        matchBrackets,
-        workTime,
-        workDelay,
-        pollInterval,
-        undoDepth,
-        tabindex,
-        extraKeys;
+        @Option theme,
+        @Option mode,
+        @Option indentUnit,
+        @Option smartIndent,
+        @Option tabSize,
+        @Option indentWithTabs,
+        @Option electricChars,
+        @Option keyMap,
+        @Option lineWrapping,
+        @Option lineNumbers,
+        @Option firstLineNumber,
+        @Option gutter,
+        @Option fixedGutter,
+        @Option readOnly,
+        @Option matchBrackets,
+        @Option workTime,
+        @Option workDelay,
+        @Option pollInterval,
+        @Option undoDepth,
+        @Option tabindex,
+        @Option extraKeys;
 
 		private String toString;
 

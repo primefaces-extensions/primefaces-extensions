@@ -38,6 +38,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
+import org.primefaces.extensions.renderkit.widget.Option;
 import org.primefaces.util.Constants;
 
 /**
@@ -76,25 +77,25 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	protected enum PropertyKeys {
 
 		widgetVar,
-		forValue("for"),
-		aspectRatio,
-		autoHide,
-		fadeSpeed,
-		handles,
-		hide,
-		imageHeight,
-		imageWidth,
-		movable,
-		persistent,
-		resizable,
-		show,
-		zIndex,
-		maxHeight,
-		maxWidth,
-		minHeight,
-		minWidth,
-		parentSelector,
-		keyboardSupport;
+		@Option forValue("for"),
+		@Option aspectRatio,
+		@Option autoHide,
+		@Option fadeSpeed,
+		@Option handles,
+		@Option hide,
+		@Option imageHeight,
+		@Option imageWidth,
+		@Option movable,
+		@Option persistent,
+		@Option resizable,
+		@Option show,
+		@Option zIndex,
+		@Option maxHeight,
+		@Option maxWidth,
+		@Option minHeight,
+		@Option minWidth,
+		@Option parentSelector,
+		@Option keyboardSupport;
 
 		private String toString;
 
