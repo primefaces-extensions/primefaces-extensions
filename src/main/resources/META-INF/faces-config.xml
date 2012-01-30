@@ -112,6 +112,10 @@
         <component-type>org.primefaces.extensions.component.BlockUI</component-type>
         <component-class>org.primefaces.extensions.component.blockui.BlockUI</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.TimePicker</component-type>
+        <component-class>org.primefaces.extensions.component.timepicker.TimePicker</component-class>
+    </component>    
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -195,8 +199,8 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.BlockUIRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.blockui.BlockUIRenderer</renderer-class>
+            <renderer-type>org.primefaces.extensions.component.TimePickerRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.timepicker.TimePickerRenderer</renderer-class>
         </renderer>        
 
         <client-behavior-renderer>

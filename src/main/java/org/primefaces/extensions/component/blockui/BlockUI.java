@@ -39,6 +39,7 @@ import org.primefaces.component.api.Widget;
  */
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
                       })
 public class BlockUI extends UIComponentBase implements Widget {
