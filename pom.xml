@@ -106,7 +106,6 @@
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
-                                <include>blockui/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>tooltip/**</include>
@@ -144,6 +143,7 @@
                             <includes>
                                 <include>core/core.js</include>
                                 <include>ajaxstatus/ajaxstatus.js</include>
+                                <include>blockui/**</include>                                
                                 <include>ckeditor/widget.js</include>
                                 <include>codemirror/widget.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
