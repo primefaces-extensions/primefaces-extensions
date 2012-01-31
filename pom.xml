@@ -107,6 +107,7 @@
                             <includes>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
+                                <include>timepicker/**</include>                                
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
                             </includes>
