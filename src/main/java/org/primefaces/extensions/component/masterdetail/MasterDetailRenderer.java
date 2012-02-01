@@ -30,7 +30,7 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
@@ -54,7 +54,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	private static final String FACET_LABEL = "label";
 
 	@Override
-	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		MasterDetail masterDetail = (MasterDetail) component;
 		MasterDetailLevel mdl;
 
@@ -296,7 +296,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(final FacesContext fc, UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
 		// rendering happens on encodeEnd
 	}
 

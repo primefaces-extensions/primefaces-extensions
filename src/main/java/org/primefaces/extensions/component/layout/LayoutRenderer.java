@@ -31,7 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.DataModel;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.util.ComponentUtils;

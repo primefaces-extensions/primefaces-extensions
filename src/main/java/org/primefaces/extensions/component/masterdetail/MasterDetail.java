@@ -36,7 +36,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.util.Constants;
 
@@ -186,7 +186,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	@Override
-	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();

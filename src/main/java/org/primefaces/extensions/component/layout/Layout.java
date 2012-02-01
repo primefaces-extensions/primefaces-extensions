@@ -44,7 +44,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
