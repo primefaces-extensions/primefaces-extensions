@@ -25,7 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -178,7 +178,7 @@ public class BlockUIRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(FacesContext fc, UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
 		// nothing to do
 	}
 }
