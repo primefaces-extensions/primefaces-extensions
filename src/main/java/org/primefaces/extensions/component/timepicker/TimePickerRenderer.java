@@ -27,7 +27,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.renderkit.InputRenderer;
 
@@ -184,7 +184,7 @@ public class TimePickerRenderer extends InputRenderer {
 		}
 	}
 
-	protected void encodeSpinnerButton(FacesContext fc, String styleClass, String iconClass, boolean disabled)
+	protected void encodeSpinnerButton(final FacesContext fc, String styleClass, final String iconClass, final boolean disabled)
 	    throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
@@ -203,7 +203,7 @@ public class TimePickerRenderer extends InputRenderer {
 	}
 
 	@Override
-	public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue)
+	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
 	    throws ConverterException {
 		TimePicker timepicker = (TimePicker) component;
 		String value = (String) submittedValue;

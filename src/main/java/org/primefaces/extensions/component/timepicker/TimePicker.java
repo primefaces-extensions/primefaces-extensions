@@ -29,7 +29,7 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.lang3.LocaleUtils;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ArrayUtils;
@@ -104,7 +104,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
@@ -312,7 +312,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 	 */
 
-	public java.util.Locale calculateLocale(FacesContext fc) {
+	public java.util.Locale calculateLocale(final FacesContext fc) {
 		if (appropriateLocale == null) {
 			Object userLocale = getLocale();
 			if (userLocale != null) {
