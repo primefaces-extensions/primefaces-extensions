@@ -18,10 +18,8 @@
 
 package org.primefaces.extensions.renderkit.widget;
 
-import java.lang.reflect.Method;
-
 /**
- * Container for the {@link Option} and the value of the {@link Option}.
+ * Container for all required informations to render an widget option.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
@@ -32,8 +30,25 @@ public class OptionContainer {
 	private String name;
 	private boolean escape;
 	private boolean useDoubleQuotes;
-	private String propertyName;
-	private Method readMethod;
+
+	public OptionContainer() {
+
+	}
+
+	public OptionContainer(final String name) {
+		this.name = name;
+	}
+
+	public OptionContainer(final String name, final boolean escape) {
+		this.name = name;
+		this.escape = escape;
+	}
+
+	public OptionContainer(final String name, final boolean escape, final boolean useDoubleQuotes) {
+		this.name = name;
+		this.escape = escape;
+		this.useDoubleQuotes = useDoubleQuotes;
+	}
 
 	public String getName() {
 		return name;
@@ -57,21 +72,5 @@ public class OptionContainer {
 
 	public void setUseDoubleQuotes(final boolean useDoubleQuotes) {
 		this.useDoubleQuotes = useDoubleQuotes;
-	}
-
-	public String getPropertyName() {
-		return propertyName;
-	}
-
-	public void setPropertyName(final String propertyName) {
-		this.propertyName = propertyName;
-	}
-
-	public Method getReadMethod() {
-		return readMethod;
-	}
-
-	public void setReadMethod(final Method readMethod) {
-		this.readMethod = readMethod;
 	}
 }

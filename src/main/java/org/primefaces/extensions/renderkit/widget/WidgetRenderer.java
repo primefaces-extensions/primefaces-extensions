@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -32,7 +33,7 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.component.api.Widget;
 
 /**
- * Utilities for rendering with {@link Widget}s.
+ * Utilities for rendering {@link Widget}s.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
@@ -40,11 +41,17 @@ import org.primefaces.component.api.Widget;
  */
 public class WidgetRenderer {
 
-	private static final Map<String, OptionContainer[]> PROPERTY_KEYS_CACHE = new HashMap<String, OptionContainer[]>();
+	private static final Map<String, AdvancedOptionContainer[]> PROPERTY_KEYS_CACHE =
+		new HashMap<String, AdvancedOptionContainer[]>();
 
-	//TODO addtional Options as param
 	public static void renderWidgetScript(final FacesContext context, final String clientId, final ResponseWriter writer,
 			final Widget widget, final boolean hasStyleSheet) throws IOException {
+		renderWidgetScript(context, clientId, writer, widget, hasStyleSheet, null);
+	}
+
+	public static void renderWidgetScript(final FacesContext context, final String clientId, final ResponseWriter writer,
+			final Widget widget, final boolean hasStyleSheet, final Map<OptionContainer, Object> additionalOptions)
+			throws IOException {
 
 		final Class<?> widgetClass = widget.getClass();
 		final String widgetName = widgetClass.getSimpleName();
@@ -53,7 +60,15 @@ public class WidgetRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('" + widgetName + "', '" + widgetVar + "', {");
 
+		//render mapped options
 		renderOptions(clientId, writer, widget);
+
+		//render additional options
+		if (additionalOptions != null) {
+			for (Entry<OptionContainer, Object> entry : additionalOptions.entrySet()) {
+				renderOption(writer, entry.getKey(), entry.getValue());
+			}
+		}
 
 		writer.write("}, " + hasStyleSheet + ");});");
     }
@@ -65,16 +80,17 @@ public class WidgetRenderer {
 
 		writer.write("id:'" + clientId + "'");
 
-		final OptionContainer[] optionContainers = getOptionsFromPropertyKeys(widgetClass);
+		final AdvancedOptionContainer[] optionContainers = getOptionsFromPropertyKeys(widgetClass);
 		for (int i = 0; i < optionContainers.length; i++) {
-			final OptionContainer optionContainer = optionContainers[i];
+			final AdvancedOptionContainer optionContainer = optionContainers[i];
 			final Object propertyValue = getPropertValue(optionContainer, widget);
 
 			renderOption(writer, optionContainer, propertyValue);
 		}
 	}
 
-	public static void renderOption(final ResponseWriter writer, final OptionContainer optionContainer, final Object value) throws IOException {
+	public static void renderOption(final ResponseWriter writer, final OptionContainer optionContainer, final Object value)
+		throws IOException {
 
 		if (value != null) {
 			if (String.class.isAssignableFrom(value.getClass()) ||
@@ -113,7 +129,7 @@ public class WidgetRenderer {
 		}
 	}
 
-    private static Object getPropertValue(final OptionContainer optionContainer, final Widget widget) {
+    private static Object getPropertValue(final AdvancedOptionContainer optionContainer, final Widget widget) {
     	try {
      		return optionContainer.getReadMethod().invoke(widget);
     	} catch (Exception e) {
@@ -122,8 +138,8 @@ public class WidgetRenderer {
     	}
     }
 
-    private static OptionContainer[] getOptionsFromPropertyKeys(final Class<?> widgetClass) {
-    	OptionContainer[] options;
+    private static AdvancedOptionContainer[] getOptionsFromPropertyKeys(final Class<?> widgetClass) {
+    	AdvancedOptionContainer[] options;
 
     	//try from cache first
     	if (PROPERTY_KEYS_CACHE.containsKey(widgetClass.getName())) {
@@ -159,7 +175,7 @@ public class WidgetRenderer {
 							final Field propertyKeyField = propertyKeysClass.getDeclaredField(propertyKey.name());
 
 		    				if (propertyKeyField.isAnnotationPresent(Option.class)) {
-		    					final OptionContainer optionContainer = new OptionContainer();
+		    					final AdvancedOptionContainer optionContainer = new AdvancedOptionContainer();
 		    					final Option option = propertyKeyField.getAnnotation(Option.class);
 		    					final String propertyKeyAsString = propertyKey.toString();
 		    					final String name = option.name().equals("") ? propertyKeyAsString : option.name();
@@ -168,7 +184,8 @@ public class WidgetRenderer {
 		    					optionContainer.setName(name);
 		    					optionContainer.setUseDoubleQuotes(option.useDoubleQuotes());
 		    					optionContainer.setPropertyName(propertyKeyAsString);
-		    					optionContainer.setReadMethod(new PropertyDescriptor(propertyKeyAsString, widgetClass).getReadMethod());
+		    					optionContainer.setReadMethod(
+		    							new PropertyDescriptor(propertyKeyAsString, widgetClass).getReadMethod());
 
 		    					optionContainerList.add(optionContainer);
 		    				}
@@ -179,7 +196,7 @@ public class WidgetRenderer {
 	    			}
 
 	    			//add to cache
-	    	    	PROPERTY_KEYS_CACHE.put(widgetClass.getName(), optionContainerList.toArray(new OptionContainer[0]));
+	    	    	PROPERTY_KEYS_CACHE.put(widgetClass.getName(), optionContainerList.toArray(new AdvancedOptionContainer[0]));
 
 	    	    	options = PROPERTY_KEYS_CACHE.get(widgetClass.getName());
 				}
