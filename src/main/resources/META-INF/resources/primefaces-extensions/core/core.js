@@ -156,10 +156,32 @@ PrimeFacesExt = {
 		});
 	},
 
+	/**
+	 * Creates a widget and load the required resources if not already available.
+	 * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
+	 * The file and directory names must be completely in lower case.
+	 * For example: /imageareaselect/imageareaselect.js.
+	 * 
+	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
+	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} cfg An object with options.
+	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
+	 */
 	cw : function(widgetName, widgetVar, cfg, hasStyleSheet) {
 	    PrimeFacesExt.createWidget(widgetName, widgetVar, cfg, hasStyleSheet);
 	},
-	
+
+	/**
+	 * Creates a widget and load the required resources if not already available.
+	 * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
+	 * The file and directory names must be completely in lower case.
+	 * For example: /imageareaselect/imageareaselect.js.
+	 * 
+	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
+	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} cfg An object with options.
+	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
+	 */
 	createWidget : function(widgetName, widgetVar, cfg, hasStyleSheet) {            
 	    if (PrimeFacesExt.widget[widgetName]) {
 	    	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);
