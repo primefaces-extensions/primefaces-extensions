@@ -55,8 +55,8 @@ CKEDITOR_GETURL = function(resource) {
  * 
  * @constructor
  */
-PrimeFacesExt.widget.CKEditor = function(id, cfg) {
-	this.id = id;
+PrimeFacesExt.widget.CKEditor = function(cfg) {
+	this.id = cfg.id;
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(this.id);
 	this.jq = $(this.jqId);

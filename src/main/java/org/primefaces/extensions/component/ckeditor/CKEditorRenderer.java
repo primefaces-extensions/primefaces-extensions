@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
+import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -92,58 +93,13 @@ public class CKEditorRenderer extends InputRenderer {
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('CKEditor', '" + widgetVar + "', {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.CKEditor('" + clientId + "', {");
-
-		// options
-		writer.write("width:'" + ckEditor.getWidth() + "'");
-		writer.write(",height:'" + ckEditor.getHeight() + "'");
-		writer.write(",checkDirtyInterval:" + ckEditor.getCheckDirtyInterval());
-
-		if (ckEditor.getSkin() != null) {
-			writer.write(",skin:'" + ckEditor.getSkin() + "'");
-		}
-
-		if (ckEditor.getTheme() != null) {
-			writer.write(",theme:'" + ckEditor.getTheme() + "'");
-		}
-
-		final String toolbar = ckEditor.getToolbar();
-		if (toolbar != null) {
-			if (toolbar.trim().startsWith("[")) {
-				writer.write(",toolbar:" + ckEditor.getToolbar());
-			} else {
-				writer.write(",toolbar:\"" + ckEditor.getToolbar() + "\"");
-			}
-		}
-
-		if (ckEditor.isReadOnly()) {
-			writer.write(",readOnly:" + ckEditor.isReadOnly());
-		}
-
-		if (ckEditor.getInterfaceColor() != null) {
-			writer.write(",interfaceColor:'" + ckEditor.getInterfaceColor() + "'");
-		}
-
-		if (ckEditor.getLanguage() != null) {
-			writer.write(",language:" + ckEditor.getLanguage());
-		}
-
-		if (ckEditor.getDefaultLanguage() != null) {
-			writer.write(",defaultLanguage:'" + ckEditor.getDefaultLanguage() + "'");
-		}
-
-		if (ckEditor.getContentsCss() != null) {
-			writer.write(",contentsCss:'" + ckEditor.getContentsCss() + "'");
-		}
-
-		if (ckEditor.getCustomConfig() != null) {
-			writer.write(",customConfig:'" + ckEditor.getCustomConfig() + "'");
-		}
+		WidgetRenderer.renderOptions(clientId, writer, ckEditor);
 
 		encodeClientBehaviors(context, ckEditor);
 
-		writer.write("});});");
+		writer.write("}, true);});");
 
 		endScript(writer);
 	}

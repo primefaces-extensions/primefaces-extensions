@@ -33,6 +33,7 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
  * Component class for the <code>CKEditor</code> component.
@@ -83,19 +84,19 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	protected enum PropertyKeys {
 
         widgetVar,
-        height,
-        width,
-        theme,
-        skin,
-        toolbar,
-        readOnly,
-        interfaceColor,
-        language,
-        defaultLanguage,
-        contentsCss,
-        checkDirtyInterval,
-        customConfig,
-        tabindex;
+        @Option height,
+        @Option width,
+        @Option theme,
+        @Option skin,
+        @Option(useDoubleQuotes = true) toolbar,
+        @Option readOnly,
+        @Option interfaceColor,
+        @Option language,
+        @Option defaultLanguage,
+        @Option contentsCss,
+        @Option checkDirtyInterval,
+        @Option customConfig,
+        @Option tabindex;
 
 		private String toString;
 
