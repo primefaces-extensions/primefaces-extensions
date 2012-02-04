@@ -824,9 +824,16 @@
             <id>myfaces</id>
             <properties>
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
+                <pe.jsf.displayname>MyFaces</pe.jsf.displayname>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
                 <pe.jsf.version>2.1.5</pe.jsf.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>deploy</id>
+            <properties>
+                <pe.webapp.filter>release</pe.webapp.filter>
             </properties>
         </profile>        
     </profiles>
@@ -837,7 +844,8 @@
         <java.version.source>1.6</java.version.source>
         <java.version.target>1.6</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-        <pe.jsf.impl>mojarra</pe.jsf.impl>        
+        <pe.jsf.impl>mojarra</pe.jsf.impl>
+        <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.6</pe.jsf.version>
