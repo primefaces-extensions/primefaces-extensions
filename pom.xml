@@ -347,6 +347,25 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <plugin>
+                    <groupId>com.google.code.maven-svn-revision-number-plugin</groupId>
+                    <artifactId>maven-svn-revision-number-plugin</artifactId>
+                    <version>1.8</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <entries>
+                            <entry>
+                                <prefix>svn</prefix>
+                            </entry>
+                        </entries>
+                    </configuration>                    
+                </plugin>                
                 
                 <!-- dependencies to own plugins -->
                 <plugin>
