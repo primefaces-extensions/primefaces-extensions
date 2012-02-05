@@ -350,7 +350,7 @@
                 <plugin>
                     <groupId>com.google.code.maven-svn-revision-number-plugin</groupId>
                     <artifactId>maven-svn-revision-number-plugin</artifactId>
-                    <version>1.8</version>
+                    <version>1.7</version>
                     <executions>
                         <execution>
                             <goals>
@@ -865,6 +865,9 @@
         </profile>
         <profile>
             <id>deploy</id>
+	        <build>
+                <finalName>primeext-showcase-${pe.jsf.impl}</finalName>
+	        </build>
             <properties>
                 <pe.webapp.filter>release</pe.webapp.filter>
             </properties>
