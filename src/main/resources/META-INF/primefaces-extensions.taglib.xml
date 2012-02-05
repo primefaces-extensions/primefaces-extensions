@@ -186,10 +186,11 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-        	<description><![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]></description>
-        	<name>tabindex</name>
-        	<required>false</required>
-        	<type>java.lang.Integer</type>
+            <description><![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
         </attribute>
     </tag>
     <tag>
@@ -201,156 +202,181 @@
             <renderer-type>org.primefaces.extensions.component.CodeMirrorRenderer</renderer-type>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a naming container.]]></description>
+            <description><![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the client side widget.]]></description>
+            <description><![CDATA[Name of the client side widget.]]>
+            </description>
             <name>widgetVar</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Value of the component.]]></description>
+            <description><![CDATA[Value of the component.]]>
+            </description>
             <name>value</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The theme to style the editor with.]]></description>
+            <description><![CDATA[The theme to style the editor with.]]>
+            </description>
             <name>theme</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The mode to use. When not given, this will default to the first mode that was loaded. It may be a string, which either simply names the mode or is a MIME type associated with the mode. Alternatively, it may be an object containing configuration options for the mode, with a name property that names the mode (for example {name: "javascript", json: true}).]]></description>
+            <description><![CDATA[The mode to use. When not given, this will default to the first mode that was loaded. It may be a string, which either simply names the mode or is a MIME type associated with the mode. Alternatively, it may be an object containing configuration options for the mode, with a name property that names the mode (for example {name: "javascript", json: true}).]]>
+            </description>
             <name>mode</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.]]></description>
+            <description><![CDATA[How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.]]>
+            </description>
             <name>indentUnit</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.]]></description>
+            <description><![CDATA[Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.]]>
+            </description>
             <name>smartIndent</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The width of a tab character. Defaults to 4.]]></description>
+            <description><![CDATA[The width of a tab character. Defaults to 4.]]>
+            </description>
             <name>tabSize</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation (only works if the mode supports indentation). Default is true.]]></description>
+            <description><![CDATA[Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation (only works if the mode supports indentation). Default is true.]]>
+            </description>
             <name>electricChars</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Configures the keymap to use. The default is "default", which is the only keymap defined in codemirror.js itself. Extra keymaps are found in the keymap directory.]]></description>
+            <description><![CDATA[Configures the keymap to use. The default is "default", which is the only keymap defined in codemirror.js itself. Extra keymaps are found in the keymap directory.]]>
+            </description>
             <name>keyMap</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).]]></description>
+            <description><![CDATA[Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).]]>
+            </description>
             <name>lineWrapping</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Whether to show line numbers to the left of the editor.]]></description>
+            <description><![CDATA[Whether to show line numbers to the left of the editor.]]>
+            </description>
             <name>lineNumbers</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[At which number to start counting lines. Default is 1.]]></description>
+            <description><![CDATA[At which number to start counting lines. Default is 1.]]>
+            </description>
             <name>firstLineNumber</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Can be used to force a 'gutter' (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting markers.]]></description>
+            <description><![CDATA[Can be used to force a 'gutter' (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting markers.]]>
+            </description>
             <name>gutter</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[When enabled (off by default), this will make the gutter stay visible when the document is scrolled horizontally.]]></description>
+            <description><![CDATA[When enabled (off by default), this will make the gutter stay visible when the document is scrolled horizontally.]]>
+            </description>
             <name>fixedGutter</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.]]></description>
+            <description><![CDATA[This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.]]>
+            </description>
             <name>readOnly</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Determines whether brackets are matched whenever the cursor is moved next to a bracket.]]></description>
+            <description><![CDATA[Determines whether brackets are matched whenever the cursor is moved next to a bracket.]]>
+            </description>
             <name>matchBrackets</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]></description>
+            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
+            </description>
             <name>workTime</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]></description>
+            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
+            </description>
             <name>workDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn't generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.]]></description>
+            <description><![CDATA[Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn't generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.]]>
+            </description>
             <name>pollInterval</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The maximum number of undo levels that the editor stores. Defaults to 40.]]></description>
+            <description><![CDATA[The maximum number of undo levels that the editor stores. Defaults to 40.]]>
+            </description>
             <name>undoDepth</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]></description>
+            <description><![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
+            </description>
             <name>tabindex</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Can be used to specify extra keybindings for the editor. When given, should be an object with property names like Ctrl-A, Home, and Ctrl-Alt-Left.]]></description>
+            <description><![CDATA[Can be used to specify extra keybindings for the editor. When given, should be an object with property names like Ctrl-A, Home, and Ctrl-Alt-Left.]]>
+            </description>
             <name>extraKeys</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-	</tag>
+    </tag>
     <tag>
         <tag-name>head</tag-name>
         <component>
@@ -1379,18 +1405,20 @@
             <required>true</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[Makes a pane resizable. Default is true.]]></description>
-			<name>resizable</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Makes a pane closable. Default is true.]]></description>
-			<name>closable</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
+        <attribute>
+            <description><![CDATA[Makes a pane resizable. Default is true.]]>
+            </description>
+            <name>resizable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Makes a pane closable. Default is true.]]>
+            </description>
+            <name>closable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
         <attribute>
             <description><![CDATA[Specifies the initial size of a pane in px or %. Default value is null.]]>
             </description>
@@ -1447,18 +1475,20 @@
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[If true, then pane is 'closed' when layout is created. Default is false.]]></description>
-			<name>initClosed</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>        
-		<attribute>
-			<description><![CDATA[If true, then pane is styled as a status bar. It makes sense for 'south' pane. Default is false.]]></description>
-			<name>statusbar</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>        
+        <attribute>
+            <description><![CDATA[If true, then pane is 'closed' when layout is created. Default is false.]]>
+            </description>
+            <name>initClosed</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[If true, then pane is styled as a status bar. It makes sense for 'south' pane. Default is false.]]>
+            </description>
+            <name>statusbar</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
     </tag>
     <tag>
         <description><![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]>
@@ -2028,6 +2058,50 @@
             <name>source</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[Timeline .]]>
+        </description>
+        <tag-name>timeline</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Timeline</component-type>
+            <renderer-type>org.primefaces.extensions.component.TimelineRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Value of the component.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
         </attribute>
     </tag>
 </facelet-taglib>

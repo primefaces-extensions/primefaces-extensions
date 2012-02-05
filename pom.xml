@@ -110,6 +110,7 @@
                                 <include>timepicker/**</include>                                
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
+                                <include>timeline/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

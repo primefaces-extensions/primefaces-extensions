@@ -1,0 +1,39 @@
+.ui-timeline {    
+    width:100%;
+    overflow:hidden;
+    padding-top:10px;
+    margin:0;
+}
+.ui-timeline-menu{
+    float:left;
+    padding:4px;
+    text-align:left;
+    width:300px;
+    margin:0 5px 50px;
+}
+
+.ui-timeline-menu-header{   
+    line-height:2em;
+    margin:-5px -5px 10px;
+    padding:2px 5px;
+    text-align:center;
+}
+
+.ui-timeline-event-list{
+    list-style:none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.ui-timeline-event-list li{    
+    margin:5px;
+    padding:4px 7px;
+}
+
+.ui-timeline-event-list li:hover{
+    cursor: pointer;
+}
+
+.ui-timeline-event-list li div.content{    
+    display:none;
+}
