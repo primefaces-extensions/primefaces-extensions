@@ -28,7 +28,8 @@ package org.primefaces.extensions.renderkit.widget;
 public class OptionContainer {
 
 	private String name;
-	private boolean escape;
+	private boolean escapeHTML;
+	private boolean escapeText;
 	private boolean useDoubleQuotes;
 
 	public OptionContainer() {
@@ -39,14 +40,21 @@ public class OptionContainer {
 		this.name = name;
 	}
 
-	public OptionContainer(final String name, final boolean escape) {
+	public OptionContainer(final String name, final boolean escapeHTML) {
 		this.name = name;
-		this.escape = escape;
+		this.escapeHTML = escapeHTML;
 	}
 
-	public OptionContainer(final String name, final boolean escape, final boolean useDoubleQuotes) {
+	public OptionContainer(final String name, final boolean escapeHTML, final boolean escapeText) {
 		this.name = name;
-		this.escape = escape;
+		this.escapeHTML = escapeHTML;
+		this.escapeText = escapeText;
+	}
+
+	public OptionContainer(final String name, final boolean escapeHTML, final boolean escapeText, final boolean useDoubleQuotes) {
+		this.name = name;
+		this.escapeHTML = escapeHTML;
+		this.escapeText = escapeText;
 		this.useDoubleQuotes = useDoubleQuotes;
 	}
 
@@ -58,12 +66,12 @@ public class OptionContainer {
 		this.name = name;
 	}
 
-	public boolean isEscape() {
-		return escape;
+	public boolean isEscapeHTML() {
+		return escapeHTML;
 	}
 
-	public void setEscape(final boolean escape) {
-		this.escape = escape;
+	public void setEscapeHTML(final boolean escapeHTML) {
+		this.escapeHTML = escapeHTML;
 	}
 
 	public boolean isUseDoubleQuotes() {
@@ -72,5 +80,13 @@ public class OptionContainer {
 
 	public void setUseDoubleQuotes(final boolean useDoubleQuotes) {
 		this.useDoubleQuotes = useDoubleQuotes;
+	}
+
+	public boolean isEscapeText() {
+		return escapeText;
+	}
+
+	public void setEscapeText(final boolean escapeText) {
+		this.escapeText = escapeText;
 	}
 }

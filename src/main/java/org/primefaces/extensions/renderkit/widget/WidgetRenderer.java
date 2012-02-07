@@ -31,6 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.ComponentUtils;
 
 /**
  * Utilities for rendering {@link Widget}s.
@@ -97,22 +98,27 @@ public class WidgetRenderer {
 				Character.class.isAssignableFrom(value.getClass())) {
 
 				//don't add quotes for objects or arrays
-				final String stringValue = ((String) value).trim();
+				String stringValue = ((String) value).trim();
+
+				if (optionContainer.isEscapeText()) {
+					stringValue = ComponentUtils.escapeText(stringValue);
+				}
+
 				if (stringValue.startsWith("{") || stringValue.startsWith("[")) {
-					if (optionContainer.isEscape()) {
+					if (optionContainer.isEscapeHTML()) {
 						writer.writeText("," + optionContainer.getName() + ":" + stringValue, null);
 					} else {
 						writer.write("," + optionContainer.getName() + ":" + stringValue);
 					}
 				} else {
 					if (optionContainer.isUseDoubleQuotes()) {
-						if (optionContainer.isEscape()) {
+						if (optionContainer.isEscapeHTML()) {
 							writer.writeText("," + optionContainer.getName() + ":\"" + stringValue + "\"", null);
 						} else {
 							writer.write("," + optionContainer.getName() + ":\"" + stringValue + "\"");
 						}
 					} else {
-						if (optionContainer.isEscape()) {
+						if (optionContainer.isEscapeHTML()) {
 							writer.writeText("," + optionContainer.getName() + ":'" + stringValue + "'", null);
 						} else {
 							writer.write("," + optionContainer.getName() + ":'" + stringValue + "'");
@@ -120,7 +126,7 @@ public class WidgetRenderer {
 					}
 				}
 			} else {
-				if (optionContainer.isEscape()) {
+				if (optionContainer.isEscapeHTML()) {
 					writer.writeText("," + optionContainer.getName() + ":" + value, null);
 				} else {
 					writer.write("," + optionContainer.getName() + ":" + value);
@@ -180,7 +186,8 @@ public class WidgetRenderer {
 		    					final String propertyKeyAsString = propertyKey.toString();
 		    					final String name = option.name().equals("") ? propertyKeyAsString : option.name();
 
-		    					optionContainer.setEscape(option.escape());
+		    					optionContainer.setEscapeHTML(option.escapeHTML());
+		    					optionContainer.setEscapeText(option.escapeText());
 		    					optionContainer.setName(name);
 		    					optionContainer.setUseDoubleQuotes(option.useDoubleQuotes());
 		    					optionContainer.setPropertyName(propertyKeyAsString);

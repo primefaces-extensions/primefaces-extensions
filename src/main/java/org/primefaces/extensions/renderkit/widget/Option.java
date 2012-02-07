@@ -45,16 +45,23 @@ public @interface Option {
 	String name() default "";
 
 	/**
-	 * Defines if this option should be escaped.
+	 * Defines if for this option, HTML should be escaped.
 	 *
-	 * @return If the option should be escaped.
+	 * @return If for this option, HTML should be escaped.
 	 */
-	boolean escape() default false;
+	boolean escapeHTML() default false;
 
 	/**
-	 * Defines if double quotes instead of a normal qoute should be used for rendering {@link String}s.
+	 * Defines if for this option, the text should be escaped for JSON.
 	 *
-	 * @return If double qoutes should be used for {@link String}s.
+	 * @return If for this option, the text should be escaped for JSON.
+	 */
+	boolean escapeText() default false;
+
+	/**
+	 * Defines if double quotes instead of a normal quote should be used for rendering {@link String}s.
+	 *
+	 * @return If double quotes should be used for {@link String}s.
 	 */
 	boolean useDoubleQuotes() default false;
 }
