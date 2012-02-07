@@ -47,7 +47,8 @@ import org.primefaces.extensions.renderkit.widget.Option;
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css")
+	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
 })
 public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget {
 

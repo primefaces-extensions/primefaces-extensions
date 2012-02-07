@@ -19,8 +19,6 @@
 package org.primefaces.extensions.component.codemirror;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.el.ValueExpression;
@@ -28,13 +26,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ComponentSystemEventListener;
-import javax.faces.event.ListenerFor;
-import javax.faces.event.PostAddToViewEvent;
 
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -44,16 +37,7 @@ import org.primefaces.renderkit.InputRenderer;
  * @version $Revision$
  * @since 0.3
  */
-@ListenerFor(sourceClass = CodeMirror.class, systemEventClass = PostAddToViewEvent.class)
-public class CodeMirrorRenderer extends InputRenderer implements ComponentSystemEventListener {
-
-	private static final List<String> MODES_WITH_STYLESHEET = new ArrayList<String>();
-	private static final String MODE_DIRECTORY = "codemirror/mode/";
-
-	static {
-		MODES_WITH_STYLESHEET.add("diff");
-		MODES_WITH_STYLESHEET.add("tiddlywiki");
-	}
+public class CodeMirrorRenderer extends InputRenderer {
 
 	@Override
 	public void decode(final FacesContext context, final UIComponent component) {
@@ -138,46 +122,5 @@ public class CodeMirrorRenderer extends InputRenderer implements ComponentSystem
 		}
 
 		return value;
-	}
-
-	@Override
-	public void processEvent(final ComponentSystemEvent event) {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final CodeMirror codeMirror = (CodeMirror) event.getComponent();
-
-		addScript(codeMirror, context);
-		addStylesheet(codeMirror, context);
-	}
-
-	protected UIComponent addScript(final CodeMirror codeMirror, final FacesContext context) {
-		if (codeMirror.getMode() != null) {
-			if ("spec".equals(codeMirror.getMode()) || "changes".equals(codeMirror.getMode())) {
-				ComponentUtils.addComponentResource(
-						context,
-						MODE_DIRECTORY + "rpm/" + codeMirror.getMode() + "/" + codeMirror.getMode() + ".js");
-			} else {
-				ComponentUtils.addComponentResource(
-						context,
-						MODE_DIRECTORY + codeMirror.getMode() + "/" + codeMirror.getMode() + ".js");
-			}
-		}
-
-		return null;
-	}
-
-	protected void addStylesheet(final CodeMirror codeMirror, final FacesContext context) {
-		if (codeMirror.getMode() != null) {
-			if (MODES_WITH_STYLESHEET.contains(codeMirror.getMode())) {
-				ComponentUtils.addComponentResource(
-						context,
-						MODE_DIRECTORY + codeMirror.getMode() + "/" + codeMirror.getMode() + ".css");
-			}
-
-			if ("spec".equals(codeMirror.getMode())) {
-				ComponentUtils.addComponentResource(
-						context,
-						MODE_DIRECTORY + "rpm/" + codeMirror.getMode() + "/" + codeMirror.getMode() + ".css");
-			}
-		}
 	}
 }
