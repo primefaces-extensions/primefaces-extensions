@@ -94,7 +94,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		@Option maxWidth,
 		@Option minHeight,
 		@Option minWidth,
-		@Option parentSelector,
+		@Option(escapeText = true, useDoubleQuotes = true) parentSelector,
 		@Option keyboardSupport;
 
 		private String toString;
