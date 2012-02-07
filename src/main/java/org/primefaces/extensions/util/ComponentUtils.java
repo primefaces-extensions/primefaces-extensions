@@ -50,49 +50,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
 
-	public static String findClientIds(final FacesContext context, final UIComponent component, final String list) {
-		if (list == null) {
-			return "@none";
-		}
-
-		final StringBuilder newList = new StringBuilder();
-		final String[] ids = list.split("[\\s,]+");
-
-		for (int i = 0; i < ids.length; i++) {
-			String id = ids[i];
-
-			if (id.equals("@this")) {
-				id = component.getClientId(context);
-			} else if (id.equals("@form")) {
-				final UIComponent form = ComponentUtils.findParentForm(context, component);
-				if (form != null) {
-					id = form.getClientId(context);
-				} else if (context.isProjectStage(ProjectStage.Development)) {
-					LOG.log(Level.INFO, "Cannot find enclosing form for component \"{0}\".", component.getClientId(context));
-					id = "";
-				}
-			} else if (id.equals("@parent")) {
-				id = component.getParent().getClientId(context);
-			} else if (!id.equals("@all") && !id.equals("@none")) {
-				final UIComponent comp = component.findComponent(id);
-				if (comp != null) {
-					id = comp.getClientId(context);
-				} else if (context.isProjectStage(ProjectStage.Development)) {
-					LOG.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
-					id = "";
-				}
-			}
-
-			if (i != 0) {
-				newList.append(" ");
-			}
-
-			newList.append(id);
-		}
-
-		return newList.toString();
-	}
-
 	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
 		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
 
