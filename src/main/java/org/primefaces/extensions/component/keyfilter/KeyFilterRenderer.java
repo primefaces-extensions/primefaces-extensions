@@ -53,7 +53,7 @@ public class KeyFilterRenderer extends CoreRenderer {
 		writer.write("$(function() {");
 
 		writer.write(widgetVar + " = new PrimeFacesExt.widget.KeyFilter('" + clientId + "', {");
-		writer.write("target:'" + target + "'");
+		writer.write("target:\"" + target + "\"");
 
 		if (keyFilter.getRegEx() != null) {
 			writer.write(",regEx:" + keyFilter.getRegEx());

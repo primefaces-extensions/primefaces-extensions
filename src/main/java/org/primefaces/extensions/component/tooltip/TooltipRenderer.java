@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -57,16 +58,23 @@ public class TooltipRenderer extends CoreRenderer {
 		writer.write(",shared:" + shared);
 
 		if (!global) {
-			writer.write(",forTarget:'" + target + "'");
-			writer.write(",content:'");
+			writer.write(",forTarget:\"" + target + "\"");
+			writer.write(",content:\"");
 			if (tooltip.getValue() == null) {
+				FastStringWriter fsw = new FastStringWriter();
+				ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+				context.setResponseWriter(clonedWriter);
+
 				renderChildren(context, tooltip);
+
+				context.setResponseWriter(writer);
+				writer.write(escapeText(fsw.toString()));
 			} else {
-				writer.write(ComponentUtils.getStringValueToRender(context, tooltip, tooltip.getValue()).replaceAll("'",
-				                                                                                                    "\\\\'"));
+				writer.write(ComponentUtils.escapeText(ComponentUtils.getStringValueToRender(context, tooltip,
+				                                                                             tooltip.getValue())));
 			}
 
-			writer.write("'");
+			writer.write("\"");
 		}
 
 		//Events
