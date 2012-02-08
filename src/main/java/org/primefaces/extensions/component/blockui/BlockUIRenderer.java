@@ -93,7 +93,7 @@ public class BlockUIRenderer extends CoreRenderer {
 			if (targetSelector.startsWith("#")) {
 				jqTarget = ComponentUtils.escapeComponentId(targetSelector);
 			} else {
-				jqTarget = targetSelector;
+				jqTarget = ComponentUtils.escapeText(targetSelector);
 			}
 		}
 
@@ -103,6 +103,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
 		// get content
 		String jqContent = null;
+		boolean isContentExtern = false;
 		if (blockUI.getContent() != null) {
 			UIComponent contentComponent = blockUI.findComponent(blockUI.getContent());
 			if (contentComponent == null) {
@@ -110,6 +111,7 @@ public class BlockUIRenderer extends CoreRenderer {
 			}
 
 			jqContent = ComponentUtils.escapeJQueryId(contentComponent.getClientId(fc));
+			isContentExtern = true;
 		} else if (blockUI.getChildCount() > 0) {
 			jqContent = ComponentUtils.escapeJQueryId(clientId + "_content");
 		}
@@ -161,6 +163,8 @@ public class BlockUIRenderer extends CoreRenderer {
 		} else {
 			writer.write(",content:null");
 		}
+
+		writer.write(",contentExtern:" + isContentExtern);
 
 		writer.write(",regEx:" + eventRegEx + "});");
 		if (blockUI.isAutoShow()) {

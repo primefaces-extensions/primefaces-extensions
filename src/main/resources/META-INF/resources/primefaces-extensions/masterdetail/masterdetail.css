@@ -1,25 +1,16 @@
-.ui-master-detail .ui-breadcrumb > div {
-    width: auto !important;
-}
-
-.ui-master-detail .ui-breadcrumb ul li {
-    height: 22px;
-}
-
 .ui-master-detail .ui-breadcrumb ul li a {
     font-size: 1.1em;
     text-decoration: none;
+    margin-top: 0;
     padding-left: 3px;
-    padding-right: 3px;
-    margin-top: -1px;
+    padding-right: 3px;    
 }
 
-.ui-master-detail .ui-breadcrumb ul li.first a {
+.ui-master-detail .ui-breadcrumb ul li:first-child a {
     height: auto !important;    
     width: auto !important;
     background: none;
     padding-right: 3px;
-    margin-top: -1px;
     text-indent: 0.5em;
 }
 
@@ -29,6 +20,10 @@
 
 .ui-master-detail .ui-breadcrumb ul li img {
     border: none;
+}
+
+.ui-master-detail .ui-breadcrumb ul li .ui-breadcrumb-chevron {
+    margin-top: 0\9;
 }
 
 .ui-master-detail .ui-master-detail-level {

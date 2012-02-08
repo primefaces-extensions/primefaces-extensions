@@ -64,6 +64,12 @@
     </developers>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>        
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -126,6 +132,7 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>blockui/blockUI.css</include>
                                 <include>masterdetail/masterdetail.css</include>
                             </includes>
                             <aggregations>

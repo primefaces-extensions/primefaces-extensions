@@ -235,12 +235,12 @@ function install(el, opts) {
 
 	var lyr3, s;
 	if (opts.theme && full) {
-		s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage ui-dialog ui-widget ui-corner-all" style="z-index:'+(z+10)+';display:none;position:fixed">' +
-			'<div class="ui-widget-content ui-dialog-content"></div></div>';
+		s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage pe-blockui ui-widget ui-corner-all" style="z-index:'+(z+10)+';display:none;position:fixed">' +
+			'<div class="ui-widget-content pe-blockui-content"></div></div>';
 	}
 	else if (opts.theme) {
-		s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement ui-dialog ui-widget ui-corner-all" style="z-index:'+(z+10)+';display:none;position:absolute">' +
-			'<div class="ui-widget-content ui-dialog-content"></div></div>';
+		s = '<div class="blockUI ' + opts.blockMsgClass + ' blockElement pe-blockui ui-widget ui-corner-all" style="z-index:'+(z+10)+';display:none;position:absolute">' +
+			'<div class="ui-widget-content pe-blockui-content"></div></div>';
 	}
 	else if (full) {
 		s = '<div class="blockUI ' + opts.blockMsgClass + ' blockPage" style="z-index:'+(z+10)+';display:none;position:fixed"></div>';
@@ -277,7 +277,7 @@ function install(el, opts) {
 	
 	if (opts.theme && opts.draggable && $.fn.draggable) {
 		lyr3.draggable({
-			handle: '.ui-dialog-titlebar',
+			handle: '.pe-blockui-titlebar',
 			cancel: 'li'
 		});
 	}

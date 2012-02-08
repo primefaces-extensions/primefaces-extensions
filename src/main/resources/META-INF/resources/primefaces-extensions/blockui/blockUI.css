@@ -1,0 +1,26 @@
+.pe-blockui {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    -moz-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
+    -webkit-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+.pe-blockui .pe-blockui-content {
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+}
+
+.pe-blockui .pe-blockui-titlebar {
+    padding: .4em 1em;
+    position: relative;
+}
+
+.ui-draggable .pe-blockui-titlebar {
+    cursor: move;
+}

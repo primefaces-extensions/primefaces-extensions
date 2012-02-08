@@ -3,6 +3,7 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
 	var sourceId = cfg.source;
 	var targetId = cfg.target;
     var contentId = cfg.content;
+    var contentExtern = cfg.contentExtern;
 	var eventRegEx = cfg.regEx;
     var _self = this;
 	
@@ -39,7 +40,11 @@ PrimeFacesExt.widget.BlockUI = function(id, cfg) {
         if (targetEl.length > 0) {
             // block the target element
             if (contentId != null) {
-                targetEl.block({message: $(contentId).html()});
+                if (contentExtern) {
+                    targetEl.block({message: $(contentId).clone().show().wrap('<div>').parent().html()});
+                } else {
+                    targetEl.block({message: $(contentId).html()});
+                }
             } else {
                 targetEl.block();
             }
