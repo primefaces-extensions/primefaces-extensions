@@ -279,7 +279,7 @@
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>8.1.0.RC2</version>
+                    <version>${jetty.server.version}</version>
                     <configuration>
                         <webAppConfig>
                             <overrideDescriptor>src/main/resources/overrideweb-${pe.jsf.impl}.xml</overrideDescriptor>
@@ -365,6 +365,26 @@
                             </entry>
                         </entries>
                     </configuration>                    
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.0</version>
+                    <executions>
+                        <execution>
+                            <id>generate-timestamp</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create-timestamp</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <format>{0,date,yyyy-MM-dd HH:mm}</format>
+                        <items>
+                            <item>timestamp</item>
+                        </items>
+                    </configuration>
                 </plugin>                
                 
                 <!-- dependencies to own plugins -->
@@ -381,21 +401,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.primefaces.extensions</groupId>
-                    <artifactId>build-info-maven-plugin</artifactId>
-                    <version>0.1-SNAPSHOT</version>
-                    <executions>
-                        <execution>
-                            <id>extract</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>extract</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>                
+                </plugin>    
             </plugins>
         </pluginManagement>
     </build>
@@ -560,7 +566,7 @@
             <dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
-                <version>3.1</version>
+                <version>${primefaces.core.version}</version>
             </dependency>            
             <dependency>
                 <groupId>org.primefaces.themes</groupId>
@@ -881,6 +887,7 @@
         <java.version.source>1.6</java.version.source>
         <java.version.target>1.6</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
+        <jetty.server.version>8.1.0.RC2</jetty.server.version>
         <pe.jsf.impl>mojarra</pe.jsf.impl>
         <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
@@ -889,6 +896,7 @@
         <pe.impl.version>0.3.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
+        <primefaces.core.version>3.1</primefaces.core.version>
         <primefaces.theme.version>1.0.3</primefaces.theme.version>
     </properties>
 </project>
