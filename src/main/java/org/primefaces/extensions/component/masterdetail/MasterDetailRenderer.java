@@ -31,7 +31,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
@@ -138,7 +137,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 			}
 
 			// add new children
-			for (UIComponent kid : model.getMenuItems()) {
+			for (UIComponent kid : model.getContents()) {
 				breadcrumb.getChildren().add(kid);
 			}
 
