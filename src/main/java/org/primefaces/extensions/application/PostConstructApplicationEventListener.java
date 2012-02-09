@@ -16,33 +16,38 @@
  * $Id$
  */
 
-package org.primefaces.extensions.webapp;
+package org.primefaces.extensions.application;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
-import org.primefaces.extensions.util.Constants;
+import org.apache.commons.lang3.StringUtils;
+
+import org.primefaces.extensions.util.VersionProvider;
 
 /**
  * {@link SystemEventListener} which displays the PrimeFaces Extensions version on startup.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public class PostConstructApplicationEventListener implements SystemEventListener {
 
-    private static final Logger LOGGER = Logger.getLogger(PostConstructApplicationEventListener.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PostConstructApplicationEventListener.class.getName());
 
-    @Override
-    public boolean isListenerForSource(final Object source) {
-        return true;
-    }
+	@Override
+	public boolean isListenerForSource(final Object source) {
+		return true;
+	}
 
-    @Override
-    public void processEvent(final SystemEvent event) {
-        LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", Constants.VERSION);
-    }
+	@Override
+	public void processEvent(final SystemEvent event) {
+		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
+			LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", VersionProvider.getVersion());
+		}
+	}
 }

@@ -21,18 +21,17 @@ package org.primefaces.extensions.util;
 /**
  * Global constants for the project.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public final class Constants {
 
-	public static final String VERSION = "0.2.0-SNAPSHOT";
 	public static final String LIBRARY = "primefaces-extensions";
 	public static final String LIBRARY_UNCOMPRESSED = "primefaces-extensions-uncompressed";
 
 	public static final String DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM =
-		"org.primefaces.extensions.DELIVER_UNCOMPRESSED_RESOURCES";
+	    "org.primefaces.extensions.DELIVER_UNCOMPRESSED_RESOURCES";
 
 	public static final String EXTENSION_CSS = ".css";
 	public static final String EXTENSION_JS = ".js";
@@ -41,6 +40,5 @@ public final class Constants {
 	 * Avoid instantiation.
 	 */
 	private Constants() {
-
 	}
 }
