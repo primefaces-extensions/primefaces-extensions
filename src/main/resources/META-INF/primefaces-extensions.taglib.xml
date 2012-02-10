@@ -1621,7 +1621,7 @@
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (explicitly via pe:selectDetailLevel) or implicitly). Return value defines the level to go. Default is null.]]>
+            <description><![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (explicitly via pe:selectDetailLevel or implicitly). Return value defines the level to go. Default is null.]]>
             </description>
             <name>selectLevelListener</name>
             <required>false</required>
