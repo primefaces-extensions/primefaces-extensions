@@ -866,7 +866,7 @@
                 <pe.jsf.displayname>MyFaces</pe.jsf.displayname>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
-                <pe.jsf.version>2.1.5</pe.jsf.version>
+                <pe.jsf.version>2.1.6</pe.jsf.version>
             </properties>
         </profile>
         <profile>
