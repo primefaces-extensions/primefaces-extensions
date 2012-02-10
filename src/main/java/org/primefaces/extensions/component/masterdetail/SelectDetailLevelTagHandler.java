@@ -116,6 +116,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
 		// register a ComponentSystemEventListener
 		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderCommandListener());
+		parent.getAttributes().put(MasterDetail.PRERENDER_LISTENER_REGISTERED, true);
 
 		// register an ActionListener
 		if (listener != null) {

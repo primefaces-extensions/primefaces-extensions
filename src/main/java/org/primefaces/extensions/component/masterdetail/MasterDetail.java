@@ -60,6 +60,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String SELECTED_STEP_VALUE_EXPRESSION = "selectedStepVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
 	public static final String SKIP_PROCESSING = "mdSkipProcessing";
+	public static final String PRERENDER_LISTENER_REGISTERED = "mdPreRenderCommandListener";
 	public static final String SELECT_DETAIL_REQUEST = "_selectDetailRequest";
 	public static final String CURRENT_LEVEL = "_currentLevel";
 	public static final String SELECTED_LEVEL = "_selectedLevel";
@@ -200,7 +201,7 @@ public class MasterDetail extends UIComponentBase {
 		// process and update the MasterDetail component automatically
 		Collection<String> executeIds = pvc.getExecuteIds();
 		int size = executeIds.size();
-		if (!isSkipProcessing(fc) && (size == 0 || (size == 1 && "@none".equals(executeIds.iterator().next())))) {
+		if (!isSkipProcessing(fc) && (size == 0 || executeIds.contains("@none"))) {
 			pvc.getExecuteIds().add(clienId);
 		}
 
