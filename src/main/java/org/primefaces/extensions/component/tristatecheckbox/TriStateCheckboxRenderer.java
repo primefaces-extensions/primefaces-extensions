@@ -19,15 +19,17 @@
 package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.io.IOException;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 
 /**
- * TriStateCheckboxRenderer 
+ * TriStateCheckboxRenderer
  *
  * @author  Mauricio Fenoglio / last modified by $Author$
  * @version $Revision$
@@ -35,134 +37,139 @@ import org.primefaces.util.HTML;
  */
 public class TriStateCheckboxRenderer extends InputRenderer {
 
-    @Override
-    public void decode(FacesContext context, UIComponent component) {
+	@Override
+	public void decode(final FacesContext context, final UIComponent component) {
 		TriStateCheckbox checkbox = (TriStateCheckbox) component;
-                
-        if(checkbox.isDisabled()) {
-            return;
-        }
 
-        decodeBehaviors(context, checkbox);
+		if (checkbox.isDisabled()) {
+			return;
+		}
 
-	String clientId = checkbox.getClientId(context);
-	String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
-                 
-        if(submittedValue != null) {           
-            checkbox.setSubmittedValue(submittedValue);
-        }
-       
-        
-    }
-    
-    @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        TriStateCheckbox checkbox = (TriStateCheckbox) component;
+		decodeBehaviors(context, checkbox);
 
-        encodeMarkup(context, checkbox);
-        encodeScript(context, checkbox);
-    }
+		String clientId = checkbox.getClientId(context);
+		String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
 
-    protected void encodeMarkup(FacesContext context, TriStateCheckbox checkbox) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = checkbox.getClientId(context);
-       
-        int valCheck = 0;
-        try{
-            valCheck = Integer.valueOf(ComponentUtils.getValueToRender(context, checkbox));
-        }catch(Exception ex){
-             valCheck = 0 ;
-        }      
-        if(valCheck>2 ||valCheck<0)
-            valCheck=0;        
-        boolean disabled = checkbox.isDisabled();       
+		if (submittedValue != null) {
+			checkbox.setSubmittedValue(submittedValue);
+		}
+	}
 
-        String style = checkbox.getStyle();
-        String styleClass = checkbox.getStyleClass();
-        styleClass = styleClass == null ? HTML.CHECKBOX_CLASS : HTML.CHECKBOX_CLASS + " " + styleClass;
+	@Override
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+		TriStateCheckbox checkbox = (TriStateCheckbox) component;
 
-        writer.startElement("div", checkbox);
-        writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
-        if(style != null) {
-            writer.writeAttribute("style", style, "style");
-        }
+		encodeMarkup(context, checkbox);
+		encodeScript(context, checkbox);
+	}
 
-        encodeInput(context, checkbox, clientId, valCheck,disabled);
-        encodeOutput(context, checkbox, valCheck,disabled);
-        encodeItemLabel(context, checkbox, clientId);
-        
-        writer.endElement("div");
-        
-    }
+	protected void encodeMarkup(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		String clientId = checkbox.getClientId(context);
 
-    protected void encodeInput(FacesContext context, TriStateCheckbox checkbox, String clientId, int valCheck, boolean disabled) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String inputId = clientId + "_input";
-        
-        writer.startElement("div", checkbox);
-        writer.writeAttribute("class", HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
-        
-        writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, "id");
-        writer.writeAttribute("name", inputId, null);
-       
-        writer.writeAttribute("value", valCheck, null); 
-        
-        if(disabled) writer.writeAttribute("disabled", "disabled", null);
-        if(checkbox.getOnchange() != null) writer.writeAttribute("onchange", checkbox.getOnchange(), null);
+		int valCheck = 0;
+		try {
+			valCheck = Integer.valueOf(ComponentUtils.getValueToRender(context, checkbox));
+		} catch (Exception ex) {
+			valCheck = 0;
+		}
 
-        writer.endElement("input");
+		if (valCheck > 2 || valCheck < 0) {
+			valCheck = 0;
+		}
 
-        writer.endElement("div");
-    }
+		boolean disabled = checkbox.isDisabled();
 
-    protected void encodeOutput(FacesContext context, TriStateCheckbox checkbox,int valCheck ,boolean disabled) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String styleClass = HTML.CHECKBOX_BOX_CLASS;
-        styleClass = (valCheck==1 || valCheck==2) ? styleClass + " ui-state-active" : styleClass;
-        styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
-        
+		String style = checkbox.getStyle();
+		String styleClass = checkbox.getStyleClass();
+		styleClass = styleClass == null ? HTML.CHECKBOX_CLASS : HTML.CHECKBOX_CLASS + " " + styleClass;
 
-        String iconClass = HTML.CHECKBOX_ICON_CLASS;
-        iconClass = valCheck==1 ? iconClass + " " + HTML.CHECKBOX_CHECKED_ICON_CLASS : iconClass;
-        iconClass = valCheck==2 ? iconClass + " " + "ui-icon ui-icon-closethick" : iconClass;
+		writer.startElement("div", checkbox);
+		writer.writeAttribute("id", clientId, "id");
+		writer.writeAttribute("class", styleClass, "styleClass");
+		if (style != null) {
+			writer.writeAttribute("style", style, "style");
+		}
 
-        writer.startElement("div", null);
-        writer.writeAttribute("class", styleClass, null);
+		encodeInput(context, checkbox, clientId, valCheck, disabled);
+		encodeOutput(context, valCheck, disabled);
+		encodeItemLabel(context, checkbox);
 
-        writer.startElement("span", null);
-        writer.writeAttribute("class", iconClass, null);
-        writer.endElement("span");
+		writer.endElement("div");
+	}
 
-        writer.endElement("div");
-    }
-    
-    protected void encodeItemLabel(FacesContext context, TriStateCheckbox checkbox, String clientId) throws IOException {
-        String label = checkbox.getItemLabel();
-        
-        if(label != null) {
-            ResponseWriter writer = context.getResponseWriter();
-            
-            writer.startElement("span", null);
-            writer.writeAttribute("class", HTML.CHECKBOX_LABEL_CLASS, null);
-            writer.writeText(label, "itemLabel");
-            writer.endElement("span");
-        }
-    }
+	protected void encodeInput(final FacesContext context, final TriStateCheckbox checkbox, final String clientId,
+	                           final int valCheck, final boolean disabled) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		String inputId = clientId + "_input";
 
-    protected void encodeScript(FacesContext context, TriStateCheckbox checkbox) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = checkbox.getClientId(context);
+		writer.startElement("div", checkbox);
+		writer.writeAttribute("class", HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
 
-        startScript(writer, clientId);
-        
-        writer.write("$(function() {");
-        writer.write("PrimeFacesExt.cw('TriStateCheckbox','" + checkbox.resolveWidgetVar() + "',{");
-        writer.write("id:'" + clientId + "'");
-        encodeClientBehaviors(context, checkbox);
-        writer.write("});});");
+		writer.startElement("input", null);
+		writer.writeAttribute("id", inputId, "id");
+		writer.writeAttribute("name", inputId, null);
 
-        endScript(writer);
-    }
+		writer.writeAttribute("value", valCheck, null);
+
+		if (disabled) {
+			writer.writeAttribute("disabled", "disabled", null);
+		}
+
+		if (checkbox.getOnchange() != null) {
+			writer.writeAttribute("onchange", checkbox.getOnchange(), null);
+		}
+
+		writer.endElement("input");
+
+		writer.endElement("div");
+	}
+
+	protected void encodeOutput(final FacesContext context, final int valCheck, final boolean disabled) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		String styleClass = HTML.CHECKBOX_BOX_CLASS;
+		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
+		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
+
+		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+		iconClass = valCheck == 1 ? iconClass + " " + HTML.CHECKBOX_CHECKED_ICON_CLASS : iconClass;
+		iconClass = valCheck == 2 ? iconClass + " " + "ui-icon ui-icon-closethick" : iconClass;
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", styleClass, null);
+
+		writer.startElement("span", null);
+		writer.writeAttribute("class", iconClass, null);
+		writer.endElement("span");
+
+		writer.endElement("div");
+	}
+
+	protected void encodeItemLabel(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
+		String label = checkbox.getItemLabel();
+
+		if (label != null) {
+			ResponseWriter writer = context.getResponseWriter();
+
+			writer.startElement("span", null);
+			writer.writeAttribute("class", HTML.CHECKBOX_LABEL_CLASS, null);
+			writer.writeText(label, "itemLabel");
+			writer.endElement("span");
+		}
+	}
+
+	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		String clientId = checkbox.getClientId(context);
+
+		startScript(writer, clientId);
+
+		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('TriStateCheckbox','" + checkbox.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		encodeClientBehaviors(context, checkbox);
+		writer.write("});});");
+
+		endScript(writer);
+	}
 }
