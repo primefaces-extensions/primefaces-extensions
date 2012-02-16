@@ -71,9 +71,14 @@ public class MasterDetailRenderer extends CoreRenderer {
 				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
 				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
+				boolean preserveInputs = masterDetail.isPreserveInputs(fc);
 				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
 				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					editableValueHolder.resetValue();
+					if (preserveInputs) {
+						editableValueHolder.setValue(editableValueHolder.getSubmittedValue());
+					} else {
+						editableValueHolder.resetValue();
+					}
 				}
 			}
 

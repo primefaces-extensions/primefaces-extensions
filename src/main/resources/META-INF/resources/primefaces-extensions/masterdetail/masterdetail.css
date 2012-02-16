@@ -22,8 +22,8 @@
     border: none;
 }
 
-.ui-master-detail .ui-breadcrumb ul li .ui-breadcrumb-chevron {
-    margin-top: 0\9;
+.ui-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
+    margin-top: 0;
 }
 
 .ui-master-detail .ui-master-detail-level {

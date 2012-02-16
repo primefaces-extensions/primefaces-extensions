@@ -49,6 +49,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 	private final TagAttribute listener;
 	private final TagAttribute level;
 	private final TagAttribute step;
+	private final TagAttribute preserveInputs;
 
 	public SelectDetailLevelTagHandler(final TagConfig config) {
 		super(config);
@@ -56,6 +57,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		this.listener = getAttribute("listener");
 		this.level = getAttribute("level");
 		this.step = getAttribute("step");
+		this.preserveInputs = getAttribute("preserveInputs");
 	}
 
 	@Override
@@ -95,6 +97,16 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 			if (selectedStepVE != null) {
 				// store valid value expression in the attributes map
 				parent.getAttributes().put(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION, selectedStepVE);
+			}
+		}
+
+		// get value expression for preserveInputs attribute of this tag handler
+		ValueExpression preserveInputsVE = null;
+		if (preserveInputs != null) {
+			preserveInputsVE = preserveInputs.getValueExpression(ctx, boolean.class);
+			if (preserveInputsVE != null) {
+				// store valid value expression in the attributes map
+				parent.getAttributes().put(MasterDetail.PRESERVE_INPUTS_VALUE_EXPRESSION, preserveInputsVE);
 			}
 		}
 

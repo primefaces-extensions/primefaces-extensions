@@ -58,6 +58,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String CONTEXT_VALUE_VALUE_EXPRESSION = "mdContextValueVE";
 	public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
 	public static final String SELECTED_STEP_VALUE_EXPRESSION = "selectedStepVE";
+	public static final String PRESERVE_INPUTS_VALUE_EXPRESSION = "preserveInputsVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
 	public static final String SKIP_PROCESSING = "mdSkipProcessing";
 	public static final String PRERENDER_LISTENER_REGISTERED = "mdPreRenderCommandListener";
@@ -65,6 +66,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String CURRENT_LEVEL = "_currentLevel";
 	public static final String SELECTED_LEVEL = "_selectedLevel";
 	public static final String SELECTED_STEP = "_selectedStep";
+	public static final String PRESERVE_INPUTS = "_preserveInputs";
 	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
 	public static final String SKIP_PROCESSING_REQUEST = "_skipProcessing";
 	public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
@@ -302,6 +304,12 @@ public class MasterDetail extends UIComponentBase {
 	public boolean isSelectDetailRequest(final FacesContext fc) {
 		return fc.getPartialViewContext().isAjaxRequest()
 		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
+	}
+
+	public boolean isPreserveInputs(final FacesContext fc) {
+		String preserveInputs = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + PRESERVE_INPUTS);
+
+		return (preserveInputs != null && Boolean.valueOf(preserveInputs));
 	}
 
 	public void updateModel(final FacesContext fc, final MasterDetailLevel mdlToGo) {
