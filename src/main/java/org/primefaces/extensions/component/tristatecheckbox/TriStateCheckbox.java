@@ -58,7 +58,10 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		itemLabel;
+		itemLabel,
+                stateOneIcon,
+                stateTwoIcon,
+                stateThreeIcon;
 
 		String toString;
 
@@ -98,7 +101,31 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	public void setItemLabel(final String itemLabel) {
 		setAttribute(TriStateCheckbox.PropertyKeys.itemLabel, itemLabel);
 	}
+        
+        public String getStateOneIcon() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateOneIcon, null);
+	}
 
+	public void setStateOneIcon(final String stateOneIcon) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
+	}
+        
+        public String getStateTwoIcon() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateTwoIcon, null);
+	}
+
+	public void setStateTwoIcon(final String stateTwoIcon) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
+	}
+        
+        public String getStateThreeIcon() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateThreeIcon, null);
+	}
+
+	public void setStateThreeIcon(final String stateThreeIcon) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
+	}
+        
 	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();

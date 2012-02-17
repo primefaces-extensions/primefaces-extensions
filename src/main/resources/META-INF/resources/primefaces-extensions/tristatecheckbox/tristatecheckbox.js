@@ -45,38 +45,32 @@ PrimeFacesExt.widget.TriStateCheckbox.prototype.toggle = function() {
     if(!this.disabled) {
         var value = (this.input.attr('value')+1) % 3;        
         this.input.attr('value', value); 
-        if(value==0){
-            this.uncheck();
-        }else if (value ==1){
-            this.check();
+        this.changeIcon(value);
+        this.input.change();
+    }
+}
+
+PrimeFacesExt.widget.TriStateCheckbox.prototype.changeIcon = function(addIndex) {
+    if(!this.disabled) {               
+        iconsClasses =  this.box.attr('statesicons').split(';');
+        //js bug for mod of negative values. fix with this!!!!!!!
+        removeIndex = (((addIndex-1)%3)+3)%3;      
+        removeClass = 'ui-icon ' + iconsClasses[removeIndex];
+        if(iconsClasses[addIndex]!=" "){
+            addClass = 'ui-icon ' + iconsClasses[addIndex];
         }else{
-            this.tristate();
+            addClass = '';
         }
+     
+        
+        //if addIndex is 0 , remove active class
+        if(addIndex==0){
+            this.box.removeClass('ui-state-active');
+        }else{
+            this.box.addClass('ui-state-active')
+        }        
+        //remove old icon and add the new one        
+        this.box.children('.ui-chkbox-icon').removeClass(removeClass);
+        this.box.children('.ui-chkbox-icon').addClass(addClass);       
     }
 }
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.check = function() {
-    if(!this.disabled) {        
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-closethick');
-        this.box.addClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon ui-icon-check');
-        this.input.change();
-    }
-}
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.uncheck = function() {
-    if(!this.disabled) {       
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-check');
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-closethick');        
-        this.input.change();
-    }
-}
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.tristate = function() {
-    if(!this.disabled) {      
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-check');   
-        this.box.addClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon ui-icon-closethick');
-        this.input.change();
-    }
-}
-
-

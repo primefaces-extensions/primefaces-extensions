@@ -2212,37 +2212,58 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Disable the component]]>
             </description>
             <name>disabled</name>
             <required>false</required>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[User label]]>
             </description>
             <name>label</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Callback on change event]]>
             </description>
             <name>onchange</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Inline style of the component]]>
             </description>
             <name>style</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Coontainer style class]]>
             </description>
             <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Icon for StateOne as a css class.]]>
+            </description>
+            <name>stateOneIcon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Icon for StateTwo as a css class.]]>
+            </description>
+            <name>stateTwoIcon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Icon for StateThree as a css class.]]>
+            </description>
+            <name>stateThreeIcon</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
