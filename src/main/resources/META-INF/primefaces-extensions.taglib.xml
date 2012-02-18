@@ -2061,7 +2061,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Timeline .]]>
+        <description><![CDATA[Timeline visualizes temporal data.]]>
         </description>
         <tag-name>timeline</tag-name>
         <component>
@@ -2097,11 +2097,25 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Value of the component.]]>
+            <description><![CDATA[A java.util.List instance representing the backend model.]]>
             </description>
             <name>value</name>
             <required>true</required>
-            <type>java.lang.Object</type>
+            <type>java.util.List</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Inline style of the component]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Container style class]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
     <tag>

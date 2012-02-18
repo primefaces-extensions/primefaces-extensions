@@ -17,18 +17,19 @@
  */
 package org.primefaces.extensions.model.timeline;
 
-import java.util.Date;
 import java.util.List;
 
+/**
+ *
+ * @author Nilesh Mali / last modified by $Author$
+ * @version $Revision$
+ * @since 0.3
+ */
 public interface Timeline {
 
     public String getId();
 
     public String getTitle();
-
-    public Date getFocusDate();
-
-    public int getInitialZoom();
 
     public void addEvent(TimelineEvent event);
 

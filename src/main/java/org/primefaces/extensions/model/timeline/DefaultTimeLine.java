@@ -18,22 +18,21 @@
 package org.primefaces.extensions.model.timeline;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ * @author Nilesh Mali / last modified by $Author$
+ * @version $Revision$
+ * @since 0.3
+ */
 public class DefaultTimeLine implements Timeline {
-    
+
     private String id;
-    
     private String title;
-    
-    private Date focusDate;
-    
-    private int initialZoom = 20;
-    
     private List<TimelineEvent> events;
-    
+
     public DefaultTimeLine() {
         this.events = new ArrayList<TimelineEvent>();
     }
@@ -44,6 +43,7 @@ public class DefaultTimeLine implements Timeline {
         this.events = new ArrayList<TimelineEvent>();
     }
 
+    @Override
     public String getId() {
         return id;
     }
@@ -52,6 +52,7 @@ public class DefaultTimeLine implements Timeline {
         this.id = id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -60,45 +61,35 @@ public class DefaultTimeLine implements Timeline {
         this.title = title;
     }
 
-    public Date getFocusDate() {
-        return focusDate;
-    }
-
-    public void setFocusDate(Date focusDate) {
-        this.focusDate = focusDate;
-    }
-
-    public int getInitialZoom() {
-        return initialZoom;
-    }
-
-    public void setInitialZoom(int initialZoom) {
-        this.initialZoom = initialZoom;
-    }
-
+    @Override
     public void addEvent(TimelineEvent event) {
         event.setId(UUID.randomUUID().toString());
-		
-		events.add(event);
+
+        events.add(event);
     }
 
+    @Override
     public boolean deleteEvent(TimelineEvent event) {
         return events.remove(event);
     }
 
+    @Override
     public List<TimelineEvent> getEvents() {
         return events;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null)
+        if (obj == null) {
             return false;
-        if(getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         final DefaultTimeLine other = (DefaultTimeLine) obj;
-        if((this.id == null) ? (other.id != null) : !this.id.equals(other.id))
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
+        }
         return true;
     }
 
@@ -112,5 +103,5 @@ public class DefaultTimeLine implements Timeline {
     @Override
     public String toString() {
         return title;
-    }    
+    }
 }

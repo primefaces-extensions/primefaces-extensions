@@ -114,7 +114,7 @@
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.Timeline</component-type>
-        <component-class>org.primefaces.extensions.component.timeline.UITimeline</component-class>
+        <component-class>org.primefaces.extensions.component.timeline.Timeline</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.TimePicker</component-type>

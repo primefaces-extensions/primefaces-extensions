@@ -17,8 +17,10 @@
  */
 package org.primefaces.extensions.component.timeline;
 
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
@@ -36,12 +38,12 @@ import org.primefaces.component.api.Widget;
     @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
     @ResourceDependency(library = "primefaces", name = "primefaces.js"),
     @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
     @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),
     @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
 })
-public class UITimeline extends UIOutput implements Widget {
+public class Timeline extends UIOutput implements Widget {
 
-    private static final Logger LOG = Logger.getLogger(UITimeline.class.getName());
     private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
     private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -51,6 +53,8 @@ public class UITimeline extends UIOutput implements Widget {
      */
     protected enum PropertyKeys {
 
+        style,
+        styleClass,
         widgetVar;
         private String toString;
 
@@ -67,13 +71,37 @@ public class UITimeline extends UIOutput implements Widget {
         }
     }
 
-    public UITimeline() {
+    public Timeline() {
         setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
+
+    public void setWidgetVar(final String widgetVar) {
+        setAttribute(PropertyKeys.widgetVar, widgetVar);
+    }
+
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(final String style) {
+        setAttribute(PropertyKeys.style, style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String styleClass) {
+        setAttribute(PropertyKeys.styleClass, styleClass);
     }
 
     @Override
@@ -86,5 +114,29 @@ public class UITimeline extends UIOutput implements Widget {
         }
 
         return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+    }
+
+    public void setAttribute(final PropertyKeys property, final Object value) {
+        getStateHelper().put(property, value);
+
+        @SuppressWarnings("unchecked")
+        List<String> setAttributes =
+                (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+        if (setAttributes == null) {
+            final String cname = this.getClass().getName();
+            if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+                setAttributes = new ArrayList<String>(6);
+                this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+            }
+        }
+        if (setAttributes != null && value == null) {
+            final String attributeName = property.toString();
+            final ValueExpression ve = getValueExpression(attributeName);
+            if (ve == null) {
+                setAttributes.remove(attributeName);
+            } else if (!setAttributes.contains(attributeName)) {
+                setAttributes.add(attributeName);
+            }
+        }
     }
 }

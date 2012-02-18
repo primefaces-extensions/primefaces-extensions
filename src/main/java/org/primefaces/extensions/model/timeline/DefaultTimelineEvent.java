@@ -19,6 +19,12 @@ package org.primefaces.extensions.model.timeline;
 
 import java.util.Date;
 
+/**
+ *
+ * @author Nilesh Mali / last modified by $Author$
+ * @version $Revision$
+ * @since 0.3
+ */
 public class DefaultTimelineEvent implements TimelineEvent {
 
     private String id;
@@ -26,7 +32,6 @@ public class DefaultTimelineEvent implements TimelineEvent {
     private String description;
     private Date startDate;
     private Date endDate;
-    private int importance = 35;
     private String icon;
 
     public DefaultTimelineEvent() {
@@ -98,15 +103,6 @@ public class DefaultTimelineEvent implements TimelineEvent {
     }
 
     @Override
-    public int getImportance() {
-        return importance;
-    }
-
-    public void setImportance(int importance) {
-        this.importance = importance;
-    }
-
-    @Override
     public String getIcon() {
         return icon;
     }
@@ -151,6 +147,6 @@ public class DefaultTimelineEvent implements TimelineEvent {
 
     @Override
     public String toString() {
-        return "DefaultTimelineEvent{" + "id=" + id + ", title=" + title + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", importance=" + importance + '}';
+        return "DefaultTimelineEvent{" + "id=" + id + ", title=" + title + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + "}";
     }
 }
