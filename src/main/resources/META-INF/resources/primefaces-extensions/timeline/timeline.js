@@ -81,7 +81,7 @@ PrimeFacesExt.widget.Timeline.prototype.createTimelineEvent = function(tlEvent, 
     
     // BlockUI on click
     $('#' + eventId + '_li').click(function(){
-        var blockUI = new PrimeFacesExt.widget.BlockUI(eventId, {
+        var blockUI = new PrimeFacesExt.widget.BlockUI({
             source: '#' + eventId,
             target: '#' + targetId,
             content: '#' + eventId + '_content'
