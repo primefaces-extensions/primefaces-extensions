@@ -40,7 +40,7 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 	@Override
 	public void decode(final FacesContext context, final UIComponent component) {
 		TriStateCheckbox checkbox = (TriStateCheckbox) component;
-               
+
 		if (checkbox.isDisabled()) {
 			return;
 		}
@@ -125,28 +125,31 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeOutput(final FacesContext context, final TriStateCheckbox checkbox, final int valCheck, final boolean disabled) throws IOException {
+	protected void encodeOutput(final FacesContext context, final TriStateCheckbox checkbox, final int valCheck,
+	                            final boolean disabled) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String styleClass = HTML.CHECKBOX_BOX_CLASS;
 		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
 		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
 		String iconClass = HTML.CHECKBOX_ICON_CLASS;
-                
-                //if stateIcon is defined use it insted of default icons.
-                String stateOneIconClass =  checkbox.getStateOneIcon()!=null ? "ui-icon " + checkbox.getStateOneIcon(): " ";
-                String stateTwoIconClass =  checkbox.getStateTwoIcon()!=null ? "ui-icon " + checkbox.getStateTwoIcon(): "ui-icon ui-icon-check";
-                String stataThreeIconClass =  checkbox.getStateThreeIcon()!=null ? "ui-icon " + checkbox.getStateThreeIcon(): "ui-icon ui-icon-closethick";
-                
-                String statesIconsClasses = stateOneIconClass+";"+stateTwoIconClass+";"+stataThreeIconClass;
-                
-                iconClass = valCheck == 0 ? iconClass + " " + stateOneIconClass : iconClass;
+
+		//if stateIcon is defined use it insted of default icons.
+		String stateOneIconClass = checkbox.getStateOneIcon() != null ? "ui-icon " + checkbox.getStateOneIcon() : " ";
+		String stateTwoIconClass =
+		    checkbox.getStateTwoIcon() != null ? "ui-icon " + checkbox.getStateTwoIcon() : "ui-icon ui-icon-check";
+		String stataThreeIconClass =
+		    checkbox.getStateThreeIcon() != null ? "ui-icon " + checkbox.getStateThreeIcon() : "ui-icon ui-icon-closethick";
+
+		String statesIconsClasses = stateOneIconClass + ";" + stateTwoIconClass + ";" + stataThreeIconClass;
+
+		iconClass = valCheck == 0 ? iconClass + " " + stateOneIconClass : iconClass;
 		iconClass = valCheck == 1 ? iconClass + " " + stateTwoIconClass : iconClass;
 		iconClass = valCheck == 2 ? iconClass + " " + stataThreeIconClass : iconClass;
-                               
+
 		writer.startElement("div", null);
 		writer.writeAttribute("class", styleClass, null);
-                writer.writeAttribute("statesIcons", statesIconsClasses, null);
+		writer.writeAttribute("statesIcons", statesIconsClasses, null);
 
 		writer.startElement("span", null);
 		writer.writeAttribute("class", iconClass, null);

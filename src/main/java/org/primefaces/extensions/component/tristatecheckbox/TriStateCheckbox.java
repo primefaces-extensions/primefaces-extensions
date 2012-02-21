@@ -59,9 +59,9 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 
 		widgetVar,
 		itemLabel,
-                stateOneIcon,
-                stateTwoIcon,
-                stateThreeIcon;
+		stateOneIcon,
+		stateTwoIcon,
+		stateThreeIcon;
 
 		String toString;
 
@@ -82,6 +82,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		setRendererType(DEFAULT_RENDERER);
 	}
 
+	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
 	}
@@ -101,31 +102,31 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	public void setItemLabel(final String itemLabel) {
 		setAttribute(TriStateCheckbox.PropertyKeys.itemLabel, itemLabel);
 	}
-        
-        public String getStateOneIcon() {
+
+	public String getStateOneIcon() {
 		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateOneIcon, null);
 	}
 
 	public void setStateOneIcon(final String stateOneIcon) {
 		setAttribute(TriStateCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
 	}
-        
-        public String getStateTwoIcon() {
+
+	public String getStateTwoIcon() {
 		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateTwoIcon, null);
 	}
 
 	public void setStateTwoIcon(final String stateTwoIcon) {
 		setAttribute(TriStateCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
 	}
-        
-        public String getStateThreeIcon() {
+
+	public String getStateThreeIcon() {
 		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateThreeIcon, null);
 	}
 
 	public void setStateThreeIcon(final String stateThreeIcon) {
 		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
 	}
-        
+
 	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
@@ -141,6 +142,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
