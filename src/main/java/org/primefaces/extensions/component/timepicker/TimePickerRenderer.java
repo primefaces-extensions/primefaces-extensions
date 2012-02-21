@@ -125,14 +125,13 @@ public class TimePickerRenderer extends InputRenderer {
 
 	protected void encodeScript(final FacesContext fc, final TimePicker timepicker, final String value) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
-		String clientId = timepicker.getClientId(fc);
+		final String clientId = timepicker.getClientId(fc);
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
-
-		writer.write(timepicker.resolveWidgetVar() + " = new PrimeFacesExt.widget.TimePicker('" + clientId + "',{");
-
-		writer.write("myPosition:'" + timepicker.getMyPosition() + "'");
+		writer.write("PrimeFacesExt.cw('TimePicker', '" + timepicker.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",myPosition:'" + timepicker.getMyPosition() + "'");
 		writer.write(",atPosition:'" + timepicker.getAtPosition() + "'");
 		writer.write(",showPeriod:" + timepicker.isShowPeriod());
 		writer.write(",modeInline:" + timepicker.isInline());
@@ -153,7 +152,7 @@ public class TimePickerRenderer extends InputRenderer {
 
 		encodeClientBehaviors(fc, timepicker);
 
-		writer.write("});});");
+		writer.write("},true);});");
 		endScript(writer);
 	}
 

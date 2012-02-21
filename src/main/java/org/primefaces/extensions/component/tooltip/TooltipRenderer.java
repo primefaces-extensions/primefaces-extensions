@@ -53,8 +53,9 @@ public class TooltipRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function() {");
 
-		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFacesExt.widget.Tooltip('" + clientId + "',{");
-		writer.write("global:" + global);
+		writer.write("PrimeFacesExt.cw('Tooltip', '" + tooltip.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",global:" + global);
 		writer.write(",shared:" + shared);
 
 		if (!global) {
@@ -99,7 +100,7 @@ public class TooltipRenderer extends CoreRenderer {
 			writer.write(",effect:false");
 		}
 
-		writer.write("}});});");
+		writer.write("}},true);});");
 		endScript(writer);
 	}
 

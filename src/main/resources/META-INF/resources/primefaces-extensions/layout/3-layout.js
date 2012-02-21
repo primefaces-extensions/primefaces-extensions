@@ -1,4 +1,5 @@
-PrimeFacesExt.widget.Layout = function(id, cfg) {
+PrimeFacesExt.widget.Layout = function(cfg) {
+    var id = cfg.id;
     var config = cfg;
     var clientId = id;
     var jqId = PrimeFaces.escapeClientId(id);

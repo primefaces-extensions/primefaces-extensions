@@ -1,5 +1,5 @@
 
-PrimeFacesExt.widget.BlockUI = function(id, cfg) {
+PrimeFacesExt.widget.BlockUI = function(cfg) {
 	var sourceId = cfg.source;
 	var targetId = cfg.target;
     var contentId = cfg.content;

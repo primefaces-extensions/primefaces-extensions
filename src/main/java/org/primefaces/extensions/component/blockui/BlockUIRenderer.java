@@ -154,8 +154,10 @@ public class BlockUIRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function() {");
 
-		String widgetVar = blockUI.resolveWidgetVar();
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.BlockUI('" + clientId + "',{");
+		final String widgetVar = blockUI.resolveWidgetVar();
+		writer.write("PrimeFacesExt.cw('BlockUI', '" + widgetVar + "',{");
+
+		//writer.write("id:'" + clientId + "'");
 		writer.write("source:'" + jqSource + "'");
 		writer.write(",target:'" + jqTarget + "'");
 		if (jqContent != null) {
@@ -165,14 +167,15 @@ public class BlockUIRenderer extends CoreRenderer {
 		}
 
 		writer.write(",contentExtern:" + isContentExtern);
+		writer.write(",regEx:" + eventRegEx + "},true);");
 
-		writer.write(",regEx:" + eventRegEx + "});");
 		if (blockUI.isAutoShow()) {
 			writer.write(widgetVar + ".setupAjaxSend();");
 			writer.write(widgetVar + ".setupAjaxComplete();");
 		}
 
 		writer.write("});");
+
 		endScript(writer);
 	}
 

@@ -3,10 +3,8 @@
  *
  * @constructor
  */
-PrimeFacesExt.widget.KeyFilter = function(id, cfg) {
-	this.id = id;
+PrimeFacesExt.widget.KeyFilter = function(cfg) {
 	this.cfg = cfg;
-	
     var target = $(this.cfg.target);
 
     if (target.is(':input')) {

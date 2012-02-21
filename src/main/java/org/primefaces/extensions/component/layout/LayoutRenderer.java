@@ -107,13 +107,12 @@ public class LayoutRenderer extends CoreRenderer {
 	    throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId();
-		String widgetVar = layout.resolveWidgetVar();
 
 		startScript(writer, clientId);
-
 		writer.write("$(function() {");
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.Layout('" + clientId + "',{");
-		writer.write("indexTab:");
+		writer.write("PrimeFacesExt.cw('Layout', '" + layout.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",indexTab:");
 
 		DataModel<MenuItem> dataModel = layout.getDataModel();
 		if (dataModel == null || dataModel.getRowCount() < 1) {
@@ -289,7 +288,7 @@ public class LayoutRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, layout);
 
-		writer.write("});});");
+		writer.write("},true);});");
 		endScript(writer);
 	}
 

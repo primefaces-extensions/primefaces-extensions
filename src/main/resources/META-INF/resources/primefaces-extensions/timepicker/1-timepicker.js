@@ -1,5 +1,5 @@
-PrimeFacesExt.widget.TimePicker = function(id, cfg) {
-    this.id = id;
+PrimeFacesExt.widget.TimePicker = function(cfg) {
+    this.id = cfg.id;
     this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(id);
     this.jqEl = this.cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';

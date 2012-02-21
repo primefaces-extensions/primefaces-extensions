@@ -46,13 +46,14 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		final KeyFilter keyFilter = (KeyFilter) component;
 		final String clientId = keyFilter.getClientId(context);
-		final String widgetVar = keyFilter.resolveWidgetVar();
 		final String target = ComponentUtils.findTarget(context, keyFilter);
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.KeyFilter('" + clientId + "', {");
+		writer.write("PrimeFacesExt.cw('KeyFilter', '" + keyFilter.resolveWidgetVar() + "',{");
+
+		//writer.write("id:'" + clientId + "'");
 		writer.write("target:\"" + target + "\"");
 
 		if (keyFilter.getRegEx() != null) {

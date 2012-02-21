@@ -1,5 +1,5 @@
-PrimeFacesExt.widget.AjaxStatus = function(id) {
-    this.id = id;
+PrimeFacesExt.widget.AjaxStatus = function(cfg) {
+    this.id = cfg.id;
     this.jqId = PrimeFaces.escapeClientId(this.id);
     
     this.postConstruct();

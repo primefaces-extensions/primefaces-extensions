@@ -48,8 +48,9 @@ public class AjaxStatusRenderer extends CoreRenderer {
 		String widgetVar = status.resolveWidgetVar();
 
 		startScript(writer, clientId);
-
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.AjaxStatus('" + clientId + "');");
+		writer.write("PrimeFacesExt.cw('AjaxStatus', '" + status.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write("});");
 
 		encodeCallback(context, status, widgetVar, "ajaxSend", "onprestart", AjaxStatus.PRESTART_FACET);
 		encodeCallback(context, status, widgetVar, "ajaxStart", "onstart", AjaxStatus.START_FACET);
@@ -61,8 +62,7 @@ public class AjaxStatusRenderer extends CoreRenderer {
 	}
 
 	protected void encodeCallback(final FacesContext context, final AjaxStatus status, final String var, final String event,
-			final String callback, final String facetName) throws IOException {
-
+	                              final String callback, final String facetName) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String fn = (String) status.getAttributes().get(callback);
 
@@ -105,8 +105,7 @@ public class AjaxStatusRenderer extends CoreRenderer {
 	}
 
 	protected void encodeFacet(final FacesContext facesContext, final String clientId, final UIComponent facet,
-			final String facetName, final boolean hidden) throws IOException {
-
+	                           final String facetName, final boolean hidden) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 
 		writer.startElement("div", null);

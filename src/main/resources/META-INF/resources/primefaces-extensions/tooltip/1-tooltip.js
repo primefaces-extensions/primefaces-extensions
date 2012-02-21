@@ -1,4 +1,5 @@
-PrimeFacesExt.widget.Tooltip = function(id, cfg) {
+PrimeFacesExt.widget.Tooltip = function(cfg) {
+    var id = cfg.id;
     this.cfg = cfg;
     var _self = this;
 
