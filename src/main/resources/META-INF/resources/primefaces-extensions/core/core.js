@@ -1,8 +1,12 @@
+/**
+ * @namespace The PrimeFaces Extensions root namespace.
+ */
 PrimeFacesExt = {
     /**
      * Gets the extension of the current request URL.
      *
-     * @return {string} The URL extensions.
+     * @author Thomas Andraschko
+     * @returns {string} The URL extensions.
      */
 	getRequestUrlExtension : function() {
 		return PrimeFacesExt.getUrlExtension(location.href);
@@ -11,7 +15,8 @@ PrimeFacesExt = {
     /**
      * Gets the extension of the given URL.
      *
-     * @return {string} The URL extensions.
+     * @author Thomas Andraschko
+     * @returns {string} The URL extensions.
      */
 	getUrlExtension : function(url) {
 		return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).substr(url.lastIndexOf("."));
@@ -20,11 +25,11 @@ PrimeFacesExt = {
     /**
      * Builds a resource URL for given parameters.
      * 
+     * @author Thomas Andraschko
      * @param {string} name The name of the resource. For example: /core/core.js
      * @param {string} library The library of the resource. For example: primefaces-extensions
      * @param {string} version The version of the library. For example: 0.2.0-SNAPSHOT
-     * 
-     * @return {string} The resource URL.
+     * @returns {string} The resource URL.
      */
 	getFacesResource : function(name, library, version) {
 		var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
@@ -50,7 +55,8 @@ PrimeFacesExt = {
     /**
      * Gets the version of the current PrimeFaces Extensions library.
      *
-     * @return {string} The PrimeFaces Extensions version.
+     * @author Thomas Andraschko
+     * @returns {string} The PrimeFaces Extensions version.
      */
 	getPrimeFacesExtensionsVersion : function() {
 		if (!PrimeFacesExt.VERSION) {
@@ -63,10 +69,9 @@ PrimeFacesExt = {
 
     /**
      * Builds a resource URL for a PrimeFaces Extensions resource.
-     * 
-     * @param {string} name The name of the resource. For example: /core/core.js
-     * 
-     * @return {string} The resource URL.
+     *
+     * @author Thomas Andraschko
+     * @returns {string} The resource URL.
      */
 	getPrimeFacesExtensionsResource : function(name) {
 		var resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY;
@@ -83,9 +88,9 @@ PrimeFacesExt = {
     /**
      * Builds a resource URL for a PrimeFaces Extensions Compressed resource.
      * 
+     * @author Thomas Andraschko
      * @param {string} name The name of the resource. For example: /core/core.js
-     * 
-     * @return {string} The resource URL.
+     * @returns {string} The resource URL.
      */
 	getPrimeFacesExtensionsCompressedResource : function(name) {
 		return PrimeFacesExt.getFacesResource(
@@ -97,7 +102,8 @@ PrimeFacesExt = {
     /**
      * Checks if the FacesServlet is mapped with extension mapping. For example: .jsf/.xhtml.
      *
-     * @return {boolean} If mapped with extension mapping.
+     * @author Thomas Andraschko
+     * @returns {boolean} If mapped with extension mapping.
      */
 	isExtensionMapping : function() {
 		if (!PrimeFacesExt.IS_EXTENSION_MAPPING) {
@@ -113,7 +119,8 @@ PrimeFacesExt = {
     /**
      * Checks if the current included scripts are uncompressed.
      *
-     * @return {boolean} If uncompresed resources are used.
+     * @author Thomas Andraschko
+     * @returns {boolean} If uncompresed resources are used.
      */
 	useUncompressedResources : function() {
 		if (!PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES) {
@@ -128,8 +135,8 @@ PrimeFacesExt = {
     /**
      * Gets the resource URI of the current included primefaces-extensions.js.
      *
-     * @return {string} The resource URI.
-     * @protected
+     * @author Thomas Andraschko
+     * @returns {string} The resource URI.
      */
 	getPrimeFacesExtensionsScriptURI : function() {
 		if (!PrimeFacesExt.SCRIPT_URI) {
@@ -142,6 +149,7 @@ PrimeFacesExt = {
 	/**
 	 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
 	 * 
+	 * @author Thomas Andraschko
 	 * @param {string} url A string containing the URL to which the request is sent.
 	 * @param {function} callback A callback function that is executed if the request succeeds.
 	 * @param {string} cache Appends a unique timestamp if false.
@@ -162,6 +170,7 @@ PrimeFacesExt = {
 	 * The file and directory names must be completely in lower case.
 	 * For example: /imageareaselect/imageareaselect.js.
 	 * 
+	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
 	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
@@ -177,6 +186,7 @@ PrimeFacesExt = {
 	 * The file and directory names must be completely in lower case.
 	 * For example: /imageareaselect/imageareaselect.js.
 	 * 
+	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
 	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
@@ -234,7 +244,8 @@ PrimeFacesExt = {
 
 	/**
 	 * The JSF resource identifier.
-	 *
+	 * 
+	 * @author Thomas Andraschko
 	 * @type {string}
 	 * @constant
 	 */
@@ -243,6 +254,7 @@ PrimeFacesExt = {
 	/**
 	 * The name of the PrimeFaces Extensions resource library.
 	 *
+	 * @author Thomas Andraschko
 	 * @type {string}
 	 * @constant
 	 */
@@ -251,18 +263,40 @@ PrimeFacesExt = {
 	/**
 	 * The name of the PrimeFaces Extensions Uncompressed resource library.
 	 *
+	 * @author Thomas Andraschko
 	 * @type {string}
 	 * @constant
 	 */
 	RESOURCE_LIBRARY_UNCOMPRESSED : 'primefaces-extensions-uncompressed'
 };
 
+/**
+ * @namespace Namespace for behaviors.
+ */
 PrimeFacesExt.behavior = {};
+
+/**
+ * @namespace Namespace for widgets.
+ */
 PrimeFacesExt.widget = {};
+
+/**
+ * @namespace Namespace for localization.
+ */
 PrimeFacesExt.locales = {};
-// define namespace for each i18n component
+
+/**
+ * @namespace Namespace for TimePicker localization.
+ */
 PrimeFacesExt.locales.timepicker = {};
 
+
+/**
+ * JavaScript behavior.
+ * 
+ * @author Thomas Andraschko
+ * @constructor
+ */
 PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
 	return cfg.execute.call(this, cfg.source, cfg.event, cfg.params, ext);
 }
