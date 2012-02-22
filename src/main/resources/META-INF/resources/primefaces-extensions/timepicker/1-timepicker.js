@@ -5,22 +5,12 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
     this.jqEl = this.cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';
     this.jq = $(this.jqEl);
     var _self = this;
+    
+    this.configureLocale();    
 
     // extend configuration
     if (this.cfg.modeInline) {
         this.cfg.altField = this.jqId + '_input';
-    }
-
-    var msg = PrimeFaces.widget.TimepickerResourceBundle[this.cfg.locale];
-    if (!msg) {
-        // fallback
-        msg = PrimeFaces.widget.TimepickerResourceBundle['en'];
-    }
-
-    this.cfg.hourText = msg.hourText;
-    this.cfg.minuteText = msg.minuteText;
-    if (this.cfg.showPeriod) {
-        this.cfg.amPmText = msg.amPmText;
     }
 
     if (this.cfg.disabled && this.cfg.modeInline) {
@@ -69,6 +59,15 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
 }
 
 PrimeFaces.extend(PrimeFacesExt.widget.TimePicker, PrimeFaces.widget.BaseWidget);
+
+PrimeFaces.widget.TimePicker.prototype.configureLocale = function() {
+    var localeSettings = PrimeFacesExt.locales.timepicker[this.cfg.locale];
+    if(localeSettings) {
+        for(var setting in localeSettings) {
+            this.cfg[setting] = localeSettings[setting];
+        }
+    }
+}
 
 PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     var time = this.jq.val();
@@ -133,27 +132,3 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
         this.jq.val(newTime);
     }
 }
-
-PrimeFacesExt.widget.TimePickerResourceBundle = {
-    en : {
-        hourText: 'Hours',
-        minuteText: 'Minutes',
-        amPmText: ['AM', 'PM']
-    },
-    de : {
-        hourText: 'Stunden',
-        minuteText: 'Minuten',
-        amPmText: ['AM', 'PM']
-    },
-    fr : {
-        hourText: 'Heures',
-        minuteText: 'Minutes',
-        amPmText: ['AM', 'PM']
-    }
-}
-
-PrimeFacesExt.widget.TimePickerResourceBundle.en_US = PrimeFacesExt.widget.TimePickerResourceBundle.en;
-PrimeFacesExt.widget.TimePickerResourceBundle.en_UK = PrimeFacesExt.widget.TimePickerResourceBundle.en;
-PrimeFacesExt.widget.TimePickerResourceBundle.de_DE = PrimeFacesExt.widget.TimePickerResourceBundle.de;
-PrimeFacesExt.widget.TimePickerResourceBundle.de_CH = PrimeFacesExt.widget.TimePickerResourceBundle.de;
-PrimeFacesExt.widget.TimePickerResourceBundle.fr_CH = PrimeFacesExt.widget.TimePickerResourceBundle.fr;

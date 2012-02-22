@@ -259,6 +259,9 @@ PrimeFacesExt = {
 
 PrimeFacesExt.behavior = {};
 PrimeFacesExt.widget = {};
+PrimeFacesExt.locales = {};
+// define namespace for each i18n component
+PrimeFacesExt.locales.timepicker = {};
 
 PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
 	return cfg.execute.call(this, cfg.source, cfg.event, cfg.params, ext);
