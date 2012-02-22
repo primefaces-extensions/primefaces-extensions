@@ -1,6 +1,7 @@
 /**
  * PrimeFaces Extensions KeyFilter Widget.
  *
+ * @author Thomas Andraschko
  * @constructor
  */
 PrimeFacesExt.widget.KeyFilter = function(cfg) {
@@ -17,9 +18,10 @@ PrimeFacesExt.widget.KeyFilter = function(cfg) {
 
 /**
  * Applies the keyFilter to the given jQuery selector object.
- *
+ * 
+ * @author Thomas Andraschko
  * @param {object} input A jQuery selector object.
- * @protected
+ * @private
  */
 PrimeFacesExt.widget.KeyFilter.prototype.applyKeyFilter = function(input) {
 	if (this.cfg.regEx) {

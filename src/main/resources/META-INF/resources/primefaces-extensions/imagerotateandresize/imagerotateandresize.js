@@ -1,6 +1,7 @@
 /**
  * PrimeFaces Extensions ImageRotateAndResize Widget.
  *
+ * @author Thomas Andraschko
  * @constructor
  */
 PrimeFacesExt.widget.ImageRotateAndResize = function(id, cfg) {
@@ -12,7 +13,8 @@ PrimeFacesExt.widget.ImageRotateAndResize = function(id, cfg) {
 /**
  * Initializes the settings.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.initializeLazy = function() {
 	if (!this.initialized) {
@@ -29,6 +31,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.initializeLazy = function() 
 
 /**
  * Reloads the widget.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.reload = function() {
 	this.initialized = false;
@@ -38,6 +42,7 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.reload = function() {
 /**
  * Rotates the image to the left direction.
  * 
+ * @author Thomas Andraschko
  * @param {number} degree The degree.
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateLeft = function(degree) {
@@ -57,6 +62,7 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateLeft = function(degree
 /**
  * Rotates the image to the right direction.
  * 
+ * @author Thomas Andraschko
  * @param {number} degree The degree.
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateRight = function(degree) {
@@ -76,6 +82,7 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.rotateRight = function(degre
 /**
  * Resizes the image to the given width and height.
  * 
+ * @author Thomas Andraschko
  * @param {number} width The new width of the image.
  * @param {number} height The new height of the image.
  */
@@ -92,6 +99,7 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.resize = function(width, hei
 /**
  * Scales the image with the given factor.
  * 
+ * @author Thomas Andraschko
  * @param {number} scaleFactor The scale factor. For example: 1.1 = scales the image to 110% size.
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.scale = function(scaleFactor) {
@@ -107,6 +115,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.scale = function(scaleFactor
 /**
  * Restores the default image.
  * It also fires the rotate and resize event with the default values.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.restoreDefaults = function() {
 	this.initializeLazy();
@@ -123,7 +133,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.restoreDefaults = function()
 /**
  * Redraws the image.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 	var rotation;
@@ -195,7 +206,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.redrawImage = function() {
 /**
  * Fires the rotate event.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireRotateEvent = function() {
 	if (this.cfg.behaviors) {
@@ -215,7 +227,8 @@ PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireRotateEvent = function()
 /**
  * Fires the resize event.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageRotateAndResize.prototype.fireResizeEvent = function() {
 	if (this.cfg.behaviors) {

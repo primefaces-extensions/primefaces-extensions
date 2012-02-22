@@ -1,6 +1,7 @@
 /**
  * PrimeFaces Extensions ImageAreaSelect Widget.
  *
+ * @author Thomas Andraschko
  * @constructor
  */
 PrimeFacesExt.widget.ImageAreaSelect = function(cfg) {
@@ -61,7 +62,8 @@ PrimeFacesExt.widget.ImageAreaSelect = function(cfg) {
 /**
  * Binds the selectEnd callback.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectEndCallback = function() {
 	if (this.cfg.behaviors) {
@@ -83,7 +85,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectEndCallback = function(
 /**
  * Binds the selectStart callback.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectStartCallback = function() {
 	if (this.cfg.behaviors) {
@@ -105,7 +108,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectStartCallback = functio
 /**
  * Binds the selectChange callback.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectChangeCallback = function() {
 	if (this.cfg.behaviors) {
@@ -127,10 +131,11 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.bindSelectChangeCallback = functi
 /**
  * Fills the required parameters.
  *
+ * @author Thomas Andraschko
  * @param {object} img The img object from the imgareaselect plugin.
  * @param {object} selection The selection object from the imgareaselect plugin.
  * @param {object} params The object were the params will be stored.
- * @protected
+ * @private
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.fillSelectEventsParameter = function(img, selection, params) {
 	params[this.id + '_x1'] = selection.x1;
@@ -146,6 +151,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.fillSelectEventsParameter = funct
 
 /**
  * Updates the widget.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.update = function() {
 	this.instance.update();
@@ -153,6 +160,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.update = function() {
 
 /**
  * Reloads the widget.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.reload = function() {
 	this.setOptions({remove: true});
@@ -164,6 +173,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.reload = function() {
  * Cancel the current selection.
  * This method hides the selection/outer area, 
  * so no call to update() is necessary (as opposed to setSelection()). 
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.cancelSelection = function(options) {
 	this.instance.cancelSelection();
@@ -172,7 +183,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.cancelSelection = function(option
 /**
  * Get the current selection.
  *
- * @return {object} An object containing the selection.
+ * @author Thomas Andraschko
+ * @returns {object} An object containing the selection.
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.getSelection = function() {
 	return this.instance.getSelection();
@@ -185,6 +197,7 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.getSelection = function() {
  * If you want the new selection to be shown, call update() right after setSelection(). 
  * Also make sure that the show option is set to true. 
  *
+ * @author Thomas Andraschko
  * @param {int} x1 X coordinate of the top left corner of the selection area.
  * @param {int} y1 Y coordinate of the top left corner of the selection area.
  * @param {int} x2 X coordinate of the bottom right corner of the selection area.
@@ -197,7 +210,8 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.setSelection = function(x1, y1, x
 /**
  * Get current options.
  *
- * @return {object} An object containing the set of options currently in use.
+ * @author Thomas Andraschko
+ * @returns {object} An object containing the set of options currently in use.
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.getOptions = function() {
 	return this.instance.getOptions();
@@ -210,6 +224,7 @@ PrimeFacesExt.widget.ImageAreaSelect.prototype.getOptions = function() {
  * If you want the new selection to be shown, call update() right after setSelection(). 
  * Also make sure that the show option is set to true. 
  *
+ * @author Thomas Andraschko
  * @param {object} options The options for the widget.
  */
 PrimeFacesExt.widget.ImageAreaSelect.prototype.setOptions = function(options) {

@@ -2,8 +2,7 @@
  * Resolves the resources for the CKEditor.
  * 
  * @param {string} resource The requested resource from CKEditor.
- * 
- * @return {string} The faces resource URL.
+ * @returns {string} The faces resource URL.
  */
 CKEDITOR_GETURL = function(resource) {
 	var facesResource;
@@ -51,7 +50,7 @@ CKEDITOR_GETURL = function(resource) {
 }
 
 /**
- * PrimeFaces Extensions CKEditor Widget
+ * PrimeFaces Extensions CKEditor Widget.
  * 
  * @constructor
  */
@@ -135,8 +134,9 @@ PrimeFaces.extend(PrimeFacesExt.widget.CKEditor, PrimeFaces.widget.BaseWidget);
 /**
  * Initializes the CKEditor instance.
  * This method will be called when the resources for the CKEditor are loaded.
- *
- * @protected
+ * 
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.initialize = function() {
 	//remove old instances if required
@@ -152,7 +152,8 @@ PrimeFacesExt.widget.CKEditor.prototype.initialize = function() {
 /**
  * Overwrites the save button.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.overwriteSaveButton = function() {
 	//overwrite save button
@@ -183,7 +184,8 @@ PrimeFacesExt.widget.CKEditor.prototype.overwriteSaveButton = function() {
 /**
  * This method will be called when the CKEditor was initialized. 
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.initialized = function() {
 	//get instance
@@ -228,7 +230,8 @@ PrimeFacesExt.widget.CKEditor.prototype.initialized = function() {
 /**
  * Binds the common events, which will be used for dirty/change checking.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.bindCommonChangeEvents = function() {
 	this.instance.on('paste', $.proxy(this.checkDirty, this));
@@ -255,7 +258,8 @@ PrimeFacesExt.widget.CKEditor.prototype.bindCommonChangeEvents = function() {
 /**
  * Binds the events for the WYSIWYG mode, which will be used for dirty/change checking.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.bindChangeEventsForWYSIWYGMode = function() {
     this.instance.document.on('drop', $.proxy(this.checkDirty, this));
@@ -280,7 +284,8 @@ PrimeFacesExt.widget.CKEditor.prototype.bindChangeEventsForWYSIWYGMode = functio
 /**
  * Binds the events for the source mode, which will be used for dirty/change checking.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.bindChangeEventsForSourceMode = function() {
 	this.instance.textarea.on('drop', $.proxy(this.checkDirty, this));
@@ -298,7 +303,8 @@ PrimeFacesExt.widget.CKEditor.prototype.bindChangeEventsForSourceMode = function
 /**
  * Sets the dirty state.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.checkDirty = function() {
     if (this.isDirty()) {
@@ -317,7 +323,8 @@ PrimeFacesExt.widget.CKEditor.prototype.checkDirty = function() {
 /**
  * Restores the dirtyState and calls check checkDirty();
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.checkDirtyFromTimer = function() {
 	this.dirtyState = false;
@@ -327,7 +334,8 @@ PrimeFacesExt.widget.CKEditor.prototype.checkDirtyFromTimer = function() {
 /**
  * Handles the blur event and fires the change event if required.
  *
- * @protected
+ * @author Thomas Andraschko
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.handleBlur = function() {
 	this.fireEvent('blur');
@@ -345,8 +353,9 @@ PrimeFacesExt.widget.CKEditor.prototype.handleBlur = function() {
 /**
  * This method fires an event if the behavior was defined.
  *
+ * @author Thomas Andraschko
  * @param {string} eventName The name of the event.
- * @protected
+ * @private
  */
 PrimeFacesExt.widget.CKEditor.prototype.fireEvent = function(eventName) {
 	if (this.cfg.behaviors) {
@@ -363,6 +372,8 @@ PrimeFacesExt.widget.CKEditor.prototype.fireEvent = function(eventName) {
 
 /**
  * Destroys the CKEditor instance.
+ *
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.destroy = function() {
 	if (this.dirtyCheckInterval) {
@@ -379,6 +390,8 @@ PrimeFacesExt.widget.CKEditor.prototype.destroy = function() {
 
 /**
  * Checks if the editor is in dirty state.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.isDirty = function() {
 	return this.dirtyState || this.instance.checkDirty();
@@ -386,6 +399,8 @@ PrimeFacesExt.widget.CKEditor.prototype.isDirty = function() {
 
 /**
  * Sets readOnly to the CKEditor.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.setReadOnly = function(readOnly) {
     this.instance.setReadOnly(readOnly !== false);
@@ -393,6 +408,8 @@ PrimeFacesExt.widget.CKEditor.prototype.setReadOnly = function(readOnly) {
 
 /**
  * Checks if the CKEditor is readOnly.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.isReadOnly = function() {
     return this.instance.readOnly;
@@ -400,6 +417,8 @@ PrimeFacesExt.widget.CKEditor.prototype.isReadOnly = function() {
 
 /**
  * Indicates that the editor instance has focus.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.hasFocus = function() {
     return this.instance.focusManager.hasFocus;
@@ -407,6 +426,8 @@ PrimeFacesExt.widget.CKEditor.prototype.hasFocus = function() {
 
 /**
  * Returns the CKEditor instance.
+ * 
+ * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor.prototype.getEditorInstance = function() {
     return this.instance;
