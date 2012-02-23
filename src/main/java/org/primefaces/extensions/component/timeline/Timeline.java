@@ -41,7 +41,7 @@ import org.primefaces.component.api.Widget;
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
                       })
 public class Timeline extends UIOutput implements Widget {
 
