@@ -12,9 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * $Id$
  */
+
 package org.primefaces.extensions.component.timeline;
 
 import java.util.ArrayList;
@@ -30,113 +31,118 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.api.Widget;
 
 /**
- * @author Nilesh Mali / last modified by $Author$
+ * Timeline component.
+ *
+ * @author  Nilesh Mali / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+                      })
 public class Timeline extends UIOutput implements Widget {
 
-    private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
-    private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+	private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
+	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-    /**
-     * Properties that are tracked by state saving.
-     */
-    protected enum PropertyKeys {
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author  ova / last modified by $Author$
+	 * @version $Revision$
+	 */
+	protected enum PropertyKeys {
 
-        style,
-        styleClass,
-        widgetVar;
-        private String toString;
+		style,
+		styleClass,
+		widgetVar;
 
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
+		private String toString;
 
-        PropertyKeys() {
-        }
+		PropertyKeys(final String toString) {
+			this.toString = toString;
+		}
 
-        @Override
-        public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
-        }
-    }
+		PropertyKeys() {
+		}
 
-    public Timeline() {
-        setRendererType(DEFAULT_RENDERER);
-    }
+		@Override
+		public String toString() {
+			return ((this.toString != null) ? this.toString : super.toString());
+		}
+	}
 
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
+	public Timeline() {
+		setRendererType(DEFAULT_RENDERER);
+	}
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+	@Override
+	public String getFamily() {
+		return COMPONENT_FAMILY;
+	}
 
-    public void setWidgetVar(final String widgetVar) {
-        setAttribute(PropertyKeys.widgetVar, widgetVar);
-    }
+	public String getWidgetVar() {
+		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	}
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+	public void setWidgetVar(final String widgetVar) {
+		setAttribute(PropertyKeys.widgetVar, widgetVar);
+	}
 
-    public void setStyle(final String style) {
-        setAttribute(PropertyKeys.style, style);
-    }
+	public String getStyle() {
+		return (String) getStateHelper().eval(PropertyKeys.style, null);
+	}
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+	public void setStyle(final String style) {
+		setAttribute(PropertyKeys.style, style);
+	}
 
-    public void setStyleClass(final String styleClass) {
-        setAttribute(PropertyKeys.styleClass, styleClass);
-    }
+	public String getStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+	}
 
-    @Override
-    public String resolveWidgetVar() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+	public void setStyleClass(final String styleClass) {
+		setAttribute(PropertyKeys.styleClass, styleClass);
+	}
 
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
+	@Override
+	public String resolveWidgetVar() {
+		final FacesContext context = FacesContext.getCurrentInstance();
+		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
 
-        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+		if (userWidgetVar != null) {
+			return userWidgetVar;
+		}
 
-    public void setAttribute(final PropertyKeys property, final Object value) {
-        getStateHelper().put(property, value);
+		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+	}
 
-        @SuppressWarnings("unchecked")
-        List<String> setAttributes =
-                (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-        if (setAttributes == null) {
-            final String cname = this.getClass().getName();
-            if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-                setAttributes = new ArrayList<String>(6);
-                this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-            }
-        }
-        if (setAttributes != null && value == null) {
-            final String attributeName = property.toString();
-            final ValueExpression ve = getValueExpression(attributeName);
-            if (ve == null) {
-                setAttributes.remove(attributeName);
-            } else if (!setAttributes.contains(attributeName)) {
-                setAttributes.add(attributeName);
-            }
-        }
-    }
+	public void setAttribute(final PropertyKeys property, final Object value) {
+		getStateHelper().put(property, value);
+
+		@SuppressWarnings("unchecked")
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		if (setAttributes == null) {
+			final String cname = this.getClass().getName();
+			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+				setAttributes = new ArrayList<String>(6);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+			}
+		}
+
+		if (setAttributes != null && value == null) {
+			final String attributeName = property.toString();
+			final ValueExpression ve = getValueExpression(attributeName);
+			if (ve == null) {
+				setAttributes.remove(attributeName);
+			} else if (!setAttributes.contains(attributeName)) {
+				setAttributes.add(attributeName);
+			}
+		}
+	}
 }
