@@ -20,20 +20,16 @@ package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.AjaxBehaviorListener;
-import javax.faces.event.FacesListener;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.imageareaselect.ImageAreaSelect} component.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.imageareaselect.ImageAreaSelect} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 @SuppressWarnings("serial")
-public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
+public class ImageAreaSelectEvent extends AbstractAjaxBehaviorEvent {
 
 	private int height;
 	private int width;
@@ -45,17 +41,9 @@ public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
 	private int imgWidth;
 	private String imgSrc;
 
-	public ImageAreaSelectEvent(final UIComponent component,
-			final Behavior behavior,
-			final int height,
-			final int width,
-			final int x1,
-			final int x2,
-			final int y1,
-			final int y2,
-			final int imgHeight,
-			final int imgWidth,
-			final String imgSrc) {
+	public ImageAreaSelectEvent(final UIComponent component, final Behavior behavior, final int height, final int width,
+	                            final int x1, final int x2, final int y1, final int y2, final int imgHeight, final int imgWidth,
+	                            final String imgSrc) {
 		super(component, behavior);
 		this.x1 = x1;
 		this.x2 = x2;
@@ -66,18 +54,6 @@ public class ImageAreaSelectEvent extends AjaxBehaviorEvent {
 		this.imgHeight = imgHeight;
 		this.imgWidth = imgWidth;
 		this.imgSrc = imgSrc;
-	}
-
-	@Override
-	public boolean isAppropriateListener(final FacesListener facesListener) {
-		return (facesListener instanceof AjaxBehaviorListener);
-	}
-
-	@Override
-	public void processListener(final FacesListener facesListener) {
-		if (facesListener instanceof AjaxBehaviorListener) {
-			((AjaxBehaviorListener) facesListener).processAjaxBehavior(this);
-		}
 	}
 
 	public final int getHeight() {

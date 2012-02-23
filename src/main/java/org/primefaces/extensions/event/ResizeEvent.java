@@ -20,9 +20,6 @@ package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.AjaxBehaviorListener;
-import javax.faces.event.FacesListener;
 
 /**
  * Event which is triggered by the {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize} and
@@ -33,7 +30,7 @@ import javax.faces.event.FacesListener;
  * @since   0.1
  */
 @SuppressWarnings("serial")
-public class ResizeEvent extends AjaxBehaviorEvent {
+public class ResizeEvent extends AbstractAjaxBehaviorEvent {
 
 	private double width;
 	private double height;
@@ -42,18 +39,6 @@ public class ResizeEvent extends AjaxBehaviorEvent {
 		super(component, behavior);
 		this.width = width;
 		this.height = height;
-	}
-
-	@Override
-	public boolean isAppropriateListener(final FacesListener facesListener) {
-		return (facesListener instanceof AjaxBehaviorListener);
-	}
-
-	@Override
-	public void processListener(final FacesListener facesListener) {
-		if (facesListener instanceof AjaxBehaviorListener) {
-			((AjaxBehaviorListener) facesListener).processAjaxBehavior(this);
-		}
 	}
 
 	public final double getWidth() {

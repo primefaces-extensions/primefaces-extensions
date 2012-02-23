@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,29 @@
 
 package org.primefaces.extensions.event;
 
+import java.util.Date;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} and
- * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since   0.3
  */
 @SuppressWarnings("serial")
-public class OpenEvent extends AbstractAjaxBehaviorEvent {
+public class TimeSelectEvent extends AbstractAjaxBehaviorEvent {
 
-	public OpenEvent(final UIComponent component, final Behavior behavior) {
+	private Date time;
+
+	public TimeSelectEvent(final UIComponent component, final Behavior behavior, final Date time) {
 		super(component, behavior);
+		this.time = time;
+	}
+
+	public Date getTime() {
+		return time;
 	}
 }

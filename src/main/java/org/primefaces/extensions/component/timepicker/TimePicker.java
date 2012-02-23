@@ -19,8 +19,15 @@
 package org.primefaces.extensions.component.timepicker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
@@ -28,11 +35,18 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang3.LocaleUtils;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.BeforeShowEvent;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.TimeSelectEvent;
 import org.primefaces.util.ArrayUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 
 /**
@@ -57,9 +71,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String CONTAINER_CLASS = "ui-timepicker ui-widget ui-corner-all";
-
-	//public final static String PLAIN_INPUT_CLASS = "ui-timepicker-input";
-	public static final String THEME_INPUT_CLASS = "ui-timepicker-input ui-inputfield ui-state-default ui-corner-all";
+	public static final String INPUT_CLASS = "ui-inputfield ui-timepicker-input ui-state-default ui-corner-all";
 	public static final String UP_BUTTON_CLASS =
 	    "ui-timepicker-button ui-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
 	public static final String DOWN_BUTTON_CLASS =
@@ -76,6 +88,13 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 	private Locale appropriateLocale;
 
+	private static final Collection<String> EVENT_NAMES =
+	    Collections.unmodifiableCollection(Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
+	                                                     "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
+	                                                     "mouseup", "beforeShow", "timeSelect", "close"));
+
+	private Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
+
 	/**
 	 * PropertyKeys
 	 *
@@ -85,9 +104,11 @@ public class TimePicker extends HtmlInputText implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		myPosition,
-		atPosition,
+		timeSeparator,
 		showPeriod,
+		showPeriodLabels,
+		dialogPosition,
+		inputPosition,
 		mode /* 'popup', 'spinner', 'inline' */,
 		startHours,
 		endHours,
@@ -95,12 +116,14 @@ public class TimePicker extends HtmlInputText implements Widget {
 		endMinutes,
 		intervalMinutes,
 		rows,
+		showHours,
+		showMinutes,
+		showCloseButton,
+		showNowButton,
+		showDeselectButton,
+		onHourShow,
+		onMinuteShow,
 		locale;
-
-		/*
-		showPeriodLabels, showHoursLeadingZero, showMinutesLeadingZero, timeSeparator, showHours, showMinutes,
-		onSelectCallback, onCloseCallback, onHourShow, onMinuteShow, showOn // 'focus', 'button', 'both',
-		 */
 
 		String toString;
 
@@ -134,28 +157,12 @@ public class TimePicker extends HtmlInputText implements Widget {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	public String getMode() {
-		return (String) getStateHelper().eval(PropertyKeys.mode, "spinner");
+	public String getTimeSeparator() {
+		return (String) getStateHelper().eval(PropertyKeys.timeSeparator, ":");
 	}
 
-	public void setMode(final String mode) {
-		setAttribute(PropertyKeys.mode, mode);
-	}
-
-	public String getMyPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.myPosition, "left top");
-	}
-
-	public void setMyPosition(final String myPosition) {
-		setAttribute(PropertyKeys.myPosition, myPosition);
-	}
-
-	public String getAtPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.atPosition, "left bottom");
-	}
-
-	public void setAtPosition(final String atPosition) {
-		setAttribute(PropertyKeys.atPosition, atPosition);
+	public void setTimeSeparator(final String timeSeparator) {
+		setAttribute(PropertyKeys.timeSeparator, timeSeparator);
 	}
 
 	public boolean isShowPeriod() {
@@ -164,6 +171,38 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 	public void setShowPeriod(final boolean showPeriod) {
 		setAttribute(PropertyKeys.showPeriod, showPeriod);
+	}
+
+	public boolean isShowPeriodLabels() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showPeriodLabels, false);
+	}
+
+	public void setShowPeriodLabels(final boolean showPeriodLabels) {
+		setAttribute(PropertyKeys.showPeriodLabels, showPeriodLabels);
+	}
+
+	public String getMode() {
+		return (String) getStateHelper().eval(PropertyKeys.mode, "spinner");
+	}
+
+	public void setMode(final String mode) {
+		setAttribute(PropertyKeys.mode, mode);
+	}
+
+	public String getDialogPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.dialogPosition, "left top");
+	}
+
+	public void setDialogPosition(final String dialogPosition) {
+		setAttribute(PropertyKeys.dialogPosition, dialogPosition);
+	}
+
+	public String getInputPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.inputPosition, "left bottom");
+	}
+
+	public void setInputPosition(final String inputPosition) {
+		setAttribute(PropertyKeys.inputPosition, inputPosition);
 	}
 
 	public int getStartHours() {
@@ -214,6 +253,62 @@ public class TimePicker extends HtmlInputText implements Widget {
 		setAttribute(PropertyKeys.rows, rows);
 	}
 
+	public boolean isShowHours() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showHours, true);
+	}
+
+	public void setShowHours(final boolean showHours) {
+		setAttribute(PropertyKeys.showHours, showHours);
+	}
+
+	public boolean isShowMinutes() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showMinutes, true);
+	}
+
+	public void setShowMinutes(final boolean showMinutes) {
+		setAttribute(PropertyKeys.showMinutes, showMinutes);
+	}
+
+	public boolean isShowCloseButton() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showCloseButton, false);
+	}
+
+	public void setShowCloseButton(final boolean showCloseButton) {
+		setAttribute(PropertyKeys.showCloseButton, showCloseButton);
+	}
+
+	public boolean isShowDeselectButton() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showDeselectButton, false);
+	}
+
+	public void setShowDeselectButton(final boolean showDeselectButton) {
+		setAttribute(PropertyKeys.showDeselectButton, showDeselectButton);
+	}
+
+	public boolean isShowNowButton() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showNowButton, false);
+	}
+
+	public void setShowNowButton(final boolean showNowButton) {
+		setAttribute(PropertyKeys.showNowButton, showNowButton);
+	}
+
+	public String getOnHourShow() {
+		return (String) getStateHelper().eval(PropertyKeys.onHourShow, null);
+	}
+
+	public void setOnHourShow(final String onHourShow) {
+		setAttribute(PropertyKeys.onHourShow, onHourShow);
+	}
+
+	public String getOnMinuteShow() {
+		return (String) getStateHelper().eval(PropertyKeys.onMinuteShow, null);
+	}
+
+	public void setOnMinuteShow(final String onMinuteShow) {
+		setAttribute(PropertyKeys.onMinuteShow, onMinuteShow);
+	}
+
 	public Object getLocale() {
 		return getStateHelper().eval(PropertyKeys.locale, null);
 	}
@@ -222,97 +317,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 		setAttribute(PropertyKeys.locale, locale);
 	}
 
-	/*
-	public String getShowOn() {
-	    return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
-	}
-
-	public void setShowOn(String showOn) {
-	    getStateHelper().put(PropertyKeys.showOn, showOn);
-	}
-
-	public boolean isShowHours() {
-	    return (Boolean) getStateHelper().eval(PropertyKeys.showHours, true);
-	}
-
-	public void setShowHours(boolean showHours) {
-	    getStateHelper().put(PropertyKeys.showHours, showHours);
-	}
-
-	public boolean isShowMinutes() {
-	    return (Boolean) getStateHelper().eval(PropertyKeys.showMinutes, true);
-	}
-
-	public void setShowMinutes(boolean showMinutes) {
-	    getStateHelper().put(PropertyKeys.showMinutes, showMinutes);
-	}
-
-	public boolean isShowPeriodLabels() {
-	    return (Boolean) getStateHelper().eval(PropertyKeys.showPeriodLabels, false);
-	}
-
-	public void setShowPeriodLabels(boolean showPeriodLabels) {
-	    getStateHelper().put(PropertyKeys.showPeriodLabels, showPeriodLabels);
-	}
-
-	public boolean isShowHoursLeadingZero() {
-	    return (Boolean) getStateHelper().eval(PropertyKeys.showHoursLeadingZero, true);
-	}
-
-	public void setShowHoursLeadingZero(boolean showHoursLeadingZero) {
-	    getStateHelper().put(PropertyKeys.showHoursLeadingZero, showHoursLeadingZero);
-	}
-
-	public boolean isShowMinutesLeadingZero() {
-	    return (Boolean) getStateHelper().eval(PropertyKeys.showMinutesLeadingZero, true);
-	}
-
-	public void setShowMinutesLeadingZero(boolean showMinutesLeadingZero) {
-	    getStateHelper().put(PropertyKeys.showMinutesLeadingZero, showMinutesLeadingZero);
-	}
-
-	public String getTimeSeparator() {
-	    return (String) getStateHelper().eval(PropertyKeys.timeSeparator, ":");
-	}
-
-	public void setTimeSeparator(String timeSeparator) {
-	    getStateHelper().put(PropertyKeys.timeSeparator, timeSeparator);
-	}
-
-	public String getOnSelectCallback() {
-	    return (String) getStateHelper().eval(PropertyKeys.onSelectCallback, null);
-	}
-
-	public void setOnSelectCallback(String onSelectCallback) {
-	    getStateHelper().put(PropertyKeys.onSelectCallback, onSelectCallback);
-	}
-
-	public String getOnCloseCallback() {
-	    return (String) getStateHelper().eval(PropertyKeys.onCloseCallback, null);
-	}
-
-	public void setOnCloseCallback(String onCloseCallback) {
-	    getStateHelper().put(PropertyKeys.onCloseCallback, onCloseCallback);
-	}
-
-	public String getOnHourShow() {
-	    return (String) getStateHelper().eval(PropertyKeys.onHourShow, null);
-	}
-
-	public void setOnHourShow(String onHourShow) {
-	    getStateHelper().put(PropertyKeys.onHourShow, onHourShow);
-	}
-
-	public String getOnMinuteShow() {
-	    return (String) getStateHelper().eval(PropertyKeys.onMinuteShow, null);
-	}
-
-	public void setOnMinuteShow(String onMinuteShow) {
-	    getStateHelper().put(PropertyKeys.onMinuteShow, onMinuteShow);
-	}
-	 */
-
-	public java.util.Locale calculateLocale(final FacesContext fc) {
+	public Locale calculateLocale(final FacesContext fc) {
 		if (appropriateLocale == null) {
 			Object userLocale = getLocale();
 			if (userLocale != null) {
@@ -341,6 +346,61 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	@Override
+	public Collection<String> getEventNames() {
+		return EVENT_NAMES;
+	}
+
+	@Override
+	public void queueEvent(final FacesEvent event) {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		String eventName = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+		if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+			if ("timeSelect".equals(eventName)) {
+				customEvents.put("timeSelect", (AjaxBehaviorEvent) event);
+
+				return;
+			} else if ("beforeShow".equals(eventName)) {
+				BeforeShowEvent beforeShowEvent = new BeforeShowEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+				beforeShowEvent.setPhaseId(event.getPhaseId());
+				super.queueEvent(beforeShowEvent);
+
+				return;
+			} else if ("close".equals(eventName)) {
+				CloseEvent closeEvent = new CloseEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+				closeEvent.setPhaseId(event.getPhaseId());
+				super.queueEvent(closeEvent);
+
+				return;
+			}
+		}
+
+		super.queueEvent(event);
+	}
+
+	@Override
+	public void validate(final FacesContext fc) {
+		super.validate(fc);
+
+		if (isValid()) {
+			for (Iterator<String> customEventIter = customEvents.keySet().iterator(); customEventIter.hasNext();) {
+				AjaxBehaviorEvent behaviorEvent = customEvents.get(customEventIter.next());
+				TimeSelectEvent timeSelectEvent = new TimeSelectEvent(this, behaviorEvent.getBehavior(), (Date) getValue());
+
+				if (behaviorEvent.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
+					timeSelectEvent.setPhaseId(PhaseId.PROCESS_VALIDATIONS);
+				}
+
+				super.queueEvent(timeSelectEvent);
+			}
+		}
+	}
+
+	private boolean isSelfRequest(final FacesContext fc) {
+		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	}
+
+	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -355,6 +415,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {

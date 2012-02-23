@@ -20,9 +20,6 @@ package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.AjaxBehaviorListener;
-import javax.faces.event.FacesListener;
 
 /**
  * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} component.
@@ -31,21 +28,10 @@ import javax.faces.event.FacesListener;
  * @version $Revision$
  * @since   0.2
  */
-public class CloseEvent extends AjaxBehaviorEvent {
+@SuppressWarnings("serial")
+public class CloseEvent extends AbstractAjaxBehaviorEvent {
 
 	public CloseEvent(final UIComponent component, final Behavior behavior) {
 		super(component, behavior);
-	}
-
-	@Override
-	public boolean isAppropriateListener(final FacesListener facesListener) {
-		return (facesListener instanceof AjaxBehaviorListener);
-	}
-
-	@Override
-	public void processListener(final FacesListener facesListener) {
-		if (facesListener instanceof AjaxBehaviorListener) {
-			((AjaxBehaviorListener) facesListener).processAjaxBehavior(this);
-		}
 	}
 }

@@ -20,40 +20,23 @@ package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.AjaxBehaviorListener;
-import javax.faces.event.FacesListener;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize} component.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize}
+ * component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 @SuppressWarnings("serial")
-public class RotateEvent extends AjaxBehaviorEvent {
+public class RotateEvent extends AbstractAjaxBehaviorEvent {
 
 	private int degree;
 
-	public RotateEvent(final UIComponent component,
-			final Behavior behavior,
-			final int degree) {
+	public RotateEvent(final UIComponent component, final Behavior behavior, final int degree) {
 		super(component, behavior);
 		this.degree = degree;
-	}
-
-	@Override
-	public boolean isAppropriateListener(final FacesListener facesListener) {
-		return (facesListener instanceof AjaxBehaviorListener);
-	}
-
-	@Override
-	public void processListener(final FacesListener facesListener) {
-		if (facesListener instanceof AjaxBehaviorListener) {
-			((AjaxBehaviorListener) facesListener).processAjaxBehavior(this);
-		}
 	}
 
 	public int getDegree() {

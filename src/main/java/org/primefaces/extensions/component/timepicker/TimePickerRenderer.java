@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.timepicker;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.faces.component.UIComponent;
@@ -100,7 +101,7 @@ public class TimePickerRenderer extends InputRenderer {
 		}
 
 		if (!timepicker.isInline()) {
-			writer.writeAttribute("class", TimePicker.THEME_INPUT_CLASS, null);
+			writer.writeAttribute("class", TimePicker.INPUT_CLASS, null);
 			if (timepicker.isReadonly()) {
 				writer.writeAttribute("readonly", "readonly", null);
 			}
@@ -131,8 +132,8 @@ public class TimePickerRenderer extends InputRenderer {
 		writer.write("$(function(){");
 		writer.write("PrimeFacesExt.cw('TimePicker', '" + timepicker.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
-		writer.write(",myPosition:'" + timepicker.getMyPosition() + "'");
-		writer.write(",atPosition:'" + timepicker.getAtPosition() + "'");
+		writer.write(",myPosition:'" + timepicker.getDialogPosition() + "'");
+		writer.write(",atPosition:'" + timepicker.getInputPosition() + "'");
 		writer.write(",showPeriod:" + timepicker.isShowPeriod());
 		writer.write(",modeInline:" + timepicker.isInline());
 		writer.write(",modeSpinner:" + timepicker.isSpinner());
@@ -202,26 +203,44 @@ public class TimePickerRenderer extends InputRenderer {
 	}
 
 	@Override
-	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
+	public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue)
 	    throws ConverterException {
-		TimePicker timepicker = (TimePicker) component;
 		String value = (String) submittedValue;
+		if (StringUtils.isBlank(value)) {
+			return null;
+		}
+
+		TimePicker timepicker = (TimePicker) component;
 		Converter converter = timepicker.getConverter();
 
-		//first ask the converter
+		// first ask the converter
 		if (converter != null) {
-			return converter.getAsObject(context, timepicker, value);
+			return converter.getAsObject(fc, timepicker, value);
 		}
+
 		//Try to guess
+		/*
 		else {
-			Class<?> valueType = timepicker.getValueExpression("value").getType(context.getELContext());
-			Converter converterForType = context.getApplication().createConverter(valueType);
+		    Class<?> valueType = timepicker.getValueExpression("value").getType(context.getELContext());
+		    Converter converterForType = context.getApplication().createConverter(valueType);
 
-			if (converterForType != null) {
-				return converterForType.getAsObject(context, timepicker, value);
+		    if (converterForType != null) {
+		        return converterForType.getAsObject(context, timepicker, value);
+		    }
+		}*/
+
+		// use built-in conversion
+		try {
+			SimpleDateFormat timeFormat;
+			if (timepicker.isShowPeriod()) {
+				timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_12, timepicker.calculateLocale(fc));
+			} else {
+				timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_24, timepicker.calculateLocale(fc));
 			}
-		}
 
-		return value;
+			return timeFormat.parse(value);
+		} catch (ParseException e) {
+			throw new ConverterException(e);
+		}
 	}
 }
