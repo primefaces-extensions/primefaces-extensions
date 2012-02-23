@@ -237,6 +237,25 @@ PrimeFacesExt = {
 	        }, true);
 	    }
 	},
+    
+	/**
+	 * Configures component specific localized text by given widget name and locale in configuration object.
+	 * 
+	 * @author Oleg Varaksin
+	 * @param {string} widgetName The name of the widget. For example: 'TimePicker'.
+	 * @param {object} cfg Configuration object as key, value pair. This object should keep current locale in cfg.locale.
+     * @returns {object} cfg Configuration object with updated localized text (if any text to given locale were found). 
+	 */    
+    configureLocale : function(widgetName, cfg) {
+        var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
+        if(localeSettings) {
+            for(var setting in localeSettings) {
+                cfg[setting] = localeSettings[setting];
+            }
+        }
+        
+        return cfg;
+    },    
 
 	instantiateWidget : function(widgetName, widgetVar, cfg) {
 		window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
@@ -288,7 +307,7 @@ PrimeFacesExt.locales = {};
 /**
  * @namespace Namespace for TimePicker localization.
  */
-PrimeFacesExt.locales.timepicker = {};
+PrimeFacesExt.locales.TimePicker = {};
 
 
 /**

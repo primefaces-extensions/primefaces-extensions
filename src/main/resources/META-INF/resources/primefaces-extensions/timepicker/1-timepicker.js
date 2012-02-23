@@ -1,12 +1,14 @@
 PrimeFacesExt.widget.TimePicker = function(cfg) {
     this.id = cfg.id;
-    this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(id);
     this.jqEl = this.cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';
     this.jq = $(this.jqEl);
-    var _self = this;
     
-    this.configureLocale();    
+    // configure localized text
+    this.cfg = PrimeFacesExt.configureLocale('TimePicker', cfg);
+    
+    // for internal use
+    var _self = this;
 
     // extend configuration
     if (this.cfg.modeInline) {
@@ -59,15 +61,6 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
 }
 
 PrimeFaces.extend(PrimeFacesExt.widget.TimePicker, PrimeFaces.widget.BaseWidget);
-
-PrimeFaces.widget.TimePicker.prototype.configureLocale = function() {
-    var localeSettings = PrimeFacesExt.locales.timepicker[this.cfg.locale];
-    if(localeSettings) {
-        for(var setting in localeSettings) {
-            this.cfg[setting] = localeSettings[setting];
-        }
-    }
-}
 
 PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     var time = this.jq.val();
