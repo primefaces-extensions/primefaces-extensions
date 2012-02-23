@@ -154,6 +154,8 @@
                                 <include>blockui/*.js</include>                                
                                 <include>ckeditor/widget.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
+                                <include>tristatecheckbox/tristatecheckbox.js</include>
+                                <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
