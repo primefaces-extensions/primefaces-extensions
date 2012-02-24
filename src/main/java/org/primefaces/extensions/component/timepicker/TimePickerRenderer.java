@@ -75,13 +75,7 @@ public class TimePickerRenderer extends InputRenderer {
 
 		writer.startElement("span", timepicker);
 		writer.writeAttribute("id", clientId, null);
-
-		String styleClass = timepicker.getStyleClass();
-		styleClass = (styleClass == null ? TimePicker.CONTAINER_CLASS : TimePicker.CONTAINER_CLASS + " " + styleClass);
-		writer.writeAttribute("class", styleClass, null);
-		if (timepicker.getStyle() != null) {
-			writer.writeAttribute("style", timepicker.getStyle(), null);
-		}
+		writer.writeAttribute("class", TimePicker.CONTAINER_CLASS, null);
 
 		if (timepicker.isInline()) {
 			// inline container
@@ -101,7 +95,13 @@ public class TimePickerRenderer extends InputRenderer {
 		}
 
 		if (!timepicker.isInline()) {
-			writer.writeAttribute("class", TimePicker.INPUT_CLASS, null);
+			String styleClass = timepicker.getStyleClass();
+			styleClass = (styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass);
+			writer.writeAttribute("class", styleClass, null);
+
+			if (timepicker.getStyle() != null) {
+				writer.writeAttribute("style", timepicker.getStyle(), null);
+			}
 
 			// disabling is handled in JS widget
 			/*

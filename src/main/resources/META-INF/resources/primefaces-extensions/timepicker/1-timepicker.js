@@ -100,7 +100,7 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
 
     if (this.cfg.showHours && this.cfg.showMinutes) {
         // extract hours and minutes
-        result = time.match(new RegExp('^(\d{2})' + this.cfg.timeSeparator + '(\d{2})((?:\s*)|(?:\s{1}.*))$'));
+        result = time.match(new RegExp('^(\\d{2})' + this.cfg.timeSeparator + '(\\d{2})((?:\\s*)|(?:\\s{1}.*))$'));
         if (result && result.length >= 3) {
             if (result[1].charAt(0) == '0') {
                 hours = parseInt(result[1].charAt(1));
@@ -146,12 +146,12 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
         // replace old time by new one
         strHours = (hours < 10 ? "0" + hours : "" + hours);
         strMinutes = (minutes < 10 ? "0" + minutes : "" + minutes);
-        newTime = time.replace(new RegExp('^(\d{2})' + this.cfg.timeSeparator + '(\d{2})'), strHours + this.cfg.timeSeparator + strMinutes);
+        newTime = time.replace(new RegExp('^(\\d{2})' + this.cfg.timeSeparator + '(\\d{2})'), strHours + this.cfg.timeSeparator + strMinutes);
         newTime = this.adjustAmPm(newTime, prevHours, hours);
         
     } else if (this.cfg.showHours && !this.cfg.showMinutes) {
         // only hours
-        result = time.match(new RegExp('^(\d{2})((?:\s*)|(?:\s{1}.*))$'));
+        result = time.match(new RegExp('^(\\d{2})((?:\\s*)|(?:\\s{1}.*))$'));
         if (result && result.length >= 2) {
             if (result[1].charAt(0) == '0') {
                 hours = parseInt(result[1].charAt(1));
@@ -180,12 +180,12 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     
         // replace old time by new one
         strHours = (hours < 10 ? "0" + hours : "" + hours);
-        newTime = time.replace(new RegExp('^(\d{2})'), strHours);
+        newTime = time.replace(new RegExp('^(\\d{2})'), strHours);
         newTime = this.adjustAmPm(newTime, prevHours, hours);
         
     } else if (!this.cfg.showHours && this.cfg.showMinutes) {
         // only minutes
-        result = time.match(new RegExp('^(\d{2})(?:\s*)$'));
+        result = time.match(new RegExp('^(\\d{2})(?:\\s*)$'));
         if (result && result.length >= 2) {
             if (result[1].charAt(0) == '0') {
                 minutes = parseInt(result[1].charAt(1));
@@ -215,7 +215,7 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     
         // replace old time by new one
         strMinutes = (minutes < 10 ? "0" + minutes : "" + minutes);
-        newTime = time.replace(new RegExp('^(\d{2})'), strMinutes);        
+        newTime = time.replace(new RegExp('^(\\d{2})'), strMinutes);        
     }
 
     if (newTime != null) {

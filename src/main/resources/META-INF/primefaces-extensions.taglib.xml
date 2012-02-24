@@ -2063,6 +2063,20 @@
             <type>boolean</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Style of the time picker input element.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the time picker input element.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+        <attribute>
             <description><![CDATA[The character to use to separate hours and minutes. Default is :.]]></description>
             <name>timeSeparator</name>
             <required>false</required>
