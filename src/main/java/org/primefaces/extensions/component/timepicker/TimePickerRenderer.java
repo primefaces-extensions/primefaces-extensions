@@ -49,14 +49,14 @@ public class TimePickerRenderer extends InputRenderer {
 			return;
 		}
 
-		decodeBehaviors(fc, timepicker);
-
 		String param = timepicker.getClientId(fc) + "_input";
 		String submittedValue = fc.getExternalContext().getRequestParameterMap().get(param);
 
 		if (submittedValue != null) {
 			timepicker.setSubmittedValue(submittedValue);
 		}
+
+		decodeBehaviors(fc, timepicker);
 	}
 
 	@Override
@@ -101,14 +101,16 @@ public class TimePickerRenderer extends InputRenderer {
 		}
 
 		if (!timepicker.isInline()) {
+			// disabling is handled in JS widget
+			/*
 			writer.writeAttribute("class", TimePicker.INPUT_CLASS, null);
 			if (timepicker.isReadonly()) {
-				writer.writeAttribute("readonly", "readonly", null);
+			    writer.writeAttribute("readonly", "readonly", null);
 			}
 
 			if (timepicker.isDisabled()) {
-				writer.writeAttribute("disabled", "disabled", null);
-			}
+			    writer.writeAttribute("disabled", "disabled", null);
+			}*/
 
 			renderPassThruAttributes(fc, timepicker, TimePicker.INPUT_TEXT_ATTRS);
 		}
@@ -130,20 +132,29 @@ public class TimePickerRenderer extends InputRenderer {
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
+
 		writer.write("PrimeFacesExt.cw('TimePicker', '" + timepicker.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
+		writer.write(",timeSeparator:'" + timepicker.getTimeSeparator() + "'");
 		writer.write(",myPosition:'" + timepicker.getDialogPosition() + "'");
 		writer.write(",atPosition:'" + timepicker.getInputPosition() + "'");
 		writer.write(",showPeriod:" + timepicker.isShowPeriod());
+		writer.write(",showPeriodLabels:" + timepicker.isShowPeriodLabels());
 		writer.write(",modeInline:" + timepicker.isInline());
 		writer.write(",modeSpinner:" + timepicker.isSpinner());
 		writer.write(",hours:{starts:" + timepicker.getStartHours() + ",ends:" + timepicker.getEndHours() + "}");
 		writer.write(",minutes:{starts:" + timepicker.getStartMinutes() + ",ends:" + timepicker.getEndMinutes() + ",interval:"
 		             + timepicker.getIntervalMinutes() + "}");
 		writer.write(",rows:" + timepicker.getRows());
+		writer.write(",showHours:" + timepicker.isShowHours());
+		writer.write(",showMinutes:" + timepicker.isShowMinutes());
+		writer.write(",showCloseButton:" + timepicker.isShowCloseButton());
+		writer.write(",showNowButton:" + timepicker.isShowNowButton());
+		writer.write(",showDeselectButton:" + timepicker.isShowDeselectButton());
+		writer.write(",onHourShow:'" + timepicker.getOnHourShow() + "'");
+		writer.write(",onMinuteShow:'" + timepicker.getOnMinuteShow() + "'");
 		writer.write(",locale:'" + timepicker.calculateLocale(fc).toString() + "'");
 		writer.write(",disabled:" + (timepicker.isDisabled() || timepicker.isReadonly()));
-		writer.write(",showPeriodLabels:" + (timepicker.isShowPeriod() ? "true" : "false"));
 
 		if (StringUtils.isBlank(value)) {
 			writer.write(",defaultTime:''");

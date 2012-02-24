@@ -22,7 +22,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} component.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} and
+ * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
