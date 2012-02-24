@@ -2024,41 +2024,164 @@
         </attribute>        
     </tag>
     <tag>
-        <description><![CDATA[Time picker component for time (hours / minutes) inputs.]]>
+        <description><![CDATA[Time picker component for time (hours / minutes) inputs. Client behavior events: timeSelect - fires when an hour / minutes is selected (org.primefaces.extensions.event.TimeSelectEvent), close - fires when the timepicker is closed (org.primefaces.extensions.event.CloseEvent), beforeShow - fires before the timepicker is rendered and displayed (org.primefaces.extensions.event.BeforeShowEvent).]]>
         </description>
         <tag-name>timePicker</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.timepicker.TimePicker</component-type>
-            <renderer-type>org.primefaces.extensions.component.timepicker.TimePickerRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.TimePicker</component-type>
+            <renderer-type>org.primefaces.extensions.component.TimePickerRenderer</renderer-type>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
-            </description>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
-            </description>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the client side widget.]]>
-            </description>
+            <description><![CDATA[Name of the client side widget.]]></description>
             <name>widgetVar</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Disables the component]]>
+            </description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The character to use to separate hours and minutes. Default is :.]]></description>
+            <name>timeSeparator</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines whether or not to show AM/PM with selected time. Default is false.]]></description>
+            <name>showPeriod</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if the AM/PM labels on the left are displayed. Default is false.]]></description>
+            <name>showPeriodLabels</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Corner of the dialog to position. Default is 'left top'.]]></description>
+            <name>dialogPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Corner of the input to position. Default is 'left bottom'.]]></description>
+            <name>inputPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Mode specifies appearance of time picker. Possible values are 'popup', 'spinner', 'inline'. Default is 'spinner'.]]></description>
+            <name>mode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies first displayed hour. Default is 0.]]></description>
+            <name>startHours</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies last displayed hour. Default is 23.]]></description>
+            <name>endHours</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies first displayed minute. Default is 0.]]></description>
+            <name>startMinutes</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies last displayed minute. Default is 55.]]></description>
+            <name>endMinutes</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Specifies interval of displayed minutes. Default is 5.]]></description>
+            <name>intervalMinutes</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies number of rows for the input tables, minimum 2, makes more sense if you use multiple of 2. Default is 4.]]></description>
+            <name>rows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Defines if the hours section is displayed or not. Set to false to get a minute only dialog. Default is true.]]></description>
+            <name>showHours</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if the minutes section is displayed or not. Set to false to get a hours only dialog. Default is true.]]></description>
+            <name>showMinutes</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Shows an 'ok' button to confirm the edit. Default is false.]]></description>
+            <name>showCloseButton</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Shows the 'deselect' time button. Default is false.]]></description>
+            <name>showDeselectButton</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Shows the 'now' button. Default is false.]]></description>
+            <name>showNowButton</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Defines a callback to enable / disable certain hours. Example: function onHourShow(hour). Default is null.]]></description>
+            <name>onHourShow</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines a callback to enable / disable certain minutes. Example: function onMinuteShow(hour, minute). Default is null.]]></description>
+            <name>onMinuteShow</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]></description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>        
     </tag>
     <tag>
         <description><![CDATA[Timeline visualizes temporal data.]]>

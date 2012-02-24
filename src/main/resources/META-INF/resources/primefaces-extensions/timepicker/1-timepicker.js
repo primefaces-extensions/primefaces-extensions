@@ -1,7 +1,7 @@
 PrimeFacesExt.widget.TimePicker = function(cfg) {
     this.id = cfg.id;
-    this.jqId = PrimeFaces.escapeClientId(id);
-    this.jqEl = this.cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';
+    this.jqId = PrimeFaces.escapeClientId(cfg.id);
+    this.jqEl = cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';
     this.jq = $(this.jqEl);
     
     // configure localized text
@@ -24,7 +24,7 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
     };
 
     this.cfg.onSelect = function(time, inst) {
-        this.jq.val(time);
+        _self.jq.val(time);
         _self.ontimeSelect();
     };   
 
@@ -55,6 +55,8 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
 PrimeFaces.extend(PrimeFacesExt.widget.TimePicker, PrimeFaces.widget.BaseWidget);
 
 PrimeFacesExt.widget.TimePicker.prototype.enableSpinner = function() {
+    var _self = this;
+    
     $(this.jqId).children('.ui-timepicker-button').
     removeClass('ui-state-disabled').
     on({
@@ -222,21 +224,21 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
 }
 
 PrimeFacesExt.widget.TimePicker.prototype.onbeforeShow = function() {
-    var behavior = config.behaviors ? config.behaviors['beforeShow'] : null;
+    var behavior = this.cfg.behaviors ? this.cfg.behaviors['beforeShow'] : null;
     if (behavior) {
         behavior.call(this);
     }       
 }
 
 PrimeFacesExt.widget.TimePicker.prototype.onclose = function() {
-    var behavior = config.behaviors ? config.behaviors['close'] : null;
+    var behavior = this.cfg.behaviors ? this.cfg.behaviors['close'] : null;
     if (behavior) {
         behavior.call(this);
     }       
 }
 
 PrimeFacesExt.widget.TimePicker.prototype.ontimeSelect = function() {
-    var behavior = config.behaviors ? config.behaviors['timeSelect'] : null;
+    var behavior = this.cfg.behaviors ? this.cfg.behaviors['timeSelect'] : null;
     if (behavior) {
         behavior.call(this);
     }       

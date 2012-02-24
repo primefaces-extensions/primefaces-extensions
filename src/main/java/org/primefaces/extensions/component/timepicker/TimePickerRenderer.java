@@ -101,9 +101,10 @@ public class TimePickerRenderer extends InputRenderer {
 		}
 
 		if (!timepicker.isInline()) {
+			writer.writeAttribute("class", TimePicker.INPUT_CLASS, null);
+
 			// disabling is handled in JS widget
 			/*
-			writer.writeAttribute("class", TimePicker.INPUT_CLASS, null);
 			if (timepicker.isReadonly()) {
 			    writer.writeAttribute("readonly", "readonly", null);
 			}
@@ -151,8 +152,15 @@ public class TimePickerRenderer extends InputRenderer {
 		writer.write(",showCloseButton:" + timepicker.isShowCloseButton());
 		writer.write(",showNowButton:" + timepicker.isShowNowButton());
 		writer.write(",showDeselectButton:" + timepicker.isShowDeselectButton());
-		writer.write(",onHourShow:'" + timepicker.getOnHourShow() + "'");
-		writer.write(",onMinuteShow:'" + timepicker.getOnMinuteShow() + "'");
+
+		if (timepicker.getOnHourShow() != null) {
+			writer.write(",onHourShow:'" + timepicker.getOnHourShow() + "'");
+		}
+
+		if (timepicker.getOnMinuteShow() != null) {
+			writer.write(",onMinuteShow:'" + timepicker.getOnMinuteShow() + "'");
+		}
+
 		writer.write(",locale:'" + timepicker.calculateLocale(fc).toString() + "'");
 		writer.write(",disabled:" + (timepicker.isDisabled() || timepicker.isReadonly()));
 
