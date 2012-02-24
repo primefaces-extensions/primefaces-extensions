@@ -1,83 +1,76 @@
 /**
  * PrimeFaces Extensions TriStateManyCheckbox Widget
  */
-PrimeFacesExt.widget.TriStateCheckbox = function(cfg) {
+PrimeFacesExt.widget.TriStateManyCheckbox = function(cfg) {
     this.cfg = cfg;
     this.id = this.cfg.id;
     this.jqId = PrimeFaces.escapeClientId(this.id);
     this.jq = $(this.jqId);
-    this.input = $(this.jqId + '_input');
-    this.box = this.jq.find('.ui-chkbox-box');
-    this.icon = this.box.children('.ui-chkbox-icon');
-    this.itemLabel = this.jq.find('.ui-chkbox-label');
-    this.disabled = this.input.is(':disabled');
-    
+    this.outputs = this.jq.find('.ui-chkbox-box:not(.ui-state-disabled)');
+    this.inputs = this.jq.find(':text:not(:disabled)');
+    this.labels = this.jq.find('label:not(.ui-state-disabled)');
     var _self = this;
 
-    //bind events if not disabled
-    if(!this.disabled) {
-        this.box.mouseover(function() {
-            _self.box.addClass('ui-state-hover');
-        }).mouseout(function() {
-            _self.box.removeClass('ui-state-hover');
-        }).click(function() {
-            _self.toggle();
-        });
+    this.outputs.mouseover(function() {
+        $(this).addClass('ui-state-hover');
+    }).mouseout(function() {
+        $(this).removeClass('ui-state-hover');
+    }).click(function() {
+        _self.toggle($(this));
+    });
+
+    this.labels.click(function(e) {
+        var element = $(this),
+        input = $(PrimeFaces.escapeClientId(element.attr('for'))),
+        checkbox = input.parent().next();
+        checkbox.click();
         
-        //toggle state on label click
-        this.itemLabel.click(function() {
-            _self.toggle();
-        });
-        
-        //Client Behaviors
-        if(this.cfg.behaviors) {
-            PrimeFaces.attachBehaviors(this.input, this.cfg.behaviors);
-        }
+        e.preventDefault();
+    });
+
+    //Client Behaviors
+    if(this.cfg.behaviors) {
+        PrimeFaces.attachBehaviors(this.inputs, this.cfg.behaviors);
     }
     
     this.postConstruct();
 }
 
-PrimeFaces.extend(PrimeFacesExt.widget.TriStateCheckbox, PrimeFaces.widget.BaseWidget);
+PrimeFaces.extend(PrimeFacesExt.widget.TriStateManyCheckbox, PrimeFaces.widget.BaseWidget);
 
-PrimeFacesExt.widget.TriStateCheckbox.prototype.toggle = function() {   
-    
-    if(!this.disabled) {
-        var value = (this.input.attr('value')+1) % 3;
-        console.debug("aca: "+value);
-        this.input.attr('value', value); 
-        if(value==0){
-            this.uncheck();
-        }else if (value ==1){
-            this.check();
+PrimeFacesExt.widget.TriStateManyCheckbox.prototype.toggle = function(checkbox) {
+  
+    var inputField = checkbox.prev().find(':input');   
+    if(!checkbox.hasClass('ui-state-disabled')) {
+        var value = (inputField.attr('value')+1) % 3;        
+        inputField.attr('value', value); 
+        this.changeIcon(checkbox,value);
+        inputField.change();
+    }
+}
+
+PrimeFacesExt.widget.TriStateManyCheckbox.prototype.changeIcon = function(checkbox,addIndex) {
+         
+        iconsClasses =  checkbox.attr('statesicons').split(';');
+        //js bug for mod of negative values. fix with this!!!!!!!
+        removeIndex = (((addIndex-1)%3)+3)%3;      
+        removeClass = 'ui-icon ' + iconsClasses[removeIndex];
+        if(iconsClasses[addIndex]!=" "){
+            addClass = 'ui-icon ' + iconsClasses[addIndex];
         }else{
-            this.tristate();
+            addClass = '';
         }
-    }
+     
+        
+        //if addIndex is 0 , remove active class
+        if(addIndex==0){
+            checkbox.removeClass('ui-state-active');
+        }else{
+            checkbox.addClass('ui-state-active')
+        }        
+        //remove old icon and add the new one        
+        checkbox.children('.ui-chkbox-icon').removeClass(removeClass);
+        checkbox.children('.ui-chkbox-icon').addClass(addClass);       
+    
 }
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.check = function() {
-    if(!this.disabled) {        
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-closethick');
-        this.box.addClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon ui-icon-check');
-        this.input.change();
-    }
-}
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.uncheck = function() {
-    if(!this.disabled) {       
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-check');
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-closethick');        
-        this.input.change();
-    }
-}
-
-PrimeFacesExt.widget.TriStateCheckbox.prototype.tristate = function() {
-    if(!this.disabled) {      
-        this.box.removeClass('ui-state-active').children('.ui-chkbox-icon').removeClass('ui-icon ui-icon-check');   
-        this.box.addClass('ui-state-active').children('.ui-chkbox-icon').addClass('ui-icon ui-icon-closethick');
-        this.input.change();
-    }
-}
-
 
