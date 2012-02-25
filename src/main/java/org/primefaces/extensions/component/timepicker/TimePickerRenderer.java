@@ -140,7 +140,7 @@ public class TimePickerRenderer extends InputRenderer {
 		writer.write(",myPosition:'" + timepicker.getDialogPosition() + "'");
 		writer.write(",atPosition:'" + timepicker.getInputPosition() + "'");
 		writer.write(",showPeriod:" + timepicker.isShowPeriod());
-		writer.write(",showPeriodLabels:" + timepicker.isShowPeriodLabels());
+		writer.write(",showPeriodLabels:" + (timepicker.isShowPeriod() ? "true" : "false"));
 		writer.write(",modeInline:" + timepicker.isInline());
 		writer.write(",modeSpinner:" + timepicker.isSpinner());
 		writer.write(",hours:{starts:" + timepicker.getStartHours() + ",ends:" + timepicker.getEndHours() + "}");

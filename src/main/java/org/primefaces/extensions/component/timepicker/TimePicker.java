@@ -106,7 +106,6 @@ public class TimePicker extends HtmlInputText implements Widget {
 		widgetVar,
 		timeSeparator,
 		showPeriod,
-		showPeriodLabels,
 		dialogPosition,
 		inputPosition,
 		mode /* 'popup', 'spinner', 'inline' */,
@@ -171,14 +170,6 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 	public void setShowPeriod(final boolean showPeriod) {
 		setAttribute(PropertyKeys.showPeriod, showPeriod);
-	}
-
-	public boolean isShowPeriodLabels() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showPeriodLabels, false);
-	}
-
-	public void setShowPeriodLabels(final boolean showPeriodLabels) {
-		setAttribute(PropertyKeys.showPeriodLabels, showPeriodLabels);
 	}
 
 	public String getMode() {
