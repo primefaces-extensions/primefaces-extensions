@@ -30,14 +30,14 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
-import org.primefaces.model.DefaultMenuModel;
-import org.primefaces.model.MenuModel;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -54,7 +54,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	private static final String FACET_LABEL = "label";
 
 	@Override
-	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
 		MasterDetail masterDetail = (MasterDetail) component;
 		MasterDetailLevel mdl;
 
@@ -71,12 +71,22 @@ public class MasterDetailRenderer extends CoreRenderer {
 				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
 				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
-				boolean preserveInputs = masterDetail.isPreserveInputs(fc);
+				String preserveInputs = masterDetail.getPreserveInputs(fc);
+				String resetInputs = masterDetail.getResetInputs(fc);
+				String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
+				String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
+				boolean preserveAll = ArrayUtils.contains(piIds, "@all");
+				boolean resetAll = ArrayUtils.contains(riIds, "@all");
+
 				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
 				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					if (preserveInputs) {
-						editableValueHolder.setValue(editableValueHolder.getSubmittedValue());
+					String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
+					if (resetAll || (ArrayUtils.contains(riIds, clientId))) {
+						editableValueHolder.resetValue();
+					} else if (preserveAll || (ArrayUtils.contains(piIds, clientId))) {
+						editableValueHolder.setValue(ComponentUtils.getConvertedSubmittedValue(fc, editableValueHolder));
 					} else {
+						// default behavior
 						editableValueHolder.resetValue();
 					}
 				}
@@ -129,23 +139,13 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 		if (masterDetail.isShowBreadcrumb()) {
 			// get breadcrumb and its current model
-			BreadCrumb breadcrumb = getBreadcrumb(masterDetail);
+			BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
 			if (breadcrumb == null) {
 				throw new FacesException("BreadCrumb component was not found below MasterDetail.");
 			}
 
-			MenuModel model = buildBreadcrumbModel(fc, masterDetail, mdl);
-
-			// remove not up-to-date children
-			int kidsCount = breadcrumb.getChildCount();
-			for (int i = 0; i < kidsCount; i++) {
-				breadcrumb.getChildren().remove(0);
-			}
-
-			// add new children
-			for (UIComponent kid : model.getContents()) {
-				breadcrumb.getChildren().add(kid);
-			}
+			// update breadcrumb items
+			updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
 
 			// render breadcrumb
 			breadcrumb.encodeAll(fc);
@@ -189,111 +189,91 @@ public class MasterDetailRenderer extends CoreRenderer {
 		}
 	}
 
-	protected MenuModel buildBreadcrumbModel(final FacesContext fc, final MasterDetail masterDetail,
-	                                         final MasterDetailLevel mdlToRender) throws IOException {
-		// create model from scratch
-		MenuModel model = new DefaultMenuModel();
+	protected void updateBreadcrumb(final FacesContext fc, final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+	                                final MasterDetailLevel mdlToRender) throws IOException {
+		boolean lastMdlFound = false;
+		int levelToRender = mdlToRender.getLevel();
 
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
-				boolean isLastMdl = mdl.getLevel() == mdlToRender.getLevel();
-
-				// create a new menu item and add to the model
-				if (child.isRendered()) {
-					MenuItem menuItem =
-					    createMenuItem(fc, masterDetail, mdl, masterDetail.getContextValueFromFlow(fc, mdl, isLastMdl),
-					                   mdlToRender.getLevel());
-					model.addMenuItem(menuItem);
+				MenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+				if (menuItem == null) {
+					throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
 				}
 
-				if (isLastMdl) {
-					break;
+				if (!lastMdlFound && child.isRendered()) {
+					menuItem.setRendered(true);
+
+					// update value and UIParameter of the menu item
+					Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
+					String contextVar = mdl.getContextVar();
+					boolean putContext = (StringUtils.isNotBlank(contextVar) && contextValue != null);
+
+					if (putContext) {
+						Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+						requestMap.put(contextVar, contextValue);
+					}
+
+					final UIComponent facet = mdl.getFacet(FACET_LABEL);
+					if (facet != null) {
+						// swap writers
+						ResponseWriter writer = fc.getResponseWriter();
+						FastStringWriter fsw = new FastStringWriter();
+						ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+						fc.setResponseWriter(clonedWriter);
+
+						// render facet's children
+						facet.encodeAll(fc);
+
+						// restore the original writer
+						fc.setResponseWriter(writer);
+
+						// set menuitem label from facet
+						menuItem.setValue(fsw.toString());
+					} else {
+						// set menuitem label from tag attribute
+						menuItem.setValue(mdl.getLevelLabel());
+					}
+
+					menuItem.setDisabled(mdl.isLevelDisabled());
+
+					if (putContext) {
+						fc.getExternalContext().getRequestMap().remove(contextVar);
+					}
+
+					UIParameter uiParameter = getUIParameterById(menuItem, menuItem.getId() + "_cl");
+					if (uiParameter != null) {
+						// set current level parameter
+						uiParameter.setValue(levelToRender);
+					}
+				} else {
+					menuItem.setRendered(false);
+				}
+
+				if (!lastMdlFound) {
+					lastMdlFound = mdl.getLevel() == mdlToRender.getLevel();
 				}
 			}
 		}
-
-		return model;
 	}
 
-	protected MenuItem createMenuItem(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl,
-	                                  final Object contextValue, final int currentLevel) throws IOException {
-		String clientId = masterDetail.getClientId(fc);
-		MenuItem menuItem = new MenuItem();
-		menuItem.setId(masterDetail.getId() + "_bcItem_" + mdl.getLevel());
-
-		String contextVar = mdl.getContextVar();
-		boolean putContext = (StringUtils.isNotBlank(contextVar) && contextValue != null);
-		if (putContext) {
-			Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
-			requestMap.put(contextVar, contextValue);
+	protected MenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+	                                      final MasterDetailLevel mdl) {
+		String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
+		for (UIComponent child : breadcrumb.getChildren()) {
+			if ((child instanceof MenuItem) && menuItemId.equals(child.getId())) {
+				return (MenuItem) child;
+			}
 		}
 
-		final UIComponent facet = mdl.getFacet(FACET_LABEL);
-		if (facet != null) {
-			// swap writers
-			ResponseWriter writer = fc.getResponseWriter();
-			FastStringWriter fsw = new FastStringWriter();
-			ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
-			fc.setResponseWriter(clonedWriter);
-
-			// render facet's children
-			facet.encodeAll(fc);
-
-			// restore the original writer
-			fc.setResponseWriter(writer);
-
-			// set menuitem label from facet
-			menuItem.setValue(fsw.toString());
-		} else {
-			// set menuitem label from tag attribute
-			menuItem.setValue(mdl.getLevelLabel());
-		}
-
-		menuItem.setDisabled(mdl.isLevelDisabled());
-
-		if (putContext) {
-			fc.getExternalContext().getRequestMap().remove(contextVar);
-		}
-
-		menuItem.setAjax(true);
-		menuItem.setImmediate(true);
-		menuItem.setProcess("@none");
-		menuItem.setUpdate(null);
-
-		final String menuItemId = menuItem.getId();
-
-		UIParameter uiParameter = new UIParameter();
-		uiParameter.setId(menuItemId + "_sdr");
-		uiParameter.setName(clientId + MasterDetail.SELECT_DETAIL_REQUEST);
-		uiParameter.setValue(true);
-		menuItem.getChildren().add(uiParameter);
-
-		uiParameter = new UIParameter();
-		uiParameter.setId(menuItemId + "_cl");
-		uiParameter.setName(clientId + MasterDetail.CURRENT_LEVEL);
-		uiParameter.setValue(currentLevel);
-		menuItem.getChildren().add(uiParameter);
-
-		uiParameter = new UIParameter();
-		uiParameter.setId(menuItemId + "_sl");
-		uiParameter.setName(clientId + MasterDetail.SELECTED_LEVEL);
-		uiParameter.setValue(mdl.getLevel());
-		menuItem.getChildren().add(uiParameter);
-
-		uiParameter = new UIParameter();
-		uiParameter.setId(menuItemId + "_sp");
-		uiParameter.setName(clientId + MasterDetail.SKIP_PROCESSING_REQUEST);
-		uiParameter.setValue(true);
-		menuItem.getChildren().add(uiParameter);
-
-		return menuItem;
+		return null;
 	}
 
-	protected BreadCrumb getBreadcrumb(final MasterDetail masterDetail) {
-		for (UIComponent child : masterDetail.getChildren()) {
-			if (child instanceof BreadCrumb) {
-				return (BreadCrumb) child;
+	protected UIParameter getUIParameterById(final MenuItem menuItem, final String id) {
+		for (UIComponent child : menuItem.getChildren()) {
+			if ((child instanceof UIParameter) && id.equals(child.getId())) {
+				return (UIParameter) child;
 			}
 		}
 
@@ -301,7 +281,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeChildren(final FacesContext fc, UIComponent component) throws IOException {
 		// rendering happens on encodeEnd
 	}
 

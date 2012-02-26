@@ -98,6 +98,15 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 			removeUIParameter(source, masterDetailClientId + MasterDetail.PRESERVE_INPUTS);
 		}
 
+		// resetInputs
+		ValueExpression resetInputsVE = (ValueExpression) source.getAttributes().get(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION);
+		Object resetInputs = resetInputsVE != null ? resetInputsVE.getValue(fc.getELContext()) : null;
+		if (resetInputs != null) {
+			addUIParameter(fc, source, masterDetailClientId + MasterDetail.RESET_INPUTS, resetInputs);
+		} else {
+			removeUIParameter(source, masterDetailClientId + MasterDetail.RESET_INPUTS);
+		}
+
 		// skip processing flag
 		Boolean skipProcessing = (Boolean) source.getAttributes().get(MasterDetail.SKIP_PROCESSING);
 		if (skipProcessing != null && skipProcessing) {

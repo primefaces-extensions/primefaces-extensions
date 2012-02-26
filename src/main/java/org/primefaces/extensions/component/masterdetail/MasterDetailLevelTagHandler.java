@@ -134,35 +134,5 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 		Boolean isRegistered = (Boolean) uiCommand.getAttributes().get(MasterDetail.PRERENDER_LISTENER_REGISTERED);
 
 		return (isRegistered != null && isRegistered);
-
-		/* The code below doesn't work for MyFaces
-		List<SystemEventListener> systemEventListeners = uiCommand.getListenersForEventClass(PreRenderComponentEvent.class);
-		if (systemEventListeners != null && !systemEventListeners.isEmpty()) {
-		    for (SystemEventListener systemEventListener : systemEventListeners) {
-		        if (systemEventListener instanceof PreRenderCommandListener) {
-		            return true;
-		        }
-
-		        FacesListener wrapped = null;
-		        if (systemEventListener instanceof FacesWrapper<?>) {
-		            wrapped = (FacesListener) ((FacesWrapper<?>) systemEventListener).getWrapped();
-		        }
-
-		        while (wrapped != null) {
-		            if (wrapped instanceof PreRenderCommandListener) {
-		                return true;
-		            }
-
-		            if (wrapped instanceof FacesWrapper<?>) {
-		                wrapped = (FacesListener) ((FacesWrapper<?>) wrapped).getWrapped();
-		            } else {
-		                wrapped = null;
-		            }
-		        }
-		    }
-		}
-
-		return false;
-		 */
 	}
 }

@@ -23,14 +23,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.ProjectStage;
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.render.Renderer;
 
 import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.component.base.EnhancedAttachable;
@@ -126,8 +130,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				if (forSelector.startsWith("#")) {
 					return escapeComponentId(forSelector);
 				} else {
-                    return escapeText(forSelector);
-                }
+					return escapeText(forSelector);
+				}
 			}
 		}
 
@@ -138,76 +142,147 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		addComponentResource(context, name, Constants.LIBRARY, "head");
 	}
 
-    public static void addComponentResource(final FacesContext context, final String name, final String library, final String target) {
-        final Application application = context.getApplication();
+	public static void addComponentResource(final FacesContext context, final String name, final String library,
+	                                        final String target) {
+		final Application application = context.getApplication();
 
-        final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
-        componentResource.setRendererType(application.getResourceHandler().getRendererTypeForResourceName(name));
-        componentResource.setTransient(true);
-        componentResource.setId(context.getViewRoot().createUniqueId());
-        componentResource.getAttributes().put("name", name);
-        componentResource.getAttributes().put("library", library);
-        componentResource.getAttributes().put("target", target);
+		final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
+		componentResource.setRendererType(application.getResourceHandler().getRendererTypeForResourceName(name));
+		componentResource.setTransient(true);
+		componentResource.setId(context.getViewRoot().createUniqueId());
+		componentResource.getAttributes().put("name", name);
+		componentResource.getAttributes().put("library", library);
+		componentResource.getAttributes().put("target", target);
 
-        context.getViewRoot().addComponentResource(context, componentResource, target);
-    }
-    
-    /**
-     * Duplicate code from json-simple project under apache license
-     * http://code.google.com/p/json-simple/source/browse/trunk/src/org/json/simple/JSONValue.java
-     * 
-     * @param text original text as string
-     * @return String escaped text as string to be used as JSON value
-     */
-    public static String escapeText(final String text) {
-        if(text == null) {
-            return null;
-        }
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for (int i = 0; i < text.length(); i++) {
-            char ch = text.charAt(i);
-            switch (ch) {
-                case '"':
-                    sb.append("\\\"");
-                    break;
-                case '\\':
-                    sb.append("\\\\");
-                    break;
-                case '\b':
-                    sb.append("\\b");
-                    break;
-                case '\f':
-                    sb.append("\\f");
-                    break;
-                case '\n':
-                    sb.append("\\n");
-                    break;
-                case '\r':
-                    sb.append("\\r");
-                    break;
-                case '\t':
-                    sb.append("\\t");
-                    break;
-                case '/':
-                    sb.append("\\/");
-                    break;
-                default:
-                    //Reference: http://www.unicode.org/versions/Unicode5.1.0/
-                    if((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F') || (ch >= '\u2000' && ch <= '\u20FF')) {
-                        String ss = Integer.toHexString(ch);
-                        sb.append("\\u");
-                        for (int k = 0; k < 4 - ss.length(); k++) {
-                            sb.append('0');
-                        }
-                        sb.append(ss.toUpperCase());
-                    } else {
-                        sb.append(ch);
-                    }
-            }
-        }
-                
-        return sb.toString();
-    }    
+		context.getViewRoot().addComponentResource(context, componentResource, target);
+	}
+
+	/**
+	 * Duplicate code from json-simple project under apache license
+	 * http://code.google.com/p/json-simple/source/browse/trunk/src/org/json/simple/JSONValue.java
+	 *
+	 * @param  text original text as string
+	 * @return String escaped text as string to be used as JSON value
+	 */
+	public static String escapeText(final String text) {
+		if (text == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < text.length(); i++) {
+			char ch = text.charAt(i);
+			switch (ch) {
+			case '"':
+				sb.append("\\\"");
+				break;
+
+			case '\\':
+				sb.append("\\\\");
+				break;
+
+			case '\b':
+				sb.append("\\b");
+				break;
+
+			case '\f':
+				sb.append("\\f");
+				break;
+
+			case '\n':
+				sb.append("\\n");
+				break;
+
+			case '\r':
+				sb.append("\\r");
+				break;
+
+			case '\t':
+				sb.append("\\t");
+				break;
+
+			case '/':
+				sb.append("\\/");
+				break;
+
+			default:
+
+				//Reference: http://www.unicode.org/versions/Unicode5.1.0/
+				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
+				    || (ch >= '\u2000' && ch <= '\u20FF')) {
+					String ss = Integer.toHexString(ch);
+					sb.append("\\u");
+					for (int k = 0; k < 4 - ss.length(); k++) {
+						sb.append('0');
+					}
+
+					sb.append(ss.toUpperCase());
+				} else {
+					sb.append(ch);
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
+		Object submittedValue = evh.getSubmittedValue();
+		if (submittedValue == null) {
+			return submittedValue;
+		}
+
+		try {
+			UIComponent component = (UIComponent) evh;
+			Renderer renderer = getRenderer(fc, component);
+			if (renderer != null) {
+				// convert submitted value by renderer
+				return renderer.getConvertedValue(fc, component, submittedValue);
+			} else if (submittedValue instanceof String) {
+				// convert submitted value by registred (implicit or explicit) converter
+				Converter converter = getConverter(fc, component);
+				if (converter != null) {
+					return converter.getAsObject(fc, component, (String) submittedValue);
+				}
+			}
+		} catch (Exception e) {
+			// an conversion error occured
+		}
+
+		return submittedValue;
+	}
+
+	public static Renderer getRenderer(final FacesContext fc, final UIComponent component) {
+		String rendererType = component.getRendererType();
+		if (rendererType != null) {
+			return fc.getRenderKit().getRenderer(component.getFamily(), rendererType);
+		}
+
+		return null;
+	}
+
+	public static Converter getConverter(final FacesContext fc, final UIComponent component) {
+		if (!(component instanceof EditableValueHolder)) {
+			return null;
+		}
+
+		Converter converter = ((EditableValueHolder) component).getConverter();
+		if (converter != null) {
+			return converter;
+		}
+
+		ValueExpression valueExpression = component.getValueExpression("value");
+		if (valueExpression == null) {
+			return null;
+		}
+
+		Class<?> converterType = valueExpression.getType(fc.getELContext());
+		if (converterType == null || converterType == String.class || converterType == Object.class) {
+			// no conversation is needed
+			return null;
+		}
+
+		return fc.getApplication().createConverter(converterType);
+	}
 }

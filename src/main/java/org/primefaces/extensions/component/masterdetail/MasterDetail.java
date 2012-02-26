@@ -29,6 +29,7 @@ import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.AbortProcessingException;
@@ -38,6 +39,8 @@ import javax.faces.event.PostRestoreStateEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.primefaces.component.breadcrumb.BreadCrumb;
+import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.util.Constants;
 
 /**
@@ -59,6 +62,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
 	public static final String SELECTED_STEP_VALUE_EXPRESSION = "selectedStepVE";
 	public static final String PRESERVE_INPUTS_VALUE_EXPRESSION = "preserveInputsVE";
+	public static final String RESET_INPUTS_VALUE_EXPRESSION = "resetInputsVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
 	public static final String SKIP_PROCESSING = "mdSkipProcessing";
 	public static final String PRERENDER_LISTENER_REGISTERED = "mdPreRenderCommandListener";
@@ -67,6 +71,7 @@ public class MasterDetail extends UIComponentBase {
 	public static final String SELECTED_LEVEL = "_selectedLevel";
 	public static final String SELECTED_STEP = "_selectedStep";
 	public static final String PRESERVE_INPUTS = "_preserveInputs";
+	public static final String RESET_INPUTS = "_resetInputs";
 	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
 	public static final String SKIP_PROCESSING_REQUEST = "_skipProcessing";
 	public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
@@ -189,7 +194,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	@Override
-	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
+	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -306,10 +311,12 @@ public class MasterDetail extends UIComponentBase {
 		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
 	}
 
-	public boolean isPreserveInputs(final FacesContext fc) {
-		String preserveInputs = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + PRESERVE_INPUTS);
+	public String getPreserveInputs(final FacesContext fc) {
+		return fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + PRESERVE_INPUTS);
+	}
 
-		return (preserveInputs != null && Boolean.valueOf(preserveInputs));
+	public String getResetInputs(final FacesContext fc) {
+		return fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + RESET_INPUTS);
 	}
 
 	public void updateModel(final FacesContext fc, final MasterDetailLevel mdlToGo) {
@@ -359,6 +366,66 @@ public class MasterDetail extends UIComponentBase {
 		}
 
 		return null;
+	}
+
+	public BreadCrumb getBreadcrumb() {
+		BreadCrumb breadCrumb = null;
+		for (UIComponent child : this.getChildren()) {
+			if (child instanceof BreadCrumb) {
+				breadCrumb = (BreadCrumb) child;
+
+				break;
+			}
+		}
+
+		if (breadCrumb != null && breadCrumb.getChildCount() < 1) {
+			String clientId = getClientId();
+			String menuItemIdPrefix = getId() + "_bcItem_";
+
+			for (UIComponent child : getChildren()) {
+				if (child instanceof MasterDetailLevel) {
+					int level = ((MasterDetailLevel) child).getLevel();
+
+					// create menu item to detail level
+					MenuItem menuItem = new MenuItem();
+					menuItem.setId(menuItemIdPrefix + level);
+					menuItem.setAjax(true);
+					menuItem.setImmediate(true);
+					menuItem.setProcess("@none");
+					menuItem.setUpdate(null);
+
+					final String menuItemId = menuItem.getId();
+
+					UIParameter uiParameter = new UIParameter();
+					uiParameter.setId(menuItemId + "_sdr");
+					uiParameter.setName(clientId + MasterDetail.SELECT_DETAIL_REQUEST);
+					uiParameter.setValue(true);
+					menuItem.getChildren().add(uiParameter);
+
+					uiParameter = new UIParameter();
+					uiParameter.setId(menuItemId + "_cl");
+					uiParameter.setName(clientId + MasterDetail.CURRENT_LEVEL);
+					uiParameter.setValue(-1); // set dummy value and update it in renderer
+					menuItem.getChildren().add(uiParameter);
+
+					uiParameter = new UIParameter();
+					uiParameter.setId(menuItemId + "_sl");
+					uiParameter.setName(clientId + MasterDetail.SELECTED_LEVEL);
+					uiParameter.setValue(level);
+					menuItem.getChildren().add(uiParameter);
+
+					uiParameter = new UIParameter();
+					uiParameter.setId(menuItemId + "_sp");
+					uiParameter.setName(clientId + MasterDetail.SKIP_PROCESSING_REQUEST);
+					uiParameter.setValue(true);
+					menuItem.getChildren().add(uiParameter);
+
+					breadCrumb.getChildren().add(menuItem);
+				}
+			}
+		}
+
+		return breadCrumb;
 	}
 
 	public void resetCalculatedValues() {

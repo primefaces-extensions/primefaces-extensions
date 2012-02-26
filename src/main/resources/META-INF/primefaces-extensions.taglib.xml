@@ -1586,63 +1586,72 @@
             <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailTagHandler</handler-class>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a naming container.]]>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
             </description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Current level in flow. It can be arbitrary initialized and gets updated with each navigation. It allows to show any initial level when a view with MasterDetail component(s) is displayed. Default is 1.]]>
+            <description>
+                <![CDATA[Current level in flow. It can be arbitrary initialized and gets updated with each navigation. It allows to show any initial level when a view with MasterDetail component(s) is displayed. Default is 1.]]>
             </description>
             <name>level</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Context value for the current level. It can be arbitrary initialized at beginning and gets updated with each navigation. Default is null.]]>
+            <description>
+                <![CDATA[Context value for the current level. It can be arbitrary initialized at beginning and gets updated with each navigation. Default is null.]]>
             </description>
             <name>contextValue</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (explicitly via pe:selectDetailLevel or implicitly). Return value defines the level to go. Default is null.]]>
+            <description>
+                <![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (explicitly via pe:selectDetailLevel or implicitly). Return value defines the level to go. Default is null.]]>
             </description>
             <name>selectLevelListener</name>
             <required>false</required>
             <type>javax.el.MethodExpression</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Flag whether a breadcrumb navigation is shown or not. Default is true.]]>
+            <description>
+                <![CDATA[Flag whether a breadcrumb navigation is shown or not. Default is true.]]>
             </description>
             <name>showBreadcrumb</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Style of the main MasterDetail container element. Default is null.]]>
+            <description>
+                <![CDATA[Style of the main MasterDetail container element. Default is null.]]>
             </description>
             <name>style</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Style class of the main MasterDetail container element. Default is null.]]>
+            <description>
+                <![CDATA[Style class of the main MasterDetail container element. Default is null.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>
@@ -1656,49 +1665,56 @@
             <handler-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevelTagHandler</handler-class>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a naming container.]]>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
             </description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Level of this detail. Level is unique inside of masterDetail component. This is a required attribute. Default is none.]]>
+            <description>
+                <![CDATA[Level of this detail. Level is unique inside of masterDetail component. This is a required attribute. Default is none.]]>
             </description>
             <name>level</name>
             <required>true</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Variable to access the value set by pe:selectDetailLevel when the level is changed. If the value was not set by currently invoking pe:selectDetailLevel, the last set value is be used. Default is null.]]>
+            <description>
+                <![CDATA[Variable to access the value set by pe:selectDetailLevel when the level is changed. If the value was not set by currently invoking pe:selectDetailLevel, the last set value is be used. Default is null.]]>
             </description>
             <name>contextVar</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Label for the corresponding breadcrumb item shown on top. Default is none.]]>
+            <description>
+                <![CDATA[Label for the corresponding breadcrumb item shown on top. Default is none.]]>
             </description>
             <name>levelLabel</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Flag indicating whether the breadcrumb item is disabled (not clickable). Default is dalse.]]>
+            <description>
+                <![CDATA[Flag indicating whether the breadcrumb item is disabled (not clickable). Default is dalse.]]>
             </description>
             <name>levelDisabled</name>
             <required>false</required>
@@ -1709,37 +1725,50 @@
         <tag-name>selectDetailLevel</tag-name>
         <handler-class>org.primefaces.extensions.component.masterdetail.SelectDetailLevelTagHandler</handler-class>
         <attribute>
-            <description><![CDATA[Context value passing to the level to be navigated. Value defined here is accessible by contextVar in MasterDetailLevel. Default is none.]]>
+            <description>
+                <![CDATA[Context value passing to the level to be navigated. Value defined here is accessible by contextVar in MasterDetailLevel. Default is none.]]>
             </description>
             <name>contextValue</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Listener method which is fired before action / actionListener of parent command component gets called. Return value of this listener is used as a new / modified contextValue. The listener allows to pass a new / modified contextValue between levels. Default is none.]]>
+            <description>
+                <![CDATA[Listener method which is fired before action / actionListener of parent command component gets called. Return value of this listener is used as a new / modified contextValue. The listener allows to pass a new / modified contextValue between levels. Default is none.]]>
             </description>
             <name>listener</name>
             <required>false</required>
             <type>javax.el.MethodExpression</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Level to go to. Default is none.]]>
+            <description>
+                <![CDATA[Level to go to. Default is none.]]>
             </description>
             <name>level</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies how many steps to go. Can be negative. If level and step are not specified, then step = 1 is assumed. Default is none.]]>
+            <description>
+                <![CDATA[Specifies how many steps to go. Can be negative. If level and step are not specified, then step = 1 is assumed. Default is none.]]>
             </description>
             <name>step</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies if submitted input values of editable components must not be cleared while levels get switched. It makes sense e.g. if corresponding command component has "immediate"=true attribute. Default behavior clears last submitted values (built-in behavior as for pe:resetEditableValues).]]>
+            <description>
+                <![CDATA[Specifies comma or blank separated list of clientIds of editable components whose inputs have to be preserved while levels get switched. @all is allowed and means all values within master detail have to be preserved. It makes sense e.g. if corresponding command component has "immediate"=true attribute. If nothing specified, input values gets cleared.]]>
             </description>
             <name>preserveInputs</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies comma or blank separated list of clientIds of editable components whose inputs have to be cleared while levels get switched. @all is allowed and means all values within master detail have to be cleared. If takes precedence over clientIds in preserveInputs.]]>
+            </description>
+            <name>resetInputs</name>
             <required>false</required>
             <type>boolean</type>
         </attribute>
