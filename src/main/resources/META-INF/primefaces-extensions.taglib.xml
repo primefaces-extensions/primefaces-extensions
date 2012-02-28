@@ -2543,42 +2543,42 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Disable the component.]]>
             </description>
             <name>disabled</name>
             <required>false</required>
             <type>boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[User presentable name.]]>
             </description>
             <name>label</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Layout of the checkboxes, valid values are “lineDirection”(horizontal) and “pageDirection”(vertical).]]>
             </description>
             <name>layout</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Callback on change event.]]>
             </description>
             <name>onchange</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Inline style of the component.]]>
             </description>
             <name>style</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[]]>
+            <description><![CDATA[Style class of the main Layout container element. Default value is null.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>
