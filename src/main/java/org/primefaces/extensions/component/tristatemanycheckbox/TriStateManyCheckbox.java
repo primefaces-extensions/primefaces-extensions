@@ -17,15 +17,18 @@
  */
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.el.ValueExpression;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.MessageFactory;
 
 /**
  * TriStateManyCheckbox
@@ -157,6 +160,75 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
         @Override
         protected void validateValue(FacesContext context, Object value) {
-                //TODO:HACER EL VALIDADOR PARA ESTO , EL EXTENDIDO OBVIO NO CAMINA
+                Map mapValues = (Map) value;
+                //call all validators
+                Validator[] validators = this.getValidators();
+                if (this.getValidators() != null) {
+                        for (Validator validator : validators) {
+                                Iterator it = mapValues.values().iterator();
+                                while (it.hasNext()) {
+                                        Object newValue = it.next();
+                                        try {
+                                                validator.validate(context, this, newValue);
+                                        } catch (ValidatorException ve) {
+                                                // If the validator throws an exception, we're
+                                                // invalid, and we need to add a message
+                                                setValid(false);
+                                                FacesMessage message;
+                                                String validatorMessageString = getValidatorMessage();
+
+                                                if (null != validatorMessageString) {
+                                                        message =
+                                                                new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                                                validatorMessageString,
+                                                                validatorMessageString);
+                                                        message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                                                } else {
+                                                        Collection<FacesMessage> messages = ve.getFacesMessages();
+                                                        if (null != messages) {
+                                                                message = null;
+                                                                String cid = getClientId(context);
+                                                                for (FacesMessage m : messages) {
+                                                                        context.addMessage(cid, m);
+                                                                }
+                                                        } else {
+                                                                message = ve.getFacesMessage();
+                                                        }
+                                                }
+                                                if (message != null) {
+                                                        context.addMessage(getClientId(context), message);
+                                                }
+                                        }
+                                }
+                        }
+                }
+
+                boolean doAddMessage = false;
+
+                // Ensure that if the state are all 0 and a
+                // value is required, a message is queued
+                if (isRequired()
+                        && isValid()) {
+                        Iterator it = mapValues.values().iterator();
+                        boolean cCheck = true;
+                        while (it.hasNext() && cCheck) {
+                                Object val = it.next();
+                                if (!"0".equals(this.getConverter().getAsString(context, this, value))) {
+                                        cCheck = false;
+                                }
+                        }
+                        if (cCheck) {
+                                doAddMessage = true;
+                        }
+                }
+                if (doAddMessage) {
+                        Object[] params = new Object[2];
+                        params[0] = MessageFactory.getLabel(context, this);
+
+                        // Enqueue an error message if an invalid value was specified
+                        FacesMessage message = MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+                        context.addMessage(getClientId(context), message);
+                        setValid(false);
+                }
         }
 }

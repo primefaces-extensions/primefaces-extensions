@@ -18,7 +18,6 @@
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -48,17 +47,21 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
                 //only convert the values of the maps
                 if (submittedValue instanceof Map) {
-                        Map<String, String> mapSub = (Map<String, String>) submittedValue;
-                        List<String> mapValues = new ArrayList<String>(mapSub.values());
-
-                        //TODO:convert value
-
-
-                        //TODO:merge the converted and the map.
-
-
-                        return mapSub;
-
+                        Map mapSub = (Map) submittedValue;
+                        List keyValues = new ArrayList(mapSub.keySet());
+                        Map mapSubConv = new LinkedHashMap();
+                        TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+                        Converter converter = checkbox.getConverter();
+                        if (converter != null) {
+                                for (Iterator it = keyValues.iterator(); it.hasNext();) {
+                                        Object keyVal = it.next();
+                                        Object mapVal = converter.getAsObject(context, checkbox, (String) mapSub.get(keyVal));
+                                        mapSubConv.put(keyVal, mapVal);
+                                }
+                                return mapSubConv;
+                        } else {
+                                return mapSub;
+                        }
                 } else {
                         throw new FacesException("Value of '" + component.getClientId() + "'must be a Map instance");
                 }
@@ -69,29 +72,17 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 if (!shouldDecode(component)) {
                         return;
                 }
-                UISelectMany checkbox = (TriStateManyCheckbox) component;
-                Converter converter = getConverter(context, checkbox);
-
+                TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
                 decodeBehaviors(context, checkbox);
 
                 String submitParam = getSubmitParam(context, checkbox);
-                Map<String, String[]> params = context.getExternalContext().getRequestParameterValuesMap();
+                Map params = context.getExternalContext().getRequestParameterValuesMap();
 
                 String[] valuesArray = null;
                 if (params.containsKey(submitParam)) {
-                        valuesArray = params.get(submitParam);
+                        valuesArray = (String[]) params.get(submitParam);
                 }
-                List<SelectItem> selectItems = getSelectItems(context, checkbox);
-                Map<String, String> subValues = new HashMap<String, String>();
-                if (valuesArray != null && valuesArray.length == selectItems.size()) {
-                        int idx = -1;
-                        for (SelectItem item : selectItems) {
-                                idx++;
-                                String itemValueAsString = getOptionAsString(context, component, converter, item.getValue());
-                                subValues.put(itemValueAsString, valuesArray[idx]);
-                        }
-                }
-                checkbox.setSubmittedValue(subValues);
+                checkbox.setSubmittedValue(getSubmitedMap(context, checkbox, valuesArray));
         }
 
         @Override
@@ -125,10 +116,20 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 List<SelectItem> selectItems = getSelectItems(context, checkbox);
                 Converter converter = getConverter(context, checkbox);
                 Map values = getValues(checkbox);
-                //todo change overwrite getSubmittedValue to support Map
-                Object submittedValues = getSubmittedValues(checkbox);
+                Map submittedMap = (Map) getSubmittedFromComp(checkbox);
                 String layout = checkbox.getLayout();
                 boolean pageDirection = layout != null && layout.equals("pageDirection");
+
+                if (submittedMap != null) {
+                        values = submittedMap;
+                }
+
+                if (converter != null && submittedMap == null) {
+                        for (Object keyMapO : values.keySet()) {
+                                String keyValue = converter.getAsString(context, checkbox, values.get(keyMapO));
+                                values.put(keyMapO, keyValue);
+                        }
+                }
 
                 int idx = -1;
                 for (SelectItem selectItem : selectItems) {
@@ -136,16 +137,14 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                         if (pageDirection) {
                                 writer.startElement("tr", null);
                         }
-
-                        encodeOption(context, checkbox, values, submittedValues, converter, selectItem, idx);
-
+                        encodeOption(context, checkbox, values, converter, selectItem, idx);
                         if (pageDirection) {
                                 writer.endElement("tr");
                         }
                 }
         }
 
-        protected void encodeOption(FacesContext context, UIInput component, Map values, Object submittedValues, Converter converter, SelectItem option, int idx) throws IOException {
+        protected void encodeOption(FacesContext context, UIInput component, Map values, Converter converter, SelectItem option, int idx) throws IOException {
                 ResponseWriter writer = context.getResponseWriter();
                 TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
                 String itemValueAsString = getOptionAsString(context, component, converter, option.getValue());
@@ -153,21 +152,10 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 String id = name + UINamingContainer.getSeparatorChar(context) + idx;
                 boolean disabled = option.isDisabled() || checkbox.isDisabled();
 
-                Map valuesArray;
-                Object itemValue;
-                if (submittedValues != null) {
-                        //TODO: FINISH THIS ADD CAST TO COMPILE
-                        valuesArray = (Map) submittedValues;
-                        itemValue = itemValueAsString;
-                } else {
-                        valuesArray = values;
-                        itemValue = option.getValue();
-                }
 
+                Object itemValue = option.getValue();
 
-                boolean selected = isSelected(context, component, itemValue, valuesArray, converter);
-
-                int valueInput = getValueForInput(context, component, itemValue, valuesArray, converter);
+                int valueInput = getValueForInput(context, component, itemValue, values, converter);
                 if (option.isNoSelectionOption() && values != null && "".equals(valueInput)) {
                         return;
                 }
@@ -287,16 +275,19 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
          * selectItems on the iteration
          */
         protected int getValueForInput(FacesContext context, UIInput component, Object itemValue, Map valueArray, Converter converter) {
-
-                int retInt = 0;
-                if (itemValue == null || valueArray == null) {
-                        return retInt;
-                }
-                if (valueArray.containsKey(itemValue)) {
-                        retInt = Integer.valueOf(((String) valueArray.get(itemValue)));
-                        return retInt % 3;
-                } else {
-                        return retInt;
+                try {
+                        int retInt = 0;
+                        if (itemValue == null || valueArray == null) {
+                                return retInt;
+                        }
+                        if (valueArray.containsKey(itemValue)) {
+                                retInt = Integer.valueOf(((String) valueArray.get(itemValue)));
+                                return retInt % 3;
+                        } else {
+                                return retInt;
+                        }
+                } catch (NumberFormatException ex) {
+                        throw new FacesException("State of '" + component.getClientId() + "' must be an integer representation");
                 }
         }
 
@@ -312,6 +303,45 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                         return ((Map) value);
                 } else {
                         throw new FacesException("Value of '" + component.getClientId() + "'must be a Map instance");
+                }
+        }
+
+        protected Map getSubmitedMap(FacesContext context, TriStateManyCheckbox checkbox, String[] valuesArray) {
+                List<SelectItem> selectItems = getSelectItems(context, checkbox);
+                Map subValues = new LinkedHashMap();
+                Converter converter = checkbox.getConverter();
+                if (valuesArray != null && valuesArray.length == selectItems.size()) {
+                        int idx = -1;
+                        for (SelectItem item : selectItems) {
+                                idx++;
+                                Object keyMap = item.getValue();
+                                Object valueMap = valuesArray[idx];
+                                subValues.put(keyMap, valueMap);
+                        }
+                        return subValues;
+                } else {
+                        return null;
+                }
+        }
+
+        protected Map getSubmittedFromComp(UIComponent component) {
+                TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+                Map ret = (Map) checkbox.getSubmittedValue();
+                if (ret != null) {
+                        Map subValues = new LinkedHashMap();
+                        //need to reverse the order of element on the map to take the value as on decode.
+                        Set keys = ret.keySet();
+                        Object[] tempArray =  keys.toArray();
+
+                        int length = tempArray.length;
+                        for (int i = length - 1; i >= 0; i--) {
+                                Object key =  tempArray[i];
+                                Object val =  ret.get(key);
+                                subValues.put(key, val);
+                        }
+                        return subValues;
+                } else {
+                        return null;
                 }
         }
 }
