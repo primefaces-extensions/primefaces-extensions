@@ -146,7 +146,6 @@ public class BlockUI extends UIComponentBase implements Widget {
 		setAttribute(PropertyKeys.autoShow, autoShow);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

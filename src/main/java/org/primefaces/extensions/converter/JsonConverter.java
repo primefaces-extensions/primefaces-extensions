@@ -37,7 +37,6 @@ import org.primefaces.extensions.util.GsonConverter;
 @FacesConverter(value = "org.primefaces.extensions.converter.JsonConverter")
 public class JsonConverter implements Converter {
 
-	@Override
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		final ValueExpression ve;
 
@@ -50,7 +49,6 @@ public class JsonConverter implements Converter {
 		return GsonConverter.getGson().fromJson(value, ve.getType(context.getELContext()));
 	}
 
-	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
 		return GsonConverter.getGson().toJson(value);
 	}

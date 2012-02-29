@@ -109,7 +109,6 @@ public class Timeline extends UIOutput implements Widget {
 		setAttribute(PropertyKeys.styleClass, styleClass);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

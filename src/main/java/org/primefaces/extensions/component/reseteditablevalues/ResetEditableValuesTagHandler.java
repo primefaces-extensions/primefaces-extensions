@@ -46,7 +46,6 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 		this.forValue = super.getRequiredAttribute("for");
 	}
 
-	@Override
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UICommand)) {
 			throw new FacesException("ResetEditableValues must be inside a component which extends UICommand.");

@@ -203,27 +203,22 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
-	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
-	@Override
 	public String getForSelector() {
 		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
-	@Override
 	public void setForSelector(final String forSelector) {
 		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

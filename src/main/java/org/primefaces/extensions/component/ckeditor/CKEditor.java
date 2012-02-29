@@ -38,15 +38,15 @@ import org.primefaces.extensions.renderkit.widget.Option;
 /**
  * Component class for the <code>CKEditor</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+                      })
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -60,43 +60,51 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	public static final String EVENT_WYSIWYG_MODE = "wysiwygMode";
 	public static final String EVENT_SOURCE_MODE = "sourceMode";
 
-	/**
-	 * Event, which will be fired after the content has been changed (without blur before).
-	 */
+	/** Event, which will be fired after the content has been changed (without blur before). */
 	public static final String EVENT_DIRTY = "dirty";
 
-	/**
-	 * Event, which will be fired after blur, when the content has been changed.
-	 */
+	/** Event, which will be fired after blur, when the content has been changed. */
 	public static final String EVENT_CHANGE = "change";
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE,
-					EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE, EVENT_DIRTY, EVENT_WYSIWYG_MODE,
-					EVENT_SOURCE_MODE));
+	    Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE,
+	                                                     EVENT_DIRTY, EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
 
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
 
-        widgetVar,
-        @Option height,
-        @Option width,
-        @Option theme,
-        @Option skin,
-        @Option(useDoubleQuotes = true) toolbar,
-        @Option readOnly,
-        @Option interfaceColor,
-        @Option language,
-        @Option defaultLanguage,
-        @Option contentsCss,
-        @Option checkDirtyInterval,
-        @Option customConfig,
-        @Option tabindex;
+		widgetVar,
+		@Option
+		height,
+		@Option
+		width,
+		@Option
+		theme,
+		@Option
+		skin,
+		@Option(useDoubleQuotes = true)
+		toolbar,
+		@Option
+		readOnly,
+		@Option
+		interfaceColor,
+		@Option
+		language,
+		@Option
+		defaultLanguage,
+		@Option
+		contentsCss,
+		@Option
+		checkDirtyInterval,
+		@Option
+		customConfig,
+		@Option
+		tabindex;
 
 		private String toString;
 
@@ -111,7 +119,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		public String toString() {
 			return ((this.toString != null) ? this.toString : super.toString());
 		}
-    }
+	}
 
 	public CKEditor() {
 		setRendererType(DEFAULT_RENDERER);
@@ -127,90 +135,90 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		return EVENT_NAMES;
 	}
 
-    @Override
-    public String getDefaultEventName() {
-        return EVENT_SAVE;
-    }
+	@Override
+	public String getDefaultEventName() {
+		return EVENT_SAVE;
+	}
 
-    public String getHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.height, "200px");
-    }
+	public String getHeight() {
+		return (String) getStateHelper().eval(PropertyKeys.height, "200px");
+	}
 
-    public void setHeight(final String height) {
-        setAttribute(PropertyKeys.height, height);
-    }
+	public void setHeight(final String height) {
+		setAttribute(PropertyKeys.height, height);
+	}
 
-    public String getWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.width, "600px");
-    }
+	public String getWidth() {
+		return (String) getStateHelper().eval(PropertyKeys.width, "600px");
+	}
 
-    public void setWidth(final String width) {
-        setAttribute(PropertyKeys.width, width);
-    }
+	public void setWidth(final String width) {
+		setAttribute(PropertyKeys.width, width);
+	}
 
-    public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, null);
-    }
+	public String getTheme() {
+		return (String) getStateHelper().eval(PropertyKeys.theme, null);
+	}
 
-    public void setTheme(final String theme) {
-    	setAttribute(PropertyKeys.theme, theme);
-    }
+	public void setTheme(final String theme) {
+		setAttribute(PropertyKeys.theme, theme);
+	}
 
-    public String getSkin() {
-        return (String) getStateHelper().eval(PropertyKeys.skin, null);
-    }
+	public String getSkin() {
+		return (String) getStateHelper().eval(PropertyKeys.skin, null);
+	}
 
-    public void setSkin(final String skin) {
-    	setAttribute(PropertyKeys.skin, skin);
-    }
+	public void setSkin(final String skin) {
+		setAttribute(PropertyKeys.skin, skin);
+	}
 
-    public String getInterfaceColor() {
-        return (String) getStateHelper().eval(PropertyKeys.interfaceColor, null);
-    }
+	public String getInterfaceColor() {
+		return (String) getStateHelper().eval(PropertyKeys.interfaceColor, null);
+	}
 
-    public void setInterfaceColor(final String interfaceColor) {
-    	setAttribute(PropertyKeys.interfaceColor, interfaceColor);
-    }
+	public void setInterfaceColor(final String interfaceColor) {
+		setAttribute(PropertyKeys.interfaceColor, interfaceColor);
+	}
 
 	public boolean isReadOnly() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
+	}
 
-    public void setReadOnly(final boolean readOnly) {
-    	setAttribute(PropertyKeys.readOnly, readOnly);
-    }
+	public void setReadOnly(final boolean readOnly) {
+		setAttribute(PropertyKeys.readOnly, readOnly);
+	}
 
-    public String getToolbar() {
-        return (String) getStateHelper().eval(PropertyKeys.toolbar, null);
-    }
+	public String getToolbar() {
+		return (String) getStateHelper().eval(PropertyKeys.toolbar, null);
+	}
 
-    public void setToolbar(final String toolbar) {
-    	setAttribute(PropertyKeys.toolbar, toolbar);
-    }
+	public void setToolbar(final String toolbar) {
+		setAttribute(PropertyKeys.toolbar, toolbar);
+	}
 
-    public String getDefaultLanguage() {
-        return (String) getStateHelper().eval(PropertyKeys.defaultLanguage, null);
-    }
+	public String getDefaultLanguage() {
+		return (String) getStateHelper().eval(PropertyKeys.defaultLanguage, null);
+	}
 
-    public void setDefaultLanguage(final String defaultLanguage) {
-    	setAttribute(PropertyKeys.defaultLanguage, defaultLanguage);
-    }
+	public void setDefaultLanguage(final String defaultLanguage) {
+		setAttribute(PropertyKeys.defaultLanguage, defaultLanguage);
+	}
 
-    public String getLanguage() {
-        return (String) getStateHelper().eval(PropertyKeys.language, null);
-    }
+	public String getLanguage() {
+		return (String) getStateHelper().eval(PropertyKeys.language, null);
+	}
 
-    public void setLanguage(final String language) {
-    	setAttribute(PropertyKeys.language, language);
-    }
+	public void setLanguage(final String language) {
+		setAttribute(PropertyKeys.language, language);
+	}
 
-    public String getContentsCss() {
-        return (String) getStateHelper().eval(PropertyKeys.contentsCss, null);
-    }
+	public String getContentsCss() {
+		return (String) getStateHelper().eval(PropertyKeys.contentsCss, null);
+	}
 
-    public void setContentsCss(final String contentsCss) {
-    	setAttribute(PropertyKeys.contentsCss, contentsCss);
-    }
+	public void setContentsCss(final String contentsCss) {
+		setAttribute(PropertyKeys.contentsCss, contentsCss);
+	}
 
 	public String getWidgetVar() {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
@@ -244,7 +252,6 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		setAttribute(PropertyKeys.tabindex, tabindex);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -260,8 +267,8 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -269,6 +276,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

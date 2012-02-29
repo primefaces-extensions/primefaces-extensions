@@ -18,28 +18,28 @@
 
 package org.primefaces.extensions.component.remotecommand;
 
-import javax.faces.component.UICommand;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UICommand;
 
 import org.primefaces.component.api.AjaxSource;
-
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Component class for the <code>RemoteCommand</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+                      })
 public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -49,10 +49,11 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
+
 		name,
 		update,
 		process,
@@ -95,7 +96,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.name, name);
 	}
 
-	@Override
 	public String getUpdate() {
 		return (String) getStateHelper().eval(PropertyKeys.update, null);
 	}
@@ -104,7 +104,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.update, update);
 	}
 
-	@Override
 	public String getProcess() {
 		return (String) getStateHelper().eval(PropertyKeys.process, null);
 	}
@@ -113,7 +112,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.process, process);
 	}
 
-	@Override
 	public String getOnstart() {
 		return (String) getStateHelper().eval(PropertyKeys.onstart, null);
 	}
@@ -122,7 +120,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.onstart, onstart);
 	}
 
-	@Override
 	public String getOncomplete() {
 		return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
 	}
@@ -131,7 +128,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.oncomplete, oncomplete);
 	}
 
-	@Override
 	public String getOnerror() {
 		return (String) getStateHelper().eval(PropertyKeys.onerror, null);
 	}
@@ -140,7 +136,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.onerror, onerror);
 	}
 
-	@Override
 	public String getOnsuccess() {
 		return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
 	}
@@ -149,7 +144,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.onsuccess, onsuccess);
 	}
 
-	@Override
 	public boolean isGlobal() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
 	}
@@ -158,7 +152,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.global, global);
 	}
 
-	@Override
 	public boolean isAsync() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
 	}
@@ -171,8 +164,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -180,6 +173,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

@@ -38,7 +38,7 @@ import org.primefaces.component.api.Widget;
  * @since   0.2
  */
 @ResourceDependencies({
-						  @ResourceDependency(library = "javax.faces", name = "jsf.js"),
+                          @ResourceDependency(library = "javax.faces", name = "jsf.js"),
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
@@ -163,7 +163,6 @@ public class AjaxStatus extends UIComponentBase implements Widget {
 		setAttribute(PropertyKeys.styleClass, styleClass);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

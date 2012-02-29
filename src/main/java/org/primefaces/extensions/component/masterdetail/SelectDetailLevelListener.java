@@ -48,7 +48,6 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 		this.listener = listener;
 	}
 
-	@Override
 	public void processAction(final ActionEvent actionEvent) {
 		final FacesContext fc = FacesContext.getCurrentInstance();
 		final UICommand source = (UICommand) actionEvent.getComponent();
@@ -83,18 +82,15 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 		}
 	}
 
-	@Override
 	public boolean isTransient() {
 		return false;
 	}
 
-	@Override
 	public void restoreState(final FacesContext facesContext, final Object state) {
 		Object[] values = (Object[]) state;
 		listener = (MethodExpression) values[0];
 	}
 
-	@Override
 	public Object saveState(final FacesContext facesContext) {
 		Object[] values = new Object[1];
 		values[0] = listener;
@@ -102,7 +98,6 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 		return values;
 	}
 
-	@Override
 	public void setTransient(final boolean value) {
 	}
 

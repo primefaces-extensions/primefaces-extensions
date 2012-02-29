@@ -12,9 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * $Id$
  */
+
 package org.primefaces.extensions.model.timeline;
 
 import java.util.ArrayList;
@@ -22,86 +23,87 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * DOCUMENT_ME
  *
- * @author Nilesh Mali / last modified by $Author$
+ *
+ * @author  Nilesh Mali / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
 public class DefaultTimeLine implements Timeline {
 
-    private String id;
-    private String title;
-    private List<TimelineEvent> events;
+	private String id;
+	private String title;
+	private List<TimelineEvent> events;
 
-    public DefaultTimeLine() {
-        this.events = new ArrayList<TimelineEvent>();
-    }
+	public DefaultTimeLine() {
+		this.events = new ArrayList<TimelineEvent>();
+	}
 
-    public DefaultTimeLine(String id, String title) {
-        this.id = id;
-        this.title = title;
-        this.events = new ArrayList<TimelineEvent>();
-    }
+	public DefaultTimeLine(String id, String title) {
+		this.id = id;
+		this.title = title;
+		this.events = new ArrayList<TimelineEvent>();
+	}
 
-    @Override
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @Override
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    @Override
-    public void addEvent(TimelineEvent event) {
-        event.setId(UUID.randomUUID().toString());
+	public void addEvent(TimelineEvent event) {
+		event.setId(UUID.randomUUID().toString());
 
-        events.add(event);
-    }
+		events.add(event);
+	}
 
-    @Override
-    public boolean deleteEvent(TimelineEvent event) {
-        return events.remove(event);
-    }
+	public boolean deleteEvent(TimelineEvent event) {
+		return events.remove(event);
+	}
 
-    @Override
-    public List<TimelineEvent> getEvents() {
-        return events;
-    }
+	public List<TimelineEvent> getEvents() {
+		return events;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DefaultTimeLine other = (DefaultTimeLine) obj;
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + (this.id != null ? this.id.hashCode() : 0);
-        return hash;
-    }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-    @Override
-    public String toString() {
-        return title;
-    }
+		final DefaultTimeLine other = (DefaultTimeLine) obj;
+		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 11 * hash + (this.id != null ? this.id.hashCode() : 0);
+
+		return hash;
+	}
+
+	@Override
+	public String toString() {
+		return title;
+	}
 }

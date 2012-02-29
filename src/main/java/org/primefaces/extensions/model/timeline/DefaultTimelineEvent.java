@@ -12,141 +12,144 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * $Id$
  */
+
 package org.primefaces.extensions.model.timeline;
 
 import java.util.Date;
 
 /**
+ * DOCUMENT_ME
  *
- * @author Nilesh Mali / last modified by $Author$
+ * @author  Nilesh Mali / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
 public class DefaultTimelineEvent implements TimelineEvent {
 
-    private String id;
-    private String title;
-    private String description;
-    private Date startDate;
-    private Date endDate;
-    private String icon;
+	private String id;
+	private String title;
+	private String description;
+	private Date startDate;
+	private Date endDate;
+	private String icon;
 
-    public DefaultTimelineEvent() {
-    }
+	public DefaultTimelineEvent() {
+	}
 
-    public DefaultTimelineEvent(String title) {
-        this.title = title;
-    }
+	public DefaultTimelineEvent(String title) {
+		this.title = title;
+	}
 
-    public DefaultTimelineEvent(String title, String description, Date startDate, Date endDate) {
-        this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
+	public DefaultTimelineEvent(String title, String description, Date startDate, Date endDate) {
+		this.title = title;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 
-    public DefaultTimelineEvent(String title, String description, Date startDate, Date endDate, String icon) {
-        this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.icon = icon;
-    }
+	public DefaultTimelineEvent(String title, String description, Date startDate, Date endDate, String icon) {
+		this.title = title;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.icon = icon;
+	}
 
-    @Override
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @Override
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    @Override
-    public Date getStartDate() {
-        return startDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    @Override
-    public Date getEndDate() {
-        return endDate;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    @Override
-    public String getIcon() {
-        return icon;
-    }
+	public String getIcon() {
+		return icon;
+	}
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DefaultTimelineEvent other = (DefaultTimelineEvent) obj;
-        if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
-            return false;
-        }
-        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
-            return false;
-        }
-        if (this.startDate != other.startDate && (this.startDate == null || !this.startDate.equals(other.startDate))) {
-            return false;
-        }
-        if (this.endDate != other.endDate && (this.endDate == null || !this.endDate.equals(other.endDate))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
-        hash = 79 * hash + (this.description != null ? this.description.hashCode() : 0);
-        hash = 79 * hash + (this.startDate != null ? this.startDate.hashCode() : 0);
-        hash = 79 * hash + (this.endDate != null ? this.endDate.hashCode() : 0);
-        return hash;
-    }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-    @Override
-    public String toString() {
-        return "DefaultTimelineEvent{" + "id=" + id + ", title=" + title + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + "}";
-    }
+		final DefaultTimelineEvent other = (DefaultTimelineEvent) obj;
+		if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
+			return false;
+		}
+
+		if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+			return false;
+		}
+
+		if (this.startDate != other.startDate && (this.startDate == null || !this.startDate.equals(other.startDate))) {
+			return false;
+		}
+
+		if (this.endDate != other.endDate && (this.endDate == null || !this.endDate.equals(other.endDate))) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
+		hash = 79 * hash + (this.description != null ? this.description.hashCode() : 0);
+		hash = 79 * hash + (this.startDate != null ? this.startDate.hashCode() : 0);
+		hash = 79 * hash + (this.endDate != null ? this.endDate.hashCode() : 0);
+
+		return hash;
+	}
+
+	@Override
+	public String toString() {
+		return "DefaultTimelineEvent{" + "id=" + id + ", title=" + title + ", description=" + description + ", startDate="
+		       + startDate + ", endDate=" + endDate + "}";
+	}
 }

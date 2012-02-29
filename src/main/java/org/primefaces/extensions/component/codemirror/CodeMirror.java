@@ -38,18 +38,18 @@ import org.primefaces.extensions.renderkit.widget.Option;
 /**
  * Component class for the <code>CodeMirror</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
+                      })
 public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -62,39 +62,60 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	public static final String EVENT_FOCUS = "focus";
 
 	private static final Collection<String> EVENT_NAMES =
-		Collections.unmodifiableCollection(Arrays.asList(EVENT_CHANGE, EVENT_HIGHLIGHT_COMPLETE,
-				EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE));
+	    Collections.unmodifiableCollection(Arrays.asList(EVENT_CHANGE, EVENT_HIGHLIGHT_COMPLETE, EVENT_BLUR, EVENT_FOCUS,
+	                                                     EVENT_CHANGE));
 
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
 
-        widgetVar,
-        @Option theme,
-        @Option mode,
-        @Option indentUnit,
-        @Option smartIndent,
-        @Option tabSize,
-        @Option indentWithTabs,
-        @Option electricChars,
-        @Option keyMap,
-        @Option lineWrapping,
-        @Option lineNumbers,
-        @Option firstLineNumber,
-        @Option gutter,
-        @Option fixedGutter,
-        @Option readOnly,
-        @Option matchBrackets,
-        @Option workTime,
-        @Option workDelay,
-        @Option pollInterval,
-        @Option undoDepth,
-        @Option tabindex,
-        @Option extraKeys;
+		widgetVar,
+		@Option
+		theme,
+		@Option
+		mode,
+		@Option
+		indentUnit,
+		@Option
+		smartIndent,
+		@Option
+		tabSize,
+		@Option
+		indentWithTabs,
+		@Option
+		electricChars,
+		@Option
+		keyMap,
+		@Option
+		lineWrapping,
+		@Option
+		lineNumbers,
+		@Option
+		firstLineNumber,
+		@Option
+		gutter,
+		@Option
+		fixedGutter,
+		@Option
+		readOnly,
+		@Option
+		matchBrackets,
+		@Option
+		workTime,
+		@Option
+		workDelay,
+		@Option
+		pollInterval,
+		@Option
+		undoDepth,
+		@Option
+		tabindex,
+		@Option
+		extraKeys;
 
 		private String toString;
 
@@ -109,7 +130,7 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		public String toString() {
 			return ((this.toString != null) ? this.toString : super.toString());
 		}
-    }
+	}
 
 	public CodeMirror() {
 		setRendererType(DEFAULT_RENDERER);
@@ -125,29 +146,29 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		return COMPONENT_FAMILY;
 	}
 
-    public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, null);
-    }
+	public String getTheme() {
+		return (String) getStateHelper().eval(PropertyKeys.theme, null);
+	}
 
-    public void setTheme(final String theme) {
-    	setAttribute(PropertyKeys.theme, theme);
-    }
+	public void setTheme(final String theme) {
+		setAttribute(PropertyKeys.theme, theme);
+	}
 
-    public String getMode() {
-        return (String) getStateHelper().eval(PropertyKeys.mode, null);
-    }
+	public String getMode() {
+		return (String) getStateHelper().eval(PropertyKeys.mode, null);
+	}
 
-    public void setMode(final String mode) {
-    	setAttribute(PropertyKeys.mode, mode);
-    }
+	public void setMode(final String mode) {
+		setAttribute(PropertyKeys.mode, mode);
+	}
 
-    public String getKeyMap() {
-        return (String) getStateHelper().eval(PropertyKeys.keyMap, null);
-    }
+	public String getKeyMap() {
+		return (String) getStateHelper().eval(PropertyKeys.keyMap, null);
+	}
 
-    public void setKeyMap(final String keyMap) {
-    	setAttribute(PropertyKeys.keyMap, keyMap);
-    }
+	public void setKeyMap(final String keyMap) {
+		setAttribute(PropertyKeys.keyMap, keyMap);
+	}
 
 	public String getWidgetVar() {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
@@ -182,76 +203,76 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	}
 
 	public Boolean isLineNumbers() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.lineNumbers, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.lineNumbers, null);
+	}
 
-    public void setLineNumbers(final Boolean lineNumbers) {
-    	setAttribute(PropertyKeys.lineNumbers, lineNumbers);
-    }
+	public void setLineNumbers(final Boolean lineNumbers) {
+		setAttribute(PropertyKeys.lineNumbers, lineNumbers);
+	}
 
 	public Boolean isSmartIndent() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.smartIndent, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.smartIndent, null);
+	}
 
-    public void setSmartIndent(final Boolean smartIndent) {
-    	setAttribute(PropertyKeys.smartIndent, smartIndent);
-    }
+	public void setSmartIndent(final Boolean smartIndent) {
+		setAttribute(PropertyKeys.smartIndent, smartIndent);
+	}
 
 	public Boolean isReadOnly() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
+	}
 
-    public void setReadOnly(final Boolean readOnly) {
-    	setAttribute(PropertyKeys.readOnly, readOnly);
-    }
+	public void setReadOnly(final Boolean readOnly) {
+		setAttribute(PropertyKeys.readOnly, readOnly);
+	}
 
 	public Boolean isIndentWithTabs() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.indentWithTabs, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.indentWithTabs, null);
+	}
 
-    public void setIndentWithTabs(final Boolean indentWithTabs) {
-    	setAttribute(PropertyKeys.indentWithTabs, indentWithTabs);
-    }
+	public void setIndentWithTabs(final Boolean indentWithTabs) {
+		setAttribute(PropertyKeys.indentWithTabs, indentWithTabs);
+	}
 
 	public Boolean isElectricChars() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.electricChars, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.electricChars, null);
+	}
 
-    public void setElectricChars(final Boolean electricChars) {
-    	setAttribute(PropertyKeys.electricChars, electricChars);
-    }
+	public void setElectricChars(final Boolean electricChars) {
+		setAttribute(PropertyKeys.electricChars, electricChars);
+	}
 
 	public Boolean isLineWrapping() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.lineWrapping, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.lineWrapping, null);
+	}
 
-    public void setLineWrapping(final Boolean lineWrapping) {
-    	setAttribute(PropertyKeys.lineWrapping, lineWrapping);
-    }
+	public void setLineWrapping(final Boolean lineWrapping) {
+		setAttribute(PropertyKeys.lineWrapping, lineWrapping);
+	}
 
 	public Boolean isGutter() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.gutter, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.gutter, null);
+	}
 
-    public void setGutter(final Boolean gutter) {
-    	setAttribute(PropertyKeys.gutter, gutter);
-    }
+	public void setGutter(final Boolean gutter) {
+		setAttribute(PropertyKeys.gutter, gutter);
+	}
 
 	public Boolean isFixedGutter() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.fixedGutter, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.fixedGutter, null);
+	}
 
-    public void setFixedGutter(final Boolean fixedGutter) {
-    	setAttribute(PropertyKeys.fixedGutter, fixedGutter);
-    }
+	public void setFixedGutter(final Boolean fixedGutter) {
+		setAttribute(PropertyKeys.fixedGutter, fixedGutter);
+	}
 
 	public Boolean isMatchBrackets() {
-    	return (Boolean) getStateHelper().eval(PropertyKeys.matchBrackets, null);
-    }
+		return (Boolean) getStateHelper().eval(PropertyKeys.matchBrackets, null);
+	}
 
-    public void setMatchBrackets(final Boolean matchBrackets) {
-    	setAttribute(PropertyKeys.matchBrackets, matchBrackets);
-    }
+	public void setMatchBrackets(final Boolean matchBrackets) {
+		setAttribute(PropertyKeys.matchBrackets, matchBrackets);
+	}
 
 	public Integer getWorkTime() {
 		return (Integer) getStateHelper().eval(PropertyKeys.workTime, null);
@@ -301,7 +322,6 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		setAttribute(PropertyKeys.extraKeys, extraKeys);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -317,8 +337,8 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -326,6 +346,7 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

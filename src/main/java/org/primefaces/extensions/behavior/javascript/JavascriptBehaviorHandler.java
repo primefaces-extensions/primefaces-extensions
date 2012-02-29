@@ -45,9 +45,9 @@ import javax.faces.view.facelets.TagHandler;
 /**
  * {@link BehaviorHolderAttachedObjectHandler} and {@link TagHandler} implementation for the {@link JavascriptBehavior}.
  *
- * @author Thomas Andraschko / last modified by $Author: $
+ * @author  Thomas Andraschko / last modified by $Author: $
  * @version $Revision: $
- * @since 0.2
+ * @since   0.2
  */
 public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHolderAttachedObjectHandler {
 
@@ -63,7 +63,6 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public void apply(final FaceletContext faceletContext, final UIComponent parent) throws IOException {
 		if (!ComponentHandler.isNew(parent)) {
 			return;
@@ -88,8 +87,8 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 				throw new TagException(tag, "Composite component BeanInfo does not have BeanDescriptor.");
 			}
 
-			final List<AttachedObjectTarget> targetList = (List<AttachedObjectTarget>)
-					componentDescriptor.getValue(AttachedObjectTarget.ATTACHED_OBJECT_TARGETS_KEY);
+			final List<AttachedObjectTarget> targetList =
+			    (List<AttachedObjectTarget>) componentDescriptor.getValue(AttachedObjectTarget.ATTACHED_OBJECT_TARGETS_KEY);
 			if (targetList == null && !tagApplied) {
 				throw new TagException(tag, "Composite component does not support behavior events.");
 			}
@@ -100,8 +99,9 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 					if (target instanceof BehaviorHolderAttachedObjectTarget) {
 						final BehaviorHolderAttachedObjectTarget behaviorTarget = (BehaviorHolderAttachedObjectTarget) target;
 						if ((null != eventName && eventName.equals(behaviorTarget.getName()))
-								|| (null == eventName && behaviorTarget.isDefaultEvent())) {
+						    || (null == eventName && behaviorTarget.isDefaultEvent())) {
 							supportedEvent = true;
+
 							break;
 						}
 					}
@@ -122,7 +122,6 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 		}
 	}
 
-	@Override
 	public String getEventName() {
 		return (this.event != null) ? this.event.getValue() : null;
 	}
@@ -155,12 +154,10 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 		return behavior;
 	}
 
-	@Override
 	public String getFor() {
 		return null;
 	}
 
-	@Override
 	public void applyAttachedObject(final FacesContext context, final UIComponent parent) {
 		final FaceletContext faceletContext = (FaceletContext) context.getAttributes().get(FaceletContext.FACELET_CONTEXT_KEY);
 
@@ -168,8 +165,7 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 	}
 
 	private void setBehaviorAttribute(final FaceletContext faceletContext, final JavascriptBehavior behavior,
-			final TagAttribute attribute, final Class<?> type) {
-
+	                                  final TagAttribute attribute, final Class<?> type) {
 		if (attribute != null) {
 			behavior.setValueExpression(attribute.getLocalName(), attribute.getValueExpression(faceletContext, type));
 		}
@@ -193,6 +189,7 @@ public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHol
 				result = Collections.EMPTY_LIST;
 			}
 		}
+
 		return result;
 	}
 }

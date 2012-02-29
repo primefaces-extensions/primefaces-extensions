@@ -43,7 +43,6 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 
 	private static final long serialVersionUID = 20111121L;
 
-	@Override
 	public void processEvent(final ComponentSystemEvent event) {
 		UICommand source = (UICommand) event.getComponent();
 

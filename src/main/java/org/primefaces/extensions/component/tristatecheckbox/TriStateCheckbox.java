@@ -127,7 +127,6 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

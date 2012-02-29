@@ -47,7 +47,6 @@ public class PreRenderEditableValuesListener implements ComponentSystemEventList
 	public PreRenderEditableValuesListener() {
 	}
 
-	@Override
 	public void processEvent(final ComponentSystemEvent event) {
 		if (!reset) {
 			return;

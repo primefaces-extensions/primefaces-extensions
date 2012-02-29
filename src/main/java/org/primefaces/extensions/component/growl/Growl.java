@@ -34,15 +34,15 @@ import org.primefaces.extensions.component.base.AbstractNotification;
 /**
  * Component class for the <code>Growl</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js")
+                      })
 public class Growl extends AbstractNotification implements AutoUpdatable, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -120,7 +120,6 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 		getStateHelper().put(PropertyKeys.life, life);
 	}
 
-	@Override
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}
@@ -161,7 +160,6 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 		setAttribute(PropertyKeys.fatalIcon, fatalIcon);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

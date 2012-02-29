@@ -33,9 +33,9 @@ import org.primefaces.component.api.UIData;
 /**
  * {@link TagHandler} for the <code>Paginator</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 public class PaginatorTagHandler extends TagHandler {
 
@@ -59,7 +59,6 @@ public class PaginatorTagHandler extends TagHandler {
 		this.rows = this.getAttribute("rows");
 	}
 
-	@Override
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UIData)) {
 			throw new FacesException("Paginator must be inside a component which extends UIData.");

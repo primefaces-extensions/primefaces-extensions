@@ -62,7 +62,6 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		this.resetInputs = getAttribute("resetInputs");
 	}
 
-	@Override
 	public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
 		if (!(parent instanceof UICommand)) {
 			throw new FacesException("SelectDetailLevel must be inside an UICommand.");

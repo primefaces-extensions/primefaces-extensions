@@ -49,12 +49,12 @@ import org.primefaces.util.Constants;
  * @since   0.1
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
+                      })
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -66,7 +66,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	public static final String EVENT_SELECT_CHANGE = "selectChange";
 
 	private static final Collection<String> EVENT_NAMES =
-		Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT_END, EVENT_SELECT_START, EVENT_SELECT_CHANGE));
+	    Collections.unmodifiableCollection(Arrays.asList(EVENT_SELECT_END, EVENT_SELECT_START, EVENT_SELECT_CHANGE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -77,25 +77,44 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option forValue("for"),
-		@Option aspectRatio,
-		@Option autoHide,
-		@Option fadeSpeed,
-		@Option handles,
-		@Option hide,
-		@Option imageHeight,
-		@Option imageWidth,
-		@Option movable,
-		@Option persistent,
-		@Option resizable,
-		@Option show,
-		@Option zIndex,
-		@Option maxHeight,
-		@Option maxWidth,
-		@Option minHeight,
-		@Option minWidth,
-		@Option(escapeText = true, useDoubleQuotes = true) parentSelector,
-		@Option keyboardSupport;
+		@Option
+		forValue("for"),
+		@Option
+		aspectRatio,
+		@Option
+		autoHide,
+		@Option
+		fadeSpeed,
+		@Option
+		handles,
+		@Option
+		hide,
+		@Option
+		imageHeight,
+		@Option
+		imageWidth,
+		@Option
+		movable,
+		@Option
+		persistent,
+		@Option
+		resizable,
+		@Option
+		show,
+		@Option
+		zIndex,
+		@Option
+		maxHeight,
+		@Option
+		maxWidth,
+		@Option
+		minHeight,
+		@Option
+		minWidth,
+		@Option(escapeText = true, useDoubleQuotes = true)
+		parentSelector,
+		@Option
+		keyboardSupport;
 
 		private String toString;
 
@@ -283,17 +302,14 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -340,9 +356,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 			if (eventName.equals(EVENT_SELECT_END)
-					|| eventName.equals(EVENT_SELECT_CHANGE)
-					|| eventName.equals(EVENT_SELECT_START)) {
-
+			    || eventName.equals(EVENT_SELECT_CHANGE)
+			    || eventName.equals(EVENT_SELECT_START)) {
 				final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
 				final int x1 = Integer.parseInt(params.get(clientId + "_x1"));
@@ -356,8 +371,8 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 				final String imgSrc = params.get(clientId + "_imgSrc");
 
 				final ImageAreaSelectEvent selectEvent =
-						new ImageAreaSelectEvent(this, behaviorEvent.getBehavior(), height, width, x1, x2, y1, y2, imgHeight,
-								imgWidth, imgSrc);
+				    new ImageAreaSelectEvent(this, behaviorEvent.getBehavior(), height, width, x1, x2, y1, y2, imgHeight,
+				                             imgWidth, imgSrc);
 
 				super.queueEvent(selectEvent);
 			}

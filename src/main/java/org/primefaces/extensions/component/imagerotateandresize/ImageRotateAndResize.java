@@ -44,15 +44,15 @@ import org.primefaces.util.Constants;
 /**
  * Component class for the <code>ImageRotateAndResize</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.1
+ * @since   0.1
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+                      })
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -63,12 +63,12 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	public static final String EVENT_RESIZE = "resize";
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
+	    Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
 
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
@@ -113,17 +113,14 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -139,8 +136,8 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -148,6 +145,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);
@@ -174,21 +172,13 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 				final double width = Double.parseDouble(params.get(clientId + "_width"));
 				final double height = Double.parseDouble(params.get(clientId + "_height"));
 
-				final ResizeEvent resizeEvent = new ResizeEvent(
-						this,
-						behaviorEvent.getBehavior(),
-						width,
-						height);
+				final ResizeEvent resizeEvent = new ResizeEvent(this, behaviorEvent.getBehavior(), width, height);
 
 				super.queueEvent(resizeEvent);
-
 			} else if (eventName.equals(EVENT_ROTATE)) {
 				final int degree = Integer.parseInt(params.get(clientId + "_degree"));
 
-				final RotateEvent rotateEvent = new RotateEvent(
-						this,
-						behaviorEvent.getBehavior(),
-						degree);
+				final RotateEvent rotateEvent = new RotateEvent(this, behaviorEvent.getBehavior(), degree);
 
 				super.queueEvent(rotateEvent);
 			}

@@ -34,16 +34,16 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
 /**
  * Component class for the <code>KeyFilter</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
+                      })
 public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -53,7 +53,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
@@ -97,22 +97,18 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	@Override
 	public String getFor() {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	@Override
 	public void setFor(final String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
-	@Override
 	public String getForSelector() {
 		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
-	@Override
 	public void setForSelector(final String forSelector) {
 		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
@@ -141,7 +137,6 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		setAttribute(PropertyKeys.testFunction, testFunction);
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -157,8 +152,8 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -166,6 +161,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

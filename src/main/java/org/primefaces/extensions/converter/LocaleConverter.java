@@ -43,7 +43,6 @@ public class LocaleConverter implements Converter, Serializable {
 
 	private char seperator = '_';
 
-	@Override
 	public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
 		if (StringUtils.isBlank(value)) {
 			return fc.getApplication().getDefaultLocale();
@@ -52,7 +51,6 @@ public class LocaleConverter implements Converter, Serializable {
 		return getLocaleObject(value, seperator);
 	}
 
-	@Override
 	public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
 		if (value == null) {
 			final Locale defaultLocale = fc.getApplication().getDefaultLocale();
@@ -69,8 +67,8 @@ public class LocaleConverter implements Converter, Serializable {
 			return getLocaleString((Locale) value, seperator);
 		} else {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Wrong type: '" + value.getClass().getSimpleName()
-					+ "' is not 'Locale'.", StringUtils.EMPTY));
+			                                              "Wrong type: '" + value.getClass().getSimpleName()
+			                                              + "' is not 'Locale'.", StringUtils.EMPTY));
 		}
 	}
 
@@ -79,15 +77,16 @@ public class LocaleConverter implements Converter, Serializable {
 		if (seperator != '-' && seperator != '_') {
 			replacedLocale = replacedLocale.replace(seperator, '_');
 		}
+
 		replacedLocale = replacedLocale.replace('-', '_');
 
 		final String[] parts = replacedLocale.split("_");
 		if (parts.length == 0
-				|| !parts[0].matches("[a-zA-Z]{2,2}")
-				|| (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
+		    || !parts[0].matches("[a-zA-Z]{2,2}")
+		    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"'" + locale + "' does not represent a valid locale",
-					StringUtils.EMPTY));
+			                                              "'" + locale + "' does not represent a valid locale",
+			                                              StringUtils.EMPTY));
 		}
 
 		switch (parts.length) {

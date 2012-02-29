@@ -31,13 +31,11 @@ import org.primefaces.extensions.component.base.AbstractNotification;
 /**
  * Component class for the <code>Messages</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since   0.2
  */
-@ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css")
-})
+@ResourceDependencies({@ResourceDependency(library = "primefaces", name = "primefaces.css")})
 public class Messages extends AbstractNotification implements AutoUpdatable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -87,7 +85,6 @@ public class Messages extends AbstractNotification implements AutoUpdatable {
 		setAttribute(PropertyKeys.globalOnly, globalOnly);
 	}
 
-	@Override
 	public boolean isAutoUpdate() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoUpdate, false);
 	}
