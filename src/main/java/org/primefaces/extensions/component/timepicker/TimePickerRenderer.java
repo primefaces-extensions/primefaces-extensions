@@ -154,11 +154,11 @@ public class TimePickerRenderer extends InputRenderer {
 		writer.write(",showDeselectButton:" + timepicker.isShowDeselectButton());
 
 		if (timepicker.getOnHourShow() != null) {
-			writer.write(",onHourShow:'" + timepicker.getOnHourShow() + "'");
+			writer.write(",onHourShow:" + timepicker.getOnHourShow());
 		}
 
 		if (timepicker.getOnMinuteShow() != null) {
-			writer.write(",onMinuteShow:'" + timepicker.getOnMinuteShow() + "'");
+			writer.write(",onMinuteShow:" + timepicker.getOnMinuteShow());
 		}
 
 		writer.write(",locale:'" + timepicker.calculateLocale(fc).toString() + "'");

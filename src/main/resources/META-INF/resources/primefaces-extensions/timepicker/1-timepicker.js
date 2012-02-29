@@ -7,6 +7,59 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
     // configure localized text
     this.cfg = PrimeFacesExt.configureLocale('TimePicker', cfg);
     
+    if (this.cfg.showPeriod) {
+        this.amHours = {};
+        this.pmHours = {};
+        var i, prev, next;
+        
+        if (this.cfg.hours.starts <= 11) {
+            // fill AM hours
+            var hoursEnds = Math.min(11, this.cfg.hours.ends);
+            for (i=this.cfg.hours.starts; i<=hoursEnds; i++) {
+                prev, next = null;
+                if (i == this.cfg.hours.starts) {
+                    prev = null;
+                } else {
+                    prev = i - 1;
+                    if (prev == 0) {
+                        prev = 12;
+                    }
+                }
+                
+                if (i == hoursEnds) {
+                    next = null;
+                } else {
+                    next = i + 1;
+                }
+                
+                this.amHours[i == 0 ? 12 : i] = {'prev': prev, 'next': next};        
+            }            
+        }
+        
+        if (this.cfg.hours.ends >= 12) {
+            // fill PM hours
+            for (i=12; i<=this.cfg.hours.ends; i++) {
+                prev, next = null;
+                if (i == 12) {
+                    prev = null;    
+                } else {
+                    prev = i - 1;
+                    if (prev != 12) {
+                        prev = prev - 12;    
+                    }
+                }
+                
+                if (i < this.cfg.hours.ends) {
+                    next = i - 11;    
+                } else {
+                    next = null;
+                }
+                
+                this.pmHours[i > 12 ? i-12 : i] = {'prev': prev, 'next': next};
+            }
+        }
+    }
+    
     // for internal use
     var _self = this;
 
@@ -130,17 +183,11 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     
         prevHours = hours;
         if (minutes > this.cfg.minutes.ends) {
-            hours = hours + 1;
+            hours = this.increaseHour(hours, this.isAm(time));
             minutes = this.cfg.minutes.starts;
         } else if (minutes < this.cfg.minutes.starts) {
-            hours = hours - 1;
+            hours = this.decreaseHour(hours, this.isAm(time));
             minutes = this.cfg.minutes.ends;
-        }
-    
-        if (hours > this.cfg.hours.ends) {
-            hours = this.cfg.hours.starts;
-        } else if (hours < this.cfg.hours.starts) {
-            hours = this.cfg.hours.ends;
         }
     
         // replace old time by new one
@@ -167,15 +214,9 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
         prevHours = hours;
         // increment / decrement hours
         if (dir == 1) {
-            hours = hours + 1;
+            hours = this.increaseHour(hours, this.isAm(time));
         } else {
-            hours = hours - 1;
-        }
-    
-        if (hours > this.cfg.hours.ends) {
-            hours = this.cfg.hours.starts;
-        } else if (hours < this.cfg.hours.starts) {
-            hours = this.cfg.hours.ends;
+            hours = this.decreaseHour(hours, this.isAm(time));
         }
     
         // replace old time by new one
@@ -244,16 +285,105 @@ PrimeFacesExt.widget.TimePicker.prototype.ontimeSelect = function() {
     }       
 }
 
+PrimeFacesExt.widget.TimePicker.prototype.isAm = function(time) {
+    var am = this.cfg.amPmText[0];
+    return (time && time.indexOf(am) != -1);
+}
+
 PrimeFacesExt.widget.TimePicker.prototype.adjustAmPm = function(time, prevHours, hours) {
     if (prevHours == 11 && hours == 12) {
-        if (time.indexOf('AM') != -1) {
-            return time.replace("AM", "PM");
-        } else if (time.indexOf('PM') != -1) {
-            return time.replace("PM", "AM");
+        var am = this.cfg.amPmText[0];
+        var pm = this.cfg.amPmText[1];
+        if (time.indexOf(am) != -1) {
+            return time.replace(am, pm);
+        } else if (time.indexOf(pm) != -1) {
+            return time.replace(pm, am);
         }
     }
     
     return time;
+}
+
+PrimeFacesExt.widget.TimePicker.prototype.increaseHour = function(hour, isAm) {
+    var newHour;
+    if (this.cfg.showPeriod) {
+        var timeObj, curTimeObj, curHour;
+        if (isAm) {
+            timeObj = this.amHours[hour];
+            if (timeObj && timeObj.next) {
+                newHour = timeObj.next;    
+            } else {
+                for(curHour in this.pmHours) {
+                    curTimeObj = this.pmHours[curHour];
+                    if (curTimeObj.prev == null) {
+                        newHour = curHour;
+                        break;
+                    }
+                }
+            }
+        } else {
+            timeObj = this.pmHours[hour];
+            if (timeObj && timeObj.next) {
+                newHour = timeObj.next;    
+            } else {
+                for(curHour in this.amHours) {
+                    curTimeObj = this.amHours[curHour];
+                    if (curTimeObj.prev == null) {
+                        newHour = curHour;
+                        break;
+                    }
+                }                
+            }
+        }    
+    } else {
+        newHour = hour + 1;
+        if (newHour > this.cfg.hours.ends) {
+            newHour = this.cfg.hours.starts;
+        }    
+    }
+    
+    return newHour;
+}
+
+PrimeFacesExt.widget.TimePicker.prototype.decreaseHour = function(hour, isAm) {
+    var newHour;
+    if (this.cfg.showPeriod) {
+        var timeObj, curTimeObj, curHour;
+        if (isAm) {
+            timeObj = this.amHours[hour];
+            if (timeObj && timeObj.prev) {
+                newHour = timeObj.prev;    
+            } else {
+                for(curHour in this.pmHours) {
+                    curTimeObj = this.pmHours[curHour];
+                    if (curTimeObj.next == null) {
+                        newHour = curHour;
+                        break;
+                    }
+                }
+            }
+        } else {
+            timeObj = this.pmHours[hour];
+            if (timeObj && timeObj.prev) {
+                newHour = timeObj.prev;    
+            } else {
+                for(curHour in this.amHours) {
+                    curTimeObj = this.amHours[curHour];
+                    if (curTimeObj.next == null) {
+                        newHour = curHour;
+                        break;
+                    }
+                }                
+            }
+        }    
+    } else {
+        newHour = hour - 1;
+        if (newHour < this.cfg.hours.starts) {
+            newHour = this.cfg.hours.ends;
+        }    
+    }
+    
+    return newHour;
 }
 
 // Exposed public methods
@@ -283,3 +413,17 @@ PrimeFacesExt.widget.TimePicker.prototype.enable = function() {
     this.jq.timepicker('enable');
     this.enableSpinner();    
 }
+
+// default i18n
+
+PrimeFacesExt.locales.TimePicker['en'] = {
+    hourText: 'Hours',
+    minuteText: 'Minutes',
+    amPmText: ['AM', 'PM'] ,
+    closeButtonText: 'Done',
+    nowButtonText: 'Now',
+    deselectButtonText: 'Deselect'
+};
+
+PrimeFacesExt.locales.TimePicker['en_US'] = PrimeFacesExt.locales.TimePicker['en'];
+PrimeFacesExt.locales.TimePicker['en_UK'] = PrimeFacesExt.locales.TimePicker['en'];
