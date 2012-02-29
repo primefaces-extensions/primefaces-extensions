@@ -149,7 +149,8 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
     var newTime = null;
     var hours = null;
     var minutes = null;
-    var strHours, strMinutes, result, prevHours;
+    var objHours, strHours, strMinutes, result, prevHours;
+    var isAmPmChanged = false;
 
     if (this.cfg.showHours && this.cfg.showMinutes) {
         // extract hours and minutes
@@ -181,12 +182,15 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
             minutes = Math.ceil(minutes / this.cfg.minutes.interval) * this.cfg.minutes.interval;
         }
     
-        prevHours = hours;
         if (minutes > this.cfg.minutes.ends) {
-            hours = this.increaseHour(hours, this.isAm(time));
+            objHours = this.increaseHour(hours, this.isAm(time));
+            hours = objHours['newHour'];
+            isAmPmChanged = objHours['isAmPmChanged'];
             minutes = this.cfg.minutes.starts;
         } else if (minutes < this.cfg.minutes.starts) {
-            hours = this.decreaseHour(hours, this.isAm(time));
+            objHours = this.decreaseHour(hours, this.isAm(time));
+            hours = objHours['newHour'];
+            isAmPmChanged = objHours['isAmPmChanged'];
             minutes = this.cfg.minutes.ends;
         }
     
@@ -194,7 +198,7 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
         strHours = (hours < 10 ? "0" + hours : "" + hours);
         strMinutes = (minutes < 10 ? "0" + minutes : "" + minutes);
         newTime = time.replace(new RegExp('^(\\d{2})' + this.cfg.timeSeparator + '(\\d{2})'), strHours + this.cfg.timeSeparator + strMinutes);
-        newTime = this.adjustAmPm(newTime, prevHours, hours);
+        newTime = this.adjustAmPm(newTime, isAmPmChanged);
         
     } else if (this.cfg.showHours && !this.cfg.showMinutes) {
         // only hours
@@ -211,18 +215,21 @@ PrimeFacesExt.widget.TimePicker.prototype.spin = function(dir) {
             return;
         }
     
-        prevHours = hours;
         // increment / decrement hours
         if (dir == 1) {
-            hours = this.increaseHour(hours, this.isAm(time));
+            objHours = this.increaseHour(hours, this.isAm(time));
+            hours = objHours['newHour'];
+            isAmPmChanged = objHours['isAmPmChanged'];
         } else {
-            hours = this.decreaseHour(hours, this.isAm(time));
+            objHours = this.decreaseHour(hours, this.isAm(time));
+            hours = objHours['newHour'];
+            isAmPmChanged = objHours['isAmPmChanged'];
         }
     
         // replace old time by new one
         strHours = (hours < 10 ? "0" + hours : "" + hours);
         newTime = time.replace(new RegExp('^(\\d{2})'), strHours);
-        newTime = this.adjustAmPm(newTime, prevHours, hours);
+        newTime = this.adjustAmPm(newTime, isAmPmChanged);
         
     } else if (!this.cfg.showHours && this.cfg.showMinutes) {
         // only minutes
@@ -290,8 +297,8 @@ PrimeFacesExt.widget.TimePicker.prototype.isAm = function(time) {
     return (time && time.indexOf(am) != -1);
 }
 
-PrimeFacesExt.widget.TimePicker.prototype.adjustAmPm = function(time, prevHours, hours) {
-    if (prevHours == 11 && hours == 12) {
+PrimeFacesExt.widget.TimePicker.prototype.adjustAmPm = function(time, isAmPmChanged) {
+    if (isAmPmChanged) {
         var am = this.cfg.amPmText[0];
         var pm = this.cfg.amPmText[1];
         if (time.indexOf(am) != -1) {
@@ -306,6 +313,8 @@ PrimeFacesExt.widget.TimePicker.prototype.adjustAmPm = function(time, prevHours,
 
 PrimeFacesExt.widget.TimePicker.prototype.increaseHour = function(hour, isAm) {
     var newHour;
+    var isAmPmChanged = false;
+    
     if (this.cfg.showPeriod) {
         var timeObj, curTimeObj, curHour;
         if (isAm) {
@@ -317,6 +326,7 @@ PrimeFacesExt.widget.TimePicker.prototype.increaseHour = function(hour, isAm) {
                     curTimeObj = this.pmHours[curHour];
                     if (curTimeObj.prev == null) {
                         newHour = curHour;
+                        isAmPmChanged = true;
                         break;
                     }
                 }
@@ -330,6 +340,7 @@ PrimeFacesExt.widget.TimePicker.prototype.increaseHour = function(hour, isAm) {
                     curTimeObj = this.amHours[curHour];
                     if (curTimeObj.prev == null) {
                         newHour = curHour;
+                        isAmPmChanged = true;
                         break;
                     }
                 }                
@@ -342,11 +353,13 @@ PrimeFacesExt.widget.TimePicker.prototype.increaseHour = function(hour, isAm) {
         }    
     }
     
-    return newHour;
+    return {'newHour': newHour, 'isAmPmChanged': isAmPmChanged};
 }
 
 PrimeFacesExt.widget.TimePicker.prototype.decreaseHour = function(hour, isAm) {
     var newHour;
+    var isAmPmChanged = false;
+    
     if (this.cfg.showPeriod) {
         var timeObj, curTimeObj, curHour;
         if (isAm) {
@@ -358,6 +371,7 @@ PrimeFacesExt.widget.TimePicker.prototype.decreaseHour = function(hour, isAm) {
                     curTimeObj = this.pmHours[curHour];
                     if (curTimeObj.next == null) {
                         newHour = curHour;
+                        isAmPmChanged = true;
                         break;
                     }
                 }
@@ -371,6 +385,7 @@ PrimeFacesExt.widget.TimePicker.prototype.decreaseHour = function(hour, isAm) {
                     curTimeObj = this.amHours[curHour];
                     if (curTimeObj.next == null) {
                         newHour = curHour;
+                        isAmPmChanged = true;
                         break;
                     }
                 }                
@@ -383,7 +398,7 @@ PrimeFacesExt.widget.TimePicker.prototype.decreaseHour = function(hour, isAm) {
         }    
     }
     
-    return newHour;
+    return {'newHour': newHour, 'isAmPmChanged': isAmPmChanged};
 }
 
 // Exposed public methods
