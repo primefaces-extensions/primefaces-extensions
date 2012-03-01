@@ -21,6 +21,7 @@ package org.primefaces.extensions.component.timepicker;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -30,6 +31,7 @@ import javax.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -97,6 +99,10 @@ public class TimePickerRenderer extends InputRenderer {
 		if (!timepicker.isInline()) {
 			String styleClass = timepicker.getStyleClass();
 			styleClass = (styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass);
+			if (!timepicker.isValid()) {
+				styleClass = styleClass + " ui-state-error";
+			}
+
 			writer.writeAttribute("class", styleClass, null);
 
 			if (timepicker.getStyle() != null) {
@@ -193,9 +199,9 @@ public class TimePickerRenderer extends InputRenderer {
 				// use built-in converter
 				SimpleDateFormat timeFormat;
 				if (timepicker.isShowPeriod()) {
-					timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_12, timepicker.calculateLocale(fc));
+					timeFormat = new SimpleDateFormat(timepicker.getTimePattern12(), timepicker.calculateLocale(fc));
 				} else {
-					timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_24, timepicker.calculateLocale(fc));
+					timeFormat = new SimpleDateFormat(timepicker.getTimePattern24(), timepicker.calculateLocale(fc));
 				}
 
 				return timeFormat.format(value);
@@ -249,16 +255,20 @@ public class TimePickerRenderer extends InputRenderer {
 		}*/
 
 		// use built-in conversion
+		SimpleDateFormat timeFormat = null;
 		try {
-			SimpleDateFormat timeFormat;
 			if (timepicker.isShowPeriod()) {
-				timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_12, timepicker.calculateLocale(fc));
+				timeFormat = new SimpleDateFormat(timepicker.getTimePattern12(), timepicker.calculateLocale(fc));
 			} else {
-				timeFormat = new SimpleDateFormat(TimePicker.TIME_PATTERN_24, timepicker.calculateLocale(fc));
+				timeFormat = new SimpleDateFormat(timepicker.getTimePattern24(), timepicker.calculateLocale(fc));
 			}
 
 			return timeFormat.parse(value);
 		} catch (ParseException e) {
+			throw new ConverterException(MessageUtils.getMessage(timepicker.calculateLocale(fc), TimePicker.TIME_MESSAGE_KEY,
+			                                                     value, timeFormat.format(new Date(System.currentTimeMillis())),
+			                                                     MessageUtils.getLabel(fc, component)), e);
+		} catch (Exception e) {
 			throw new ConverterException(e);
 		}
 	}

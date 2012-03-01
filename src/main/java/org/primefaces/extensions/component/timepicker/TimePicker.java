@@ -83,8 +83,8 @@ public class TimePicker extends HtmlInputText implements Widget {
 	    ArrayUtils.concat(new String[] {
 	                          "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"
 	                      }, HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
-	public static final String TIME_PATTERN_24 = "HH:mm";
-	public static final String TIME_PATTERN_12 = "hh:mm a";
+
+	public static final String TIME_MESSAGE_KEY = "javax.faces.converter.DateTimeConverter.TIME";
 
 	private Locale appropriateLocale;
 
@@ -385,6 +385,14 @@ public class TimePicker extends HtmlInputText implements Widget {
 				super.queueEvent(timeSelectEvent);
 			}
 		}
+	}
+
+	public String getTimePattern24() {
+		return "HH" + getTimeSeparator() + "mm";
+	}
+
+	public String getTimePattern12() {
+		return "hh" + getTimeSeparator() + "mm a";
 	}
 
 	private boolean isSelfRequest(final FacesContext fc) {

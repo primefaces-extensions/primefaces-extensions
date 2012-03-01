@@ -2136,25 +2136,25 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies first displayed hour. Default is 0.]]></description>
+            <description><![CDATA[Specifies first displayed hour. Possible range is 0-23. Default is 0.]]></description>
             <name>startHours</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies last displayed hour. Default is 23.]]></description>
+            <description><![CDATA[Specifies last displayed hour. Possible range is 0-23. Default is 23.]]></description>
             <name>endHours</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies first displayed minute. Default is 0.]]></description>
+            <description><![CDATA[Specifies first displayed minute. Possible range is 0-55. Default is 0.]]></description>
             <name>startMinutes</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies last displayed minute. Default is 55.]]></description>
+            <description><![CDATA[Specifies last displayed minute. Possible range is 0-55. Default is 55.]]></description>
             <name>endMinutes</name>
             <required>false</required>
             <type>java.lang.Integer</type>
