@@ -77,7 +77,11 @@ PrimeFacesExt.widget.TimePicker = function(cfg) {
     };
 
     this.cfg.onSelect = function(time, inst) {
-        _self.jq.val(time);
+        if (_self.cfg.modeInline) {
+            $(_self.cfg.altField).val(time);     
+        } else {
+            _self.jq.val(time);
+        }
         _self.ontimeSelect();
     };   
 
