@@ -279,7 +279,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 		Class<?> converterType = valueExpression.getType(fc.getELContext());
 		if (converterType == null || converterType == String.class || converterType == Object.class) {
-			// no conversation is needed
+			// no conversion is needed
 			return null;
 		}
 
