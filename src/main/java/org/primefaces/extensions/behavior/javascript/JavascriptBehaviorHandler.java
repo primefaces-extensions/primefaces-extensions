@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: $
+ * $Id$
  */
 
 package org.primefaces.extensions.behavior.javascript;
@@ -45,8 +45,8 @@ import javax.faces.view.facelets.TagHandler;
 /**
  * {@link BehaviorHolderAttachedObjectHandler} and {@link TagHandler} implementation for the {@link JavascriptBehavior}.
  *
- * @author  Thomas Andraschko / last modified by $Author: $
- * @version $Revision: $
+ * @author  Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
  * @since   0.2
  */
 public class JavascriptBehaviorHandler extends TagHandler implements BehaviorHolderAttachedObjectHandler {
