@@ -50,12 +50,10 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
 		final String target = ComponentUtils.findTarget(context, imageAreaSelect);
 
-		writer.startElement("script", imageAreaSelect);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("type", "text/javascript", null);
+		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('ImageAreaSelect', '" + widgetVar + "', {");
+		writer.write("PrimeFacesExt.cw('" + ImageAreaSelect.class.getSimpleName() + "', '" + widgetVar + "', {");
 
 		WidgetRenderer.renderOptions(clientId, writer, imageAreaSelect);
 
@@ -64,6 +62,6 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		encodeClientBehaviors(context, imageAreaSelect);
 
 		writer.write("}, true);});");
-		writer.endElement("script");
+		endScript(writer);
 	}
 }

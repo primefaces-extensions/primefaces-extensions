@@ -46,7 +46,7 @@ public class TimelineRenderer extends CoreRenderer {
 		encodeScript(context, timeline);
 	}
 
-	protected void encodeMarkup(final FacesContext context, Timeline component) throws IOException {
+	protected void encodeMarkup(final FacesContext context, final Timeline component) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = component.getClientId(context);
 		writer.startElement("div", component);
@@ -62,7 +62,7 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeScript(final FacesContext context, Timeline component) throws IOException {
+	protected void encodeScript(final FacesContext context, final Timeline component) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = component.getClientId(context);
 		List<org.primefaces.extensions.model.timeline.Timeline> model =
@@ -103,7 +103,7 @@ public class TimelineRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	protected void encodeEvent(FacesContext context, TimelineEvent event, String timelineId) throws IOException {
+	protected void encodeEvent(final FacesContext context, final TimelineEvent event, final String timelineId) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
 		writer.write("{");

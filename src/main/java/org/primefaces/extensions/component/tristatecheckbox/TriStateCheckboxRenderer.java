@@ -48,7 +48,7 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		decodeBehaviors(context, checkbox);
 
 		String clientId = checkbox.getClientId(context);
-		String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
+		String submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
 
 		if (submittedValue != null) {
 			checkbox.setSubmittedValue(submittedValue);

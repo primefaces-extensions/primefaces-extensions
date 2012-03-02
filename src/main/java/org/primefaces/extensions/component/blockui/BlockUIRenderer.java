@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -84,7 +83,7 @@ public class BlockUIRenderer extends CoreRenderer {
 		if (target != null) {
 			UIComponent targetComponent = blockUI.findComponent(target);
 			if (targetComponent == null) {
-				throw new FacesException("Cannot find target for blockUI component '" + clientId + "'.");
+				throw new FacesException("Cannot find target for blockUI component '" + target + "'.");
 			}
 
 			jqTarget = ComponentUtils.escapeJQueryId(targetComponent.getClientId(fc));
@@ -157,8 +156,8 @@ public class BlockUIRenderer extends CoreRenderer {
 		final String widgetVar = blockUI.resolveWidgetVar();
 		writer.write("PrimeFacesExt.cw('BlockUI', '" + widgetVar + "',{");
 
-		//writer.write("id:'" + clientId + "'");
-		writer.write("source:'" + jqSource + "'");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",source:'" + jqSource + "'");
 		writer.write(",target:'" + jqTarget + "'");
 		if (jqContent != null) {
 			writer.write(",content:'" + jqContent + "'");

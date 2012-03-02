@@ -49,18 +49,18 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
 		final String target = ComponentUtils.findTarget(context, imageRotateAndResize);
 
-		writer.startElement("script", imageRotateAndResize);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("type", "text/javascript", null);
+		startScript(writer, clientId);
 
 		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('" + ImageRotateAndResize.class.getSimpleName() + "', '" + widgetVar + "', {");
 
-		writer.write(widgetVar + " = new PrimeFacesExt.widget.ImageRotateAndResize('" + clientId + "', {");
-		writer.write("target:'" + target + "'");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",target:'" + target + "'");
 
 		encodeClientBehaviors(context, imageRotateAndResize);
 
 		writer.write("});});");
-		writer.endElement("script");
+
+		endScript(writer);
 	}
 }

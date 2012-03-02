@@ -97,13 +97,13 @@ public class WidgetRenderer {
 			if (String.class.isAssignableFrom(value.getClass()) ||
 				Character.class.isAssignableFrom(value.getClass())) {
 
-				//don't add quotes for objects or arrays
 				String stringValue = ((String) value).trim();
 
 				if (optionContainer.isEscapeText()) {
 					stringValue = ComponentUtils.escapeText(stringValue);
 				}
 
+				//don't add quotes for objects or arrays
 				if (stringValue.startsWith("{") || stringValue.startsWith("[")) {
 					if (optionContainer.isEscapeHTML()) {
 						writer.writeText("," + optionContainer.getName() + ":" + stringValue, null);

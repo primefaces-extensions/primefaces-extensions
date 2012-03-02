@@ -93,7 +93,7 @@ public class CKEditorRenderer extends InputRenderer {
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('CKEditor', '" + widgetVar + "', {");
+		writer.write("PrimeFacesExt.cw('" + CKEditor.class.getSimpleName() + "', '" + widgetVar + "', {");
 
 		WidgetRenderer.renderOptions(clientId, writer, ckEditor);
 

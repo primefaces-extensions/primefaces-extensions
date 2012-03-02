@@ -89,7 +89,7 @@ public class CodeMirrorRenderer extends InputRenderer {
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('CodeMirror', '" + widgetVar + "', {");
+		writer.write("PrimeFacesExt.cw('" + CodeMirror.class.getSimpleName() + "', '" + widgetVar + "', {");
 
 		WidgetRenderer.renderOptions(clientId, writer, codeMirror);
 

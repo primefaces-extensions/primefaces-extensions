@@ -194,7 +194,7 @@ PrimeFacesExt = {
 	 */
 	createWidget : function(widgetName, widgetVar, cfg, hasStyleSheet) {            
 	    if (PrimeFacesExt.widget[widgetName]) {
-	    	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);
+	    	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
 	    } else {
 	    	if (hasStyleSheet === true) {
 	    		var styleSheet =
@@ -232,12 +232,27 @@ PrimeFacesExt = {
 
     		//load script
 	        PrimeFacesExt.getScript(script, function() {
-	            //instantiate widget
-	        	PrimeFacesExt.instantiateWidget(widgetName, widgetVar, cfg);
+	        	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
 	        }, true);
 	    }
 	},
-    
+
+	/**
+	 * Creates the widget or calls "refresh" if already available.
+	 * 
+	 * @author Thomas Andraschko
+	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
+	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} cfg An object with options.
+	 */
+	initWidget : function(widgetName, widgetVar, cfg) {
+		if(window[widgetVar]) {
+			window[widgetVar].refresh(cfg);
+		} else {
+			window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+		}
+	},
+
 	/**
 	 * Configures component specific localized text by given widget name and locale in configuration object.
 	 * 
@@ -255,10 +270,16 @@ PrimeFacesExt = {
         }
         
         return cfg;
-    },    
+    },
 
-	instantiateWidget : function(widgetName, widgetVar, cfg) {
-		window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+	/**
+	 * Removes the widget's script block from the DOM.
+	 * 
+	 * @author Thomas Andraschko
+	 * @param {string} clientId The id of the widget.
+	 */
+	removeWidgetScript : function(clientId) {
+		$(PrimeFaces.escapeClientId(clientId) + '_s').remove();
 	},
 
 	/**
@@ -309,7 +330,6 @@ PrimeFacesExt.locales = {};
  */
 PrimeFacesExt.locales.TimePicker = {};
 
-
 /**
  * JavaScript behavior.
  * 
@@ -318,4 +338,4 @@ PrimeFacesExt.locales.TimePicker = {};
  */
 PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
 	return cfg.execute.call(this, cfg.source, cfg.event, cfg.params, ext);
-}
+};
