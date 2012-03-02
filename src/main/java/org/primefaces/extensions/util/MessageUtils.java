@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,21 +40,8 @@ public class MessageUtils {
 
 	public static final String FACES_MESSAGES = "javax.faces.Messages";
 
-	public static Object getLabel(final FacesContext context, final UIComponent component) {
-		Object label = component.getAttributes().get("label");
-		if (label == null || (label instanceof String && StringUtils.isEmpty((String) label))) {
-			label = component.getValueExpression("label");
-		}
-
-		// use the "clientId" if there was no label specified.
-		if (label == null) {
-			label = component.getClientId(context);
-		}
-
-		return label;
-	}
-
-	public static FacesMessage getMessage(final Locale locale, final String key, final Object... params) {
+	public static FacesMessage getMessage(final Locale locale, final FacesMessage.Severity severity, final String key,
+	                                      final Object... params) {
 		String summary = null;
 		String detail = null;
 		ResourceBundle bundle;
@@ -108,14 +94,25 @@ public class MessageUtils {
 		}
 
 		if (summary != null) {
-			return new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, (detail != null ? detail : StringUtils.EMPTY));
+			return new FacesMessage(severity, summary, (detail != null ? detail : StringUtils.EMPTY));
 		}
 
-		return new FacesMessage(FacesMessage.SEVERITY_ERROR, "???" + key + "???", (detail != null ? detail : StringUtils.EMPTY));
+		return new FacesMessage(severity, "???" + key + "???", (detail != null ? detail : StringUtils.EMPTY));
+	}
+
+	public static FacesMessage getMessage(final FacesMessage.Severity severity, final String key, final Object... params) {
+		// let current locale to be calculated
+		return getMessage(null, severity, key, params);
+	}
+
+	public static FacesMessage getMessage(final Locale locale, final String key, final Object... params) {
+		// set severity to error
+		return getMessage(locale, FacesMessage.SEVERITY_ERROR, key, params);
 	}
 
 	public static FacesMessage getMessage(final String key, final Object... params) {
 		// let current locale to be calculated
-		return getMessage(null, key, params);
+		// set severity to error
+		return getMessage(null, FacesMessage.SEVERITY_ERROR, key, params);
 	}
 }
