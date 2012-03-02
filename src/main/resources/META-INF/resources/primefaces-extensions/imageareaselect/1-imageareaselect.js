@@ -11,8 +11,9 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
-		this._super(cfg);
-	
+		this.id = cfg.id;
+		this.cfg = cfg;
+
 		this.options = {};
 		this.options.instance = true,
 		this.options.classPrefix = 'ui-imgageareaselect';
@@ -62,6 +63,8 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 		this.bindSelectEndCallback();
 	
 		this.instance = $(this.cfg.target).imgAreaSelect(this.options);
+		
+		PrimeFacesExt.removeWidgetScript(this.id)
 	},
 
 	/**
