@@ -33,6 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.MessageFactory;
 
 /**
  * Renderer for the {@link TimePicker} component.
@@ -267,7 +268,7 @@ public class TimePickerRenderer extends InputRenderer {
 		} catch (ParseException e) {
 			throw new ConverterException(MessageUtils.getMessage(timepicker.calculateLocale(fc), TimePicker.TIME_MESSAGE_KEY,
 			                                                     value, timeFormat.format(new Date(System.currentTimeMillis())),
-			                                                     MessageUtils.getLabel(fc, component)), e);
+			                                                     MessageFactory.getLabel(fc, component)), e);
 		} catch (Exception e) {
 			throw new ConverterException(e);
 		}
