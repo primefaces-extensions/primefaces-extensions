@@ -55,6 +55,12 @@ public class RequiredLabelRenderer extends CoreRenderer {
 
 		writer.startElement("label", component);
 		writer.writeAttribute("for", forComponent.getClientId(context), null);
+		writer.writeAttribute("class", label.getStyleClass(), null);
+
+		//render common attributes
+		renderPassThruAttributes(context, label, HTML.COMMON_EVENTS);
+		renderPassThruAttributes(context, label, HTML.BLUR_FOCUS_EVENTS);
+		renderPassThruAttributes(context, label, PASS_TROUGH_ATTRIBUTES);
 
 		//write text
 		if (label.isEscape()) {
@@ -62,13 +68,6 @@ public class RequiredLabelRenderer extends CoreRenderer {
 		} else {
 			writer.write(ComponentUtils.getValueToRender(context, label));
 		}
-
-		writer.writeAttribute("class", label.getStyleClass(), null);
-
-		//render common attributes
-		renderPassThruAttributes(context, label, HTML.COMMON_EVENTS);
-		renderPassThruAttributes(context, label, HTML.BLUR_FOCUS_EVENTS);
-		renderPassThruAttributes(context, label, PASS_TROUGH_ATTRIBUTES);
 
 		encodeAdditionalContent(context, component);
 
