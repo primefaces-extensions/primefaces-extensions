@@ -897,6 +897,6 @@
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
         <primefaces.core.version>3.2-SNAPSHOT</primefaces.core.version>
-        <primefaces.theme.version>1.0.3</primefaces.theme.version>
+        <primefaces.theme.version>1.0.4</primefaces.theme.version>
     </properties>
 </project>
