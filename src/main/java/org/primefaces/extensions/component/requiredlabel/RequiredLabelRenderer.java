@@ -70,16 +70,24 @@ public class RequiredLabelRenderer extends CoreRenderer {
 		renderPassThruAttributes(context, label, HTML.BLUR_FOCUS_EVENTS);
 		renderPassThruAttributes(context, label, PASS_TROUGH_ATTRIBUTES);
 
-		//write inner span with required indicator
+		encodeAdditionalContent(context, component);
+
+		writer.endElement("label");
+	}
+
+	protected void encodeAdditionalContent(final FacesContext context, final UIComponent component) throws IOException {
+		final ResponseWriter writer = context.getResponseWriter();
+		final RequiredLabel label = (RequiredLabel) component;
+
 		writer.startElement("span", component);
 		writer.writeAttribute("class", RequiredLabel.SPAN_DEFAULT_STYLE_CLASS, null);
+
 		if (label.isEscape()) {
 			writer.writeText(label.getRequiredIndicator(), null);
 		} else {
 			writer.write(label.getRequiredIndicator());
 		}
-		writer.endElement("span");
 
-		writer.endElement("label");
+		writer.endElement("span");
 	}
 }
