@@ -16,7 +16,7 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 
 		this.options = {};
 		this.options.instance = true,
-		this.options.classPrefix = 'ui-imgageareaselect';
+		this.options.classPrefix = 'pe-imgageareaselect';
 	
 		if (this.cfg.aspectRatio) {
 			this.options.aspectRatio = this.cfg.aspectRatio;

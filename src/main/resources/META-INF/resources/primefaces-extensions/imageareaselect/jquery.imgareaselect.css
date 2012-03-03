@@ -1,36 +1,36 @@
-.ui-imgageareaselect-border1 {
+.pe-imgageareaselect-border1 {
 	background: url("#{resource['primefaces-extensions:imageareaselect/border-v.gif']}") repeat-y left top;
 }
 
-.ui-imgageareaselect-border2 {
+.pe-imgageareaselect-border2 {
     background: url("#{resource['primefaces-extensions:imageareaselect/border-h.gif']}") repeat-x left top;
 }
 
-.ui-imgageareaselect-border3 {
+.pe-imgageareaselect-border3 {
     background: url("#{resource['primefaces-extensions:imageareaselect/border-v.gif']}") repeat-y right top;
 }
 
-.ui-imgageareaselect-border4 {
+.pe-imgageareaselect-border4 {
     background: url("#{resource['primefaces-extensions:imageareaselect/border-h.gif']}") repeat-x left bottom;
 }
 
-.ui-imgageareaselect-border1, .ui-imgageareaselect-border2, .ui-imgageareaselect-border3, .ui-imgageareaselect-border4 {
+.pe-imgageareaselect-border1, .ui-imgageareaselect-border2, .ui-imgageareaselect-border3, .ui-imgageareaselect-border4 {
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
 
-.ui-imgageareaselect-handle {
+.pe-imgageareaselect-handle {
     background-color: #fff;
     border: solid 1px #000;
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
 
-.ui-imgageareaselect-outer {
+.pe-imgageareaselect-outer {
     background-color: #000;
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
 
-.ui-imgageareaselect-selection {
+.pe-imgageareaselect-selection {
 }
