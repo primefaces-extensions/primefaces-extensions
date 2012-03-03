@@ -246,7 +246,7 @@ PrimeFacesExt = {
 	 * @param {object} cfg An object with options.
 	 */
 	initWidget : function(widgetName, widgetVar, cfg) {
-		if(window[widgetVar]) {
+		if (window[widgetVar]) {
 			window[widgetVar].refresh(cfg);
 		} else {
 			window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
