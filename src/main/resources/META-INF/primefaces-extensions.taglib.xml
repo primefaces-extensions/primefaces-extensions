@@ -2282,9 +2282,9 @@
         </attribute>
     </tag>
     <tag>
-        <tag-name>triStateCheckbox</tag-name>
         <description><![CDATA[]]>
         </description>
+        <tag-name>triStateCheckbox</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.TriStateCheckbox</component-type>
             <renderer-type>org.primefaces.extensions.component.TriStateCheckboxRenderer</renderer-type>
@@ -2446,9 +2446,9 @@
         </attribute>
     </tag>
     <tag>
-        <tag-name>triStateManyCheckbox</tag-name>
         <description><![CDATA[]]>
         </description>
+        <tag-name>triStateManyCheckbox</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.TriStateManyCheckbox</component-type>
             <renderer-type>org.primefaces.extensions.component.TriStateManyCheckboxRenderer</renderer-type>
@@ -2609,4 +2609,13 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <description><![CDATA[]]>
+        </description>
+        <tag-name>requiredLabel</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.RequiredLabel</component-type>
+            <renderer-type>org.primefaces.extensions.component.RequiredLabelRenderer</renderer-type>
+        </component>
+	</tag>
 </facelet-taglib>

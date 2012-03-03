@@ -134,6 +134,7 @@
                                 <include>blockui/blockUI.css</include>
                                 <include>masterdetail/masterdetail.css</include>
                                 <include>timeline/timeline.css</include>
+                                <include>requiredlabel/requiredlabel.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
