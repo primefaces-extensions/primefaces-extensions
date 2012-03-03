@@ -28,6 +28,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -79,7 +80,7 @@ public class CKEditorRenderer extends InputRenderer {
 		}
 
 		if (ckEditor.getValue() != null) {
-			writer.write(ckEditor.getValue().toString());
+			writer.write(ComponentUtils.getValueToRender(context, ckEditor));
 		}
 
 		writer.endElement("textarea");

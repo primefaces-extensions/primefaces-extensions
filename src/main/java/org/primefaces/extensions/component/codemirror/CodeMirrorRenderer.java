@@ -28,6 +28,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -75,7 +76,7 @@ public class CodeMirrorRenderer extends InputRenderer {
 		writer.writeAttribute("name", clientId, null);
 
 		if (codeMirror.getValue() != null) {
-			writer.write(codeMirror.getValue().toString());
+			writer.write(ComponentUtils.getValueToRender(context, codeMirror));
 		}
 
 		writer.endElement("textarea");
