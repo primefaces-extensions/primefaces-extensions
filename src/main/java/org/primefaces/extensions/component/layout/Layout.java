@@ -45,7 +45,6 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.event.CloseEvent;
@@ -421,7 +420,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 
-	@Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
