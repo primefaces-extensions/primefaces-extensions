@@ -6,3 +6,4 @@ This product includes software developed by Kevin Dalman (http://layout.jquery-d
 This product includes software developed by François Gélinas (https://github.com/fgelinas/timepicker)
 This product includes software developed by Mike Alsup (https://github.com/malsup/blockui)
 This product includes software developed by Akzhan Abdulin (https://github.com/akzhan/jquery-keyfilter)
+This product includes software developed by Bob Knothe (http://www.decorplanit.com/plugin/)

@@ -116,6 +116,7 @@
                                 <include>timepicker/**</include>                                
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
+                                <include>inputnumber/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

@@ -132,6 +132,10 @@
         <component-type>org.primefaces.extensions.component.TriStateManyCheckbox</component-type>
         <component-class>org.primefaces.extensions.component.tristatemanycheckbox.TriStateManyCheckbox</component-class>
     </component>
+    <component>                        
+        <component-type>org.primefaces.extensions.component.InputNumber</component-type>
+        <component-class>org.primefaces.extensions.component.inputnumber.InputNumber</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -242,6 +246,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.TriStateManyCheckboxRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.tristatemanycheckbox.TriStateManyCheckboxRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.InputNumberRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.inputnumber.InputNumberRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
