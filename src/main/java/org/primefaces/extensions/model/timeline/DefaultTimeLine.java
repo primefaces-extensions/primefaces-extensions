@@ -26,7 +26,7 @@ import java.util.UUID;
  * DOCUMENT_ME
  *
  *
- * @author  Nilesh Mali / last modified by $Author$
+ * @author  Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  * @since   0.3
  */

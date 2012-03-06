@@ -5,7 +5,7 @@
  */
 PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
     
-	/**
+        /**
 	 * Initializes the widget.
 	 * 
 	 * @param {object} cfg The widget configuration.
@@ -13,7 +13,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
 	    this._super(cfg);
 	    
-	    this.jq.append('<div id="'+ this.id + '_main" class="ui-timeline ui-widget-content ui-corner-all"><div id="'+ this.id + '_scroll"></div></div>');
+	    this.jq.append('<div id="'+ this.id + '_main" class="pe-timeline ui-widget-content ui-corner-all"><div id="'+ this.id + '_scroll"></div></div>');
 	    this.container = $('#' + this.id + '_scroll');    
 	    
 	    if(this.cfg.dataSource) {
@@ -53,9 +53,9 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
 	},
 
 	createTimeline : function(tl) {
-	    var dom = '<div id="' + tl.id + '" class="ui-timeline-menu">';
-	    dom += '<div class="ui-timeline-menu-header ui-widget-header ui-corner-all">';
-	    dom += tl.title + '</div><ul id="'+ tl.id +'_ul" class="ui-timeline-event-list"></ul></div>';    
+	    var dom = '<div id="' + tl.id + '" class="pe-timeline-menu">';
+	    dom += '<div class="pe-timeline-menu-header ui-widget-header ui-corner-all">';
+	    dom += tl.title + '</div><ul id="'+ tl.id +'_ul" class="pe-timeline-event-list"></ul></div>';    
 	    this.container.append(dom);
 	    var eventContainer = $('#' + tl.id + '_ul');
 	    var size = tl.events.length;
@@ -84,6 +84,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
 	    // BlockUI on click
 	    $('#' + eventId + '_li').click(function(){
 	        var blockUI = new PrimeFacesExt.widget.BlockUI({
+                    id: eventId + '_jsf',    
 	            source: '#' + eventId,
 	            target: '#' + targetId,
 	            content: '#' + eventId + '_content'

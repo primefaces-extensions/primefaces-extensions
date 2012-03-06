@@ -22,7 +22,7 @@ import java.util.Date;
 
 /**
  *
- * @author Nilesh Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  */
 public class DateUtil {

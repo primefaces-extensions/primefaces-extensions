@@ -33,7 +33,7 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link Timeline} component.
  *
- * @author  Nilesh Mali / last modified by $Author$
+ * @author  Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  * @since   0.3
  */
