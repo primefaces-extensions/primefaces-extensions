@@ -49,11 +49,6 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GrowlRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public static final String WARN_ICON = "growl/images/warn.png";
-	public static final String ERROR_ICON = "growl/images/error.png";
-	public static final String INFO_ICON = "growl/images/info.png";
-	public static final String FATAL_ICON = "growl/images/fatal.png";
-
 	/**
 	 * Properties that are tracked by state saving.
 	 *

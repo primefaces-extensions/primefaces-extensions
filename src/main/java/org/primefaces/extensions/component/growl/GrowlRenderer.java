@@ -51,109 +51,71 @@ public class GrowlRenderer extends CoreRenderer {
 
 		startScript(writer, clientId);
 
-		if (isAjaxRequest(context)) {
-			writer.write(widgetVar + ".show(");
-			encodeMessages(context, growl);
-			writer.write(");");
-		} else {
-			writer.write("$(function(){");
+        writer.write("$(function(){");
+        writer.write("PrimeFaces.cw('Growl','" + widgetVar + "',{");
+        writer.write("id:'" + clientId + "'");
+        writer.write(",sticky:" + growl.isSticky());
+        writer.write(",life:" + growl.getLife());
 
-			writer.write("PrimeFaces.cw('Growl','" + widgetVar + "',{");
-			writer.write("id:'" + clientId + "',msgs:");
-			encodeMessages(context, growl);
-			writer.write("});});");
-		}
+        writer.write(",msgs:");
+        encodeMessages(context, growl);
 
-		endScript(writer);
+        writer.write("});});");
+
+        endScript(writer);
 	}
 
 	protected void encodeMessages(final FacesContext context, final Growl growl) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
-		final Iterator<FacesMessage> messages =
-			growl.isGlobalOnly() ? context.getMessages(null) : context.getMessages();
+		final Iterator<FacesMessage> messages = growl.isGlobalOnly() ? context.getMessages(null) : context.getMessages();
 
-			writer.write("[");
+		writer.write("[");
 
-			while (messages.hasNext()) {
-				final FacesMessage message = messages.next();
-				final boolean shouldRender = growl.shouldRender(message,
-						TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.GROWL);
+		while(messages.hasNext()) {
+			final FacesMessage message = messages.next();
+			final boolean shouldRender = growl.shouldRender(message,
+					TargetableFacesMessage.Target.ALL, TargetableFacesMessage.Target.GROWL);
 
-				if (shouldRender) {
-					final String severityImage = getImage(context, growl, message);
-					final String summary = escapeText(message.getSummary());
-					final String detail = escapeText(message.getDetail());
+			if (message.isRendered() && !growl.isRedisplay() || !shouldRender) {
+				continue;
+			}
 
-					writer.write("{");
+			final String summary = escapeText(message.getSummary());
+			final String detail = escapeText(message.getDetail());
 
-					//render summary
-					if (growl.isShowSummary()) {
-						if (growl.isEscape()) {
-							writer.writeText("title:\"" + summary + "\"", null);
-						} else {
-							writer.write("title:\"" + summary + "\"");
-						}
-					} else {
-						writer.write("title:\"\"");
-					}
+			writer.write("{");
 
-					//render detail
-					if (growl.isShowDetail()) {
-						if (growl.isEscape()) {
-							writer.writeText(",text:\"" + detail + "\"", null);
-						} else {
-							writer.write(",text:\"" + detail + "\"");
-						}
-					} else {
-						writer.write(",text:\"\"");
-					}
-
-					if (!isValueBlank(severityImage)) {
-						writer.write(",image:\"" + severityImage + "\"");
-					}
-
-					if (growl.isSticky()) {
-						writer.write(",sticky:true");
-					} else {
-						writer.write(",sticky:false");
-					}
-
-					if (growl.getLife() != 6000) {
-						writer.write(",time:" + growl.getLife());
-					}
-
-					writer.write("}");
-
-					if (messages.hasNext()) {
-						writer.write(",");
-					}
-
-					message.rendered();
+			if (growl.isShowSummary() && growl.isShowDetail()) {
+				if (growl.isEscape()) {
+					writer.writeText("summary:\"" + summary + "\",detail:\"" + detail + "\"", null);
+				} else {
+					writer.write("summary:\"" + summary + "\",detail:\"" + detail + "\"");
+				}
+			} else if (growl.isShowSummary() && !growl.isShowDetail()) {
+				if (growl.isEscape()) {
+					writer.writeText("summary:\"" + summary + "\",detail:\"\"", null);
+				} else {
+					writer.write("summary:\"" + summary + "\",detail:\"\"");
+				}
+			} else if(!growl.isShowSummary() && growl.isShowDetail()) {
+				if (growl.isEscape()) {
+					writer.writeText("summary:\"\",text:\"" + detail + "\"", null);
+				} else {
+					writer.write("summary:\"\",text:\"" + detail + "\"");
 				}
 			}
 
-			writer.write("]");
-	}
+			writer.write(",severity:" + message.getSeverity().getOrdinal());
 
-	protected String getImage(final FacesContext facesContext, final Growl growl, final FacesMessage message) {
-		final FacesMessage.Severity severity = message.getSeverity();
+			writer.write("}");
 
-		if (severity != null) {
-			if (severity.equals(FacesMessage.SEVERITY_INFO)) {
-				return growl.getInfoIcon() != null ? getResourceURL(facesContext, growl.getInfoIcon())
-						: getResourceRequestPath(facesContext, Growl.INFO_ICON);
-			} else if (severity.equals(FacesMessage.SEVERITY_ERROR)) {
-				return growl.getErrorIcon() != null ? getResourceURL(facesContext, growl.getErrorIcon())
-						: getResourceRequestPath(facesContext, Growl.ERROR_ICON);
-			} else if (severity.equals(FacesMessage.SEVERITY_WARN)) {
-				return growl.getWarnIcon() != null ? getResourceURL(facesContext, growl.getWarnIcon())
-						: getResourceRequestPath(facesContext, Growl.WARN_ICON);
-			} else if (severity.equals(FacesMessage.SEVERITY_FATAL)) {
-				return growl.getFatalIcon() != null ? getResourceURL(facesContext, growl.getFatalIcon())
-						: getResourceRequestPath(facesContext, Growl.FATAL_ICON);
+			if (messages.hasNext()) {
+				writer.write(",");
 			}
+
+			message.rendered();
 		}
 
-		return "";
+		writer.write("]");
 	}
 }
