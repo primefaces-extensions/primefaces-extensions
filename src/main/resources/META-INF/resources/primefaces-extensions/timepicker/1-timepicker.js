@@ -124,7 +124,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	enableSpinner : function() {
 	    var _self = this;
 	    
-	    $(this.jqId).children('.ui-timepicker-button').
+	    $(this.jqId).children('.pe-timepicker-button').
 	    removeClass('ui-state-disabled').
 	    on({
 	        mouseover: function(){
@@ -140,14 +140,14 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	            var el = $(this);
 	            el.addClass('ui-state-active');
 	        
-	            var dir = el.hasClass('ui-timepicker-up') ? 1 : -1;
+	            var dir = el.hasClass('pe-timepicker-up') ? 1 : -1;
 	            _self.spin(dir);
 	        }
 	    });
 	},
 
 	disableSpinner : function() {
-	    $(this.jqId).children('.ui-timepicker-button').
+	    $(this.jqId).children('.pe-timepicker-button').
 	    removeClass('ui-state-hover ui-state-active').
 	    addClass('ui-state-disabled').
 	    off('mouseover mouseout mouseup mousedown');    

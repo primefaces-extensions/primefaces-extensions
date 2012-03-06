@@ -45,6 +45,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.event.CloseEvent;
@@ -82,8 +83,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public static final String POSITION_EAST = "east";
 	public static final String POSITION_SEPARATOR = "_";
 	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
-	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-layout-pane-header ui-corner-top";
-	public static final String STYLE_CLASS_PANE_CONTENT = "ui-layout-pane-content";
+	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header pe-layout-pane-header ui-corner-top";
+	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
 
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));

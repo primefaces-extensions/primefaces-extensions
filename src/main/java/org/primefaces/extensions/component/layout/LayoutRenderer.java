@@ -301,11 +301,11 @@ public class LayoutRenderer extends CoreRenderer {
 		if (layoutPane != null && layoutPane.isRendered()) {
 			writer.startElement("div", null);
 			writer.writeAttribute("id", clientId + "-layout-outer-north", null);
-			writer.writeAttribute("class", "layout-outer-north", null);
+			writer.writeAttribute("class", "pe-layout-outer-north", null);
 			writer.startElement("div", null);
-			writer.writeAttribute("class", "layout-inner-north " + Layout.STYLE_CLASS_PANE, null);
+			writer.writeAttribute("class", "pe-layout-inner-north " + Layout.STYLE_CLASS_PANE, null);
 			writer.startElement("div", null);
-			writer.writeAttribute("class", "ui-layout-pane-content", null);
+			writer.writeAttribute("class", "pe-layout-pane-content", null);
 
 			renderChildren(fc, layoutPane);
 
@@ -316,14 +316,14 @@ public class LayoutRenderer extends CoreRenderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "-layout-outer-center", null);
-		writer.writeAttribute("class", "layout-outer-center", null);
+		writer.writeAttribute("class", "pe-layout-outer-center", null);
 
 		DataModel<MenuItem> dataModel = layout.getDataModel();
 		if (dataModel != null && dataModel.getRowCount() > 0) {
 			// render tabs
 			writer.startElement("ul", null);
 			writer.writeAttribute("id", clientId + "-layout-tabbuttons", null);
-			writer.writeAttribute("class", "layout-tabbuttons", null);
+			writer.writeAttribute("class", "pe-layout-tabbuttons", null);
 			writer.writeAttribute("style", "display: none;", null);
 
 			Iterator<MenuItem> iter = dataModel.iterator();
@@ -379,10 +379,10 @@ public class LayoutRenderer extends CoreRenderer {
 
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "-layout-tabpanels", null);
-		writer.writeAttribute("class", "layout-tabpanels", null);
+		writer.writeAttribute("class", "pe-layout-tabpanels", null);
 
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "ui-layout-tab", null);
+		writer.writeAttribute("class", "pe-layout-tab", null);
 
 		UIForm form = (UIForm) layoutPanes.get("form");
 		if (form != null) {

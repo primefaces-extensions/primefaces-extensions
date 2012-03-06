@@ -125,7 +125,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = masterDetail.getClientId(fc);
 		String styleClass =
-		    masterDetail.getStyleClass() == null ? "ui-master-detail" : "ui-master-detail " + masterDetail.getStyleClass();
+		    masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
 
 		writer.startElement("div", masterDetail);
 		writer.writeAttribute("id", clientId, "id");
@@ -154,7 +154,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		// render container for MasterDetailLevel
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "_detaillevel", "id");
-		writer.writeAttribute("class", "ui-master-detail-level", null);
+		writer.writeAttribute("class", "pe-master-detail-level", null);
 
 		// try to get context value if contextVar exists
 		Object contextValue = null;

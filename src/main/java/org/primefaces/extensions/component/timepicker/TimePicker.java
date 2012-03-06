@@ -70,12 +70,12 @@ public class TimePicker extends HtmlInputText implements Widget {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public static final String CONTAINER_CLASS = "ui-timepicker ui-widget ui-corner-all";
-	public static final String INPUT_CLASS = "ui-inputfield ui-timepicker-input ui-state-default ui-corner-all";
+	public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
+	public static final String INPUT_CLASS = "ui-inputfield pe-timepicker-input ui-state-default ui-corner-all";
 	public static final String UP_BUTTON_CLASS =
-	    "ui-timepicker-button ui-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
+	    "pe-timepicker-button pe-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
 	public static final String DOWN_BUTTON_CLASS =
-	    "ui-timepicker-button ui-timepicker-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only";
+	    "pe-timepicker-button pe-timepicker-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only";
 	public static final String UP_ICON_CLASS = "ui-icon ui-icon-triangle-1-n";
 	public static final String DOWN_ICON_CLASS = "ui-icon ui-icon-triangle-1-s";
 

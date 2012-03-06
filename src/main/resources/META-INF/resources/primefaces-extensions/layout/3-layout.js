@@ -70,7 +70,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	        , onclose: eventCallbacks.onclose
 	        , onresize: eventCallbacks.onresize
 	        , slidable: false
-	        , contentSelector: '.ui-layout-pane-content'
+	        , contentSelector: '.pe-layout-pane-content'
 	        , togglerTip_open: cfg.togglerTipClose
 	        , togglerTip_closed: cfg.togglerTipOpen
 	        , resizerTip: cfg.resizerTip
@@ -220,7 +220,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	    }
 	
 	    var resizeTabPanelLayout = function() {
-	        var jtLayoutTabPanel = $(jqId + "-layout-tabpanels > div.ui-layout-tab");
+	        var jtLayoutTabPanel = $(jqId + "-layout-tabpanels > div.pe-layout-tab");
 	
 	        if (jtLayoutTabPanel.data("layoutContainer")) {
 	            jtLayoutTabPanel.layout().resizeAll();

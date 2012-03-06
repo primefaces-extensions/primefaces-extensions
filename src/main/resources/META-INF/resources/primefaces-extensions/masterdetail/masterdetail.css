@@ -1,4 +1,4 @@
-.ui-master-detail .ui-breadcrumb ul li a {
+.pe-master-detail .ui-breadcrumb ul li a {
     font-size: 1.1em;
     text-decoration: none;
     margin-top: 0;
@@ -6,7 +6,7 @@
     padding-right: 3px;    
 }
 
-.ui-master-detail .ui-breadcrumb ul li:first-child a {
+.pe-master-detail .ui-breadcrumb ul li:first-child a {
     height: auto !important;    
     width: auto !important;
     background: none;
@@ -14,18 +14,18 @@
     text-indent: 0.5em;
 }
 
-.ui-master-detail .ui-breadcrumb ul li a:hover {
+.pe-master-detail .ui-breadcrumb ul li a:hover {
     text-decoration: underline;
 }
 
-.ui-master-detail .ui-breadcrumb ul li img {
+.pe-master-detail .ui-breadcrumb ul li img {
     border: none;
 }
 
-.ui-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
+.pe-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
     margin-top: 0;
 }
 
-.ui-master-detail .ui-master-detail-level {
+.pe-master-detail .pe-master-detail-level {
     margin-top: 15px;
 }

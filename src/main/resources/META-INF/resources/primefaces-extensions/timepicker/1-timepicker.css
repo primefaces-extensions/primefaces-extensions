@@ -1,4 +1,4 @@
-.ui-timepicker {
+.pe-timepicker {
     display: inline-block;
     overflow: visible;
     padding: 0;
@@ -6,13 +6,13 @@
     vertical-align: middle;
 }
 
-.ui-timepicker-input {
+.pe-timepicker-input {
     vertical-align: middle;
     text-align: left;
     width: 60px;
 }
 
-.ui-timepicker-button {
+.pe-timepicker-button {
     cursor: default;
     display: block;
     font-size: 0.5em;
@@ -28,25 +28,25 @@
     z-index: 100;
 }
 
-.ui-timepicker .ui-icon {
+.pe-timepicker .ui-icon {
     left: 0;
     margin-top: -8px;
     position: absolute;
     top: 50%;
 }
 
-.ui-timepicker-up {
+.pe-timepicker-up {
     top: 0;
 }
 
-.ui-timepicker-down {
+.pe-timepicker-down {
     bottom: 0;
 }
 
-.ui-timepicker .ui-icon-triangle-1-s {
+.pe-timepicker .ui-icon-triangle-1-s {
     background-position: -65px -16px;
 }
 
-.ui-timepicker .ui-icon-triangle-1-n {
+.pe-timepicker .ui-icon-triangle-1-n {
     margin-top: -9px;
 }
