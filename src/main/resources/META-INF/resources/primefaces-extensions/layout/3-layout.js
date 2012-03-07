@@ -179,35 +179,103 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	        }
 	    }
 	
-	    this.allowOverflow = function(pane) {
-	        if (pane === 'north') {
-	            peOuterLayout.allowOverflow('north');
-	        } else if (pane === 'center' && peTabLayout) {
-	            peTabLayout.panes.center.allowOverflow('center');
-	        } else if (pane === 'west' && peTabLayout) {
-	            peTabLayout.panes.west.allowOverflow('west');
-	        } else if (pane === 'east' && peTabLayout) {
-	            peTabLayout.panes.east.allowOverflow('east');
-	        } else if (pane === 'south' && peTabLayout) {
-	            peTabLayout.panes.south.allowOverflow('south');
-	        }
+	    this.toggle = function(pane) {
+            if (pane == null) {
+                return null;           
+            }
+            
+            var position = pane.split("_");            
+	        var layoutObj = getLayoutByPane(position);
+            if (layoutObj) {
+                layoutObj.toggle(position[position.length-1]);    
+            }
 	    }
-	
-	    this.resetOverflow = function(pane) {
-	        if (pane === 'north') {
-	            peOuterLayout.resetOverflow('north');
-	        } else if (pane === 'center' && peTabLayout) {
-	            peTabLayout.panes.center.resetOverflow('center');
-	        } else if (pane === 'west' && peTabLayout) {
-	            peTabLayout.panes.west.resetOverflow('west');
-	        } else if (pane === 'east' && peTabLayout) {
-	            peTabLayout.panes.east.resetOverflow('east');
-	        } else if (pane === 'south' && peTabLayout) {
-	            peTabLayout.panes.south.resetOverflow('south');
-	        }
+        
+	    this.close = function(pane) {
+            if (pane == null) {
+                return null;           
+            }
+            
+            var position = pane.split("_");            
+	        var layoutObj = getLayoutByPane(position);
+            if (layoutObj) {
+                layoutObj.close(position[position.length-1]);    
+            }
 	    }
+        
+	    this.open = function(pane) {
+            if (pane == null) {
+                return null;           
+            }
+            
+            var position = pane.split("_");            
+	        var layoutObj = getLayoutByPane(position);
+            if (layoutObj) {
+                layoutObj.open(position[position.length-1]);    
+            }
+	    }
+        
+	    this.sizePane = function(pane, size) {
+            if (pane == null) {
+                return null;           
+            }
+            
+            var position = pane.split("_");            
+	        var layoutObj = getLayoutByPane(position);
+            if (layoutObj) {
+                layoutObj.sizePane(position[position.length-1], size);    
+            }
+	    }        
 	
 	    /* private access */
+        
+	    var getLayoutByPane = function(position) {
+            if (position[0] === 'north') {
+                // don't support nested layout for north at the moment
+                return peOuterLayout;    
+            }
+            
+            if (position[0] !== 'center' && position[0] !== 'west' && position[0] !== 'east' && position[0] !== 'south') {
+                // invalid pane position
+                return null;    
+            }            
+            
+            if (position[0] == 'center' && position.length == 1) {
+                // center pane can't be manipulated
+                return null;
+            }            
+            
+            if (position.length == 1) {
+                return peTabLayout;    
+            }
+            
+            if (position.length > 2) {
+                // invalid pane position
+                return null;
+            }
+            
+            if (position[1] == 'center') {
+                // center pane can't be manipulated
+                return null;
+            }
+            
+            if (position[1] !== 'north' && position[1] !== 'west' && position[1] !== 'east' && position[1] !== 'south') {
+                // invalid pane position
+                return null;    
+            }            
+            
+            if (position[0] === 'center') {
+                return peCenterLayout;
+	        } else if (position[0] === 'west') {
+	            return peWestLayout;
+	        } else if (position[0] === 'east') {
+	            return peEastLayout;
+	        } else if (position[0] === 'south') {
+	            return peSouthLayout;
+	        }
+            
+            return null;
+	    }        
 	
 	    var resizeOrCreateLayout = function() {
 	        if (peLayoutTabsLoading) {
