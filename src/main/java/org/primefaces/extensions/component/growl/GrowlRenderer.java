@@ -99,13 +99,26 @@ public class GrowlRenderer extends CoreRenderer {
 				}
 			} else if(!growl.isShowSummary() && growl.isShowDetail()) {
 				if (growl.isEscape()) {
-					writer.writeText("summary:\"\",text:\"" + detail + "\"", null);
+					writer.writeText("summary:\"\",detail:\"" + detail + "\"", null);
 				} else {
-					writer.write("summary:\"\",text:\"" + detail + "\"");
+					writer.write("summary:\"\",detail:\"" + detail + "\"");
 				}
 			}
 
-			writer.write(",severity:" + message.getSeverity().getOrdinal());
+			final int ordinal = message.getSeverity().getOrdinal();
+
+			String severity = null;
+			if (ordinal == FacesMessage.SEVERITY_INFO.getOrdinal()) {
+				severity = "info";
+			} else if(ordinal == FacesMessage.SEVERITY_ERROR.getOrdinal()) {
+				severity = "error";
+			} else if(ordinal == FacesMessage.SEVERITY_WARN.getOrdinal()) {
+				severity = "warn";
+			} else if(ordinal == FacesMessage.SEVERITY_FATAL.getOrdinal()) {
+				severity = "fatal";
+			}
+
+			writer.write(",severity:'" + severity + "'");
 
 			writer.write("}");
 

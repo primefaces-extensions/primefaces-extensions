@@ -39,10 +39,10 @@ import org.primefaces.extensions.component.base.AbstractNotification;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js")
-                      })
+	@ResourceDependency(library="primefaces", name="primefaces.css"),
+	@ResourceDependency(library="primefaces", name="jquery/jquery.js"),
+	@ResourceDependency(library="primefaces", name="primefaces.js")
+})
 public class Growl extends AbstractNotification implements AutoUpdatable, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -65,6 +65,8 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 		errorIcon,
 		fatalIcon,
 		autoUpdate,
+		showDetail,
+		showSummary,
 		widgetVar;
 
 		private String toString;
@@ -105,6 +107,26 @@ public class Growl extends AbstractNotification implements AutoUpdatable, Widget
 
 	public void setSticky(final boolean sticky) {
 		setAttribute(PropertyKeys.sticky, sticky);
+	}
+
+	@Override
+	public boolean isShowDetail() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showDetail, false);
+	}
+
+	@Override
+	public void setShowDetail(final boolean showDetail) {
+		setAttribute(PropertyKeys.showDetail, showDetail);
+	}
+
+	@Override
+	public boolean isShowSummary() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showSummary, true);
+	}
+
+	@Override
+	public void setShowSummary(final boolean showSummary) {
+		setAttribute(PropertyKeys.showSummary, showSummary);
 	}
 
 	public int getLife() {
