@@ -2970,5 +2970,54 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Decimal separator char.]]>
+            </description>
+            <name>decimalSeparator</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+         <attribute>
+            <description><![CDATA[Thousand separator char.]]>
+            </description>
+            <name>thousandSeparator</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Desired symbol or unit.]]>
+            </description>
+            <name>symbol</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Symbol suffix (prefix is the default).]]>
+            </description>
+            <name>symbolPosition</name>            
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Minimum values.]]>
+            </description>
+            <name>minValue</name>            
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Maximum values.]]>
+            </description>
+            <name>maxValue</name>            
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+        <attribute>
+            <description><![CDATA[Controls the rounding method.]]>
+            </description>
+            <name>roundMethod</name>            
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>  
     </tag>
 </facelet-taglib>

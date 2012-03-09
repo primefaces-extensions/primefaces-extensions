@@ -1,20 +1,43 @@
-/* 
- * Copyright 2012 MauriMonte.
+/**
+ * PrimeFaces Extensions InputNumber Widget.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * @author Mauricio Fenoglio
  */
+PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
 
-
-jQuery(function($) {
-	$('input.dummyTest').autoNumeric();
+        /**
+	 * Initializes the widget.
+	 * 
+	 * @param {object} cfg The widget configuration.
+	 */
+        init : function(cfg) {
+                this._super(cfg);             
+                this.inputInternal = $(this.jqId + '_input');
+                this.inputExternal = $(this.jqId);     
+                this.plugOptArray =   cfg.pluginOptions; 
+                this.valueToRender =  cfg.valueToRender;
+                var _self = this;
+	
+                //bind events if not disabled
+                if (!this.disabled) {         
+                
+                        //copy to hidden input the cleaned value
+                        this.inputExternal.change(function() {                  
+                                cleanVal = _self.inputExternal.autoNumericGet();                    
+                                _self.inputInternal.attr('value', cleanVal); 
+                        })                               
+                                
+                        //Client Behaviors
+                        if(this.cfg.behaviors) {
+                                PrimeFaces.attachBehaviors(this.input, this.cfg.behaviors);
+                        }
+                        this.inputExternal.autoNumeric(this.plugOptArray);   
+                
+                        //set the value to the external input the plugin will format it. 
+                        this.inputExternal.autoNumericSet(this.valueToRender);
+                        //then copie the value to the internal input
+                        cleanVal = _self.inputExternal.autoNumericGet();                    
+                        _self.inputInternal.attr('value', cleanVal); 
+                }
+        }	
 });
