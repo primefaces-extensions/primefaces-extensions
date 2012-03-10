@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -31,8 +32,10 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
@@ -43,13 +46,13 @@ import org.primefaces.extensions.renderkit.widget.Option;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
+})
 public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -74,48 +77,28 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option
-		theme,
-		@Option
-		mode,
-		@Option
-		indentUnit,
-		@Option
-		smartIndent,
-		@Option
-		tabSize,
-		@Option
-		indentWithTabs,
-		@Option
-		electricChars,
-		@Option
-		keyMap,
-		@Option
-		lineWrapping,
-		@Option
-		lineNumbers,
-		@Option
-		firstLineNumber,
-		@Option
-		gutter,
-		@Option
-		fixedGutter,
-		@Option
-		readOnly,
-		@Option
-		matchBrackets,
-		@Option
-		workTime,
-		@Option
-		workDelay,
-		@Option
-		pollInterval,
-		@Option
-		undoDepth,
-		@Option
-		tabindex,
-		@Option
-		extraKeys;
+		@Option theme,
+		@Option mode,
+		@Option indentUnit,
+		@Option smartIndent,
+		@Option tabSize,
+		@Option indentWithTabs,
+		@Option electricChars,
+		@Option keyMap,
+		@Option lineWrapping,
+		@Option lineNumbers,
+		@Option firstLineNumber,
+		@Option gutter,
+		@Option fixedGutter,
+		@Option readOnly,
+		@Option matchBrackets,
+		@Option workTime,
+		@Option workDelay,
+		@Option pollInterval,
+		@Option undoDepth,
+		@Option tabindex,
+		@Option extraKeys,
+		completeMethod;
 
 		private String toString;
 
@@ -322,6 +305,14 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		setAttribute(PropertyKeys.extraKeys, extraKeys);
 	}
 
+	public MethodExpression getCompleteMethod() {
+		return (MethodExpression) getStateHelper().eval(PropertyKeys.completeMethod, null);
+	}
+
+	public void setCompleteMethod(final MethodExpression completeMethod) {
+		setAttribute(PropertyKeys.completeMethod, completeMethod);
+	}
+
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
@@ -357,4 +348,29 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 			}
 		}
 	}
+
+    private List<String> suggestions = null;
+
+    @SuppressWarnings("unchecked")
+	@Override
+	public void broadcast(final FacesEvent event) throws javax.faces.event.AbortProcessingException {
+		super.broadcast(event);
+
+		final FacesContext facesContext = FacesContext.getCurrentInstance();
+		final MethodExpression completeMethod = getCompleteMethod();
+
+		if (completeMethod != null && event instanceof CompleteEvent) {
+			suggestions = (List<String>) completeMethod.invoke(facesContext.getELContext(), new Object[] {((CompleteEvent) event).getQuery()});
+
+            if (suggestions == null) {
+                suggestions = new ArrayList<String>();
+            }
+
+            facesContext.renderResponse();
+		}
+	}
+
+    public List<String> getSuggestions() {
+        return this.suggestions;
+    }
 }

@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.codemirror;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.el.ValueExpression;
@@ -26,7 +27,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
+import javax.faces.event.PhaseId;
 
+import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
@@ -57,14 +60,30 @@ public class CodeMirrorRenderer extends InputRenderer {
 
         // decode behaviors
 		decodeBehaviors(context, component);
+
+        // Complete event
+        final String query = params.get(clientId + "_query");
+        if (query != null) {
+            final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, query);
+            autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
+
+            codeMirror.queueEvent(autoCompleteEvent);
+        }
 	}
 
 	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final CodeMirror codeMirror = (CodeMirror) component;
 
-		encodeMarkup(context, codeMirror);
-		encodeScript(context, codeMirror);
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String query = params.get(codeMirror.getClientId(context) + "_query");
+
+        if (query != null) {
+        	encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
+        } else {
+    		encodeMarkup(context, codeMirror);
+    		encodeScript(context, codeMirror);
+        }
 	}
 
 	protected void encodeMarkup(final FacesContext context, final CodeMirror codeMirror) throws IOException {
@@ -124,4 +143,37 @@ public class CodeMirrorRenderer extends InputRenderer {
 
 		return value;
 	}
+
+    protected void encodeSuggestions(final FacesContext context, final CodeMirror codeMirror, final List<String> suggestions) throws IOException {
+    	final ResponseWriter writer = context.getResponseWriter();
+
+    	final StringBuilder suggestionsBuilder = new StringBuilder();
+
+    	for (int i = 0; i < suggestions.size(); i++) {
+    		final String suggestion = suggestions.get(i);
+
+    		if (i > 0) {
+    			suggestionsBuilder.append(',');
+    		}
+
+    		suggestionsBuilder.append(suggestion);
+    	}
+
+    	writer.writeText(suggestionsBuilder.toString(), codeMirror, null);
+
+
+    	/*
+    	writer.startElement("ul", codeMirror);
+
+    	for (int i = 0; i < suggestions.size(); i++) {
+    		final String suggestion = suggestions.get(i);
+
+    		writer.startElement("li", null);
+    		writer.writeText(suggestion, null);
+    		writer.endElement("li");
+    	}
+
+    	writer.endElement("ul");
+    	*/
+    }
 }
