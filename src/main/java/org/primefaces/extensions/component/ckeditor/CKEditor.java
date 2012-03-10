@@ -43,10 +43,10 @@ import org.primefaces.extensions.renderkit.widget.Option;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -79,32 +79,19 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option
-		height,
-		@Option
-		width,
-		@Option
-		theme,
-		@Option
-		skin,
-		@Option(useDoubleQuotes = true)
-		toolbar,
-		@Option
-		readOnly,
-		@Option
-		interfaceColor,
-		@Option
-		language,
-		@Option
-		defaultLanguage,
-		@Option
-		contentsCss,
-		@Option
-		checkDirtyInterval,
-		@Option
-		customConfig,
-		@Option
-		tabindex;
+		@Option height,
+		@Option width,
+		@Option theme,
+		@Option skin,
+		@Option(useDoubleQuotes = true) toolbar,
+		@Option readOnly,
+		@Option interfaceColor,
+		@Option language,
+		@Option defaultLanguage,
+		@Option contentsCss,
+		@Option checkDirtyInterval,
+		@Option customConfig,
+		@Option tabindex;
 
 		private String toString;
 
