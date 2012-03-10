@@ -44,7 +44,7 @@ public class RequiredLabel extends HtmlOutputLabel implements Attachable {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.RequiredLabelRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public static final String SPAN_DEFAULT_STYLE_CLASS = "pe-label-required-indicator";
+	public static final String SPAN_DEFAULT_STYLE_CLASS = "pe-required-label-indicator";
 
 	/**
 	 * Properties that are tracked by state saving.
