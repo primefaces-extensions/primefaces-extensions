@@ -25,12 +25,13 @@ import javax.faces.event.AjaxBehaviorListener;
 import javax.faces.event.FacesListener;
 
 /**
- * Abstract super class for all PrimeFaces Extensions events.
+ * Abstract super class for all PrimeFaces Extensions AJAX events.
  *
  * @author  ova / last modified by $Author$
  * @version $Revision$
  * @since   0.3
  */
+@SuppressWarnings("serial")
 public abstract class AbstractAjaxBehaviorEvent extends AjaxBehaviorEvent {
 
 	public AbstractAjaxBehaviorEvent(final UIComponent component, final Behavior behavior) {
