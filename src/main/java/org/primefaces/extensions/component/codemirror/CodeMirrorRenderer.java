@@ -147,22 +147,6 @@ public class CodeMirrorRenderer extends InputRenderer {
     protected void encodeSuggestions(final FacesContext context, final CodeMirror codeMirror, final List<String> suggestions) throws IOException {
     	final ResponseWriter writer = context.getResponseWriter();
 
-    	final StringBuilder suggestionsBuilder = new StringBuilder();
-
-    	for (int i = 0; i < suggestions.size(); i++) {
-    		final String suggestion = suggestions.get(i);
-
-    		if (i > 0) {
-    			suggestionsBuilder.append(',');
-    		}
-
-    		suggestionsBuilder.append(suggestion);
-    	}
-
-    	writer.writeText(suggestionsBuilder.toString(), codeMirror, null);
-
-
-    	/*
     	writer.startElement("ul", codeMirror);
 
     	for (int i = 0; i < suggestions.size(); i++) {
@@ -174,6 +158,5 @@ public class CodeMirrorRenderer extends InputRenderer {
     	}
 
     	writer.endElement("ul");
-    	*/
     }
 }
