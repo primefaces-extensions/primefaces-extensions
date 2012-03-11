@@ -61,11 +61,11 @@ public class CodeMirrorRenderer extends InputRenderer {
         // decode behaviors
 		decodeBehaviors(facesContext, component);
 
-        // Complete event
+        // complete event
         final String token = params.get(clientId + "_token");
-        final String context = params.get(clientId + "_context");
         if (token != null) {
-            final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context);
+        	final String context = params.get(clientId + "_context");
+        	final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 
             codeMirror.queueEvent(autoCompleteEvent);
