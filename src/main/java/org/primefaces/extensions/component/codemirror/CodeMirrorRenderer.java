@@ -44,7 +44,7 @@ import org.primefaces.renderkit.InputRenderer;
 public class CodeMirrorRenderer extends InputRenderer {
 
 	@Override
-	public void decode(final FacesContext context, final UIComponent component) {
+	public void decode(final FacesContext facesContext, final UIComponent component) {
 		final CodeMirror codeMirror = (CodeMirror) component;
 
 		if (codeMirror.isReadOnly()) {
@@ -52,19 +52,20 @@ public class CodeMirrorRenderer extends InputRenderer {
 		}
 
 		// set value
-        final String clientId = codeMirror.getClientId(context);
-        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String clientId = codeMirror.getClientId(facesContext);
+        final Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
         	codeMirror.setSubmittedValue(params.get(clientId));
         }
 
         // decode behaviors
-		decodeBehaviors(context, component);
+		decodeBehaviors(facesContext, component);
 
         // Complete event
-        final String query = params.get(clientId + "_query");
-        if (query != null) {
-            final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, query);
+        final String token = params.get(clientId + "_token");
+        final String context = params.get(clientId + "_context");
+        if (token != null) {
+            final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 
             codeMirror.queueEvent(autoCompleteEvent);
@@ -76,9 +77,9 @@ public class CodeMirrorRenderer extends InputRenderer {
 		final CodeMirror codeMirror = (CodeMirror) component;
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String query = params.get(codeMirror.getClientId(context) + "_query");
+        final String token = params.get(codeMirror.getClientId(context) + "_token");
 
-        if (query != null) {
+        if (token != null) {
         	encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
         } else {
     		encodeMarkup(context, codeMirror);

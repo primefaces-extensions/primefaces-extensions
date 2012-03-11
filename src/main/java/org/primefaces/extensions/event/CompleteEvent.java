@@ -7,11 +7,13 @@ import javax.faces.event.FacesListener;
 @SuppressWarnings("serial")
 public class CompleteEvent extends FacesEvent {
 
-    private String query;
+    private String token;
+    private String context;
 
-    public CompleteEvent(final UIComponent component, final String query) {
+    public CompleteEvent(final UIComponent component, final String token, final String context) {
         super(component);
-        this.query = query;
+        this.token = token;
+        this.context = context;
     }
 
     @Override
@@ -24,7 +26,11 @@ public class CompleteEvent extends FacesEvent {
 
     }
 
-    public String getQuery() {
-        return query;
+    public String getToken() {
+        return token;
+    }
+
+    public String getContext() {
+        return context;
     }
 }

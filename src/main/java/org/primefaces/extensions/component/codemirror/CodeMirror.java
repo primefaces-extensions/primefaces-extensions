@@ -32,6 +32,7 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
@@ -353,14 +354,18 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 
     @SuppressWarnings("unchecked")
 	@Override
-	public void broadcast(final FacesEvent event) throws javax.faces.event.AbortProcessingException {
+	public void broadcast(final FacesEvent event) throws AbortProcessingException {
 		super.broadcast(event);
 
 		final FacesContext facesContext = FacesContext.getCurrentInstance();
 		final MethodExpression completeMethod = getCompleteMethod();
 
 		if (completeMethod != null && event instanceof CompleteEvent) {
-			suggestions = (List<String>) completeMethod.invoke(facesContext.getELContext(), new Object[] {((CompleteEvent) event).getQuery()});
+			final CompleteEvent completeEvent = (CompleteEvent) event;
+
+			suggestions = (List<String>) completeMethod.invoke(
+					facesContext.getELContext(),
+					new Object[] { completeEvent.getToken(), completeEvent.getContext()});
 
             if (suggestions == null) {
                 suggestions = new ArrayList<String>();
