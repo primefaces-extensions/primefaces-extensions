@@ -114,6 +114,34 @@ public class CodeMirrorRenderer extends InputRenderer {
 
 		WidgetRenderer.renderOptions(clientId, writer, codeMirror);
 
+        if (!codeMirror.isGlobal()) {
+        	writer.write(",global:false");
+        }
+
+        if (codeMirror.getProcess() != null) {
+        	writer.write(",process:'" + ComponentUtils.findClientIds(context, codeMirror, codeMirror.getProcess()) + "'");
+        }
+
+        if (codeMirror.getOnstart() != null) {
+        	writer.write(",onstart:function(request) {" + codeMirror.getOnstart() + ";}");
+        }
+
+        if (codeMirror.getOncomplete() != null) {
+        	writer.write(",oncomplete:function(xhr, status, args) {" + codeMirror.getOncomplete() + ";}");
+        }
+
+		if (codeMirror.getOnsuccess() != null) {
+			writer.write(",onsuccess:function(data, status, xhr){" + codeMirror.getOnsuccess() + ";}");
+		}
+
+		if (codeMirror.getOnerror() != null) {
+			writer.write(",onerror:function(xhr, status, error){" + codeMirror.getOnerror() + ";}");
+		}
+
+		if (codeMirror.isAsync()) {
+			writer.write(",async:true");
+		}
+
 		encodeClientBehaviors(context, codeMirror);
 
 		writer.write("}, true);});");

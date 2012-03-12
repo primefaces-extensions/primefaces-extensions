@@ -391,6 +391,55 @@
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
         </attribute>
+       <attribute>
+            <description><![CDATA[Component(s) to process partially instead of whole view.]]>
+            </description>
+            <name>process</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute before ajax request is begins.]]>
+            </description>
+            <name>onstart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request is completed.]]>
+            </description>
+            <name>oncomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request fails.]]>
+            </description>
+            <name>onerror</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request succeeds.]]>
+            </description>
+            <name>onsuccess</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
+            </description>
+            <name>global</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[When set to true, ajax requests are not queued. Default value: false.]]>
+            </description>
+            <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <tag-name>head</tag-name>

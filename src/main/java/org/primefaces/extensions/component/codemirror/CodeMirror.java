@@ -99,7 +99,14 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		@Option undoDepth,
 		@Option tabindex,
 		@Option extraKeys,
-		completeMethod;
+		completeMethod,
+		process,
+		onstart,
+		oncomplete,
+		onerror,
+		onsuccess,
+		global,
+		async;
 
 		private String toString;
 
@@ -312,6 +319,62 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 
 	public void setCompleteMethod(final MethodExpression completeMethod) {
 		setAttribute(PropertyKeys.completeMethod, completeMethod);
+	}
+
+	public String getProcess() {
+		return (String) getStateHelper().eval(PropertyKeys.process, null);
+	}
+
+	public void setProcess(final String process) {
+		setAttribute(PropertyKeys.process, process);
+	}
+
+	public String getOnstart() {
+		return (String) getStateHelper().eval(PropertyKeys.onstart, null);
+	}
+
+	public void setOnstart(final String onstart) {
+		setAttribute(PropertyKeys.onstart, onstart);
+	}
+
+	public String getOncomplete() {
+		return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
+	}
+
+	public void setOncomplete(final String oncomplete) {
+		setAttribute(PropertyKeys.oncomplete, oncomplete);
+	}
+
+	public String getOnerror() {
+		return (String) getStateHelper().eval(PropertyKeys.onerror, null);
+	}
+
+	public void setOnerror(final String onerror) {
+		setAttribute(PropertyKeys.onerror, onerror);
+	}
+
+	public String getOnsuccess() {
+		return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
+	}
+
+	public void setOnsuccess(final String onsuccess) {
+		setAttribute(PropertyKeys.onsuccess, onsuccess);
+	}
+
+	public boolean isGlobal() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
+	}
+
+	public void setGlobal(final boolean global) {
+		setAttribute(PropertyKeys.global, global);
+	}
+
+	public boolean isAsync() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
+	}
+
+	public void setAsync(final boolean async) {
+		setAttribute(PropertyKeys.async, async);
 	}
 
 	public String resolveWidgetVar() {
