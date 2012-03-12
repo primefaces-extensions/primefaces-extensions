@@ -18,12 +18,7 @@
 
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
@@ -33,7 +28,6 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.MessageFactory;
 
@@ -150,6 +144,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	public void setAttribute(final TriStateManyCheckbox.PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
+                @SuppressWarnings("unchecked")
 		List<String> setAttributes =
 		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
@@ -173,13 +168,14 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 	@Override
 	protected void validateValue(FacesContext context, Object value) {
-		Map mapValues = (Map) value;
+                @SuppressWarnings("unchecked")
+		Map<Object,Object> mapValues = (Map) value;
 
 		//call all validators
 		Validator[] validators = this.getValidators();
 		if (this.getValidators() != null) {
 			for (Validator validator : validators) {
-				Iterator it = mapValues.values().iterator();
+				Iterator<Object> it = mapValues.values().iterator();
 				while (it.hasNext()) {
 					Object newValue = it.next();
 					try {
@@ -224,7 +220,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		// value is required, a message is queued
 		if (isRequired()
 		    && isValid()) {
-			Iterator it = mapValues.values().iterator();
+			Iterator<Object> it = mapValues.values().iterator();
 			boolean cCheck = true;
 			while (it.hasNext() && cCheck) {
 				Object val = it.next();

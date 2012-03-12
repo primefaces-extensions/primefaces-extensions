@@ -20,14 +20,12 @@ package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.component.api.Widget;
 
 /**
