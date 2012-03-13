@@ -61,7 +61,7 @@ public class TooltipRenderer extends CoreRenderer {
 		if (!global) {
 			writer.write(",forTarget:\"" + target + "\"");
 			writer.write(",content:\"");
-			if (tooltip.getValue() == null) {
+			if (tooltip.getChildCount() > 0) {
 				FastStringWriter fsw = new FastStringWriter();
 				ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
 				context.setResponseWriter(clonedWriter);
@@ -71,8 +71,10 @@ public class TooltipRenderer extends CoreRenderer {
 				context.setResponseWriter(writer);
 				writer.write(escapeText(fsw.toString()));
 			} else {
-				writer.write(ComponentUtils.escapeText(ComponentUtils.getStringValueToRender(context, tooltip,
-				                                                                             tooltip.getValue())));
+				String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
+				if (valueToRender != null) {
+					writer.write(escapeText(valueToRender));
+				}
 			}
 
 			writer.write("\"");
