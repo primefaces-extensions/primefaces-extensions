@@ -80,7 +80,11 @@ public class CKEditorRenderer extends InputRenderer {
 		}
 
 		if (ckEditor.getValue() != null) {
-			writer.write(ComponentUtils.getValueToRender(context, ckEditor));
+			if (ckEditor.isEscape()) {
+				writer.writeText(ComponentUtils.getValueToRender(context, ckEditor), null);
+			} else {
+				writer.write(ComponentUtils.getValueToRender(context, ckEditor));
+			}
 		}
 
 		writer.endElement("textarea");

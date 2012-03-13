@@ -91,7 +91,8 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		@Option contentsCss,
 		@Option checkDirtyInterval,
 		@Option customConfig,
-		@Option tabindex;
+		@Option tabindex,
+		escape;
 
 		private String toString;
 
@@ -237,6 +238,14 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
 	public void setTabindex(final Integer tabindex) {
 		setAttribute(PropertyKeys.tabindex, tabindex);
+	}
+
+	public boolean isEscape() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.escape, true);
+	}
+
+	public void setEscape(final boolean escape) {
+		setAttribute(PropertyKeys.escape, escape);
 	}
 
 	public String resolveWidgetVar() {

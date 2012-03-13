@@ -96,7 +96,11 @@ public class CodeMirrorRenderer extends InputRenderer {
 		writer.writeAttribute("name", clientId, null);
 
 		if (codeMirror.getValue() != null) {
-			writer.write(ComponentUtils.getValueToRender(context, codeMirror));
+			if (codeMirror.isEscape()) {
+				writer.writeText(ComponentUtils.getValueToRender(context, codeMirror), null);
+			} else {
+				writer.write(ComponentUtils.getValueToRender(context, codeMirror));
+			}
 		}
 
 		writer.endElement("textarea");

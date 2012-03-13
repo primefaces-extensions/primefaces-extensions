@@ -106,7 +106,8 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		onerror,
 		onsuccess,
 		global,
-		async;
+		async,
+		escape;
 
 		private String toString;
 
@@ -375,6 +376,14 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 
 	public void setAsync(final boolean async) {
 		setAttribute(PropertyKeys.async, async);
+	}
+
+	public boolean isEscape() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.escape, true);
+	}
+
+	public void setEscape(final boolean escape) {
+		setAttribute(PropertyKeys.escape, escape);
 	}
 
 	public String resolveWidgetVar() {
