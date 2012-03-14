@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -55,7 +56,17 @@ public class RequiredLabelRenderer extends CoreRenderer {
 
 		writer.startElement("label", component);
 		writer.writeAttribute("for", forComponent.getClientId(context), null);
-		writer.writeAttribute("class", label.getStyleClass(), null);
+
+		//style
+        String defaultClass = "";
+        if (forComponent instanceof UIInput) {
+        	defaultClass = ((UIInput) forComponent).isValid() ? defaultClass : defaultClass + " re-required-label-invalid";
+        }
+
+        String styleClass = label.getStyleClass();
+        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
+
+		writer.writeAttribute("class", styleClass, null);
 
 		//render common attributes
 		renderPassThruAttributes(context, label, HTML.COMMON_EVENTS);
