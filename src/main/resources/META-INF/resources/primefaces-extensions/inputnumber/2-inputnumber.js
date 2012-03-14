@@ -29,7 +29,7 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
                                 
                         //Client Behaviors
                         if(this.cfg.behaviors) {
-                                PrimeFaces.attachBehaviors(this.input, this.cfg.behaviors);
+                                PrimeFaces.attachBehaviors(this.inputExternal, this.cfg.behaviors);
                         }
                         this.inputExternal.autoNumeric(this.plugOptArray);   
                 

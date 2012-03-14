@@ -41,41 +41,22 @@ public class InputNumberRenderer extends InputRenderer {
         @Override
         public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue)
                 throws ConverterException {
-
-
-                Double doubleSubmited;
+                
                 InputNumber inputNumber = (InputNumber) component;
                 Converter converter = inputNumber.getConverter();
-
-                //is a Double instance
-                if (submittedValue instanceof Double) {
-                        doubleSubmited = (Double) submittedValue;
-                        if (converter != null) {
+                String submittedValueString = (String) submittedValue;
+                Double doubleSubmited = Double.valueOf(submittedValueString);
+                if (converter != null) {
                                 //todo convert
                                 return doubleSubmited;
-                        } else {
-                                return doubleSubmited;
-                        }
-                        //a String representation try to cast it.    
-                } else if (submittedValue instanceof String) {
-                        String submittedValueString = (String) submittedValue;
-                        if (converter != null) {
-                                //todo convert
-                                return Double.valueOf(submittedValueString);
-                        } else {
-                                return Double.valueOf(submittedValueString);
-                        }
-
                 } else {
-                        throw new FacesException("Value of '" + component.getClientId() + "'must be a Double instance or the String representation of a Double value.");
+                                return doubleSubmited;
                 }
-
         }
 
         @Override
         public void decode(FacesContext context, UIComponent component) {
                 InputNumber inputNumber = (InputNumber) component;
-
 
                 if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
                         return;
@@ -84,12 +65,12 @@ public class InputNumberRenderer extends InputRenderer {
                 decodeBehaviors(context, inputNumber);
 
                 String inputId = inputNumber.getClientId(context) + "_input";
-                String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(inputId);
+                String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
                 if (submittedValue != null) {
                         inputNumber.setSubmittedValue(submittedValue);
                 }
-                System.err.println(submittedValue);
+               
         }
 
         @Override
@@ -118,8 +99,7 @@ public class InputNumberRenderer extends InputRenderer {
 
                 encodeInput(context, inputNumber, clientId, disabled);
                 encodeOutput(context, inputNumber, clientId, disabled);
-                //encodeItemLabel(context, inputNumber);
-
+                
                 writer.endElement("div");
         }
 
@@ -144,7 +124,6 @@ public class InputNumberRenderer extends InputRenderer {
                 }
 
                 writer.endElement("input");
-
                 writer.endElement("div");
         }
 
@@ -213,26 +192,30 @@ public class InputNumberRenderer extends InputRenderer {
                 String minValue = inputNumber.getMinValue();
                 String maxValue = inputNumber.getMaxValue();
                 String roundMethod = inputNumber.getRoundMethod();
+                String decimalPlaces = inputNumber.getDecimalPlaces();
 
                 String options = "";
-                options += decimalSeparator.isEmpty() ? "" : "aSep: '" + decimalSeparator + "',";
-                options += thousandSeparator.isEmpty() ? "" : "aDec: '" + thousandSeparator + "',";
+                options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
+                options += thousandSeparator.isEmpty() ? "" : "aSep: '" + thousandSeparator + "',";
                 options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
                 options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
                 options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
                 options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
                 options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
+                options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
 
-                //delete las comma if it exist
+                
+                //if all options are empty return empty
+                if (options.isEmpty()){
+                        return "";
+                }
+                
+                //delete the last comma
                 int lastInd = options.length() - 1;
                 if (options.charAt(lastInd) == ',') {
                         options = options.substring(0, lastInd);
                 }
-
-                if (options.isEmpty()) {
-                        return "";
-                } else {
-                        return "{" + options + "}";
-                }
+                return "{" + options + "}";
+                
         }
 }

@@ -64,7 +64,9 @@ public class InputNumber extends HtmlInputText implements Widget {
                 symbolPosition,
                 minValue,
                 maxValue,
-                roundMethod;
+                roundMethod,
+                decimalPlaces;
+              
                 String toString;
 
                 PropertyKeys(String toString) {
@@ -152,7 +154,16 @@ public class InputNumber extends HtmlInputText implements Widget {
         public void setRoundMethod(final String roundMethod) {
                 setAttribute(PropertyKeys.roundMethod, roundMethod);
         }
+        
+        public String getDecimalPlaces() {
+                return (String) getStateHelper().eval(PropertyKeys.decimalPlaces, "");
+        }
 
+        public void setDecimalPlaces(final String decimalPlaces) {
+                setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
+        }
+        
+       
         public String resolveWidgetVar() {
                 final FacesContext context = FacesContext.getCurrentInstance();
                 final String userWidgetVar = (String) getAttributes().get(org.primefaces.extensions.component.inputnumber.InputNumber.PropertyKeys.widgetVar.toString());
