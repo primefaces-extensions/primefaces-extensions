@@ -47,22 +47,26 @@ public class RequiredLabelRenderer extends CoreRenderer {
 
 		final ResponseWriter writer = context.getResponseWriter();
 		final RequiredLabel label = (RequiredLabel) component;
-		final String forValue = label.getFor();
 
-		final UIComponent forComponent = component.findComponent(forValue);
-		if (forComponent == null) {
-			throw new FacesException("Cannot find component '" + forValue + "'.");
-		}
+		String defaultClass = "";
 
 		writer.startElement("label", component);
-		writer.writeAttribute("for", forComponent.getClientId(context), null);
+
+		final String forValue = label.getFor();
+		if (forValue != null) {
+			final UIComponent forComponent = component.findComponent(forValue);
+			if (forComponent == null) {
+				throw new FacesException("Cannot find component '" + forValue + "'.");
+			}
+
+			writer.writeAttribute("for", forComponent.getClientId(context), null);
+
+	        if (forComponent instanceof UIInput) {
+	        	defaultClass = ((UIInput) forComponent).isValid() ? defaultClass : defaultClass + " re-required-label-invalid";
+	        }
+		}
 
 		//style
-        String defaultClass = "";
-        if (forComponent instanceof UIInput) {
-        	defaultClass = ((UIInput) forComponent).isValid() ? defaultClass : defaultClass + " re-required-label-invalid";
-        }
-
         String styleClass = label.getStyleClass();
         styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
 
