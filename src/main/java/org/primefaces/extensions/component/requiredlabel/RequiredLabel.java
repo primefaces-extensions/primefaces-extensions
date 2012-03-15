@@ -54,7 +54,8 @@ public class RequiredLabel extends HtmlOutputLabel implements Attachable {
 	 */
 	protected enum PropertyKeys {
 
-		requiredIndicator;
+		requiredIndicator,
+		indicatorPosition;
 
 		private String toString;
 
@@ -86,6 +87,14 @@ public class RequiredLabel extends HtmlOutputLabel implements Attachable {
 
 	public void setRequiredIndicator(final String requiredIndicator) {
 		setAttribute(PropertyKeys.requiredIndicator, requiredIndicator);
+	}
+
+	public String getIndicatorPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.indicatorPosition, "right");
+	}
+
+	public void setIndicatorPosition(final String indicatorPosition) {
+		setAttribute(PropertyKeys.indicatorPosition, indicatorPosition);
 	}
 
 	@SuppressWarnings("unchecked")

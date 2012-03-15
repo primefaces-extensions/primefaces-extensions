@@ -77,6 +77,10 @@ public class RequiredLabelRenderer extends CoreRenderer {
 		renderPassThruAttributes(context, label, HTML.BLUR_FOCUS_EVENTS);
 		renderPassThruAttributes(context, label, PASS_TROUGH_ATTRIBUTES);
 
+		if ("left".equals(label.getIndicatorPosition())) {
+			encodeAdditionalContent(context, component);
+		}
+
 		//write text
 		if (label.isEscape()) {
 			writer.writeText(ComponentUtils.getValueToRender(context, label), null);
@@ -84,7 +88,9 @@ public class RequiredLabelRenderer extends CoreRenderer {
 			writer.write(ComponentUtils.getValueToRender(context, label));
 		}
 
-		encodeAdditionalContent(context, component);
+		if ("right".equals(label.getIndicatorPosition())) {
+			encodeAdditionalContent(context, component);
+		}
 
 		writer.endElement("label");
 	}
