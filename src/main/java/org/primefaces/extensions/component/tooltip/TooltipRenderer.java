@@ -46,7 +46,7 @@ public class TooltipRenderer extends CoreRenderer {
 		boolean shared = tooltip.isShared();
 		String target = null;
 
-		if (!tooltip.isGlobal()) {
+		if (!global || (tooltip.getFor() != null || tooltip.getForSelector() != null)) {
 			target = ComponentUtils.findTarget(context, tooltip);
 		}
 
@@ -58,8 +58,13 @@ public class TooltipRenderer extends CoreRenderer {
 		writer.write(",global:" + global);
 		writer.write(",shared:" + shared);
 
-		if (!global) {
+		if (target == null) {
+			writer.write(",forTarget:null");
+		} else {
 			writer.write(",forTarget:\"" + target + "\"");
+		}
+
+		if (!global) {
 			writer.write(",content:\"");
 			if (tooltip.getChildCount() > 0) {
 				FastStringWriter fsw = new FastStringWriter();

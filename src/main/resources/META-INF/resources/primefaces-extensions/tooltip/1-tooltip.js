@@ -17,8 +17,14 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
 	
 	    if (this.cfg.global) {
 	        this.cfg.position.container = $(document.body);
+            var selector;
+            if (this.cfg.forTarget == null) {
+                selector = '*[title]';    
+            } else {
+                selector = this.cfg.forTarget + '[title]';                
+            }
 	
-	        $('body').undelegate('.tooltip').delegate('*[title]', this.cfg.show.event + '.tooltip', function(event) {
+	        $('body').undelegate('.tooltip').delegate(selector, this.cfg.show.event + '.tooltip', function(event) {
 	            var el = $(this);
 	            if (el.is(':disabled')) {
 	                return;
