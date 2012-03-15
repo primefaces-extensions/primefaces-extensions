@@ -46,6 +46,8 @@ public class InputNumber extends HtmlInputText implements Widget {
         public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
         private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputNumberRenderer";
         private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+        public final static String INPUTNUMBER_INPUT_WRAPPER_CLASS = "ui-helper-hidden";
+        public final static String INPUTNUMBER_CLASS = "ui-inputNum ui-widget";
 
         /**
          * PropertyKeys
@@ -66,7 +68,6 @@ public class InputNumber extends HtmlInputText implements Widget {
                 maxValue,
                 roundMethod,
                 decimalPlaces;
-              
                 String toString;
 
                 PropertyKeys(String toString) {
@@ -154,7 +155,7 @@ public class InputNumber extends HtmlInputText implements Widget {
         public void setRoundMethod(final String roundMethod) {
                 setAttribute(PropertyKeys.roundMethod, roundMethod);
         }
-        
+
         public String getDecimalPlaces() {
                 return (String) getStateHelper().eval(PropertyKeys.decimalPlaces, "");
         }
@@ -162,8 +163,7 @@ public class InputNumber extends HtmlInputText implements Widget {
         public void setDecimalPlaces(final String decimalPlaces) {
                 setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
         }
-        
-       
+
         public String resolveWidgetVar() {
                 final FacesContext context = FacesContext.getCurrentInstance();
                 final String userWidgetVar = (String) getAttributes().get(org.primefaces.extensions.component.inputnumber.InputNumber.PropertyKeys.widgetVar.toString());

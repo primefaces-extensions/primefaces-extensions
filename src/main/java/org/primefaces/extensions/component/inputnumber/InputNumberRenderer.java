@@ -18,13 +18,14 @@
 package org.primefaces.extensions.component.inputnumber;
 
 import java.io.IOException;
-import javax.faces.FacesException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import org.primefaces.component.inputmask.InputMask;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -41,16 +42,16 @@ public class InputNumberRenderer extends InputRenderer {
         @Override
         public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue)
                 throws ConverterException {
-                
+
                 InputNumber inputNumber = (InputNumber) component;
                 Converter converter = inputNumber.getConverter();
                 String submittedValueString = (String) submittedValue;
                 Double doubleSubmited = Double.valueOf(submittedValueString);
                 if (converter != null) {
-                                //todo convert
-                                return doubleSubmited;
+                        Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
+                        return doubleConverted;
                 } else {
-                                return doubleSubmited;
+                        return doubleSubmited;
                 }
         }
 
@@ -70,7 +71,7 @@ public class InputNumberRenderer extends InputRenderer {
                 if (submittedValue != null) {
                         inputNumber.setSubmittedValue(submittedValue);
                 }
-               
+
         }
 
         @Override
@@ -87,11 +88,9 @@ public class InputNumberRenderer extends InputRenderer {
 
                 String style = inputNumber.getStyle();
                 String styleClass = inputNumber.getStyleClass();
-                //todo ver meter aca clases para esto
-                styleClass = styleClass == null ? HTML.CHECKBOX_CLASS : HTML.CHECKBOX_CLASS + " " + styleClass;
+                styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
 
                 writer.startElement("div", inputNumber);
-                //writer.writeAttribute("id", clientId, "id");
                 writer.writeAttribute("class", styleClass, "styleClass");
                 if (style != null) {
                         writer.writeAttribute("style", style, "style");
@@ -99,7 +98,7 @@ public class InputNumberRenderer extends InputRenderer {
 
                 encodeInput(context, inputNumber, clientId, disabled);
                 encodeOutput(context, inputNumber, clientId, disabled);
-                
+
                 writer.endElement("div");
         }
 
@@ -109,7 +108,7 @@ public class InputNumberRenderer extends InputRenderer {
 
                 writer.startElement("div", inputNumber);
                 //todo ver esto de meter otra clase.
-                writer.writeAttribute("class", HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
+                writer.writeAttribute("class", InputNumber.INPUTNUMBER_INPUT_WRAPPER_CLASS, null);
 
                 writer.startElement("input", null);
                 writer.writeAttribute("id", inputId, "id");
@@ -131,7 +130,7 @@ public class InputNumberRenderer extends InputRenderer {
 
                 ResponseWriter writer = context.getResponseWriter();
                 String styleClass = inputNumber.getStyleClass();
-                String defaultClass = InputMask.STYLE_CLASS;
+                String defaultClass = InputText.STYLE_CLASS;
                 defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
                 defaultClass = inputNumber.isDisabled() ? defaultClass + " ui-state-disabled" : defaultClass;
                 styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
@@ -171,7 +170,7 @@ public class InputNumberRenderer extends InputRenderer {
                 writer.write("$(function() {");
                 writer.write("PrimeFacesExt.cw('InputNumber','" + inputNumber.resolveWidgetVar() + "',{");
                 writer.write("id:'" + clientId + "'");
-                writer.write(",valueToRender:'" + valueToRender + "'");
+                writer.write(",valueToRender:'" + formatForPlugin(valueToRender) + "'");
 
                 String metaOptions = getOptions(inputNumber);
                 if (!metaOptions.isEmpty()) {
@@ -204,18 +203,29 @@ public class InputNumberRenderer extends InputRenderer {
                 options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
                 options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
 
-                
+
                 //if all options are empty return empty
-                if (options.isEmpty()){
+                if (options.isEmpty()) {
                         return "";
                 }
-                
+
                 //delete the last comma
                 int lastInd = options.length() - 1;
                 if (options.charAt(lastInd) == ',') {
                         options = options.substring(0, lastInd);
                 }
                 return "{" + options + "}";
-                
+
+        }
+
+        private String formatForPlugin(String valueToRender) {
+                try {
+                        double doubleToRender = Double.parseDouble(valueToRender);
+                        NumberFormat formatter = new DecimalFormat("#0.0#");
+                        String f = formatter.format(doubleToRender);
+                        return f;
+                } catch (Exception e) {
+                        return "0.0";
+                }
         }
 }
