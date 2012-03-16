@@ -917,6 +917,6 @@
         <primefaces.core.version>3.2-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
         <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
-        <pe.updatedComponents>codeMirror;tooltip</pe.updatedComponents>
+        <pe.updatedComponents>codeMirror;tooltip;layout</pe.updatedComponents>
     </properties>
 </project>
