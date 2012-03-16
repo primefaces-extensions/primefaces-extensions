@@ -70,6 +70,24 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
+        <developer>
+            <id>mali</id>
+            <name>Nilesh N. Mali</name>
+            <email>nileshmali86@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+5.5</timezone>
+        </developer>
+        <developer>
+            <id>mfenoglio</id>
+            <name>Mauricio Fenoglio</name>
+            <email>fenoloco@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-3.0</timezone>
+        </developer>
     </developers>
 
     <build>
@@ -897,6 +915,8 @@
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
         <primefaces.core.version>3.2-SNAPSHOT</primefaces.core.version>
-        <primefaces.theme.version>1.0.4</primefaces.theme.version>
+        <primefaces.theme.version>1.0.4</primefaces.theme.version>    
+        <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
+        <pe.updatedComponents>codeMirror;tooltip</pe.updatedComponents>
     </properties>
 </project>
