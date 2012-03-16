@@ -61,6 +61,24 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
+        <developer>
+            <id>mali</id>
+            <name>Nilesh N. Mali</name>
+            <email>nileshmali86@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+5.5</timezone>
+        </developer>
+        <developer>
+            <id>mfenoglio</id>
+            <name>Mauricio Fenoglio</name>
+            <email>fenoloco@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>-3.0</timezone>
+        </developer>
     </developers>
 
     <build>
@@ -211,5 +229,5 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
 		</dependency>
-    </dependencies>
+    </dependencies>    
 </project>
