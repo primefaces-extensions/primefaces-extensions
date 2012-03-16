@@ -20,6 +20,7 @@ package org.primefaces.extensions.component.inputnumber;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -220,9 +221,12 @@ public class InputNumberRenderer extends InputRenderer {
 
         private String formatForPlugin(String valueToRender) {
                 try {
+                        
                         double doubleToRender = Double.parseDouble(valueToRender);
                         NumberFormat formatter = new DecimalFormat("#0.0#");
-                        String f = formatter.format(doubleToRender);
+                        String f = formatter.format(doubleToRender);                        
+                        //force to english decimal separator
+                        f = f.replace(',', '.');
                         return f;
                 } catch (Exception e) {
                         return "0.0";
