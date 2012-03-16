@@ -914,9 +914,9 @@
         <pe.impl.version>0.4.0</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
+        <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
+        <pe.updatedComponents>codeMirror;tooltip;layout</pe.updatedComponents>        
         <primefaces.core.version>3.2</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
-        <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
-        <pe.updatedComponents>codeMirror;tooltip;layout</pe.updatedComponents>
     </properties>
 </project>
