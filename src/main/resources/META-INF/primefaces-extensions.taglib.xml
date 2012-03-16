@@ -3005,35 +3005,7 @@
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Icon for StateOne as a css class.]]>
-            </description>
-            <name>stateOneIcon</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Icon for StateTwo as a css class.]]>
-            </description>
-            <name>stateTwoIcon</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Icon for StateThree as a css class.]]>
-            </description>
-            <name>stateThreeIcon</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Label to display next to checkbox.]]>
-            </description>
-            <name>itemLabel</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+        </attribute>        
         <attribute>
             <description><![CDATA[Decimal separator char.]]>
             </description>
