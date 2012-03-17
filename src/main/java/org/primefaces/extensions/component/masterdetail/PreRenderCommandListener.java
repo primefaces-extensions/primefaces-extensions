@@ -138,7 +138,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		masterDetailLevel.getAttributes().put(MasterDetail.CONTEXT_VALUES, contextValues);
 	}
 
-	private static MasterDetail findMasterDetail(final UIComponent component) {
+	private MasterDetail findMasterDetail(final UIComponent component) {
 		UIComponent parent = component.getParent();
 
 		while (parent != null) {
