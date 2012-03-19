@@ -916,7 +916,7 @@
         <pe.webapp.online>false</pe.webapp.online>
         <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
         <pe.updatedComponents>codeMirror;tooltip;layout</pe.updatedComponents>        
-        <primefaces.core.version>3.2-SNAPSHOT</primefaces.core.version>
+        <primefaces.core.version>3.3-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
     </properties>
 </project>
