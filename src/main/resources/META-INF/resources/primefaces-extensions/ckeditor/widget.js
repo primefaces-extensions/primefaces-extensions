@@ -168,7 +168,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 							var saveCallback = widget.cfg.behaviors['save'];
 						    if (saveCallback) {
 						    	var ext = {
-						    			params: {}
+						    			params: []
 						    	};
 	
 						    	saveCallback.call(widget, null, ext);
@@ -176,6 +176,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 						}
 					}
 				});
+
 				editor.ui.addButton('Save', {label : editor.lang.save, command : 'save' });
 			}
 		}
@@ -353,7 +354,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 			var callback = this.cfg.behaviors[eventName];
 		    if (callback) {
 		    	var ext = {
-		    			params: {}
+		    			params: []
 		    	};
 	
 		    	callback.call(this, null, ext);

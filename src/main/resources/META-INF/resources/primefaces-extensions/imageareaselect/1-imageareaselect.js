@@ -77,11 +77,9 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectEndCallback = this.cfg.behaviors['selectEnd'];
 		    if (selectEndCallback) {
 				this.options.onSelectEnd = $.proxy(function(img, selection) {
-			    	var ext = {
-			    			params: {}
-			    	};
+			    	var ext = {};
 	
-			    	this.fillSelectEventsParameter(img, selection, ext.params);
+			    	this.fillSelectEventsParameter(img, selection, ext);
 	
 			    	selectEndCallback.call(this, null, ext);
 			    }, this);
@@ -99,11 +97,9 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectStartCallback = this.cfg.behaviors['selectStart'];
 		    if (selectStartCallback) {
 				this.options.onSelectStart = $.proxy(function(img, selection) {
-			    	var ext = {
-			    			params: {}
-			    	};
+			    	var ext = {};
 			
-			    	this.fillSelectEventsParameter(img, selection, ext.params);
+			    	this.fillSelectEventsParameter(img, selection, ext);
 	
 			    	selectStartCallback.call(this, null, ext);
 				}, this);
@@ -121,11 +117,9 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectChangeCallback = this.cfg.behaviors['selectChange'];
 		    if (selectChangeCallback) {
 				this.options.onSelectChange = $.proxy(function(img, selection) {
-			    	var ext = {
-			    			params: {}
-			    	};
+			    	var ext = {};
 			
-			    	this.fillSelectEventsParameter(img, selection, ext.params);
+			    	this.fillSelectEventsParameter(img, selection, ext);
 	
 			    	selectChangeCallback.call(this, null, ext);
 				}, this);
@@ -138,19 +132,21 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 	 *
 	 * @param {object} img The img object from the imgareaselect plugin.
 	 * @param {object} selection The selection object from the imgareaselect plugin.
-	 * @param {object} params The object were the params will be stored.
+	 * @param {object} ext The AJAX extensions object.
 	 * @private
 	 */
-	fillSelectEventsParameter : function(img, selection, params) {
-		params[this.id + '_x1'] = selection.x1;
-		params[this.id + '_x2'] = selection.x2;
-		params[this.id + '_y1'] = selection.y1;
-		params[this.id + '_y2'] = selection.y2;
-		params[this.id + '_width'] = selection.width;
-		params[this.id + '_height'] = selection.height;
-		params[this.id + '_imgSrc'] = img.src;
-		params[this.id + '_imgHeight'] = img.height;
-		params[this.id + '_imgWidth'] = img.width;
+	fillSelectEventsParameter : function(img, selection, ext) {
+		ext.params = [
+		              { name: this.id + '_x1', value: selection.x1 },
+		              { name: this.id + '_x2', value: selection.x2 },
+		              { name: this.id + '_y1', value: selection.y1 },
+		              { name: this.id + '_y2', value: selection.y2 },
+		              { name: this.id + '_width', value: selection.width },
+		              { name: this.id + '_height', value: selection.height },
+		              { name: this.id + '_imgSrc', value: img.src },
+		              { name: this.id + '_imgHeight', value: img.height },
+		              { name: this.id + '_imgWidth', value: img.width }
+        ];
 	},
 
 	/**

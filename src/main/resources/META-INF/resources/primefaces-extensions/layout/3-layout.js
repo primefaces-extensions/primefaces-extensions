@@ -134,9 +134,11 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	        var behavior = config.behaviors ? config.behaviors['open'] : null;
 	        if (behavior) {
 	            var ext = {
-	                params: {}
+		    			params: [
+		    			         { name: clientId + '_pane', value: paneposition }
+		    			]
 	            };
-	            ext.params[clientId + '_pane'] = paneposition;
+
 	            behavior.call(this, paneposition, ext);
 	        }
 	        
@@ -149,9 +151,11 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	        var behavior = config.behaviors ? config.behaviors['close'] : null;
 	        if (behavior) {
 	            var ext = {
-	                params: {}
+		    			params: [
+		    			         { name: clientId + '_pane', value: paneposition }
+		    			]
 	            };
-	            ext.params[clientId + '_pane'] = paneposition;
+
 	            behavior.call(this, paneposition, ext);
 	        }
 	        
@@ -165,11 +169,13 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 	            var behavior = config.behaviors ? config.behaviors['resize'] : null;
 	            if (behavior) {
 	                var ext = {
-	                    params : {}
+			    			params: [
+			    			         { name: clientId + '_pane', value: paneposition },
+			    			         { name: clientId + '_width', value: state.innerWidth },
+			    			         { name: clientId + '_height', value: state.innerHeight }
+			    			]
 	                };
-	                ext.params[clientId + '_pane'] = paneposition;
-	                ext.params[clientId + '_width'] = state.innerWidth;
-	                ext.params[clientId + '_height'] = state.innerHeight;
+
 	                behavior.call(this, paneposition, ext);
 	            }
 	            

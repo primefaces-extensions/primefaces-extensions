@@ -212,11 +212,11 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 			var callback = this.cfg.behaviors['rotate'];
 		    if (callback) {
 		    	var ext = {
-		    			params: {}
+		    			params: [
+		    			         { name: this.id + '_degree', value: this.degree }
+		    			]
 		    	};
-		
-		    	ext.params[this.id + '_degree'] = this.degree;
-		   
+
 		    	callback.call(this, null, ext);
 		    }
 		}
@@ -232,12 +232,12 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 			var callback = this.cfg.behaviors['resize'];
 		    if (callback) {
 		    	var ext = {
-		    			params: {}
+		    			params: [
+		    			         { name: this.id + '_width', value: this.newImageWidth },
+		    			         { name: this.id + '_height', value: this.newImageHeight }
+		    			]
 		    	};
-		    	
-		    	ext.params[this.id + '_width'] = this.newImageWidth;
-		    	ext.params[this.id + '_height'] = this.newImageHeight;
-		    	
+
 		    	callback.call(this, null, ext);
 		    }
 		}
