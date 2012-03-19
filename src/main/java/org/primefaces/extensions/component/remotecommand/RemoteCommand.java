@@ -62,7 +62,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		onerror,
 		onsuccess,
 		global,
-		async;
+		async,
+		partialSubmit;
 
 		private String toString;
 
@@ -158,6 +159,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public void setAsync(final boolean async) {
 		setAttribute(PropertyKeys.async, async);
+	}
+
+	public boolean isPartialSubmit() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.partialSubmit, false);
+	}
+
+	public void setPartialSubmit(final boolean partialSubmit) {
+		setAttribute(PropertyKeys.partialSubmit, partialSubmit);
 	}
 
 	@SuppressWarnings("unchecked")
