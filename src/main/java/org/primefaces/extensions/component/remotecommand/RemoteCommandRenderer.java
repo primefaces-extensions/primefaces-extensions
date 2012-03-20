@@ -188,7 +188,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		}
 
 		//params
-		req.append(",params:{");
+		req.append(",params:[");
 
 		for (int i = 0; i < parameters.size(); i++) {
 			if (i != 0) {
@@ -197,13 +197,14 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
 			final RemoteCommandParameter param = parameters.get(i);
 
-			req.append("\"");
+			req.append("{ name: \"");
 			req.append(clientId).append("_").append(param.getName());
-			req.append("\"");
-			req.append(":").append(param.getName());
+			req.append("\", value: ");
+			req.append(param.getName());
+			req.append("}");
 		}
 
-		req.append("}});");
+		req.append("]});");
 
 		return req.toString();
 	}
