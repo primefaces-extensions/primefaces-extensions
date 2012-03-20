@@ -18,6 +18,7 @@
 package org.primefaces.extensions.component.inputnumber;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -224,7 +225,13 @@ public class InputNumberRenderer extends InputRenderer {
 		try {
 			double doubleToRender = Double.parseDouble(valueToRender);
 			NumberFormat formatter = new DecimalFormat("#0.0#");
-			String f = formatter.format(doubleToRender);
+                        formatter.setRoundingMode(RoundingMode.FLOOR);
+                        //autoNumeric jquery plugin max and min limits
+                        formatter.setMinimumFractionDigits(10);
+                        formatter.setMaximumFractionDigits(10);
+                        formatter.setMaximumIntegerDigits(20);
+			String f = formatter.format(doubleToRender);                    
+                        
 			//force to english decimal separator
 			f = f.replace(',', '.');
 			return f;
