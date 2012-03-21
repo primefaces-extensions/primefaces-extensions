@@ -3069,4 +3069,10 @@
             <type>java.lang.String</type>
         </attribute>       
     </tag>
+    <tag>
+        <description><![CDATA[Util tag to import constants.]]>
+        </description>
+        <tag-name>importConstants</tag-name>
+        <handler-class>org.primefaces.extensions.component.importconstants.ImportConstantsTagHandler</handler-class>
+	</tag>
 </facelet-taglib>
