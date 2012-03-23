@@ -49,12 +49,12 @@ import org.primefaces.util.Constants;
  * @since   0.1
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "imageareaselect/imageareaselect.js")
+})
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -77,44 +77,25 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option
-		forValue("for"),
-		@Option
-		aspectRatio,
-		@Option
-		autoHide,
-		@Option
-		fadeSpeed,
-		@Option
-		handles,
-		@Option
-		hide,
-		@Option
-		imageHeight,
-		@Option
-		imageWidth,
-		@Option
-		movable,
-		@Option
-		persistent,
-		@Option
-		resizable,
-		@Option
-		show,
-		@Option
-		zIndex,
-		@Option
-		maxHeight,
-		@Option
-		maxWidth,
-		@Option
-		minHeight,
-		@Option
-		minWidth,
-		@Option(escapeText = true, useDoubleQuotes = true)
-		parentSelector,
-		@Option
-		keyboardSupport;
+		@Option forValue("for"),
+		@Option aspectRatio,
+		@Option autoHide,
+		@Option fadeSpeed,
+		@Option handles,
+		@Option hide,
+		@Option imageHeight,
+		@Option imageWidth,
+		@Option movable,
+		@Option persistent,
+		@Option resizable,
+		@Option show,
+		@Option zIndex,
+		@Option maxHeight,
+		@Option maxWidth,
+		@Option minHeight,
+		@Option minWidth,
+		@Option(escapeText = true, useDoubleQuotes = true) parentSelector,
+		@Option keyboardSupport;
 
 		private String toString;
 
