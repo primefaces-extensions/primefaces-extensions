@@ -177,6 +177,7 @@
                                 <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
                                 <include>timeline/timeline.js</include>
+                                <include>blockpanel/blockPanel.js</include>                                
                             </includes>
                             <aggregations>
                                 <aggregation>

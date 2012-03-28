@@ -2044,6 +2044,57 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[blockPanel can locks UI]]>
+        </description>
+        <tag-name>blockPanel</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.BlockPanel</component-type>
+            <renderer-type>org.primefaces.extensions.component.BlockPanelRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style of the main Layout container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the main Layout container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the blocked UI out of panel.]]>
+            </description>
+            <name>blocked</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
         <description><![CDATA[blockUI blocks any piece of page during various Ajax calls.]]>
         </description>
         <tag-name>blockUI</tag-name>
