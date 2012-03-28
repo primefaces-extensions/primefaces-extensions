@@ -34,7 +34,6 @@ import java.io.IOException;
  * @since   0.5
  */
 public class BlockPanelRenderer extends CoreRenderer {
-
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		encodeMarkup(fc, component);
