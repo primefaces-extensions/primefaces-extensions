@@ -914,8 +914,8 @@
         <pe.impl.version>0.5.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
-        <pe.newComponents>inputNumber;requiredLabel</pe.newComponents>
-        <pe.updatedComponents>codeMirror;tooltip;layout</pe.updatedComponents>        
+        <pe.newComponents>blockPanel;importConstants</pe.newComponents>
+        <pe.updatedComponents>someComponent</pe.updatedComponents>        
         <primefaces.core.version>3.3-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
     </properties>
