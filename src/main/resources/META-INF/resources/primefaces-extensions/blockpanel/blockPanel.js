@@ -161,16 +161,15 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		}
 		
 		var updateVisibility = function() {
+            var jidEl = $(PrimeFaces.escapeClientId(idEl));
 			if (elementMustBeVisible) {
-				var maskElement = getMaskElement();
-				if ($(PrimeFaces.escapeClientId(idEl)).is(':visible') == false)
-					maskElement.fadeTo("fast", destinationOpacity, updateVisibility);
+				if (!jidEl.is(':visible'))
+					getMaskElement().fadeTo("fast", destinationOpacity, updateVisibility);
 				return;
 			}
 			// ...
-			if ($(PrimeFaces.escapeClientId(idEl)).is(':visible') == true) {
-				var maskElement = getMaskElement();
-				maskElement.fadeOut('fast', updateVisibility);
+			if (jidEl.is(':visible')) {
+				getMaskElement().fadeOut('fast', updateVisibility);
 			}
 		}
 
@@ -203,7 +202,6 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 			}
 		};
 	};
-	
 	
 	var top 	= new ElementPieceOfMask('_top');
 	var left 	= new ElementPieceOfMask('_left');
@@ -273,7 +271,6 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		resizeTimer = setTimeout(updateMaskPositions, 100);
 	});
 
-	
 	var updatePositions = function() {
 		updateMaskPositions();
 		if (mustBeShowed) 
@@ -298,7 +295,6 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		left.hide();
 		right.hide();
 	}
-	
 	
 	return {
 		show: function() {
