@@ -37,7 +37,7 @@ import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
 /**
- * {@link TagHandler} for the <code>importConstants</code> component.
+ * {@link TagHandler} for the <code>ImportConstants</code> component.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$

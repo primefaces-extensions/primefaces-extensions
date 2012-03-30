@@ -3104,18 +3104,18 @@
             <name>maxValue</name>            
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Controls the rounding method.]]>
             </description>
-            <name>roundMethod</name>            
+            <name>roundMethod</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>  
+        </attribute>
         <attribute>
             <description><![CDATA[Number of decimal places.]]>
             </description>
-            <name>decimalPlaces</name>            
+            <name>decimalPlaces</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>       
@@ -3125,5 +3125,19 @@
         </description>
         <tag-name>importConstants</tag-name>
         <handler-class>org.primefaces.extensions.component.importconstants.ImportConstantsTagHandler</handler-class>
+        <attribute>
+            <description><![CDATA[The constants class.]]>
+            </description>
+            <name>className</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The EL variable which can be used to obtain the constants. Default value: Name of the class without package.]]>
+            </description>
+            <name>var</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 </facelet-taglib>
