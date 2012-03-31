@@ -18,6 +18,9 @@
 
 package org.primefaces.extensions.application;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
@@ -40,10 +43,12 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 	public static final String[] UNCOMPRESSED_EXCLUDES = new String[] { "ckeditor/" };
 
 	private final ResourceHandler wrapped;
+	private final Map<String, Resource> resourceCache;
 
 	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
 		super();
 		wrapped = resourceHandler;
+		resourceCache = new HashMap<String, Resource>();
 	}
 
 	@Override
@@ -57,15 +62,21 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 		if (libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 
-			//get uncompressed resource if project stage == development
-			if (deliverUncompressedFile(resourceName)) {
-				resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+			if (resourceCache.containsKey(resourceName)) {
+				resource = resourceCache.get(resourceName);
 			} else {
-				resource = super.createResource(resourceName, libraryName);
-			}
+				//get uncompressed resource if project stage == development
+				if (deliverUncompressedFile(resourceName)) {
+					resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+				} else {
+					resource = super.createResource(resourceName, libraryName);
+				}
 
-			if (resource != null) {
-				resource = new PrimeFacesExtensionsResource(resource);
+				if (resource != null) {
+					resource = new PrimeFacesExtensionsResource(resource);
+				}
+
+				resourceCache.put(resourceName, resource);
 			}
 		} else {
 			resource = super.createResource(resourceName, libraryName);

@@ -24,7 +24,6 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.extensions.util.VersionProvider;
 
 /**
@@ -42,6 +41,8 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
 	public PrimeFacesExtensionsResource(final Resource resource) {
 		super();
 		wrapped = resource;
+
+		System.err.println("create------------");
 
 		// get current version
 		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
