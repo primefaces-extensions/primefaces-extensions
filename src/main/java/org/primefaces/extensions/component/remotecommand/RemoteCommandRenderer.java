@@ -170,6 +170,9 @@ public class RemoteCommandRenderer extends CoreRenderer {
 			req.append(",global:false");
 		}
 
+        //partial submit
+        req.append(",partialSubmit:" + source.isPartialSubmit());
+
 		//callbacks
 		if (source.getOnstart() != null) {
 			req.append(",onstart:function(){").append(source.getOnstart()).append(";}");
