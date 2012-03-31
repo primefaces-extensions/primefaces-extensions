@@ -104,7 +104,7 @@ public class WidgetRenderer {
 				}
 
 				//don't add quotes for objects or arrays
-				if (stringValue.startsWith("{") || stringValue.startsWith("[")) {
+				if (stringValue.charAt(0) == '{' || stringValue.charAt(0) == '[') {
 					if (optionContainer.isEscapeHTML()) {
 						writer.writeText("," + optionContainer.getName() + ":" + stringValue, null);
 					} else {

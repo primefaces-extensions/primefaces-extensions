@@ -49,11 +49,12 @@ public class InputNumberRenderer extends InputRenderer {
 		InputNumber inputNumber = (InputNumber) component;
 		Converter converter = inputNumber.getConverter();
 		String submittedValueString = (String) submittedValue;
-		Double doubleSubmited = Double.valueOf(submittedValueString);
+
 		if (converter != null) {
 			Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
 			return doubleConverted;
 		} else {
+			Double doubleSubmited = Double.valueOf(submittedValueString);
 			return doubleSubmited;
 		}
 	}
@@ -225,13 +226,13 @@ public class InputNumberRenderer extends InputRenderer {
 		try {
 			double doubleToRender = Double.parseDouble(valueToRender);
 			NumberFormat formatter = new DecimalFormat("#0.0#");
-                        formatter.setRoundingMode(RoundingMode.FLOOR);
-                        //autoNumeric jquery plugin max and min limits
-                        formatter.setMinimumFractionDigits(10);
-                        formatter.setMaximumFractionDigits(10);
-                        formatter.setMaximumIntegerDigits(20);
-			String f = formatter.format(doubleToRender);                    
-                        
+			formatter.setRoundingMode(RoundingMode.FLOOR);
+			//autoNumeric jquery plugin max and min limits
+			formatter.setMinimumFractionDigits(10);
+			formatter.setMaximumFractionDigits(10);
+			formatter.setMaximumIntegerDigits(20);
+			String f = formatter.format(doubleToRender);
+
 			//force to english decimal separator
 			f = f.replace(',', '.');
 			return f;
