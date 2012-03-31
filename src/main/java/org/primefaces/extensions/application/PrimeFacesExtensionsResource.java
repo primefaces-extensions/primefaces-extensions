@@ -42,8 +42,6 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
 		super();
 		wrapped = resource;
 
-		System.err.println("create------------");
-
 		// get current version
 		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
 			version = "&amp;v=" + VersionProvider.getVersion();
