@@ -101,7 +101,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	    this.jq.timepicker(this.cfg);
 	
 	    if (this.cfg.disabled) {
-	        this.jq.timepicker('disable');
+	        this.disable();
 	    }
 	
 	    if (this.cfg.modeSpinner && !this.cfg.disabled) {
@@ -435,12 +435,26 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	
 	disable : function() {
 	    this.jq.timepicker('disable');
-	    this.disableSpinner(); 
+        
+        if (!this.cfg.modeInline) {
+            this.jq.addClass('ui-state-disabled');
+        }
+        
+        if (this.cfg.modeSpinner) {
+	        this.disableSpinner();
+        }
 	},
 	
 	enable : function() {
 	    this.jq.timepicker('enable');
-	    this.enableSpinner();    
+        
+        if (!this.cfg.modeInline) {
+            this.jq.removeClass('ui-state-disabled');    
+        }
+        
+        if (this.cfg.modeSpinner) {
+	        this.enableSpinner();
+        }
 	}
 });
 
