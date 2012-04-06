@@ -19,16 +19,6 @@
             <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
             <source-class>javax.faces.application.Application</source-class>
         </system-event-listener>
-        <system-event-listener>
-            <system-event-listener-class>org.primefaces.event.AutoUpdateComponentListener</system-event-listener-class>
-            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
-            <source-class>org.primefaces.extensions.component.messages.Messages</source-class>
-        </system-event-listener>
-        <system-event-listener>
-            <system-event-listener-class>org.primefaces.event.AutoUpdateComponentListener</system-event-listener-class>
-            <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>
-            <source-class>org.primefaces.extensions.component.growl.Growl</source-class>
-        </system-event-listener>
     </application>
 
     <behavior>
@@ -55,14 +45,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.ImageRotateAndResize</component-type>
         <component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Message</component-type>
-        <component-class>org.primefaces.extensions.component.message.Message</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Messages</component-type>
-        <component-class>org.primefaces.extensions.component.messages.Messages</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
@@ -99,10 +81,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.MasterDetailLevel</component-type>
         <component-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevel</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Growl</component-type>
-        <component-class>org.primefaces.extensions.component.growl.Growl</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.KeyFilter</component-type>
@@ -198,23 +176,8 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.MessageRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.message.MessageRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.MessagesRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.messages.MessagesRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.MasterDetailRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.masterdetail.MasterDetailRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.GrowlRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.growl.GrowlRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
