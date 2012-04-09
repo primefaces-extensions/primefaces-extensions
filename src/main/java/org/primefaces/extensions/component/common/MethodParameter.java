@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,26 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.remotecommand;
+package org.primefaces.extensions.component.common;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ValueExpression;
-import javax.faces.component.UIOutput;
+import javax.faces.FacesException;
+
+import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.util.DummyValueExpression;
 
 /**
- * Component class for the <code>RemoteCommandParameter</code> component.
+ * Component class for the <code>MethodParameter</code> component.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since 0.5
  */
-public class RemoteCommandParameter extends UIOutput {
+public class MethodParameter extends AbstractParameter {
 
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -43,8 +45,7 @@ public class RemoteCommandParameter extends UIOutput {
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
-		name,
-		applyTo;
+		type;
 
 		private String toString;
 
@@ -61,7 +62,7 @@ public class RemoteCommandParameter extends UIOutput {
 		}
 	}
 
-	public RemoteCommandParameter() {
+	public MethodParameter() {
 		setRendererType(null);
 	}
 
@@ -70,24 +71,28 @@ public class RemoteCommandParameter extends UIOutput {
 		return COMPONENT_FAMILY;
 	}
 
-	public String getName() {
-		return (String) getStateHelper().eval(PropertyKeys.name, null);
+	public String getType() {
+		return (String) getStateHelper().eval(PropertyKeys.type, null);
 	}
 
-	public void setName(final String name) {
-		setAttribute(PropertyKeys.name, name);
+	public void setType(final String type) {
+		setAttribute(PropertyKeys.type, type);
 	}
 
-	public ValueExpression getApplyTo() {
-		ValueExpression ve = (ValueExpression) getStateHelper().eval(PropertyKeys.applyTo, null);
-		if (ve == null) {
-			ve = getValueExpression(PropertyKeys.applyTo.toString());
+	/**
+	 * Enables converters to get the value type from the "value" expression.
+	 */
+	@Override
+	public ValueExpression getValueExpression(final String name) {
+		if ("value".equals(name)) {
+			try {
+				return new DummyValueExpression(Class.forName(getType()));
+			} catch (ClassNotFoundException e) {
+				new FacesException(e.getMessage(), e);
+			}
 		}
-		return ve;
-	}
 
-	public void setApplyTo(final ValueExpression applyTo) {
-		setAttribute(PropertyKeys.applyTo, applyTo);
+		return super.getValueExpression(name);
 	}
 
 	@SuppressWarnings("unchecked")

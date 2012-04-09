@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.remotecommand;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +33,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.common.AssignableParameter;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -64,12 +65,12 @@ public class RemoteCommandRenderer extends CoreRenderer {
 			//apply params
 			final ELContext elContext = context.getELContext();
 
-			for (final RemoteCommandParameter param : getParameters(command)) {
+			for (final AssignableParameter param : command.getAssignableParameters()) {
 				if (!param.isRendered()) {
 					continue;
 				}
 
-				final ValueExpression valueExpression = param.getApplyTo();
+				final ValueExpression valueExpression = param.getAssignTo();
 				final String paramValue = params.get(clientId + "_" + param.getName());
 
 				final Converter converter = param.getConverter();
@@ -90,14 +91,15 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final ResponseWriter writer = context.getResponseWriter();
 		final RemoteCommand command = (RemoteCommand) component;
 
-		final List<RemoteCommandParameter> parameters = getParameters(command);
+		final List<AbstractParameter> parameters = command.getAllParameters();
+		final String name = command.getName();
 
 		//script
 		writer.startElement("script", command);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.writeAttribute("id", command.getClientId(), null);
 
-		writer.write(command.getName() + " = function(");
+		writer.write(name + " = function(");
 
 		//parameters
 		for (int i = 0; i < parameters.size(); i++) {
@@ -105,7 +107,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 				writer.write(",");
 			}
 
-			final RemoteCommandParameter param = parameters.get(i);
+			final AbstractParameter param = parameters.get(i);
 			writer.write(param.getName());
 		}
 
@@ -115,11 +117,17 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
 		writer.write("}");
 
+        if (command.isAutoRun()) {
+            writer.write(";$(function() {");
+            writer.write(name + "();");
+            writer.write("});");
+        }
+
 		writer.endElement("script");
 	}
 
 	protected String buildAjaxRequest(final FacesContext context, final AjaxSource source,
-	                                  final List<RemoteCommandParameter> parameters) {
+	                                  final List<AbstractParameter> parameters) {
 		final UIComponent component = (UIComponent) source;
 		final String clientId = component.getClientId(context);
 		final UIComponent form = ComponentUtils.findParentForm(context, component);
@@ -198,7 +206,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 				req.append(",");
 			}
 
-			final RemoteCommandParameter param = parameters.get(i);
+			final AbstractParameter param = parameters.get(i);
 
 			req.append("{ name: \"");
 			req.append(clientId).append("_").append(param.getName());
@@ -210,16 +218,5 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		req.append("]});");
 
 		return req.toString();
-	}
-
-	protected final List<RemoteCommandParameter> getParameters(final RemoteCommand command) {
-		final List<RemoteCommandParameter> parameters = new ArrayList<RemoteCommandParameter>();
-		for (final UIComponent child : command.getChildren()) {
-			if (child instanceof RemoteCommandParameter) {
-				parameters.add((RemoteCommandParameter) child);
-			}
-		}
-
-		return parameters;
 	}
 }

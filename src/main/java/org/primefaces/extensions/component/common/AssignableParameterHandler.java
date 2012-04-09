@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.remotecommand;
+package org.primefaces.extensions.component.common;
 
 import javax.el.ValueExpression;
 import javax.faces.view.facelets.ComponentConfig;
@@ -29,29 +29,29 @@ import javax.faces.view.facelets.MetadataTarget;
 import javax.faces.view.facelets.TagAttribute;
 
 /**
- * {@link ComponentHandler} for the {@link RemoteCommandParameter} component.
+ * {@link ComponentHandler} for the {@link AssignableParameter} component.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.2
+ * @since 0.5
  */
-public class RemoteCommandParameterHandler extends ComponentHandler {
+public class AssignableParameterHandler extends ComponentHandler {
 
-	private static final ApplyToMetaRule META_RULE = new ApplyToMetaRule();
+	private static final AssignToMetaRule META_RULE = new AssignToMetaRule();
 
 	/**
-	 * {@link MetaRule} for the <code>applyTo</code> of the {@link RemoteCommandParameter}.
+	 * {@link MetaRule} for the <code>assignTo</code> of the {@link AssignableParameter}.
 	 *
 	 * @author Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
-	private static final class ApplyToMetaRule extends MetaRule {
+	private static final class AssignToMetaRule extends MetaRule {
 
         @Override
 		public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
-            if (meta.isTargetInstanceOf(RemoteCommandParameter.class)) {
-                if (RemoteCommandParameter.PropertyKeys.applyTo.toString().equals(name)) {
-                    return new ApplyToValueExpressionMetadata(attribute);
+            if (meta.isTargetInstanceOf(AssignableParameter.class)) {
+                if (AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
+                    return new AssignToValueExpressionMetadata(attribute);
                 }
             }
 
@@ -60,36 +60,36 @@ public class RemoteCommandParameterHandler extends ComponentHandler {
     }
 
 	/**
-	 * {@link Metadata} for the <code>applyTo</code> of the {@link RemoteCommandParameter}.
+	 * {@link Metadata} for the <code>assignTo</code> of the {@link AssignableParameter}.
 	 *
 	 * @author Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
-	private static final class ApplyToValueExpressionMetadata extends Metadata {
+	private static final class AssignToValueExpressionMetadata extends Metadata {
 
 		private final TagAttribute attribute;
 
-		public ApplyToValueExpressionMetadata(final TagAttribute attribute) {
+		public AssignToValueExpressionMetadata(final TagAttribute attribute) {
 			this.attribute = attribute;
 		}
 
 		@Override
 		public void applyMetadata(final FaceletContext context, final Object instance) {
-			final RemoteCommandParameter param = (RemoteCommandParameter) instance;
+			final AssignableParameter param = (AssignableParameter) instance;
 			final ValueExpression valueExpression = attribute.getValueExpression(context, Object.class);
 
-			param.setApplyTo(valueExpression);
+			param.setAssignTo(valueExpression);
 		}
 	}
 
-	public RemoteCommandParameterHandler(final ComponentConfig config) {
+	public AssignableParameterHandler(final ComponentConfig config) {
 		super(config);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	protected MetaRuleset createMetaRuleset(final Class type) {
-		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+		final MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		metaRuleset.addRule(META_RULE);
 
 		return metaRuleset;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,25 @@ package org.primefaces.extensions.component.remotecommand;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UICommand;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.el.MethodBinding;
+import javax.faces.event.AbortProcessingException;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.common.AssignableParameter;
+import org.primefaces.extensions.component.common.MethodParameter;
 
 /**
  * Component class for the <code>RemoteCommand</code> component.
@@ -36,10 +48,10 @@ import org.primefaces.component.api.AjaxSource;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -63,7 +75,10 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		onsuccess,
 		global,
 		async,
-		partialSubmit;
+		partialSubmit,
+		actionListener,
+		action,
+		autoRun;
 
 		private String toString;
 
@@ -169,6 +184,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.partialSubmit, partialSubmit);
 	}
 
+	public boolean isAutoRun() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.autoRun, false);
+	}
+
+	public void setAutoRun(final boolean autoRun) {
+		setAttribute(PropertyKeys.autoRun, autoRun);
+	}
+
 	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
@@ -192,5 +215,100 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 				setAttributes.add(attributeName);
 			}
 		}
+	}
+
+    @SuppressWarnings("deprecation")
+	@Override
+    public void broadcast(final FacesEvent event) throws AbortProcessingException {
+    	//TODO FacesListener
+
+        if (event instanceof ActionEvent) {
+            final FacesContext context = getFacesContext();
+
+            //invoke actionListener
+            final MethodBinding listener = getActionListener();
+            if (listener != null) {
+            	listener.invoke(context, getConvertedMethodParameters(context));
+            }
+
+            //invoke action
+            final ActionListener actionListener = context.getApplication().getActionListener();
+            if (actionListener != null) {
+            	actionListener.processAction((ActionEvent) event);
+            }
+        }
+    }
+
+    private transient List<AbstractParameter> allParameters = null;
+    private transient List<AssignableParameter> assignableParameters = null;
+    private transient List<MethodParameter> methodParameters = null;
+    private transient Object[] convertedMethodParams = null;
+
+    protected void findChildParameters() {
+    	if (allParameters == null || assignableParameters == null || methodParameters == null) {
+    		allParameters = new ArrayList<AbstractParameter>();
+    		assignableParameters = new ArrayList<AssignableParameter>();
+    		methodParameters = new ArrayList<MethodParameter>();
+
+			for (final UIComponent child : super.getChildren()) {
+				if (child instanceof AbstractParameter) {
+					allParameters.add((AbstractParameter) child);
+
+					if (child instanceof AssignableParameter) {
+						assignableParameters.add((AssignableParameter) child);
+					} else {
+						if (child instanceof MethodParameter) {
+							methodParameters.add((MethodParameter) child);
+						}
+					}
+				}
+			}
+    	}
+    }
+
+	protected List<AbstractParameter> getAllParameters() {
+		findChildParameters();
+
+		return allParameters;
+	}
+
+	protected List<AssignableParameter> getAssignableParameters() {
+		findChildParameters();
+
+		return assignableParameters;
+	}
+
+	protected List<MethodParameter> getMethodParameters() {
+		findChildParameters();
+
+		return methodParameters;
+	}
+
+	protected Object[] getConvertedMethodParameters(final FacesContext context) {
+		if (convertedMethodParams == null) {
+			convertedMethodParams = new Object[getMethodParameters().size()];
+
+			for (int i = 0; i < getMethodParameters().size(); i++) {
+				final MethodParameter methodParameter = getMethodParameters().get(i);
+
+				final Converter converter = methodParameter.getConverter();
+				final String parameterValue = getParameterValue(context, methodParameter.getName());
+
+				if (converter == null) {
+					convertedMethodParams[i] = parameterValue;
+				} else {
+					final Object convertedValue = converter.getAsObject(context, methodParameter, parameterValue);
+					convertedMethodParams[i] = convertedValue;
+				}
+			}
+		}
+
+		return convertedMethodParams;
+	}
+
+	public String getParameterValue(final FacesContext context, final String name) {
+		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		final String clientId = getClientId(context);
+		return params.get(clientId + "_" + name);
 	}
 }

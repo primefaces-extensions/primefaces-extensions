@@ -24,7 +24,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.primefaces.extensions.component.remotecommand.RemoteCommandParameter;
 import org.primefaces.extensions.util.GsonConverter;
 
 /**
@@ -38,15 +37,8 @@ import org.primefaces.extensions.util.GsonConverter;
 public class JsonConverter implements Converter {
 
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		final ValueExpression ve;
-
-		if (component instanceof RemoteCommandParameter) {
-			ve = ((RemoteCommandParameter) component).getApplyTo();
-		} else {
-			ve = component.getValueExpression("value");
-		}
-
-		return GsonConverter.getGson().fromJson(value, ve.getType(context.getELContext()));
+		final ValueExpression expression = component.getValueExpression("value");
+		return GsonConverter.getGson().fromJson(value, expression.getType(context.getELContext()));
 	}
 
 	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {

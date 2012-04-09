@@ -51,8 +51,12 @@
         <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.RemoteCommandParameter</component-type>
-        <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommandParameter</component-class>
+        <component-type>org.primefaces.extensions.component.AssignableParameter</component-type>
+        <component-class>org.primefaces.extensions.component.common.AssignableParameter</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.MethodParameter</component-type>
+        <component-class>org.primefaces.extensions.component.common.MethodParameter</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.SaveState</component-type>
