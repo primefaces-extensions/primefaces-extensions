@@ -35,6 +35,7 @@ import javax.faces.event.PhaseId;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
 import org.primefaces.extensions.component.common.AssignableParameter;
+import org.primefaces.extensions.util.AjaxRequestBuilder;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -88,11 +89,36 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
 	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+		final UIComponent form = ComponentUtils.findParentForm(context, component);
+
+		if (form == null) {
+			throw new FacesException("Component " + component.getClientId(context)
+			                         + " must be enclosed in a form.");
+		}
+
 		final ResponseWriter writer = context.getResponseWriter();
 		final RemoteCommand command = (RemoteCommand) component;
+		final AjaxSource source = command;
+		final String clientId = command.getClientId(context);
 
 		final List<AbstractParameter> parameters = command.getAllParameters();
 		final String name = command.getName();
+
+		final AjaxRequestBuilder builder = new AjaxRequestBuilder();
+		builder.source(clientId)
+			.form(form.getClientId(context))
+			.process(context, component, source.getProcess())
+			.update(context, component, source.getUpdate())
+			.async(source.isAsync())
+			.global(source.isGlobal())
+			.partialSubmit(source.isPartialSubmit())
+			.onstart(source.getOnstart())
+			.onerror(source.getOnerror())
+			.onsuccess(source.getOnsuccess())
+			.oncomplete(source.getOncomplete());
+		builder.params(clientId, parameters);
+
+		final String request = builder.build();
 
 		//script
 		writer.startElement("script", command);
@@ -112,9 +138,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		}
 
 		writer.write(") {");
-
-		writer.write(buildAjaxRequest(context, command, parameters));
-
+		writer.write(request);
 		writer.write("}");
 
         if (command.isAutoRun()) {
@@ -124,99 +148,5 @@ public class RemoteCommandRenderer extends CoreRenderer {
         }
 
 		writer.endElement("script");
-	}
-
-	protected String buildAjaxRequest(final FacesContext context, final AjaxSource source,
-	                                  final List<AbstractParameter> parameters) {
-		final UIComponent component = (UIComponent) source;
-		final String clientId = component.getClientId(context);
-		final UIComponent form = ComponentUtils.findParentForm(context, component);
-
-		if (form == null) {
-			throw new FacesException("Component " + component.getClientId(context)
-			                         + " must be enclosed in a form.");
-		}
-
-		final StringBuilder req = new StringBuilder();
-		req.append("PrimeFaces.ab(");
-
-		//form
-		req.append("{formId:").append("'").append(form.getClientId(context)).append("'");
-
-		//source
-		req.append(",source:").append("'").append(clientId).append("'");
-
-		//process
-		String process = source.getProcess();
-		if (process == null) {
-			process = "@all";
-		} else {
-			process = ComponentUtils.findClientIds(context, component, process);
-
-			//add @this
-			if (process.indexOf(clientId) == -1) {
-				process = process + " " + clientId;
-			}
-		}
-
-		req.append(",process:'").append(process).append("'");
-
-		//update
-		if (source.getUpdate() != null) {
-			req.append(",update:'");
-			req.append(ComponentUtils.findClientIds(context, component, source.getUpdate()));
-			req.append("'");
-		}
-
-		//async
-		if (source.isAsync()) {
-			req.append(",async:true");
-		}
-
-		//global
-		if (!source.isGlobal()) {
-			req.append(",global:false");
-		}
-
-        //partial submit
-        req.append(",partialSubmit:" + source.isPartialSubmit());
-
-		//callbacks
-		if (source.getOnstart() != null) {
-			req.append(",onstart:function(){").append(source.getOnstart()).append(";}");
-		}
-
-		if (source.getOnerror() != null) {
-			req.append(",onerror:function(xhr, status, error){").append(source.getOnerror()).append(";}");
-		}
-
-		if (source.getOnsuccess() != null) {
-			req.append(",onsuccess:function(data, status, xhr){").append(source.getOnsuccess()).append(";}");
-		}
-
-		if (source.getOncomplete() != null) {
-			req.append(",oncomplete:function(xhr, status, args){").append(source.getOncomplete()).append(";}");
-		}
-
-		//params
-		req.append(",params:[");
-
-		for (int i = 0; i < parameters.size(); i++) {
-			if (i != 0) {
-				req.append(",");
-			}
-
-			final AbstractParameter param = parameters.get(i);
-
-			req.append("{ name: \"");
-			req.append(clientId).append("_").append(param.getName());
-			req.append("\", value: ");
-			req.append(param.getName());
-			req.append("}");
-		}
-
-		req.append("]});");
-
-		return req.toString();
 	}
 }
