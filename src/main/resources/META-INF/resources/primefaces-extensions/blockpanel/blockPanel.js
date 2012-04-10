@@ -130,6 +130,7 @@ PrimeFacesExt.widget.BlockPanel.FocusArea = function(elementId) {
  */
 PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 	var maskId = elementId+'_maskAround';
+
 	var destinationOpacity = function() {
 		var el = $('<div class="ui-widget-overlay"></div>');
 		$('body').append(el);
@@ -147,7 +148,8 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 			if (!maskElement || !maskElement.length) {
 				maskElement = $('<div id="'+idEl+'" />');
 				maskElement.css({
-					position: 'fixed',
+//					position: 'fixed',
+                    position: 'absolute',
 					top: 0,
 					left: 0,
 					display: 'none',
@@ -222,48 +224,107 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 			height: maxHeight
 		};
 	}
-	
-	var updateMaskPositions = function() {
-		var maxSize = getMaxSize();
+
+    // check IE8 browser (it works in all BROWSER MODEs and DOCUMENT MODEs)
+    var isIE8 = function() {
+        if ($.browser.msie) {
+            // document.documentMode is since IE8
+            // window.performance is since IE9
+            if (document.documentMode && !window.performance) return true;
+        }
+        return false;
+    }
+
+
+    var updateMaskPositions = function() {
+        var maxSize = getMaxSize();
 		
 		var maxWidth = maxSize.width;
 		var maxHeight = maxSize.height;
 		
-		// Set BORDERS
+		// Check PANEL position for MASK
 		var el = $(PrimeFaces.escapeClientId(elementId));
 		var x0 = el.offset().left;
 		var y0 = el.offset().top;
 		var x1 = x0 + el.outerWidth();
 		var y1 = y0 + el.outerHeight();
-		
+
+        // Correct MASK position before, any parents is with overflow=AUTO|HIDDEN|SCROLL
+        var elParent = el.parent();
+        while (elParent.length > 0 && elParent[0].tagName!='HTML') {
+            var overflow = elParent.css('overflow');
+
+            if (overflow == 'auto' || overflow == 'hidden' || overflow == 'scroll') {
+                // IE BUG - if height is 0 => CSS problem with overflow => ignore it
+                if (elParent.height()>0) {
+                    var offset = elParent.offset();
+                    if (x0 < offset.left) x0 = offset.left;
+                    if (y0 < offset.top) y0 = offset.top;
+                    if (x1 > offset.left + elParent.outerWidth()) x1 = offset.left + elParent.outerWidth();
+                    if (y1 > offset.top + elParent.outerHeight()) y1 = offset.top + elParent.outerHeight();
+                }
+            }
+
+            elParent = elParent.parent();
+        }
+
+
 		if (x0<0) x0 = 0;
 		if (y0<0) y0 = 0;
 		if (x1<x0) x1=x0;
 		if (y1<y0) y1=y0;
-		
-		var bodyOffset = {top: $(window).scrollTop(), left: $(window).scrollLeft()};
 
-		top.updatePosition(
-				0-bodyOffset.left,
-				0-bodyOffset.top,
-				maxWidth-bodyOffset.left,
-				y0-bodyOffset.top);
-		bottom.updatePosition(
-				0-bodyOffset.left,
-				y1-bodyOffset.top,
-				maxWidth-bodyOffset.left,
-				maxHeight-bodyOffset.top);
-		left.updatePosition(
-				0-bodyOffset.left,
-				y0-bodyOffset.top,
-				x0-bodyOffset.left,
-				y1-bodyOffset.top);
-		right.updatePosition(
-				x1-bodyOffset.left,
-				y0-bodyOffset.top,
-				maxWidth-bodyOffset.left,
-				y1-bodyOffset.top);
-	}
+        if (el.outerHeight()>0 && y1-y0<=5) {
+            try {
+                var elFocus = $(PrimeFaces.escapeClientId(elementId)+' :focusable');
+                // Change focus ...
+                if (elFocus.length < 2) {
+                    // If ELEMENT does not exist => create TMP element
+                    var tmpEl = $('<a href="#"> </a>');
+                    el.append(tmpEl);
+                    tmpEl.focus();
+                    tmpEl.remove();
+                }
+                else {
+                    // ELEMENT exists
+                    $(elFocus[1]).focus();
+                }
+                // SET FOCUS for first element
+                $(elFocus[0]).focus();
+
+            } catch(e) {}
+        }
+
+        var ie8Corecting = 0;
+        // IE8 has bug with layouts => check IE8 (it works in all BROWSER MODE and DOCUMENT MODE)
+        if (isIE8()) {
+            ie8Corecting = 1;
+        }
+		
+//		var bodyOffset = {top: $(window).scrollTop(), left: $(window).scrollLeft()};
+        var bodyOffset = {top: 0, left: 0};
+
+        top.updatePosition(
+            0-bodyOffset.left,
+            0-bodyOffset.top,
+            maxWidth-bodyOffset.left,
+            y0-bodyOffset.top);
+        bottom.updatePosition(
+            0-bodyOffset.left,
+            y1-bodyOffset.top,
+            maxWidth-bodyOffset.left,
+            maxHeight-bodyOffset.top);
+        left.updatePosition(
+            0-bodyOffset.left,
+            y0-bodyOffset.top + ie8Corecting,
+            x0-bodyOffset.left,
+            y1-bodyOffset.top - ie8Corecting);
+        right.updatePosition(
+            x1-bodyOffset.left,
+            y0-bodyOffset.top + ie8Corecting,
+            maxWidth-bodyOffset.left,
+            y1-bodyOffset.top - ie8Corecting);
+    }
 	
 	var resizeTimer = null;
 	$(window).bind('resize', function() {
