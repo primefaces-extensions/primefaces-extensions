@@ -34,6 +34,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.FacesListener;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
@@ -227,7 +228,11 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
 	@Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
-    	//TODO FacesListener
+        for (FacesListener listener : getFacesListeners(FacesListener.class)) {
+            if (event.isAppropriateListener(listener)) {
+                event.processListener(listener);
+            }
+        }
 
         if (event instanceof ActionEvent) {
             final FacesContext context = getFacesContext();
