@@ -20,9 +20,10 @@ package org.primefaces.extensions.component.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
 
 import org.primefaces.extensions.component.base.AbstractParameter;
 import org.primefaces.extensions.util.DummyValueExpression;
@@ -85,11 +86,16 @@ public class MethodParameter extends AbstractParameter {
 	@Override
 	public ValueExpression getValueExpression(final String name) {
 		if ("value".equals(name)) {
-			try {
-				return new DummyValueExpression(Class.forName(getType()));
-			} catch (ClassNotFoundException e) {
-				throw new FacesException(e.getMessage(), e);
-			}
+			//get type from parent component
+			//MethodSignatureTagHandler stores all parameters to the parent component
+			final UIComponent parent = getParent();
+			final Map<String, Object> parentAttribtues = parent.getAttributes();
+			final Class<?>[] parameterTypes =
+				(Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
+			final Class<?> parameterType =
+				parameterTypes[parent.getChildren().indexOf(this)];
+
+			return new DummyValueExpression(parameterType);
 		}
 
 		return super.getValueExpression(name);

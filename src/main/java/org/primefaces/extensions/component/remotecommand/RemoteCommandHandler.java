@@ -22,7 +22,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.el.MethodExpression;
-import javax.faces.FacesException;
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.CompositeFaceletHandler;
@@ -116,17 +115,12 @@ public class RemoteCommandHandler extends ComponentHandler {
 	@SuppressWarnings("unchecked")
 	protected MetaRuleset createMetaRuleset(final Class type) {
 		final MetaRuleset metaRuleset = super.createMetaRuleset(type);
-
-		try {
-			metaRuleset.addRule(new RemoteCommandMetaRule(getParameterClasses()));
-		} catch (ClassNotFoundException e) {
-			new FacesException(e.getMessage(), e);
-		}
+		metaRuleset.addRule(new RemoteCommandMetaRule(getParameterTypes()));
 
 		return metaRuleset;
 	}
 
-	private Class<?>[] getParameterClasses() throws ClassNotFoundException {
+	private Class<?>[] getParameterTypes() {
 		//try to get next MethodSignatureTagHandler
 		MethodSignatureTagHandler signatureTagHandler = null;
 
@@ -141,14 +135,6 @@ public class RemoteCommandHandler extends ComponentHandler {
 			return new Class<?>[] {};
 		}
 
-		//split parameters and load class types
-		final String[] parameters = signatureTagHandler.getParameters().split(",");
-		final Class<?>[] parameterClasses = new Class<?>[parameters.length];
-
-		for (int i = 0; i < parameters.length; i++) {
-			parameterClasses[i] = Class.forName(parameters[i].trim());
-		}
-
-		return parameterClasses;
+		return signatureTagHandler.getParameterTypes();
 	}
 }
