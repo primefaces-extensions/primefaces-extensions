@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -29,7 +30,6 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.el.MethodBinding;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
@@ -76,9 +76,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		global,
 		async,
 		partialSubmit,
-		actionListener,
 		action,
-		autoRun;
+		autoRun,
+		actionListener;
 
 		private String toString;
 
@@ -192,6 +192,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		setAttribute(PropertyKeys.autoRun, autoRun);
 	}
 
+	public MethodExpression getActionListenerMethodExpression() {
+        return (MethodExpression) getStateHelper().get(PropertyKeys.actionListener);
+    }
+
+	public void setActionListenerMethodExpression(final MethodExpression actionListener) {
+        getStateHelper().put(PropertyKeys.actionListener, actionListener);
+    }
+
 	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
@@ -217,7 +225,6 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		}
 	}
 
-    @SuppressWarnings("deprecation")
 	@Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
     	//TODO FacesListener
@@ -226,9 +233,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
             final FacesContext context = getFacesContext();
 
             //invoke actionListener
-            final MethodBinding listener = getActionListener();
+            final MethodExpression listener = getActionListenerMethodExpression();
             if (listener != null) {
-            	listener.invoke(context, getConvertedMethodParameters(context));
+            	listener.invoke(context.getELContext(), getConvertedMethodParameters(context));
             }
 
             //invoke action

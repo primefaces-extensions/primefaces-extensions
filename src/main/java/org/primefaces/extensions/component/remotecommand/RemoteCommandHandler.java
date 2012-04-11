@@ -36,7 +36,6 @@ import javax.faces.view.facelets.TagAttributeException;
 
 import org.primefaces.extensions.component.common.MethodParameter;
 import org.primefaces.extensions.component.common.MethodSignatureTagHandler;
-import org.primefaces.extensions.util.LegacyMethodBinding;
 
 /**
  * {@link ComponentHandler} for the {@link RemoteCommand} component.
@@ -66,7 +65,7 @@ public class RemoteCommandHandler extends ComponentHandler {
 		public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
             if (meta.isTargetInstanceOf(RemoteCommand.class)) {
             	if (RemoteCommand.PropertyKeys.actionListener.toString().equals(name)) {
-                	final Method method = meta.getWriteMethod(name);
+                	final Method method = meta.getWriteMethod("actionListenerMethodExpression");
                 	return new ActionListenerMetadata(attribute, method, parameters);
                 }
             }
@@ -100,7 +99,7 @@ public class RemoteCommandHandler extends ComponentHandler {
 
             //invoke setAction with MethodExpression
             try {
-            	method.invoke(instance, new Object[] { new LegacyMethodBinding(expression) });
+            	method.invoke(instance, new Object[] { expression });
             } catch (InvocationTargetException e) {
                 throw new TagAttributeException(attribute, e.getCause());
             } catch (Exception e) {
