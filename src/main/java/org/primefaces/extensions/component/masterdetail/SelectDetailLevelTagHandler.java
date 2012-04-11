@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
@@ -123,15 +122,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
 		if (parent instanceof AjaxSource) {
 			AjaxSource ajaxSource = (AjaxSource) parent;
-			if (ajaxSource.getProcess() == null) {
-				// set process to @none because PrimeFaces set it to @all
-				try {
-					Method setProcessMethod = ajaxSource.getClass().getMethod("setProcess", new Class[] {String.class});
-					setProcessMethod.invoke(ajaxSource, "@none");
-				} catch (Exception e) {
-					// ignore
-				}
-			} else if ("@none".equals(ajaxSource.getProcess().trim())) {
+			if (ajaxSource.getProcess() != null && "@none".equals(ajaxSource.getProcess().trim())) {
 				// mark navigation for skipping all JSF phases except rendering
 				parent.getAttributes().put(MasterDetail.SKIP_PROCESSING, true);
 			}

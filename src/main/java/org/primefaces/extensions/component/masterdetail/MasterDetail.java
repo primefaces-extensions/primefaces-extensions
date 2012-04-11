@@ -208,7 +208,7 @@ public class MasterDetail extends UIComponentBase {
 		// process and update the MasterDetail component automatically
 		Collection<String> executeIds = pvc.getExecuteIds();
 		int size = executeIds.size();
-		if (!isSkipProcessing(fc) && (size == 0 || executeIds.contains("@none"))) {
+		if (!isSkipProcessing(fc) && size == 0) {
 			pvc.getExecuteIds().add(clienId);
 		}
 
