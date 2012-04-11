@@ -88,7 +88,7 @@ public class MethodParameter extends AbstractParameter {
 			try {
 				return new DummyValueExpression(Class.forName(getType()));
 			} catch (ClassNotFoundException e) {
-				new FacesException(e.getMessage(), e);
+				throw new FacesException(e.getMessage(), e);
 			}
 		}
 
