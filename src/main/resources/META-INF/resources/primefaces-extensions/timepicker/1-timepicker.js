@@ -117,6 +117,9 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	    if (this.cfg.behaviors) {
 	        PrimeFaces.attachBehaviors(this.jq, this.cfg.behaviors);
 	    }
+        
+        // pfs metadata
+        $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
 	    
 	    PrimeFacesExt.removeWidgetScript(this.id);
 	},
