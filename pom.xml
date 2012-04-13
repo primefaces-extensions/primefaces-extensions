@@ -775,11 +775,6 @@
                 <artifactId>closure-compiler</artifactId>
                 <version>r1810</version>
             </dependency>
-            <dependency>
-                <groupId>com.yahoo.platform.yui</groupId>
-                <artifactId>yuicompressor</artifactId>
-                <version>2.4.6</version>
-            </dependency>
             
             <!-- dependencies to own artefacts -->
             <dependency>
@@ -891,12 +886,12 @@
         <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
-        <pe.jsf.version>2.1.6</pe.jsf.version>
+        <pe.jsf.version>2.1.7</pe.jsf.version>
         <pe.impl.version>0.5.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
         <pe.newComponents>blockPanel;importConstants</pe.newComponents>
-        <pe.updatedComponents>someComponent</pe.updatedComponents>        
+        <pe.updatedComponents>remoteCommand</pe.updatedComponents>        
         <primefaces.core.version>3.3-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
     </properties>
