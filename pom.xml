@@ -886,7 +886,7 @@
         <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
-        <pe.jsf.version>2.1.7</pe.jsf.version>
+        <pe.jsf.version>2.1.6</pe.jsf.version>
         <pe.impl.version>0.5.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
