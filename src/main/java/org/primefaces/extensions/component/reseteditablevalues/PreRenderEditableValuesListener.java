@@ -19,11 +19,14 @@
 package org.primefaces.extensions.component.reseteditablevalues;
 
 import java.io.Serializable;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitContext;
+import javax.faces.component.visit.VisitHint;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
@@ -38,6 +41,8 @@ import javax.faces.event.ComponentSystemEventListener;
 public class PreRenderEditableValuesListener implements ComponentSystemEventListener, Serializable {
 
 	private static final long serialVersionUID = 20111225L;
+
+	private static final Set<VisitHint> VISIT_HINTS = EnumSet.of(VisitHint.SKIP_UNRENDERED);
 
 	private boolean reset = false;
 
@@ -61,7 +66,8 @@ public class PreRenderEditableValuesListener implements ComponentSystemEventList
 			((EditableValueHolder) source).resetValue();
 		} else {
 			EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-			source.visitTree(VisitContext.createVisitContext(FacesContext.getCurrentInstance()), visitCallback);
+			source.visitTree(VisitContext.createVisitContext(FacesContext.getCurrentInstance(), null, VISIT_HINTS),
+			                 visitCallback);
 
 			final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
 			for (EditableValueHolder editableValueHolder : editableValueHolders) {
