@@ -89,17 +89,13 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);
 		boolean disabled = inputNumber.isDisabled();
-
-		String style = inputNumber.getStyle();
+                
 		String styleClass = inputNumber.getStyleClass();
 		styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
 
 		writer.startElement("div", inputNumber);
 		writer.writeAttribute("class", styleClass, "styleClass");
-		if (style != null) {
-			writer.writeAttribute("style", style, "style");
-		}
-
+		
 		encodeInput(context, inputNumber, clientId, disabled);
 		encodeOutput(context, inputNumber, clientId, disabled);
 
@@ -110,8 +106,7 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_input";
 
-		writer.startElement("div", inputNumber);
-		//todo ver esto de meter otra clase.
+		writer.startElement("div", inputNumber);		
 		writer.writeAttribute("class", InputNumber.INPUTNUMBER_INPUT_WRAPPER_CLASS, null);
 
 		writer.startElement("input", null);
@@ -133,11 +128,11 @@ public class InputNumberRenderer extends InputRenderer {
 	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId, final boolean disabled) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
-		String styleClass = inputNumber.getStyleClass();
+		
 		String defaultClass = InputText.STYLE_CLASS;
 		defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
 		defaultClass = inputNumber.isDisabled() ? defaultClass + " ui-state-disabled" : defaultClass;
-		styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
+		
 
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId, null);
@@ -157,7 +152,7 @@ public class InputNumberRenderer extends InputRenderer {
 			writer.writeAttribute("style", inputNumber.getStyle(), "style");
 		}
 
-		writer.writeAttribute("class", styleClass, "");
+		writer.writeAttribute("class", defaultClass, "");
 
 		writer.endElement("input");
 	}
