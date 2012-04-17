@@ -151,9 +151,10 @@
                         <resourcesSet>
                             <includes>
                                 <include>blockui/blockUI.css</include>
+                                <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
+                                <include>requiredlabel/requiredlabel.css</include>                                
                                 <include>timeline/timeline.css</include>
-                                <include>requiredlabel/requiredlabel.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -171,13 +172,14 @@
                             <includes>
                                 <include>core/core.js</include>
                                 <include>ajaxstatus/ajaxstatus.js</include>
+                                <include>blockpanel/blockpanel.js</include>
                                 <include>blockui/*.js</include>                                
                                 <include>ckeditor/widget.js</include>
+                                <include>dynaform/dynaform.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                                 <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
-                                <include>timeline/timeline.js</include>
-                                <include>blockpanel/blockPanel.js</include>                                
+                                <include>timeline/timeline.js</include>           
                             </includes>
                             <aggregations>
                                 <aggregation>
