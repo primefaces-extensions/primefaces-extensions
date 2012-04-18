@@ -24,28 +24,31 @@ import javax.faces.FacesWrapper;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PreRenderComponentEvent;
 import javax.faces.event.SystemEventListener;
 
+import org.primefaces.component.behavior.ajax.AjaxBehaviorListenerImpl;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
- * {@link ActionListener} for the <code>ResetEditableValues</code> component.
+ * Class for all added at runtime "reset" listeners.
  *
  * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since   0.2
  */
-public class ResetEditableValuesListener implements ActionListener, StateHolder {
+public class ResetEditableValuesListener extends AjaxBehaviorListenerImpl implements ActionListener, StateHolder {
 
 	private String components;
 
 	/**
-	 * This constructor is required for serialization. Please do not remove.
+	 * This constructor is required for serialization. Please don't remove.
 	 */
 	public ResetEditableValuesListener() {
 	}
@@ -54,16 +57,24 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 		this.components = components;
 	}
 
-	public void processAction(final ActionEvent actionEvent) {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final UIComponent source = actionEvent.getComponent();
-		final String clientId = source.getClientId(context);
+	public void processAction(final ActionEvent event) throws AbortProcessingException {
+		processReset(event.getComponent());
+	}
 
-		if (!clientId.equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM))) {
+	@Override
+	public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
+		processReset(event.getComponent());
+	}
+
+	protected void processReset(final UIComponent source) {
+		final FacesContext fc = FacesContext.getCurrentInstance();
+		final String clientId = source.getClientId(fc);
+
+		if (!clientId.equals(fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM))) {
 			return;
 		}
 
-		final List<UIComponent> foundComponents = ComponentUtils.findComponents(context, source, components);
+		final List<UIComponent> foundComponents = ComponentUtils.findComponents(fc, source, components);
 		for (UIComponent foundComponent : foundComponents) {
 			PreRenderEditableValuesListener ppevListener = getPreRenderEditableValuesListener(foundComponent);
 			if (ppevListener == null) {
@@ -75,26 +86,7 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 		}
 	}
 
-	public boolean isTransient() {
-		return false;
-	}
-
-	public void restoreState(final FacesContext facesContext, final Object state) {
-		Object[] values = (Object[]) state;
-		components = (String) values[0];
-	}
-
-	public Object saveState(final FacesContext facesContext) {
-		Object[] values = new Object[1];
-		values[0] = components;
-
-		return values;
-	}
-
-	public void setTransient(final boolean value) {
-	}
-
-	private PreRenderEditableValuesListener getPreRenderEditableValuesListener(final UIComponent component) {
+	protected PreRenderEditableValuesListener getPreRenderEditableValuesListener(final UIComponent component) {
 		List<SystemEventListener> systemEventListeners = component.getListenersForEventClass(PreRenderComponentEvent.class);
 		if (systemEventListeners != null && !systemEventListeners.isEmpty()) {
 			for (SystemEventListener systemEventListener : systemEventListeners) {
@@ -122,5 +114,24 @@ public class ResetEditableValuesListener implements ActionListener, StateHolder 
 		}
 
 		return null;
+	}
+
+	public boolean isTransient() {
+		return false;
+	}
+
+	public void restoreState(final FacesContext facesContext, final Object state) {
+		Object[] values = (Object[]) state;
+		components = (String) values[0];
+	}
+
+	public Object saveState(final FacesContext facesContext) {
+		Object[] values = new Object[1];
+		values[0] = components;
+
+		return values;
+	}
+
+	public void setTransient(final boolean value) {
 	}
 }

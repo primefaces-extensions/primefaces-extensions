@@ -1178,6 +1178,14 @@
             <required>true</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax if ResetEditableValues is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+            </description>
+            <name>event</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
     </tag>
     <tag>
         <tag-name>saveState</tag-name>
@@ -2096,7 +2104,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]>
+                <![CDATA[Name(s) of one or several accepted events. Several events should be defined as space or comma separated list.]]>
             </description>
             <name>event</name>
             <required>false</required>

@@ -19,16 +19,25 @@
 package org.primefaces.extensions.component.reseteditablevalues;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.faces.FacesException;
-import javax.faces.component.ActionSource;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * {@link TagHandler} for the <code>ResetEditableValues</code> component.
@@ -40,20 +49,75 @@ import javax.faces.view.facelets.TagHandler;
 public class ResetEditableValuesTagHandler extends TagHandler {
 
 	private final TagAttribute forValue;
+	private final TagAttribute event;
 
 	public ResetEditableValuesTagHandler(final TagConfig config) {
 		super(config);
 		this.forValue = super.getRequiredAttribute("for");
+		this.event = super.getAttribute("event");
 	}
 
 	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
-		if (!(parent instanceof UICommand)) {
-			throw new FacesException("ResetEditableValues must be inside a component which extends UICommand.");
+		if (!ComponentHandler.isNew(parent)) {
+			return;
 		}
 
-		if (ComponentHandler.isNew(parent)) {
-			ActionSource actionSource = (ActionSource) parent;
-			actionSource.addActionListener(new ResetEditableValuesListener(forValue.getValue(context)));
+		final String strFor = forValue.getValue(context);
+		if (StringUtils.isBlank(strFor)) {
+			return;
 		}
+
+		if (parent instanceof UICommand) {
+			((UICommand) parent).addActionListener(new ResetEditableValuesListener(strFor));
+
+			return;
+		} else if (parent instanceof ClientBehaviorHolder) {
+			// find attached f:ajax / p:ajax corresponding to supported events
+			Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(context, (ClientBehaviorHolder) parent);
+			if (clientBehaviors == null || clientBehaviors.isEmpty()) {
+				return;
+			}
+
+			for (List<ClientBehavior> listBehaviors : clientBehaviors) {
+				for (ClientBehavior clientBehavior : listBehaviors) {
+					if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
+						((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+						    new ResetEditableValuesListener(strFor));
+					} else if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+						((org.primefaces.component.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+						    new ResetEditableValuesListener(strFor));
+					}
+				}
+			}
+
+			return;
+		}
+
+		throw new FacesException("ResetEditableValues must be attached to a command or ajaxified component");
+	}
+
+	private Collection<List<ClientBehavior>> getClientBehaviors(final FaceletContext context,
+	                                                            final ClientBehaviorHolder clientBehaviorHolder) {
+		Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
+		if (mapBehaviors == null || mapBehaviors.isEmpty()) {
+			return null;
+		}
+
+		String events = (event != null ? event.getValue(context) : null);
+		String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
+		if (arrEvents == null || arrEvents.length < 1) {
+			return mapBehaviors.values();
+		}
+
+		Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
+
+		final Set<String> keys = mapBehaviors.keySet();
+		for (String key : keys) {
+			if (ArrayUtils.contains(arrEvents, key)) {
+				behaviors.add(mapBehaviors.get(key));
+			}
+		}
+
+		return behaviors;
 	}
 }
