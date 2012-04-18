@@ -22,31 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ValueExpression;
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.model.dynaform.DefaultDynaFormElement;
 
 /**
- * <code>DynaForm</code> component.
+ * <code>DynaFormCell</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-@ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
-public class DynaForm extends UIComponentBase implements NamingContainer, Widget {
+public class DynaFormCell extends UIComponentBase {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -57,13 +45,7 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 	 */
 	protected enum PropertyKeys {
 
-		widgetVar,
-		var,
-		value,
-		saved,
-		labelPosition, // "left" | "top" | "right"
-		autoSubmit,
-		style,
+		type,
 		styleClass;
 
 		private String toString;
@@ -81,8 +63,8 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 		}
 	}
 
-	public DynaForm() {
-		setRendererType(DEFAULT_RENDERER);
+	public DynaFormCell() {
+		setRendererType(null);
 	}
 
 	@Override
@@ -90,52 +72,12 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 		return COMPONENT_FAMILY;
 	}
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	public void setType(final String type) {
+		setAttribute(PropertyKeys.type, type);
 	}
 
-	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
-	}
-
-	public String getVar() {
-		return (String) getStateHelper().eval(PropertyKeys.var, null);
-	}
-
-	public void setVar(final String var) {
-		setAttribute(PropertyKeys.var, var);
-	}
-
-	public Object getValue() {
-		return getStateHelper().eval(PropertyKeys.value, null);
-	}
-
-	public void setValue(final Object value) {
-		setAttribute(PropertyKeys.value, value);
-	}
-
-	public void setLabelPosition(final String labelPosition) {
-		setAttribute(PropertyKeys.labelPosition, labelPosition);
-	}
-
-	public String getLabelPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.labelPosition, "left");
-	}
-
-	public boolean isAutoSubmit() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.autoSubmit, false);
-	}
-
-	public void setAutoSubmit(final boolean autoSubmit) {
-		setAttribute(PropertyKeys.autoSubmit, autoSubmit);
-	}
-
-	public void setStyle(final String style) {
-		setAttribute(PropertyKeys.style, style);
-	}
-
-	public String getStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.style, null);
+	public String getType() {
+		return (String) getStateHelper().eval(PropertyKeys.type, DefaultDynaFormElement.DEFAULT_TYPE);
 	}
 
 	public void setStyleClass(final String styleClass) {
@@ -144,17 +86,6 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 
 	public String getStyleClass() {
 		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-	}
-
-	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
-
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
 	public void setAttribute(final PropertyKeys property, final Object value) {

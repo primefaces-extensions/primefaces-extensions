@@ -42,7 +42,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the behavior, when set to false behavior will not be rendered.]]>
             </description>
             <name>disabled</name>
             <required>false</required>
@@ -59,7 +60,8 @@
 
     <!-- Components -->
     <tag>
-        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (javax.faces.event.AjaxBehaviorEvent), initialize - fired after the editor was successfully intialized (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent), wysiwygMode - fired after switching to the wysiwyg mode (javax.faces.event.AjaxBehaviorEvent), sourceMode - fired after switching to the source mode (javax.faces.event.AjaxBehaviorEvent), dirty - fired after the content has been changed wihout leaving the editor focus (javax.faces.event.AjaxBehaviorEvent), change - fired after blur and if the content has been changed (javax.faces.event.AjaxBehaviorEvent).]]>
+        <description>
+            <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (javax.faces.event.AjaxBehaviorEvent), initialize - fired after the editor was successfully intialized (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent), wysiwygMode - fired after switching to the wysiwyg mode (javax.faces.event.AjaxBehaviorEvent), sourceMode - fired after switching to the source mode (javax.faces.event.AjaxBehaviorEvent), dirty - fired after the content has been changed wihout leaving the editor focus (javax.faces.event.AjaxBehaviorEvent), change - fired after blur and if the content has been changed (javax.faces.event.AjaxBehaviorEvent).]]>
         </description>
         <tag-name>ckEditor</tag-name>
         <component>
@@ -74,7 +76,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -151,14 +154,16 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Default language is used in case no language is set using language option and the editor is not able to use the user language.]]>
+            <description>
+                <![CDATA[Default language is used in case no language is set using language option and the editor is not able to use the user language.]]>
             </description>
             <name>language</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[This setting is used to set the CKEditor language. In case this option is not set, the editor will automatically try to load with user language if supported, otherwise the default language will be used.]]>
+            <description>
+                <![CDATA[This setting is used to set the CKEditor language. In case this option is not set, the editor will automatically try to load with user language if supported, otherwise the default language will be used.]]>
             </description>
             <name>defaultLanguage</name>
             <required>false</required>
@@ -172,7 +177,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Interval in ms for dirty checking. This is not required for the most cases but some internal CKEditor plugins does not throw the events which can be cached to check for changes. This timer checks for changes for the defined interval. Also this feature can be expensive for big documents. Default: 1000ms. 0 = deactivated.]]>
+            <description>
+                <![CDATA[Interval in ms for dirty checking. This is not required for the most cases but some internal CKEditor plugins does not throw the events which can be cached to check for changes. This timer checks for changes for the defined interval. Also this feature can be expensive for big documents. Default: 1000ms. 0 = deactivated.]]>
             </description>
             <name>checkDirtyInterval</name>
             <required>false</required>
@@ -193,7 +199,8 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
             <required>false</required>
@@ -201,13 +208,14 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-codemirror:*.jar artifact. Client behavior events: change - fired every time the content of the editor is changed (javax.faces.event.AjaxBehaviorEvent), highlightComplete - fired whenever the editor's content has been fully highlighted (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent).]]>
+        <description>
+            <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-codemirror:*.jar artifact. Client behavior events: change - fired every time the content of the editor is changed (javax.faces.event.AjaxBehaviorEvent), highlightComplete - fired whenever the editor's content has been fully highlighted (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent).]]>
         </description>
         <tag-name>codeMirror</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.CodeMirror</component-type>
             <renderer-type>org.primefaces.extensions.component.CodeMirrorRenderer</renderer-type>
-        	<handler-class>org.primefaces.extensions.component.codemirror.CodeMirrorHandler</handler-class>
+            <handler-class>org.primefaces.extensions.component.codemirror.CodeMirrorHandler</handler-class>
         </component>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a naming container.]]>
@@ -217,7 +225,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -252,21 +261,24 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The mode to use. When not given, this will default to the first mode that was loaded. It may be a string, which either simply names the mode or is a MIME type associated with the mode. Alternatively, it may be an object containing configuration options for the mode, with a name property that names the mode (for example {name: "javascript", json: true}).]]>
+            <description>
+                <![CDATA[The mode to use. When not given, this will default to the first mode that was loaded. It may be a string, which either simply names the mode or is a MIME type associated with the mode. Alternatively, it may be an object containing configuration options for the mode, with a name property that names the mode (for example {name: "javascript", json: true}).]]>
             </description>
             <name>mode</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.]]>
+            <description>
+                <![CDATA[How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.]]>
             </description>
             <name>indentUnit</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.]]>
+            <description>
+                <![CDATA[Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.]]>
             </description>
             <name>smartIndent</name>
             <required>false</required>
@@ -280,14 +292,16 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation (only works if the mode supports indentation). Default is true.]]>
+            <description>
+                <![CDATA[Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation (only works if the mode supports indentation). Default is true.]]>
             </description>
             <name>electricChars</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Configures the keymap to use. The default is "default", which is the only keymap defined in codemirror.js itself. Extra keymaps are found in the keymap directory.]]>
+            <description>
+                <![CDATA[Configures the keymap to use. The default is "default", which is the only keymap defined in codemirror.js itself. Extra keymaps are found in the keymap directory.]]>
             </description>
             <name>keyMap</name>
             <required>false</required>
@@ -315,21 +329,24 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Can be used to force a 'gutter' (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting markers.]]>
+            <description>
+                <![CDATA[Can be used to force a 'gutter' (empty space on the left of the editor) to be shown even when no line numbers are active. This is useful for setting markers.]]>
             </description>
             <name>gutter</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[When enabled (off by default), this will make the gutter stay visible when the document is scrolled horizontally.]]>
+            <description>
+                <![CDATA[When enabled (off by default), this will make the gutter stay visible when the document is scrolled horizontally.]]>
             </description>
             <name>fixedGutter</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.]]>
+            <description>
+                <![CDATA[This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.]]>
             </description>
             <name>readOnly</name>
             <required>false</required>
@@ -343,21 +360,24 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
+            <description>
+                <![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
             </description>
             <name>workTime</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
+            <description>
+                <![CDATA[Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. The defaults are 200 and 300, you can change these options to make the highlighting more or less aggressive.]]>
             </description>
             <name>workDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn't generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.]]>
+            <description>
+                <![CDATA[Indicates how quickly CodeMirror should poll its input textarea for changes. Most input is captured by events, but some things, like IME input on some browsers, doesn't generate events that allow CodeMirror to properly detect it. Thus, it polls. Default is 100 milliseconds.]]>
             </description>
             <name>pollInterval</name>
             <required>false</required>
@@ -378,20 +398,22 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Can be used to specify extra keybindings for the editor. When given, should be an object with property names like Ctrl-A, Home, and Ctrl-Alt-Left.]]>
+            <description>
+                <![CDATA[Can be used to specify extra keybindings for the editor. When given, should be an object with property names like Ctrl-A, Home, and Ctrl-Alt-Left.]]>
             </description>
             <name>extraKeys</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
         </attribute>
-       <attribute>
+        <attribute>
             <description><![CDATA[Component(s) to process partially instead of whole view.]]>
             </description>
             <name>process</name>
@@ -427,7 +449,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
+            <description>
+                <![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
             </description>
             <name>global</name>
             <required>false</required>
@@ -442,75 +465,140 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[DynaForm allows to show a dynamic form described by model.]]></description>
         <tag-name>dynaForm</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.DynaForm</component-type>
             <renderer-type>org.primefaces.extensions.component.DynaFormRenderer</renderer-type>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a naming container.]]>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
             </description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIOutput</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the client side widget.]]>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
             </description>
             <name>widgetVar</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Datasource of the component - array or collection of elements of type DynaFormElement.]]>
+            <description>
+                <![CDATA[Datasource of the component - array or collection of elements of type DynaFormElement.]]>
             </description>
             <name>value</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the request-scoped variable that'll be used to refer each DynaFormElement during rendering.]]>
+            <description>
+                <![CDATA[Name of the request-scoped variable that'll be used to refer each DynaFormElement during rendering.]]>
             </description>
             <name>var</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Label position. Possible values are left | right | top. Default is left.]]>
+            <description>
+                <![CDATA[Label position. Possible values are left | right | top. Default is left.]]>
             </description>
             <name>labelPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Style of the main container element. Default value is null.]]>
+            <description>
+                <![CDATA[Flag whether the form has to be submitted after displaying automatically. Note: the form can be submitted if it contains at least one submit button. Default value is false.]]>
+            </description>
+            <name>autoSubmit</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
             </description>
             <name>style</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Style class of the main container element. Default value is null.]]>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
-    </tag>    
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[DynaFormCell specifies a cell for a certain typed element within DynaForm.]]></description>
+        <tag-name>dynaFormCell</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.DynaFormCell</component-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Type of the DynaFormCell corresponding to DynaFormElement. Default value is "default".]]>
+            </description>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute> 
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element representing a cell. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
     <tag>
         <tag-name>head</tag-name>
         <component>
@@ -525,7 +613,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -554,7 +643,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Widget for selecting a rectangular area of an image. Client behavior events: selectEnd - fired after the selection finished (org.primefaces.extensions.event.ImageAreaSelectEvent), selectStart - fired after the selection started (org.primefaces.extensions.event.ImageAreaSelectEvent), selectChange - fired after the selection changed (org.primefaces.extensions.event.ImageAreaSelectEvent).]]>
+        <description>
+            <![CDATA[Widget for selecting a rectangular area of an image. Client behavior events: selectEnd - fired after the selection finished (org.primefaces.extensions.event.ImageAreaSelectEvent), selectStart - fired after the selection started (org.primefaces.extensions.event.ImageAreaSelectEvent), selectChange - fired after the selection changed (org.primefaces.extensions.event.ImageAreaSelectEvent).]]>
         </description>
         <tag-name>imageAreaSelect</tag-name>
         <component>
@@ -569,7 +659,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -597,7 +688,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A string of the form "width:height" which represents the aspect ratio to maintain. Example: "4:3".]]>
+            <description>
+                <![CDATA[A string of the form "width:height" which represents the aspect ratio to maintain. Example: "4:3".]]>
             </description>
             <name>aspectRatio</name>
             <required>false</required>
@@ -611,14 +703,16 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default value: 0.]]>
+            <description>
+                <![CDATA[If set to a number greater than zero, showing or hiding the plugin is done with a graceful fade in/fade out animation. Default value: 0.]]>
             </description>
             <name>fadeSpeed</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default value: false.]]>
+            <description>
+                <![CDATA[If set to true, resize handles are shown on the selection area; if set to "corners", only corner handles are shown. Default value: false.]]>
             </description>
             <name>handles</name>
             <required>false</required>
@@ -653,7 +747,8 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]>
+            <description>
+                <![CDATA[If set to true, clicking outside the selection area will not start a new selection (ie. the user will only be able to move/resize the existing selection area). Default value: false.]]>
             </description>
             <name>persistent</name>
             <required>false</required>
@@ -674,7 +769,8 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The z-index value to be assigned to plugin elements; normally, imgAreaSelect figures it out automatically, but there are a few cases when it's necessary to set it explicitly.]]>
+            <description>
+                <![CDATA[The z-index value to be assigned to plugin elements; normally, imgAreaSelect figures it out automatically, but there are a few cases when it's necessary to set it explicitly.]]>
             </description>
             <name>zIndex</name>
             <required>false</required>
@@ -709,7 +805,8 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]>
+            <description>
+                <![CDATA[A jQuery object or selector string that specifies the parent element that the plugin will be appended to. Default value: "body".]]>
             </description>
             <name>parentSelector</name>
             <required>false</required>
@@ -724,7 +821,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Widget for rotating or resizing an image. Client behavior events: rotate - fired after image rotation (org.primefaces.extensions.event.RotateEvent), resize - fired after image resizing (org.primefaces.extensions.event.ResizeEvent).]]>
+        <description>
+            <![CDATA[Widget for rotating or resizing an image. Client behavior events: rotate - fired after image rotation (org.primefaces.extensions.event.RotateEvent), resize - fired after image resizing (org.primefaces.extensions.event.ResizeEvent).]]>
         </description>
         <tag-name>imageRotateAndResize</tag-name>
         <component>
@@ -739,7 +837,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -815,7 +914,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines if paginator should be hidden if total data count is less than number of rows per page. Default is true.]]>
+            <description>
+                <![CDATA[Defines if paginator should be hidden if total data count is less than number of rows per page. Default is true.]]>
             </description>
             <name>paginatorAlwaysVisible</name>
             <required>false</required>
@@ -829,7 +929,7 @@
         <component>
             <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
             <renderer-type>org.primefaces.extensions.component.RemoteCommandRenderer</renderer-type>
-           	<handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandHandler</handler-class>
+            <handler-class>org.primefaces.extensions.component.remotecommand.RemoteCommandHandler</handler-class>
         </component>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
@@ -839,7 +939,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -874,7 +975,8 @@
             <type>javax.el.MethodExpression</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value that determines the phaseId of the action event, when true actions are processed at "Apply Request Values", when false at "Invoke Application" phase.]]>
+            <description>
+                <![CDATA[Boolean value that determines the phaseId of the action event, when true actions are processed at "Apply Request Values", when false at "Invoke Application" phase.]]>
             </description>
             <name>immediate</name>
             <required>false</required>
@@ -930,7 +1032,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
+            <description>
+                <![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
             </description>
             <name>global</name>
             <required>false</required>
@@ -944,11 +1047,12 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-			<description><![CDATA[When enabled, only values related to partially processed components would be serialized for ajax instead of whole form.]]></description>
-			<name>partialSubmit</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
+            <description>
+                <![CDATA[When enabled, only values related to partially processed components would be serialized for ajax instead of whole form.]]></description>
+            <name>partialSubmit</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
         <attribute>
             <description><![CDATA[When set to true, command will be invoked on page load.]]>
             </description>
@@ -973,7 +1077,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1001,7 +1106,8 @@
             <type>javax.el.ValueExpression</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
             <required>false</required>
@@ -1009,7 +1115,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Method can be used to receive a parameter of the RemoteCommand in the actionListener or action method.]]>
+        <description>
+            <![CDATA[Method can be used to receive a parameter of the RemoteCommand in the actionListener or action method.]]>
         </description>
         <tag-name>methodParam</tag-name>
         <component>
@@ -1037,7 +1144,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
             <required>false</required>
@@ -1063,7 +1171,8 @@
         <tag-name>resetEditableValues</tag-name>
         <handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
         <attribute>
-            <description><![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]>
+            <description>
+                <![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]>
             </description>
             <name>for</name>
             <required>true</required>
@@ -1113,7 +1222,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1247,7 +1357,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Page Layout component. Client behavior events: open - fires after a layout pane gets opened (org.primefaces.extensions.event.OpenEvent), close - fires after a layout pane gets closed (org.primefaces.extensions.event.CloseEvent), resize - fires after a layout pane gets resized (org.primefaces.extensions.event.ResizeEvent).]]>
+        <description>
+            <![CDATA[Page Layout component. Client behavior events: open - fires after a layout pane gets opened (org.primefaces.extensions.event.OpenEvent), close - fires after a layout pane gets closed (org.primefaces.extensions.event.CloseEvent), resize - fires after a layout pane gets resized (org.primefaces.extensions.event.ResizeEvent).]]>
         </description>
         <tag-name>layout</tag-name>
         <component>
@@ -1262,7 +1373,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1281,7 +1393,7 @@
             <name>widgetVar</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Specifies whether layout should span all page or not. Default value is true.]]>
             </description>
@@ -1304,50 +1416,54 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Dynamic tabs for tabbed layout. This object must be either of type javax.faces.model.DataModel<MenuItem>, or an object that can be adapted into a DataModel<MenuItem>. Such possible objects are List and Array of MenuItems.]]>
+            <description>
+                <![CDATA[Dynamic tabs for tabbed layout. This object must be either of type javax.faces.model.DataModel<MenuItem>, or an object that can be adapted into a DataModel<MenuItem>. Such possible objects are List and Array of MenuItems.]]>
             </description>
             <name>tabs</name>
             <required>false</required>
             <type>javax.faces.model.DataModel</type>
-        </attribute>          
+        </attribute>
         <attribute>
             <description><![CDATA[Tip on toggler when pane is opened.]]>
             </description>
             <name>togglerTipOpen</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>          
+        </attribute>
         <attribute>
             <description><![CDATA[Tip on toggler when pane is closed.]]>
             </description>
             <name>togglerTipClose</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>          
+        </attribute>
         <attribute>
             <description><![CDATA[Tip when resizer-bar gets dragged to resize a pane.]]>
             </description>
             <name>resizerTip</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>          
+        </attribute>
         <attribute>
-            <description><![CDATA[Indicates server-side state management. A hash (JSON string) containing all dimensions and close, open state of existing layout panes. It can be bound to a bean.]]>
+            <description>
+                <![CDATA[Indicates server-side state management. A hash (JSON string) containing all dimensions and close, open state of existing layout panes. It can be bound to a bean.]]>
             </description>
             <name>state</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>          
+        </attribute>
         <attribute>
-            <description><![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in cookies on window unload and restored during layout build-up. Default is false.]]>
+            <description>
+                <![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in cookies on window unload and restored during layout build-up. Default is false.]]>
             </description>
             <name>stateCookie</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>          
+        </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Layout pane within Layout component. 5 regions are supported: 'north', 'south', 'center', 'west' und 'east'.]]>
+        <description>
+            <![CDATA[Layout pane within Layout component. 5 regions are supported: 'north', 'south', 'center', 'west' und 'east'.]]>
         </description>
         <tag-name>layoutPane</tag-name>
         <component>
@@ -1361,7 +1477,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1403,7 +1520,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Position of a pane. Possible values are 'north', 'south', 'west', 'east', 'center'. Default value is 'center'.]]>
+            <description>
+                <![CDATA[Position of a pane. Possible values are 'north', 'south', 'west', 'east', 'center'. Default value is 'center'.]]>
             </description>
             <name>position</name>
             <required>true</required>
@@ -1445,28 +1563,32 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the minimum-width limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            <description>
+                <![CDATA[Specifies the minimum-width limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
             </description>
             <name>minWidth</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the maximum-width limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            <description>
+                <![CDATA[Specifies the maximum-width limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
             </description>
             <name>maxWidth</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the minimum-height limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            <description>
+                <![CDATA[Specifies the minimum-height limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
             </description>
             <name>minHeight</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the maximum-height limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            <description>
+                <![CDATA[Specifies the maximum-height limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
             </description>
             <name>maxHeight</name>
             <required>false</required>
@@ -1485,14 +1607,15 @@
             <name>initClosed</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
-            <description><![CDATA[If true, then pane is styled as a status bar. It makes sense for 'south' pane. Default is false.]]>
+            <description>
+                <![CDATA[If true, then pane is styled as a status bar. It makes sense for 'south' pane. Default is false.]]>
             </description>
             <name>statusbar</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[AjaxStatus is a global notifier for ajax requests made by PrimeFaces and JSF standard components.]]>
@@ -1510,7 +1633,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1545,7 +1669,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Client side callback to execute before ajax requests start. This callback is only available for PrimeFaces ajax calls.]]>
+            <description>
+                <![CDATA[Client side callback to execute before ajax requests start. This callback is only available for PrimeFaces ajax calls.]]>
             </description>
             <name>onprestart</name>
             <required>false</required>
@@ -1581,7 +1706,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[MasterDetail component allows to group contents into levels (sections) and saves page space. Smart and flexible navigation between levels via breadcrumbs or command components gives a neat and stylish interface for users.]]>
+        <description>
+            <![CDATA[MasterDetail component allows to group contents into levels (sections) and saves page space. Smart and flexible navigation between levels via breadcrumbs or command components gives a neat and stylish interface for users.]]>
         </description>
         <tag-name>masterDetail</tag-name>
         <component>
@@ -1793,7 +1919,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1835,7 +1962,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines the predefined mask which should be used (pint, int, pnum, num, hex, email, alpha, alphanum).]]>
+            <description>
+                <![CDATA[Defines the predefined mask which should be used (pint, int, pnum, num, hex, email, alpha, alphanum).]]>
             </description>
             <name>mask</name>
             <required>false</required>
@@ -1850,8 +1978,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[blockPanel can locks UI]]>
-        </description>
+        <description><![CDATA[blockPanel can locks UI.]]></description>
         <tag-name>blockPanel</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.BlockPanel</component-type>
@@ -1865,7 +1992,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1901,8 +2029,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[blockUI blocks any piece of page during various Ajax calls.]]>
-        </description>
+        <description><![CDATA[blockUI blocks any piece of page during various Ajax calls.]]></description>
         <tag-name>blockUI</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.BlockUI</component-type>
@@ -1916,7 +2043,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -1937,7 +2065,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Id of component in terms of findComponent to specify component which sends an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
+            <description>
+                <![CDATA[Id of component in terms of findComponent to specify component which sends an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
             </description>
             <name>source</name>
             <required>false</required>
@@ -1958,29 +2087,33 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Id of the component in terms of findComponent to be used as content shown during blocking. If nothing specified, the content of blockUI component is used.]]>
+            <description>
+                <![CDATA[Id of the component in terms of findComponent to be used as content shown during blocking. If nothing specified, the content of blockUI component is used.]]>
             </description>
             <name>content</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
-            <description><![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]>
+            <description>
+                <![CDATA[Name(s) of one or several events. Several events should be defined as space or comma separated list.]]>
             </description>
             <name>event</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Flag whether the blocking is shown automatically without the need to use JavaScript widget. Default value is false.]]>
+            <description>
+                <![CDATA[Flag whether the blocking is shown automatically without the need to use JavaScript widget. Default value is false.]]>
             </description>
             <name>autoShow</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Time picker component for time (hours / minutes) inputs. Client behavior events: timeSelect - fires when an hour / minutes is selected (org.primefaces.extensions.event.TimeSelectEvent), close - fires when the time picker is closed (org.primefaces.extensions.event.CloseEvent), beforeShow - fires before the time picker is rendered and displayed (org.primefaces.extensions.event.BeforeShowEvent).]]>
+        <description>
+            <![CDATA[Time picker component for time (hours / minutes) inputs. Client behavior events: timeSelect - fires when an hour / minutes is selected (org.primefaces.extensions.event.TimeSelectEvent), close - fires when the time picker is closed (org.primefaces.extensions.event.CloseEvent), beforeShow - fires before the time picker is rendered and displayed (org.primefaces.extensions.event.BeforeShowEvent).]]>
         </description>
         <tag-name>timePicker</tag-name>
         <component>
@@ -1994,13 +2127,15 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
             <name>rendered</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
@@ -2022,7 +2157,7 @@
             <name>label</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Style of the time picker input element.]]></description>
             <name>style</name>
@@ -2034,7 +2169,7 @@
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[The character to use to separate hours and minutes. Default is :.]]></description>
             <name>timeSeparator</name>
@@ -2060,7 +2195,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Mode specifies appearance of time picker. Possible values are 'popup', 'spinner', 'inline'. Default is 'spinner'.]]></description>
+            <description>
+                <![CDATA[Mode specifies appearance of time picker. Possible values are 'popup', 'spinner', 'inline'. Default is 'spinner'.]]></description>
             <name>mode</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -2088,7 +2224,7 @@
             <name>endMinutes</name>
             <required>false</required>
             <type>java.lang.Integer</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Specifies interval of displayed minutes. Default is 5.]]></description>
             <name>intervalMinutes</name>
@@ -2096,19 +2232,22 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies number of rows for the input tables, minimum 2, makes more sense if you use multiple of 2. Default is 4.]]></description>
+            <description>
+                <![CDATA[Specifies number of rows for the input tables, minimum 2, makes more sense if you use multiple of 2. Default is 4.]]></description>
             <name>rows</name>
             <required>false</required>
             <type>java.lang.Integer</type>
-        </attribute>        
+        </attribute>
         <attribute>
-            <description><![CDATA[Defines if the hours section is displayed or not. Set to false to get a minute only dialog. Default is true.]]></description>
+            <description>
+                <![CDATA[Defines if the hours section is displayed or not. Set to false to get a minute only dialog. Default is true.]]></description>
             <name>showHours</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines if the minutes section is displayed or not. Set to false to get a hours only dialog. Default is true.]]></description>
+            <description>
+                <![CDATA[Defines if the minutes section is displayed or not. Set to false to get a hours only dialog. Default is true.]]></description>
             <name>showMinutes</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
@@ -2124,31 +2263,34 @@
             <name>showDeselectButton</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Shows the 'now' button. Default is false.]]></description>
             <name>showNowButton</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
-            <description><![CDATA[Defines a callback to enable / disable certain hours. Example: function onHourShow(hour). Default is null.]]></description>
+            <description>
+                <![CDATA[Defines a callback to enable / disable certain hours. Example: function onHourShow(hour). Default is null.]]></description>
             <name>onHourShow</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines a callback to enable / disable certain minutes. Example: function onMinuteShow(hour, minute). Default is null.]]></description>
+            <description>
+                <![CDATA[Defines a callback to enable / disable certain minutes. Example: function onMinuteShow(hour, minute). Default is null.]]></description>
             <name>onMinuteShow</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]></description>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]></description>
             <name>locale</name>
             <required>false</required>
             <type>java.lang.Object</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Timeline visualizes temporal data.]]>
@@ -2166,7 +2308,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2224,7 +2367,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2253,7 +2397,8 @@
             <type>java.faces.convert.Converter</type>
         </attribute>
         <attribute>
-            <description><![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
+            <description>
+                <![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
             </description>
             <name>immediate</name>
             <required>false</required>
@@ -2388,7 +2533,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2417,7 +2563,8 @@
             <type>java.faces.convert.Converter</type>
         </attribute>
         <attribute>
-            <description><![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
+            <description>
+                <![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
             </description>
             <name>immediate</name>
             <required>false</required>
@@ -2487,7 +2634,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Layout of the checkboxes, valid values are “lineDirection”(horizontal) and “pageDirection”(vertical).]]>
+            <description>
+                <![CDATA[Layout of the checkboxes, valid values are “lineDirection”(horizontal) and “pageDirection”(vertical).]]>
             </description>
             <name>layout</name>
             <required>false</required>
@@ -2552,7 +2700,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2573,7 +2722,8 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
             <required>false</required>
@@ -2750,7 +2900,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2779,7 +2930,8 @@
             <type>java.faces.convert.Converter</type>
         </attribute>
         <attribute>
-            <description><![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
+            <description>
+                <![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
             </description>
             <name>immediate</name>
             <required>false</required>
@@ -2868,7 +3020,7 @@
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Decimal separator char.]]>
             </description>
@@ -2876,7 +3028,7 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-         <attribute>
+        <attribute>
             <description><![CDATA[Thousand separator char.]]>
             </description>
             <name>thousandSeparator</name>
@@ -2893,21 +3045,21 @@
         <attribute>
             <description><![CDATA[Symbol suffix (prefix is the default).]]>
             </description>
-            <name>symbolPosition</name>            
+            <name>symbolPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description><![CDATA[Minimum values.]]>
             </description>
-            <name>minValue</name>            
+            <name>minValue</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description><![CDATA[Maximum values.]]>
             </description>
-            <name>maxValue</name>            
+            <name>maxValue</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -2924,7 +3076,7 @@
             <name>decimalPlaces</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>       
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Util tag to import constants.]]>
@@ -2939,11 +3091,12 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The EL variable which can be used to obtain the constants. Default value: Name of the class without package.]]>
+            <description>
+                <![CDATA[The EL variable which can be used to obtain the constants. Default value: Name of the class without package.]]>
             </description>
             <name>var</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-	</tag>
+    </tag>
 </facelet-taglib>
