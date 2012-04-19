@@ -109,7 +109,7 @@ public class InputNumber extends HtmlInputText implements Widget {
         }
 
         public String getThousandSeparator() {
-                return (String) getStateHelper().eval(PropertyKeys.thousandSeparator, "");
+                return (String) getStateHelper().eval(PropertyKeys.thousandSeparator, null);
         }
 
         public void setThousandSeparator(final String thousandSeparator) {

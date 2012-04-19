@@ -194,8 +194,11 @@ public class InputNumberRenderer extends InputRenderer {
 
 		String options = "";
 		options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
-		options += thousandSeparator.isEmpty() ? "" : "aSep: '" + thousandSeparator + "',";
-		options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
+        if(thousandSeparator!=null){
+            //empty thousandSeparator must be explicity defined.
+            options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
+        }
+        options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
 		options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
 		options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
 		options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
