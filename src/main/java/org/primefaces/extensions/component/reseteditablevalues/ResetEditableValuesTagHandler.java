@@ -80,11 +80,11 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 
 			for (List<ClientBehavior> listBehaviors : clientBehaviors) {
 				for (ClientBehavior clientBehavior : listBehaviors) {
-					if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
-						((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
-						    new ResetEditableValuesListener(strFor));
-					} else if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+					if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
 						((org.primefaces.component.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+						    new ResetEditableValuesListener(strFor));
+					} else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
+						((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
 						    new ResetEditableValuesListener(strFor));
 					}
 				}
