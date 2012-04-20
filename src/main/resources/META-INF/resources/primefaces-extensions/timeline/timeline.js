@@ -90,7 +90,9 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
 	            content: '#' + eventId + '_content'
 	        });
 	        blockUI.block();
-	        $('.blockOverlay').attr("title","Click to unblock").click(blockUI.unblock);
+	        $('.ui-widget-overlay').attr("title","Click to unblock").click(function(){                        
+                        blockUI.unblock();
+                });
 	    });
 	}
 });
