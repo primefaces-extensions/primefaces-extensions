@@ -1158,7 +1158,7 @@
         <tag-name>methodSignature</tag-name>
         <handler-class>org.primefaces.extensions.component.common.MethodSignatureTagHandler</handler-class>
         <attribute>
-            <description><![CDATA[A list with classes seperated by comma.]]>
+            <description><![CDATA[A comma separated list with full qualified class names. Class names should match passed parameters in the same order as they were defined.]]>
             </description>
             <name>parameters</name>
             <required>false</required>
