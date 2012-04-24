@@ -135,6 +135,7 @@
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
                                 <include>inputnumber/**</include>
+                                <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -153,8 +154,9 @@
                                 <include>blockui/blockUI.css</include>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>requiredlabel/requiredlabel.css</include>                                
+                                <include>requiredlabel/requiredlabel.css</include>
                                 <include>timeline/timeline.css</include>
+                                <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
