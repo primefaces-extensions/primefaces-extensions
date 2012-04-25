@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.common;
+package org.primefaces.extensions.component.parameters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ import org.primefaces.extensions.component.base.AbstractParameter;
 /**
  * Component class for the <code>AssignableParameter</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since   0.5
  */
 public class AssignableParameter extends AbstractParameter {
 
@@ -39,10 +39,11 @@ public class AssignableParameter extends AbstractParameter {
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
+
 		assignTo;
 
 		private String toString;
@@ -84,6 +85,9 @@ public class AssignableParameter extends AbstractParameter {
 
 	/**
 	 * Enables converters to get the value type from the "value" expression.
+	 *
+	 * @param  name DOCUMENT_ME
+	 * @return DOCUMENT_ME
 	 */
 	@Override
 	public ValueExpression getValueExpression(final String name) {
@@ -98,8 +102,8 @@ public class AssignableParameter extends AbstractParameter {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -107,6 +111,7 @@ public class AssignableParameter extends AbstractParameter {
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

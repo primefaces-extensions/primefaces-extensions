@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.common;
+package org.primefaces.extensions.component.parameters;
 
 import javax.el.ValueExpression;
 import javax.faces.view.facelets.ComponentConfig;
@@ -31,9 +31,9 @@ import javax.faces.view.facelets.TagAttribute;
 /**
  * {@link ComponentHandler} for the {@link AssignableParameter} component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since   0.5
  */
 public class AssignableParameterHandler extends ComponentHandler {
 
@@ -42,27 +42,28 @@ public class AssignableParameterHandler extends ComponentHandler {
 	/**
 	 * {@link MetaRule} for the <code>assignTo</code> of the {@link AssignableParameter}.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	private static final class AssignToMetaRule extends MetaRule {
 
-        @Override
+		@Override
 		public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
-            if (meta.isTargetInstanceOf(AssignableParameter.class)) {
-                if (AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
-                    return new AssignToValueExpressionMetadata(attribute);
-                }
-            }
+			if (meta.isTargetInstanceOf(AssignableParameter.class)) {
+				if (AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
+					return new AssignToValueExpressionMetadata(attribute);
+				}
+			}
 
-            return null;
-        }
-    }
+			return null;
+		}
+	}
+
 
 	/**
 	 * {@link Metadata} for the <code>assignTo</code> of the {@link AssignableParameter}.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	private static final class AssignToValueExpressionMetadata extends Metadata {

@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.common;
+package org.primefaces.extensions.component.parameters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +31,9 @@ import org.primefaces.extensions.util.DummyValueExpression;
 /**
  * Component class for the <code>MethodParameter</code> component.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since   0.5
  */
 public class MethodParameter extends AbstractParameter {
 
@@ -42,10 +42,11 @@ public class MethodParameter extends AbstractParameter {
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author Thomas Andraschko / last modified by $Author$
+	 * @author  Thomas Andraschko / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
+
 		type;
 
 		private String toString;
@@ -82,6 +83,9 @@ public class MethodParameter extends AbstractParameter {
 
 	/**
 	 * Enables converters to get the value type from the "value" expression.
+	 *
+	 * @param  name DOCUMENT_ME
+	 * @return DOCUMENT_ME
 	 */
 	@Override
 	public ValueExpression getValueExpression(final String name) {
@@ -91,9 +95,8 @@ public class MethodParameter extends AbstractParameter {
 			final UIComponent parent = getParent();
 			final Map<String, Object> parentAttribtues = parent.getAttributes();
 			final Class<?>[] parameterTypes =
-				(Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
-			final Class<?> parameterType =
-				parameterTypes[parent.getChildren().indexOf(this)];
+			    (Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
+			final Class<?> parameterType = parameterTypes[parent.getChildren().indexOf(this)];
 
 			return new DummyValueExpression(parameterType);
 		}
@@ -105,8 +108,8 @@ public class MethodParameter extends AbstractParameter {
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-		List<String> setAttributes = (List<String>) this.getAttributes().get(
-				"javax.faces.component.UIComponentBase.attributesThatAreSet");
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -114,6 +117,7 @@ public class MethodParameter extends AbstractParameter {
 				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
 			}
 		}
+
 		if (setAttributes != null && value == null) {
 			final String attributeName = property.toString();
 			final ValueExpression ve = getValueExpression(attributeName);

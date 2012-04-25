@@ -38,8 +38,8 @@ import javax.faces.event.FacesListener;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
-import org.primefaces.extensions.component.common.AssignableParameter;
-import org.primefaces.extensions.component.common.MethodParameter;
+import org.primefaces.extensions.component.parameters.AssignableParameter;
+import org.primefaces.extensions.component.parameters.MethodParameter;
 
 /**
  * Component class for the <code>RemoteCommand</code> component.
@@ -49,10 +49,10 @@ import org.primefaces.extensions.component.common.MethodParameter;
  * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+                      })
 public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -194,12 +194,12 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public MethodExpression getActionListenerMethodExpression() {
-        return (MethodExpression) getStateHelper().get(PropertyKeys.actionListener);
-    }
+		return (MethodExpression) getStateHelper().get(PropertyKeys.actionListener);
+	}
 
 	public void setActionListenerMethodExpression(final MethodExpression actionListener) {
-        getStateHelper().put(PropertyKeys.actionListener, actionListener);
-    }
+		getStateHelper().put(PropertyKeys.actionListener, actionListener);
+	}
 
 	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
@@ -227,40 +227,40 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	@Override
-    public void broadcast(final FacesEvent event) throws AbortProcessingException {
-        for (FacesListener listener : getFacesListeners(FacesListener.class)) {
-            if (event.isAppropriateListener(listener)) {
-                event.processListener(listener);
-            }
-        }
+	public void broadcast(final FacesEvent event) throws AbortProcessingException {
+		for (FacesListener listener : getFacesListeners(FacesListener.class)) {
+			if (event.isAppropriateListener(listener)) {
+				event.processListener(listener);
+			}
+		}
 
-        if (event instanceof ActionEvent) {
-            final FacesContext context = getFacesContext();
+		if (event instanceof ActionEvent) {
+			final FacesContext context = getFacesContext();
 
-            //invoke actionListener
-            final MethodExpression listener = getActionListenerMethodExpression();
-            if (listener != null) {
-            	listener.invoke(context.getELContext(), getConvertedMethodParameters(context));
-            }
+			//invoke actionListener
+			final MethodExpression listener = getActionListenerMethodExpression();
+			if (listener != null) {
+				listener.invoke(context.getELContext(), getConvertedMethodParameters(context));
+			}
 
-            //invoke action
-            final ActionListener actionListener = context.getApplication().getActionListener();
-            if (actionListener != null) {
-            	actionListener.processAction((ActionEvent) event);
-            }
-        }
-    }
+			//invoke action
+			final ActionListener actionListener = context.getApplication().getActionListener();
+			if (actionListener != null) {
+				actionListener.processAction((ActionEvent) event);
+			}
+		}
+	}
 
-    private transient List<AbstractParameter> allParameters = null;
-    private transient List<AssignableParameter> assignableParameters = null;
-    private transient List<MethodParameter> methodParameters = null;
-    private transient Object[] convertedMethodParams = null;
+	private transient List<AbstractParameter> allParameters = null;
+	private transient List<AssignableParameter> assignableParameters = null;
+	private transient List<MethodParameter> methodParameters = null;
+	private transient Object[] convertedMethodParams = null;
 
-    protected void findChildParameters() {
-    	if (allParameters == null || assignableParameters == null || methodParameters == null) {
-    		allParameters = new ArrayList<AbstractParameter>();
-    		assignableParameters = new ArrayList<AssignableParameter>();
-    		methodParameters = new ArrayList<MethodParameter>();
+	protected void findChildParameters() {
+		if (allParameters == null || assignableParameters == null || methodParameters == null) {
+			allParameters = new ArrayList<AbstractParameter>();
+			assignableParameters = new ArrayList<AssignableParameter>();
+			methodParameters = new ArrayList<MethodParameter>();
 
 			for (final UIComponent child : super.getChildren()) {
 				if (child instanceof AbstractParameter) {
@@ -275,8 +275,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 					}
 				}
 			}
-    	}
-    }
+		}
+	}
 
 	protected List<AbstractParameter> getAllParameters() {
 		findChildParameters();
@@ -321,6 +321,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public String getParameterValue(final FacesContext context, final String name) {
 		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 		final String clientId = getClientId(context);
+
 		return params.get(clientId + "_" + name);
 	}
 }

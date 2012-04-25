@@ -1067,7 +1067,7 @@
         <tag-name>assignableParam</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.AssignableParameter</component-type>
-            <handler-class>org.primefaces.extensions.component.common.AssignableParameterHandler</handler-class>
+            <handler-class>org.primefaces.extensions.component.parameters.AssignableParameterHandler</handler-class>
         </component>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a naming container.]]>
@@ -1156,7 +1156,7 @@
         <description><![CDATA[]]>
         </description>
         <tag-name>methodSignature</tag-name>
-        <handler-class>org.primefaces.extensions.component.common.MethodSignatureTagHandler</handler-class>
+        <handler-class>org.primefaces.extensions.component.parameters.MethodSignatureTagHandler</handler-class>
         <attribute>
             <description><![CDATA[A comma separated list with full qualified class names. Class names should match passed parameters in the same order as they were defined.]]>
             </description>

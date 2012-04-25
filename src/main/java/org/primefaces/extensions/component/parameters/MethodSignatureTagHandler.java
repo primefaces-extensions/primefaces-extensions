@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.common;
+package org.primefaces.extensions.component.parameters;
 
 import java.io.IOException;
 
@@ -30,14 +30,13 @@ import javax.faces.view.facelets.TagHandler;
 /**
  * {@link TagHandler} for the <code>MethodSignature</code> tag.
  *
- * @author Thomas Andraschko / last modified by $Author$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since   0.5
  */
 public class MethodSignatureTagHandler extends TagHandler {
 
-	public static final String PARAMETERS_TYPES_ATTRIBUTE_NAME =
-		"METHOD_SIGNATURE_PARAMETER_TYPES";
+	public static final String PARAMETERS_TYPES_ATTRIBUTE_NAME = "METHOD_SIGNATURE_PARAMETER_TYPES";
 
 	private final Class<?>[] parameterTypes;
 

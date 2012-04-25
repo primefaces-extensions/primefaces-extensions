@@ -20,6 +20,11 @@ package org.primefaces.extensions.model.dynaform;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * Default implementation of {@link DynaFormElement}.
  *
@@ -27,104 +32,81 @@ import java.io.Serializable;
  * @version $Revision$
  * @since   0.5
  */
-public class DefaultDynaFormElement implements DynaFormElement, Serializable {
+public class DefaultDynaFormElement extends DynaFormElement implements Serializable {
 
 	private static final long serialVersionUID = 20120417L;
-
-	public static final String DEFAULT_TYPE = "default";
-
-	private Object data;
-
-	private String type;
-
-	private String label;
-
-	private boolean required;
-
-	private int colspan = 1;
-
-	private int row = 1;
-
-	private int column = 1;
 
 	public DefaultDynaFormElement() {
 		this.type = DEFAULT_TYPE;
 	}
 
 	public DefaultDynaFormElement(final Object data) {
-		this.data = data;
+		setData(data);
 		this.type = DEFAULT_TYPE;
 	}
 
 	public DefaultDynaFormElement(final Object data, final String type) {
-		this.data = data;
+		setData(data);
 		this.type = type;
 	}
 
 	public DefaultDynaFormElement(final Object data, final String type, final String label, final boolean required,
-	                              final int colspan, final int row, final int column) {
-		this.data = data;
+	                              final boolean extended, final int colspan, final int row, final int column) {
+		setData(data);
 		this.type = type;
 		this.label = label;
 		this.required = required;
+		this.extended = extended;
 		this.colspan = colspan;
 		this.row = row;
 		this.column = column;
 	}
 
-	public Object getData() {
-		return data;
+	@Override
+	public int hashCode() {
+		if (getData() != null) {
+			return new HashCodeBuilder(17, 37).append(getData()).toHashCode();
+		} else {
+			return new HashCodeBuilder(17, 37).append(type).append(label).append(required).append(extended).append(colspan)
+			                                  .append(row).append(column).toHashCode();
+		}
 	}
 
-	public void setData(Object data) {
-		this.data = data;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (obj == this) {
+			return true;
+		}
+
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
+
+		DefaultDynaFormElement ddfe = (DefaultDynaFormElement) obj;
+
+		if (getData() != null) {
+			return new EqualsBuilder().append(getData(), ddfe.getData()).isEquals();
+		} else {
+			return new EqualsBuilder().append(type, ddfe.type).append(label, ddfe.label).append(required, ddfe.required)
+			                          .append(extended, ddfe.extended).append(colspan, ddfe.colspan).append(row, ddfe.row)
+			                          .append(column, ddfe.column).isEquals();
+		}
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public boolean isRequired() {
-		return required;
-	}
-
-	public void setRequired(boolean required) {
-		this.required = required;
-	}
-
-	public int getColspan() {
-		return colspan;
-	}
-
-	public void setColspan(int colspan) {
-		this.colspan = colspan;
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-	public void setRow(int row) {
-		this.row = row;
-	}
-
-	public int getColumn() {
-		return column;
-	}
-
-	public void setColumn(int column) {
-		this.column = column;
+	@Override
+	public String toString() {
+		if (getData() != null) {
+			return getData().toString();
+		} else {
+			return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("type", type).append("label", label)
+			                                                                  .append("required", required)
+			                                                                  .append("extended", extended)
+			                                                                  .append("colspan", colspan).append("row", row)
+			                                                                  .append("column", column).toString();
+		}
 	}
 }

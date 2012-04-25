@@ -22,14 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.NamingContainer;
-import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.model.common.DataWrapper;
+import org.primefaces.extensions.model.dynaform.DynaFormElement;
 
 /**
  * <code>DynaForm</code> component.
@@ -43,11 +45,10 @@ import org.primefaces.component.api.Widget;
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
                       })
-public class DynaForm extends UIComponentBase implements NamingContainer, Widget {
+public class DynaForm extends AbstractDynamicData implements Widget {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -58,9 +59,6 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 	protected enum PropertyKeys {
 
 		widgetVar,
-		var,
-		value,
-		saved,
 		labelPosition, // "left" | "top" | "right"
 		autoSubmit,
 		style,
@@ -96,22 +94,6 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 
 	public void setWidgetVar(final String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
-	}
-
-	public String getVar() {
-		return (String) getStateHelper().eval(PropertyKeys.var, null);
-	}
-
-	public void setVar(final String var) {
-		setAttribute(PropertyKeys.var, var);
-	}
-
-	public Object getValue() {
-		return getStateHelper().eval(PropertyKeys.value, null);
-	}
-
-	public void setValue(final Object value) {
-		setAttribute(PropertyKeys.value, value);
 	}
 
 	public void setLabelPosition(final String labelPosition) {
@@ -180,5 +162,45 @@ public class DynaForm extends UIComponentBase implements NamingContainer, Widget
 				setAttributes.add(attributeName);
 			}
 		}
+	}
+
+	@Override
+	protected DataWrapper findData(final String key) {
+		Object value = getValue();
+		if (value == null) {
+			return null;
+		}
+
+		DataWrapper dataWrapper = null;
+		Class clazz = value.getClass();
+		if (List.class.isAssignableFrom(clazz)) {
+			List dynaFormElements = (List) value;
+			for (Object obj : dynaFormElements) {
+				if (obj instanceof DynaFormElement) {
+					DynaFormElement dynaFormElement = (DynaFormElement) obj;
+					if (key.equals(dynaFormElement.getKey())) {
+						return dynaFormElement;
+					}
+				} else {
+					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+				}
+			}
+		} else if (clazz.isArray()) {
+			Class elementType = clazz.getComponentType();
+			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
+				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+			}
+
+			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
+			for (DynaFormElement dynaFormElement : dynaFormElements) {
+				if (key.equals(dynaFormElement.getKey())) {
+					return dynaFormElement;
+				}
+			}
+		} else {
+			throw new FacesException("Value of DynaForm must be either List oder Array");
+		}
+
+		return dataWrapper;
 	}
 }

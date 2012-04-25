@@ -34,7 +34,7 @@ import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
-import org.primefaces.extensions.component.common.AssignableParameter;
+import org.primefaces.extensions.component.parameters.AssignableParameter;
 import org.primefaces.extensions.util.AjaxRequestBuilder;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
@@ -105,17 +105,10 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final String name = command.getName();
 
 		final AjaxRequestBuilder builder = new AjaxRequestBuilder();
-		builder.source(clientId)
-			.form(form.getClientId(context))
-			.process(context, component, source.getProcess())
-			.update(context, component, source.getUpdate())
-			.async(source.isAsync())
-			.global(source.isGlobal())
-			.partialSubmit(source.isPartialSubmit())
-			.onstart(source.getOnstart())
-			.onerror(source.getOnerror())
-			.onsuccess(source.getOnsuccess())
-			.oncomplete(source.getOncomplete());
+		builder.source(clientId).form(form.getClientId(context)).process(context, component, source.getProcess())
+		       .update(context, component, source.getUpdate()).async(source.isAsync()).global(source.isGlobal())
+		       .partialSubmit(source.isPartialSubmit()).onstart(source.getOnstart()).onerror(source.getOnerror())
+		       .onsuccess(source.getOnsuccess()).oncomplete(source.getOncomplete());
 		builder.params(clientId, parameters);
 
 		final String request = builder.build();
@@ -141,11 +134,11 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		writer.write(request);
 		writer.write("}");
 
-        if (command.isAutoRun()) {
-            writer.write(";$(function() {");
-            writer.write(name + "();");
-            writer.write("});");
-        }
+		if (command.isAutoRun()) {
+			writer.write(";$(function() {");
+			writer.write(name + "();");
+			writer.write("});");
+		}
 
 		writer.endElement("script");
 	}

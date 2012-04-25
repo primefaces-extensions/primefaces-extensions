@@ -18,40 +18,104 @@
 
 package org.primefaces.extensions.model.dynaform;
 
+import org.primefaces.extensions.model.common.DataWrapper;
+
 /**
- * Model interface for any element inside of <code>DynaForm</code>.
+ * Abstract class for any element inside of <code>DynaForm</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public interface DynaFormElement {
+public abstract class DynaFormElement extends DataWrapper {
 
-	Object getData();
+	public static final String DEFAULT_TYPE = "default";
 
-	void setData(Object data);
+	protected static final String KEY_SEPARATOR = "_";
 
-	String getType();
+	protected static final String KEY_SUFFIX_REGULAR = "_reg";
 
-	void setType(String type);
+	protected static final String KEY_SUFFIX_EXTENDED = "_ext";
 
-	String getLabel();
+	protected String type;
 
-	void setLabel(String label);
+	protected String label;
 
-	boolean isRequired();
+	protected boolean required;
 
-	void setRequired(boolean required);
+	protected boolean extended;
 
-	int getColspan();
+	protected int colspan = 1;
 
-	void setColspan(int colspan);
+	protected int row = 1;
 
-	int getRow();
+	protected int column = 1;
 
-	void setRow(int row);
+	public String getType() {
+		return type;
+	}
 
-	int getColumn();
+	public void setType(String type) {
+		this.type = type;
+	}
 
-	void setColumn(int column);
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public boolean isRequired() {
+		return required;
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
+
+	public boolean isExtended() {
+		return extended;
+	}
+
+	public void setExtended(boolean extended) {
+		this.extended = extended;
+	}
+
+	public int getColspan() {
+		return colspan;
+	}
+
+	public void setColspan(int colspan) {
+		this.colspan = colspan;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
+
+	public String getKey() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(row).append(KEY_SEPARATOR).append(column);
+		if (extended) {
+			sb.append(KEY_SUFFIX_EXTENDED);
+		} else {
+			sb.append(KEY_SUFFIX_REGULAR);
+		}
+
+		return sb.toString();
+	}
 }
