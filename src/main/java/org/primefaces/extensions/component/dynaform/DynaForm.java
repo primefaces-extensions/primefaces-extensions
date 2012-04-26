@@ -25,12 +25,14 @@ import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
-import org.primefaces.extensions.model.common.DataWrapper;
+import org.primefaces.extensions.model.common.IdentificableData;
 import org.primefaces.extensions.model.dynaform.DynaFormElement;
 
 /**
@@ -165,13 +167,12 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	@Override
-	protected DataWrapper findData(final String key) {
+	protected IdentificableData findData(final String key) {
 		Object value = getValue();
 		if (value == null) {
 			return null;
 		}
 
-		DataWrapper dataWrapper = null;
 		Class clazz = value.getClass();
 		if (List.class.isAssignableFrom(clazz)) {
 			List dynaFormElements = (List) value;
@@ -201,6 +202,70 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 			throw new FacesException("Value of DynaForm must be either List oder Array");
 		}
 
-		return dataWrapper;
+		return null;
+	}
+
+	@Override
+	protected void processChildren(final FacesContext context, final PhaseId phaseId) {
+		processFacets(context, phaseId, this);
+
+		Object value = getValue();
+		if (value != null) {
+			Class clazz = value.getClass();
+			if (List.class.isAssignableFrom(clazz)) {
+				List dynaFormElements = (List) value;
+				for (Object obj : dynaFormElements) {
+					if (obj instanceof DynaFormElement) {
+						processDynaFormCells(context, phaseId, (DynaFormElement) obj);
+					} else {
+						throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+					}
+				}
+			} else if (clazz.isArray()) {
+				Class elementType = clazz.getComponentType();
+				if (!DynaFormElement.class.isAssignableFrom(elementType)) {
+					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+				}
+
+				DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
+				for (DynaFormElement dynaFormElement : dynaFormElements) {
+					processDynaFormCells(context, phaseId, dynaFormElement);
+				}
+			} else {
+				throw new FacesException("Value of DynaForm must be either List oder Array");
+			}
+		}
+
+		resetData();
+	}
+
+	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormElement dynaFormElement) {
+		setData(dynaFormElement);
+
+		if (getData() == null) {
+			return;
+		}
+
+		for (UIComponent kid : getChildren()) {
+			if (!(kid instanceof DynaFormCell) || !kid.isRendered()) {
+				continue;
+			}
+
+			for (UIComponent grandkid : kid.getChildren()) {
+				if (!grandkid.isRendered()) {
+					continue;
+				}
+
+				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+					grandkid.processDecodes(context);
+				} else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+					grandkid.processValidators(context);
+				} else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+					grandkid.processUpdates(context);
+				} else {
+					throw new IllegalArgumentException();
+				}
+			}
+		}
 	}
 }

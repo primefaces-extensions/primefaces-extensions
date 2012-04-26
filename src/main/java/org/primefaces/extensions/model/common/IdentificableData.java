@@ -19,15 +19,16 @@
 package org.primefaces.extensions.model.common;
 
 /**
- * Data wrapper.
+ * Data wrapper with unique key.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public abstract class DataWrapper {
+public abstract class IdentificableData {
 
 	protected Object data;
+	protected String key;
 
 	public Object getData() {
 		return data;
@@ -35,5 +36,13 @@ public abstract class DataWrapper {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 }

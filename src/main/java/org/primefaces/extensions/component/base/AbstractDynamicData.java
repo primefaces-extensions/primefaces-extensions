@@ -23,17 +23,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.el.ValueExpression;
+import javax.faces.application.Application;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.UniqueIdVendor;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.PhaseId;
+import javax.faces.event.PostValidateEvent;
+import javax.faces.event.PreValidateEvent;
 
-import org.primefaces.extensions.event.EventWrapper;
-import org.primefaces.extensions.model.common.DataWrapper;
+import org.primefaces.extensions.event.EventDataWrapper;
+import org.primefaces.extensions.model.common.IdentificableData;
 import org.primefaces.extensions.util.SavedEditableValueState;
 
 /**
@@ -43,13 +50,11 @@ import org.primefaces.extensions.util.SavedEditableValueState;
  * @version $Revision$
  * @since   0.5
  */
-public abstract class AbstractDynamicData extends UIComponentBase implements NamingContainer {
+public abstract class AbstractDynamicData extends UIComponentBase implements NamingContainer, UniqueIdVendor {
 
 	protected static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	protected String key;
-
-	protected DataWrapper data;
+	protected IdentificableData data;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -60,6 +65,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	protected enum PropertyKeys {
 
 		saved,
+		lastId,
 		var,
 		value;
 
@@ -119,35 +125,46 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
-	protected abstract DataWrapper findData(final String key);
+	protected abstract IdentificableData findData(final String key);
 
-	public String getKey() {
-		return key;
-	}
+	protected abstract void processChildren(final FacesContext context, final PhaseId phaseId);
 
-	public void setKey(final String key) {
+	public void setData(final String key) {
 		saveDescendantState();
 
-		this.key = key;
-		this.data = (key != null ? findData(key) : null);
+		this.data = findData(key);
 
-		if (this.key == null || this.data == null) {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove(getVar());
-		} else {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(getVar(), this.data.getData());
-		}
-
+		exposeVarData();
 		restoreDescendantState();
 	}
 
-	public DataWrapper getData() {
+	public void setData(final IdentificableData data) {
+		saveDescendantState();
+
+		this.data = data;
+
+		exposeVarData();
+		restoreDescendantState();
+	}
+
+	public void resetData() {
+		saveDescendantState();
+
+		this.data = null;
+
+		exposeVarData();
+		restoreDescendantState();
+	}
+
+	public IdentificableData getData() {
 		return data;
 	}
 
 	@Override
-	public String getContainerClientId(FacesContext context) {
+	public String getContainerClientId(final FacesContext context) {
 		String clientId = super.getContainerClientId(context);
-		String key = getKey();
+		IdentificableData data = getData();
+		String key = (data != null ? data.getKey() : null);
 
 		if (key == null) {
 			return clientId;
@@ -159,24 +176,89 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public void queueEvent(FacesEvent event) {
-		super.queueEvent(new EventWrapper(this, event, getKey()));
+	public void processDecodes(final FacesContext context) {
+		if (!isRendered()) {
+			return;
+		}
+
+		pushComponentToEL(context, this);
+
+		@SuppressWarnings("unchecked")
+		Map<String, SavedEditableValueState> saved =
+		    (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
+
+		FacesMessage.Severity sev = context.getMaximumSeverity();
+		boolean hasErrors = (sev != null && (FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0));
+
+		if (saved == null || !hasErrors) {
+			getStateHelper().remove(PropertyKeys.saved);
+		}
+
+		processChildren(context, PhaseId.APPLY_REQUEST_VALUES);
+
+		try {
+			decode(context);
+		} catch (RuntimeException e) {
+			context.renderResponse();
+			throw e;
+		} finally {
+			popComponentFromEL(context);
+		}
 	}
 
 	@Override
-	public void broadcast(FacesEvent event) throws AbortProcessingException {
-		if (!(event instanceof EventWrapper)) {
+	public void processValidators(final FacesContext context) {
+		if (!isRendered()) {
+			return;
+		}
+
+		pushComponentToEL(context, this);
+
+		Application app = context.getApplication();
+		app.publishEvent(context, PreValidateEvent.class, this);
+		processChildren(context, PhaseId.PROCESS_VALIDATIONS);
+		app.publishEvent(context, PostValidateEvent.class, this);
+		popComponentFromEL(context);
+	}
+
+	@Override
+	public void processUpdates(FacesContext context) {
+		if (!isRendered()) {
+			return;
+		}
+
+		pushComponentToEL(context, this);
+		processChildren(context, PhaseId.UPDATE_MODEL_VALUES);
+		popComponentFromEL(context);
+	}
+
+	@Override
+	public void queueEvent(final FacesEvent event) {
+		super.queueEvent(new EventDataWrapper(this, event, getData()));
+	}
+
+	@Override
+	public void broadcast(final FacesEvent event) throws AbortProcessingException {
+		if (!(event instanceof EventDataWrapper)) {
 			super.broadcast(event);
 
 			return;
 		}
 
-		EventWrapper eventWrapper = (EventWrapper) event;
-		FacesEvent originalEvent = eventWrapper.getFacesEvent();
+		EventDataWrapper eventDataWrapper = (EventDataWrapper) event;
+		FacesEvent originalEvent = eventDataWrapper.getFacesEvent();
 		UIComponent originalSource = (UIComponent) originalEvent.getSource();
-		setKey(eventWrapper.getKey());
+		setData(eventDataWrapper.getData());
 
 		originalSource.broadcast(originalEvent);
+	}
+
+	public String createUniqueId(final FacesContext context, final String seed) {
+		Integer i = (Integer) getStateHelper().get(PropertyKeys.lastId);
+		int lastId = ((i != null) ? i : 0);
+		getStateHelper().put(PropertyKeys.lastId, ++lastId);
+
+		return UIViewRoot.UNIQUE_ID_PREFIX + (seed == null ? lastId : seed);
 	}
 
 	protected void saveDescendantState() {
@@ -263,6 +345,32 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			for (UIComponent facet : component.getFacets().values()) {
 				restoreDescendantState(context, facet);
 			}
+		}
+	}
+
+	protected void processFacets(final FacesContext context, final PhaseId phaseId, final UIComponent component) {
+		resetData();
+
+		if (component.getFacetCount() > 0) {
+			for (UIComponent facet : component.getFacets().values()) {
+				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+					facet.processDecodes(context);
+				} else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+					facet.processValidators(context);
+				} else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+					facet.processUpdates(context);
+				} else {
+					throw new IllegalArgumentException();
+				}
+			}
+		}
+	}
+
+	protected void exposeVarData() {
+		if (getData() == null) {
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove(getVar());
+		} else {
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(getVar(), getData().getData());
 		}
 	}
 }

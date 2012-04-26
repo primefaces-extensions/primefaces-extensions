@@ -18,7 +18,7 @@
 
 package org.primefaces.extensions.model.dynaform;
 
-import org.primefaces.extensions.model.common.DataWrapper;
+import org.primefaces.extensions.model.common.IdentificableData;
 
 /**
  * Abstract class for any element inside of <code>DynaForm</code>.
@@ -27,15 +27,9 @@ import org.primefaces.extensions.model.common.DataWrapper;
  * @version $Revision$
  * @since   0.5
  */
-public abstract class DynaFormElement extends DataWrapper {
+public abstract class DynaFormElement extends IdentificableData {
 
 	public static final String DEFAULT_TYPE = "default";
-
-	protected static final String KEY_SEPARATOR = "_";
-
-	protected static final String KEY_SUFFIX_REGULAR = "_reg";
-
-	protected static final String KEY_SUFFIX_EXTENDED = "_ext";
 
 	protected String type;
 
@@ -105,17 +99,5 @@ public abstract class DynaFormElement extends DataWrapper {
 
 	public void setColumn(int column) {
 		this.column = column;
-	}
-
-	public String getKey() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(row).append(KEY_SEPARATOR).append(column);
-		if (extended) {
-			sb.append(KEY_SUFFIX_EXTENDED);
-		} else {
-			sb.append(KEY_SUFFIX_REGULAR);
-		}
-
-		return sb.toString();
 	}
 }

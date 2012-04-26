@@ -36,6 +36,12 @@ public class DefaultDynaFormElement extends DynaFormElement implements Serializa
 
 	private static final long serialVersionUID = 20120417L;
 
+	protected static final String KEY_SEPARATOR = "_";
+
+	protected static final String KEY_SUFFIX_REGULAR = "_reg";
+
+	protected static final String KEY_SUFFIX_EXTENDED = "_ext";
+
 	public DefaultDynaFormElement() {
 		this.type = DEFAULT_TYPE;
 	}
@@ -43,11 +49,15 @@ public class DefaultDynaFormElement extends DynaFormElement implements Serializa
 	public DefaultDynaFormElement(final Object data) {
 		setData(data);
 		this.type = DEFAULT_TYPE;
+
+		setKey(generateKey());
 	}
 
 	public DefaultDynaFormElement(final Object data, final String type) {
 		setData(data);
 		this.type = type;
+
+		setKey(generateKey());
 	}
 
 	public DefaultDynaFormElement(final Object data, final String type, final String label, final boolean required,
@@ -60,12 +70,26 @@ public class DefaultDynaFormElement extends DynaFormElement implements Serializa
 		this.colspan = colspan;
 		this.row = row;
 		this.column = column;
+
+		setKey(generateKey());
+	}
+
+	protected String generateKey() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(row).append(KEY_SEPARATOR).append(column);
+		if (extended) {
+			sb.append(KEY_SUFFIX_EXTENDED);
+		} else {
+			sb.append(KEY_SUFFIX_REGULAR);
+		}
+
+		return sb.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		if (getData() != null) {
-			return new HashCodeBuilder(17, 37).append(getData()).toHashCode();
+		if (getKey() != null) {
+			return new HashCodeBuilder(17, 37).append(getKey()).toHashCode();
 		} else {
 			return new HashCodeBuilder(17, 37).append(type).append(label).append(required).append(extended).append(colspan)
 			                                  .append(row).append(column).toHashCode();
@@ -88,8 +112,8 @@ public class DefaultDynaFormElement extends DynaFormElement implements Serializa
 
 		DefaultDynaFormElement ddfe = (DefaultDynaFormElement) obj;
 
-		if (getData() != null) {
-			return new EqualsBuilder().append(getData(), ddfe.getData()).isEquals();
+		if (getKey() != null) {
+			return new EqualsBuilder().append(getKey(), ddfe.getKey()).isEquals();
 		} else {
 			return new EqualsBuilder().append(type, ddfe.type).append(label, ddfe.label).append(required, ddfe.required)
 			                          .append(extended, ddfe.extended).append(colspan, ddfe.colspan).append(row, ddfe.row)
@@ -99,14 +123,10 @@ public class DefaultDynaFormElement extends DynaFormElement implements Serializa
 
 	@Override
 	public String toString() {
-		if (getData() != null) {
-			return getData().toString();
-		} else {
-			return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("type", type).append("label", label)
-			                                                                  .append("required", required)
-			                                                                  .append("extended", extended)
-			                                                                  .append("colspan", colspan).append("row", row)
-			                                                                  .append("column", column).toString();
-		}
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("data", getData()).append("key", getKey())
+		                                                                  .append("type", type).append("label", label)
+		                                                                  .append("required", required)
+		                                                                  .append("extended", extended).append("colspan", colspan)
+		                                                                  .append("row", row).append("column", column).toString();
 	}
 }

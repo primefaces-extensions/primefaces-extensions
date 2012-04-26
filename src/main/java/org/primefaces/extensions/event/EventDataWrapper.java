@@ -23,6 +23,8 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 
+import org.primefaces.extensions.model.common.IdentificableData;
+
 /**
  * Event wrapper.
  *
@@ -30,23 +32,23 @@ import javax.faces.event.PhaseId;
  * @version $Revision$
  * @since   0.5
  */
-public class EventWrapper extends FacesEvent {
+public class EventDataWrapper extends FacesEvent {
 
 	private FacesEvent event = null;
-	private String key = null;
+	private IdentificableData data = null;
 
-	public EventWrapper(final UIComponent component, final FacesEvent event, final String key) {
+	public EventDataWrapper(final UIComponent component, final FacesEvent event, final IdentificableData data) {
 		super(component);
 		this.event = event;
-		this.key = key;
+		this.data = data;
 	}
 
 	public FacesEvent getFacesEvent() {
 		return (this.event);
 	}
 
-	public String getKey() {
-		return key;
+	public IdentificableData getData() {
+		return data;
 	}
 
 	@Override
