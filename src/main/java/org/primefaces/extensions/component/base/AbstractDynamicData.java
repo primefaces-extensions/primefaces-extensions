@@ -23,8 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.ContextCallback;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
@@ -32,6 +34,9 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.UniqueIdVendor;
+import javax.faces.component.visit.VisitCallback;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
@@ -125,9 +130,42 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
+	/**
+	 * Finds instance of {@link IdentificableData} by corresponding key.
+	 *
+	 * @param  key unique key
+	 * @return IdentificableData found data
+	 */
 	protected abstract IdentificableData findData(final String key);
 
+	/**
+	 * Processes children components during processDecodes(), processValidators(), processUpdates().
+	 *
+	 * @param context faces context {@link FacesContext}
+	 * @param phaseId current JSF phase id
+	 */
 	protected abstract void processChildren(final FacesContext context, final PhaseId phaseId);
+
+	/**
+	 * Visits children components during visitTree().
+	 *
+	 * @param  context  visit context {@link VisitContext}
+	 * @param  callback visit callback {@link VisitCallback}
+	 * @return boolean true - indicates that the children's visit is complete (e.g. all components that need to be visited have
+	 *         been visited), false - otherwise.
+	 */
+	protected abstract boolean visitChildren(final VisitContext context, final VisitCallback callback);
+
+	/**
+	 * Searches a child component with the given clientId during invokeOnComponent() and invokes the callback on it if found.
+	 *
+	 * @param  context  faces context {@link FacesContext}
+	 * @param  clientId client Id
+	 * @param  callback {@link ContextCallback}
+	 * @return boolean true - child component was found, else - otherwise
+	 */
+	protected abstract boolean invokeOnChildren(final FacesContext context, final String clientId,
+	                                            final ContextCallback callback);
 
 	public void setData(final String key) {
 		saveDescendantState();
@@ -194,6 +232,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			getStateHelper().remove(PropertyKeys.saved);
 		}
 
+		processFacets(context, PhaseId.APPLY_REQUEST_VALUES, this);
 		processChildren(context, PhaseId.APPLY_REQUEST_VALUES);
 
 		try {
@@ -216,18 +255,22 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		Application app = context.getApplication();
 		app.publishEvent(context, PreValidateEvent.class, this);
+
+		processFacets(context, PhaseId.PROCESS_VALIDATIONS, this);
 		processChildren(context, PhaseId.PROCESS_VALIDATIONS);
+
 		app.publishEvent(context, PostValidateEvent.class, this);
 		popComponentFromEL(context);
 	}
 
 	@Override
-	public void processUpdates(FacesContext context) {
+	public void processUpdates(final FacesContext context) {
 		if (!isRendered()) {
 			return;
 		}
 
 		pushComponentToEL(context, this);
+		processFacets(context, PhaseId.UPDATE_MODEL_VALUES, this);
 		processChildren(context, PhaseId.UPDATE_MODEL_VALUES);
 		popComponentFromEL(context);
 	}
@@ -245,12 +288,133 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			return;
 		}
 
+		FacesContext context = FacesContext.getCurrentInstance();
+		IdentificableData oldData = getData();
 		EventDataWrapper eventDataWrapper = (EventDataWrapper) event;
 		FacesEvent originalEvent = eventDataWrapper.getFacesEvent();
 		UIComponent originalSource = (UIComponent) originalEvent.getSource();
 		setData(eventDataWrapper.getData());
 
-		originalSource.broadcast(originalEvent);
+		UIComponent compositeParent = null;
+		try {
+			if (!UIComponent.isCompositeComponent(originalSource)) {
+				compositeParent = getCompositeComponentParent(originalSource);
+			}
+
+			if (compositeParent != null) {
+				compositeParent.pushComponentToEL(context, null);
+			}
+
+			originalSource.pushComponentToEL(context, null);
+			originalSource.broadcast(originalEvent);
+		} finally {
+			originalSource.popComponentFromEL(context);
+			if (compositeParent != null) {
+				compositeParent.popComponentFromEL(context);
+			}
+		}
+
+		setData(oldData);
+	}
+
+	@Override
+	public boolean visitTree(final VisitContext context, final VisitCallback callback) {
+		if (!isVisitable(context)) {
+			return false;
+		}
+
+		final FacesContext fc = context.getFacesContext();
+		IdentificableData oldData = getData();
+		resetData();
+
+		pushComponentToEL(fc, null);
+
+		try {
+			VisitResult result = context.invokeVisitCallback(this, callback);
+
+			if (result == VisitResult.COMPLETE) {
+				return true;
+			}
+
+			if (result == VisitResult.ACCEPT && !context.getSubtreeIdsToVisit(this).isEmpty()) {
+				if (getFacetCount() > 0) {
+					for (UIComponent facet : getFacets().values()) {
+						if (facet.visitTree(context, callback)) {
+							return true;
+						}
+					}
+				}
+
+				if (visitChildren(context, callback)) {
+					return true;
+				}
+			}
+		} finally {
+			popComponentFromEL(fc);
+			setData(oldData);
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean invokeOnComponent(final FacesContext context, final String clientId, final ContextCallback callback) {
+		IdentificableData oldData = getData();
+		resetData();
+
+		try {
+			if (clientId.equals(super.getClientId(context))) {
+				this.pushComponentToEL(context, getCompositeComponentParent(this));
+				callback.invokeContextCallback(context, this);
+
+				return true;
+			}
+
+			if (getFacetCount() > 0) {
+				for (UIComponent c : getFacets().values()) {
+					if (clientId.equals(c.getClientId(context))) {
+						callback.invokeContextCallback(context, c);
+
+						return true;
+					}
+				}
+			}
+
+			return invokeOnChildren(context, clientId, callback);
+		} catch (FacesException fe) {
+			throw fe;
+		} catch (Exception e) {
+			throw new FacesException(e);
+		} finally {
+			popComponentFromEL(context);
+			setData(oldData);
+		}
+	}
+
+	protected void processFacets(final FacesContext context, final PhaseId phaseId, final UIComponent component) {
+		resetData();
+
+		if (component.getFacetCount() > 0) {
+			for (UIComponent facet : component.getFacets().values()) {
+				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+					facet.processDecodes(context);
+				} else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+					facet.processValidators(context);
+				} else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+					facet.processUpdates(context);
+				} else {
+					throw new IllegalArgumentException();
+				}
+			}
+		}
+	}
+
+	protected void exposeVarData() {
+		if (getData() == null) {
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove(getVar());
+		} else {
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(getVar(), getData().getData());
+		}
 	}
 
 	public String createUniqueId(final FacesContext context, final String seed) {
@@ -345,32 +509,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			for (UIComponent facet : component.getFacets().values()) {
 				restoreDescendantState(context, facet);
 			}
-		}
-	}
-
-	protected void processFacets(final FacesContext context, final PhaseId phaseId, final UIComponent component) {
-		resetData();
-
-		if (component.getFacetCount() > 0) {
-			for (UIComponent facet : component.getFacets().values()) {
-				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
-					facet.processDecodes(context);
-				} else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
-					facet.processValidators(context);
-				} else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
-					facet.processUpdates(context);
-				} else {
-					throw new IllegalArgumentException();
-				}
-			}
-		}
-	}
-
-	protected void exposeVarData() {
-		if (getData() == null) {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove(getVar());
-		} else {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(getVar(), getData().getData());
 		}
 	}
 }

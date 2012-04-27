@@ -25,8 +25,11 @@ import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.visit.VisitCallback;
+import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 
@@ -207,8 +210,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 	@Override
 	protected void processChildren(final FacesContext context, final PhaseId phaseId) {
-		processFacets(context, phaseId, this);
-
 		Object value = getValue();
 		if (value != null) {
 			Class clazz = value.getClass();
@@ -239,6 +240,90 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		resetData();
 	}
 
+	@Override
+	protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
+		Object value = getValue();
+		if (value == null) {
+			return false;
+		}
+
+		Class clazz = value.getClass();
+		if (List.class.isAssignableFrom(clazz)) {
+			List dynaFormElements = (List) value;
+			for (Object obj : dynaFormElements) {
+				if (obj instanceof DynaFormElement) {
+					if (visitDynaFormCells(context, callback, (DynaFormElement) obj)) {
+						return true;
+					}
+				} else {
+					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+				}
+			}
+		} else if (clazz.isArray()) {
+			Class elementType = clazz.getComponentType();
+			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
+				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+			}
+
+			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
+			for (DynaFormElement dynaFormElement : dynaFormElements) {
+				if (visitDynaFormCells(context, callback, dynaFormElement)) {
+					return true;
+				}
+			}
+		} else {
+			throw new FacesException("Value of DynaForm must be either List oder Array");
+		}
+
+		resetData();
+
+		return false;
+	}
+
+	@Override
+	protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
+		Object value = getValue();
+		if (value == null) {
+			return false;
+		}
+
+		Class clazz = value.getClass();
+		if (List.class.isAssignableFrom(clazz)) {
+			List dynaFormElements = (List) value;
+			for (Object obj : dynaFormElements) {
+				if (obj instanceof DynaFormElement) {
+					setData((DynaFormElement) obj);
+
+					if (super.invokeOnComponent(context, clientId, callback)) {
+						return true;
+					}
+				} else {
+					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+				}
+			}
+		} else if (clazz.isArray()) {
+			Class elementType = clazz.getComponentType();
+			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
+				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
+			}
+
+			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
+			for (DynaFormElement dynaFormElement : dynaFormElements) {
+				setData(dynaFormElement);
+
+				if (super.invokeOnComponent(context, clientId, callback)) {
+					return true;
+				}
+			}
+		} else {
+			throw new FacesException("Value of DynaForm must be either List oder Array");
+		}
+
+		resetData();
+
+		return false;
+	}
+
 	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormElement dynaFormElement) {
 		setData(dynaFormElement);
 
@@ -267,5 +352,26 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 				}
 			}
 		}
+	}
+
+	private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback,
+	                                   final DynaFormElement dynaFormElement) {
+		setData(dynaFormElement);
+
+		if (getData() == null) {
+			return false;
+		}
+
+		if (getChildCount() > 0) {
+			for (UIComponent child : getChildren()) {
+				if (child instanceof DynaFormCell) {
+					if (child.visitTree(context, callback)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }
