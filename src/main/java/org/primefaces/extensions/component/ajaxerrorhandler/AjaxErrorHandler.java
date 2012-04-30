@@ -38,8 +38,7 @@ import java.util.List;
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
         @ResourceDependency(library = "primefaces", name = "primefaces.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "ajaxerrorhandler/ajaxerrorhandler.js")
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class AjaxErrorHandler extends UIComponentBase implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

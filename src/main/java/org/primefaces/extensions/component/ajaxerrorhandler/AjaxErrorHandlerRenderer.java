@@ -52,36 +52,18 @@ public class AjaxErrorHandlerRenderer extends CoreRenderer {
 
 
         Map<String, String> values = getConfigJSON(ajaxErrorHandler);
-        boolean hostnameIsDefined = context.getExternalContext().getRequestMap().get(hostnameRequestKey)!=null;
 
-
-        // If component has facet ...
-//        writeFacetIfExists(context, writer, ajaxErrorHandler, values, AjaxErrorHandler.PropertyKeys.title.toString(), clientId);
-//        writeFacetIfExists(context, writer, ajaxErrorHandler, values, AjaxErrorHandler.PropertyKeys.body.toString(), clientId);
-//        writeCustomBodyIfExists(context, writer, ajaxErrorHandler, values, clientId);
-
-        if (values.size()>0) {
-            String json = GsonConverter.getGson().toJson(values);
-            startScript(writer, clientId);
-            if (!hostnameIsDefined) {
-                writer.write("PrimeFacesExt.AjaxErrorHandler.setHostname('"+getHostname()+"');");
-                hostnameIsDefined = true;
-                context.getExternalContext().getRequestMap().put(hostnameRequestKey, true);
-            }
-            if (widgetVar!=null)
-                writer.write(widgetVar+" = ");
-
-            writer.write("PrimeFacesExt.AjaxErrorHandler.addErrorSettings("+json+");");
-            endScript(writer);
-        }
-
-        // If hostname is not added ...
-        if (!hostnameIsDefined) {
-            startScript(writer, clientId);
+        String json = GsonConverter.getGson().toJson(values);
+        startScript(writer, clientId);
+        if (context.getExternalContext().getRequestMap().get(hostnameRequestKey)==null) {
             writer.write("PrimeFacesExt.AjaxErrorHandler.setHostname('"+getHostname()+"');");
             context.getExternalContext().getRequestMap().put(hostnameRequestKey, true);
-            endScript(writer);
         }
+        if (widgetVar!=null)
+            writer.write(widgetVar+" = ");
+
+        writer.write("PrimeFacesExt.AjaxErrorHandler.addErrorSettings("+json+");");
+        endScript(writer);
     }
     protected String getHostname() {
         try {
@@ -99,7 +81,7 @@ public class AjaxErrorHandlerRenderer extends CoreRenderer {
     private final static String CONF_BUTTON_TEXT = "buttonText";
     private final static String CONF_BUTTON_ONCLICK = "buttonOnClick";
     private final static String CONF_ONERROR = "onerror";
-//    private final static String CONF_CUSTOM_CONTENT_ID = "customContentId";
+
     protected Map<String, String> getConfigJSON(final AjaxErrorHandler ajaxErrorHandler) {
         Map<String, String> values = new LinkedHashMap<String, String>();
         if (!StringUtils.isEmpty(ajaxErrorHandler.getType())) {
@@ -122,54 +104,6 @@ public class AjaxErrorHandlerRenderer extends CoreRenderer {
         }
         return values;
     }
-
-//    protected void writeFacetIfExists(FacesContext facesContext, ResponseWriter writer, AjaxErrorHandler ajaxErrorHandler, Map<String, String> jsonConfig, String type, String clientId) throws IOException {
-//        UIComponent facet = ajaxErrorHandler.getFacet(type);
-//        if (facet == null) return;
-//
-//        String facetId = clientId+"_"+type;
-//
-//        writer.startElement("div", null);
-//        writer.writeAttribute("style","display:none;",null);
-//        writer.writeAttribute("id", facetId, null);
-//
-//        renderChild(facesContext, facet);
-//
-//        writer.endElement("div");
-//
-//        jsonConfig.put(type+"Id", facetId);
-//    }
-//
-//    protected void writeCustomBodyIfExists (FacesContext facesContext, ResponseWriter writer, AjaxErrorHandler ajaxErrorHandler, Map<String, String> jsonConfig, String clientId) throws IOException {
-//        if (ajaxErrorHandler.getChildCount()==0) return;
-//
-//
-//        String contentId = clientId+"_customContent";
-//
-//        writer.startElement("div", null);
-//        writer.writeAttribute("style","display:none;",null);
-//        writer.writeAttribute("id", contentId, null);
-//
-//        for (UIComponent child : ajaxErrorHandler.getChildren()) {
-//            renderChild(facesContext, child);
-//        }
-//
-//        writer.endElement("div");
-//
-//        jsonConfig.put(CONF_CUSTOM_CONTENT_ID, contentId);
-//    }
-
-//    @Override
-//    protected void startScript(ResponseWriter writer, String clientId) throws IOException {
-//        super.startScript(writer, clientId);
-//        writer.write("$(function(){");
-//    }
-//
-//    @Override
-//    protected void endScript(ResponseWriter writer) throws IOException {
-//        writer.write("});");
-//        super.endScript(writer);
-//    }
 
     @Override
     public void encodeChildren(FacesContext context, UIComponent component) throws IOException {

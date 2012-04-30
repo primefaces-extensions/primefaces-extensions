@@ -8,64 +8,71 @@ PrimeFacesExt.AjaxErrorHandler = function() {
     var defaultHostname = '???unknown???';
     var getDefaultErrorTime = function() {return new Date().toString();};
 
-    PrimeFaces.ajax.AjaxResponse = function() {
-        // backup original AjaxResponse function ...
-        var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
+    var init = function() {
+        // redefine init function
+        init = function() {};
 
-        return function() {
-            var docPartialUpdate = arguments[0];
-            var nodeErrors = docPartialUpdate.getElementsByTagName('error');
-            if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
-                // XML => JSON
-                var error = {};
-                for (var i=0; i<nodeErrors[0].childNodes.length; i++) {
-                    var node = nodeErrors[0].childNodes[i];
-                    var key = node.nodeName;
-                    var val = node.nodeValue;
-                    if (node.childNodes && node.childNodes.length) {
-                        val = node.childNodes[0].nodeValue;
+
+        PrimeFaces.ajax.AjaxResponse = function() {
+            // backup original AjaxResponse function ...
+            var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
+
+            return function() {
+                var docPartialUpdate = arguments[0];
+                var nodeErrors = docPartialUpdate.getElementsByTagName('error');
+                if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
+                    // XML => JSON
+                    var error = {};
+                    for (var i=0; i<nodeErrors[0].childNodes.length; i++) {
+                        var node = nodeErrors[0].childNodes[i];
+                        var key = node.nodeName;
+                        var val = node.nodeValue;
+                        if (node.childNodes && node.childNodes.length) {
+                            val = node.childNodes[0].nodeValue;
+                        }
+                        error[key] = val;
                     }
-                    error[key] = val;
-                }
 
-                if (error['error-name']) {
-                    // findErrorSettings
-                    var errorSetting = findErrorSettings(error['error-name']);
-                    var retOnError = true;
-                    if (errorSetting['onerror']) {
-                        try {
-                            var fun = errorSetting['onerror'];
-                            if (typeof(fun) != 'function') {
-                                fun = function(error, response) {
-                                    return eval(errorSetting['onerror']);
+                    if (error['error-name']) {
+                        // findErrorSettings
+                        var errorSetting = findErrorSettings(error['error-name']);
+                        var retOnError = true;
+                        if (errorSetting['onerror']) {
+                            try {
+                                var fun = errorSetting['onerror'];
+                                if (typeof(fun) != 'function') {
+                                    fun = function(error, response) {
+                                        return eval(errorSetting['onerror']);
+                                    };
                                 };
-                            };
 
-                            fun.call(this, error, arguments[2]);
-                        } catch(e) {}
-                    }
-                    if (retOnError !== false) {
-                        // Copy updates to errorSettings ...
-                        if (error.updateCustomContent && error.updateCustomContent.substring(-13)=='<exception />') error.updateCustomContent=null;
-                        if (error.updateTitle && error.updateTitle.substring(-13)=='<exception />') error.updateTitle=null;
-                        if (error.updateBody && error.updateBody.substring(-13)=='<exception />') error.updateBody= null;
-                        if (error.updateViewState && error.updateViewState.substring(-13)=='<exception />') error.updateViewState= null;
+                                fun.call(this, error, arguments[2]);
+                            } catch(e) {}
+                        }
+                        if (retOnError !== false) {
+                            // Copy updates to errorSettings ...
+                            if (error.updateCustomContent && error.updateCustomContent.substring(-13)=='<exception />') error.updateCustomContent=null;
+                            if (error.updateTitle && error.updateTitle.substring(-13)=='<exception />') error.updateTitle=null;
+                            if (error.updateBody && error.updateBody.substring(-13)=='<exception />') error.updateBody= null;
+                            if (error.updateViewState && error.updateViewState.substring(-13)=='<exception />') error.updateViewState= null;
 
-                        errorSetting.updateCustomContent = error.updateCustomContent;
-                        errorSetting.updateTitle = error.updateTitle;
-                        errorSetting.updateBody = error.updateBody;
-                        errorSetting.updateViewState = error.updateViewState;
+                            errorSetting.updateCustomContent = error.updateCustomContent;
+                            errorSetting.updateTitle = error.updateTitle;
+                            errorSetting.updateBody = error.updateBody;
+                            errorSetting.updateViewState = error.updateViewState;
 
-                        var errorData = replaceVariables(errorSetting, error);
+                            var errorData = replaceVariables(errorSetting, error);
 
-                        showPopupWindow(errorData);
-                        return true;
+                            showPopupWindow(errorData);
+                            return true;
+                        }
                     }
                 }
+                return backupAjaxResponse.apply(window, arguments);
             }
-            return backupAjaxResponse.apply(window, arguments);
-        }
-    }();
+        }();
+    }
+
 
     var defSettings = {
         'title': '{error-name}',
@@ -216,12 +223,14 @@ PrimeFacesExt.AjaxErrorHandler = function() {
 
     return {
         addErrorSettings: function(conf) {
+            init();
             addErrorSettings(conf);
             return PrimeFacesExt.AjaxErrorHandler;
         },
         hide: destroyPopupWindow,
         isVisible : isVisible,
         setHostname: function(hostname) {
+            init();
             defaultHostname = hostname;
         }
     };

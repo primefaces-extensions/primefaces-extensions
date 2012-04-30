@@ -23,6 +23,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
+import javax.faces.component.visit.VisitCallback;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.component.visit.VisitResult;
 import javax.faces.context.*;
 import javax.faces.event.*;
 import java.io.IOException;
@@ -208,7 +211,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
             UIViewRoot root = context.getViewRoot();
             MyAjaxErrorHandlerCache cache = new MyAjaxErrorHandlerCache(errorName);
-            findAjaxErrorHandlers(cache, root);
+            root.visitTree(VisitContext.createVisitContext(context), cache);
 
             UIComponent titleFacet = cache.findCurrentTitleFacet();
             if (titleFacet!=null) {
@@ -332,7 +335,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
         }
     }
 
-    static private class MyAjaxErrorHandlerCache {
+    static private class MyAjaxErrorHandlerCache implements VisitCallback {
         List<AjaxErrorHandler> defaultAjaxErrorHandler = new LinkedList<AjaxErrorHandler>();
         List<AjaxErrorHandler> typeAjaxErrorHandler = new LinkedList<AjaxErrorHandler>();
 
@@ -341,17 +344,6 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
             this.type = type;
         }
 
-        void add(AjaxErrorHandler handler) {
-            if (handler.getType()==null) {
-                isResolved = false;
-                defaultAjaxErrorHandler.add(handler);
-                return;
-            }
-            if (StringUtils.equals(handler.getType(), this.type)) {
-                isResolved = false;
-                typeAjaxErrorHandler.add(handler);
-            }
-        }
         UIComponent facetTitle = null;
         UIComponent facetBody = null;
         List<UIComponent> customContent = null;
@@ -410,18 +402,39 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
             resolveFacetsAndCustomContent();
             return customContent;
         }
+
+        public VisitResult visit(VisitContext context, UIComponent target) {
+            if (!target.isRendered()) {
+                return VisitResult.REJECT;
+            }
+            if (!(target instanceof AjaxErrorHandler)) return VisitResult.ACCEPT;
+
+            AjaxErrorHandler handler = (AjaxErrorHandler) target;
+
+            if (handler.getType()==null) {
+                isResolved = false;
+                defaultAjaxErrorHandler.add(handler);
+            }
+            else if (StringUtils.equals(handler.getType(), this.type)) {
+                isResolved = false;
+                typeAjaxErrorHandler.add(handler);
+            }
+
+            return VisitResult.REJECT;
+        }
     }
 
 
-    private void findAjaxErrorHandlers(MyAjaxErrorHandlerCache cache, UIComponent component) {
-        if (component == null) return;
-        if (component instanceof AjaxErrorHandler) {
-            cache.add((AjaxErrorHandler)component);
-            return;
-        }
-        if (component.getChildCount()==0) return;
-        for (UIComponent child : component.getChildren()) {
-            findAjaxErrorHandlers(cache, child);
-        }
-    }
+//    private void findAjaxErrorHandlers(MyAjaxErrorHandlerCache cache, UIComponent component) {
+//        if (component == null) return;
+//        if (!component.isRendered()) return;
+//        if (component instanceof AjaxErrorHandler) {
+//            cache.add((AjaxErrorHandler)component);
+//            return;
+//        }
+//        if (component.getChildCount()==0) return;
+//        for (UIComponent child : component.getChildren()) {
+//            findAjaxErrorHandlers(cache, child);
+//        }
+//    }
 }

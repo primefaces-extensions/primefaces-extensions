@@ -135,7 +135,6 @@
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
                                 <include>inputnumber/**</include>
-                                <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -173,6 +172,7 @@
                         <resourcesSet>
                             <includes>
                                 <include>core/core.js</include>
+                                <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
                                 <include>ajaxstatus/ajaxstatus.js</include>
                                 <include>blockpanel/blockpanel.js</include>
                                 <include>blockui/*.js</include>                                
@@ -181,7 +181,7 @@
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                                 <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
-                                <include>timeline/timeline.js</include>           
+                                <include>timeline/timeline.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
