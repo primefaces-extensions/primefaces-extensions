@@ -136,7 +136,8 @@ PrimeFacesExt.AjaxErrorHandler = function() {
         return ret;
     }
 
-    var win =  null;
+    var win = null;
+    var winRoot =  null;
     var winMask = null;
     var winRecalcHeight = null;
     var showPopupWindow = function(errorData) {
@@ -144,7 +145,9 @@ PrimeFacesExt.AjaxErrorHandler = function() {
 
         winMask = $('<div class="ui-widget-overlay"></div>').hide();
         win = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-overlay-visible"></div>').hide();
-        $('body').append(winMask, win);
+
+        winRoot = $('<div class="pe-ajax-error-handler" style="z-index: 999999999; overflow: visible; position: absolute; left:0px; top: 0px;"></div>').append(win, winMask);
+        $('body').append(winRoot);
 
         if (errorData.updateCustomContent) {
             var elContent = $('<div></div>');
@@ -210,11 +213,12 @@ PrimeFacesExt.AjaxErrorHandler = function() {
         winRecalcHeight();
     };
     var destroyPopupWindow = function () {
-        if (winMask) winMask.remove();
-        if (win) win.remove();
+//        if (winMask) winMask.remove();
+        if (winRoot) winRoot.remove();
 //        if (winRecalcHeight) $(window).unbind('resize', winRecalcHeight);
+        winRoot = null;
         winMask = null;
-        win = null;
+        win=null;
         winRecalcHeight = null;
     };
     var isVisible = function() {
