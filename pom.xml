@@ -88,6 +88,16 @@
             </roles>
             <timezone>-3.0</timezone>
         </developer>
+        <developer>
+            <id>pavol.slany</id>
+            <name>Pavol Slany</name>
+            <email>pavol.slany@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <!--Europe/Bratislava-->
+            <timezone>+1</timezone>
+        </developer>
     </developers>
 
     <build>
