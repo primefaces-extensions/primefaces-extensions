@@ -25,6 +25,12 @@ import org.primefaces.renderkit.CoreRenderer;
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.5
  */
 public class DynaFormRenderer extends CoreRenderer {
+
+	private static final String FACET_PRE_INCLUDE_REGULAR = "preIncludeRegular";
+	private static final String FACET_POST_INCLUDE_REGULAR = "postIncludeRegular";
+	private static final String FACET_PRE_INCLUDE_EXTENDED = "preIncludeExtended";
+	private static final String FACET_POST_INCLUDE_EXTENDED = "postIncludeExtended";
 }

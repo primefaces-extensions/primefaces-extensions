@@ -45,7 +45,7 @@ import javax.faces.event.PostValidateEvent;
 import javax.faces.event.PreValidateEvent;
 
 import org.primefaces.extensions.event.EventDataWrapper;
-import org.primefaces.extensions.model.common.IdentificableData;
+import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.util.SavedEditableValueState;
 
 /**
@@ -59,7 +59,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 	protected static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	protected IdentificableData data;
+	protected KeyData data;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -131,12 +131,17 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	/**
-	 * Finds instance of {@link IdentificableData} by corresponding key.
+	 * Finds instance of {@link org.primefaces.extensions.model.common.KeyData} by corresponding key.
 	 *
 	 * @param  key unique key
 	 * @return IdentificableData found data
 	 */
-	protected abstract IdentificableData findData(final String key);
+	protected abstract KeyData findData(final String key);
+
+	/**
+	 * Exposes variables for each iteration.
+	 */
+	protected abstract void exposeVars();
 
 	/**
 	 * Processes children components during processDecodes(), processValidators(), processUpdates().
@@ -172,16 +177,16 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		this.data = findData(key);
 
-		exposeVarData();
+		exposeVars();
 		restoreDescendantState();
 	}
 
-	public void setData(final IdentificableData data) {
+	public void setData(final KeyData data) {
 		saveDescendantState();
 
 		this.data = data;
 
-		exposeVarData();
+		exposeVars();
 		restoreDescendantState();
 	}
 
@@ -190,18 +195,18 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		this.data = null;
 
-		exposeVarData();
+		exposeVars();
 		restoreDescendantState();
 	}
 
-	public IdentificableData getData() {
+	public KeyData getData() {
 		return data;
 	}
 
 	@Override
 	public String getContainerClientId(final FacesContext context) {
 		String clientId = super.getContainerClientId(context);
-		IdentificableData data = getData();
+		KeyData data = getData();
 		String key = (data != null ? data.getKey() : null);
 
 		if (key == null) {
@@ -289,7 +294,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		IdentificableData oldData = getData();
+		KeyData oldData = getData();
 		EventDataWrapper eventDataWrapper = (EventDataWrapper) event;
 		FacesEvent originalEvent = eventDataWrapper.getFacesEvent();
 		UIComponent originalSource = (UIComponent) originalEvent.getSource();
@@ -324,7 +329,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 
 		final FacesContext fc = context.getFacesContext();
-		IdentificableData oldData = getData();
+		KeyData oldData = getData();
 		resetData();
 
 		pushComponentToEL(fc, null);
@@ -359,7 +364,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 	@Override
 	public boolean invokeOnComponent(final FacesContext context, final String clientId, final ContextCallback callback) {
-		IdentificableData oldData = getData();
+		KeyData oldData = getData();
 		resetData();
 
 		try {
@@ -406,14 +411,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 					throw new IllegalArgumentException();
 				}
 			}
-		}
-	}
-
-	protected void exposeVarData() {
-		if (getData() == null) {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().remove(getVar());
-		} else {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(getVar(), getData().getData());
 		}
 	}
 

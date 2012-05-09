@@ -19,7 +19,9 @@
 package org.primefaces.extensions.component.dynaform;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -35,14 +37,16 @@ import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
-import org.primefaces.extensions.model.common.IdentificableData;
-import org.primefaces.extensions.model.dynaform.DynaFormElement;
+import org.primefaces.extensions.model.common.KeyData;
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormModel;
 
 /**
  * <code>DynaForm</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.5
  */
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
@@ -55,6 +59,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
 
+	private Map<String, DynaFormCell> cells;
+
 	/**
 	 * Properties that are tracked by state saving.
 	 *
@@ -64,7 +70,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		labelPosition, // "left" | "top" | "right"
+		forValue,
 		autoSubmit,
 		style,
 		styleClass;
@@ -101,12 +107,12 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	public void setLabelPosition(final String labelPosition) {
-		setAttribute(PropertyKeys.labelPosition, labelPosition);
+	public String getForValue() {
+		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	public String getLabelPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.labelPosition, "left");
+	public void setForValue(final String forValue) {
+		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
 	public boolean isAutoSubmit() {
@@ -169,71 +175,76 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 	}
 
+	public Map<String, DynaFormCell> getCells() {
+		if (cells == null) {
+			cells = new HashMap<String, DynaFormCell>();
+			for (UIComponent child : getChildren()) {
+				if (child instanceof DynaFormCell) {
+					DynaFormCell dynaFormCell = (DynaFormCell) child;
+					cells.put(dynaFormCell.getType(), dynaFormCell);
+				}
+			}
+		}
+
+		return cells;
+	}
+
+	public DynaFormCell getCell(String type) {
+		DynaFormCell cell = getCells().get(type);
+
+		if (cell == null) {
+			throw new FacesException("DynaFormCell to type " + type + " was not found");
+		} else {
+			return cell;
+		}
+	}
+
 	@Override
-	protected IdentificableData findData(final String key) {
+	protected KeyData findData(final String key) {
 		Object value = getValue();
 		if (value == null) {
 			return null;
 		}
 
-		Class clazz = value.getClass();
-		if (List.class.isAssignableFrom(clazz)) {
-			List dynaFormElements = (List) value;
-			for (Object obj : dynaFormElements) {
-				if (obj instanceof DynaFormElement) {
-					DynaFormElement dynaFormElement = (DynaFormElement) obj;
-					if (key.equals(dynaFormElement.getKey())) {
-						return dynaFormElement;
-					}
-				} else {
-					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-				}
-			}
-		} else if (clazz.isArray()) {
-			Class elementType = clazz.getComponentType();
-			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
-				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-			}
+		if (!(value instanceof DynaFormModel)) {
+			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+		}
 
-			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
-			for (DynaFormElement dynaFormElement : dynaFormElements) {
-				if (key.equals(dynaFormElement.getKey())) {
-					return dynaFormElement;
-				}
+		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+		for (DynaFormControl dynaFormControl : dynaFormControls) {
+			if (key.equals(dynaFormControl.getKey())) {
+				return dynaFormControl;
 			}
-		} else {
-			throw new FacesException("Value of DynaForm must be either List oder Array");
 		}
 
 		return null;
 	}
 
 	@Override
+	protected void exposeVars() {
+		DynaFormControl dynaFormControl = (DynaFormControl) getData();
+		Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+
+		if (dynaFormControl == null) {
+			requestMap.remove(getVar());
+			requestMap.remove(getForValue());
+		} else {
+			requestMap.put(getVar(), dynaFormControl.getData());
+			requestMap.put(getForValue(), dynaFormControl.getRefKey());
+		}
+	}
+
+	@Override
 	protected void processChildren(final FacesContext context, final PhaseId phaseId) {
 		Object value = getValue();
 		if (value != null) {
-			Class clazz = value.getClass();
-			if (List.class.isAssignableFrom(clazz)) {
-				List dynaFormElements = (List) value;
-				for (Object obj : dynaFormElements) {
-					if (obj instanceof DynaFormElement) {
-						processDynaFormCells(context, phaseId, (DynaFormElement) obj);
-					} else {
-						throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-					}
-				}
-			} else if (clazz.isArray()) {
-				Class elementType = clazz.getComponentType();
-				if (!DynaFormElement.class.isAssignableFrom(elementType)) {
-					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-				}
+			if (!(value instanceof DynaFormModel)) {
+				throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+			}
 
-				DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
-				for (DynaFormElement dynaFormElement : dynaFormElements) {
-					processDynaFormCells(context, phaseId, dynaFormElement);
-				}
-			} else {
-				throw new FacesException("Value of DynaForm must be either List oder Array");
+			List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+			for (DynaFormControl dynaFormControl : dynaFormControls) {
+				processDynaFormCells(context, phaseId, dynaFormControl);
 			}
 		}
 
@@ -247,32 +258,15 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 			return false;
 		}
 
-		Class clazz = value.getClass();
-		if (List.class.isAssignableFrom(clazz)) {
-			List dynaFormElements = (List) value;
-			for (Object obj : dynaFormElements) {
-				if (obj instanceof DynaFormElement) {
-					if (visitDynaFormCells(context, callback, (DynaFormElement) obj)) {
-						return true;
-					}
-				} else {
-					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-				}
-			}
-		} else if (clazz.isArray()) {
-			Class elementType = clazz.getComponentType();
-			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
-				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-			}
+		if (!(value instanceof DynaFormModel)) {
+			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+		}
 
-			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
-			for (DynaFormElement dynaFormElement : dynaFormElements) {
-				if (visitDynaFormCells(context, callback, dynaFormElement)) {
-					return true;
-				}
+		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+		for (DynaFormControl dynaFormControl : dynaFormControls) {
+			if (visitDynaFormCells(context, callback, dynaFormControl)) {
+				return true;
 			}
-		} else {
-			throw new FacesException("Value of DynaForm must be either List oder Array");
 		}
 
 		resetData();
@@ -287,36 +281,17 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 			return false;
 		}
 
-		Class clazz = value.getClass();
-		if (List.class.isAssignableFrom(clazz)) {
-			List dynaFormElements = (List) value;
-			for (Object obj : dynaFormElements) {
-				if (obj instanceof DynaFormElement) {
-					setData((DynaFormElement) obj);
+		if (!(value instanceof DynaFormModel)) {
+			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+		}
 
-					if (super.invokeOnComponent(context, clientId, callback)) {
-						return true;
-					}
-				} else {
-					throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-				}
-			}
-		} else if (clazz.isArray()) {
-			Class elementType = clazz.getComponentType();
-			if (!DynaFormElement.class.isAssignableFrom(elementType)) {
-				throw new FacesException("Elements in DynaForm must be of type DynaFormElement");
-			}
+		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+		for (DynaFormControl dynaFormControl : dynaFormControls) {
+			setData(dynaFormControl);
 
-			DynaFormElement[] dynaFormElements = (DynaFormElement[]) value;
-			for (DynaFormElement dynaFormElement : dynaFormElements) {
-				setData(dynaFormElement);
-
-				if (super.invokeOnComponent(context, clientId, callback)) {
-					return true;
-				}
+			if (super.invokeOnComponent(context, clientId, callback)) {
+				return true;
 			}
-		} else {
-			throw new FacesException("Value of DynaForm must be either List oder Array");
 		}
 
 		resetData();
@@ -324,8 +299,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return false;
 	}
 
-	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormElement dynaFormElement) {
-		setData(dynaFormElement);
+	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
+		setData(dynaFormControl);
 
 		if (getData() == null) {
 			return;
@@ -355,8 +330,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback,
-	                                   final DynaFormElement dynaFormElement) {
-		setData(dynaFormElement);
+	                                   final DynaFormControl dynaFormControl) {
+		setData(dynaFormControl);
 
 		if (getData() == null) {
 			return false;

@@ -23,7 +23,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 import javax.faces.event.PhaseId;
 
-import org.primefaces.extensions.model.common.IdentificableData;
+import org.primefaces.extensions.model.common.KeyData;
 
 /**
  * Event wrapper.
@@ -35,9 +35,9 @@ import org.primefaces.extensions.model.common.IdentificableData;
 public class EventDataWrapper extends FacesEvent {
 
 	private FacesEvent event = null;
-	private IdentificableData data = null;
+	private KeyData data = null;
 
-	public EventDataWrapper(final UIComponent component, final FacesEvent event, final IdentificableData data) {
+	public EventDataWrapper(final UIComponent component, final FacesEvent event, final KeyData data) {
 		super(component);
 		this.event = event;
 		this.data = data;
@@ -47,7 +47,7 @@ public class EventDataWrapper extends FacesEvent {
 		return (this.event);
 	}
 
-	public IdentificableData getData() {
+	public KeyData getData() {
 		return data;
 	}
 

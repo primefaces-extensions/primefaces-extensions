@@ -24,13 +24,14 @@ import java.util.List;
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
 
-import org.primefaces.extensions.model.dynaform.DefaultDynaFormElement;
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
 /**
  * <code>DynaFormCell</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
+ * @since   0.5
  */
 public class DynaFormCell extends UIComponentBase {
 
@@ -77,7 +78,7 @@ public class DynaFormCell extends UIComponentBase {
 	}
 
 	public String getType() {
-		return (String) getStateHelper().eval(PropertyKeys.type, DefaultDynaFormElement.DEFAULT_TYPE);
+		return (String) getStateHelper().eval(PropertyKeys.type, DynaFormControl.DEFAULT_TYPE);
 	}
 
 	public void setStyleClass(final String styleClass) {

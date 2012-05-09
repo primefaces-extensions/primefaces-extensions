@@ -19,30 +19,19 @@
 package org.primefaces.extensions.model.common;
 
 /**
- * Data wrapper with unique key.
+ * Data wrapper interface with unique key.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public abstract class IdentificableData {
+public interface KeyData {
 
-	protected Object data;
-	protected String key;
+	Object getData();
 
-	public Object getData() {
-		return data;
-	}
+	void setData(Object data);
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+	String getKey();
 
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
+	void setKey(String key);
 }
