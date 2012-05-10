@@ -43,7 +43,7 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
 	    }
         
         // pfs metadata
-        this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+        this.input.data(PrimeFaces.CLIENT_ID_DATA, this.id);
 	},
 
 	toggle : function() {   
