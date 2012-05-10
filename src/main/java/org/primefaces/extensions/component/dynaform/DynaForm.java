@@ -39,7 +39,9 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormLabelControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.model.dynaform.DynaFormVarStatus;
 
 /**
  * <code>DynaForm</code> component.
@@ -70,14 +72,15 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		forValue,
+		varStatus,
 		autoSubmit,
+		openExtended,
 		style,
 		styleClass;
 
 		private String toString;
 
-		PropertyKeys(final String toString) {
+		PropertyKeys(String toString) {
 			this.toString = toString;
 		}
 
@@ -103,27 +106,35 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
-	public void setWidgetVar(final String widgetVar) {
+	public void setWidgetVar(String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
-	public String getForValue() {
-		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+	public String getVarStatus() {
+		return (String) getStateHelper().eval(PropertyKeys.varStatus, null);
 	}
 
-	public void setForValue(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+	public void setVarStatus(String varStatus) {
+		setAttribute(PropertyKeys.varStatus, varStatus);
 	}
 
 	public boolean isAutoSubmit() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.autoSubmit, false);
 	}
 
-	public void setAutoSubmit(final boolean autoSubmit) {
+	public void setAutoSubmit(boolean autoSubmit) {
 		setAttribute(PropertyKeys.autoSubmit, autoSubmit);
 	}
 
-	public void setStyle(final String style) {
+	public boolean isOpenExtended() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.openExtended, false);
+	}
+
+	public void setOpenExtended(boolean openExtended) {
+		setAttribute(PropertyKeys.openExtended, openExtended);
+	}
+
+	public void setStyle(String style) {
 		setAttribute(PropertyKeys.style, style);
 	}
 
@@ -131,7 +142,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.style, null);
 	}
 
-	public void setStyleClass(final String styleClass) {
+	public void setStyleClass(String styleClass) {
 		setAttribute(PropertyKeys.styleClass, styleClass);
 	}
 
@@ -150,7 +161,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")
@@ -200,7 +211,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	@Override
-	protected KeyData findData(final String key) {
+	protected KeyData findData(String key) {
 		Object value = getValue();
 		if (value == null) {
 			return null;
@@ -227,15 +238,25 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 		if (dynaFormControl == null) {
 			requestMap.remove(getVar());
-			requestMap.remove(getForValue());
+			requestMap.remove(getVarStatus());
 		} else {
 			requestMap.put(getVar(), dynaFormControl.getData());
-			requestMap.put(getForValue(), dynaFormControl.getRefKey());
+
+			String forValue = null;
+			if (dynaFormControl instanceof DynaFormLabelControl) {
+				forValue = ((DynaFormLabelControl) dynaFormControl).getRefKey();
+			}
+
+			DynaFormVarStatus dynaFormVarStatus =
+			    new DynaFormVarStatus(dynaFormControl.getColspan(), dynaFormControl.getRowspan(), dynaFormControl.getRow(),
+			                          dynaFormControl.getColumn(), dynaFormControl.isExtended(), forValue);
+
+			requestMap.put(getVarStatus(), dynaFormVarStatus);
 		}
 	}
 
 	@Override
-	protected void processChildren(final FacesContext context, final PhaseId phaseId) {
+	protected void processChildren(FacesContext context, PhaseId phaseId) {
 		Object value = getValue();
 		if (value != null) {
 			if (!(value instanceof DynaFormModel)) {
@@ -252,7 +273,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	@Override
-	protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
+	protected boolean visitChildren(VisitContext context, VisitCallback callback) {
 		Object value = getValue();
 		if (value == null) {
 			return false;
@@ -275,7 +296,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	@Override
-	protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
+	protected boolean invokeOnChildren(FacesContext context, String clientId, ContextCallback callback) {
 		Object value = getValue();
 		if (value == null) {
 			return false;
@@ -299,7 +320,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return false;
 	}
 
-	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
+	private void processDynaFormCells(FacesContext context, PhaseId phaseId, DynaFormControl dynaFormControl) {
 		setData(dynaFormControl);
 
 		if (getData() == null) {
@@ -329,8 +350,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 	}
 
-	private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback,
-	                                   final DynaFormControl dynaFormControl) {
+	private boolean visitDynaFormCells(VisitContext context, VisitCallback callback, DynaFormControl dynaFormControl) {
 		setData(dynaFormControl);
 
 		if (getData() == null) {

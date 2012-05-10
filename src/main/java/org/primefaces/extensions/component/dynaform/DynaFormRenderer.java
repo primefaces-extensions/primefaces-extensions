@@ -18,6 +18,12 @@
 
 package org.primefaces.extensions.component.dynaform;
 
+import java.io.IOException;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -33,4 +39,41 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String FACET_POST_INCLUDE_REGULAR = "postIncludeRegular";
 	private static final String FACET_PRE_INCLUDE_EXTENDED = "preIncludeExtended";
 	private static final String FACET_POST_INCLUDE_EXTENDED = "postIncludeExtended";
+
+	@Override
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+		encodeMarkup(fc, component);
+		encodeScript(fc, component);
+	}
+
+	protected void encodeMarkup(FacesContext fc, UIComponent component) throws IOException {
+		DynaForm dynaForm = (DynaForm) component;
+
+		// TODO
+	}
+
+	protected void encodeScript(FacesContext fc, UIComponent component) throws IOException {
+		DynaForm dynaForm = (DynaForm) component;
+		ResponseWriter writer = fc.getResponseWriter();
+		String clientId = dynaForm.getClientId(fc);
+
+		startScript(writer, clientId);
+
+		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('DynaForm','" + dynaForm.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
+		writer.write("});});");
+		endScript(writer);
+	}
+
+	@Override
+	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+		//Rendering happens on encodeEnd
+	}
+
+	@Override
+	public boolean getRendersChildren() {
+		return true;
+	}
 }

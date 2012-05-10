@@ -63,57 +63,28 @@ public class DynaFormModel implements Serializable {
 		return maxColumn;
 	}
 
-	public String addRegular(int colspan, int rowspan, int row, int column) {
-		return addRegular(null, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column);
+	public String addEditControl(Object data, int colspan, int rowspan, int row, int column, boolean extended) {
+		return addEditControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, extended);
 	}
 
-	public String addRegular(int colspan, int rowspan, int row, int column, String forValue) {
-		return addRegular(null, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, forValue);
+	public String addEditControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
+		DynaFormControl dynaFormControl = new DynaFormEditControl(data, type, colspan, rowspan, row, column, extended);
+
+		return addControl(dynaFormControl, row, column, extended);
 	}
 
-	public String addRegular(Object data, int colspan, int rowspan, int row, int column) {
-		return addRegular(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column);
+	public void addLabelControl(Object data, int colspan, int rowspan, int row, int column, boolean extended, String forValue) {
+		addLabelControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, extended, forValue);
 	}
 
-	public String addRegular(Object data, int colspan, int rowspan, int row, int column, String forValue) {
-		return addRegular(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, forValue);
+	public void addLabelControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended,
+	                            String forValue) {
+		DynaFormControl dynaFormControl = new DynaFormLabelControl(data, type, colspan, rowspan, row, column, extended, forValue);
+
+		addControl(dynaFormControl, row, column, extended);
 	}
 
-	public String addRegular(Object data, String type, int colspan, int rowspan, int row, int column) {
-		return addRegular(data, type, colspan, rowspan, row, column, null);
-	}
-
-	public String addExtended(int colspan, int rowspan, int row, int column) {
-		return addExtended(null, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column);
-	}
-
-	public String addExtended(int colspan, int rowspan, int row, int column, String forValue) {
-		return addExtended(null, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, forValue);
-	}
-
-	public String addExtended(Object data, int colspan, int rowspan, int row, int column) {
-		return addExtended(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column);
-	}
-
-	public String addExtended(Object data, int colspan, int rowspan, int row, int column, String forValue) {
-		return addExtended(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, forValue);
-	}
-
-	public String addExtended(Object data, String type, int colspan, int rowspan, int row, int column) {
-		return addExtended(data, type, colspan, rowspan, row, column, null);
-	}
-
-	public String addRegular(Object data, String type, int colspan, int rowspan, int row, int column, String forValue) {
-		return addControl(data, type, colspan, rowspan, row, column, forValue, false);
-	}
-
-	public String addExtended(Object data, String type, int colspan, int rowspan, int row, int column, String forValue) {
-		return addControl(data, type, colspan, rowspan, row, column, forValue, true);
-	}
-
-	private String addControl(Object data, String type, int colspan, int rowspan, int row, int column, String forValue,
-	                          boolean extended) {
-		DynaFormControl dynaFormControl = new DynaFormControl(data, type, colspan, rowspan, row, column, forValue, extended);
+	private String addControl(DynaFormControl dynaFormControl, int row, int column, boolean extended) {
 		if (extended) {
 			if (extendedGrid == null) {
 				extendedGrid = new HashMap<Integer, Map<Integer, DynaFormControl>>();

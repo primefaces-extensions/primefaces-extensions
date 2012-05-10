@@ -4,18 +4,26 @@
  * @author Oleg Varaksin
  */
 PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
-	
-	/**
-	 * Initializes the widget.
-	 * 
-	 * @param {object} cfg The widget configuration.
-	 */
-	init : function(cfg) {
-	    var id = cfg.id;
-	    this.cfg = cfg;
-        
+
+    /**
+     * Initializes the widget.
+     *
+     * @param {object} cfg The widget configuration.
+     */
+    init : function(cfg) {
+        var id = cfg.id;
+        this.cfg = cfg;
+
         // TODO
-	    
-	    PrimeFacesExt.removeWidgetScript(cfg.id)
-	}
+
+        PrimeFacesExt.removeWidgetScript(cfg.id)
+    },
+
+    expandExtended : function() {
+        // TODO
+    },
+    
+    collapseExtended : function() {
+        // TODO
+    }    
 });

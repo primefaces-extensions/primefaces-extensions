@@ -513,7 +513,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable which will be used during iteration to refer each underlaying object.]]>
+                <![CDATA[Name of the request-scoped variable for the underlaying object of each iteration.]]>
             </description>
             <name>var</name>
             <required>false</required>
@@ -521,9 +521,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable which will be used for label during iteration to refer Id of the corresponding editable component inside form.]]>
+                <![CDATA[
+                    Name of the request-scoped variable for the status of each iteration. Object is a POJO with the following read-only JavaBeans properties:
+                    colspan - used to reference current colspan.
+                    rowspan - used to reference current rowspan.
+                    row - used to reference current row position (beginning at 1).
+                    column - used to reference current column position (beginning at 1).
+                    extended - used to distinguish between controls in regular and extended grid. true - extended control, false - regular. 
+                    forValue - used for an output label to refer Id of the corresponding editable component inside DynaForm.
+                ]]>
             </description>
-            <name>forValue</name>
+            <name>varStatus</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>        
@@ -535,6 +543,14 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flag whether the extended grid has to be shown opened on page load. Default value is false.]]>
+            </description>
+            <name>openExtended</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
         <attribute>
             <description>
                 <![CDATA[Style of the main container element. Default value is null.]]>

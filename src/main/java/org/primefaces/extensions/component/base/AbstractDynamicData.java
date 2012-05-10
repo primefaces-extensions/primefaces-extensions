@@ -76,7 +76,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		private String toString;
 
-		PropertyKeys(final String toString) {
+		PropertyKeys(String toString) {
 			this.toString = toString;
 		}
 
@@ -93,7 +93,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		return (String) getStateHelper().eval(PropertyKeys.var, null);
 	}
 
-	public void setVar(final String var) {
+	public void setVar(String var) {
 		setAttribute(PropertyKeys.var, var);
 	}
 
@@ -101,11 +101,11 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		return getStateHelper().eval(PropertyKeys.value, null);
 	}
 
-	public void setValue(final Object value) {
+	public void setValue(Object value) {
 		setAttribute(PropertyKeys.value, value);
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")
@@ -134,9 +134,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	 * Finds instance of {@link org.primefaces.extensions.model.common.KeyData} by corresponding key.
 	 *
 	 * @param  key unique key
-	 * @return IdentificableData found data
+	 * @return KeyData found data
 	 */
-	protected abstract KeyData findData(final String key);
+	protected abstract KeyData findData(String key);
 
 	/**
 	 * Exposes variables for each iteration.
@@ -149,7 +149,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	 * @param context faces context {@link FacesContext}
 	 * @param phaseId current JSF phase id
 	 */
-	protected abstract void processChildren(final FacesContext context, final PhaseId phaseId);
+	protected abstract void processChildren(FacesContext context, PhaseId phaseId);
 
 	/**
 	 * Visits children components during visitTree().
@@ -159,7 +159,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	 * @return boolean true - indicates that the children's visit is complete (e.g. all components that need to be visited have
 	 *         been visited), false - otherwise.
 	 */
-	protected abstract boolean visitChildren(final VisitContext context, final VisitCallback callback);
+	protected abstract boolean visitChildren(VisitContext context, VisitCallback callback);
 
 	/**
 	 * Searches a child component with the given clientId during invokeOnComponent() and invokes the callback on it if found.
@@ -169,10 +169,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	 * @param  callback {@link ContextCallback}
 	 * @return boolean true - child component was found, else - otherwise
 	 */
-	protected abstract boolean invokeOnChildren(final FacesContext context, final String clientId,
-	                                            final ContextCallback callback);
+	protected abstract boolean invokeOnChildren(FacesContext context, String clientId, ContextCallback callback);
 
-	public void setData(final String key) {
+	public void setData(String key) {
 		saveDescendantState();
 
 		this.data = findData(key);
@@ -181,7 +180,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		restoreDescendantState();
 	}
 
-	public void setData(final KeyData data) {
+	public void setData(KeyData data) {
 		saveDescendantState();
 
 		this.data = data;
@@ -204,7 +203,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public String getContainerClientId(final FacesContext context) {
+	public String getContainerClientId(FacesContext context) {
 		String clientId = super.getContainerClientId(context);
 		KeyData data = getData();
 		String key = (data != null ? data.getKey() : null);
@@ -219,7 +218,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public void processDecodes(final FacesContext context) {
+	public void processDecodes(FacesContext context) {
 		if (!isRendered()) {
 			return;
 		}
@@ -251,7 +250,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public void processValidators(final FacesContext context) {
+	public void processValidators(FacesContext context) {
 		if (!isRendered()) {
 			return;
 		}
@@ -269,7 +268,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public void processUpdates(final FacesContext context) {
+	public void processUpdates(FacesContext context) {
 		if (!isRendered()) {
 			return;
 		}
@@ -281,12 +280,12 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public void queueEvent(final FacesEvent event) {
+	public void queueEvent(FacesEvent event) {
 		super.queueEvent(new EventDataWrapper(this, event, getData()));
 	}
 
 	@Override
-	public void broadcast(final FacesEvent event) throws AbortProcessingException {
+	public void broadcast(FacesEvent event) throws AbortProcessingException {
 		if (!(event instanceof EventDataWrapper)) {
 			super.broadcast(event);
 
@@ -323,7 +322,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public boolean visitTree(final VisitContext context, final VisitCallback callback) {
+	public boolean visitTree(VisitContext context, VisitCallback callback) {
 		if (!isVisitable(context)) {
 			return false;
 		}
@@ -363,7 +362,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	@Override
-	public boolean invokeOnComponent(final FacesContext context, final String clientId, final ContextCallback callback) {
+	public boolean invokeOnComponent(FacesContext context, String clientId, ContextCallback callback) {
 		KeyData oldData = getData();
 		resetData();
 
@@ -396,7 +395,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
-	protected void processFacets(final FacesContext context, final PhaseId phaseId, final UIComponent component) {
+	protected void processFacets(FacesContext context, PhaseId phaseId, UIComponent component) {
 		resetData();
 
 		if (component.getFacetCount() > 0) {
@@ -414,7 +413,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
-	public String createUniqueId(final FacesContext context, final String seed) {
+	public String createUniqueId(FacesContext context, String seed) {
 		Integer i = (Integer) getStateHelper().get(PropertyKeys.lastId);
 		int lastId = ((i != null) ? i : 0);
 		getStateHelper().put(PropertyKeys.lastId, ++lastId);
@@ -428,7 +427,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
-	protected void saveDescendantState(final FacesContext context, final UIComponent component) {
+	protected void saveDescendantState(FacesContext context, UIComponent component) {
 		@SuppressWarnings("unchecked")
 		Map<String, SavedEditableValueState> saved =
 		    (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
@@ -475,7 +474,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		}
 	}
 
-	protected void restoreDescendantState(final FacesContext context, final UIComponent component) {
+	protected void restoreDescendantState(FacesContext context, UIComponent component) {
 		// force id reset
 		component.setId(component.getId());
 

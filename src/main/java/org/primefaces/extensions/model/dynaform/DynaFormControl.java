@@ -18,25 +18,19 @@
 
 package org.primefaces.extensions.model.dynaform;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
- * Class representing a control (typically input element or label) inside of <code>DynaForm</code>.
+ * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormControl implements KeyData, Serializable {
-
-	private static final long serialVersionUID = 20120417L;
+public abstract class DynaFormControl implements KeyData {
 
 	protected static final String KEY_SEPARATOR = "_";
 
@@ -50,16 +44,19 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	protected String key;
 
-	protected String refKey;
-
 	protected String type;
 
 	protected int colspan = 1;
 
 	protected int rowspan = 1;
 
-	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, String refKey,
-	                       boolean extended) {
+	protected int row;
+
+	protected int column;
+
+	protected boolean extended;
+
+	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
 		this.data = data;
 		if (type != null) {
 			this.type = type;
@@ -69,7 +66,9 @@ public class DynaFormControl implements KeyData, Serializable {
 
 		this.colspan = colspan;
 		this.rowspan = rowspan;
-		this.refKey = refKey;
+		this.row = row;
+		this.column = column;
+		this.extended = extended;
 
 		setKey(generateKey(row, column, extended));
 	}
@@ -90,10 +89,6 @@ public class DynaFormControl implements KeyData, Serializable {
 		this.key = key;
 	}
 
-	public String getRefKey() {
-		return refKey;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -104,6 +99,18 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	public int getRowspan() {
 		return rowspan;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+	public boolean isExtended() {
+		return extended;
 	}
 
 	protected String generateKey(int row, int column, boolean extended) {
@@ -140,13 +147,5 @@ public class DynaFormControl implements KeyData, Serializable {
 		DynaFormControl ddfe = (DynaFormControl) obj;
 
 		return new EqualsBuilder().append(getKey(), ddfe.getKey()).isEquals();
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("data", getData()).append("key", getKey())
-		                                                                  .append("refKey", refKey).append("type", type)
-		                                                                  .append("colspan", colspan).append("rowspan", rowspan)
-		                                                                  .toString();
 	}
 }
