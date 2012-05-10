@@ -901,7 +901,7 @@
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
         <pe.newComponents>ajaxErrorHandler;blockPanel;importConstants;dynaForm</pe.newComponents>
-        <pe.updatedComponents>remoteCommand;resetEditableValues</pe.updatedComponents>        
+        <pe.updatedComponents>remoteCommand;resetEditableValues;inputNumber</pe.updatedComponents>        
         <primefaces.core.version>3.3-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.4</primefaces.theme.version>    
     </properties>
