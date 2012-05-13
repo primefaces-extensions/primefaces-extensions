@@ -523,12 +523,14 @@
             <description>
                 <![CDATA[
                     Name of the request-scoped variable for the status of each iteration. Object is a POJO with the following read-only JavaBeans properties:
-                    colspan - used to reference current colspan.
-                    rowspan - used to reference current rowspan.
-                    row - used to reference current row position (beginning at 1).
-                    column - used to reference current column position (beginning at 1).
-                    extended - used to distinguish between controls in regular and extended grid. true - extended control, false - regular. 
-                    forValue - used for an output label to refer Id of the corresponding editable component inside DynaForm.
+                    <ul>
+                    <li>colspan - used to reference current colspan.</li>
+                    <li>rowspan - used to reference current rowspan.</li>
+                    <li>row - used to reference current row position (beginning at 1).</li>
+                    <li>column - used to reference current column position (beginning at 1).</li>
+                    <li>extended - used to distinguish between controls in regular and extended grid. true - extended control, false - regular.</li> 
+                    <li>forValue - used for an output label to refer Id of the corresponding editable component inside DynaForm.</li>
+                    </ul>
                 ]]>
             </description>
             <name>varStatus</name>
