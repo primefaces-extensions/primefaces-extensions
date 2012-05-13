@@ -39,6 +39,7 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String FACET_POST_INCLUDE_REGULAR = "postIncludeRegular";
 	private static final String FACET_PRE_INCLUDE_EXTENDED = "preIncludeExtended";
 	private static final String FACET_POST_INCLUDE_EXTENDED = "postIncludeExtended";
+	private static final String FACET_BUTTON_BAR = "buttonBar";
 
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -65,6 +66,13 @@ public class DynaFormRenderer extends CoreRenderer {
 		writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
 		writer.write("});});");
 		endScript(writer);
+	}
+
+	protected void encodeFacet(FacesContext fc, UIComponent component, String name) throws IOException {
+		final UIComponent facet = component.getFacet(name);
+		if (facet != null) {
+			facet.encodeAll(fc);
+		}
 	}
 
 	@Override
