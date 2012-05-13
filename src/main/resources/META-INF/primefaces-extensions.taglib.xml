@@ -535,7 +535,7 @@
             </description>
             <name>varStatus</name>
             <required>false</required>
-            <type>java.lang.String</type>
+            <type>java.lang.Object</type>
         </attribute>        
         <attribute>
             <description>
