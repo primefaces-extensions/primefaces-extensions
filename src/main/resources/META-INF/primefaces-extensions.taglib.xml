@@ -526,8 +526,8 @@
                     <ul>
                     <li>colspan - used to reference current colspan.</li>
                     <li>rowspan - used to reference current rowspan.</li>
-                    <li>row - used to reference current row position (beginning at 1).</li>
-                    <li>column - used to reference current column position (beginning at 1).</li>
+                    <li>row - used to reference current row position within dynamic form (beginning at 1).</li>
+                    <li>column - used to reference current column position within current row (beginning at 1).</li>
                     <li>extended - used to distinguish between controls in regular and extended grid. true - extended control, false - regular.</li> 
                     <li>forValue - used for an output label to refer Id of the corresponding editable component inside DynaForm.</li>
                     </ul>
@@ -552,6 +552,14 @@
             <name>openExtended</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Button bar position. Possible values are "top" | "bottom" | "both". Default value is "bottom".]]>
+            </description>
+            <name>buttonBarPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>        
         <attribute>
             <description>

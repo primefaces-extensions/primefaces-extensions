@@ -35,10 +35,10 @@ import org.primefaces.renderkit.CoreRenderer;
  */
 public class DynaFormRenderer extends CoreRenderer {
 
-	private static final String FACET_PRE_INCLUDE_REGULAR = "preIncludeRegular";
-	private static final String FACET_POST_INCLUDE_REGULAR = "postIncludeRegular";
-	private static final String FACET_PRE_INCLUDE_EXTENDED = "preIncludeExtended";
-	private static final String FACET_POST_INCLUDE_EXTENDED = "postIncludeExtended";
+	private static final String FACET_HEADER_REGULAR = "headerRegular";
+	private static final String FACET_FOOTER_REGULAR = "footerRegular";
+	private static final String FACET_HEADER_EXTENDED = "headerExtended";
+	private static final String FACET_FOOTER_EXTENDED = "footerExtended";
 	private static final String FACET_BUTTON_BAR = "buttonBar";
 
 	@Override

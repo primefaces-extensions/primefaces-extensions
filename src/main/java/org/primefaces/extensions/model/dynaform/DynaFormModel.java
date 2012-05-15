@@ -20,9 +20,7 @@ package org.primefaces.extensions.model.dynaform;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Model class for <code>DynaForm</code> component. It represents a data grid.
@@ -33,93 +31,41 @@ import java.util.Map;
  */
 public class DynaFormModel implements Serializable {
 
-	private Map<Integer, Map<Integer, DynaFormControl>> regularGrid;
+	private static final long serialVersionUID = 20120514L;
 
-	private Map<Integer, Map<Integer, DynaFormControl>> extendedGrid;
+	private List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
+
+	private List<DynaFormRow> extendedRows = null;
 
 	private List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
 
-	private int maxRow;
-
-	private int maxColumn;
-
-	public Map<Integer, Map<Integer, DynaFormControl>> getRegularGrid() {
-		return regularGrid;
+	public List<DynaFormRow> getRegularRows() {
+		return regularRows;
 	}
 
-	public Map<Integer, Map<Integer, DynaFormControl>> getExtendedGrid() {
-		return extendedGrid;
+	public List<DynaFormRow> getExtendedRows() {
+		return extendedRows;
 	}
 
 	public List<DynaFormControl> getControls() {
 		return controls;
 	}
 
-	public int getMaxRow() {
-		return maxRow;
+	public DynaFormRow createRegularRow() {
+		DynaFormRow dynaFormRow = new DynaFormRow(regularRows.size() + 1, false, this);
+		regularRows.add(dynaFormRow);
+
+		return dynaFormRow;
 	}
 
-	public int getMaxColumn() {
-		return maxColumn;
-	}
-
-	public String addEditControl(Object data, int colspan, int rowspan, int row, int column, boolean extended) {
-		return addEditControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, extended);
-	}
-
-	public String addEditControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
-		DynaFormControl dynaFormControl = new DynaFormEditControl(data, type, colspan, rowspan, row, column, extended);
-
-		return addControl(dynaFormControl, row, column, extended);
-	}
-
-	public void addLabelControl(Object data, int colspan, int rowspan, int row, int column, boolean extended, String forValue) {
-		addLabelControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, row, column, extended, forValue);
-	}
-
-	public void addLabelControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended,
-	                            String forValue) {
-		DynaFormControl dynaFormControl = new DynaFormLabelControl(data, type, colspan, rowspan, row, column, extended, forValue);
-
-		addControl(dynaFormControl, row, column, extended);
-	}
-
-	private String addControl(DynaFormControl dynaFormControl, int row, int column, boolean extended) {
-		if (extended) {
-			if (extendedGrid == null) {
-				extendedGrid = new HashMap<Integer, Map<Integer, DynaFormControl>>();
-			}
-
-			fillGrid(extendedGrid, row, column, dynaFormControl);
-		} else {
-			if (regularGrid == null) {
-				regularGrid = new HashMap<Integer, Map<Integer, DynaFormControl>>();
-			}
-
-			fillGrid(regularGrid, row, column, dynaFormControl);
+	public DynaFormRow createExtendedRow() {
+		if (extendedRows == null) {
+			extendedRows = new ArrayList<DynaFormRow>();
 		}
 
-		return dynaFormControl.getKey();
-	}
+		DynaFormRow dynaFormRow = new DynaFormRow(extendedRows.size() + 1, true, this);
+		extendedRows.add(dynaFormRow);
 
-	private void fillGrid(Map<Integer, Map<Integer, DynaFormControl>> grid, int row, int column,
-	                      DynaFormControl dynaFormControl) {
-		Map<Integer, DynaFormControl> map = grid.get(row);
-		if (map == null) {
-			map = new HashMap<Integer, DynaFormControl>();
-			grid.put(row, map);
-		}
-
-		map.put(column, dynaFormControl);
-
-		controls.add(dynaFormControl);
-
-		if (maxRow < row) {
-			maxRow = row;
-		}
-
-		if (maxColumn < column) {
-			maxColumn = column;
-		}
+		return dynaFormRow;
 	}
 }

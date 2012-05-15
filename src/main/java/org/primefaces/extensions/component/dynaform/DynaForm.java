@@ -39,7 +39,6 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
-import org.primefaces.extensions.model.dynaform.DynaFormLabelControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormVarStatus;
 
@@ -75,6 +74,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		varStatus,
 		autoSubmit,
 		openExtended,
+		buttonBarPosition, // top, bottom, both
 		style,
 		styleClass;
 
@@ -132,6 +132,14 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 	public void setOpenExtended(boolean openExtended) {
 		setAttribute(PropertyKeys.openExtended, openExtended);
+	}
+
+	public String getButtonBarPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.buttonBarPosition, "bottom");
+	}
+
+	public void setButtonBarPosition(String buttonBarPosition) {
+		setAttribute(PropertyKeys.buttonBarPosition, buttonBarPosition);
 	}
 
 	public void setStyle(String style) {
@@ -242,14 +250,9 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		} else {
 			requestMap.put(getVar(), dynaFormControl.getData());
 
-			String forValue = null;
-			if (dynaFormControl instanceof DynaFormLabelControl) {
-				forValue = ((DynaFormLabelControl) dynaFormControl).getRefKey();
-			}
-
 			DynaFormVarStatus dynaFormVarStatus =
 			    new DynaFormVarStatus(dynaFormControl.getColspan(), dynaFormControl.getRowspan(), dynaFormControl.getRow(),
-			                          dynaFormControl.getColumn(), dynaFormControl.isExtended(), forValue);
+			                          dynaFormControl.getColumn(), dynaFormControl.isExtended(), dynaFormControl.getRefKey());
 
 			requestMap.put(getVarStatus(), dynaFormVarStatus);
 		}

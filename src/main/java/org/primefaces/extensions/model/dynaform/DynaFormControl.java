@@ -18,19 +18,25 @@
 
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
- * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
+ * Class representing a control (typically input element or label) inside of <code>DynaForm</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public abstract class DynaFormControl implements KeyData {
+public class DynaFormControl implements KeyData, Serializable {
+
+	private static final long serialVersionUID = 20120514L;
 
 	protected static final String KEY_SEPARATOR = "_";
 
@@ -40,9 +46,11 @@ public abstract class DynaFormControl implements KeyData {
 
 	public static final String DEFAULT_TYPE = "default";
 
+	protected String key;
+
 	protected Object data;
 
-	protected String key;
+	protected String refKey;
 
 	protected String type;
 
@@ -70,7 +78,15 @@ public abstract class DynaFormControl implements KeyData {
 		this.column = column;
 		this.extended = extended;
 
-		setKey(generateKey(row, column, extended));
+		generateKey();
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	public Object getData() {
@@ -81,12 +97,12 @@ public abstract class DynaFormControl implements KeyData {
 		this.data = data;
 	}
 
-	public String getKey() {
-		return key;
+	public String getRefKey() {
+		return refKey;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setRefKey(String refKey) {
+		this.refKey = refKey;
 	}
 
 	public String getType() {
@@ -113,7 +129,7 @@ public abstract class DynaFormControl implements KeyData {
 		return extended;
 	}
 
-	protected String generateKey(int row, int column, boolean extended) {
+	private void generateKey() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(row).append(KEY_SEPARATOR).append(column);
 		if (extended) {
@@ -122,12 +138,17 @@ public abstract class DynaFormControl implements KeyData {
 			sb.append(KEY_SUFFIX_REGULAR);
 		}
 
-		return sb.toString();
+		setKey(sb.toString());
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(getKey()).toHashCode();
+		if (key != null) {
+			return new HashCodeBuilder(17, 37).append(key).toHashCode();
+		} else {
+			return new HashCodeBuilder(17, 37).append(data).append(type).append(refKey).append(colspan).append(rowspan)
+			                                  .append(row).append(column).append(extended).toHashCode();
+		}
 	}
 
 	@Override
@@ -146,6 +167,21 @@ public abstract class DynaFormControl implements KeyData {
 
 		DynaFormControl ddfe = (DynaFormControl) obj;
 
-		return new EqualsBuilder().append(getKey(), ddfe.getKey()).isEquals();
+		if (key != null) {
+			return new EqualsBuilder().append(key, ddfe.key).isEquals();
+		} else {
+			return new EqualsBuilder().append(data, ddfe.data).append(type, ddfe.type).append(refKey, ddfe.refKey)
+			                          .append(colspan, ddfe.colspan).append(rowspan, ddfe.rowspan).append(row, ddfe.row)
+			                          .append(column, ddfe.column).append(extended, ddfe.extended).isEquals();
+		}
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("key", key).append("data", data)
+		                                                                  .append("type", type).append("refKey", refKey)
+		                                                                  .append("colspan", colspan).append("rowspan", rowspan)
+		                                                                  .append("row", row).append("column", column)
+		                                                                  .append("extended", extended).toString();
 	}
 }

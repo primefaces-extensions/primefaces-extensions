@@ -27,11 +27,11 @@ package org.primefaces.extensions.model.common;
  */
 public interface KeyData {
 
-	Object getData();
-
-	void setData(Object data);
-
 	String getKey();
 
 	void setKey(String key);
+
+	Object getData();
+
+	void setData(Object data);
 }
