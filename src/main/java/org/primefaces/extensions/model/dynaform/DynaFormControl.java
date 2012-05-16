@@ -38,33 +38,36 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	private static final long serialVersionUID = 20120514L;
 
-	protected static final String KEY_SEPARATOR = "_";
-
-	protected static final String KEY_SUFFIX_REGULAR = "_reg";
-
-	protected static final String KEY_SUFFIX_EXTENDED = "_ext";
-
 	public static final String DEFAULT_TYPE = "default";
 
-	protected String key;
+	private static final String KEY_SEPARATOR = "_";
 
-	protected Object data;
+	private static final String KEY_SUFFIX_REGULAR = "_reg";
 
-	protected String refKey;
+	private static final String KEY_SUFFIX_EXTENDED = "_ext";
 
-	protected String type;
+	private String key;
 
-	protected int colspan = 1;
+	private Object data;
 
-	protected int rowspan = 1;
+	private String refKey;
 
-	protected int row;
+	private String type;
 
-	protected int column;
+	private int colspan = 1;
 
-	protected boolean extended;
+	private int rowspan = 1;
 
-	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
+	private int row;
+
+	private int column;
+
+	private boolean extended;
+
+	private boolean applyLabelStyle;
+
+	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended,
+	                       boolean applyLabelStyle) {
 		this.data = data;
 		if (type != null) {
 			this.type = type;
@@ -77,6 +80,7 @@ public class DynaFormControl implements KeyData, Serializable {
 		this.row = row;
 		this.column = column;
 		this.extended = extended;
+		this.applyLabelStyle = applyLabelStyle;
 
 		generateKey();
 	}
@@ -127,6 +131,10 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	public boolean isExtended() {
 		return extended;
+	}
+
+	public boolean isApplyLabelStyle() {
+		return applyLabelStyle;
 	}
 
 	private void generateKey() {

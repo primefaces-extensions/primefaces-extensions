@@ -50,12 +50,20 @@ public class DynaFormRow implements Serializable {
 	}
 
 	public DynaFormControl addControl(Object data, int colspan, int rowspan) {
-		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
+		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, false);
+	}
+
+	public DynaFormControl addControl(Object data, int colspan, int rowspan, boolean applyLabelStyle) {
+		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, applyLabelStyle);
 	}
 
 	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
+		return addControl(data, type, colspan, rowspan, false);
+	}
+
+	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan, boolean applyLabelStyle) {
 		DynaFormControl dynaFormControl =
-		    new DynaFormControl(data, type, colspan, rowspan, row, dynaFormControls.size() + 1, extended);
+		    new DynaFormControl(data, type, colspan, rowspan, row, dynaFormControls.size() + 1, extended, applyLabelStyle);
 
 		dynaFormControls.add(dynaFormControl);
 		dynaFormModel.getControls().add(dynaFormControl);
