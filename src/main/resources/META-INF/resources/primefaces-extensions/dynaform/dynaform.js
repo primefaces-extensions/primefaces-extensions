@@ -11,19 +11,18 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
      * @param {object} cfg The widget configuration.
      */
     init : function(cfg) {
-        var id = cfg.id;
-        this.cfg = cfg;
+        this._super(cfg);
 
-        // TODO
-
-        PrimeFacesExt.removeWidgetScript(cfg.id)
+        if (cfg.autoSubmit) {
+            this.submitForm();
+        }
     },
 
-    expandExtended : function() {
-        // TODO
+    toggleExtended : function() {
+        this.jq.find("tr.pe-dynaform-extendedrow").toggle();
     },
-    
-    collapseExtended : function() {
-        // TODO
-    }    
+
+    submitForm : function() {
+        this.jq.find(":submit").trigger('click');
+    }
 });

@@ -194,7 +194,17 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 	}
 
-	public Map<String, DynaFormCell> getCells() {
+	public DynaFormCell getCell(String type) {
+		DynaFormCell cell = getCells().get(type);
+
+		if (cell == null) {
+			throw new FacesException("DynaFormCell to type " + type + " was not found");
+		} else {
+			return cell;
+		}
+	}
+
+	protected Map<String, DynaFormCell> getCells() {
 		if (cells == null) {
 			cells = new HashMap<String, DynaFormCell>();
 			for (UIComponent child : getChildren()) {
@@ -206,16 +216,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 
 		return cells;
-	}
-
-	public DynaFormCell getCell(String type) {
-		DynaFormCell cell = getCells().get(type);
-
-		if (cell == null) {
-			throw new FacesException("DynaFormCell to type " + type + " was not found");
-		} else {
-			return cell;
-		}
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
@@ -53,10 +54,10 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String FACET_BUTTON_BAR_CLASS = "pe-dynaform-buttonbar";
 	private static final String FACET_HEADER_CLASS = "pe-dynaform-headerfacet";
 	private static final String FACET_FOOTER_CLASS = "pe-dynaform-footerfacet";
+	private static final String EXTENDED_ROW_CLASS = "pe-dynaform-extendedrow";
 
 	private static final String BUTTON_BAR_ROLE = "toolbar";
-	private static final String HEADER_ROLE = "gridcell";
-	private static final String FOOTER_ROLE = "gridcell";
+	private static final String GRID_CELL_ROLE = "gridcell";
 
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -86,24 +87,26 @@ public class DynaFormRenderer extends CoreRenderer {
 		String bbPosition = dynaForm.getButtonBarPosition();
 
 		if ("top".equals(bbPosition) || "both".equals(bbPosition)) {
-			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE);
+			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE, false, true);
 		}
 
-		encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, HEADER_ROLE);
+		encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, false, true);
 
 		// encode regular grid
-		encodeBody(fc, dynaForm, dynaFormModel.getRegularRows(), true);
+		encodeBody(fc, dynaForm, dynaFormModel.getRegularRows(), false, true);
 
-		encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, FOOTER_ROLE);
-		encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, HEADER_ROLE);
+		encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
+		encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
+		            dynaForm.isOpenExtended());
 
 		// encode extended grid
-		encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), dynaForm.isOpenExtended());
+		encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), true, dynaForm.isOpenExtended());
 
-		encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, FOOTER_ROLE);
+		encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
+		            dynaForm.isOpenExtended());
 
 		if ("bottom".equals(bbPosition) || "both".equals(bbPosition)) {
-			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE);
+			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE, false, true);
 		}
 
 		writer.endElement("table");
@@ -123,15 +126,26 @@ public class DynaFormRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role)
-	    throws IOException {
+	protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
+	                           boolean extended, boolean visible) throws IOException {
 		final UIComponent facet = dynaForm.getFacet(name);
 		if (facet != null && facet.isRendered()) {
 			ResponseWriter writer = fc.getResponseWriter();
 			writer.startElement("tr", null);
+			if (extended) {
+				writer.writeAttribute("class", EXTENDED_ROW_CLASS, null);
+			}
+
+			if (!visible) {
+				writer.writeAttribute("style", "display:none;", null);
+			}
+
 			writer.writeAttribute("role", "row", null);
 			writer.startElement("td", null);
-			writer.writeAttribute("colspan", totalColspan, null);
+			if (totalColspan > 1) {
+				writer.writeAttribute("colspan", totalColspan, null);
+			}
+
 			writer.writeAttribute("class", styleClass, null);
 			writer.writeAttribute("role", role, null);
 
@@ -142,20 +156,60 @@ public class DynaFormRenderer extends CoreRenderer {
 		}
 	}
 
-	protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean visible)
-	    throws IOException {
+	protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
+	                          boolean visible) throws IOException {
 		if (dynaFormRows == null || dynaFormRows.isEmpty()) {
 			return;
 		}
 
 		ResponseWriter writer = fc.getResponseWriter();
 
-		writer.startElement("tr", null);
-		writer.writeAttribute("role", "row", null);
+		for (DynaFormRow dynaFormRow : dynaFormRows) {
+			writer.startElement("tr", null);
+			if (extended) {
+				writer.writeAttribute("class", EXTENDED_ROW_CLASS, null);
+			}
 
-		// TODO
+			if (!visible) {
+				writer.writeAttribute("style", "display:none;", null);
+			}
 
-		writer.endElement("tr");
+			writer.writeAttribute("role", "row", null);
+
+			for (DynaFormControl dynaFormControl : dynaFormRow.getDynaFormControls()) {
+				dynaForm.setData(dynaFormControl);
+
+				// find cell by type
+				DynaFormCell dynaFormCell = dynaForm.getCell(dynaFormControl.getType());
+
+				writer.startElement("td", null);
+				if (dynaFormControl.getColspan() > 1) {
+					writer.writeAttribute("colspan", dynaFormControl.getColspan(), null);
+				}
+
+				if (dynaFormControl.getRowspan() > 1) {
+					writer.writeAttribute("rowspan", dynaFormControl.getRowspan(), null);
+				}
+
+				String styleClass = CELL_CLASS;
+				if (dynaFormControl.isApplyLabelStyle()) {
+					styleClass = styleClass + " " + LABEL_CLASS;
+				}
+
+				if (dynaFormCell.getStyleClass() != null) {
+					styleClass = styleClass + " " + dynaFormCell.getStyleClass();
+				}
+
+				writer.writeAttribute("class", styleClass, null);
+				writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+				dynaFormCell.encodeAll(fc);
+
+				writer.endElement("td");
+			}
+
+			writer.endElement("tr");
+		}
 	}
 
 	protected int getTotalColspan(DynaFormModel dynaFormModel) {
