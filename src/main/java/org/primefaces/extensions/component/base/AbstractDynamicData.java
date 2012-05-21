@@ -202,7 +202,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		return data;
 	}
 
-	@Override
 	public String getContainerClientId(FacesContext context) {
 		String clientId = super.getContainerClientId(context);
 		KeyData data = getData();
@@ -481,6 +480,10 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		@SuppressWarnings("unchecked")
 		Map<String, SavedEditableValueState> saved =
 		    (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
+
+		if (saved == null) {
+			return;
+		}
 
 		if (component instanceof EditableValueHolder) {
 			EditableValueHolder input = (EditableValueHolder) component;

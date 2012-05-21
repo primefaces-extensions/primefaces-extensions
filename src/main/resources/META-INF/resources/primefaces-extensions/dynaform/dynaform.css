@@ -3,6 +3,7 @@
     padding: 0;
     border-collapse : collapse;
     border-spacing: 0;
+    width: 1%;
 }
 
 .pe-dynaform-cell {
@@ -19,10 +20,17 @@
     width: 1%;
 }
 
-.pe-dynaform-buttonbar {
+.pe-dynaform-buttonbar-top {
     text-align: right;
     vertical-align: middle;
-    padding: 2px 0 2px 0;
+    padding: 0 0 10px 0;
+    white-space: nowrap;
+}
+
+.pe-dynaform-buttonbar-bottom {
+    text-align: right;
+    vertical-align: middle;
+    padding: 10px 0 0 0;
     white-space: nowrap;
 }
 

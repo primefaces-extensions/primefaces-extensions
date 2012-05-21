@@ -51,7 +51,8 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String GRID_CLASS = "pe-dynaform-grid";
 	private static final String CELL_CLASS = "pe-dynaform-cell";
 	private static final String LABEL_CLASS = "pe-dynaform-label";
-	private static final String FACET_BUTTON_BAR_CLASS = "pe-dynaform-buttonbar";
+	private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
+	private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
 	private static final String FACET_HEADER_CLASS = "pe-dynaform-headerfacet";
 	private static final String FACET_FOOTER_CLASS = "pe-dynaform-footerfacet";
 	private static final String EXTENDED_ROW_CLASS = "pe-dynaform-extendedrow";
@@ -87,7 +88,7 @@ public class DynaFormRenderer extends CoreRenderer {
 		String bbPosition = dynaForm.getButtonBarPosition();
 
 		if ("top".equals(bbPosition) || "both".equals(bbPosition)) {
-			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE, false, true);
+			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_TOP_CLASS, BUTTON_BAR_ROLE, false, true);
 		}
 
 		encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, false, true);
@@ -106,7 +107,8 @@ public class DynaFormRenderer extends CoreRenderer {
 		            dynaForm.isOpenExtended());
 
 		if ("bottom".equals(bbPosition) || "both".equals(bbPosition)) {
-			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_CLASS, BUTTON_BAR_ROLE, false, true);
+			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_BOTTOM_CLASS, BUTTON_BAR_ROLE, false,
+			            true);
 		}
 
 		writer.endElement("table");

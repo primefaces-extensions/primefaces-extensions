@@ -324,20 +324,20 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	private void processDynaFormCells(FacesContext context, PhaseId phaseId, DynaFormControl dynaFormControl) {
-		setData(dynaFormControl);
-
-		if (getData() == null) {
-			return;
-		}
-
 		for (UIComponent kid : getChildren()) {
-			if (!(kid instanceof DynaFormCell) || !kid.isRendered()) {
+			if (!(kid instanceof DynaFormCell) || !kid.isRendered()
+			    || !kid.equals(getCell(dynaFormControl.getType()))) {
 				continue;
 			}
 
 			for (UIComponent grandkid : kid.getChildren()) {
 				if (!grandkid.isRendered()) {
 					continue;
+				}
+
+				setData(dynaFormControl);
+				if (getData() == null) {
+					return;
 				}
 
 				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
@@ -354,15 +354,14 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	private boolean visitDynaFormCells(VisitContext context, VisitCallback callback, DynaFormControl dynaFormControl) {
-		setData(dynaFormControl);
-
-		if (getData() == null) {
-			return false;
-		}
-
 		if (getChildCount() > 0) {
 			for (UIComponent child : getChildren()) {
-				if (child instanceof DynaFormCell) {
+				if (child instanceof DynaFormCell && child.equals(getCell(dynaFormControl.getType()))) {
+					setData(dynaFormControl);
+					if (getData() == null) {
+						return false;
+					}
+
 					if (child.visitTree(context, callback)) {
 						return true;
 					}
@@ -371,5 +370,33 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 
 		return false;
+	}
+
+	protected void saveDescendantState() {
+		DynaFormControl dynaFormControl = (DynaFormControl) getData();
+		if (dynaFormControl == null) {
+			return;
+		}
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		for (UIComponent child : getChildren()) {
+			if (child instanceof DynaFormCell && child.equals(getCell(dynaFormControl.getType()))) {
+				saveDescendantState(context, child);
+			}
+		}
+	}
+
+	protected void restoreDescendantState() {
+		DynaFormControl dynaFormControl = (DynaFormControl) getData();
+		if (dynaFormControl == null) {
+			return;
+		}
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		for (UIComponent child : getChildren()) {
+			if (child instanceof DynaFormCell && child.equals(getCell(dynaFormControl.getType()))) {
+				restoreDescendantState(context, child);
+			}
+		}
 	}
 }
