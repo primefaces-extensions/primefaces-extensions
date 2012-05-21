@@ -202,6 +202,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		return data;
 	}
 
+	@Override
 	public String getContainerClientId(FacesContext context) {
 		String clientId = super.getContainerClientId(context);
 		KeyData data = getData();
@@ -427,6 +428,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	protected void saveDescendantState(FacesContext context, UIComponent component) {
+		// force id reset
+		component.setId(component.getId());
+
 		@SuppressWarnings("unchecked")
 		Map<String, SavedEditableValueState> saved =
 		    (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);

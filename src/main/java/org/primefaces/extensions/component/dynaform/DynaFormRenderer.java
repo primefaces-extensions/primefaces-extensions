@@ -50,6 +50,8 @@ public class DynaFormRenderer extends CoreRenderer {
 
 	private static final String GRID_CLASS = "pe-dynaform-grid";
 	private static final String CELL_CLASS = "pe-dynaform-cell";
+	private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
+	private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
 	private static final String LABEL_CLASS = "pe-dynaform-label";
 	private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
 	private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
@@ -151,6 +153,8 @@ public class DynaFormRenderer extends CoreRenderer {
 			writer.writeAttribute("class", styleClass, null);
 			writer.writeAttribute("role", role, null);
 
+			dynaForm.resetData();
+
 			facet.encodeAll(fc);
 
 			writer.endElement("td");
@@ -178,7 +182,10 @@ public class DynaFormRenderer extends CoreRenderer {
 
 			writer.writeAttribute("role", "row", null);
 
-			for (DynaFormControl dynaFormControl : dynaFormRow.getDynaFormControls()) {
+			List<DynaFormControl> dynaFormControls = dynaFormRow.getDynaFormControls();
+			int size = dynaFormControls.size();
+			for (int i = 0; i < size; i++) {
+				DynaFormControl dynaFormControl = dynaFormControls.get(i);
 				dynaForm.setData(dynaFormControl);
 
 				// find cell by type
@@ -194,6 +201,12 @@ public class DynaFormRenderer extends CoreRenderer {
 				}
 
 				String styleClass = CELL_CLASS;
+				if (i == 0) {
+					styleClass = styleClass + " " + CELL_FIRST_CLASS;
+				} else if (i == size - 1) {
+					styleClass = styleClass + " " + CELL_LAST_CLASS;
+				}
+
 				if (dynaFormControl.isApplyLabelStyle()) {
 					styleClass = styleClass + " " + LABEL_CLASS;
 				}

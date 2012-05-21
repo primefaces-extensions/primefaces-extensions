@@ -34,8 +34,6 @@ public class SavedEditableValueState implements Serializable {
 
 	private Object submittedValue;
 
-	private boolean submitted;
-
 	private boolean valid = true;
 
 	private Object value;
@@ -48,14 +46,6 @@ public class SavedEditableValueState implements Serializable {
 
 	public void setSubmittedValue(Object submittedValue) {
 		this.submittedValue = submittedValue;
-	}
-
-	public boolean isSubmitted() {
-		return submitted;
-	}
-
-	public void setSubmitted(boolean submitted) {
-		this.submitted = submitted;
 	}
 
 	public boolean isValid() {
