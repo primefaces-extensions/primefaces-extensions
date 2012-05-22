@@ -40,11 +40,13 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	public static final String DEFAULT_TYPE = "default";
 
-	private static final String KEY_SEPARATOR = "_";
+	private static final String KEY_PREFIX_ROW = "r";
 
-	private static final String KEY_SUFFIX_REGULAR = "_reg";
+	private static final String KEY_PREFIX_COLUMN = "c";
 
-	private static final String KEY_SUFFIX_EXTENDED = "_ext";
+	private static final String KEY_SUFFIX_REGULAR = "reg";
+
+	private static final String KEY_SUFFIX_EXTENDED = "ext";
 
 	private String key;
 
@@ -139,7 +141,7 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	private void generateKey() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(row).append(KEY_SEPARATOR).append(column);
+		sb.append(KEY_PREFIX_ROW).append(row).append(KEY_PREFIX_COLUMN).append(column);
 		if (extended) {
 			sb.append(KEY_SUFFIX_EXTENDED);
 		} else {
