@@ -41,7 +41,7 @@ public class DynaFormRow implements Serializable {
 
 	private DynaFormModel dynaFormModel;
 
-	private List<DynaFormControl> dynaFormControls = new ArrayList<DynaFormControl>();
+	private List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
 
 	public DynaFormRow(int row, boolean extended, DynaFormModel dynaFormModel) {
 		this.row = row;
@@ -50,31 +50,34 @@ public class DynaFormRow implements Serializable {
 	}
 
 	public DynaFormControl addControl(Object data, int colspan, int rowspan) {
-		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, false);
-	}
-
-	public DynaFormControl addControl(Object data, int colspan, int rowspan, boolean applyLabelStyle) {
-		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan, applyLabelStyle);
+		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
 	}
 
 	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
-		return addControl(data, type, colspan, rowspan, false);
-	}
+		DynaFormControl dynaFormControl = new DynaFormControl(data, type, colspan, rowspan, row, elements.size() + 1, extended);
 
-	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan, boolean applyLabelStyle) {
-		DynaFormControl dynaFormControl =
-		    new DynaFormControl(data, type, colspan, rowspan, row, dynaFormControls.size() + 1, extended, applyLabelStyle);
-
-		dynaFormControls.add(dynaFormControl);
+		elements.add(dynaFormControl);
 		dynaFormModel.getControls().add(dynaFormControl);
-
 		totalColspan = totalColspan + colspan;
 
 		return dynaFormControl;
 	}
 
-	public List<DynaFormControl> getDynaFormControls() {
-		return dynaFormControls;
+	public DynaFormLabel addLabel(String value, int colspan, int rowspan) {
+		return addLabel(value, true, colspan, rowspan);
+	}
+
+	public DynaFormLabel addLabel(String value, boolean escape, int colspan, int rowspan) {
+		DynaFormLabel dynaFormLabel = new DynaFormLabel(value, escape, colspan, rowspan, row, elements.size() + 1, extended);
+
+		elements.add(dynaFormLabel);
+		totalColspan = totalColspan + colspan;
+
+		return dynaFormLabel;
+	}
+
+	public List<AbstractDynaFormElement> getElements() {
+		return elements;
 	}
 
 	public int getTotalColspan() {

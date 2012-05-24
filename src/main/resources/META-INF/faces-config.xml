@@ -39,8 +39,8 @@
         <component-class>org.primefaces.extensions.component.dynaform.DynaForm</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.DynaFormCell</component-type>
-        <component-class>org.primefaces.extensions.component.dynaform.DynaFormCell</component-class>
+        <component-type>org.primefaces.extensions.component.UIDynaFormControl</component-type>
+        <component-class>org.primefaces.extensions.component.dynaform.UIDynaFormControl</component-class>
     </component>    
     <component>
         <component-type>org.primefaces.extensions.component.Head</component-type>

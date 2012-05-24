@@ -26,7 +26,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
@@ -53,6 +55,8 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
 	private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
 	private static final String LABEL_CLASS = "pe-dynaform-label";
+	private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
+
 	private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
 	private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
 	private static final String FACET_HEADER_CLASS = "pe-dynaform-headerfacet";
@@ -153,8 +157,6 @@ public class DynaFormRenderer extends CoreRenderer {
 			writer.writeAttribute("class", styleClass, null);
 			writer.writeAttribute("role", role, null);
 
-			dynaForm.resetData();
-
 			facet.encodeAll(fc);
 
 			writer.endElement("td");
@@ -182,22 +184,18 @@ public class DynaFormRenderer extends CoreRenderer {
 
 			writer.writeAttribute("role", "row", null);
 
-			List<DynaFormControl> dynaFormControls = dynaFormRow.getDynaFormControls();
-			int size = dynaFormControls.size();
+			List<AbstractDynaFormElement> elements = dynaFormRow.getElements();
+			int size = elements.size();
 			for (int i = 0; i < size; i++) {
-				DynaFormControl dynaFormControl = dynaFormControls.get(i);
-				dynaForm.setData(dynaFormControl);
-
-				// find cell by type
-				DynaFormCell dynaFormCell = dynaForm.getCell(dynaFormControl.getType());
+				AbstractDynaFormElement element = elements.get(i);
 
 				writer.startElement("td", null);
-				if (dynaFormControl.getColspan() > 1) {
-					writer.writeAttribute("colspan", dynaFormControl.getColspan(), null);
+				if (element.getColspan() > 1) {
+					writer.writeAttribute("colspan", element.getColspan(), null);
 				}
 
-				if (dynaFormControl.getRowspan() > 1) {
-					writer.writeAttribute("rowspan", dynaFormControl.getRowspan(), null);
+				if (element.getRowspan() > 1) {
+					writer.writeAttribute("rowspan", element.getRowspan(), null);
 				}
 
 				String styleClass = CELL_CLASS;
@@ -207,24 +205,40 @@ public class DynaFormRenderer extends CoreRenderer {
 					styleClass = styleClass + " " + CELL_LAST_CLASS;
 				}
 
-				if (dynaFormControl.isApplyLabelStyle()) {
+				if (element instanceof DynaFormLabel) {
+					// render label
 					styleClass = styleClass + " " + LABEL_CLASS;
+					writer.writeAttribute("class", styleClass, null);
+					writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+					DynaFormLabel label = (DynaFormLabel) element;
+
+					// TODO
+				} else {
+					// render control
+					DynaFormControl control = (DynaFormControl) element;
+					dynaForm.setData(control);
+
+					// find control's cell by type
+					UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+
+					if (cell.getStyleClass() != null) {
+						styleClass = styleClass + " " + cell.getStyleClass();
+					}
+
+					writer.writeAttribute("class", styleClass, null);
+					writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+					cell.encodeAll(fc);
 				}
-
-				if (dynaFormCell.getStyleClass() != null) {
-					styleClass = styleClass + " " + dynaFormCell.getStyleClass();
-				}
-
-				writer.writeAttribute("class", styleClass, null);
-				writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
-				dynaFormCell.encodeAll(fc);
 
 				writer.endElement("td");
 			}
 
 			writer.endElement("tr");
 		}
+
+		dynaForm.resetData();
 	}
 
 	protected int getTotalColspan(DynaFormModel dynaFormModel) {

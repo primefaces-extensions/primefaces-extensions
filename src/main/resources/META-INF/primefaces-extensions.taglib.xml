@@ -521,24 +521,6 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[
-                    Name of the request-scoped variable for the status of each iteration. Object is a POJO with the following read-only JavaBeans properties:
-                    <ul>
-                    <li>colspan - used to reference current colspan.</li>
-                    <li>rowspan - used to reference current rowspan.</li>
-                    <li>row - used to reference current row position within dynamic form (beginning at 1).</li>
-                    <li>column - used to reference current column position within current row (beginning at 1).</li>
-                    <li>extended - used to distinguish between controls in regular and extended grid. true - extended control, false - regular.</li> 
-                    <li>forValue - used for an output label to refer Id of the corresponding editable component inside DynaForm.</li>
-                    </ul>
-                ]]>
-            </description>
-            <name>varStatus</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>        
-        <attribute>
-            <description>
                 <![CDATA[Flag whether the form has to be submitted after displaying automatically. Note: the form can be submitted if it contains at least one submit button. Default value is false.]]>
             </description>
             <name>autoSubmit</name>
@@ -579,10 +561,10 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[DynaFormCell specifies a cell for a certain typed element within DynaForm.]]></description>
-        <tag-name>dynaFormCell</tag-name>
+        <description><![CDATA[Specifies a control for a certain typed element within DynaForm.]]></description>
+        <tag-name>dynaFormControl</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.DynaFormCell</component-type>
+            <component-type>org.primefaces.extensions.component.UIDynaFormControl</component-type>
         </component>
         <attribute>
             <description>
@@ -610,15 +592,23 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Type of the DynaFormCell corresponding to form control. Default value is "default".]]>
+                <![CDATA[Type corresponding to form control. Default value is "default".]]>
             </description>
             <name>type</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute> 
+        </attribute>
         <attribute>
             <description>
-                <![CDATA[Style class of the container element representing a cell. Default value is null.]]>
+                <![CDATA[Provided reference between label and corresponding control like "for" attribute in h:outputLabel or p:outputLabel. Default value is null.]]>
+            </description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element for this control. Default value is null.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>

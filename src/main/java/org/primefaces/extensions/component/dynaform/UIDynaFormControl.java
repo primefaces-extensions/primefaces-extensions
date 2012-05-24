@@ -27,13 +27,13 @@ import javax.faces.component.UIComponentBase;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
 /**
- * <code>DynaFormCell</code> component.
+ * <code>UIDynaFormControl</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormCell extends UIComponentBase {
+public class UIDynaFormControl extends UIComponentBase {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -47,6 +47,7 @@ public class DynaFormCell extends UIComponentBase {
 	protected enum PropertyKeys {
 
 		type,
+		forVal("for"),
 		styleClass;
 
 		private String toString;
@@ -64,7 +65,7 @@ public class DynaFormCell extends UIComponentBase {
 		}
 	}
 
-	public DynaFormCell() {
+	public UIDynaFormControl() {
 		setRendererType(null);
 	}
 
@@ -79,6 +80,14 @@ public class DynaFormCell extends UIComponentBase {
 
 	public String getType() {
 		return (String) getStateHelper().eval(PropertyKeys.type, DynaFormControl.DEFAULT_TYPE);
+	}
+
+	public String getFor() {
+		return (String) getStateHelper().eval(PropertyKeys.forVal, null);
+	}
+
+	public void setFor(final String forValue) {
+		setAttribute(PropertyKeys.forVal, forValue);
 	}
 
 	public void setStyleClass(final String styleClass) {

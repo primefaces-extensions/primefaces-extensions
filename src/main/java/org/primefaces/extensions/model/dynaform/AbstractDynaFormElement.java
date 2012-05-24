@@ -19,17 +19,17 @@
 package org.primefaces.extensions.model.dynaform;
 
 /**
- * POJO for exposed "varStatus" attribute.
+ * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormVarStatus {
+public abstract class AbstractDynaFormElement {
 
-	private int colspan;
+	private int colspan = 1;
 
-	private int rowspan;
+	private int rowspan = 1;
 
 	private int row;
 
@@ -37,15 +37,12 @@ public class DynaFormVarStatus {
 
 	private boolean extended;
 
-	private String forValue;
-
-	public DynaFormVarStatus(int colspan, int rowspan, int row, int column, boolean extended, String forValue) {
+	public AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
 		this.colspan = colspan;
 		this.rowspan = rowspan;
 		this.row = row;
 		this.column = column;
 		this.extended = extended;
-		this.forValue = forValue;
 	}
 
 	public int getColspan() {
@@ -68,7 +65,27 @@ public class DynaFormVarStatus {
 		return extended;
 	}
 
-	public String getForValue() {
-		return forValue;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		AbstractDynaFormElement that = (AbstractDynaFormElement) o;
+
+		return row == that.row && column == that.column && extended == that.extended;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = row;
+		result = 31 * result + column;
+		result = 31 * result + (extended ? 1 : 0);
+
+		return result;
 	}
 }

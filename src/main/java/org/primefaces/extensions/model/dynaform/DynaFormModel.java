@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Model class for <code>DynaForm</code> component. It represents a data grid.
+ * Model class for <code>DynaForm</code> component.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$

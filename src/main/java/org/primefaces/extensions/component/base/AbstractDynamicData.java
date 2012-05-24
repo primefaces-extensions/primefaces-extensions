@@ -139,11 +139,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	protected abstract KeyData findData(String key);
 
 	/**
-	 * Exposes variables for each iteration.
-	 */
-	protected abstract void exposeVars();
-
-	/**
 	 * Processes children components during processDecodes(), processValidators(), processUpdates().
 	 *
 	 * @param context faces context {@link FacesContext}
@@ -176,7 +171,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		this.data = findData(key);
 
-		exposeVars();
+		exposeVar();
 		restoreDescendantState();
 	}
 
@@ -185,7 +180,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		this.data = data;
 
-		exposeVars();
+		exposeVar();
 		restoreDescendantState();
 	}
 
@@ -194,7 +189,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 		this.data = null;
 
-		exposeVars();
+		exposeVar();
 		restoreDescendantState();
 	}
 
@@ -421,6 +416,17 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		return UIViewRoot.UNIQUE_ID_PREFIX + (seed == null ? lastId : seed);
 	}
 
+	protected void exposeVar() {
+		KeyData keyData = getData();
+		Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+
+		if (keyData == null) {
+			requestMap.remove(getVar());
+		} else {
+			requestMap.put(getVar(), keyData.getData());
+		}
+	}
+
 	protected void saveDescendantState() {
 		for (UIComponent child : getChildren()) {
 			saveDescendantState(FacesContext.getCurrentInstance(), child);
@@ -458,6 +464,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			state.setValid(input.isValid());
 			state.setSubmittedValue(input.getSubmittedValue());
 			state.setLocalValueSet(input.isLocalValueSet());
+			state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
 		}
 
 		for (UIComponent child : component.getChildren()) {
@@ -502,6 +509,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			input.setValid(state.isValid());
 			input.setSubmittedValue(state.getSubmittedValue());
 			input.setLocalValueSet(state.isLocalValueSet());
+			((UIComponent) input).getAttributes().put("label", state.getLabelValue());
 		}
 
 		for (UIComponent child : component.getChildren()) {

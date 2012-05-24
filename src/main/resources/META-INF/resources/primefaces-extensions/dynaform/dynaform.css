@@ -24,6 +24,10 @@
     width: 1%;
 }
 
+.pe-dynaform-label .pe-dynaform-label-rfi {
+    margin-left: 0.4em;
+}
+
 .pe-dynaform-buttonbar-top {
     text-align: right;
     vertical-align: middle;

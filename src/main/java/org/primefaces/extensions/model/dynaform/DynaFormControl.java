@@ -20,21 +20,19 @@ package org.primefaces.extensions.model.dynaform;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
- * Class representing a control (typically input element or label) inside of <code>DynaForm</code>.
+ * Class representing a control inside of <code>DynaForm</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormControl implements KeyData, Serializable {
+public class DynaFormControl extends AbstractDynaFormElement implements KeyData, Serializable {
 
 	private static final long serialVersionUID = 20120514L;
 
@@ -52,37 +50,17 @@ public class DynaFormControl implements KeyData, Serializable {
 
 	private Object data;
 
-	private String refKey;
-
 	private String type;
 
-	private int colspan = 1;
+	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
+		super(colspan, rowspan, row, column, extended);
 
-	private int rowspan = 1;
-
-	private int row;
-
-	private int column;
-
-	private boolean extended;
-
-	private boolean applyLabelStyle;
-
-	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended,
-	                       boolean applyLabelStyle) {
 		this.data = data;
 		if (type != null) {
 			this.type = type;
 		} else {
 			this.type = DEFAULT_TYPE;
 		}
-
-		this.colspan = colspan;
-		this.rowspan = rowspan;
-		this.row = row;
-		this.column = column;
-		this.extended = extended;
-		this.applyLabelStyle = applyLabelStyle;
 
 		generateKey();
 	}
@@ -103,46 +81,14 @@ public class DynaFormControl implements KeyData, Serializable {
 		this.data = data;
 	}
 
-	public String getRefKey() {
-		return refKey;
-	}
-
-	public void setRefKey(String refKey) {
-		this.refKey = refKey;
-	}
-
 	public String getType() {
 		return type;
 	}
 
-	public int getColspan() {
-		return colspan;
-	}
-
-	public int getRowspan() {
-		return rowspan;
-	}
-
-	public int getRow() {
-		return row;
-	}
-
-	public int getColumn() {
-		return column;
-	}
-
-	public boolean isExtended() {
-		return extended;
-	}
-
-	public boolean isApplyLabelStyle() {
-		return applyLabelStyle;
-	}
-
 	private void generateKey() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(KEY_PREFIX_ROW).append(row).append(KEY_PREFIX_COLUMN).append(column);
-		if (extended) {
+		sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn());
+		if (isExtended()) {
 			sb.append(KEY_SUFFIX_EXTENDED);
 		} else {
 			sb.append(KEY_SUFFIX_REGULAR);
@@ -152,46 +98,11 @@ public class DynaFormControl implements KeyData, Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		if (key != null) {
-			return new HashCodeBuilder(17, 37).append(key).toHashCode();
-		} else {
-			return new HashCodeBuilder(17, 37).append(data).append(type).append(refKey).append(colspan).append(rowspan)
-			                                  .append(row).append(column).append(extended).toHashCode();
-		}
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (obj == this) {
-			return true;
-		}
-
-		if (obj.getClass() != getClass()) {
-			return false;
-		}
-
-		DynaFormControl ddfe = (DynaFormControl) obj;
-
-		if (key != null) {
-			return new EqualsBuilder().append(key, ddfe.key).isEquals();
-		} else {
-			return new EqualsBuilder().append(data, ddfe.data).append(type, ddfe.type).append(refKey, ddfe.refKey)
-			                          .append(colspan, ddfe.colspan).append(rowspan, ddfe.rowspan).append(row, ddfe.row)
-			                          .append(column, ddfe.column).append(extended, ddfe.extended).isEquals();
-		}
-	}
-
-	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("key", key).append("data", data)
-		                                                                  .append("type", type).append("refKey", refKey)
-		                                                                  .append("colspan", colspan).append("rowspan", rowspan)
-		                                                                  .append("row", row).append("column", column)
-		                                                                  .append("extended", extended).toString();
+		                                                                  .append("type", type).append("colspan", getColspan())
+		                                                                  .append("rowspan", getRowspan()).append("row", getRow())
+		                                                                  .append("column", getColumn())
+		                                                                  .append("extended", isExtended()).toString();
 	}
 }

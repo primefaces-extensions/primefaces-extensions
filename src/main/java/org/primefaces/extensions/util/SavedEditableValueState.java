@@ -40,6 +40,8 @@ public class SavedEditableValueState implements Serializable {
 
 	private boolean localValueSet;
 
+	private Object labelValue;
+
 	public Object getSubmittedValue() {
 		return submittedValue;
 	}
@@ -70,5 +72,13 @@ public class SavedEditableValueState implements Serializable {
 
 	public void setLocalValueSet(boolean localValueSet) {
 		this.localValueSet = localValueSet;
+	}
+
+	public Object getLabelValue() {
+		return labelValue;
+	}
+
+	public void setLabelValue(Object labelValue) {
+		this.labelValue = labelValue;
 	}
 }

@@ -40,7 +40,6 @@ import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.extensions.model.dynaform.DynaFormVarStatus;
 
 /**
  * <code>DynaForm</code> component.
@@ -60,7 +59,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
 
-	private Map<String, DynaFormCell> cells;
+	private Map<String, UIDynaFormControl> cells;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -71,7 +70,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
-		varStatus,
 		autoSubmit,
 		openExtended,
 		buttonBarPosition, // top, bottom, both
@@ -108,14 +106,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 	public void setWidgetVar(String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
-	}
-
-	public String getVarStatus() {
-		return (String) getStateHelper().eval(PropertyKeys.varStatus, null);
-	}
-
-	public void setVarStatus(String varStatus) {
-		setAttribute(PropertyKeys.varStatus, varStatus);
 	}
 
 	public boolean isAutoSubmit() {
@@ -194,22 +184,22 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 	}
 
-	public DynaFormCell getCell(String type) {
-		DynaFormCell cell = getCells().get(type);
+	public UIDynaFormControl getControlCell(String type) {
+		UIDynaFormControl cell = getControlCells().get(type);
 
 		if (cell == null) {
-			throw new FacesException("DynaFormCell to type " + type + " was not found");
+			throw new FacesException("UIDynaFormControl to type " + type + " was not found");
 		} else {
 			return cell;
 		}
 	}
 
-	protected Map<String, DynaFormCell> getCells() {
+	protected Map<String, UIDynaFormControl> getControlCells() {
 		if (cells == null) {
-			cells = new HashMap<String, DynaFormCell>();
+			cells = new HashMap<String, UIDynaFormControl>();
 			for (UIComponent child : getChildren()) {
-				if (child instanceof DynaFormCell) {
-					DynaFormCell dynaFormCell = (DynaFormCell) child;
+				if (child instanceof UIDynaFormControl) {
+					UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
 					cells.put(dynaFormCell.getType(), dynaFormCell);
 				}
 			}
@@ -237,25 +227,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 
 		return null;
-	}
-
-	@Override
-	protected void exposeVars() {
-		DynaFormControl dynaFormControl = (DynaFormControl) getData();
-		Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
-
-		if (dynaFormControl == null) {
-			requestMap.remove(getVar());
-			requestMap.remove(getVarStatus());
-		} else {
-			requestMap.put(getVar(), dynaFormControl.getData());
-
-			DynaFormVarStatus dynaFormVarStatus =
-			    new DynaFormVarStatus(dynaFormControl.getColspan(), dynaFormControl.getRowspan(), dynaFormControl.getRow(),
-			                          dynaFormControl.getColumn(), dynaFormControl.isExtended(), dynaFormControl.getRefKey());
-
-			requestMap.put(getVarStatus(), dynaFormVarStatus);
-		}
 	}
 
 	@Override
@@ -325,7 +296,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 	private void processDynaFormCells(FacesContext context, PhaseId phaseId, DynaFormControl dynaFormControl) {
 		for (UIComponent kid : getChildren()) {
-			if (!(kid instanceof DynaFormCell) || !kid.isRendered()) {
+			if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()) {
 				continue;
 			}
 
@@ -355,7 +326,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	private boolean visitDynaFormCells(VisitContext context, VisitCallback callback, DynaFormControl dynaFormControl) {
 		if (getChildCount() > 0) {
 			for (UIComponent child : getChildren()) {
-				if (child instanceof DynaFormCell) {
+				if (child instanceof UIDynaFormControl) {
 					setData(dynaFormControl);
 					if (getData() == null) {
 						return false;
