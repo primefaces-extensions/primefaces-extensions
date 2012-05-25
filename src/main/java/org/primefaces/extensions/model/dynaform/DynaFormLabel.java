@@ -40,11 +40,11 @@ public class DynaFormLabel extends AbstractDynaFormElement implements Serializab
 
 	private DynaFormControl forControl;
 
-	private String targetFor;
+	private String targetClientId;
 
-	private boolean targetRequired;
+	private boolean targetRequired = false;
 
-	private boolean targetValid;
+	private boolean targetValid = true;
 
 	public DynaFormLabel(String value, boolean escape, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);
@@ -69,12 +69,12 @@ public class DynaFormLabel extends AbstractDynaFormElement implements Serializab
 		this.forControl = forControl;
 	}
 
-	public String getTargetFor() {
-		return targetFor;
+	public String getTargetClientId() {
+		return targetClientId;
 	}
 
-	public void setTargetFor(String targetFor) {
-		this.targetFor = targetFor;
+	public void setTargetClientId(String targetClientId) {
+		this.targetClientId = targetClientId;
 	}
 
 	public boolean isTargetRequired() {

@@ -22,10 +22,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.component.api.InputHolder;
 import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
@@ -55,6 +57,7 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
 	private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
 	private static final String LABEL_CLASS = "pe-dynaform-label";
+	private static final String LABEL_INVALID_CLASS = "pe-dynaform-label ui-state-error";
 	private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
 
 	private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
@@ -89,7 +92,12 @@ public class DynaFormRenderer extends CoreRenderer {
 
 		writer.writeAttribute("role", "grid", null);
 
+		// get model
 		DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
+
+		// prepare labels with informations about corresponding control components
+		preRenderLabel(fc, dynaForm, dynaFormModel);
+
 		int totalColspan = getTotalColspan(dynaFormModel);
 		String bbPosition = dynaForm.getButtonBarPosition();
 
@@ -186,6 +194,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
 			List<AbstractDynaFormElement> elements = dynaFormRow.getElements();
 			int size = elements.size();
+
 			for (int i = 0; i < size; i++) {
 				AbstractDynaFormElement element = elements.get(i);
 
@@ -207,13 +216,35 @@ public class DynaFormRenderer extends CoreRenderer {
 
 				if (element instanceof DynaFormLabel) {
 					// render label
-					styleClass = styleClass + " " + LABEL_CLASS;
-					writer.writeAttribute("class", styleClass, null);
-					writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
 					DynaFormLabel label = (DynaFormLabel) element;
 
-					// TODO
+					if (label.isTargetValid()) {
+						styleClass = styleClass + " " + LABEL_CLASS;
+					} else {
+						styleClass = styleClass + " " + LABEL_INVALID_CLASS;
+					}
+
+					writer.startElement("label", null);
+					writer.writeAttribute("class", styleClass, null);
+					writer.writeAttribute("for", label.getTargetClientId(), null);
+					writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+					if (label.getValue() != null) {
+						if (label.isEscape()) {
+							writer.writeText(label.getValue(), "value");
+						} else {
+							writer.write(label.getValue());
+						}
+					}
+
+					if (label.isTargetRequired()) {
+						writer.startElement("span", null);
+						writer.writeAttribute("class", LABEL_INDICATOR_CLASS, null);
+						writer.write("*");
+						writer.endElement("span");
+					}
+
+					writer.endElement("label");
 				} else {
 					// render control
 					DynaFormControl control = (DynaFormControl) element;
@@ -236,6 +267,41 @@ public class DynaFormRenderer extends CoreRenderer {
 			}
 
 			writer.endElement("tr");
+		}
+
+		dynaForm.resetData();
+	}
+
+	protected void preRenderLabel(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) {
+		for (DynaFormLabel dynaFormLabel : dynaFormModel.getLabels()) {
+			// get corresponding control if any
+			DynaFormControl control = dynaFormLabel.getForControl();
+			if (control != null) {
+				// find control's cell by type
+				UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+
+				if (cell.getFor() != null) {
+					dynaForm.setData(control);
+
+					UIComponent target = cell.findComponent(cell.getFor());
+					if (target == null) {
+						LOGGER.warning("Cannot find component with identifier " + cell.getFor() + " inside UIDynaFormControl");
+
+						continue;
+					}
+
+					String targetClientId =
+					    (target instanceof InputHolder) ? ((InputHolder) target).getInputClientId() : target.getClientId(fc);
+
+					dynaFormLabel.setTargetClientId(targetClientId);
+					dynaFormLabel.setTargetValid(((EditableValueHolder) target).isValid());
+					dynaFormLabel.setTargetRequired(((EditableValueHolder) target).isRequired());
+
+					if (dynaFormLabel.getValue() != null) {
+						target.getAttributes().put("label", dynaFormLabel.getValue());
+					}
+				}
+			}
 		}
 
 		dynaForm.resetData();

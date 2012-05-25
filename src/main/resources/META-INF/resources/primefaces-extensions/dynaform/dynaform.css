@@ -28,6 +28,10 @@
     margin-left: 0.4em;
 }
 
+.pe-dynaform-label.ui-state-error {
+    border: 0 none;
+}
+
 .pe-dynaform-buttonbar-top {
     text-align: right;
     vertical-align: middle;

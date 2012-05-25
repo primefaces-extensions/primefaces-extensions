@@ -37,6 +37,8 @@ public class DynaFormModel implements Serializable {
 
 	private List<DynaFormRow> extendedRows = null;
 
+	private List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
+
 	private List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
 
 	public List<DynaFormRow> getRegularRows() {
@@ -49,6 +51,10 @@ public class DynaFormModel implements Serializable {
 
 	public List<DynaFormControl> getControls() {
 		return controls;
+	}
+
+	public List<DynaFormLabel> getLabels() {
+		return labels;
 	}
 
 	public DynaFormRow createRegularRow() {

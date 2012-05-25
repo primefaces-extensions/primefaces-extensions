@@ -71,6 +71,7 @@ public class DynaFormRow implements Serializable {
 		DynaFormLabel dynaFormLabel = new DynaFormLabel(value, escape, colspan, rowspan, row, elements.size() + 1, extended);
 
 		elements.add(dynaFormLabel);
+		dynaFormModel.getLabels().add(dynaFormLabel);
 		totalColspan = totalColspan + colspan;
 
 		return dynaFormLabel;
