@@ -57,7 +57,7 @@ public class DynaFormRenderer extends CoreRenderer {
 	private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
 	private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
 	private static final String LABEL_CLASS = "pe-dynaform-label";
-	private static final String LABEL_INVALID_CLASS = "pe-dynaform-label ui-state-error";
+	private static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
 	private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
 
 	private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
@@ -208,9 +208,11 @@ public class DynaFormRenderer extends CoreRenderer {
 				}
 
 				String styleClass = CELL_CLASS;
-				if (i == 0) {
+				if (i == 0 && element.getColspan() == 1) {
 					styleClass = styleClass + " " + CELL_FIRST_CLASS;
-				} else if (i == size - 1) {
+				}
+
+				if (i == size - 1 && element.getColspan() == 1) {
 					styleClass = styleClass + " " + CELL_LAST_CLASS;
 				}
 
@@ -218,16 +220,15 @@ public class DynaFormRenderer extends CoreRenderer {
 					// render label
 					DynaFormLabel label = (DynaFormLabel) element;
 
-					if (label.isTargetValid()) {
-						styleClass = styleClass + " " + LABEL_CLASS;
-					} else {
-						styleClass = styleClass + " " + LABEL_INVALID_CLASS;
-					}
+					writer.writeAttribute("class", styleClass + " " + LABEL_CLASS, null);
+					writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
 					writer.startElement("label", null);
-					writer.writeAttribute("class", styleClass, null);
+					if (!label.isTargetValid()) {
+						writer.writeAttribute("class", LABEL_INVALID_CLASS, null);
+					}
+
 					writer.writeAttribute("for", label.getTargetClientId(), null);
-					writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
 					if (label.getValue() != null) {
 						if (label.isEscape()) {
@@ -311,22 +312,16 @@ public class DynaFormRenderer extends CoreRenderer {
 		// the main aim of this method is layout check
 		int totalColspan = -1;
 		for (DynaFormRow dynaFormRow : dynaFormModel.getRegularRows()) {
-			if (totalColspan != -1 && totalColspan != dynaFormRow.getTotalColspan()) {
-				LOGGER.warning(
-				    "Layout of dynamic form is bad formed, it's composed of rows with different total colspans (regular part).");
+			if (dynaFormRow.getTotalColspan() > totalColspan) {
+				totalColspan = dynaFormRow.getTotalColspan();
 			}
-
-			totalColspan = dynaFormRow.getTotalColspan();
 		}
 
 		if (dynaFormModel.getExtendedRows() != null) {
 			for (DynaFormRow dynaFormRow : dynaFormModel.getExtendedRows()) {
-				if (totalColspan != -1 && totalColspan != dynaFormRow.getTotalColspan()) {
-					LOGGER.warning(
-					    "Layout of dynamic form is bad formed, it's composed of rows with different total colspans (extended part).");
+				if (dynaFormRow.getTotalColspan() > totalColspan) {
+					totalColspan = dynaFormRow.getTotalColspan();
 				}
-
-				totalColspan = dynaFormRow.getTotalColspan();
 			}
 		}
 

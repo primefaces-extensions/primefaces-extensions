@@ -227,8 +227,12 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		FacesMessage.Severity sev = context.getMaximumSeverity();
 		boolean hasErrors = (sev != null && (FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0));
 
-		if (saved == null || !hasErrors) {
+		if (saved == null) {
 			getStateHelper().remove(PropertyKeys.saved);
+		} else if (!hasErrors) {
+			for (SavedEditableValueState saveState : saved.values()) {
+				saveState.reset();
+			}
 		}
 
 		processFacets(context, PhaseId.APPLY_REQUEST_VALUES, this);
@@ -464,7 +468,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			state.setValid(input.isValid());
 			state.setSubmittedValue(input.getSubmittedValue());
 			state.setLocalValueSet(input.isLocalValueSet());
-			state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
+			if (((UIComponent) input).getAttributes().containsKey("label")) {
+				state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
+			}
 		}
 
 		for (UIComponent child : component.getChildren()) {
@@ -509,7 +515,13 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			input.setValid(state.isValid());
 			input.setSubmittedValue(state.getSubmittedValue());
 			input.setLocalValueSet(state.isLocalValueSet());
-			((UIComponent) input).getAttributes().put("label", state.getLabelValue());
+			if (((UIComponent) input).getAttributes().containsKey("label")) {
+				if (state.getLabelValue() != null) {
+					((UIComponent) input).getAttributes().put("label", state.getLabelValue());
+				} else {
+					((UIComponent) input).getAttributes().remove("label");
+				}
+			}
 		}
 
 		for (UIComponent child : component.getChildren()) {

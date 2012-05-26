@@ -114,8 +114,7 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		} else {
 			final ELContext elContext = context.getELContext();
 			final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-			final ValueExpression ve =
-				expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+			final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
 
 			theme = (String) ve.getValue(elContext);
 		}
@@ -157,7 +156,10 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 		for (final UIComponent resource : resources) {
 			final String name = (String) resource.getAttributes().get("name");
 
-			if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_CSS)) {
+			if (name == null) {
+				// could be inline style
+				styles.add(resource);
+			} else if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_CSS)) {
 				styles.add(resource);
 			} else if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_JS)) {
 				scripts.add(resource);

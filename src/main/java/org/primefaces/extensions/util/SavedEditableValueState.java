@@ -38,9 +38,16 @@ public class SavedEditableValueState implements Serializable {
 
 	private Object value;
 
-	private boolean localValueSet;
+	private boolean localValueSet = false;
 
 	private Object labelValue;
+
+	public void reset() {
+		submittedValue = null;
+		valid = true;
+		value = null;
+		localValueSet = false;
+	}
 
 	public Object getSubmittedValue() {
 		return submittedValue;
