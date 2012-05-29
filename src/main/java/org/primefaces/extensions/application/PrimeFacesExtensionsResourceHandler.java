@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,17 +18,14 @@
 
 package org.primefaces.extensions.application;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.extensions.util.Constants;
+import org.primefaces.extensions.util.ContextParametersProvider;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
@@ -43,12 +40,11 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 	public static final String[] UNCOMPRESSED_EXCLUDES = new String[] { "ckeditor/" };
 
 	private final ResourceHandler wrapped;
-	private final Map<String, Resource> resourceCache;
 
 	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
 		super();
+
 		wrapped = resourceHandler;
-		resourceCache = new HashMap<String, Resource>();
 	}
 
 	@Override
@@ -58,50 +54,50 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	@Override
 	public Resource createResource(final String resourceName, final String libraryName) {
-		Resource resource;
+		Resource resource = super.createResource(resourceName, libraryName);;
 
-		if (libraryName != null && libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+		if (resource != null && libraryName != null) {
 
-			if (resourceCache.containsKey(resourceName)) {
-				resource = resourceCache.get(resourceName);
-			} else {
-				//get uncompressed resource if project stage == development
+			if (ContextParametersProvider.getInstance().isWrapPrimeFacesResources()
+					&& libraryName.equalsIgnoreCase(org.primefaces.util.Constants.LIBRARY)) {
+
+				//Handle PrimeFaces resources
+				resource = new PrimeFacesResource(resource);
+
+			} else if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+
+				//Handle PrimeFaces Extensions resources
 				if (deliverUncompressedFile(resourceName)) {
+					//get uncompressed resource if project stage == development
 					resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
-				} else {
-					resource = super.createResource(resourceName, libraryName);
 				}
 
 				if (resource != null) {
 					resource = new PrimeFacesExtensionsResource(resource);
 				}
-
-				resourceCache.put(resourceName, resource);
 			}
-		} else {
-			resource = super.createResource(resourceName, libraryName);
 		}
 
 		return resource;
 	}
 
 	protected boolean deliverUncompressedFile(final String resourceName) {
-        final FacesContext context = FacesContext.getCurrentInstance();
+		final FacesContext context = FacesContext.getCurrentInstance();
 
-        if (context.isProjectStage(ProjectStage.Development)) {
-        	if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
-	        	for (String exclude : UNCOMPRESSED_EXCLUDES) {
-	        		if (resourceName.contains(exclude)) {
-	        			return false;
-	        		}
+		if (ContextParametersProvider.getInstance().isDeliverUncompressedResources()
+				&& context.isProjectStage(ProjectStage.Development)) {
+
+			if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
+				for (String exclude : UNCOMPRESSED_EXCLUDES) {
+					if (resourceName.contains(exclude)) {
+						return false;
+					}
 				}
 
-	        	final ExternalContext externalContext = context.getExternalContext();
-		        final String value = externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
-		        return value == null ? true : Boolean.valueOf(value);
-	        }
-        }
+				return ContextParametersProvider.getInstance().isDeliverUncompressedResources();
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 }
