@@ -21,13 +21,11 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -44,8 +42,8 @@ public class InputNumberRenderer extends InputRenderer {
 
 	@Override
 	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
-		throws ConverterException {
-
+		throws ConverterException {  
+        
 		InputNumber inputNumber = (InputNumber) component;
 		Converter converter = inputNumber.getConverter();
 		String submittedValueString = (String) submittedValue;
@@ -54,8 +52,10 @@ public class InputNumberRenderer extends InputRenderer {
 			Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
 			return doubleConverted;
 		} else {
-			Double doubleSubmited = Double.valueOf(submittedValueString);
-			return doubleSubmited;
+			if (submittedValueString != null && !submittedValueString.isEmpty()) {
+				return Double.valueOf(submittedValueString);
+			}
+			return new Double(0);
 		}
 	}
 
