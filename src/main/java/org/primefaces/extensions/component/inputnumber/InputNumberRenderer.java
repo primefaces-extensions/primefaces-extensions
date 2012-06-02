@@ -235,7 +235,8 @@ public class InputNumberRenderer extends InputRenderer {
 			f = f.replace(',', '.');
 			return f;
 		} catch (Exception e) {
-			return "0.0";
+			throw new IllegalArgumentException(
+                        "Error converting  [" + valueToRender + "] to a double value;" ,e );
 		}
 	}
 }
