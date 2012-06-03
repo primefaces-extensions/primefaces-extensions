@@ -167,30 +167,38 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	protected abstract boolean invokeOnChildren(FacesContext context, String clientId, ContextCallback callback);
 
 	public void setData(String key) {
-		saveDescendantState();
+		if (data != null) {
+			saveDescendantState();
+		}
 
-		this.data = findData(key);
-
+		data = findData(key);
 		exposeVar();
-		restoreDescendantState();
+
+		if (data != null) {
+			restoreDescendantState();
+		}
 	}
 
-	public void setData(KeyData data) {
-		saveDescendantState();
+	public void setData(KeyData keyData) {
+		if (data != null) {
+			saveDescendantState();
+		}
 
-		this.data = data;
-
+		data = keyData;
 		exposeVar();
-		restoreDescendantState();
+
+		if (data != null) {
+			restoreDescendantState();
+		}
 	}
 
 	public void resetData() {
-		saveDescendantState();
+		if (data != null) {
+			saveDescendantState();
+		}
 
-		this.data = null;
-
+		data = null;
 		exposeVar();
-		restoreDescendantState();
 	}
 
 	public KeyData getData() {
@@ -468,9 +476,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			state.setValid(input.isValid());
 			state.setSubmittedValue(input.getSubmittedValue());
 			state.setLocalValueSet(input.isLocalValueSet());
-			if (((UIComponent) input).getAttributes().containsKey("label")) {
-				state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
-			}
+			state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
 		}
 
 		for (UIComponent child : component.getChildren()) {
@@ -515,12 +521,8 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 			input.setValid(state.isValid());
 			input.setSubmittedValue(state.getSubmittedValue());
 			input.setLocalValueSet(state.isLocalValueSet());
-			if (((UIComponent) input).getAttributes().containsKey("label")) {
-				if (state.getLabelValue() != null) {
-					((UIComponent) input).getAttributes().put("label", state.getLabelValue());
-				} else {
-					((UIComponent) input).getAttributes().remove("label");
-				}
+			if (state.getLabelValue() != null) {
+				((UIComponent) input).getAttributes().put("label", state.getLabelValue());
 			}
 		}
 
