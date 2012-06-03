@@ -199,7 +199,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
 	}
 
-	public void setHideEffectLength(final Integer hideEffectLength) {
+	public void setHideEffectLength(final int hideEffectLength) {
 		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
