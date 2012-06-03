@@ -576,6 +576,24 @@
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>${primefaces.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>afterdark</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>afternoon</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>afterwork</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
             </dependency>            
             <dependency>
                 <groupId>org.primefaces.themes</groupId>
