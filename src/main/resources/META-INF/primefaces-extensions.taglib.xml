@@ -521,7 +521,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Flag whether the form has to be submitted after displaying automatically. Note: the form can be submitted if it contains at least one submit button. Default value is false.]]>
+                <![CDATA[Flag whether the form has to be submitted automatically after current page has been loaded. Note: the form can be submitted if it contains at least one submit button. Default value is false.]]>
             </description>
             <name>autoSubmit</name>
             <required>false</required>

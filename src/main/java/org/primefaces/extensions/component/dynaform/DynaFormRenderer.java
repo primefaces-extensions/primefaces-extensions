@@ -131,12 +131,14 @@ public class DynaFormRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext fc, DynaForm dynaForm) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = dynaForm.getClientId(fc);
+		String widgetVar = dynaForm.resolveWidgetVar();
 
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('DynaForm','" + dynaForm.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('DynaForm','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+		writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
 		writer.write("});});");
 		endScript(writer);

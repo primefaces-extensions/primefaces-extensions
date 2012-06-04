@@ -13,7 +13,7 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
     init : function(cfg) {
         this._super(cfg);
 
-        if (cfg.autoSubmit) {
+        if (cfg.autoSubmit && !window[cfg.widgetVar]) {
             this.submitForm();
         }
     },
