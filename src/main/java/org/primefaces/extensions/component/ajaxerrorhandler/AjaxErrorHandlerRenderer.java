@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,101 +15,114 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import org.apache.commons.lang3.StringUtils;
-import org.primefaces.extensions.util.GsonConverter;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.renderkit.CoreRenderer;
 
 /**
- * AjaxErrorHandlerRenderer
+ * Renderer for the {@link AjaxErrorHandler} component.
  *
  * @author Pavol Slany / last modified by $Author$
  * @version $Revision$
  * @since 0.5
  */
 public class AjaxErrorHandlerRenderer extends CoreRenderer {
-    private String hostnameRequestKey = AjaxErrorHandlerRenderer.class.getCanonicalName()+".hostnameIsDefined";
 
-    @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        encodeScript(context, (AjaxErrorHandler) component);
-    }
+	private static final String HOSTNAME_ALREADY_DEFINED_KEY =
+			AjaxErrorHandlerRenderer.class.getCanonicalName() + ".HOSTNAME_ALREADY_DEFINED";
 
+	@Override
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+		encodeScript(context, (AjaxErrorHandler) component);
+	}
 
-    protected void encodeScript(final FacesContext context, final AjaxErrorHandler ajaxErrorHandler) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = ajaxErrorHandler.getClientId(context);
-        String widgetVar = ajaxErrorHandler.resolveWidgetVar();
+	protected void encodeScript(final FacesContext context, final AjaxErrorHandler ajaxErrorHandler) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
+		String clientId = ajaxErrorHandler.getClientId(context);
+		String widgetVar = ajaxErrorHandler.resolveWidgetVar();
 
+		startScript(writer, clientId);
 
-        Map<String, String> values = getConfigJSON(ajaxErrorHandler);
+		if (widgetVar != null) {
+			writer.write("$(function(){");
+			writer.write(widgetVar);
+			writer.write(" = PrimeFacesExt.getAjaxErrorHandlerInstance();});");
+		}
 
-        String json = GsonConverter.getGson().toJson(values);
-        startScript(writer, clientId);
-        if (context.getExternalContext().getRequestMap().get(hostnameRequestKey)==null) {
-            writer.write("PrimeFacesExt.AjaxErrorHandler.setHostname('"+getHostname()+"');");
-            context.getExternalContext().getRequestMap().put(hostnameRequestKey, true);
-        }
-        if (widgetVar!=null)
-            writer.write(widgetVar+" = ");
+		if (context.getExternalContext().getRequestMap().get(HOSTNAME_ALREADY_DEFINED_KEY) == null) {
+			writer.write("$(function(){PrimeFacesExt.getAjaxErrorHandlerInstance().setHostname('");
+			writer.write(getHostname());
+			writer.write("');});");
+			context.getExternalContext().getRequestMap().put(HOSTNAME_ALREADY_DEFINED_KEY, true);
+		}
 
-        writer.write("PrimeFacesExt.AjaxErrorHandler.addErrorSettings("+json+");");
-        endScript(writer);
-    }
-    protected String getHostname() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        }
-        catch (Exception e) {
-            return "???unknown???";
-        }
-    }
+		writer.write("$(function(){PrimeFacesExt.getAjaxErrorHandlerInstance().addErrorSettings({");
 
+		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.type.toString(), ajaxErrorHandler.getType());
+		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.title.toString(), ajaxErrorHandler.getTitle());
+		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.body.toString(), ajaxErrorHandler.getBody());
+		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.button.toString(), ajaxErrorHandler.getButton());
 
-    private final static String CONF_TYPE = "type";
-    private final static String CONF_TITLE = "title";
-    private final static String CONF_BODY = "body";
-    private final static String CONF_BUTTON_TEXT = "buttonText";
-    private final static String CONF_BUTTON_ONCLICK = "buttonOnClick";
-    private final static String CONF_ONERROR = "onerror";
+		if (!StringUtils.isEmpty(ajaxErrorHandler.getButtonOnclick())) {
+			writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.buttonOnclick.toString(),
+					"function(){" + ajaxErrorHandler.getButtonOnclick() + "}");
+		}
 
-    protected Map<String, String> getConfigJSON(final AjaxErrorHandler ajaxErrorHandler) {
-        Map<String, String> values = new LinkedHashMap<String, String>();
-        if (!StringUtils.isEmpty(ajaxErrorHandler.getType())) {
-            values.put(CONF_TYPE, ajaxErrorHandler.getType());
-        }
-        if (ajaxErrorHandler.getTitle() != null) {
-            values.put(CONF_TITLE, ajaxErrorHandler.getTitle());
-        }
-        if (!StringUtils.isEmpty(ajaxErrorHandler.getBody())) {
-            values.put(CONF_BODY, ajaxErrorHandler.getBody());
-        }
-        if (!StringUtils.isEmpty(ajaxErrorHandler.getButton())) {
-            values.put(CONF_BUTTON_TEXT, ajaxErrorHandler.getButton());
-        }
-        if (!StringUtils.isEmpty(ajaxErrorHandler.getButtonOnclick())) {
-            values.put(CONF_BUTTON_ONCLICK, ajaxErrorHandler.getButtonOnclick());
-        }
-        if (!StringUtils.isEmpty(ajaxErrorHandler.getOnerror())) {
-            values.put(CONF_ONERROR, ajaxErrorHandler.getOnerror());
-        }
-        return values;
-    }
+		if (!StringUtils.isEmpty(ajaxErrorHandler.getOnerror())) {
+			writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.onerror.toString(),
+					"function(error, response){" + ajaxErrorHandler.getOnerror() + "}");
+		}
 
-    @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-    }
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
+		writer.write("});});");
+
+		endScript(writer);
+	}
+
+	protected void writeStringOption(final ResponseWriter writer, final String type, final String value) throws IOException {
+		if (!StringUtils.isEmpty(value)) {
+			writer.write("'");
+			writer.write(type);
+			writer.write("':'");
+			writer.write(value);
+			writer.write("',");
+		}
+	}
+
+	protected void writeFunctionOption(final ResponseWriter writer, final String type, final String value) throws IOException {
+		if (!StringUtils.isEmpty(value)) {
+			writer.write("'");
+			writer.write(type);
+			writer.write("':");
+			writer.write(value);
+			writer.write(",");
+		}
+	}
+
+	protected String getHostname() throws UnknownHostException {
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return "???unknown???";
+		}
+	}
+
+	@Override
+	public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+		//do nothing
+	}
+
+	@Override
+	public boolean getRendersChildren() {
+		return true;
+	}
 }

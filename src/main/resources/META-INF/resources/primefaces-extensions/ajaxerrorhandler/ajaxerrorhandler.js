@@ -1,241 +1,290 @@
+PrimeFacesExt.getAjaxErrorHandlerInstance = function() {
+	if (!PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE) {
+		var instance = new PrimeFacesExt.widget.AjaxErrorHandler();
+
+		instance.init();
+		
+		PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE = instance;
+	}
+
+	return PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE;
+}
+
+//TODO replace _self with proxy
+//TODO dialog is sometimes not centered
+//TODO callback args are null
+
 /**
  * PrimeFaces Extensions AjaxErrorHandler.
  *
  * @author Pavol Slany
  */
+PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
+	
+	DEFAULT_HOSTNAME : '???unknown???',
 
-PrimeFacesExt.AjaxErrorHandler = function() {
-    var defaultHostname = '???unknown???';
-    var getDefaultErrorTime = function() {return new Date().toString();};
+	init : function() {
+		this.popupWindow = null;
+		this.popupWindowRoot = null;
+		this.popupWindowMask = null;
 
-    var init = function() {
-        // redefine init function
-        init = function() {};
+		this.hostname = this.DEFAULT_HOSTNAME;
+		
+		this.defaultSettings = {
+			'title': '{error-name}',
+			'body': '{error-message}',
+			'button': 'Reload',
+			'buttonOnclick': function() {
+				document.location.href = document.location.href;
+			},
+			'onerror': function(error, response) {
+				
+			}
+		};
+		this.settings = this.defaultSettings;
+		this.otherSettings = {};
 
+		this.overwritePrimeFacesAjaxResponse();
+	},
 
-        PrimeFaces.ajax.AjaxResponse = function() {
-            // backup original AjaxResponse function ...
-            var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
+	overwritePrimeFacesAjaxResponse : function() {
+		var _self = this;
 
-            return function() {
-                var docPartialUpdate = arguments[0];
-                var nodeErrors = docPartialUpdate.getElementsByTagName('error');
-                if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
-                    // XML => JSON
-                    var error = {};
-                    for (var i=0; i<nodeErrors[0].childNodes.length; i++) {
-                        var node = nodeErrors[0].childNodes[i];
-                        var key = node.nodeName;
-                        var val = node.nodeValue;
-                        if (node.childNodes && node.childNodes.length) {
-                            val = node.childNodes[0].nodeValue;
-                        }
-                        error[key] = val;
-                    }
+		PrimeFaces.ajax.AjaxResponse = function() {
+			// backup original AjaxResponse function ...
+			var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
 
-                    if (error['error-name']) {
-                        // findErrorSettings
-                        var errorSetting = findErrorSettings(error['error-name']);
-                        var retOnError = true;
-                        if (errorSetting['onerror']) {
-                            try {
-                                var fun = errorSetting['onerror'];
-                                if (typeof(fun) != 'function') {
-                                    fun = function(error, response) {
-                                        return eval(errorSetting['onerror']);
-                                    };
-                                };
+			var docPartialUpdate = arguments[0];
+			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
 
-                                fun.call(this, error, arguments[2]);
-                            } catch(e) {}
-                        }
-                        if (retOnError !== false) {
-                            // Copy updates to errorSettings ...
-                            if (error.updateCustomContent && error.updateCustomContent.substring(-13)=='<exception />') error.updateCustomContent=null;
-                            if (error.updateTitle && error.updateTitle.substring(-13)=='<exception />') error.updateTitle=null;
-                            if (error.updateBody && error.updateBody.substring(-13)=='<exception />') error.updateBody= null;
-                            if (error.updateViewState && error.updateViewState.substring(-13)=='<exception />') error.updateViewState= null;
+			if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
+				// XML => JSON
+				var error = {};
 
-                            errorSetting.updateCustomContent = error.updateCustomContent;
-                            errorSetting.updateTitle = error.updateTitle;
-                            errorSetting.updateBody = error.updateBody;
-                            errorSetting.updateViewState = error.updateViewState;
+				for (var i=0; i < nodeErrors[0].childNodes.length; i++) {
+					var node = nodeErrors[0].childNodes[i];
+					var key = node.nodeName;
+					var val = node.nodeValue;
 
-                            var errorData = replaceVariables(errorSetting, error);
+					if (node.childNodes && node.childNodes.length) {
+						val = node.childNodes[0].nodeValue;
+					}
 
-                            showPopupWindow(errorData);
-                            return true;
-                        }
-                    }
-                }
-                return backupAjaxResponse.apply(window, arguments);
-            }
-        }();
-    }
+					error[key] = val;
+				}
 
+				if (error['error-name']) {
+					// findErrorSettings
+					var errorSetting = _self.findErrorSettings(error['error-name']);
 
-    var defSettings = {
-        'title': '{error-name}',
-        'body': '{error-message}',
-        'buttonText': 'Reload',
-        'buttonOnClick': function() {
-            document.location.href = document.location.href;
-        },
-        'onerror': function(values) {}
-    };
-    var mainSettings = defSettings;
-    var otherSettings = {};
+					//skip dialog if onerror is defined and returns false
+					if (errorSetting['onerror']) {
+						var onerrorFunction = errorSetting['onerror'];
+						if (onerrorFunction.call(this, error, arguments[2]) === false) {
+							return true;
+						}
+					}
 
-    var findErrorSettings = function(name) {
-        if (!name) return jQuery.extend({}, mainSettings);
+					// Copy updates to errorSettings ...
+					if (error.updateCustomContent && error.updateCustomContent.substring(-13) == '<exception />') {
+						error.updateCustomContent = null;
+					}
 
-        if (!otherSettings[name]) jQuery.extend({}, mainSettings);
+					if (error.updateTitle && error.updateTitle.substring(-13) == '<exception />') {
+						error.updateTitle = null;
+					}
 
-        return jQuery.extend({}, mainSettings, otherSettings[name]);
-    }
-    var addErrorSettings = function(conf) {
-        if (!conf) return;
+					if (error.updateBody && error.updateBody.substring(-13) == '<exception />') {
+						error.updateBody = null;
+					}
 
-        if (!conf.type) {
-            mainSettings = jQuery.extend({},mainSettings,conf);
-            return;
-        }
-        var def = otherSettings[conf.type] || {};
-        otherSettings[conf.type] = jQuery.extend({}, def, conf);
-    }
+					if (error.updateViewState && error.updateViewState.substring(-13) == '<exception />') {
+						error.updateViewState = null;
+					}
 
+					errorSetting.updateCustomContent = error.updateCustomContent;
+					errorSetting.updateTitle = error.updateTitle;
+					errorSetting.updateBody = error.updateBody;
+					errorSetting.updateViewState = error.updateViewState;
 
+					var errorData = _self.replaceVariables(errorSetting, error);
 
-        var replaceAll = function(str, key, val) {
-        var newStr;
-        while ((newStr = str.replace(key, val))!=str) {str = newStr};
-        return str;
-    };
+					_self.show(errorData);
 
+					return true;
+				}
+			}
 
-    var replaceVariables = function(obj, variables) {
-        if (!obj) return text;
+			return backupAjaxResponse.apply(window, arguments);
+		};
+	},
+	
+	isVisible : function() {
+		return this.popupWindow && this.popupWindow.isVisible();
+	},
 
-        variables = jQuery.extend({
-            'error-hostname': defaultHostname,
-            'error-stacktrace': '',
-            'error-time': getDefaultErrorTime()
-        },variables);
+	recalculatePopupWindowHeight : function() {
+		if (this.popupWindowMask == null && this.popupWindow == null) {
+			return;
+		}
 
-        var ret = {};
-        jQuery.each(obj, function(key, val) {
-            if (typeof(val) == 'string') {
-                jQuery.each(variables, function(iVar, iVal) {
-                    val = replaceAll(val, '{'+iVar+'}',iVal);
-                });
-            }
-            ret[key] = val;
-        });
+		var height = $(window).outerHeight();
+		var width = $(window).outerWidth();
+		this.popupWindowMask.css('width', width);
+		this.popupWindowMask.css('height', height);
 
+		var winCss = {};
+		winCss.left = (width - this.popupWindow.outerWidth()) / 2;
+		winCss.top = (height - this.popupWindow.outerHeight()) / 2;
 
-        return ret;
-    }
+		if (winCss.left < 0) {
+			winCss.left=0;
+		}
 
-    var win = null;
-    var winRoot =  null;
-    var winMask = null;
-    var winRecalcHeight = null;
-    var showPopupWindow = function(errorData) {
-        destroyPopupWindow();
+		if (winCss.top < 0) {
+			winCss.top=0;
+		}
 
-        winMask = $('<div class="ui-widget-overlay"></div>').hide();
-        win = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-overlay-visible"></div>').hide();
+		this.popupWindow.css(winCss);
+	},
+	
+	hide : function () {
+		if (this.popupWindowRoot) {
+			this.popupWindowRoot.remove();
+		}
 
-        winRoot = $('<div class="pe-ajax-error-handler" style="z-index: 999999999; overflow: visible; position: absolute; left:0px; top: 0px;"></div>').append(win, winMask);
-        $('body').append(winRoot);
+		this.popupWindowRoot = null;
+		this.popupWindowMask = null;
+		this.popupWindow = null;
+	},
+	
+	show : function(errorData) {
+		this.hide();
 
-        if (errorData.updateCustomContent) {
-            var elContent = $('<div></div>');
-            win.append(elContent);
-            elContent.replaceWith(errorData.updateCustomContent);
-        }
-        else {
-            var htmlContent = '<div class="ui-dialog-content ui-widget-content"></div>';
-            var htmlTitle = '<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"></div>';
-            var htmlTitleText = '<span class="ui-dialog-title"></span>';
+		this.popupWindowMask = $('<div class="ui-widget-overlay"></div>').hide();
+		this.popupWindow = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-overlay-visible"></div>').hide();
 
+		this.popupWindowRoot = $('<div class="pe-ajax-error-handler" style="z-index: 999999999; overflow: visible; position: absolute; left:0px; top: 0px;"></div>').append(this.popupWindow, this.popupWindowMask);
+		$('body').append(this.popupWindowRoot);
 
-            var button = $('<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">'+errorData['buttonText']+'</span></button>');
-            var funOnClick = errorData['buttonOnClick'];
-            button.click(function() {
-                if (typeof(funOnClick) == 'function') funOnClick.call(this);
-                else eval(funOnClick);
-            });
+		if (errorData.updateCustomContent) {
+			var elContent = $('<div></div>');
+			this.popupWindow.append(elContent);
+			elContent.replaceWith(errorData.updateCustomContent);
+		} else {
+			var htmlContent = '<div class="ui-dialog-content ui-widget-content"></div>';
+			var htmlTitle = '<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"></div>';
+			var htmlTitleText = '<span class="ui-dialog-title"></span>';
 
-            var elTitle = $('<a />');
-            var elBody = $('<a />');
-            win.append($(htmlTitle).append($(htmlTitleText).append(elTitle)));
-            win.append($(htmlContent).append($('<div></div>').append(elBody)), $('<div class="pe-error-buttons"></div>').append(button));
+			var button = $('<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' + errorData['button'] + '</span></button>');
+			var buttonOnclickFunction = errorData['buttonOnclick'];
+			button.click(function() {
+				buttonOnclickFunction.call(this);
+			});
 
-            // setup draggable
-            win.draggable({
-                cancel: '.ui-dialog-content, .ui-dialog-titlebar-close',
-                handle: '.ui-dialog-titlebar',
-                containment : 'document'
-            });
+			var elTitle = $('<a />');
+			var elBody = $('<a />');
+			this.popupWindow.append($(htmlTitle).append($(htmlTitleText).append(elTitle)));
+			this.popupWindow.append(
+					$(htmlContent).append($('<div></div>').append(elBody)),
+					$('<div class="pe-error-buttons"></div>').append(button));
 
-            elTitle.replaceWith(errorData.updateTitle || errorData.title);
-            elBody.replaceWith(errorData.updateBody || errorData.body);
-        }
+			// setup draggable
+			this.popupWindow.draggable({
+				cancel: '.ui-dialog-content, .ui-dialog-titlebar-close',
+				handle: '.ui-dialog-titlebar',
+				containment : 'document'
+			});
 
+			elTitle.replaceWith(errorData.updateTitle || errorData.title);
+			elBody.replaceWith(errorData.updateBody || errorData.body);
+		}
 
+		this.popupWindowMask.css('zIndex', PrimeFaces.zindex++);
+		this.popupWindow.css('zIndex', PrimeFaces.zindex++);
 
-        var zIndex = 999998;
-        winMask.css('zIndex', zIndex++);
-        win.css('zIndex', zIndex);
+		this.popupWindow.css({'position' : 'fixed',
+			'margin-left' : 'auto',
+			'margin-right' : 'auto',
+			'overflow' : 'hidden'});
 
-        win.css({'position':'fixed', 'margin-left':'auto', 'margin-right':'auto', 'overflow':'hidden'});
-        winMask.css({'position':'fixed', 'left':0, 'top':0});
-        winRecalcHeight = function() {
-            if (winMask == null && win==null) return;
+		this.popupWindowMask.css({'position' : 'fixed', 'left' : 0, 'top' : 0});
 
-            var height = $(window).outerHeight();
-            var width = $(window).outerWidth();
-            winMask.css('width',width);
-            winMask.css('height', width);
+		this.recalculatePopupWindowHeight();
+		this.popupWindow.show();
+		this.popupWindowMask.show();
+		this.recalculatePopupWindowHeight();
+	},
 
-            var winCss = {};
-            winCss.left = (width - win.outerWidth()) / 2;
-            winCss.top = (height - win.outerHeight()) / 2;
-            if (winCss.left<0) winCss.left=0;
-            if (winCss.top<0) winCss.top=0;
-            win.css(winCss);
-        };
-//        $(window).resize(winRecalcHeight);
-        winRecalcHeight();
-        win.show();
-        winMask.show();
-        winRecalcHeight();
-    };
-    var destroyPopupWindow = function () {
-//        if (winMask) winMask.remove();
-        if (winRoot) winRoot.remove();
-//        if (winRecalcHeight) $(window).unbind('resize', winRecalcHeight);
-        winRoot = null;
-        winMask = null;
-        win=null;
-        winRecalcHeight = null;
-    };
-    var isVisible = function() {
-        return win && win.isVisible();
-    }
+	getDefaultErrorTime : function() {
+		return new Date().toString();
+	},
+	
+	findErrorSettings : function(name) {
+		if (!name) {
+			return jQuery.extend({}, this.settings);
+		}
 
-    return {
-        addErrorSettings: function(conf) {
-            init();
-            addErrorSettings(conf);
-            return PrimeFacesExt.AjaxErrorHandler;
-        },
-        hide: destroyPopupWindow,
-        isVisible : isVisible,
-        setHostname: function(hostname) {
-            init();
-            defaultHostname = hostname;
-        }
-    };
-}();
+		if (!this.otherSettings[name]) {
+			jQuery.extend({}, this.settings);
+		}
+
+		return jQuery.extend({}, this.settings, this.otherSettings[name]);
+	},
+
+	addErrorSettings : function(newSettings) {
+		if (!newSettings) {
+			return;
+		}
+
+		if (!newSettings.type) {
+			this.settings = jQuery.extend({}, this.settings, newSettings);
+			return;
+		}
+
+		var type = this.otherSettings[newSettings.type] || {};
+
+		this.otherSettings[newSettings.type] = jQuery.extend({}, type, newSettings);
+	},
+	
+	replaceAll : function(str, key, val) {
+		var newStr;
+
+		while ((newStr = str.replace(key, val)) != str) {
+			str = newStr
+		};
+
+		return str;
+	},
+	
+	replaceVariables : function(obj, variables) {
+		if (!obj) {
+			return text;
+		}
+
+		variables = jQuery.extend({
+			'error-hostname': this.hostname,
+			'error-stacktrace': '',
+			'error-time': this.getDefaultErrorTime()
+		}, variables);
+
+		var returnValue = {};
+
+		jQuery.each(obj, $.proxy(function(key, val) {
+			if (typeof(val) == 'string') {
+				jQuery.each(variables, $.proxy(function(iVar, iVal) {
+					val = this.replaceAll(val, '{' + iVar + '}', iVal);
+				}, this));
+			}
+
+			returnValue[key] = val;
+		}, this));
+
+		return returnValue;
+	},
+	
+	setHostname : function(hostname) {
+		this.hostname = hostname;
+	}
+});
+

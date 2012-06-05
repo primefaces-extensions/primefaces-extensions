@@ -29,36 +29,31 @@ import javax.faces.context.ExceptionHandlerFactory;
  */
 public class AjaxExceptionHandlerFactory extends ExceptionHandlerFactory {
 
-    // Variables ------------------------------------------------------------------------------------------------------
+	private ExceptionHandlerFactory wrapped;
 
-    private ExceptionHandlerFactory wrapped;
+	/**
+	 * Construct a new full {@link AjaxExceptionHandlerFactory} around the given wrapped factory.
+	 * 
+	 * @param wrapped The wrapped factory.
+	 */
+	public AjaxExceptionHandlerFactory(final ExceptionHandlerFactory wrapped) {
+		this.wrapped = wrapped;
+	}
 
-    // Constructors ---------------------------------------------------------------------------------------------------
+	/**
+	 * Returns a new instance {@link AjaxExceptionHandler}.
+	 */
+	@Override
+	public ExceptionHandler getExceptionHandler() {
+		//TODO can this instance be cached?
+		return new AjaxExceptionHandler(wrapped.getExceptionHandler());
+	}
 
-    /**
-     * Construct a new full ajax exception handler factory around the given wrapped factory.
-     * @param wrapped The wrapped factory.
-     */
-    public AjaxExceptionHandlerFactory(ExceptionHandlerFactory wrapped) {
-        this.wrapped = wrapped;
-    }
-
-    // Actions --------------------------------------------------------------------------------------------------------
-
-    /**
-     * Returns a new instance {@link AjaxExceptionHandler}.
-     */
-    @Override
-    public ExceptionHandler getExceptionHandler() {
-        return new AjaxExceptionHandler(wrapped.getExceptionHandler());
-    }
-
-    /**
-     * Returns the wrapped factory.
-     */
-    @Override
-    public ExceptionHandlerFactory getWrapped() {
-        return wrapped;
-    }
-
+	/**
+	 * Returns the wrapped factory.
+	 */
+	@Override
+	public ExceptionHandlerFactory getWrapped() {
+		return wrapped;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,183 +15,169 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import org.primefaces.component.api.Widget;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.primefaces.component.api.Widget;
 
 /**
- * AjaxErrorHandler
+ * Component class for the <code>AjaxErrorHandler</code> component.
  *
  * @author Pavol Slany / last modified by $Author$
  * @version $Revision$
  * @since 0.5
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "javax.faces", name = "jsf.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+	@ResourceDependency(library = "javax.faces", name = "jsf.js"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class AjaxErrorHandler extends UIComponentBase implements Widget {
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AjaxErrorHandler";
-    private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Pavol Slany / last modified by $Author$
-     * @version $Revision$
-     */
-    static public enum PropertyKeys {
-        id,
-        type,
-        title,
-        body,
-        button,
-        buttonOnclick,
-        onerror,
-        mode,
-        widgetVar;
+	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AjaxErrorHandler";
+	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-        private String toString;
+	/**
+	 * Properties that are tracked by state saving.
+	 *
+	 * @author Pavol Slany / last modified by $Author$
+	 * @version $Revision$
+	 */
+	static public enum PropertyKeys {
+		type,
+		title,
+		body,
+		button,
+		buttonOnclick,
+		onerror,
+		mode,
+		widgetVar;
 
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
+		private String toString;
 
-        PropertyKeys() {
-        }
+		PropertyKeys(final String toString) {
+			this.toString = toString;
+		}
 
-        @Override
-        public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
-        }
-    }
+		PropertyKeys() {
+		}
 
-    public AjaxErrorHandler() {
-        setRendererType(DEFAULT_RENDERER);
-    }
+		@Override
+		public String toString() {
+			return ((this.toString != null) ? this.toString : super.toString());
+		}
+	}
 
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
+	public AjaxErrorHandler() {
+		setRendererType(DEFAULT_RENDERER);
+	}
 
-    public void setAttribute(final PropertyKeys property, final Object value) {
-        getStateHelper().put(property, value);
+	@Override
+	public String getFamily() {
+		return COMPONENT_FAMILY;
+	}
 
-        List<String> setAttributes =
-                (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-        if (setAttributes == null) {
-            final String cname = this.getClass().getName();
-            if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-                setAttributes = new ArrayList<String>(6);
-                this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-            }
-        }
+	public String getWidgetVar() {
+		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	}
 
-        if (setAttributes != null && value == null) {
-            final String attributeName = property.toString();
-            final ValueExpression ve = getValueExpression(attributeName);
-            if (ve == null) {
-                setAttributes.remove(attributeName);
-            } else if (!setAttributes.contains(attributeName)) {
-                setAttributes.add(attributeName);
-            }
-        }
-    }
+	public void setWidgetVar(final String widgetVar) {
+		setAttribute(PropertyKeys.widgetVar, widgetVar);
+	}
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+	public String getType() {
+		return (String) getStateHelper().eval(PropertyKeys.type, null);
+	}
 
-    public void setWidgetVar(final String widgetVar) {
-        setAttribute(PropertyKeys.widgetVar, widgetVar);
-    }
+	public void setType(final String type) {
+		setAttribute(PropertyKeys.type, type);
+	}
 
-    public String resolveWidgetVar() {
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+	public String getTitle() {
+		return (String) getStateHelper().eval(PropertyKeys.title, null);
+	}
 
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
+	public void setTitle(final String title) {
+		setAttribute(PropertyKeys.title, title);
+	}
 
-        //        final FacesContext context = FacesContext.getCurrentInstance();
-        //        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-        return null;
-    }
+	public String getBody() {
+		return (String) getStateHelper().eval(PropertyKeys.body, null);
+	}
 
+	public void setBody(final String body) {
+		setAttribute(PropertyKeys.body, body);
+	}
 
-    public String getId() {
-        return (String) getStateHelper().eval(PropertyKeys.id, null);
-    }
+	public String getButton() {
+		return (String) getStateHelper().eval(PropertyKeys.button, null);
+	}
 
-    public void setId(String id) {
-        setAttribute(PropertyKeys.id, id);
-    }
+	public void setButton(final String button) {
+		setAttribute(PropertyKeys.button, button);
+	}
 
-    public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, null);
-    }
+	public String getButtonOnclick() {
+		return (String) getStateHelper().eval(PropertyKeys.buttonOnclick, null);
+	}
 
-    public void setType(String type) {
-        setAttribute(PropertyKeys.type, type);
-    }
+	public void setButtonOnclick(final String buttonOnclick) {
+		setAttribute(PropertyKeys.buttonOnclick, buttonOnclick);
+	}
 
-    public String getTitle() {
-        return (String) getStateHelper().eval(PropertyKeys.title, null);
-    }
+	public String getOnerror() {
+		return (String) getStateHelper().eval(PropertyKeys.onerror, null);
+	}
 
-    public void setTitle(String title) {
-        setAttribute(PropertyKeys.title, title);
-    }
+	public void setOnerror(final String onerror) {
+		setAttribute(PropertyKeys.onerror, onerror);
+	}
 
-    public String getBody() {
-        return (String) getStateHelper().eval(PropertyKeys.body, null);
-    }
+	public String getMode() {
+		return (String) getStateHelper().eval(PropertyKeys.mode, null);
+	}
 
-    public void setBody(String body) {
-        setAttribute(PropertyKeys.body, body);
-    }
+	public void setMode(final String mode) {
+		setAttribute(PropertyKeys.mode, mode);
+	}
 
-    public String getButton() {
-        return (String) getStateHelper().eval(PropertyKeys.button, null);
-    }
+	public String resolveWidgetVar() {
+		return (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+	}
 
-    public void setButton(String button) {
-        setAttribute(PropertyKeys.button, button);
-    }
+	public void setAttribute(final PropertyKeys property, final Object value) {
+		getStateHelper().put(property, value);
 
-    public String getButtonOnclick() {
-        return (String) getStateHelper().eval(PropertyKeys.buttonOnclick, null);
-    }
+		@SuppressWarnings("unchecked")
+		List<String> setAttributes =
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		if (setAttributes == null) {
+			final String cname = this.getClass().getName();
+			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+				setAttributes = new ArrayList<String>(6);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+			}
+		}
 
-    public void setButtonOnclick(String buttonOnclick) {
-        setAttribute(PropertyKeys.buttonOnclick, buttonOnclick);
-    }
-
-    public String getOnerror() {
-        return (String) getStateHelper().eval(PropertyKeys.onerror, null);
-    }
-
-    public void setOnerror(String onerror) {
-        setAttribute(PropertyKeys.onerror, onerror);
-    }
-
-    public String getMode() {
-        return (String) getStateHelper().eval(PropertyKeys.mode, null);
-    }
-
-    public void setMode(String mode) {
-        setAttribute(PropertyKeys.mode, mode);
-    }
+		if (setAttributes != null && value == null) {
+			final String attributeName = property.toString();
+			final ValueExpression ve = getValueExpression(attributeName);
+			if (ve == null) {
+				setAttributes.remove(attributeName);
+			} else if (!setAttributes.contains(attributeName)) {
+				setAttributes.add(attributeName);
+			}
+		}
+	}
 }
