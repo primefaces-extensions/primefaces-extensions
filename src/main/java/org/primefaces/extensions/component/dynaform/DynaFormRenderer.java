@@ -134,12 +134,12 @@ public class DynaFormRenderer extends CoreRenderer {
 		String widgetVar = dynaForm.resolveWidgetVar();
 
 		startScript(writer, clientId);
-
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('DynaForm','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
+		writer.write(",isPostback:" + fc.isPostback());
 		writer.write("});});");
 		endScript(writer);
 	}
