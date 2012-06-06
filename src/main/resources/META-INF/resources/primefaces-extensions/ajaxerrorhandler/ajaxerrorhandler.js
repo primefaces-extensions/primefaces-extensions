@@ -132,7 +132,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 		this.hide();
 
 		//create required html
-		this.dialog = $('<div id="ajaxErrorHandlerDialog" class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow" style="width: auto; height: auto;"></div>');
+		this.dialog = $('<div id="ajaxErrorHandlerDialog" class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow pe-ajax-error-handler" style="width: auto; height: auto;"></div>');
 
 		//append to DOM
 		$('body').append(this.dialog);

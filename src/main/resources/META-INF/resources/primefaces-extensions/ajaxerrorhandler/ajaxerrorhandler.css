@@ -1,3 +1,3 @@
-#ajaxErrorHandlerDialog > .ui-dialog-buttonpane {
+.pe-ajax-error-handler > .ui-dialog-buttonpane {
 	text-align: center;
 }
