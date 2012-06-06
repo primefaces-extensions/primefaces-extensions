@@ -139,7 +139,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 		//custom content?
 		if (errorData.updateCustomContent) {
-			this.dialog.append($(errorData.updateCustomContent));
+			this.dialog.append(errorData.updateCustomContent);
 		} else {
 			//create required html
 			var dialogHeader = $('<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"></div>');
