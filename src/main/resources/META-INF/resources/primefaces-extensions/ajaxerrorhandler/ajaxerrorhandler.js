@@ -10,10 +10,6 @@ PrimeFacesExt.getAjaxErrorHandlerInstance = function() {
 	return PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE;
 }
 
-//TODO replace _self with proxy
-//TODO dialog is sometimes not centered
-//TODO callback args are null
-
 /**
  * PrimeFaces Extensions AjaxErrorHandler.
  *
@@ -122,98 +118,75 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 	isVisible : function() {
 		return this.popupWindow && this.popupWindow.isVisible();
 	},
-
-	recalculatePopupWindowHeight : function() {
-		if (this.popupWindowMask == null && this.popupWindow == null) {
-			return;
-		}
-
-		var height = $(window).outerHeight();
-		var width = $(window).outerWidth();
-		this.popupWindowMask.css('width', width);
-		this.popupWindowMask.css('height', height);
-
-		var winCss = {};
-		winCss.left = (width - this.popupWindow.outerWidth()) / 2;
-		winCss.top = (height - this.popupWindow.outerHeight()) / 2;
-
-		if (winCss.left < 0) {
-			winCss.left=0;
-		}
-
-		if (winCss.top < 0) {
-			winCss.top=0;
-		}
-
-		this.popupWindow.css(winCss);
-	},
 	
 	hide : function () {
-		if (this.popupWindowRoot) {
-			this.popupWindowRoot.remove();
-		}
+		if (this.dialogWidget) {
+			this.dialogWidget.hide();
+			this.dialogWidget = null;
 
-		this.popupWindowRoot = null;
-		this.popupWindowMask = null;
-		this.popupWindow = null;
+			this.dialog.remove();
+		}
 	},
 	
 	show : function(errorData) {
 		this.hide();
 
-		this.popupWindowMask = $('<div class="ui-widget-overlay"></div>').hide();
-		this.popupWindow = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-overlay-visible"></div>').hide();
+		//create required html
+		this.dialog = $('<div id="ajaxErrorHandlerDialog" class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow" style="width: auto; height: auto;"></div>');
 
-		this.popupWindowRoot = $('<div class="pe-ajax-error-handler" style="z-index: 999999999; overflow: visible; position: absolute; left:0px; top: 0px;"></div>').append(this.popupWindow, this.popupWindowMask);
-		$('body').append(this.popupWindowRoot);
+		//append to DOM
+		$('body').append(this.dialog);
 
+		//custom content?
 		if (errorData.updateCustomContent) {
-			var elContent = $('<div></div>');
-			this.popupWindow.append(elContent);
-			elContent.replaceWith(errorData.updateCustomContent);
+			this.dialog.append($(errorData.updateCustomContent));
 		} else {
-			var htmlContent = '<div class="ui-dialog-content ui-widget-content"></div>';
-			var htmlTitle = '<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"></div>';
-			var htmlTitleText = '<span class="ui-dialog-title"></span>';
+			//create required html
+			var dialogHeader = $('<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"></div>');
+			var dialogHeaderText = $('<span class="ui-dialog-title"></span>');
+			var dialogContent = $('<div class="ui-dialog-content ui-widget-content" style="height: auto;"></div>');
+			var dialogButtonPane = $('<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"></div>')
+			
+			//append to DOM
+			dialogHeader.append(dialogHeaderText);
 
-			var button = $('<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' + errorData['button'] + '</span></button>');
+			this.dialog.append(dialogHeader);
+			this.dialog.append(dialogContent);
+			this.dialog.append(dialogButtonPane);
+
+			//setup button
+			var dialogButton = $('<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">' + errorData['button'] + '</span></button>');
 			var buttonOnclickFunction = errorData['buttonOnclick'];
-			button.click(function() {
+			dialogButton.click(function() {
 				buttonOnclickFunction.call(this);
 			});
+			
+			dialogButtonPane.append(dialogButton);
 
-			var elTitle = $('<a />');
-			var elBody = $('<a />');
-			this.popupWindow.append($(htmlTitle).append($(htmlTitleText).append(elTitle)));
-			this.popupWindow.append(
-					$(htmlContent).append($('<div></div>').append(elBody)),
-					$('<div class="pe-error-buttons"></div>').append(button));
+			//add title
+			if (errorData.updateTitle) {
+				dialogHeaderText.append(errorData.updateTitle);
+			} else {
+				dialogHeaderText.append(errorData.title);
+			}
 
-			// setup draggable
-			this.popupWindow.draggable({
-				cancel: '.ui-dialog-content, .ui-dialog-titlebar-close',
-				handle: '.ui-dialog-titlebar',
-				containment : 'document'
-			});
-
-			elTitle.replaceWith(errorData.updateTitle || errorData.title);
-			elBody.replaceWith(errorData.updateBody || errorData.body);
+			//add body
+			if (errorData.updateBody) {
+				dialogContent.append(errorData.updateBody);
+			} else {
+				dialogContent.append(errorData.body);
+			}
 		}
 
-		this.popupWindowMask.css('zIndex', PrimeFaces.zindex++);
-		this.popupWindow.css('zIndex', PrimeFaces.zindex++);
+		//create Dialog widget
+		this.dialogWidget = new PrimeFaces.widget.Dialog({
+			id : 'ajaxErrorHandlerDialog',
+			resizable : true,
+			draggable : true,
+			modal : true
+		});
 
-		this.popupWindow.css({'position' : 'fixed',
-			'margin-left' : 'auto',
-			'margin-right' : 'auto',
-			'overflow' : 'hidden'});
-
-		this.popupWindowMask.css({'position' : 'fixed', 'left' : 0, 'top' : 0});
-
-		this.recalculatePopupWindowHeight();
-		this.popupWindow.show();
-		this.popupWindowMask.show();
-		this.recalculatePopupWindowHeight();
+		this.dialogWidget.show();
 	},
 
 	getDefaultErrorTime : function() {
@@ -287,4 +260,3 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 		this.hostname = hostname;
 	}
 });
-

@@ -1,4 +1,3 @@
-.pe-error-buttons {
-    text-align: center;
-    margin: 10px;
+#ajaxErrorHandlerDialog > .ui-dialog-buttonpane {
+	text-align: center;
 }
