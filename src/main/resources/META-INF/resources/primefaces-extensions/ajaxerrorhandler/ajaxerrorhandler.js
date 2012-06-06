@@ -46,10 +46,10 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 	overwritePrimeFacesAjaxResponse : function() {
 		var _self = this;
 
-		PrimeFaces.ajax.AjaxResponse = function() {
-			// backup original AjaxResponse function ...
-			var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
+		// backup original AjaxResponse function ...
+		var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
 
+		PrimeFaces.ajax.AjaxResponse = function() {
 			var docPartialUpdate = arguments[0];
 			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
 
