@@ -18,32 +18,21 @@
 
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.visit.VisitContext;
-import javax.faces.context.ExceptionHandler;
-import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.PartialResponseWriter;
-import javax.faces.event.AbortProcessingException;
+import javax.faces.context.*;
 import javax.faces.event.ExceptionQueuedEvent;
-import javax.faces.event.ExceptionQueuedEventContext;
-import javax.faces.event.PhaseId;
-import javax.faces.event.SystemEvent;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * AjaxExceptionHandler
@@ -56,19 +45,12 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final Logger LOGGER = Logger.getLogger(AjaxExceptionHandler.class.getCanonicalName());
 
-	private static final String LOG_BEFORE_KEY = "jsf.context.exception.handler.log_before";
-	private static final String LOG_AFTER_KEY = "jsf.context.exception.handler.log_after";
-	private static final String LOG_KEY = "jsf.context.exception.handler.log";
-
-	private LinkedList<ExceptionQueuedEvent> unhandledExceptions;
-	private LinkedList<ExceptionQueuedEvent> handledExceptions;
-	private ExceptionQueuedEvent handled;
 	private ExceptionHandler wrapped = null;
 
 	/**
 	 * Construct a new {@link AjaxExceptionHandler} around the given wrapped {@link ExceptionHandler}.
 	 * 
-	 * @param exceptionHandler The wrapped {@link ExceptionHandler}.
+	 * @param wrapped The wrapped {@link ExceptionHandler}.
 	 */
 	public AjaxExceptionHandler(final ExceptionHandler wrapped) {
 		this.wrapped = wrapped;
@@ -80,74 +62,28 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	@Override
-	public ExceptionQueuedEvent getHandledExceptionQueuedEvent() {
-		return handled;
-	}
-
-	@Override
 	public void handle() throws FacesException {
-		if (FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest() == false) {
-			return;
-		}
+		FacesContext context = FacesContext.getCurrentInstance();
 
-		for (Iterator<ExceptionQueuedEvent> i = getUnhandledExceptionQueuedEvents().iterator(); i.hasNext(); ) {
-			ExceptionQueuedEvent event = i.next();
-			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
+		if (context.getPartialViewContext().isAjaxRequest()) {
+			Iterator<ExceptionQueuedEvent> unhandledExceptionQueuedEvents = getUnhandledExceptionQueuedEvents().iterator();
 
-			try {
-				Throwable t = context.getException();
-				if (isRethrown(t)) {
-					handled = event;
+			if (unhandledExceptionQueuedEvents.hasNext()) {
+				Throwable exception = unhandledExceptionQueuedEvents.next().getContext().getException();
+				unhandledExceptionQueuedEvents.remove();
 
-					handlePartialResponseError(context.getContext(), t);
-
-					/*
-					Throwable unwrapped = getRootCause(t);
-
-					if (unwrapped != null) {
-						handlePartialResponseError(context.getContext(), unwrapped);
-					} else {
-						if (t instanceof FacesException) {
-							handlePartialResponseError(context.getContext(), t);
-						} else {
-							handlePartialResponseError(context.getContext(), new FacesException(t.getMessage(), t));
-						}
-					}
-					 */
-				} else {
-					log(context);
-				}
-
-			} finally {
-				if (handledExceptions == null) {
-					handledExceptions = new LinkedList<ExceptionQueuedEvent>();
-				}
-
-				handledExceptions.add(event);
-				i.remove();
-			}
-		}
-	}
-
-	@Override
-	public void processEvent(final SystemEvent event) throws AbortProcessingException {
-		if (event != null) {
-			if (unhandledExceptions == null) {
-				unhandledExceptions = new LinkedList<ExceptionQueuedEvent>();
+				handlePartialResponseError(context, exception);
 			}
 
-			unhandledExceptions.add((ExceptionQueuedEvent) event);
+			while (unhandledExceptionQueuedEvents.hasNext()) {
+				// Any remaining unhandled exceptions are not interesting. First fix the first.
+				unhandledExceptionQueuedEvents.next();
+				unhandledExceptionQueuedEvents.remove();
+			}
+
 		}
-	}
 
-	@Override
-	public Iterable<ExceptionQueuedEvent> getUnhandledExceptionQueuedEvents() {
-		return ((unhandledExceptions != null) ? unhandledExceptions : Collections.<ExceptionQueuedEvent>emptyList());
-	}
-
-	@Override
-	public Iterable<ExceptionQueuedEvent> getHandledExceptionQueuedEvents() {
-		return ((handledExceptions != null) ? handledExceptions : Collections.<ExceptionQueuedEvent>emptyList());
+		wrapped.handle();
 	}
 
 	private void handlePartialResponseError(final FacesContext context, final Throwable t) {
@@ -196,7 +132,8 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 			UIViewRoot root = context.getViewRoot();
 			AjaxErrorHandlerVisitCallback visitCallback = new AjaxErrorHandlerVisitCallback(errorName);
-			root.visitTree(VisitContext.createVisitContext(context), visitCallback);
+			if (root != null)
+				root.visitTree(VisitContext.createVisitContext(context), visitCallback);
 
 			UIComponent titleFacet = visitCallback.findCurrentTitleFacet();
 			if (titleFacet != null) {
@@ -278,39 +215,6 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			if (LOGGER.isLoggable(Level.SEVERE)) {
 				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			}
-		}
-	}
-
-	private boolean isRethrown(final Throwable t) {
-		return (!(t instanceof AbortProcessingException));
-	}
-
-	private void log(final ExceptionQueuedEventContext exceptionContext) {
-		UIComponent c = exceptionContext.getComponent();
-		boolean beforePhase = exceptionContext.inBeforePhase();
-		boolean afterPhase = exceptionContext.inAfterPhase();
-		PhaseId phaseId = exceptionContext.getPhaseId();
-		Throwable t = exceptionContext.getException();
-		String key = getLoggingKey(beforePhase, afterPhase);
-
-		if (LOGGER.isLoggable(Level.SEVERE)) {
-			LOGGER.log(Level.SEVERE,
-					key,
-					new Object[] { t.getClass().getName(),
-					phaseId.toString(),
-					((c != null) ? c.getClientId(exceptionContext.getContext()) : ""),
-					t.getMessage()});
-			LOGGER.log(Level.SEVERE, t.getMessage(), t);
-		}
-	}
-
-	private String getLoggingKey(final boolean beforePhase, final boolean afterPhase) {
-		if (beforePhase) {
-			return LOG_BEFORE_KEY;
-		} else if (afterPhase) {
-			return LOG_AFTER_KEY;
-		} else {
-			return LOG_KEY;
 		}
 	}
 

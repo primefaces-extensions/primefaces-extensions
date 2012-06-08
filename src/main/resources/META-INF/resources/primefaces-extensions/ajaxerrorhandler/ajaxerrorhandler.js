@@ -2,7 +2,7 @@ PrimeFacesExt.getAjaxErrorHandlerInstance = function() {
 	if (!PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE) {
 		var instance = new PrimeFacesExt.widget.AjaxErrorHandler();
 
-		instance.init();
+		//  INIT IS CALLED AUTOMATICALLY ... instance.init();
 		
 		PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE = instance;
 	}
@@ -111,7 +111,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 				}
 			}
 
-			return backupAjaxResponse.apply(window, arguments);
+			return backupAjaxResponse.apply(this, arguments);
 		};
 	},
 	
