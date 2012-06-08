@@ -34,7 +34,6 @@ import javax.faces.component.UIComponentBase;
 public class MasterDetailLevel extends UIComponentBase {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailLevel";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -66,7 +65,7 @@ public class MasterDetailLevel extends UIComponentBase {
 	}
 
 	public MasterDetailLevel() {
-		setRendererType(DEFAULT_RENDERER);
+		setRendererType(null);
 	}
 
 	@Override
