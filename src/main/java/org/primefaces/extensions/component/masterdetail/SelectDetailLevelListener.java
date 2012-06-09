@@ -41,6 +41,9 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 
 	private MethodExpression listener;
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
 	public SelectDetailLevelListener() {
 	}
 

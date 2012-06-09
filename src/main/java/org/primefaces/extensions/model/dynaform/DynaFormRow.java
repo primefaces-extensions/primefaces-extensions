@@ -43,6 +43,12 @@ public class DynaFormRow implements Serializable {
 
 	private List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
+	public DynaFormRow() {
+	}
+
 	public DynaFormRow(int row, boolean extended, DynaFormModel dynaFormModel) {
 		this.row = row;
 		this.extended = extended;

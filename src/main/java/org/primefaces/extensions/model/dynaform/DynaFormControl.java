@@ -52,6 +52,12 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData,
 
 	private String type;
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
+	public DynaFormControl() {
+	}
+
 	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);
 

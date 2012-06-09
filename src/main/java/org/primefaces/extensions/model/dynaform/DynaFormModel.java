@@ -21,6 +21,7 @@ package org.primefaces.extensions.model.dynaform;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Model class for <code>DynaForm</code> component.
@@ -33,6 +34,8 @@ public class DynaFormModel implements Serializable {
 
 	private static final long serialVersionUID = 20120514L;
 
+	private String uuid;
+
 	private List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
 
 	private List<DynaFormRow> extendedRows = null;
@@ -40,6 +43,14 @@ public class DynaFormModel implements Serializable {
 	private List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
 
 	private List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
+
+	public DynaFormModel() {
+		uuid = UUID.randomUUID().toString();
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
 
 	public List<DynaFormRow> getRegularRows() {
 		return regularRows;
@@ -73,5 +84,9 @@ public class DynaFormModel implements Serializable {
 		extendedRows.add(dynaFormRow);
 
 		return dynaFormRow;
+	}
+
+	public boolean isExistExtendedGrid() {
+		return (getExtendedRows() != null && !getExtendedRows().isEmpty());
 	}
 }

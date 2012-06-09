@@ -46,6 +46,12 @@ public class DynaFormLabel extends AbstractDynaFormElement implements Serializab
 
 	private boolean targetValid = true;
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
+	public DynaFormLabel() {
+	}
+
 	public DynaFormLabel(String value, boolean escape, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);
 

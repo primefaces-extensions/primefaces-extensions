@@ -37,6 +37,9 @@ public abstract class AbstractDynaFormElement {
 
 	private boolean extended;
 
+	public AbstractDynaFormElement() {
+	}
+
 	public AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
 		this.colspan = colspan;
 		this.rowspan = rowspan;
