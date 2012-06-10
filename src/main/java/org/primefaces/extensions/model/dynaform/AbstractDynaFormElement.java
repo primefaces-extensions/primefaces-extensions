@@ -18,6 +18,8 @@
 
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serializable;
+
 /**
  * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
  *
@@ -25,7 +27,9 @@ package org.primefaces.extensions.model.dynaform;
  * @version $Revision$
  * @since   0.5
  */
-public abstract class AbstractDynaFormElement {
+public abstract class AbstractDynaFormElement implements Serializable {
+
+	private static final long serialVersionUID = 20120514L;
 
 	private int colspan = 1;
 
@@ -37,6 +41,9 @@ public abstract class AbstractDynaFormElement {
 
 	private boolean extended;
 
+	/**
+	 * This constructor is required for serialization. Please do not remove.
+	 */
 	public AbstractDynaFormElement() {
 	}
 

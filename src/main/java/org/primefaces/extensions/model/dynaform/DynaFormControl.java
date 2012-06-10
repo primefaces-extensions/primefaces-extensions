@@ -18,8 +18,6 @@
 
 package org.primefaces.extensions.model.dynaform;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -32,9 +30,7 @@ import org.primefaces.extensions.model.common.KeyData;
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormControl extends AbstractDynaFormElement implements KeyData, Serializable {
-
-	private static final long serialVersionUID = 20120514L;
+public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
 	public static final String DEFAULT_TYPE = "default";
 
@@ -51,12 +47,6 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData,
 	private Object data;
 
 	private String type;
-
-	/**
-	 * This constructor is required for serialization. Please do not remove.
-	 */
-	public DynaFormControl() {
-	}
 
 	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);

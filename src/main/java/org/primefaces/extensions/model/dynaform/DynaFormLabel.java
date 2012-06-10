@@ -18,8 +18,6 @@
 
 package org.primefaces.extensions.model.dynaform;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -30,9 +28,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @version $Revision$
  * @since   0.5
  */
-public class DynaFormLabel extends AbstractDynaFormElement implements Serializable {
-
-	private static final long serialVersionUID = 20120524L;
+public class DynaFormLabel extends AbstractDynaFormElement {
 
 	private String value;
 
@@ -45,12 +41,6 @@ public class DynaFormLabel extends AbstractDynaFormElement implements Serializab
 	private boolean targetRequired = false;
 
 	private boolean targetValid = true;
-
-	/**
-	 * This constructor is required for serialization. Please do not remove.
-	 */
-	public DynaFormLabel() {
-	}
 
 	public DynaFormLabel(String value, boolean escape, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);
