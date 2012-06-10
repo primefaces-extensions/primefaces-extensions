@@ -23,9 +23,9 @@ import java.lang.reflect.Method;
 /**
  * Advanced {@link OptionContainer} for internal usage.
  *
- * @author Thomas Andraschko / last modified by $Author:$
+ * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
 public class AdvancedOptionContainer extends OptionContainer {
 
