@@ -11,7 +11,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>0.5.0</version>
+    <version>0.6.0-SNAPSHOT</version>
     <name>primefaces-extensions</name>
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
@@ -35,9 +35,9 @@
     <inceptionYear>2011</inceptionYear>
 
     <scm>
-        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/primefaces-extensions/tags/primefaces-extensions-0.5.0</connection>
-        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/tags/primefaces-extensions-0.5.0</developerConnection>
-        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/tags/primefaces-extensions-0.5.0</url>
+        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</connection>
+        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</developerConnection>
+        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
     </scm>
     
     <developers>
