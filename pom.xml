@@ -914,11 +914,11 @@
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.version>2.1.9</pe.jsf.version>
-        <pe.impl.version>0.5.0</pe.impl.version>        
+        <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
-        <pe.newComponents>ajaxErrorHandler;blockPanel;importConstants;dynaForm</pe.newComponents>
-        <pe.updatedComponents>remoteCommand;resetEditableValues;inputNumber</pe.updatedComponents>        
+        <pe.newComponents></pe.newComponents>
+        <pe.updatedComponents></pe.updatedComponents>        
         <primefaces.core.version>3.3</primefaces.core.version>
         <primefaces.theme.version>1.0.5</primefaces.theme.version>    
     </properties>
