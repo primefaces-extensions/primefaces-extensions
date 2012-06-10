@@ -18,11 +18,8 @@
 
 package org.primefaces.extensions.component.base;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
@@ -90,11 +87,11 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	public String getVar() {
-		return (String) getStateHelper().eval(PropertyKeys.var, null);
+		return (String) getStateHelper().get(PropertyKeys.var);
 	}
 
 	public void setVar(String var) {
-		setAttribute(PropertyKeys.var, var);
+		getStateHelper().put(PropertyKeys.var, var);
 	}
 
 	public Object getValue() {
@@ -102,32 +99,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	public void setValue(Object value) {
-		setAttribute(PropertyKeys.value, value);
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+		getStateHelper().put(PropertyKeys.value, value);
 	}
 
 	/**
