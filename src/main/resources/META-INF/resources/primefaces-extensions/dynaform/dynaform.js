@@ -18,7 +18,7 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
 
         if (cfg.autoSubmit && !window[cfg.widgetVar]) {
             this.submitForm();
-        } else if (cfg.isPostback && this.toggledExtended) {
+        } else if (cfg.isPostback && this.toggledExtended && this.uuid == cfg.uuid) {
             var rows = this.jq.find("tr.pe-dynaform-extendedrow");
             if (rows.length > 0) {
                 if (this.openExtended) {
@@ -28,6 +28,8 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         }
+        
+        this.uuid = cfg.uuid;
     },
 
     toggleExtended : function() {

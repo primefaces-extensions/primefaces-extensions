@@ -72,11 +72,14 @@ public class DynaFormRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
 		DynaForm dynaForm = (DynaForm) component;
-		encodeMarkup(fc, dynaForm);
-		encodeScript(fc, dynaForm);
+
+		// get model
+		DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
+		encodeMarkup(fc, dynaForm, dynaFormModel);
+		encodeScript(fc, dynaForm, dynaFormModel);
 	}
 
-	protected void encodeMarkup(FacesContext fc, DynaForm dynaForm) throws IOException {
+	protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = dynaForm.getClientId(fc);
 
@@ -91,9 +94,6 @@ public class DynaFormRenderer extends CoreRenderer {
 		}
 
 		writer.writeAttribute("role", "grid", null);
-
-		// get model
-		DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
 
 		// prepare labels with informations about corresponding control components
 		preRenderLabel(fc, dynaForm, dynaFormModel);
@@ -128,7 +128,7 @@ public class DynaFormRenderer extends CoreRenderer {
 		writer.endElement("table");
 	}
 
-	protected void encodeScript(FacesContext fc, DynaForm dynaForm) throws IOException {
+	protected void encodeScript(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = dynaForm.getClientId(fc);
 		String widgetVar = dynaForm.resolveWidgetVar();
@@ -138,6 +138,7 @@ public class DynaFormRenderer extends CoreRenderer {
 		writer.write("PrimeFacesExt.cw('DynaForm','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",widgetVar:'" + widgetVar + "'");
+		writer.write(",uuid:'" + dynaFormModel.getUuid() + "'");
 		writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
 		writer.write(",isPostback:" + fc.isPostback());
 		writer.write("});});");
