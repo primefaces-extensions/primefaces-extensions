@@ -18,6 +18,14 @@
 
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.context.*;
+import javax.faces.event.ExceptionQueuedEvent;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -25,19 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.context.ExceptionHandler;
-import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.context.PartialResponseWriter;
-import javax.faces.event.ExceptionQueuedEvent;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * {@link ExceptionHandlerWrapper} which writes a custom XML response for the {@link AjaxErrorHandler} component.
@@ -70,20 +65,23 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 	public void handle() throws FacesException {
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		if (context.getPartialViewContext().isAjaxRequest()) {
-			Iterator<ExceptionQueuedEvent> unhandledExceptionQueuedEvents = getUnhandledExceptionQueuedEvents().iterator();
+		if (context.getPartialViewContext()!=null && context.getPartialViewContext().isAjaxRequest()) {
+			Iterable<ExceptionQueuedEvent> exceptionQueuedEvents = getUnhandledExceptionQueuedEvents();
+			if (exceptionQueuedEvents!=null && exceptionQueuedEvents.iterator()!=null) {
+				Iterator<ExceptionQueuedEvent> unhandledExceptionQueuedEvents = getUnhandledExceptionQueuedEvents().iterator();
 
-			if (unhandledExceptionQueuedEvents.hasNext()) {
-				Throwable exception = unhandledExceptionQueuedEvents.next().getContext().getException();
-				unhandledExceptionQueuedEvents.remove();
+				if (unhandledExceptionQueuedEvents.hasNext()) {
+					Throwable exception = unhandledExceptionQueuedEvents.next().getContext().getException();
+					unhandledExceptionQueuedEvents.remove();
 
-				handlePartialResponseError(context, exception);
-			}
+					handlePartialResponseError(context, exception);
+				}
 
-			while (unhandledExceptionQueuedEvents.hasNext()) {
-				// Any remaining unhandled exceptions are not interesting. First fix the first.
-				unhandledExceptionQueuedEvents.next();
-				unhandledExceptionQueuedEvents.remove();
+				while (unhandledExceptionQueuedEvents.hasNext()) {
+					// Any remaining unhandled exceptions are not interesting. First fix the first.
+					unhandledExceptionQueuedEvents.next();
+					unhandledExceptionQueuedEvents.remove();
+				}
 			}
 
 		}
