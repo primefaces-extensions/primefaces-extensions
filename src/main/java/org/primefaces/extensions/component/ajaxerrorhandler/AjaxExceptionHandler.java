@@ -18,14 +18,6 @@
 
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.context.*;
-import javax.faces.event.ExceptionQueuedEvent;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -34,8 +26,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.context.ExceptionHandler;
+import javax.faces.context.ExceptionHandlerWrapper;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.context.PartialResponseWriter;
+import javax.faces.event.ExceptionQueuedEvent;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
 /**
- * AjaxExceptionHandler
+ * {@link ExceptionHandlerWrapper} which writes a custom XML response for the {@link AjaxErrorHandler} component.
  *
  * @author Pavol Slany / last modified by $Author$
  * @version $Revision$
@@ -89,6 +94,10 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 	private void handlePartialResponseError(final FacesContext context, final Throwable t) {
 		if (context.getResponseComplete()) {
 			return; // don't write anything if the response is complete
+		}
+
+		if (!context.getExternalContext().isResponseCommitted()) {
+			context.getExternalContext().responseReset();
 		}
 
 		try {
