@@ -37,6 +37,7 @@ import org.primefaces.extensions.util.DummyValueExpression;
  */
 public class MethodParameter extends AbstractParameter {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MethodParameter";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -95,7 +96,7 @@ public class MethodParameter extends AbstractParameter {
 			final UIComponent parent = getParent();
 			final Map<String, Object> parentAttribtues = parent.getAttributes();
 			final Class<?>[] parameterTypes =
-			    (Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
+					(Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
 			final Class<?> parameterType = parameterTypes[parent.getChildren().indexOf(this)];
 
 			return new DummyValueExpression(parameterType);
@@ -109,7 +110,7 @@ public class MethodParameter extends AbstractParameter {
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

@@ -18,7 +18,12 @@
 
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
@@ -28,6 +33,7 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.MessageFactory;
 
@@ -39,13 +45,14 @@ import org.primefaces.util.MessageFactory;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateManyCheckbox";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -66,7 +73,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
@@ -144,9 +151,9 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	public void setAttribute(final TriStateManyCheckbox.PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);
 
-                @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -167,8 +174,8 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	@Override
-	protected void validateValue(FacesContext context, Object value) {
-                @SuppressWarnings("unchecked")
+	protected void validateValue(final FacesContext context, final Object value) {
+		@SuppressWarnings("unchecked")
 		Map<Object,Object> mapValues = (Map) value;
 
 		//call all validators
@@ -190,7 +197,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 						if (null != validatorMessageString) {
 							message =
-							    new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessageString, validatorMessageString);
+									new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessageString, validatorMessageString);
 							message.setSeverity(FacesMessage.SEVERITY_ERROR);
 						} else {
 							Collection<FacesMessage> messages = ve.getFacesMessages();
@@ -219,7 +226,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		// Ensure that if the state are all 0 and a
 		// value is required, a message is queued
 		if (isRequired()
-		    && isValid()) {
+				&& isValid()) {
 			Iterator<Object> it = mapValues.values().iterator();
 			boolean cCheck = true;
 			while (it.hasNext() && cCheck) {
@@ -240,7 +247,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 			// Enqueue an error message if an invalid value was specified
 			FacesMessage message =
-			    MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+					MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
 			context.addMessage(getClientId(context), message);
 			setValid(false);
 		}

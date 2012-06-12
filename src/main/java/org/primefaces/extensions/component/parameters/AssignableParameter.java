@@ -34,6 +34,7 @@ import org.primefaces.extensions.component.base.AbstractParameter;
  */
 public class AssignableParameter extends AbstractParameter {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.AssignableParameter";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -103,7 +104,7 @@ public class AssignableParameter extends AbstractParameter {
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

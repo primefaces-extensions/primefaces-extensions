@@ -20,12 +20,14 @@ package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.component.api.Widget;
 
 /**
@@ -36,13 +38,14 @@ import org.primefaces.component.api.Widget;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class TriStateCheckbox extends HtmlInputText implements Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateCheckbox";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -63,7 +66,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 
 		String toString;
 
-		PropertyKeys(String toString) {
+		PropertyKeys(final String toString) {
 			this.toString = toString;
 		}
 
@@ -141,7 +144,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

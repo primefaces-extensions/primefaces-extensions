@@ -39,14 +39,15 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+})
 public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -235,7 +236,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
