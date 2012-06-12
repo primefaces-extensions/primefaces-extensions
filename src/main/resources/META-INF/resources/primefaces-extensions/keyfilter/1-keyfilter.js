@@ -39,5 +39,10 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 		} else if (this.cfg.mask) {
 			input.keyfilter($.fn.keyfilter.defaults.masks[this.cfg.mask]);
 		}
+
+		//disable paste
+		input.bind('paste', function(e) {
+			e.preventDefault();
+		});
 	}
 });
