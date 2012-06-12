@@ -44,15 +44,15 @@ import org.primefaces.util.Constants;
 /**
  * Component class for the <code>ImageRotateAndResize</code> component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.1
+ * @since 0.1
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -63,7 +63,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	public static final String EVENT_RESIZE = "resize";
 
 	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -137,7 +137,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
