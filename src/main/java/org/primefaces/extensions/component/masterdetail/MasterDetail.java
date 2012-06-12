@@ -38,7 +38,6 @@ import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.util.Constants;
@@ -54,6 +53,7 @@ import org.primefaces.util.Constants;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
 public class MasterDetail extends UIComponentBase {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MasterDetail";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -173,7 +173,7 @@ public class MasterDetail extends UIComponentBase {
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -194,7 +194,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	@Override
-	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+	public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -308,7 +308,7 @@ public class MasterDetail extends UIComponentBase {
 
 	public boolean isSelectDetailRequest(final FacesContext fc) {
 		return fc.getPartialViewContext().isAjaxRequest()
-		       && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
+				&& fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
 	}
 
 	public String getPreserveInputs(final FacesContext fc) {

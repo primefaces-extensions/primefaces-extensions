@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2012 Prime Teknoloji.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * $Id$
  */
+
 package org.primefaces.extensions.component.codemirror;
 
 import java.util.List;
@@ -23,6 +26,13 @@ import javax.faces.view.facelets.MetaRuleset;
 
 import org.primefaces.facelets.MethodRule;
 
+/**
+ * {@link ComponentHandler} for the {@link CodeMirror} component.
+ *
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
+ * @since 0.3
+ */
 public class CodeMirrorHandler extends ComponentHandler {
 
 	public CodeMirrorHandler(final ComponentConfig config) {

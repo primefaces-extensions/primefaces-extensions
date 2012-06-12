@@ -56,6 +56,7 @@ import org.primefaces.extensions.renderkit.widget.Option;
 })
 public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CodeMirrorRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -66,8 +67,8 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 	public static final String EVENT_FOCUS = "focus";
 
 	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList(EVENT_CHANGE, EVENT_HIGHLIGHT_COMPLETE, EVENT_BLUR, EVENT_FOCUS,
-	                                                     EVENT_CHANGE));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_CHANGE, EVENT_HIGHLIGHT_COMPLETE, EVENT_BLUR, EVENT_FOCUS,
+					EVENT_CHANGE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -402,7 +403,7 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -422,9 +423,9 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		}
 	}
 
-    private List<String> suggestions = null;
+	private List<String> suggestions = null;
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
 	public void broadcast(final FacesEvent event) throws AbortProcessingException {
 		super.broadcast(event);
@@ -439,15 +440,15 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 					facesContext.getELContext(),
 					new Object[] { completeEvent.getToken(), completeEvent.getContext()});
 
-            if (suggestions == null) {
-                suggestions = new ArrayList<String>();
-            }
+			if (suggestions == null) {
+				suggestions = new ArrayList<String>();
+			}
 
-            facesContext.renderResponse();
+			facesContext.renderResponse();
 		}
 	}
 
-    public List<String> getSuggestions() {
-        return this.suggestions;
-    }
+	public List<String> getSuggestions() {
+		return this.suggestions;
+	}
 }

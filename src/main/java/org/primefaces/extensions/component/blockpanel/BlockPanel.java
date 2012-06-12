@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@
 
 package org.primefaces.extensions.component.blockpanel;
 
-import org.primefaces.component.api.Widget;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
@@ -26,8 +27,8 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.primefaces.component.api.Widget;
 
 /**
  * <code>BlockPanel</code> component.
@@ -45,6 +46,7 @@ import java.util.List;
 })
 public class BlockPanel extends UIComponentBase implements Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.BlockPanel";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.BlockPanelRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";

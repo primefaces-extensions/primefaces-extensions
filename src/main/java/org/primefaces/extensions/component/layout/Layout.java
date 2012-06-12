@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.event.CloseEvent;
@@ -61,17 +60,18 @@ import org.primefaces.util.Constants;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
+	@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
+})
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	private static final Logger LOG = Logger.getLogger(Layout.class.getName());
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Layout";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -87,7 +87,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
 
 	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
+			Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
 
 	private Map<String, UIComponent> layoutPanes;
 
@@ -408,7 +408,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 		if (hasSubPanes && layoutPanes.get(position + POSITION_SEPARATOR + POSITION_CENTER) == null) {
 			throw new FacesException("Rendered 'center' layout pane inside of '" + position
-			                         + "' layout pane is missing");
+					+ "' layout pane is missing");
 		}
 
 		if (hasSubPanes) {
@@ -418,7 +418,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 	private boolean isSelfRequest(final FacesContext context) {
 		return this.getClientId(context)
-		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+				.equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
@@ -437,7 +437,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

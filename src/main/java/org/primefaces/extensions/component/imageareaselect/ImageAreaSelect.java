@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ import org.primefaces.util.Constants;
 })
 public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageAreaSelect";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";

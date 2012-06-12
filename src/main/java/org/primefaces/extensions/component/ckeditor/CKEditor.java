@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import org.primefaces.extensions.renderkit.widget.Option;
 })
 public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CKEditor";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CKEditorRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -67,8 +68,8 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 	public static final String EVENT_CHANGE = "change";
 
 	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE,
-	                                                     EVENT_DIRTY, EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE,
+					EVENT_DIRTY, EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -264,7 +265,7 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

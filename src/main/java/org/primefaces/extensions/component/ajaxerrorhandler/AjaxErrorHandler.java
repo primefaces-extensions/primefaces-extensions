@@ -44,8 +44,9 @@ import org.primefaces.component.api.Widget;
 })
 public class AjaxErrorHandler extends UIComponentBase implements Widget {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.AjaxErrorHandler";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AjaxErrorHandler";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AjaxErrorHandlerRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**

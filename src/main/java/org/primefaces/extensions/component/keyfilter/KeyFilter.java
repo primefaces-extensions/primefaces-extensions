@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,13 +39,14 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
-                      })
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+	@ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
+})
 public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttachable {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.KeyFilter";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeyFilterRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
@@ -153,7 +154,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		getStateHelper().put(property, value);
 
 		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
