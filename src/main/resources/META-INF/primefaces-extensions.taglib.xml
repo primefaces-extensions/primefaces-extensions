@@ -1184,8 +1184,8 @@
     <tag>
         <description><![CDATA[Component to reset submitted values and validation state.]]>
         </description>
-        <tag-name>resetEditableValues</tag-name>
-        <handler-class>org.primefaces.extensions.component.reseteditablevalues.ResetEditableValuesTagHandler</handler-class>
+        <tag-name>resetInput</tag-name>
+        <handler-class>org.primefaces.extensions.component.resetinput.ResetInputTagHandler</handler-class>
         <attribute>
             <description>
                 <![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]>
@@ -1196,7 +1196,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax if ResetEditableValues is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax if ResetInput is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
             </description>
             <name>event</name>
             <required>false</required>

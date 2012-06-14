@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.reseteditablevalues;
+package org.primefaces.extensions.component.resetinput;
 
 import java.io.Serializable;
 import java.util.EnumSet;

@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.reseteditablevalues;
+package org.primefaces.extensions.component.resetinput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,18 +40,18 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * {@link TagHandler} for the <code>ResetEditableValues</code> component.
+ * {@link TagHandler} for the <code>ResetInput</code> component.
  *
  * @author  Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since   0.2
  */
-public class ResetEditableValuesTagHandler extends TagHandler {
+public class ResetInputTagHandler extends TagHandler {
 
 	private final TagAttribute forValue;
 	private final TagAttribute event;
 
-	public ResetEditableValuesTagHandler(final TagConfig config) {
+	public ResetInputTagHandler(final TagConfig config) {
 		super(config);
 		this.forValue = super.getRequiredAttribute("for");
 		this.event = super.getAttribute("event");
@@ -68,7 +68,7 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 		}
 
 		if (parent instanceof UICommand) {
-			((UICommand) parent).addActionListener(new ResetEditableValuesListener(strFor));
+			((UICommand) parent).addActionListener(new ResetInputListener(strFor));
 
 			return;
 		} else if (parent instanceof ClientBehaviorHolder) {
@@ -82,10 +82,10 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 				for (ClientBehavior clientBehavior : listBehaviors) {
 					if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
 						((org.primefaces.component.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
-						    new ResetEditableValuesListener(strFor));
+						    new ResetInputListener(strFor));
 					} else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
 						((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
-						    new ResetEditableValuesListener(strFor));
+						    new ResetInputListener(strFor));
 					}
 				}
 			}
@@ -93,7 +93,7 @@ public class ResetEditableValuesTagHandler extends TagHandler {
 			return;
 		}
 
-		throw new FacesException("ResetEditableValues must be attached to a command or ajaxified component");
+		throw new FacesException("ResetInput must be attached to a command or ajaxified component");
 	}
 
 	private Collection<List<ClientBehavior>> getClientBehaviors(final FaceletContext context,

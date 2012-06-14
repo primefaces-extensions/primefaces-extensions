@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.reseteditablevalues;
+package org.primefaces.extensions.component.resetinput;
 
 import java.util.List;
 
@@ -43,17 +43,17 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  * @since   0.2
  */
-public class ResetEditableValuesListener extends AjaxBehaviorListenerImpl implements ActionListener, StateHolder {
+public class ResetInputListener extends AjaxBehaviorListenerImpl implements ActionListener, StateHolder {
 
 	private String components;
 
 	/**
 	 * This constructor is required for serialization. Please don't remove.
 	 */
-	public ResetEditableValuesListener() {
+	public ResetInputListener() {
 	}
 
-	public ResetEditableValuesListener(final String components) {
+	public ResetInputListener(final String components) {
 		this.components = components;
 	}
 

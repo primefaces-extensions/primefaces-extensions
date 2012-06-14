@@ -38,7 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
-import org.primefaces.extensions.component.reseteditablevalues.EditableValueHoldersVisitCallback;
+import org.primefaces.extensions.component.resetinput.EditableValueHoldersVisitCallback;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
