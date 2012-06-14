@@ -38,7 +38,7 @@ import javax.faces.event.ComponentSystemEventListener;
  * @version $Revision$
  * @since   0.2
  */
-public class PreRenderEditableValuesListener implements ComponentSystemEventListener, Serializable {
+public class PreRenderInputListener implements ComponentSystemEventListener, Serializable {
 
 	private static final long serialVersionUID = 20111225L;
 
@@ -49,7 +49,7 @@ public class PreRenderEditableValuesListener implements ComponentSystemEventList
 	/**
 	 * This constructor is required for serialization. Please do not remove.
 	 */
-	public PreRenderEditableValuesListener() {
+	public PreRenderInputListener() {
 	}
 
 	public void processEvent(final ComponentSystemEvent event) {

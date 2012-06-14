@@ -76,9 +76,9 @@ public class ResetInputListener extends AjaxBehaviorListenerImpl implements Acti
 
 		final List<UIComponent> foundComponents = ComponentUtils.findComponents(fc, source, components);
 		for (UIComponent foundComponent : foundComponents) {
-			PreRenderEditableValuesListener ppevListener = getPreRenderEditableValuesListener(foundComponent);
+			PreRenderInputListener ppevListener = getPreRenderEditableValuesListener(foundComponent);
 			if (ppevListener == null) {
-				ppevListener = new PreRenderEditableValuesListener();
+				ppevListener = new PreRenderInputListener();
 				foundComponent.subscribeToEvent(PreRenderComponentEvent.class, ppevListener);
 			}
 
@@ -86,12 +86,12 @@ public class ResetInputListener extends AjaxBehaviorListenerImpl implements Acti
 		}
 	}
 
-	protected PreRenderEditableValuesListener getPreRenderEditableValuesListener(final UIComponent component) {
+	protected PreRenderInputListener getPreRenderEditableValuesListener(final UIComponent component) {
 		List<SystemEventListener> systemEventListeners = component.getListenersForEventClass(PreRenderComponentEvent.class);
 		if (systemEventListeners != null && !systemEventListeners.isEmpty()) {
 			for (SystemEventListener systemEventListener : systemEventListeners) {
-				if (systemEventListener instanceof PreRenderEditableValuesListener) {
-					return (PreRenderEditableValuesListener) systemEventListener;
+				if (systemEventListener instanceof PreRenderInputListener) {
+					return (PreRenderInputListener) systemEventListener;
 				}
 
 				FacesListener wrapped = null;
@@ -100,8 +100,8 @@ public class ResetInputListener extends AjaxBehaviorListenerImpl implements Acti
 				}
 
 				while (wrapped != null) {
-					if (wrapped instanceof PreRenderEditableValuesListener) {
-						return (PreRenderEditableValuesListener) wrapped;
+					if (wrapped instanceof PreRenderInputListener) {
+						return (PreRenderInputListener) wrapped;
 					}
 
 					if (wrapped instanceof FacesWrapper<?>) {
