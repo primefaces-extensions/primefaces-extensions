@@ -65,7 +65,7 @@ public class PreRenderInputListener implements ComponentSystemEventListener, Ser
 		if (source instanceof EditableValueHolder) {
 			((EditableValueHolder) source).resetValue();
 		} else {
-			EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
+			InputsVisitCallback visitCallback = new InputsVisitCallback();
 			source.visitTree(VisitContext.createVisitContext(FacesContext.getCurrentInstance(), null, VISIT_HINTS),
 			                 visitCallback);
 

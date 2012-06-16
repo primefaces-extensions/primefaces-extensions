@@ -19,17 +19,14 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitHint;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -38,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.component.menuitem.MenuItem;
-import org.primefaces.extensions.component.resetinput.EditableValueHoldersVisitCallback;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
@@ -56,8 +52,6 @@ public class MasterDetailRenderer extends CoreRenderer {
 	private static final String FACET_FOOTER = "footer";
 	private static final String FACET_LABEL = "label";
 
-	private static final Set<VisitHint> VISIT_HINTS = EnumSet.of(VisitHint.SKIP_UNRENDERED);
-
 	@Override
 	public void encodeEnd(final FacesContext fc, UIComponent component) throws IOException {
 		MasterDetail masterDetail = (MasterDetail) component;
@@ -73,8 +67,8 @@ public class MasterDetailRenderer extends CoreRenderer {
 				mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
 
 				// reset last saved validation state and stored values of editable components
-				EditableValueHoldersVisitCallback visitCallback = new EditableValueHoldersVisitCallback();
-				mdlToProcess.visitTree(VisitContext.createVisitContext(fc, null, VISIT_HINTS), visitCallback);
+				MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
+				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
 				String preserveInputs = masterDetail.getPreserveInputs(fc);
 				String resetInputs = masterDetail.getResetInputs(fc);

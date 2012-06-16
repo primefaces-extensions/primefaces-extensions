@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.resetinput;
+package org.primefaces.extensions.component.masterdetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +28,26 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 
 /**
- * Callback calling while a component subtree is visiting. The aim of this callback is gathering of all components implementing
- * {@link EditableValueHolder} below the subtree.
+ * Callback calling while MasterDetailLevel's subtree is visiting. The aim of this callback is gathering of all components
+ * implementing {@link javax.faces.component.EditableValueHolder} below the subtree.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since   0.5.1
  */
-public class EditableValueHoldersVisitCallback implements VisitCallback {
+public class MasterDetailLevelVisitCallback implements VisitCallback {
 
 	private List<EditableValueHolder> editableValueHolders = new ArrayList<EditableValueHolder>();
 
-	public VisitResult visit(final VisitContext context, final UIComponent target) {
+	public VisitResult visit(VisitContext context, UIComponent target) {
+		if (target instanceof MasterDetailLevel) {
+			return VisitResult.ACCEPT;
+		}
+
+		if (!target.isRendered()) {
+			return VisitResult.REJECT;
+		}
+
 		if (target instanceof EditableValueHolder) {
 			editableValueHolders.add((EditableValueHolder) target);
 		}
