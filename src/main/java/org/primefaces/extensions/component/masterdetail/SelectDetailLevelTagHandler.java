@@ -51,7 +51,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 	private final TagAttribute preserveInputs;
 	private final TagAttribute resetInputs;
 
-	public SelectDetailLevelTagHandler(final TagConfig config) {
+	public SelectDetailLevelTagHandler(TagConfig config) {
 		super(config);
 		this.contextValue = getAttribute("contextValue");
 		this.listener = getAttribute("listener");
@@ -61,7 +61,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		this.resetInputs = getAttribute("resetInputs");
 	}
 
-	public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
+	public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
 		if (!(parent instanceof UICommand)) {
 			throw new FacesException("SelectDetailLevel must be inside an UICommand.");
 		}

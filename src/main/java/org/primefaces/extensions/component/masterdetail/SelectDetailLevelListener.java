@@ -47,11 +47,11 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 	public SelectDetailLevelListener() {
 	}
 
-	public SelectDetailLevelListener(final MethodExpression listener) {
+	public SelectDetailLevelListener(MethodExpression listener) {
 		this.listener = listener;
 	}
 
-	public void processAction(final ActionEvent actionEvent) {
+	public void processAction(ActionEvent actionEvent) {
 		final FacesContext fc = FacesContext.getCurrentInstance();
 		final UICommand source = (UICommand) actionEvent.getComponent();
 		final String clientId = source.getClientId(fc);
@@ -89,7 +89,7 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 		return false;
 	}
 
-	public void restoreState(final FacesContext facesContext, final Object state) {
+	public void restoreState(FacesContext facesContext, Object state) {
 		Object[] values = (Object[]) state;
 		listener = (MethodExpression) values[0];
 	}
@@ -101,10 +101,10 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 		return values;
 	}
 
-	public void setTransient(final boolean value) {
+	public void setTransient(boolean value) {
 	}
 
-	private MasterDetailLevel findMasterDetailLevel(final UIComponent component) {
+	private MasterDetailLevel findMasterDetailLevel(UIComponent component) {
 		UIComponent parent = component.getParent();
 
 		while (parent != null) {

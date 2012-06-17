@@ -52,7 +52,7 @@ public class MasterDetailLevel extends UIComponentBase {
 
 		private String toString;
 
-		PropertyKeys(final String toString) {
+		PropertyKeys(String toString) {
 			this.toString = toString;
 		}
 
@@ -78,7 +78,7 @@ public class MasterDetailLevel extends UIComponentBase {
 		return (Integer) getStateHelper().eval(PropertyKeys.level, null);
 	}
 
-	public void setLevel(final int level) {
+	public void setLevel(int level) {
 		setAttribute(PropertyKeys.level, level);
 	}
 
@@ -86,7 +86,7 @@ public class MasterDetailLevel extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.contextVar, null);
 	}
 
-	public void setContextVar(final String contextVar) {
+	public void setContextVar(String contextVar) {
 		setAttribute(PropertyKeys.contextVar, contextVar);
 	}
 
@@ -94,7 +94,7 @@ public class MasterDetailLevel extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.levelLabel, null);
 	}
 
-	public void setLevelLabel(final String levelLabel) {
+	public void setLevelLabel(String levelLabel) {
 		setAttribute(PropertyKeys.levelLabel, levelLabel);
 	}
 
@@ -102,16 +102,16 @@ public class MasterDetailLevel extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.levelDisabled, false);
 	}
 
-	public void setLevelDisabled(final boolean levelDisabled) {
+	public void setLevelDisabled(boolean levelDisabled) {
 		setAttribute(PropertyKeys.levelDisabled, levelDisabled);
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

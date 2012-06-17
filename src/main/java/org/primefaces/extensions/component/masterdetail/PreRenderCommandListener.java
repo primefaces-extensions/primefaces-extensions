@@ -43,7 +43,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 
 	private static final long serialVersionUID = 20111121L;
 
-	public void processEvent(final ComponentSystemEvent event) {
+	public void processEvent(ComponentSystemEvent event) {
 		UICommand source = (UICommand) event.getComponent();
 
 		// find master detail component
@@ -138,7 +138,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		masterDetailLevel.getAttributes().put(MasterDetail.CONTEXT_VALUES, contextValues);
 	}
 
-	private MasterDetail findMasterDetail(final UIComponent component) {
+	private MasterDetail findMasterDetail(UIComponent component) {
 		UIComponent parent = component.getParent();
 
 		while (parent != null) {
@@ -152,7 +152,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		return null;
 	}
 
-	private MasterDetailLevel findMasterDetailLevel(final UIComponent component) {
+	private MasterDetailLevel findMasterDetailLevel(UIComponent component) {
 		UIComponent parent = component.getParent();
 
 		while (parent != null) {
@@ -166,8 +166,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		return null;
 	}
 
-	private void addUIParameter(final FacesContext fc, final UIComponent source, final String paramName,
-	                            final Object paramValue) {
+	private void addUIParameter(FacesContext fc, UIComponent source, String paramName, Object paramValue) {
 		for (UIComponent child : source.getChildren()) {
 			if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
 				// update value
@@ -184,7 +183,7 @@ public class PreRenderCommandListener implements ComponentSystemEventListener, S
 		source.getChildren().add(uiParameter);
 	}
 
-	private void removeUIParameter(final UIComponent source, final String paramName) {
+	private void removeUIParameter(UIComponent source, String paramName) {
 		List<UIComponent> childs = source.getChildren();
 		if (childs == null || childs.isEmpty()) {
 			return;

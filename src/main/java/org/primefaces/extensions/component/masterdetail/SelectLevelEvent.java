@@ -34,7 +34,7 @@ public class SelectLevelEvent extends FacesEvent {
 	private int currentLevel;
 	private int newLevel;
 
-	public SelectLevelEvent(final UIComponent component, final int currentLevel, final int newLevel) {
+	public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
 		super(component);
 		this.currentLevel = currentLevel;
 		this.newLevel = newLevel;

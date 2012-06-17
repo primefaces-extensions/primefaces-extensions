@@ -49,7 +49,7 @@ public class MasterDetailTagHandler extends ComponentHandler {
 	}
 
 	@Override
-	public void onComponentPopulated(final FaceletContext ctx, final UIComponent c, final UIComponent parent) {
+	public void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent) {
 		if (!isNew(parent)) {
 			return;
 		}
@@ -67,7 +67,7 @@ public class MasterDetailTagHandler extends ComponentHandler {
 		}
 	}
 
-	private static boolean isBreadcrumbAvailable(final MasterDetail masterDetail) {
+	private static boolean isBreadcrumbAvailable(MasterDetail masterDetail) {
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof BreadCrumb) {
 				return true;

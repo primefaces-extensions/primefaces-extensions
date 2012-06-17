@@ -52,7 +52,7 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 	}
 
 	@Override
-	public void onComponentPopulated(final FaceletContext ctx, final UIComponent c, final UIComponent parent) {
+	public void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent) {
 		if (!isNew(parent)) {
 			return;
 		}
@@ -92,7 +92,7 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 		}
 	}
 
-	private boolean isAjaxifiedCommand(final UICommand uiCommand) {
+	private boolean isAjaxifiedCommand(UICommand uiCommand) {
 		// check for ajax attribute
 		try {
 			Method isAjaxMethod = uiCommand.getClass().getMethod("isAjax");
@@ -122,7 +122,7 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 		return false;
 	}
 
-	private boolean isPreRenderCommandListenerRegistred(final UICommand uiCommand) {
+	private boolean isPreRenderCommandListenerRegistred(UICommand uiCommand) {
 		Boolean isRegistered = (Boolean) uiCommand.getAttributes().get(MasterDetail.PRERENDER_LISTENER_REGISTERED);
 
 		return (isRegistered != null && isRegistered);

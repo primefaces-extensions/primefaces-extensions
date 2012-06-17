@@ -1797,6 +1797,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Per default breadcrumb items right from the current level are not shown. This flag allows to show all breadcrumb items right from the current level as disabled. Default is false.]]>
+            </description>
+            <name>showAllBreadcrumbItems</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+        <attribute>
+            <description>
                 <![CDATA[Style of the main MasterDetail container element. Default is null.]]>
             </description>
             <name>style</name>
