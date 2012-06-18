@@ -1,25 +1,28 @@
 .pe-master-detail .ui-breadcrumb ul li a {
     font-size: 1.1em;
     text-decoration: none;
-    margin-top: 1px;
+    margin-top: 2px;
     padding-left: 3px;
-    padding-right: 3px;    
+    padding-right: 3px;
+}
+
+.pe-master-detail .ui-breadcrumb ul li a.ui-icon-home {
+    margin-top: 2px;
+}
+
+.pe-master-detail .ui-breadcrumb ul li:first-child a {
+    height: auto !important;
+    width: auto !important;
+    background: none;
+    padding-right: 3px;
+    text-indent: 0.5em;
 }
 
 .pe-master-detail .ui-breadcrumb ul li span.ui-state-disabled {
     float: left;
     font-size: 1.1em;
-    margin-top: 1px;
     padding-left: 3px;
     padding-right: 3px;
-}
-
-.pe-master-detail .ui-breadcrumb ul li:first-child a {
-    height: auto !important;    
-    width: auto !important;
-    background: none;
-    padding-right: 3px;
-    text-indent: 0.5em;
 }
 
 .pe-master-detail .ui-breadcrumb ul li a:hover {
@@ -31,7 +34,13 @@
 }
 
 .pe-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
-    margin-top: 0;
+    margin-top: 1px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .pe-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
+        margin-top: 2px;
+    }
 }
 
 .pe-master-detail .pe-master-detail-level {

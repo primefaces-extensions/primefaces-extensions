@@ -1196,7 +1196,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax when ResetInput is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax in case when ResetInput is attached to any component with ajax behavior. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
             </description>
             <name>event</name>
             <required>false</required>
@@ -1781,7 +1781,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place via pe:selectDetailLevel). Return value defines the level to go. Default is null.]]>
+                <![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (via pe:selectDetailLevel). Return value defines the level to go. Default is null.]]>
             </description>
             <name>selectLevelListener</name>
             <required>false</required>
@@ -1936,7 +1936,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax when SelectDetailLevel is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax in case when SelectDetailLevel is attached to any component with ajax behavior. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
             </description>
             <name>event</name>
             <required>false</required>

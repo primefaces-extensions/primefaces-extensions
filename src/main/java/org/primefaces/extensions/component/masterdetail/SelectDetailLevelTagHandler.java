@@ -70,7 +70,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
 	public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
 		if (!ComponentUtils.isAjaxifiedComponent(parent)) {
-			throw new FacesException("SelectDetailLevel must be only inside ajaxified components.");
+			throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
 		}
 
 		if (!ComponentHandler.isNew(parent)) {
@@ -138,14 +138,12 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		// register a ComponentSystemEventListener
 		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderSourceListener());
 
-		// register an ActionListener
+		// register an ActionListener / AjaxBehaviorListener
 		if (listener != null) {
 			MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
 
 			if (parent instanceof ActionSource) {
 				((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
-
-				return;
 			} else if (parent instanceof ClientBehaviorHolder) {
 				// find attached f:ajax / p:ajax corresponding to supported events
 				Collection<List<ClientBehavior>> clientBehaviors =
@@ -165,11 +163,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 						}
 					}
 				}
-
-				return;
 			}
-
-			throw new FacesException("SelectDetailLevel must be attached to a command or ajaxified component");
 		}
 	}
 }
