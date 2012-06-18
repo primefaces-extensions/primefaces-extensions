@@ -19,13 +19,16 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.ActionSource;
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.ClientBehavior;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.event.PreRenderComponentEvent;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
@@ -34,6 +37,8 @@ import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
 import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.TagUtils;
 
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
@@ -50,6 +55,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 	private final TagAttribute step;
 	private final TagAttribute preserveInputs;
 	private final TagAttribute resetInputs;
+	private final TagAttribute event;
 
 	public SelectDetailLevelTagHandler(TagConfig config) {
 		super(config);
@@ -59,11 +65,12 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		this.step = getAttribute("step");
 		this.preserveInputs = getAttribute("preserveInputs");
 		this.resetInputs = getAttribute("resetInputs");
+		this.event = super.getAttribute("event");
 	}
 
 	public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
-		if (!(parent instanceof UICommand)) {
-			throw new FacesException("SelectDetailLevel must be inside an UICommand.");
+		if (!ComponentUtils.isAjaxifiedComponent(parent)) {
+			throw new FacesException("SelectDetailLevel must be only inside ajaxified components.");
 		}
 
 		if (!ComponentHandler.isNew(parent)) {
@@ -129,13 +136,40 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 		}
 
 		// register a ComponentSystemEventListener
-		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderCommandListener());
-		parent.getAttributes().put(MasterDetail.PRERENDER_LISTENER_REGISTERED, true);
+		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderSourceListener());
 
 		// register an ActionListener
 		if (listener != null) {
 			MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
-			((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
+
+			if (parent instanceof ActionSource) {
+				((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
+
+				return;
+			} else if (parent instanceof ClientBehaviorHolder) {
+				// find attached f:ajax / p:ajax corresponding to supported events
+				Collection<List<ClientBehavior>> clientBehaviors =
+				    TagUtils.getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
+				if (clientBehaviors == null || clientBehaviors.isEmpty()) {
+					return;
+				}
+
+				for (List<ClientBehavior> listBehaviors : clientBehaviors) {
+					for (ClientBehavior clientBehavior : listBehaviors) {
+						if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+							((org.primefaces.component.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+							    new SelectDetailLevelListener(me));
+						} else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
+							((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+							    new SelectDetailLevelListener(me));
+						}
+					}
+				}
+
+				return;
+			}
+
+			throw new FacesException("SelectDetailLevel must be attached to a command or ajaxified component");
 		}
 	}
 }

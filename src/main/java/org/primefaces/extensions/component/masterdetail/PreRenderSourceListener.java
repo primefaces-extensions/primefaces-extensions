@@ -25,7 +25,6 @@ import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
@@ -33,18 +32,18 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
 
 /**
- * {@link ComponentSystemEventListener} for an <code>UICommand</code> component.
+ * {@link ComponentSystemEventListener} for components with attached <code>SelectDetailLevel</code>.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.2
  */
-public class PreRenderCommandListener implements ComponentSystemEventListener, Serializable {
+public class PreRenderSourceListener implements ComponentSystemEventListener, Serializable {
 
 	private static final long serialVersionUID = 20111121L;
 
 	public void processEvent(ComponentSystemEvent event) {
-		UICommand source = (UICommand) event.getComponent();
+		UIComponent source = event.getComponent();
 
 		// find master detail component
 		MasterDetail masterDetail = findMasterDetail(source);

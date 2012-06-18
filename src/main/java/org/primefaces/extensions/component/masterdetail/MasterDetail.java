@@ -66,7 +66,6 @@ public class MasterDetail extends UIComponentBase {
 	public static final String RESET_INPUTS_VALUE_EXPRESSION = "resetInputsVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
 	public static final String SKIP_PROCESSING = "mdSkipProcessing";
-	public static final String PRERENDER_LISTENER_REGISTERED = "mdPreRenderCommandListener";
 	public static final String SELECT_DETAIL_REQUEST = "_selectDetailRequest";
 	public static final String CURRENT_LEVEL = "_currentLevel";
 	public static final String SELECTED_LEVEL = "_selectedLevel";
@@ -338,7 +337,7 @@ public class MasterDetail extends UIComponentBase {
 			getStateHelper().remove(PropertyKeys.level);
 		}
 
-		// get UICommand caused this ajax request
+		// get component caused this ajax request
 		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
 		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 

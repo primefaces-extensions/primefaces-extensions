@@ -24,20 +24,23 @@ import java.util.Map;
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import org.primefaces.component.behavior.ajax.AjaxBehaviorListenerImpl;
 
 /**
- * {@link ActionListener} for command component <code>SelectDetailLevelTagHandler</code> is attached to.
+ * Class for all added at runtime listeners specified by SelectDetailLevel.
  *
  * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since   0.2
  */
-public class SelectDetailLevelListener implements ActionListener, StateHolder {
+public class SelectDetailLevelListener extends AjaxBehaviorListenerImpl implements ActionListener, StateHolder {
 
 	private MethodExpression listener;
 
@@ -52,8 +55,16 @@ public class SelectDetailLevelListener implements ActionListener, StateHolder {
 	}
 
 	public void processAction(ActionEvent actionEvent) {
+		process(actionEvent.getComponent());
+	}
+
+	@Override
+	public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
+		process(event.getComponent());
+	}
+
+	public void process(UIComponent source) {
 		final FacesContext fc = FacesContext.getCurrentInstance();
-		final UICommand source = (UICommand) actionEvent.getComponent();
 		final String clientId = source.getClientId(fc);
 
 		// find master detail level component

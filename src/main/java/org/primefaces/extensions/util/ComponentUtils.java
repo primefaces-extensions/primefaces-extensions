@@ -19,6 +19,7 @@
 package org.primefaces.extensions.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,10 +33,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
 
+import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.component.base.EnhancedAttachable;
 
@@ -54,7 +57,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
 
-	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
+	public static List<UIComponent> findComponents(FacesContext context, UIComponent source, String list) {
 		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
 
 		final String[] ids = list.split("[\\s,]+");
@@ -90,7 +93,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return foundComponents;
 	}
 
-	public static String findTarget(final FacesContext context, final Attachable attachable) {
+	public static String findTarget(FacesContext context, Attachable attachable) {
 		if (!(attachable instanceof UIComponent)) {
 			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
@@ -98,8 +101,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return findTarget(context, attachable, (UIComponent) attachable);
 	}
 
-	public static String findTarget(final FacesContext context, final Attachable attachable,
-	                                final ClientBehaviorContext cbContext) {
+	public static String findTarget(FacesContext context, Attachable attachable, ClientBehaviorContext cbContext) {
 		if (!(attachable instanceof ClientBehavior)) {
 			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
@@ -111,7 +113,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return findTarget(context, attachable, cbContext.getComponent());
 	}
 
-	private static String findTarget(final FacesContext context, final Attachable attachable, final UIComponent component) {
+	private static String findTarget(FacesContext context, Attachable attachable, UIComponent component) {
 		final String forValue = attachable.getFor();
 		if (forValue != null) {
 			final UIComponent forComponent = component.findComponent(forValue);
@@ -138,12 +140,11 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return escapeJQueryId(component.getParent().getClientId(context));
 	}
 
-	public static void addComponentResource(final FacesContext context, final String name) {
+	public static void addComponentResource(FacesContext context, String name) {
 		addComponentResource(context, name, Constants.LIBRARY, "head");
 	}
 
-	public static void addComponentResource(final FacesContext context, final String name, final String library,
-	                                        final String target) {
+	public static void addComponentResource(FacesContext context, String name, String library, String target) {
 		final Application application = context.getApplication();
 
 		final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
@@ -227,7 +228,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return sb.toString();
 	}
 
-	public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
+	public static Object getConvertedSubmittedValue(FacesContext fc, EditableValueHolder evh) {
 		Object submittedValue = evh.getSubmittedValue();
 		if (submittedValue == null) {
 			return submittedValue;
@@ -253,7 +254,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return submittedValue;
 	}
 
-	public static Renderer getRenderer(final FacesContext fc, final UIComponent component) {
+	public static Renderer getRenderer(FacesContext fc, UIComponent component) {
 		String rendererType = component.getRendererType();
 		if (rendererType != null) {
 			return fc.getRenderKit().getRenderer(component.getFamily(), rendererType);
@@ -262,7 +263,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return null;
 	}
 
-	public static Converter getConverter(final FacesContext fc, final UIComponent component) {
+	public static Converter getConverter(FacesContext fc, UIComponent component) {
 		if (!(component instanceof EditableValueHolder)) {
 			return null;
 		}
@@ -284,5 +285,34 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		}
 
 		return fc.getApplication().createConverter(converterType);
+	}
+
+	public static boolean isAjaxifiedComponent(UIComponent component) {
+		// check for ajax source
+		if (component instanceof AjaxSource) {
+			// note: we don't call "isAjax" because not all components implementing AjaxSource has "isAjax" method.
+			// e.g. HotKey is automatic ajaxified if JS "handler" is not set. It doesn't have "isAjax".
+			// how can we check more reliable?
+			return true;
+		}
+
+		if (component instanceof ClientBehaviorHolder) {
+			// check for attached f:ajax / p:ajax
+			Collection<List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors().values();
+			if (behaviors == null || behaviors.isEmpty()) {
+				return false;
+			}
+
+			for (List<ClientBehavior> listBehaviors : behaviors) {
+				for (ClientBehavior clientBehavior : listBehaviors) {
+					if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
+					    || clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }

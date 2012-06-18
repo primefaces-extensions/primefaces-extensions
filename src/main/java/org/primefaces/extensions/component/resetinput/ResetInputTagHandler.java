@@ -19,14 +19,11 @@
 package org.primefaces.extensions.component.resetinput;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.faces.FacesException;
-import javax.faces.component.UICommand;
+import javax.faces.component.ActionSource;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -36,8 +33,9 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import org.primefaces.extensions.util.TagUtils;
 
 /**
  * {@link TagHandler} for the <code>ResetInput</code> component.
@@ -57,23 +55,24 @@ public class ResetInputTagHandler extends TagHandler {
 		this.event = super.getAttribute("event");
 	}
 
-	public void apply(final FaceletContext context, final UIComponent parent) throws IOException {
+	public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
 		if (!ComponentHandler.isNew(parent)) {
 			return;
 		}
 
-		final String strFor = forValue.getValue(context);
+		final String strFor = forValue.getValue(ctx);
 		if (StringUtils.isBlank(strFor)) {
 			return;
 		}
 
-		if (parent instanceof UICommand) {
-			((UICommand) parent).addActionListener(new ResetInputListener(strFor));
+		if (parent instanceof ActionSource) {
+			((ActionSource) parent).addActionListener(new ResetInputListener(strFor));
 
 			return;
 		} else if (parent instanceof ClientBehaviorHolder) {
 			// find attached f:ajax / p:ajax corresponding to supported events
-			Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(context, (ClientBehaviorHolder) parent);
+			Collection<List<ClientBehavior>> clientBehaviors =
+			    TagUtils.getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
 			if (clientBehaviors == null || clientBehaviors.isEmpty()) {
 				return;
 			}
@@ -94,30 +93,5 @@ public class ResetInputTagHandler extends TagHandler {
 		}
 
 		throw new FacesException("ResetInput must be attached to a command or ajaxified component");
-	}
-
-	private Collection<List<ClientBehavior>> getClientBehaviors(final FaceletContext context,
-	                                                            final ClientBehaviorHolder clientBehaviorHolder) {
-		Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
-		if (mapBehaviors == null || mapBehaviors.isEmpty()) {
-			return null;
-		}
-
-		String events = (event != null ? event.getValue(context) : null);
-		String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
-		if (arrEvents == null || arrEvents.length < 1) {
-			return mapBehaviors.values();
-		}
-
-		Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
-
-		final Set<String> keys = mapBehaviors.keySet();
-		for (String key : keys) {
-			if (ArrayUtils.contains(arrEvents, key)) {
-				behaviors.add(mapBehaviors.get(key));
-			}
-		}
-
-		return behaviors;
 	}
 }

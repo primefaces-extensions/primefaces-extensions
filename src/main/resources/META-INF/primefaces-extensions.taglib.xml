@@ -1196,7 +1196,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax if ResetInput is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax when ResetInput is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
             </description>
             <name>event</name>
             <required>false</required>
@@ -1781,7 +1781,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place (explicitly via pe:selectDetailLevel or implicitly). Return value defines the level to go. Default is null.]]>
+                <![CDATA[Method with signature int methodName(SelectLevelEvent). Server-side listener invoking when a navigation attempt takes place via pe:selectDetailLevel). Return value defines the level to go. Default is null.]]>
             </description>
             <name>selectLevelListener</name>
             <required>false</required>
@@ -1896,7 +1896,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Listener method which is fired before action / actionListener of parent command component gets called. Return value of this listener is used as a new / modified contextValue. The listener allows to pass a new / modified contextValue between levels. Default is none.]]>
+                <![CDATA[Listener method which is fired before action / actionListener of component, pe:selectDetailLevel is attached to, gets called. Return value of this listener is used as a new / modified contextValue. The listener allows to pass a new / modified contextValue between levels. Default is none.]]>
             </description>
             <name>listener</name>
             <required>false</required>
@@ -1934,6 +1934,14 @@
             <required>false</required>
             <type>boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax when SelectDetailLevel is attached to any ajaxified component. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
+            </description>
+            <name>event</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
     </tag>
     <tag>
         <description><![CDATA[keyFilter filters keyboard input by for a given input field.]]>
