@@ -620,6 +620,12 @@
             </dependency>
             <dependency>
                 <groupId>org.primefaces.themes</groupId>
+                <artifactId>cruze</artifactId>
+                <version>${primefaces.theme.version}</version>
+                <scope>runtime</scope>
+            </dependency>        
+            <dependency>
+                <groupId>org.primefaces.themes</groupId>
                 <artifactId>cupertino</artifactId>
                 <version>${primefaces.theme.version}</version>
                 <scope>runtime</scope>
@@ -920,6 +926,6 @@
         <pe.newComponents>ajaxErrorHandler;blockPanel;importConstants;dynaForm</pe.newComponents>
         <pe.updatedComponents>remoteCommand;resetInput;inputNumber;masterDetail</pe.updatedComponents>
         <primefaces.core.version>3.3.1</primefaces.core.version>
-        <primefaces.theme.version>1.0.5</primefaces.theme.version>    
+        <primefaces.theme.version>1.0.6</primefaces.theme.version>    
     </properties>
 </project>
