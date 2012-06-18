@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.model.timeline.TimelineEvent;
-import org.primefaces.extensions.util.DateUtil;
+import org.primefaces.extensions.util.DateUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -103,7 +103,8 @@ public class TimelineRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	protected void encodeEvent(final FacesContext context, final TimelineEvent event, final String timelineId) throws IOException {
+	protected void encodeEvent(final FacesContext context, final TimelineEvent event, final String timelineId)
+	    throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
 		writer.write("{");
@@ -111,11 +112,11 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",\"title\":\"" + event.getTitle() + "\"");
 		writer.write(",\"description\":\"" + event.getDescription() + "\"");
 		writer.write(",\"startDate\":\""
-		             + ((event.getStartDate() == null) ? "" : DateUtil.getLocalDateString(event.getStartDate())) + "\"");
+		             + ((event.getStartDate() == null) ? "" : DateUtils.getLocalDateString(event.getStartDate())) + "\"");
 
 		if (event.getEndDate() != null) {
-			writer.write(",\"endDate\":\"" + ((event.getEndDate() == null) ? ""
-			                                                               : DateUtil.getLocalDateString(event.getEndDate()))
+			writer.write(",\"endDate\":\""
+			             + ((event.getEndDate() == null) ? "" : DateUtils.getLocalDateString(event.getEndDate()))
 			             + "\"");
 		}
 

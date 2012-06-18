@@ -12,21 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * $Id$
  */
+
 package org.primefaces.extensions.util;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 /**
+ * DOCUMENT_ME
  *
- * @author Nilesh Namdeo Mali / last modified by $Author$
+ *
+ * @author  Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  */
-public class DateUtil {
-    public static String getLocalDateString(Date date){
-        return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
-    }
+public class DateUtils {
+
+	public static String getLocalDateString(Date date) {
+		return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
+	}
 }
