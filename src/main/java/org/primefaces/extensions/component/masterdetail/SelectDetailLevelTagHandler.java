@@ -36,7 +36,6 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
-import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.TagUtils;
 
@@ -124,14 +123,6 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 			if (resetInputsVE != null) {
 				// store valid value expression in the attributes map
 				parent.getAttributes().put(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION, resetInputsVE);
-			}
-		}
-
-		if (parent instanceof AjaxSource) {
-			AjaxSource ajaxSource = (AjaxSource) parent;
-			if (ajaxSource.getProcess() != null && "@none".equals(ajaxSource.getProcess().trim())) {
-				// mark navigation for skipping all JSF phases except rendering
-				parent.getAttributes().put(MasterDetail.SKIP_PROCESSING, true);
 			}
 		}
 

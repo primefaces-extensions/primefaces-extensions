@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +64,6 @@ public class MasterDetail extends UIComponentBase {
 	public static final String PRESERVE_INPUTS_VALUE_EXPRESSION = "preserveInputsVE";
 	public static final String RESET_INPUTS_VALUE_EXPRESSION = "resetInputsVE";
 	public static final String CONTEXT_VALUES = "mdContextValues";
-	public static final String SKIP_PROCESSING = "mdSkipProcessing";
 	public static final String SELECT_DETAIL_REQUEST = "_selectDetailRequest";
 	public static final String CURRENT_LEVEL = "_currentLevel";
 	public static final String SELECTED_LEVEL = "_selectedLevel";
@@ -73,7 +71,6 @@ public class MasterDetail extends UIComponentBase {
 	public static final String PRESERVE_INPUTS = "_preserveInputs";
 	public static final String RESET_INPUTS = "_resetInputs";
 	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
-	public static final String SKIP_PROCESSING_REQUEST = "_skipProcessing";
 	public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
 
 	private MasterDetailLevel detailLevelToProcess;
@@ -214,13 +211,14 @@ public class MasterDetail extends UIComponentBase {
 		String clienId = this.getClientId(fc);
 		PartialViewContext pvc = fc.getPartialViewContext();
 
-		// process and update the MasterDetail component automatically
+		/* automatic processing is not possible to unify in Mojarra and MyFaces.
 		Collection<String> executeIds = pvc.getExecuteIds();
 		int size = executeIds.size();
 		if (!isSkipProcessing(fc) && size == 0) {
-			pvc.getExecuteIds().add(clienId);
-		}
+		    pvc.getExecuteIds().add(clienId);
+		}*/
 
+		// update the MasterDetail component automatically
 		if (pvc.getRenderIds().isEmpty()) {
 			pvc.getRenderIds().add(clienId);
 		}
@@ -423,12 +421,6 @@ public class MasterDetail extends UIComponentBase {
 					uiParameter.setValue(level);
 					menuItem.getChildren().add(uiParameter);
 
-					uiParameter = new UIParameter();
-					uiParameter.setId(menuItemId + "_sp");
-					uiParameter.setName(clientId + MasterDetail.SKIP_PROCESSING_REQUEST);
-					uiParameter.setValue(true);
-					menuItem.getChildren().add(uiParameter);
-
 					breadCrumb.getChildren().add(menuItem);
 				}
 			}
@@ -470,10 +462,6 @@ public class MasterDetail extends UIComponentBase {
 		if (detailLevelToProcess == null) {
 			throw new FacesException("Current MasterDetailLevel to process not found.");
 		}
-	}
-
-	private boolean isSkipProcessing(FacesContext fc) {
-		return fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SKIP_PROCESSING_REQUEST);
 	}
 
 	private MasterDetailLevel getDetailLevelByStep(int step) {

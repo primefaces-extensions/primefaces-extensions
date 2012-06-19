@@ -105,14 +105,6 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 			removeUIParameter(source, masterDetailClientId + MasterDetail.RESET_INPUTS);
 		}
 
-		// skip processing flag
-		Boolean skipProcessing = (Boolean) source.getAttributes().get(MasterDetail.SKIP_PROCESSING);
-		if (skipProcessing != null && skipProcessing) {
-			addUIParameter(fc, source, masterDetailClientId + MasterDetail.SKIP_PROCESSING_REQUEST, true);
-		} else {
-			removeUIParameter(source, masterDetailClientId + MasterDetail.SKIP_PROCESSING_REQUEST);
-		}
-
 		ValueExpression contextValueVE =
 		    (ValueExpression) source.getAttributes().get(MasterDetail.CONTEXT_VALUE_VALUE_EXPRESSION);
 		if (contextValueVE == null) {
