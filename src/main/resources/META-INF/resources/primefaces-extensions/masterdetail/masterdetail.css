@@ -33,16 +33,6 @@
     border: none;
 }
 
-.pe-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
-    margin-top: 1px;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    .pe-master-detail .ui-breadcrumb ul li.ui-breadcrumb-chevron {
-        margin-top: 2px;
-    }
-}
-
 .pe-master-detail .pe-master-detail-level {
     margin-top: 15px;
 }
