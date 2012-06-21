@@ -139,8 +139,9 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		return opacity;
 	}();
 
-	var ElementPieceOfMask = function(maskKey) {
+	var ElementPieceOfMask = function(maskKey, zIndex) {
 		var idEl = maskId + maskKey;
+		var zIndex = zIndex;
 		var elementMustBeVisible = $(PrimeFaces.escapeClientId(idEl)).is(':visible');
 		var getMaskElement = function() {
 			var maskElement = $(PrimeFaces.escapeClientId(idEl));
@@ -153,7 +154,7 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 					top: 0,
 					left: 0,
 					display: 'none',
-					zIndex : 999999,
+					zIndex : zIndex,
 					overflow: 'hidden'
 				});
 				maskElement.append($('<div class="ui-widget-overlay" style="position:absolute;"></div>').css('opacity', 1));
@@ -165,8 +166,12 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		var updateVisibility = function() {
             var jidEl = $(PrimeFaces.escapeClientId(idEl));
 			if (elementMustBeVisible) {
-				if (!jidEl.is(':visible'))
-					getMaskElement().fadeTo("fast", destinationOpacity, updateVisibility);
+				if (!jidEl.is(':visible')) {
+					var el = getMaskElement();
+					el.css('zIndex', zIndex);
+					el.fadeTo("fast", destinationOpacity, updateVisibility);
+
+				}
 				return;
 			}
 			// ...
@@ -194,8 +199,9 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 					width: maxSize.width
 				});
 			},
-			show: function() {
+			show: function(zIndexNew) {
 				elementMustBeVisible = true;
+				zIndex = zIndexNew;
 				updateVisibility();
 			},
 			hide: function() {
@@ -204,11 +210,13 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 			}
 		};
 	};
-	
-	var top 	= new ElementPieceOfMask('_top');
-	var left 	= new ElementPieceOfMask('_left');
-	var bottom 	= new ElementPieceOfMask('_bottom');
-	var right 	= new ElementPieceOfMask('_right');
+
+	var zIndex = ++PrimeFaces.zindex;
+
+	var top 	= new ElementPieceOfMask('_top', zIndex);
+	var left 	= new ElementPieceOfMask('_left', zIndex);
+	var bottom 	= new ElementPieceOfMask('_bottom', zIndex);
+	var right 	= new ElementPieceOfMask('_right', zIndex);
 	
 	var getMaxSize = function() {
 		var winWidth = $(window).width();
@@ -342,11 +350,13 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		mustBeShowed = true;
 		
 		updatePositions();
+
+		var zIndex = ++PrimeFaces.zindex;
 		
-		top.show();
-		bottom.show();
-		left.show();
-		right.show();
+		top.show(zIndex);
+		bottom.show(zIndex);
+		left.show(zIndex);
+		right.show(zIndex);
 	}
 	var hideAreas = function() {
 		mustBeShowed = false;
