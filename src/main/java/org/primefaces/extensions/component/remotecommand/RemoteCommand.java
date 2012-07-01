@@ -202,6 +202,10 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		getStateHelper().put(PropertyKeys.actionListener, actionListener);
 	}
 
+	public boolean isPartialSubmitSet() {
+		return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
+	}
+
 	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
 		getStateHelper().put(property, value);

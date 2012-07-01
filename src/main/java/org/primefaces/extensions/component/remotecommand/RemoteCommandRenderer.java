@@ -93,7 +93,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
 		if (form == null) {
 			throw new FacesException("Component " + component.getClientId(context)
-			                         + " must be enclosed in a form.");
+					+ " must be enclosed in a form.");
 		}
 
 		final ResponseWriter writer = context.getResponseWriter();
@@ -105,10 +105,18 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final String name = command.getName();
 
 		final AjaxRequestBuilder builder = new AjaxRequestBuilder();
-		builder.source(clientId).form(form.getClientId(context)).process(context, component, source.getProcess())
-		       .update(context, component, source.getUpdate()).async(source.isAsync()).global(source.isGlobal())
-		       .partialSubmit(source.isPartialSubmit()).onstart(source.getOnstart()).onerror(source.getOnerror())
-		       .onsuccess(source.getOnsuccess()).oncomplete(source.getOncomplete());
+		builder.source(clientId)
+			.form(form.getClientId(context))
+			.process(context, component, source.getProcess())
+			.update(context, component, source.getUpdate())
+			.async(source.isAsync())
+			.global(source.isGlobal())
+			.partialSubmit(source.isPartialSubmit(), command.isPartialSubmitSet())
+			.onstart(source.getOnstart())
+			.onerror(source.getOnerror())
+			.onsuccess(source.getOnsuccess())
+			.oncomplete(source.getOncomplete());
+
 		builder.params(clientId, parameters);
 
 		final String request = builder.build();
