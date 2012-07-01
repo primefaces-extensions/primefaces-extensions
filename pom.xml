@@ -925,7 +925,7 @@
         <pe.webapp.online>false</pe.webapp.online>
         <pe.newComponents></pe.newComponents>
         <pe.updatedComponents>timeline;layout</pe.updatedComponents>
-        <primefaces.core.version>3.3.1</primefaces.core.version>
+        <primefaces.core.version>3.4-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.6</primefaces.theme.version>    
     </properties>
 </project>
