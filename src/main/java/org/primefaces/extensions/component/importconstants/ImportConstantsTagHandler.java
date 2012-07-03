@@ -98,7 +98,7 @@ public class ImportConstantsTagHandler extends TagHandler {
 		final ExpressionFactory expressionFactory = facesContext.getApplication().getExpressionFactory();
 
 		final ValueExpression aliasValueExpression = expressionFactory.createValueExpression(elContext, var, Map.class);
-		aliasValueExpression.setValue(FacesContext.getCurrentInstance().getELContext(), constants);
+		aliasValueExpression.setValue(elContext, constants);
 	}
 
 	/**
