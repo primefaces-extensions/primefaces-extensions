@@ -923,8 +923,8 @@
         <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.webapp.online>false</pe.webapp.online>
-        <pe.newComponents></pe.newComponents>
-        <pe.updatedComponents>timeline;layout</pe.updatedComponents>
+        <pe.newComponents>;</pe.newComponents>
+        <pe.updatedComponents>layout;masterDetail;timeline;tooltip</pe.updatedComponents>
         <primefaces.core.version>3.4-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.6</primefaces.theme.version>    
     </properties>
