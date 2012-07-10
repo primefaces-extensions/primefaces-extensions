@@ -911,16 +911,6 @@
         </profile>
         <profile>
             <id>deploy</id>
-	        <build>
-                <finalName>primeext-showcase-${pe.jsf.impl}</finalName>
-	        </build>
-            <properties>
-                <pe.webapp.filter>release</pe.webapp.filter>
-		        <pe.webapp.online>true</pe.webapp.online>
-            </properties>
-        </profile>
-        <profile>
-            <id>cloud</id>
             <build>
                 <finalName>showcase-primeext</finalName>
    	        </build>            
@@ -949,7 +939,6 @@
         <pe.jsf.version>2.1.10</pe.jsf.version>
         <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
-        <pe.webapp.online>false</pe.webapp.online>
         <pe.newComponents>;</pe.newComponents>
         <pe.updatedComponents>layout;masterDetail;timeline;tooltip</pe.updatedComponents>
         <primefaces.core.version>3.4-SNAPSHOT</primefaces.core.version>
