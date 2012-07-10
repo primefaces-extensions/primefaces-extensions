@@ -306,7 +306,7 @@
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
-                    <version>${jetty.server.version}</version>
+                    <version>${server.version}</version>
                     <configuration>
                         <webAppConfig>
                             <overrideDescriptor>src/main/resources/overrideweb-${pe.jsf.impl}.xml</overrideDescriptor>
@@ -927,7 +927,8 @@
             <properties>
                 <pe.jsf.scope>provided</pe.jsf.scope>
                 <pe.webapp.filter>release</pe.webapp.filter>
-		        <pe.webapp.online>true</pe.webapp.online>
+                <server.name>JBoss</server.name>
+                <server.version>7.1.1</server.version>
             </properties>
         </profile>        
     </profiles>
@@ -938,7 +939,8 @@
         <java.version.source>1.5</java.version.source>
         <java.version.target>1.5</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-        <jetty.server.version>8.1.0.RC2</jetty.server.version>
+        <server.name>Jetty</server.name>
+        <server.version>8.1.0.RC2</server.version>
         <pe.jsf.impl>mojarra</pe.jsf.impl>
         <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
