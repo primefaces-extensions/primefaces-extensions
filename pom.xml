@@ -512,6 +512,7 @@
                 <groupId>${pe.jsf.group}</groupId>
                 <artifactId>${pe.jsf.artifact}-api</artifactId>
                 <version>${pe.jsf.version}</version>
+                <scope>${pe.jsf.scope}</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>jstl</groupId>
@@ -523,6 +524,7 @@
                 <groupId>${pe.jsf.group}</groupId>
                 <artifactId>${pe.jsf.artifact}-impl</artifactId>
                 <version>${pe.jsf.version}</version>
+                <scope>${pe.jsf.scope}</scope>
                 <exclusions>
                     <exclusion>
                         <groupId>jstl</groupId>
@@ -537,9 +539,20 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>el-impl</artifactId>
-                <version>2.2</version>
+                <groupId>de.odysseus.juel</groupId>
+                <artifactId>juel-impl</artifactId>
+                <version>2.2.4</version>
+				<exclusions>
+					<exclusion>
+						<groupId>de.odysseus.juel</groupId>
+						<artifactId>juel-api</artifactId>
+					</exclusion>
+				</exclusions>
+            </dependency>
+            <dependency>
+                <groupId>de.odysseus.juel</groupId>
+                <artifactId>juel-spi</artifactId>
+                <version>2.2.4</version>
             </dependency>
             <dependency>
                 <groupId>javax.annotation</groupId>
@@ -905,6 +918,17 @@
                 <pe.webapp.filter>release</pe.webapp.filter>
 		        <pe.webapp.online>true</pe.webapp.online>
             </properties>
+        </profile>
+        <profile>
+            <id>cloud</id>
+            <build>
+                <finalName>showcase-primeext</finalName>
+   	        </build>            
+            <properties>
+                <pe.jsf.scope>provided</pe.jsf.scope>
+                <pe.webapp.filter>release</pe.webapp.filter>
+		        <pe.webapp.online>true</pe.webapp.online>
+            </properties>
         </profile>        
     </profiles>
 
@@ -919,6 +943,7 @@
         <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
+        <pe.jsf.scope>compile</pe.jsf.scope>        
         <pe.jsf.version>2.1.10</pe.jsf.version>
         <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
