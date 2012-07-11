@@ -72,12 +72,12 @@
         </developer>
         <developer>
             <id>mali</id>
-            <name>Nilesh N. Mali</name>
+            <name>Nilesh Namdeo Mali</name>
             <email>nileshmali86@gmail.com</email>
             <roles>
                 <role>Developer</role>
             </roles>
-            <timezone>+5.5</timezone>
+            <timezone>+5.30</timezone>
         </developer>
         <developer>
             <id>mfenoglio</id>
@@ -903,8 +903,7 @@
             <id>myfaces</id>
             <properties>
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
-                <pe.jsf.displayname>MyFaces</pe.jsf.displayname>
-                <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
+                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
                 <pe.jsf.version>2.1.7</pe.jsf.version>
             </properties>
@@ -917,8 +916,6 @@
             <properties>
                 <pe.jsf.scope>provided</pe.jsf.scope>
                 <pe.webapp.filter>release</pe.webapp.filter>
-                <server.name>JBoss</server.name>
-                <server.version>7.1.1</server.version>
             </properties>
         </profile>        
     </profiles>
@@ -929,10 +926,8 @@
         <java.version.source>1.5</java.version.source>
         <java.version.target>1.5</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
-        <server.name>Jetty</server.name>
         <server.version>8.1.0.RC2</server.version>
         <pe.jsf.impl>mojarra</pe.jsf.impl>
-        <pe.jsf.displayname>Mojarra</pe.jsf.displayname>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.scope>compile</pe.jsf.scope>        
