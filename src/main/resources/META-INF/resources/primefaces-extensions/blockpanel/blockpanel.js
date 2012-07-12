@@ -1,4 +1,3 @@
-
 /**
  * PrimeFaces Extensions BlockPanel Widget.
  *
@@ -15,21 +14,35 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 		this.id = cfg.id;
 		this.blocked = cfg.blocked;
 
+		PrimeFacesExt.widget.BlockPanel.cache = PrimeFacesExt.widget.BlockPanel.cache || {};
+
 		////////////////////////
 		// Mask
-		this.getMask = function() {
-			var mask = new PrimeFacesExt.widget.BlockPanel.MaskAround(this.id);
-			return (this.getMask = function() {return mask})();
+		this.getMask = function () {
+			var mask = PrimeFacesExt.widget.BlockPanel.cache['PrimeFacesExt.widget.BlockPanel.MaskAround:' + this.id];
+			if (!mask) {
+				mask = new PrimeFacesExt.widget.BlockPanel.MaskAround(this.id);
+				PrimeFacesExt.widget.BlockPanel.cache['PrimeFacesExt.widget.BlockPanel.MaskAround:' + this.id] = mask;
+			}
+			return (this.getMask = function () {
+				return mask
+			})();
 		}
 
 		////////////////////////
 		// FOCUS LOST bindings ...
-		this.getFocusArea = function() {
-			var area = new PrimeFacesExt.widget.BlockPanel.FocusArea(this.id);
-			return (this.getFocusArea = function() {return area})();
+		this.getFocusArea = function () {
+			var area = window['PrimeFacesExt.widget.BlockPanel.FocusArea:' + this.id];
+			if (!area) {
+				area = new PrimeFacesExt.widget.BlockPanel.FocusArea(this.id);
+				window['PrimeFacesExt.widget.BlockPanel.FocusArea:' + this.id] = area;
+			}
+			return (this.getFocusArea = function () {
+				return area
+			})();
 		}
 
-		this.block = function() {
+		this.block = function () {
 			this.blocked = true;
 			// Show MASK
 			this.getMask().show();
@@ -37,7 +50,7 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 			// focus area ...
 			this.getFocusArea().activate();
 		}
-		this.unblock = function() {
+		this.unblock = function () {
 			this.blocked = false;
 			// Hide MASK
 			this.getMask().hide();
@@ -46,7 +59,7 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 			this.getFocusArea().deactivate()
 		}
 
-		if(this.blocked) {
+		if (this.blocked) {
 			this.block();
 		}
 		else {
@@ -56,11 +69,11 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 		PrimeFacesExt.removeWidgetScript(this.id);
 	},
 
-	block : function () {
+	block:function () {
 		this.block();
 	},
 
-	unblock : function () {
+	unblock:function () {
 		this.unblock();
 	}
 });
@@ -68,16 +81,16 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 /**
  * @author Pavol Slany
  */
-PrimeFacesExt.widget.BlockPanel.FocusArea = function(elementId) {
+PrimeFacesExt.widget.BlockPanel.FocusArea = function (elementId) {
 	var elPanel = $(PrimeFaces.escapeClientId(elementId));
 
 	// If panel has not focusable elements => create hidden focusable element
 	// Add hidden focusable HTML element
-	if (!$(PrimeFaces.escapeClientId(elementId)+' :focusable').length)
+	if (!$(PrimeFaces.escapeClientId(elementId) + ' :focusable').length)
 		elPanel.append($('<a href="" style="width:0px;height:0px;position:absolute;"></a>'));
 
-	var focusFirstElement = function() {
-		$($(PrimeFaces.escapeClientId(elementId)+' :focusable')[0]).focus();
+	var focusFirstElement = function () {
+		$($(PrimeFaces.escapeClientId(elementId) + ' :focusable')[0]).focus();
 		isIn = 0;
 	}
 
@@ -85,19 +98,19 @@ PrimeFacesExt.widget.BlockPanel.FocusArea = function(elementId) {
 
 	var isIn = 0;
 	var focusOutTimeout = null;
-	var focusOutTimeoutHandler = function() {
+	var focusOutTimeoutHandler = function () {
 		if (isIn < 0 && activate) {
 			focusFirstElement();
 		}
 	};
-	var focusin = function() {
-		isIn=isIn+1;
+	var focusin = function () {
+		isIn = isIn + 1;
 
 		if (focusOutTimeout != null) clearTimeout(focusOutTimeout);
 		focusOutTimeout = setTimeout(focusOutTimeoutHandler, 20);
 	};
-	var focusout = function() {
-		isIn=isIn-1;
+	var focusout = function () {
+		isIn = isIn - 1;
 
 		if (focusOutTimeout != null) clearTimeout(focusOutTimeout);
 		focusOutTimeout = setTimeout(focusOutTimeoutHandler, 20);
@@ -105,20 +118,19 @@ PrimeFacesExt.widget.BlockPanel.FocusArea = function(elementId) {
 
 
 	return {
-		activate: function() {
+		activate:function () {
 			if (!activate) {
-				elPanel.bind('focusin',focusin);
-				elPanel.bind('focusout',focusout);
+				elPanel.bind('focusin', focusin);
+				elPanel.bind('focusout', focusout);
 
 				focusFirstElement();
 			}
 			activate = true;
-		}
-		,
-		deactivate: function() {
+		},
+		deactivate:function () {
 			if (activate) {
-				elPanel.unbind('focusin',focusin);
-				elPanel.unbind('focusout',focusout);
+				elPanel.unbind('focusin', focusin);
+				elPanel.unbind('focusout', focusout);
 			}
 			activate = false;
 		}
@@ -128,10 +140,10 @@ PrimeFacesExt.widget.BlockPanel.FocusArea = function(elementId) {
 /**
  * @author Pavol Slany
  */
-PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
-	var maskId = elementId+'_maskAround';
+PrimeFacesExt.widget.BlockPanel.MaskAround = function (elementId) {
+	var maskId = elementId + '_maskAround';
 
-	var destinationOpacity = function() {
+	var destinationOpacity = function () {
 		var el = $('<div class="ui-widget-overlay"></div>');
 		$('body').append(el);
 		var opacity = el.css('opacity');
@@ -139,34 +151,43 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		return opacity;
 	}();
 
-	var ElementPieceOfMask = function(maskKey, zIndex) {
+	var ElementPieceOfMask = function (maskKey, zIndex) {
 		var idEl = maskId + maskKey;
 		var zIndex = zIndex;
 		var elementMustBeVisible = $(PrimeFaces.escapeClientId(idEl)).is(':visible');
-		var getMaskElement = function() {
+		var getMaskElement = function () {
 			var maskElement = $(PrimeFaces.escapeClientId(idEl));
 
 			if (!maskElement || !maskElement.length) {
-				maskElement = $('<div id="'+idEl+'" />');
+				maskElement = $('<div id="' + idEl + '" />');
 				maskElement.css({
 //					position: 'fixed',
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					display: 'none',
-					zIndex : zIndex,
-					overflow: 'hidden'
+					position:'absolute',
+					top:0,
+					left:0,
+					display:'none',
+					zIndex:zIndex,
+					overflow:'hidden'
 				});
 				maskElement.append($('<div class="ui-widget-overlay" style="position:absolute;"></div>').css('opacity', 1));
 				$('body').append(maskElement);
 			}
 			return maskElement;
 		}
+		var isMaskVisible = function () {
+			var maskElement = $(PrimeFaces.escapeClientId(idEl));
+			if (!maskElement || !maskElement.length) return false;
+			return maskElement.is(":visible");
+		}
+		var isMaskInBody = function () {
+			var maskElement = $(PrimeFaces.escapeClientId(idEl));
+			if (!maskElement || !maskElement.length) return false;
+			return true;
+		}
 
-		var updateVisibility = function() {
-			var jidEl = $(PrimeFaces.escapeClientId(idEl));
+		var updateVisibility = function () {
 			if (elementMustBeVisible) {
-				if (!jidEl.is(':visible')) {
+				if (!isMaskVisible()) {
 					var el = getMaskElement();
 					el.css('zIndex', zIndex);
 					el.fadeTo("fast", destinationOpacity, updateVisibility);
@@ -175,36 +196,44 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 				return;
 			}
 			// ...
-			if (jidEl.is(':visible')) {
-				getMaskElement().fadeOut('fast', updateVisibility);
+			if (isMaskVisible()) {
+				getMaskElement().fadeOut('fast', function () {
+					updateVisibility();
+				});
+				return;
+			}
+
+			if (isMaskInBody()) {
+				getMaskElement().remove();
+				return;
 			}
 		}
 
 		return {
-			updatePosition: function(x0,y0,x1,y1) {
+			updatePosition:function (x0, y0, x1, y1) {
 				$('<div class="ui-widget-overlay"></div>')
 				var el = getMaskElement();
 				el.css({
-					left: x0,
-					top: y0,
-					width: (x1-x0),
-					height: (y1-y0)
+					left:x0,
+					top:y0,
+					width:(x1 - x0),
+					height:(y1 - y0)
 				});
 
 				var maxSize = getMaxSize();
 				$(el.children()[0]).css({
-					left: (0-x0),
-					top: (0-y0),
-					height: maxSize.height,
-					width: maxSize.width
+					left:(0 - x0),
+					top:(0 - y0),
+					height:maxSize.height,
+					width:maxSize.width
 				});
 			},
-			show: function(zIndexNew) {
+			show:function (zIndexNew) {
 				elementMustBeVisible = true;
 				zIndex = zIndexNew;
 				updateVisibility();
 			},
-			hide: function() {
+			hide:function () {
 				elementMustBeVisible = false;
 				updateVisibility();
 			}
@@ -213,12 +242,12 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 
 	var zIndex = ++PrimeFaces.zindex;
 
-	var top 	= new ElementPieceOfMask('_top', zIndex);
-	var left 	= new ElementPieceOfMask('_left', zIndex);
-	var bottom 	= new ElementPieceOfMask('_bottom', zIndex);
-	var right 	= new ElementPieceOfMask('_right', zIndex);
+	var top = new ElementPieceOfMask('_top', zIndex);
+	var left = new ElementPieceOfMask('_left', zIndex);
+	var bottom = new ElementPieceOfMask('_bottom', zIndex);
+	var right = new ElementPieceOfMask('_right', zIndex);
 
-	var getMaxSize = function() {
+	var getMaxSize = function () {
 		var winWidth = $(window).width();
 		var winHeight = $(window).height();
 		var docWidth = $(document).width();
@@ -228,13 +257,13 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		var maxHeight = winHeight > docHeight ? winHeight : docHeight;
 
 		return {
-			width: maxWidth,
-			height: maxHeight
+			width:maxWidth,
+			height:maxHeight
 		};
 	}
 
 	// check IE8 browser (it works in all BROWSER MODEs and DOCUMENT MODEs)
-	var isIE8 = function() {
+	var isIE8 = function () {
 		if ($.browser.msie) {
 			// document.documentMode is since IE8
 			// window.performance is since IE9
@@ -244,7 +273,7 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 	}
 
 
-	var updateMaskPositions = function() {
+	var updateMaskPositions = function () {
 		var maxSize = getMaxSize();
 
 		var maxWidth = maxSize.width;
@@ -259,12 +288,12 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 
 		// Correct MASK position before, any parents is with overflow=AUTO|HIDDEN|SCROLL
 		var elParent = el.parent();
-		while (elParent.length > 0 && elParent[0].tagName!='HTML') {
+		while (elParent.length > 0 && elParent[0].tagName != 'HTML') {
 			var overflow = elParent.css('overflow');
 
 			if (overflow == 'auto' || overflow == 'hidden' || overflow == 'scroll') {
 				// IE BUG - if height is 0 => CSS problem with overflow => ignore it
-				if (elParent.height()>0) {
+				if (elParent.height() > 0) {
 					var offset = elParent.offset();
 					if (x0 < offset.left) x0 = offset.left;
 					if (y0 < offset.top) y0 = offset.top;
@@ -277,14 +306,14 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		}
 
 
-		if (x0<0) x0 = 0;
-		if (y0<0) y0 = 0;
-		if (x1<x0) x1=x0;
-		if (y1<y0) y1=y0;
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 < x0) x1 = x0;
+		if (y1 < y0) y1 = y0;
 
-		if (el.outerHeight()>0 && y1-y0<=5) {
+		if (el.outerHeight() > 0 && y1 - y0 <= 5) {
 			try {
-				var elFocus = $(PrimeFaces.escapeClientId(elementId)+' :focusable');
+				var elFocus = $(PrimeFaces.escapeClientId(elementId) + ' :focusable');
 				// Change focus ...
 				if (elFocus.length < 2) {
 					// If ELEMENT does not exist => create TMP element
@@ -300,7 +329,8 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 				// SET FOCUS for first element
 				$(elFocus[0]).focus();
 
-			} catch(e) {}
+			} catch (e) {
+			}
 		}
 
 		var ie8Corecting = 0;
@@ -310,43 +340,44 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		}
 
 //		var bodyOffset = {top: $(window).scrollTop(), left: $(window).scrollLeft()};
-		var bodyOffset = {top: 0, left: 0};
+		var bodyOffset = {top:0, left:0};
 
 		top.updatePosition(
-			0-bodyOffset.left,
-			0-bodyOffset.top,
-			maxWidth-bodyOffset.left,
-			y0-bodyOffset.top);
+			0 - bodyOffset.left,
+			0 - bodyOffset.top,
+			maxWidth - bodyOffset.left,
+			y0 - bodyOffset.top);
 		bottom.updatePosition(
-			0-bodyOffset.left,
-			y1-bodyOffset.top,
-			maxWidth-bodyOffset.left,
-			maxHeight-bodyOffset.top);
+			0 - bodyOffset.left,
+			y1 - bodyOffset.top,
+			maxWidth - bodyOffset.left,
+			maxHeight - bodyOffset.top);
 		left.updatePosition(
-			0-bodyOffset.left,
-			y0-bodyOffset.top + ie8Corecting,
-			x0-bodyOffset.left,
-			y1-bodyOffset.top - ie8Corecting);
+			0 - bodyOffset.left,
+			y0 - bodyOffset.top + ie8Corecting,
+			x0 - bodyOffset.left,
+			y1 - bodyOffset.top - ie8Corecting);
 		right.updatePosition(
-			x1-bodyOffset.left,
-			y0-bodyOffset.top + ie8Corecting,
-			maxWidth-bodyOffset.left,
-			y1-bodyOffset.top - ie8Corecting);
+			x1 - bodyOffset.left,
+			y0 - bodyOffset.top + ie8Corecting,
+			maxWidth - bodyOffset.left,
+			y1 - bodyOffset.top - ie8Corecting);
 	}
 
+	var mustBeShowed = false;
 	var resizeTimer = null;
-	$(window).bind('resize', function() {
+	$(window).bind('resize', function () {
 		if (resizeTimer) clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(updateMaskPositions, 100);
+		resizeTimer = setTimeout(updatePositions, 100);
 	});
 
-	var updatePositions = function() {
-		updateMaskPositions();
-		if (mustBeShowed)
+	var updatePositions = function () {
+		if (mustBeShowed === true) {
+			updateMaskPositions();
 			setTimeout(updatePositions, 150);
+		}
 	};
-	var mustBeShowed = false;
-	var showAreas = function() {
+	var showAreas = function () {
 		mustBeShowed = true;
 
 		updatePositions();
@@ -358,7 +389,7 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 		left.show(zIndex);
 		right.show(zIndex);
 	}
-	var hideAreas = function() {
+	var hideAreas = function () {
 		mustBeShowed = false;
 
 		top.hide();
@@ -368,10 +399,10 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function(elementId) {
 	}
 
 	return {
-		show: function() {
+		show:function () {
 			showAreas();
 		},
-		hide: function() {
+		hide:function () {
 			hideAreas();
 		}
 	};
