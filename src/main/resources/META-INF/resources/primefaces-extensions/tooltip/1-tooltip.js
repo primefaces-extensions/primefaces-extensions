@@ -51,6 +51,11 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
 	        $('<div/>').qtip(this.cfg);
 	    } else {
 	        this.cfg.position.container = $(document.body);
+            if (this.cfg.autoShow) {
+                this.cfg.position.adjust = {
+                    resize: true
+                };
+            }
 	
 	        // delete previous tooltip to support ajax updates and create a new one
 	        $(this.cfg.forTarget).qtip('destroy').qtip(this.cfg);
