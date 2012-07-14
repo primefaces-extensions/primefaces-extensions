@@ -44,6 +44,7 @@ public class TooltipRenderer extends CoreRenderer {
 		String clientId = tooltip.getClientId(context);
 		boolean global = tooltip.isGlobal();
 		boolean shared = tooltip.isShared();
+		boolean autoShow = tooltip.isAutoShow();
 		String target = null;
 
 		if (!global || (tooltip.getFor() != null || tooltip.getForSelector() != null)) {
@@ -57,6 +58,7 @@ public class TooltipRenderer extends CoreRenderer {
 		writer.write("id:'" + clientId + "'");
 		writer.write(",global:" + global);
 		writer.write(",shared:" + shared);
+		writer.write(",autoShow:" + autoShow);
 
 		if (target == null) {
 			writer.write(",forTarget:null");
@@ -89,6 +91,9 @@ public class TooltipRenderer extends CoreRenderer {
 		if (shared && !global) {
 			writer.write(",show:{target:$('" + target + "')}");
 			writer.write(",hide:{target:$('" + target + "')}");
+		} else if (autoShow) {
+			writer.write(",show:{when:false,ready:true}");
+			writer.write(",hide:false");
 		} else {
 			writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
 			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()

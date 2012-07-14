@@ -1239,7 +1239,8 @@
             <renderer-type>org.primefaces.extensions.component.TooltipRenderer</renderer-type>
         </component>
         <attribute>
-            <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
             </description>
             <name>id</name>
             <required>false</required>
@@ -1254,126 +1255,152 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Value of the component than can be either an EL expression of a literal text.]]>
+            <description>
+                <![CDATA[Value of the component than can be either an EL expression of a literal text.]]>
             </description>
             <name>value</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
-            <description><![CDATA[An el expression or a literal text that defines a converter for the component.]]>
+            <description>
+                <![CDATA[An el expression or a literal text that defines a converter for the component.]]>
             </description>
             <name>converter</name>
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the client side widget.]]>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
             </description>
             <name>widgetVar</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A global tooltip converts each title attribute to a tooltip. Default value is false.]]>
+            <description>
+                <![CDATA[A global tooltip converts each title attribute to a tooltip. Default value is false.]]>
             </description>
             <name>global</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A shared tooltip - one tooltip, multiple targets. Default value is false.]]>
+            <description>
+                <![CDATA[A shared tooltip - one tooltip, multiple targets. Default value is false.]]>
             </description>
             <name>shared</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The corner of the target element to position the tooltip by. Default value is 'bottom right'.]]>
+            <description>
+                <![CDATA[The autoShow flag enables showing tooltips automatically after page loading. Auto shown tooltips can not be global or shared. Default value is false.]]>
+            </description>
+            <name>autoShow</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>        
+        <attribute>
+            <description>
+                <![CDATA[The corner of the target element to position the tooltip by. Default value is 'bottom right'.]]>
             </description>
             <name>targetPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[The corner of the tooltip to position the target's position. Default value is 'top left'.]]>
+            <description>
+                <![CDATA[The corner of the tooltip to position the target's position. Default value is 'top left'.]]>
             </description>
             <name>position</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Event displaying the tooltip. Default value is mouseenter.]]>
+            <description>
+                <![CDATA[Event displaying the tooltip. Default value is mouseenter.]]>
             </description>
             <name>showEvent</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Delay time for displaying the tooltip. Default value is 0.]]>
+            <description>
+                <![CDATA[Delay time for displaying the tooltip. Default value is 0.]]>
             </description>
             <name>showDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Effect to be used for displaying. Default value is fadeIn.]]>
+            <description>
+                <![CDATA[Effect to be used for displaying. Default value is fadeIn.]]>
             </description>
             <name>showEffect</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Time in milliseconds to display the effect. Default value is 500.]]>
+            <description>
+                <![CDATA[Time in milliseconds to display the effect. Default value is 500.]]>
             </description>
             <name>showEffectLength</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Event hiding the tooltip. Default value is mouseleave.]]>
+            <description>
+                <![CDATA[Event hiding the tooltip. Default value is mouseleave.]]>
             </description>
             <name>hideEvent</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Delay time for hiding the tooltip. Default value is 0.]]>
+            <description>
+                <![CDATA[Delay time for hiding the tooltip. Default value is 0.]]>
             </description>
             <name>hideDelay</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Effect to be used for hiding. Default value is fadeOut.]]>
+            <description>
+                <![CDATA[Effect to be used for hiding. Default value is fadeOut.]]>
             </description>
             <name>hideEffect</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Time in milliseconds to process the hide effect. Default value is 500.]]>
+            <description>
+                <![CDATA[Time in milliseconds to process the hide effect. Default value is 500.]]>
             </description>
             <name>hideEffectLength</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Id of the component to attach the tooltip.]]>
+            <description>
+                <![CDATA[Id of the component to attach the tooltip.]]>
             </description>
             <name>for</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[jQuery selector for any elements to attach the tooltip.]]>
+            <description>
+                <![CDATA[jQuery selector for any elements to attach the tooltip.]]>
             </description>
             <name>forSelector</name>
             <required>false</required>

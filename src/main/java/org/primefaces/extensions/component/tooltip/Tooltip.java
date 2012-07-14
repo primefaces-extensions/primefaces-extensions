@@ -39,12 +39,12 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+                      })
 public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
@@ -63,6 +63,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		widgetVar,
 		global,
 		shared,
+		autoShow,
 		targetPosition,
 		position,
 		showEvent,
@@ -78,7 +79,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 		private String toString;
 
-		PropertyKeys(final String toString) {
+		PropertyKeys(String toString) {
 			this.toString = toString;
 		}
 
@@ -104,7 +105,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
-	public void setWidgetVar(final String widgetVar) {
+	public void setWidgetVar(String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
@@ -112,7 +113,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Boolean) getStateHelper().eval(PropertyKeys.global, false);
 	}
 
-	public void setGlobal(final boolean global) {
+	public void setGlobal(boolean global) {
 		setAttribute(PropertyKeys.global, global);
 	}
 
@@ -120,15 +121,23 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Boolean) getStateHelper().eval(PropertyKeys.shared, false);
 	}
 
-	public void setShared(final boolean shared) {
+	public void setShared(boolean shared) {
 		setAttribute(PropertyKeys.shared, shared);
+	}
+
+	public boolean isAutoShow() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.autoShow, false);
+	}
+
+	public void setAutoShow(boolean autoShow) {
+		setAttribute(PropertyKeys.autoShow, autoShow);
 	}
 
 	public String getTargetPosition() {
 		return (String) getStateHelper().eval(PropertyKeys.targetPosition, "bottom right");
 	}
 
-	public void setTargetPosition(final String targetPosition) {
+	public void setTargetPosition(String targetPosition) {
 		setAttribute(PropertyKeys.targetPosition, targetPosition);
 	}
 
@@ -136,7 +145,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(Tooltip.PropertyKeys.position, "top left");
 	}
 
-	public void setPosition(final String position) {
+	public void setPosition(String position) {
 		setAttribute(PropertyKeys.position, position);
 	}
 
@@ -144,7 +153,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.showEvent, "mouseenter");
 	}
 
-	public void setShowEvent(final String showEvent) {
+	public void setShowEvent(String showEvent) {
 		setAttribute(PropertyKeys.showEvent, showEvent);
 	}
 
@@ -152,7 +161,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
 	}
 
-	public void setShowDelay(final int showDelay) {
+	public void setShowDelay(int showDelay) {
 		setAttribute(PropertyKeys.showDelay, showDelay);
 	}
 
@@ -160,7 +169,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.showEffect, "fadeIn");
 	}
 
-	public void setShowEffect(final String showEffect) {
+	public void setShowEffect(String showEffect) {
 		setAttribute(PropertyKeys.showEffect, showEffect);
 	}
 
@@ -168,7 +177,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
 	}
 
-	public void setShowEffectLength(final int showEffectLength) {
+	public void setShowEffectLength(int showEffectLength) {
 		setAttribute(PropertyKeys.showEffectLength, showEffectLength);
 	}
 
@@ -176,7 +185,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.hideEvent, "mouseleave");
 	}
 
-	public void setHideEvent(final String hideEvent) {
+	public void setHideEvent(String hideEvent) {
 		setAttribute(PropertyKeys.hideEvent, hideEvent);
 	}
 
@@ -184,7 +193,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
 	}
 
-	public void setHideDelay(final int hideDelay) {
+	public void setHideDelay(int hideDelay) {
 		setAttribute(PropertyKeys.hideDelay, hideDelay);
 	}
 
@@ -192,7 +201,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.hideEffect, "fadeOut");
 	}
 
-	public void setHideEffect(final String hideEffect) {
+	public void setHideEffect(String hideEffect) {
 		setAttribute(PropertyKeys.hideEffect, hideEffect);
 	}
 
@@ -200,7 +209,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
 	}
 
-	public void setHideEffectLength(final int hideEffectLength) {
+	public void setHideEffectLength(int hideEffectLength) {
 		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
@@ -208,7 +217,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
 	}
 
-	public void setFor(final String forValue) {
+	public void setFor(String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
@@ -216,7 +225,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
 	}
 
-	public void setForSelector(final String forSelector) {
+	public void setForSelector(String forSelector) {
 		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
@@ -231,12 +240,12 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
