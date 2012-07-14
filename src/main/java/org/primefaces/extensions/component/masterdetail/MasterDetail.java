@@ -91,6 +91,7 @@ public class MasterDetail extends UIComponentBase {
 		selectLevelListener,
 		showBreadcrumb,
 		showAllBreadcrumbItems,
+		breadcrumbAboveHeader,
 		style,
 		styleClass;
 
@@ -156,6 +157,14 @@ public class MasterDetail extends UIComponentBase {
 
 	public void setShowAllBreadcrumbItems(boolean showAllBreadcrumbItems) {
 		setAttribute(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
+	}
+
+	public boolean isBreadcrumbAboveHeader() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.breadcrumbAboveHeader, false);
+	}
+
+	public void setBreadcrumbAboveHeader(boolean breadcrumbAboveHeader) {
+		setAttribute(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
 	}
 
 	public String getStyle() {

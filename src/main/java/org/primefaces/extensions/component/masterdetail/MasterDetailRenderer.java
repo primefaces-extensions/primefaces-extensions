@@ -132,21 +132,19 @@ public class MasterDetailRenderer extends CoreRenderer {
 			writer.writeAttribute("style", masterDetail.getStyle(), "style");
 		}
 
-		// render header
-		encodeFacet(fc, masterDetail, FACET_HEADER);
-
 		if (masterDetail.isShowBreadcrumb()) {
-			// get breadcrumb and its current model
-			BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
-			if (breadcrumb == null) {
-				throw new FacesException("BreadCrumb component was not found below MasterDetail.");
+			if (masterDetail.isBreadcrumbAboveHeader()) {
+				// render breadcrumb and then header
+				renderBreadcrumb(fc, masterDetail, mdl);
+				encodeFacet(fc, masterDetail, FACET_HEADER);
+			} else {
+				// render header and then breadcrumb
+				encodeFacet(fc, masterDetail, FACET_HEADER);
+				renderBreadcrumb(fc, masterDetail, mdl);
 			}
-
-			// update breadcrumb items
-			updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
-
-			// render breadcrumb
-			breadcrumb.encodeAll(fc);
+		} else {
+			// render header without breadcrumb
+			encodeFacet(fc, masterDetail, FACET_HEADER);
 		}
 
 		// render container for MasterDetailLevel
@@ -178,6 +176,17 @@ public class MasterDetailRenderer extends CoreRenderer {
 		// render footer
 		encodeFacet(fc, masterDetail, FACET_FOOTER);
 		writer.endElement("div");
+	}
+
+	protected void renderBreadcrumb(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+		// get breadcrumb and its current model
+		BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
+
+		// update breadcrumb items
+		updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
+
+		// render breadcrumb
+		breadcrumb.encodeAll(fc);
 	}
 
 	protected void encodeFacet(FacesContext fc, UIComponent component, String name) throws IOException {
