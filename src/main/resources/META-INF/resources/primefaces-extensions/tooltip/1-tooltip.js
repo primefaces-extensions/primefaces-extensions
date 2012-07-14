@@ -56,7 +56,8 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
             $(this.cfg.forTarget).qtip('destroy').qtip(this.cfg);
 
             if (this.cfg.autoShow) {
-                $(window).on("debouncedresize", function(event) {
+                var nsevent = "debouncedresize.tooltip" + PrimeFaces.escapeClientId(id);
+                $(window).off(nsevent).on(nsevent, function(event) {
                     $(_self.cfg.forTarget).qtip('reposition');
                 });
             }
@@ -80,6 +81,10 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
     destroy : function() {
         if (this.cfg.forTarget) {
             $(this.cfg.forTarget).qtip('destroy');
+
+            if (this.cfg.autoShow) {
+                $(window).off("debouncedresize.tooltip" + PrimeFaces.escapeClientId(this.cfg.id));
+            }
         }
     },
 
