@@ -161,7 +161,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 	                            SelectItem option, int idx) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-		String itemValueAsString = getOptionAsString(context, component, converter, option.getValue());
+		String itemValueAsString = String.valueOf(option.getValue());
 		String name = checkbox.getClientId(context);
 		String id = name + UINamingContainer.getSeparatorChar(context) + idx;
 		boolean disabled = option.isDisabled() || checkbox.isDisabled();
