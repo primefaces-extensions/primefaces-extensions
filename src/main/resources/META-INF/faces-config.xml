@@ -83,10 +83,6 @@
         <component-class>org.primefaces.extensions.component.layout.LayoutPane</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.AjaxStatus</component-type>
-        <component-class>org.primefaces.extensions.component.ajaxstatus.AjaxStatus</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.MasterDetail</component-type>
         <component-class>org.primefaces.extensions.component.masterdetail.MasterDetail</component-class>
     </component>
@@ -185,11 +181,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LayoutRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.layout.LayoutRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.AjaxStatusRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.ajaxstatus.AjaxStatusRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

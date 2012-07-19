@@ -182,7 +182,6 @@
                             <includes>
                                 <include>core/core.js</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
-                                <include>ajaxstatus/ajaxstatus.js</include>
                                 <include>blockpanel/blockpanel.js</include>
                                 <include>blockui/*.js</include>                                
                                 <include>ckeditor/widget.js</include>
