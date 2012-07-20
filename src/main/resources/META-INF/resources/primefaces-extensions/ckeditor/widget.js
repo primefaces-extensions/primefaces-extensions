@@ -120,10 +120,25 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 				//load jquery adapter
 				PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 	
-					//overwrite save button and init editor
-					this.overwriteSaveButton();
-					this.initialize();
-	
+					if (this.jq.is(':visible')) {
+						//overwrite save button and init editor
+						this.overwriteSaveButton();
+						this.initialize();
+			        } else {
+			            var hiddenParent = this.jq.parents('.ui-hidden-container:first');
+			            var hiddenParentWidget = hiddenParent.data('widget');
+
+			            if (hiddenParentWidget) {
+			                hiddenParentWidget.addOnshowHandler($.proxy(function() {
+			                	if (!this.instance && this.jq.is(':visible')) {
+									//overwrite save button and init editor
+									this.overwriteSaveButton();
+									this.initialize();
+			                	}
+			                }, this));
+			            }
+			        }
+
 				}, this), true);
 	
 			}, this), true);
