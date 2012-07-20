@@ -45,6 +45,7 @@ public class TooltipRenderer extends CoreRenderer {
 		boolean global = tooltip.isGlobal();
 		boolean shared = tooltip.isShared();
 		boolean autoShow = tooltip.isAutoShow();
+		boolean mouseTracking = tooltip.isMouseTracking();
 		String target = null;
 
 		if (!global || (tooltip.getFor() != null || tooltip.getForSelector() != null)) {
@@ -87,8 +88,10 @@ public class TooltipRenderer extends CoreRenderer {
 			writer.write("\"");
 		}
 
-		//Events
-		if (shared && !global) {
+		// events
+		if (mouseTracking) {
+			writer.write(",hide:{fixed:true}");
+		} else if (shared && !global) {
 			writer.write(",show:{target:$('" + target + "')}");
 			writer.write(",hide:{target:$('" + target + "')}");
 		} else if (autoShow) {
@@ -103,11 +106,15 @@ public class TooltipRenderer extends CoreRenderer {
 			             + ");}}");
 		}
 
-		//Position
+		// position
 		writer.write(",position: {");
-		writer.write("at:'" + tooltip.getTargetPosition() + "'");
-		writer.write(",my:'" + tooltip.getPosition() + "'");
-		if (shared && !global) {
+		writer.write("at:'" + tooltip.getAtPosition() + "'");
+		writer.write(",my:'" + tooltip.getMyPosition() + "'");
+		writer.write(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
+		if (mouseTracking) {
+			writer.write(",target:'mouse'");
+			writer.write(",viewport:$(window)");
+		} else if (shared && !global) {
 			writer.write(",target:'event'");
 			writer.write(",effect:false");
 		}

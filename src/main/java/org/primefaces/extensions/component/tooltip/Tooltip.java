@@ -64,8 +64,11 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		global,
 		shared,
 		autoShow,
-		targetPosition,
-		position,
+		mouseTracking,
+		adjustX,
+		adjustY,
+		atPosition,
+		myPosition,
 		showEvent,
 		showDelay,
 		showEffect,
@@ -133,20 +136,44 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		setAttribute(PropertyKeys.autoShow, autoShow);
 	}
 
-	public String getTargetPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.targetPosition, "bottom right");
+	public boolean isMouseTracking() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.mouseTracking, false);
 	}
 
-	public void setTargetPosition(String targetPosition) {
-		setAttribute(PropertyKeys.targetPosition, targetPosition);
+	public void setMouseTracking(boolean mouseTracking) {
+		setAttribute(PropertyKeys.mouseTracking, mouseTracking);
 	}
 
-	public String getPosition() {
-		return (String) getStateHelper().eval(Tooltip.PropertyKeys.position, "top left");
+	public int getAdjustX() {
+		return (Integer) getStateHelper().eval(PropertyKeys.adjustX, 0);
 	}
 
-	public void setPosition(String position) {
-		setAttribute(PropertyKeys.position, position);
+	public void setAdjustX(int adjustX) {
+		setAttribute(PropertyKeys.adjustX, adjustX);
+	}
+
+	public int getAdjustY() {
+		return (Integer) getStateHelper().eval(PropertyKeys.adjustY, 0);
+	}
+
+	public void setAdjustY(int adjustY) {
+		setAttribute(PropertyKeys.adjustY, adjustY);
+	}
+
+	public String getAtPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.atPosition, "bottom right");
+	}
+
+	public void setAtPosition(String atPosition) {
+		setAttribute(PropertyKeys.atPosition, atPosition);
+	}
+
+	public String getMyPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.myPosition, "top left");
+	}
+
+	public void setMyPosition(String myPosition) {
+		setAttribute(PropertyKeys.myPosition, myPosition);
 	}
 
 	public String getShowEvent() {

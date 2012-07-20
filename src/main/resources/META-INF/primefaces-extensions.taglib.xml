@@ -1304,25 +1304,49 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The autoShow flag enables showing tooltips automatically after page loading. Auto shown tooltips can not be global or shared. Default value is false.]]>
+                <![CDATA[This flag enables showing tooltips automatically after page loading. Auto shown tooltips can not be global or shared. Default value is false.]]>
             </description>
             <name>autoShow</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[This flag enables tooltip's positioning in relation to the mouse. Default value is false.]]>
+            </description>
+            <name>mouseTracking</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>        
         <attribute>
             <description>
-                <![CDATA[The corner of the target element to position the tooltip by. Default value is 'bottom right'.]]>
+                <![CDATA[A positive or negative pixel value by which to offset the tooltip in the horizontal plane (x-axis). Negative values cause a reduction in the value (moves tooltip to the left). Default value is 0.]]>
             </description>
-            <name>targetPosition</name>
+            <name>adjustX</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A positive or negative pixel value by which to offset the tooltip in the vertical plane (y-axis). Negative values cause a reduction in the value (moves tooltip upwards). Default value is 0.]]>
+            </description>
+            <name>adjustY</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>        
+        <attribute>
+            <description>
+                <![CDATA[The corner of the target element to position the tooltips corner at. Default value is 'bottom right'.]]>
+            </description>
+            <name>atPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The corner of the tooltip to position the target's position. Default value is 'top left'.]]>
+                <![CDATA[The corner of the tooltip to position in relation to the target element. Default value is 'top left'.]]>
             </description>
-            <name>position</name>
+            <name>myPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
