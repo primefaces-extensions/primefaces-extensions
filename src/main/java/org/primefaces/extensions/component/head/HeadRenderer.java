@@ -149,19 +149,14 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	}
 
 	private void fillScriptsAndStyles(final FacesContext context, final List<UIComponent> styles,
-	                                  final List<UIComponent> scripts) {
+			final List<UIComponent> scripts) {
 		final UIViewRoot viewRoot = context.getViewRoot();
 		final List<UIComponent> resources = viewRoot.getComponentResources(context, "head");
 
 		for (final UIComponent resource : resources) {
-			final String name = (String) resource.getAttributes().get("name");
-
-			if (name == null) {
-				// could be inline style
+			if (org.primefaces.extensions.util.Constants.RENDERER_TYPE_STYLESHEET.equals(resource.getRendererType())) {
 				styles.add(resource);
-			} else if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_CSS)) {
-				styles.add(resource);
-			} else if (name.endsWith(org.primefaces.extensions.util.Constants.EXTENSION_JS)) {
+			} else if (org.primefaces.extensions.util.Constants.RENDERER_TYPE_SCRIPT.equals(resource.getRendererType())) {
 				scripts.add(resource);
 			}
 		}

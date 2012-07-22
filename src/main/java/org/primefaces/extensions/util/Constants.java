@@ -39,6 +39,9 @@ public final class Constants {
 	public static final String EXTENSION_CSS = ".css";
 	public static final String EXTENSION_JS = ".js";
 
+	public static final String RENDERER_TYPE_SCRIPT = "javax.faces.resource.Script";
+	public static final String RENDERER_TYPE_STYLESHEET = "javax.faces.resource.Stylesheet";
+
 	/**
 	 * Avoid instantiation.
 	 */
