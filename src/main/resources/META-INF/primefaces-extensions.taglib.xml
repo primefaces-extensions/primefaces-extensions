@@ -206,6 +206,13 @@
             <required>false</required>
             <type>javax.faces.convert.Converter</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Marks component as required.]]>
+            </description>
+            <name>required</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description>
