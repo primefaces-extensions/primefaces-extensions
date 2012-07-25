@@ -45,11 +45,11 @@ import org.primefaces.util.MessageFactory;
  * @since   0.3
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+                      })
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateManyCheckbox";
@@ -58,9 +58,9 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
-	 * DOCUMENT_ME
+	 * PropertyKeys
 	 *
-	 * @author  ova / last modified by $Author$
+	 * @author  Oleg Varaksin / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
@@ -153,7 +153,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
@@ -176,7 +176,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	@Override
 	protected void validateValue(final FacesContext context, final Object value) {
 		@SuppressWarnings("unchecked")
-		Map<Object,Object> mapValues = (Map) value;
+		Map<Object, Object> mapValues = (Map) value;
 
 		//call all validators
 		Validator[] validators = this.getValidators();
@@ -197,7 +197,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 						if (null != validatorMessageString) {
 							message =
-									new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessageString, validatorMessageString);
+							    new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessageString, validatorMessageString);
 							message.setSeverity(FacesMessage.SEVERITY_ERROR);
 						} else {
 							Collection<FacesMessage> messages = ve.getFacesMessages();
@@ -226,7 +226,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		// Ensure that if the state are all 0 and a
 		// value is required, a message is queued
 		if (isRequired()
-				&& isValid()) {
+		    && isValid()) {
 			Iterator<Object> it = mapValues.values().iterator();
 			boolean cCheck = true;
 			while (it.hasNext() && cCheck) {
@@ -247,7 +247,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 			// Enqueue an error message if an invalid value was specified
 			FacesMessage message =
-					MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+			    MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
 			context.addMessage(getClientId(context), message);
 			setValid(false);
 		}

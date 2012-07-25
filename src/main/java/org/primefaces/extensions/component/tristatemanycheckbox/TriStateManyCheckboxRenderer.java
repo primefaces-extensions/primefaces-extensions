@@ -20,7 +20,6 @@ package org.primefaces.extensions.component.tristatemanycheckbox;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +37,7 @@ import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
+import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.HTML;
 
@@ -62,8 +62,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 			TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
 			Converter converter = checkbox.getConverter();
 			if (converter != null) {
-				for (Iterator<String> it = keyValues.iterator(); it.hasNext();) {
-					String keyVal = it.next();
+				for (String keyVal : keyValues) {
 					Object mapVal = converter.getAsObject(context, checkbox, (String) mapSub.get(keyVal));
 					mapSubConv.put(keyVal, mapVal);
 				}
@@ -216,37 +215,38 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeOptionOutput(FacesContext context, TriStateManyCheckbox checkbox, int valCheck, boolean disabled)
-	    throws IOException {
+	protected void encodeOptionOutput(final FacesContext context, final TriStateManyCheckbox checkbox, final int valCheck,
+	                                  final boolean disabled) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String styleClass = HTML.CHECKBOX_BOX_CLASS;
 		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
 		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
-		String iconClass = HTML.CHECKBOX_ICON_CLASS;
-
 		//if stateIcon is defined use it insted of default icons.
-		String stateOneIconClass = checkbox.getStateOneIcon() != null ? "ui-icon " + checkbox.getStateOneIcon() : " ";
+		String stateOneIconClass =
+		    checkbox.getStateOneIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateOneIcon() : "";
 		String stateTwoIconClass =
-		    checkbox.getStateTwoIcon() != null ? "ui-icon " + checkbox.getStateTwoIcon() : "ui-icon ui-icon-check";
+		    checkbox.getStateTwoIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateTwoIcon()
+		                                       : TriStateCheckbox.UI_ICON + "ui-icon-check";
 		String stataThreeIconClass =
-		    checkbox.getStateThreeIcon() != null ? "ui-icon " + checkbox.getStateThreeIcon() : "ui-icon ui-icon-closethick";
+		    checkbox.getStateThreeIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateThreeIcon()
+		                                         : TriStateCheckbox.UI_ICON + "ui-icon-closethick";
 
-		String statesIconsClasses = stateOneIconClass + ";" + stateTwoIconClass + ";" + stataThreeIconClass;
+		String statesIconsClasses =
+		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
 
-		iconClass = valCheck == 0 ? iconClass + " " + stateOneIconClass : iconClass;
-		iconClass = valCheck == 1 ? iconClass + " " + stateTwoIconClass : iconClass;
-		iconClass = valCheck == 2 ? iconClass + " " + stataThreeIconClass : iconClass;
+		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+		if (valCheck == 0) {
+			iconClass = iconClass + " " + stateOneIconClass;
+		} else if (valCheck == 1) {
+			iconClass = iconClass + " " + stateTwoIconClass;
+		} else if (valCheck == 2) {
+			iconClass = iconClass + " " + stataThreeIconClass;
+		}
 
-		writer.startElement("div", null);
-		writer.writeAttribute("class", styleClass, null);
-		writer.writeAttribute("statesIcons", statesIconsClasses, null);
-
-		writer.startElement("span", null);
-		writer.writeAttribute("class", iconClass, null);
-		writer.endElement("span");
-
-		writer.endElement("div");
+		// preparation with singe quotes for .data('iconstates')
+		writer.write("<div class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "'>" + "<span class=\""
+		             + iconClass + "\"></span></div>");
 	}
 
 	protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
@@ -285,9 +285,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
 	@Override
 	protected String getSubmitParam(FacesContext context, UISelectMany selectMany) {
-		String getSubParm = selectMany.getClientId(context);
-
-		return getSubParm;
+		return selectMany.getClientId(context);
 	}
 
 	/*
@@ -321,8 +319,8 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
 		if (value == null) {
 			return null;
-			       //it should be a Map instance for <ItemStringValue,Value>
 		} else if (value instanceof Map) {
+			//it should be a Map instance for <ItemStringValue,Value>
 			return ((Map) value);
 		} else {
 			throw new FacesException("Value of '" + component.getClientId() + "'must be a Map instance");

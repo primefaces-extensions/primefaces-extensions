@@ -19,9 +19,11 @@
 package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.io.IOException;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -130,30 +132,31 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
 		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
-		String iconClass = HTML.CHECKBOX_ICON_CLASS;
-
 		//if stateIcon is defined use it insted of default icons.
-		String stateOneIconClass = checkbox.getStateOneIcon() != null ? "ui-icon " + checkbox.getStateOneIcon() : " ";
+		String stateOneIconClass =
+		    checkbox.getStateOneIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateOneIcon() : "";
 		String stateTwoIconClass =
-		    checkbox.getStateTwoIcon() != null ? "ui-icon " + checkbox.getStateTwoIcon() : "ui-icon ui-icon-check";
+		    checkbox.getStateTwoIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateTwoIcon()
+		                                       : TriStateCheckbox.UI_ICON + "ui-icon-check";
 		String stataThreeIconClass =
-		    checkbox.getStateThreeIcon() != null ? "ui-icon " + checkbox.getStateThreeIcon() : "ui-icon ui-icon-closethick";
+		    checkbox.getStateThreeIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateThreeIcon()
+		                                         : TriStateCheckbox.UI_ICON + "ui-icon-closethick";
 
-		String statesIconsClasses = stateOneIconClass + ";" + stateTwoIconClass + ";" + stataThreeIconClass;
+		String statesIconsClasses =
+		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
 
-		iconClass = valCheck == 0 ? iconClass + " " + stateOneIconClass : iconClass;
-		iconClass = valCheck == 1 ? iconClass + " " + stateTwoIconClass : iconClass;
-		iconClass = valCheck == 2 ? iconClass + " " + stataThreeIconClass : iconClass;
+		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+		if (valCheck == 0) {
+			iconClass = iconClass + " " + stateOneIconClass;
+		} else if (valCheck == 1) {
+			iconClass = iconClass + " " + stateTwoIconClass;
+		} else if (valCheck == 2) {
+			iconClass = iconClass + " " + stataThreeIconClass;
+		}
 
-		writer.startElement("div", null);
-		writer.writeAttribute("class", styleClass, null);
-		writer.writeAttribute("statesIcons", statesIconsClasses, null);
-
-		writer.startElement("span", null);
-		writer.writeAttribute("class", iconClass, null);
-		writer.endElement("span");
-
-		writer.endElement("div");
+		// preparation with singe quotes for .data('iconstates')
+		writer.write("<div class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "'>"
+		             + "<span class=\"" + iconClass + "\"></span></div>");
 	}
 
 	protected void encodeItemLabel(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
