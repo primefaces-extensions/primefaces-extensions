@@ -122,6 +122,14 @@
         <component-type>org.primefaces.extensions.component.InputNumber</component-type>
         <component-class>org.primefaces.extensions.component.inputnumber.InputNumber</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.AjaxErrorHandler</component-type>
+        <component-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandler</component-class>
+    </component>
+    <component>                        
+        <component-type>org.primefaces.extensions.component.Waypoint</component-type>
+        <component-class>org.primefaces.extensions.component.waypoint.Waypoint</component-class>
+    </component>    
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -131,10 +139,6 @@
         <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.LocaleConverter</converter-class>
     </converter>
-    <component>
-        <component-type>org.primefaces.extensions.component.AjaxErrorHandler</component-type>
-        <component-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandler</component-class>
-    </component>
 
     <render-kit>
         <renderer>
@@ -231,7 +235,12 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.AjaxErrorHandlerRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandlerRenderer</renderer-class>
-        </renderer>
+        </renderer>        
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.WaypointRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.waypoint.WaypointRenderer</renderer-class>
+        </renderer>        
 
         <client-behavior-renderer>
             <client-behavior-renderer-type>org.primefaces.extensions.behavior.JavascriptBehaviorRenderer</client-behavior-renderer-type>

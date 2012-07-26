@@ -145,6 +145,7 @@
                                 <include>tooltip/**</include>
                                 <include>keyfilter/**</include>
                                 <include>inputnumber/**</include>
+                                <include>waypoint/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
