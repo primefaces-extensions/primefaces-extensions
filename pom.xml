@@ -928,8 +928,8 @@
         <pe.jsf.version>2.1.10</pe.jsf.version>
         <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
-        <pe.newComponents>;</pe.newComponents>
-        <pe.updatedComponents>layout;masterDetail;timeline;tooltip</pe.updatedComponents>
+        <pe.newComponents>waypoint;fluidGrid;spotlight</pe.newComponents>
+        <pe.updatedComponents>codeMirror;layout;masterDetail;timeline;tooltip;triStateCheckbox;triStateManyCheckbox</pe.updatedComponents>
         <primefaces.core.version>3.4-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.6</primefaces.theme.version>    
     </properties>
