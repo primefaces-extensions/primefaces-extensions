@@ -60,17 +60,30 @@ public class WaypointRenderer extends CoreRenderer {
 			context = waypoint.getForContextSelector();
 		}
 
+		// try to get offset
+		String offset = waypoint.getOffset();
+		if (offset == null) {
+			offset = waypoint.getOffsetFunction();
+		}
+
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
 		writer.write("PrimeFacesExt.cw('Waypoint', '" + waypoint.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",target:'" + ComponentUtils.findTarget(fc, waypoint) + "'");
+
 		if (context != null) {
 			writer.write(",context:'" + context + "'");
 		}
 
-		// TODO
+		if (offset != null) {
+			writer.write(",offset:" + offset);
+		}
+
+		writer.write(",continuous:" + waypoint.isContinuous());
+		writer.write(",onlyOnScroll:" + waypoint.isOnlyOnScroll());
+		writer.write(",triggerOnce:" + waypoint.isTriggerOnce());
 
 		encodeClientBehaviors(fc, waypoint);
 

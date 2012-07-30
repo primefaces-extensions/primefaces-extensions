@@ -1850,7 +1850,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Specifies comma or blank separated list of clientIds of editable components whose inputs have to be cleared while levels get switched. @all is allowed and means all values within master detail have to be cleared. If takes precedence over clientIds in preserveInputs.]]>
+                <![CDATA[Specifies comma or blank separated list of clientIds of editable components whose inputs have to be cleared while levels get switched. @all is allowed and means all values within master detail have to be cleared. It takes precedence over clientIds in preserveInputs.]]>
             </description>
             <name>resetInputs</name>
             <required>false</required>
@@ -3006,7 +3006,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Determines how far the top of the element must be from the top of the browser window to trigger a waypoint. It can be a number, which is taken as a number of pixels or a string representing a percentage of the viewport height. Default is 0 (if no offset or offsetFunction was specified).]]>
+                <![CDATA[Determines how far the top of the element must be from the top of the browser window to trigger a waypoint. It can be a number, which is taken as a number of pixels or a string representing a percentage of the viewport height. It takes precedence over offsetFunction. Default is 0 (if no offset and offsetFunction were specified).]]>
             </description>
             <name>offset</name>
             <required>false</required>
