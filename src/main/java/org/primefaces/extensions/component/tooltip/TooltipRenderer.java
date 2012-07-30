@@ -64,7 +64,7 @@ public class TooltipRenderer extends CoreRenderer {
 		if (target == null) {
 			writer.write(",forTarget:null");
 		} else {
-			writer.write(",forTarget:\"" + target + "\"");
+			writer.write(",forTarget:'" + target + "'");
 		}
 
 		if (!global) {

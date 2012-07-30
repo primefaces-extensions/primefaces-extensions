@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -88,12 +89,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
 			jqTarget = ComponentUtils.escapeJQueryId(targetComponent.getClientId(fc));
 		} else if (blockUI.getTargetSelector() != null) {
-			String targetSelector = blockUI.getTargetSelector();
-			if (targetSelector.startsWith("#")) {
-				jqTarget = ComponentUtils.escapeComponentId(targetSelector);
-			} else {
-				jqTarget = ComponentUtils.escapeText(targetSelector);
-			}
+			jqTarget = blockUI.getTargetSelector();
 		}
 
 		if (jqTarget == null) {

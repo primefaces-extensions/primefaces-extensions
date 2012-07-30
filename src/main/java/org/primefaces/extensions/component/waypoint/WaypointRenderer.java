@@ -58,15 +58,6 @@ public class WaypointRenderer extends CoreRenderer {
 			context = ComponentUtils.escapeJQueryId(forComponent.getClientId(fc));
 		} else {
 			context = waypoint.getForContextSelector();
-			if (context != null) {
-				if (context.startsWith("#")) {
-					context = ComponentUtils.escapeComponentId(context);
-				} else {
-					context = ComponentUtils.escapeText(context);
-				}
-			} else {
-				context = "window";
-			}
 		}
 
 		startScript(writer, clientId);
@@ -74,8 +65,10 @@ public class WaypointRenderer extends CoreRenderer {
 
 		writer.write("PrimeFacesExt.cw('Waypoint', '" + waypoint.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
-		writer.write(",target:\"" + ComponentUtils.findTarget(fc, waypoint) + "\"");
-		writer.write(",context:\"" + context + "\"");
+		writer.write(",target:'" + ComponentUtils.findTarget(fc, waypoint) + "'");
+		if (context != null) {
+			writer.write(",context:'" + context + "'");
+		}
 
 		// TODO
 

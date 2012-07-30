@@ -119,6 +119,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	}
 
 	private static String findTarget(FacesContext context, Attachable attachable, UIComponent component) {
+		// try to handle "for" as target
 		final String forValue = attachable.getFor();
 		if (forValue != null) {
 			final UIComponent forComponent = component.findComponent(forValue);
@@ -129,19 +130,16 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			return escapeJQueryId(forComponent.getClientId(context));
 		}
 
+		// try to handle "forSelector" as target
 		if (attachable instanceof EnhancedAttachable) {
-			final EnhancedAttachable enhancedAttachable = (EnhancedAttachable) attachable;
-			final String forSelector = enhancedAttachable.getForSelector();
+			final String forSelector = ((EnhancedAttachable) attachable).getForSelector();
 
 			if (forSelector != null) {
-				if (forSelector.startsWith("#")) {
-					return escapeComponentId(forSelector);
-				} else {
-					return escapeText(forSelector);
-				}
+				return forSelector;
 			}
 		}
 
+		// take parent as target
 		return escapeJQueryId(component.getParent().getClientId(context));
 	}
 
