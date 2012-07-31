@@ -11,11 +11,19 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
      * @param {object} cfg The widget configuration.
      */
     init:function (cfg) {
-        this.id = cfg.id;
         this.cfg = cfg;
+        this.id = cfg.id;
         this.target = $(this.cfg.target);
 
-        // TODO
+        delete this.cfg.target;
+        var _self = this;
+
+        this.cfg.handler = function (event, direction) {
+            _self.scroll(event, direction);
+        };
+
+        // create waypoint(s)
+        this.target.waypoint('destroy').waypoint(this.cfg);
 
         PrimeFacesExt.removeWidgetScript(this.id);
     },
@@ -38,7 +46,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Registers this waypoint again with all old handlers. This method can be called after .remove().
      */
-    waypoint:function () {
+    register:function () {
         this.target.waypoint(this.cfg);
     },
 
@@ -47,5 +55,18 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
      */
     refresh:function () {
         $.waypoints('refresh');
+    },
+
+    scroll:function (event, direction) {
+        var behavior = this.cfg.behaviors ? this.cfg.behaviors[direction] : null;
+        if (behavior) {
+            var ext = {
+                target:this.target
+            };
+
+            behavior.call(this, event, ext);
+        }
+
+        e.stopPropagation();
     }
 });
