@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.el.ValueExpression;
@@ -207,21 +208,19 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 
 	@Override
 	public void queueEvent(FacesEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-		if (isSelfRequest(context)) {
+		if (isSelfRequest(fc)) {
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-			if ("down".equals(eventName)) {
-				WaypointEvent waypointEvent = new WaypointEvent(this, behaviorEvent.getBehavior(), WaypointEvent.Direction.DOWN);
-				waypointEvent.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(waypointEvent);
-
-				return;
-			} else if ("up".equals(eventName)) {
-				WaypointEvent waypointEvent = new WaypointEvent(this, behaviorEvent.getBehavior(), WaypointEvent.Direction.UP);
+			if ("scroll".equals(eventName)) {
+				String direction = params.get(this.getClientId(fc) + "_direction");
+				WaypointEvent waypointEvent =
+				    new WaypointEvent(this, behaviorEvent.getBehavior(),
+				                      direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(Locale.ENGLISH))
+				                                        : null);
 				waypointEvent.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(waypointEvent);
 

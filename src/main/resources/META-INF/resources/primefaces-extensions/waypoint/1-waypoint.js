@@ -58,9 +58,12 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     },
 
     scroll:function (event, direction) {
-        var behavior = this.cfg.behaviors ? this.cfg.behaviors[direction] : null;
+        var behavior = this.cfg.behaviors ? this.cfg.behaviors["scroll"] : null;
         if (behavior) {
             var ext = {
+                params:[
+                    {name:this.id + '_direction', value:direction}
+                ],
                 target:this.target
             };
 
