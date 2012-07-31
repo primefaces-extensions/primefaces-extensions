@@ -64,6 +64,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
                 params:[
                     {name:this.id + '_direction', value:direction}
                 ],
+                direction:direction,
                 target:this.target
             };
 
