@@ -936,11 +936,11 @@
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.scope>compile</pe.jsf.scope>        
         <pe.jsf.version>2.1.10</pe.jsf.version>
-        <pe.impl.version>0.5.1</pe.impl.version>        
+        <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
         <pe.webapp.filter>development</pe.webapp.filter>
-        <pe.newComponents>;</pe.newComponents>
-        <pe.updatedComponents>;</pe.updatedComponents>
-        <primefaces.core.version>3.3</primefaces.core.version>
+        <pe.newComponents>waypoint;fluidGrid;spotlight</pe.newComponents>
+        <pe.updatedComponents>codeMirror;layout;masterDetail;timeline;tooltip;triStateCheckbox;triStateManyCheckbox</pe.updatedComponents>
+        <primefaces.core.version>3.4-SNAPSHOT</primefaces.core.version>
         <primefaces.theme.version>1.0.6</primefaces.theme.version>    
     </properties>
 </project>
