@@ -17,7 +17,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
 
         delete this.cfg.target;
         var _self = this;
-
+        
         this.cfg.handler = function (event, direction) {
             _self.scroll(event, direction);
         };
@@ -65,12 +65,13 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
                     {name:this.id + '_direction', value:direction}
                 ],
                 direction:direction,
-                target:this.target
+                target:this.target,
+                cfg:this.cfg
             };
 
             behavior.call(this, event, ext);
         }
 
-        e.stopPropagation();
+        event.stopPropagation();
     }
 });

@@ -2934,7 +2934,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Waypoint makes easy to execute a custom logic whenever you scroll to an element.]]></description>
+        <description><![CDATA[Waypoint makes it easy to execute a custom logic whenever you scroll to an element.]]></description>
         <tag-name>waypoint</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Waypoint</component-type>
