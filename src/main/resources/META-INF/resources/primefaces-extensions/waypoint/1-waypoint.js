@@ -17,13 +17,11 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
 
         delete this.cfg.target;
         var _self = this;
-        
-        this.cfg.handler = function (event, direction) {
-            _self.scroll(event, direction);
-        };
 
         // create waypoint(s)
-        this.target.waypoint('destroy').waypoint(this.cfg);
+        this.target.waypoint('destroy').waypoint(function(event, direction) {
+            _self.scroll(event, direction);
+        }, this.cfg);
 
         PrimeFacesExt.removeWidgetScript(this.id);
     },
