@@ -22,9 +22,9 @@ import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
@@ -43,7 +43,7 @@ import org.primefaces.extensions.util.ComponentUtils;
 public class WidgetRenderer {
 
 	private static final Map<String, AdvancedOptionContainer[]> PROPERTY_KEYS_CACHE =
-		new HashMap<String, AdvancedOptionContainer[]>();
+		new ConcurrentHashMap<String, AdvancedOptionContainer[]>();
 
 	public static void renderWidgetScript(final FacesContext context, final String clientId, final ResponseWriter writer,
 			final Widget widget, final boolean hasStyleSheet) throws IOException {
