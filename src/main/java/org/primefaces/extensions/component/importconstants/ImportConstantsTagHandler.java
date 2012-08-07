@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.importconstants;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -126,7 +125,7 @@ public class ImportConstantsTagHandler extends TagHandler {
 	 * @return A {@link Map} with the found constants.
 	 */
 	protected Map<String, Object> loadConstants(final Class<?> clazz) {
-		final Map<String, Object> constants = new HashMap<String, Object>();
+		final Map<String, Object> constants = new ImportConstantsHashMap<String, Object>(clazz);
 
 		// Go through all the fields, and put static ones in a map.
 		final Field[] fields = clazz.getDeclaredFields();
