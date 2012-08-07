@@ -23,6 +23,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -44,7 +45,7 @@ import javax.faces.view.facelets.TagHandler;
  */
 public class ImportConstantsTagHandler extends TagHandler {
 
-	private static final Map<Class<?>, Map<String, Object>> CACHE = new HashMap<Class<?>, Map<String, Object>>();
+	private static final Map<Class<?>, Map<String, Object>> CACHE = new ConcurrentHashMap<Class<?>, Map<String, Object>>();
 
 	private final TagAttribute classNameTagAttribute;
 	private final TagAttribute varTagAttribute;
