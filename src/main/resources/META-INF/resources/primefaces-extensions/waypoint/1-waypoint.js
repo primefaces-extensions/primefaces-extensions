@@ -16,36 +16,41 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         this.target = $(this.cfg.target);
 
         delete this.cfg.target;
-        var _self = this;
-
-        // create waypoint(s)
-        this.target.waypoint('destroy').waypoint(function(event, direction) {
-            _self.scroll(event, direction, $(this));
-        }, this.cfg);
 
         PrimeFacesExt.removeWidgetScript(this.id);
     },
 
     /**
-     * Unbinds all event handlers and unregisters this waypoint.
+     * Unbinds all event handlers and unregisters the waypoint(s).
      */
     destroy:function () {
         this.target.waypoint('destroy');
+        return this;
     },
 
     /**
-     * Unregisters this waypoint and wipes any custom options, but leaves the waypoint event bound.
-     * Calling .waypoint() again in the future would reregister the waypoint and the old handlers would continue to work.
+     * Unregisters the waypoint(s) and wipes any custom options, but leaves the waypoint(s) event bound.
+     * Calling .waypoint() again in the future would reregister the waypoint(s) and the old handlers would continue to work.
      */
     remove:function () {
         this.target.waypoint('remove');
     },
 
     /**
-     * Registers this waypoint again with all old handlers. This method can be called after .remove().
+     * Registers the waypoint(s) again with all old handlers. This method can be called after .remove().
      */
     register:function () {
         this.target.waypoint(this.cfg);
+    },
+
+    /**
+     * Creates the waypoint(s) again with the same handlers as for init. This method can be called after .destory().
+     */
+    create:function () {
+        var _self = this;
+        this.target.waypoint(function (event, direction) {
+            _self.scroll(event, direction, $(this));
+        }, this.cfg);    
     },
 
     /**

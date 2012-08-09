@@ -18,15 +18,14 @@
 
 package org.primefaces.extensions.component.waypoint;
 
-import java.io.IOException;
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.renderkit.CoreRenderer;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
 
 /**
  * WaypointRenderer.
@@ -65,11 +64,13 @@ public class WaypointRenderer extends CoreRenderer {
 		if (offset == null) {
 			offset = waypoint.getOffsetFunction();
 		}
+        
+        final String widget = waypoint.resolveWidgetVar();
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
-		writer.write("PrimeFacesExt.cw('Waypoint', '" + waypoint.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('Waypoint', '" + widget + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",target:'" + ComponentUtils.findTarget(fc, waypoint) + "'");
 
@@ -87,7 +88,9 @@ public class WaypointRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, waypoint);
 
-		writer.write("});});");
+		writer.write("});");
+        writer.write(widget + ".destroy().create();");
+        writer.write("});");
 		endScript(writer);
 	}
 }
