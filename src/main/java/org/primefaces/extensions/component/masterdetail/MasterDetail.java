@@ -160,7 +160,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public boolean isBreadcrumbAboveHeader() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.breadcrumbAboveHeader, false);
+		return (Boolean) getStateHelper().eval(PropertyKeys.breadcrumbAboveHeader, true);
 	}
 
 	public void setBreadcrumbAboveHeader(boolean breadcrumbAboveHeader) {

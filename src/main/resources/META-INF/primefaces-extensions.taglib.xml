@@ -1719,7 +1719,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean flag to allow rendering of breadcrumb above or below header facet. Default is false.]]>
+                <![CDATA[Boolean flag to allow rendering of breadcrumb above or below header facet. Default is true.]]>
             </description>
             <name>breadcrumbAboveHeader</name>
             <required>false</required>
