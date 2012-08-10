@@ -33,6 +33,11 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
      * Calling .waypoint() again in the future would reregister the waypoint(s) and the old handlers would continue to work.
      */
     remove:function () {
+        if (this.isMozilla()) {
+            // mozilla bug https://github.com/imakewebthings/jquery-waypoints/issues/80
+            this.winscrolltop = $(window).scrollTop();
+        }
+        
         this.target.waypoint('remove');
     },
 
@@ -40,6 +45,11 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
      * Registers the waypoint(s) again with all old handlers. This method can be called after .remove().
      */
     register:function () {
+        if (this.isMozilla() && this.winscrolltop) {
+            $(window).scrollTop(this.winscrolltop);
+            delete this.winscrolltop;
+        }
+        
         this.target.waypoint(this.cfg);
     },
 
@@ -68,14 +78,18 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
                     {name:this.id + '_direction', value:direction}
                 ],
                 direction:direction,
-                jqThis:jqThis,
-                target:this.target,
-                cfg:this.cfg
+                jqThis:jqThis
             };
 
             behavior.call(this, event, ext);
         }
 
         event.stopPropagation();
+    },
+    
+    // https://github.com/jquery/jquery-browser
+    isMozilla:function() {
+        var ua = (navigator.userAgent || "").toLowerCase();
+        return ("mozilla" === (ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+))?/.exec(ua) || [])[1]);
     }
 });

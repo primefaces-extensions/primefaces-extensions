@@ -77,7 +77,6 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 		forContext,
 		forContextSelector,
 		offset,
-		offsetFunction,
 		continuous,
 		onlyOnScroll,
 		triggerOnce;
@@ -152,14 +151,6 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 
 	public void setOffset(String offset) {
 		setAttribute(PropertyKeys.offset, offset);
-	}
-
-	public String getOffsetFunction() {
-		return (String) getStateHelper().eval(PropertyKeys.offsetFunction, null);
-	}
-
-	public void setOffsetFunction(String offsetFunction) {
-		setAttribute(PropertyKeys.offsetFunction, offsetFunction);
 	}
 
 	public boolean isContinuous() {

@@ -18,14 +18,15 @@
 
 package org.primefaces.extensions.component.waypoint;
 
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import java.io.IOException;
+
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.renderkit.CoreRenderer;
 
 /**
  * WaypointRenderer.
@@ -59,13 +60,7 @@ public class WaypointRenderer extends CoreRenderer {
 			context = waypoint.getForContextSelector();
 		}
 
-		// try to get offset
-		String offset = waypoint.getOffset();
-		if (offset == null) {
-			offset = waypoint.getOffsetFunction();
-		}
-        
-        final String widget = waypoint.resolveWidgetVar();
+		final String widget = waypoint.resolveWidgetVar();
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
@@ -78,8 +73,8 @@ public class WaypointRenderer extends CoreRenderer {
 			writer.write(",context:'" + context + "'");
 		}
 
-		if (offset != null) {
-			writer.write(",offset:" + offset);
+		if (waypoint.getOffset() != null) {
+			writer.write(",offset:" + waypoint.getOffset());
 		}
 
 		writer.write(",continuous:" + waypoint.isContinuous());
@@ -89,8 +84,8 @@ public class WaypointRenderer extends CoreRenderer {
 		encodeClientBehaviors(fc, waypoint);
 
 		writer.write("});");
-        writer.write(widget + ".destroy().create();");
-        writer.write("});");
+		writer.write(widget + ".destroy().create();");
+		writer.write("});");
 		endScript(writer);
 	}
 }
