@@ -57,4 +57,8 @@ public class SelectLevelEvent extends FacesEvent {
 	public int getNewLevel() {
 		return newLevel;
 	}
+
+	public boolean isEntered(int level) {
+		return (newLevel == level && currentLevel != level);
+	}
 }
