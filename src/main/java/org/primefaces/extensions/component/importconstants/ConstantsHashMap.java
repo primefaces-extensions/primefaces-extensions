@@ -33,7 +33,7 @@ import javax.faces.FacesException;
  * @param <TV> The value type.
  */
 @SuppressWarnings("serial")
-public class ImportConstantsHashMap<TK, TV> extends HashMap<TK, TV> {
+public class ConstantsHashMap<TK, TV> extends HashMap<TK, TV> {
 
 	private Class<?> clazz;
 
@@ -42,7 +42,7 @@ public class ImportConstantsHashMap<TK, TV> extends HashMap<TK, TV> {
 	 *
 	 * @param clazz The class.
 	 */
-	public ImportConstantsHashMap(final Class<?> clazz) {
+	public ConstantsHashMap(final Class<?> clazz) {
 		this.clazz = clazz;
 	}
 

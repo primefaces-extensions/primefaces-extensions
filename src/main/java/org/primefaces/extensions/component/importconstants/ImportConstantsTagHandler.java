@@ -35,6 +35,8 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
+import org.primefaces.extensions.util.ClassUtils;
+
 /**
  * {@link TagHandler} for the <code>ImportConstants</code> component.
  *
@@ -44,7 +46,8 @@ import javax.faces.view.facelets.TagHandler;
  */
 public class ImportConstantsTagHandler extends TagHandler {
 
-	private static final Map<Class<?>, Map<String, Object>> CACHE = new ConcurrentHashMap<Class<?>, Map<String, Object>>();
+	private static final Map<ClassLoader, Map<Class<?>, Map<String, Object>>> CACHE =
+			new ConcurrentHashMap<ClassLoader, Map<Class<?>, Map<String, Object>>>();
 
 	private final TagAttribute classNameTagAttribute;
 	private final TagAttribute varTagAttribute;
@@ -66,16 +69,7 @@ public class ImportConstantsTagHandler extends TagHandler {
 	 */
 	public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
 		final Class<?> clazz = getClassFromAttribute(classNameTagAttribute, ctx);
-
-		// Get constants
-		Map<String, Object> constants;
-
-		if (CACHE.containsKey(clazz)) {
-			constants = CACHE.get(clazz);
-		} else {
-			constants = loadConstants(clazz);
-			CACHE.put(clazz, constants);
-		}
+		final Map<String, Object> constants = getConstants(clazz);
 
 		// Create alias/var expression
 		String var;
@@ -119,13 +113,40 @@ public class ImportConstantsTagHandler extends TagHandler {
 	}
 
 	/**
-	 * Gets all constants of the given {@link Class}.
+	 * Get all constants of the given {@link Class}.
+	 *
+	 * @param clazz The class which includes the constants.
+	 * @return A {@link Map} with the constants.
+	 */
+	protected Map<String, Object> getConstants(final Class<?> clazz) {
+		final ClassLoader classLoader = ClassUtils.getClassLoader(clazz);
+
+		if (!CACHE.containsKey(classLoader)) {
+			CACHE.put(classLoader, new ConcurrentHashMap<Class<?>, Map<String,Object>>());
+		}
+
+		final Map<Class<?>, Map<String, Object>> cache = CACHE.get(classLoader);
+
+		final Map<String, Object> constants;
+
+		if (cache.containsKey(clazz)) {
+			constants = cache.get(clazz);
+		} else {
+			constants = collectConstants(clazz);
+			cache.put(clazz, constants);
+		}
+
+		return constants;
+	}
+
+	/**
+	 * Collects all constants of the given {@link Class}.
 	 *
 	 * @param clazz The class which includes the constants.
 	 * @return A {@link Map} with the found constants.
 	 */
-	protected Map<String, Object> loadConstants(final Class<?> clazz) {
-		final Map<String, Object> constants = new ImportConstantsHashMap<String, Object>(clazz);
+	protected Map<String, Object> collectConstants(final Class<?> clazz) {
+		final Map<String, Object> constants = new ConstantsHashMap<String, Object>(clazz);
 
 		// Go through all the fields, and put static ones in a map.
 		final Field[] fields = clazz.getDeclaredFields();
