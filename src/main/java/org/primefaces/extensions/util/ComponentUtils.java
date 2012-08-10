@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,11 +58,18 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	private static final Logger LOG = Logger.getLogger(ComponentUtils.class.getName());
 
+	/**
+	 * Prevent instantiation.
+	 */
+	private ComponentUtils() {
+		// prevent instantiation
+	}
+
 	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
 
-	public static List<UIComponent> findComponents(FacesContext context, UIComponent source, String list) {
+	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
 		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
 
 		final String[] ids = list.split("[\\s,]+");
@@ -98,7 +105,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return foundComponents;
 	}
 
-	public static String findTarget(FacesContext context, Attachable attachable) {
+	public static String findTarget(final FacesContext context, final Attachable attachable) {
 		if (!(attachable instanceof UIComponent)) {
 			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
@@ -106,7 +113,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return findTarget(context, attachable, (UIComponent) attachable);
 	}
 
-	public static String findTarget(FacesContext context, Attachable attachable, ClientBehaviorContext cbContext) {
+	public static String findTarget(final FacesContext context, final Attachable attachable, final ClientBehaviorContext cbContext) {
 		if (!(attachable instanceof ClientBehavior)) {
 			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
@@ -118,7 +125,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return findTarget(context, attachable, cbContext.getComponent());
 	}
 
-	private static String findTarget(FacesContext context, Attachable attachable, UIComponent component) {
+	private static String findTarget(final FacesContext context, final Attachable attachable, final UIComponent component) {
 		// try to handle "for" as target
 		final String forValue = attachable.getFor();
 		if (forValue != null) {
@@ -143,11 +150,11 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return escapeJQueryId(component.getParent().getClientId(context));
 	}
 
-	public static void addComponentResource(FacesContext context, String name) {
+	public static void addComponentResource(final FacesContext context, final String name) {
 		addComponentResource(context, name, Constants.LIBRARY, "head");
 	}
 
-	public static void addComponentResource(FacesContext context, String name, String library, String target) {
+	public static void addComponentResource(final FacesContext context, final String name, final String library, final String target) {
 		final Application application = context.getApplication();
 
 		final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
@@ -214,7 +221,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 				//Reference: http://www.unicode.org/versions/Unicode5.1.0/
 				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
-				    || (ch >= '\u2000' && ch <= '\u20FF')) {
+						|| (ch >= '\u2000' && ch <= '\u20FF')) {
 					String ss = Integer.toHexString(ch);
 					sb.append("\\u");
 					for (int k = 0; k < 4 - ss.length(); k++) {
@@ -231,7 +238,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return sb.toString();
 	}
 
-	public static Object getConvertedSubmittedValue(FacesContext fc, EditableValueHolder evh) {
+	public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
 		Object submittedValue = evh.getSubmittedValue();
 		if (submittedValue == null) {
 			return submittedValue;
@@ -257,7 +264,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return submittedValue;
 	}
 
-	public static Renderer getRenderer(FacesContext fc, UIComponent component) {
+	public static Renderer getRenderer(final FacesContext fc, final UIComponent component) {
 		String rendererType = component.getRendererType();
 		if (rendererType != null) {
 			return fc.getRenderKit().getRenderer(component.getFamily(), rendererType);
@@ -266,7 +273,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return null;
 	}
 
-	public static Converter getConverter(FacesContext fc, UIComponent component) {
+	public static Converter getConverter(final FacesContext fc, final UIComponent component) {
 		if (!(component instanceof EditableValueHolder)) {
 			return null;
 		}
@@ -290,7 +297,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return fc.getApplication().createConverter(converterType);
 	}
 
-	public static boolean isAjaxifiedComponent(UIComponent component) {
+	public static boolean isAjaxifiedComponent(final UIComponent component) {
 		// check for ajax source
 		if (component instanceof AjaxSource) {
 			// workaround, currently there isn't other way in PrimeFaces
@@ -323,7 +330,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				for (List<ClientBehavior> listBehaviors : behaviors) {
 					for (ClientBehavior clientBehavior : listBehaviors) {
 						if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
-						    || clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+								|| clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
 							return true;
 						}
 					}
