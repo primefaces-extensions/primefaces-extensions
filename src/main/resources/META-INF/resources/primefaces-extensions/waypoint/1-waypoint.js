@@ -59,7 +59,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     create:function () {
         var _self = this;
         this.target.waypoint(function (event, direction) {
-            _self.scroll(event, direction, $(this));
+            _self.scroll(event, direction, this);
         }, this.cfg);    
     },
 
@@ -70,15 +70,15 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         $.waypoints('refresh');
     },
 
-    scroll:function (event, direction, jqThis) {
+    scroll:function (event, dir, way) {
         var behavior = this.cfg.behaviors ? this.cfg.behaviors["scroll"] : null;
         if (behavior) {
             var ext = {
                 params:[
-                    {name:this.id + '_direction', value:direction}
+                    {name:this.id + '_direction', value:dir}
                 ],
-                direction:direction,
-                jqThis:jqThis
+                direction:dir,
+                waypoint:way
             };
 
             behavior.call(this, event, ext);
