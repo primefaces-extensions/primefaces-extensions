@@ -29,8 +29,8 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
-     * Unregisters the waypoint(s) and wipes any custom options, but leaves the waypoint(s) event bound.
-     * Calling .waypoint() again in the future would reregister the waypoint(s) and the old handlers would continue to work.
+     * Unregisters the waypoint(s) and wipes any custom options, but leaves the waypoint's event bound.
+     * Calling .register() again in the future would reregister the waypoint(s) and the old handlers would continue to work.
      */
     remove:function () {
         if (this.isMozilla()) {
