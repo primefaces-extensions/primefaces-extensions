@@ -61,7 +61,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.WaypointRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("scroll"));
+	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("reached"));
 
 	/**
 	 * PropertyKeys
@@ -214,7 +214,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 		if (isSelfRequest(fc)) {
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-			if ("scroll".equals(eventName)) {
+			if ("reached".equals(eventName)) {
 				String direction = params.get(this.getClientId(fc) + "_direction");
 				WaypointEvent waypointEvent =
 				    new WaypointEvent(this, behaviorEvent.getBehavior(),
