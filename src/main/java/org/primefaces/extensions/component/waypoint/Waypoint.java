@@ -216,10 +216,14 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 
 			if ("reached".equals(eventName)) {
 				String direction = params.get(this.getClientId(fc) + "_direction");
+				String waypointId = params.get(this.getClientId(fc) + "_waypointId");
+
 				WaypointEvent waypointEvent =
 				    new WaypointEvent(this, behaviorEvent.getBehavior(),
-				                      direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(Locale.ENGLISH))
-				                                        : null);
+				                      (direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(
+				                                                                               Locale.ENGLISH))
+				                                         : null),
+				                      waypointId);
 				waypointEvent.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(waypointEvent);
 

@@ -33,13 +33,20 @@ public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 
 	private Direction direction;
 
-	public WaypointEvent(UIComponent component, Behavior behavior, Direction direction) {
+	private String waypointId; // client Id of the current waypoint
+
+	public WaypointEvent(UIComponent component, Behavior behavior, Direction direction, String waypointId) {
 		super(component, behavior);
 		this.direction = direction;
+		this.waypointId = waypointId;
 	}
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	public String getWaypointId() {
+		return waypointId;
 	}
 
 	/**

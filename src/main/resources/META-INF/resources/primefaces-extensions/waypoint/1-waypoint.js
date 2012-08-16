@@ -75,7 +75,8 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         if (behavior) {
             var ext = {
                 params:[
-                    {name:this.id + '_direction', value:dir}
+                    {name:this.id + '_direction', value:dir},
+                    {name:this.id + '_waypointId', value:$(way).attr('id')}
                 ],
                 direction:dir,
                 waypoint:way
