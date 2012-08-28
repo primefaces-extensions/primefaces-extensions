@@ -185,53 +185,53 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		for (int i = 0; i < text.length(); i++) {
 			char ch = text.charAt(i);
 			switch (ch) {
-			case '"':
-				sb.append("\\\"");
-				break;
+				case '"':
+					sb.append("\\\"");
+					break;
 
-			case '\\':
-				sb.append("\\\\");
-				break;
+				case '\\':
+					sb.append("\\\\");
+					break;
 
-			case '\b':
-				sb.append("\\b");
-				break;
+				case '\b':
+					sb.append("\\b");
+					break;
 
-			case '\f':
-				sb.append("\\f");
-				break;
+				case '\f':
+					sb.append("\\f");
+					break;
 
-			case '\n':
-				sb.append("\\n");
-				break;
+				case '\n':
+					sb.append("\\n");
+					break;
 
-			case '\r':
-				sb.append("\\r");
-				break;
+				case '\r':
+					sb.append("\\r");
+					break;
 
-			case '\t':
-				sb.append("\\t");
-				break;
+				case '\t':
+					sb.append("\\t");
+					break;
 
-			case '/':
-				sb.append("\\/");
-				break;
+				case '/':
+					sb.append("\\/");
+					break;
 
-			default:
+				default:
 
-				//Reference: http://www.unicode.org/versions/Unicode5.1.0/
-				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
-						|| (ch >= '\u2000' && ch <= '\u20FF')) {
-					String ss = Integer.toHexString(ch);
-					sb.append("\\u");
-					for (int k = 0; k < 4 - ss.length(); k++) {
-						sb.append('0');
+					//Reference: http://www.unicode.org/versions/Unicode5.1.0/
+					if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
+							|| (ch >= '\u2000' && ch <= '\u20FF')) {
+						String ss = Integer.toHexString(ch);
+						sb.append("\\u");
+						for (int k = 0; k < 4 - ss.length(); k++) {
+							sb.append('0');
+						}
+
+						sb.append(ss.toUpperCase());
+					} else {
+						sb.append(ch);
 					}
-
-					sb.append(ss.toUpperCase());
-				} else {
-					sb.append(ch);
-				}
 			}
 		}
 
@@ -339,5 +339,52 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		}
 
 		return false;
+	}
+
+	/**
+	 * NOTE: COPIED FROM TOBAGO.
+	 * 
+	 * Puts two backslashes before #;&,.+*~':"!^$[]()=>|/ to escape them. Two
+	 * are needed, because of JavaScript string literals. Puts three backslashes
+	 * before a \ itself, to escape it.
+	 */
+	public static String escapeSelector(final String value) {
+		final StringBuilder builder = new StringBuilder();
+
+		for (char c : value.toCharArray()) {
+			switch (c) {
+				case '\\':
+					builder.append("\\\\\\\\");
+					break;
+				case '#':
+				case ';':
+				case '&':
+				case ',':
+				case '.':
+				case '+':
+				case '*':
+				case '~':
+				case '\'':
+				case ':':
+				case '"':
+				case '!':
+				case '^':
+				case '$':
+				case '[':
+				case ']':
+				case '(':
+				case ')':
+				case '=':
+				case '>':
+				case '|':
+				case '/':
+					builder.append("\\\\");
+				default:
+					builder.append(c);
+					break;
+			}
+		}
+
+		return builder.toString();
 	}
 }
