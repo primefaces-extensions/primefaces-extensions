@@ -69,7 +69,7 @@ public class InputNumberRenderer extends InputRenderer {
 	public void decode(final FacesContext context, final UIComponent component) {
 		InputNumber inputNumber = (InputNumber) component;
 
-		if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
+		if (inputNumber.isReadonly()) {
 			return;
 		}
 
@@ -94,7 +94,7 @@ public class InputNumberRenderer extends InputRenderer {
 	protected void encodeMarkup(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);
-		boolean disabled = inputNumber.isDisabled();
+		
 
 		String styleClass = inputNumber.getStyleClass();
 		styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
@@ -102,13 +102,13 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.startElement("div", inputNumber);
 		writer.writeAttribute("class", styleClass, "styleClass");
 
-		encodeInput(context, inputNumber, clientId, disabled);
-		encodeOutput(context, inputNumber, clientId, disabled);
+		encodeInput(context, inputNumber, clientId);
+		encodeOutput(context, inputNumber, clientId);
 
 		writer.endElement("div");
 	}
 
-	protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId, final boolean disabled) throws IOException {
+	protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_input";
 
@@ -118,11 +118,7 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.startElement("input", null);
 		writer.writeAttribute("id", inputId, "id");
 		writer.writeAttribute("name", inputId, null);
-
-		if (disabled) {
-			writer.writeAttribute("disabled", "disabled", null);
-		}
-
+		
 		if (inputNumber.getOnchange() != null) {
 			writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
 		}
@@ -131,15 +127,13 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId, final boolean disabled) throws IOException {
+	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
 
 		String defaultClass = InputText.STYLE_CLASS;
 		defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
-		defaultClass = inputNumber.isDisabled() ? defaultClass + " ui-state-disabled" : defaultClass;
-
-
+		
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
@@ -148,9 +142,7 @@ public class InputNumberRenderer extends InputRenderer {
 
 		renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS);
 
-		if (inputNumber.isDisabled()) {
-			writer.writeAttribute("disabled", "disabled", "disabled");
-		}
+		
 		if (inputNumber.isReadonly()) {
 			writer.writeAttribute("readonly", "readonly", "readonly");
 		}
@@ -165,7 +157,7 @@ public class InputNumberRenderer extends InputRenderer {
 
 	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		String clientId = inputNumber.getClientId(context);
+		String clientId = inputNumber.getClientId(context);               
 		startScript(writer, clientId);
 		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
 		if (valueToRender == null) {
@@ -175,6 +167,7 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('InputNumber','" + inputNumber.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
+                writer.write(",disabled:" + inputNumber.isDisabled());
 		writer.write(",valueToRender:'" + formatForPlugin(valueToRender) + "'");
 
 		String metaOptions = getOptions(inputNumber);
