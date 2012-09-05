@@ -61,7 +61,7 @@ public class InputNumberRenderer extends InputRenderer {
 			if (submittedValueString != null && !submittedValueString.isEmpty()) {
 				return Double.valueOf(submittedValueString);
 			}
-			return new Double(0);
+			return null;
 		}
 	}
 
@@ -74,8 +74,8 @@ public class InputNumberRenderer extends InputRenderer {
 		}
 
 		decodeBehaviors(context, inputNumber);
-
-		String inputId = inputNumber.getClientId(context) + "_input";
+		
+		String inputId = inputNumber.getClientId(context) + "_hinput";
 		String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
 		if (submittedValue != null) {
@@ -99,44 +99,47 @@ public class InputNumberRenderer extends InputRenderer {
 		String styleClass = inputNumber.getStyleClass();
 		styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
 
-		writer.startElement("div", inputNumber);
+		
+                writer.startElement("span", null);
+		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", styleClass, "styleClass");
 
-		encodeInput(context, inputNumber, clientId);
 		encodeOutput(context, inputNumber, clientId);
-
-		writer.endElement("div");
+                encodeInput(context, inputNumber, clientId);
+		
+		writer.endElement("span");
 	}
 
 	protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		String inputId = clientId + "_input";
+		String inputId = clientId + "_hinput";
 
-		writer.startElement("div", inputNumber);
-		writer.writeAttribute("class", InputNumber.INPUTNUMBER_INPUT_WRAPPER_CLASS, null);
-
+		
 		writer.startElement("input", null);
-		writer.writeAttribute("id", inputId, "id");
+		writer.writeAttribute("id", inputId, null);
 		writer.writeAttribute("name", inputId, null);
+                writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("autocomplete", "off", null);
 		
 		if (inputNumber.getOnchange() != null) {
 			writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
 		}
 
 		writer.endElement("input");
-		writer.endElement("div");
+		
 	}
 
 	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
-
+                String inputId = clientId + "_input";
+                
 		String defaultClass = InputText.STYLE_CLASS;
 		defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
 		
 		writer.startElement("input", null);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("name", clientId, null);
+                writer.writeAttribute("id", inputId, null);
+                writer.writeAttribute("name", inputId, null);		
 		writer.writeAttribute("type", "text", null);
 
 
@@ -190,6 +193,7 @@ public class InputNumberRenderer extends InputRenderer {
 		String maxValue = inputNumber.getMaxValue();
 		String roundMethod = inputNumber.getRoundMethod();
 		String decimalPlaces = inputNumber.getDecimalPlaces();
+                String emptyValue = inputNumber.getEmptyValue();
 
 		String options = "";
 		options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
@@ -203,6 +207,7 @@ public class InputNumberRenderer extends InputRenderer {
 		options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
 		options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
 		options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
+                options += "wEmpty: '" + emptyValue + "',";
 
 
 		//if all options are empty return empty
@@ -221,9 +226,8 @@ public class InputNumberRenderer extends InputRenderer {
 
 	private String formatForPlugin(final String valueToRender) {
 
-		if (valueToRender == null || valueToRender.isEmpty()) {
-			LOGGER.warning("The value is null or empty. Default value 0.0 will be used.");
-			return "0.0";
+		if (valueToRender == null || valueToRender.isEmpty()) {			
+			return "";
 		} else {
 
 			try {

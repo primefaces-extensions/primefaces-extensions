@@ -20,14 +20,12 @@ package org.primefaces.extensions.component.inputnumber;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.component.api.Widget;
 
 /**
@@ -51,7 +49,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputNumberRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public final static String INPUTNUMBER_INPUT_WRAPPER_CLASS = "ui-helper-hidden";
+	
 	public final static String INPUTNUMBER_CLASS = "ui-inputNum ui-widget";
 
 	/**
@@ -72,7 +70,8 @@ public class InputNumber extends HtmlInputText implements Widget {
 		minValue,
 		maxValue,
 		roundMethod,
-		decimalPlaces;
+		decimalPlaces,
+                emptyValue;
 		String toString;
 
 		PropertyKeys(final String toString) {
@@ -167,6 +166,14 @@ public class InputNumber extends HtmlInputText implements Widget {
 
 	public void setDecimalPlaces(final String decimalPlaces) {
 		setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
+	}
+        
+        public String getEmptyValue() {
+		return (String) getStateHelper().eval(PropertyKeys.emptyValue, "empty");
+	}
+
+	public void setEmptyValue(final String emptyValue) {
+		setAttribute(PropertyKeys.emptyValue, emptyValue);
 	}
 
 	public String resolveWidgetVar() {

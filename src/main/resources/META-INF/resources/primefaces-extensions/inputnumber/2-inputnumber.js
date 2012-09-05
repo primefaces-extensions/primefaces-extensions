@@ -12,39 +12,42 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	init : function(cfg) {
 		this._super(cfg);
-		this.inputInternal = $(this.jqId + '_input');
-		this.inputExternal = $(this.jqId);
+		this.inputInternal = $(this.jqId + '_hinput');
+		this.inputExternal = $(this.jqId + '_input');
 		this.plugOptArray =   cfg.pluginOptions;
 		this.valueToRender =  cfg.valueToRender;
                 this.disabled = cfg.disabled;      
                 
-		var _self = this;
+		var _self = this;             
 
 		//bind events if not disabled
 		if (this.disabled) {
                     this.inputExternal.attr("disabled", "disabled");
                     this.inputExternal.addClass("ui-state-disabled");
                     this.inputInternal.attr("disabled", "disabled");
-                }
+                }                
 
-		//copy to hidden input the cleaned value
+                //copy to hidden input the cleaned value
 		this.inputExternal.change(function() {
-                    cleanVal = _self.inputExternal.autoNumericGet();
+                    cleanVal = _self.inputExternal.autoNumeric('get');                  
                     _self.inputInternal.attr('value', cleanVal);
 		})
 
 		//Client Behaviors
 		if (this.cfg.behaviors) {
-			PrimeFaces.attachBehaviors(this.inputExternal, this.cfg.behaviors);
+                    PrimeFaces.attachBehaviors(this.inputExternal, this.cfg.behaviors);
 		}
-		this.inputExternal.autoNumeric(this.plugOptArray);
-	
-		//set the value to the external input the plugin will format it. 
-		this.inputExternal.autoNumericSet(this.valueToRender);
-		//then copie the value to the internal input
-		cleanVal = _self.inputExternal.autoNumericGet();
-		_self.inputInternal.attr('value', cleanVal);
-		
+                
+		this.inputExternal.autoNumeric('init',this.plugOptArray);
+                       
+                if(this.valueToRender!=""){
+                      //set the value to the external input the plugin will format it.                 
+                    this.inputExternal.autoNumeric('set',this.valueToRender);                     
+                    //then copie the value to the internal input
+                    cleanVal = _self.inputExternal.autoNumeric('get');              
+                    _self.inputInternal.attr('value', cleanVal);
+                }
+                
 	},
         
 	enable : function() {

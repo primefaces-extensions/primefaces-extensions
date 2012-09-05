@@ -2846,6 +2846,13 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Controls empty input display behavior, options are empty, zero, sign (default empty)]]>
+            </description>
+            <name>emptyValue</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Util tag to import constants.]]>
