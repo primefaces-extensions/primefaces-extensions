@@ -13,6 +13,7 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
 		this.id = cfg.id;
 		this.blocked = cfg.blocked;
+		this.content = $(PrimeFaces.escapeClientId(this.id));
 
 		PrimeFacesExt.widget.BlockPanel.cache = PrimeFacesExt.widget.BlockPanel.cache || {};
 
@@ -29,26 +30,14 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 			})();
 		}
 
-		////////////////////////
-		// FOCUS LOST bindings ...
-		this.getFocusArea = function () {
-			var area = window['PrimeFacesExt.widget.BlockPanel.FocusArea:' + this.id];
-			if (!area) {
-				area = new PrimeFacesExt.widget.BlockPanel.FocusArea(this.id);
-				window['PrimeFacesExt.widget.BlockPanel.FocusArea:' + this.id] = area;
-			}
-			return (this.getFocusArea = function () {
-				return area
-			})();
-		}
-
 		this.block = function () {
 			this.blocked = true;
 			// Show MASK
 			this.getMask().show();
 
 			// focus area ...
-			this.getFocusArea().activate();
+			//this.getFocusArea().activate();
+			this.enableModality();
 		}
 		this.unblock = function () {
 			this.blocked = false;
@@ -56,7 +45,8 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 			this.getMask().hide();
 
 			// focus area ...
-			this.getFocusArea().deactivate()
+//			this.getFocusArea().deactivate()
+			this.disableModality();
 		}
 
 		if (this.blocked) {
@@ -69,6 +59,40 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 		PrimeFacesExt.removeWidgetScript(this.id);
 	},
 
+	enableModality: function() {
+
+		//disable tabbing out of modal dialog and stop events from targets outside of dialog
+		this.disableModality();
+
+		this.content.bind('keydown.lightspot', function(event) {
+			if(event.keyCode !== $.ui.keyCode.TAB) {
+				return;
+			}
+
+			var tabbables = $(':tabbable', this),
+				first = tabbables.filter(':first'),
+				last  = tabbables.filter(':last');
+
+			if (event.target === last[0] && !event.shiftKey) {
+				first.focus(1);
+				return false;
+			} else if (event.target === first[0] && event.shiftKey) {
+				last.focus(1);
+				return false;
+			}
+		});
+
+		// if focus is out of panel => set focus ...
+		var focused = $(':focus', this.content);
+		if (!focused || !focused.length)
+			$(':tabbable', this.content).filter(':first').focus(1);
+
+	},
+
+	disableModality: function(){
+		this.content.unbind('.lightspot');
+	},
+
 	block:function () {
 		this.block();
 	},
@@ -77,65 +101,6 @@ PrimeFacesExt.widget.BlockPanel = PrimeFaces.widget.BaseWidget.extend({
 		this.unblock();
 	}
 });
-
-/**
- * @author Pavol Slany
- */
-PrimeFacesExt.widget.BlockPanel.FocusArea = function (elementId) {
-	var elPanel = $(PrimeFaces.escapeClientId(elementId));
-
-	// If panel has not focusable elements => create hidden focusable element
-	// Add hidden focusable HTML element
-	if (!$(PrimeFaces.escapeClientId(elementId) + ' :focusable').length)
-		elPanel.append($('<a href="" style="width:0px;height:0px;position:absolute;"></a>'));
-
-	var focusFirstElement = function () {
-		$($(PrimeFaces.escapeClientId(elementId) + ' :focusable')[0]).focus();
-		isIn = 0;
-	}
-
-	var activate = false;
-
-	var isIn = 0;
-	var focusOutTimeout = null;
-	var focusOutTimeoutHandler = function () {
-		if (isIn < 0 && activate) {
-			focusFirstElement();
-		}
-	};
-	var focusin = function () {
-		isIn = isIn + 1;
-
-		if (focusOutTimeout != null) clearTimeout(focusOutTimeout);
-		focusOutTimeout = setTimeout(focusOutTimeoutHandler, 20);
-	};
-	var focusout = function () {
-		isIn = isIn - 1;
-
-		if (focusOutTimeout != null) clearTimeout(focusOutTimeout);
-		focusOutTimeout = setTimeout(focusOutTimeoutHandler, 20);
-	};
-
-
-	return {
-		activate:function () {
-			if (!activate) {
-				elPanel.bind('focusin', focusin);
-				elPanel.bind('focusout', focusout);
-
-				focusFirstElement();
-			}
-			activate = true;
-		},
-		deactivate:function () {
-			if (activate) {
-				elPanel.unbind('focusin', focusin);
-				elPanel.unbind('focusout', focusout);
-			}
-			activate = false;
-		}
-	}
-};
 
 /**
  * @author Pavol Slany
@@ -162,7 +127,7 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function (elementId) {
 				maskElement = $('<div id="' + idEl + '" />');
 				maskElement.css({
 //					position: 'fixed',
-					position:'absolute',
+					position: !$.browser.webkit ? 'fixed' : 'absolute',
 					top:0,
 					left:0,
 					display:'none',
@@ -171,7 +136,15 @@ PrimeFacesExt.widget.BlockPanel.MaskAround = function (elementId) {
 				});
 				maskElement.append($('<div class="ui-widget-overlay" style="position:absolute;"></div>').css('opacity', 1));
 				$('body').append(maskElement);
+
+				maskElement.click(function() {
+					var content = $(PrimeFaces.escapeClientId(elementId));
+					var tabbables = $(':tabbable', content);
+					tabbables.filter(':first').focus(1);
+				});
 			}
+
+
 			return maskElement;
 		}
 		var isMaskVisible = function () {
