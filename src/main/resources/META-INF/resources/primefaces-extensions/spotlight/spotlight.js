@@ -132,7 +132,8 @@ PrimeFacesExt.widget.Spotlight.MaskAround = function (elementId) {
 					left:0,
 					display:'none',
 					zIndex:zIndex,
-					overflow:'hidden'
+					overflow:'hidden',
+					border: 'none'
 				});
 				maskElement.append($('<div class="ui-widget-overlay" style="position:absolute;"></div>').css('opacity', 1));
 				$('body').append(maskElement);
