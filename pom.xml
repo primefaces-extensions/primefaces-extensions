@@ -183,7 +183,7 @@
                             <includes>
                                 <include>core/core.js</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
-                                <include>blockpanel/blockpanel.js</include>
+                                <include>spotlight/spotlight.js</include>
                                 <include>blockui/*.js</include>                                
                                 <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>

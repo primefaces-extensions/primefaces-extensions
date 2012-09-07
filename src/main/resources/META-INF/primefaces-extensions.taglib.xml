@@ -1947,13 +1947,21 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[blockPanel can locks UI.]]></description>
+        <description><![CDATA[Deprecated tag name, use spotlight name!]]></description>
         <tag-name>blockPanel</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.BlockPanel</component-type>
-            <renderer-type>org.primefaces.extensions.component.BlockPanelRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.Spotlight</component-type>
+            <renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
         </component>
-        <attribute>
+	</tag>
+	<tag>
+		<description><![CDATA[spotlight can locks UI.]]></description>
+		<tag-name>spotlight</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.Spotlight</component-type>
+			<renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
+		</component>
+		<attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
             </description>
             <name>id</name>

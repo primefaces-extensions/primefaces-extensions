@@ -95,8 +95,8 @@
         <component-class>org.primefaces.extensions.component.keyfilter.KeyFilter</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.BlockPanel</component-type>
-        <component-class>org.primefaces.extensions.component.blockpanel.BlockPanel</component-class>
+        <component-type>org.primefaces.extensions.component.Spotlight</component-type>
+        <component-class>org.primefaces.extensions.component.spotlight.Spotlight</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.BlockUI</component-type>
@@ -198,8 +198,8 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.BlockPanelRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.blockpanel.BlockPanelRenderer</renderer-class>
+            <renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.spotlight.SpotlightRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

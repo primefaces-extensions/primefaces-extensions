@@ -16,10 +16,9 @@
  * $Id$
  */
 
-package org.primefaces.extensions.component.blockpanel;
+package org.primefaces.extensions.component.spotlight;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.primefaces.component.api.Widget;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
@@ -27,11 +26,11 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.component.api.Widget;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * <code>BlockPanel</code> component.
+ * <code>Spotlight</code> component.
  *
  * @author  Pavol Slany / last modified by $Author$
  * @version $Revision$
@@ -44,11 +43,11 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class BlockPanel extends UIComponentBase implements Widget {
+public class Spotlight extends UIComponentBase implements Widget {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.BlockPanel";
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Spotlight";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.BlockPanelRenderer";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SpotlightRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
@@ -81,7 +80,7 @@ public class BlockPanel extends UIComponentBase implements Widget {
 		}
 	}
 
-	public BlockPanel() {
+	public Spotlight() {
 		setRendererType(DEFAULT_RENDERER);
 	}
 
