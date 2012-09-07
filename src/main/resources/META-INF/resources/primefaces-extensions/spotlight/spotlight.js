@@ -185,6 +185,16 @@ PrimeFacesExt.widget.Spotlight.MaskAround = function (elementId) {
 
 		return {
 			updatePosition:function (x0, y0, x1, y1) {
+				// X,Y correction
+				if (getMaskElement().css('position')=='fixed') {
+					var xx = $(window).scrollLeft();
+					var yy = $(window).scrollTop();
+					x0 -= xx;
+					x1 -= xx;
+					y0 -= yy;
+					y1 -= yy;
+				}
+
 				$('<div class="ui-widget-overlay"></div>')
 				var el = getMaskElement();
 				el.css({
