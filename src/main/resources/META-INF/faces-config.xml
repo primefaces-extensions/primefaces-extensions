@@ -248,9 +248,9 @@
         </client-behavior-renderer>
     </render-kit>
 
-    <factory>
-        <exception-handler-factory>org.primefaces.extensions.component.ajaxerrorhandler.AjaxExceptionHandlerFactory</exception-handler-factory>
-    </factory>
+    <!--<factory>-->
+        <!--<exception-handler-factory>org.primefaces.extensions.component.ajaxerrorhandler.AjaxExceptionHandlerFactory</exception-handler-factory>-->
+    <!--</factory>-->
 
 
 </faces-config>
