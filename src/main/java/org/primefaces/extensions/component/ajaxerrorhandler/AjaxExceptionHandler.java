@@ -120,7 +120,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			// Node <error-message>
 			writer.startElement("error-message", null);
 			writer.startCDATA();
-			writer.write(ExceptionUtils.getRootCauseMessage(t));
+			writer.write(rootCause != null ? rootCause.getMessage() : t.getMessage());
 			writer.endCDATA();
 			writer.endElement("error-message");
 
