@@ -28,9 +28,9 @@ import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
@@ -42,9 +42,9 @@ import org.primefaces.extensions.renderkit.widget.Option;
 /**
  * Component class for the <code>CodeMirror</code> component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
@@ -54,7 +54,7 @@ import org.primefaces.extensions.renderkit.widget.Option;
 	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
 	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
 })
-public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget {
+public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -299,11 +299,13 @@ public class CodeMirror extends UIInput implements ClientBehaviorHolder, Widget 
 		setAttribute(PropertyKeys.undoDepth, undoDepth);
 	}
 
-	public Integer getTabindex() {
-		return (Integer) getStateHelper().eval(PropertyKeys.tabindex, null);
+	@Override
+	public String getTabindex() {
+		return (String) getStateHelper().eval(PropertyKeys.tabindex, null);
 	}
 
-	public void setTabindex(final Integer tabindex) {
+	@Override
+	public void setTabindex(final String tabindex) {
 		setAttribute(PropertyKeys.tabindex, tabindex);
 	}
 

@@ -27,9 +27,9 @@ import java.util.List;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIInput;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
@@ -38,16 +38,16 @@ import org.primefaces.extensions.renderkit.widget.Option;
 /**
  * Component class for the <code>CKEditor</code> component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
+public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CKEditor";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -233,11 +233,13 @@ public class CKEditor extends UIInput implements ClientBehaviorHolder, Widget {
 		setAttribute(PropertyKeys.customConfig, customConfig);
 	}
 
-	public Integer getTabindex() {
-		return (Integer) getStateHelper().eval(PropertyKeys.tabindex, null);
+	@Override
+	public String getTabindex() {
+		return (String) getStateHelper().eval(PropertyKeys.tabindex, null);
 	}
 
-	public void setTabindex(final Integer tabindex) {
+	@Override
+	public void setTabindex(final String tabindex) {
 		setAttribute(PropertyKeys.tabindex, tabindex);
 	}
 
