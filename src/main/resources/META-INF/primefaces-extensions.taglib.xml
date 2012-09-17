@@ -3072,5 +3072,49 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>        
-    </tag>    
+    </tag>
+    <tag>
+    	<description><![CDATA[Tag to simulate a java switch.]]></description>
+        <tag-name>switch</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Switch</component-type>
+            <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
+        </component>
+         <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Value which is used to determine which case should be rendered.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+    	<description><![CDATA[Tag which defines a case for the pe:switch component.]]></description>
+        <tag-name>case</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Case</component-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[The pe:switch will check wheter this value is equal to it's value. If so, the childs of this declared pe:case will be renderd.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+    <tag>
+    	<description><![CDATA[Tag which defines the default case for the pe:switch component.]]></description>
+        <tag-name>defaultCase</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
+        </component>
+    </tag>       
 </facelet-taglib>

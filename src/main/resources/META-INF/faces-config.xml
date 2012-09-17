@@ -130,6 +130,18 @@
         <component-type>org.primefaces.extensions.component.Waypoint</component-type>
         <component-class>org.primefaces.extensions.component.waypoint.Waypoint</component-class>
     </component>    
+    <component>                        
+        <component-type>org.primefaces.extensions.component.Switch</component-type>
+        <component-class>org.primefaces.extensions.component.switchcomponent.Switch</component-class>
+    </component>
+    <component>                        
+        <component-type>org.primefaces.extensions.component.Case</component-type>
+        <component-class>org.primefaces.extensions.component.switchcomponent.Case</component-class>
+    </component>
+    <component>                        
+        <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
+        <component-class>org.primefaces.extensions.component.switchcomponent.DefaultCase</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -240,7 +252,12 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.WaypointRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.waypoint.WaypointRenderer</renderer-class>
-        </renderer>        
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.switchcomponent.SwitchRenderer</renderer-class>
+        </renderer>           
 
         <client-behavior-renderer>
             <client-behavior-renderer-type>org.primefaces.extensions.behavior.JavascriptBehaviorRenderer</client-behavior-renderer-type>
