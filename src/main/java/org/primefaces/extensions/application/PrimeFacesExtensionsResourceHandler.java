@@ -54,12 +54,12 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 	@Override
 	public Resource createResource(final String resourceName, final String libraryName) {
-		Resource resource = super.createResource(resourceName, libraryName);;
+		Resource resource = super.createResource(resourceName, libraryName);
 
 		if (resource != null && libraryName != null) {
 
 			if (ContextParametersProvider.getInstance().isWrapPrimeFacesResources()
-					&& libraryName.equalsIgnoreCase(org.primefaces.util.Constants.LIBRARY)) {
+				&& libraryName.equalsIgnoreCase(org.primefaces.util.Constants.LIBRARY)) {
 
 				//Handle PrimeFaces resources
 				resource = new PrimeFacesResource(resource);
