@@ -132,15 +132,15 @@
     </component>    
     <component>                        
         <component-type>org.primefaces.extensions.component.Switch</component-type>
-        <component-class>org.primefaces.extensions.component.switchcomponent.Switch</component-class>
+        <component-class>org.primefaces.extensions.component.switchcase.Switch</component-class>
     </component>
     <component>                        
         <component-type>org.primefaces.extensions.component.Case</component-type>
-        <component-class>org.primefaces.extensions.component.switchcomponent.Case</component-class>
+        <component-class>org.primefaces.extensions.component.switchcase.Case</component-class>
     </component>
     <component>                        
         <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
-        <component-class>org.primefaces.extensions.component.switchcomponent.DefaultCase</component-class>
+        <component-class>org.primefaces.extensions.component.switchcase.DefaultCase</component-class>
     </component>
 
     <converter>
@@ -256,7 +256,7 @@
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.switchcomponent.SwitchRenderer</renderer-class>
+            <renderer-class>org.primefaces.extensions.component.switchcase.SwitchRenderer</renderer-class>
         </renderer>           
 
         <client-behavior-renderer>

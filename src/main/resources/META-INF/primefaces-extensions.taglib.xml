@@ -3080,27 +3080,53 @@
             <component-type>org.primefaces.extensions.component.Switch</component-type>
             <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
         </component>
-         <attribute>
-            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
             <name>id</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Value which is used to determine which case should be rendered.]]>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
-            <name>value</name>
-            <required>true</required>
-            <type>java.lang.Object</type>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
         </attribute>
     </tag>
     <tag>
-    	<description><![CDATA[Tag which defines a case for the pe:switch component.]]></description>
+    	<description><![CDATA[Tag which defines a case for the switch component.]]></description>
         <tag-name>case</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Case</component-type>
         </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[The pe:switch will check wheter this value is equal to it's value. If so, the childs of this declared pe:case will be renderd.]]>
@@ -3111,10 +3137,26 @@
         </attribute>
     </tag>
     <tag>
-    	<description><![CDATA[Tag which defines the default case for the pe:switch component.]]></description>
+    	<description><![CDATA[Tag which defines the default case for the switch component.]]></description>
         <tag-name>defaultCase</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
         </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
     </tag>       
 </facelet-taglib>
