@@ -8,3 +8,4 @@ This product includes software developed by Mike Alsup (https://github.com/malsu
 This product includes software developed by Akzhan Abdulin (https://github.com/akzhan/jquery-keyfilter)
 This product includes software developed by Bob Knothe (http://www.decorplanit.com/plugin/)
 This product includes software developed by Caleb Troughton (http://imakewebthings.com/jquery-waypoints/)
+This product includes software developed by Almende (http://almende.github.com/chap-links-library/timeline.html)

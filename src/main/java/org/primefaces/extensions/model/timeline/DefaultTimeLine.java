@@ -20,11 +20,9 @@ package org.primefaces.extensions.model.timeline;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
- * DOCUMENT_ME
- *
+ * Default implementation of Timeline.
  *
  * @author  Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
@@ -32,7 +30,6 @@ import java.util.UUID;
  */
 public class DefaultTimeLine implements Timeline {
 
-	private String id;
 	private String title;
 	private List<TimelineEvent> events;
 
@@ -40,18 +37,9 @@ public class DefaultTimeLine implements Timeline {
 		this.events = new ArrayList<TimelineEvent>();
 	}
 
-	public DefaultTimeLine(String id, String title) {
-		this.id = id;
+	public DefaultTimeLine(String title) {
 		this.title = title;
 		this.events = new ArrayList<TimelineEvent>();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getTitle() {
@@ -63,8 +51,6 @@ public class DefaultTimeLine implements Timeline {
 	}
 
 	public void addEvent(TimelineEvent event) {
-		event.setId(UUID.randomUUID().toString());
-
 		events.add(event);
 	}
 
@@ -74,32 +60,6 @@ public class DefaultTimeLine implements Timeline {
 
 	public List<TimelineEvent> getEvents() {
 		return events;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-
-		final DefaultTimeLine other = (DefaultTimeLine) obj;
-		if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 11 * hash + (this.id != null ? this.id.hashCode() : 0);
-
-		return hash;
 	}
 
 	@Override

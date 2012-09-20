@@ -19,6 +19,8 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,114 +28,140 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
-import org.primefaces.extensions.util.DateUtils;
+import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
  * Renderer for the {@link Timeline} component.
  *
- * @author  Nilesh Namdeo Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 public class TimelineRenderer extends CoreRenderer {
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		Timeline timeline = (Timeline) component;
-		encodeMarkup(context, timeline);
-		encodeScript(context, timeline);
-	}
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        Timeline timeline = (Timeline) component;
+        encodeMarkup(context, timeline);
+        encodeScript(context, timeline);
+    }
 
-	protected void encodeMarkup(final FacesContext context, final Timeline component) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = component.getClientId(context);
-		writer.startElement("div", component);
-		writer.writeAttribute("id", clientId, "id");
-		if (component.getStyle() != null) {
-			writer.writeAttribute("style", component.getStyle(), "style");
-		}
+    protected void encodeMarkup(final FacesContext context, final Timeline component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = component.getClientId(context);
+        writer.startElement("div", component);
+        writer.writeAttribute("id", clientId, "id");
+        if (component.getStyle() != null) {
+            writer.writeAttribute("style", component.getStyle(), "style");
+        }
+        if (component.getStyleClass() != null) {
+            writer.writeAttribute("class", component.getStyleClass(), "styleClass");
+        }
+        writer.endElement("div");
+    }
 
-		if (component.getStyleClass() != null) {
-			writer.writeAttribute("class", component.getStyleClass(), "styleClass");
-		}
+    protected void encodeScript(final FacesContext context, final Timeline component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = component.getClientId(context);
+        List<org.primefaces.extensions.model.timeline.Timeline> model =
+                (List<org.primefaces.extensions.model.timeline.Timeline>) component.getValue();
 
-		writer.endElement("div");
-	}
+        startScript(writer, clientId);
+        writer.write("$(function() {");
+        writer.write("PrimeFacesExt.cw('Timeline', '" + component.resolveWidgetVar() + "',{");
+        writer.write("id:\"" + clientId + "\"");
+        writer.write(",axisPosition:\"" + component.getAxisPosition() + "\"");
+        writer.write(",eventStyle:\"" + component.getEventStyle() + "\"");
+        writer.write(",height:\"" + component.getHeight() + "\"");
+        writer.write(",width:\"" + component.getWidth() + "\"");
+        writer.write(",showNavigation:" + component.getShowNavigation());
+        if (!model.isEmpty()) {
+            String groupName = null;
+            boolean hasGroup = model.size() > 1;
+            writer.write(",dataSource: [");
+            for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext(); ) {
+                org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
+                groupName = (hasGroup) ? timeline.getTitle() : null;
+                for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext(); ) {
+                    encodeEvent(context, component, eventIter.next(), groupName);
 
-	protected void encodeScript(final FacesContext context, final Timeline component) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = component.getClientId(context);
-		List<org.primefaces.extensions.model.timeline.Timeline> model =
-		    (List<org.primefaces.extensions.model.timeline.Timeline>) component.getValue();
+                    if (eventIter.hasNext()) {
+                        writer.write(",");
+                    }
+                }
+                if (it.hasNext()) {
+                    writer.write(",");
+                }
+            }
+            writer.write("]");
+        }
 
-		startScript(writer, clientId);
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('Timeline', '" + component.resolveWidgetVar() + "',{");
-		writer.write("id:\"" + clientId + "\"");
-		if (!model.isEmpty()) {
-			writer.write(",dataSource: [");
-			for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext();) {
-				org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
-				String id = timeline.getId();
-				writer.write("{");
-				writer.write("\"id\":\"" + timeline.getId() + "\"");
-				writer.write(",\"title\":\"" + timeline.getTitle() + "\"");
+        writer.write("},true);});");
+        endScript(writer);
+    }
 
-				//events
-				writer.write(",\"events\":[");
-				for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext();) {
-					encodeEvent(context, eventIter.next(), id);
+    protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event, final String groupName)
+            throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
 
-					if (eventIter.hasNext()) {
-						writer.write(",");
-					}
-				}
+        writer.write("{");
+        writer.write("\"start\":" + createJsDate(event.getStartDate()));
+        writer.write(",\"content\":\"");
+        if (component.getChildCount() > 0) {
+            if (StringUtils.isNotBlank(component.getVar())) {
+                context.getExternalContext().getRequestMap().put(component.getVar(), event);
+            }
+            FastStringWriter fsw = new FastStringWriter();
+            ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+            context.setResponseWriter(clonedWriter);
 
-				writer.write("]}");
+            renderChildren(context, component);
 
-				if (it.hasNext()) {
-					writer.write(",");
-				}
-			}
-		}
+            context.setResponseWriter(writer);
+            writer.write(escapeText(fsw.toString()));
+        } else {
+            writer.write(escapeText(event.getTitle()));
+        }
+        writer.write("\"");
 
-		writer.write("]},true);});");
-		endScript(writer);
-	}
+        if (event.getEndDate() != null) {
+            writer.write(",\"end\":" + createJsDate(event.getEndDate()));
+        }
+        if (groupName != null) {
+            writer.write(",\"group\":\"" + groupName + "\"");
+        }
+        if(StringUtils.isNotBlank(event.getStyleClass())){
+            writer.write(",\"className\":\"" + event.getStyleClass() + "\"");
+        }
+        writer.write("}");
 
-	protected void encodeEvent(final FacesContext context, final TimelineEvent event, final String timelineId)
-	    throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
+    }
 
-		writer.write("{");
-		writer.write("\"id\":\"" + timelineId + "-" + event.getId() + "\"");
-		writer.write(",\"title\":\"" + event.getTitle() + "\"");
-		writer.write(",\"description\":\"" + event.getDescription() + "\"");
-		writer.write(",\"startDate\":\""
-		             + ((event.getStartDate() == null) ? "" : DateUtils.getLocalDateString(event.getStartDate())) + "\"");
+    private static String createJsDate(Date date) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("new Date(");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        sb.append(cal.get(Calendar.YEAR)).append(',');
+        sb.append(cal.get(Calendar.MONTH)).append(',');
+        sb.append(cal.get(Calendar.DAY_OF_MONTH)).append(',');
+        sb.append(cal.get(Calendar.HOUR_OF_DAY)).append(',');
+        sb.append(cal.get(Calendar.MINUTE)).append(',');
+        sb.append(cal.get(Calendar.SECOND)).append(',');
+        sb.append(cal.get(Calendar.MILLISECOND)).append(')');
+        return sb.toString();
+    }
 
-		if (event.getEndDate() != null) {
-			writer.write(",\"endDate\":\""
-			             + ((event.getEndDate() == null) ? "" : DateUtils.getLocalDateString(event.getEndDate()))
-			             + "\"");
-		}
+    @Override
+    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+        //do nothing
+    }
 
-		if (event.getIcon() != null) {
-			writer.write(",\"icon\":\"" + getResourceURL(context, event.getIcon()) + "\"");
-		}
-
-		writer.write("}");
-	}
-
-	@Override
-	public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
-		//do nothing
-	}
-
-	@Override
-	public boolean getRendersChildren() {
-		return true;
-	}
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
 }

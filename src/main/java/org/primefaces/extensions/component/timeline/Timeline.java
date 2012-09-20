@@ -33,116 +33,171 @@ import org.primefaces.component.api.Widget;
 /**
  * Timeline component.
  *
- * @author  Nilesh Namdeo Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
 })
 public class Timeline extends UIOutput implements Widget {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
-	private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
+    private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
+    private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author  ova / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Nilesh Namdeo Mali / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
+        axisPosition,
+        eventStyle,
+        height,
+        showNavigation,
+        style,
+        styleClass,
+        var,
+        widgetVar,
+        width;
 
-		style,
-		styleClass,
-		widgetVar;
+        private String toString;
 
-		private String toString;
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys() {
+        }
 
-		PropertyKeys() {
-		}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
+    public Timeline() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-	public Timeline() {
-		setRendererType(DEFAULT_RENDERER);
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    public String getAxisPosition() {
+        return (String) getStateHelper().eval(PropertyKeys.axisPosition, "bottom");
+    }
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
+    public void setAxisPosition(final String axisPosition) {
+        setAttribute(PropertyKeys.axisPosition, axisPosition);
+    }
 
-	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
-	}
+    public String getEventStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.eventStyle, "box");
+    }
 
-	public String getStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.style, null);
-	}
+    public void setEventStyle(final String eventStyle) {
+        setAttribute(PropertyKeys.eventStyle, eventStyle);
+    }
 
-	public void setStyle(final String style) {
-		setAttribute(PropertyKeys.style, style);
-	}
+    public String getHeight() {
+        return (String) getStateHelper().eval(PropertyKeys.height, "auto");
+    }
 
-	public String getStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-	}
+    public void setHeight(final String height) {
+        setAttribute(PropertyKeys.height, height);
+    }
 
-	public void setStyleClass(final String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
-	}
+    public String getShowNavigation() {
+        return (String) getStateHelper().eval(PropertyKeys.showNavigation, "false");
+    }
 
-	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+    public void setShowNavigation(final String showNavigation) {
+        setAttribute(PropertyKeys.showNavigation, showNavigation);
+    }
 
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
 
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
+    public void setStyle(final String style) {
+        setAttribute(PropertyKeys.style, style);
+    }
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
 
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
+    public void setStyleClass(final String styleClass) {
+        setAttribute(PropertyKeys.styleClass, styleClass);
+    }
 
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
-	}
+    public String getVar() {
+        return (String) getStateHelper().eval(PropertyKeys.var, null);
+    }
+
+    public void setVar(final String var) {
+        setAttribute(PropertyKeys.var, var);
+    }
+
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
+
+    public void setWidgetVar(final String widgetVar) {
+        setAttribute(PropertyKeys.widgetVar, widgetVar);
+    }
+
+    public String getWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.width, "100%");
+    }
+
+    public void setWidth(final String width) {
+        setAttribute(PropertyKeys.width, width);
+    }
+
+    public String resolveWidgetVar() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+
+        if (userWidgetVar != null) {
+            return userWidgetVar;
+        }
+
+        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+    }
+
+    public void setAttribute(final PropertyKeys property, final Object value) {
+        getStateHelper().put(property, value);
+
+        @SuppressWarnings("unchecked")
+        List<String> setAttributes =
+                (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+        if (setAttributes == null) {
+            final String cname = this.getClass().getName();
+            if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+                setAttributes = new ArrayList<String>(6);
+                this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+            }
+        }
+
+        if (setAttributes != null && value == null) {
+            final String attributeName = property.toString();
+            final ValueExpression ve = getValueExpression(attributeName);
+            if (ve == null) {
+                setAttributes.remove(attributeName);
+            } else if (!setAttributes.contains(attributeName)) {
+                setAttributes.add(attributeName);
+            }
+        }
+    }
 }

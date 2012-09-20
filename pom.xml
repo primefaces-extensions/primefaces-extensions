@@ -68,7 +68,7 @@
             <roles>
                 <role>Developer</role>
             </roles>
-            <timezone>+5.5</timezone>
+            <timezone>+5.30</timezone>
         </developer>
         <developer>
             <id>mfenoglio</id>
@@ -146,6 +146,7 @@
                                 <include>keyfilter/**</include>
                                 <include>inputnumber/**</include>
                                 <include>waypoint/**</include>
+                                <include>timeline/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -164,7 +165,6 @@
                                 <include>blockui/blockUI.css</include>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>timeline/timeline.css</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
                             </includes>
                             <aggregations>
@@ -190,7 +190,6 @@
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                                 <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
-                                <include>timeline/timeline.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

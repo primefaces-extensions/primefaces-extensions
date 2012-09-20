@@ -1,0 +1,138 @@
+.ui-timeline-container {
+    border: 2px solid;
+    margin: 0 !important;
+    clear: both;
+    overflow: hidden;
+}
+
+.ui-timeline-frame {
+    overflow: hidden;
+}
+
+.ui-timeline-axis {
+    border-width: 1px;
+    border-top-style: groove;
+}
+
+.ui-timeline-axis-grid {
+    border-left-style: groove;
+    border-width: 1px;
+}
+
+.ui-timeline-axis-grid-minor {
+}
+
+.ui-timeline-axis-grid-major {
+}
+
+.ui-timeline-axis-text {
+    font-size: 1em;
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.ui-timeline-axis-text-minor {
+}
+
+.ui-timeline-axis-text-major {
+}
+
+.ui-timeline-event {
+    display: inline-block;
+}
+
+.ui-timeline-event-selected {
+}
+
+.ui-timeline-event-box {
+    text-align: center;
+}
+
+.ui-timeline-event-dot {
+    border: 5px solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px; /* For Firefox 3.6 and older */
+}
+
+.ui-timeline-event-range {
+}
+
+.ui-timeline-event-range-drag-left {
+    cursor: w-resize;
+    z-index: 1000;
+}
+
+.ui-timeline-event-range-drag-right {
+    cursor: e-resize;
+    z-index: 1000;
+}
+
+.ui-timeline-event-line {
+    border-left: 1px solid;
+}
+
+.ui-timeline-event-content {
+    margin: 5px;
+    white-space: nowrap;
+    font-weight: normal;
+    font-size: 1em;
+    overflow: hidden;
+}
+
+.ui-timeline-groups-axis {
+    border: 1px groove;
+}
+
+.ui-timeline-groups-text {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1em;
+}
+
+.ui-timeline-currenttime {
+    background-color: #FF2A27;
+    width: 2px;
+}
+
+.ui-timeline-customtime {
+    background-color: #6E94FF;
+    width: 2px;
+    cursor: move;
+}
+
+.ui-timeline-navigation {
+
+}
+
+.ui-timeline-navigation-new, .ui-timeline-navigation-delete,
+.ui-timeline-navigation-zoom-in, .ui-timeline-navigation-zoom-out,
+.ui-timeline-navigation-move-left, .ui-timeline-navigation-move-right {
+    cursor: pointer;
+    padding: 5px 5px;
+    float: left;
+    text-decoration: none;
+}
+
+.ui-timeline-navigation-new {
+
+}
+
+.ui-timeline-navigation-delete {
+    padding: 0px 0px 0px 5px;
+}
+
+.ui-timeline-navigation-zoom-in {
+
+}
+
+.ui-timeline-navigation-zoom-out {
+
+}
+
+.ui-timeline-navigation-move-left {
+
+}
+
+.ui-timeline-navigation-move-right {
+
+}

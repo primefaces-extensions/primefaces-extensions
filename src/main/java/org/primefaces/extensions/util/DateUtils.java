@@ -19,18 +19,24 @@
 package org.primefaces.extensions.util;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * DOCUMENT_ME
  *
- *
- * @author  Nilesh Namdeo Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  */
 public class DateUtils {
 
-	public static String getLocalDateString(Date date) {
-		return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
-	}
+    public static String getLocalDateString(Date date) {
+        return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
+    }
+
+    public static String getFormattedDateString(final Date date, final String format) {
+        if (date == null)
+            return "";
+        SimpleDateFormat fmt = new SimpleDateFormat(format);
+        return fmt.format(date);
+    }
 }

@@ -27,17 +27,11 @@ import java.util.Date;
  */
 public interface TimelineEvent {
 
-    public String getId();
-
-    public void setId(String id);
-
     public String getTitle();
-
-    public Object getDescription();
 
     public Date getStartDate();
 
     public Date getEndDate();
 
-    public String getIcon();
+    public String getStyleClass();
 }

@@ -6,12 +6,12 @@
 
     <namespace>http://primefaces.org/ui/extensions</namespace>
 
-	<!-- Functions -->
-	<function>
-		<function-name>escapeSelector</function-name>
-		<function-class>org.primefaces.extensions.util.ComponentUtils</function-class>
-		<function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
-	</function>
+    <!-- Functions -->
+    <function>
+        <function-name>escapeSelector</function-name>
+        <function-class>org.primefaces.extensions.util.ComponentUtils</function-class>
+        <function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
+    </function>
 
     <!-- Converters -->
     <tag>
@@ -329,7 +329,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).]]>
+            <description>
+                <![CDATA[Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).]]>
             </description>
             <name>lineWrapping</name>
             <required>false</required>
@@ -374,7 +375,8 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Determines whether brackets are matched whenever the cursor is moved next to a bracket.]]>
+            <description>
+                <![CDATA[Determines whether brackets are matched whenever the cursor is moved next to a bracket.]]>
             </description>
             <name>matchBrackets</name>
             <required>false</required>
@@ -570,7 +572,7 @@
             <name>buttonBarPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[Style of the main container element. Default value is null.]]>
@@ -633,7 +635,7 @@
             <name>for</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[Style class of the container element for this control. Default value is null.]]>
@@ -740,7 +742,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[If set to true, selection area will disappear when selection ends. Default value: false.]]>
+            <description>
+                <![CDATA[If set to true, selection area will disappear when selection ends. Default value: false.]]>
             </description>
             <name>autoHide</name>
             <required>false</required>
@@ -911,7 +914,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]>
+        <description>
+            <![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]>
         </description>
         <tag-name>remoteCommand</tag-name>
         <component>
@@ -1050,7 +1054,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[AssignableParam can be used the apply a parameter of the RemoteCommand to a backing bean.]]>
+        <description>
+            <![CDATA[AssignableParam can be used the apply a parameter of the RemoteCommand to a backing bean.]]>
         </description>
         <tag-name>assignableParam</tag-name>
         <component>
@@ -1146,7 +1151,8 @@
         <tag-name>methodSignature</tag-name>
         <handler-class>org.primefaces.extensions.component.parameters.MethodSignatureTagHandler</handler-class>
         <attribute>
-            <description><![CDATA[A comma separated list with full qualified class names. Class names should match passed parameters in the same order as they were defined.]]>
+            <description>
+                <![CDATA[A comma separated list with full qualified class names. Class names should match passed parameters in the same order as they were defined.]]>
             </description>
             <name>parameters</name>
             <required>false</required>
@@ -1173,7 +1179,7 @@
             <name>event</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
         <tag-name>saveState</tag-name>
@@ -1289,7 +1295,7 @@
             <name>mouseTracking</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[A positive or negative pixel value by which to offset the tooltip in the horizontal plane (x-axis). Negative values cause a reduction in the value (moves tooltip to the left). Default value is 0.]]>
@@ -1305,7 +1311,7 @@
             <name>adjustY</name>
             <required>false</required>
             <type>java.lang.Integer</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[The corner of the target element to position the tooltips corner at. Default value is 'bottom right'.]]>
@@ -1596,14 +1602,16 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the minimum-size limit in px or % when resizing a pane. Default value is null.]]>
+            <description>
+                <![CDATA[Specifies the minimum-size limit in px or % when resizing a pane. Default value is null.]]>
             </description>
             <name>minSize</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies the maximum-size limit in px or % when resizing a pane. Default value is null.]]>
+            <description>
+                <![CDATA[Specifies the maximum-size limit in px or % when resizing a pane. Default value is null.]]>
             </description>
             <name>maxSize</name>
             <required>false</required>
@@ -1642,7 +1650,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Spacing between pane and adjacent pane - when pane is 'open' or 'closed'. Default value is 6.]]>
+            <description>
+                <![CDATA[Spacing between pane and adjacent pane - when pane is 'open' or 'closed'. Default value is 6.]]>
             </description>
             <name>spacing</name>
             <required>false</required>
@@ -1745,7 +1754,7 @@
             <name>breadcrumbAboveHeader</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[Style of the main MasterDetail container element. Default is null.]]>
@@ -1884,7 +1893,7 @@
             <name>event</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[keyFilter filters keyboard input by for a given input field.]]>
@@ -1967,15 +1976,15 @@
             <component-type>org.primefaces.extensions.component.Spotlight</component-type>
             <renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
         </component>
-	</tag>
-	<tag>
-		<description><![CDATA[spotlight can locks UI.]]></description>
-		<tag-name>spotlight</tag-name>
-		<component>
-			<component-type>org.primefaces.extensions.component.Spotlight</component-type>
-			<renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
-		</component>
-		<attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[spotlight can locks UI.]]></description>
+        <tag-name>spotlight</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Spotlight</component-type>
+            <renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
+        </component>
+        <attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]>
             </description>
             <name>id</name>
@@ -2168,7 +2177,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines whether or not to show AM/PM with selected time. Default is false.]]></description>
+            <description>
+                <![CDATA[Defines whether or not to show AM/PM with selected time. Default is false.]]></description>
             <name>showPeriod</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
@@ -2205,13 +2215,15 @@
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies first displayed minute. Possible range is 0-55. Default is 0.]]></description>
+            <description>
+                <![CDATA[Specifies first displayed minute. Possible range is 0-55. Default is 0.]]></description>
             <name>startMinutes</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies last displayed minute. Possible range is 0-55. Default is 55.]]></description>
+            <description>
+                <![CDATA[Specifies last displayed minute. Possible range is 0-55. Default is 55.]]></description>
             <name>endMinutes</name>
             <required>false</required>
             <type>java.lang.Integer</type>
@@ -2299,14 +2311,6 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
-            </description>
-            <name>rendered</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
@@ -2314,18 +2318,12 @@
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the client side widget.]]>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
-            <name>widgetVar</name>
+            <name>rendered</name>
             <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[A java.util.List instance representing the backend model.]]>
-            </description>
-            <name>value</name>
-            <required>true</required>
-            <type>java.util.List</type>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description><![CDATA[Inline style of the component]]>
@@ -2340,6 +2338,68 @@
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the request-scoped variable for the underlaying object of each iteration.]]>
+            </description>
+            <name>var</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Position of date axis. Posible values are: top, bottom. Default is bottom]]>
+            </description>
+            <name>axisPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Controls visibility of navigation controls. Default is false.]]>
+            </description>
+            <name>showNavigation</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Event display style. Posible values are box,dot. Default is box.]]>
+            </description>
+            <name>eventStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Width of the timeline. Default is 100%.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Height of the timeline. Default is auto.]]>
+            </description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A java.util.List instance representing the backend model.]]>
+            </description>
+            <name>value</name>
+            <required>true</required>
+            <type>java.util.List</type>
         </attribute>
     </tag>
     <tag>
@@ -2869,7 +2929,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Controls empty input display behavior, options are empty, zero, sign (default empty)]]>
+            <description>
+                <![CDATA[Controls empty input display behavior, options are empty, zero, sign (default empty)]]>
             </description>
             <name>emptyValue</name>
             <required>false</required>
@@ -2898,7 +2959,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[AjaxErrorHandler catchs AJAX ERRORS and show it in modal window or change.]]></description>
+        <description>
+            <![CDATA[AjaxErrorHandler catchs AJAX ERRORS and show it in modal window or change.]]></description>
         <tag-name>ajaxErrorHandler</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.AjaxErrorHandler</component-type>
@@ -2970,7 +3032,8 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Waypoint makes it easy to execute a custom logic whenever you scroll to an element. Client behavior events: reached - fired when the user scrolls past the element. (org.primefaces.extensions.event.WaypointEvent)]]></description>
+        <description>
+            <![CDATA[Waypoint makes it easy to execute a custom logic whenever you scroll to an element. Client behavior events: reached - fired when the user scrolls past the element. (org.primefaces.extensions.event.WaypointEvent)]]></description>
         <tag-name>waypoint</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Waypoint</component-type>
@@ -3063,7 +3126,7 @@
             <name>onlyOnScroll</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[If true, the waypoint will be destroyed when triggered. Default is false.]]>
@@ -3071,92 +3134,6 @@
             <name>triggerOnce</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
-        </attribute>        
-    </tag>
-    <tag>
-    	<description><![CDATA[Tag to simulate a java switch.]]></description>
-        <tag-name>switch</tag-name>
-        <component>
-            <component-type>org.primefaces.extensions.component.Switch</component-type>
-            <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
-        </component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
-            </description>
-            <name>rendered</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
-            </description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
         </attribute>
     </tag>
-    <tag>
-    	<description><![CDATA[Tag which defines a case for the switch component.]]></description>
-        <tag-name>case</tag-name>
-        <component>
-            <component-type>org.primefaces.extensions.component.Case</component-type>
-        </component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
-            </description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[The pe:switch will check wheter this value is equal to it's value. If so, the childs of this declared pe:case will be renderd.]]>
-            </description>
-            <name>value</name>
-            <required>true</required>
-            <type>java.lang.Object</type>
-        </attribute>
-    </tag>
-    <tag>
-    	<description><![CDATA[Tag which defines the default case for the switch component.]]></description>
-        <tag-name>defaultCase</tag-name>
-        <component>
-            <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
-        </component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
-            </description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
-        </attribute>
-    </tag>       
 </facelet-taglib>

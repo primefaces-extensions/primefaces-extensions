@@ -27,8 +27,6 @@ import java.util.List;
  */
 public interface Timeline {
 
-    public String getId();
-
     public String getTitle();
 
     public void addEvent(TimelineEvent event);
