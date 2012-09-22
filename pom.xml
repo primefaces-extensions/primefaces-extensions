@@ -107,7 +107,15 @@
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                     <excludes>
-                        <exclude>**/ckeditor/changes.txt</exclude>
+                        <exclude>**/META-INF/resources/**/core/**</exclude>
+                        <exclude>**/META-INF/resources/**/ckeditor/**</exclude>
+                        <exclude>**/META-INF/resources/**/ajaxerrorhandler/**</exclude>
+                        <exclude>**/META-INF/resources/**/spotlight/**</exclude>
+                        <exclude>**/META-INF/resources/**/dynaform/**</exclude>
+                        <exclude>**/META-INF/resources/**/masterdetail/**</exclude>                        
+                        <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
+                        <exclude>**/META-INF/resources/**/tristatecheckbox/**</exclude>
+                        <exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>                        
                     </excludes>
                 </configuration>
             </plugin>
@@ -139,6 +147,7 @@
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
+                                <include>blockui/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>timepicker/**</include>                                
@@ -162,7 +171,6 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
-                                <include>blockui/blockUI.css</include>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
@@ -184,7 +192,6 @@
                                 <include>core/core.js</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
                                 <include>spotlight/spotlight.js</include>
-                                <include>blockui/*.js</include>                                
                                 <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
