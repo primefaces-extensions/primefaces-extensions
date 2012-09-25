@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,10 +33,10 @@ import javax.faces.component.UIComponentBase;
  */
 public class LayoutPane extends UIComponentBase {
 
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LayoutPane";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutPaneRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
-
-	private boolean existNestedPanes = false;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -46,23 +46,8 @@ public class LayoutPane extends UIComponentBase {
 	 */
 	protected enum PropertyKeys {
 
-		styleHeader,
-		styleClassHeader,
-		styleContent,
-		styleClassContent,
 		position,
-		resizable,
-		closable,
-		size,
-		minSize,
-		maxSize,
-		minWidth,
-		maxWidth,
-		minHeight,
-		maxHeight,
-		spacing,
-		initClosed,
-		statusbar;
+		combinedPosition;
 
 		private String toString;
 
@@ -80,7 +65,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public LayoutPane() {
-		setRendererType(null);
+		setRendererType(DEFAULT_RENDERER);
 	}
 
 	@Override
@@ -88,158 +73,21 @@ public class LayoutPane extends UIComponentBase {
 		return COMPONENT_FAMILY;
 	}
 
-	public String getStyleHeader() {
-		return (String) getStateHelper().eval(PropertyKeys.styleHeader, null);
-	}
-
-	public void setStyleHeader(final String styleHeader) {
-		setAttribute(PropertyKeys.styleHeader, styleHeader);
-	}
-
-	public String getStyleClassHeader() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClassHeader, null);
-	}
-
-	public void setStyleClassHeader(final String styleClassHeader) {
-		setAttribute(PropertyKeys.styleClassHeader, styleClassHeader);
-	}
-
-	public String getStyleContent() {
-		return (String) getStateHelper().eval(PropertyKeys.styleContent, null);
-	}
-
-	public void setStyleContent(final String styleContent) {
-		setAttribute(PropertyKeys.styleContent, styleContent);
-	}
-
-	public String getStyleClassContent() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClassContent, null);
-	}
-
-	public void setStyleClassContent(final String styleClassContent) {
-		setAttribute(PropertyKeys.styleClassContent, styleClassContent);
-	}
-
-	/**
-	 * Gets position ("north" | "south" | "west" | "east" | "center").
-	 *
-	 * @return String position
-	 */
+	// position "north" | "south" | "west" | "east" | "center"
 	public String getPosition() {
 		return (String) getStateHelper().eval(PropertyKeys.position, "center");
 	}
 
-	/**
-	 * Sets position ("north" | "south" | "west" | "east" | "center").
-	 *
-	 * @param position position to set
-	 */
-	public void setPosition(final String position) {
+	public void setPosition(String position) {
 		setAttribute(PropertyKeys.position, position);
 	}
 
-	public boolean isResizable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.resizable, true);
+	public String getCombinedPosition() {
+		return (String) getStateHelper().eval(PropertyKeys.combinedPosition, "center");
 	}
 
-	public void setResizable(final boolean resizable) {
-		setAttribute(PropertyKeys.resizable, resizable);
-	}
-
-	public boolean isClosable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.closable, true);
-	}
-
-	public void setClosable(final boolean closable) {
-		setAttribute(PropertyKeys.closable, closable);
-	}
-
-	public String getSize() {
-		return (String) getStateHelper().eval(PropertyKeys.size, null);
-	}
-
-	public void setSize(final String size) {
-		setAttribute(PropertyKeys.size, size);
-	}
-
-	public String getMinSize() {
-		return (String) getStateHelper().eval(PropertyKeys.minSize, null);
-	}
-
-	public void setMinSize(final String minSize) {
-		setAttribute(PropertyKeys.minSize, minSize);
-	}
-
-	public String getMaxSize() {
-		return (String) getStateHelper().eval(PropertyKeys.maxSize, null);
-	}
-
-	public void setMaxSize(final String maxSize) {
-		setAttribute(PropertyKeys.maxSize, maxSize);
-	}
-
-	public String getMinWidth() {
-		return (String) getStateHelper().eval(PropertyKeys.minWidth, null);
-	}
-
-	public void setMinWidth(final String minWidth) {
-		setAttribute(PropertyKeys.minWidth, minWidth);
-	}
-
-	public String getMaxWidth() {
-		return (String) getStateHelper().eval(PropertyKeys.maxWidth, null);
-	}
-
-	public void setMaxWidth(final String maxWidth) {
-		setAttribute(PropertyKeys.maxWidth, maxWidth);
-	}
-
-	public String getMinHeight() {
-		return (String) getStateHelper().eval(PropertyKeys.minHeight, null);
-	}
-
-	public void setMinHeight(final String minHeight) {
-		setAttribute(PropertyKeys.minHeight, minHeight);
-	}
-
-	public String getMaxHeight() {
-		return (String) getStateHelper().eval(PropertyKeys.maxHeight, null);
-	}
-
-	public void setMaxHeight(final String maxHeight) {
-		setAttribute(PropertyKeys.maxHeight, maxHeight);
-	}
-
-	public int getSpacing() {
-		return (Integer) getStateHelper().eval(PropertyKeys.spacing, 6);
-	}
-
-	public void setSpacing(final int spacing) {
-		setAttribute(PropertyKeys.spacing, spacing);
-	}
-
-	public boolean isInitClosed() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.initClosed, false);
-	}
-
-	public void setInitClosed(final boolean initClosed) {
-		setAttribute(PropertyKeys.initClosed, initClosed);
-	}
-
-	public boolean isStatusbar() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.statusbar, false);
-	}
-
-	public void setStatusbar(final boolean statusbar) {
-		setAttribute(PropertyKeys.statusbar, statusbar);
-	}
-
-	public boolean isExistNestedPanes() {
-		return existNestedPanes;
-	}
-
-	public void setExistNestedPanes(final boolean existNestedPanes) {
-		this.existNestedPanes = existNestedPanes;
+	public void setCombinedPosition(String combinedPosition) {
+		setAttribute(PropertyKeys.combinedPosition, combinedPosition);
 	}
 
 	public void setAttribute(final PropertyKeys property, final Object value) {

@@ -83,99 +83,16 @@
     border: 1px solid #E27D7D;
 }
 
+.pe-layout-pane-withsubpanes {
+    border: none;
+}
+
 .pe-layout-pane-header {
     padding: 4px 1em;
     border-width: 0 0 1px;
 }
 
 .pe-layout-pane-content {
-    padding: 1ex;
+    padding: 6px;
     overflow: auto;
-    border: none;
-}
-
-.pe-layout-outer-center {
-    background: transparent;
-    border: 0;
-    padding: 0;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-}
-
-.pe-layout-tabbuttons {
-    left: auto;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-}
-
-.pe-layout-tabbuttons li {
-    border: 0;
-    margin: 0 0 -1px 5px;
-}
-
-.pe-layout-tabbuttons li.last-tab {
-    margin-right: 220px;
-}
-
-.pe-layout-tabbuttons li a {
-    font-weight: bold;
-    cursor: pointer;
-    padding-left: 0.4em;
-    border-radius: 0;
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-}
-
-.pe-layout-tabbuttons li table {
-    border-collapse: collapse;
-}
-
-.pe-layout-tabbuttons li table tr td {
-    padding-left: 3px;
-}
-
-.pe-layout-tabbuttons li table tr td:first-child {
-    padding-top: 0;
-    padding-left: 0;
-}
-
-.ui-tabs .ui-tabs-nav li a {
-    padding: 0.5em 0.8em 0.5em 0.5em;
-}
-
-.pe-layout-tabpanels {
-    margin-top: 2px;
-    padding: 0 4px 5px 4px;
-}
-
-.pe-layout-tabpanels .pe-layout-tab {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    overflow: hidden;
-}
-
-.pe-layout-tabpanels .pe-layout-tab .ui-layout-south .statusbar {
-    overflow: hidden;
-    margin: 0;
-    padding: 5px 20px 0 0;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: right;
-    white-space: nowrap;
-}
-
-.pe-layout-outer-north {
-    overflow: visible;
-    padding: 4px;
-}
-
-.pe-layout-inner-north {
-    height: 100%;
-    padding-bottom: 2px;
 }

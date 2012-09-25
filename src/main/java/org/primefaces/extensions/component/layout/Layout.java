@@ -22,31 +22,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIForm;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-import javax.faces.model.ArrayDataModel;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import javax.faces.model.ScalarDataModel;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.primefaces.component.api.Widget;
-import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
@@ -60,13 +53,12 @@ import org.primefaces.util.Constants;
  * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
+                      })
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	private static final Logger LOG = Logger.getLogger(Layout.class.getName());
@@ -76,37 +68,30 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	public static final String POSITION_NORTH = "north";
-	public static final String POSITION_SOUTH = "south";
-	public static final String POSITION_CENTER = "center";
-	public static final String POSITION_WEST = "west";
-	public static final String POSITION_EAST = "east";
 	public static final String POSITION_SEPARATOR = "_";
 	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
-	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header pe-layout-pane-header ui-corner-top";
+	public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-top pe-layout-pane-withsubpanes";
+	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
 	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
+	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
 
-	private Map<String, UIComponent> layoutPanes;
+	private boolean fullPage = false;
 
 	/**
 	 * Properties that are tracked by state saving.
 	 *
-	 * @author  ova / last modified by $Author$
+	 * @author  Oleg Varaksin / last modified by $Author$
 	 * @version $Revision$
 	 */
 	protected enum PropertyKeys {
 
 		widgetVar,
 		fullPage,
+		options,
 		style,
 		styleClass,
-		tabs,
-		togglerTipOpen,
-		togglerTipClose,
-		resizerTip,
 		state,
 		stateCookie;
 
@@ -125,12 +110,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		}
 	}
 
-	/**
-	 * The {@link javax.faces.model.DataModel} associated with this component to build tabs dynamically, lazily instantiated if
-	 * requested. This object is not part of the saved and restored state of the component.
-	 */
-	private DataModel<MenuItem> dataModel = null;
-
 	public Layout() {
 		setRendererType(DEFAULT_RENDERER);
 	}
@@ -144,7 +123,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
 
-	public void setWidgetVar(final String widgetVar) {
+	public void setWidgetVar(String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
 
@@ -152,15 +131,23 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		return (Boolean) getStateHelper().eval(PropertyKeys.fullPage, true);
 	}
 
-	public void setFullPage(final boolean fullPage) {
+	public void setFullPage(boolean fullPage) {
 		setAttribute(PropertyKeys.fullPage, fullPage);
+	}
+
+	public Object getOptions() {
+		return getStateHelper().eval(PropertyKeys.options, null);
+	}
+
+	public void setOptions(Object options) {
+		setAttribute(PropertyKeys.options, options);
 	}
 
 	public String getStyle() {
 		return (String) getStateHelper().eval(PropertyKeys.style, null);
 	}
 
-	public void setStyle(final String style) {
+	public void setStyle(String style) {
 		setAttribute(PropertyKeys.style, style);
 	}
 
@@ -168,68 +155,15 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
 	}
 
-	public void setStyleClass(final String styleClass) {
+	public void setStyleClass(String styleClass) {
 		setAttribute(PropertyKeys.styleClass, styleClass);
-	}
-
-	/**
-	 * Return tabs of the layout. This value must either be be of type {@link DataModel}, or a type that can be adapted into a
-	 * {@link DataModel}:
-	 *
-	 * <ul>
-	 *   <li>Arrays</li>
-	 *   <li><code>java.util.List</code></li>
-	 * </ul>
-	 *
-	 * <p>All other types will be adapted using the {@link javax.faces.model.ScalarDataModel} class, which will treat the object
-	 * as a single tab.</p>
-	 *
-	 * @return Object
-	 */
-	public Object getTabs() {
-		return getStateHelper().eval(PropertyKeys.tabs, null);
-	}
-
-	/**
-	 * Set tabs of the layout. This items object must be either of type {@link DataModel}, or a type that can be adapted into a
-	 * {@link DataModel}.
-	 *
-	 * @param tabs items new items
-	 */
-	public void setTabs(final Object tabs) {
-		setDataModel(null);
-		setAttribute(PropertyKeys.tabs, tabs);
-	}
-
-	public String getTogglerTipOpen() {
-		return (String) getStateHelper().eval(PropertyKeys.togglerTipOpen, null);
-	}
-
-	public void setTogglerTipOpen(final String togglerTipOpen) {
-		setAttribute(PropertyKeys.togglerTipOpen, togglerTipOpen);
-	}
-
-	public String getTogglerTipClose() {
-		return (String) getStateHelper().eval(PropertyKeys.togglerTipClose, null);
-	}
-
-	public void setTogglerTipClose(final String togglerTipClose) {
-		setAttribute(PropertyKeys.togglerTipClose, togglerTipClose);
-	}
-
-	public String getResizerTip() {
-		return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
-	}
-
-	public void setResizerTip(final String resizerTip) {
-		setAttribute(PropertyKeys.resizerTip, resizerTip);
 	}
 
 	public String getState() {
 		return (String) getStateHelper().eval(PropertyKeys.state, null);
 	}
 
-	public void setState(final String state) {
+	public void setState(String state) {
 		setAttribute(PropertyKeys.state, state);
 	}
 
@@ -237,44 +171,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		return (Boolean) getStateHelper().eval(PropertyKeys.stateCookie, false);
 	}
 
-	public void setStateCookie(final boolean stateCookie) {
+	public void setStateCookie(boolean stateCookie) {
 		setAttribute(PropertyKeys.stateCookie, stateCookie);
-	}
-
-	/**
-	 * Sets data model.
-	 *
-	 * @param model data model
-	 */
-	public void setDataModel(final DataModel<MenuItem> model) {
-		this.dataModel = model;
-	}
-
-	/**
-	 * Gets data model.
-	 *
-	 * @return DataModel
-	 */
-	@SuppressWarnings("unchecked")
-	public DataModel<MenuItem> getDataModel() {
-		if (this.dataModel != null) {
-			return dataModel;
-		}
-
-		Object tabs = getTabs();
-		if (tabs == null) {
-			setDataModel(new ListDataModel<MenuItem>(Collections.EMPTY_LIST));
-		} else if (tabs instanceof DataModel<?>) {
-			setDataModel((DataModel<MenuItem>) tabs);
-		} else if (tabs instanceof List<?>) {
-			setDataModel(new ListDataModel<MenuItem>((List<MenuItem>) tabs));
-		} else if (MenuItem[].class.isAssignableFrom(tabs.getClass())) {
-			setDataModel(new ArrayDataModel<MenuItem>((MenuItem[]) tabs));
-		} else {
-			setDataModel(new ScalarDataModel<MenuItem>((MenuItem) tabs));
-		}
-
-		return dataModel;
 	}
 
 	@Override
@@ -283,7 +181,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	@Override
-	public void processDecodes(final FacesContext fc) {
+	public void processDecodes(FacesContext fc) {
 		if (isSelfRequest(fc)) {
 			this.decode(fc);
 		} else {
@@ -292,14 +190,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	@Override
-	public void processValidators(final FacesContext fc) {
+	public void processValidators(FacesContext fc) {
 		if (!isSelfRequest(fc)) {
 			super.processValidators(fc);
 		}
 	}
 
 	@Override
-	public void processUpdates(final FacesContext fc) {
+	public void processUpdates(FacesContext fc) {
 		if (!isSelfRequest(fc)) {
 			super.processUpdates(fc);
 		}
@@ -316,7 +214,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	@Override
-	public void queueEvent(final FacesEvent event) {
+	public void queueEvent(FacesEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
@@ -324,7 +222,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 		if (isSelfRequest(context)) {
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-			LayoutPane pane = (LayoutPane) getLayoutPanes().get(params.get(clientId + "_pane"));
+			LayoutPane pane = getLayoutPane(this, params.get(clientId + "_pane"));
 			if (pane == null) {
 				LOG.warning("LayoutPane by request parameter '" + params.get(clientId + "_pane") + "' was not found");
 
@@ -358,67 +256,26 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		super.queueEvent(event);
 	}
 
-	public Map<String, UIComponent> getLayoutPanes() {
-		if (layoutPanes != null) {
-			return layoutPanes;
-		}
-
-		layoutPanes = new HashMap<String, UIComponent>();
-
-		for (UIComponent child : this.getChildren()) {
+	public LayoutPane getLayoutPane(UIComponent component, String combinedPosition) {
+		for (UIComponent child : component.getChildren()) {
 			if (child instanceof LayoutPane) {
-				// layout pane on the first level
-				pickLayoutPane(child, layoutPanes);
-			} else if (child instanceof UIForm) {
-				// a form is allowed here
-				layoutPanes.put("form", child);
-
-				for (UIComponent child2 : child.getChildren()) {
-					if (child2 instanceof LayoutPane) {
-						// layout pane on the first level
-						pickLayoutPane(child2, layoutPanes);
+				if (((LayoutPane) child).getCombinedPosition().equals(combinedPosition)) {
+					return (LayoutPane) child;
+				} else {
+					LayoutPane pane = getLayoutPane(child, combinedPosition);
+					if (pane != null) {
+						return pane;
 					}
 				}
 			}
 		}
 
-		return layoutPanes;
+		return null;
 	}
 
-	private void pickLayoutPane(final UIComponent child, final Map<String, UIComponent> layoutPanes) {
-		if (!child.isRendered()) {
-			return;
-		}
-
-		String position = ((LayoutPane) child).getPosition();
-		layoutPanes.put(position, child);
-
-		boolean hasSubPanes = false;
-		for (UIComponent subChild : child.getChildren()) {
-			if (subChild instanceof LayoutPane) {
-				if (!subChild.isRendered()) {
-					continue;
-				}
-
-				// layout pane on the second level
-				layoutPanes.put(position + POSITION_SEPARATOR + ((LayoutPane) subChild).getPosition(), subChild);
-				hasSubPanes = true;
-			}
-		}
-
-		if (hasSubPanes && layoutPanes.get(position + POSITION_SEPARATOR + POSITION_CENTER) == null) {
-			throw new FacesException("Rendered 'center' layout pane inside of '" + position
-					+ "' layout pane is missing");
-		}
-
-		if (hasSubPanes) {
-			((LayoutPane) child).setExistNestedPanes(true);
-		}
-	}
-
-	private boolean isSelfRequest(final FacesContext context) {
+	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
-				.equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
@@ -432,12 +289,12 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
