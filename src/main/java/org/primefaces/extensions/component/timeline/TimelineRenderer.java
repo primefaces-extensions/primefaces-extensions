@@ -19,8 +19,6 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,6 +39,11 @@ import org.primefaces.renderkit.CoreRenderer;
  * @since 0.3
  */
 public class TimelineRenderer extends CoreRenderer {
+
+    @Override
+    public void decode(FacesContext context, UIComponent component) {
+        decodeBehaviors(context, component);
+    }
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -86,7 +89,7 @@ public class TimelineRenderer extends CoreRenderer {
                 org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
                 groupName = (hasGroup) ? timeline.getTitle() : null;
                 for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext(); ) {
-                    encodeEvent(context, component, eventIter.next(), groupName);
+                    encodeEvent(context, component, eventIter.next(), groupName, timeline.getId());
 
                     if (eventIter.hasNext()) {
                         writer.write(",");
@@ -98,17 +101,19 @@ public class TimelineRenderer extends CoreRenderer {
             }
             writer.write("]");
         }
-
+        encodeClientBehaviors(context, component);
         writer.write("},true);});");
         endScript(writer);
     }
 
-    protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event, final String groupName)
+    protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event, final String groupName, final String timelineId)
             throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         writer.write("{");
-        writer.write("\"start\":" + createJsDate(event.getStartDate()));
+        writer.write("\"timelineId\":" + "\"" + timelineId + "\"");
+        writer.write(",\"id\":" + "\"" + event.getId() + "\"");
+        writer.write(",\"start\":" + createJsDate(event.getStartDate().getTime()));
         writer.write(",\"content\":\"");
         if (component.getChildCount() > 0) {
             if (StringUtils.isNotBlank(component.getVar())) {
@@ -128,7 +133,7 @@ public class TimelineRenderer extends CoreRenderer {
         writer.write("\"");
 
         if (event.getEndDate() != null) {
-            writer.write(",\"end\":" + createJsDate(event.getEndDate()));
+            writer.write(",\"end\":" + createJsDate(event.getEndDate().getTime()));
         }
         if (groupName != null) {
             writer.write(",\"group\":\"" + groupName + "\"");
@@ -140,18 +145,10 @@ public class TimelineRenderer extends CoreRenderer {
 
     }
 
-    private static String createJsDate(Date date) {
+    private static String createJsDate(long milliseconds) {
         StringBuilder sb = new StringBuilder(50);
         sb.append("new Date(");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        sb.append(cal.get(Calendar.YEAR)).append(',');
-        sb.append(cal.get(Calendar.MONTH)).append(',');
-        sb.append(cal.get(Calendar.DAY_OF_MONTH)).append(',');
-        sb.append(cal.get(Calendar.HOUR_OF_DAY)).append(',');
-        sb.append(cal.get(Calendar.MINUTE)).append(',');
-        sb.append(cal.get(Calendar.SECOND)).append(',');
-        sb.append(cal.get(Calendar.MILLISECOND)).append(')');
+        sb.append(milliseconds).append(')');
         return sb.toString();
     }
 

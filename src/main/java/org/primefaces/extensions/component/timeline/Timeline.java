@@ -18,17 +18,22 @@
 
 package org.primefaces.extensions.component.timeline;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
-import javax.faces.component.UIOutput;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.util.Constants;
 
 /**
  * Timeline component.
@@ -45,12 +50,14 @@ import org.primefaces.component.api.Widget;
         @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
 })
-public class Timeline extends UIOutput implements Widget {
+public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
     private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
     private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
+
+    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("eventSelect"));
 
     /**
      * Properties that are tracked by state saving.
@@ -65,6 +72,7 @@ public class Timeline extends UIOutput implements Widget {
         showNavigation,
         style,
         styleClass,
+        value,
         var,
         widgetVar,
         width;
@@ -141,6 +149,14 @@ public class Timeline extends UIOutput implements Widget {
         setAttribute(PropertyKeys.styleClass, styleClass);
     }
 
+    public List<org.primefaces.extensions.model.timeline.Timeline> getValue() {
+        return (List<org.primefaces.extensions.model.timeline.Timeline>) getStateHelper().eval(PropertyKeys.value, null);
+    }
+
+    public void setValue(final List<org.primefaces.extensions.model.timeline.Timeline> timelines) {
+        setAttribute(PropertyKeys.value, timelines);
+    }
+
     public String getVar() {
         return (String) getStateHelper().eval(PropertyKeys.var, null);
     }
@@ -163,6 +179,56 @@ public class Timeline extends UIOutput implements Widget {
 
     public void setWidth(final String width) {
         setAttribute(PropertyKeys.width, width);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        String clientId = this.getClientId(context);
+        if (isSelfRequest(context)) {
+
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            FacesEvent wrapperEvent = null;
+            if (eventName.equals("eventSelect")) {
+                String selectedTimelineId = params.get(clientId + "_selectedTimelineId");
+                String selectedEventId = params.get(clientId + "_selectedEventId");
+
+                if (this.getValue() != null && !this.getValue().isEmpty()) {
+                    Iterator<org.primefaces.extensions.model.timeline.Timeline> itrTimeline = this.getValue().iterator();
+                    org.primefaces.extensions.model.timeline.Timeline timeline;
+                    while (itrTimeline.hasNext()) {
+                        timeline = itrTimeline.next();
+                        if (timeline.getId().equals(selectedTimelineId)) {
+                            Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
+                            TimelineEvent selectedEvent = null;
+                            while (itrEvent.hasNext()) {
+                                selectedEvent = itrEvent.next();
+                                if (selectedEvent.getId().equals(selectedEventId)) {
+                                    wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
+                                    super.queueEvent(wrapperEvent);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        super.queueEvent(event);
     }
 
     public String resolveWidgetVar() {

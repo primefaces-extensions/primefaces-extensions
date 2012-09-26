@@ -20,6 +20,7 @@ package org.primefaces.extensions.model.timeline;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Default implementation of Timeline.
@@ -30,6 +31,7 @@ import java.util.List;
  */
 public class DefaultTimeLine implements Timeline {
 
+    private String id;
 	private String title;
 	private List<TimelineEvent> events;
 
@@ -37,12 +39,21 @@ public class DefaultTimeLine implements Timeline {
 		this.events = new ArrayList<TimelineEvent>();
 	}
 
-	public DefaultTimeLine(String title) {
+	public DefaultTimeLine(String id, String title) {
+        this.id = id;
 		this.title = title;
 		this.events = new ArrayList<TimelineEvent>();
 	}
 
-	public String getTitle() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
 		return title;
 	}
 
@@ -51,6 +62,7 @@ public class DefaultTimeLine implements Timeline {
 	}
 
 	public void addEvent(TimelineEvent event) {
+        event.setId(UUID.randomUUID().toString());
 		events.add(event);
 	}
 
@@ -62,7 +74,24 @@ public class DefaultTimeLine implements Timeline {
 		return events;
 	}
 
-	@Override
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DefaultTimeLine)) return false;
+
+        DefaultTimeLine that = (DefaultTimeLine) o;
+
+        if (!id.equals(that.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
 	public String toString() {
 		return title;
 	}

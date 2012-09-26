@@ -15,23 +15,27 @@
  * 
  * $Id$ 
  */
+
 package org.primefaces.extensions.model.timeline;
 
 import java.util.Date;
 
 /**
- *
  * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  * @since 0.3
  */
 public interface TimelineEvent {
 
-    public String getTitle();
+    String getId();
 
-    public Date getStartDate();
+    void setId(String id);
 
-    public Date getEndDate();
+    String getTitle();
 
-    public String getStyleClass();
+    Date getStartDate();
+
+    Date getEndDate();
+
+    String getStyleClass();
 }

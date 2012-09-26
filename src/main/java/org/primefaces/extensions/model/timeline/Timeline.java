@@ -15,23 +15,27 @@
  * 
  * $Id$
  */
+
 package org.primefaces.extensions.model.timeline;
 
 import java.util.List;
 
 /**
- *
  * @author Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
  * @since 0.3
  */
 public interface Timeline {
 
-    public String getTitle();
+    String getId();
 
-    public void addEvent(TimelineEvent event);
+    void setId(String id);
 
-    public boolean deleteEvent(TimelineEvent event);
+    String getTitle();
 
-    public List<TimelineEvent> getEvents();
+    void addEvent(TimelineEvent event);
+
+    boolean deleteEvent(TimelineEvent event);
+
+    List<TimelineEvent> getEvents();
 }

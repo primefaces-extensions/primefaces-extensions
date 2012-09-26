@@ -95,31 +95,31 @@ links.Timeline = function (container) {
     // Needed for IE (which gives an error when you try to set an undefined
     // value in a style)
     this.size = {
-        'actualHeight' :0,
-        'axis'         :{
+        'actualHeight':0,
+        'axis':{
             'characterMajorHeight':0,
-            'characterMajorWidth' :0,
+            'characterMajorWidth':0,
             'characterMinorHeight':0,
-            'characterMinorWidth' :0,
-            'height'              :0,
-            'labelMajorTop'       :0,
-            'labelMinorTop'       :0,
-            'line'                :0,
-            'lineMajorWidth'      :0,
-            'lineMinorHeight'     :0,
-            'lineMinorTop'        :0,
-            'lineMinorWidth'      :0,
-            'top'                 :0
+            'characterMinorWidth':0,
+            'height':0,
+            'labelMajorTop':0,
+            'labelMinorTop':0,
+            'line':0,
+            'lineMajorWidth':0,
+            'lineMinorHeight':0,
+            'lineMinorTop':0,
+            'lineMinorWidth':0,
+            'top':0
         },
         'contentHeight':0,
-        'contentLeft'  :0,
-        'contentWidth' :0,
-        'dataChanged'  :false,
-        'frameHeight'  :0,
-        'frameWidth'   :0,
-        'groupsLeft'   :0,
-        'groupsWidth'  :0,
-        'items'        :{
+        'contentLeft':0,
+        'contentWidth':0,
+        'dataChanged':false,
+        'frameHeight':0,
+        'frameWidth':0,
+        'groupsLeft':0,
+        'groupsWidth':0,
+        'items':{
             'top':0
         }
     };
@@ -127,39 +127,39 @@ links.Timeline = function (container) {
     this.dom.container = container;
 
     this.options = {
-        'width'     :"100%",
-        'height'    :"auto",
-        'minHeight' :0, // minimal height in pixels
+        'width':"100%",
+        'height':"auto",
+        'minHeight':0, // minimal height in pixels
         'autoHeight':true,
 
-        'eventMargin'    :10, // minimal margin between events
+        'eventMargin':10, // minimal margin between events
         'eventMarginAxis':20, // minimal margin beteen events and the axis
-        'dragAreaWidth'  :10, // pixels
+        'dragAreaWidth':10, // pixels
 
-        'min'        :undefined,
-        'max'        :undefined,
+        'min':undefined,
+        'max':undefined,
         'intervalMin':10, // milliseconds
         'intervalMax':1000 * 60 * 60 * 24 * 365 * 10000, // milliseconds
 
-        'moveable'       :true,
-        'zoomable'       :true,
-        'selectable'     :true,
-        'editable'       :false,
-        'snapEvents'     :true,
+        'moveable':true,
+        'zoomable':true,
+        'selectable':true,
+        'editable':false,
+        'snapEvents':true,
         'groupChangeable':true,
 
         'showCurrentTime':true, // show a red bar displaying the current time
-        'showCustomTime' :false, // show a blue, draggable bar displaying a custom time
+        'showCustomTime':false, // show a blue, draggable bar displaying a custom time
         'showMajorLabels':true,
         'showMinorLabels':true,
-        'showNavigation' :false,
-        'showButtonAdd'  :true,
-        'groupsOnRight'  :false,
-        'axisOnTop'      :false,
-        'stackEvents'    :true,
-        'animate'        :true,
-        'animateZoom'    :true,
-        'style'          :'box'
+        'showNavigation':false,
+        'showButtonAdd':true,
+        'groupsOnRight':false,
+        'axisOnTop':false,
+        'stackEvents':true,
+        'animate':true,
+        'animateZoom':true,
+        'style':'box'
     };
 
     this.clientTimeOffset = 0;    // difference between client time and the time
@@ -298,11 +298,11 @@ links.Timeline.prototype.setData = function (data) {
 
         for (var row = 0, rows = data.getNumberOfRows(); row < rows; row++) {
             items.push(this.createItem({
-                'start'    :data.getValue(row, 0),
-                'end'      :data.getValue(row, 1),
-                'content'  :data.getValue(row, 2),
-                'detail'   :((detailCol != undefined) ? data.getValue(row, detailCol) : undefined),
-                'group'    :((groupCol != undefined) ? data.getValue(row, groupCol) : undefined),
+                'start':data.getValue(row, 0),
+                'end':data.getValue(row, 1),
+                'content':data.getValue(row, 2),
+                'detail':((detailCol != undefined) ? data.getValue(row, detailCol) : undefined),
+                'group':((groupCol != undefined) ? data.getValue(row, groupCol) : undefined),
                 'className':((classNameCol != undefined) ? data.getValue(row, classNameCol) : undefined)
             }));
         }
@@ -578,7 +578,7 @@ links.Timeline.prototype.setVisibleChartRangeNow = function () {
 links.Timeline.prototype.getVisibleChartRange = function () {
     var range = {
         'start':new Date(this.start),
-        'end'  :new Date(this.end)
+        'end':new Date(this.end)
     };
     return range;
 };
@@ -2092,11 +2092,11 @@ links.Timeline.prototype.redrawNavigation = function () {
                 var group = timeline.groups.length ? timeline.groups[0].content : undefined;
 
                 timeline.addItem({
-                    'start'  :xstart,
-                    'end'    :xend,
+                    'start':xstart,
+                    'end':xend,
                     'content':content,
-                    'detail' :detail,
-                    'group'  :group
+                    'detail':detail,
+                    'group':group
                 });
                 var index = (timeline.items.length - 1);
                 timeline.selectItem(index);
@@ -2800,11 +2800,11 @@ links.Timeline.prototype.onMouseDown = function (event) {
         var detail = "New Detail";
         var group = this.getGroupFromHeight(y);
         this.addItem({
-            'start'  :xstart,
-            'end'    :xend,
+            'start':xstart,
+            'end':xend,
             'content':content,
-            'detail' :detail,
-            'group'  :this.getGroupName(group)
+            'detail':detail,
+            'group':this.getGroupName(group)
         });
         params.itemIndex = (this.items.length - 1);
         this.selectItem(params.itemIndex);
@@ -3071,7 +3071,7 @@ links.Timeline.prototype.onMouseUp = function (event) {
 
             this.updateData(params.itemIndex, {
                 'start':item.start,
-                'end'  :item.end
+                'end':item.end
             });
 
             // fire an add or change event. 
@@ -3082,11 +3082,11 @@ links.Timeline.prototype.onMouseUp = function (event) {
             if (params.addItem) {
                 if (this.applyAdd) {
                     this.updateData(params.itemIndex, {
-                        'start'  :item.start,
-                        'end'    :item.end,
+                        'start':item.start,
+                        'end':item.end,
                         'content':item.content,
-                        'detail' :item.detail,
-                        'group'  :this.getGroupName(item.group)
+                        'detail':item.detail,
+                        'group':this.getGroupName(item.group)
                     });
                 }
                 else {
@@ -3098,7 +3098,7 @@ links.Timeline.prototype.onMouseUp = function (event) {
                 if (this.applyChange) {
                     this.updateData(params.itemIndex, {
                         'start':item.start,
-                        'end'  :item.end
+                        'end':item.end
                     });
                 }
                 else {
@@ -3203,11 +3203,11 @@ links.Timeline.prototype.onDblClick = function (event) {
         var detail = "New Detail";
         var group = this.getGroupFromHeight(y);   // (group may be undefined)
         this.addItem({
-            'start'  :xstart,
-            'end'    :xend,
+            'start':xstart,
+            'end':xend,
             'content':content,
-            'detail' :detail,
-            'group'  :this.getGroupName(group)
+            'detail':detail,
+            'group':this.getGroupName(group)
         });
         params.itemIndex = (this.items.length - 1);
         this.selectItem(params.itemIndex);
@@ -3666,6 +3666,8 @@ links.Timeline.prototype.getItem = function (index) {
     var item = this.items[index];
 
     var properties = {};
+    properties.id = item.id;
+    properties.timelineId = item.timelineId;
     properties.start = new Date(item.start);
     if (item.end) {
         properties.end = new Date(item.end);
@@ -3739,19 +3741,21 @@ links.Timeline.prototype.addItems = function (items) {
  */
 links.Timeline.prototype.createItem = function (itemData) {
     var item = {
-        'start'    :itemData.start,
-        'end'      :itemData.end,
-        'content'  :itemData.content,
-        'detail'   :itemData.detail,
-        'type'     :itemData.end ? 'range' : this.options.style,
-        'group'    :this.getGroup(itemData.group),
+        'id':itemData.id,
+        'timelineId':itemData.timelineId,
+        'start':itemData.start,
+        'end':itemData.end,
+        'content':itemData.content,
+        'detail':itemData.detail,
+        'type':itemData.end ? 'range' : this.options.style,
+        'group':this.getGroup(itemData.group),
         'className':itemData.className,
-        'top'      :0,
-        'left'     :0,
-        'width'    :0,
-        'height'   :0,
+        'top':0,
+        'left':0,
+        'width':0,
+        'height':0,
         'lineWidth':0,
-        'dotWidth' :0,
+        'dotWidth':0,
         'dotHeight':0
     };
     return item;
@@ -3774,11 +3778,13 @@ links.Timeline.prototype.changeItem = function (index, itemData) {
 
     // create new item
     var newItem = {
-        'start'  :itemData.hasOwnProperty('start') ? itemData.start : item.start,
-        'end'    :itemData.hasOwnProperty('end') ? itemData.end : item.end,
+        'id':itemData.hasOwnProperty('id') ? itemData.id : item.id,
+        'timelineId':itemData.hasOwnProperty('timelineId') ? itemData.timelineId : item.id,
+        'start':itemData.hasOwnProperty('start') ? itemData.start : item.start,
+        'end':itemData.hasOwnProperty('end') ? itemData.end : item.end,
         'content':itemData.hasOwnProperty('content') ? itemData.content : item.content,
-        'detail' :itemData.hasOwnProperty('detail') ? itemData.detail : item.detail,
-        'group'  :itemData.hasOwnProperty('group') ? itemData.group : this.getGroupName(item.group)
+        'detail':itemData.hasOwnProperty('detail') ? itemData.detail : item.detail,
+        'group':itemData.hasOwnProperty('group') ? itemData.group : this.getGroupName(item.group)
     };
     this.items[index] = this.createItem(newItem);
 
@@ -3817,9 +3823,9 @@ links.Timeline.prototype.getGroup = function (groupName) {
     var groupIndex = groupIndexes[groupName];
     if (groupIndex === undefined && groupName !== undefined) {
         groupObj = {
-            'content' :groupName,
+            'content':groupName,
             'labelTop':0,
-            'lineTop' :0
+            'lineTop':0
             // note: this object will lateron get addition information, 
             //       such as height and width of the group         
         };
@@ -3958,7 +3964,7 @@ links.Timeline.prototype.selectItem = function (index) {
 
         this.selection = {
             'index':index,
-            'item' :domItem
+            'item':domItem
         };
 
         if (this.options.editable) {
@@ -4162,12 +4168,12 @@ links.Timeline.prototype.stackCalculateFinal = function (items) {
         }
 
         finalItems[i] = {
-            'left'  :left,
-            'top'   :top,
-            'right' :right,
+            'left':left,
+            'top':top,
+            'right':right,
             'bottom':bottom,
             'height':height,
-            'item'  :item
+            'item':item
         };
     }
 
@@ -4332,7 +4338,7 @@ links.Timeline.prototype.trigger = function (event) {
         case 'rangechanged':
             properties = {
                 'start':new Date(this.start),
-                'end'  :new Date(this.end)
+                'end':new Date(this.end)
             };
             break;
 
@@ -4519,12 +4525,12 @@ links.Timeline.StepDate = function (start, end, minimumStep) {
 
 /// enum scale
 links.Timeline.StepDate.SCALE = { MILLISECOND:1,
-    SECOND                                   :2,
-    MINUTE                                   :3,
-    HOUR                                     :4,
-    DAY                                      :5,
-    MONTH                                    :6,
-    YEAR                                     :7};
+    SECOND:2,
+    MINUTE:3,
+    HOUR:4,
+    DAY:5,
+    MONTH:6,
+    YEAR:7};
 
 
 /**
@@ -5207,9 +5213,9 @@ links.imageloader = (function () {
     }
 
     return {
-        'isLoaded' :isLoaded,
+        'isLoaded':isLoaded,
         'isLoading':isLoading,
-        'load'     :load
+        'load':load
     };
 })();
 

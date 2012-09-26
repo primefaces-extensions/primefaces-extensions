@@ -29,6 +29,7 @@ import java.util.Date;
  */
 public class DefaultTimelineEvent implements TimelineEvent {
 
+    private String id;
     private String title;
     private String styleClass;
     private Date startDate;
@@ -53,6 +54,14 @@ public class DefaultTimelineEvent implements TimelineEvent {
         this.startDate = startDate;
         this.endDate = endDate;
         this.styleClass = styleClass;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -88,39 +97,20 @@ public class DefaultTimelineEvent implements TimelineEvent {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DefaultTimelineEvent)) return false;
 
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        DefaultTimelineEvent that = (DefaultTimelineEvent) o;
 
-        final DefaultTimelineEvent other = (DefaultTimelineEvent) obj;
-        if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
-            return false;
-        }
-
-        if (this.startDate != other.startDate && (this.startDate == null || !this.startDate.equals(other.startDate))) {
-            return false;
-        }
-
-        if (this.endDate != other.endDate && (this.endDate == null || !this.endDate.equals(other.endDate))) {
-            return false;
-        }
+        if (!id.equals(that.id)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
-        hash = 79 * hash + (this.startDate != null ? this.startDate.hashCode() : 0);
-        hash = 79 * hash + (this.endDate != null ? this.endDate.hashCode() : 0);
-
-        return hash;
+        return id.hashCode();
     }
 
     @Override
