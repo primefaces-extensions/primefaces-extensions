@@ -5245,7 +5245,7 @@ $.layout.state = {
 
 		// the state-data.child key should NOT be copied to 'options', so remove it if it was
 		// had to wait until AFTER we 'copied' data above because is a 'pointer' to stateData.child
-		if (o.child) delete o.child;
+		if (o && o.child) delete o.child;
  
  		/*
 		var vis, o, s, h, c

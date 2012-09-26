@@ -10,7 +10,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
      *
      * @param {object} cfg The widget configuration.
      */
-    init:function (cfg) {
+    init: function (cfg) {
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
@@ -22,9 +22,9 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 
         if (cfg.clientState) {
             this.cfg.options.stateManagement = {
-                enabled: true,
-                cookie: {
-                    name: encodeURIComponent('pfext.layout.' + this.id)
+                enabled:true,
+                cookie:{
+                    name:encodeURIComponent('pfext.layout.' + this.id)
                 }
             };
         } else if (cfg.serverState) {
@@ -45,112 +45,74 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
                 });
             }
         }
-
-        /*
-         var eventCallbacks = {
-         onopen: function(panename, pane, state, options) {
-         if (options.paneposition) {
-         _self.onopen(options.paneposition);
-         }
-         }
-         , onclose: function(panename, pane, state, options) {
-         if (options.paneposition) {
-         _self.onclose(options.paneposition);
-         }
-         }
-         , onresize: function(panename, pane, state, options) {
-         if (options.paneposition) {
-         _self.onresize(options.paneposition, state);
-         }
-         }        
-         };*/
-
-        /*
-         var northOpt = $.extend({}, {
-         onopen: eventCallbacks.onopen
-         , onclose: eventCallbacks.onclose
-         , onresize: eventCallbacks.onresize
-         , resizeWithWindowDelay: 250
-         , slidable: false
-         , north__paneSelector: jqId + "-layout-outer-north"
-         , center__paneSelector: jqId + "-layout-outer-center"
-         }, cfg.northOptions);    
-
-         var defaultLayoutSettings = {
-         onopen: eventCallbacks.onopen
-         , onclose: eventCallbacks.onclose
-         , onresize: eventCallbacks.onresize
-         , slidable: false
-         , contentSelector: '.pe-layout-pane-content'
-         , togglerTip_open: cfg.togglerTipClose
-         , togglerTip_closed: cfg.togglerTipOpen
-         , resizerTip: cfg.resizerTip
-         , spacing_open: 0
-         };*/
-
-        /*
-         this.onopen = function(paneposition) {
-         var behavior = config.behaviors ? config.behaviors['open'] : null;
-         if (behavior) {
-         var ext = {
-         params: [
-         { name: clientId + '_pane', value: paneposition }
-         ]
-         };
-
-         behavior.call(this, paneposition, ext);
-         }
-
-         if (stateHiddenField && stateHiddenField.length > 0) {
-         stateHiddenField.val(getLayoutState());
-         }        
-         }
-
-         this.onclose = function(paneposition) {
-         var behavior = config.behaviors ? config.behaviors['close'] : null;
-         if (behavior) {
-         var ext = {
-         params: [
-         { name: clientId + '_pane', value: paneposition }
-         ]
-         };
-
-         behavior.call(this, paneposition, ext);
-         }
-
-         if (stateHiddenField && stateHiddenField.length > 0) {
-         stateHiddenField.val(getLayoutState());
-         }        
-         }
-
-         this.onresize = function(paneposition, state) {
-         if (!state.isClosed && !state.isHidden) {
-         var behavior = config.behaviors ? config.behaviors['resize'] : null;
-         if (behavior) {
-         var ext = {
-         params: [
-         { name: clientId + '_pane', value: paneposition },
-         { name: clientId + '_width', value: state.innerWidth },
-         { name: clientId + '_height', value: state.innerHeight }
-         ]
-         };
-
-         behavior.call(this, paneposition, ext);
-         }
-
-         if (stateHiddenField && stateHiddenField.length > 0) {
-         stateHiddenField.val(getLayoutState());
-         }            
-         }
-         }*/
     },
 
-    createLayout:function () {
+    createLayout: function () {
         // create layout
         var layoutObj = this.jqTarget.layout(this.cfg.options);
 
         if (this.cfg.serverState) {
-            layoutObj.loadState($.parseJSON(this.cfg.state));
+            layoutObj.loadState(this.cfg.state);
         }
+
+        var _self = this;
+        var panesSelector = ".ui-layout-center,.ui-layout-north,.ui-layout-south,.ui-layout-west,.ui-layout-east";
+
+        // bind events
+        this.jqTarget.find(panesSelector).bind("layoutpaneonopen", function () {
+            var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['open'] : null;
+            if (behavior) {
+                var combinedPosition = $(this).data('combinedPosition');
+                var ext = {
+                    params:[
+                        {name:_self.id + '_pane', value:combinedPosition}
+                    ]
+                };
+
+                behavior.call(_self, combinedPosition, ext);
+            }
+
+            if (_self.cfg.serverState) {
+                _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
+            }
+        }).bind("layoutpaneonclose", function () {
+            var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['close'] : null;
+            if (behavior) {
+                var combinedPosition = $(this).data('combinedPosition');
+                var ext = {
+                    params:[
+                        {name:_self.id + '_pane', value:combinedPosition}
+                    ]
+                };
+    
+                behavior.call(_self, combinedPosition, ext);
+            }
+    
+            if (_self.cfg.serverState) {
+                _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
+            }
+        }).bind("layoutpaneonresize", function () {
+            var layoutPane = $(this).data("layoutPane");
+
+            if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
+                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['resize'] : null;
+                if (behavior) {
+                    var combinedPosition = $(this).data('combinedPosition');
+                    var ext = {
+                        params:[
+                            {name:_self.id + '_pane', value:combinedPosition},
+                            {name:_self.id + '_width', value:layoutPane.state.innerWidth},
+                            {name:_self.id + '_height', value:layoutPane.state.innerHeight}
+                        ]
+                    };
+        
+                    behavior.call(_self, combinedPosition, ext);
+                }
+        
+                if (_self.cfg.serverState) {
+                    _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
+                }
+            }
+        });
     }
 });

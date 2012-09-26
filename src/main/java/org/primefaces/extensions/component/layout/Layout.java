@@ -77,8 +77,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
 
-	private boolean fullPage = false;
-
 	/**
 	 * Properties that are tracked by state saving.
 	 *

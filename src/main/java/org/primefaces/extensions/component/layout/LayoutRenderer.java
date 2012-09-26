@@ -123,9 +123,9 @@ public class LayoutRenderer extends CoreRenderer {
 
 			String state = layout.getState();
 			if (StringUtils.isNotBlank(state)) {
-				writer.write(",state:'" + state + "'");
+				writer.write(",state:" + state);
 			} else {
-				writer.write(",state:'{}'");
+				writer.write(",state:{}");
 			}
 		} else {
 			writer.write("false");
