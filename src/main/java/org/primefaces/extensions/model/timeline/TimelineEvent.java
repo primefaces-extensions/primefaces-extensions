@@ -12,8 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
- * $Id$ 
+ *
+ * $Id$
  */
 
 package org.primefaces.extensions.model.timeline;
@@ -37,5 +37,9 @@ public interface TimelineEvent {
 
     Date getEndDate();
 
+    void setEndDate(Date endDate);
+
     String getStyleClass();
+
+    void setStyleClass(String styleClass);
 }

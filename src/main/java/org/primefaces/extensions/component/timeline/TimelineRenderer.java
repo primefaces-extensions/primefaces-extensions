@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.timeline;
 
 import java.io.IOException;
@@ -82,13 +81,13 @@ public class TimelineRenderer extends CoreRenderer {
         writer.write(",width:\"" + component.getWidth() + "\"");
         writer.write(",showNavigation:" + component.getShowNavigation());
         if (!model.isEmpty()) {
-            String groupName = null;
+            String groupName;
             boolean hasGroup = model.size() > 1;
             writer.write(",dataSource: [");
-            for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext(); ) {
+            for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext();) {
                 org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
                 groupName = (hasGroup) ? timeline.getTitle() : null;
-                for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext(); ) {
+                for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext();) {
                     encodeEvent(context, component, eventIter.next(), groupName, timeline.getId());
 
                     if (eventIter.hasNext()) {
@@ -106,8 +105,8 @@ public class TimelineRenderer extends CoreRenderer {
         endScript(writer);
     }
 
-    protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event, final String groupName, final String timelineId)
-            throws IOException {
+    protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event,
+                               final String groupName, final String timelineId) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         writer.write("{");
@@ -138,7 +137,7 @@ public class TimelineRenderer extends CoreRenderer {
         if (groupName != null) {
             writer.write(",\"group\":\"" + groupName + "\"");
         }
-        if(StringUtils.isNotBlank(event.getStyleClass())){
+        if (StringUtils.isNotBlank(event.getStyleClass())) {
             writer.write(",\"className\":\"" + event.getStyleClass() + "\"");
         }
         writer.write("}");

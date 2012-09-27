@@ -15,10 +15,15 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.timeline;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
@@ -43,12 +48,12 @@ import org.primefaces.util.Constants;
  * @since 0.3
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
 })
 public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
@@ -56,7 +61,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
     private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
     private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
-
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("eventSelect"));
 
     /**
@@ -66,6 +70,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
      * @version $Revision$
      */
     protected enum PropertyKeys {
+
         axisPosition,
         eventStyle,
         height,
@@ -76,7 +81,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         var,
         widgetVar,
         width;
-
         private String toString;
 
         PropertyKeys(final String toString) {
@@ -200,7 +204,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         if (isSelfRequest(context)) {
 
             AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            FacesEvent wrapperEvent = null;
             if (eventName.equals("eventSelect")) {
                 String selectedTimelineId = params.get(clientId + "_selectedTimelineId");
                 String selectedEventId = params.get(clientId + "_selectedEventId");
@@ -212,11 +215,11 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                         timeline = itrTimeline.next();
                         if (timeline.getId().equals(selectedTimelineId)) {
                             Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
-                            TimelineEvent selectedEvent = null;
+                            TimelineEvent selectedEvent;
                             while (itrEvent.hasNext()) {
                                 selectedEvent = itrEvent.next();
                                 if (selectedEvent.getId().equals(selectedEventId)) {
-                                    wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
+                                    FacesEvent wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
                                     super.queueEvent(wrapperEvent);
                                     return;
                                 }

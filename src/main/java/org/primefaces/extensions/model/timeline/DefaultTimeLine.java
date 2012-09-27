@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.model.timeline;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,7 @@ import java.util.UUID;
  * @version $Revision$
  * @since   0.3
  */
-public class DefaultTimeLine implements Timeline {
+public class DefaultTimeLine implements Timeline, Serializable {
 
     private String id;
 	private String title;
