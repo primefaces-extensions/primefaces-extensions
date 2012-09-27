@@ -48,7 +48,7 @@
         <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/master-pom/trunk</developerConnection>
         <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/master-pom/trunk</url>
     </scm>
-    
+
     <developers>
         <developer>
             <id>andraschko</id>
@@ -102,7 +102,7 @@
     <build>
         <pluginManagement>
             <plugins>
-			    <plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>2.3</version>
@@ -140,7 +140,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
-		            <version>2.8</version>
+                    <version>2.8</version>
                     <extensions>true</extensions>
                     <configuration>
                         <useProjectReferences>false</useProjectReferences>
@@ -396,7 +396,7 @@
                                 <prefix>svn</prefix>
                             </entry>
                         </entries>
-                    </configuration>                    
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -417,8 +417,8 @@
                             <item>timestamp</item>
                         </items>
                     </configuration>
-                </plugin>                
-                
+                </plugin>
+
                 <!-- dependencies to own plugins -->
                 <plugin>
                     <groupId>org.primefaces.extensions</groupId>
@@ -433,7 +433,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>    
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -509,9 +509,9 @@
                 <version>2.0.1</version>
             </dependency>
             <dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
             </dependency>
             <dependency>
                 <groupId>${pe.jsf.group}</groupId>
@@ -579,15 +579,15 @@
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
-                <version>2.1</version>
+                <version>2.2.2</version>
             </dependency>
-            
+
             <!-- dependencies to PrimeFaces -->
             <dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>${primefaces.core.version}</version>
-            </dependency>            
+            </dependency>
 
             <!-- dependencies for own plugins -->
             <dependency>
@@ -610,7 +610,7 @@
                 <artifactId>closure-compiler</artifactId>
                 <version>r1810</version>
             </dependency>
-            
+
             <!-- dependencies to own artefacts -->
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
@@ -631,7 +631,7 @@
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>all-themes</artifactId>
                 <version>${primefaces.theme.version}</version>
-            </dependency>            
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -697,26 +697,26 @@
             <id>myfaces</id>
             <properties>
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
-                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
+                <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
-                <pe.jsf.version>2.1.7</pe.jsf.version>
+                <pe.jsf.version>2.1.9</pe.jsf.version>
             </properties>
         </profile>
         <profile>
             <id>deploy</id>
             <build>
                 <finalName>showcase-primeext</finalName>
-   	        </build>            
+            </build>
             <properties>
                 <pe.jsf.scope>provided</pe.jsf.scope>
                 <pe.webapp.filter>release</pe.webapp.filter>
             </properties>
-        </profile>        
+        </profile>
     </profiles>
 
     <properties>
-      	<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-      	<resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
+        <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+        <resources.dir.uncompressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions-uncompressed</resources.dir.uncompressed>
         <java.version.source>1.5</java.version.source>
         <java.version.target>1.5</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
@@ -724,13 +724,13 @@
         <pe.jsf.impl>mojarra</pe.jsf.impl>
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
-        <pe.jsf.scope>compile</pe.jsf.scope>        
-        <pe.jsf.version>2.1.10</pe.jsf.version>
-        <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>        
+        <pe.jsf.scope>compile</pe.jsf.scope>
+        <pe.jsf.version>2.1.13</pe.jsf.version>
+        <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.newComponents>waypoint;spotlight</pe.newComponents>
         <pe.updatedComponents>ajaxErrorHandler;codeMirror;inputNumber;layout;masterDetail;timeline;tooltip;triStateCheckbox;triStateManyCheckbox</pe.updatedComponents>
-        <primefaces.core.version>3.4</primefaces.core.version>
+        <primefaces.core.version>3.4.1</primefaces.core.version>
         <primefaces.theme.version>1.0.8</primefaces.theme.version>
     </properties>
 </project>
