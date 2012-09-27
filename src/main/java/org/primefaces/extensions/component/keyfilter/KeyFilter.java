@@ -64,7 +64,8 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		forSelector,
 		regEx,
 		mask,
-		testFunction;
+		testFunction,
+		preventPaste;
 
 		private String toString;
 
@@ -138,6 +139,14 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		setAttribute(PropertyKeys.testFunction, testFunction);
 	}
 
+	public Boolean getPreventPaste() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.preventPaste, Boolean.TRUE);
+	}
+
+	public void setPreventPaste(final Boolean preventPaste) {
+		setAttribute(PropertyKeys.preventPaste, preventPaste);
+	}
+	
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

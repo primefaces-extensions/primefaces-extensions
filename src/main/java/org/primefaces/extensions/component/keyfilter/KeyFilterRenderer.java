@@ -64,6 +64,11 @@ public class KeyFilterRenderer extends CoreRenderer {
 			writer.write(",testFunction:function(c){" + keyFilter.getTestFunction() + ";}");
 		}
 
+		if (keyFilter.getPreventPaste() != null) {
+			writer.write(",preventPaste:" + keyFilter.getPreventPaste());
+		}
+
+
 		writer.write("});});");
 		endScript(writer);
 	}

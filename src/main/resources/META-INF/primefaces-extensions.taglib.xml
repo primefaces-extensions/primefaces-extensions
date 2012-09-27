@@ -1818,6 +1818,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify if the component also should prevent paste. Default value is true.]]>
+            </description>
+            <name>preventPaste</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Deprecated tag name, use spotlight name!]]></description>

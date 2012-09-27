@@ -16,10 +16,10 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 	    this.target = $(this.cfg.target);
 
 	    if (this.target.is(':input')) {
-	    	this.applyKeyFilter(this.target);
+	    	this.applyKeyFilter(this.target, cfg);
 	    } else {
 	    	var nestedInput = $(':not(:submit):not(:button):input:visible:enabled:first', this.target);
-	    	this.applyKeyFilter(nestedInput);
+	    	this.applyKeyFilter(nestedInput, cfg);
 	    }
 	    
 	    PrimeFacesExt.removeWidgetScript(this.id);
@@ -29,9 +29,10 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 	 * Applies the keyFilter to the given jQuery selector object.
 	 * 
 	 * @param {object} input A jQuery selector object.
+	 * @param {object} cfg The widget configuration.
 	 * @private
 	 */
-	applyKeyFilter : function(input) {
+	applyKeyFilter : function(input, cfg) {
 		if (this.cfg.regEx) {
 			input.keyfilter(this.cfg.regEx);
 		} else if (this.cfg.testFunction) {
@@ -40,9 +41,11 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 			input.keyfilter($.fn.keyfilter.defaults.masks[this.cfg.mask]);
 		}
 
-		//disable paste
-		input.bind('paste', function(e) {
-			e.preventDefault();
-		});
+		if (cfg.preventPaste) {
+			//disable paste
+			input.bind('paste', function(e) {
+				e.preventDefault();
+			});
+		}
 	}
 });
