@@ -726,7 +726,7 @@
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.scope>compile</pe.jsf.scope>
         <pe.jsf.version>2.1.13</pe.jsf.version>
-        <pe.impl.version>0.6.0-SNAPSHOT</pe.impl.version>
+        <pe.impl.version>0.6.0</pe.impl.version>
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.newComponents>waypoint;spotlight</pe.newComponents>
         <pe.updatedComponents>ajaxErrorHandler;codeMirror;inputNumber;layout;masterDetail;timeline;tooltip;triStateCheckbox;triStateManyCheckbox</pe.updatedComponents>
