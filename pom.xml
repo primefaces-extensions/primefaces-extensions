@@ -705,10 +705,12 @@
         <profile>
             <id>deploy</id>
             <build>
-                <finalName>showcase-primeext</finalName>
+                <finalName>primeext-showcase</finalName>
             </build>
             <properties>
+                <!--
                 <pe.jsf.scope>provided</pe.jsf.scope>
+                -->
                 <pe.webapp.filter>release</pe.webapp.filter>
             </properties>
         </profile>
