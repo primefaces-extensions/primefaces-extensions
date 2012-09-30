@@ -69,8 +69,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String POSITION_SEPARATOR = "_";
-	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-top";
-	public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-top pe-layout-pane-withsubpanes";
+	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-all";
+	public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
 	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
 	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
 

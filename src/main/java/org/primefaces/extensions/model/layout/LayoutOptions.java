@@ -135,10 +135,14 @@ public class LayoutOptions implements Serializable {
 	}
 
 	public LayoutOptions getLayoutOptions(String id) {
+		if (id == null) {
+			return null;
+		}
+
 		LayoutOptions loOptions = null;
 
 		if (child != null) {
-			if (child.getId().equals(id)) {
+			if (id.equals(child.getId())) {
 				return child;
 			} else {
 				loOptions = child.getLayoutOptions(id);
@@ -146,7 +150,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && panes != null) {
-			if (panes.getId().equals(id)) {
+			if (id.equals(panes.getId())) {
 				return panes;
 			} else {
 				loOptions = panes.getLayoutOptions(id);
@@ -154,7 +158,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && center != null) {
-			if (center.getId().equals(id)) {
+			if (id.equals(center.getId())) {
 				return center;
 			} else {
 				loOptions = center.getLayoutOptions(id);
@@ -162,7 +166,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && north != null) {
-			if (north.getId().equals(id)) {
+			if (id.equals(north.getId())) {
 				return north;
 			} else {
 				loOptions = north.getLayoutOptions(id);
@@ -170,7 +174,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && south != null) {
-			if (south.getId().equals(id)) {
+			if (id.equals(south.getId())) {
 				return south;
 			} else {
 				loOptions = south.getLayoutOptions(id);
@@ -178,7 +182,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && east != null) {
-			if (east.getId().equals(id)) {
+			if (id.equals(east.getId())) {
 				return east;
 			} else {
 				loOptions = east.getLayoutOptions(id);
@@ -186,7 +190,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (loOptions == null && west != null) {
-			if (west.getId().equals(id)) {
+			if (id.equals(west.getId())) {
 				return west;
 			} else {
 				loOptions = west.getLayoutOptions(id);
@@ -199,8 +203,12 @@ public class LayoutOptions implements Serializable {
 	public boolean replace(String id, LayoutOptions layoutOptions) {
 		boolean replaced = false;
 
+		if (id == null) {
+			return replaced;
+		}
+
 		if (child != null) {
-			if (child.getId().equals(id)) {
+			if (id.equals(child.getId())) {
 				child = layoutOptions;
 
 				return true;
@@ -210,7 +218,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && panes != null) {
-			if (panes.getId().equals(id)) {
+			if (id.equals(panes.getId())) {
 				panes = layoutOptions;
 
 				return true;
@@ -220,7 +228,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && center != null) {
-			if (center.getId().equals(id)) {
+			if (id.equals(center.getId())) {
 				center = layoutOptions;
 
 				return true;
@@ -230,7 +238,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && north != null) {
-			if (north.getId().equals(id)) {
+			if (id.equals(north.getId())) {
 				north = layoutOptions;
 
 				return true;
@@ -240,7 +248,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && south != null) {
-			if (south.getId().equals(id)) {
+			if (id.equals(south.getId())) {
 				south = layoutOptions;
 
 				return true;
@@ -250,7 +258,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && east != null) {
-			if (east.getId().equals(id)) {
+			if (id.equals(east.getId())) {
 				east = layoutOptions;
 
 				return true;
@@ -260,7 +268,7 @@ public class LayoutOptions implements Serializable {
 		}
 
 		if (!replaced && west != null) {
-			if (west.getId().equals(id)) {
+			if (id.equals(west.getId())) {
 				west = layoutOptions;
 
 				return true;

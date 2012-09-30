@@ -54,14 +54,30 @@ public class LayoutPaneRenderer extends CoreRenderer {
 
 		boolean hasSubPanes = false;
 		for (UIComponent subChild : layoutPane.getChildren()) {
+			// check first level
+			if (hasSubPanes) {
+				break;
+			}
+
 			if (subChild instanceof LayoutPane) {
 				if (!subChild.isRendered()) {
 					continue;
 				}
 
 				hasSubPanes = true;
+			} else {
+				for (UIComponent subSubChild : subChild.getChildren()) {
+					// check second level
+					if (subSubChild instanceof LayoutPane) {
+						if (!subSubChild.isRendered()) {
+							continue;
+						}
 
-				break;
+						hasSubPanes = true;
+
+						break;
+					}
+				}
 			}
 		}
 
@@ -81,7 +97,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
 			}
 		}
 
-		writer.writeAttribute("data-combinedPosition", combinedPosition, null);
+		writer.writeAttribute("data-combinedposition", combinedPosition, null);
 
 		// encode header
 		if (header != null) {

@@ -4,13 +4,12 @@
  * @author Oleg Varaksin
  */
 PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
-
     /**
      * Initializes the widget.
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function (cfg) {
+    init:function (cfg) {
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
@@ -47,72 +46,148 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    createLayout: function () {
+    createLayout:function () {
         // create layout
-        var layoutObj = this.jqTarget.layout(this.cfg.options);
+        this.layout = this.jqTarget.layout(this.cfg.options);
 
         if (this.cfg.serverState) {
-            layoutObj.loadState(this.cfg.state);
+            this.layout.loadState(this.cfg.state);
         }
 
+        // bind "open", "close" and "resize" events
+        this.bindEvents(this.jqTarget);
+    },
+    
+    bindEvents:function(parent) {
         var _self = this;
-        var panesSelector = ".ui-layout-center,.ui-layout-north,.ui-layout-south,.ui-layout-west,.ui-layout-east";
 
         // bind events
-        this.jqTarget.find(panesSelector).bind("layoutpaneonopen", function () {
-            var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['open'] : null;
-            if (behavior) {
-                var combinedPosition = $(this).data('combinedPosition');
-                var ext = {
-                    params:[
-                        {name:_self.id + '_pane', value:combinedPosition}
-                    ]
-                };
-
-                behavior.call(_self, combinedPosition, ext);
-            }
-
-            if (_self.cfg.serverState) {
-                _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
-            }
-        }).bind("layoutpaneonclose", function () {
-            var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['close'] : null;
-            if (behavior) {
-                var combinedPosition = $(this).data('combinedPosition');
-                var ext = {
-                    params:[
-                        {name:_self.id + '_pane', value:combinedPosition}
-                    ]
-                };
-    
-                behavior.call(_self, combinedPosition, ext);
-            }
-    
-            if (_self.cfg.serverState) {
-                _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
-            }
-        }).bind("layoutpaneonresize", function () {
-            var layoutPane = $(this).data("layoutPane");
-
-            if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
-                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['resize'] : null;
+        parent.find(".ui-layout-pane")
+            .bind("layoutpaneonopen",function () {
+                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['open'] : null;
                 if (behavior) {
-                    var combinedPosition = $(this).data('combinedPosition');
+                    var combinedPosition = $(this).data('combinedposition');
                     var ext = {
                         params:[
-                            {name:_self.id + '_pane', value:combinedPosition},
-                            {name:_self.id + '_width', value:layoutPane.state.innerWidth},
-                            {name:_self.id + '_height', value:layoutPane.state.innerHeight}
+                            {name:_self.id + '_pane', value:combinedPosition}
                         ]
                     };
-        
+    
                     behavior.call(_self, combinedPosition, ext);
                 }
-        
+    
                 if (_self.cfg.serverState) {
-                    _self.stateHiddenField.val(layoutObj.encodeJSON(layoutObj.readState()));
+                    _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
                 }
-            }
-        });
+            }).bind("layoutpaneonclose",function () {
+                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['close'] : null;
+                if (behavior) {
+                    var combinedPosition = $(this).data('combinedposition');
+                    var ext = {
+                        params:[
+                            {name:_self.id + '_pane', value:combinedPosition}
+                        ]
+                    };
+    
+                    behavior.call(_self, combinedPosition, ext);
+                }
+    
+                if (_self.cfg.serverState) {
+                    _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
+                }
+            }).bind("layoutpaneonresize", function () {
+                var layoutPane = $(this).data("layoutPane");
+    
+                if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
+                    var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['resize'] : null;
+                    if (behavior) {
+                        var combinedPosition = $(this).data('combinedposition');
+                        var ext = {
+                            params:[
+                                {name:_self.id + '_pane', value:combinedPosition},
+                                {name:_self.id + '_width', value:layoutPane.state.innerWidth},
+                                {name:_self.id + '_height', value:layoutPane.state.innerHeight}
+                            ]
+                        };
+    
+                        behavior.call(_self, combinedPosition, ext);
+                    }
+    
+                    if (_self.cfg.serverState) {
+                        _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
+                    }
+                }
+            });        
+    },
+
+    toggle:function (pane) {
+        this.jqTarget.find(".ui-layout-pane").
+            each(function() {
+                var combinedPosition = $(this).data('combinedposition');
+                if (combinedPosition && combinedPosition === pane) {
+                    $(this).trigger("layoutpanetoggle");
+                    return false;
+                }
+            });
+    },
+
+    close:function (pane) {
+        this.jqTarget.find(".ui-layout-pane").
+            each(function() {
+                var combinedPosition = $(this).data('combinedposition');
+                if (combinedPosition && combinedPosition === pane) {
+                    $(this).trigger("layoutpaneclose");
+                    return false;
+                }
+            });
+    },
+
+    open:function (pane) {
+        this.jqTarget.find(".ui-layout-pane").
+            each(function() {
+                var combinedPosition = $(this).data('combinedposition');
+                if (combinedPosition && combinedPosition === pane) {
+                    $(this).trigger("layoutpaneopen");
+                    return false;
+                }
+            });
+    },
+
+    sizePane:function (pane, size) {
+        this.jqTarget.find(".ui-layout-pane").
+            each(function() {
+                var combinedPosition = $(this).data('combinedposition');
+                if (combinedPosition && combinedPosition === pane) {
+                    $(this).trigger("layoutpanesize", [size]);
+                    return false;
+                }
+            });
     }
+    
+    /*
+    update:function (pane, options) {
+        var _self = this;
+        
+        this.jqTarget.find(".ui-layout-pane").
+            each(function() {
+                var $this = $(this);
+                var combinedPosition = $this.data('combinedposition');
+                if (combinedPosition && combinedPosition === pane) {
+                    
+                    // update child options
+                    var $layoutContainer = $this.closest(".ui-layout-container");
+                    if ($layoutContainer.length) {
+                        var innerLayout = $layoutContainer.data("layout");
+                        
+                        innerLayout.destroy();
+                        $layoutContainer.layout(options != null ? options : {});
+                        
+                        // bind "open", "close" and "resize" events
+                        _self.bindEvents($this);                        
+                    }                    
+                    
+                    return false;
+                }
+            });
+    }*/   
 });
