@@ -38,7 +38,7 @@
  * TODO
  *
  * Add zooming with pinching on Android
- * 
+ *
  * Bug: when an item contains a javascript onclick or a link, this does not work
  *      when the item is not selected (when the item is being selected,
  *      it is redrawn, which cancels any onclick or link action)
@@ -55,8 +55,8 @@
  */
 if (typeof links === 'undefined') {
     links = {};
-    // important: do not use var, as "var links = {};" will overwrite 
-    //            the existing links variable value with undefined in IE8, IE7.  
+// important: do not use var, as "var links = {};" will overwrite
+//            the existing links variable value with undefined in IE8, IE7.
 }
 
 
@@ -65,8 +65,8 @@ if (typeof links === 'undefined') {
  */
 if (typeof google === 'undefined') {
     google = undefined;
-    // important: do not use var, as "var google = undefined;" will overwrite 
-    //            the existing google variable value with undefined in IE8, IE7.
+// important: do not use var, as "var google = undefined;" will overwrite
+//            the existing google variable value with undefined in IE8, IE7.
 }
 
 
@@ -91,7 +91,7 @@ links.Timeline = function (container) {
 
     this.listeners = {}; // event listener callbacks
 
-    // Initialize sizes. 
+    // Initialize sizes.
     // Needed for IE (which gives an error when you try to set an undefined
     // value in a style)
     this.size = {
@@ -178,13 +178,13 @@ links.Timeline = function (container) {
     this.data = [];
     this.firstDraw = true;
 
-    // date interval must be initialized 
+    // date interval must be initialized
     this.setVisibleChartRange(undefined, undefined, false);
 
     // create all DOM elements
     this.redrawFrame();
 
-    // Internet Explorer does not support Array.indexof, 
+    // Internet Explorer does not support Array.indexof,
     // so we define it here in that case
     // http://soledadpenades.com/2007/05/17/arrayindexof-in-internet-explorer/
     if (!Array.prototype.indexOf) {
@@ -319,7 +319,7 @@ links.Timeline.prototype.setData = function (data) {
         throw "Unknown data type. DataTable or Array expected.";
     }
 
-    // set a flag to force the recalcSize method to recalculate the 
+    // set a flag to force the recalcSize method to recalculate the
     // heights and widths of the events
     this.size.dataChanged = true;
     this.redrawFrame();      // create the items for the new data
@@ -417,9 +417,9 @@ links.Timeline.prototype.updateData = function (index, values) {
  */
 links.Timeline.prototype.getItemIndex = function (element) {
     var e = element,
-        dom = this.dom,
-        items = this.items,
-        index = undefined;
+    dom = this.dom,
+    items = this.items,
+    index = undefined;
 
     // try to find the frame where the items are located in
     while (e.parentNode && e.parentNode !== dom.items.frame) {
@@ -551,8 +551,8 @@ links.Timeline.prototype.setVisibleChartRange = function (start, end, redraw) {
  */
 links.Timeline.prototype.setVisibleChartRangeAuto = function () {
     var range = this.getDataRange(true),
-        start = undefined,
-        end = undefined;
+    start = undefined,
+    end = undefined;
     this.setVisibleChartRange(range.min, range.max);
 };
 
@@ -595,14 +595,14 @@ links.Timeline.prototype.getVisibleChartRange = function () {
  */
 links.Timeline.prototype.getDataRange = function (withMargin) {
     var items = this.items,
-        min = undefined,
-        max = undefined;
+    min = undefined,
+    max = undefined;
 
     if (items) {
         for (var i = 0, iMax = items.length; i < iMax; i++) {
             var item = items[i],
-                start = item.start ? item.start.valueOf() : undefined,
-                end = item.end ? item.end.valueOf() : start;
+            start = item.start ? item.start.valueOf() : undefined,
+            end = item.end ? item.end.valueOf() : start;
 
             if (min != undefined && start != undefined) {
                 min = Math.min(min, start);
@@ -639,8 +639,8 @@ links.Timeline.prototype.getDataRange = function (withMargin) {
  */
 links.Timeline.prototype.redrawFrame = function () {
     var dom = this.dom,
-        options = this.options,
-        size = this.size;
+    options = this.options,
+    size = this.size;
 
     if (!dom.frame) {
         // the surrounding main frame
@@ -672,10 +672,10 @@ links.Timeline.prototype.redrawFrame = function () {
  */
 links.Timeline.prototype.redrawContent = function () {
     var dom = this.dom,
-        size = this.size;
+    size = this.size;
 
     if (!dom.content) {
-        // create content box where the axis and canvas will 
+        // create content box where the axis and canvas will
         dom.content = document.createElement("DIV");
         //this.frame.className = "ui-timeline-frame";
         dom.content.style.position = "relative";
@@ -692,7 +692,7 @@ links.Timeline.prototype.redrawContent = function () {
         dom.contentTimelines = timelines;
 
         var params = this.eventParams,
-            me = this;
+        me = this;
         if (!params.onMouseDown) {
             params.onMouseDown = function (event) {
                 me.onMouseDown(event);
@@ -734,9 +734,9 @@ links.Timeline.prototype.redrawContent = function () {
  */
 links.Timeline.prototype.redrawAxis = function () {
     var dom = this.dom,
-        options = this.options,
-        size = this.size,
-        step = this.step;
+    options = this.options,
+    size = this.size,
+    step = this.step;
 
     var axis = dom.axis;
     if (!axis) {
@@ -781,7 +781,7 @@ links.Timeline.prototype.redrawAxis = function () {
 
     // calculate minimum step (in milliseconds) based on character size
     this.minimumStep = this.screenToTime(size.axis.characterMinorWidth * 6).valueOf() -
-        this.screenToTime(0).valueOf();
+    this.screenToTime(0).valueOf();
 
     step.setRange(start, end, this.minimumStep);
 
@@ -793,8 +793,8 @@ links.Timeline.prototype.redrawAxis = function () {
     var xFirstMajorLabel = undefined;
     while (!step.end()) {
         var cur = step.getCurrent(),
-            x = this.timeToScreen(cur),
-            isMajor = step.isMajor();
+        x = this.timeToScreen(cur),
+        isMajor = step.isMajor();
 
         if (options.showMinorLabels) {
             this.redrawAxisMinorText(x, step.getLabelMinor());
@@ -819,8 +819,8 @@ links.Timeline.prototype.redrawAxis = function () {
     // create a major label on the left when needed
     if (options.showMajorLabels) {
         var leftTime = this.screenToTime(0),
-            leftText = this.step.getLabelMajor(leftTime),
-            width = leftText.length * size.axis.characterMajorWidth + 10;// estimation
+        leftText = this.step.getLabelMajor(leftTime),
+        width = leftText.length * size.axis.characterMajorWidth + 10;// estimation
 
         if (xFirstMajorLabel === undefined || width < xFirstMajorLabel) {
             this.redrawAxisMajorText(0, leftText, leftTime);
@@ -844,7 +844,7 @@ links.Timeline.prototype.redrawAxisCharacters = function () {
     // this is used to calculate the step size, and also the positioning of the
     // axis
     var dom = this.dom,
-        axis = dom.axis;
+    axis = dom.axis;
 
     if (!axis.characterMinor) {
         var text = document.createTextNode("0");
@@ -894,12 +894,12 @@ links.Timeline.prototype.redrawAxisStartOverwriting = function () {
  */
 links.Timeline.prototype.redrawAxisEndOverwriting = function () {
     var dom = this.dom,
-        props = this.size.axis.properties,
-        frame = this.dom.axis.frame;
+    props = this.size.axis.properties,
+    frame = this.dom.axis.frame;
 
     // remove leftovers
     var minorTexts = dom.axis.minorTexts,
-        num = props.minorTextNum;
+    num = props.minorTextNum;
     while (minorTexts.length > num) {
         var minorText = minorTexts[num];
         frame.removeChild(minorText);
@@ -907,7 +907,7 @@ links.Timeline.prototype.redrawAxisEndOverwriting = function () {
     }
 
     var minorLines = dom.axis.minorLines,
-        num = props.minorLineNum;
+    num = props.minorLineNum;
     while (minorLines.length > num) {
         var minorLine = minorLines[num];
         frame.removeChild(minorLine);
@@ -915,7 +915,7 @@ links.Timeline.prototype.redrawAxisEndOverwriting = function () {
     }
 
     var majorTexts = dom.axis.majorTexts,
-        num = props.majorTextNum;
+    num = props.majorTextNum;
     while (majorTexts.length > num) {
         var majorText = majorTexts[num];
         frame.removeChild(majorText);
@@ -923,7 +923,7 @@ links.Timeline.prototype.redrawAxisEndOverwriting = function () {
     }
 
     var majorLines = dom.axis.majorLines,
-        num = props.majorLineNum;
+    num = props.majorLineNum;
     while (majorLines.length > num) {
         var majorLine = majorLines[num];
         frame.removeChild(majorLine);
@@ -936,8 +936,8 @@ links.Timeline.prototype.redrawAxisEndOverwriting = function () {
  */
 links.Timeline.prototype.redrawAxisHorizontal = function () {
     var axis = this.dom.axis,
-        size = this.size,
-        options = this.options;
+    size = this.size,
+    options = this.options;
 
     // line behind all axis elements (possibly having a background color)
     var hasAxis = (options.showMinorLabels || options.showMajorLabels);
@@ -1003,12 +1003,12 @@ links.Timeline.prototype.redrawAxisHorizontal = function () {
  */
 links.Timeline.prototype.redrawAxisMinorText = function (x, text) {
     var size = this.size,
-        dom = this.dom,
-        props = size.axis.properties,
-        frame = dom.axis.frame,
-        minorTexts = dom.axis.minorTexts,
-        index = props.minorTextNum,
-        label;
+    dom = this.dom,
+    props = size.axis.properties,
+    frame = dom.axis.frame,
+    minorTexts = dom.axis.minorTexts,
+    index = props.minorTextNum,
+    label;
 
     if (index < minorTexts.length) {
         label = minorTexts[index]
@@ -1016,7 +1016,7 @@ links.Timeline.prototype.redrawAxisMinorText = function (x, text) {
     else {
         // create new label
         var content = document.createTextNode(""),
-            label = document.createElement("DIV");
+        label = document.createElement("DIV");
         label.appendChild(content);
         label.className = "ui-timeline-axis-text ui-timeline-axis-text-minor";
         label.style.position = "absolute";
@@ -1040,12 +1040,12 @@ links.Timeline.prototype.redrawAxisMinorText = function (x, text) {
  */
 links.Timeline.prototype.redrawAxisMinorLine = function (x) {
     var axis = this.size.axis,
-        dom = this.dom,
-        props = axis.properties,
-        frame = dom.axis.frame,
-        minorLines = dom.axis.minorLines,
-        index = props.minorLineNum,
-        line;
+    dom = this.dom,
+    props = axis.properties,
+    frame = dom.axis.frame,
+    minorLines = dom.axis.minorLines,
+    index = props.minorLineNum,
+    line;
 
     if (index < minorLines.length) {
         line = minorLines[index];
@@ -1075,11 +1075,11 @@ links.Timeline.prototype.redrawAxisMinorLine = function (x) {
  */
 links.Timeline.prototype.redrawAxisMajorText = function (x, text) {
     var size = this.size,
-        props = size.axis.properties,
-        frame = this.dom.axis.frame,
-        majorTexts = this.dom.axis.majorTexts,
-        index = props.majorTextNum,
-        label;
+    props = size.axis.properties,
+    frame = this.dom.axis.frame,
+    majorTexts = this.dom.axis.majorTexts,
+    index = props.majorTextNum,
+    label;
 
     if (index < majorTexts.length) {
         label = majorTexts[index];
@@ -1111,12 +1111,12 @@ links.Timeline.prototype.redrawAxisMajorText = function (x, text) {
  */
 links.Timeline.prototype.redrawAxisMajorLine = function (x) {
     var size = this.size,
-        props = size.axis.properties,
-        axis = this.size.axis,
-        frame = this.dom.axis.frame,
-        majorLines = this.dom.axis.majorLines,
-        index = props.majorLineNum,
-        line;
+    props = size.axis.properties,
+    axis = this.size.axis,
+    frame = this.dom.axis.frame,
+    majorLines = this.dom.axis.majorLines,
+    index = props.majorLineNum,
+    line;
 
     if (index < majorLines.length) {
         var line = majorLines[index];
@@ -1144,11 +1144,11 @@ links.Timeline.prototype.redrawAxisMajorLine = function (x) {
  */
 links.Timeline.prototype.redrawItems = function () {
     var dom = this.dom,
-        options = this.options,
-        boxAlign = (options.box && options.box.align) ? options.box.align : undefined,
-        size = this.size,
-        contentWidth = size.contentWidth,
-        items = this.items;
+    options = this.options,
+    boxAlign = (options.box && options.box.align) ? options.box.align : undefined,
+    size = this.size,
+    contentWidth = size.contentWidth,
+    items = this.items;
 
     if (!dom.items) {
         dom.items = {};
@@ -1191,12 +1191,12 @@ links.Timeline.prototype.redrawItems = function () {
     if (size.dataChanged) {
         // create the items
         var rangesCreated = ranges.length,
-            boxesCreated = boxes.length,
-            dotsCreated = dots.length,
-            rangesUsed = 0,
-            boxesUsed = 0,
-            dotsUsed = 0,
-            itemsLength = items.length;
+        boxesCreated = boxes.length,
+        dotsCreated = dots.length,
+        rangesUsed = 0,
+        boxesUsed = 0,
+        dotsUsed = 0,
+        itemsLength = items.length;
 
         for (var i = 0, iMax = items.length; i < iMax; i++) {
             var item = items[i];
@@ -1236,7 +1236,7 @@ links.Timeline.prototype.redrawItems = function () {
                         boxes[boxesUsed] = domItem;
                         frame.appendChild(domItem);
                         frame.insertBefore(domItem.line, frame.firstChild);
-                        // Note: line must be added in front of the items, 
+                        // Note: line must be added in front of the items,
                         //       such that it stays below all items
                         frame.appendChild(domItem.dot);
                         item.dom = domItem;
@@ -1294,12 +1294,12 @@ links.Timeline.prototype.redrawItems = function () {
     // reposition all items
     for (var i = 0, iMax = items.length; i < iMax; i++) {
         var item = items[i],
-            domItem = item.dom;
+        domItem = item.dom;
 
         switch (item.type) {
             case 'range':
                 var left = this.timeToScreen(item.start),
-                    right = this.timeToScreen(item.end);
+                right = this.timeToScreen(item.end);
 
                 // limit the width of the item, as browsers cannot draw very wide divs
                 if (left < -contentWidth) {
@@ -1335,8 +1335,8 @@ links.Timeline.prototype.redrawItems = function () {
                 var left = this.timeToScreen(item.start);
 
                 var axisOnTop = options.axisOnTop,
-                    axisHeight = size.axis.height,
-                    axisTop = size.axis.top;
+                axisHeight = size.axis.height,
+                axisTop = size.axis.top;
                 var visible = ((left + item.width / 2 > -contentWidth) &&
                     (left - item.width / 2 < 2 * contentWidth));
                 if (visible || size.dataChanged) {
@@ -1388,8 +1388,8 @@ links.Timeline.prototype.redrawItems = function () {
                 var left = this.timeToScreen(item.start);
 
                 var axisOnTop = options.axisOnTop,
-                    axisHeight = size.axis.height,
-                    axisTop = size.axis.top;
+                axisHeight = size.axis.height,
+                axisTop = size.axis.top;
                 var visible = (left + item.width > -contentWidth) && (left < 2 * contentWidth);
                 if (visible || size.dataChanged) {
                     // when data is changed, all items must be kept visible, as their heights must be measured
@@ -1429,8 +1429,8 @@ links.Timeline.prototype.redrawItems = function () {
     // put frame online again
     dom.content.appendChild(frame);
 
-    /* TODO
-     // retrieve all image sources from the items, and set a callback once 
+/* TODO
+     // retrieve all image sources from the items, and set a callback once
      // all images are retrieved
      var urls = [];
      var timeline = this;
@@ -1444,7 +1444,7 @@ links.Timeline.prototype.redrawItems = function () {
      var sendCallbackWhenAlreadyLoaded = false;
      links.imageloader.load(url, callback, sendCallbackWhenAlreadyLoaded);
      }
-     }    
+     }
      */
 };
 
@@ -1462,6 +1462,10 @@ links.Timeline.prototype.createEventBox = function (item) {
     divBox.style.left = "0px";
     divBox.style.top = "0px";
 
+    if(this.options.selectable){
+        divBox.style.cursor = "pointer";
+    }
+    
     $(divBox).hover(function () {
         $(this).addClass("ui-state-hover");
     }, function () {
@@ -1517,7 +1521,7 @@ links.Timeline.prototype.updateEventBox = function (item) {
             links.Timeline.addClassName(divDot, item.className);
         }
 
-        // TODO: apply selected className?
+    // TODO: apply selected className?
     }
 };
 
@@ -1570,7 +1574,7 @@ links.Timeline.prototype.updateEventDot = function (item) {
             links.Timeline.addClassName(divDot, item.className);
         }
 
-        // TODO: apply selected className?
+    // TODO: apply selected className?
     }
 };
 
@@ -1583,6 +1587,10 @@ links.Timeline.prototype.createEventRange = function (item) {
     // background box
     var divBox = document.createElement("DIV");
     divBox.style.position = "absolute";
+
+    if(this.options.selectable){
+        divBox.style.cursor = "pointer";
+    }
 
     $(divBox).hover(function () {
         $(this).addClass("ui-state-hover");
@@ -1616,7 +1624,7 @@ links.Timeline.prototype.updateEventRange = function (item) {
             links.Timeline.addClassName(divBox, item.className);
         }
 
-        // TODO: apply selected className?
+    // TODO: apply selected className?
     }
 };
 
@@ -1625,9 +1633,9 @@ links.Timeline.prototype.updateEventRange = function (item) {
  */
 links.Timeline.prototype.redrawGroups = function () {
     var dom = this.dom,
-        options = this.options,
-        size = this.size,
-        groups = this.groups;
+    options = this.options,
+    size = this.size,
+    groups = this.groups;
 
     if (dom.groups === undefined) {
         dom.groups = {};
@@ -1665,8 +1673,8 @@ links.Timeline.prototype.redrawGroups = function () {
 
     frame.style.left = size.groupsLeft + "px";
     frame.style.width = (options.groupsWidth !== undefined) ?
-        options.groupsWidth :
-        size.groupsWidth + "px";
+    options.groupsWidth :
+    size.groupsWidth + "px";
 
     // hide groups axis when there are no groups
     if (groups.length == 0) {
@@ -1679,7 +1687,7 @@ links.Timeline.prototype.redrawGroups = function () {
     if (size.dataChanged) {
         // create the items
         var current = labels.length,
-            needed = groups.length;
+        needed = groups.length;
 
         // overwrite existing items
         for (var i = 0, iMax = Math.min(current, needed); i < iMax; i++) {
@@ -1730,8 +1738,8 @@ links.Timeline.prototype.redrawGroups = function () {
         // remove redundant items from the DOM when needed
         for (var i = needed; i < current; i++) {
             var label = labels[i],
-                labelLine = labelLines[i],
-                itemLine = itemLines[i];
+            labelLine = labelLines[i],
+            itemLine = itemLines[i];
 
             frame.removeChild(label);
             frame.removeChild(labelLine);
@@ -1742,16 +1750,16 @@ links.Timeline.prototype.redrawGroups = function () {
         itemLines.splice(needed, current - needed);
 
         frame.style.borderStyle = options.groupsOnRight ?
-            "none none none groove" :
-            "none groove none none";
+        "none none none groove" :
+        "none groove none none";
     }
 
     // position the groups
     for (var i = 0, iMax = groups.length; i < iMax; i++) {
         var group = groups[i],
-            label = labels[i],
-            labelLine = labelLines[i],
-            itemLine = itemLines[i];
+        label = labels[i],
+        labelLine = labelLines[i],
+        itemLine = itemLines[i];
 
         label.style.top = group.labelTop + "px";
         labelLine.style.top = group.lineTop + "px";
@@ -1795,8 +1803,8 @@ links.Timeline.prototype.redrawGroups = function () {
  */
 links.Timeline.prototype.redrawCurrentTime = function () {
     var options = this.options,
-        dom = this.dom,
-        size = this.size;
+    dom = this.dom,
+    size = this.size;
 
     if (!options.showCurrentTime) {
         if (dom.currentTime) {
@@ -1848,8 +1856,8 @@ links.Timeline.prototype.redrawCurrentTime = function () {
  */
 links.Timeline.prototype.redrawCustomTime = function () {
     var options = this.options,
-        dom = this.dom,
-        size = this.size;
+    dom = this.dom,
+    size = this.size;
 
     if (!options.showCustomTime) {
         if (dom.customTime) {
@@ -1883,7 +1891,7 @@ links.Timeline.prototype.redrawCustomTime = function () {
     }
 
     var x = this.timeToScreen(this.customTime),
-        visible = (x > -size.contentWidth && x < 2 * size.contentWidth);
+    visible = (x > -size.contentWidth && x < 2 * size.contentWidth);
     dom.customTime.style.display = visible ? '' : 'none';
     dom.customTime.style.left = x + "px";
     dom.customTime.title = "Time: " + this.customTime;
@@ -1896,10 +1904,10 @@ links.Timeline.prototype.redrawCustomTime = function () {
  */
 links.Timeline.prototype.redrawDeleteButton = function () {
     var timeline = this,
-        options = this.options,
-        dom = this.dom,
-        size = this.size,
-        frame = dom.items.frame;
+    options = this.options,
+    dom = this.dom,
+    size = this.size,
+    frame = dom.items.frame;
 
     if (!options.editable) {
         return;
@@ -1918,10 +1926,10 @@ links.Timeline.prototype.redrawDeleteButton = function () {
 
     if (this.selection) {
         var index = this.selection.index,
-            item = this.items[index],
-            domItem = this.selection.item,
-            right,
-            top = item.top;
+        item = this.items[index],
+        domItem = this.selection.item,
+        right,
+        top = item.top;
 
         switch (item.type) {
             case 'range':
@@ -1964,10 +1972,10 @@ links.Timeline.prototype.redrawDeleteButton = function () {
  */
 links.Timeline.prototype.redrawDragAreas = function () {
     var timeline = this,
-        options = this.options,
-        dom = this.dom,
-        size = this.size,
-        frame = this.dom.items.frame;
+    options = this.options,
+    dom = this.dom,
+    size = this.size,
+    frame = this.dom.items.frame;
 
     if (!options.editable) {
         return;
@@ -2000,14 +2008,14 @@ links.Timeline.prototype.redrawDragAreas = function () {
     // reposition left and right drag area
     if (this.selection) {
         var index = this.selection.index,
-            item = this.items[index];
+        item = this.items[index];
 
         if (item.type == 'range') {
             var domItem = item.dom,
-                left = this.timeToScreen(item.start),
-                right = this.timeToScreen(item.end),
-                top = item.top,
-                height = item.height;
+            left = this.timeToScreen(item.start),
+            right = this.timeToScreen(item.end),
+            top = item.top,
+            height = item.height;
 
             dragLeft.style.left = left + 'px';
             dragLeft.style.top = top + 'px';
@@ -2036,10 +2044,10 @@ links.Timeline.prototype.redrawDragAreas = function () {
  */
 links.Timeline.prototype.redrawNavigation = function () {
     var timeline = this,
-        options = this.options,
-        dom = this.dom,
-        frame = dom.frame,
-        navBar = dom.navBar;
+    options = this.options,
+    dom = this.dom,
+    frame = dom.frame,
+    navBar = dom.navBar;
 
     if (!navBar) {
         if (options.editable || options.showNavigation) {
@@ -2103,8 +2111,8 @@ links.Timeline.prototype.redrawNavigation = function () {
 
                 timeline.applyAdd = true;
 
-                // fire an add event. 
-                // Note that the change can be canceled from within an event listener if 
+                // fire an add event.
+                // Note that the change can be canceled from within an event listener if
                 // this listener calls the method cancelAdd().
                 timeline.trigger('add');
 
@@ -2321,32 +2329,32 @@ links.Timeline.prototype.recalcSize = function () {
     var resized = false;
 
     var timeline = this,
-        size = this.size,
-        options = this.options,
-        axisOnTop = options.axisOnTop,
-        dom = this.dom,
-        axis = dom.axis,
-        groups = this.groups,
-        labels = dom.groups.labels,
-        items = this.items;
+    size = this.size,
+    options = this.options,
+    axisOnTop = options.axisOnTop,
+    dom = this.dom,
+    axis = dom.axis,
+    groups = this.groups,
+    labels = dom.groups.labels,
+    items = this.items;
 
     var groupsWidth = size.groupsWidth,
-        characterMinorWidth = axis.characterMinor ? axis.characterMinor.clientWidth : 0,
-        characterMinorHeight = axis.characterMinor ? axis.characterMinor.clientHeight : 0,
-        characterMajorWidth = axis.characterMajor ? axis.characterMajor.clientWidth : 0,
-        characterMajorHeight = axis.characterMajor ? axis.characterMajor.clientHeight : 0,
-        axisHeight = (options.showMinorLabels ? characterMinorHeight : 0) +
-            (options.showMajorLabels ? characterMajorHeight : 0),
-        actualHeight = size.actualHeight || axisHeight;
+    characterMinorWidth = axis.characterMinor ? axis.characterMinor.clientWidth : 0,
+    characterMinorHeight = axis.characterMinor ? axis.characterMinor.clientHeight : 0,
+    characterMajorWidth = axis.characterMajor ? axis.characterMajor.clientWidth : 0,
+    characterMajorHeight = axis.characterMajor ? axis.characterMajor.clientHeight : 0,
+    axisHeight = (options.showMinorLabels ? characterMinorHeight : 0) +
+    (options.showMajorLabels ? characterMajorHeight : 0),
+    actualHeight = size.actualHeight || axisHeight;
 
     // TODO: move checking for loaded items when creating the dom
     if (size.dataChanged) {
-        // retrieve all image sources from the items, and set a callback once 
+        // retrieve all image sources from the items, and set a callback once
         // all images are retrieved
         var urls = [];
         for (var i = 0, iMax = items.length; i < iMax; i++) {
             var item = items[i],
-                domItem = item.dom;
+            domItem = item.dom;
 
             if (domItem) {
                 links.Timeline.filterImageUrls(domItem, urls);
@@ -2382,8 +2390,8 @@ links.Timeline.prototype.recalcSize = function () {
         // loop through the width and height of all items
         for (var i = 0, iMax = items.length; i < iMax; i++) {
             var item = items[i],
-                domItem = item.dom,
-                group = item.group;
+            domItem = item.dom,
+            group = item.group;
 
             var width = domItem ? domItem.clientWidth : 0;
             var height = domItem ? domItem.clientHeight : 0;
@@ -2427,12 +2435,12 @@ links.Timeline.prototype.recalcSize = function () {
     // but stacked items
     if (groups.length == 0 && options.autoHeight) {
         var min = 0,
-            max = 0;
+        max = 0;
 
         if (this.animation && this.animation.finalItems) {
             // adjust the offset of all finalItems when the actualHeight has been changed
             var finalItems = this.animation.finalItems,
-                finalItem = finalItems[0];
+            finalItem = finalItems[0];
             if (finalItem && finalItem.top) {
                 min = finalItem.top;
                 max = finalItem.top + finalItem.height;
@@ -2478,17 +2486,17 @@ links.Timeline.prototype.recalcSize = function () {
         }
     }
 
-    // now the heights of the elements are known, we can calculate the the 
-    // width and height of frame and axis and content 
+    // now the heights of the elements are known, we can calculate the the
+    // width and height of frame and axis and content
     // Note: IE7 has issues with giving frame.clientWidth, therefore I use offsetWidth instead
     var frameWidth = dom.frame ? dom.frame.offsetWidth : 0,
-        frameHeight = Math.max(options.autoHeight ?
-            actualHeight : (dom.frame ? dom.frame.clientHeight : 0),
-            options.minHeight),
-        axisTop = axisOnTop ? 0 : frameHeight - axisHeight,
-        axisLine = axisOnTop ? axisHeight : axisTop,
-        itemsTop = axisOnTop ? axisHeight : 0,
-        contentHeight = Math.max(frameHeight - axisHeight, 0);
+    frameHeight = Math.max(options.autoHeight ?
+        actualHeight : (dom.frame ? dom.frame.clientHeight : 0),
+        options.minHeight),
+    axisTop = axisOnTop ? 0 : frameHeight - axisHeight,
+    axisLine = axisOnTop ? axisHeight : axisTop,
+    itemsTop = axisOnTop ? axisHeight : 0,
+    contentHeight = Math.max(frameHeight - axisHeight, 0);
 
     if (options.groupsWidth !== undefined) {
         groupsWidth = dom.groups.frame ? dom.groups.frame.clientWidth : 0;
@@ -2498,9 +2506,9 @@ links.Timeline.prototype.recalcSize = function () {
     if (size.dataChanged) {
         // calculate top positions of the group labels and lines
         var eventMargin = options.eventMargin,
-            top = axisOnTop ?
-                options.eventMarginAxis + eventMargin / 2 :
-                contentHeight - options.eventMarginAxis + eventMargin / 2;
+        top = axisOnTop ?
+        options.eventMarginAxis + eventMargin / 2 :
+        contentHeight - options.eventMarginAxis + eventMargin / 2;
 
         for (var i = 0, iMax = groups.length; i < iMax; i++) {
             var group = groups[i];
@@ -2521,7 +2529,7 @@ links.Timeline.prototype.recalcSize = function () {
         // calculate top position of the items
         for (var i = 0, iMax = items.length; i < iMax; i++) {
             var item = items[i],
-                group = item.group;
+            group = item.group;
 
             if (group) {
                 item.top = group.top;
@@ -2557,18 +2565,18 @@ links.Timeline.prototype.recalcSize = function () {
     size.axis.line = axisLine;
     size.axis.height = axisHeight;
     size.axis.labelMajorTop = options.axisOnTop ? 0 : axisLine +
-        (options.showMinorLabels ? characterMinorHeight : 0);
+    (options.showMinorLabels ? characterMinorHeight : 0);
     size.axis.labelMinorTop = options.axisOnTop ?
-        (options.showMajorLabels ? characterMajorHeight : 0) :
-        axisLine;
+    (options.showMajorLabels ? characterMajorHeight : 0) :
+    axisLine;
     size.axis.lineMinorTop = options.axisOnTop ? size.axis.labelMinorTop : 0;
     size.axis.lineMinorHeight = options.showMajorLabels ?
-        frameHeight - characterMajorHeight :
-        frameHeight;
+    frameHeight - characterMajorHeight :
+    frameHeight;
     size.axis.lineMinorWidth = dom.axis.minorLines.length ?
-        dom.axis.minorLines[0].offsetWidth : 1;
+    dom.axis.minorLines[0].offsetWidth : 1;
     size.axis.lineMajorWidth = dom.axis.majorLines.length ?
-        dom.axis.majorLines[0].offsetWidth : 1;
+    dom.axis.majorLines[0].offsetWidth : 1;
 
     size.items.top = itemsTop;
 
@@ -2598,7 +2606,7 @@ links.Timeline.prototype.recalcSize = function () {
 links.Timeline.prototype.recalcConversion = function () {
     this.conversion.offset = parseFloat(this.start.valueOf());
     this.conversion.factor = parseFloat(this.size.contentWidth) /
-        parseFloat(this.end.valueOf() - this.start.valueOf());
+    parseFloat(this.end.valueOf() - this.start.valueOf());
 };
 
 
@@ -2611,7 +2619,7 @@ links.Timeline.prototype.recalcConversion = function () {
  */
 links.Timeline.prototype.screenToTime = function (x) {
     var conversion = this.conversion,
-        time = new Date(parseFloat(x) / conversion.factor + conversion.offset);
+    time = new Date(parseFloat(x) / conversion.factor + conversion.offset);
     return time;
 };
 
@@ -2635,8 +2643,8 @@ links.Timeline.prototype.timeToScreen = function (time) {
  */
 links.Timeline.prototype.onTouchStart = function (event) {
     var params = this.eventParams,
-        dom = this.dom,
-        me = this;
+    dom = this.dom,
+    me = this;
 
     if (params.touchDown) {
         // if already moving, return
@@ -2673,7 +2681,7 @@ links.Timeline.prototype.onTouchMove = function (event) {
     }
 
     if (!params.zoomed) {
-        // move 
+        // move
         this.onMouseMove(event);
     }
     else {
@@ -2683,11 +2691,11 @@ links.Timeline.prototype.onTouchMove = function (event) {
             params.zoomed = true;
 
             var scale = event.scale,
-                oldWidth = (params.end.valueOf() - params.start.valueOf()),
-                newWidth = oldWidth / scale,
-                diff = newWidth - oldWidth,
-                start = new Date(parseInt(params.start.valueOf() - diff / 2)),
-                end = new Date(parseInt(params.end.valueOf() + diff / 2));
+            oldWidth = (params.end.valueOf() - params.start.valueOf()),
+            newWidth = oldWidth / scale,
+            diff = newWidth - oldWidth,
+            start = new Date(parseInt(params.start.valueOf() - diff / 2)),
+            end = new Date(parseInt(params.end.valueOf() + diff / 2));
 
             // TODO: determine zoom-around-date from touch positions?
 
@@ -2733,8 +2741,8 @@ links.Timeline.prototype.onMouseDown = function (event) {
     event = event || window.event;
 
     var params = this.eventParams,
-        options = this.options,
-        dom = this.dom;
+    options = this.options,
+    dom = this.dom;
 
     // only react on left mouse button down
     var leftButtonDown = event.which ? (event.which == 1) : (event.button == 1);
@@ -2742,7 +2750,7 @@ links.Timeline.prototype.onMouseDown = function (event) {
         return;
     }
 
-    // check if frame is not resized (causing a mismatch with the end Date) 
+    // check if frame is not resized (causing a mismatch with the end Date)
     this.recalcSize();
 
     // get mouse position
@@ -2782,8 +2790,8 @@ links.Timeline.prototype.onMouseDown = function (event) {
 
     params.customTime = (params.target === dom.customTime ||
         params.target.parentNode === dom.customTime) ?
-        this.customTime :
-        undefined;
+    this.customTime :
+    undefined;
 
     params.addItem = (options.editable && event.ctrlKey);
     if (params.addItem) {
@@ -2861,9 +2869,9 @@ links.Timeline.prototype.onMouseMove = function (event) {
     event = event || window.event;
 
     var params = this.eventParams,
-        size = this.size,
-        dom = this.dom,
-        options = this.options;
+    size = this.size,
+    dom = this.dom,
+    options = this.options;
 
     // calculate change in mouse position
     var mouseX, mouseY;
@@ -2908,9 +2916,9 @@ links.Timeline.prototype.onMouseMove = function (event) {
     }
     else if (params.editItem) {
         var item = this.items[params.itemIndex],
-            domItem = item.dom,
-            left,
-            right;
+        domItem = item.dom,
+        left,
+        right;
 
         if (params.itemDragLeft) {
             // move the start of the item
@@ -2967,7 +2975,7 @@ links.Timeline.prototype.onMouseMove = function (event) {
             if (!options.animate) {
                 this.redrawFrame();
             }
-            // Note: when animate==true, no redraw is needed here, its done by stackEvents animation
+        // Note: when animate==true, no redraw is needed here, its done by stackEvents animation
         }
         else {
             // move item from one group to another when needed
@@ -2979,7 +2987,9 @@ links.Timeline.prototype.onMouseMove = function (event) {
 
                     //item.group = group;
                     var index = this.items.indexOf(item);
-                    this.changeItem(index, {'group':this.getGroupName(group)});
+                    this.changeItem(index, {
+                        'group':this.getGroupName(group)
+                    });
 
                     item.top = group.top;
                     this.repositionItem(item);
@@ -2997,7 +3007,7 @@ links.Timeline.prototype.onMouseMove = function (event) {
         var newEnd = new Date(params.end.valueOf() + diffMillisecs);
         this.applyRange(newStart, newEnd);
 
-        // if the applied range is moved due to a fixed min or max, 
+        // if the applied range is moved due to a fixed min or max,
         // change the diffMillisecs accordingly
         var appliedDiff = (this.start.valueOf() - newStart.valueOf());
         if (appliedDiff) {
@@ -3007,7 +3017,7 @@ links.Timeline.prototype.onMouseMove = function (event) {
         this.recalcConversion();
 
         // move the items by changing the left position of their frame.
-        // this is much faster than repositioning all elements individually via the 
+        // this is much faster than repositioning all elements individually via the
         // redrawFrame() function (which is done once at mouseup)
         // note that we round diffX to prevent wrong positioning on millisecond scale
         var previousLeft = params.previousLeft || 0;
@@ -3041,7 +3051,7 @@ links.Timeline.prototype.onMouseMove = function (event) {
  */
 links.Timeline.prototype.onMouseUp = function (event) {
     var params = this.eventParams,
-        options = this.options;
+    options = this.options;
 
     event = event || window.event;
 
@@ -3074,8 +3084,8 @@ links.Timeline.prototype.onMouseUp = function (event) {
                 'end':item.end
             });
 
-            // fire an add or change event. 
-            // Note that the change can be canceled from within an event listener if 
+            // fire an add or change event.
+            // Note that the change can be canceled from within an event listener if
             // this listener calls the method cancelChange().
             this.trigger(params.addItem ? 'add' : 'change');
 
@@ -3107,7 +3117,7 @@ links.Timeline.prototype.onMouseUp = function (event) {
                     delete this.applyAdd;
 
                     var item = this.items[params.itemIndex],
-                        domItem = item.dom;
+                    domItem = item.dom;
 
                     item.start = params.itemStart;
                     item.end = params.itemEnd;
@@ -3156,7 +3166,7 @@ links.Timeline.prototype.onMouseUp = function (event) {
             }
         }
         else {
-            // timeline is moved 
+            // timeline is moved
             this.redrawFrame();
 
             if ((params.moved && options.moveable) || (params.zoomed && options.zoomable)) {
@@ -3173,9 +3183,9 @@ links.Timeline.prototype.onMouseUp = function (event) {
  */
 links.Timeline.prototype.onDblClick = function (event) {
     var params = this.eventParams,
-        options = this.options,
-        dom = this.dom,
-        size = this.size;
+    options = this.options,
+    dom = this.dom,
+    size = this.size;
     event = event || window.event;
 
     if (!options.editable) {
@@ -3187,7 +3197,7 @@ links.Timeline.prototype.onDblClick = function (event) {
         this.trigger('edit');
     }
     else {
-        // create a new item    
+        // create a new item
         var x = event.clientX - links.Timeline.getAbsoluteLeft(dom.content);
         var y = event.clientY - links.Timeline.getAbsoluteTop(dom.content);
 
@@ -3214,8 +3224,8 @@ links.Timeline.prototype.onDblClick = function (event) {
 
         this.applyAdd = true;
 
-        // fire an add event. 
-        // Note that the change can be canceled from within an event listener if 
+        // fire an add event.
+        // Note that the change can be canceled from within an event listener if
         // this listener calls the method cancelAdd().
         this.trigger('add');
 
@@ -3245,7 +3255,7 @@ links.Timeline.prototype.onMouseWheel = function (event) {
         event = window.event;
     }
 
-    // retrieve delta    
+    // retrieve delta
     var delta = 0;
     if (event.wheelDelta) { /* IE/Opera. */
         delta = event.wheelDelta / 120;
@@ -3259,21 +3269,21 @@ links.Timeline.prototype.onMouseWheel = function (event) {
     // Basically, delta is now positive if wheel was scrolled up,
     // and negative, if wheel was scrolled down.
     if (delta) {
-        // TODO: on FireFox, the window is not redrawn within repeated scroll-events 
+        // TODO: on FireFox, the window is not redrawn within repeated scroll-events
         // -> use a delayed redraw? Make a zoom queue?
 
         var timeline = this;
         var zoom = function () {
-            // check if frame is not resized (causing a mismatch with the end date) 
+            // check if frame is not resized (causing a mismatch with the end date)
             timeline.recalcSize();
 
             // perform the zoom action. Delta is normally 1 or -1
             var zoomFactor = delta / 5.0;
             var frameLeft = links.Timeline.getAbsoluteLeft(timeline.dom.content);
             var zoomAroundDate =
-                (event.clientX != undefined && frameLeft != undefined) ?
-                    timeline.screenToTime(event.clientX - frameLeft) :
-                    undefined;
+            (event.clientX != undefined && frameLeft != undefined) ?
+            timeline.screenToTime(event.clientX - frameLeft) :
+            undefined;
 
             timeline.zoom(zoomFactor, zoomAroundDate);
 
@@ -3281,7 +3291,7 @@ links.Timeline.prototype.onMouseWheel = function (event) {
             timeline.trigger("rangechange");
             timeline.trigger("rangechanged");
 
-            /* TODO: smooth scrolling on FF
+        /* TODO: smooth scrolling on FF
              timeline.zooming = false;
 
              if (timeline.zoomingQueue) {
@@ -3296,7 +3306,7 @@ links.Timeline.prototype.onMouseWheel = function (event) {
 
         zoom();
 
-        /* TODO: smooth scrolling on FF
+    /* TODO: smooth scrolling on FF
          if (!timeline.zooming || true) {
 
          timeline.zooming = true;
@@ -3361,7 +3371,7 @@ links.Timeline.prototype.zoom = function (zoomFactor, zoomAroundDate) {
     if (!animate || this.groups.length > 0) {
         this.redrawFrame();
     }
-    /* TODO
+/* TODO
      else {
      this.redrawFrame();
      this.recalcSize();
@@ -3527,8 +3537,8 @@ links.Timeline.prototype.confirmDeleteItem = function (index) {
         this.selectItem(index);
     }
 
-    // fire a delete event trigger. 
-    // Note that the delete event can be canceled from within an event listener if 
+    // fire a delete event trigger.
+    // Note that the delete event can be canceled from within an event listener if
     // this listener calls the method cancelChange().
     this.trigger('delete');
 
@@ -3623,9 +3633,9 @@ links.Timeline.prototype.deleteAllItems = function () {
  */
 links.Timeline.prototype.getGroupFromHeight = function (height) {
     var groups = this.groups,
-        options = this.options,
-        size = this.size,
-        y = height - (options.axisOnTop ? size.axis.height : 0);
+    options = this.options,
+    size = this.size,
+    y = height - (options.axisOnTop ? size.axis.height : 0);
 
     if (groups) {
         var group;
@@ -3695,7 +3705,7 @@ links.Timeline.prototype.getItem = function (index) {
  */
 links.Timeline.prototype.addItem = function (itemData) {
     var items = [
-        itemData
+    itemData
     ];
 
     this.addItems(items);
@@ -3712,7 +3722,7 @@ links.Timeline.prototype.addItem = function (itemData) {
  */
 links.Timeline.prototype.addItems = function (items) {
     var newItems = items,
-        curItems = this.items;
+    curItems = this.items;
 
     // append the items
     for (var i = 0, iMax = newItems.length; i < iMax; i++) {
@@ -3817,8 +3827,8 @@ links.Timeline.prototype.deleteGroups = function () {
  */
 links.Timeline.prototype.getGroup = function (groupName) {
     var groups = this.groups,
-        groupIndexes = this.groupIndexes,
-        groupObj = undefined;
+    groupIndexes = this.groupIndexes,
+    groupObj = undefined;
 
     var groupIndex = groupIndexes[groupName];
     if (groupIndex === undefined && groupName !== undefined) {
@@ -3826,8 +3836,8 @@ links.Timeline.prototype.getGroup = function (groupName) {
             'content':groupName,
             'labelTop':0,
             'lineTop':0
-            // note: this object will lateron get addition information, 
-            //       such as height and width of the group         
+        // note: this object will lateron get addition information,
+        //       such as height and width of the group
         };
         groups.push(groupObj);
         // sort the groups
@@ -3918,8 +3928,8 @@ links.Timeline.prototype.setSelection = function (selection) {
                     middle = new Date(start);
                 }
                 var diff = (this.end.valueOf() - this.start.valueOf()),
-                    newStart = new Date(middle.valueOf() - diff / 2),
-                    newEnd = new Date(middle.valueOf() + diff / 2);
+                newStart = new Date(middle.valueOf() - diff / 2),
+                newEnd = new Date(middle.valueOf() + diff / 2);
 
                 this.setVisibleChartRange(newStart, newEnd);
 
@@ -3943,7 +3953,9 @@ links.Timeline.prototype.setSelection = function (selection) {
 links.Timeline.prototype.getSelection = function () {
     var sel = [];
     if (this.selection) {
-        sel.push({"row":this.selection.index});
+        sel.push({
+            "row":this.selection.index
+        });
     }
     return sel;
 };
@@ -3960,7 +3972,7 @@ links.Timeline.prototype.selectItem = function (index) {
 
     if (this.items[index] !== undefined) {
         var item = this.items[index],
-            domItem = item.dom;
+        domItem = item.dom;
 
         this.selection = {
             'index':index,
@@ -3987,7 +3999,7 @@ links.Timeline.prototype.selectItem = function (index) {
                 break;
         }
 
-        /* TODO: cleanup this cannot work as this breaks any javascript action inside the item
+    /* TODO: cleanup this cannot work as this breaks any javascript action inside the item
          // move the item to the end, such that it will be displayed on top of the other items
          var parent = domItem.parentNode;
          if (parent) {
@@ -4129,22 +4141,22 @@ links.Timeline.prototype.stackOrder = function (items) {
  */
 links.Timeline.prototype.stackCalculateFinal = function (items) {
     var size = this.size,
-        axisTop = size.axis.top,
-        options = this.options,
-        axisOnTop = options.axisOnTop,
-        eventMargin = options.eventMargin,
-        eventMarginAxis = options.eventMarginAxis,
-        finalItems = [];
+    axisTop = size.axis.top,
+    options = this.options,
+    axisOnTop = options.axisOnTop,
+    eventMargin = options.eventMargin,
+    eventMarginAxis = options.eventMarginAxis,
+    finalItems = [];
 
     // initialize final positions
     for (var i = 0, iMax = items.length; i < iMax; i++) {
         var item = items[i],
-            top,
-            left,
-            right,
-            bottom,
-            height = item.height,
-            width = item.width;
+        top,
+        left,
+        right,
+        bottom,
+        height = item.height,
+        width = item.width;
 
         if (axisOnTop) {
             top = axisTop + eventMarginAxis + eventMargin / 2;
@@ -4221,7 +4233,7 @@ links.Timeline.prototype.stackMoveOneStep = function (currentItems, finalItems) 
     // apply new positions animated
     for (i = 0, iMax = currentItems.length; i < iMax; i++) {
         var finalItem = finalItems[i],
-            item = finalItem.item;
+        item = finalItem.item;
 
         var topNow = parseInt(item.top);
         var topFinal = parseInt(finalItem.top);
@@ -4262,7 +4274,7 @@ links.Timeline.prototype.stackMoveToFinal = function (currentItems, finalItems) 
     // Put the events directly at there final position
     for (i = 0, iMax = currentItems.length; i < iMax; i++) {
         var current = currentItems[i],
-            finalItem = finalItems[i];
+        finalItem = finalItems[i];
 
         current.left = finalItem.left;
         current.top = finalItem.top;
@@ -4283,9 +4295,9 @@ links.Timeline.prototype.stackMoveToFinal = function (currentItems, finalItems) 
  */
 links.Timeline.prototype.stackEventsCheckOverlap = function (items, itemIndex, itemStart, itemEnd) {
     var eventMargin = this.options.eventMargin,
-        collision = this.collision;
+    collision = this.collision;
 
-    // we loop from end to start, as we suppose that the chance of a 
+    // we loop from end to start, as we suppose that the chance of a
     // collision is larger for items at the end, so check these first.
     var item1 = items[itemIndex];
     for (var i = itemEnd; i >= itemStart; i--) {
@@ -4313,7 +4325,7 @@ links.Timeline.prototype.stackEventsCheckOverlap = function (items, itemIndex, i
  * @return {boolean}            true if item1 and item2 collide, else false
  */
 links.Timeline.prototype.collision = function (item1, item2, margin) {
-    // set margin if not specified 
+    // set margin if not specified
     if (margin == undefined) {
         margin = 0;
     }
@@ -4524,13 +4536,15 @@ links.Timeline.StepDate = function (start, end, minimumStep) {
 };
 
 /// enum scale
-links.Timeline.StepDate.SCALE = { MILLISECOND:1,
+links.Timeline.StepDate.SCALE = {
+    MILLISECOND:1,
     SECOND:2,
     MINUTE:3,
     HOUR:4,
     DAY:5,
     MONTH:6,
-    YEAR:7};
+    YEAR:7
+};
 
 
 /**
@@ -4586,7 +4600,7 @@ links.Timeline.StepDate.prototype.roundToMinor = function () {
             this.current.setSeconds(0);
         case links.Timeline.StepDate.SCALE.SECOND:
             this.current.setMilliseconds(0);
-        //case links.Timeline.StepDate.SCALE.MILLISECOND: // nothing to do for milliseconds
+    //case links.Timeline.StepDate.SCALE.MILLISECOND: // nothing to do for milliseconds
     }
 
     if (this.step != 1) {
@@ -4633,7 +4647,7 @@ links.Timeline.StepDate.prototype.end = function () {
 links.Timeline.StepDate.prototype.next = function () {
     var prev = this.current.getTime();
 
-    // Two cases, needed to prevent issues with switching daylight savings 
+    // Two cases, needed to prevent issues with switching daylight savings
     // (end of March and end of October)
     if (this.current.getMonth() < 6) {
         switch (this.scale) {
@@ -4919,7 +4933,7 @@ links.Timeline.StepDate.prototype.snap = function (date) {
         if (date.getDate() > 15) {
             date.setDate(1);
             date.setMonth(date.getMonth() + 1);
-            // important: first set Date to 1, after that change the month.      
+        // important: first set Date to 1, after that change the month.
         }
         else {
             date.setDate(1);
@@ -5044,10 +5058,10 @@ links.Timeline.StepDate.prototype.getLabelMinor = function (date) {
             return String(date.getSeconds());
         case links.Timeline.StepDate.SCALE.MINUTE:
             return this.addZeros(date.getHours(), 2) + ":" +
-                this.addZeros(date.getMinutes(), 2);
+            this.addZeros(date.getMinutes(), 2);
         case links.Timeline.StepDate.SCALE.HOUR:
             return this.addZeros(date.getHours(), 2) + ":" +
-                this.addZeros(date.getMinutes(), 2);
+            this.addZeros(date.getMinutes(), 2);
         case links.Timeline.StepDate.SCALE.DAY:
             return String(date.getDate());
         case links.Timeline.StepDate.SCALE.MONTH:
@@ -5082,26 +5096,26 @@ links.Timeline.StepDate.prototype.getLabelMajor = function (date) {
     switch (this.scale) {
         case links.Timeline.StepDate.SCALE.MILLISECOND:
             return  this.addZeros(date.getHours(), 2) + ":" +
-                this.addZeros(date.getMinutes(), 2) + ":" +
-                this.addZeros(date.getSeconds(), 2);
+            this.addZeros(date.getMinutes(), 2) + ":" +
+            this.addZeros(date.getSeconds(), 2);
         case links.Timeline.StepDate.SCALE.SECOND:
             return  date.getDate() + " " +
-                MONTHS[date.getMonth()] + " " +
-                this.addZeros(date.getHours(), 2) + ":" +
-                this.addZeros(date.getMinutes(), 2);
+            MONTHS[date.getMonth()] + " " +
+            this.addZeros(date.getHours(), 2) + ":" +
+            this.addZeros(date.getMinutes(), 2);
         case links.Timeline.StepDate.SCALE.MINUTE:
             return  DAYS[date.getDay()] + " " +
-                date.getDate() + " " +
-                MONTHS[date.getMonth()] + " " +
-                date.getFullYear();
+            date.getDate() + " " +
+            MONTHS[date.getMonth()] + " " +
+            date.getFullYear();
         case links.Timeline.StepDate.SCALE.HOUR:
             return  DAYS[date.getDay()] + " " +
-                date.getDate() + " " +
-                MONTHS[date.getMonth()] + " " +
-                date.getFullYear();
+            date.getDate() + " " +
+            MONTHS[date.getMonth()] + " " +
+            date.getFullYear();
         case links.Timeline.StepDate.SCALE.DAY:
             return  MONTHS[date.getMonth()] + " " +
-                date.getFullYear();
+            date.getFullYear();
         case links.Timeline.StepDate.SCALE.MONTH:
             return String(date.getFullYear());
         default:
@@ -5134,7 +5148,7 @@ links.Timeline.StepDate.prototype.addZeros = function (value, len) {
  */
 links.imageloader = (function () {
     var urls = {};  // the loaded urls
-    var callbacks = {}; // the urls currently being loaded. Each key contains 
+    var callbacks = {}; // the urls currently being loaded. Each key contains
     // an array with callbacks
 
     /**
@@ -5403,7 +5417,7 @@ links.Timeline.removeClassName = function (elem, className) {
  * @param {*} obj
  * @return {Boolean} isArray    true if the given object is an array
  */
-    // See http://stackoverflow.com/questions/2943805/javascript-instanceof-typeof-in-gwt-jsni
+// See http://stackoverflow.com/questions/2943805/javascript-instanceof-typeof-in-gwt-jsni
 links.Timeline.isArray = function (obj) {
     if (obj instanceof Array) {
         return true;
