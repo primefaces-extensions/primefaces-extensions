@@ -1465,7 +1465,7 @@ links.Timeline.prototype.createEventBox = function (item) {
     if(this.options.selectable){
         divBox.style.cursor = "pointer";
     }
-    
+
     $(divBox).hover(function () {
         $(this).addClass("ui-state-hover");
     }, function () {
@@ -4028,7 +4028,11 @@ links.Timeline.prototype.unselectItem = function () {
 
         if (item && item.dom) {
             var domItem = item.dom;
-            domItem.style.cursor = '';
+            if(this.options.selectable){
+                domItem.style.cursor = 'pointer';
+            }else{
+                domItem.style.cursor = '';
+            }
             switch (item.type) {
                 case 'range':
                     links.Timeline.removeClassName(domItem, 'ui-state-active');

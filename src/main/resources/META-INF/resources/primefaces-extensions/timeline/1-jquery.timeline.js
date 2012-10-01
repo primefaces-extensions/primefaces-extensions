@@ -51,7 +51,6 @@
             });
         },
         addEvent:function (type, callback) {
-            var _self = this;
             return this.each(function () {
                 if (type == 'select') {
                     links.events.addListener(timeline, 'select', function () {
@@ -59,6 +58,7 @@
                         if (selection.length) {
                             if (selection[0].row != undefined) {
                                 callback(timeline.getItem(selection[0].row));
+                                timeline.unselectItem();
                             }
                         }
                     });
