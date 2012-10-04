@@ -33,7 +33,6 @@ public class DefaultCase extends UIComponentBase {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
 	public DefaultCase() {
-		setRendered(false);
 		setRendererType(null);
 	}
 

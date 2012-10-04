@@ -25,7 +25,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.component.keyfilter.KeyFilter;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -49,6 +48,9 @@ public class SwitchRenderer extends CoreRenderer {
 		boolean caseMatched = false;
 
 		for (UIComponent child : switchComponent.getChildren()) {
+
+			child.setRendered(false);
+
 			if (child instanceof Case) {
 				final Case caseComponent = (Case) child;
 
@@ -57,27 +59,36 @@ public class SwitchRenderer extends CoreRenderer {
 					continue;
 				}
 
-				if (caseComponent.getValue() == null && switchComponent.getValue() == null) {
-					renderChildren(context, caseComponent);
-					caseMatched = true;
-					break;
+				if ((caseComponent.getValue() == null && switchComponent.getValue() == null)
+						|| caseComponent.getValue().equals(switchComponent.getValue())) {
 
-				} else if (caseComponent.getValue().equals(switchComponent.getValue())) {
+					caseComponent.setRendered(true);
 					renderChildren(context, caseComponent);
 					caseMatched = true;
-					break;
 				}
+
 			} else if (child instanceof DefaultCase) {
 				defaultCase = (DefaultCase) child;
 			} else {
-				throw new FacesException("The switch component accepts only case and defaultCase as children.");
+				throw new FacesException("Switch only accepts case or defaultCase as children.");
 			}	
 		}
 
 		if (!caseMatched && defaultCase != null) {
+			defaultCase.setRendered(true);
 			renderChildren(context, defaultCase);
 		}
 
 		writer.endElement("div");
 	}
+
+    @Override
+	public boolean getRendersChildren() {
+		return true;
+	}
+
+    @Override
+    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+    	//Do Nothing
+    }
 }

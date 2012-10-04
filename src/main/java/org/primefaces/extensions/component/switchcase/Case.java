@@ -61,7 +61,6 @@ public class Case extends DefaultCase {
 	}
 
 	public Case() {
-		setRendered(false);
 		setRendererType(null);
 	}
 
