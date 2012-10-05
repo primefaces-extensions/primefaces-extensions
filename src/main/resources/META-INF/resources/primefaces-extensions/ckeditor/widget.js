@@ -121,8 +121,6 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 				PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 	
 					if (this.jq.is(':visible')) {
-						//overwrite save button and init editor
-						this.overwriteSaveButton();
 						this.initialize();
 			        } else {
 			            var hiddenParent = this.jq.parents('.ui-hidden-container:first');
@@ -131,8 +129,6 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 			            if (hiddenParentWidget) {
 			                hiddenParentWidget.addOnshowHandler($.proxy(function() {
 			                	if (!this.instance && this.jq.is(':visible')) {
-									//overwrite save button and init editor
-									this.overwriteSaveButton();
 									this.initialize();
 			                	}
 			                }, this));
@@ -155,12 +151,15 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 * @private
 	 */
 	initialize : function() {
+		//overwrite save button
+		this.overwriteSaveButton();
+
 		//remove old instances if required
 		var oldInstance = CKEDITOR.instances[this.id];
 		if (oldInstance) {
 			oldInstance.destroy(true);
 		}
-	
+
 		//initialize ckeditor after all resources were loaded
 		this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
 	},
