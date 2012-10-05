@@ -3025,6 +3025,13 @@
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Value of the component.]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Tag which defines a case for the switch component.]]></description>
@@ -3050,7 +3057,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The pe:switch will check wheter this value is equal to it's value. If so, the childs of this declared pe:case will be renderd.]]>
+                <![CDATA[The switch component will check wheter this value is equal to it's value. If so, the childs of this declared case will be rendered.]]>
             </description>
             <name>value</name>
             <required>true</required>
