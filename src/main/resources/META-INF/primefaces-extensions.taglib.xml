@@ -1522,6 +1522,34 @@
             <required>true</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Style of the pane's header. Default value is null.]]>
+            </description>
+            <name>styleHeader</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the pane's header. Default value is null.]]>
+            </description>
+            <name>styleClassHeader</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style of the pane's content. Default value is null.]]>
+            </description>
+            <name>styleContent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Style class of the pane's content. Default value is null.]]>
+            </description>
+            <name>styleClassContent</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>

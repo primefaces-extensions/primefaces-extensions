@@ -47,7 +47,11 @@ public class LayoutPane extends UIComponentBase {
 	protected enum PropertyKeys {
 
 		position,
-		combinedPosition;
+		combinedPosition,
+		styleHeader,
+		styleClassHeader,
+		styleContent,
+		styleClassContent;
 
 		private String toString;
 
@@ -71,6 +75,38 @@ public class LayoutPane extends UIComponentBase {
 	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
+	}
+
+	public String getStyleHeader() {
+		return (String) getStateHelper().eval(PropertyKeys.styleHeader, null);
+	}
+
+	public void setStyleHeader(final String styleHeader) {
+		setAttribute(PropertyKeys.styleHeader, styleHeader);
+	}
+
+	public String getStyleClassHeader() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClassHeader, null);
+	}
+
+	public void setStyleClassHeader(final String styleClassHeader) {
+		setAttribute(PropertyKeys.styleClassHeader, styleClassHeader);
+	}
+
+	public String getStyleContent() {
+		return (String) getStateHelper().eval(PropertyKeys.styleContent, null);
+	}
+
+	public void setStyleContent(final String styleContent) {
+		setAttribute(PropertyKeys.styleContent, styleContent);
+	}
+
+	public String getStyleClassContent() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClassContent, null);
+	}
+
+	public void setStyleClassContent(final String styleClassContent) {
+		setAttribute(PropertyKeys.styleClassContent, styleClassContent);
 	}
 
 	// position "north" | "south" | "west" | "east" | "center"

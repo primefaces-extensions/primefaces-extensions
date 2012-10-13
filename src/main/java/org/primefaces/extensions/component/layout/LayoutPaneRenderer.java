@@ -102,7 +102,15 @@ public class LayoutPaneRenderer extends CoreRenderer {
 		// encode header
 		if (header != null) {
 			writer.startElement("div", null);
-			writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER, null);
+			if (layoutPane.getStyleClassHeader() != null) {
+				writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
+			} else {
+				writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER, null);
+			}
+
+			if (layoutPane.getStyleHeader() != null) {
+				writer.writeAttribute("style", layoutPane.getStyleHeader(), null);
+			}
 
 			header.encodeAll(fc);
 
@@ -112,8 +120,20 @@ public class LayoutPaneRenderer extends CoreRenderer {
 		// encode content
 		if (header != null) {
 			writer.startElement("div", null);
-			writer.writeAttribute("class", "ui-layout-content " + Layout.STYLE_CLASS_PANE_CONTENT, null);
-			writer.writeAttribute("style", "border:none", null);
+			if (layoutPane.getStyleClassContent() != null) {
+				writer.writeAttribute("class",
+				                      "ui-layout-content " + Layout.STYLE_CLASS_PANE_CONTENT + " "
+				                      + layoutPane.getStyleClassContent(), null);
+			} else {
+				writer.writeAttribute("class", "ui-layout-content " + Layout.STYLE_CLASS_PANE_CONTENT, null);
+			}
+
+			if (layoutPane.getStyleContent() != null) {
+				writer.writeAttribute("style", "border:none; " + layoutPane.getStyleContent(), null);
+			} else {
+				writer.writeAttribute("style", "border:none", null);
+			}
+
 			renderChildren(fc, layoutPane);
 
 			writer.endElement("div");
