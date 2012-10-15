@@ -91,9 +91,20 @@ public class LayoutPaneRenderer extends CoreRenderer {
 			if (header != null) {
 				writer.writeAttribute("class", "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE, null);
 			} else {
-				writer.writeAttribute("class",
-				                      "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
-				                      + Layout.STYLE_CLASS_PANE_CONTENT, null);
+				if (layoutPane.getStyleClassContent() != null) {
+					writer.writeAttribute("class",
+					                      "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
+					                      + Layout.STYLE_CLASS_PANE_CONTENT + " "
+					                      + layoutPane.getStyleClassContent(), null);
+				} else {
+					writer.writeAttribute("class",
+					                      "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
+					                      + Layout.STYLE_CLASS_PANE_CONTENT, null);
+				}
+
+				if (layoutPane.getStyleContent() != null) {
+					writer.writeAttribute("style", layoutPane.getStyleContent(), null);
+				}
 			}
 		}
 
