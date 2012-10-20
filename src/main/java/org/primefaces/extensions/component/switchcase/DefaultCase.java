@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.switchcase;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UINamingContainer;
 
 /**
  * Component class for the <code>DefaultCase</code> component.
@@ -27,7 +28,7 @@ import javax.faces.component.UIComponentBase;
  * @version $Revision: $
  * @since 0.6
  */
-public class DefaultCase extends UIComponentBase {
+public class DefaultCase extends UINamingContainer {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DefaultCase";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

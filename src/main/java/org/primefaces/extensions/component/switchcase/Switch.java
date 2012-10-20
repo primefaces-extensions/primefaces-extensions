@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.UINamingContainer;
 
 /**
  * Component class for the <code>Switch</code> component.
@@ -31,7 +32,7 @@ import javax.faces.component.UIComponentBase;
  * @version $Revision: $
  * @since 0.6
  */
-public class Switch extends UIComponentBase {
+public class Switch extends UINamingContainer {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
