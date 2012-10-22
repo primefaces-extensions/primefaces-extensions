@@ -186,7 +186,13 @@ public class CodeMirrorRenderer extends InputRenderer {
     		final String suggestion = suggestions.get(i);
 
     		writer.startElement("li", null);
-    		writer.writeText(suggestion, null);
+
+    		if (codeMirror.isEscapeSuggestions()) {
+    			writer.writeText(suggestion, null);
+    		} else {
+    			writer.write(suggestion);
+    		}
+
     		writer.endElement("li");
     	}
 

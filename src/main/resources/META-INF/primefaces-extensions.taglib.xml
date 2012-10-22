@@ -227,6 +227,12 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+		<attribute>
+			<description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
+			<name>escape</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
     </tag>
     <tag>
         <description>
@@ -490,6 +496,25 @@
             <description><![CDATA[When set to true, ajax requests are not queued. Default value: false.]]>
             </description>
             <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+		<attribute>
+			<description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
+			<name>escape</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Defines if the suggestions should be escaped or not.]]></description>
+			<name>escapeSuggestions</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+        <attribute>
+            <description><![CDATA[Marks component as required.]]>
+            </description>
+            <name>required</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

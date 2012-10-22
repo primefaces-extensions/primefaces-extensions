@@ -108,7 +108,8 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 		onsuccess,
 		global,
 		async,
-		escape;
+		escape,
+		escapeSuggestions;
 
 		private String toString;
 
@@ -387,6 +388,14 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 
 	public void setEscape(final boolean escape) {
 		setAttribute(PropertyKeys.escape, escape);
+	}
+
+	public boolean isEscapeSuggestions() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.escapeSuggestions, true);
+	}
+
+	public void setEscapeSuggestions(final boolean suggestions) {
+		setAttribute(PropertyKeys.escapeSuggestions, suggestions);
 	}
 
 	public String resolveWidgetVar() {
