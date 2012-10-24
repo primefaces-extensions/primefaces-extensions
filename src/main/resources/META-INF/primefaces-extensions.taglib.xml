@@ -3116,6 +3116,22 @@
             <required>true</required>
             <type>java.lang.Object</type>
         </attribute>
+         <attribute>
+            <description>
+                <![CDATA[Style will be applied to the switch container div if this case matches. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class will be applied to the switch container div if this case matches. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Tag which defines the default case for the switch component.]]></description>
@@ -3138,6 +3154,22 @@
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
+        </attribute>
+         <attribute>
+            <description>
+                <![CDATA[Style will be applied to the switch container div if default case is renderend. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class will be applied to the switch container div if default case is renderend. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
 </facelet-taglib>

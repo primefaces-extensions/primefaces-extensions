@@ -39,11 +39,8 @@ public class SwitchRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		final Switch switchComponent = (Switch) component;
-		final ResponseWriter writer = context.getResponseWriter();
 
-		writer.startElement("div", switchComponent);
-		writer.writeAttribute("id", switchComponent.getClientId(context), null);
-
+		DefaultCase caseToRender = null;
 		DefaultCase defaultCase = null;
 		boolean caseMatched = false;
 
@@ -62,8 +59,7 @@ public class SwitchRenderer extends CoreRenderer {
 				if ((caseComponent.getValue() == null && switchComponent.getValue() == null)
 						|| caseComponent.getValue().equals(switchComponent.getValue())) {
 
-					caseComponent.setRendered(true);
-					renderChildren(context, caseComponent);
+					caseToRender = caseComponent;
 					caseMatched = true;
 				}
 
@@ -75,11 +71,27 @@ public class SwitchRenderer extends CoreRenderer {
 		}
 
 		if (!caseMatched && defaultCase != null) {
-			defaultCase.setRendered(true);
-			renderChildren(context, defaultCase);
+			caseToRender = defaultCase;
 		}
-
-		writer.endElement("div");
+		
+		if (caseToRender != null) {
+			final ResponseWriter writer = context.getResponseWriter();
+			writer.startElement("div", switchComponent);
+			writer.writeAttribute("id", switchComponent.getClientId(context), null);
+			
+			if (caseToRender.getStyle() != null) {
+				writer.writeAttribute("style", caseToRender.getStyle(), null);
+			}
+			
+			if (caseToRender.getStyleClass() != null) {
+				writer.writeAttribute("class", caseToRender.getStyleClass(), null);
+			}
+			
+			caseToRender.setRendered(true);
+			renderChildren(context, caseToRender);
+			
+			writer.endElement("div");
+		}
 	}
 
     @Override

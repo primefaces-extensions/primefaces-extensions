@@ -15,6 +15,7 @@
  *
  * $Id: $
  */
+
 package org.primefaces.extensions.component.switchcase;
 
 import java.util.ArrayList;
