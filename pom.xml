@@ -732,7 +732,7 @@
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.newComponents>waypoint;spotlight</pe.newComponents>
         <pe.updatedComponents>ajaxErrorHandler;codeMirror;inputNumber;layout;masterDetail;timeline;tooltip;triStateCheckbox;triStateManyCheckbox</pe.updatedComponents>
-        <primefaces.core.version>3.4.1</primefaces.core.version>
+        <primefaces.core.version>3.4.2</primefaces.core.version>
         <primefaces.theme.version>1.0.8</primefaces.theme.version>
     </properties>
 </project>
