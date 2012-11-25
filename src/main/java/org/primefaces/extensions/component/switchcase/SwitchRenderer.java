@@ -42,7 +42,6 @@ public class SwitchRenderer extends CoreRenderer {
 
 		DefaultCase caseToRender = null;
 		DefaultCase defaultCase = null;
-		boolean caseMatched = false;
 
 		for (UIComponent child : switchComponent.getChildren()) {
 
@@ -60,7 +59,6 @@ public class SwitchRenderer extends CoreRenderer {
 						|| caseComponent.getValue().equals(switchComponent.getValue())) {
 
 					caseToRender = caseComponent;
-					caseMatched = true;
 				}
 
 			} else if (child instanceof DefaultCase) {
@@ -70,7 +68,7 @@ public class SwitchRenderer extends CoreRenderer {
 			}	
 		}
 
-		if (!caseMatched && defaultCase != null) {
+		if (caseToRender == null) {
 			caseToRender = defaultCase;
 		}
 		
