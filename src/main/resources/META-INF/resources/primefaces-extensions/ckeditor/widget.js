@@ -67,6 +67,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 		this.dirtyEventDefined = this.cfg.behaviors && this.cfg.behaviors['dirty'];
 		this.changeEventDefined = this.cfg.behaviors && this.cfg.behaviors['change'];
 	    this.dirtyState = false;
+	    this.instance = null;
 	
 		this.options = {};
 		//add widget to ckeditor config, this is required for the save event
@@ -107,7 +108,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 		}
 	
 		//check if ckeditor is already included
-		if (typeof(CKEDITOR) == 'undefined') {
+		if (!$.fn.ckeditor) {
 			var ckEditorScriptURI =
 				PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/ckeditor.js');
 			
@@ -151,17 +152,19 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 * @private
 	 */
 	initialize : function() {
-		//overwrite save button
-		this.overwriteSaveButton();
-
-		//remove old instances if required
-		var oldInstance = CKEDITOR.instances[this.id];
-		if (oldInstance) {
-			oldInstance.destroy(true);
+		if (!this.instance) {
+			//overwrite save button
+			this.overwriteSaveButton();
+	
+			//remove old instances if required
+			var oldInstance = CKEDITOR.instances[this.id];
+			if (oldInstance) {
+				oldInstance.destroy(true);
+			}
+	
+			//initialize ckeditor after all resources were loaded
+			this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
 		}
-
-		//initialize ckeditor after all resources were loaded
-		this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
 	},
 
 	/**
