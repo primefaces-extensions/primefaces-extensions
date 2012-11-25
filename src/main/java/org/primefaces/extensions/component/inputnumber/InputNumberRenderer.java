@@ -74,7 +74,7 @@ public class InputNumberRenderer extends InputRenderer {
 		}
 
 		decodeBehaviors(context, inputNumber);
-		
+
 		String inputId = inputNumber.getClientId(context) + "_hinput";
 		String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
@@ -94,19 +94,19 @@ public class InputNumberRenderer extends InputRenderer {
 	protected void encodeMarkup(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);
-		
+
 
 		String styleClass = inputNumber.getStyleClass();
 		styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
 
-		
-                writer.startElement("span", null);
+
+		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", styleClass, "styleClass");
 
 		encodeOutput(context, inputNumber, clientId);
-                encodeInput(context, inputNumber, clientId);
-		
+		encodeInput(context, inputNumber, clientId);
+
 		writer.endElement("span");
 	}
 
@@ -114,38 +114,38 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_hinput";
 
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("id", inputId, null);
 		writer.writeAttribute("name", inputId, null);
-                writer.writeAttribute("type", "hidden", null);
+		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("autocomplete", "off", null);
-		
+
 		if (inputNumber.getOnchange() != null) {
 			writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
 		}
 
 		writer.endElement("input");
-		
+
 	}
 
 	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 
 		ResponseWriter writer = context.getResponseWriter();
-                String inputId = clientId + "_input";
-                
+		String inputId = clientId + "_input";
+
 		String defaultClass = InputText.STYLE_CLASS;
 		defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
-		
+
 		writer.startElement("input", null);
-                writer.writeAttribute("id", inputId, null);
-                writer.writeAttribute("name", inputId, null);		
+		writer.writeAttribute("id", inputId, null);
+		writer.writeAttribute("name", inputId, null);		
 		writer.writeAttribute("type", "text", null);
 
 
 		renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS);
 
-		
+
 		if (inputNumber.isReadonly()) {
 			writer.writeAttribute("readonly", "readonly", "readonly");
 		}
@@ -170,7 +170,7 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('InputNumber','" + inputNumber.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
-                writer.write(",disabled:" + inputNumber.isDisabled());
+		writer.write(",disabled:" + inputNumber.isDisabled());
 		writer.write(",valueToRender:'" + formatForPlugin(valueToRender) + "'");
 
 		String metaOptions = getOptions(inputNumber);
@@ -193,7 +193,7 @@ public class InputNumberRenderer extends InputRenderer {
 		String maxValue = inputNumber.getMaxValue();
 		String roundMethod = inputNumber.getRoundMethod();
 		String decimalPlaces = inputNumber.getDecimalPlaces();
-                String emptyValue = inputNumber.getEmptyValue();
+		String emptyValue = inputNumber.getEmptyValue();
 
 		String options = "";
 		options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
@@ -207,7 +207,7 @@ public class InputNumberRenderer extends InputRenderer {
 		options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
 		options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
 		options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
-                options += "wEmpty: '" + emptyValue + "',";
+		options += "wEmpty: '" + emptyValue + "',";
 
 
 		//if all options are empty return empty
