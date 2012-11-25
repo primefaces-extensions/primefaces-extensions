@@ -2847,6 +2847,132 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+		<attribute>
+			<description><![CDATA[Access key to transfer focus to the input element.]]></description>
+			<name>accesskey</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Alternate textual description of the input element.]]></description>
+			<name>alt</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Controls browser autocomplete behavior.]]></description>
+			<name>autocomplete</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Direction indication for text that does not inherit directionality.]]></description>
+			<name>dir</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[A localized user presentable name.]]></description>
+			<name>lang</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Maximum number of characters that may be entered in this field.]]></description>
+			<name>maxlength</name>
+			<required>false</required>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when input element loses focus.]]></description>
+			<name>onblur</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when input element is clicked.]]></description>
+			<name>onclick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when input element is double clicked.]]></description>
+			<name>ondblclick</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when input element receives focus.]]></description>
+			<name>onfocus</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a key is pressed down over input element.]]></description>
+			<name>onkeydown</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a key is pressed and released over input element.]]></description>
+			<name>onkeypress</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a key is released over input element.]]></description>
+			<name>onkeyup</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a pointer input element is pressed down over input element.]]></description>
+			<name>onmousedown</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a pointer input element is moved within input element.]]></description>
+			<name>onmousemove</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a pointer input element is moved away from input element.]]></description>
+			<name>onmouseout</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a pointer input element is moved onto input element.]]></description>
+			<name>onmouseover</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when a pointer input element is released over input element.]]></description>
+			<name>onmouseup</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Client side callback to execute when text within input element is selected by user.]]></description>
+			<name>onselect</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Advisory tooltip information.]]></description>
+			<name>tabindex</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Advisory tooltip information.]]></description>
+			<name>title</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
     </tag>
     <tag>
         <description><![CDATA[Util tag to import constants.]]>
