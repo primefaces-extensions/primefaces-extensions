@@ -117,6 +117,24 @@ PrimeFacesExt = {
 	},
 
     /**
+     * Gets the URL extensions of current included resources. For example: jsf/xhtml.
+     * This should only be used if extensions mapping is used.
+     *
+     * @author Thomas Andraschko
+     * @returns {string} The URL extension.
+     */
+	getResourceUrlExtension : function() {
+		if (!PrimeFacesExt.RESOURCE_URL_EXTENSION) {
+			var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
+			var primeFacesExtensionsScript = 'primefaces-extensions.js';
+		
+			PrimeFacesExt.RESOURCE_URL_EXTENSION = RegExp('primefaces-extensions.js.([^?]*)').exec(scriptURI)[1];
+		}
+
+		return PrimeFacesExt.RESOURCE_URL_EXTENSION;
+	},
+	
+    /**
      * Checks if the current included scripts are uncompressed.
      *
      * @author Thomas Andraschko
