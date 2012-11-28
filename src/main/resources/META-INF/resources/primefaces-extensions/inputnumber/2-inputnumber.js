@@ -38,9 +38,9 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
 			PrimeFaces.attachBehaviors(this.inputExternal, this.cfg.behaviors);
 		}
                 
-		this.inputExternal.autoNumeric('init',this.plugOptArray);
+		this.inputExternal.autoNumeric('init', this.plugOptArray);
                        
-		if(this.valueToRender!=""){
+		if (this.valueToRender != ""){
 			//set the value to the external input the plugin will format it.                 
 			this.inputExternal.autoNumeric('set',this.valueToRender);                     
 			//then copie the value to the internal input
