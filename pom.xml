@@ -699,7 +699,7 @@
                 <pe.jsf.impl>myfaces</pe.jsf.impl>
                 <pe.jsf.group>org.apache.myfaces.core</pe.jsf.group>
                 <pe.jsf.artifact>myfaces</pe.jsf.artifact>
-                <pe.jsf.version>2.1.9</pe.jsf.version>
+                <pe.jsf.version>2.1.10</pe.jsf.version>
             </properties>
         </profile>
         <profile>
@@ -727,7 +727,7 @@
         <pe.jsf.group>com.sun.faces</pe.jsf.group>
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.scope>compile</pe.jsf.scope>
-        <pe.jsf.version>2.1.13</pe.jsf.version>
+        <pe.jsf.version>2.1.15</pe.jsf.version>
         <pe.impl.version>0.6.2-SNAPSHOT</pe.impl.version>
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.newComponents>;</pe.newComponents>
