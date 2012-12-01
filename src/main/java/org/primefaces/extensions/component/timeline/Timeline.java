@@ -43,7 +43,8 @@ import org.primefaces.util.Constants;
 /**
  * Timeline component.
  *
- * @author Nilesh Namdeo Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author: nileshmali86@gmail.com
+ * $
  * @version $Revision$
  * @since 0.3
  */
@@ -66,7 +67,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
     /**
      * Properties that are tracked by state saving.
      *
-     * @author Nilesh Namdeo Mali / last modified by $Author$
+     * @author Nilesh Namdeo Mali / last modified by $Author:
+     * nileshmali86@gmail.com $
      * @version $Revision$
      */
     protected enum PropertyKeys {
@@ -153,12 +155,12 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         setAttribute(PropertyKeys.styleClass, styleClass);
     }
 
-    public List<org.primefaces.extensions.model.timeline.Timeline> getValue() {
-        return (List<org.primefaces.extensions.model.timeline.Timeline>) getStateHelper().eval(PropertyKeys.value, null);
+    public Object getValue() {
+        return getStateHelper().eval(PropertyKeys.value, null);
     }
 
-    public void setValue(final List<org.primefaces.extensions.model.timeline.Timeline> timelines) {
-        setAttribute(PropertyKeys.value, timelines);
+    public void setValue(final Object timelineValue) {
+        setAttribute(PropertyKeys.value, timelineValue);
     }
 
     public String getVar() {
@@ -208,11 +210,10 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                 String selectedTimelineId = params.get(clientId + "_selectedTimelineId");
                 String selectedEventId = params.get(clientId + "_selectedEventId");
 
-                if (this.getValue() != null && !this.getValue().isEmpty()) {
-                    Iterator<org.primefaces.extensions.model.timeline.Timeline> itrTimeline = this.getValue().iterator();
-                    org.primefaces.extensions.model.timeline.Timeline timeline;
-                    while (itrTimeline.hasNext()) {
-                        timeline = itrTimeline.next();
+                if (this.getValue() != null) {
+                    if (this.getValue() instanceof org.primefaces.extensions.model.timeline.Timeline) {
+                        org.primefaces.extensions.model.timeline.Timeline timeline =
+                                (org.primefaces.extensions.model.timeline.Timeline) this.getValue();
                         if (timeline.getId().equals(selectedTimelineId)) {
                             Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
                             TimelineEvent selectedEvent;
@@ -225,8 +226,26 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                                 }
                             }
                         }
+                    } else if(this.getValue() instanceof List){
+                        Iterator<org.primefaces.extensions.model.timeline.Timeline> itrTimeline = 
+                                ((List<org.primefaces.extensions.model.timeline.Timeline>)this.getValue()).iterator();
+                        org.primefaces.extensions.model.timeline.Timeline timeline;
+                        while (itrTimeline.hasNext()) {
+                            timeline = itrTimeline.next();
+                            if (timeline.getId().equals(selectedTimelineId)) {
+                                Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
+                                TimelineEvent selectedEvent;
+                                while (itrEvent.hasNext()) {
+                                    selectedEvent = itrEvent.next();
+                                    if (selectedEvent.getId().equals(selectedEventId)) {
+                                        FacesEvent wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
+                                        super.queueEvent(wrapperEvent);
+                                        return;
+                                    }
+                                }
+                            }
+                        }
                     }
-
                 }
             }
         }

@@ -33,7 +33,8 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link Timeline} component.
  *
- * @author Nilesh Namdeo Mali / last modified by $Author$
+ * @author Nilesh Namdeo Mali / last modified by $Author: nileshmali86@gmail.com
+ * $
  * @version $Revision$
  * @since 0.3
  */
@@ -68,8 +69,6 @@ public class TimelineRenderer extends CoreRenderer {
     protected void encodeScript(final FacesContext context, final Timeline component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = component.getClientId(context);
-        List<org.primefaces.extensions.model.timeline.Timeline> model =
-                (List<org.primefaces.extensions.model.timeline.Timeline>) component.getValue();
 
         startScript(writer, clientId);
         writer.write("$(function() {");
@@ -80,25 +79,41 @@ public class TimelineRenderer extends CoreRenderer {
         writer.write(",height:\"" + component.getHeight() + "\"");
         writer.write(",width:\"" + component.getWidth() + "\"");
         writer.write(",showNavigation:" + component.getShowNavigation());
-        if (!model.isEmpty()) {
-            String groupName;
-            boolean hasGroup = model.size() > 1;
+        if (component.getValue() instanceof org.primefaces.extensions.model.timeline.Timeline) {
+            org.primefaces.extensions.model.timeline.Timeline timeline =
+                    (org.primefaces.extensions.model.timeline.Timeline) component.getValue();
             writer.write(",dataSource: [");
-            for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext();) {
-                org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
-                groupName = (hasGroup) ? timeline.getTitle() : null;
-                for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext();) {
-                    encodeEvent(context, component, eventIter.next(), groupName, timeline.getId());
+            for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext();) {
+                encodeEvent(context, component, eventIter.next(), null, timeline.getId());
 
-                    if (eventIter.hasNext()) {
-                        writer.write(",");
-                    }
-                }
-                if (it.hasNext()) {
+                if (eventIter.hasNext()) {
                     writer.write(",");
                 }
             }
             writer.write("]");
+        } else if (component.getValue() instanceof List) {
+            List<org.primefaces.extensions.model.timeline.Timeline> model =
+                    (List<org.primefaces.extensions.model.timeline.Timeline>) component.getValue();
+            if (!model.isEmpty()) {
+                String groupName;
+                boolean hasGroup = model.size() > 1;
+                writer.write(",dataSource: [");
+                for (Iterator<org.primefaces.extensions.model.timeline.Timeline> it = model.iterator(); it.hasNext();) {
+                    org.primefaces.extensions.model.timeline.Timeline timeline = it.next();
+                    groupName = (hasGroup) ? timeline.getTitle() : null;
+                    for (Iterator<TimelineEvent> eventIter = timeline.getEvents().iterator(); eventIter.hasNext();) {
+                        encodeEvent(context, component, eventIter.next(), groupName, timeline.getId());
+
+                        if (eventIter.hasNext()) {
+                            writer.write(",");
+                        }
+                    }
+                    if (it.hasNext()) {
+                        writer.write(",");
+                    }
+                }
+                writer.write("]");
+            }
         }
         encodeClientBehaviors(context, component);
         writer.write("},true);});");
@@ -106,7 +121,7 @@ public class TimelineRenderer extends CoreRenderer {
     }
 
     protected void encodeEvent(final FacesContext context, final Timeline component, final TimelineEvent event,
-                               final String groupName, final String timelineId) throws IOException {
+            final String groupName, final String timelineId) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         writer.write("{");

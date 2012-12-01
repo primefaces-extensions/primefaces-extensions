@@ -13,44 +13,44 @@
         <function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
     </function>
 
-	<function>
-		<function-name>escapeHtml4</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
-	</function>
-	<function>
-		<function-name>unescapeHtml4</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String unescapeHtml4(java.lang.String)</function-signature>
-	</function>
+    <function>
+        <function-name>escapeHtml4</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <function-name>unescapeHtml4</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String unescapeHtml4(java.lang.String)</function-signature>
+    </function>
 
-	<function>
-		<function-name>escapeHtml3</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
-	</function>
-	<function>
-		<function-name>unescapeHtml3</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String unescapeHtml3(java.lang.String)</function-signature>
-	</function>
+    <function>
+        <function-name>escapeHtml3</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <function-name>unescapeHtml3</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String unescapeHtml3(java.lang.String)</function-signature>
+    </function>
 
-	<function>
-		<function-name>escapeXml</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String escapeXml(java.lang.String)</function-signature>
-	</function>
-	<function>
-		<function-name>unescapeXml</function-name>
-		<function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-		<function-signature>java.lang.String unescapeXml(java.lang.String)</function-signature>
-	</function>
+    <function>
+        <function-name>escapeXml</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String escapeXml(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <function-name>unescapeXml</function-name>
+        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
+        <function-signature>java.lang.String unescapeXml(java.lang.String)</function-signature>
+    </function>
 
-	<function>
-		<function-name>encodeURL</function-name>
-		<function-class>org.primefaces.extensions.util.URLEncoderWrapper</function-class>
-		<function-signature>java.lang.String encode(java.lang.String)</function-signature>
-	</function>
+    <function>
+        <function-name>encodeURL</function-name>
+        <function-class>org.primefaces.extensions.util.URLEncoderWrapper</function-class>
+        <function-signature>java.lang.String encode(java.lang.String)</function-signature>
+    </function>
 
     <!-- Converters -->
     <tag>
@@ -266,12 +266,12 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
-			<name>escape</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
+        <attribute>
+            <description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description>
@@ -538,18 +538,18 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
-			<name>escape</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Defines if the suggestions should be escaped or not.]]></description>
-			<name>escapeSuggestions</name>
-			<required>false</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
+        <attribute>
+            <description><![CDATA[Defines if the content of the component should be escaped or not.]]></description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Defines if the suggestions should be escaped or not.]]></description>
+            <name>escapeSuggestions</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
         <attribute>
             <description><![CDATA[Marks component as required.]]>
             </description>
@@ -2246,7 +2246,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Timeline visualizes temporal data.]]>
+        <description><![CDATA[Timeline visualizes temporal data. Client behavior events: eventSelect - fired when timeline event is selected (javax.faces.event.AjaxBehaviorEvent)]]>
         </description>
         <tag-name>timeline</tag-name>
         <component>
@@ -2345,11 +2345,11 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[A java.util.List instance representing the backend model.]]>
+            <description><![CDATA[A java.lang.Object instance representing the backend model. This may have list of timeline objects or single timeline object.]]>
             </description>
             <name>value</name>
             <required>true</required>
-            <type>java.util.List</type>
+            <type>java.lang.Object</type>
         </attribute>
     </tag>
     <tag>
@@ -2886,132 +2886,132 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[Access key to transfer focus to the input element.]]></description>
-			<name>accesskey</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Alternate textual description of the input element.]]></description>
-			<name>alt</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Controls browser autocomplete behavior.]]></description>
-			<name>autocomplete</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Direction indication for text that does not inherit directionality.]]></description>
-			<name>dir</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[A localized user presentable name.]]></description>
-			<name>lang</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Maximum number of characters that may be entered in this field.]]></description>
-			<name>maxlength</name>
-			<required>false</required>
-			<type>int</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when input element loses focus.]]></description>
-			<name>onblur</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when input element is clicked.]]></description>
-			<name>onclick</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when input element is double clicked.]]></description>
-			<name>ondblclick</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when input element receives focus.]]></description>
-			<name>onfocus</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a key is pressed down over input element.]]></description>
-			<name>onkeydown</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a key is pressed and released over input element.]]></description>
-			<name>onkeypress</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a key is released over input element.]]></description>
-			<name>onkeyup</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a pointer input element is pressed down over input element.]]></description>
-			<name>onmousedown</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a pointer input element is moved within input element.]]></description>
-			<name>onmousemove</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a pointer input element is moved away from input element.]]></description>
-			<name>onmouseout</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a pointer input element is moved onto input element.]]></description>
-			<name>onmouseover</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when a pointer input element is released over input element.]]></description>
-			<name>onmouseup</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Client side callback to execute when text within input element is selected by user.]]></description>
-			<name>onselect</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Advisory tooltip information.]]></description>
-			<name>tabindex</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<description><![CDATA[Advisory tooltip information.]]></description>
-			<name>title</name>
-			<required>false</required>
-			<type>java.lang.String</type>
-		</attribute>
+        <attribute>
+            <description><![CDATA[Access key to transfer focus to the input element.]]></description>
+            <name>accesskey</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Alternate textual description of the input element.]]></description>
+            <name>alt</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Controls browser autocomplete behavior.]]></description>
+            <name>autocomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Direction indication for text that does not inherit directionality.]]></description>
+            <name>dir</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A localized user presentable name.]]></description>
+            <name>lang</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Maximum number of characters that may be entered in this field.]]></description>
+            <name>maxlength</name>
+            <required>false</required>
+            <type>int</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when input element loses focus.]]></description>
+            <name>onblur</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when input element is clicked.]]></description>
+            <name>onclick</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when input element is double clicked.]]></description>
+            <name>ondblclick</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when input element receives focus.]]></description>
+            <name>onfocus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a key is pressed down over input element.]]></description>
+            <name>onkeydown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a key is pressed and released over input element.]]></description>
+            <name>onkeypress</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a key is released over input element.]]></description>
+            <name>onkeyup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a pointer input element is pressed down over input element.]]></description>
+            <name>onmousedown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a pointer input element is moved within input element.]]></description>
+            <name>onmousemove</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a pointer input element is moved away from input element.]]></description>
+            <name>onmouseout</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a pointer input element is moved onto input element.]]></description>
+            <name>onmouseover</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when a pointer input element is released over input element.]]></description>
+            <name>onmouseup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client side callback to execute when text within input element is selected by user.]]></description>
+            <name>onselect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Advisory tooltip information.]]></description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Advisory tooltip information.]]></description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Util tag to import constants.]]>
@@ -3281,7 +3281,7 @@
             <required>true</required>
             <type>java.lang.Object</type>
         </attribute>
-         <attribute>
+        <attribute>
             <description>
                 <![CDATA[Style will be applied to the switch container div if this case matches. Default value is null.]]>
             </description>
@@ -3320,7 +3320,7 @@
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
         </attribute>
-         <attribute>
+        <attribute>
             <description>
                 <![CDATA[Style will be applied to the switch container div if default case is renderend. Default value is null.]]>
             </description>
