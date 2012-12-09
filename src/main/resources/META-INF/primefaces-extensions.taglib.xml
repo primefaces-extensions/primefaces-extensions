@@ -27,7 +27,7 @@
     <function>
         <function-name>escapeHtml3</function-name>
         <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
+        <function-signature>java.lang.String escapeHtml3(java.lang.String)</function-signature>
     </function>
     <function>
         <function-name>unescapeHtml3</function-name>
@@ -1613,6 +1613,90 @@
             <name>styleClassContent</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Makes a pane resizable. Default is true.]]>
+            </description>
+            <name>resizable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Makes a pane closable. Default is true.]]>
+            </description>
+            <name>closable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Specifies the initial size of a pane in px or %. Default value is null.]]>
+            </description>
+            <name>size</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the minimum-size limit in px or % when resizing a pane. Default value is null.]]>
+            </description>
+            <name>minSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the maximum-size limit in px or % when resizing a pane. Default value is null.]]>
+            </description>
+            <name>maxSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the minimum-width limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            </description>
+            <name>minWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the maximum-width limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            </description>
+            <name>maxWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the minimum-height limit in px or % when resizing a pane. Default value is null - as small as pane can go.]]>
+            </description>
+            <name>minHeight</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies the maximum-height limit in px or % when resizing a pane. Default value is null - as large as pane can go.]]>
+            </description>
+            <name>maxHeight</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Spacing between pane and adjacent pane - when pane is 'open' or 'closed'. Default value is 6.]]>
+            </description>
+            <name>spacing</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If true, then pane is 'closed' when layout is created. Default is false.]]>
+            </description>
+            <name>initClosed</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
         </attribute>
     </tag>
     <tag>
