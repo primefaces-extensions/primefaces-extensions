@@ -89,9 +89,11 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				}
 			} else if (id.equals("@parent")) {
 				foundComponents.add(source.getParent());
-			} else if (id.equals("@all") || id.equals("@none")) {
-				LOG.log(Level.WARNING, "Components @all and @none are not supported.");
-			} else {
+			} else if (id.equals("@all")) {
+				LOG.log(Level.WARNING, "@all as identifier is not supported.");
+			} else if (id.equals("@none")) {
+                // ignore
+            } else {
 				final UIComponent component = source.findComponent(id);
 
 				if (component != null) {
