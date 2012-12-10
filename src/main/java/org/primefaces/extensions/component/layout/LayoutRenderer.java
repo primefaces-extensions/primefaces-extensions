@@ -49,8 +49,8 @@ public class LayoutRenderer extends CoreRenderer {
 	public void encodeBegin(FacesContext fc, UIComponent component) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		Layout layout = (Layout) component;
-        
-        encodeScript(fc, layout);
+
+		encodeScript(fc, layout);
 
 		if (!layout.isFullPage()) {
 			writer.startElement("div", layout);
@@ -82,8 +82,14 @@ public class LayoutRenderer extends CoreRenderer {
 				writer.writeAttribute("autocomplete", "off", null);
 				writer.endElement("input");
 			}
-           
+
 			writer.endElement("div");
+		}
+
+		if (Boolean.TRUE.equals(fc.getAttributes().get(Layout.SHOULD_CREATE_PANE_OPTIONS))) {
+			// resets
+			fc.getAttributes().remove(Layout.SHOULD_CREATE_PANE_OPTIONS);
+			layout.removeOptions();
 		}
 	}
 

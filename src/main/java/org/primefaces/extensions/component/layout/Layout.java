@@ -34,8 +34,12 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ListenerFor;
+import javax.faces.event.PreRenderComponentEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -52,6 +56,7 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  * @since   0.2
  */
+@ListenerFor(systemEventClass = PreRenderComponentEvent.class)
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
@@ -73,6 +78,12 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
 	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
 	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
+	public static final String SHOULD_CREATE_PANE_OPTIONS = "shouldCreatePaneOptions";
+	public static final String PANE_POSITION_CENTER = "center";
+	public static final String PANE_POSITION_NORTH = "north";
+	public static final String PANE_POSITION_SOUTH = "south";
+	public static final String PANE_POSITION_WEST = "west";
+	public static final String PANE_POSITION_EAST = "east";
 
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("open", "close", "resize"));
@@ -179,6 +190,21 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	@Override
+	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+		super.processEvent(event);
+
+		if (!(event instanceof PreRenderComponentEvent)) {
+			return;
+		}
+
+		if (getOptions() == null) {
+			// Important for LayoutPane. LayoutOptions created as Java model takes precedence over options defined
+			// as attributes of LayoutPane. This flag is evaluated in the LayoutPane's PreRenderComponentEvent listener.
+			FacesContext.getCurrentInstance().getAttributes().put(SHOULD_CREATE_PANE_OPTIONS, Boolean.TRUE);
+		}
+	}
+
+	@Override
 	public void processDecodes(FacesContext fc) {
 		if (isSelfRequest(fc)) {
 			this.decode(fc);
@@ -269,6 +295,10 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		}
 
 		return null;
+	}
+
+	public void removeOptions() {
+		getStateHelper().remove(PropertyKeys.options);
 	}
 
 	private boolean isSelfRequest(FacesContext context) {

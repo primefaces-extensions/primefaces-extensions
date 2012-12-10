@@ -1515,7 +1515,7 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Layout options as instance of the class LayoutOptions]]></description>
+            <description><![CDATA[Layout options as instance of the class LayoutOptions. LayoutOptions created as Java model takes precedence over layout options as tag attributes.]]></description>
             <name>options</name>
             <required>false</required>
             <type>java.lang.Object</type>

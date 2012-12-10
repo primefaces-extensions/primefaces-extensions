@@ -42,8 +42,8 @@ public class LayoutPaneRenderer extends CoreRenderer {
 
 		String position = layoutPane.getPosition();
 		String combinedPosition = position;
-
 		UIComponent parent = layoutPane.getParent();
+
 		while (parent instanceof LayoutPane) {
 			combinedPosition = ((LayoutPane) parent).getPosition() + Layout.POSITION_SEPARATOR + combinedPosition;
 			parent = parent.getParent();
