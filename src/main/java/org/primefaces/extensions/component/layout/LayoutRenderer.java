@@ -29,6 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -50,7 +51,18 @@ public class LayoutRenderer extends CoreRenderer {
 		ResponseWriter writer = fc.getResponseWriter();
 		Layout layout = (Layout) component;
 
-		encodeScript(fc, layout);
+		boolean buildOptions = (layout.getOptions() == null);
+		layout.setBuildOptions(buildOptions);
+
+		if (buildOptions) {
+			FastStringWriter fsw = new FastStringWriter();
+			layout.setOriginalWriter(writer);
+			layout.setFastStringWriter(fsw);
+			fc.setResponseWriter(writer.cloneWithWriter(fsw));
+			writer = fc.getResponseWriter();
+		} else {
+			encodeScript(fc, layout);
+		}
 
 		if (!layout.isFullPage()) {
 			writer.startElement("div", layout);
@@ -67,14 +79,14 @@ public class LayoutRenderer extends CoreRenderer {
 	}
 
 	@Override
-	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+	public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		Layout layout = (Layout) component;
-		String clientId = layout.getClientId(fc);
 
 		if (!layout.isFullPage()) {
 			if (!layout.isStateCookie()) {
 				// render hidden field for server-side state saving
+				String clientId = layout.getClientId(fc);
 				writer.startElement("input", null);
 				writer.writeAttribute("type", "hidden", null);
 				writer.writeAttribute("id", clientId + "_state", null);
@@ -86,11 +98,16 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.endElement("div");
 		}
 
-		if (Boolean.TRUE.equals(fc.getAttributes().get(Layout.SHOULD_CREATE_PANE_OPTIONS))) {
-			// resets
-			fc.getAttributes().remove(Layout.SHOULD_CREATE_PANE_OPTIONS);
+		if (layout.isBuildOptions()) {
+			fc.setResponseWriter(layout.getOriginalWriter());
+			encodeScript(fc, layout);
+			fc.getResponseWriter().write(layout.getFastStringWriter().toString());
 			layout.removeOptions();
+			layout.setOriginalWriter(null);
+			layout.setFastStringWriter(null);
 		}
+
+		layout.setBuildOptions(false);
 	}
 
 	@Override

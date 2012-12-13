@@ -25,7 +25,6 @@ import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
@@ -259,82 +258,77 @@ public class LayoutPane extends UIComponentBase {
 	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
 
-		if (!(event instanceof PreRenderComponentEvent)) {
+		if (!(event instanceof PreRenderComponentEvent) || !getLayout().isBuildOptions()) {
 			return;
 		}
 
-		boolean createPaneOptions =
-		    Boolean.TRUE.equals(FacesContext.getCurrentInstance().getAttributes().get(Layout.SHOULD_CREATE_PANE_OPTIONS));
+		// create layout options for this pane via attributes defined in pe:layoutPane
+		String position = getPosition();
+		UIComponent parent = getParent();
+		LayoutOptions thisLayoutOptions = getOptions();
+		LayoutOptions options;
 
-		if (createPaneOptions) {
-			// create layout options for this pane via attributes defined in pe:layoutPane
-			String position = getPosition();
-			UIComponent parent = getParent();
-			LayoutOptions thisLayoutOptions = getOptions();
-			LayoutOptions options;
+		if (parent instanceof LayoutPane) {
+			LayoutOptions parentLayoutOptions = ((LayoutPane) parent).getOptions();
+			options = parentLayoutOptions.getChildOptions();
+			if (options == null) {
+				options = new LayoutOptions();
+				parentLayoutOptions.setChildOptions(options);
+			}
+		} else if (parent instanceof Layout) {
+			options = (LayoutOptions) ((Layout) parent).getOptions();
+			if (options == null) {
+				Layout layout = ((Layout) parent);
+				options = new LayoutOptions();
+				layout.setOptions(options);
 
-			if (parent instanceof LayoutPane) {
-				LayoutOptions parentLayoutOptions = ((LayoutPane) parent).getOptions();
-				options = parentLayoutOptions.getChildOptions();
-				if (options == null) {
-					options = new LayoutOptions();
-					parentLayoutOptions.setChildOptions(options);
+				// options for all panes
+				LayoutOptions panes = null;
+				String resizerTip = layout.getResizerTip();
+				if (resizerTip != null) {
+					panes = new LayoutOptions();
+					panes.addOption(Layout.PropertyKeys.resizerTip.toString(), resizerTip);
 				}
-			} else if (parent instanceof Layout) {
-				options = (LayoutOptions) ((Layout) parent).getOptions();
-				if (options == null) {
-					Layout layout = ((Layout) parent);
-					options = new LayoutOptions();
-					layout.setOptions(options);
 
-					// options for all panes
-					LayoutOptions panes = null;
-					String resizerTip = layout.getResizerTip();
-					if (resizerTip != null) {
+				String togglerTipOpen = layout.getTogglerTipOpen();
+				if (togglerTipOpen != null) {
+					if (panes == null) {
 						panes = new LayoutOptions();
-						panes.addOption(Layout.PropertyKeys.resizerTip.toString(), resizerTip);
 					}
 
-					String togglerTipOpen = layout.getTogglerTipOpen();
-					if (togglerTipOpen != null) {
-						if (panes == null) {
-							panes = new LayoutOptions();
-						}
-
-						panes.addOption(Layout.PropertyKeys.togglerTip_open.toString(), togglerTipOpen);
-					}
-
-					String togglerTipClosed = layout.getTogglerTipClosed();
-					if (togglerTipClosed != null) {
-						if (panes == null) {
-							panes = new LayoutOptions();
-						}
-
-						panes.addOption(Layout.PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
-					}
-
-					if (panes != null) {
-						options.setPanesOptions(panes);
-					}
+					panes.addOption(Layout.PropertyKeys.togglerTip_open.toString(), togglerTipOpen);
 				}
-			} else {
-				throw new FacesException("LayoutPane can be only placed within another LayoutPane or Layout");
-			}
 
-			if (Layout.PANE_POSITION_CENTER.equals(position)) {
-				options.setCenterOptions(thisLayoutOptions);
-			} else if (Layout.PANE_POSITION_NORTH.equals(position)) {
-				options.setNorthOptions(thisLayoutOptions);
-			} else if (Layout.PANE_POSITION_SOUTH.equals(position)) {
-				options.setSouthOptions(thisLayoutOptions);
-			} else if (Layout.PANE_POSITION_WEST.equals(position)) {
-				options.setWestOptions(thisLayoutOptions);
-			} else if (Layout.PANE_POSITION_EAST.equals(position)) {
-				options.setEastOptions(thisLayoutOptions);
-			} else {
-				throw new FacesException("Pane position " + position
-				                         + " is invalid. Valid positions are 'center', 'north' 'south', 'west', 'east'");
+				String togglerTipClosed = layout.getTogglerTipClosed();
+				if (togglerTipClosed != null) {
+					if (panes == null) {
+						panes = new LayoutOptions();
+					}
+
+					panes.addOption(Layout.PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
+				}
+
+				if (panes != null) {
+					options.setPanesOptions(panes);
+				}
 			}
+		} else {
+			throw new FacesException("LayoutPane can be only placed within another LayoutPane or Layout");
+		}
+
+		if (Layout.PANE_POSITION_CENTER.equals(position)) {
+			options.setCenterOptions(thisLayoutOptions);
+		} else if (Layout.PANE_POSITION_NORTH.equals(position)) {
+			options.setNorthOptions(thisLayoutOptions);
+		} else if (Layout.PANE_POSITION_SOUTH.equals(position)) {
+			options.setSouthOptions(thisLayoutOptions);
+		} else if (Layout.PANE_POSITION_WEST.equals(position)) {
+			options.setWestOptions(thisLayoutOptions);
+		} else if (Layout.PANE_POSITION_EAST.equals(position)) {
+			options.setEastOptions(thisLayoutOptions);
+		} else {
+			throw new FacesException("Pane position " + position
+			                         + " is invalid. Valid positions are 'center', 'north' 'south', 'west', 'east'");
 		}
 	}
 
@@ -387,6 +381,16 @@ public class LayoutPane extends UIComponentBase {
 		}
 
 		return options;
+	}
+
+	private Layout getLayout() {
+		UIComponent parent = getParent();
+
+		while (!(parent instanceof Layout)) {
+			parent = parent.getParent();
+		}
+
+		return (Layout) parent;
 	}
 
 	public void setAttribute(PropertyKeys property, Object value) {

@@ -22,6 +22,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
         if (cfg.clientState) {
             this.cfg.options.stateManagement = {
                 enabled:true,
+                autoSave:true,
                 cookie:{
                     name:encodeURIComponent('pfext.layout.' + this.id)
                 }

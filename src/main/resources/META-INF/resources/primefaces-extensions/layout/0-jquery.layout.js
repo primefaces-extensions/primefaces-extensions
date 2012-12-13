@@ -1,6 +1,6 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.76
+ * jquery.layout 1.3.0 - Release Candidate 30.74
  * $Date$
  * $Rev$
  *
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.76
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.74
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -62,7 +62,7 @@ var	min		= Math.min
  */
 $.layout = {
 
-	version:	"1.3.rc30.76"
+	version:	"1.3.rc30.74"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
 	// can update code here if $.browser is phased out or logic changes
@@ -285,18 +285,15 @@ $.layout = {
 		return typeof evt === "object" && evt.stopPropagation ? evt : null;
 	}
 ,	parsePaneName: function (evt_or_pane) {
-		var evt = $.layout.getEventObject( evt_or_pane )
-		,	pane = evt_or_pane;
+		// getEventObject() automatically calls .stopPropagation(), WHICH MUST BE DONE!
+		var evt = $.layout.getEventObject( evt_or_pane );
 		if (evt) {
 			// ALWAYS stop propagation of events triggered in Layout!
 			evt.stopPropagation();
-			pane = $(this).data("layoutEdge");
+			return $(this).data("layoutEdge");
 		}
-		if (pane && !/^(west|east|north|south|center)$/.test(pane)) {
-			$.layout.msg('LAYOUT ERROR - Invalid pane-name: "'+ pane +'"');
-			pane = "error";
-		}
-		return pane;
+		else
+			return evt_or_pane;
 	}
 
 
@@ -2411,7 +2408,8 @@ $.fn.layout = function (opts) {
 			$Ts[pane]	= false;
 			if (!$P) return; // pane does not exist - skip
 
-			var	o		= options[pane]
+			var 
+				o		= options[pane]
 			,	s		= state[pane]
 			,	c		= _c[pane]
 			,	paneId	= o.paneSelector.substr(0,1) === "#" ? o.paneSelector.substr(1) : ""
@@ -3240,7 +3238,7 @@ $.fn.layout = function (opts) {
 		_hidePane(pane);
 		s.isClosed = true;
 		s.isVisible = false;
-		if (setHandles) setAsClosed(pane, true); // true = force
+		// UNUSED: if (setHandles) setAsClosed(pane, true); // true = force
 	}
 
 	/**
@@ -3255,7 +3253,7 @@ $.fn.layout = function (opts) {
 		var	pane = evtPane.call(this, evt_or_pane);
 		// if pane has been initialized, but NOT the complete layout, close pane instantly
 		if (!state.initialized && $Ps[pane]) {
-			_closePane(pane, true); // INIT pane as closed
+			_closePane(pane); // INIT pane as closed
 			return;
 		}
 		if (!isInitialized()) return;
@@ -3349,7 +3347,6 @@ $.fn.layout = function (opts) {
 	* @param {string}	pane	The pane just closed, ie: north, south, east, or west
 	*/
 ,	setAsClosed = function (pane) {
-		if (!$Rs[pane]) return; // handles not initialized yet!
 		var
 			$P		= $Ps[pane]
 		,	$R		= $Rs[pane]
@@ -3812,7 +3809,8 @@ $.fn.layout = function (opts) {
 	* @param {boolean=}	[force=false]
 	*/
 ,	makePaneFit = function (pane, isOpening, skipCallback, force) {
-		var	o	= options[pane]
+		var
+			o	= options[pane]
 		,	s	= state[pane]
 		,	c	= _c[pane]
 		,	$P	= $Ps[pane]
@@ -3887,6 +3885,8 @@ $.fn.layout = function (opts) {
 
 
 	/**
+	* sizePane / manualSizePane
+	* sizePane is called only by internal methods whenever a pane needs to be resized
 	* manualSizePane is an exposed flow-through method allowing extra code when pane is 'manually resized'
 	*
 	* @param {(string|Object)}	evt_or_pane				The pane being resized
@@ -3910,8 +3910,6 @@ $.fn.layout = function (opts) {
 	}
 
 	/**
-	* sizePane is called only by internal methods whenever a pane needs to be resized
-	*
 	* @param {(string|Object)}	evt_or_pane				The pane being resized
 	* @param {number}			size					The *desired* new size for this pane - will be validated
 	* @param {boolean=}			[skipCallback=false]	Should the onresize callback be run?
@@ -4308,7 +4306,7 @@ $.fn.layout = function (opts) {
 		if ($.isPlainObject( pC )) {
 			// resize one or more children
 			$.each( pC, function (key, child) {
-				if (!child.destroyed) child.resizeAll();
+				child.resizeAll();
 			});
 		}
 	}
@@ -4530,7 +4528,7 @@ $.fn.layout = function (opts) {
 			}
 
 			// DONE measuring and sizing this resizer/toggler, so can be 'hidden' now
-			if (!state.initialized && (o.initHidden || s.isHidden)) {
+			if (!state.initialized && (o.initHidden || s.noRoom)) {
 				$R.hide();
 				if ($T) $T.hide();
 			}
@@ -5165,14 +5163,11 @@ $.ui.cookie = {
 		,	date	= ''
 		,	clear	= false
 		,	o		= cookieOpts || {}
-		,	x		= o.expires  || null
-		,	t		= $.type(x)
+		,	x		= o.expires
 		;
 		if (x && x.toUTCString)
 			date = x;
-		else if (t === "string" && t > 0)
-			t = parseInt(t,10);
-		if (x === null || t === "number") {
+		else if (x === null || typeof x === 'number') {
 			date = new Date();
 			if (x > 0)
 				date.setDate(date.getDate() + x);
@@ -5181,15 +5176,15 @@ $.ui.cookie = {
 				clear = true;
 			}
 		}
-		if (date)		params += ";expires="+ date.toUTCString();
-		if (o.path)		params += ";path="+ o.path;
-		if (o.domain)	params += ";domain="+ o.domain;
-		if (o.secure)	params += ";secure";
-		document.cookie = name +"="+ (clear ? "" : encodeURIComponent( val )) + params; // write or clear cookie
+		if (date)		params += ';expires='+ date.toUTCString();
+		if (o.path)		params += ';path='+ o.path;
+		if (o.domain)	params += ';domain='+ o.domain;
+		if (o.secure)	params += ';secure';
+		document.cookie = name +'='+ (clear ? "" : encodeURIComponent( val )) + params; // write or clear cookie
 	}
 
 ,	clear: function (name) {
-		$.ui.cookie.write(name, "", {expires: -1});
+		$.ui.cookie.write(name, '', {expires: -1});
 	}
 
 };
@@ -5224,7 +5219,7 @@ $.layout.defaults.stateManagement = {
 ,	cookie: {
 		name:	""	// If not specified, will use Layout.name, else just "Layout"
 	,	domain:	""	// blank = current domain
-	,	path:	""	// blank = current page, "/" = entire website
+	,	path:	""	// blank = current page, '/' = entire website
 	,	expires: ""	// 'days' to keep cookie - leave blank for 'session cookie'
 	,	secure:	false
 	}
