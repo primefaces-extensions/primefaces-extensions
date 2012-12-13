@@ -74,7 +74,9 @@ public class LayoutPane extends UIComponentBase {
 		minHeight,
 		maxHeight,
 		spacing,
-		initClosed;
+		initClosed,
+		initHidden,
+		resizeWhileDragging;
 
 		private String toString;
 
@@ -104,7 +106,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleHeader, null);
 	}
 
-	public void setStyleHeader(final String styleHeader) {
+	public void setStyleHeader(String styleHeader) {
 		setAttribute(PropertyKeys.styleHeader, styleHeader);
 	}
 
@@ -112,7 +114,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleClassHeader, null);
 	}
 
-	public void setStyleClassHeader(final String styleClassHeader) {
+	public void setStyleClassHeader(String styleClassHeader) {
 		setAttribute(PropertyKeys.styleClassHeader, styleClassHeader);
 	}
 
@@ -120,7 +122,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleContent, null);
 	}
 
-	public void setStyleContent(final String styleContent) {
+	public void setStyleContent(String styleContent) {
 		setAttribute(PropertyKeys.styleContent, styleContent);
 	}
 
@@ -128,7 +130,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.styleClassContent, null);
 	}
 
-	public void setStyleClassContent(final String styleClassContent) {
+	public void setStyleClassContent(String styleClassContent) {
 		setAttribute(PropertyKeys.styleClassContent, styleClassContent);
 	}
 
@@ -153,7 +155,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.resizable, true);
 	}
 
-	public void setResizable(final boolean resizable) {
+	public void setResizable(boolean resizable) {
 		setAttribute(PropertyKeys.resizable, resizable);
 	}
 
@@ -161,7 +163,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.closable, true);
 	}
 
-	public void setClosable(final boolean closable) {
+	public void setClosable(boolean closable) {
 		setAttribute(PropertyKeys.closable, closable);
 	}
 
@@ -169,7 +171,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.size, null);
 	}
 
-	public void setSize(final String size) {
+	public void setSize(String size) {
 		setAttribute(PropertyKeys.size, size);
 	}
 
@@ -177,7 +179,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minSize, null);
 	}
 
-	public void setMinSize(final String minSize) {
+	public void setMinSize(String minSize) {
 		setAttribute(PropertyKeys.minSize, minSize);
 	}
 
@@ -185,7 +187,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxSize, null);
 	}
 
-	public void setMaxSize(final String maxSize) {
+	public void setMaxSize(String maxSize) {
 		setAttribute(PropertyKeys.maxSize, maxSize);
 	}
 
@@ -193,7 +195,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minWidth, null);
 	}
 
-	public void setMinWidth(final String minWidth) {
+	public void setMinWidth(String minWidth) {
 		setAttribute(PropertyKeys.minWidth, minWidth);
 	}
 
@@ -201,7 +203,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxWidth, null);
 	}
 
-	public void setMaxWidth(final String maxWidth) {
+	public void setMaxWidth(String maxWidth) {
 		setAttribute(PropertyKeys.maxWidth, maxWidth);
 	}
 
@@ -209,7 +211,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.minHeight, null);
 	}
 
-	public void setMinHeight(final String minHeight) {
+	public void setMinHeight(String minHeight) {
 		setAttribute(PropertyKeys.minHeight, minHeight);
 	}
 
@@ -217,7 +219,7 @@ public class LayoutPane extends UIComponentBase {
 		return (String) getStateHelper().eval(PropertyKeys.maxHeight, null);
 	}
 
-	public void setMaxHeight(final String maxHeight) {
+	public void setMaxHeight(String maxHeight) {
 		setAttribute(PropertyKeys.maxHeight, maxHeight);
 	}
 
@@ -225,7 +227,7 @@ public class LayoutPane extends UIComponentBase {
 		return (Integer) getStateHelper().eval(PropertyKeys.spacing, 6);
 	}
 
-	public void setSpacing(final int spacing) {
+	public void setSpacing(int spacing) {
 		setAttribute(PropertyKeys.spacing, spacing);
 	}
 
@@ -233,8 +235,24 @@ public class LayoutPane extends UIComponentBase {
 		return (Boolean) getStateHelper().eval(PropertyKeys.initClosed, false);
 	}
 
-	public void setInitClosed(final boolean initClosed) {
+	public void setInitClosed(boolean initClosed) {
 		setAttribute(PropertyKeys.initClosed, initClosed);
+	}
+
+	public boolean isInitHidden() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.initHidden, false);
+	}
+
+	public void setInitHidden(boolean initHidden) {
+		setAttribute(PropertyKeys.initHidden, initHidden);
+	}
+
+	public boolean isResizeWhileDragging() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.resizeWhileDragging, false);
+	}
+
+	public void setResizeWhileDragging(boolean resizeWhileDragging) {
+		setAttribute(PropertyKeys.resizeWhileDragging, resizeWhileDragging);
 	}
 
 	@Override
@@ -265,8 +283,39 @@ public class LayoutPane extends UIComponentBase {
 			} else if (parent instanceof Layout) {
 				options = (LayoutOptions) ((Layout) parent).getOptions();
 				if (options == null) {
+					Layout layout = ((Layout) parent);
 					options = new LayoutOptions();
-					((Layout) parent).setOptions(options);
+					layout.setOptions(options);
+
+					// options for all panes
+					LayoutOptions panes = null;
+					String resizerTip = layout.getResizerTip();
+					if (resizerTip != null) {
+						panes = new LayoutOptions();
+						panes.addOption(Layout.PropertyKeys.resizerTip.toString(), resizerTip);
+					}
+
+					String togglerTipOpen = layout.getTogglerTipOpen();
+					if (togglerTipOpen != null) {
+						if (panes == null) {
+							panes = new LayoutOptions();
+						}
+
+						panes.addOption(Layout.PropertyKeys.togglerTip_open.toString(), togglerTipOpen);
+					}
+
+					String togglerTipClosed = layout.getTogglerTipClosed();
+					if (togglerTipClosed != null) {
+						if (panes == null) {
+							panes = new LayoutOptions();
+						}
+
+						panes.addOption(Layout.PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
+					}
+
+					if (panes != null) {
+						options.setPanesOptions(panes);
+					}
 				}
 			} else {
 				throw new FacesException("LayoutPane can be only placed within another LayoutPane or Layout");
@@ -295,55 +344,52 @@ public class LayoutPane extends UIComponentBase {
 		}
 
 		options = new LayoutOptions();
+		options.addOption(PropertyKeys.resizable.toString(), isResizable());
+		options.addOption(PropertyKeys.closable.toString(), isClosable());
+		options.addOption(PropertyKeys.spacing.toString(), getSpacing());
+		options.addOption(PropertyKeys.initClosed.toString(), isInitClosed());
+		options.addOption(PropertyKeys.initHidden.toString(), isInitHidden());
+		options.addOption(PropertyKeys.resizeWhileDragging.toString(), isResizeWhileDragging());
 
-		if (getStateHelper().get(PropertyKeys.resizable) != null) {
-			options.addOption(PropertyKeys.resizable.toString, isResizable());
+		String size = getSize();
+		if (size != null) {
+			options.addOption(PropertyKeys.size.toString(), size);
 		}
 
-		if (getStateHelper().get(PropertyKeys.closable) != null) {
-			options.addOption(PropertyKeys.closable.toString, isClosable());
+		String minSize = getMinSize();
+		if (minSize != null) {
+			options.addOption(PropertyKeys.minSize.toString(), minSize);
 		}
 
-		if (getStateHelper().get(PropertyKeys.size) != null) {
-			options.addOption(PropertyKeys.size.toString, getSize());
+		String maxSize = getMaxSize();
+		if (maxSize != null) {
+			options.addOption(PropertyKeys.maxSize.toString(), maxSize);
 		}
 
-		if (getStateHelper().get(PropertyKeys.minSize) != null) {
-			options.addOption(PropertyKeys.minSize.toString, getMinSize());
+		String minWidth = getMinWidth();
+		if (minWidth != null) {
+			options.addOption(PropertyKeys.minWidth.toString(), minWidth);
 		}
 
-		if (getStateHelper().get(PropertyKeys.maxSize) != null) {
-			options.addOption(PropertyKeys.maxSize.toString, getMaxSize());
+		String maxWidth = getMaxWidth();
+		if (maxWidth != null) {
+			options.addOption(PropertyKeys.maxWidth.toString(), maxWidth);
 		}
 
-		if (getStateHelper().get(PropertyKeys.minWidth) != null) {
-			options.addOption(PropertyKeys.minWidth.toString, getMinWidth());
+		String minHeight = getMinHeight();
+		if (minHeight != null) {
+			options.addOption(PropertyKeys.minHeight.toString(), minHeight);
 		}
 
-		if (getStateHelper().get(PropertyKeys.maxWidth) != null) {
-			options.addOption(PropertyKeys.maxWidth.toString, getMaxWidth());
-		}
-
-		if (getStateHelper().get(PropertyKeys.minHeight) != null) {
-			options.addOption(PropertyKeys.minHeight.toString, getMinHeight());
-		}
-
-		if (getStateHelper().get(PropertyKeys.maxHeight) != null) {
-			options.addOption(PropertyKeys.maxHeight.toString, getMaxHeight());
-		}
-
-		if (getStateHelper().get(PropertyKeys.spacing) != null) {
-			options.addOption(PropertyKeys.spacing.toString, getSpacing());
-		}
-
-		if (getStateHelper().get(PropertyKeys.initClosed) != null) {
-			options.addOption(PropertyKeys.initClosed.toString, isInitClosed());
+		String maxHeight = getMaxHeight();
+		if (maxHeight != null) {
+			options.addOption(PropertyKeys.maxHeight.toString(), maxHeight);
 		}
 
 		return options;
 	}
 
-	public void setAttribute(final PropertyKeys property, final Object value) {
+	public void setAttribute(PropertyKeys property, Object value) {
 		getStateHelper().put(property, value);
 
 		@SuppressWarnings("unchecked")

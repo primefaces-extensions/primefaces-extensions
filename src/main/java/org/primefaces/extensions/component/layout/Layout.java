@@ -94,7 +94,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	 * @author  Oleg Varaksin / last modified by $Author$
 	 * @version $Revision$
 	 */
-	protected enum PropertyKeys {
+	enum PropertyKeys {
 
 		widgetVar,
 		fullPage,
@@ -102,7 +102,10 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		style,
 		styleClass,
 		state,
-		stateCookie;
+		stateCookie,
+		togglerTip_open,
+		togglerTip_closed,
+		resizerTip;
 
 		private String toString;
 
@@ -182,6 +185,30 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 	public void setStateCookie(boolean stateCookie) {
 		setAttribute(PropertyKeys.stateCookie, stateCookie);
+	}
+
+	public String getTogglerTipOpen() {
+		return (String) getStateHelper().eval(PropertyKeys.togglerTip_open, null);
+	}
+
+	public void setTogglerTipOpen(String togglerTipOpen) {
+		setAttribute(PropertyKeys.togglerTip_open, togglerTipOpen);
+	}
+
+	public String getTogglerTipClosed() {
+		return (String) getStateHelper().eval(PropertyKeys.togglerTip_closed, null);
+	}
+
+	public void setTogglerTipClosed(String togglerTipClosed) {
+		setAttribute(PropertyKeys.togglerTip_closed, togglerTipClosed);
+	}
+
+	public String getResizerTip() {
+		return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
+	}
+
+	public void setResizerTip(String resizerTip) {
+		setAttribute(PropertyKeys.resizerTip, resizerTip);
 	}
 
 	@Override

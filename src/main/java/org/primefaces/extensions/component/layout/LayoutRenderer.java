@@ -100,7 +100,7 @@ public class LayoutRenderer extends CoreRenderer {
 
 	protected void encodeScript(FacesContext fc, Layout layout) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
-		String clientId = layout.getClientId();
+		String clientId = layout.getClientId(fc);
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");

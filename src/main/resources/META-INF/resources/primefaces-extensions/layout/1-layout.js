@@ -15,7 +15,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
 
         var jqId = PrimeFaces.escapeClientId(this.id);
-
+        
         this.jqTarget = $(cfg.forTarget);
         this.stateHiddenField = null;
 
@@ -29,7 +29,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
         } else if (cfg.serverState) {
             this.stateHiddenField = $(jqId + "_state");
         }
-
+        
         var _self = this;
 
         if (this.jqTarget.is(':visible')) {

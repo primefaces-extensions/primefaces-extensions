@@ -1548,6 +1548,30 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Tip when resizer-bar can be dragged to resize a pane. Default is 'Resize'.]]>
+            </description>
+            <name>resizerTip</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Tip on toggler when pane is 'open'. Default is 'Close'.]]>
+            </description>
+            <name>togglerTipOpen</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Tip on toggler when pane is 'closed'. Default is 'Open'.]]>
+            </description>
+            <name>togglerTipClosed</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>
@@ -1695,6 +1719,20 @@
             <description><![CDATA[If true, then pane is 'closed' when layout is created. Default is false.]]>
             </description>
             <name>initClosed</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If true, then pane is hidden when layout is created - no resizer or spacing is visible, as if the pane does not exist. Default is false.]]>
+            </description>
+            <name>initHidden</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If true, then pane gets resized live while it is dragging. If false, only helper element shows resizing. Default is false.]]>
+            </description>
+            <name>resizeWhileDragging</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
