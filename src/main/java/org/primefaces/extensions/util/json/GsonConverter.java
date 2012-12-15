@@ -16,7 +16,9 @@
  * $Id$
  */
 
-package org.primefaces.extensions.util;
+package org.primefaces.extensions.util.json;
+
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,6 +37,7 @@ public final class GsonConverter {
 
 	private GsonConverter() {
 		GsonBuilder gsonBilder = new GsonBuilder();
+		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		gsonBilder.serializeNulls();
 		gson = gsonBilder.create();
 	}

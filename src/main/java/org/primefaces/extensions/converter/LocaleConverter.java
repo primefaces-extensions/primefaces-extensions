@@ -41,6 +41,8 @@ import org.apache.commons.lang3.StringUtils;
 @FacesConverter(value = "org.primefaces.extensions.converter.LocaleConverter")
 public class LocaleConverter implements Converter, Serializable {
 
+	private static final long serialVersionUID = 20121214L;
+
 	private char seperator = '_';
 
 	public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {

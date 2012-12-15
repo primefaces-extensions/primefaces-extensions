@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,24 @@
 
 package org.primefaces.extensions.converter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.el.ValueExpression;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import org.primefaces.extensions.util.GsonConverter;
+import org.apache.commons.lang3.StringUtils;
+
+import org.primefaces.extensions.util.json.GsonConverter;
+import org.primefaces.extensions.util.json.ParameterizedTypeImpl;
 
 /**
  * {@link Converter} which converts a JSON string to an object an vice-versa.
@@ -34,14 +45,142 @@ import org.primefaces.extensions.util.GsonConverter;
  * @since   0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.JsonConverter")
-public class JsonConverter implements Converter {
+public class JsonConverter implements Converter, Serializable {
 
-	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		final ValueExpression expression = component.getValueExpression("value");
-		return GsonConverter.getGson().fromJson(value, expression.getType(context.getELContext()));
+	private static final long serialVersionUID = 20121214L;
+
+	private static final Map<String, Class<?>> PRIMITIVE_CLASSES = new HashMap<String, Class<?>>();
+	private static final Map<String, Class<?>> PRIMITIVE_ARRAY_CLASSES = new HashMap<String, Class<?>>();
+
+	static {
+		PRIMITIVE_CLASSES.put("boolean", boolean.class);
+		PRIMITIVE_CLASSES.put("byte", byte.class);
+		PRIMITIVE_CLASSES.put("short", short.class);
+		PRIMITIVE_CLASSES.put("char", char.class);
+		PRIMITIVE_CLASSES.put("int", int.class);
+		PRIMITIVE_CLASSES.put("long", long.class);
+		PRIMITIVE_CLASSES.put("float", float.class);
+		PRIMITIVE_CLASSES.put("double", double.class);
+
+		PRIMITIVE_ARRAY_CLASSES.put("boolean[]", boolean[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("byte[]", byte[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("short[]", short[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("char[]", char[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("int[]", int[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("long[]", long[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("float[]", float[].class);
+		PRIMITIVE_ARRAY_CLASSES.put("double[]", double[].class);
 	}
 
-	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
-		return GsonConverter.getGson().toJson(value);
+	private String type;
+
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		java.lang.reflect.Type objType;
+
+		if (getType() == null) {
+			ValueExpression expression = component.getValueExpression("value");
+			objType = expression.getType(context.getELContext());
+		} else {
+			objType = getObjectType(getType().trim(), false);
+		}
+
+		return GsonConverter.getGson().fromJson(value, objType);
+	}
+
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (getType() == null) {
+			return GsonConverter.getGson().toJson(value);
+		} else {
+			return GsonConverter.getGson().toJson(value, getObjectType(getType().trim(), false));
+		}
+	}
+
+	private java.lang.reflect.Type getObjectType(String type, boolean isTypeArg) {
+		Class clazz = PRIMITIVE_CLASSES.get(type);
+		if (clazz != null) {
+			if (!isTypeArg) {
+				return clazz;
+			} else {
+				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				                                              "Type argument can not be a primitive type, but it was " + type
+				                                              + ".", StringUtils.EMPTY));
+			}
+		}
+
+		clazz = PRIMITIVE_ARRAY_CLASSES.get(type);
+		if (clazz != null) {
+			return clazz;
+		}
+
+		int leftBracketIdx = type.indexOf("<");
+		if (leftBracketIdx < 0) {
+			try {
+				return Class.forName(type);
+			} catch (ClassNotFoundException e) {
+				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Class " + type + " not found",
+				                                              StringUtils.EMPTY));
+			}
+		}
+
+		int rightBracketIdx = type.lastIndexOf(">");
+		if (rightBracketIdx < 0) {
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
+			                                              StringUtils.EMPTY));
+		}
+
+		Class rawType;
+		try {
+			rawType = Class.forName(type.substring(0, leftBracketIdx));
+		} catch (ClassNotFoundException e) {
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+			                                              "Class " + type.substring(0, leftBracketIdx) + " not found",
+			                                              StringUtils.EMPTY));
+		}
+
+		String strTypeArgs = type.substring(leftBracketIdx + 1, rightBracketIdx);
+		List<String> listTypeArgs = new ArrayList<String>();
+		int startPos = 0;
+		int seekPos = 0;
+
+		while (true) {
+			int commaPos = strTypeArgs.indexOf(",", seekPos);
+			if (commaPos >= 0) {
+				String term = strTypeArgs.substring(startPos, commaPos);
+				int countLeftBrackets = StringUtils.countMatches(term, "<");
+				int countRightBrackets = StringUtils.countMatches(term, ">");
+				if (countLeftBrackets == countRightBrackets) {
+					listTypeArgs.add(term.trim());
+					startPos = commaPos + 1;
+				}
+
+				seekPos = commaPos + 1;
+			} else {
+				listTypeArgs.add(strTypeArgs.substring(startPos).trim());
+
+				break;
+			}
+		}
+
+		if (listTypeArgs.isEmpty()) {
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
+			                                              StringUtils.EMPTY));
+		}
+
+		int size = listTypeArgs.size();
+		java.lang.reflect.Type[] objectTypes = new java.lang.reflect.Type[size];
+		for (int i = 0; i < size; i++) {
+			// recursive call for each type argument
+			objectTypes[i] = getObjectType(listTypeArgs.get(i), true);
+		}
+
+		return new ParameterizedTypeImpl(rawType, objectTypes, null);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

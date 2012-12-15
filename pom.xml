@@ -226,6 +226,17 @@
         <dependency>
             <groupId>${pe.jsf.group}</groupId>
             <artifactId>${pe.jsf.artifact}-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>${pe.jsf.group}</groupId>
+            <artifactId>${pe.jsf.artifact}-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
