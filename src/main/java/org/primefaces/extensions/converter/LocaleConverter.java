@@ -43,14 +43,14 @@ public class LocaleConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 20121214L;
 
-	private char seperator = '_';
+	private char separator = '_';
 
 	public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
 		if (StringUtils.isBlank(value)) {
 			return fc.getApplication().getDefaultLocale();
 		}
 
-		return getLocaleObject(value, seperator);
+		return getLocaleObject(value, separator);
 	}
 
 	public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
@@ -60,13 +60,13 @@ public class LocaleConverter implements Converter, Serializable {
 				return null;
 			}
 
-			return getLocaleString(defaultLocale, seperator);
+			return getLocaleString(defaultLocale, separator);
 		}
 
 		if (value instanceof String) {
 			return (String) value;
 		} else if (value instanceof Locale) {
-			return getLocaleString((Locale) value, seperator);
+			return getLocaleString((Locale) value, separator);
 		} else {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
 			                                              "Wrong type: '" + value.getClass().getSimpleName()
@@ -114,11 +114,11 @@ public class LocaleConverter implements Converter, Serializable {
 		return locale.getLanguage() + seperator + locale.getCountry();
 	}
 
-	public char getSeperator() {
-		return seperator;
+	public char getSeparator() {
+		return separator;
 	}
 
-	public void setSeperator(final char seperator) {
-		this.seperator = seperator;
+	public void setSeparator(char separator) {
+		this.separator = separator;
 	}
 }

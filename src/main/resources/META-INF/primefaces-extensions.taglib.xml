@@ -58,6 +58,14 @@
         <converter>
             <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
         </converter>
+        <attribute>
+            <description>
+                <![CDATA[Data type of the value object (optional). Any primitive type, array, non generic or generic type is supported. Data type is sometimes required to convert a value to a JSON representation. All data types should be fully qualified. Default is null.]]>
+            </description>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
     </tag>
     <tag>
         <tag-name>convertLocale</tag-name>
@@ -65,9 +73,10 @@
             <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
         </converter>
         <attribute>
-            <description><![CDATA[Character which will be used to seperate the country and language.]]>
+            <description>
+                <![CDATA[Character which will be used to separate the country and language. Default is '_'.]]>
             </description>
-            <name>seperator</name>
+            <name>separator</name>
             <required>false</required>
             <type>java.lang.Character</type>
         </attribute>
