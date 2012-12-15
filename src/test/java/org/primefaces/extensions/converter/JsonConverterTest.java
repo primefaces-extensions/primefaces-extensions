@@ -212,5 +212,50 @@ public class JsonConverterTest {
 		                                             ((Map<String, ImmutablePair<Integer, Date>>) obj).entrySet()));
 	}
 
-	// TODO: POJO, generic POJO
+	@Test
+	public void testPojoNonGeneric() {
+		jsonConverter.setType("org.primefaces.extensions.converter.FooNonGeneric");
+
+		FooNonGeneric fooNonGeneric = new FooNonGeneric();
+		String json = jsonConverter.getAsString(null, null, fooNonGeneric);
+
+		Object obj = jsonConverter.getAsObject(null, null, json);
+		assertTrue(fooNonGeneric.equals(obj));
+	}
+
+	@Test
+	public void testPojoGenericSimple() {
+		jsonConverter.setType("org.primefaces.extensions.converter.FooGeneric<java.lang.String, java.lang.Integer>");
+
+		FooGeneric<String, Integer> fooGeneric = new FooGeneric<String, Integer>();
+		fooGeneric.setA("test");
+		fooGeneric.setB(25);
+
+		String json = jsonConverter.getAsString(null, null, fooGeneric);
+
+		Object obj = jsonConverter.getAsObject(null, null, json);
+		assertTrue(fooGeneric.equals(obj));
+	}
+
+	@Test
+	public void testPojoGenericComplex() {
+		jsonConverter.setType(
+		    "org.primefaces.extensions.converter.FooGeneric<int[], org.primefaces.extensions.converter.FooGeneric<org.primefaces.extensions.converter.FooNonGeneric, java.lang.Boolean>>");
+
+		FooNonGeneric fooNonGeneric = new FooNonGeneric();
+		FooGeneric<FooNonGeneric, Boolean> fooGenericInnner = new FooGeneric<FooNonGeneric, Boolean>();
+		fooGenericInnner.setA(fooNonGeneric);
+		fooGenericInnner.setB(false);
+
+		FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericOuter =
+		    new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
+		int[] ints = {1, 2, 3, 4, 5};
+		fooGenericOuter.setA(ints);
+		fooGenericOuter.setB(fooGenericInnner);
+
+		String json = jsonConverter.getAsString(null, null, fooGenericOuter);
+
+		Object obj = jsonConverter.getAsObject(null, null, json);
+		assertTrue(fooGenericOuter.equals(obj));
+	}
 }
