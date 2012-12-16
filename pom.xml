@@ -728,7 +728,7 @@
         <pe.jsf.artifact>jsf</pe.jsf.artifact>
         <pe.jsf.scope>compile</pe.jsf.scope>
         <pe.jsf.version>2.1.13</pe.jsf.version>
-        <pe.impl.version>0.6.2</pe.impl.version>
+        <pe.impl.version>0.6.3-SNAPSHOT</pe.impl.version>
         <pe.webapp.filter>development</pe.webapp.filter>
         <pe.newComponents>;</pe.newComponents>
         <pe.updatedComponents>codeMirror;ckEditor;layout;timeline;tooltip</pe.updatedComponents>
