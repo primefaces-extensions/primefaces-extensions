@@ -75,6 +75,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
 	public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
 	public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
+	public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content";
 	public static final String PANE_POSITION_CENTER = "center";
 	public static final String PANE_POSITION_NORTH = "north";
 	public static final String PANE_POSITION_SOUTH = "south";

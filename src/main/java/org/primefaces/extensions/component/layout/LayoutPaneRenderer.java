@@ -133,10 +133,10 @@ public class LayoutPaneRenderer extends CoreRenderer {
 			writer.startElement("div", null);
 			if (layoutPane.getStyleClassContent() != null) {
 				writer.writeAttribute("class",
-				                      "ui-layout-content " + Layout.STYLE_CLASS_PANE_CONTENT + " "
+				                      Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT + " "
 				                      + layoutPane.getStyleClassContent(), null);
 			} else {
-				writer.writeAttribute("class", "ui-layout-content " + Layout.STYLE_CLASS_PANE_CONTENT, null);
+				writer.writeAttribute("class", Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT, null);
 			}
 
 			if (layoutPane.getStyleContent() != null) {

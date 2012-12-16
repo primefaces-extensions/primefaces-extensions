@@ -26,11 +26,13 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
+import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PreRenderComponentEvent;
 
+import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 
 /**
@@ -263,7 +265,7 @@ public class LayoutPane extends UIComponentBase {
 			return;
 		}
 
-		setOptions();
+		setOptions(getParent());
 	}
 
 	public LayoutOptions getOptions() {
@@ -317,10 +319,9 @@ public class LayoutPane extends UIComponentBase {
 		return options;
 	}
 
-	private void setOptions() {
+	private void setOptions(UIComponent parent) {
 		// create layout options for this pane via attributes defined in pe:layoutPane
 		String position = getPosition();
-		UIComponent parent = getParent();
 		LayoutOptions thisLayoutOptions = getOptions();
 		LayoutOptions options;
 
@@ -370,11 +371,31 @@ public class LayoutPane extends UIComponentBase {
 			}
 		} else if (parent instanceof UIForm) {
 			// layout pane can be within a h:form
-			setOptions();
+			setOptions(parent.getParent());
+
+			return;
+		} else if (parent instanceof HtmlPanelGroup
+		           && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((HtmlPanelGroup) parent).getStyleClass())
+		           && "block".equals(((HtmlPanelGroup) parent).getLayout())) {
+			// layout pane can be within h:panelGroup representing a HTML div
+			setOptions(parent.getParent());
+
+			return;
+		} else if (parent instanceof OutputPanel
+		           && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass())
+		           && "block".equals(((OutputPanel) parent).getLayout())) {
+			// layout pane can be within p:outputPanel representing a HTML div
+			setOptions(parent.getParent());
+
+			return;
+		} else if (parent != null && parent.toString().contains(Layout.STYLE_CLASS_LAYOUT_CONTENT)) {
+			// plain div (UIInstructions) with class "ui-layout-content"
+			setOptions(parent.getParent());
 
 			return;
 		} else {
-			throw new FacesException("LayoutPane can be only placed within another LayoutPane or Layout");
+			throw new FacesException(
+			    "LayoutPane can be only placed within another LayoutPane, Layout, UIForm or DIV with class 'ui-layout-content'");
 		}
 
 		if (Layout.PANE_POSITION_CENTER.equals(position)) {
