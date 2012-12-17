@@ -627,11 +627,6 @@
                 <artifactId>resources-codemirror</artifactId>
                 <version>${pe.impl.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.primefaces.extensions</groupId>
-                <artifactId>all-themes</artifactId>
-                <version>${primefaces.theme.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
