@@ -588,6 +588,11 @@
                 <artifactId>primefaces</artifactId>
                 <version>${primefaces.core.version}</version>
             </dependency>
+            <dependency>
+	            <groupId>org.primefaces.themes</groupId>
+	            <artifactId>all-themes</artifactId>
+                <version>${primefaces.theme.version}</version>
+            </dependency>
 
             <!-- dependencies for own plugins -->
             <dependency>
@@ -728,6 +733,6 @@
         <pe.newComponents>;</pe.newComponents>
         <pe.updatedComponents>codeMirror;ckEditor;layout;timeline;tooltip</pe.updatedComponents>
         <primefaces.core.version>3.4.2</primefaces.core.version>
-        <primefaces.theme.version>1.0.8</primefaces.theme.version>
+        <primefaces.theme.version>1.0.9</primefaces.theme.version>
     </properties>
 </project>
