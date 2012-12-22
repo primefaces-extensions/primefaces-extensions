@@ -19,6 +19,7 @@
 package org.primefaces.extensions.converter;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +113,21 @@ public class JsonConverter implements Converter, Serializable {
 			return clazz;
 		}
 
+		int arrayBracketIdx = type.indexOf("[");
 		int leftBracketIdx = type.indexOf("<");
+		if (arrayBracketIdx >= 0 && (leftBracketIdx < 0 || arrayBracketIdx < leftBracketIdx)) {
+			// array
+			try {
+				clazz = Class.forName(type.substring(0, arrayBracketIdx));
+
+				return Array.newInstance(clazz, 0).getClass();
+			} catch (ClassNotFoundException e) {
+				throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				                                              "Class " + type.substring(0, arrayBracketIdx) + " not found",
+				                                              StringUtils.EMPTY));
+			}
+		}
+
 		if (leftBracketIdx < 0) {
 			try {
 				return Class.forName(type);

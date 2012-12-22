@@ -81,6 +81,12 @@ public class JsonConverterTest {
 		jsonConverter.getAsString(null, null, new HashMap<Integer, Character>());
 	}
 
+	@Test(expected = ConverterException.class)
+	public void testClassNotFoundArray() {
+		jsonConverter.setType("java.lang.Abc[]");
+		jsonConverter.getAsString(null, null, new Integer[] {1, 2, 3});
+	}
+
 	@Test
 	public void testBoolean() {
 		jsonConverter.setType("boolean");
@@ -136,6 +142,17 @@ public class JsonConverterTest {
 
 		Object obj = jsonConverter.getAsObject(null, null, json);
 		assertTrue(Arrays.equals(longs, (long[]) obj));
+	}
+
+	@Test
+	public void testStringArray() {
+		jsonConverter.setType("java.lang.String[]");
+
+		String[] strings = {"abc", "def", "ghi"};
+		String json = jsonConverter.getAsString(null, null, strings);
+
+		Object obj = jsonConverter.getAsObject(null, null, json);
+		assertTrue(Arrays.equals(strings, (String[]) obj));
 	}
 
 	@Test
