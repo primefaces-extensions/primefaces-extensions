@@ -115,9 +115,9 @@ public class TooltipRenderer extends CoreRenderer {
 		writer.write("at:'" + tooltip.getAtPosition() + "'");
 		writer.write(",my:'" + tooltip.getMyPosition() + "'");
 		writer.write(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
+		writer.write(",viewport:$(window)");
 		if (mouseTracking) {
 			writer.write(",target:'mouse'");
-			writer.write(",viewport:$(window)");
 		} else if (shared && !global) {
 			writer.write(",target:'event'");
 			writer.write(",effect:false");
