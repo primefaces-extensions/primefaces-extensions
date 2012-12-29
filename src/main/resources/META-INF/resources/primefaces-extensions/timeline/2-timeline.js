@@ -19,7 +19,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
 
         var options = {
             'width':"100%",
-            'height':this.jq.height() + "px",
+            'height': cfg.height,
             'selectable':false,
 
             'showCurrentTime':true, // show a red bar displaying the current time
