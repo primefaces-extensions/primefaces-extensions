@@ -26,6 +26,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.*;
 import javax.faces.event.ExceptionQueuedEvent;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -49,7 +50,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 	/**
 	 * Construct a new {@link AjaxExceptionHandler} around the given wrapped {@link ExceptionHandler}.
-	 * 
+	 *
 	 * @param wrapped The wrapped {@link ExceptionHandler}.
 	 */
 	public AjaxExceptionHandler(final ExceptionHandler wrapped) {
@@ -101,11 +102,29 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 		try {
 			Throwable rootCause = ExceptionUtils.getRootCause(t);
 
+			// Workaround for ViewExpiredException if UIViewRoot was not restored ...
+			if (context.getViewRoot() == null) {
+				try {
+					String uri = ((HttpServletRequest) context.getExternalContext().getRequest()).getRequestURI();
+					UIViewRoot uiViewRoot = context.getApplication().getViewHandler().createView(context, uri);
+					context.setViewRoot(uiViewRoot);
+
+					// Workaround for Mojarra : if  UIViewRoot == null (VIEW is lost in session), throwed is  IllegalArgumentException instead of 'ViewExpiredException'
+					if (rootCause instanceof IllegalArgumentException) {
+						rootCause = new javax.faces.application.ViewExpiredException(uri);
+					}
+				}
+				catch (Exception tt) {
+					LOGGER.log(Level.SEVERE, tt.getMessage(), tt);
+				}
+			}
+
 			String errorName = (rootCause == null) ? t.getClass().getCanonicalName() : rootCause.getClass().getCanonicalName();
 
 			ExternalContext extContext = context.getExternalContext();
 			extContext.setResponseContentType("text/xml");
 			extContext.addResponseHeader("Cache-Control", "no-cache");
+
 			PartialResponseWriter writer = context.getPartialViewContext().getPartialResponseWriter();
 
 			writer.startDocument();
