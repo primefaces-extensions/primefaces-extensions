@@ -132,8 +132,10 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			String errorName = (rootCause == null) ? t.getClass().getCanonicalName() : rootCause.getClass().getCanonicalName();
 
 			ExternalContext extContext = context.getExternalContext();
-			extContext.setResponseContentType("text/xml");
+
+			extContext.addResponseHeader("Content-Type", "text/html; charset="+extContext.getRequestCharacterEncoding());
 			extContext.addResponseHeader("Cache-Control", "no-cache");
+			extContext.setResponseCharacterEncoding(extContext.getRequestCharacterEncoding());
 
 			PartialResponseWriter writer = context.getPartialViewContext().getPartialResponseWriter();
 
