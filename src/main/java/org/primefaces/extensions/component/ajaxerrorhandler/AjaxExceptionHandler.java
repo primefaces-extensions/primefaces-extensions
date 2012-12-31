@@ -18,13 +18,15 @@
 
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.visit.VisitContext;
-import javax.faces.context.*;
+import javax.faces.context.ExceptionHandler;
+import javax.faces.context.ExceptionHandlerWrapper;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.context.PartialResponseWriter;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -34,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
  * {@link ExceptionHandlerWrapper} which writes a custom XML response for the {@link AjaxErrorHandler} component.
@@ -110,7 +113,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 					context.setViewRoot(uiViewRoot);
 
 					// Workaround for Mojarra : if  UIViewRoot == null (VIEW is lost in session), throwed is  IllegalArgumentException instead of 'ViewExpiredException'
-					if (rootCause instanceof IllegalArgumentException) {
+					if (rootCause==null && t instanceof IllegalArgumentException) {
 						rootCause = new javax.faces.application.ViewExpiredException(uri);
 					}
 				}
