@@ -28,6 +28,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.PartialResponseWriter;
 import javax.faces.event.ExceptionQueuedEvent;
+import javax.faces.view.ViewDeclarationLanguage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -109,13 +110,19 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			if (context.getViewRoot() == null) {
 				try {
 					String uri = ((HttpServletRequest) context.getExternalContext().getRequest()).getRequestURI();
-					UIViewRoot uiViewRoot = context.getApplication().getViewHandler().createView(context, uri);
-					context.setViewRoot(uiViewRoot);
+					UIViewRoot viewRoot = context.getApplication().getViewHandler().createView(context, uri);
+					context.setViewRoot(viewRoot);
 
 					// Workaround for Mojarra : if  UIViewRoot == null (VIEW is lost in session), throwed is  IllegalArgumentException instead of 'ViewExpiredException'
 					if (rootCause==null && t instanceof IllegalArgumentException) {
 						rootCause = new javax.faces.application.ViewExpiredException(uri);
 					}
+
+					// buildView - create component tree in view ...
+					// todo: add CONTEXT-PARAM for set this feature BUILD VIEW
+					String viewId = viewRoot.getViewId();
+					ViewDeclarationLanguage vdl = context.getApplication().getViewHandler().getViewDeclarationLanguage(context, viewId);
+					vdl.buildView(context, viewRoot);
 				}
 				catch (Exception tt) {
 					LOGGER.log(Level.SEVERE, tt.getMessage(), tt);
