@@ -133,9 +133,10 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 			ExternalContext extContext = context.getExternalContext();
 
-			extContext.addResponseHeader("Content-Type", "text/html; charset="+extContext.getRequestCharacterEncoding());
+			extContext.addResponseHeader("Content-Type", "text/xml; charset="+extContext.getRequestCharacterEncoding());
 			extContext.addResponseHeader("Cache-Control", "no-cache");
 			extContext.setResponseCharacterEncoding(extContext.getRequestCharacterEncoding());
+			extContext.setResponseContentType("text/xml");
 
 			PartialResponseWriter writer = context.getPartialViewContext().getPartialResponseWriter();
 
