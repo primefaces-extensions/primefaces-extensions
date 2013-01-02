@@ -35,9 +35,9 @@
     <inceptionYear>2011</inceptionYear>
 
     <scm>
-        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</connection>
-        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/primefaces-extensions/trunk</developerConnection>
-        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/primefaces-extensions/trunk</url>
+        <connection>scm:git:git@github.com:primefaces-extensions/core.git</connection>
+        <developerConnection>scm:git:git@github.com:primefaces-extensions/core.git</developerConnection>
+        <url>https://github.com/primefaces-extensions/core</url>
     </scm>
     
     <developers>
