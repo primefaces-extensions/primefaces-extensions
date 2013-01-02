@@ -44,9 +44,9 @@
     <inceptionYear>2011</inceptionYear>
 
     <scm>
-        <connection>scm:svn:http://primefaces-extensions.googlecode.com/svn/master-pom/trunk</connection>
-        <developerConnection>scm:svn:https://primefaces-extensions.googlecode.com/svn/master-pom/trunk</developerConnection>
-        <url>http://code.google.com/p/primefaces-extensions/source/browse/#svn/master-pom/trunk</url>
+        <connection>scm:git:git@github.com:primefaces-extensions/master-pom.git</connection>
+        <developerConnection>scm:git:git@github.com:primefaces-extensions/master-pom.git</developerConnection>
+        <url>https://github.com/primefaces-extensions/master-pom</url>
     </scm>
 
     <developers>
