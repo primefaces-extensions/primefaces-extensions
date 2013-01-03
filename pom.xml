@@ -16,7 +16,7 @@
     <description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
     </description>
-    <url>http://code.google.com/p/primefaces-extensions</url>
+    <url>https://github.com/primefaces-extensions</url>
 
     <licenses>
         <license>
@@ -29,7 +29,7 @@
 
     <repositories>
         <repository>
-            <id>prime-repo-new</id>
+            <id>primefaces</id>
             <name>PrimeFaces Maven Repository</name>
             <url>http://repository.primefaces.org</url>
             <layout>default</layout>
@@ -37,8 +37,8 @@
     </repositories>
 
     <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
+        <system>GitHub</system>
+        <url>https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues</url>
     </issueManagement>
 
     <inceptionYear>2011</inceptionYear>
@@ -55,6 +55,7 @@
             <name>Thomas Andraschko</name>
             <email>zoigln@googlemail.com</email>
             <roles>
+            	<role>Owner</role>
                 <role>Buildmaster</role>
                 <role>Developer</role>
             </roles>
@@ -65,6 +66,7 @@
             <name>Oleg Varaksin</name>
             <email>ovaraksin@googlemail.com</email>
             <roles>
+            	<role>Owner</role>
                 <role>Buildmaster</role>
                 <role>Developer</role>
             </roles>
@@ -96,6 +98,15 @@
                 <role>Developer</role>
             </roles>
             <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>jonna</id>
+            <name>Sudheer Jonna</name>
+            <email>sudheer.jonna@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+5.30</timezone>
         </developer>
     </developers>
 
