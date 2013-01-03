@@ -4,7 +4,6 @@
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
         <version>1.5.0-SNAPSHOT</version>
-        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -16,80 +15,12 @@
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
     </description>
-    <url>http://code.google.com/p/primefaces-extensions</url>
-
-    <licenses>
-        <license>
-            <name>Apache 2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
-        </license>
-    </licenses>
-
-    <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/primefaces-extensions/issues/list</url>
-    </issueManagement>
-
-    <inceptionYear>2011</inceptionYear>
 
     <scm>
         <connection>scm:git:git@github.com:primefaces-extensions/core.git</connection>
         <developerConnection>scm:git:git@github.com:primefaces-extensions/core.git</developerConnection>
         <url>https://github.com/primefaces-extensions/core</url>
     </scm>
-    
-    <developers>
-        <developer>
-            <id>andraschko</id>
-            <name>Thomas Andraschko</name>
-            <email>zoigln@googlemail.com</email>
-            <roles>
-                <role>Buildmaster</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <id>varaksin</id>
-            <name>Oleg Varaksin</name>
-            <email>ovaraksin@googlemail.com</email>
-            <roles>
-                <role>Buildmaster</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <id>mali</id>
-            <name>Nilesh N. Mali</name>
-            <email>nileshmali86@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+5.30</timezone>
-        </developer>
-        <developer>
-            <id>mfenoglio</id>
-            <name>Mauricio Fenoglio</name>
-            <email>fenoloco@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>-3.0</timezone>
-        </developer>
-        <developer>
-            <id>pavol.slany</id>
-            <name>Pavol Slany</name>
-            <email>pavol.slany@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <!--Europe/Bratislava-->
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
 
     <build>
         <resources>
@@ -222,11 +153,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${pe.jsf.group}</groupId>
-            <artifactId>${pe.jsf.artifact}-api</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
