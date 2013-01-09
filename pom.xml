@@ -40,8 +40,7 @@
 					</archive>
 					<excludes>
 						<!-- Remove empty resource folders from JAR file. -->
-						<!-- These are folders whose resources are merged into one big CSS 
-							/ JS file. -->
+						<!-- These are folders whose resources are merged into one big CSS and JS file. -->
 						<exclude>**/META-INF/resources/**/core/**</exclude>
 						<exclude>**/META-INF/resources/**/ckeditor/**</exclude>
 						<exclude>**/META-INF/resources/**/ajaxerrorhandler/**</exclude>
