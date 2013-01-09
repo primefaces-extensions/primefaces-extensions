@@ -28,7 +28,8 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	            // fill AM hours
 	            var hoursEnds = Math.min(11, this.cfg.hours.ends);
 	            for (i=this.cfg.hours.starts; i<=hoursEnds; i++) {
-	                prev, next = null;
+	                prev = null;
+                    next = null;
 	                if (i == this.cfg.hours.starts) {
 	                    prev = null;
 	                } else {
@@ -51,7 +52,8 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	        if (this.cfg.hours.ends >= 12) {
 	            // fill PM hours
 	            for (i=12; i<=this.cfg.hours.ends; i++) {
-	                prev, next = null;
+	                prev = null;
+                    next = null;
 	                if (i == 12) {
 	                    prev = null;    
 	                } else {
@@ -80,9 +82,19 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	        this.cfg.altField = this.jqId + '_input';
 	    }
 	    
-	    this.cfg.beforeShow = function(input, inst) {
-	        _self.onbeforeShow();
-	    };
+        if (!this.cfg.modeInline) {
+            this.cfg.beforeShow = function(input, inst) {
+                setTimeout(function() {
+                    $('#ui-timepicker-div').css('z-index', ++PrimeFaces.zindex);
+                }, 250);
+                
+       	        _self.onbeforeShow();
+       	    };
+        } else {
+            this.cfg.beforeShow = function(input, inst) {
+       	        _self.onbeforeShow();
+       	    };
+        }
 	    
 	    this.cfg.onClose = function(time, inst) {
 	        _self.onclose();
