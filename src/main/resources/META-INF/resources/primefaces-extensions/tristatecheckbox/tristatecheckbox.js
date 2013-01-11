@@ -62,7 +62,11 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
             // remove old icon and add the new one
             var iconsClasses = this.box.data('iconstates');
             this.icon.removeClass(iconsClasses[oldValue]).addClass(iconsClasses[newValue]);
-
+            
+            // change title to the new one
+            var iconTitles = this.box.data('titlestates');
+            this.box.attr('title', iconTitles[newValue]);
+           
             // fire change event
             this.input.change();
         }

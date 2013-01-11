@@ -20,14 +20,12 @@ package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.component.api.Widget;
 
 /**
@@ -64,7 +62,10 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		itemLabel,
 		stateOneIcon,
 		stateTwoIcon,
-		stateThreeIcon;
+		stateThreeIcon,
+                stateOneTitle,
+                stateTwoTitle,
+                stateThreeTitle;
 
 		String toString;
 
@@ -128,6 +129,30 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 
 	public void setStateThreeIcon(final String stateThreeIcon) {
 		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
+	}
+        
+        public String getStateOneTitle() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateOneTitle, "");
+	}
+
+	public void setStateOneTitle(final String stateOneTitle) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
+	}
+        
+        public String getStateTwoTitle() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateTwoTitle, "");
+	}
+
+	public void setStateTwoTitle(final String stateTwoTitle) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
+	}
+        
+        public String getStateThreeTitle() {
+		return (String) getStateHelper().eval(TriStateCheckbox.PropertyKeys.stateThreeTitle, "");
+	}
+
+	public void setStateThreeTitle(final String stateThreeTitle) {
+		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
 
 	public String resolveWidgetVar() {

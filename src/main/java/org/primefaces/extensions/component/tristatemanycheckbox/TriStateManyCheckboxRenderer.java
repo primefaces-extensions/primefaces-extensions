@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -35,7 +34,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
-
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
 import org.primefaces.renderkit.SelectManyRenderer;
@@ -234,19 +232,43 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
 		String statesIconsClasses =
 		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
+                
+                String statesTitles =
+		    "[\"" + checkbox.getStateOneTitle() + "\",\"" 
+                       + checkbox.getStateTwoTitle() + "\",\"" + checkbox.getStateThreeTitle() + "\"]";
+                
+                
 
 		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+                String activeTitle = "";
 		if (valCheck == 0) {
 			iconClass = iconClass + " " + stateOneIconClass;
+                        activeTitle = checkbox.getStateOneTitle();
 		} else if (valCheck == 1) {
 			iconClass = iconClass + " " + stateTwoIconClass;
+                        activeTitle = checkbox.getStateTwoTitle();
 		} else if (valCheck == 2) {
 			iconClass = iconClass + " " + stataThreeIconClass;
+                        activeTitle = checkbox.getStateThreeTitle();
 		}
+                
+                String dataTitles = "";
+                String titleAtt = "";
+                
+                if(!checkbox.getStateOneTitle().isEmpty() 
+                    || !checkbox.getStateTwoTitle().isEmpty() || !checkbox.getStateThreeTitle().isEmpty()){
+                        // preparation with singe quotes for .data('titlestates')
+                        dataTitles = "data-titlestates='" + statesTitles + "' ";
+                        // active title Att 
+                        titleAtt = " title=\"" + activeTitle + "\" ";
+                }                
 
-		// preparation with singe quotes for .data('iconstates')
-		writer.write("<div class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "'>" + "<span class=\""
-		             + iconClass + "\"></span></div>");
+                
+                // preparation with singe quotes for .data('iconstates') 
+		writer.write("<div " + titleAtt + "class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "' "
+                                + dataTitles + ">"
+                                + "<span class=\"" + iconClass + "\"></span></div>");                
+		
 	}
 
 	protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {

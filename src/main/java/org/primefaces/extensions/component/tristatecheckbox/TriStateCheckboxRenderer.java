@@ -19,11 +19,9 @@
 package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.io.IOException;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -145,18 +143,37 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		String statesIconsClasses =
 		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
 
+                String statesTitles =
+		    "[\"" + checkbox.getStateOneTitle() + "\",\"" 
+                       + checkbox.getStateTwoTitle() + "\",\"" + checkbox.getStateThreeTitle() + "\"]";
+                                
 		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+                String activeTitle = "";
 		if (valCheck == 0) {
 			iconClass = iconClass + " " + stateOneIconClass;
+                        activeTitle = checkbox.getStateOneTitle();
 		} else if (valCheck == 1) {
 			iconClass = iconClass + " " + stateTwoIconClass;
+                        activeTitle = checkbox.getStateTwoTitle();
 		} else if (valCheck == 2) {
 			iconClass = iconClass + " " + stataThreeIconClass;
+                        activeTitle = checkbox.getStateThreeTitle();
 		}
-
+                
+                String dataTitles = "";
+                String titleAtt = "";
+                
+                if(!checkbox.getStateOneTitle().isEmpty() 
+                    || !checkbox.getStateTwoTitle().isEmpty() || !checkbox.getStateThreeTitle().isEmpty()){
+                        dataTitles = "data-titlestates='" + statesTitles + "' ";
+                        titleAtt = " title=\"" + activeTitle + "\" ";
+                }
+                                
 		// preparation with singe quotes for .data('iconstates')
-		writer.write("<div class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "'>"
-		             + "<span class=\"" + iconClass + "\"></span></div>");
+		writer.write("<div " + titleAtt + "class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "' "
+                                + dataTitles + ">"
+                                + "<span class=\"" + iconClass + "\"></span></div>");
+                
 	}
 
 	protected void encodeItemLabel(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
