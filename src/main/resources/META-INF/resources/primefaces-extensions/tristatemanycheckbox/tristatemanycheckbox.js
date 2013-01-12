@@ -60,6 +60,10 @@ PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             var iconsClasses = checkbox.data('iconstates');
             checkbox.children().removeClass(iconsClasses[oldValue]).addClass(iconsClasses[newValue]);
 
+            // change title to the new one
+            var iconTitles = checkbox.data('titlestates');
+            checkbox.attr('title', iconTitles[newValue]);
+
             // fire change event
             inputField.change();
         }

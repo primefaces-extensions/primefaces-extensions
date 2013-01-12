@@ -2648,6 +2648,27 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateOne.]]>
+            </description>
+            <name>stateOneTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateTwo.]]>
+            </description>
+            <name>stateTwoTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateThree.]]>
+            </description>
+            <name>stateThreeTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[]]>
@@ -2812,6 +2833,27 @@
             <description><![CDATA[Icon for StateThree as a css class.]]>
             </description>
             <name>stateThreeIcon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateOne.]]>
+            </description>
+            <name>stateOneTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateTwo.]]>
+            </description>
+            <name>stateTwoTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Title for StateThree.]]>
+            </description>
+            <name>stateThreeTitle</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

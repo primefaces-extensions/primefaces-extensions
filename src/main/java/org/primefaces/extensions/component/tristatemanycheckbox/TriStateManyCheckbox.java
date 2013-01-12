@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
@@ -33,7 +32,6 @@ import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.MessageFactory;
 
@@ -69,7 +67,10 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		layout,
 		stateOneIcon,
 		stateTwoIcon,
-		stateThreeIcon;
+		stateThreeIcon,
+                stateOneTitle,
+                stateTwoTitle,
+                stateThreeTitle;
 
 		String toString;
 
@@ -137,6 +138,30 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		setAttribute(TriStateManyCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
 	}
 
+        public String getStateOneTitle() {
+		return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateOneTitle, "");
+	}
+
+	public void setStateOneTitle(final String stateOneTitle) {
+		setAttribute(TriStateManyCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
+	}
+        
+        public String getStateTwoTitle() {
+		return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, "");
+	}
+
+	public void setStateTwoTitle(final String stateTwoTitle) {
+		setAttribute(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
+	}
+        
+        public String getStateThreeTitle() {
+		return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, "");
+	}
+
+	public void setStateThreeTitle(final String stateThreeTitle) {
+		setAttribute(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
+	}
+        
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(TriStateManyCheckbox.PropertyKeys.widgetVar.toString());
