@@ -2669,6 +2669,13 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[The tab index to assign to the component, If not given, tabindex=0 will be assigned.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[]]>
@@ -2854,6 +2861,13 @@
             <description><![CDATA[Title for StateThree.]]>
             </description>
             <name>stateThreeTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The tab index to assign to the component, If not given, tabindex=0 will be assigned.]]>
+            </description>
+            <name>tabindex</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.component.tristatecheckbox;
 
+import java.io.Console;
 import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -168,9 +169,14 @@ public class TriStateCheckboxRenderer extends InputRenderer {
                         dataTitles = "data-titlestates='" + statesTitles + "' ";
                         titleAtt = " title=\"" + activeTitle + "\" ";
                 }
-                                
+                
+                String tabIndexTag = " tabIndex=0 ";                
+                if(checkbox.getTabindex()!=null){
+                    tabIndexTag = "tabIndex=" + checkbox.getTabindex() + " ";
+                }               
+                                                
 		// preparation with singe quotes for .data('iconstates')
-		writer.write("<div " + titleAtt + "class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "' "
+		writer.write("<div " + tabIndexTag + titleAtt + "class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "' "
                                 + dataTitles + ">"
                                 + "<span class=\"" + iconClass + "\"></span></div>");
                 

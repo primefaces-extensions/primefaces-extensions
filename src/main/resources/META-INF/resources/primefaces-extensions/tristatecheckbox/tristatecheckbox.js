@@ -18,6 +18,9 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
         this.icon = this.box.children('.ui-chkbox-icon');
         this.itemLabel = this.jq.find('.ui-chkbox-label');
         this.disabled = this.input.is(':disabled');
+        this.fixedMod = function(number,mod){
+            return ((number%mod)+mod)%mod;
+        }
 
         var _self = this;
 
@@ -26,16 +29,45 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
             this.box.mouseover(function () {
                 _self.box.addClass('ui-state-hover');
             }).mouseout(function () {
-                        _self.box.removeClass('ui-state-hover');
-                    }).click(function () {
-                        _self.toggle();
-                    });
+                _self.box.removeClass('ui-state-hover');
+            }).click(function () {
+                _self.toggle(1);
+                return false;
+            });
 
             //toggle state on label click
             this.itemLabel.click(function () {
-                _self.toggle();
+                _self.toggle(1);
+                return false;
             });
 
+            //adding accesibility
+            this.box.bind('keydown', function(event) {
+                console.log(event.keyCode);
+                switch(event.keyCode){
+                    case 38:
+                        _self.toggle(1);
+                        return false;
+                        break;
+                    case 40:
+                        _self.toggle(-1);
+                        return false;
+                        break;
+                    case 39:
+                        _self.toggle(1);
+                        return false;
+                        break;
+                    case 37:
+                        _self.toggle(-1);
+                        return false;
+                        break;
+                    case 32:
+                        _self.toggle(1);
+                        return false;
+                        break; 
+                }    
+            });
+            
             // client behaviors
             if (this.cfg.behaviors) {
                 PrimeFaces.attachBehaviors(this.input, this.cfg.behaviors);
@@ -46,10 +78,10 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
         this.input.data(PrimeFaces.CLIENT_ID_DATA, this.id);
     },
 
-    toggle:function () {
+    toggle:function (direction) {
         if (!this.disabled) {
             var oldValue = parseInt(this.input.val());
-            var newValue = (oldValue + 1) % 3;
+            var newValue = this.fixedMod((oldValue + direction),3);
             this.input.val(newValue);
 
             // remove / add def. icon and active classes
@@ -65,7 +97,9 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
             
             // change title to the new one
             var iconTitles = this.box.data('titlestates');
-            this.box.attr('title', iconTitles[newValue]);
+            if(iconTitles!=null && iconTitles.length>0){
+                this.box.attr('title', iconTitles[newValue]);
+            }
            
             // fire change event
             this.input.change();
