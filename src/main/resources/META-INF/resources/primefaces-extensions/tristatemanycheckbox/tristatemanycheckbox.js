@@ -27,13 +27,13 @@ PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             $(this).removeClass('ui-state-hover');
         }).click(function () {
             _self.toggle($(this),1);
-            return false;
+            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
         });
 
         this.labels.click(function (e) {
             var element = $(this), input = $(PrimeFaces.escapeClientId(element.attr('for'))), checkbox = input.parent().next();
             checkbox.click();
-            return false;
+            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
         });
 
         //adding accesibility
@@ -41,23 +41,23 @@ PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             switch(event.keyCode){
                 case 38:
                     _self.toggle($(this),1);
-                    return false;
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                     break;
                 case 40:
                     _self.toggle($(this),-1);
-                    return false;
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                     break;
                 case 39:
                     _self.toggle($(this),1);
-                    return false;
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                     break;
                 case 37:
                     _self.toggle($(this),-1);
-                    return false;
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                     break;
                 case 32:
                     _self.toggle($(this),1);
-                    return false;
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                     break; 
             }    
         });

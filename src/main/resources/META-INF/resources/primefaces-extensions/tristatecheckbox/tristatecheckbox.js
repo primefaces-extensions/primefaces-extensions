@@ -32,38 +32,37 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
                 _self.box.removeClass('ui-state-hover');
             }).click(function () {
                 _self.toggle(1);
-                return false;
+                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
             });
 
             //toggle state on label click
             this.itemLabel.click(function () {
                 _self.toggle(1);
-                return false;
+                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
             });
 
             //adding accesibility
-            this.box.bind('keydown', function(event) {
-                console.log(event.keyCode);
+            this.box.bind('keydown', function(event) {                
                 switch(event.keyCode){
                     case 38:
                         _self.toggle(1);
-                        return false;
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                         break;
                     case 40:
                         _self.toggle(-1);
-                        return false;
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                         break;
                     case 39:
                         _self.toggle(1);
-                        return false;
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                         break;
                     case 37:
                         _self.toggle(-1);
-                        return false;
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                         break;
                     case 32:
                         _self.toggle(1);
-                        return false;
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
                         break; 
                 }    
             });
