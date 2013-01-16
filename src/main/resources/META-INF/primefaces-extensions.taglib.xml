@@ -3010,56 +3010,56 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Decimal separator char.]]>
+            <description><![CDATA[Decimal separator char. Default is '.'.]]>
             </description>
             <name>decimalSeparator</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Thousand separator char.]]>
+            <description><![CDATA[Thousand separator char. Default is ','.]]>
             </description>
             <name>thousandSeparator</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Desired symbol or unit.]]>
+            <description><![CDATA[Desired symbol or unit. Default is none.]]>
             </description>
             <name>symbol</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Symbol suffix (prefix is the default).]]>
+            <description><![CDATA[Symbol suffix. Default is prefix.]]>
             </description>
             <name>symbolPosition</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Minimum values.]]>
+            <description><![CDATA[Minimum values. Default is 0.00.]]>
             </description>
             <name>minValue</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Maximum values.]]>
+            <description><![CDATA[Maximum values. Default is 999999999.99.]]>
             </description>
             <name>maxValue</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Controls the rounding method.]]>
+            <description><![CDATA[Controls the rounding method. Default is Round-Half-Up Symmetric.]]>
             </description>
             <name>roundMethod</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Number of decimal places.]]>
+            <description><![CDATA[Number of decimal places. Default are taken from minValue and MaxValue.]]>
             </description>
             <name>decimalPlaces</name>
             <required>false</required>
@@ -3067,7 +3067,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Controls empty input display behavior, options are empty, zero, sign (default empty)]]>
+                <![CDATA[Controls empty input display behavior, options are empty, zero, sign. Default is empty.]]>
             </description>
             <name>emptyValue</name>
             <required>false</required>
