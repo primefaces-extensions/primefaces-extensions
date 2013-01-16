@@ -28,9 +28,13 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
 		}                
 
 		//copy to hidden input the cleaned value
-		this.inputExternal.change(function() {
-			cleanVal = _self.inputExternal.autoNumeric('get');                  
+		this.inputExternal.change(function() {                    
+                    if(_self.inputExternal.val()!=''){
+                        cleanVal = _self.inputExternal.autoNumeric('get');                  
 			_self.inputInternal.attr('value', cleanVal);
+                    }else{
+                        _self.inputInternal.removeAttr('value');
+                    }
 		})
 
 		//Client Behaviors
