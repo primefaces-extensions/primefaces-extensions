@@ -26,9 +26,9 @@ import org.primefaces.util.Constants;
 /**
  * {@link ResourceWrapper} which appends the version of PrimeFaces to the URL.
  *
- * @author Thomas Andraschko / last modified by $Author: $
+ * @author  Thomas Andraschko / last modified by $Author: $
  * @version $Revision: $
- * @since 0.5
+ * @since   0.5
  */
 public class PrimeFacesResource extends ResourceWrapper {
 
@@ -38,7 +38,7 @@ public class PrimeFacesResource extends ResourceWrapper {
 	public PrimeFacesResource(final Resource resource) {
 		super();
 		wrapped = resource;
-		version = "&amp;v=" + Constants.VERSION;
+		version = "&v=" + Constants.VERSION;
 	}
 
 	@Override

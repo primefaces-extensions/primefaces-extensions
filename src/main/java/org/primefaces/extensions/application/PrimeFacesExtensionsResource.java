@@ -24,6 +24,7 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.primefaces.extensions.util.VersionProvider;
 
 /**
@@ -44,7 +45,7 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
 		// get current version
 		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
-			version = "&amp;v=" + VersionProvider.getVersion();
+			version = "&v=" + VersionProvider.getVersion();
 		} else {
 			version = UUID.randomUUID().toString();
 		}
