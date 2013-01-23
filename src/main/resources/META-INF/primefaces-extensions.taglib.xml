@@ -719,6 +719,114 @@
         </attribute>
     </tag>
     <tag>
+        <tag-name>exporter</tag-name>
+        <handler-class>
+            org.primefaces.extensions.component.exporter.ExporterTagHandler
+        </handler-class>
+        <attribute>
+            <description>Server side id of the datatable whose data would be exported.</description>
+            <name>target</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Export type: "pdf","xls".</description>
+            <name>type</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Filename of the generated export file, defaults to datatable server side id.</description>
+            <name>fileName</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Table header title  to use.</description>
+            <name>tableTitle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Exports only current page instead of whole dataset.</description>
+            <name>pageOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>PreProcessor for the exported document.</description>
+            <name>preProcessor</name>
+            <required>false</required>
+            <type>javax.el.MethodExpression</type>
+        </attribute>
+        <attribute>
+            <description>PostProcessor for the exported document.</description>
+            <name>postProcessor</name>
+            <required>false</required>
+            <type>javax.el.MethodExpression</type>
+        </attribute>
+        <attribute>
+            <description>Character encoding to use.</description>
+            <name>encoding</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>When enabled, only selection would be exported.</description>
+            <name>selectionOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>When enabled, subtable would be exported.</description>
+            <name>isSubTable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>Facet background to use.Ex:Color.BLUE,Color.ORANGE...</description>
+            <name>facetBackground</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Facet font size to use.Ex:10,12..</description>
+            <name>facetFontSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Facet font color to use.Ex:Color.BLUE,Color.ORANGE..</description>
+            <name>facetFontColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Facet Font Style to use.Ex:normal,bold,italic..</description>
+            <name>facetFontStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Cell Font size to use.Ex:10,12</description>
+            <name>cellFontSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Cell Font Color  to use.Ex:Color.BLUE,Color.ORANGE</description>
+            <name>cellFontColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Cell Font style  to use.Ex:normal,bold,italic</description>
+            <name>cellFontStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
         <tag-name>head</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Head</component-type>

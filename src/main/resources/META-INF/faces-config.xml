@@ -41,7 +41,11 @@
     <component>
         <component-type>org.primefaces.extensions.component.UIDynaFormControl</component-type>
         <component-class>org.primefaces.extensions.component.dynaform.UIDynaFormControl</component-class>
-    </component>    
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.DataExporter</component-type>
+        <component-class>org.primefaces.extensions.component.exporter.DataExporter</component-class>
+    </component>
     <component>
         <component-type>org.primefaces.extensions.component.Head</component-type>
         <component-class>org.primefaces.extensions.component.head.Head</component-class>
