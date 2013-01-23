@@ -3,7 +3,7 @@
 }
 
 .pe-master-detail .ui-breadcrumb .ui-breadcrumb-chevron {
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 .pe-master-detail .ui-breadcrumb ul li a {
@@ -11,7 +11,6 @@
     text-decoration: none;
     padding-left: 3px;
     padding-right: 3px;
-    padding-top: 1px;
 }
 
 .pe-master-detail .ui-breadcrumb ul li a.ui-icon-home {
