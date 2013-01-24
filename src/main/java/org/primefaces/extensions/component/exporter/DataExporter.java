@@ -76,8 +76,8 @@ public class DataExporter implements ActionListener, StateHolder {
 	public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName,ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor,ValueExpression isSubTable,ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle) {
 		this.target = target;
 		this.type = type;
-        this.tableTitle = tableTitle;
 		this.fileName = fileName;
+        this.tableTitle = tableTitle;
 		this.pageOnly = pageOnly;
 		this.selectionOnly = selectionOnly;
 		this.preProcessor = preProcessor;
@@ -217,8 +217,8 @@ public class DataExporter implements ActionListener, StateHolder {
 
 		values[0] =target;
 		values[1] = type;
-        values[2]=tableTitle;
-		values[3] = fileName;
+		values[2] = fileName;
+        values[3]=tableTitle;
 		values[4] = pageOnly;
 		values[5] = selectionOnly;
 		values[6] = preProcessor;

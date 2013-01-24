@@ -59,7 +59,7 @@ public class ExporterTagHandler extends TagHandler {
 		super(tagConfig);
 		this.target = getRequiredAttribute("target");
 		this.type = getRequiredAttribute("type");
-		this.fileName = getRequiredAttribute("fileName");
+		this.fileName = getAttribute("fileName");
         this.tableTitle = getAttribute("tableTitle");
 		this.pageOnly = getAttribute("pageOnly");
 		this.selectionOnly = getAttribute("selectionOnly");
@@ -82,7 +82,7 @@ public class ExporterTagHandler extends TagHandler {
 		if (ComponentHandler.isNew(parent)) {
 			ValueExpression targetVE = target.getValueExpression(faceletContext, Object.class);
 			ValueExpression typeVE = type.getValueExpression(faceletContext, Object.class);
-			ValueExpression fileNameVE = fileName.getValueExpression(faceletContext, Object.class);
+			ValueExpression fileNameVE = null;
             ValueExpression tableTitleVE = null;
 			ValueExpression pageOnlyVE = null;
 			ValueExpression selectionOnlyVE = null;
@@ -99,6 +99,10 @@ public class ExporterTagHandler extends TagHandler {
             ValueExpression cellFontColorVE = null;
             ValueExpression cellFontStyleVE = null;
 
+            if(fileName!=null)
+            {
+                fileNameVE = fileName.getValueExpression(faceletContext, Object.class);
+            }
             if(tableTitle != null) {
                 tableTitleVE = tableTitle.getValueExpression(faceletContext, Object.class);
             }
