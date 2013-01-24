@@ -213,9 +213,9 @@ public class DataExporter implements ActionListener, StateHolder {
 	}
 
 	public Object saveState(FacesContext context) {
-		Object values[] = new Object[9];
+		Object values[] = new Object[17];
 
-		values[0] = target;
+		values[0] =target;
 		values[1] = type;
         values[2]=tableTitle;
 		values[3] = fileName;
