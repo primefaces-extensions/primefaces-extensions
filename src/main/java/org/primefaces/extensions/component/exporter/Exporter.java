@@ -205,38 +205,10 @@ public abstract class Exporter {
 			//No converter found just return the value as string
 			return value.toString();
 		} 
-        //start
-       /* else if(component instanceof UIInstructions)
-        {
-        	String value = component.toString();
-        	ValueExpression ve=component.getValueExpression("value");
-        	System.out.println("UIInstructions  ------"+value);
-			HtmlOutputText text=new HtmlOutputText();
-			//text.setValue(value);
-			text.setValueExpression("value", ve);
-			//component.set
-			return exportValue(context,text);
-			//ValueExpression expr = component.setValueExpression(value, expr);
-        }*/
-        //end
+
         else {
 			//This would get the plain texts on UIInstructions when using Facelets
 			String value = component.toString();
-			//start
-		/*	if(value != null)
-				value=value.trim();
-			if((""+value.charAt(0))=="#")				
-			{
-				System.out.println("UIInstructions  ------");
-				HtmlOutputText text=new HtmlOutputText();
-				text.setValue(value);
-				//text.setValueExpression("value", (ValueExpression)value);
-				
-				exportValue(context,text);
-				//ValueExpression expr = component.setValueExpression(value, expr);
-			}*/
-			//System.out.println("Plain text values are"+value);
-			//end
 			if(value != null)
 				return value.trim();
 			else
