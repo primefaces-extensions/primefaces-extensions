@@ -31,7 +31,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
             this.stateHiddenField = $(jqId + "_state");
         }
         
-        var _self = this;
+        var $this = this;
 
         if (this.jqTarget.is(':visible')) {
             this.createLayout();
@@ -41,7 +41,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 
             if (hiddenParentWidget) {
                 hiddenParentWidget.addOnshowHandler(function () {
-                    return _self.createLayout();
+                    return $this.createLayout();
                 });
             }
         }
@@ -60,62 +60,62 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
     },
     
     bindEvents:function(parent) {
-        var _self = this;
+        var $this = this;
 
         // bind events
         parent.find(".ui-layout-pane")
             .bind("layoutpaneonopen",function () {
-                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['open'] : null;
+                var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
                     var ext = {
                         params:[
-                            {name:_self.id + '_pane', value:combinedPosition}
+                            {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
     
-                    behavior.call(_self, combinedPosition, ext);
+                    behavior.call($this, combinedPosition, ext);
                 }
     
-                if (_self.cfg.serverState) {
-                    _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
+                if ($this.cfg.serverState) {
+                    $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
             }).bind("layoutpaneonclose",function () {
-                var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['close'] : null;
+                var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
                     var ext = {
                         params:[
-                            {name:_self.id + '_pane', value:combinedPosition}
+                            {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
     
-                    behavior.call(_self, combinedPosition, ext);
+                    behavior.call($this, combinedPosition, ext);
                 }
     
-                if (_self.cfg.serverState) {
-                    _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
+                if ($this.cfg.serverState) {
+                    $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
             }).bind("layoutpaneonresize", function () {
                 var layoutPane = $(this).data("layoutPane");
     
                 if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
-                    var behavior = _self.cfg.behaviors ? _self.cfg.behaviors['resize'] : null;
+                    var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['resize'] : null;
                     if (behavior) {
                         var combinedPosition = $(this).data('combinedposition');
                         var ext = {
                             params:[
-                                {name:_self.id + '_pane', value:combinedPosition},
-                                {name:_self.id + '_width', value:layoutPane.state.innerWidth},
-                                {name:_self.id + '_height', value:layoutPane.state.innerHeight}
+                                {name:$this.id + '_pane', value:combinedPosition},
+                                {name:$this.id + '_width', value:layoutPane.state.innerWidth},
+                                {name:$this.id + '_height', value:layoutPane.state.innerHeight}
                             ]
                         };
     
-                        behavior.call(_self, combinedPosition, ext);
+                        behavior.call($this, combinedPosition, ext);
                     }
     
-                    if (_self.cfg.serverState) {
-                        _self.stateHiddenField.val(_self.layout.encodeJSON(_self.layout.readState()));
+                    if ($this.cfg.serverState) {
+                        $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                     }
                 }
             });        
@@ -167,7 +167,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
     
     /*
     update:function (pane, options) {
-        var _self = this;
+        var $this = this;
         
         this.jqTarget.find(".ui-layout-pane").
             each(function() {
@@ -184,7 +184,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
                         $layoutContainer.layout(options != null ? options : {});
                         
                         // bind "open", "close" and "resize" events
-                        _self.bindEvents($this);                        
+                        $this.bindEvents($this);                        
                     }                    
                     
                     return false;
