@@ -730,7 +730,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Export type: "pdf","xls".</description>
+            <description>Export type: "pdf","xls".Current supported format is "pdf" only</description>
             <name>type</name>
             <required>true</required>
             <type>java.lang.String</type>
