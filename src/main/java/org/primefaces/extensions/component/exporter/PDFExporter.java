@@ -541,7 +541,7 @@ public class PDFExporter extends Exporter {
     					
     				}
     				pdfTable.addCell(cell);
-    				System.out.println("facet values are"+value);  
+
     			}
     		}
     		
@@ -575,7 +575,6 @@ public class PDFExporter extends Exporter {
   		else
   			 {
   				//This would get the plain texts on UIInstructions when using Facelets
-  	        	System.out.println("Plain text values are");
   				String value = component.toString();
 
   				if(value != null)
@@ -673,7 +672,6 @@ public class PDFExporter extends Exporter {
 					
 				}
 				pdfTable.addCell(cell);
-				System.out.println("facet values are"+builder.toString());  
 			}
         }
     }
@@ -695,7 +693,6 @@ public class PDFExporter extends Exporter {
             }
             
             if(col instanceof DynamicColumn) {
-            	//System.out.println("I'AM IN DYNAMIC COLUMNS ---------"+col);
                 ((DynamicColumn) col).applyModel();
             }
             
