@@ -121,20 +121,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 				//load jquery adapter
 				PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 	
-					if (this.jq.is(':visible')) {
-						this.initialize();
-			        } else {
-			            var hiddenParent = this.jq.parents('.ui-hidden-container:first');
-			            var hiddenParentWidget = hiddenParent.data('widget');
-
-			            if (hiddenParentWidget) {
-			                hiddenParentWidget.addOnshowHandler($.proxy(function() {
-			                	if (!this.instance && this.jq.is(':visible')) {
-									this.initialize();
-			                	}
-			                }, this));
-			            }
-			        }
+					PrimeFacesExt.handleInitialize(this, this.initialize);
 
 				}, this), true);
 	

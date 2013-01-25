@@ -299,6 +299,37 @@ PrimeFacesExt = {
 	removeWidgetScript : function(clientId) {
 		$(PrimeFaces.escapeClientId(clientId) + '_s').remove();
 	},
+	
+	/**
+	 * Handles the initializiation of the widget, also in hidden parents.
+	 * 
+	 * @author Thomas Andraschko
+	 * @param {object} widget The widget instance.
+	 * @param {function} initFunction The initialization method of the widget.
+	 */
+	handleInitialize : function(widget, initFunction) {
+
+		var delegate = function() {
+	        return initFunction.apply(widget, arguments);
+	    };
+
+		if (widget.jq.is(':visible')) {		
+			widget.widgetInitialized = true;
+			delegate();
+        } else {
+            var hiddenParent = widget.jq.parents('.ui-hidden-container:first');
+            var hiddenParentWidget = hiddenParent.data('widget');
+
+            if (hiddenParentWidget) {
+                hiddenParentWidget.addOnshowHandler(function() {
+                	if (!widget.widgetInitialized && widget.jq.is(':visible')) {
+                		widget.widgetInitialized = true;
+                		delegate();
+                	}
+                });
+            }
+        }
+	},
 
 	/**
 	 * The JSF resource identifier.
