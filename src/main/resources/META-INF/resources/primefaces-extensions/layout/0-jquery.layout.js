@@ -1,8 +1,8 @@
 /**
  * @preserve
- * jquery.layout 1.3.0 - Release Candidate 30.74
- * $Date$
- * $Rev$
+ * jquery.layout 1.3.0 - Release Candidate 30.79
+ * $Date: 2013-01-12 08:00:00 (Sat, 12 Jan 2013) $
+ * $Rev: 303007 $
  *
  * Copyright (c) 2012 
  *   Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -11,7 +11,7 @@
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.74
+ * Changelog: http://layout.jquery-dev.net/changelog.cfm#1.3.0.rc30.79
  *
  * Docs: http://layout.jquery-dev.net/documentation.html
  * Tips: http://layout.jquery-dev.net/tips.html
@@ -23,6 +23,10 @@
  * {?string}	nullable type (sometimes NULL) - default for {Object}
  * {number=}	optional parameter
  * {*}			ALL types
+ */
+/*	TODO for jQ 2.0 
+ *	change .andSelf() to .addBack()
+ *	$.fn.disableSelection won't work
  */
 
 // NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
@@ -53,27 +57,18 @@ var	min		= Math.min
 			}
 		function g (f) { return f; }; // compiler hack
 	}
-
 ;
-
 
 /*
  *	GENERIC $.layout METHODS - used by all layouts
  */
 $.layout = {
 
-	version:	"1.3.rc30.74"
+	version:	"1.3.rc30.79"
 ,	revision:	0.033007 // 1.3.0 final = 1.0300 - major(n+).minor(nn)+patch(nn+)
 
-	// can update code here if $.browser is phased out or logic changes
-,	browser: {
-		mozilla:	!!$.browser.mozilla
-	,	webkit:		!!$.browser.webkit || !!$.browser.safari // webkit = jQ 1.4
-	,	msie:		!!$.browser.msie
-	,	isIE6:		$.browser.msie && $.browser.version == 6
-	,	boxModel:	$.support.boxModel !== false || !$.browser.msie // ONLY IE reverts to old box-model - update for older jQ onReady
-	,	version:	$.browser.version // not used in Layout core, but may be used by plugins
-	}
+	// $.layout.browser REPLACES $.browser
+,	browser:	{} // set below
 
 	// *PREDEFINED* EFFECTS & DEFAULTS 
 	// MUST list effect here - OR MUST set an fxSettings option (can be an empty hash: {})
@@ -285,15 +280,18 @@ $.layout = {
 		return typeof evt === "object" && evt.stopPropagation ? evt : null;
 	}
 ,	parsePaneName: function (evt_or_pane) {
-		// getEventObject() automatically calls .stopPropagation(), WHICH MUST BE DONE!
-		var evt = $.layout.getEventObject( evt_or_pane );
+		var evt = $.layout.getEventObject( evt_or_pane )
+		,	pane = evt_or_pane;
 		if (evt) {
 			// ALWAYS stop propagation of events triggered in Layout!
 			evt.stopPropagation();
-			return $(this).data("layoutEdge");
+			pane = $(this).data("layoutEdge");
 		}
-		else
-			return evt_or_pane;
+		if (pane && !/^(west|east|north|south|center)$/.test(pane)) {
+			$.layout.msg('LAYOUT ERROR - Invalid pane-name: "'+ pane +'"');
+			pane = "error";
+		}
+		return pane;
 	}
 
 
@@ -382,7 +380,7 @@ $.layout = {
 			i[ei] = d.inset[ei] + b; // total offset of content from outer side
 		});
 
-		x.width		= $E.css("width");
+		x.width		= $E.width();
 		x.height	= $E.height();
 		x.top		= N($E,"top",true);
 		x.bottom	= N($E,"bottom",true);
@@ -446,17 +444,16 @@ $.layout = {
 		// a 'calculated' outerHeight can be passed so borders and/or padding are removed if needed
 		if (outerWidth <= 0) return 0;
 
-		if (!$.layout.browser.boxModel) return outerWidth;
-
-		// strip border and padding from outerWidth to get CSS Width
-		var b = $.layout.borderWidth
-		,	n = $.layout.cssNum
-		,	W = outerWidth
-				- b($E, "Left")
-				- b($E, "Right")
-				- n($E, "paddingLeft")		
-				- n($E, "paddingRight");
-
+		var bs	= !$.layout.browser.boxModel ? "border-box" : $.support.boxSizing ? $E.css("boxSizing") : "content-box"
+		,	b	= $.layout.borderWidth
+		,	n	= $.layout.cssNum
+		,	W	= outerWidth
+		;
+		// strip border and/or padding from outerWidth to get CSS Width
+		if (bs !== "border-box")
+			W -= (b($E, "Left") + b($E, "Right"));
+		if (bs === "content-box")
+			W -= (n($E, "paddingLeft") + n($E, "paddingRight"));
 		return max(0,W);
 	}
 
@@ -472,17 +469,16 @@ $.layout = {
 		// a 'calculated' outerHeight can be passed so borders and/or padding are removed if needed
 		if (outerHeight <= 0) return 0;
 
-		if (!$.layout.browser.boxModel) return outerHeight;
-
-		// strip border and padding from outerHeight to get CSS Height
-		var b = $.layout.borderWidth
-		,	n = $.layout.cssNum
-		,	H = outerHeight
-			- b($E, "Top")
-			- b($E, "Bottom")
-			- n($E, "paddingTop")
-			- n($E, "paddingBottom");
-
+		var bs	= !$.layout.browser.boxModel ? "border-box" : $.support.boxSizing ? $E.css("boxSizing") : "content-box"
+		,	b	= $.layout.borderWidth
+		,	n	= $.layout.cssNum
+		,	H	= outerHeight
+		;
+		// strip border and/or padding from outerHeight to get CSS Height
+		if (bs !== "border-box")
+			H -= (b($E, "Top") + b($E, "Bottom"));
+		if (bs === "content-box")
+			H -= (n($E, "paddingTop") + n($E, "paddingBottom"));
 		return max(0,H);
 	}
 
@@ -605,6 +601,37 @@ $.layout = {
 
 };
 
+
+/*
+ *	$.layout.browser REPLACES removed $.browser, with extra data
+ *	Parsing code here adapted from jQuery 1.8 $.browse
+ */
+var u = navigator.userAgent.toLowerCase()
+,	m = /(chrome)[ \/]([\w.]+)/.exec( u )
+	||	/(webkit)[ \/]([\w.]+)/.exec( u )
+	||	/(opera)(?:.*version|)[ \/]([\w.]+)/.exec( u )
+	||	/(msie) ([\w.]+)/.exec( u )
+	||	u.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( u )
+	||	[]
+,	b = m[1] || ""
+,	v = m[2] || 0
+,	ie = b === "msie"
+;
+$.layout.browser = {
+	version:	v
+,	safari:		b === "webkit"	// webkit (NOT chrome) = safari
+,	webkit:		b === "chrome"	// chrome = webkit
+,	msie:		ie
+,	isIE6:		ie && v == 6
+	// ONLY IE reverts to old box-model - update for older jQ onReady
+,	boxModel:	!ie || $.support.boxModel !== false
+};
+if (b) $.layout.browser[b] = true; // set CURRENT browser
+/*	OLD versions of jQuery only set $.support.boxModel after page is loaded
+ *	so if this is IE, use support.boxModel to test for quirks-mode (ONLY IE changes boxModel) */
+if (ie) $(function(){ $.layout.browser.boxModel = $.support.boxModel; });
+
+
 // DEFAULT OPTIONS
 $.layout.defaults = {
 /*
@@ -642,11 +669,11 @@ $.layout.defaults = {
 ,	errors: {
 		pane:					"pane"		// description of "layout pane element" - used only in error messages
 	,	selector:				"selector"	// description of "jQuery-selector" - used only in error messages
-	,	addButtonError:			"Error Adding Button \n\nInvalid "
-	,	containerMissing:		"UI Layout Initialization Error\n\nThe specified layout-container does not exist."
-	,	centerPaneMissing:		"UI Layout Initialization Error\n\nThe center-pane element does not exist.\n\nThe center-pane is a required element."
-	,	noContainerHeight:		"UI Layout Initialization Warning\n\nThe layout-container \"CONTAINER\" has no height.\n\nTherefore the layout is 0-height and hence 'invisible'!"
-	,	callbackError:			"UI Layout Callback Error\n\nThe EVENT callback is not a valid function."
+	,	addButtonError:			"Error Adding Button\nInvalid "
+	,	containerMissing:		"UI Layout Initialization Error\nThe specified layout-container does not exist."
+	,	centerPaneMissing:		"UI Layout Initialization Error\nThe center-pane element does not exist.\nThe center-pane is a required element."
+	,	noContainerHeight:		"UI Layout Initialization Warning\nThe layout-container \"CONTAINER\" has no height.\nTherefore the layout is 0-height and hence 'invisible'!"
+	,	callbackError:			"UI Layout Callback Error\nThe EVENT callback is not a valid function."
 	}
 /*
  *	PANE DEFAULT SETTINGS
@@ -808,7 +835,7 @@ $.layout.optionsMap = {
 	layout: ("name,instanceKey,stateManagement,effects,inset,zIndexes,errors,"
 	+	"zIndex,scrollToBookmarkOnLoad,showErrorMessages,maskPanesEarly,"
 	+	"outset,resizeWithWindow,resizeWithWindowDelay,resizeWithWindowMaxDelay,"
-	+	"onresizeall,onresizeall_start,onresizeall_end,onload,onunload").split(",")
+	+	"onresizeall,onresizeall_start,onresizeall_end,onload,onload_start,onload_end,onunload,onunload_start,onunload_end").split(",")
 //	borderPanes: [ ALL options that are NOT specified as 'layout' ]
 	// default.panes options that apply to the center-pane (most options apply _only_ to border-panes)
 ,	center: ("paneClass,contentSelector,contentIgnoreSelector,findNestedContent,applyDemoStyles,triggerEventsOnLoad,"
@@ -2408,8 +2435,7 @@ $.fn.layout = function (opts) {
 			$Ts[pane]	= false;
 			if (!$P) return; // pane does not exist - skip
 
-			var 
-				o		= options[pane]
+			var	o		= options[pane]
 			,	s		= state[pane]
 			,	c		= _c[pane]
 			,	paneId	= o.paneSelector.substr(0,1) === "#" ? o.paneSelector.substr(1) : ""
@@ -3238,7 +3264,7 @@ $.fn.layout = function (opts) {
 		_hidePane(pane);
 		s.isClosed = true;
 		s.isVisible = false;
-		// UNUSED: if (setHandles) setAsClosed(pane, true); // true = force
+		if (setHandles) setAsClosed(pane);
 	}
 
 	/**
@@ -3253,7 +3279,7 @@ $.fn.layout = function (opts) {
 		var	pane = evtPane.call(this, evt_or_pane);
 		// if pane has been initialized, but NOT the complete layout, close pane instantly
 		if (!state.initialized && $Ps[pane]) {
-			_closePane(pane); // INIT pane as closed
+			_closePane(pane, true); // INIT pane as closed
 			return;
 		}
 		if (!isInitialized()) return;
@@ -3347,6 +3373,7 @@ $.fn.layout = function (opts) {
 	* @param {string}	pane	The pane just closed, ie: north, south, east, or west
 	*/
 ,	setAsClosed = function (pane) {
+		if (!$Rs[pane]) return; // handles not initialized yet!
 		var
 			$P		= $Ps[pane]
 		,	$R		= $Rs[pane]
@@ -3809,8 +3836,7 @@ $.fn.layout = function (opts) {
 	* @param {boolean=}	[force=false]
 	*/
 ,	makePaneFit = function (pane, isOpening, skipCallback, force) {
-		var
-			o	= options[pane]
+		var	o	= options[pane]
 		,	s	= state[pane]
 		,	c	= _c[pane]
 		,	$P	= $Ps[pane]
@@ -3885,8 +3911,6 @@ $.fn.layout = function (opts) {
 
 
 	/**
-	* sizePane / manualSizePane
-	* sizePane is called only by internal methods whenever a pane needs to be resized
 	* manualSizePane is an exposed flow-through method allowing extra code when pane is 'manually resized'
 	*
 	* @param {(string|Object)}	evt_or_pane				The pane being resized
@@ -3910,6 +3934,8 @@ $.fn.layout = function (opts) {
 	}
 
 	/**
+	* sizePane is called only by internal methods whenever a pane needs to be resized
+	*
 	* @param {(string|Object)}	evt_or_pane				The pane being resized
 	* @param {number}			size					The *desired* new size for this pane - will be validated
 	* @param {boolean=}			[skipCallback=false]	Should the onresize callback be run?
@@ -4306,7 +4332,7 @@ $.fn.layout = function (opts) {
 		if ($.isPlainObject( pC )) {
 			// resize one or more children
 			$.each( pC, function (key, child) {
-				child.resizeAll();
+				if (!child.destroyed) child.resizeAll();
 			});
 		}
 	}
@@ -4528,7 +4554,7 @@ $.fn.layout = function (opts) {
 			}
 
 			// DONE measuring and sizing this resizer/toggler, so can be 'hidden' now
-			if (!state.initialized && (o.initHidden || s.noRoom)) {
+			if (!state.initialized && (o.initHidden || s.isHidden)) {
 				$R.hide();
 				if ($T) $T.hide();
 			}
@@ -5065,15 +5091,6 @@ $.fn.layout = function (opts) {
 }
 
 
-/*	OLD versions of jQuery only set $.support.boxModel after page is loaded
- *	so if this is IE, use support.boxModel to test for quirks-mode (ONLY IE changes boxModel).
- */
-$(function(){
-	var b = $.layout.browser;
-	if (b.msie) b.boxModel = $.support.boxModel;
-});
-
-
 })( jQuery );
 // END Layout - keep internal vars internal!
 
@@ -5085,7 +5102,7 @@ $(function(){
 
 /**
  * jquery.layout.state 1.0
- * $Date$
+ * $Date: 2011-07-16 08:00:00 (Sat, 16 July 2011) $
  *
  * Copyright (c) 2012 
  *   Kevin Dalman (http://allpro.net)
@@ -5143,8 +5160,7 @@ $.ui.cookie = {
 	acceptsCookies: !!navigator.cookieEnabled
 
 ,	read: function (name) {
-		var
-			c		= document.cookie
+		var	c		= document.cookie
 		,	cs		= c ? c.split(';') : []
 		,	pair	// loop var
 		;
@@ -5152,22 +5168,25 @@ $.ui.cookie = {
 			pair = $.trim(cs[i]).split('='); // name=value pair
 			if (pair[0] == name) // found the layout cookie
 				return decodeURIComponent(pair[1]);
-
 		}
 		return null;
 	}
 
 ,	write: function (name, val, cookieOpts) {
-		var
-			params	= ''
-		,	date	= ''
+		var	params	= ""
+		,	date	= ""
 		,	clear	= false
 		,	o		= cookieOpts || {}
-		,	x		= o.expires
+		,	x		= o.expires  || null
+		,	t		= $.type(x)
 		;
-		if (x && x.toUTCString)
+		if (t === "date")
 			date = x;
-		else if (x === null || typeof x === 'number') {
+		else if (t === "string" && x > 0) {
+			x = parseInt(x,10);
+			t = "number";
+		}
+		if (t === "number") {
 			date = new Date();
 			if (x > 0)
 				date.setDate(date.getDate() + x);
@@ -5176,15 +5195,15 @@ $.ui.cookie = {
 				clear = true;
 			}
 		}
-		if (date)		params += ';expires='+ date.toUTCString();
-		if (o.path)		params += ';path='+ o.path;
-		if (o.domain)	params += ';domain='+ o.domain;
-		if (o.secure)	params += ';secure';
-		document.cookie = name +'='+ (clear ? "" : encodeURIComponent( val )) + params; // write or clear cookie
+		if (date)		params += ";expires="+ date.toUTCString();
+		if (o.path)		params += ";path="+ o.path;
+		if (o.domain)	params += ";domain="+ o.domain;
+		if (o.secure)	params += ";secure";
+		document.cookie = name +"="+ (clear ? "" : encodeURIComponent( val )) + params; // write or clear cookie
 	}
 
 ,	clear: function (name) {
-		$.ui.cookie.write(name, '', {expires: -1});
+		$.ui.cookie.write(name, "", {expires: -1});
 	}
 
 };
@@ -5219,7 +5238,7 @@ $.layout.defaults.stateManagement = {
 ,	cookie: {
 		name:	""	// If not specified, will use Layout.name, else just "Layout"
 	,	domain:	""	// blank = current domain
-	,	path:	""	// blank = current page, '/' = entire website
+	,	path:	""	// blank = current page, "/" = entire website
 	,	expires: ""	// 'days' to keep cookie - leave blank for 'session cookie'
 	,	secure:	false
 	}
@@ -5546,7 +5565,7 @@ $.layout.onUnload.push( $.layout.state._unload );
 
 /**
  * jquery.layout.buttons 1.0
- * $Date$
+ * $Date: 2011-07-16 08:00:00 (Sat, 16 July 2011) $
  *
  * Copyright (c) 2012 
  *   Kevin Dalman (http://allpro.net)
@@ -5827,7 +5846,7 @@ $.layout.onLoad.push(  $.layout.buttons._load );
 
 /**
  * jquery.layout.browserZoom 1.0
- * $Date$
+ * $Date: 2011-12-29 08:00:00 (Thu, 29 Dec 2011) $
  *
  * Copyright (c) 2012 
  *   Kevin Dalman (http://allpro.net)
