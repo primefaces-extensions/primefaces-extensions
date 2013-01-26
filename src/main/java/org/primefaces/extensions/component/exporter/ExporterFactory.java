@@ -16,11 +16,12 @@
 package org.primefaces.extensions.component.exporter;
 
 import javax.faces.FacesException;
+
 /**
  * <code>Exporter</code> component.
  *
- * @author  Sudheer Jonna / last modified by $Author$
- * @since   0.7.0
+ * @author Sudheer Jonna / last modified by $Author$
+ * @since 0.7.0
  */
 public class ExporterFactory {
 
@@ -31,11 +32,11 @@ public class ExporterFactory {
 
     public static Exporter getExporterForType(String type) {
         Exporter exporter = null;
-        
+
         try {
             ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
 
-            switch(exporterType) {
+            switch (exporterType) {
 
                 case PDF:
                     exporter = new PDFExporter();
@@ -45,18 +46,16 @@ public class ExporterFactory {
 //                    exporter = new ExcelExporter();
 //                break;
 
-                default:
-                {
+                default: {
                     exporter = new PDFExporter();
                     break;
                 }
 
             }
-        }
-        catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new FacesException(e);
-        } 
-        
+        }
+
         return exporter;
-	}
+    }
 }
