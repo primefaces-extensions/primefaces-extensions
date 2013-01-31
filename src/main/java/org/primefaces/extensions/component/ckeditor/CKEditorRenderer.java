@@ -79,11 +79,12 @@ public class CKEditorRenderer extends InputRenderer {
 			writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
 		}
 
-		if (ckEditor.getValue() != null) {
+		final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
+		if (valueToRender != null) {
 			if (ckEditor.isEscape()) {
-				writer.writeText(ComponentUtils.getValueToRender(context, ckEditor), null);
+				writer.writeText(valueToRender, null);
 			} else {
-				writer.write(ComponentUtils.getValueToRender(context, ckEditor));
+				writer.write(valueToRender);
 			}
 		}
 

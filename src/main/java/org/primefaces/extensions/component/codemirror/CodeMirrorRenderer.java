@@ -95,11 +95,12 @@ public class CodeMirrorRenderer extends InputRenderer {
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
 
-		if (codeMirror.getValue() != null) {
+		final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
+		if (valueToRender != null) {
 			if (codeMirror.isEscape()) {
-				writer.writeText(ComponentUtils.getValueToRender(context, codeMirror), null);
+				writer.writeText(valueToRender, null);
 			} else {
-				writer.write(ComponentUtils.getValueToRender(context, codeMirror));
+				writer.write(valueToRender);
 			}
 		}
 
