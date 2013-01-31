@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2013 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: $
+ * $Id$
  */
 
-package org.primefaces.extensions.util;
+package org.primefaces.extensions.config;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-/**
- * Class which provides servlet context config param values.
- * 
- * @author Thomas Andraschko / last modified by $Author: $
- * @version $Revision: $
- * @since 0.5
- */
-public class ContextParametersProvider {
+import org.primefaces.extensions.util.Constants;
 
-	private static ContextParametersProvider instance = null;
+/**
+ * Container for all config parameters.
+ *
+ * @author Thomas Andraschko / last modified by $Author$
+ * @version $Revision$
+ * @since 0.6.3
+ */
+public class ConfigContainer {
 
 	private boolean deliverUncompressedResources = true;
 	private boolean wrapPrimeFacesResources = false;
@@ -38,8 +38,7 @@ public class ContextParametersProvider {
 	/**
 	 * Avoid instantiation.
 	 */
-	private ContextParametersProvider() {
-		final FacesContext context = FacesContext.getCurrentInstance();
+	public ConfigContainer(final FacesContext context) {
 		final ExternalContext externalContext = context.getExternalContext();
 
 		final String deliverUncompressedResourcesStringValue =
@@ -55,29 +54,10 @@ public class ContextParametersProvider {
 		}
 	}
 
-	/**
-	 * Gets the {@link ContextParametersProvider} instance.
-	 * 
-	 * @return The {@link ContextParametersProvider} instance.
-	 */
-	public static ContextParametersProvider getInstance() {
-		if (instance == null) {
-			instance = new ContextParametersProvider();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * @return the deliverUncompressedResources
-	 */
 	public boolean isDeliverUncompressedResources() {
 		return deliverUncompressedResources;
 	}
 
-	/**
-	 * @return the wrapPrimeFacesResources
-	 */
 	public boolean isWrapPrimeFacesResources() {
 		return wrapPrimeFacesResources;
 	}

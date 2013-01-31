@@ -24,8 +24,9 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.extensions.config.ConfigContainer;
+import org.primefaces.extensions.config.ConfigProvider;
 import org.primefaces.extensions.util.Constants;
-import org.primefaces.extensions.util.ContextParametersProvider;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
@@ -58,7 +59,10 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
 		if (resource != null && libraryName != null) {
 
-			if (ContextParametersProvider.getInstance().isWrapPrimeFacesResources()
+			final FacesContext context = FacesContext.getCurrentInstance();
+			final ConfigContainer config = ConfigProvider.getConfig(context);
+
+			if (config.isWrapPrimeFacesResources()
 				&& libraryName.equalsIgnoreCase(org.primefaces.util.Constants.LIBRARY)) {
 
 				//Handle PrimeFaces resources
@@ -67,7 +71,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 			} else if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 
 				//Handle PrimeFaces Extensions resources
-				if (deliverUncompressedFile(resourceName)) {
+				if (deliverUncompressedFile(resourceName, config, context)) {
 					//get uncompressed resource if project stage == development
 					resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
 				}
@@ -81,20 +85,20 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 		return resource;
 	}
 
-	protected boolean deliverUncompressedFile(final String resourceName) {
-		final FacesContext context = FacesContext.getCurrentInstance();
+	protected boolean deliverUncompressedFile(final String resourceName,
+			final ConfigContainer config, final FacesContext context) {
 
-		if (ContextParametersProvider.getInstance().isDeliverUncompressedResources()
+		if (config.isDeliverUncompressedResources()
 				&& context.isProjectStage(ProjectStage.Development)) {
 
 			if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
-				for (String exclude : UNCOMPRESSED_EXCLUDES) {
+				for (final String exclude : UNCOMPRESSED_EXCLUDES) {
 					if (resourceName.contains(exclude)) {
 						return false;
 					}
 				}
 
-				return ContextParametersProvider.getInstance().isDeliverUncompressedResources();
+				return config.isDeliverUncompressedResources();
 			}
 		}
 
