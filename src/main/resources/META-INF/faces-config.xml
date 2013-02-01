@@ -20,6 +20,10 @@
             <source-class>javax.faces.application.Application</source-class>
         </system-event-listener>
     </application>
+    
+    <lifecycle>
+    	<phase-listener>org.primefaces.extensions.config.ConfigCleanupPhaseListener</phase-listener>
+    </lifecycle>
 
     <behavior>
         <behavior-id>org.primefaces.extensions.behavior.JavascriptBehavior</behavior-id>
