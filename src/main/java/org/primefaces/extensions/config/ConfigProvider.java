@@ -90,7 +90,7 @@ public class ConfigProvider {
 		return container;
 	}
 
-	public static void cleanupThreadLocalCache()
+	public static void cleanCache()
 	{
 		CACHE.remove();
 	}

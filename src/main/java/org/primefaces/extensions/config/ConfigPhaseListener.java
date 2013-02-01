@@ -9,17 +9,17 @@ import javax.faces.event.PhaseListener;
  * threads can be reused and therefore it could contain the wrong {@link ConfigContainer}.
  */
 @SuppressWarnings("serial")
-public class ConfigCleanupPhaseListener implements PhaseListener {
+public class ConfigPhaseListener implements PhaseListener {
 
 	public void afterPhase(final PhaseEvent event) {
-		ConfigProvider.cleanupThreadLocalCache();
+
 	}
 
 	public void beforePhase(final PhaseEvent event) {
-		// do nothing
+		ConfigProvider.cleanCache();
 	}
 
 	public PhaseId getPhaseId() {
-		return PhaseId.RENDER_RESPONSE;
+		return PhaseId.RESTORE_VIEW;
 	}
 }

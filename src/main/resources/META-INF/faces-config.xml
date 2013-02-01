@@ -22,7 +22,7 @@
     </application>
     
     <lifecycle>
-    	<phase-listener>org.primefaces.extensions.config.ConfigCleanupPhaseListener</phase-listener>
+    	<phase-listener>org.primefaces.extensions.config.ConfigPhaseListener</phase-listener>
     </lifecycle>
 
     <behavior>
