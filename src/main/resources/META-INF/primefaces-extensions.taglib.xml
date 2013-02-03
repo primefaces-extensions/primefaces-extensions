@@ -2330,6 +2330,13 @@
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Value of the component.]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[Name of the client side widget.]]></description>
             <name>widgetVar</name>
             <required>false</required>
