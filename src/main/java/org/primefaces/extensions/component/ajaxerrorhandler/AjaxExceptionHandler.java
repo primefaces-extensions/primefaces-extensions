@@ -130,6 +130,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			}
 
 			String errorName = (rootCause == null) ? t.getClass().getCanonicalName() : rootCause.getClass().getCanonicalName();
+			LOGGER.log(Level.SEVERE, ""+t.getMessage(), t);
 
 			ExternalContext extContext = context.getExternalContext();
 
@@ -152,7 +153,9 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			// Node <error-message>
 			writer.startElement("error-message", null);
 			writer.startCDATA();
-			writer.write(rootCause != null ? rootCause.getMessage() : t.getMessage());
+			String message = rootCause != null && rootCause.getMessage()!=null ? rootCause.getMessage() : t.getMessage();
+			if (message == null) message = "";
+			writer.write(message);
 			writer.endCDATA();
 			writer.endElement("error-message");
 
@@ -160,6 +163,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			writer.startElement("error-stacktrace", null);
 			writer.startCDATA();
 			String stackTrace = ExceptionUtils.getStackTrace(rootCause == null? t : rootCause);
+			if (stackTrace == null) stackTrace = "";
 			writer.write(stackTrace);
 			writer.endCDATA();
 			writer.endElement("error-stacktrace");
