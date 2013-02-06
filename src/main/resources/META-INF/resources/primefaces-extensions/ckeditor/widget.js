@@ -386,6 +386,10 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 * Checks if the editor is in dirty state.
 	 */
 	isDirty : function() {
+		if (!this.instance) {
+			return false;
+		}
+
 		return this.dirtyState || this.instance.checkDirty();
 	},
 
