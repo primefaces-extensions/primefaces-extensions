@@ -1,8 +1,8 @@
 /**
 * autoNumeric.js
 * @author: Bob Knothe
-* @author: Sokolov Yura aka funny_falcon
-* @version: 1.8.0 - 2013-1-5 GMT 5:00 PM
+* @author: Sokolov Yura aka funny_falcon 
+* @version: 1.8.5 - 2013-02-16 GMT 10:30 PM  
 *
 * Created by Robert J. Knothe on 2010-10-25. Please report any bug at http://www.decorplanit.com/plugin/
 * Created by Sokolov Yura on 2010-11-07. http://github.com/funny_falcon
@@ -87,7 +87,7 @@
         $.each(settings, function (k, val) {
             if (typeof val === 'function') {
                 settings[k] = val($this, settings, k);
-            } else if (typeof ($this.autoNumeric[val]) === 'function') {
+            } else if (typeof $this.autoNumeric[val] === 'function') {
                 /**
                 * calls the attached function from the html5 data example: data-a-sign="functionName"
                 */
@@ -870,7 +870,7 @@
                 }
                 var holder = getHolder($this, settings);
                 if (settings.runOnce === undefined && settings.aForm && ($this[0].value || $this.text() !== '' || settings.wEmpty !== 'empty')) {
-                    if ($this.is('input[type=text]')) {
+                    if ($this.is('input[type=text], input[type=hidden], input:not([type])')) { /**added hidden type */
                         if (settings.nBracket !== null && ($this[0].value || settings.wEmpty !== 'empty')) { /** routine to handle page refresh */
                             settings.oEvent = "pageLoad";
                             $this[0].value = negativeBracket($this[0].value, settings.nBracket, settings.oEvent);
@@ -883,12 +883,16 @@
                     }
                 }
                 settings.runOnce = true;
-                if ($this.is('input[type=text]') && !$this.is('[readonly]')) {
+                if ($this.is('input[type=text], input[type=hidden], input:not([type])') && !$this.is('[readonly]')) { /**added hidden type */
                     $this.bind('keydown.autoNumeric', function (e) {
                         holder = getHolder($this);
                         if (holder.settings.aDec === holder.settings.aSep) {
                             $.error("autoNumeric will not function properly when the decimal character aDec: '" + holder.settings.aDec + "' and thousand seperater aSep: '" + holder.settings.aSep + "' are the same character");
                             return this;
+                        }
+                        if (holder.that.readOnly) {
+                            holder.processed = true
+                            return true;
                         }
                         /* The below streamed code / comment allows the "enter" keydown to throw a change() event */
                         /* if (e.keyCode === 13 && holder.inVal !== $this.val()){
@@ -993,7 +997,7 @@
                             $this.val(negativeBracket($this.val(), settingsClone.nBracket, settingsClone.oEvent));
                         }
                     });
-                } else if ($this.is('input[type=text]') && $this.is('[readonly]')) {
+                } else if ($this.is('input[type=text], input[type=hidden], input:not([type])') && $this.is('[readonly]')) {  /**added hidden type */
                     this.blur();
                 }
             });
@@ -1053,7 +1057,7 @@
                     value = autoRound('', settings);
                 }
                 value = autoGroup(value, settings);
-                if ($this.is('input[type=text]')) {
+                if ($this.is('input[type=text], input[type=hidden], input:not([type])')) {  /**added hidden type */
                     return $this.val(value);
                 }
                 if ($.inArray($this.prop('tagName'), settings.tagList) !== -1) {
@@ -1074,13 +1078,16 @@
             /** code here, use .eq(0) to grab first element in selector
             we'll just grab the HTML of that element for our value */
             var getValue = '';
-            if ($this.is('input[type=text]')) {
+            if ($this.is('input[type=text], input[type=hidden], input:not([type])')) { /**added hidden type */
                 getValue = $this.eq(0).val();
             } else if ($.inArray($this.prop('tagName'), settings.tagList) !== -1) {
                 getValue = $this.eq(0).text();
             } else {
                 $.error("The <" + $this.prop('tagName') + "> is not supported by autoNumeric()");
                 return false;
+            }
+            if ((getValue === '' || getValue === settings.aSign) && settings.wEmpty === 'empty') {
+                return '';
             }
             if (settings.nBracket !== null && getValue !== '') {
                 getValue = negativeBracket(getValue, settings.nBracket, settings.oEvent);
@@ -1095,22 +1102,20 @@
             if (settings.lZero === 'keep') {
                 return getValue;
             }
-            return +getValue;
+            return getValue; /** returned Numeric String */
         },
         /** method to get the unformated value from multiple fields */
         getString: function () {
-            var isAutoNumeric = false, $this = autoGet($(this)), str =  $this.serialize(), parts = str.split('&'), i = 0;
+            var isAutoNumeric = false, $this = autoGet($(this)), str = $this.serialize(), parts = str.split('&'), i = 0;
             for (i; i < parts.length; i += 1) {
                 var miniParts = parts[i].split('=');
-                var settings = $('input:text[name=' + miniParts[0] + ']').data('autoNumeric');
+                var settings = $('*[name=' + miniParts[0] + ']').data('autoNumeric');
                 if (typeof settings === 'object') {
-                    if (miniParts[1] !== '') {
+                    if (miniParts[1] !== '' && $('*[name=' + miniParts[0] + ']').data('autoNumeric') !== undefined) {
                         miniParts[1] = $('input[name=' + miniParts[0] + ']').autoNumeric('get');
                         parts[i] = miniParts.join('=');
-                    } else {
-                        parts[i] = miniParts.join('=');
+                        isAutoNumeric = true;
                     }
-                    isAutoNumeric = true;
                 }
             }
             if (isAutoNumeric === true) {
@@ -1123,9 +1128,9 @@
         getArray: function () {
             var isAutoNumeric = false, $this = autoGet($(this)), formFields =  $this.serializeArray();
             $.each(formFields, function (i, field) {
-                var settings = $('input:text[name=' + field.name + ']').data('autoNumeric');
+                var settings = $('*[name=' + field.name + ']').data('autoNumeric');
                 if (typeof settings === 'object') {
-                    if (field.value !== '') {
+                    if (field.value !== '' && $('*[name=' + field.name + ']').data('autoNumeric') !== undefined) {
                         field.value = $('input[name=' + field.name + ']').autoNumeric('get').toString();
                     }
                     isAutoNumeric = true;
