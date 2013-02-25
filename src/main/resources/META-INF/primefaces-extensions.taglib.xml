@@ -784,7 +784,7 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description>Facet background to use.Ex:Color.BLUE,Color.ORANGE...</description>
+            <description>Facet background to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
             <name>facetBackground</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -796,7 +796,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Facet font color to use.Ex:Color.BLUE,Color.ORANGE..</description>
+            <description>Facet font color to use.Hex Colors like #FFFF00,#FF0000... </description>
             <name>facetFontColor</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -814,7 +814,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Cell Font Color  to use.Ex:Color.BLUE,Color.ORANGE</description>
+            <description>Cell Font Color  to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
             <name>cellFontColor</name>
             <required>false</required>
             <type>java.lang.String</type>
