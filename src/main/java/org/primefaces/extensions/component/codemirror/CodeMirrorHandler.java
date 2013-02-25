@@ -44,7 +44,7 @@ public class CodeMirrorHandler extends ComponentHandler {
 	protected MetaRuleset createMetaRuleset(final Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { String.class, String.class }));
+        metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { String.class, String.class, Integer.class, Integer.class }));
 
 		return metaRuleset;
 	}

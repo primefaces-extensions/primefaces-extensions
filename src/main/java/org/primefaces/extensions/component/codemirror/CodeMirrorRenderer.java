@@ -63,9 +63,10 @@ public class CodeMirrorRenderer extends InputRenderer {
 
         // complete event
         final String token = params.get(clientId + "_token");
+        final Cursor cursor = new Cursor(params.get(clientId + "_line"), params.get(clientId + "_column"));
         if (token != null) {
-        	final String context = params.get(clientId + "_context");
-        	final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context);
+            final String context = params.get(clientId + "_context");
+            final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context, cursor.line, cursor.column);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
 
             codeMirror.queueEvent(autoCompleteEvent);
@@ -198,5 +199,24 @@ public class CodeMirrorRenderer extends InputRenderer {
     	}
 
     	writer.endElement("ul");
+    }
+
+    private final class Cursor {
+
+        int line;
+        int column;
+
+        public Cursor(String line, String column) {
+            try {
+                this.line = Integer.parseInt(line);
+            } catch (NumberFormatException nfe) {
+                this.line = -1;
+            }
+            try {
+                this.column = Integer.parseInt(column);
+            } catch (NumberFormatException nfe) {
+                this.column = -1;
+            }
+        }
     }
 }

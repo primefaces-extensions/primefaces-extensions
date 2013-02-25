@@ -449,7 +449,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 
 			suggestions = (List<String>) completeMethod.invoke(
 					facesContext.getELContext(),
-					new Object[] { completeEvent.getToken(), completeEvent.getContext()});
+                    new Object[] { completeEvent.getToken(), completeEvent.getContext(), completeEvent.getLine(), completeEvent.getColumn()});
 
 			if (suggestions == null) {
 				suggestions = new ArrayList<String>();
