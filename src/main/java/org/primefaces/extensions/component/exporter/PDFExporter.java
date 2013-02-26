@@ -111,7 +111,7 @@ public class PDFExporter extends Exporter {
                 }
                 if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains("" + ",")) {
 
-                    Font tableTitleFont = FontFactory.getFont(FontFactory.TIMES, "UTF-8", Font.DEFAULTSIZE, Font.BOLD);
+                    Font tableTitleFont = FontFactory.getFont(FontFactory.TIMES, encodingType, Font.DEFAULTSIZE, Font.BOLD);
                     Paragraph title = new Paragraph(tableTitle, tableTitleFont);
                     document.add(title);
 
