@@ -65,9 +65,12 @@ public class CodeMirrorRenderer extends InputRenderer {
         final String token = params.get(clientId + "_token");
         if (token != null) {
         	final String context = params.get(clientId + "_context");
-        	final CompleteEvent autoCompleteEvent = new CompleteEvent(codeMirror, token, context);
-            autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
+        	final int line = Integer.parseInt(params.get(clientId + "_line"));
+        	final int column = Integer.parseInt(params.get(clientId + "_column"));
 
+        	final CompleteEvent autoCompleteEvent = new CompleteEvent(
+        			codeMirror, token, context, line, column);
+            autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
             codeMirror.queueEvent(autoCompleteEvent);
         }
 	}

@@ -24,6 +24,7 @@ import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.MetaRuleset;
 
+import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.facelets.MethodRule;
 
 /**
@@ -42,9 +43,9 @@ public class CodeMirrorHandler extends ComponentHandler {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected MetaRuleset createMetaRuleset(final Class type) {
-		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+		final MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { String.class, String.class }));
+		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
 
 		return metaRuleset;
 	}
