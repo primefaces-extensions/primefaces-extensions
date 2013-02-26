@@ -18,13 +18,13 @@
 
 package org.primefaces.extensions.component.codemirror;
 
-import java.util.List;
+import org.primefaces.extensions.event.CompleteEvent;
+import org.primefaces.facelets.MethodRule;
 
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.MetaRuleset;
-
-import org.primefaces.facelets.MethodRule;
+import java.util.List;
 
 /**
  * {@link ComponentHandler} for the {@link CodeMirror} component.
@@ -44,7 +44,7 @@ public class CodeMirrorHandler extends ComponentHandler {
 	protected MetaRuleset createMetaRuleset(final Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { String.class, String.class }));
+        metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
 
 		return metaRuleset;
 	}
