@@ -1479,6 +1479,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[When set to true, the tooltip will not hide if moused over, allowing the contents to be clicked and interacted with. Default value is false.]]>
+            </description>
+            <name>fixed</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[A positive or negative pixel value by which to offset the tooltip in the horizontal plane (x-axis). Negative values cause a reduction in the value (moves tooltip to the left). Default value is 0.]]>
             </description>
             <name>adjustX</name>

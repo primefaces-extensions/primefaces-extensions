@@ -95,7 +95,7 @@ public class TooltipRenderer extends CoreRenderer {
 			writer.write(",show:{target:$('" + target + "')" + ",delay:" + tooltip.getShowDelay()
 			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
 			             + ");}}");
-			writer.write(",hide:{target:$('" + target + "')" + ",delay:" + tooltip.getHideDelay()
+			writer.write(",hide:{target:$('" + target + "')" + ",delay:" + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed()
 			             + ",effect:function(){$(this)." + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength()
 			             + ");}}");
 		} else if (autoShow) {
@@ -105,9 +105,9 @@ public class TooltipRenderer extends CoreRenderer {
 			writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
 			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
 			             + ");}}");
-			writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay()
-			             + ",effect:function(){$(this)." + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength()
-			             + ");}}");
+			writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
+			             + tooltip.isFixed() + ",effect:function(){$(this)." + tooltip.getHideEffect() + "("
+			             + tooltip.getHideEffectLength() + ");}}");
 		}
 
 		// position

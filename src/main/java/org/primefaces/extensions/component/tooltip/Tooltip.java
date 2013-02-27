@@ -65,6 +65,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		shared,
 		autoShow,
 		mouseTracking,
+		fixed,
 		adjustX,
 		adjustY,
 		atPosition,
@@ -142,6 +143,14 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 	public void setMouseTracking(boolean mouseTracking) {
 		setAttribute(PropertyKeys.mouseTracking, mouseTracking);
+	}
+
+	public boolean isFixed() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.fixed, false);
+	}
+
+	public void setFixed(boolean fixed) {
+		setAttribute(PropertyKeys.fixed, fixed);
 	}
 
 	public int getAdjustX() {
