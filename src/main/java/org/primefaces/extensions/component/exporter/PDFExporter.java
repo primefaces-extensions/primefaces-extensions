@@ -61,7 +61,6 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 
-//import com.sun.faces.facelets.compiler.UIInstructions;
 
 /**
  * <code>Exporter</code> component.
@@ -162,28 +161,30 @@ public class PDFExporter extends Exporter {
             this.cellFontStyle = "" + cellFont.ITALIC;
 
     }
-
-    protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean isSubTable) {
+    protected void createCustomFonts()
+    {
         this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
         this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        if (facetFontColor != null)
+            this.facetFont.setColor(facetFontColor);
+        if (facetFontSize != null)
+            this.facetFont.setSize(facetFontSize);
+        if (facetFontStyle != null)
+            this.facetFont.setStyle(facetFontStyle);
         if (cellFontColor != null)
             this.cellFont.setColor(cellFontColor);
         if (cellFontSize != null)
             this.cellFont.setSize(cellFontSize);
         if (cellFontStyle != null)
             this.cellFont.setStyle(cellFontStyle);
+    }
+    protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean isSubTable) {
 
-        if (facetFontColor != null)
-            this.facetFont.setColor(facetFontColor);
-        if (facetFontSize != null)
-            this.facetFont.setSize(10f);
-        if (facetFontStyle != null)
-            this.facetFont.setStyle(facetFontStyle);
-
+        createCustomFonts();
         int columnsCount = getColumnsCount(table);
         PdfPTable pdfTable = null;
         if (isSubTable) {
-            int subTableCount = table.getRowCount();//getSubTableCount(table.getChildren());
+            int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
             int subTableColumnsCount = getColumnsCount(subtable);
             pdfTable = new PdfPTable(subTableColumnsCount);
@@ -196,7 +197,7 @@ public class PDFExporter extends Exporter {
 
             int i = 0;
             while (subTableCount > 0) {
-                // addColumnFacets1(subtable, pdfTable, subtable.);
+
                 subTableCount--;
                 table.setRowIndex(i);
                 i++;
@@ -361,15 +362,12 @@ public class PDFExporter extends Exporter {
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 if (rowIndex % rows == 0) {
                     table.setFirst(rowIndex);
-                    //  table.loadLazyData();
                 }
-
-                //  exportRow(table, pdfTable, rowIndex);
             }
 
             //restore
             table.setFirst(first);
-            //  table.loadLazyData();
+
         } else {
             tableColumnGroup(pdfTable, table, "header");
 
@@ -705,10 +703,7 @@ public class PDFExporter extends Exporter {
                     if (facetBackground != null)
                         cell.setBackgroundColor(facetBackground);
                     pdfTable.addCell(cell);
-                }                /*else if(col.getFacet(columnType.facet()) instanceof UIInstructions)
-            	{
-            		pdfTable.addCell(new Paragraph(col.getFacet(columnType.facet()).toString().trim(), this.facetFont));
-            	}*/
+                }
                 else {
 
                     addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
@@ -739,10 +734,6 @@ public class PDFExporter extends Exporter {
                         cell.setBackgroundColor(facetBackground);
                     pdfTable.addCell(cell);
                 }
-	                	/*else if(col.getFacet(columnType.facet()) instanceof UIInstructions)
-	                	{
-	                		pdfTable.addCell(new Paragraph(col.getFacet(columnType.facet()).toString().trim(), this.facetFont));
-	                	}*/
                 else {
 
                     addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
@@ -773,10 +764,6 @@ public class PDFExporter extends Exporter {
                         cell.setBackgroundColor(facetBackground);
                     pdfTable.addCell(cell);
                 }
-	                	/*else if(col.getFacet(columnType.facet()) instanceof UIInstructions)
-	                	{
-	                		pdfTable.addCell(new Paragraph(col.getFacet(columnType.facet()).toString().trim(), this.facetFont));
-	                	}*/
                 else {
 
                     addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
