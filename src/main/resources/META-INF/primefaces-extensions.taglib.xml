@@ -724,7 +724,7 @@
             org.primefaces.extensions.component.exporter.ExporterTagHandler
         </handler-class>
         <attribute>
-            <description>Server side id of the datatable whose data would be exported.</description>
+            <description>Server side id of the DataTable/DataList whose data would be exported.</description>
             <name>target</name>
             <required>true</required>
             <type>java.lang.String</type>
@@ -736,13 +736,13 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Filename of the generated export file, defaults to datatable server side id.</description>
+            <description>Filename of the generated export file, defaults to DataTable/DataList server side id.</description>
             <name>fileName</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Table header title  to use.</description>
+            <description>Table/List header title  to use.</description>
             <name>tableTitle</name>
             <required>false</required>
             <type>java.lang.String</type>
