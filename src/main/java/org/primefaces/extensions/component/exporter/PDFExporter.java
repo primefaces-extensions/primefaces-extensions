@@ -161,7 +161,7 @@ public class PDFExporter extends Exporter {
             this.cellFontStyle = "" + cellFont.ITALIC;
 
     }
-    protected void createCustomFonts()
+    protected void createCustomFonts(String encoding)
     {
         this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
         this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
@@ -180,7 +180,7 @@ public class PDFExporter extends Exporter {
     }
     protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean isSubTable) {
 
-        createCustomFonts();
+        createCustomFonts(encoding);
         int columnsCount = getColumnsCount(table);
         PdfPTable pdfTable = null;
         if (isSubTable) {
