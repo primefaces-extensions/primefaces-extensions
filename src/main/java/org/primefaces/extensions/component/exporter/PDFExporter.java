@@ -353,17 +353,6 @@ public class PDFExporter extends Exporter {
         return pdfTable;
     }
 
-    public int getSubTableCount(List<UIComponent> list) {
-        int count = 0;
-        for (UIComponent kid : list) {
-            if (kid instanceof SubTable)
-                count++;
-        }
-
-        return count;
-    }
-
-
     protected void exportPageOnly(FacesContext context, DataTable table, PdfPTable pdfTable) {
         int first = table.getFirst();
         int rowsToExport = first + table.getRows();
@@ -856,38 +845,6 @@ public class PDFExporter extends Exporter {
             }
         }
     }
-
-    protected void addSubTableColumnFacets(SubTable table, PdfPTable pdfTable, ColumnType columnType) {
-        for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
-
-            if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
-            }
-            PdfPCell cell = null;
-            if (col.isExportable()) {
-                if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
-                    cell = new PdfPCell(new Paragraph(col.getHeaderText(), this.facetFont));
-                    if (facetBackground != null) {
-                        cell.setBackgroundColor(facetBackground);
-                    }
-                    pdfTable.addCell(cell);
-                } else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
-                    cell = new PdfPCell(new Paragraph(col.getFooterText(), this.facetFont));
-                    if (facetBackground != null)  {
-                        cell.setBackgroundColor(facetBackground);
-                    }
-                    pdfTable.addCell(cell);
-                } else {
-
-                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
-                }
-            }
-        }
-    }
-
 
     protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font) {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
