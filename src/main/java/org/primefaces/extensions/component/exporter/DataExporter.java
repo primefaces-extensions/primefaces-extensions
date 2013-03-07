@@ -154,8 +154,8 @@ public class DataExporter implements ActionListener, StateHolder {
 
 
         try {
-
-            Exporter exporter = ExporterFactory.getExporterForType(exportAs);
+            ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
+            Exporter exporter = factory.getExporterForType(exportAs);
             exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue);
             exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, isSubtable);
             context.responseComplete();

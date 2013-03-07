@@ -23,39 +23,8 @@ import javax.faces.FacesException;
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
  */
-public class ExporterFactory {
+public interface ExporterFactory {
 
-    static public enum ExporterType {
-        PDF,
-        XLS
-    }
+    Exporter getExporterForType(String type);
 
-    public static Exporter getExporterForType(String type) {
-        Exporter exporter = null;
-
-        try {
-            ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
-
-            switch (exporterType) {
-
-                case PDF:
-                    exporter = new PDFExporter();
-                    break;
-
-//                case XLS:
-//                    exporter = new ExcelExporter();
-//                break;
-
-                default: {
-                    exporter = new PDFExporter();
-                    break;
-                }
-
-            }
-        } catch (IllegalArgumentException e) {
-            throw new FacesException(e);
-        }
-
-        return exporter;
-    }
 }
