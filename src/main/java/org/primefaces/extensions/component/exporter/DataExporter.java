@@ -15,20 +15,16 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import java.io.IOException;
-import java.lang.System;
-
 import javax.el.ELContext;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
-import org.primefaces.component.datatable.DataTable;
+import java.io.IOException;
 
 /**
  * <code>Exporter</code> component.
@@ -56,7 +52,7 @@ public class DataExporter implements ActionListener, StateHolder {
 
     private MethodExpression postProcessor;
 
-    private ValueExpression isSubTable;
+    private ValueExpression subTable;
 
     private ValueExpression facetBackground;
 
@@ -72,10 +68,12 @@ public class DataExporter implements ActionListener, StateHolder {
 
     private ValueExpression cellFontStyle;
 
+    private ValueExpression datasetPadding;
+
     public DataExporter() {
     }
 
-    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression isSubTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle) {
+    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding) {
         this.target = target;
         this.type = type;
         this.fileName = fileName;
@@ -85,7 +83,7 @@ public class DataExporter implements ActionListener, StateHolder {
         this.preProcessor = preProcessor;
         this.postProcessor = postProcessor;
         this.encoding = encoding;
-        this.isSubTable = isSubTable;
+        this.subTable = subTable;
         this.facetBackground = facetBackground;
         this.facetFontSize = facetFontSize;
         this.facetFontColor = facetFontColor;
@@ -93,10 +91,9 @@ public class DataExporter implements ActionListener, StateHolder {
         this.cellFontSize = cellFontSize;
         this.cellFontColor = cellFontColor;
         this.cellFontStyle = cellFontStyle;
-
+        this.datasetPadding = datasetPadding;
 
     }
-
 
     public void processAction(ActionEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -126,9 +123,9 @@ public class DataExporter implements ActionListener, StateHolder {
             isSelectionOnly = selectionOnly.isLiteralText() ? Boolean.valueOf(selectionOnly.getValue(context.getELContext()).toString()) : (Boolean) selectionOnly.getValue(context.getELContext());
         }
 
-        boolean isSubtable = false;
-        if (isSubTable != null) {
-            isSubtable = isSubTable.isLiteralText() ? Boolean.valueOf(isSubTable.getValue(context.getELContext()).toString()) : (Boolean) isSubTable.getValue(context.getELContext());
+        boolean subtable = false;
+        if (subTable != null) {
+            subtable = subTable.isLiteralText() ? Boolean.valueOf(subTable.getValue(context.getELContext()).toString()) : (Boolean) subTable.getValue(context.getELContext());
         }
         String facetBackgroundValue = "#FFFFFF";
         if (facetBackground != null)
@@ -151,13 +148,15 @@ public class DataExporter implements ActionListener, StateHolder {
         String cellFontStyleValue = "NORMAL";
         if (cellFontStyle != null)
             cellFontStyleValue = (String) cellFontStyle.getValue(elContext);
-
+        String datasetPaddingValue = "5";
+        if (datasetPadding != null)
+            datasetPaddingValue = (String) datasetPadding.getValue(elContext);
 
         try {
             ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
             Exporter exporter = factory.getExporterForType(exportAs);
-            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue);
-            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, isSubtable);
+            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue, datasetPaddingValue);
+            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, subtable);
             context.responseComplete();
         } catch (IOException e) {
             throw new FacesException(e);
@@ -198,7 +197,7 @@ public class DataExporter implements ActionListener, StateHolder {
         preProcessor = (MethodExpression) values[6];
         postProcessor = (MethodExpression) values[7];
         encoding = (ValueExpression) values[8];
-        isSubTable = (ValueExpression) values[9];
+        subTable = (ValueExpression) values[9];
         facetBackground = (ValueExpression) values[10];
         facetFontSize = (ValueExpression) values[11];
         facetFontColor = (ValueExpression) values[12];
@@ -206,10 +205,11 @@ public class DataExporter implements ActionListener, StateHolder {
         cellFontSize = (ValueExpression) values[14];
         cellFontColor = (ValueExpression) values[15];
         cellFontStyle = (ValueExpression) values[16];
+        datasetPadding = (ValueExpression) values[17];
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[17];
+        Object values[] = new Object[18];
 
         values[0] = target;
         values[1] = type;
@@ -220,7 +220,7 @@ public class DataExporter implements ActionListener, StateHolder {
         values[6] = preProcessor;
         values[7] = postProcessor;
         values[8] = encoding;
-        values[9] = isSubTable;
+        values[9] = subTable;
         values[10] = facetBackground;
         values[11] = facetFontSize;
         values[12] = facetFontColor;
@@ -228,6 +228,7 @@ public class DataExporter implements ActionListener, StateHolder {
         values[14] = cellFontSize;
         values[15] = cellFontColor;
         values[16] = cellFontStyle;
+        values[17] = datasetPadding;
 
         return ((Object[]) values);
     }

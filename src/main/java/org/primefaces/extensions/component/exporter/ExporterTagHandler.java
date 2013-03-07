@@ -47,7 +47,7 @@ public class ExporterTagHandler extends TagHandler {
     private final TagAttribute preProcessor;
     private final TagAttribute postProcessor;
     private final TagAttribute encoding;
-    private final TagAttribute isSubTable;
+    private final TagAttribute subTable;
     private final TagAttribute facetBackground;
     private final TagAttribute facetFontSize;
     private final TagAttribute facetFontColor;
@@ -55,6 +55,7 @@ public class ExporterTagHandler extends TagHandler {
     private final TagAttribute cellFontSize;
     private final TagAttribute cellFontColor;
     private final TagAttribute cellFontStyle;
+    private final TagAttribute datasetPadding;
 
     public ExporterTagHandler(TagConfig tagConfig) {
         super(tagConfig);
@@ -67,7 +68,7 @@ public class ExporterTagHandler extends TagHandler {
         this.encoding = getAttribute("encoding");
         this.preProcessor = getAttribute("preProcessor");
         this.postProcessor = getAttribute("postProcessor");
-        this.isSubTable = getAttribute("isSubTable");
+        this.subTable = getAttribute("subTable");
         this.facetBackground = getAttribute("facetBackground");
         this.facetFontSize = getAttribute("facetFontSize");
         this.facetFontColor = getAttribute("facetFontColor");
@@ -75,7 +76,7 @@ public class ExporterTagHandler extends TagHandler {
         this.cellFontSize = getAttribute("cellFontSize");
         this.cellFontColor = getAttribute("cellFontColor");
         this.cellFontStyle = getAttribute("cellFontStyle");
-
+        this.datasetPadding = getAttribute("datasetPadding");
 
     }
 
@@ -91,7 +92,7 @@ public class ExporterTagHandler extends TagHandler {
             ValueExpression encodingVE = null;
             MethodExpression preProcessorME = null;
             MethodExpression postProcessorME = null;
-            ValueExpression isSubTableVE = null;
+            ValueExpression subTableVE = null;
             ValueExpression facetBackgroundVE = null;
             ValueExpression facetFontSizeVE = null;
             ValueExpression facetFontColorVE = null;
@@ -99,6 +100,7 @@ public class ExporterTagHandler extends TagHandler {
             ValueExpression cellFontSizeVE = null;
             ValueExpression cellFontColorVE = null;
             ValueExpression cellFontStyleVE = null;
+            ValueExpression datasetPaddingVE = null;
 
             if (fileName != null) {
                 fileNameVE = fileName.getValueExpression(faceletContext, Object.class);
@@ -121,8 +123,8 @@ public class ExporterTagHandler extends TagHandler {
             if (postProcessor != null) {
                 postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[]{Object.class});
             }
-            if (isSubTable != null) {
-                isSubTableVE = isSubTable.getValueExpression(faceletContext, Object.class);
+            if (subTable != null) {
+                subTableVE = subTable.getValueExpression(faceletContext, Object.class);
             }
             if (facetBackground != null) {
                 facetBackgroundVE = facetBackground.getValueExpression(faceletContext, Object.class);
@@ -145,10 +147,12 @@ public class ExporterTagHandler extends TagHandler {
             if (cellFontStyle != null) {
                 cellFontStyleVE = cellFontStyle.getValueExpression(faceletContext, Object.class);
             }
-
+            if (datasetPadding != null) {
+                datasetPaddingVE = datasetPadding.getValueExpression(faceletContext, Object.class);
+            }
 
             ActionSource actionSource = (ActionSource) parent;
-            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME, postProcessorME, isSubTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, cellFontSizeVE, cellFontColorVE, cellFontStyleVE));
+            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME, postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, cellFontSizeVE, cellFontColorVE, cellFontStyleVE, datasetPaddingVE));
 
         }
     }

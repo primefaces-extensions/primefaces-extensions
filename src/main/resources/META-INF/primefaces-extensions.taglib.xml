@@ -779,7 +779,7 @@
         </attribute>
         <attribute>
             <description>When enabled, subtable would be exported.</description>
-            <name>isSubTable</name>
+            <name>subTable</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
@@ -822,6 +822,12 @@
         <attribute>
             <description>Cell Font style  to use.Ex:normal,bold,italic</description>
             <name>cellFontStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Spacing between multiple DataTables/DataLists</description>
+            <name>datasetPadding</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

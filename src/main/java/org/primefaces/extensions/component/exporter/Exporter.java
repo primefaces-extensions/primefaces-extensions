@@ -24,7 +24,6 @@ import java.util.List;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
 import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIColumn;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.ValueHolder;
@@ -35,15 +34,18 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
+import javax.faces.component.html.HtmlSelectOneMenu;
 
 import org.primefaces.component.celleditor.CellEditor;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.roweditor.RowEditor;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.datalist.DataList;
+import org.primefaces.component.subtable.SubTable;
+import org.primefaces.component.column.Column;
+import org.primefaces.component.api.UIColumn;
+import org.primefaces.component.columns.Columns;
 
-import javax.faces.component.html.HtmlSelectOneMenu;
-
-//import com.sun.faces.facelets.compiler.UIInstructions;
-//end
 
 /**
  * <code>Exporter</code> component.
@@ -78,48 +80,22 @@ public abstract class Exporter {
     public abstract void export(ActionEvent event, String tableId, FacesContext facesContext,
                                 String outputFileName, String tableTitleValue, boolean pageOnly, boolean selectionOnly,
                                 String encodingType, MethodExpression preProcessor,
-                                MethodExpression postProcessor, boolean isSubTable) throws IOException;
+                                MethodExpression postProcessor, boolean subTable) throws IOException;
 
-    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle) throws IOException;
-
-    protected List<UIColumn> getColumnsToExport(UIData table) {
-        List<UIColumn> columns = new ArrayList<UIColumn>();
-        int columnIndex = -1;
-
-        for (UIComponent child : table.getChildren()) {
-            if (child instanceof UIColumn) {
-                UIColumn column = (UIColumn) child;
-                columnIndex++;
-
-                columns.add(column);
-            }
-        }
-
-        return columns;
-    }
-
-    protected boolean hasColumnFooter(List<UIColumn> columns) {
-        for (UIColumn column : columns) {
-            if (column.getFooter() != null)
-                return true;
-        }
-
-        return false;
-    }
+    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) throws IOException;
 
     protected String exportValue(FacesContext context, UIComponent component) {
+
         if (component instanceof CellEditor) {
             return exportValue(context, component.getFacet("output"));
         }
         if (component instanceof RowEditor) {
             return (String) "RowEditor";
             // return (String) component.getAttributes().get("alt");
-
         }
 
         if (component instanceof HtmlGraphicImage) {
             return (String) component.getAttributes().get("alt");
-
         }
 
         if (component instanceof HtmlCommandLink) {
@@ -215,4 +191,180 @@ public abstract class Exporter {
                 return "";
         }
     }
+
+    protected String exportFacetValue(FacesContext context, UIComponent component) {
+        if (component instanceof ValueHolder) {
+
+            if (component instanceof EditableValueHolder) {
+                Object submittedValue = ((EditableValueHolder) component).getSubmittedValue();
+                if (submittedValue != null) {
+                    return submittedValue.toString();
+                }
+            }
+
+            ValueHolder valueHolder = (ValueHolder) component;
+            Object value = valueHolder.getValue();
+            if (value == null) {
+                return "";
+            }
+
+            //first ask the converter
+            if (valueHolder.getConverter() != null) {
+                return valueHolder.getConverter().getAsString(context, component, value);
+            }
+            return value.toString();
+        } else {
+            //This would get the plain texts on UIInstructions when using Facelets
+            String value = component.toString();
+
+            if (value != null) {
+                return value.trim();
+            } else {
+                return "";
+            }
+        }
+
+    }
+
+    protected List<UIColumn> getColumnsToExport(UIData table) {
+        List<UIColumn> columns = new ArrayList<UIColumn>();
+        int columnIndex = -1;
+
+        for (UIComponent child : table.getChildren()) {
+            if (child instanceof UIColumn) {
+                UIColumn column = (UIColumn) child;
+                columnIndex++;
+
+                columns.add(column);
+            }
+        }
+
+        return columns;
+    }
+
+    protected String addColumnValues(DataList dataList, StringBuilder input) {
+        for (UIComponent component : dataList.getChildren()) {
+            if (component instanceof Column) {
+                UIColumn column = (UIColumn) component;
+                for (UIComponent childComponent : column.getChildren()) {
+                    if (component.isRendered()) {
+                        String value = exportValue(FacesContext.getCurrentInstance(), childComponent);
+
+                        if (value != null) {
+                            input.append(value + "\n \n");
+                        }
+                    }
+                }
+                return input.toString();
+            } else {
+                if (component.isRendered()) {
+                    String value = exportValue(FacesContext.getCurrentInstance(), component);
+
+                    if (value != null) {
+                        input.append(value + "\n \n");
+                    }
+                }
+                return input.toString();
+            }
+        }
+        return null;
+    }
+
+    protected int getColumnsCount(DataTable table) {
+        int count = 0;
+
+        for (UIComponent child : table.getChildren()) {
+            if (!child.isRendered()) {
+                continue;
+            }
+
+            if (child instanceof Column) {
+                Column column = (Column) child;
+
+                if (column.isExportable()) {
+                    count++;
+                }
+            } else if (child instanceof Columns) {
+                Columns columns = (Columns) child;
+
+                if (columns.isExportable()) {
+                    count += columns.getRowCount();
+                }
+            }
+        }
+
+        return count;
+    }
+
+    protected int getColumnsCount(SubTable table) {
+        int count = 0;
+
+        for (UIComponent child : table.getChildren()) {
+            if (!child.isRendered()) {
+                continue;
+            }
+
+            if (child instanceof Column) {
+                Column column = (Column) child;
+
+                if (column.isExportable()) {
+                    count++;
+                }
+            } else if (child instanceof Columns) {
+                Columns columns = (Columns) child;
+
+                if (columns.isExportable()) {
+                    count += columns.getRowCount();
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public boolean hasHeaderColumn(DataTable table) {
+        for (UIComponent child : table.getChildren()) {
+            if (child.isRendered() && (child instanceof UIColumn)) {
+                UIColumn column = (UIColumn) child;
+
+                if (column.getFacet("header") != null || column.getHeaderText() != null) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public boolean hasHeaderColumn(SubTable table) {
+        for (UIComponent child : table.getChildren()) {
+            if (child.isRendered() && (child instanceof UIColumn)) {
+                UIColumn column = (UIColumn) child;
+
+                if (column.getFacet("header") != null || column.getHeaderText() != null) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public boolean hasFooterColumn(SubTable table) {
+        for (UIComponent child : table.getChildren()) {
+            if (child.isRendered() && (child instanceof UIColumn)) {
+                UIColumn column = (UIColumn) child;
+
+                if (column.getFacet("footer") != null || column.getHeaderText() != null) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
 }

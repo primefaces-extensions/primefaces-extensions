@@ -18,16 +18,18 @@ package org.primefaces.extensions.component.exporter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.*;
 import java.lang.Float;
+import java.lang.Integer;
 import java.lang.String;
 import java.lang.StringBuilder;
+import java.lang.System;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.lang.reflect.Array;
 import java.util.Map;
 import java.awt.Color;
-
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
@@ -40,8 +42,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-
-import org.primefaces.component.datagrid.DataGrid;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.row.Row;
@@ -64,7 +64,6 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 
-
 /**
  * <code>Exporter</code> component.
  *
@@ -82,10 +81,10 @@ public class PDFExporter extends Exporter {
     private Float cellFontSize;
     private Color cellFontColor;
     private String cellFontStyle;
-
+    private int datasetPadding;
 
     @Override
-    public void export(ActionEvent event, String tableId, FacesContext context, String filename, String tableTitle, boolean pageOnly, boolean selectionOnly, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor, boolean isSubTable) throws IOException {
+    public void export(ActionEvent event, String tableId, FacesContext context, String filename, String tableTitle, boolean pageOnly, boolean selectionOnly, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor, boolean subTable) throws IOException {
         try {
             Document document = new Document();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -124,18 +123,17 @@ public class PDFExporter extends Exporter {
                 if (component instanceof DataList) {
                     list = (DataList) component;
                     pdf = exportPDFTable(context, list, pageOnly, encodingType);
-                }
-                else {
+                } else {
                     table = (DataTable) component;
-                    pdf = exportPDFTable(context, table, pageOnly, selectionOnly, encodingType, isSubTable);
+                    pdf = exportPDFTable(context, table, pageOnly, selectionOnly, encodingType, subTable);
                 }
 
-                if (pdf != null){
+                if (pdf != null) {
                     document.add(pdf);
                 }
                 // add a couple of blank lines
                 Paragraph preface = new Paragraph();
-                addEmptyLine(preface, 7);
+                addEmptyLine(preface, datasetPadding);
                 document.add(preface);
 
 
@@ -153,66 +151,12 @@ public class PDFExporter extends Exporter {
         }
     }
 
-    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle) {
-
-        this.facetBackground = Color.decode(facetBackground);
-        this.facetFontSize = new Float(facetFontSize);
-        this.facetFontColor = Color.decode(facetFontColor);
-        this.cellFontSize = new Float(cellFontSize);
-        this.cellFontColor = Color.decode(cellFontColor);
-
-        if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.facetFontStyle = "" + facetFont.NORMAL;
-        }
-        if (facetFontStyle.equalsIgnoreCase("BOLD"))  {
-            this.facetFontStyle = "" + facetFont.BOLD;
-        }
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.facetFontStyle = "" + facetFont.ITALIC;
-        }
-
-        if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.cellFontStyle = "" + cellFont.NORMAL;
-        }
-        if (cellFontStyle.equalsIgnoreCase("BOLD"))  {
-            this.cellFontStyle = "" + cellFont.BOLD;
-        }
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.cellFontStyle = "" + cellFont.ITALIC;
-        }
-
-    }
-
-    protected void createCustomFonts(String encoding) {
-
-        this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
-        this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
-        if (facetFontColor != null) {
-            this.facetFont.setColor(facetFontColor);
-        }
-        if (facetFontSize != null) {
-            this.facetFont.setSize(facetFontSize);
-        }
-        if (facetFontStyle != null) {
-            this.facetFont.setStyle(facetFontStyle);
-        }
-        if (cellFontColor != null) {
-            this.cellFont.setColor(cellFontColor);
-        }
-        if (cellFontSize != null) {
-            this.cellFont.setSize(cellFontSize);
-        }
-        if (cellFontStyle != null) {
-            this.cellFont.setStyle(cellFontStyle);
-        }
-    }
-
-    protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean isSubTable) {
+    protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean subTable) {
 
         createCustomFonts(encoding);
         int columnsCount = getColumnsCount(table);
         PdfPTable pdfTable = null;
-        if (isSubTable) {
+        if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
             int subTableColumnsCount = getColumnsCount(subtable);
@@ -270,7 +214,11 @@ public class PDFExporter extends Exporter {
 
 
             return pdfTable;
-        } else if (columnsCount != 0) {
+        } else {
+
+            if (columnsCount == 0)
+                return null;
+
             pdfTable = new PdfPTable(columnsCount);
 
             if (table.getHeader() != null) {
@@ -299,8 +247,6 @@ public class PDFExporter extends Exporter {
             table.setRowIndex(-1);
 
             return pdfTable;
-        } else {
-            return null;
         }
 
     }
@@ -316,7 +262,7 @@ public class PDFExporter extends Exporter {
         if (list.getHeader() != null) {
             String value = exportValue(FacesContext.getCurrentInstance(), list.getHeader());
             PdfPCell cell = new PdfPCell(new Paragraph((value), this.facetFont));
-            if (facetBackground != null){
+            if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -530,8 +476,7 @@ public class PDFExporter extends Exporter {
                         String value = null;
                         if (facetType.equalsIgnoreCase("header")) {
                             value = column.getHeaderText();
-                        }
-                        else
+                        } else
                             value = column.getFooterText();
                         int rowSpan = column.getRowspan();
                         int colSpan = column.getColspan();
@@ -564,7 +509,7 @@ public class PDFExporter extends Exporter {
     protected void tableColumnGroup(PdfPTable pdfTable, SubTable table, String facetType) {
         ColumnGroup cg = table.getColumnGroup(facetType);
         List<UIComponent> headerComponentList = null;
-        if (cg != null){
+        if (cg != null) {
             headerComponentList = cg.getChildren();
         }
         if (headerComponentList != null)
@@ -576,8 +521,7 @@ public class PDFExporter extends Exporter {
                         String value = null;
                         if (facetType.equalsIgnoreCase("header")) {
                             value = column.getHeaderText();
-                        }
-                        else
+                        } else
                             value = column.getFooterText();
                         int rowSpan = column.getRowspan();
                         int colSpan = column.getColspan();
@@ -606,86 +550,6 @@ public class PDFExporter extends Exporter {
             }
         pdfTable.completeRow();
 
-    }
-
-    protected String exportFacetValue(FacesContext context, UIComponent component) {
-        if (component instanceof ValueHolder) {
-
-            if (component instanceof EditableValueHolder) {
-                Object submittedValue = ((EditableValueHolder) component).getSubmittedValue();
-                if (submittedValue != null) {
-                    return submittedValue.toString();
-                }
-            }
-
-            ValueHolder valueHolder = (ValueHolder) component;
-            Object value = valueHolder.getValue();
-            if (value == null) {
-                return "";
-            }
-
-            //first ask the converter
-            if (valueHolder.getConverter() != null) {
-                return valueHolder.getConverter().getAsString(context, component, value);
-            }
-            return value.toString();
-        } else {
-            //This would get the plain texts on UIInstructions when using Facelets
-            String value = component.toString();
-
-            if (value != null) {
-                return value.trim();
-            }
-            else {
-                return "";
-            }
-        }
-
-    }
-
-    public boolean hasHeaderColumn(DataTable table) {
-        for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
-                UIColumn column = (UIColumn) child;
-
-                if (column.getFacet("header") != null || column.getHeaderText() != null) {
-                    return true;
-                }
-            }
-
-        }
-
-        return false;
-    }
-
-    public boolean hasHeaderColumn(SubTable table) {
-        for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
-                UIColumn column = (UIColumn) child;
-
-                if (column.getFacet("header") != null || column.getHeaderText() != null) {
-                    return true;
-                }
-            }
-
-        }
-
-        return false;
-    }
-
-    public boolean hasFooterColumn(SubTable table) {
-        for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
-                UIColumn column = (UIColumn) child;
-
-                if (column.getFacet("footer") != null || column.getHeaderText() != null) {
-                    return true;
-                }
-            }
-
-        }
-
-        return false;
     }
 
     protected void exportRow(DataTable table, PdfPTable pdfTable, int rowIndex) {
@@ -871,34 +735,65 @@ public class PDFExporter extends Exporter {
         pdfTable.addCell(new Paragraph(builder.toString(), font));
     }
 
-    protected String addColumnValues(DataList dataList, StringBuilder input) {
-        for (UIComponent component : dataList.getChildren()) {
-            if (component instanceof Column) {
-                UIColumn column = (UIColumn) component;
-                for (UIComponent childComponent : column.getChildren()) {
-                    if (component.isRendered()) {
-                        String value = exportValue(FacesContext.getCurrentInstance(), childComponent);
+    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
 
-                        if (value != null) {
-                            input.append(value + "\n \n");
-                        }
-                    }
-                }
-                return input.toString();
-            } else {
-                if (component.isRendered()) {
-                    String value = exportValue(FacesContext.getCurrentInstance(), component);
+        this.facetBackground = Color.decode(facetBackground);
+        this.facetFontSize = new Float(facetFontSize);
+        this.facetFontColor = Color.decode(facetFontColor);
+        this.cellFontSize = new Float(cellFontSize);
+        this.cellFontColor = Color.decode(cellFontColor);
+        this.datasetPadding = Integer.parseInt(datasetPadding);
 
-                    if (value != null) {
-                        input.append(value + "\n \n");
-                    }
-                }
-                return input.toString();
-            }
-
-
+        if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
+            this.facetFontStyle = "" + facetFont.NORMAL;
         }
-        return null;
+        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+            this.facetFontStyle = "" + facetFont.BOLD;
+        }
+        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+            this.facetFontStyle = "" + facetFont.ITALIC;
+        }
+
+        if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
+            this.cellFontStyle = "" + cellFont.NORMAL;
+        }
+        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+            this.cellFontStyle = "" + cellFont.BOLD;
+        }
+        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+            this.cellFontStyle = "" + cellFont.ITALIC;
+        }
+
+    }
+
+    protected void createCustomFonts(String encoding) {
+
+        this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
+        this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        if (facetFontColor != null) {
+            this.facetFont.setColor(facetFontColor);
+        }
+        if (facetFontSize != null) {
+            this.facetFont.setSize(facetFontSize);
+        }
+        if (facetFontStyle != null) {
+            this.facetFont.setStyle(facetFontStyle);
+        }
+        if (cellFontColor != null) {
+            this.cellFont.setColor(cellFontColor);
+        }
+        if (cellFontSize != null) {
+            this.cellFont.setSize(cellFontSize);
+        }
+        if (cellFontStyle != null) {
+            this.cellFont.setStyle(cellFontStyle);
+        }
+    }
+
+    private static void addEmptyLine(Paragraph paragraph, int number) {
+        for (int i = 0; i < number; i++) {
+            paragraph.add(new Paragraph(" "));
+        }
     }
 
     protected void writePDFToResponse(ExternalContext externalContext, ByteArrayOutputStream baos, String fileName) throws IOException, DocumentException {
@@ -913,64 +808,5 @@ public class PDFExporter extends Exporter {
         baos.writeTo(out);
         externalContext.responseFlushBuffer();
     }
-
-    private static void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
-        }
-    }
-
-    protected int getColumnsCount(DataTable table) {
-        int count = 0;
-
-        for (UIComponent child : table.getChildren()) {
-            if (!child.isRendered()) {
-                continue;
-            }
-
-            if (child instanceof Column) {
-                Column column = (Column) child;
-
-                if (column.isExportable()) {
-                    count++;
-                }
-            } else if (child instanceof Columns) {
-                Columns columns = (Columns) child;
-
-                if (columns.isExportable()) {
-                    count += columns.getRowCount();
-                }
-            }
-        }
-
-        return count;
-    }
-
-    protected int getColumnsCount(SubTable table) {
-        int count = 0;
-
-        for (UIComponent child : table.getChildren()) {
-            if (!child.isRendered()) {
-                continue;
-            }
-
-            if (child instanceof Column) {
-                Column column = (Column) child;
-
-                if (column.isExportable()) {
-                    count++;
-                }
-            } else if (child instanceof Columns) {
-                Columns columns = (Columns) child;
-
-                if (columns.isExportable()) {
-                    count += columns.getRowCount();
-                }
-            }
-        }
-
-        return count;
-    }
-
 
 }
