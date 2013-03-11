@@ -52,6 +52,7 @@ public class ExporterTagHandler extends TagHandler {
     private final TagAttribute facetFontSize;
     private final TagAttribute facetFontColor;
     private final TagAttribute facetFontStyle;
+    private final TagAttribute fontName;
     private final TagAttribute cellFontSize;
     private final TagAttribute cellFontColor;
     private final TagAttribute cellFontStyle;
@@ -73,6 +74,7 @@ public class ExporterTagHandler extends TagHandler {
         this.facetFontSize = getAttribute("facetFontSize");
         this.facetFontColor = getAttribute("facetFontColor");
         this.facetFontStyle = getAttribute("facetFontStyle");
+        this.fontName = getAttribute("fontName");
         this.cellFontSize = getAttribute("cellFontSize");
         this.cellFontColor = getAttribute("cellFontColor");
         this.cellFontStyle = getAttribute("cellFontStyle");
@@ -97,6 +99,7 @@ public class ExporterTagHandler extends TagHandler {
             ValueExpression facetFontSizeVE = null;
             ValueExpression facetFontColorVE = null;
             ValueExpression facetFontStyleVE = null;
+            ValueExpression fontNameVE = null;
             ValueExpression cellFontSizeVE = null;
             ValueExpression cellFontColorVE = null;
             ValueExpression cellFontStyleVE = null;
@@ -138,6 +141,9 @@ public class ExporterTagHandler extends TagHandler {
             if (facetFontStyle != null) {
                 facetFontStyleVE = facetFontStyle.getValueExpression(faceletContext, Object.class);
             }
+            if (fontName != null) {
+                fontNameVE = fontName.getValueExpression(faceletContext, Object.class);
+            }
             if (cellFontSize != null) {
                 cellFontSizeVE = cellFontSize.getValueExpression(faceletContext, Object.class);
             }
@@ -152,7 +158,7 @@ public class ExporterTagHandler extends TagHandler {
             }
 
             ActionSource actionSource = (ActionSource) parent;
-            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME, postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, cellFontSizeVE, cellFontColorVE, cellFontStyleVE, datasetPaddingVE));
+            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME, postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, fontNameVE, cellFontSizeVE, cellFontColorVE, cellFontStyleVE, datasetPaddingVE));
 
         }
     }

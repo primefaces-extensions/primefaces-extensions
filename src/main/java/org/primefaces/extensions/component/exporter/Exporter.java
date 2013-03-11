@@ -82,7 +82,7 @@ public abstract class Exporter {
                                 String encodingType, MethodExpression preProcessor,
                                 MethodExpression postProcessor, boolean subTable) throws IOException;
 
-    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) throws IOException;
+    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) throws IOException;
 
     protected String exportValue(FacesContext context, UIComponent component) {
 

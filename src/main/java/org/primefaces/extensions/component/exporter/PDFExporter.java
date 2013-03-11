@@ -735,15 +735,21 @@ public class PDFExporter extends Exporter {
         pdfTable.addCell(new Paragraph(builder.toString(), font));
     }
 
-    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
+    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
 
-        this.facetBackground = Color.decode(facetBackground);
         this.facetFontSize = new Float(facetFontSize);
-        this.facetFontColor = Color.decode(facetFontColor);
         this.cellFontSize = new Float(cellFontSize);
-        this.cellFontColor = Color.decode(cellFontColor);
         this.datasetPadding = Integer.parseInt(datasetPadding);
 
+        if (facetBackground != null) {
+            this.facetBackground = Color.decode(facetBackground);
+        }
+        if (facetFontColor != null) {
+            this.facetFontColor = Color.decode(facetFontColor);
+        }
+        if (cellFontColor != null) {
+            this.cellFontColor = Color.decode(cellFontColor);
+        }
         if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
             this.facetFontStyle = "" + facetFont.NORMAL;
         }

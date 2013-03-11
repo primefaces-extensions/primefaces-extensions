@@ -56,7 +56,7 @@ class DefaultExporterFactory implements ExporterFactory {
 
     static public enum ExporterType {
         PDF,
-        XLS
+        XLSX
     }
 
     public Exporter getExporterForType(String type) {
@@ -72,9 +72,9 @@ class DefaultExporterFactory implements ExporterFactory {
                     exporter = new PDFExporter();
                     break;
 
-                /*case XLS:
+                case XLSX:
                     exporter = new ExcelExporter();
-                    break;*/
+                    break;
 
                 default: {
                     exporter = new PDFExporter();

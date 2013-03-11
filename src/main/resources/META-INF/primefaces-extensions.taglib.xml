@@ -730,7 +730,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Export type: "pdf","xls".Current supported format is "pdf" only</description>
+            <description>Export type: "pdf","xlsx".</description>
             <name>type</name>
             <required>true</required>
             <type>java.lang.String</type>
@@ -802,8 +802,14 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Facet Font Style to use.Ex:normal,bold,italic..</description>
+            <description>Facet Font Style to use.Ex:normal,bold,italic.Default value is Bold</description>
             <name>facetFontStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>Font Name to use.Applicable for excel only Ex:Courier New,Verdana..</description>
+            <name>fontName</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -820,7 +826,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Cell Font style  to use.Ex:normal,bold,italic</description>
+            <description>Cell Font style  to use.Ex:normal,bold,italic.Default value is normal</description>
             <name>cellFontStyle</name>
             <required>false</required>
             <type>java.lang.String</type>

@@ -62,6 +62,8 @@ public class DataExporter implements ActionListener, StateHolder {
 
     private ValueExpression facetFontStyle;
 
+    private ValueExpression fontName;
+
     private ValueExpression cellFontSize;
 
     private ValueExpression cellFontColor;
@@ -73,7 +75,7 @@ public class DataExporter implements ActionListener, StateHolder {
     public DataExporter() {
     }
 
-    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding) {
+    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding) {
         this.target = target;
         this.type = type;
         this.fileName = fileName;
@@ -88,6 +90,7 @@ public class DataExporter implements ActionListener, StateHolder {
         this.facetFontSize = facetFontSize;
         this.facetFontColor = facetFontColor;
         this.facetFontStyle = facetFontStyle;
+        this.fontName = fontName;
         this.cellFontSize = cellFontSize;
         this.cellFontColor = cellFontColor;
         this.cellFontStyle = cellFontStyle;
@@ -127,22 +130,25 @@ public class DataExporter implements ActionListener, StateHolder {
         if (subTable != null) {
             subtable = subTable.isLiteralText() ? Boolean.valueOf(subTable.getValue(context.getELContext()).toString()) : (Boolean) subTable.getValue(context.getELContext());
         }
-        String facetBackgroundValue = "#FFFFFF";
+        String facetBackgroundValue = null;
         if (facetBackground != null)
             facetBackgroundValue = (String) facetBackground.getValue(elContext);
         String facetFontSizeValue = "10";
         if (facetFontSize != null)
             facetFontSizeValue = (String) facetFontSize.getValue(elContext);
-        String facetFontColorValue = "#000000";
+        String facetFontColorValue = null;
         if (facetFontColor != null)
             facetFontColorValue = (String) facetFontColor.getValue(elContext);
         String facetFontStyleValue = "BOLD";
         if (facetFontStyle != null)
             facetFontStyleValue = (String) facetFontStyle.getValue(elContext);
+        String fontNameValue = null;
+        if (fontName != null)
+            fontNameValue = (String) fontName.getValue(elContext);
         String cellFontSizeValue = "8";
         if (cellFontSize != null)
             cellFontSizeValue = (String) cellFontSize.getValue(elContext);
-        String cellFontColorValue = "#000000";
+        String cellFontColorValue = null;
         if (cellFontColor != null)
             cellFontColorValue = (String) cellFontColor.getValue(elContext);
         String cellFontStyleValue = "NORMAL";
@@ -155,7 +161,7 @@ public class DataExporter implements ActionListener, StateHolder {
         try {
             ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
             Exporter exporter = factory.getExporterForType(exportAs);
-            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue, datasetPaddingValue);
+            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue, datasetPaddingValue);
             exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, subtable);
             context.responseComplete();
         } catch (IOException e) {
@@ -202,14 +208,15 @@ public class DataExporter implements ActionListener, StateHolder {
         facetFontSize = (ValueExpression) values[11];
         facetFontColor = (ValueExpression) values[12];
         facetFontStyle = (ValueExpression) values[13];
-        cellFontSize = (ValueExpression) values[14];
-        cellFontColor = (ValueExpression) values[15];
-        cellFontStyle = (ValueExpression) values[16];
-        datasetPadding = (ValueExpression) values[17];
+        fontName = (ValueExpression) values[14];
+        cellFontSize = (ValueExpression) values[15];
+        cellFontColor = (ValueExpression) values[16];
+        cellFontStyle = (ValueExpression) values[17];
+        datasetPadding = (ValueExpression) values[18];
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[18];
+        Object values[] = new Object[19];
 
         values[0] = target;
         values[1] = type;
@@ -225,10 +232,11 @@ public class DataExporter implements ActionListener, StateHolder {
         values[11] = facetFontSize;
         values[12] = facetFontColor;
         values[13] = facetFontStyle;
-        values[14] = cellFontSize;
-        values[15] = cellFontColor;
-        values[16] = cellFontStyle;
-        values[17] = datasetPadding;
+        values[14] = fontName;
+        values[15] = cellFontSize;
+        values[16] = cellFontColor;
+        values[17] = cellFontStyle;
+        values[18] = datasetPadding;
 
         return ((Object[]) values);
     }
