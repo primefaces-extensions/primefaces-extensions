@@ -328,6 +328,12 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+		<attribute>
+			<description><![CDATA[Method providing suggestions.]]></description>
+			<name>completeMethod</name>
+			<required>false</required>
+			<type>javax.el.MethodExpression</type>
+		</attribute>
         <attribute>
             <description><![CDATA[The theme to style the editor with.]]>
             </description>
