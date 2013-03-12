@@ -75,10 +75,6 @@
         <component-class>org.primefaces.extensions.component.parameters.MethodParameter</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.SaveState</component-type>
-        <component-class>org.primefaces.extensions.component.savestate.SaveState</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Tooltip</component-type>
         <component-class>org.primefaces.extensions.component.tooltip.Tooltip</component-class>
     </component>
