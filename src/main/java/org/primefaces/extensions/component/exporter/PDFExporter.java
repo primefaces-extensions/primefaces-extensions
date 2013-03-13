@@ -38,6 +38,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -430,6 +431,7 @@ public class PDFExporter extends Exporter {
                 cell.setBackgroundColor(facetBackground);
             }
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            //addColumnAlignments(component,cell);
             cell.setColspan(columnCount);
             pdfTable.addCell(cell);
             pdfTable.completeRow();
@@ -453,7 +455,8 @@ public class PDFExporter extends Exporter {
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
-            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+           // addColumnAlignments(component,cell);
             cell.setColspan(columnCount);
             pdfTable.addCell(cell);
             pdfTable.completeRow();
@@ -496,6 +499,7 @@ public class PDFExporter extends Exporter {
 
 
                         }
+                       // addColumnAlignments(component,cell);
                         pdfTable.addCell(cell);
 
                     }
@@ -541,6 +545,7 @@ public class PDFExporter extends Exporter {
 
 
                         }
+                       // addColumnAlignments(component,cell);
                         pdfTable.addCell(cell);
 
                     }
@@ -713,6 +718,8 @@ public class PDFExporter extends Exporter {
     protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font) {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         PdfPCell cell = new PdfPCell(new Paragraph(value, font));
+        addColumnAlignments(component,cell);
+
         if (facetBackground != null) {
             cell.setBackgroundColor(facetBackground);
         }
@@ -731,8 +738,41 @@ public class PDFExporter extends Exporter {
                 }
             }
         }
+        PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
+        addColumnAlignments(components,cell);
+        pdfTable.addCell(cell);
+    }
 
-        pdfTable.addCell(new Paragraph(builder.toString(), font));
+    protected void addColumnAlignments(UIComponent component,PdfPCell cell) {
+        if(component instanceof HtmlOutputText)  {
+            HtmlOutputText output=(HtmlOutputText)component;
+            if(output.getStyle()!=null && output.getStyle().contains("left")) {
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            }
+            if(output.getStyle()!=null && output.getStyle().contains("right")) {
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            }
+            if(output.getStyle()!=null && output.getStyle().contains("center")) {
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            }
+        }
+    }
+
+    protected void addColumnAlignments(List<UIComponent> components,PdfPCell cell) {
+        for (UIComponent component : components) {
+            if(component instanceof HtmlOutputText)  {
+                HtmlOutputText output=(HtmlOutputText)component;
+                if(output.getStyle()!=null && output.getStyle().contains("left")) {
+                    cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                }
+                if(output.getStyle()!=null && output.getStyle().contains("right")) {
+                    cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                }
+                if(output.getStyle()!=null && output.getStyle().contains("center")) {
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                }
+            }
+        }
     }
 
     public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
