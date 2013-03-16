@@ -45,12 +45,16 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 	overwritePrimeFacesAjaxResponse : function() {
 		var _self = this;
+		if (_self.isOveritedAjaxResponse) return;
+		_self.isOveritedAjaxResponse = true;
 
-		// backup original AjaxResponse function ...
-		var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
 
-		PrimeFaces.ajax.AjaxResponse = function() {
-			var docPartialUpdate = arguments[0];
+		_self.isOveritedAjaxResponse = true;
+
+		$(document).ajaxComplete(function() {
+			var docPartialUpdate = arguments[3];
+			if (!docPartialUpdate && arguments[1].responseXML)
+				docPartialUpdate = arguments[1].responseXML;
 			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
 
 			if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
@@ -110,9 +114,76 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 					return true;
 				}
 			}
-
-			return backupAjaxResponse.apply(this, arguments);
-		};
+		});
+		//		// backup original AjaxResponse function ...
+		//		debugger;
+		//		var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
+		//
+		//		PrimeFaces.ajax.AjaxResponse = function() {
+		//			debugger;
+		//			var docPartialUpdate = arguments[0];
+		//			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
+		//
+		//			if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
+		//				// XML => JSON
+		//				var error = {};
+		//
+		//				for (var i=0; i < nodeErrors[0].childNodes.length; i++) {
+		//					var node = nodeErrors[0].childNodes[i];
+		//					var key = node.nodeName;
+		//					var val = node.nodeValue;
+		//
+		//					if (node.childNodes && node.childNodes.length) {
+		//						val = node.childNodes[0].nodeValue;
+		//					}
+		//
+		//					error[key] = val;
+		//				}
+		//
+		//				if (error['error-name']) {
+		//					// findErrorSettings
+		//					var errorSetting = _self.findErrorSettings(error['error-name']);
+		//
+		//					//skip dialog if onerror is defined and returns false
+		//					if (errorSetting['onerror']) {
+		//						var onerrorFunction = errorSetting['onerror'];
+		//						if (onerrorFunction.call(this, error, arguments[2]) === false) {
+		//							return true;
+		//						}
+		//					}
+		//
+		//					// Copy updates to errorSettings ...
+		//					if (error.updateCustomContent && error.updateCustomContent.substring(-13) == '<exception />') {
+		//						error.updateCustomContent = null;
+		//					}
+		//
+		//					if (error.updateTitle && error.updateTitle.substring(-13) == '<exception />') {
+		//						error.updateTitle = null;
+		//					}
+		//
+		//					if (error.updateBody && error.updateBody.substring(-13) == '<exception />') {
+		//						error.updateBody = null;
+		//					}
+		//
+		//					if (error.updateViewState && error.updateViewState.substring(-13) == '<exception />') {
+		//						error.updateViewState = null;
+		//					}
+		//
+		//					errorSetting.updateCustomContent = error.updateCustomContent;
+		//					errorSetting.updateTitle = error.updateTitle;
+		//					errorSetting.updateBody = error.updateBody;
+		//					errorSetting.updateViewState = error.updateViewState;
+		//
+		//					var errorData = _self.replaceVariables(errorSetting, error);
+		//
+		//					_self.show(errorData);
+		//
+		//					return true;
+		//				}
+		//			}
+		//
+		//			return backupAjaxResponse.apply(this, arguments);
+		//		};
 	},
 	
 	isVisible : function() {

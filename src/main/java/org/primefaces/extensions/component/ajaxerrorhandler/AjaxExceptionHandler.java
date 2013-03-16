@@ -175,8 +175,15 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 			UIViewRoot root = context.getViewRoot();
 			AjaxErrorHandlerVisitCallback visitCallback = new AjaxErrorHandlerVisitCallback(errorName);
-			if (root != null)
-				root.visitTree(VisitContext.createVisitContext(context), visitCallback);
+			if (root != null) {
+				try {
+					root.visitTree(VisitContext.createVisitContext(context), visitCallback);
+				}
+				catch (Exception e) {
+					// There can by problem during visitTree
+					LOGGER.log(Level.SEVERE, "Problem with visitTree in AjaxExceptionHandler: ", e);
+				}
+			}
 
 			UIComponent titleFacet = visitCallback.findCurrentTitleFacet();
 			if (titleFacet != null) {
