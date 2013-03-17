@@ -740,8 +740,11 @@ public class ExcelExporter extends Exporter {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
         if (type.equalsIgnoreCase("facet")) {
+           // addColumnAlignments(component,facetStyle);
             cell.setCellStyle(facetStyle);
         } else {
+            CellStyle cellStyle=this.cellStyle;
+            cellStyle=addColumnAlignments(component,cellStyle);
             cell.setCellStyle(cellStyle);
         }
 
@@ -766,11 +769,32 @@ public class ExcelExporter extends Exporter {
         cell.setCellValue(new XSSFRichTextString(builder.toString()));
 
         if (type.equalsIgnoreCase("facet")) {
+            //addColumnAlignments(components,facetStyle);
             cell.setCellStyle(facetStyle);
         } else {
+            CellStyle cellStyle=this.cellStyle;
+            for (UIComponent component : components) {
+            cellStyle=addColumnAlignments(component,cellStyle);
             cell.setCellStyle(cellStyle);
+            }
         }
 
+    }
+
+    protected CellStyle addColumnAlignments(UIComponent component,CellStyle style) {
+        if(component instanceof HtmlOutputText)  {
+            HtmlOutputText output=(HtmlOutputText)component;
+            if(output.getStyle()!=null && output.getStyle().contains("left")) {
+                style.setAlignment(CellStyle.ALIGN_LEFT);
+            }
+            if(output.getStyle()!=null && output.getStyle().contains("right")) {
+                style.setAlignment(CellStyle.ALIGN_RIGHT);
+            }
+            if(output.getStyle()!=null && output.getStyle().contains("center")) {
+                style.setAlignment(CellStyle.ALIGN_CENTER);
+            }
+        }
+        return style;
     }
 
     public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
@@ -851,7 +875,7 @@ public class ExcelExporter extends Exporter {
 
     protected void writeExcelToResponse(ExternalContext externalContext, Workbook generatedExcel, String filename) throws IOException {
 
-        externalContext.setResponseContentType("application/vnd.ms-excel");
+        externalContext.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         externalContext.setResponseHeader("Expires", "0");
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         externalContext.setResponseHeader("Pragma", "public");
