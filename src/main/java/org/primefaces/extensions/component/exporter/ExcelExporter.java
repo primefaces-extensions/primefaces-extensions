@@ -23,13 +23,14 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.column.Column;
@@ -190,7 +191,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportAll(FacesContext context, DataTable table, Sheet sheet, Boolean subTable) {
+    protected void exportAll(FacesContext context, DataTable table,Sheet sheet, Boolean subTable) {
 
         int first = table.getFirst();
         int rowCount = table.getRowCount();
@@ -265,7 +266,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportAll(FacesContext context, SubTable table, Sheet sheet) {
+    protected void exportAll(FacesContext context, SubTable table,Sheet sheet) {
         int first = table.getFirst();
         int rowCount = table.getRowCount();
         int rows = table.getRows();
@@ -302,7 +303,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportAll(FacesContext context, DataList list, Sheet sheet) {
+    protected void exportAll(FacesContext context, DataList list,Sheet sheet) {
         int first = list.getFirst();
         int rowCount = list.getRowCount();
         int rows = list.getRows();
@@ -332,7 +333,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportPageOnly(FacesContext context, DataTable table, Sheet sheet) {
+    protected void exportPageOnly(FacesContext context, DataTable table,Sheet sheet) {
         int first = table.getFirst();
         int rowsToExport = first + table.getRows();
 
@@ -341,7 +342,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportPageOnly(FacesContext context, DataList list, Sheet sheet) {
+    protected void exportPageOnly(FacesContext context, DataList list,Sheet sheet) {
         int first = list.getFirst();
         int rowsToExport = first + list.getRows();
 
@@ -350,7 +351,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportSelectionOnly(FacesContext context, DataTable table, Sheet sheet) {
+    protected void exportSelectionOnly(FacesContext context, DataTable table,Sheet sheet) {
         Object selection = table.getSelection();
         String var = table.getVar();
 
@@ -372,7 +373,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, DataTable table, int columnCount, String facetType) {
+    protected void tableFacet(FacesContext context,Sheet sheet, DataTable table, int columnCount, String facetType) {
         Map<String, UIComponent> map = table.getFacets();
         UIComponent component = map.get(facetType);
         if (component != null) {
@@ -401,7 +402,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, SubTable table, int columnCount, String facetType) {
+    protected void tableFacet(FacesContext context,Sheet sheet, SubTable table, int columnCount, String facetType) {
         Map<String, UIComponent> map = table.getFacets();
         UIComponent component = map.get(facetType);
         if (component != null) {
@@ -431,7 +432,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, DataList list, String facetType) {
+    protected void tableFacet(FacesContext context,Sheet sheet, DataList list, String facetType) {
         Map<String, UIComponent> map = list.getFacets();
         UIComponent component = map.get(facetType);
         if (component != null) {
@@ -597,7 +598,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportRow(DataTable table, Sheet sheet, int rowIndex) {
+    protected void exportRow(DataTable table,Sheet sheet, int rowIndex) {
         table.setRowIndex(rowIndex);
         if (!table.isRowAvailable()) {
             return;
@@ -606,7 +607,7 @@ public class ExcelExporter extends Exporter {
         exportCells(table, sheet);
     }
 
-    protected void exportRow(SubTable table, Sheet sheet, int rowIndex) {
+    protected void exportRow(SubTable table,Sheet sheet, int rowIndex) {
         table.setRowIndex(rowIndex);
 
         if (!table.isRowAvailable()) {
@@ -616,7 +617,7 @@ public class ExcelExporter extends Exporter {
         exportCells(table, sheet);
     }
 
-    protected void exportRow(DataList list, Sheet sheet, int rowIndex) {
+    protected void exportRow(DataList list,Sheet sheet, int rowIndex) {
         list.setRowIndex(rowIndex);
 
         if (!list.isRowAvailable()) {
@@ -626,7 +627,7 @@ public class ExcelExporter extends Exporter {
         exportCells(list, sheet);
     }
 
-    protected void exportCells(DataTable table, Sheet sheet) {
+    protected void exportCells(DataTable table,Sheet sheet) {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
@@ -643,6 +644,21 @@ public class ExcelExporter extends Exporter {
                 addColumnValue(row, col.getChildren(), "content");
             }
         }
+        FacesContext context=null;
+        for(UIComponent component:table.getChildren()) {
+            if(component instanceof RowExpansion)   {
+                RowExpansion rowExpansion=(RowExpansion)component;
+                if(rowExpansion.getChildren()!=null) {
+                DataList  list=(DataList)rowExpansion.getChildren().get(0);
+                if (list.getHeader() != null) {
+                     tableFacet(context, sheet, list, "header");
+                 }
+                exportAll(context, list, sheet);
+                }
+
+            }
+        }
+
     }
 
     protected void exportCells(SubTable table, Sheet sheet) {
@@ -664,7 +680,7 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportCells(DataList list, Sheet sheet) {
+    protected void exportCells(DataList list,Sheet sheet) {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
@@ -694,7 +710,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void addColumnFacets(DataTable table, Sheet sheet, ColumnType columnType) {
+    protected void addColumnFacets(DataTable table,Sheet sheet, ColumnType columnType) {
 
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row rowHeader = sheet.createRow(sheetRowIndex);
@@ -712,9 +728,10 @@ public class ExcelExporter extends Exporter {
                 addColumnValue(rowHeader, col.getFacet(columnType.facet()), "facet");
             }
         }
+
     }
 
-    protected void addColumnFacets(SubTable table, Sheet sheet, ColumnType columnType) {
+    protected void addColumnFacets(SubTable table,Sheet sheet, ColumnType columnType) {
 
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row rowHeader = sheet.createRow(sheetRowIndex);
@@ -873,7 +890,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void writeExcelToResponse(ExternalContext externalContext, Workbook generatedExcel, String filename) throws IOException {
+    protected void writeExcelToResponse(ExternalContext externalContext, org.apache.poi.ss.usermodel.Workbook generatedExcel, String filename) throws IOException {
 
         externalContext.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         externalContext.setResponseHeader("Expires", "0");
