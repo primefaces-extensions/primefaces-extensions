@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013 PrimeFaces Extensions.
+ * Copyright 2012 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id: $
+ * $Id$
  */
 
-package org.primefaces.extensions.component.timeline;
+package org.primefaces.extensions.model.timeline_old;
 
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.renderkit.CoreRenderer;
+import java.util.List;
 
 /**
- * TimelineRenderer
+ * DOCUMENT_ME
  *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- * @since   0.7 (reimplemented)
+ *
+ * @author  Nilesh Namdeo Mali / last modified by $Author$
+ * @version $Revision$
+ * @since   0.3
  */
-public class TimelineRenderer extends CoreRenderer {
+public interface Timeline {
 
-	@Override
-	public void decode(FacesContext context, UIComponent component) {
-		decodeBehaviors(context, component);
-	}
+	String getId();
+
+	void setId(String id);
+
+	String getTitle();
+
+	void addEvent(TimelineEvent event);
+
+	boolean deleteEvent(TimelineEvent event);
+
+	List<TimelineEvent> getEvents();
 }

@@ -12,30 +12,37 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * $Id$
  */
 
-package org.primefaces.extensions.model.timeline;
+package org.primefaces.extensions.model.timeline_old;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * @author Nilesh Namdeo Mali / last modified by $Author$
+ * DOCUMENT_ME
+ *
+ *
+ * @author  Nilesh Namdeo Mali / last modified by $Author$
  * @version $Revision$
- * @since 0.3
+ * @since   0.3
  */
-public interface Timeline {
+public interface TimelineEvent {
 
-    String getId();
+	String getId();
 
-    void setId(String id);
+	void setId(String id);
 
-    String getTitle();
+	String getTitle();
 
-    void addEvent(TimelineEvent event);
+	Date getStartDate();
 
-    boolean deleteEvent(TimelineEvent event);
+	Date getEndDate();
 
-    List<TimelineEvent> getEvents();
+	void setEndDate(Date endDate);
+
+	String getStyleClass();
+
+	void setStyleClass(String styleClass);
 }

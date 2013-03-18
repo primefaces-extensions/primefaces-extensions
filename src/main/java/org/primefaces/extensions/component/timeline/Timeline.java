@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2013 PrimeFaces Extensions.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@ package org.primefaces.extensions.component.timeline;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,260 +33,518 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.FacesEvent;
+import javax.faces.event.ListenerFor;
+import javax.faces.event.PostAddToViewEvent;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.event.timeline.TimelineAddEvent;
+import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
+import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.extensions.model.timeline.TimelineModel;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
- * Timeline component.
+ * Timeline component class.
  *
- * @author Nilesh Namdeo Mali / last modified by $Author: nileshmali86@gmail.com
- * $
- * @version $Revision$
- * @since 0.3
+ * @author  Oleg Varaksin / last modified by $Author: $
+ * @version $Revision: 1.0 $
+ * @since   0.7 (reimplemented)
  */
+@ListenerFor(systemEventClass = PostAddToViewEvent.class)
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
+                      })
 public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
-    private static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
-    private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("eventSelect"));
+	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
+	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+	public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
+	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Nilesh Namdeo Mali / last modified by $Author:
-     * nileshmali86@gmail.com $
-     * @version $Revision$
-     */
-    protected enum PropertyKeys {
+	private static final Collection<String> EVENT_NAMES =
+	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select"));
 
-        axisPosition,
-        eventStyle,
-        height,
-        showNavigation,
-        style,
-        styleClass,
-        value,
-        var,
-        widgetVar,
-        width;
-        private String toString;
+	/**
+	 * PropertyKeys
+	 *
+	 * @author  Oleg Varaksin / last modified by $Author: $
+	 * @version $Revision: 1.0 $
+	 */
+	enum PropertyKeys {
 
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
+		widgetVar,
+		value,
+		var,
+		locale,
+		timeZone,
+		height,
+		minHeight,
+		width,
+		responsive,
+		axisOnTop,
+		dragAreaWidth,
+		editable,
+		selectable,
+		zoomable,
+		moveable,
+		start,
+		end,
+		min,
+		max,
+		zoomMin,
+		zoomMax,
+		eventMargin,
+		eventMarginAxis,
+		eventStyle,
+		groupsChangeable,
+		groupsOnRight,
+		groupsWidth,
+		snapEvents,
+		stackEvents,
+		showCurrentTime,
+		showMajorLabels,
+		showMinorLabels,
+		showButtonNew,
+		showNavigation;
 
-        PropertyKeys() {
-        }
+		private String toString;
 
-        @Override
-        public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
-        }
-    }
+		PropertyKeys(final String toString) {
+			this.toString = toString;
+		}
 
-    public Timeline() {
-        setRendererType(DEFAULT_RENDERER);
-    }
+		PropertyKeys() {
+		}
 
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
+		@Override
+		public String toString() {
+			return ((this.toString != null) ? this.toString : super.toString());
+		}
+	}
 
-    public String getAxisPosition() {
-        return (String) getStateHelper().eval(PropertyKeys.axisPosition, "bottom");
-    }
+	public Timeline() {
+		setRendererType(DEFAULT_RENDERER);
+	}
 
-    public void setAxisPosition(final String axisPosition) {
-        setAttribute(PropertyKeys.axisPosition, axisPosition);
-    }
+	@Override
+	public String getFamily() {
+		return COMPONENT_FAMILY;
+	}
 
-    public String getEventStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.eventStyle, "box");
-    }
+	public String getWidgetVar() {
+		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+	}
 
-    public void setEventStyle(final String eventStyle) {
-        setAttribute(PropertyKeys.eventStyle, eventStyle);
-    }
+	public void setWidgetVar(String widgetVar) {
+		setAttribute(PropertyKeys.widgetVar, widgetVar);
+	}
 
-    public String getHeight() {
-        return (String) getStateHelper().eval(PropertyKeys.height, "auto");
-    }
+	public TimelineModel getValue() {
+		return (TimelineModel) getStateHelper().eval(PropertyKeys.value, null);
+	}
 
-    public void setHeight(final String height) {
-        setAttribute(PropertyKeys.height, height);
-    }
+	public void setValue(TimelineModel value) {
+		setAttribute(PropertyKeys.value, value);
+	}
 
-    public String getShowNavigation() {
-        return (String) getStateHelper().eval(PropertyKeys.showNavigation, "false");
-    }
+	public String getVar() {
+		return (String) getStateHelper().eval(PropertyKeys.var, null);
+	}
 
-    public void setShowNavigation(final String showNavigation) {
-        setAttribute(PropertyKeys.showNavigation, showNavigation);
-    }
+	public void setVar(String var) {
+		setAttribute(PropertyKeys.var, var);
+	}
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+	public Object getLocale() {
+		return getStateHelper().eval(PropertyKeys.locale, null);
+	}
 
-    public void setStyle(final String style) {
-        setAttribute(PropertyKeys.style, style);
-    }
+	public void setLocale(Object locale) {
+		setAttribute(PropertyKeys.locale, locale);
+	}
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+	public Object getTimeZone() {
+		return getStateHelper().eval(PropertyKeys.timeZone, null);
+	}
 
-    public void setStyleClass(final String styleClass) {
-        setAttribute(PropertyKeys.styleClass, styleClass);
-    }
+	public void setTimeZone(Object timeZone) {
+		setAttribute(PropertyKeys.timeZone, timeZone);
+	}
 
-    public Object getValue() {
-        return getStateHelper().eval(PropertyKeys.value, null);
-    }
+	public String getHeight() {
+		return (String) getStateHelper().eval(PropertyKeys.height, "auto");
+	}
 
-    public void setValue(final Object timelineValue) {
-        setAttribute(PropertyKeys.value, timelineValue);
-    }
+	public void setHeight(String height) {
+		setAttribute(PropertyKeys.height, height);
+	}
 
-    public String getVar() {
-        return (String) getStateHelper().eval(PropertyKeys.var, null);
-    }
+	public String getMinHeight() {
+		return (String) getStateHelper().eval(PropertyKeys.minHeight, 0);
+	}
 
-    public void setVar(final String var) {
-        setAttribute(PropertyKeys.var, var);
-    }
+	public void setMinHeight(String minHeight) {
+		setAttribute(PropertyKeys.minHeight, minHeight);
+	}
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+	public String getWidth() {
+		return (String) getStateHelper().eval(PropertyKeys.width, "100%");
+	}
 
-    public void setWidgetVar(final String widgetVar) {
-        setAttribute(PropertyKeys.widgetVar, widgetVar);
-    }
+	public void setWidth(String width) {
+		setAttribute(PropertyKeys.width, width);
+	}
 
-    public String getWidth() {
-        return (String) getStateHelper().eval(PropertyKeys.width, "100%");
-    }
+	public boolean isResponsive() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.responsive, true);
+	}
 
-    public void setWidth(final String width) {
-        setAttribute(PropertyKeys.width, width);
-    }
+	public void setResponsive(boolean responsive) {
+		setAttribute(PropertyKeys.responsive, responsive);
+	}
 
-    private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
-                .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
-    }
+	public boolean isAxisOnTop() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.axisOnTop, false);
+	}
 
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
+	public void setAxisOnTop(boolean axisOnTop) {
+		setAttribute(PropertyKeys.axisOnTop, axisOnTop);
+	}
 
-    @Override
-    public void queueEvent(final FacesEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
-        String clientId = this.getClientId(context);
-        if (isSelfRequest(context)) {
+	public int getDragAreaWidth() {
+		return (Integer) getStateHelper().eval(PropertyKeys.dragAreaWidth, 10);
+	}
 
-            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            if (eventName.equals("eventSelect")) {
-                String selectedTimelineId = params.get(clientId + "_selectedTimelineId");
-                String selectedEventId = params.get(clientId + "_selectedEventId");
+	public void setDragAreaWidth(int dragAreaWidth) {
+		setAttribute(PropertyKeys.dragAreaWidth, dragAreaWidth);
+	}
 
-                if (this.getValue() != null) {
-                    if (this.getValue() instanceof org.primefaces.extensions.model.timeline.Timeline) {
-                        org.primefaces.extensions.model.timeline.Timeline timeline =
-                                (org.primefaces.extensions.model.timeline.Timeline) this.getValue();
-                        if (timeline.getId().equals(selectedTimelineId)) {
-                            Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
-                            TimelineEvent selectedEvent;
-                            while (itrEvent.hasNext()) {
-                                selectedEvent = itrEvent.next();
-                                if (selectedEvent.getId().equals(selectedEventId)) {
-                                    FacesEvent wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
-                                    super.queueEvent(wrapperEvent);
-                                    return;
-                                }
-                            }
-                        }
-                    } else if(this.getValue() instanceof List){
-                        Iterator<org.primefaces.extensions.model.timeline.Timeline> itrTimeline = 
-                                ((List<org.primefaces.extensions.model.timeline.Timeline>)this.getValue()).iterator();
-                        org.primefaces.extensions.model.timeline.Timeline timeline;
-                        while (itrTimeline.hasNext()) {
-                            timeline = itrTimeline.next();
-                            if (timeline.getId().equals(selectedTimelineId)) {
-                                Iterator<TimelineEvent> itrEvent = timeline.getEvents().iterator();
-                                TimelineEvent selectedEvent;
-                                while (itrEvent.hasNext()) {
-                                    selectedEvent = itrEvent.next();
-                                    if (selectedEvent.getId().equals(selectedEventId)) {
-                                        FacesEvent wrapperEvent = new SelectEvent(this, behaviorEvent.getBehavior(), selectedEvent);
-                                        super.queueEvent(wrapperEvent);
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+	public boolean isEditable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.editable, false);
+	}
 
-        super.queueEvent(event);
-    }
+	public void setEditable(boolean editable) {
+		setAttribute(PropertyKeys.editable, editable);
+	}
 
-    public String resolveWidgetVar() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+	public boolean isSelectable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.selectable, true);
+	}
 
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
+	public void setSelectable(boolean selectable) {
+		setAttribute(PropertyKeys.selectable, selectable);
+	}
 
-        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+	public boolean isZoomable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.zoomable, true);
+	}
 
-    public void setAttribute(final PropertyKeys property, final Object value) {
-        getStateHelper().put(property, value);
+	public void setZoomable(boolean zoomable) {
+		setAttribute(PropertyKeys.zoomable, zoomable);
+	}
 
-        @SuppressWarnings("unchecked")
-        List<String> setAttributes =
-                (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-        if (setAttributes == null) {
-            final String cname = this.getClass().getName();
-            if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-                setAttributes = new ArrayList<String>(6);
-                this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-            }
-        }
+	public boolean isMoveable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.moveable, true);
+	}
 
-        if (setAttributes != null && value == null) {
-            final String attributeName = property.toString();
-            final ValueExpression ve = getValueExpression(attributeName);
-            if (ve == null) {
-                setAttributes.remove(attributeName);
-            } else if (!setAttributes.contains(attributeName)) {
-                setAttributes.add(attributeName);
-            }
-        }
-    }
+	public void setMoveable(boolean moveable) {
+		setAttribute(PropertyKeys.moveable, moveable);
+	}
+
+	public Date getStart() {
+		return (Date) getStateHelper().eval(PropertyKeys.start, null);
+	}
+
+	public void setStart(Date start) {
+		setAttribute(PropertyKeys.start, start);
+	}
+
+	public Date getEnd() {
+		return (Date) getStateHelper().eval(PropertyKeys.end, null);
+	}
+
+	public void setEnd(Date end) {
+		setAttribute(PropertyKeys.end, end);
+	}
+
+	public Date getMin() {
+		return (Date) getStateHelper().eval(PropertyKeys.min, null);
+	}
+
+	public void setMin(Date min) {
+		setAttribute(PropertyKeys.min, min);
+	}
+
+	public Date getMax() {
+		return (Date) getStateHelper().eval(PropertyKeys.max, null);
+	}
+
+	public void setMax(Date max) {
+		setAttribute(PropertyKeys.max, max);
+	}
+
+	public long getZoomMin() {
+		return (Long) getStateHelper().eval(PropertyKeys.zoomMin, 10);
+	}
+
+	public void setZoomMin(long zoomMin) {
+		setAttribute(PropertyKeys.zoomMin, zoomMin);
+	}
+
+	public long getZoomMax() {
+		return (Long) getStateHelper().eval(PropertyKeys.zoomMax, 315360000000000L);
+	}
+
+	public void setZoomMax(long zoomMax) {
+		setAttribute(PropertyKeys.zoomMax, zoomMax);
+	}
+
+	public int getEventMargin() {
+		return (Integer) getStateHelper().eval(PropertyKeys.eventMargin, 10);
+	}
+
+	public void setEventMargin(int eventMargin) {
+		setAttribute(PropertyKeys.eventMargin, eventMargin);
+	}
+
+	public int getEventMarginAxis() {
+		return (Integer) getStateHelper().eval(PropertyKeys.eventMarginAxis, 10);
+	}
+
+	public void setEventMarginAxis(int eventMarginAxis) {
+		setAttribute(PropertyKeys.eventMarginAxis, eventMarginAxis);
+	}
+
+	public String getEventStyle() {
+		return (String) getStateHelper().eval(PropertyKeys.eventStyle, "box");
+	}
+
+	public void setEventStyle(String eventStyle) {
+		setAttribute(PropertyKeys.eventStyle, eventStyle);
+	}
+
+	public boolean isGroupsChangeable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.groupsChangeable, true);
+	}
+
+	public void setGroupsChangeable(boolean groupsChangeable) {
+		setAttribute(PropertyKeys.groupsChangeable, groupsChangeable);
+	}
+
+	public boolean isGroupsOnRight() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.groupsOnRight, false);
+	}
+
+	public void setGroupsOnRight(boolean groupsOnRight) {
+		setAttribute(PropertyKeys.groupsOnRight, groupsOnRight);
+	}
+
+	public String getGroupsWidth() {
+		return (String) getStateHelper().eval(PropertyKeys.groupsWidth, null);
+	}
+
+	public void setGroupsWidth(String groupsWidth) {
+		setAttribute(PropertyKeys.groupsWidth, groupsWidth);
+	}
+
+	public boolean isSnapEvents() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.snapEvents, true);
+	}
+
+	public void setSnapEvents(boolean snapEvents) {
+		setAttribute(PropertyKeys.snapEvents, snapEvents);
+	}
+
+	public boolean isStackEvents() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.stackEvents, true);
+	}
+
+	public void setStackEvents(boolean stackEvents) {
+		setAttribute(PropertyKeys.stackEvents, stackEvents);
+	}
+
+	public boolean isShowCurrentTime() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showCurrentTime, true);
+	}
+
+	public void setShowCurrentTime(boolean showCurrentTime) {
+		setAttribute(PropertyKeys.showCurrentTime, showCurrentTime);
+	}
+
+	public boolean isShowMajorLabels() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showMajorLabels, true);
+	}
+
+	public void setShowMajorLabels(boolean showMajorLabels) {
+		setAttribute(PropertyKeys.showMajorLabels, showMajorLabels);
+	}
+
+	public boolean isShowMinorLabels() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showMinorLabels, true);
+	}
+
+	public void setShowMinorLabels(boolean showMinorLabels) {
+		setAttribute(PropertyKeys.showMinorLabels, showMinorLabels);
+	}
+
+	public boolean isShowButtonNew() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showButtonNew, false);
+	}
+
+	public void setShowButtonNew(boolean showButtonNew) {
+		setAttribute(PropertyKeys.showButtonNew, showButtonNew);
+	}
+
+	public boolean isShowNavigation() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.showNavigation, false);
+	}
+
+	public void setShowNavigation(boolean showNavigation) {
+		setAttribute(PropertyKeys.showNavigation, showNavigation);
+	}
+
+	@Override
+	public Collection<String> getEventNames() {
+		return EVENT_NAMES;
+	}
+
+	@Override
+	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+		super.processEvent(event);
+
+		FacesContext fc = FacesContext.getCurrentInstance();
+		if (!(event instanceof PostAddToViewEvent) || fc.getPartialViewContext().isAjaxRequest()) {
+			return;
+		}
+
+		String widgetVar = resolveWidgetVar();
+		fc.getViewRoot().addPhaseListener(new TimelineRestoreViewListener(widgetVar));
+
+		// Thread-safe TimelineUpdater instance should be instantiated here on the initial GET request.
+		// For subsequent AJAX calls it will instantiated by the TimelineRestoreViewListener.
+		TimelineRestoreViewListener.createTimelineUpdater(fc, widgetVar);
+	}
+
+	@Override
+	public void queueEvent(FacesEvent event) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+		String clientId = this.getClientId(context);
+
+		if (isSelfRequest(context)) {
+			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+
+			if ("add".equals(eventName)) {
+				// get preset start / end time in millisec. (local time in browser) and the group
+				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
+				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
+				String group = params.get(clientId + "_group");
+
+				TimelineAddEvent te =
+				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), getDate(startDate), getDate(endDate), group);
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			} else if ("change".equals(eventName)) {
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
+				int index = Integer.valueOf(params.get(clientId + "_index"));
+
+				// get new start / end time in millisec. (local time in browser)
+				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
+				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
+
+				// update the original timeline event with new dates
+				timelineEvent.setStartDate(getDate(startDate));
+				timelineEvent.setEndDate(getDate(endDate));
+
+				TimelineModificationEvent te =
+				    new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent, index);
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
+				int index = Integer.valueOf(params.get(clientId + "_index"));
+
+				TimelineModificationEvent te =
+				    new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent, index);
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			} else if ("select".equals(eventName)) {
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
+				TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			}
+		}
+
+		super.queueEvent(event);
+	}
+
+	private boolean isSelfRequest(FacesContext context) {
+		return this.getClientId(context)
+		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	}
+
+	public Date getDate(long millis) {
+		Calendar calendar =
+		    Calendar.getInstance(ComponentUtils.resolveTimeZone(getTimeZone()), ComponentUtils.resolveLocale(getLocale()));
+		calendar.setTimeInMillis(millis);
+
+		return calendar.getTime();
+	}
+
+	public String resolveWidgetVar() {
+		final FacesContext context = FacesContext.getCurrentInstance();
+		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+
+		if (userWidgetVar != null) {
+			return userWidgetVar;
+		}
+
+		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+	}
+
+	public void setAttribute(PropertyKeys property, Object value) {
+		getStateHelper().put(property, value);
+
+		@SuppressWarnings("unchecked")
+		List<String> setAttributes =
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		if (setAttributes == null) {
+			final String cname = this.getClass().getName();
+			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
+				setAttributes = new ArrayList<String>(6);
+				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
+			}
+		}
+
+		if (setAttributes != null && value == null) {
+			final String attributeName = property.toString();
+			final ValueExpression ve = getValueExpression(attributeName);
+			if (ve == null) {
+				setAttributes.remove(attributeName);
+			} else if (!setAttributes.contains(attributeName)) {
+				setAttributes.add(attributeName);
+			}
+		}
+	}
 }

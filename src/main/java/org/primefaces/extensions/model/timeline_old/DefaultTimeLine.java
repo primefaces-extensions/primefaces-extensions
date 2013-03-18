@@ -16,7 +16,7 @@
  * $Id$
  */
 
-package org.primefaces.extensions.model.timeline;
+package org.primefaces.extensions.model.timeline_old;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 public class DefaultTimeLine implements Timeline, Serializable {
 
-    private String id;
+	private String id;
 	private String title;
 	private List<TimelineEvent> events;
 
@@ -41,20 +41,20 @@ public class DefaultTimeLine implements Timeline, Serializable {
 	}
 
 	public DefaultTimeLine(String id, String title) {
-        this.id = id;
+		this.id = id;
 		this.title = title;
 		this.events = new ArrayList<TimelineEvent>();
 	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 
@@ -63,7 +63,7 @@ public class DefaultTimeLine implements Timeline, Serializable {
 	}
 
 	public void addEvent(TimelineEvent event) {
-        event.setId(UUID.randomUUID().toString());
+		event.setId(UUID.randomUUID().toString());
 		events.add(event);
 	}
 
@@ -75,24 +75,31 @@ public class DefaultTimeLine implements Timeline, Serializable {
 		return events;
 	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DefaultTimeLine)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
 
-        DefaultTimeLine that = (DefaultTimeLine) o;
+		if (!(o instanceof DefaultTimeLine)) {
+			return false;
+		}
 
-        if (!id.equals(that.id)) return false;
+		DefaultTimeLine that = (DefaultTimeLine) o;
 
-        return true;
-    }
+		if (!id.equals(that.id)) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+		return true;
+	}
 
-    @Override
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		return title;
 	}

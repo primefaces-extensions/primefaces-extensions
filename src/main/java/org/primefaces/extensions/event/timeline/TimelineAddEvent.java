@@ -16,24 +16,44 @@
  * $Id: $
  */
 
-package org.primefaces.extensions.component.timeline;
+package org.primefaces.extensions.event.timeline;
+
+import java.util.Date;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
+import javax.faces.component.behavior.Behavior;
 
-import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 
 /**
- * TimelineRenderer
+ * Event when a new timeline event is added.
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
- * @since   0.7 (reimplemented)
+ * @since   0.7
  */
-public class TimelineRenderer extends CoreRenderer {
+public class TimelineAddEvent extends AbstractAjaxBehaviorEvent {
 
-	@Override
-	public void decode(FacesContext context, UIComponent component) {
-		decodeBehaviors(context, component);
+	private Date startDate;
+	private Date endDate;
+	private String group;
+
+	public TimelineAddEvent(UIComponent component, Behavior behavior, Date startDate, Date endDate, String group) {
+		super(component, behavior);
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.group = group;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public String getGroup() {
+		return group;
 	}
 }

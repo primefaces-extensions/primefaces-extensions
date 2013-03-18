@@ -16,24 +16,37 @@
  * $Id: $
  */
 
-package org.primefaces.extensions.component.timeline;
+package org.primefaces.extensions.event.timeline;
 
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
+import javax.faces.component.behavior.Behavior;
 
-import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
+import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 /**
- * TimelineRenderer
+ * Event when a timeline event gets changed, edited, deleted.
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
- * @since   0.7 (reimplemented)
+ * @since   0.7
  */
-public class TimelineRenderer extends CoreRenderer {
+public class TimelineModificationEvent extends AbstractAjaxBehaviorEvent {
 
-	@Override
-	public void decode(FacesContext context, UIComponent component) {
-		decodeBehaviors(context, component);
+	private TimelineEvent timelineEvent;
+	private int index;
+
+	public TimelineModificationEvent(UIComponent component, Behavior behavior, TimelineEvent timelineEvent, int index) {
+		super(component, behavior);
+		this.timelineEvent = timelineEvent;
+		this.index = index;
+	}
+
+	public TimelineEvent getTimelineEvent() {
+		return timelineEvent;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 }

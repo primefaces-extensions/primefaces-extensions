@@ -21,6 +21,8 @@ package org.primefaces.extensions.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -92,8 +94,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			} else if (id.equals("@all")) {
 				LOG.log(Level.WARNING, "@all as identifier is not supported.");
 			} else if (id.equals("@none")) {
-                // ignore
-            } else {
+				// ignore
+			} else {
 				final UIComponent component = source.findComponent(id);
 
 				if (component != null) {
@@ -115,7 +117,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return findTarget(context, attachable, (UIComponent) attachable);
 	}
 
-	public static String findTarget(final FacesContext context, final Attachable attachable, final ClientBehaviorContext cbContext) {
+	public static String findTarget(final FacesContext context, final Attachable attachable,
+	                                final ClientBehaviorContext cbContext) {
 		if (!(attachable instanceof ClientBehavior)) {
 			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
 		}
@@ -156,7 +159,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		addComponentResource(context, name, Constants.LIBRARY, "head");
 	}
 
-	public static void addComponentResource(final FacesContext context, final String name, final String library, final String target) {
+	public static void addComponentResource(final FacesContext context, final String name, final String library,
+	                                        final String target) {
 		final Application application = context.getApplication();
 
 		final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
@@ -187,53 +191,53 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		for (int i = 0; i < text.length(); i++) {
 			char ch = text.charAt(i);
 			switch (ch) {
-				case '"':
-					sb.append("\\\"");
-					break;
+			case '"':
+				sb.append("\\\"");
+				break;
 
-				case '\\':
-					sb.append("\\\\");
-					break;
+			case '\\':
+				sb.append("\\\\");
+				break;
 
-				case '\b':
-					sb.append("\\b");
-					break;
+			case '\b':
+				sb.append("\\b");
+				break;
 
-				case '\f':
-					sb.append("\\f");
-					break;
+			case '\f':
+				sb.append("\\f");
+				break;
 
-				case '\n':
-					sb.append("\\n");
-					break;
+			case '\n':
+				sb.append("\\n");
+				break;
 
-				case '\r':
-					sb.append("\\r");
-					break;
+			case '\r':
+				sb.append("\\r");
+				break;
 
-				case '\t':
-					sb.append("\\t");
-					break;
+			case '\t':
+				sb.append("\\t");
+				break;
 
-				case '/':
-					sb.append("\\/");
-					break;
+			case '/':
+				sb.append("\\/");
+				break;
 
-				default:
+			default:
 
-					//Reference: http://www.unicode.org/versions/Unicode5.1.0/
-					if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
-							|| (ch >= '\u2000' && ch <= '\u20FF')) {
-						String ss = Integer.toHexString(ch);
-						sb.append("\\u");
-						for (int k = 0; k < 4 - ss.length(); k++) {
-							sb.append('0');
-						}
-
-						sb.append(ss.toUpperCase());
-					} else {
-						sb.append(ch);
+				//Reference: http://www.unicode.org/versions/Unicode5.1.0/
+				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
+				    || (ch >= '\u2000' && ch <= '\u20FF')) {
+					String ss = Integer.toHexString(ch);
+					sb.append("\\u");
+					for (int k = 0; k < 4 - ss.length(); k++) {
+						sb.append('0');
 					}
+
+					sb.append(ss.toUpperCase());
+				} else {
+					sb.append(ch);
+				}
 			}
 		}
 
@@ -332,7 +336,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				for (List<ClientBehavior> listBehaviors : behaviors) {
 					for (ClientBehavior clientBehavior : listBehaviors) {
 						if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
-								|| clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
+						    || clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
 							return true;
 						}
 					}
@@ -345,48 +349,88 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	/**
 	 * NOTE: COPIED FROM TOBAGO.
-	 * 
-	 * Puts two backslashes before #;&,.+*~':"!^$[]()=>|/ to escape them. Two
-	 * are needed, because of JavaScript string literals. Puts three backslashes
-	 * before a \ itself, to escape it.
+	 *
+	 * <p>Puts two backslashes before #;&,.+*~':"!^$[]()=>|/ to escape them. Two are needed, because of JavaScript string
+	 * literals. Puts three backslashes before a \ itself, to escape it.</p>
+	 *
+	 * @param  value DOCUMENT_ME
+	 * @return DOCUMENT_ME
 	 */
 	public static String escapeSelector(final String value) {
 		final StringBuilder builder = new StringBuilder();
 
 		for (char c : value.toCharArray()) {
 			switch (c) {
-				case '\\':
-					builder.append("\\\\\\\\");
-					break;
-				case '#':
-				case ';':
-				case '&':
-				case ',':
-				case '.':
-				case '+':
-				case '*':
-				case '~':
-				case '\'':
-				case ':':
-				case '"':
-				case '!':
-				case '^':
-				case '$':
-				case '[':
-				case ']':
-				case '(':
-				case ')':
-				case '=':
-				case '>':
-				case '|':
-				case '/':
-					builder.append("\\\\");
-				default:
-					builder.append(c);
-					break;
+			case '\\':
+				builder.append("\\\\\\\\");
+				break;
+
+			case '#':
+			case ';':
+			case '&':
+			case ',':
+			case '.':
+			case '+':
+			case '*':
+			case '~':
+			case '\'':
+			case ':':
+			case '"':
+			case '!':
+			case '^':
+			case '$':
+			case '[':
+			case ']':
+			case '(':
+			case ')':
+			case '=':
+			case '>':
+			case '|':
+			case '/':
+				builder.append("\\\\");
+
+			default:
+				builder.append(c);
+				break;
 			}
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Gets a {@link Locale} instance by the value of the component attribute "locale" which can be String or {@link Locale} or
+	 * null.
+	 *
+	 * @param  locale given locale
+	 * @return resolved Locale
+	 */
+	public static Locale resolveLocale(Object locale) {
+		if (locale instanceof String) {
+			locale = org.primefaces.util.ComponentUtils.toLocale((String) locale);
+		}
+
+		if (locale == null) {
+			locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		}
+
+		return (Locale) locale;
+	}
+
+	/**
+	 * Gets a {@link TimeZone} instance by the value of the component attribute "timeZone" which can be String or {@link TimeZone}
+	 * or null.
+	 *
+	 * @param  timeZone given time zone
+	 * @return resolved TimeZone
+	 */
+	public static TimeZone resolveTimeZone(Object timeZone) {
+		if (timeZone instanceof String) {
+			return TimeZone.getTimeZone((String) timeZone);
+		} else if (timeZone instanceof TimeZone) {
+			return (TimeZone) timeZone;
+		} else {
+			return TimeZone.getDefault();
+		}
 	}
 }
