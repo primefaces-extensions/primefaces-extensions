@@ -48,6 +48,7 @@ import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.row.Row;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.component.summaryrow.SummaryRow;
+import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.column.Column;
@@ -64,6 +65,7 @@ import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.Rectangle;
 
 /**
  * <code>Exporter</code> component.
@@ -632,6 +634,24 @@ public class PDFExporter extends Exporter {
                 addColumnValue(pdfTable, col.getChildren(), this.cellFont);
             }
 
+        }
+        pdfTable.completeRow();
+        FacesContext context=null;
+        for(UIComponent component:table.getChildren()) {
+            if(component instanceof RowExpansion)   {
+                RowExpansion rowExpansion=(RowExpansion)component;
+                if(rowExpansion.getChildren()!=null) {
+                    DataList  list=(DataList)rowExpansion.getChildren().get(0);
+                    PdfPTable pdfTableChild=exportPDFTable(context, list, false, "UTF-8");
+                    pdfTableChild.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+                    PdfPCell cell = new PdfPCell();
+                    cell.addElement(pdfTableChild);
+                    cell.setColspan(pdfTable.getNumberOfColumns());
+                    pdfTable.addCell(cell);
+                }
+
+            }
+            pdfTable.completeRow();
         }
 
     }
