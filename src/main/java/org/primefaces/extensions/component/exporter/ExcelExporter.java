@@ -25,6 +25,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -186,6 +187,11 @@ public class ExcelExporter extends Exporter {
             for (int i = 0; i < maxColumns; i++) {
                 sheet.autoSizeColumn((short) i);
             }
+
+        PrintSetup  printSetup=sheet.getPrintSetup();
+        printSetup.setLandscape(true);
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE);
+        sheet.setPrintGridlines(true);
 
         writeExcelToResponse(context.getExternalContext(), wb, filename);
 
