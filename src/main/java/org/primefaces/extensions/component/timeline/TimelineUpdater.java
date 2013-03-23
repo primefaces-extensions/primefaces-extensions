@@ -68,5 +68,5 @@ public abstract class TimelineUpdater {
 
 	public abstract void delete(int index);
 
-	public abstract void deleteAll();
+	public abstract void clear();
 }

@@ -20,7 +20,6 @@ package org.primefaces.extensions.model.timeline;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Model class representing a timeline event.
@@ -31,7 +30,7 @@ import java.util.UUID;
  */
 public class TimelineEvent implements Serializable {
 
-	private static final long serialVersionUID = 20120316L;
+	private static final long serialVersionUID = 20130316L;
 
 	private String id;
 	private Object data;
@@ -42,21 +41,16 @@ public class TimelineEvent implements Serializable {
 	private String styleClass;
 
 	public TimelineEvent() {
-		id = UUID.randomUUID().toString();
 	}
 
 	public TimelineEvent(Object data, Date startDate) {
 		checkStartDate(startDate);
-
-		id = UUID.randomUUID().toString();
 		this.data = data;
 		this.startDate = startDate;
 	}
 
 	public TimelineEvent(Object data, Date startDate, Date endDate) {
 		checkStartDate(startDate);
-
-		id = UUID.randomUUID().toString();
 		this.data = data;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -64,8 +58,6 @@ public class TimelineEvent implements Serializable {
 
 	public TimelineEvent(Object data, Date startDate, Date endDate, Boolean editable) {
 		checkStartDate(startDate);
-
-		id = UUID.randomUUID().toString();
 		this.data = data;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -74,8 +66,6 @@ public class TimelineEvent implements Serializable {
 
 	public TimelineEvent(Object data, Date startDate, Date endDate, Boolean editable, String group) {
 		checkStartDate(startDate);
-
-		id = UUID.randomUUID().toString();
 		this.data = data;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -85,8 +75,6 @@ public class TimelineEvent implements Serializable {
 
 	public TimelineEvent(Object data, Date startDate, Date endDate, Boolean editable, String group, String styleClass) {
 		checkStartDate(startDate);
-
-		id = UUID.randomUUID().toString();
 		this.data = data;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -97,6 +85,10 @@ public class TimelineEvent implements Serializable {
 
 	public String getId() {
 		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Object getData() {

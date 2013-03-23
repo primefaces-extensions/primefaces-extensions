@@ -83,9 +83,9 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 	}
 
 	@Override
-	public void deleteAll() {
+	public void clear() {
 		checkCrudOperationDataList();
-		crudOperationDatas.add(new CrudOperationData(CrudOperation.DELETE_ALL));
+		crudOperationDatas.add(new CrudOperationData(CrudOperation.CLEAR));
 	}
 
 	public PhaseId getPhaseId() {
@@ -119,7 +119,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				// TODO
 				break;
 
-			case DELETE_ALL:
+			case CLEAR:
 
 				// TODO
 				break;
@@ -215,6 +215,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		ADD,
 		UPDATE,
 		DELETE,
-		DELETE_ALL
+		CLEAR
 	}
 }

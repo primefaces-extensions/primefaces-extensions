@@ -460,7 +460,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				return;
 			} else if ("change".equals(eventName)) {
 				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
-				int index = Integer.valueOf(params.get(clientId + "_index"));
+				//int index = Integer.valueOf(params.get(clientId + "_index"));
 
 				// get new start / end time in millisec. (local time in browser)
 				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
@@ -470,18 +470,16 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				timelineEvent.setStartDate(getDate(startDate));
 				timelineEvent.setEndDate(getDate(endDate));
 
-				TimelineModificationEvent te =
-				    new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent, index);
+				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
 				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
-				int index = Integer.valueOf(params.get(clientId + "_index"));
+				//int index = Integer.valueOf(params.get(clientId + "_index"));
 
-				TimelineModificationEvent te =
-				    new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent, index);
+				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 

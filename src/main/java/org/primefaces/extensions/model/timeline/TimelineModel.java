@@ -21,6 +21,9 @@ package org.primefaces.extensions.model.timeline;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.primefaces.extensions.component.timeline.TimelineUpdater;
 
 /**
  * Model class for the Timeline component which consists of {@link TimelineEvent}s.
@@ -31,7 +34,7 @@ import java.util.List;
  */
 public class TimelineModel implements Serializable {
 
-	private static final long serialVersionUID = 20120316L;
+	private static final long serialVersionUID = 20130316L;
 
 	private List<TimelineEvent> events;
 
@@ -40,37 +43,81 @@ public class TimelineModel implements Serializable {
 	}
 
 	public TimelineModel(List<TimelineEvent> events) {
-		this.events = events;
+		this.events = new ArrayList<TimelineEvent>();
+
+		if (events != null && !events.isEmpty()) {
+			for (TimelineEvent event : events) {
+				add(event);
+			}
+		}
 	}
 
 	public void add(TimelineEvent event) {
+		event.setId(UUID.randomUUID().toString());
 		events.add(event);
 	}
 
-	public boolean delete(TimelineEvent event) {
-		return events.remove(event);
+	public void add(TimelineEvent event, TimelineUpdater timelineUpdater) {
+		event.setId(UUID.randomUUID().toString());
+		events.add(event);
+
+		if (timelineUpdater != null) {
+			// update UI
+			timelineUpdater.add(event);
+		}
 	}
 
-	public TimelineEvent update(TimelineEvent event) {
-		int index = -1;
-
-		for (int i = 0; i < events.size(); i++) {
-			if (events.get(i).getId().equals(event.getId())) {
-				index = i;
-
-				break;
+	public void addAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
+		if (events != null && !events.isEmpty()) {
+			for (TimelineEvent event : events) {
+				add(event, timelineUpdater);
 			}
 		}
-
-		if (index >= 0) {
-			return events.set(index, event);
-		}
-
-		return null;
 	}
 
-	public void clear() {
+	public TimelineEvent update(TimelineEvent event, TimelineUpdater timelineUpdater) {
+		int index = getIndex(event);
+		TimelineEvent prevEvent = null;
+
+		if (index >= 0) {
+			prevEvent = events.set(index, event);
+		}
+
+		if (timelineUpdater != null) {
+			// update UI
+			timelineUpdater.update(event, index);
+		}
+
+		return prevEvent;
+	}
+
+	public boolean delete(TimelineEvent event, TimelineUpdater timelineUpdater) {
+		int index = getIndex(event);
+		boolean res = events.remove(event);
+
+		if (timelineUpdater != null) {
+			// update UI
+			timelineUpdater.delete(index);
+		}
+
+		return res;
+	}
+
+	public void clear(TimelineUpdater timelineUpdater) {
 		events.clear();
+
+		if (timelineUpdater != null) {
+			// update UI
+			timelineUpdater.clear();
+		}
+	}
+
+	public List<TimelineEvent> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<TimelineEvent> events) {
+		this.events = events;
 	}
 
 	public TimelineEvent getEvent(String id) {
@@ -83,11 +130,17 @@ public class TimelineModel implements Serializable {
 		return null;
 	}
 
-	public List<TimelineEvent> getEvents() {
-		return events;
-	}
+	private int getIndex(TimelineEvent event) {
+		int index = -1;
 
-	public void setEvents(List<TimelineEvent> events) {
-		this.events = events;
+		for (int i = 0; i < events.size(); i++) {
+			if (events.get(i).getId().equals(event.getId())) {
+				index = i;
+
+				break;
+			}
+		}
+
+		return index;
 	}
 }
