@@ -26,23 +26,24 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered when a new timeline event is added.
+ * Event which is triggered when a visible range of the Timeline is changing or has been changed.
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
  * @since   0.7
  */
-public class TimelineAddEvent extends AbstractAjaxBehaviorEvent {
+public class TimelineRangeEvent extends AbstractAjaxBehaviorEvent {
 
+	/** new start time of the visible range */
 	private Date startDate;
-	private Date endDate;
-	private String group;
 
-	public TimelineAddEvent(UIComponent component, Behavior behavior, Date startDate, Date endDate, String group) {
+	/** new end time of the visible range */
+	private Date endDate;
+
+	public TimelineRangeEvent(UIComponent component, Behavior behavior, Date startDate, Date endDate) {
 		super(component, behavior);
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.group = group;
 	}
 
 	public Date getStartDate() {
@@ -51,9 +52,5 @@ public class TimelineAddEvent extends AbstractAjaxBehaviorEvent {
 
 	public Date getEndDate() {
 		return endDate;
-	}
-
-	public String getGroup() {
-		return group;
 	}
 }

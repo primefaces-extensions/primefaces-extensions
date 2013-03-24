@@ -75,32 +75,48 @@ public class TimelineModel implements Serializable {
 		}
 	}
 
-	public TimelineEvent update(TimelineEvent event, TimelineUpdater timelineUpdater) {
+	public void update(TimelineEvent event, TimelineUpdater timelineUpdater) {
 		int index = getIndex(event);
-		TimelineEvent prevEvent = null;
-
 		if (index >= 0) {
-			prevEvent = events.set(index, event);
+			events.set(index, event);
 		}
 
 		if (timelineUpdater != null) {
 			// update UI
 			timelineUpdater.update(event, index);
 		}
-
-		return prevEvent;
 	}
 
-	public boolean delete(TimelineEvent event, TimelineUpdater timelineUpdater) {
+	public void updateAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
+		if (events != null && !events.isEmpty()) {
+			for (TimelineEvent event : events) {
+				update(event, timelineUpdater);
+			}
+		}
+	}
+
+	public void delete(TimelineEvent event, TimelineUpdater timelineUpdater) {
 		int index = getIndex(event);
-		boolean res = events.remove(event);
+		events.remove(event);
 
 		if (timelineUpdater != null) {
 			// update UI
 			timelineUpdater.delete(index);
 		}
+	}
 
-		return res;
+	public void deleteAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
+		if (events != null && !events.isEmpty()) {
+			List<Integer> indexes = new ArrayList<Integer>();
+			for (TimelineEvent event : events) {
+				indexes.add(getIndex(event));
+			}
+
+			if (timelineUpdater != null) {
+				// update UI
+				timelineUpdater.deleteAll(indexes);
+			}
+		}
 	}
 
 	public void clear(TimelineUpdater timelineUpdater) {

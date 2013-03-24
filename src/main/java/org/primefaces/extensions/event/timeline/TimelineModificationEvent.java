@@ -25,7 +25,7 @@ import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 /**
- * Event when a timeline event gets changed, edited, deleted.
+ * Event which is triggered when a timeline event gets changed, edited, deleted.
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $

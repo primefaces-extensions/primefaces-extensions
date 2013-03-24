@@ -36,6 +36,9 @@ import org.primefaces.extensions.model.timeline.TimelineEvent;
  */
 public abstract class TimelineUpdater {
 
+	/** The same id of the Timeline component in terms of findComponent() as in {@link #getCurrentInstance(String)} */
+	protected String id;
+
 	/**
 	 * Gets the current thread-safe TimelineUpdater instance by Id.
 	 *
@@ -57,16 +60,21 @@ public abstract class TimelineUpdater {
 			throw new FacesException("Timeline component with Id " + id + " was not found");
 		}
 
-		return map.get(((Timeline) timeline).resolveWidgetVar());
+		TimelineUpdater timelineUpdater = map.get(((Timeline) timeline).resolveWidgetVar());
+		if (timelineUpdater != null) {
+			timelineUpdater.id = id;
+		}
+
+		return timelineUpdater;
 	}
 
 	public abstract void add(TimelineEvent event);
 
-	public abstract void addAll(List<TimelineEvent> events);
-
 	public abstract void update(TimelineEvent event, int index);
 
 	public abstract void delete(int index);
+
+	public abstract void deleteAll(List<Integer> indexes);
 
 	public abstract void clear();
 }

@@ -25,7 +25,7 @@ import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 /**
- * Event when a new timeline event was selected.
+ * Event which is triggered when a new timeline event was selected.
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $

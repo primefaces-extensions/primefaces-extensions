@@ -19,7 +19,6 @@ package org.primefaces.extensions.component.timeline;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -43,10 +42,10 @@ import javax.faces.event.PostAddToViewEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.timeline.TimelineAddEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
+import org.primefaces.extensions.event.timeline.TimelineRangeEvent;
 import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -73,7 +72,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select"));
+	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
+	                                                     "rangechanged"));
 
 	/**
 	 * PropertyKeys
@@ -88,6 +88,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		var,
 		locale,
 		timeZone,
+		style,
+		styleClass,
 		height,
 		minHeight,
 		width,
@@ -182,6 +184,22 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		setAttribute(PropertyKeys.timeZone, timeZone);
 	}
 
+	public String getStyle() {
+		return (String) getStateHelper().eval(PropertyKeys.style, null);
+	}
+
+	public void setStyle(String style) {
+		setAttribute(PropertyKeys.style, style);
+	}
+
+	public String getStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+	}
+
+	public void setStyleClass(String styleClass) {
+		setAttribute(PropertyKeys.styleClass, styleClass);
+	}
+
 	public String getHeight() {
 		return (String) getStateHelper().eval(PropertyKeys.height, "auto");
 	}
@@ -190,11 +208,11 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		setAttribute(PropertyKeys.height, height);
 	}
 
-	public String getMinHeight() {
-		return (String) getStateHelper().eval(PropertyKeys.minHeight, 0);
+	public int getMinHeight() {
+		return (Integer) getStateHelper().eval(PropertyKeys.minHeight, 0);
 	}
 
-	public void setMinHeight(String minHeight) {
+	public void setMinHeight(int minHeight) {
 		setAttribute(PropertyKeys.minHeight, minHeight);
 	}
 
@@ -447,13 +465,13 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("add".equals(eventName)) {
-				// get preset start / end time in millisec. (local time in browser) and the group
+				// get preset start / end time in millisec. (already converted to UTC) and the group
 				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
 				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
 				String group = params.get(clientId + "_group");
 
 				TimelineAddEvent te =
-				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), getDate(startDate), getDate(endDate), group);
+				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate), group);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -462,13 +480,13 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
 				//int index = Integer.valueOf(params.get(clientId + "_index"));
 
-				// get new start / end time in millisec. (local time in browser)
+				// get new start / end time in millisec. (already converted to UTC)
 				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
 				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
 
 				// update the original timeline event with new dates
-				timelineEvent.setStartDate(getDate(startDate));
-				timelineEvent.setEndDate(getDate(endDate));
+				timelineEvent.setStartDate(new Date(startDate));
+				timelineEvent.setEndDate(new Date(endDate));
 
 				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
@@ -491,6 +509,28 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				super.queueEvent(te);
 
 				return;
+			} else if ("rangechange".equals(eventName)) {
+				// get new start / end time in millisec. (already converted to UTC) for the visible range
+				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
+				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
+
+				TimelineRangeEvent te =
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate));
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			} else if ("rangechanged".equals(eventName)) {
+				// get new start / end time in millisec. (already converted to UTC) for the visible range
+				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
+				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
+
+				TimelineRangeEvent te =
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate));
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
 			}
 		}
 
@@ -500,14 +540,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
 		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
-	}
-
-	public Date getDate(long millis) {
-		Calendar calendar =
-		    Calendar.getInstance(ComponentUtils.resolveTimeZone(getTimeZone()), ComponentUtils.resolveLocale(getLocale()));
-		calendar.setTimeInMillis(millis);
-
-		return calendar.getTime();
 	}
 
 	public String resolveWidgetVar() {

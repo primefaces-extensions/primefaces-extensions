@@ -18,16 +18,22 @@
 
 package org.primefaces.extensions.component.timeline;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.extensions.util.ComponentUtils;
 
 /**
  * Default implementation of the {@link TimelineUpdater}.
@@ -40,6 +46,8 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 	private static final long serialVersionUID = 20130317L;
 
+	private static final Logger LOG = Logger.getLogger(DefaultTimelineUpdater.class.getName());
+
 	private String widgetVar;
 	private List<CrudOperationData> crudOperationDatas;
 
@@ -51,19 +59,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 		checkCrudOperationDataList();
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.ADD, event));
-	}
-
-	@Override
-	public void addAll(List<TimelineEvent> events) {
-		if (events == null || events.isEmpty()) {
-			return;
-		}
-
-		checkCrudOperationDataList();
-
-		for (TimelineEvent event : events) {
-			crudOperationDatas.add(new CrudOperationData(CrudOperation.ADD, event));
-		}
 	}
 
 	@Override
@@ -83,6 +78,12 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 	}
 
 	@Override
+	public void deleteAll(List<Integer> indexes) {
+		checkCrudOperationDataList();
+		crudOperationDatas.add(new CrudOperationData(CrudOperation.DELETE_ALL, indexes));
+	}
+
+	@Override
 	public void clear() {
 		checkCrudOperationDataList();
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.CLEAR));
@@ -98,32 +99,75 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		}
 
 		FacesContext fc = event.getFacesContext();
+		StringBuilder sb = new StringBuilder();
 
+		Timeline timeline = (Timeline) fc.getViewRoot().findComponent(id);
 		TimelineRenderer timelineRenderer =
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
+		Calendar calendar = Calendar.getInstance(ComponentUtils.resolveTimeZone(timeline.getTimeZone()));
 
-		for (CrudOperationData crudOperationData : crudOperationDatas) {
-			switch (crudOperationData.getCrudOperation()) {
-			case ADD:
+		try {
+			for (CrudOperationData crudOperationData : crudOperationDatas) {
+				switch (crudOperationData.getCrudOperation()) {
+				case ADD:
 
-				// TODO
-				break;
+					sb.append(widgetVar);
+					sb.append(".addItem(");
+					sb.append(timelineRenderer.encodeEvent(fc, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(");");
+					break;
 
-			case UPDATE:
+				case UPDATE:
 
-				// TODO
-				break;
+					sb.append(widgetVar);
+					sb.append(".changeItem(");
+					sb.append(crudOperationData.getIndex());
+					sb.append(",");
+					sb.append(timelineRenderer.encodeEvent(fc, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(");");
+					break;
 
-			case DELETE:
+				case DELETE:
 
-				// TODO
-				break;
+					sb.append(widgetVar);
+					sb.append(".deleteItem(");
+					sb.append(crudOperationData.getIndex());
+					sb.append(",false);");
+					break;
 
-			case CLEAR:
+				case DELETE_ALL:
 
-				// TODO
-				break;
+					List<Integer> indexes = crudOperationData.getIndexes();
+					int size = indexes != null ? indexes.size() : 0;
+					if (size == 0) {
+						break;
+					}
+
+					for (int i = 0; i < size; i++) {
+						sb.append(widgetVar);
+						sb.append(".deleteItem(");
+						sb.append(crudOperationData.getIndex());
+						if (i + 1 < size) {
+							sb.append(",true);");
+						} else {
+							sb.append(",false);");
+						}
+					}
+
+					break;
+
+				case CLEAR:
+
+					sb.append(widgetVar);
+					sb.append(".deleteAllItems();");
+					break;
+				}
 			}
+
+			// execute JS script
+			RequestContext.getCurrentInstance().execute(sb.toString());
+		} catch (IOException e) {
+			LOG.log(Level.WARNING, "Timeline with id " + id + " could not be updated, at least one CRUD operation failed", e);
 		}
 	}
 
@@ -170,6 +214,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		private CrudOperation crudOperation;
 		private TimelineEvent event;
 		private int index;
+		private List<Integer> indexes;
 
 		CrudOperationData(CrudOperation crudOperation) {
 			this.crudOperation = crudOperation;
@@ -183,6 +228,11 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		CrudOperationData(CrudOperation crudOperation, int index) {
 			this.crudOperation = crudOperation;
 			this.index = index;
+		}
+
+		CrudOperationData(CrudOperation crudOperation, List<Integer> indexes) {
+			this.crudOperation = crudOperation;
+			this.indexes = indexes;
 		}
 
 		CrudOperationData(CrudOperation crudOperation, TimelineEvent event, int index) {
@@ -202,6 +252,10 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		public int getIndex() {
 			return index;
 		}
+
+		public List<Integer> getIndexes() {
+			return indexes;
+		}
 	}
 
 	/**
@@ -215,6 +269,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		ADD,
 		UPDATE,
 		DELETE,
+		DELETE_ALL,
 		CLEAR
 	}
 }
