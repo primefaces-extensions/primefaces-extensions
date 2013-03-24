@@ -25,8 +25,11 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
             this.inputExternal.attr("disabled", "disabled");
             this.inputExternal.addClass("ui-state-disabled");
             this.inputInternal.attr("disabled", "disabled");
-        }                
-
+        }
+        
+        //Visual effects
+        PrimeFaces.skinInput(this.inputExternal);
+        
         //copy to hidden input the cleaned value
         this.inputExternal.bind('keyup', function(event) {                 
             //filter keys

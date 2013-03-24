@@ -18,8 +18,10 @@
 
 package org.primefaces.extensions.component.inputnumber;
 
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -51,6 +53,8 @@ public class InputNumber extends HtmlInputText implements Widget {
 
 	
 	public final static String INPUTNUMBER_CLASS = "ui-inputNum ui-widget";
+        private  String decimalSeparator;
+        private  String thousandSeparator;
 
 	/**
 	 * PropertyKeys
@@ -87,8 +91,10 @@ public class InputNumber extends HtmlInputText implements Widget {
 		}
 	}
 
-	public InputNumber() {
-		setRendererType(DEFAULT_RENDERER);
+        public InputNumber() {
+		setRendererType(DEFAULT_RENDERER);     
+                decimalSeparator = null;
+                thousandSeparator = null;
 	}
 
 	@Override
@@ -105,7 +111,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public String getDecimalSeparator() {
-		return (String) getStateHelper().eval(PropertyKeys.decimalSeparator, "");
+		return (String) getStateHelper().eval(PropertyKeys.decimalSeparator, getCalculatedDecimalSepartor());
 	}
 
 	public void setDecimalSeparator(final String decimalSeparator) {
@@ -113,7 +119,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public String getThousandSeparator() {
-		return (String) getStateHelper().eval(PropertyKeys.thousandSeparator, null);
+		return (String) getStateHelper().eval(PropertyKeys.thousandSeparator, getCalculatedThousandSeparator());
 	}
 
 	public void setThousandSeparator(final String thousandSeparator) {
@@ -211,4 +217,22 @@ public class InputNumber extends HtmlInputText implements Widget {
 			}
 		}
 	}
+        
+        private String getCalculatedDecimalSepartor(){
+            if(decimalSeparator==null){
+                Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+                DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
+                decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
+            }
+            return decimalSeparator;
+        }
+        
+        private String getCalculatedThousandSeparator(){
+            if(thousandSeparator==null){               
+                Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
+                DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
+                thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
+            }
+            return thousandSeparator;           
+        }
 }
