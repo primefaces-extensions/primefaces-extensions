@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.inputnumber;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -54,12 +55,16 @@ public class InputNumberRenderer extends InputRenderer {
 		Converter converter = inputNumber.getConverter();
 		String submittedValueString = (String) submittedValue;
 
-		if (converter != null) {
+		if (converter != null) {                       
 			Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
 			return doubleConverted;
-		} else {
-			if (submittedValueString != null && !submittedValueString.isEmpty()) {
-				return Double.valueOf(submittedValueString);
+		} else {                       
+			if (submittedValueString != null && !submittedValueString.isEmpty()) {				
+                                if(inputNumber.getValue() instanceof BigDecimal) {
+                                    return new BigDecimal(submittedValueString);  
+                                }else{
+                                    return new Double(submittedValueString);
+                                }
 			}
 			return null;
 		}
@@ -160,9 +165,9 @@ public class InputNumberRenderer extends InputRenderer {
 
 	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		String clientId = inputNumber.getClientId(context);               
+		String clientId = inputNumber.getClientId(context);                
 		startScript(writer, clientId);
-		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
+                String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
 		if (valueToRender == null) {
 			valueToRender = "";
 		}
@@ -171,7 +176,7 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.write("PrimeFacesExt.cw('InputNumber','" + inputNumber.resolveWidgetVar() + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",disabled:" + inputNumber.isDisabled());
-		writer.write(",valueToRender:'" + formatForPlugin(valueToRender) + "'");
+		writer.write(",valueToRender:'" + formatForPlugin(valueToRender,inputNumber) + "'");
 
 		String metaOptions = getOptions(inputNumber);
 		if (!metaOptions.isEmpty()) {
@@ -197,10 +202,8 @@ public class InputNumberRenderer extends InputRenderer {
 
 		String options = "";
 		options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
-		if (thousandSeparator != null) {
-			//empty thousandSeparator must be explicity defined.
-			options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
-		}
+		//empty thousandSeparator must be explicity defined.
+		options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
 		options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
 		options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
 		options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
@@ -224,23 +227,29 @@ public class InputNumberRenderer extends InputRenderer {
 
 	}
 
-	private String formatForPlugin(final String valueToRender) {
+	private String formatForPlugin(final String valueToRender,final InputNumber inputNumber) {
 
 		if (valueToRender == null || valueToRender.isEmpty()) {			
 			return "";
 		} else {
 
-			try {
-				double doubleToRender = Double.parseDouble(valueToRender);
-				NumberFormat formatter = new DecimalFormat("#0.0#");
+			try { 
+                                Object objectToRender; 
+                                if(inputNumber.getValue() instanceof BigDecimal) {
+                                    objectToRender = new BigDecimal(valueToRender);  
+                                }else{
+                                    objectToRender =  new Double(valueToRender);
+                                }
+                               
+                                NumberFormat formatter = new DecimalFormat("#0.0#");
 				formatter.setRoundingMode(RoundingMode.FLOOR);
 				//autoNumeric jquery plugin max and min limits
-				formatter.setMinimumFractionDigits(10);
-				formatter.setMaximumFractionDigits(10);
+				formatter.setMinimumFractionDigits(15);
+				formatter.setMaximumFractionDigits(15);
 				formatter.setMaximumIntegerDigits(20);
-				String f = formatter.format(doubleToRender);
+				String f = formatter.format(objectToRender);
 
-				//force to english decimal separator
+                                //force to english decimal separator
 				f = f.replace(',', '.');
 				return f;
 			} catch (Exception e) {
