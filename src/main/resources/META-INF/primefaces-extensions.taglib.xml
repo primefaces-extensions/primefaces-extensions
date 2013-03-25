@@ -814,7 +814,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Font Name to use.Applicable for excel only Ex:Courier New,Verdana..</description>
+            <description>Font Name/Font family to use.Ex:Courier New,Verdana..</description>
             <name>fontName</name>
             <required>false</required>
             <type>java.lang.String</type>

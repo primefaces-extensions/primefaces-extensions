@@ -81,6 +81,7 @@ public class PDFExporter extends Exporter {
     private Float facetFontSize;
     private Color facetFontColor;
     private String facetFontStyle;
+    private String fontName;
     private Float cellFontSize;
     private Color cellFontColor;
     private String cellFontStyle;
@@ -810,6 +811,9 @@ public class PDFExporter extends Exporter {
         if (cellFontColor != null) {
             this.cellFontColor = Color.decode(cellFontColor);
         }
+        if (fontName != null) {
+            this.fontName = fontName;
+        }
         if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
             this.facetFontStyle = "" + facetFont.NORMAL;
         }
@@ -853,6 +857,10 @@ public class PDFExporter extends Exporter {
         }
         if (cellFontStyle != null) {
             this.cellFont.setStyle(cellFontStyle);
+        }
+        if (fontName != null) {
+            cellFont.setFamily(fontName);
+            facetFont.setFamily(fontName);
         }
     }
 
