@@ -52,138 +52,79 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 		_self.isOveritedAjaxResponse = true;
 
 		$(document).ajaxComplete(function() {
-			var docPartialUpdate = arguments[3];
-			if (!docPartialUpdate && arguments[1].responseXML)
-				docPartialUpdate = arguments[1].responseXML;
-			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
+			try {
+				var docPartialUpdate = arguments[3];
+				if (!docPartialUpdate && arguments[1] && arguments[1].responseXML)
+					docPartialUpdate = arguments[1].responseXML;
 
-			if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
-				// XML => JSON
-				var error = {};
+				var nodeErrors = null;
+				if (docPartialUpdate)
+					nodeErrors = docPartialUpdate.getElementsByTagName('error');
 
-				for (var i=0; i < nodeErrors[0].childNodes.length; i++) {
-					var node = nodeErrors[0].childNodes[i];
-					var key = node.nodeName;
-					var val = node.nodeValue;
+				if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
+					// XML => JSON
+					var error = {};
 
-					if (node.childNodes && node.childNodes.length) {
-						val = node.childNodes[0].nodeValue;
-					}
+					for (var i=0; i < nodeErrors[0].childNodes.length; i++) {
+						var node = nodeErrors[0].childNodes[i];
+						var key = node.nodeName;
+						var val = node.nodeValue;
 
-					error[key] = val;
-				}
-
-				if (error['error-name']) {
-					// findErrorSettings
-					var errorSetting = _self.findErrorSettings(error['error-name']);
-
-					//skip dialog if onerror is defined and returns false
-					if (errorSetting['onerror']) {
-						var onerrorFunction = errorSetting['onerror'];
-						if (onerrorFunction.call(this, error, arguments[2]) === false) {
-							return true;
+						if (node.childNodes && node.childNodes.length) {
+							val = node.childNodes[0].nodeValue;
 						}
+
+						error[key] = val;
 					}
 
-					// Copy updates to errorSettings ...
-					if (error.updateCustomContent && error.updateCustomContent.substring(-13) == '<exception />') {
-						error.updateCustomContent = null;
+					if (error['error-name']) {
+						// findErrorSettings
+						var errorSetting = _self.findErrorSettings(error['error-name']);
+
+						//skip dialog if onerror is defined and returns false
+						if (errorSetting['onerror']) {
+							var onerrorFunction = errorSetting['onerror'];
+							if (onerrorFunction.call(this, error, arguments[2]) === false) {
+								return true;
+							}
+						}
+
+						// Copy updates to errorSettings ...
+						if (error.updateCustomContent && error.updateCustomContent.substring(-13) == '<exception />') {
+							error.updateCustomContent = null;
+						}
+
+						if (error.updateTitle && error.updateTitle.substring(-13) == '<exception />') {
+							error.updateTitle = null;
+						}
+
+						if (error.updateBody && error.updateBody.substring(-13) == '<exception />') {
+							error.updateBody = null;
+						}
+
+						if (error.updateViewState && error.updateViewState.substring(-13) == '<exception />') {
+							error.updateViewState = null;
+						}
+
+						errorSetting.updateCustomContent = error.updateCustomContent;
+						errorSetting.updateTitle = error.updateTitle;
+						errorSetting.updateBody = error.updateBody;
+						errorSetting.updateViewState = error.updateViewState;
+
+						var errorData = _self.replaceVariables(errorSetting, error);
+
+						_self.show(errorData);
+
+						return true;
 					}
-
-					if (error.updateTitle && error.updateTitle.substring(-13) == '<exception />') {
-						error.updateTitle = null;
-					}
-
-					if (error.updateBody && error.updateBody.substring(-13) == '<exception />') {
-						error.updateBody = null;
-					}
-
-					if (error.updateViewState && error.updateViewState.substring(-13) == '<exception />') {
-						error.updateViewState = null;
-					}
-
-					errorSetting.updateCustomContent = error.updateCustomContent;
-					errorSetting.updateTitle = error.updateTitle;
-					errorSetting.updateBody = error.updateBody;
-					errorSetting.updateViewState = error.updateViewState;
-
-					var errorData = _self.replaceVariables(errorSetting, error);
-
-					_self.show(errorData);
-
-					return true;
 				}
 			}
+			catch (e) {
+				try {
+					console.error('Unknown response in AjaxExceptionHandler:', e);
+				} catch (ee) {}
+			}
 		});
-		//		// backup original AjaxResponse function ...
-		//		debugger;
-		//		var backupAjaxResponse = PrimeFaces.ajax.AjaxResponse;
-		//
-		//		PrimeFaces.ajax.AjaxResponse = function() {
-		//			debugger;
-		//			var docPartialUpdate = arguments[0];
-		//			var nodeErrors = docPartialUpdate.getElementsByTagName('error');
-		//
-		//			if (nodeErrors && nodeErrors.length && nodeErrors[0].childNodes && nodeErrors[0].childNodes.length) {
-		//				// XML => JSON
-		//				var error = {};
-		//
-		//				for (var i=0; i < nodeErrors[0].childNodes.length; i++) {
-		//					var node = nodeErrors[0].childNodes[i];
-		//					var key = node.nodeName;
-		//					var val = node.nodeValue;
-		//
-		//					if (node.childNodes && node.childNodes.length) {
-		//						val = node.childNodes[0].nodeValue;
-		//					}
-		//
-		//					error[key] = val;
-		//				}
-		//
-		//				if (error['error-name']) {
-		//					// findErrorSettings
-		//					var errorSetting = _self.findErrorSettings(error['error-name']);
-		//
-		//					//skip dialog if onerror is defined and returns false
-		//					if (errorSetting['onerror']) {
-		//						var onerrorFunction = errorSetting['onerror'];
-		//						if (onerrorFunction.call(this, error, arguments[2]) === false) {
-		//							return true;
-		//						}
-		//					}
-		//
-		//					// Copy updates to errorSettings ...
-		//					if (error.updateCustomContent && error.updateCustomContent.substring(-13) == '<exception />') {
-		//						error.updateCustomContent = null;
-		//					}
-		//
-		//					if (error.updateTitle && error.updateTitle.substring(-13) == '<exception />') {
-		//						error.updateTitle = null;
-		//					}
-		//
-		//					if (error.updateBody && error.updateBody.substring(-13) == '<exception />') {
-		//						error.updateBody = null;
-		//					}
-		//
-		//					if (error.updateViewState && error.updateViewState.substring(-13) == '<exception />') {
-		//						error.updateViewState = null;
-		//					}
-		//
-		//					errorSetting.updateCustomContent = error.updateCustomContent;
-		//					errorSetting.updateTitle = error.updateTitle;
-		//					errorSetting.updateBody = error.updateBody;
-		//					errorSetting.updateViewState = error.updateViewState;
-		//
-		//					var errorData = _self.replaceVariables(errorSetting, error);
-		//
-		//					_self.show(errorData);
-		//
-		//					return true;
-		//				}
-		//			}
-		//
-		//			return backupAjaxResponse.apply(this, arguments);
-		//		};
 	},
 	
 	isVisible : function() {
