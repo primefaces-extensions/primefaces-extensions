@@ -2605,6 +2605,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Boolean flag if the timeline is theme aware in terms of jQuery Themeroller style classes. If this flag is set to false, a default internal CSS styling is applied. Otherwise the current theme is applied. Default is true.]]>
+            </description>
+            <name>themable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Check if the timeline container is resized, and if so, resize the timeline. Useful when the webpage is resized. Default is true.]]>
             </description>
             <name>responsive</name>

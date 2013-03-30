@@ -64,12 +64,20 @@ public class TimelineModel implements Serializable {
 		}
 	}
 
+	public void addAll(List<TimelineEvent> events) {
+		addAll(events, null);
+	}
+
 	public void addAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
 		if (events != null && !events.isEmpty()) {
 			for (TimelineEvent event : events) {
 				add(event, timelineUpdater);
 			}
 		}
+	}
+
+	public void update(TimelineEvent event) {
+		update(event, null);
 	}
 
 	public void update(TimelineEvent event, TimelineUpdater timelineUpdater) {
@@ -84,12 +92,20 @@ public class TimelineModel implements Serializable {
 		}
 	}
 
+	public void updateAll(List<TimelineEvent> events) {
+		updateAll(events, null);
+	}
+
 	public void updateAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
 		if (events != null && !events.isEmpty()) {
 			for (TimelineEvent event : events) {
 				update(event, timelineUpdater);
 			}
 		}
+	}
+
+	public void delete(TimelineEvent event) {
+		delete(event, null);
 	}
 
 	public void delete(TimelineEvent event, TimelineUpdater timelineUpdater) {
@@ -100,6 +116,10 @@ public class TimelineModel implements Serializable {
 			// update UI
 			timelineUpdater.delete(index);
 		}
+	}
+
+	public void deleteAll(List<TimelineEvent> events) {
+		deleteAll(events, null);
 	}
 
 	public void deleteAll(List<TimelineEvent> events, TimelineUpdater timelineUpdater) {
@@ -116,6 +136,10 @@ public class TimelineModel implements Serializable {
 				timelineUpdater.deleteAll(indexes);
 			}
 		}
+	}
+
+	public void clear() {
+		events.clear();
 	}
 
 	public void clear(TimelineUpdater timelineUpdater) {

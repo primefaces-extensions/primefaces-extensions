@@ -93,6 +93,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		height,
 		minHeight,
 		width,
+		themable,
 		responsive,
 		axisOnTop,
 		dragAreaWidth,
@@ -222,6 +223,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	public void setWidth(String width) {
 		setAttribute(PropertyKeys.width, width);
+	}
+
+	public boolean isThemable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.themable, true);
+	}
+
+	public void setThemable(boolean themable) {
+		setAttribute(PropertyKeys.themable, themable);
 	}
 
 	public boolean isResponsive() {
