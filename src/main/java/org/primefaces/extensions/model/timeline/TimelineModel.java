@@ -21,7 +21,6 @@ package org.primefaces.extensions.model.timeline;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.primefaces.extensions.component.timeline.TimelineUpdater;
 
@@ -53,12 +52,10 @@ public class TimelineModel implements Serializable {
 	}
 
 	public void add(TimelineEvent event) {
-		event.setId(UUID.randomUUID().toString());
 		events.add(event);
 	}
 
 	public void add(TimelineEvent event, TimelineUpdater timelineUpdater) {
-		event.setId(UUID.randomUUID().toString());
 		events.add(event);
 
 		if (timelineUpdater != null) {
@@ -112,6 +109,8 @@ public class TimelineModel implements Serializable {
 				indexes.add(getIndex(event));
 			}
 
+			this.events.removeAll(events);
+
 			if (timelineUpdater != null) {
 				// update UI
 				timelineUpdater.deleteAll(indexes);
@@ -136,21 +135,23 @@ public class TimelineModel implements Serializable {
 		this.events = events;
 	}
 
-	public TimelineEvent getEvent(String id) {
-		for (TimelineEvent event : events) {
-			if (event.getId().equals(id)) {
-				return event;
-			}
+	public TimelineEvent getEvent(String index) {
+		return getEvent(index != null ? Integer.valueOf(index) : -1);
+	}
+
+	public TimelineEvent getEvent(int index) {
+		if (index < 0) {
+			return null;
 		}
 
-		return null;
+		return events.get(index);
 	}
 
 	private int getIndex(TimelineEvent event) {
 		int index = -1;
 
 		for (int i = 0; i < events.size(); i++) {
-			if (events.get(i).getId().equals(event.getId())) {
+			if (events.get(i).equals(event)) {
 				index = i;
 
 				break;

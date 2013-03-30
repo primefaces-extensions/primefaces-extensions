@@ -1,0 +1,17 @@
+default css:
+------------------------------------------------
+- Fixed css background images. For example:
+	background: url("#{resource['primefaces-extensions:timeline/new.png']}") no-repeat center;
+
+- Don't use image for clustering
+    /*background: #97B0F8 url('img/cluster_bg.png');*/
+	
+- Adjusted padding for icons (navigation and new)
+    div.timeline-navigation-new,
+    div.timeline-navigation-delete,
+    div.timeline-navigation-zoom-in,
+    div.timeline-navigation-zoom-out,
+    div.timeline-navigation-move-left,
+    div.timeline-navigation-move-right {
+        padding: 8px;  // was 10px
+    }

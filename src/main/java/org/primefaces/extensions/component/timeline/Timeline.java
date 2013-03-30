@@ -465,28 +465,22 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("add".equals(eventName)) {
-				// get preset start / end time in millisec. (already converted to UTC) and the group
-				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
-				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
-				String group = params.get(clientId + "_group");
-
+				// preset start / end date (already converted to UTC) and the group
 				TimelineAddEvent te =
-				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate), group);
+				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
+				                         toDate(params.get(clientId + "_endDate")), params.get(clientId + "_group"));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("change".equals(eventName)) {
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
-				//int index = Integer.valueOf(params.get(clientId + "_index"));
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				// get new start / end time in millisec. (already converted to UTC)
-				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
-				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
-
-				// update the original timeline event with new dates
-				timelineEvent.setStartDate(new Date(startDate));
-				timelineEvent.setEndDate(new Date(endDate));
+				// update start / end date (already converted to UTC)
+				if (timelineEvent != null) {
+					timelineEvent.setStartDate(toDate(params.get(clientId + "_startDate")));
+					timelineEvent.setEndDate(toDate(params.get(clientId + "_endDate")));
+				}
 
 				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
@@ -494,8 +488,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
-				//int index = Integer.valueOf(params.get(clientId + "_index"));
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
 				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
@@ -503,30 +496,26 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("select".equals(eventName)) {
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventId"));
+				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 				TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("rangechange".equals(eventName)) {
-				// get new start / end time in millisec. (already converted to UTC) for the visible range
-				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
-				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
-
+				// get start / end date (already converted to UTC)
 				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate));
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
+				                           toDate(params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("rangechanged".equals(eventName)) {
-				// get new start / end time in millisec. (already converted to UTC) for the visible range
-				long startDate = Long.valueOf(params.get(clientId + "_startDate"));
-				long endDate = Long.valueOf(params.get(clientId + "_endDate"));
-
+				// get start / end date (already converted to UTC)
 				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), new Date(startDate), new Date(endDate));
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
+				                           toDate(params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -540,6 +529,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
 		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+	}
+
+	private Date toDate(String param) {
+		if (param == null) {
+			return null;
+		}
+
+		return new Date(Long.valueOf(param));
 	}
 
 	public String resolveWidgetVar() {

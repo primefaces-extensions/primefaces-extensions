@@ -2549,7 +2549,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[An instance of org.primefaces.extensions.model.timeline.TimelineModel representing the backend model.]]>
+                <![CDATA[An instance of TimelineModel representing the backing model.]]>
             </description>
             <name>value</name>
             <required>true</required>

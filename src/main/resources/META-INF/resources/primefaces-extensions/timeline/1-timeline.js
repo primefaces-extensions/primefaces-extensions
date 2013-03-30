@@ -24,9 +24,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
      */
     createTimeline: function () {
         //this.jq.addClass("ui-widget ui-widget-content ui-corner-all ui-timeline-container");
+        var $jqId = $(this.jqId);
+        if (this.cfg.opts.selectable) {
+            $jqId.addClass("ui-timeline-selectable");
+        }
 
         // instantiate a timeline object
-        this.instance = new links.Timeline(document.getElementById(this.id));
+        this.instance = new links.Timeline($jqId.get(0));
 
         // draw the timeline with created data and options
         this.instance.draw(this.cfg.data, this.cfg.opts);
@@ -47,34 +51,52 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         }
 
         // "select" event
-        var behavior = this.getBehavior("select");
-        if (this.cfg.selectable && behavior) {
+        if (this.cfg.opts.selectable && this.getBehavior("select")) {
             links.events.addListener(this.instance, 'select', $.proxy(function () {
-                var item = this.getSelectedItem();
+                var index = this.getSelectedIndex();
+                if (index < 0) {
+                    return;
+                }
+                
                 var ext = {
                     params: [
-                        {name: this.id + '_eventId', value: item.id}
+                        {name: this.id + '_eventIdx', value: index}
                     ]
                 };
 
-                behavior.call(this, null, ext);
+                this.getBehavior("select").call(this, null, ext);
             }, this));
         }
 
         // "add" event
-        behavior = this.getBehavior("add");
-        if (this.cfg.selectable && this.cfg.editable && behavior) {
+        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("add")) {
             links.events.addListener(this.instance, 'add', $.proxy(function () {
                 var item = this.getSelectedItem();
-                var ext = {
-                    params: [
-                        {name: this.id + '_startDate', value: this.getUTC(item.start)},
-                        {name: this.id + '_endDate', value: this.getUTC(item.end)},
-                        {name: this.id + '_group', value: item.group}
-                    ]
-                };
+                if (item == null) {
+                    return;
+                }
+                
+                var params = [];
+                params.push({
+                    name: this.id + '_startDate',
+                    value: this.getUTC(item.start)
+                });
+                
+                if (item.end) {
+                    params.push({
+                        name: this.id + '_endDate',
+                        value: this.getUTC(item.end)
+                    });    
+                }
+                
+                if (item.group) {
+                    params.push({
+                        name: this.id + '_group',
+                        value: item.group
+                    });    
+                }
 
-                behavior.call(this, null, ext);
+                this.getBehavior("add").call(this, null, {params: params});
                 
                 // cancel adding the item because it should be added on the server-side and draw with response
                 this.instance.cancelAdd();
@@ -116,7 +138,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
     getSelectedItem: function () {
         var index = this.getSelectedIndex();
         if (index != -1) {
-            this.instance.getItem(index);
+            return this.instance.getItem(index);
         }
 
         return null;

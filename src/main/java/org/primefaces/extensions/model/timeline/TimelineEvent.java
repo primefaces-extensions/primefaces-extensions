@@ -32,7 +32,6 @@ public class TimelineEvent implements Serializable {
 
 	private static final long serialVersionUID = 20130316L;
 
-	private String id;
 	private Object data;
 	private Date startDate;
 	private Date endDate;
@@ -81,14 +80,6 @@ public class TimelineEvent implements Serializable {
 		this.editable = editable;
 		this.group = group;
 		this.styleClass = styleClass;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public Object getData() {
@@ -151,7 +142,7 @@ public class TimelineEvent implements Serializable {
 
 		TimelineEvent that = (TimelineEvent) o;
 
-		if (id != null ? !id.equals(that.id) : that.id != null) {
+		if (data != null ? !data.equals(that.data) : that.data != null) {
 			return false;
 		}
 
@@ -160,7 +151,7 @@ public class TimelineEvent implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+		return data != null ? data.hashCode() : 0;
 	}
 
 	private void checkStartDate(Date startDate) {

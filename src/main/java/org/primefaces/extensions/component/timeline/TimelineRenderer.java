@@ -162,8 +162,7 @@ public class TimelineRenderer extends CoreRenderer {
 	                          TimelineEvent event) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-		fsw.write("{\"id\":\"" + event.getId() + "\"");
-		fsw.write(",\"start\":" + encodeDate(calendar, event.getStartDate()));
+		fsw.write("{\"start\":" + encodeDate(calendar, event.getStartDate()));
 
 		if (event.getEndDate() != null) {
 			fsw.write(",\"end\":" + encodeDate(calendar, event.getEndDate()));

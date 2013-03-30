@@ -8,16 +8,20 @@ div.timeline-axis {
     border-width: 1px;
     border-top-style: solid;
 }
+
 div.timeline-axis-grid {
     border-left-style: solid;
     border-width: 1px;
 }
+
 div.timeline-axis-grid-minor {
     border-color: #e5e5e5;
 }
+
 div.timeline-axis-grid-major {
     border-color: #bfbfbf;
 }
+
 div.timeline-axis-text {
     color: #4D4D4D;
     padding: 3px;
@@ -45,9 +49,10 @@ div.timeline-event-selected {
 
 div.timeline-event-cluster {
     /* TODO: use another color or pattern? */
-    background: #97B0F8 url('img/cluster_bg.png');
+    /*background: #97B0F8 url('img/cluster_bg.png');*/
     color: white;
 }
+
 div.timeline-event-cluster div.timeline-event-dot {
     border-color: #D5DDF6;
 }
@@ -64,14 +69,14 @@ div.timeline-event-dot {
     border-style: solid;
     border-width: 5px;
     border-radius: 5px;
-    -moz-border-radius: 5px;  /* For Firefox 3.6 and older */
+    -moz-border-radius: 5px; /* For Firefox 3.6 and older */
 }
 
 div.timeline-event-range {
     border-style: solid;
     border-width: 1px;
     border-radius: 2px;
-    -moz-border-radius: 2px;  /* For Firefox 3.6 and older */
+    -moz-border-radius: 2px; /* For Firefox 3.6 and older */
 }
 
 div.timeline-event-range-drag-left {
@@ -83,7 +88,6 @@ div.timeline-event-range-drag-right {
     cursor: e-resize;
     z-index: 1000;
 }
-
 
 div.timeline-event-line {
     border-left-width: 1px;
@@ -100,6 +104,7 @@ div.timeline-groups-axis {
     border-color: #BEBEBE;
     border-width: 1px;
 }
+
 div.timeline-groups-text {
     color: #4D4D4D;
     padding-left: 10px;
@@ -122,48 +127,49 @@ div.timeline-navigation {
     font-size: 20px;
     font-weight: bold;
     color: gray;
-
     border: 1px solid #BEBEBE;
     background-color: #F5F5F5;
     border-radius: 2px;
-    -moz-border-radius: 2px;  /* For Firefox 3.6 and older */
+    -moz-border-radius: 2px; /* For Firefox 3.6 and older */
 }
 
-div.timeline-navigation-new, div.timeline-navigation-delete,
-div.timeline-navigation-zoom-in,  div.timeline-navigation-zoom-out,
-div.timeline-navigation-move-left, div.timeline-navigation-move-right {
+div.timeline-navigation-new,
+div.timeline-navigation-delete,
+div.timeline-navigation-zoom-in,
+div.timeline-navigation-zoom-out,
+div.timeline-navigation-move-left,
+div.timeline-navigation-move-right {
     cursor: pointer;
-    padding: 10px 10px;
+    padding: 8px;
     float: left;
     text-decoration: none;
     border-color: #BEBEBE; /* border is used for the separator between new and navigation buttons */
-
     width: 16px;
     height: 16px;
 }
 
 div.timeline-navigation-new {
-    background: url('img/16/new.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/new.png']}") no-repeat center;
 }
 
 div.timeline-navigation-delete {
     padding: 0px;
     padding-left: 5px;
-    background: url('img/16/delete.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/delete.png']}") no-repeat center;
 }
 
 div.timeline-navigation-zoom-in {
-    background: url('img/16/zoomin.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/zoomin.png']}") no-repeat center;
 }
 
 div.timeline-navigation-zoom-out {
-    background: url('img/16/zoomout.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/zoomout.png']}") no-repeat center;
 }
 
 div.timeline-navigation-move-left {
-    background: url('img/16/moveleft.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/moveleft.png']}") no-repeat center;
 }
 
 div.timeline-navigation-move-right {
-    background: url('img/16/moveright.png') no-repeat center;
+    background: url("#{resource['primefaces-extensions:timeline/moveright.png']}") no-repeat center;
 }
