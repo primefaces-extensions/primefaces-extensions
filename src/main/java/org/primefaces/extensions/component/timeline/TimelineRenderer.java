@@ -34,7 +34,6 @@ import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * TimelineRenderer
@@ -75,123 +74,135 @@ public class TimelineRenderer extends CoreRenderer {
 	}
 
 	protected void encodeScript(FacesContext context, Timeline timeline) throws IOException {
+		TimelineModel model = timeline.getValue();
+		if (model == null) {
+			return;
+		}
+
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = timeline.getClientId(context);
-		TimelineModel model = timeline.getValue();
 		Calendar calendar = Calendar.getInstance(ComponentUtils.resolveTimeZone(timeline.getTimeZone()));
+		FastStringWriter fsw = new FastStringWriter();
 
-		WidgetBuilder wb = getWidgetBuilder(context);
-		wb.widget("Timeline", timeline.resolveWidgetVar(), clientId, true);
+		startScript(writer, clientId);
+		writer.write("$(function(){");
+		writer.write("PrimeFacesExt.cw('Timeline','" + timeline.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
 		writer.write(",data:[");
 
 		// encode events
 		List<TimelineEvent> events = model.getEvents();
 		int size = events != null ? events.size() : 0;
 		for (int i = 0; i < size; i++) {
-			writer.write(escapeText(encodeEvent(context, timeline, calendar, events.get(i))));
+			fsw.reset();
+			writer.write(encodeEvent(context, fsw, timeline, calendar, events.get(i)));
 			if (i + 1 < size) {
 				writer.write(",");
 			}
 		}
 
-		writer.write("]");
+		writer.write("],opts:{");
 
 		// encode options
-		wb.attr("height", timeline.getHeight());
-		wb.attr("minHeight", timeline.getMinHeight());
-		wb.attr("width", timeline.getWidth());
-		wb.attr("responsive", timeline.isResponsive());
-		wb.attr("axisOnTop", timeline.isAxisOnTop());
-		wb.attr("dragAreaWidth", timeline.getDragAreaWidth());
-		wb.attr("editable", timeline.isEditable());
-		wb.attr("selectable", timeline.isSelectable());
-		wb.attr("zoomable", timeline.isZoomable());
-		wb.attr("moveable", timeline.isMoveable());
+		writer.write("height:'" + timeline.getHeight() + "'");
+		writer.write(",minHeight:" + timeline.getMinHeight());
+		writer.write(",width:'" + timeline.getWidth() + "'");
+		writer.write(",responsive:" + timeline.isResponsive());
+		writer.write(",axisOnTop:" + timeline.isAxisOnTop());
+		writer.write(",dragAreaWidth:" + timeline.getDragAreaWidth());
+		writer.write(",editable:" + timeline.isEditable());
+		writer.write(",selectable:" + timeline.isSelectable());
+		writer.write(",zoomable:" + timeline.isZoomable());
+		writer.write(",moveable:" + timeline.isMoveable());
 
 		if (timeline.getStart() != null) {
-			wb.attr("start", encodeDate(calendar, timeline.getStart()));
+			writer.write(",start:" + encodeDate(calendar, timeline.getStart()));
 		}
 
 		if (timeline.getEnd() != null) {
-			wb.attr("end", encodeDate(calendar, timeline.getEnd()));
+			writer.write(",end:" + encodeDate(calendar, timeline.getEnd()));
 		}
 
 		if (timeline.getMin() != null) {
-			wb.attr("min", encodeDate(calendar, timeline.getMin()));
+			writer.write(",min:" + encodeDate(calendar, timeline.getMin()));
 		}
 
 		if (timeline.getMax() != null) {
-			wb.attr("max", encodeDate(calendar, timeline.getMax()));
+			writer.write(",max:" + encodeDate(calendar, timeline.getMax()));
 		}
 
-		wb.attr("intervalMin", timeline.getZoomMin());
-		wb.attr("intervalMax", timeline.getZoomMax());
-		wb.attr("eventMargin", timeline.getEventMargin());
-		wb.attr("eventMarginAxis", timeline.getEventMarginAxis());
-		wb.attr("eventStyle", timeline.getEventStyle());
-		wb.attr("groupsChangeable", timeline.isGroupsChangeable());
-		wb.attr("groupsOnRight", timeline.isGroupsOnRight());
+		writer.write(",intervalMin:" + timeline.getZoomMin());
+		writer.write(",intervalMax:" + timeline.getZoomMax());
+		writer.write(",eventMargin:" + timeline.getEventMargin());
+		writer.write(",eventMarginAxis:" + timeline.getEventMarginAxis());
+		writer.write(",style:'" + timeline.getEventStyle() + "'");
+		writer.write(",groupsChangeable:" + timeline.isGroupsChangeable());
+		writer.write(",groupsOnRight:" + timeline.isGroupsOnRight());
 
 		if (timeline.getGroupsWidth() != null) {
-			wb.attr("groupsWidth", timeline.getGroupsWidth());
+			writer.write(",groupsWidth:'" + timeline.getGroupsWidth() + "'");
 		}
 
-		wb.attr("snapEvents", timeline.isSnapEvents());
-		wb.attr("stackEvents", timeline.isStackEvents());
-		wb.attr("showCurrentTime", timeline.isShowCurrentTime());
-		wb.attr("showMajorLabels", timeline.isShowMajorLabels());
-		wb.attr("showMinorLabels", timeline.isShowMinorLabels());
-		wb.attr("showButtonNew", timeline.isShowButtonNew());
-		wb.attr("showNavigation", timeline.isShowNavigation());
+		writer.write(",snapEvents:" + timeline.isSnapEvents());
+		writer.write(",stackEvents:" + timeline.isStackEvents());
+		writer.write(",showCurrentTime:" + timeline.isShowCurrentTime());
+		writer.write(",showMajorLabels:" + timeline.isShowMajorLabels());
+		writer.write(",showMinorLabels:" + timeline.isShowMinorLabels());
+		writer.write(",showButtonNew:" + timeline.isShowButtonNew());
+		writer.write(",showNavigation:" + timeline.isShowNavigation());
+		writer.write("}");
 
-		encodeClientBehaviors(context, timeline, wb);
+		encodeClientBehaviors(context, timeline);
 
-		startScript(writer, clientId);
-		writer.write(wb.build());
+		writer.write("},true);});");
 		endScript(writer);
 	}
 
-	public String encodeEvent(FacesContext context, Timeline timeline, Calendar calendar, TimelineEvent event)
-	    throws IOException {
+	public String encodeEvent(FacesContext context, FastStringWriter fsw, Timeline timeline, Calendar calendar,
+	                          TimelineEvent event) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-		FastStringWriter fsw = new FastStringWriter();
-		ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
-		context.setResponseWriter(clonedWriter);
-
-		clonedWriter.write("{\"id\":\"" + event.getId() + "\"");
-		clonedWriter.write(",\"start\":" + encodeDate(calendar, event.getStartDate()));
+		fsw.write("{\"id\":\"" + event.getId() + "\"");
+		fsw.write(",\"start\":" + encodeDate(calendar, event.getStartDate()));
 
 		if (event.getEndDate() != null) {
-			clonedWriter.write(",\"end\":" + encodeDate(calendar, event.getEndDate()));
+			fsw.write(",\"end\":" + encodeDate(calendar, event.getEndDate()));
 		}
 
-		clonedWriter.write(",\"editable\":" + event.isEditable());
+		if (event.isEditable() != null) {
+			fsw.write(",\"editable\":" + event.isEditable());
+		}
 
 		if (event.getGroup() != null) {
-			clonedWriter.write(",\"group\":\"" + event.getGroup() + "\"");
+			fsw.write(",\"group\":\"" + event.getGroup() + "\"");
 		}
 
 		if (StringUtils.isNotBlank(event.getStyleClass())) {
-			clonedWriter.write(",\"styleClass\":\"" + event.getStyleClass() + "\"");
+			fsw.write(",\"styleClass\":\"" + event.getStyleClass() + "\"");
 		}
 
-		clonedWriter.write(",\"content\":\"");
+		fsw.write(",\"content\":\"");
 		if (timeline.getChildCount() > 0) {
 			if (StringUtils.isNotBlank(timeline.getVar())) {
 				context.getExternalContext().getRequestMap().put(timeline.getVar(), event);
 			}
 
+			fsw.setJson(true);
+
+			ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+			context.setResponseWriter(clonedWriter);
+
 			renderChildren(context, timeline);
+
+			// restore writer
+			context.setResponseWriter(writer);
+			fsw.setJson(false);
 		} else if (event.getData() != null) {
-			clonedWriter.write(event.getData().toString());
+			fsw.write(escapeText(event.getData().toString()));
 		}
 
-		clonedWriter.write("\"");
-		clonedWriter.write("}");
-
-		// restore the original writer
-		context.setResponseWriter(writer);
+		fsw.write("\"");
+		fsw.write("}");
 
 		return fsw.toString();
 	}
@@ -201,19 +212,19 @@ public class TimelineRenderer extends CoreRenderer {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("new Date(");
-		calendar.get(Calendar.YEAR);
+		sb.append(calendar.get(Calendar.YEAR));
 		sb.append(',');
-		calendar.get(Calendar.MONTH);
+		sb.append(calendar.get(Calendar.MONTH));
 		sb.append(',');
-		calendar.get(Calendar.DAY_OF_MONTH);
+		sb.append(calendar.get(Calendar.DAY_OF_MONTH));
 		sb.append(',');
-		calendar.get(Calendar.HOUR_OF_DAY);
+		sb.append(calendar.get(Calendar.HOUR_OF_DAY));
 		sb.append(',');
-		calendar.get(Calendar.MINUTE);
+		sb.append(calendar.get(Calendar.MINUTE));
 		sb.append(',');
-		calendar.get(Calendar.SECOND);
+		sb.append(calendar.get(Calendar.SECOND));
 		sb.append(',');
-		calendar.get(Calendar.MILLISECOND);
+		sb.append(calendar.get(Calendar.MILLISECOND));
 		sb.append(')');
 
 		return sb.toString();

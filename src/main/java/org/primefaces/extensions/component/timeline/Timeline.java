@@ -313,7 +313,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public long getZoomMin() {
-		return (Long) getStateHelper().eval(PropertyKeys.zoomMin, 10);
+		return (Long) getStateHelper().eval(PropertyKeys.zoomMin, 10L);
 	}
 
 	public void setZoomMin(long zoomMin) {

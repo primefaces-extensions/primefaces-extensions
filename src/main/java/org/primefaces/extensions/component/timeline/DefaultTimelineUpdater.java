@@ -34,6 +34,7 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.FastStringWriter;
 
 /**
  * Default implementation of the {@link TimelineUpdater}.
@@ -100,6 +101,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 		FacesContext fc = event.getFacesContext();
 		StringBuilder sb = new StringBuilder();
+		FastStringWriter fsw = new FastStringWriter();
 
 		Timeline timeline = (Timeline) fc.getViewRoot().findComponent(id);
 		TimelineRenderer timelineRenderer =
@@ -111,19 +113,21 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				switch (crudOperationData.getCrudOperation()) {
 				case ADD:
 
+					fsw.reset();
 					sb.append(widgetVar);
 					sb.append(".addItem(");
-					sb.append(timelineRenderer.encodeEvent(fc, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, timeline, calendar, crudOperationData.getEvent()));
 					sb.append(");");
 					break;
 
 				case UPDATE:
 
+					fsw.reset();
 					sb.append(widgetVar);
 					sb.append(".changeItem(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
-					sb.append(timelineRenderer.encodeEvent(fc, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, timeline, calendar, crudOperationData.getEvent()));
 					sb.append(");");
 					break;
 

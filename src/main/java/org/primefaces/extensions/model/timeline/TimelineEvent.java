@@ -115,11 +115,11 @@ public class TimelineEvent implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public boolean isEditable() {
+	public Boolean isEditable() {
 		return editable;
 	}
 
-	public void setEditable(boolean editable) {
+	public void setEditable(Boolean editable) {
 		this.editable = editable;
 	}
 

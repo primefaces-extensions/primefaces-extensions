@@ -189,59 +189,83 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < text.length(); i++) {
-			char ch = text.charAt(i);
-			switch (ch) {
-			case '"':
-				sb.append("\\\"");
-				break;
-
-			case '\\':
-				sb.append("\\\\");
-				break;
-
-			case '\b':
-				sb.append("\\b");
-				break;
-
-			case '\f':
-				sb.append("\\f");
-				break;
-
-			case '\n':
-				sb.append("\\n");
-				break;
-
-			case '\r':
-				sb.append("\\r");
-				break;
-
-			case '\t':
-				sb.append("\\t");
-				break;
-
-			case '/':
-				sb.append("\\/");
-				break;
-
-			default:
-
-				//Reference: http://www.unicode.org/versions/Unicode5.1.0/
-				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
-				    || (ch >= '\u2000' && ch <= '\u20FF')) {
-					String ss = Integer.toHexString(ch);
-					sb.append("\\u");
-					for (int k = 0; k < 4 - ss.length(); k++) {
-						sb.append('0');
-					}
-
-					sb.append(ss.toUpperCase());
-				} else {
-					sb.append(ch);
-				}
-			}
+			escapeChar(sb, text.charAt(i));
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * Duplicate code from json-simple project under apache license
+	 * http://code.google.com/p/json-simple/source/browse/trunk/src/org/json/simple/JSONValue.java
+	 *
+	 * @param  text original text as char[]
+	 * @return String escaped text as char[] to be used as JSON value
+	 */
+	public static char[] escapeText(final char[] text) {
+		if (text == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : text) {
+			escapeChar(sb, c);
+		}
+
+		return sb.toString().toCharArray();
+	}
+
+	private static void escapeChar(StringBuilder sb, char ch) {
+		switch (ch) {
+		case '"':
+			sb.append("\\\"");
+			break;
+
+		case '\\':
+			sb.append("\\\\");
+			break;
+
+		case '\b':
+			sb.append("\\b");
+			break;
+
+		case '\f':
+			sb.append("\\f");
+			break;
+
+		case '\n':
+			sb.append("\\n");
+			break;
+
+		case '\r':
+			sb.append("\\r");
+			break;
+
+		case '\t':
+			sb.append("\\t");
+			break;
+
+		case '/':
+			sb.append("\\/");
+			break;
+
+		default:
+
+			//Reference: http://www.unicode.org/versions/Unicode5.1.0/
+			if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F')
+			    || (ch >= '\u2000' && ch <= '\u20FF')) {
+				String ss = Integer.toHexString(ch);
+				sb.append("\\u");
+				for (int k = 0; k < 4 - ss.length(); k++) {
+					sb.append('0');
+				}
+
+				sb.append(ss.toUpperCase());
+			} else {
+				sb.append(ch);
+			}
+		}
 	}
 
 	public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
