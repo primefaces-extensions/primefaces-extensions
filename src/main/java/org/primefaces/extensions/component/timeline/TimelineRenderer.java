@@ -177,7 +177,7 @@ public class TimelineRenderer extends CoreRenderer {
 		}
 
 		if (StringUtils.isNotBlank(event.getStyleClass())) {
-			fsw.write(",\"styleClass\":\"" + event.getStyleClass() + "\"");
+			fsw.write(",\"className\":\"" + event.getStyleClass() + "\"");
 		}
 
 		fsw.write(",\"content\":\"");

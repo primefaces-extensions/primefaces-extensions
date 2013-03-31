@@ -48,6 +48,30 @@ public class TimelineEvent implements Serializable {
 		this.startDate = startDate;
 	}
 
+	public TimelineEvent(Object data, Date startDate, Boolean editable) {
+		checkStartDate(startDate);
+		this.data = data;
+		this.startDate = startDate;
+		this.editable = editable;
+	}
+
+	public TimelineEvent(Object data, Date startDate, Boolean editable, String group) {
+		checkStartDate(startDate);
+		this.data = data;
+		this.startDate = startDate;
+		this.editable = editable;
+		this.group = group;
+	}
+
+	public TimelineEvent(Object data, Date startDate, Boolean editable, String group, String styleClass) {
+		checkStartDate(startDate);
+		this.data = data;
+		this.startDate = startDate;
+		this.editable = editable;
+		this.group = group;
+		this.styleClass = styleClass;
+	}
+
 	public TimelineEvent(Object data, Date startDate, Date endDate) {
 		checkStartDate(startDate);
 		this.data = data;

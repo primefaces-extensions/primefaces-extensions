@@ -2565,7 +2565,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[User locale for i18n messages. The attribute can either a String or Locale object.]]>
+                <![CDATA[User locale for i18n messages. The attribute can be either a String or Locale object.]]>
             </description>
             <name>locale</name>
             <required>false</required>
@@ -2573,7 +2573,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can either a String or TimeZone object.]]>
+                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object.]]>
             </description>
             <name>timeZone</name>
             <required>false</required>

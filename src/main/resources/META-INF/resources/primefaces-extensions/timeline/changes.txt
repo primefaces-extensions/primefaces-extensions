@@ -1,4 +1,4 @@
-default css:
+0-timeline.css:
 ------------------------------------------------
 - Fixed css background images. For example:
 	background: url("#{resource['primefaces-extensions:timeline/new.png']}") no-repeat center;
@@ -15,3 +15,16 @@ default css:
     div.timeline-navigation-move-right {
         padding: 8px;  // was 10px
     }
+    
+0-timeline.js:
+------------------------------------------------
+
+- Added "editable" properties to the return object in the getItem() method
+    links.Timeline.prototype.getItem = function (index) {
+        ...
+        if (item.hasOwnProperty('editable') && (typeof item.editable != 'undefined')) {
+            properties.editable = item.editable;
+        }
+    
+        return properties;
+    };
