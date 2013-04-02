@@ -58,11 +58,6 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                     return;
                 }
                 
-                if (!this.isEditable(index)) {
-                    // only editable events can be selected
-                    return;
-                }
-                
                 var ext = {
                     params: [
                         {name: this.id + '_eventIdx', value: index}
