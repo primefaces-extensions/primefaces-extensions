@@ -345,6 +345,19 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
     },
     
     /**
+     * Sets the visible range (zoom) to the specified range. Accepts two parameters of type Date
+     * that represent the first and last times of the wanted selected visible range.
+     * Set start to null to include everything from the earliest date to end;
+     * set end to null to include everything from start to the last date.
+     *
+     * @param start start Date
+     * @param end end Date 
+     */
+    setVisibleRange: function (start, end) {
+        return this.instance.setVisibleChartRange(start, end);
+    },
+    
+    /**
      * Check if the timeline container is resized, and if so, resize the timeline. Useful when the webpage is resized.
      */
     checkResize: function () {

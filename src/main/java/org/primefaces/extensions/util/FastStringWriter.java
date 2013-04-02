@@ -30,7 +30,6 @@ import java.io.Writer;
 public class FastStringWriter extends Writer {
 
 	protected StringBuilder builder;
-	private boolean json = false;
 
 	public FastStringWriter() {
 		builder = new StringBuilder();
@@ -53,7 +52,7 @@ public class FastStringWriter extends Writer {
 			return;
 		}
 
-		builder.append(json ? ComponentUtils.escapeText(cbuf) : cbuf, off, len);
+		builder.append(cbuf, off, len);
 	}
 
 	@Override
@@ -66,24 +65,16 @@ public class FastStringWriter extends Writer {
 
 	@Override
 	public void write(String str) {
-		builder.append(json ? ComponentUtils.escapeText(str) : str);
+		builder.append(str);
 	}
 
 	@Override
 	public void write(String str, int off, int len) {
-		builder.append(json ? ComponentUtils.escapeText(str.substring(off, off + len)) : str.substring(off, off + len));
+		builder.append(str.substring(off, off + len));
 	}
 
 	public StringBuilder getBuffer() {
 		return builder;
-	}
-
-	public boolean isJson() {
-		return json;
-	}
-
-	public void setJson(boolean json) {
-		this.json = json;
 	}
 
 	@Override
@@ -93,6 +84,5 @@ public class FastStringWriter extends Writer {
 
 	public void reset() {
 		builder.setLength(0);
-		json = false;
 	}
 }

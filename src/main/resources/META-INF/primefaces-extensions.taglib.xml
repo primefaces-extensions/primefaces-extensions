@@ -2557,7 +2557,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable for the underlaying object of each iteration.]]>
+                <![CDATA[Name of the request-scoped variable for underlaying object in the TimelineEvent for each iteration.]]>
             </description>
             <name>var</name>
             <required>false</required>

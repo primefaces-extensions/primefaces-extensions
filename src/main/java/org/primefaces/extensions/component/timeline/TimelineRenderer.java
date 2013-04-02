@@ -83,6 +83,7 @@ public class TimelineRenderer extends CoreRenderer {
 		String clientId = timeline.getClientId(context);
 		Calendar calendar = Calendar.getInstance(ComponentUtils.resolveTimeZone(timeline.getTimeZone()));
 		FastStringWriter fsw = new FastStringWriter();
+		FastStringWriter fswHtml = new FastStringWriter();
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
@@ -94,8 +95,7 @@ public class TimelineRenderer extends CoreRenderer {
 		List<TimelineEvent> events = model.getEvents();
 		int size = events != null ? events.size() : 0;
 		for (int i = 0; i < size; i++) {
-			fsw.reset();
-			writer.write(encodeEvent(context, fsw, timeline, calendar, events.get(i)));
+			writer.write(encodeEvent(context, fsw, fswHtml, timeline, calendar, events.get(i)));
 			if (i + 1 < size) {
 				writer.write(",");
 			}
@@ -158,8 +158,8 @@ public class TimelineRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	public String encodeEvent(FacesContext context, FastStringWriter fsw, Timeline timeline, Calendar calendar,
-	                          TimelineEvent event) throws IOException {
+	public String encodeEvent(FacesContext context, FastStringWriter fsw, FastStringWriter fswHtml, Timeline timeline,
+	                          Calendar calendar, TimelineEvent event) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
 		fsw.write("{\"start\":" + encodeDate(calendar, event.getStartDate()));
@@ -182,28 +182,31 @@ public class TimelineRenderer extends CoreRenderer {
 
 		fsw.write(",\"content\":\"");
 		if (timeline.getChildCount() > 0) {
-			if (StringUtils.isNotBlank(timeline.getVar())) {
-				context.getExternalContext().getRequestMap().put(timeline.getVar(), event);
+			Object data = event.getData();
+			if (StringUtils.isNotBlank(timeline.getVar()) && data != null) {
+				context.getExternalContext().getRequestMap().put(timeline.getVar(), data);
 			}
 
-			fsw.setJson(true);
-
-			ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+			ResponseWriter clonedWriter = writer.cloneWithWriter(fswHtml);
 			context.setResponseWriter(clonedWriter);
 
 			renderChildren(context, timeline);
 
 			// restore writer
 			context.setResponseWriter(writer);
-			fsw.setJson(false);
+			fsw.write(ComponentUtils.escapeHtmlTextInJson(fswHtml.toString()));
+			fswHtml.reset();
 		} else if (event.getData() != null) {
-			fsw.write(escapeText(event.getData().toString()));
+			fsw.write(event.getData().toString());
 		}
 
 		fsw.write("\"");
 		fsw.write("}");
 
-		return fsw.toString();
+		String eventJson = fsw.toString();
+		fsw.reset();
+
+		return eventJson;
 	}
 
 	private String encodeDate(Calendar calendar, Date date) {

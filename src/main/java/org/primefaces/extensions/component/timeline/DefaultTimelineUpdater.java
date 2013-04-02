@@ -102,6 +102,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		FacesContext fc = event.getFacesContext();
 		StringBuilder sb = new StringBuilder();
 		FastStringWriter fsw = new FastStringWriter();
+		FastStringWriter fswHtml = new FastStringWriter();
 
 		Timeline timeline = (Timeline) fc.getViewRoot().findComponent(id);
 		TimelineRenderer timelineRenderer =
@@ -113,21 +114,19 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				switch (crudOperationData.getCrudOperation()) {
 				case ADD:
 
-					fsw.reset();
 					sb.append(widgetVar);
 					sb.append(".addItem(");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
 					sb.append(");");
 					break;
 
 				case UPDATE:
 
-					fsw.reset();
 					sb.append(widgetVar);
 					sb.append(".changeItem(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
 					sb.append(");");
 					break;
 

@@ -216,6 +216,34 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return sb.toString().toCharArray();
 	}
 
+	public static String escapeHtmlTextInJson(final String text) {
+		if (text == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < text.length(); i++) {
+			escapeHtmlCharInJson(sb, text.charAt(i));
+		}
+
+		return sb.toString();
+	}
+
+	public static char[] escapeHtmlTextInJson(final char[] text) {
+		if (text == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : text) {
+			escapeHtmlCharInJson(sb, c);
+		}
+
+		return sb.toString().toCharArray();
+	}
+
 	private static void escapeChar(StringBuilder sb, char ch) {
 		switch (ch) {
 		case '"':
@@ -265,6 +293,26 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 			} else {
 				sb.append(ch);
 			}
+		}
+	}
+
+	private static void escapeHtmlCharInJson(StringBuilder sb, char ch) {
+		switch (ch) {
+		case '"':
+			sb.append("\\\"");
+			break;
+
+		case '\\':
+			sb.append("\\\\");
+			break;
+
+		case '\n':
+		case '\r':
+		case '\t':
+			break;
+
+		default:
+			sb.append(ch);
 		}
 	}
 
