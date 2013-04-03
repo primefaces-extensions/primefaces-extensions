@@ -2702,7 +2702,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Set a minimum interval for the visible range in milliseconds. It will not be possible to zoom in further than this minimum. Default is 10.]]>
+                <![CDATA[Set a minimum zoom interval for the visible range in milliseconds. It will not be possible to zoom in further than this minimum. Default is 10.]]>
             </description>
             <name>zoomMin</name>
             <required>false</required>
@@ -2710,7 +2710,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Set a maximum interval for the visible range in milliseconds. It will not be possible to zoom out further than this maximum. Default value equals 315360000000000 ms (about 10000 years).]]>
+                <![CDATA[Set a maximum zoom interval for the visible range in milliseconds. It will not be possible to zoom out further than this maximum. Default value equals 315360000000000 ms (about 10000 years).]]>
             </description>
             <name>zoomMax</name>
             <required>false</required>

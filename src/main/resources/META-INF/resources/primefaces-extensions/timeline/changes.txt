@@ -15,16 +15,3 @@
     div.timeline-navigation-move-right {
         padding: 8px;  // was 10px
     }
-    
-0-timeline.js:
-------------------------------------------------
-
-- Added "editable" properties to the return object in the getItem() method
-    links.Timeline.prototype.getItem = function (index) {
-        ...
-        if (item.hasOwnProperty('editable') && (typeof item.editable != 'undefined')) {
-            properties.editable = item.editable;
-        }
-    
-        return properties;
-    };
