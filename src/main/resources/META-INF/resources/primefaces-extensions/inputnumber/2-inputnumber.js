@@ -31,7 +31,7 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.skinInput(this.inputExternal);
         
         //copy to hidden input the cleaned value
-        this.inputExternal.bind('keyup', function(event) {                 
+        this.inputExternal.bind('keyup', function(event) { 
             //filter keys
             var keyCode = event.keyCode;
             if (keyCode == 8 || keyCode == 13 || keyCode == 32
@@ -77,5 +77,15 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         this.inputExternal.addClass("ui-state-disabled");
         this.inputInternal.attr("disabled", "disabled");
         this.disabled = true;
-    }
+    },
+            
+    setValue : function(value){                
+        this.inputExternal.autoNumeric('set', value);                  
+        cleanVal = this.inputExternal.autoNumeric('get');              
+        this.inputInternal.attr('value', cleanVal);
+    },
+    
+    getValue : function(){
+         return  this.inputExternal.autoNumeric('get'); 
+    }   
 });
