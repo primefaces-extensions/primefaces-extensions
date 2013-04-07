@@ -32,12 +32,8 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.FacesEvent;
-import javax.faces.event.ListenerFor;
-import javax.faces.event.PostAddToViewEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.timeline.TimelineAddEvent;
@@ -55,7 +51,6 @@ import org.primefaces.util.Constants;
  * @version $Revision: 1.0 $
  * @since   0.7 (reimplemented)
  */
-@ListenerFor(systemEventClass = PostAddToViewEvent.class)
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
@@ -444,23 +439,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	@Override
 	public Collection<String> getEventNames() {
 		return EVENT_NAMES;
-	}
-
-	@Override
-	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
-		super.processEvent(event);
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		if (!(event instanceof PostAddToViewEvent) || fc.getPartialViewContext().isAjaxRequest()) {
-			return;
-		}
-
-		String widgetVar = resolveWidgetVar();
-		fc.getViewRoot().addPhaseListener(new TimelineRestoreViewListener(widgetVar));
-
-		// Thread-safe TimelineUpdater instance should be instantiated here on the initial GET request.
-		// For subsequent AJAX calls it will instantiated by the TimelineRestoreViewListener.
-		TimelineRestoreViewListener.createTimelineUpdater(fc, widgetVar);
 	}
 
 	@Override

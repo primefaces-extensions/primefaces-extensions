@@ -2498,6 +2498,7 @@
         <component>
             <component-type>org.primefaces.extensions.component.Timeline</component-type>
             <renderer-type>org.primefaces.extensions.component.TimelineRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.timeline.TimelineTagHandler</handler-class>
         </component>
         <attribute>
             <description>

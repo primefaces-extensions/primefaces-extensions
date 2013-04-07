@@ -115,27 +115,27 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				case ADD:
 
 					sb.append(widgetVar);
-					sb.append(".addItem(");
+					sb.append(".addEvent(");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
-					sb.append(");");
+					sb.append(")");
 					break;
 
 				case UPDATE:
 
 					sb.append(widgetVar);
-					sb.append(".changeItem(");
+					sb.append(".changeEvent(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
-					sb.append(");");
+					sb.append(")");
 					break;
 
 				case DELETE:
 
 					sb.append(widgetVar);
-					sb.append(".deleteItem(");
+					sb.append(".deleteEvent(");
 					sb.append(crudOperationData.getIndex());
-					sb.append(",false);");
+					sb.append(",false)");
 					break;
 
 				case DELETE_ALL:
@@ -148,12 +148,12 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 					for (int i = 0; i < size; i++) {
 						sb.append(widgetVar);
-						sb.append(".deleteItem(");
+						sb.append(".deleteEvent(");
 						sb.append(crudOperationData.getIndex());
 						if (i + 1 < size) {
-							sb.append(",true);");
+							sb.append(",true)");
 						} else {
-							sb.append(",false);");
+							sb.append(",false)");
 						}
 					}
 
@@ -162,7 +162,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				case CLEAR:
 
 					sb.append(widgetVar);
-					sb.append(".deleteAllItems();");
+					sb.append(".deleteAllEvents()");
 					break;
 				}
 			}
