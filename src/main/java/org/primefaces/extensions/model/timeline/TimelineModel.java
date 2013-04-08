@@ -171,7 +171,7 @@ public class TimelineModel implements Serializable {
 		return events.get(index);
 	}
 
-	private int getIndex(TimelineEvent event) {
+	public int getIndex(TimelineEvent event) {
 		int index = -1;
 
 		for (int i = 0; i < events.size(); i++) {

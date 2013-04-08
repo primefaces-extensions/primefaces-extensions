@@ -166,18 +166,26 @@ public class TimelineRenderer extends CoreRenderer {
 
 		if (event.getEndDate() != null) {
 			fsw.write(",\"end\":" + encodeDate(calendar, event.getEndDate()));
+		} else {
+			fsw.write(",\"end\":null");
 		}
 
 		if (event.isEditable() != null) {
 			fsw.write(",\"editable\":" + event.isEditable());
+		} else {
+			fsw.write(",\"editable\":null");
 		}
 
 		if (event.getGroup() != null) {
 			fsw.write(",\"group\":\"" + event.getGroup() + "\"");
+		} else {
+			fsw.write(",\"group\":null");
 		}
 
 		if (StringUtils.isNotBlank(event.getStyleClass())) {
 			fsw.write(",\"className\":\"" + event.getStyleClass() + "\"");
+		} else {
+			fsw.write(",\"className\":null");
 		}
 
 		fsw.write(",\"content\":\"");

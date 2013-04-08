@@ -461,23 +461,41 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("change".equals(eventName)) {
+				TimelineEvent clonedEvent = null;
 				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				// update start / end date (already converted to UTC)
 				if (timelineEvent != null) {
-					timelineEvent.setStartDate(toDate(params.get(clientId + "_startDate")));
-					timelineEvent.setEndDate(toDate(params.get(clientId + "_endDate")));
+					clonedEvent = new TimelineEvent();
+					clonedEvent.setData(timelineEvent.getData());
+					clonedEvent.setEditable(timelineEvent.isEditable());
+					clonedEvent.setGroup(timelineEvent.getGroup());
+					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+
+					// update start / end date (already converted to UTC)
+					clonedEvent.setStartDate(toDate(params.get(clientId + "_startDate")));
+					clonedEvent.setEndDate(toDate(params.get(clientId + "_endDate")));
 				}
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
+				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
+				TimelineEvent clonedEvent = null;
 				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), timelineEvent);
+				if (timelineEvent != null) {
+					clonedEvent = new TimelineEvent();
+					clonedEvent.setData(timelineEvent.getData());
+					clonedEvent.setStartDate((Date) timelineEvent.getStartDate().clone());
+					clonedEvent.setEndDate(timelineEvent.getEndDate() != null ? (Date) timelineEvent.getEndDate().clone() : null);
+					clonedEvent.setEditable(timelineEvent.isEditable());
+					clonedEvent.setGroup(timelineEvent.getGroup());
+					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+				}
+
+				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 

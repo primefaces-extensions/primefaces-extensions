@@ -108,7 +108,12 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                     return;
                 }
                 
-                if (!this.isEditable(index)) {
+                var event = this.getEvent(index);
+                if (event == null) {
+                    return;
+                }
+                
+                if (!this.instance.isEditable(event)) {
                     // only editable events can be changed
                     return;
                 }
@@ -231,20 +236,28 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 newItem.startDate = this.getUTC(item.start);
             }
             
-            if (item.hasOwnProperty('end') && (typeof item.end != 'undefined')) {
+            if (item.hasOwnProperty('end') && (item.end != null)) {
                 newItem.endDate = this.getUTC(item.end);
+            } else {
+                newItem.endDate = null;
             }
             
-            if (item.hasOwnProperty('editable') && (typeof item.editable != 'undefined')) {
+            if (item.hasOwnProperty('editable')) {
                 newItem.editable = item.editable;
+            } else {
+                newItem.editable = null;
             }
             
-            if (item.hasOwnProperty('group') && (typeof item.group != 'undefined')) {
+            if (item.hasOwnProperty('group')) {
                 newItem.group = item.group;
+            } else {
+                newItem.group = null;
             }
             
-            if (item.hasOwnProperty('className') && (typeof item.className != 'undefined')) {
+            if (item.hasOwnProperty('className')) {
                 newItem.styleClass = item.className;
+            } else {
+                newItem.styleClass = null;
             }
             
             return newItem;
@@ -330,8 +343,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
      * @return {boolean} true - editable, false - not
      */
     isEditable: function(index) {
-        var event = this.getEvent(index);
-        return event != null && (typeof event.editable == 'undefined' || event.editable);
+        return this.instance.isEditable(this.getEvent(index));
     },
     
     /**
