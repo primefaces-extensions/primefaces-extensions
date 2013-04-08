@@ -42,6 +42,7 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.component.UIPanel;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.datalist.DataList;
@@ -426,7 +427,24 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
-            } else {
+            } else if (component instanceof UIPanel) {
+                String header="";
+                for(UIComponent child:component.getChildren())  {
+                     headerValue = exportValue(context, child);
+                     header=header+headerValue;
+                }
+                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                if (facetBackground != null) {
+                    cell.setBackgroundColor(facetBackground);
+                }
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                //addColumnAlignments(component,cell);
+                cell.setColspan(columnCount);
+                pdfTable.addCell(cell);
+                pdfTable.completeRow();
+                return;
+        }
+            else {
                 headerValue = exportFacetValue(context, component);
             }
             PdfPCell cell = new PdfPCell(new Paragraph((headerValue), this.facetFont));
@@ -451,6 +469,22 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
+            } else if (component instanceof UIPanel) {
+                String header="";
+                for(UIComponent child:component.getChildren())  {
+                    headerValue = exportValue(context, child);
+                    header=header+headerValue;
+                }
+                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                if (facetBackground != null) {
+                    cell.setBackgroundColor(facetBackground);
+                }
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                //addColumnAlignments(component,cell);
+                cell.setColspan(columnCount);
+                pdfTable.addCell(cell);
+                pdfTable.completeRow();
+                return;
             } else {
                 headerValue = exportFacetValue(context, component);
             }
