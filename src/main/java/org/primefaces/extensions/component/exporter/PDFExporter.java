@@ -676,13 +676,22 @@ public class PDFExporter extends Exporter {
             if(component instanceof RowExpansion)   {
                 RowExpansion rowExpansion=(RowExpansion)component;
                 if(rowExpansion.getChildren()!=null) {
+                    if(rowExpansion.getChildren().get(0) instanceof DataTable) {
+                    DataTable  childTable=(DataTable)rowExpansion.getChildren().get(0);
+                    PdfPTable pdfTableChild=exportPDFTable(context, childTable, false, false, "UTF-8", false);
+                    PdfPCell cell = new PdfPCell();
+                    cell.addElement(pdfTableChild);
+                    cell.setColspan(pdfTable.getNumberOfColumns());
+                    pdfTable.addCell(cell);
+                    }
+                    if(rowExpansion.getChildren().get(0) instanceof DataList)  {
                     DataList  list=(DataList)rowExpansion.getChildren().get(0);
                     PdfPTable pdfTableChild=exportPDFTable(context, list, false, "UTF-8");
                     pdfTableChild.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                     PdfPCell cell = new PdfPCell();
                     cell.addElement(pdfTableChild);
                     cell.setColspan(pdfTable.getNumberOfColumns());
-                    pdfTable.addCell(cell);
+                    }
                 }
 
             }
@@ -690,6 +699,7 @@ public class PDFExporter extends Exporter {
         }
 
     }
+
 
     protected void subTableExportCells(SubTable table, PdfPTable pdfTable) {
         for (UIColumn col : table.getColumns()) {
