@@ -32,13 +32,9 @@ public abstract class AbstractDynaFormElement implements Serializable {
 	private static final long serialVersionUID = 20120514L;
 
 	private int colspan = 1;
-
 	private int rowspan = 1;
-
 	private int row;
-
 	private int column;
-
 	private boolean extended;
 
 	/**

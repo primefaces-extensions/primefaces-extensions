@@ -35,13 +35,9 @@ public class DynaFormModel implements Serializable {
 	private static final long serialVersionUID = 20120514L;
 
 	private String uuid;
-
 	private List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
-
 	private List<DynaFormRow> extendedRows = null;
-
 	private List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
-
 	private List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
 
 	public DynaFormModel() {

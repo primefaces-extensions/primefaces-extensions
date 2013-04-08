@@ -33,19 +33,13 @@ import org.primefaces.extensions.model.common.KeyData;
 public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
 	public static final String DEFAULT_TYPE = "default";
-
 	private static final String KEY_PREFIX_ROW = "r";
-
 	private static final String KEY_PREFIX_COLUMN = "c";
-
 	private static final String KEY_SUFFIX_REGULAR = "reg";
-
 	private static final String KEY_SUFFIX_EXTENDED = "ext";
 
 	private String key;
-
 	private Object data;
-
 	private String type;
 
 	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {

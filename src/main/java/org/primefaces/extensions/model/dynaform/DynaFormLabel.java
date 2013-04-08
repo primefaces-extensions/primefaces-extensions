@@ -31,15 +31,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class DynaFormLabel extends AbstractDynaFormElement {
 
 	private String value;
-
 	private boolean escape = true;
-
 	private DynaFormControl forControl;
-
 	private String targetClientId;
-
 	private boolean targetRequired = false;
-
 	private boolean targetValid = true;
 
 	public DynaFormLabel(String value, boolean escape, int colspan, int rowspan, int row, int column, boolean extended) {

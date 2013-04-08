@@ -34,13 +34,11 @@ public class DynaFormRow implements Serializable {
 	private static final long serialVersionUID = 20120514L;
 
 	private int row;
-
 	private boolean extended;
-
 	private int totalColspan = 0;
-
 	private DynaFormModel dynaFormModel;
 
+	// all elements (label and controls) in this row
 	private List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
 
 	/**
@@ -55,10 +53,48 @@ public class DynaFormRow implements Serializable {
 		this.dynaFormModel = dynaFormModel;
 	}
 
+	/**
+	 * Adds control with data, default type, colspan = 1 and rowspan = 1.
+	 *
+	 * @param  data data object
+	 * @return DynaFormControl added control
+	 */
+	public DynaFormControl addControl(Object data) {
+		return addControl(data, DynaFormControl.DEFAULT_TYPE, 1, 1);
+	}
+
+	/**
+	 * Adds control with given data, type, colspan = 1 and rowspan = 1.
+	 *
+	 * @param  data data object
+	 * @param  type type to match the type attribute in pe:dynaFormControl
+	 * @return DynaFormControl added control
+	 */
+	public DynaFormControl addControl(Object data, String type) {
+		return addControl(data, type, 1, 1);
+	}
+
+	/**
+	 * Adds control with given data, default type, colspan and rowspan.
+	 *
+	 * @param  data    data object
+	 * @param  colspan colspan
+	 * @param  rowspan rowspan
+	 * @return DynaFormControl added control
+	 */
 	public DynaFormControl addControl(Object data, int colspan, int rowspan) {
 		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
 	}
 
+	/**
+	 * Adds control with given data, type, colspan and rowspan.
+	 *
+	 * @param  data    data object
+	 * @param  type    type to match the type attribute in pe:dynaFormControl
+	 * @param  colspan colspan
+	 * @param  rowspan rowspan
+	 * @return DynaFormControl added control
+	 */
 	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
 		DynaFormControl dynaFormControl = new DynaFormControl(data, type, colspan, rowspan, row, elements.size() + 1, extended);
 
@@ -69,10 +105,37 @@ public class DynaFormRow implements Serializable {
 		return dynaFormControl;
 	}
 
+	/**
+	 * Adds a label with given text, colspan = 1 and rowspan = 1.
+	 *
+	 * @param  value label text
+	 * @return DynaFormLabel added label
+	 */
+	public DynaFormLabel addLabel(String value) {
+		return addLabel(value, true, 1, 1);
+	}
+
+	/**
+	 * Adds a label with given text, colspan and rowspan.
+	 *
+	 * @param  value   label text
+	 * @param  colspan colspan
+	 * @param  rowspan rowspan
+	 * @return DynaFormLabel added label
+	 */
 	public DynaFormLabel addLabel(String value, int colspan, int rowspan) {
 		return addLabel(value, true, colspan, rowspan);
 	}
 
+	/**
+	 * Adds a label with given text, escape flag, colspan and rowspan.
+	 *
+	 * @param  value   label text
+	 * @param  escape  boolean flag if the label text should escaped or not
+	 * @param  colspan colspan
+	 * @param  rowspan rowspan
+	 * @return DynaFormLabel added label
+	 */
 	public DynaFormLabel addLabel(String value, boolean escape, int colspan, int rowspan) {
 		DynaFormLabel dynaFormLabel = new DynaFormLabel(value, escape, colspan, rowspan, row, elements.size() + 1, extended);
 
