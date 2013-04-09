@@ -696,16 +696,37 @@ public class ExcelExporter extends Exporter {
             if (component instanceof RowExpansion) {
                 RowExpansion rowExpansion = (RowExpansion) component;
                 if (rowExpansion.getChildren() != null) {
+                   if(rowExpansion.getChildren().get(0) instanceof DataList) {
                     DataList list = (DataList) rowExpansion.getChildren().get(0);
                     if (list.getHeader() != null) {
                         tableFacet(context, sheet, list, "header");
                     }
                     exportAll(context, list, sheet);
+                    }
+                   if(rowExpansion.getChildren().get(0) instanceof DataTable) {
+                       DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
+                    int columnsCount = getColumnsCount(childTable);
+
+                    if (childTable.getHeader() != null) {
+                        tableFacet(context, sheet, childTable, columnsCount, "header");
+
+                    }
+                    tableColumnGroup(sheet, childTable, "header");
+
+                    addColumnFacets(childTable, sheet, ColumnType.HEADER);
+
+                    exportAll(context, childTable, sheet, false);
+
+                    if (childTable.hasFooterColumn()) {
+                        addColumnFacets(childTable, sheet, ColumnType.FOOTER);
+                    }
+                    tableColumnGroup(sheet, childTable, "footer");
+                    childTable.setRowIndex(-1);
                 }
 
             }
         }
-
+       }
     }
 
     protected void exportCells(SubTable table, Sheet sheet) {
