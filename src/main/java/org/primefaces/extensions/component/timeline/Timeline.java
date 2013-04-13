@@ -468,12 +468,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 					clonedEvent = new TimelineEvent();
 					clonedEvent.setData(timelineEvent.getData());
 					clonedEvent.setEditable(timelineEvent.isEditable());
-					clonedEvent.setGroup(timelineEvent.getGroup());
 					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
 
 					// update start / end date (already converted to UTC)
 					clonedEvent.setStartDate(toDate(params.get(clientId + "_startDate")));
 					clonedEvent.setEndDate(toDate(params.get(clientId + "_endDate")));
+
+					// update group
+					clonedEvent.setGroup(params.get(clientId + "_group"));
 				}
 
 				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);

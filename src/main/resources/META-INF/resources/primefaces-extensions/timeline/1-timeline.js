@@ -135,6 +135,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                         value: this.getUTC(event.end)
                     });    
                 }
+                
+                if (event.group) {
+                    params.push({
+                        name: this.id + '_group',
+                        value: event.group
+                    });    
+                }
 
                 this.getBehavior("change").call(this, null, {params: params});
             }, this));
