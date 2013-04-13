@@ -32,11 +32,22 @@ public class TimelineEvent implements Serializable {
 
 	private static final long serialVersionUID = 20130316L;
 
+	/** any custom data object (required to show content of the event) */
 	private Object data;
+
+	/** event's start date (required) */
 	private Date startDate;
+
+	/** event's end date (optional) */
 	private Date endDate;
+
+	/** is this event editable? (optional. if null, see the timeline's attribute "editable" */
 	private Boolean editable;
+
+	/** group this event belongs to (optional) */
 	private String group;
+
+	/** any custom style class for this event in UI (optional) */
 	private String styleClass;
 
 	public TimelineEvent() {
@@ -176,6 +187,18 @@ public class TimelineEvent implements Serializable {
 	@Override
 	public int hashCode() {
 		return data != null ? data.hashCode() : 0;
+	}
+
+	@Override
+	public String toString() {
+		return "TimelineEvent{"
+		       + "data=" + data
+		       + ", startDate=" + startDate
+		       + ", endDate=" + endDate
+		       + ", editable=" + editable
+		       + ", group='" + group + '\''
+		       + ", styleClass='" + styleClass + '\''
+		       + '}';
 	}
 
 	private void checkStartDate(Date startDate) {

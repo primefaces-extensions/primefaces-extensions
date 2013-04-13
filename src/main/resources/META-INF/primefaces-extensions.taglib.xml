@@ -2574,7 +2574,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object.]]>
+                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object. If no time zone is provided, the used time zone is TimeZone.getDefault().]]>
             </description>
             <name>timeZone</name>
             <required>false</required>
