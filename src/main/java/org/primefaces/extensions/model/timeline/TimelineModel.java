@@ -199,7 +199,10 @@ public class TimelineModel implements Serializable {
 				indexes.add(getIndex(event));
 			}
 
-			this.events.removeAll(events);
+			//this.events.removeAll(events);
+			for (TimelineEvent e : events) {
+				this.events.remove(e);
+			}
 
 			if (timelineUpdater != null) {
 				// update UI
@@ -328,9 +331,9 @@ public class TimelineModel implements Serializable {
 		    new TimelineEvent(event.getData(), orderedEvents.first().getStartDate(), orderedEvents.last().getEndDate(),
 		                      event.isEditable(), event.getGroup(), event.getStyleClass());
 
-		// delete all given events and add a merged one
-		deleteAll(orderedEvents, timelineUpdater);
-		add(mergedEvent, timelineUpdater);
+		// merge...
+		deleteAll(events, timelineUpdater);
+		update(mergedEvent, timelineUpdater);
 
 		return mergedEvent;
 	}

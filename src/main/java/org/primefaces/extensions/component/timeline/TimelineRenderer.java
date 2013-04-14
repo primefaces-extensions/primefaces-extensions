@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -81,7 +82,8 @@ public class TimelineRenderer extends CoreRenderer {
 
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = timeline.getClientId(context);
-		Calendar calendar = Calendar.getInstance(ComponentUtils.resolveTimeZone(timeline.getTimeZone()));
+		TimeZone timeZone = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
+		Calendar calendar = Calendar.getInstance(timeZone);
 		FastStringWriter fsw = new FastStringWriter();
 		FastStringWriter fswHtml = new FastStringWriter();
 
@@ -95,7 +97,7 @@ public class TimelineRenderer extends CoreRenderer {
 		List<TimelineEvent> events = model.getEvents();
 		int size = events != null ? events.size() : 0;
 		for (int i = 0; i < size; i++) {
-			writer.write(encodeEvent(context, fsw, fswHtml, timeline, calendar, events.get(i)));
+			writer.write(encodeEvent(context, fsw, fswHtml, timeline, calendar, timeZone, events.get(i)));
 			if (i + 1 < size) {
 				writer.write(",");
 			}
@@ -116,19 +118,19 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",moveable:" + timeline.isMoveable());
 
 		if (timeline.getStart() != null) {
-			writer.write(",start:" + encodeDate(calendar, timeline.getStart()));
+			writer.write(",start:" + encodeDate(calendar, timeZone, timeline.getStart()));
 		}
 
 		if (timeline.getEnd() != null) {
-			writer.write(",end:" + encodeDate(calendar, timeline.getEnd()));
+			writer.write(",end:" + encodeDate(calendar, timeZone, timeline.getEnd()));
 		}
 
 		if (timeline.getMin() != null) {
-			writer.write(",min:" + encodeDate(calendar, timeline.getMin()));
+			writer.write(",min:" + encodeDate(calendar, timeZone, timeline.getMin()));
 		}
 
 		if (timeline.getMax() != null) {
-			writer.write(",max:" + encodeDate(calendar, timeline.getMax()));
+			writer.write(",max:" + encodeDate(calendar, timeZone, timeline.getMax()));
 		}
 
 		writer.write(",intervalMin:" + timeline.getZoomMin());
@@ -159,13 +161,13 @@ public class TimelineRenderer extends CoreRenderer {
 	}
 
 	public String encodeEvent(FacesContext context, FastStringWriter fsw, FastStringWriter fswHtml, Timeline timeline,
-	                          Calendar calendar, TimelineEvent event) throws IOException {
+	                          Calendar calendar, TimeZone timeZone, TimelineEvent event) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-		fsw.write("{\"start\":" + encodeDate(calendar, event.getStartDate()));
+		fsw.write("{\"start\":" + encodeDate(calendar, timeZone, event.getStartDate()));
 
 		if (event.getEndDate() != null) {
-			fsw.write(",\"end\":" + encodeDate(calendar, event.getEndDate()));
+			fsw.write(",\"end\":" + encodeDate(calendar, timeZone, event.getEndDate()));
 		} else {
 			fsw.write(",\"end\":null");
 		}
@@ -217,27 +219,13 @@ public class TimelineRenderer extends CoreRenderer {
 		return eventJson;
 	}
 
-	private String encodeDate(Calendar calendar, Date date) {
-		calendar.setTime(date);
+	// convert from UTC to locale date
+	private String encodeDate(Calendar calendar, TimeZone localTimeZone, Date utcDate) {
+		int offsetFromUTC = localTimeZone.getOffset(utcDate.getTime());
+		calendar.setTime(utcDate);
+		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("new Date(");
-		sb.append(calendar.get(Calendar.YEAR));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.MONTH));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.DAY_OF_MONTH));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.HOUR_OF_DAY));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.MINUTE));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.SECOND));
-		sb.append(',');
-		sb.append(calendar.get(Calendar.MILLISECOND));
-		sb.append(')');
-
-		return sb.toString();
+		return "new Date(" + calendar.getTimeInMillis() + ")";
 	}
 
 	@Override

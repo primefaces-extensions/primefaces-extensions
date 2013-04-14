@@ -19,11 +19,13 @@ package org.primefaces.extensions.component.timeline;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
@@ -42,6 +44,7 @@ import org.primefaces.extensions.event.timeline.TimelineRangeEvent;
 import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -452,10 +455,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("add".equals(eventName)) {
-				// preset start / end date (already converted to UTC) and the group
+				// preset start / end date and the group
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineAddEvent te =
-				    new TimelineAddEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
-				                         toDate(params.get(clientId + "_endDate")), params.get(clientId + "_group"));
+				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
+				                         toDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                         toDate(calendar, timeZone, params.get(clientId + "_endDate")),
+				                         params.get(clientId + "_group"));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -470,11 +477,11 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 					clonedEvent.setEditable(timelineEvent.isEditable());
 					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
 
-					// update start / end date (already converted to UTC)
-					clonedEvent.setStartDate(toDate(params.get(clientId + "_startDate")));
-					clonedEvent.setEndDate(toDate(params.get(clientId + "_endDate")));
-
-					// update group
+					// update start / end date and the group
+					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+					TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+					clonedEvent.setStartDate(toDate(calendar, timeZone, params.get(clientId + "_startDate")));
+					clonedEvent.setEndDate(toDate(calendar, timeZone, params.get(clientId + "_endDate")));
 					clonedEvent.setGroup(params.get(clientId + "_group"));
 				}
 
@@ -510,19 +517,25 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("rangechange".equals(eventName)) {
-				// get start / end date (already converted to UTC)
+				// get start / end date
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
-				                           toDate(params.get(clientId + "_endDate")));
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
+				                           toDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                           toDate(calendar, timeZone, params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("rangechanged".equals(eventName)) {
-				// get start / end date (already converted to UTC)
+				// get start / end date
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(), toDate(params.get(clientId + "_startDate")),
-				                           toDate(params.get(clientId + "_endDate")));
+				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
+				                           toDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                           toDate(calendar, timeZone, params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -538,12 +551,18 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
 	}
 
-	private Date toDate(String param) {
+	// convert from local date to UTC
+	private Date toDate(Calendar calendar, TimeZone localTimeZone, String param) {
 		if (param == null) {
 			return null;
 		}
 
-		return new Date(Long.valueOf(param));
+		Date date = new Date(Long.valueOf(param));
+		int offsetFromUTC = localTimeZone.getOffset(date.getTime()) * (-1);
+		calendar.setTime(date);
+		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
+
+		return calendar.getTime();
 	}
 
 	public String resolveWidgetVar() {

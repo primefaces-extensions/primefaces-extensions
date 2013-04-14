@@ -79,13 +79,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 var params = [];
                 params.push({
                     name: this.id + '_startDate',
-                    value: this.getUTC(event.start)
+                    value: event.start.getTime()
                 });
                 
                 if (event.end) {
                     params.push({
                         name: this.id + '_endDate',
-                        value: this.getUTC(event.end)
+                        value: event.end.getTime()
                     });    
                 }
                 
@@ -126,13 +126,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 
                 params.push({
                     name: this.id + '_startDate',
-                    value: this.getUTC(event.start)
+                    value: event.start.getTime()
                 });
                 
                 if (event.end) {
                     params.push({
                         name: this.id + '_endDate',
-                        value: this.getUTC(event.end)
+                        value: event.end.getTime()
                     });    
                 }
                 
@@ -200,8 +200,8 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 
                 var ext = {
                     params: [
-                        {name: this.id + '_startDate', value: this.getUTC(range.start)},
-                        {name: this.id + '_endDate', value: this.getUTC(range.end)}
+                        {name: this.id + '_startDate', value: range.start.getTime()},
+                        {name: this.id + '_endDate', value: range.end.getTime()}
                     ]
                 };
 
@@ -216,8 +216,8 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 
                 var ext = {
                     params: [
-                        {name: this.id + '_startDate', value: this.getUTC(range.start)},
-                        {name: this.id + '_endDate', value: this.getUTC(range.end)}
+                        {name: this.id + '_startDate', value: range.start.getTime()},
+                        {name: this.id + '_endDate', value: range.end.getTime()}
                     ]
                 };
 
@@ -240,11 +240,11 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
             }
             
             if (item.hasOwnProperty('start')) {
-                newItem.startDate = this.getUTC(item.start);
+                newItem.startDate = item.start.getTime();
             }
             
             if (item.hasOwnProperty('end') && (item.end != null)) {
-                newItem.endDate = this.getUTC(item.end);
+                newItem.endDate = item.end.getTime();
             } else {
                 newItem.endDate = null;
             }
@@ -443,26 +443,6 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         this.instance.setSelection([{
             'row': index
         }]);    
-    },
-
-    /**
-     * Converts local date in Browser in UTC.     
-     * 
-     * @param local local date
-     * @return {Number}
-     */
-    getUTC: function(local) {
-        var utc = new Date(Date.UTC(
-            local.getFullYear(),
-            local.getMonth(),
-            local.getDate(),
-            local.getHours(),
-            local.getMinutes(),
-            local.getSeconds(),
-            local.getMilliseconds()
-        ));
-        
-        return utc.getTime();
     },
 
     /**

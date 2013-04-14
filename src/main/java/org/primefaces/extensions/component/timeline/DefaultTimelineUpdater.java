@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,31 +108,38 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		Timeline timeline = (Timeline) fc.getViewRoot().findComponent(id);
 		TimelineRenderer timelineRenderer =
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
-		Calendar calendar = Calendar.getInstance(ComponentUtils.resolveTimeZone(timeline.getTimeZone()));
+
+		TimeZone timeZone = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
+		Calendar calendar = Calendar.getInstance(timeZone);
 
 		try {
 			for (CrudOperationData crudOperationData : crudOperationDatas) {
 				switch (crudOperationData.getCrudOperation()) {
 				case ADD:
 
+					sb.append(";");
 					sb.append(widgetVar);
 					sb.append(".addEvent(");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
+					                                       crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 
 				case UPDATE:
 
+					sb.append(";");
 					sb.append(widgetVar);
 					sb.append(".changeEvent(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, crudOperationData.getEvent()));
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
+					                                       crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 
 				case DELETE:
 
+					sb.append(";");
 					sb.append(widgetVar);
 					sb.append(".deleteEvent(");
 					sb.append(crudOperationData.getIndex());
@@ -147,20 +155,24 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					}
 
 					for (int i = 0; i < size; i++) {
+						sb.append(";");
 						sb.append(widgetVar);
 						sb.append(".deleteEvent(");
-						sb.append(crudOperationData.getIndex());
+						sb.append(indexes.get(i));
+						sb.append(",false)");
+						/*
 						if (i + 1 < size) {
-							sb.append(",true)");
+						    sb.append(",true)");
 						} else {
-							sb.append(",false)");
-						}
+						    sb.append(",false)");
+						}*/
 					}
 
 					break;
 
 				case CLEAR:
 
+					sb.append(";");
 					sb.append(widgetVar);
 					sb.append(".deleteAllEvents()");
 					break;
