@@ -18,7 +18,6 @@
 
 package org.primefaces.extensions.component.timeline;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
@@ -73,8 +72,6 @@ public abstract class TimelineUpdater {
 	public abstract void update(TimelineEvent event, int index);
 
 	public abstract void delete(int index);
-
-	public abstract void deleteAll(List<Integer> indexes);
 
 	public abstract void clear();
 }

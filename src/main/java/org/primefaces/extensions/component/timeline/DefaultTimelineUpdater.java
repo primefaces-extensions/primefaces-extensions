@@ -80,12 +80,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 	}
 
 	@Override
-	public void deleteAll(List<Integer> indexes) {
-		checkCrudOperationDataList();
-		crudOperationDatas.add(new CrudOperationData(CrudOperation.DELETE_ALL, indexes));
-	}
-
-	@Override
 	public void clear() {
 		checkCrudOperationDataList();
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.CLEAR));
@@ -143,31 +137,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(widgetVar);
 					sb.append(".deleteEvent(");
 					sb.append(crudOperationData.getIndex());
-					sb.append(",false)");
-					break;
-
-				case DELETE_ALL:
-
-					List<Integer> indexes = crudOperationData.getIndexes();
-					int size = indexes != null ? indexes.size() : 0;
-					if (size == 0) {
-						break;
-					}
-
-					for (int i = 0; i < size; i++) {
-						sb.append(";");
-						sb.append(widgetVar);
-						sb.append(".deleteEvent(");
-						sb.append(indexes.get(i));
-						sb.append(",false)");
-						/*
-						if (i + 1 < size) {
-						    sb.append(",true)");
-						} else {
-						    sb.append(",false)");
-						}*/
-					}
-
+					sb.append(")");
 					break;
 
 				case CLEAR:
@@ -229,7 +199,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		private CrudOperation crudOperation;
 		private TimelineEvent event;
 		private int index;
-		private List<Integer> indexes;
 
 		CrudOperationData(CrudOperation crudOperation) {
 			this.crudOperation = crudOperation;
@@ -243,11 +212,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		CrudOperationData(CrudOperation crudOperation, int index) {
 			this.crudOperation = crudOperation;
 			this.index = index;
-		}
-
-		CrudOperationData(CrudOperation crudOperation, List<Integer> indexes) {
-			this.crudOperation = crudOperation;
-			this.indexes = indexes;
 		}
 
 		CrudOperationData(CrudOperation crudOperation, TimelineEvent event, int index) {
@@ -267,10 +231,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		public int getIndex() {
 			return index;
 		}
-
-		public List<Integer> getIndexes() {
-			return indexes;
-		}
 	}
 
 	/**
@@ -284,7 +244,6 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		ADD,
 		UPDATE,
 		DELETE,
-		DELETE_ALL,
 		CLEAR
 	}
 }

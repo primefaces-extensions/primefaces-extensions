@@ -21,6 +21,7 @@ package org.primefaces.extensions.model.timeline;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -194,19 +195,8 @@ public class TimelineModel implements Serializable {
 	 */
 	public void deleteAll(Collection<TimelineEvent> events, TimelineUpdater timelineUpdater) {
 		if (events != null && !events.isEmpty()) {
-			List<Integer> indexes = new ArrayList<Integer>();
 			for (TimelineEvent event : events) {
-				indexes.add(getIndex(event));
-			}
-
-			//this.events.removeAll(events);
-			for (TimelineEvent e : events) {
-				this.events.remove(e);
-			}
-
-			if (timelineUpdater != null) {
-				// update UI
-				timelineUpdater.deleteAll(indexes);
+				delete(event, timelineUpdater);
 			}
 		}
 	}
@@ -327,9 +317,19 @@ public class TimelineModel implements Serializable {
 		orderedEvents.add(event);
 		orderedEvents.addAll(events);
 
+		// find the largest end date
+		Date endDate = null;
+		for (TimelineEvent e : orderedEvents) {
+			if (endDate == null && e.getEndDate() != null) {
+				endDate = e.getEndDate();
+			} else if (endDate != null && e.getEndDate() != null && endDate.before(e.getEndDate())) {
+				endDate = e.getEndDate();
+			}
+		}
+
 		TimelineEvent mergedEvent =
-		    new TimelineEvent(event.getData(), orderedEvents.first().getStartDate(), orderedEvents.last().getEndDate(),
-		                      event.isEditable(), event.getGroup(), event.getStyleClass());
+		    new TimelineEvent(event.getData(), orderedEvents.first().getStartDate(), endDate, event.isEditable(),
+		                      event.getGroup(), event.getStyleClass());
 
 		// merge...
 		deleteAll(events, timelineUpdater);
