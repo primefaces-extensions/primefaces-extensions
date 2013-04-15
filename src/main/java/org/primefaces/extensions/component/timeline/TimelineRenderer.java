@@ -133,8 +133,8 @@ public class TimelineRenderer extends CoreRenderer {
 			writer.write(",max:" + encodeDate(calendar, timeZone, timeline.getMax()));
 		}
 
-		writer.write(",intervalMin:" + timeline.getZoomMin());
-		writer.write(",intervalMax:" + timeline.getZoomMax());
+		writer.write(",zoomMin:" + timeline.getZoomMin());
+		writer.write(",zoomMax:" + timeline.getZoomMax());
 		writer.write(",eventMargin:" + timeline.getEventMargin());
 		writer.write(",eventMarginAxis:" + timeline.getEventMarginAxis());
 		writer.write(",style:'" + timeline.getEventStyle() + "'");
