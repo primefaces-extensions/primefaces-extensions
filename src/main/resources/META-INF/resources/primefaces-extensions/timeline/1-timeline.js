@@ -28,6 +28,9 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.opts.selectable) {
             $jqId.addClass("ui-timeline-selectable");
         }
+        
+        // configure localized text
+        this.cfg.opts = PrimeFacesExt.configureLocale('Timeline', this.cfg.opts);
 
         // instantiate a timeline object
         this.instance = new links.Timeline($jqId.get(0));

@@ -153,10 +153,13 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",showMinorLabels:" + timeline.isShowMinorLabels());
 		writer.write(",showButtonNew:" + timeline.isShowButtonNew());
 		writer.write(",showNavigation:" + timeline.isShowNavigation());
+
+		if (timeline.getLocale() != null) {
+			writer.write(",locale:'" + timeline.getLocale().toString() + "'");
+		}
+
 		writer.write("}");
-
 		encodeClientBehaviors(context, timeline);
-
 		writer.write("},true);});");
 		endScript(writer);
 	}

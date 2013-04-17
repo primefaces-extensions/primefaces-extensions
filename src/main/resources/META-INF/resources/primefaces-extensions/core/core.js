@@ -260,7 +260,7 @@ PrimeFacesExt = {
 	 * 
 	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {string} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
 	 */
 	initWidget : function(widgetName, widgetVar, cfg) {
@@ -280,10 +280,14 @@ PrimeFacesExt = {
      * @returns {object} cfg Configuration object with updated localized text (if any text to given locale were found). 
 	 */    
     configureLocale : function(widgetName, cfg) {
-        var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
-        if(localeSettings) {
-            for(var setting in localeSettings) {
-                cfg[setting] = localeSettings[setting];
+        if (cfg.locale) {
+            var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
+            if(localeSettings) {
+                for(var setting in localeSettings) {
+                    if (localeSettings.hasOwnProperty(setting)) {
+                        cfg[setting] = localeSettings[setting];
+                    }
+                }
             }
         }
         
