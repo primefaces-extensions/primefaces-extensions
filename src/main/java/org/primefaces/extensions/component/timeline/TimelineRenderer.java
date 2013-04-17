@@ -33,6 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.DateUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -221,11 +222,7 @@ public class TimelineRenderer extends CoreRenderer {
 
 	// convert from UTC to locale date
 	private String encodeDate(Calendar calendar, TimeZone localTimeZone, Date utcDate) {
-		int offsetFromUTC = localTimeZone.getOffset(utcDate.getTime());
-		calendar.setTime(utcDate);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
-
-		return "new Date(" + calendar.getTimeInMillis() + ")";
+		return "new Date(" + DateUtils.toLocalDate(calendar, localTimeZone, utcDate) + ")";
 	}
 
 	@Override

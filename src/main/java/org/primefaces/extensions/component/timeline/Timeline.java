@@ -45,6 +45,7 @@ import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.DateUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -460,8 +461,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineAddEvent te =
 				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
-				                         toDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                         toDate(calendar, timeZone, params.get(clientId + "_endDate")),
+				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
 				                         params.get(clientId + "_group"));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
@@ -480,8 +481,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 					// update start / end date and the group
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 					TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-					clonedEvent.setStartDate(toDate(calendar, timeZone, params.get(clientId + "_startDate")));
-					clonedEvent.setEndDate(toDate(calendar, timeZone, params.get(clientId + "_endDate")));
+					clonedEvent.setStartDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")));
+					clonedEvent.setEndDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
 					clonedEvent.setGroup(params.get(clientId + "_group"));
 				}
 
@@ -522,8 +523,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineRangeEvent te =
 				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
-				                           toDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                           toDate(calendar, timeZone, params.get(clientId + "_endDate")));
+				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -534,8 +535,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineRangeEvent te =
 				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
-				                           toDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                           toDate(calendar, timeZone, params.get(clientId + "_endDate")));
+				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -549,20 +550,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
 		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
-	}
-
-	// convert from local date to UTC
-	private Date toDate(Calendar calendar, TimeZone localTimeZone, String param) {
-		if (param == null) {
-			return null;
-		}
-
-		Date date = new Date(Long.valueOf(param));
-		int offsetFromUTC = localTimeZone.getOffset(date.getTime()) * (-1);
-		calendar.setTime(date);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
-
-		return calendar.getTime();
 	}
 
 	public String resolveWidgetVar() {

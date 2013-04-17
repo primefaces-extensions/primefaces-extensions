@@ -228,7 +228,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
     
     /**
      * Retrieves the array of current data (events) as an JSON string. This method is useful when you done some changes
-     * in timeline and want to send them to server to update the backing model (with pe:remoteCommand and pe:convertJson).
+     * in timeline and want to send them to server to update the backing model (with pe:remoteCommand and pe:convertTimelineEvents).
      * 
      * @return {Object}
      */

@@ -81,6 +81,20 @@
             <type>java.lang.Character</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>convertTimelineEvents</tag-name>
+        <converter>
+            <converter-id>org.primefaces.extensions.converter.TimelineEventsConverter</converter-id>
+        </converter>
+        <attribute>
+            <description>
+                <![CDATA[Time zone for UTC / Local date conversion. It can be a TimeZone object as well as a String with time zone Id.]]>
+            </description>
+            <name>timeZone</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>        
+    </tag>
 
     <!-- Behaviors -->
     <tag>

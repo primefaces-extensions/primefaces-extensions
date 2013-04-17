@@ -96,7 +96,7 @@ public class JsonConverter implements Converter, Serializable {
 		}
 	}
 
-	private java.lang.reflect.Type getObjectType(String type, boolean isTypeArg) {
+	protected java.lang.reflect.Type getObjectType(String type, boolean isTypeArg) {
 		Class clazz = PRIMITIVE_CLASSES.get(type);
 		if (clazz != null) {
 			if (!isTypeArg) {
