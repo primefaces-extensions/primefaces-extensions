@@ -280,7 +280,7 @@ PrimeFacesExt = {
      * @returns {object} cfg Configuration object with updated localized text (if any text to given locale were found). 
 	 */    
     configureLocale : function(widgetName, cfg) {
-        if (cfg.locale) {
+        if (PrimeFacesExt.locales && PrimeFacesExt.locales[widgetName] && cfg.locale) {
             var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
             if(localeSettings) {
                 for(var setting in localeSettings) {
@@ -379,9 +379,10 @@ PrimeFacesExt.widget = {};
 PrimeFacesExt.locales = {};
 
 /**
- * @namespace Namespace for TimePicker localization.
+ * @namespace Namespaces for components with localized text.
  */
 PrimeFacesExt.locales.TimePicker = {};
+PrimeFacesExt.locales.Timeline = {};
 
 /**
  * JavaScript behavior.
