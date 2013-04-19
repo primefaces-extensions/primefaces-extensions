@@ -68,19 +68,21 @@ public class AjaxErrorHandlerRenderer extends CoreRenderer {
 
 		writer.write("$(function(){PrimeFacesExt.getAjaxErrorHandlerInstance().addErrorSettings({");
 
-		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.type.toString(), ajaxErrorHandler.getType());
-		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.title.toString(), ajaxErrorHandler.getTitle());
-		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.body.toString(), ajaxErrorHandler.getBody());
-		writeStringOption(writer, AjaxErrorHandler.PropertyKeys.button.toString(), ajaxErrorHandler.getButton());
+		boolean optionWritten = false;
+		
+		optionWritten |= writeStringOption(writer, AjaxErrorHandler.PropertyKeys.type.toString(), ajaxErrorHandler.getType(), optionWritten);
+		optionWritten |= writeStringOption(writer, AjaxErrorHandler.PropertyKeys.title.toString(), ajaxErrorHandler.getTitle(), optionWritten);
+		optionWritten |= writeStringOption(writer, AjaxErrorHandler.PropertyKeys.body.toString(), ajaxErrorHandler.getBody(), optionWritten);
+		optionWritten |= writeStringOption(writer, AjaxErrorHandler.PropertyKeys.button.toString(), ajaxErrorHandler.getButton(), optionWritten);
 
 		if (!StringUtils.isEmpty(ajaxErrorHandler.getButtonOnclick())) {
-			writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.buttonOnclick.toString(),
-					"function(){" + ajaxErrorHandler.getButtonOnclick() + "}");
+			optionWritten |= writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.buttonOnclick.toString(),
+					"function(){" + ajaxErrorHandler.getButtonOnclick() + "}", optionWritten);
 		}
 
 		if (!StringUtils.isEmpty(ajaxErrorHandler.getOnerror())) {
-			writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.onerror.toString(),
-					"function(error, response){" + ajaxErrorHandler.getOnerror() + "}");
+			optionWritten |= writeFunctionOption(writer, AjaxErrorHandler.PropertyKeys.onerror.toString(),
+					"function(error, response){" + ajaxErrorHandler.getOnerror() + "}", optionWritten);
 		}
 
 		writer.write("});});");
@@ -88,24 +90,43 @@ public class AjaxErrorHandlerRenderer extends CoreRenderer {
 		endScript(writer);
 	}
 
-	protected void writeStringOption(final ResponseWriter writer, final String type, final String value) throws IOException {
-		if (!StringUtils.isEmpty(value)) {
+	protected boolean writeStringOption(final ResponseWriter writer, final String type, final String value, final boolean optionWritten)
+			throws IOException {
+
+		boolean writeOption = !StringUtils.isEmpty(value);
+
+		if (writeOption) {
+			if (optionWritten) {
+				writer.write(",");
+			}
+
 			writer.write("'");
 			writer.write(type);
 			writer.write("':'");
 			writer.write(value);
-			writer.write("',");
+			writer.write("'");
 		}
+
+		return writeOption;
 	}
 
-	protected void writeFunctionOption(final ResponseWriter writer, final String type, final String value) throws IOException {
-		if (!StringUtils.isEmpty(value)) {
+	protected boolean writeFunctionOption(final ResponseWriter writer, final String type, final String value, final boolean optionWritten)
+			throws IOException {
+
+		boolean writeOption = !StringUtils.isEmpty(value);
+		
+		if (writeOption) {
+			if (optionWritten) {
+				writer.write(",");
+			}
+
 			writer.write("'");
 			writer.write(type);
 			writer.write("':");
 			writer.write(value);
-			writer.write(",");
 		}
+
+		return writeOption;
 	}
 
 	protected String getHostname() throws UnknownHostException {
