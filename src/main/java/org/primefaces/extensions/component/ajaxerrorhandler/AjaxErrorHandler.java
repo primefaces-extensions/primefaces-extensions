@@ -38,6 +38,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependencies({
 	@ResourceDependency(library = "javax.faces", name = "jsf.js"),
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
