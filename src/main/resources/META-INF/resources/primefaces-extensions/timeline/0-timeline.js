@@ -4225,7 +4225,8 @@ links.Timeline.ItemDot.prototype.updateDOM = function () {
         // update contents
         divBox.firstChild.innerHTML = this.content;
 
-        // update class
+        // update classes
+        divBox.className = "timeline-event-dot-container";
         divDot.className  = "timeline-event timeline-event-dot ui-widget ui-state-default";
 
         if (this.isCluster) {
