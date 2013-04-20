@@ -258,7 +258,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 		jQuery.each(obj, $.proxy(function(key, val) {
 			if (typeof(val) == 'string') {
 				jQuery.each(variables, $.proxy(function(iVar, iVal) {
-					val = this.replaceAll(val, '{' + iVar + '}', iVal);
+					val = this.replaceAll(val, '{' + iVar + '}', iVal.replace(/\n/g, '<br />'));
 				}, this));
 			}
 

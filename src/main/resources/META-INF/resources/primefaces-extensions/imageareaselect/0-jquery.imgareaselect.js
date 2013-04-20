@@ -1,8 +1,8 @@
 /*
  * imgAreaSelect jQuery plugin
- * version 0.9.9
+ * version 0.9.10
  *
- * Copyright (c) 2008-2012 Michal Wojciechowski (odyniec.net)
+ * Copyright (c) 2008-2013 Michal Wojciechowski (odyniec.net)
  *
  * Dual licensed under the MIT (MIT-LICENSE.txt)
  * and GPL (GPL-LICENSE.txt) licenses.
@@ -68,6 +68,8 @@ $.imgAreaSelect = function (img, options) {
         selection = { x1: 0, y1: 0, x2: 0, y2: 0, width: 0, height: 0 },
 
         docElem = document.documentElement,
+
+        ua = navigator.userAgent,
 
         $p, d, i, o, w, h, adjusted;
 
@@ -203,7 +205,7 @@ $.imgAreaSelect = function (img, options) {
                     $.imgAreaSelect.onKeyPress = docKeyPress);
         }
 
-        if ($.browser.msie && $border.outerWidth() - $border.innerWidth() == 2) {
+        if (msie && $border.outerWidth() - $border.innerWidth() == 2) {
             $border.css('margin', 0);
             setTimeout(function () { $border.css('margin', 'auto'); }, 0);
         }
@@ -603,9 +605,9 @@ $.imgAreaSelect = function (img, options) {
         if (o = options.borderColor2)
             $($border[1]).css({ borderStyle: 'dashed', borderColor: o });
 
-        $box.append($area.add($border).add($areaOpera).add($handles));
+        $box.append($area.add($border).add($areaOpera)).append($handles);
 
-        if ($.browser.msie) {
+        if (msie) {
             if (o = ($outer.css('filter')||'').match(/opacity=(\d+)/))
                 $outer.css('opacity', o[1]/100);
             if (o = ($border.css('filter')||'').match(/opacity=(\d+)/))
@@ -660,6 +662,10 @@ $.imgAreaSelect = function (img, options) {
 
     this.update = doUpdate;
 
+    var msie = (/msie ([\w.]+)/i.exec(ua)||[])[1],
+        opera = /opera/i.test(ua),
+        safari = /webkit/i.test(ua) && !/chrome/i.test(ua);
+
     $p = $img;
 
     while ($p.length) {
@@ -673,13 +679,13 @@ $.imgAreaSelect = function (img, options) {
 
     zIndex = options.zIndex || zIndex;
 
-    if ($.browser.msie)
+    if (msie)
         $img.attr('unselectable', 'on');
 
-    $.imgAreaSelect.keyPress = $.browser.msie ||
-        $.browser.safari ? 'keydown' : 'keypress';
+    $.imgAreaSelect.keyPress = msie || safari ? 'keydown' : 'keypress';
 
-    if ($.browser.opera)
+    if (opera)
+
         $areaOpera = div().css({ width: '100%', height: '100%',
             position: 'absolute', zIndex: zIndex + 2 || 2 });
 
@@ -691,7 +697,7 @@ $.imgAreaSelect = function (img, options) {
     img.complete || img.readyState == 'complete' || !$img.is('img') ?
         imgLoad() : $img.one('load', imgLoad);
 
-   if (!imgLoaded && $.browser.msie && $.browser.version >= 7)
+    if (!imgLoaded && msie && msie >= 7)
         img.src = img.src;
 };
 
