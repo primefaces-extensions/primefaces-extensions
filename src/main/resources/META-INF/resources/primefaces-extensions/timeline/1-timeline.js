@@ -14,8 +14,6 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.id = cfg.id;
 
-        this.jqId = PrimeFaces.escapeClientId(this.id);
-
         PrimeFacesExt.handleInitialize(this, this.createTimeline);
     },
 
@@ -23,17 +21,11 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
      * Creates timeline widget with all initialization steps.
      */
     createTimeline: function () {
-        //this.jq.addClass("ui-widget ui-widget-content ui-corner-all ui-timeline-container");
-        var $jqId = $(this.jqId);
-        if (this.cfg.opts.selectable) {
-            $jqId.addClass("ui-timeline-selectable");
-        }
-        
         // configure localized text
         this.cfg.opts = PrimeFacesExt.configureLocale('Timeline', this.cfg.opts);
 
         // instantiate a timeline object
-        this.instance = new links.Timeline($jqId.get(0));
+        this.instance = new links.Timeline(document.getElementById(this.id));
 
         // draw the timeline with created data and options
         this.instance.draw(this.cfg.data, this.cfg.opts);
@@ -47,7 +39,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
      */
     bindEvents: function () {
         if (this.cfg.opts.responsive) {
-            var nsevent = "resize.timeline" + this.jqId;
+            var nsevent = "resize.timeline" + PrimeFaces.escapeClientId(this.id);
             $(window).off(nsevent).on(nsevent, $.proxy(function () {
                 this.instance.checkResize();
             }, this));
