@@ -971,6 +971,7 @@ public class ExcelExporter extends Exporter {
         }
 
         facetStyle.setFont(facetFont);
+        facetStyle.setAlignment(CellStyle.ALIGN_CENTER);
 
     }
 

@@ -157,8 +157,9 @@ public class PDFExporter extends Exporter {
     }
 
     protected PdfPTable exportPDFTable(FacesContext context, DataTable table, boolean pageOnly, boolean selectionOnly, String encoding, boolean subTable) {
-
+        if(!("-".equalsIgnoreCase(encoding))) {
         createCustomFonts(encoding);
+        }
         int columnsCount = getColumnsCount(table);
         PdfPTable pdfTable = null;
         if (subTable) {
@@ -258,7 +259,9 @@ public class PDFExporter extends Exporter {
 
     protected PdfPTable exportPDFTable(FacesContext context, DataList list, boolean pageOnly, String encoding) {
 
-        createCustomFonts(encoding);
+        if(!("-".equalsIgnoreCase(encoding))) {
+            createCustomFonts(encoding);
+        }
         int first = list.getFirst();
         int rowCount = list.getRowCount();
         int rowsToExport = first + list.getRows();
@@ -678,7 +681,7 @@ public class PDFExporter extends Exporter {
                 if(rowExpansion.getChildren()!=null) {
                     if(rowExpansion.getChildren().get(0) instanceof DataTable) {
                     DataTable  childTable=(DataTable)rowExpansion.getChildren().get(0);
-                    PdfPTable pdfTableChild=exportPDFTable(context, childTable, false, false, "UTF-8", false);
+                    PdfPTable pdfTableChild=exportPDFTable(context, childTable, false, false, "-", false);
                     PdfPCell cell = new PdfPCell();
                     cell.addElement(pdfTableChild);
                     cell.setColspan(pdfTable.getNumberOfColumns());
@@ -686,7 +689,7 @@ public class PDFExporter extends Exporter {
                     }
                     if(rowExpansion.getChildren().get(0) instanceof DataList)  {
                     DataList  list=(DataList)rowExpansion.getChildren().get(0);
-                    PdfPTable pdfTableChild=exportPDFTable(context, list, false, "UTF-8");
+                    PdfPTable pdfTableChild=exportPDFTable(context, list, false, "-");
                     pdfTableChild.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                     PdfPCell cell = new PdfPCell();
                     cell.addElement(pdfTableChild);
