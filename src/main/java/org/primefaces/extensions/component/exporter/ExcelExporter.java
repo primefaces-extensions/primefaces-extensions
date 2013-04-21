@@ -52,6 +52,7 @@ import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.component.UIPanel;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -388,7 +389,15 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
-            } else {
+            } else if (component instanceof UIPanel) {
+                 String header="";
+                     for(UIComponent child:component.getChildren())  {
+                            headerValue = exportValue(context, child);
+                            header=header+headerValue;
+                         }
+                headerValue = header;
+          }
+            else {
                 headerValue = exportFacetValue(context, component);
             }
 
@@ -417,7 +426,14 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
-            } else {
+            } else if (component instanceof UIPanel) {
+            String header="";
+            for(UIComponent child:component.getChildren())  {
+                headerValue = exportValue(context, child);
+                header=header+headerValue;
+            }
+            headerValue = header;
+        } else {
                 headerValue = exportFacetValue(context, component);
             }
 
