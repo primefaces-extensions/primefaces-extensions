@@ -154,9 +154,12 @@ public class LayoutRenderer extends CoreRenderer {
 			writer.write("false");
 		}
 
-		LayoutOptions layoutOptions = (LayoutOptions) layout.getOptions();
-		if (layoutOptions != null) {
-			writer.write(",options:" + layoutOptions.render());
+		Object layoutOptions = layout.getOptions();
+		if (layoutOptions instanceof LayoutOptions) {
+			writer.write(",options:" + ((LayoutOptions) layoutOptions).toJson());
+		} else if (layoutOptions instanceof String) {
+			// already serialized as JSON string
+			writer.write(",options:" + layoutOptions.toString());
 		} else {
 			writer.write(",options:{}");
 		}

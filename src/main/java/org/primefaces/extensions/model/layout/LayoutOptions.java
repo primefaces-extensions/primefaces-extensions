@@ -280,7 +280,12 @@ public class LayoutOptions implements Serializable {
 		return replaced;
 	}
 
-	public String render() {
+	/**
+	 * Serializes layout options to JSON string.
+	 *
+	 * @return Layout options as JSON string
+	 */
+	public String toJson() {
 		return GsonLayoutOptions.getGson().toJson(this);
 	}
 }

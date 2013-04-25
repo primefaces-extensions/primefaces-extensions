@@ -1645,7 +1645,9 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Layout options as instance of the class LayoutOptions. LayoutOptions created as Java model takes precedence over layout options as tag attributes.]]></description>
+            <description>
+                <![CDATA[Layout options as an instance of the class LayoutOptions or an JSON String representing serialized LayoutOptions. LayoutOptions created as Java model takes precedence over layout options as tag attributes. Serializing of layout options to an JSON string can increase the time of layout building when the layout is built during application startup in an application scoped bean (LayoutOptions gets always serialized to JSON to be able to be used in the underlying widget). Use the method toJson() in the LayoutOptions if you want to serialize all options to an JSON string.]]>
+            </description>
             <name>options</name>
             <required>false</required>
             <type>java.lang.Object</type>
