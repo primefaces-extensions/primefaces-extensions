@@ -31,6 +31,7 @@ import javax.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.MessageFactory;
@@ -110,16 +111,6 @@ public class TimePickerRenderer extends InputRenderer {
 				writer.writeAttribute("style", timepicker.getStyle(), null);
 			}
 
-			// disabling is handled in JS widget
-			/*
-			if (timepicker.isReadonly()) {
-			    writer.writeAttribute("readonly", "readonly", null);
-			}
-
-			if (timepicker.isDisabled()) {
-			    writer.writeAttribute("disabled", "disabled", null);
-			}*/
-
 			renderPassThruAttributes(fc, timepicker, TimePicker.INPUT_TEXT_ATTRS);
 		}
 
@@ -129,6 +120,24 @@ public class TimePickerRenderer extends InputRenderer {
 			boolean disabled = timepicker.isDisabled() || timepicker.isReadonly();
 			encodeSpinnerButton(fc, TimePicker.UP_BUTTON_CLASS, TimePicker.UP_ICON_CLASS, disabled);
 			encodeSpinnerButton(fc, TimePicker.DOWN_BUTTON_CLASS, TimePicker.DOWN_ICON_CLASS, disabled);
+		}
+
+		if (!"focus".equals(timepicker.getShowOn())) {
+			writer.startElement("button", null);
+			writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_CLASS, null);
+			writer.writeAttribute("type", "button", null);
+			writer.writeAttribute("role", "button", null);
+
+			writer.startElement("span", null);
+			writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
+			writer.endElement("span");
+
+			writer.startElement("span", null);
+			writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
+			writer.write("ui-button");
+			writer.endElement("span");
+
+			writer.endElement("button");
 		}
 
 		writer.endElement("span");
@@ -166,6 +175,11 @@ public class TimePickerRenderer extends InputRenderer {
 
 		if (timepicker.getOnMinuteShow() != null) {
 			writer.write(",onMinuteShow:" + timepicker.getOnMinuteShow());
+		}
+
+		if (!"focus".equals(timepicker.getShowOn())) {
+			writer.write(",showOn:'" + timepicker.getShowOn() + "'");
+			writer.write(",button:'" + ComponentUtils.escapeJQueryId(clientId) + " .pe-timepicker-trigger'");
 		}
 
 		writer.write(",locale:'" + timepicker.calculateLocale(fc).toString() + "'");

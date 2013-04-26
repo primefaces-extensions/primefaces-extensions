@@ -40,6 +40,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang3.LocaleUtils;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
@@ -56,13 +57,13 @@ import org.primefaces.util.HTML;
  * @since   0.3
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
+                      })
 public class TimePicker extends HtmlInputText implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";
@@ -73,25 +74,29 @@ public class TimePicker extends HtmlInputText implements Widget {
 	public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
 	public static final String INPUT_CLASS = "ui-inputfield pe-timepicker-input ui-state-default ui-corner-all";
 	public static final String UP_BUTTON_CLASS =
-			"pe-timepicker-button pe-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
+	    "pe-timepicker-button pe-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
 	public static final String DOWN_BUTTON_CLASS =
-			"pe-timepicker-button pe-timepicker-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only";
+	    "pe-timepicker-button pe-timepicker-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only";
 	public static final String UP_ICON_CLASS = "ui-icon ui-icon-triangle-1-n";
 	public static final String DOWN_ICON_CLASS = "ui-icon ui-icon-triangle-1-s";
+	public static final String BUTTON_TRIGGER_CLASS =
+	    "pe-timepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only";
+	public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
+	public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
 	public static final String[] INPUT_TEXT_ATTRS =
-			ArrayUtils.concat(new String[] {
-					"accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"
-			}, HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
+	    ArrayUtils.concat(new String[] {
+	                          "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"
+	                      }, HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
 
 	public static final String TIME_MESSAGE_KEY = "javax.faces.converter.DateTimeConverter.TIME";
 
 	private Locale appropriateLocale;
 
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
-					"keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
-					"mouseup", "beforeShow", "timeSelect", "close"));
+	    Collections.unmodifiableCollection(Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
+	                                                     "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
+	                                                     "mouseup", "beforeShow", "timeSelect", "close"));
 
 	private Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
 
@@ -122,6 +127,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 		showDeselectButton,
 		onHourShow,
 		onMinuteShow,
+		showOn,
 		locale;
 
 		String toString;
@@ -300,6 +306,14 @@ public class TimePicker extends HtmlInputText implements Widget {
 		setAttribute(PropertyKeys.onMinuteShow, onMinuteShow);
 	}
 
+	public String getShowOn() {
+		return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
+	}
+
+	public void setShowOn(final String showOn) {
+		setAttribute(PropertyKeys.showOn, showOn);
+	}
+
 	public Object getLocale() {
 		return getStateHelper().eval(PropertyKeys.locale, null);
 	}
@@ -318,7 +332,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 					appropriateLocale = (Locale) userLocale;
 				} else {
 					throw new IllegalArgumentException(userLocale.getClass() + " is not a valid locale for timepicker:"
-							+ this.getClientId(fc));
+					                                   + this.getClientId(fc));
 				}
 			} else {
 				appropriateLocale = fc.getViewRoot().getLocale();
@@ -415,7 +429,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 		@SuppressWarnings("unchecked")
 		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
+		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
 		if (setAttributes == null) {
 			final String cname = this.getClass().getName();
 			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {

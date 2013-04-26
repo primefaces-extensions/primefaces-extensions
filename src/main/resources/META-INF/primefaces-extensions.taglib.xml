@@ -2508,6 +2508,13 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Define when the timepicker is shown. 'focus': when the input gets focus, 'button' when the button trigger element is clicked, 'both': when the input gets focus and when the button is clicked. Default is 'focus'.]]></description>
+            <name>showOn</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]></description>
             <name>locale</name>
             <required>false</required>

@@ -47,3 +47,14 @@
 .pe-timepicker .ui-icon-triangle-1-s {
     background-position: -65px -16px;
 }
+
+.pe-timepicker-trigger {
+    margin-left: 1px;
+    height: 2em;
+    width: 2em;
+    vertical-align: middle;
+}
+
+.pe-timepicker-trigger .ui-icon-clock {
+    left: 50%;
+}
