@@ -151,12 +151,14 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	        mouseup: function(){
 	            $(this).removeClass('ui-state-active');
 	        },
-	        mousedown: function(){
+	        mousedown: function(e){
 	            var el = $(this);
 	            el.addClass('ui-state-active');
 	        
 	            var dir = el.hasClass('pe-timepicker-up') ? 1 : -1;
 	            _self.spin(dir);
+                
+                e.preventDefault();
 	        }
 	    });
 	},
