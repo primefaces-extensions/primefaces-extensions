@@ -57,6 +57,8 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	protected static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	protected KeyData data;
+	protected StringBuilder idBuilder = new StringBuilder();
+	private String thisContainerClientId;
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -69,6 +71,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		saved,
 		lastId,
 		var,
+		varContainerId,
 		value;
 
 		private String toString;
@@ -92,6 +95,14 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 	public void setVar(String var) {
 		getStateHelper().put(PropertyKeys.var, var);
+	}
+
+	public String getVarContainerId() {
+		return (String) getStateHelper().get(PropertyKeys.varContainerId);
+	}
+
+	public void setVarContainerId(String varContainerId) {
+		getStateHelper().put(PropertyKeys.varContainerId, varContainerId);
 	}
 
 	public Object getValue() {
@@ -179,16 +190,20 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
 	@Override
 	public String getContainerClientId(FacesContext context) {
-		String clientId = super.getContainerClientId(context);
+		if (thisContainerClientId == null) {
+			thisContainerClientId = super.getContainerClientId(context);
+		}
+
 		KeyData data = getData();
 		String key = (data != null ? data.getKey() : null);
 
 		if (key == null) {
-			return clientId;
+			return thisContainerClientId;
 		} else {
-			StringBuilder builder = new StringBuilder();
+			idBuilder.setLength(0);
 
-			return builder.append(clientId).append(UINamingContainer.getSeparatorChar(context)).append(key).toString();
+			return idBuilder.append(thisContainerClientId).append(UINamingContainer.getSeparatorChar(context)).append(key)
+			                .toString();
 		}
 	}
 
@@ -401,13 +416,26 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 	}
 
 	protected void exposeVar() {
-		KeyData keyData = getData();
-		Map<String, Object> requestMap = FacesContext.getCurrentInstance().getExternalContext().getRequestMap();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
 
+		KeyData keyData = getData();
 		if (keyData == null) {
 			requestMap.remove(getVar());
 		} else {
 			requestMap.put(getVar(), keyData.getData());
+		}
+
+		String varContainerId = getVarContainerId();
+		if (varContainerId == null) {
+			return;
+		}
+
+		String containerClientId = getContainerClientId(fc);
+		if (containerClientId == null) {
+			requestMap.remove(varContainerId);
+		} else {
+			requestMap.put(varContainerId, containerClientId);
 		}
 	}
 

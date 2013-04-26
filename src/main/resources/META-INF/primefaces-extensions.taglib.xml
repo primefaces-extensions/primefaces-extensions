@@ -636,9 +636,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable for the underlaying object of each iteration.]]>
+                <![CDATA[Name of the request-scoped variable for the underlaying object for each iteration.]]>
             </description>
             <name>var</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:dynaFormControl. This property allows to get the whole clientId of a component within pe:dynaFormControl. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
+            </description>
+            <name>varContainerId</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
