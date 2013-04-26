@@ -16,7 +16,7 @@
     cursor: default;
     display: block;
     font-size: 0.5em;
-    height: 50%;
+    height: 44%;
     margin: 0;
     overflow: hidden;
     padding: 0;
@@ -35,18 +35,15 @@
     top: 50%;
 }
 
-.pe-timepicker-up {
+.pe-timepicker-button.pe-timepicker-up {
     top: 0;
+    border-bottom: none;
 }
 
-.pe-timepicker-down {
+.pe-timepicker-button.pe-timepicker-down {
     bottom: 0;
 }
 
 .pe-timepicker .ui-icon-triangle-1-s {
     background-position: -65px -16px;
-}
-
-.pe-timepicker .ui-icon-triangle-1-n {
-    margin-top: -9px;
 }

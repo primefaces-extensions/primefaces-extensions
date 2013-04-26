@@ -1,0 +1,5 @@
+jquery.ui.timepicker.js:
+------------------------------------------------
+- Fixed conflict with PF calendar with time
+	https://github.com/fgelinas/timepicker/issues/67
+

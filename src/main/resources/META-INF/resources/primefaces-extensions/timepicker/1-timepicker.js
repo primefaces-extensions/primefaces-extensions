@@ -110,7 +110,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	    };   
 	
 	    // create timepicker
-	    this.jq.timepicker(this.cfg);
+	    this.jq.fgtimepicker(this.cfg);
 	
 	    if (this.cfg.disabled) {
 	        this.disable();
@@ -433,23 +433,23 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	// Exposed public methods
 	
 	setTime : function(time) {
-	    this.jq.timepicker('setTime', time);     
+	    this.jq.fgtimepicker('setTime', time);     
 	},
 	
 	getTime : function() {
-	    return this.jq.timepicker('getTime');     
+	    return this.jq.fgtimepicker('getTime');     
 	},
 	
 	getHours : function() {
-	    return this.jq.timepicker('getHour');     
+	    return this.jq.fgtimepicker('getHour');     
 	},
 	
 	getMinutes : function() {
-	    return this.jq.timepicker('getMinute');     
+	    return this.jq.fgtimepicker('getMinute');     
 	},
 	
 	disable : function() {
-	    this.jq.timepicker('disable');
+	    this.jq.fgtimepicker('disable');
         
         if (!this.cfg.modeInline) {
             this.jq.addClass('ui-state-disabled');
@@ -461,7 +461,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	},
 	
 	enable : function() {
-	    this.jq.timepicker('enable');
+	    this.jq.fgtimepicker('enable');
         
         if (!this.cfg.modeInline) {
             this.jq.removeClass('ui-state-disabled');    
