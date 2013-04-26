@@ -75,7 +75,8 @@ public class LayoutPane extends UIComponentBase {
 		maxWidth,
 		minHeight,
 		maxHeight,
-		spacing,
+		spacing_open,
+		spacing_closed,
 		initClosed,
 		initHidden,
 		resizeWhileDragging;
@@ -225,12 +226,20 @@ public class LayoutPane extends UIComponentBase {
 		setAttribute(PropertyKeys.maxHeight, maxHeight);
 	}
 
-	public int getSpacing() {
-		return (Integer) getStateHelper().eval(PropertyKeys.spacing, 6);
+	public int getSpacingOpen() {
+		return (Integer) getStateHelper().eval(PropertyKeys.spacing_open, 6);
 	}
 
-	public void setSpacing(int spacing) {
-		setAttribute(PropertyKeys.spacing, spacing);
+	public void setSpacingOpen(int spacingOpen) {
+		setAttribute(PropertyKeys.spacing_open, spacingOpen);
+	}
+
+	public int getSpacingClosed() {
+		return (Integer) getStateHelper().eval(PropertyKeys.spacing_closed, 6);
+	}
+
+	public void setSpacingClosed(int spacingClosed) {
+		setAttribute(PropertyKeys.spacing_closed, spacingClosed);
 	}
 
 	public boolean isInitClosed() {
@@ -276,7 +285,8 @@ public class LayoutPane extends UIComponentBase {
 		options = new LayoutOptions();
 		options.addOption(PropertyKeys.resizable.toString(), isResizable());
 		options.addOption(PropertyKeys.closable.toString(), isClosable());
-		options.addOption(PropertyKeys.spacing.toString(), getSpacing());
+		options.addOption(PropertyKeys.spacing_open.toString(), getSpacingOpen());
+		options.addOption(PropertyKeys.spacing_closed.toString(), getSpacingClosed());
 		options.addOption(PropertyKeys.initClosed.toString(), isInitClosed());
 		options.addOption(PropertyKeys.initHidden.toString(), isInitHidden());
 		options.addOption(PropertyKeys.resizeWhileDragging.toString(), isResizeWhileDragging());

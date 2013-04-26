@@ -1841,9 +1841,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Spacing between pane and adjacent pane - when pane is 'open' or 'closed'. Default value is 6.]]>
+                <![CDATA[Spacing in px between pane and adjacent pane - when pane is 'open'. Default value is 6.]]>
             </description>
-            <name>spacing</name>
+            <name>spacingOpen</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Spacing in px between pane and adjacent pane - when pane is 'closed'. Default value is 6.]]>
+            </description>
+            <name>spacingClosed</name>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
