@@ -708,6 +708,25 @@ public class ExcelExporter extends Exporter {
             }
         }
         FacesContext context = null;
+        if (table.getRowIndex() == 0) {
+            for (UIComponent component : table.getChildren()) {
+                if (component instanceof RowExpansion) {
+                    RowExpansion rowExpansion = (RowExpansion) component;
+                    if (rowExpansion.getChildren() != null) {
+                        if (rowExpansion.getChildren().get(0) instanceof DataTable) {
+                            DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
+                            childTable.setRowIndex(-1);
+                        }
+                        if (rowExpansion.getChildren().get(0) instanceof DataList) {
+                            DataList childList = (DataList) rowExpansion.getChildren().get(0);
+                            childList.setRowIndex(-1);
+                        }
+                    }
+
+                }
+            }
+        }
+        table.setRowIndex(table.getRowIndex() + 1);
         for (UIComponent component : table.getChildren()) {
             if (component instanceof RowExpansion) {
                 RowExpansion rowExpansion = (RowExpansion) component;
