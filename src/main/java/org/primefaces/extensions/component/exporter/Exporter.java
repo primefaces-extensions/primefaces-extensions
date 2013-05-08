@@ -45,6 +45,7 @@ import org.primefaces.component.subtable.SubTable;
 import org.primefaces.component.column.Column;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columns.Columns;
+import org.primefaces.extensions.util.ComponentUtils;
 
 
 /**
@@ -168,16 +169,9 @@ public abstract class Exporter {
             }
             //Try to guess
             else {
-                ValueExpression expr = component.getValueExpression("value");
-                if (expr != null) {
-                    Class<?> valueType = expr.getType(context.getELContext());
-                    if (valueType != null) {
-                        Converter converterForType = context.getApplication().createConverter(valueType);
-
+                        Converter converterForType = ComponentUtils.getConverter(context,component);
                         if (converterForType != null)
                             return converterForType.getAsString(context, component, value);
-                    }
-                }
             }
 
             //No converter found just return the value as string
