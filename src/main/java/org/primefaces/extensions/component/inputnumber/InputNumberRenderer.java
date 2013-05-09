@@ -74,9 +74,9 @@ public class InputNumberRenderer extends InputRenderer {
 	public void decode(final FacesContext context, final UIComponent component) {
 		InputNumber inputNumber = (InputNumber) component;
 
-		if (inputNumber.isReadonly()) {
-			return;
-		}
+        if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
+            return;
+        }
 
 		decodeBehaviors(context, inputNumber);
 
@@ -139,8 +139,9 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_input";
 
-		String defaultClass = InputText.STYLE_CLASS;
-		defaultClass = !inputNumber.isValid() ? defaultClass + " ui-state-error" : defaultClass;
+        String defaultClass = InputText.STYLE_CLASS;
+        defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
+        defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
 
 		writer.startElement("input", null);
 		writer.writeAttribute("id", inputId, null);
@@ -153,6 +154,9 @@ public class InputNumberRenderer extends InputRenderer {
 
 		if (inputNumber.isReadonly()) {
 			writer.writeAttribute("readonly", "readonly", "readonly");
+		}
+		if (inputNumber.isDisabled()) {
+			writer.writeAttribute("disabled", "disabled", "disabled");
 		}
 		if (inputNumber.getStyle() != null) {
 			writer.writeAttribute("style", inputNumber.getStyle(), "style");
@@ -258,4 +262,5 @@ public class InputNumberRenderer extends InputRenderer {
 			}
 		}
 	}
+
 }
