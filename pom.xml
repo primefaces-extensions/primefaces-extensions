@@ -505,6 +505,6 @@
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 
 		<primefaces.core.version>3.5</primefaces.core.version>
-		<primefaces.theme.version>1.0.9</primefaces.theme.version>
+		<primefaces.theme.version>1.0.10</primefaces.theme.version>
 	</properties>
 </project>
