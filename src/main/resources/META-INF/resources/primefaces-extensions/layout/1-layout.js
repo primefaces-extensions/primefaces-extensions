@@ -64,7 +64,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
 
         // bind events
         parent.find(".ui-layout-pane")
-            .bind("layoutpaneonopen",function () {
+            .on("layoutpaneonopen",function () {
                 var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
@@ -80,7 +80,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
                 if ($this.cfg.serverState) {
                     $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
-            }).bind("layoutpaneonclose",function () {
+            }).on("layoutpaneonclose",function () {
                 var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
@@ -96,7 +96,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
                 if ($this.cfg.serverState) {
                     $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
-            }).bind("layoutpaneonresize", function () {
+            }).on("layoutpaneonresize", function () {
                 var layoutPane = $(this).data("layoutPane");
     
                 if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
@@ -133,37 +133,52 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
     },
 
     close:function (pane) {
-        this.jqTarget.find(".ui-layout-pane").
-            each(function() {
-                var combinedPosition = $(this).data('combinedposition');
-                if (combinedPosition && combinedPosition === pane) {
-                    $(this).trigger("layoutpaneclose");
-                    return false;
-                }
-            });
+        var panes = this.jqTarget.find(".ui-layout-pane");
+        var length = panes.length;
+        for (var i=0; i < length; i++) {
+            var combinedPosition = $(panes[i]).data('combinedposition');
+            if (combinedPosition && combinedPosition === pane) {
+                $(panes[i]).trigger("layoutpaneclose");
+                break;
+            }            
+        }
     },
 
     open:function (pane) {
-        this.jqTarget.find(".ui-layout-pane").
-            each(function() {
-                var combinedPosition = $(this).data('combinedposition');
-                if (combinedPosition && combinedPosition === pane) {
-                    $(this).trigger("layoutpaneopen");
-                    return false;
-                }
-            });
+        var panes = this.jqTarget.find(".ui-layout-pane");
+        var length = panes.length;
+        for (var i=0; i < length; i++) {
+            var combinedPosition = $(panes[i]).data('combinedposition');
+            if (combinedPosition && combinedPosition === pane) {
+                $(panes[i]).trigger("layoutpaneopen");
+                break;
+            }            
+        }
     },
 
     sizePane:function (pane, size) {
-        this.jqTarget.find(".ui-layout-pane").
-            each(function() {
-                var combinedPosition = $(this).data('combinedposition');
-                if (combinedPosition && combinedPosition === pane) {
-                    $(this).trigger("layoutpanesize", [size]);
-                    return false;
-                }
-            });
-    }
+        var panes = this.jqTarget.find(".ui-layout-pane");
+        var length = panes.length;
+        for (var i=0; i < length; i++) {
+            var combinedPosition = $(panes[i]).data('combinedposition');
+            if (combinedPosition && combinedPosition === pane) {
+                $(panes[i]).trigger("layoutpanesize", [size]);
+                break;
+            }            
+        }
+    },
+    
+    sizeContent:function (pane) {
+        var panes = this.jqTarget.find(".ui-layout-pane");
+        var length = panes.length;
+        for (var i=0; i < length; i++) {
+            var combinedPosition = $(panes[i]).data('combinedposition');
+            if (combinedPosition && combinedPosition === pane) {
+                $(panes[i]).trigger("layoutpanesizecontent");
+                break;
+            }            
+        }
+    }    
     
     /*
     update:function (pane, options) {
