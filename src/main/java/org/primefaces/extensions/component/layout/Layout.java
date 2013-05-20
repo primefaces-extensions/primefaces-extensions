@@ -107,7 +107,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		stateCookie,
 		togglerTip_open,
 		togglerTip_closed,
-		resizerTip;
+		resizerTip,
+		maskPanesEarly;
 
 		private String toString;
 
@@ -211,6 +212,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 	public void setResizerTip(String resizerTip) {
 		setAttribute(PropertyKeys.resizerTip, resizerTip);
+	}
+
+	public boolean isMaskPanesEarly() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.maskPanesEarly, false);
+	}
+
+	public void setMaskPanesEarly(boolean maskPanesEarly) {
+		setAttribute(PropertyKeys.maskPanesEarly, maskPanesEarly);
 	}
 
 	@Override

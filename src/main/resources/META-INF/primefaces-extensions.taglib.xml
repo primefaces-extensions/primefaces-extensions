@@ -1712,6 +1712,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Useful flag if you are dealing with iframes or objects like applets inside layout panes. This option triggers masking each time the mouse moves over a resizer - instead of waiting until your 'grab it' with your mouse. This is done just in case you are about to grab & drag the resizer. Enabling this avoids the slight delay that sometimes occurs when you quickly grab a resizer and try to drag over an iframe or object. Default is false.]]>
+            </description>
+            <name>maskPanesEarly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description>
@@ -1881,6 +1889,22 @@
             <description><![CDATA[If true, then pane gets resized live while it is dragging. If false, only helper element shows resizing. Default is false.]]>
             </description>
             <name>resizeWhileDragging</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Useful flag if you are dealing with iframes inside layout panes. If true, this option adds a DIV-mask over-or-inside this pane, so user can drag (resize) the pane over iframe. Default is false.]]>
+            </description>
+            <name>maskContents</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Useful flag if you are dealing with objects like applets inside layout panes. If true, this option add IFRAME-mask over-or-inside this pane to cover objects / applets - content-mask will overlay this mask. Default is false.]]>
+            </description>
+            <name>maskObjects</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

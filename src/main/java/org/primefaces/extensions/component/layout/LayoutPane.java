@@ -79,7 +79,9 @@ public class LayoutPane extends UIComponentBase {
 		spacing_closed,
 		initClosed,
 		initHidden,
-		resizeWhileDragging;
+		resizeWhileDragging,
+		maskContents,
+		maskObjects;
 
 		private String toString;
 
@@ -266,6 +268,22 @@ public class LayoutPane extends UIComponentBase {
 		setAttribute(PropertyKeys.resizeWhileDragging, resizeWhileDragging);
 	}
 
+	public boolean isMaskContents() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.maskContents, false);
+	}
+
+	public void setMaskContents(boolean maskContents) {
+		setAttribute(PropertyKeys.maskContents, maskContents);
+	}
+
+	public boolean isMaskObjects() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.maskObjects, false);
+	}
+
+	public void setMaskObjects(boolean maskObjects) {
+		setAttribute(PropertyKeys.maskObjects, maskObjects);
+	}
+
 	@Override
 	public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
 		super.processEvent(event);
@@ -282,14 +300,50 @@ public class LayoutPane extends UIComponentBase {
 			return options;
 		}
 
+		// create options object
 		options = new LayoutOptions();
-		options.addOption(PropertyKeys.resizable.toString(), isResizable());
-		options.addOption(PropertyKeys.closable.toString(), isClosable());
+
+		boolean isResizable = isResizable();
+		if (!isResizable) {
+			options.addOption(PropertyKeys.resizable.toString(), isResizable);
+		}
+
+		boolean isClosable = isClosable();
+		if (!isClosable) {
+			options.addOption(PropertyKeys.closable.toString(), isClosable);
+		}
+
 		options.addOption(PropertyKeys.spacing_open.toString(), getSpacingOpen());
 		options.addOption(PropertyKeys.spacing_closed.toString(), getSpacingClosed());
-		options.addOption(PropertyKeys.initClosed.toString(), isInitClosed());
-		options.addOption(PropertyKeys.initHidden.toString(), isInitHidden());
-		options.addOption(PropertyKeys.resizeWhileDragging.toString(), isResizeWhileDragging());
+
+		boolean initClosed = isInitClosed();
+		if (initClosed) {
+			options.addOption(PropertyKeys.initClosed.toString(), initClosed);
+		}
+
+		boolean initHidden = isInitHidden();
+		if (initHidden) {
+			options.addOption(PropertyKeys.initHidden.toString(), initHidden);
+		}
+
+		boolean isResizeWhileDragging = isResizeWhileDragging();
+		if (isResizeWhileDragging) {
+			options.addOption(PropertyKeys.resizeWhileDragging.toString(), isResizeWhileDragging);
+		}
+
+		boolean isMaskContents = isMaskContents();
+		if (isMaskContents) {
+			options.addOption(PropertyKeys.maskContents.toString(), isMaskContents);
+			options.addOption("contentIgnoreSelector", ".ui-layout-mask");
+		}
+
+		boolean isMaskObjects = isMaskObjects();
+		if (isMaskObjects) {
+			options.addOption(PropertyKeys.maskObjects.toString(), isMaskObjects);
+			if (!isMaskContents) {
+				options.addOption("contentIgnoreSelector", ".ui-layout-mask");
+			}
+		}
 
 		String size = getSize();
 		if (size != null) {
@@ -373,6 +427,11 @@ public class LayoutPane extends UIComponentBase {
 					}
 
 					panes.addOption(Layout.PropertyKeys.togglerTip_closed.toString(), togglerTipClosed);
+				}
+
+				boolean maskPanesEarly = layout.isMaskPanesEarly();
+				if (maskPanesEarly) {
+					options.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), maskPanesEarly);
 				}
 
 				if (panes != null) {
