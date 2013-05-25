@@ -475,7 +475,7 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
-            } else if (component instanceof UIPanel) {
+            } else if (component instanceof UIPanel || component instanceof OutputPanel) {
                 String header = "";
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
