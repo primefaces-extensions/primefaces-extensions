@@ -672,7 +672,7 @@ public class PDFExporter extends Exporter {
                     pdfTable.addCell(new Paragraph(col.getSelectionMode(), this.cellFont));
                     continue;
                 }
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont);
+                addColumnValue(pdfTable, col.getChildren(), this.cellFont,"data");
             }
 
         }
@@ -737,7 +737,7 @@ public class PDFExporter extends Exporter {
             }
 
             if (col.isExportable()) {
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont);
+                addColumnValue(pdfTable, col.getChildren(), this.cellFont,"data");
             }
         }
     }
@@ -769,7 +769,7 @@ public class PDFExporter extends Exporter {
                     pdfTable.addCell(cell);
                 } else {
 
-                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
+                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont,columnType.name());
                 }
             }
         }
@@ -801,13 +801,13 @@ public class PDFExporter extends Exporter {
                     pdfTable.addCell(cell);
                 } else {
 
-                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont);
+                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont,columnType.name());
                 }
             }
         }
     }
 
-    protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font) {
+    protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font,String columnType) {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         PdfPCell cell = new PdfPCell(new Paragraph(value, font));
         //addColumnAlignments(component, cell);
@@ -815,10 +815,13 @@ public class PDFExporter extends Exporter {
         if (facetBackground != null) {
             cell.setBackgroundColor(facetBackground);
         }
+        if(columnType.equalsIgnoreCase("header")){
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        }
         pdfTable.addCell(cell);
     }
 
-    protected void addColumnValue(PdfPTable pdfTable, List<UIComponent> components, Font font) {
+    protected void addColumnValue(PdfPTable pdfTable, List<UIComponent> components, Font font,String columnType) {
         StringBuilder builder = new StringBuilder();
 
         for (UIComponent component : components) {
@@ -832,6 +835,9 @@ public class PDFExporter extends Exporter {
         }
         PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
         //addColumnAlignments(components, cell);
+        if(columnType.equalsIgnoreCase("header")){
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        }
         pdfTable.addCell(cell);
     }
 
