@@ -865,6 +865,13 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>PDF format orientation.Possible values are Portrait or Landscape.Default value:Portrait</description>
+            <name>orientation</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+
     </tag>
     <tag>
         <tag-name>head</tag-name>

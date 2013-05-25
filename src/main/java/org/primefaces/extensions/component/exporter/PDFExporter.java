@@ -55,6 +55,7 @@ import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.column.Column;
 import org.primefaces.component.columngroup.ColumnGroup;
 import org.primefaces.component.columns.Columns;
+import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.util.Constants;
 
 import com.lowagie.text.pdf.PdfPTable;
@@ -67,6 +68,7 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.Rectangle;
+import com.lowagie.text.PageSize;
 
 /**
  * <code>Exporter</code> component.
@@ -87,11 +89,14 @@ public class PDFExporter extends Exporter {
     private Color cellFontColor;
     private String cellFontStyle;
     private int datasetPadding;
+    private String orientation;
 
     @Override
     public void export(ActionEvent event, String tableId, FacesContext context, String filename, String tableTitle, boolean pageOnly, boolean selectionOnly, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor, boolean subTable) throws IOException {
         try {
             Document document = new Document();
+            if(orientation.equalsIgnoreCase("Landscape"))
+            document.setPageSize(PageSize.A4.rotate());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PdfWriter.getInstance(document, baos);
             StringTokenizer st = new StringTokenizer(tableId, ",");
@@ -429,7 +434,7 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
-            } else if (component instanceof UIPanel) {
+            } else if (component instanceof UIPanel || component instanceof OutputPanel) {
                 String header = "";
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
@@ -754,6 +759,7 @@ public class PDFExporter extends Exporter {
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTable.addCell(cell);
                 } else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
                     cell = new PdfPCell(new Paragraph(col.getFooterText(), this.facetFont));
@@ -785,6 +791,7 @@ public class PDFExporter extends Exporter {
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTable.addCell(cell);
                 } else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
                     cell = new PdfPCell(new Paragraph(col.getFooterText(), this.facetFont));
@@ -803,7 +810,7 @@ public class PDFExporter extends Exporter {
     protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font) {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         PdfPCell cell = new PdfPCell(new Paragraph(value, font));
-        addColumnAlignments(component, cell);
+        //addColumnAlignments(component, cell);
 
         if (facetBackground != null) {
             cell.setBackgroundColor(facetBackground);
@@ -824,7 +831,7 @@ public class PDFExporter extends Exporter {
             }
         }
         PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
-        addColumnAlignments(components, cell);
+        //addColumnAlignments(components, cell);
         pdfTable.addCell(cell);
     }
 
@@ -860,11 +867,12 @@ public class PDFExporter extends Exporter {
         }
     }
 
-    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
+    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) {
 
         this.facetFontSize = new Float(facetFontSize);
         this.cellFontSize = new Float(cellFontSize);
         this.datasetPadding = Integer.parseInt(datasetPadding);
+        this.orientation=orientation;
 
         if (facetBackground != null) {
             this.facetBackground = Color.decode(facetBackground);

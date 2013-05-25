@@ -917,7 +917,7 @@ public class ExcelExporter extends Exporter {
         return style;
     }
 
-    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding) {
+    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) {
         if (facetBackground != null) {
             this.facetBackground = Color.decode(facetBackground);
         }
