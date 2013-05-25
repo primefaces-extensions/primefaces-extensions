@@ -543,6 +543,9 @@ public class PDFExporter extends Exporter {
 
                         }
                         // addColumnAlignments(component,cell);
+                        if (facetType.equalsIgnoreCase("header")) {
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        }
                         pdfTable.addCell(cell);
 
                     }
@@ -589,6 +592,9 @@ public class PDFExporter extends Exporter {
 
                         }
                         // addColumnAlignments(component,cell);
+                        if (facetType.equalsIgnoreCase("header")) {
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        }
                         pdfTable.addCell(cell);
 
                     }
