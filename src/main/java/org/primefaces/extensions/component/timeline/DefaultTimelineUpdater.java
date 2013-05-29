@@ -79,13 +79,13 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.DELETE, index));
 	}
 
-    @Override
-    public void select(int index) {
-        checkCrudOperationDataList();
-      	crudOperationDatas.add(new CrudOperationData(CrudOperation.SELECT, index));
-    }
+	@Override
+	public void select(int index) {
+		checkCrudOperationDataList();
+		crudOperationDatas.add(new CrudOperationData(CrudOperation.SELECT, index));
+	}
 
-    @Override
+	@Override
 	public void clear() {
 		checkCrudOperationDataList();
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.CLEAR));
@@ -145,15 +145,15 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(crudOperationData.getIndex());
 					sb.append(")");
 					break;
-                
-                case SELECT:
-            
-                    sb.append(";");
-                    sb.append(widgetVar);
-                    sb.append(".setSelection(");
-                    sb.append(crudOperationData.getIndex());
-                    sb.append(")");
-                    break;                
+
+				case SELECT:
+
+					sb.append(";");
+					sb.append(widgetVar);
+					sb.append(".setSelection(");
+					sb.append(crudOperationData.getIndex());
+					sb.append(")");
+					break;
 
 				case CLEAR:
 
@@ -259,7 +259,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		ADD,
 		UPDATE,
 		DELETE,
-        SELECT,
+		SELECT,
 		CLEAR
 	}
 }

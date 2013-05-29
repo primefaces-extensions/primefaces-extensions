@@ -431,13 +431,19 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Selects an event by index. The visible range will be moved,
      * so that the selected event is placed in the middle.
+     * To unselect all events, use a negative index, e.g. index = -1.
      * 
      * @param index
      */
     setSelection: function(index) {
-        this.instance.setSelection([{
-            'row': index
-        }]);    
+        if (index >= 0) {
+            this.instance.setSelection([{
+                'row': index
+            }]);
+        } else {
+            // unselect all events
+            this.instance.setSelection([]);
+        }    
     },
 
     /**
