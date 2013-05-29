@@ -200,6 +200,21 @@ public class TimelineModel implements Serializable {
 			}
 		}
 	}
+    
+    /**
+   	 * Selects a given event in UI visually.
+   	 *
+   	 * @param event           event to be selected
+   	 * @param timelineUpdater TimelineUpdater instance to select the event in UI
+   	 */
+   	public void select(TimelineEvent event, TimelineUpdater timelineUpdater) {
+   		int index = getIndex(event);
+   
+   		if (timelineUpdater != null) {
+   			// update UI
+   			timelineUpdater.select(index);
+   		}
+   	}
 
 	/**
 	 * Clears the timeline model without UI update (no events are available after that)

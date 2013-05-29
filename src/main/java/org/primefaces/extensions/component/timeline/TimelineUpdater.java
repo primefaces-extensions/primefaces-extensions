@@ -72,6 +72,8 @@ public abstract class TimelineUpdater {
 	public abstract void update(TimelineEvent event, int index);
 
 	public abstract void delete(int index);
+    
+    public abstract void select(int index);
 
 	public abstract void clear();
 }
