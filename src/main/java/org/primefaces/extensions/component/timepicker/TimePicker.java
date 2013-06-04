@@ -394,7 +394,9 @@ public class TimePicker extends HtmlInputText implements Widget {
 
 				if (behaviorEvent.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
 					timeSelectEvent.setPhaseId(PhaseId.PROCESS_VALIDATIONS);
-				}
+				} else {
+                    timeSelectEvent.setPhaseId(PhaseId.INVOKE_APPLICATION);
+                }
 
 				super.queueEvent(timeSelectEvent);
 			}
