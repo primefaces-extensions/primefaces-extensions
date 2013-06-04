@@ -49,7 +49,8 @@
 }
 
 .pe-timepicker-trigger {
-    margin-left: 1px;
+    position: absolute;
+    margin: 1px 0 1px 1px;
     height: 2em;
     width: 2em;
     vertical-align: middle;
