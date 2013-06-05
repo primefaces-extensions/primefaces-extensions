@@ -10,7 +10,7 @@
 	<groupId>org.primefaces.extensions</groupId>
 	<artifactId>master-pom</artifactId>
 	<packaging>pom</packaging>
-	<version>1.7.0-SNAPSHOT</version>
+	<version>1.7.0</version>
 	<name>master-pom</name>
 	<description>
         <![CDATA[PrimeFaces Extensions Master Project for Maven to define global project settings.]]>
@@ -46,7 +46,8 @@
 		<connection>scm:git:git@github.com:primefaces-extensions/master-pom.git</connection>
 		<developerConnection>scm:git:git@github.com:primefaces-extensions/master-pom.git</developerConnection>
 		<url>https://github.com/primefaces-extensions/master-pom</url>
-	</scm>
+	  <tag>master-pom-1.7.0</tag>
+  </scm>
 
 	<developers>
 		<developer>
