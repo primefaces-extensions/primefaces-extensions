@@ -10,7 +10,7 @@
 	<groupId>org.primefaces.extensions</groupId>
 	<artifactId>primefaces-extensions</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.1</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>primefaces-extensions</name>
 	<description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
@@ -20,7 +20,7 @@
 		<connection>scm:git:git@github.com:primefaces-extensions/core.git</connection>
 		<developerConnection>scm:git:git@github.com:primefaces-extensions/core.git</developerConnection>
 		<url>https://github.com/primefaces-extensions/core</url>
-	  <tag>primefaces-extensions-0.7.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<build>
