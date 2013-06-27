@@ -52,7 +52,7 @@ public class LayoutOptionsSerializer implements JsonSerializer<LayoutOptions> {
 			} else if (value instanceof Number) {
 				jsonPrimitive = new JsonPrimitive((Number) value);
 			} else if (value instanceof String) {
-				jsonPrimitive = new JsonPrimitive((String) entry.getValue());
+				jsonPrimitive = new JsonPrimitive((String) value);
 			}
 
 			result.add(entry.getKey(), jsonPrimitive);
