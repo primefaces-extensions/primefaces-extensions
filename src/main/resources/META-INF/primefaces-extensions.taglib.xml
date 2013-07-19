@@ -1388,28 +1388,6 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Component to reset submitted values and validation state.]]>
-        </description>
-        <tag-name>resetInput</tag-name>
-        <handler-class>org.primefaces.extensions.component.resetinput.ResetInputTagHandler</handler-class>
-        <attribute>
-            <description>
-                <![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]>
-            </description>
-            <name>for</name>
-            <required>true</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax in case when ResetInput is attached to any component with ajax behavior. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
-            </description>
-            <name>event</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-    </tag>
-    <tag>
         <description><![CDATA[Advanced Tooltip component.]]>
         </description>
         <tag-name>tooltip</tag-name>
