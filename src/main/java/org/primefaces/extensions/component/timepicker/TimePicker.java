@@ -358,7 +358,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	@Override
 	public void queueEvent(final FacesEvent event) {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		String eventName = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+		String eventName = fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 		if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
 			if ("timeSelect".equals(eventName)) {
@@ -412,7 +412,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	private boolean isSelfRequest(final FacesContext fc) {
-		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
