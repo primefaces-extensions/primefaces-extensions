@@ -37,11 +37,6 @@ import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
 
 import org.primefaces.component.api.AjaxSource;
-import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.commandlink.CommandLink;
-import org.primefaces.component.hotkey.Hotkey;
-import org.primefaces.component.menuitem.UIMenuItem;
-import org.primefaces.component.splitbutton.SplitButton;
 import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.component.base.EnhancedAttachable;
 
@@ -311,34 +306,14 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	public static boolean isAjaxifiedComponent(final UIComponent component) {
 		// check for ajax source
-		if (component instanceof AjaxSource) {
-			// workaround, currently there isn't other way in PrimeFaces
-			boolean isAjaxified;
-
-			if (component instanceof CommandButton) {
-				String type = ((CommandButton) component).getType();
-				isAjaxified = !type.equals("reset") && !type.equals("button") && ((CommandButton) component).isAjax();
-			} else if (component instanceof CommandLink) {
-				isAjaxified = ((CommandLink) component).isAjax();
-			} else if (component instanceof UIMenuItem) {
-				isAjaxified = ((UIMenuItem) component).getUrl() == null && ((UIMenuItem) component).isAjax();
-			} else if (component instanceof SplitButton) {
-				isAjaxified = ((SplitButton) component).isAjax();
-			} else if (component instanceof Hotkey) {
-				isAjaxified = ((Hotkey) component).getHandler() == null;
-			} else {
-				isAjaxified = true;
-			}
-
-			if (isAjaxified) {
-				return true;
-			}
+		if (component instanceof AjaxSource && ((AjaxSource) component).isAjaxified()) {
+			return true;
 		}
 
 		if (component instanceof ClientBehaviorHolder) {
 			// check for attached f:ajax / p:ajax
 			Collection<List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors().values();
-			if (behaviors != null && !behaviors.isEmpty()) {
+			if (!behaviors.isEmpty()) {
 				for (List<ClientBehavior> listBehaviors : behaviors) {
 					for (ClientBehavior clientBehavior : listBehaviors) {
 						if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
