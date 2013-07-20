@@ -451,8 +451,7 @@ public class LayoutPane extends UIComponentBase {
 
 			return;
 		} else if (parent instanceof OutputPanel
-		           && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass())
-		           && "block".equals(((OutputPanel) parent).getLayout())) {
+		           && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass())) {
 			// layout pane can be within p:outputPanel representing a HTML div
 			setOptions(parent.getParent());
 
