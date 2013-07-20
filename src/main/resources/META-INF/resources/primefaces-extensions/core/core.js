@@ -190,7 +190,7 @@ PrimeFacesExt = {
 	 * 
 	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
 	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
 	 */
@@ -206,7 +206,7 @@ PrimeFacesExt = {
 	 * 
 	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
 	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
 	 */
