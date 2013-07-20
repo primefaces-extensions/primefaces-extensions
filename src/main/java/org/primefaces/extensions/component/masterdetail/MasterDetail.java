@@ -39,7 +39,7 @@ import javax.faces.event.PostRestoreStateEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.util.Constants;
 
 /**
@@ -345,7 +345,7 @@ public class MasterDetail extends UIComponentBase {
 		}
 
 		// get component caused this ajax request
-		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
+		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
 		// get resolved context value
@@ -403,7 +403,7 @@ public class MasterDetail extends UIComponentBase {
 					int level = ((MasterDetailLevel) child).getLevel();
 
 					// create menu item to detail level
-					MenuItem menuItem = new MenuItem();
+					UIMenuItem menuItem = new UIMenuItem();
 					menuItem.setId(menuItemIdPrefix + level);
 					menuItem.setAjax(true);
 					menuItem.setImmediate(true);

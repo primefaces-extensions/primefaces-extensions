@@ -117,13 +117,13 @@ public class BlockUIRenderer extends CoreRenderer {
 
 		if (StringUtils.isBlank(events)) {
 			// no events means all events of the given source are accepted
-			eventRegEx = "/" + Constants.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
+			eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
 		} else {
 			String[] arrEvents = events.split("[\\s,]+");
 			StringBuilder sb = new StringBuilder("/");
 
 			for (int i = 0; i < arrEvents.length; i++) {
-				sb.append(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+				sb.append(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 				sb.append("=");
 				sb.append(arrEvents[i]);
 

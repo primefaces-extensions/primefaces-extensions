@@ -329,4 +329,25 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
 		return params.get(clientId + "_" + name);
 	}
+
+	
+	//TODO 4.0
+	public boolean isAjaxified() {
+		return true;
+	}
+
+	public boolean isResetValues() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isResetValuesSet() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isIgnoreAutoUpdate() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

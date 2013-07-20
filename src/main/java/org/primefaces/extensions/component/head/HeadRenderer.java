@@ -108,7 +108,7 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 	private void encodeTheme(final FacesContext context) throws IOException {
 		String theme = null;
 
-		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.THEME_PARAM);
+		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.ContextParams.THEME);
 		if (themeParamValue == null) {
 			theme = THEME_DEFAULT;
 		} else {

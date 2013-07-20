@@ -209,7 +209,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	public void queueEvent(FacesEvent event) {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+		String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 		if (isSelfRequest(fc)) {
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
@@ -235,7 +235,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	private boolean isSelfRequest(FacesContext fc) {
-		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {

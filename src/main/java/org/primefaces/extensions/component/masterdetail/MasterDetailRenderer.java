@@ -34,7 +34,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
@@ -205,7 +205,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
-				MenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+				UIMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
 				if (menuItem == null) {
 					throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
 				}
@@ -280,18 +280,18 @@ public class MasterDetailRenderer extends CoreRenderer {
 		}
 	}
 
-	protected MenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
+	protected UIMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
 		String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
 		for (UIComponent child : breadcrumb.getChildren()) {
-			if ((child instanceof MenuItem) && menuItemId.equals(child.getId())) {
-				return (MenuItem) child;
+			if ((child instanceof UIMenuItem) && menuItemId.equals(child.getId())) {
+				return (UIMenuItem) child;
 			}
 		}
 
 		return null;
 	}
 
-	protected UIParameter getUIParameterById(MenuItem menuItem, String id) {
+	protected UIParameter getUIParameterById(UIMenuItem menuItem, String id) {
 		for (UIComponent child : menuItem.getChildren()) {
 			if ((child instanceof UIParameter) && id.equals(child.getId())) {
 				return (UIParameter) child;

@@ -18,18 +18,14 @@
 
 package org.primefaces.extensions.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.Application;
-import javax.faces.application.ProjectStage;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
@@ -44,7 +40,7 @@ import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandlink.CommandLink;
 import org.primefaces.component.hotkey.Hotkey;
-import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.component.splitbutton.SplitButton;
 import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.component.base.EnhancedAttachable;
@@ -69,44 +65,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
-	}
-
-	public static List<UIComponent> findComponents(final FacesContext context, final UIComponent source, final String list) {
-		final List<UIComponent> foundComponents = new ArrayList<UIComponent>();
-
-		final String[] ids = list.split("[\\s,]+");
-
-		for (int i = 0; i < ids.length; i++) {
-			final String id = ids[i];
-
-			if (id.equals("@this")) {
-				foundComponents.add(source);
-			} else if (id.equals("@form")) {
-				final UIComponent form = ComponentUtils.findParentForm(context, source);
-
-				if (form != null) {
-					foundComponents.add(form);
-				} else if (context.isProjectStage(ProjectStage.Development)) {
-					LOG.log(Level.INFO, "Cannot find enclosing form for component \"{0}\".", source.getClientId(context));
-				}
-			} else if (id.equals("@parent")) {
-				foundComponents.add(source.getParent());
-			} else if (id.equals("@all")) {
-				LOG.log(Level.WARNING, "@all as identifier is not supported.");
-			} else if (id.equals("@none")) {
-				// ignore
-			} else {
-				final UIComponent component = source.findComponent(id);
-
-				if (component != null) {
-					foundComponents.add(component);
-				} else if (context.isProjectStage(ProjectStage.Development)) {
-					LOG.log(Level.WARNING, "Cannot find component with identifier \"{0}\" in view.", id);
-				}
-			}
-		}
-
-		return foundComponents;
 	}
 
 	public static String findTarget(final FacesContext context, final Attachable attachable) {
@@ -351,30 +309,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return null;
 	}
 
-	public static Converter getConverter(final FacesContext fc, final UIComponent component) {
-		if (!(component instanceof EditableValueHolder)) {
-			return null;
-		}
-
-		Converter converter = ((EditableValueHolder) component).getConverter();
-		if (converter != null) {
-			return converter;
-		}
-
-		ValueExpression valueExpression = component.getValueExpression("value");
-		if (valueExpression == null) {
-			return null;
-		}
-
-		Class<?> converterType = valueExpression.getType(fc.getELContext());
-		if (converterType == null || converterType == String.class || converterType == Object.class) {
-			// no conversion is needed
-			return null;
-		}
-
-		return fc.getApplication().createConverter(converterType);
-	}
-
 	public static boolean isAjaxifiedComponent(final UIComponent component) {
 		// check for ajax source
 		if (component instanceof AjaxSource) {
@@ -386,8 +320,8 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 				isAjaxified = !type.equals("reset") && !type.equals("button") && ((CommandButton) component).isAjax();
 			} else if (component instanceof CommandLink) {
 				isAjaxified = ((CommandLink) component).isAjax();
-			} else if (component instanceof MenuItem) {
-				isAjaxified = ((MenuItem) component).getUrl() == null && ((MenuItem) component).isAjax();
+			} else if (component instanceof UIMenuItem) {
+				isAjaxified = ((UIMenuItem) component).getUrl() == null && ((UIMenuItem) component).isAjax();
 			} else if (component instanceof SplitButton) {
 				isAjaxified = ((SplitButton) component).isAjax();
 			} else if (component instanceof Hotkey) {

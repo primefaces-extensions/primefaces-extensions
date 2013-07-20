@@ -165,7 +165,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		final String clientId = getClientId(context);
 
 		if (isRequestSource(clientId, params)) {
-			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+			final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 			final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
@@ -189,6 +189,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	private boolean isRequestSource(final String clientId, final Map<String, String> params) {
-		return clientId.equals(params.get(Constants.PARTIAL_SOURCE_PARAM));
+		return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 }
