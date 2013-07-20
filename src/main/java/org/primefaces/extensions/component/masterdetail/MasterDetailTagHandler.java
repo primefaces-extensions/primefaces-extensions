@@ -36,6 +36,9 @@ import org.primefaces.facelets.MethodRule;
  */
 public class MasterDetailTagHandler extends ComponentHandler {
 
+	private static final MethodRule SELECT_LEVEL_LISTENER =
+	    new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class});
+
 	public MasterDetailTagHandler(final ComponentConfig config) {
 		super(config);
 	}
@@ -43,7 +46,7 @@ public class MasterDetailTagHandler extends ComponentHandler {
 	@Override
 	protected MetaRuleset createMetaRuleset(Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
-		metaRuleset.addRule(new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class}));
+		metaRuleset.addRule(SELECT_LEVEL_LISTENER);
 
 		return metaRuleset;
 	}
