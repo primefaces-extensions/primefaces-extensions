@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.logging.Logger;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -44,8 +43,6 @@ import org.primefaces.util.HTML;
  * @since 0.3
  */
 public class InputNumberRenderer extends InputRenderer {
-
-	private static final Logger LOGGER = Logger.getLogger(InputNumberRenderer.class.getName());
 
 	@Override
 	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)

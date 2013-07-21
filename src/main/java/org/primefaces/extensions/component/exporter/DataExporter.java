@@ -174,21 +174,6 @@ public class DataExporter implements ActionListener, StateHolder {
         }
     }
 
-    private int[] resolveExcludedColumnIndexes(Object columnsToExclude) {
-        if (columnsToExclude == null || columnsToExclude.equals("")) {
-            return null;
-        } else {
-            String[] columnIndexesAsString = ((String) columnsToExclude).split(",");
-            int[] indexes = new int[columnIndexesAsString.length];
-
-            for (int i = 0; i < indexes.length; i++) {
-                indexes[i] = Integer.parseInt(columnIndexesAsString[i].trim());
-            }
-
-            return indexes;
-        }
-    }
-
     public boolean isTransient() {
         return false;
     }

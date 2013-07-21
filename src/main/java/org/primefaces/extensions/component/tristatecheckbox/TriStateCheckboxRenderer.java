@@ -18,7 +18,6 @@
 
 package org.primefaces.extensions.component.tristatecheckbox;
 
-import java.io.Console;
 import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

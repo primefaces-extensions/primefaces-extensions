@@ -18,12 +18,10 @@ package org.primefaces.extensions.component.exporter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.*;
 import java.lang.Float;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.System;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -33,9 +31,7 @@ import java.awt.Color;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.component.html.HtmlOutputText;
@@ -52,9 +48,7 @@ import org.primefaces.component.summaryrow.SummaryRow;
 import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
-import org.primefaces.component.column.Column;
 import org.primefaces.component.columngroup.ColumnGroup;
-import org.primefaces.component.columns.Columns;
 import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.util.Constants;
 
@@ -285,7 +279,6 @@ public class PDFExporter extends Exporter {
 
         StringBuilder builder = new StringBuilder();
         String output = null;
-        UIComponent datalist = (UIComponent) list;
 
         if (pageOnly) {
             output = exportPageOnly(first, list, rowsToExport, builder);

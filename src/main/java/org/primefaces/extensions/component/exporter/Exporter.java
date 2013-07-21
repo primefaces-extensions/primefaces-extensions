@@ -18,11 +18,9 @@ package org.primefaces.extensions.component.exporter;
 import java.io.IOException;
 import java.lang.String;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.el.MethodExpression;
-import javax.el.ValueExpression;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
@@ -30,7 +28,6 @@ import javax.faces.component.ValueHolder;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlGraphicImage;
-import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
@@ -39,7 +36,6 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import org.primefaces.component.celleditor.CellEditor;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.roweditor.RowEditor;
-import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.component.column.Column;
@@ -222,12 +218,10 @@ public abstract class Exporter {
 
     protected List<UIColumn> getColumnsToExport(UIData table) {
         List<UIColumn> columns = new ArrayList<UIColumn>();
-        int columnIndex = -1;
 
         for (UIComponent child : table.getChildren()) {
             if (child instanceof UIColumn) {
                 UIColumn column = (UIColumn) child;
-                columnIndex++;
 
                 columns.add(column);
             }

@@ -15,8 +15,6 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import javax.faces.FacesException;
-
 /**
  * <code>Exporter</code> component.
  *

@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import javax.faces.FacesException;
 import javax.faces.application.Application;
@@ -48,8 +47,6 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  * @since   0.2
  */
 public class ComponentUtils extends org.primefaces.util.ComponentUtils {
-
-	private static final Logger LOG = Logger.getLogger(ComponentUtils.class.getName());
 
 	/**
 	 * Prevent instantiation.
