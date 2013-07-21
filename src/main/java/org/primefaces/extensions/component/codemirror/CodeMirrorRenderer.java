@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
 
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
@@ -127,7 +128,7 @@ public class CodeMirrorRenderer extends InputRenderer {
         }
 
         if (codeMirror.getProcess() != null) {
-        	writer.write(",process:'" + ComponentUtils.findClientIds(context, codeMirror, codeMirror.getProcess()) + "'");
+        	writer.write(",process:'" + SearchExpressionFacade.resolveComponentsForClient(context, codeMirror, codeMirror.getProcess()) + "'");
         }
 
         if (codeMirror.getOnstart() != null) {
