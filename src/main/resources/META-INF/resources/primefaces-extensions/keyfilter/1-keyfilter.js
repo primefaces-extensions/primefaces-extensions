@@ -13,7 +13,7 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
 		this.id = cfg.id;
 		this.cfg = cfg;
-	    this.target = $(this.cfg.target);
+	    this.target = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target);
 
 	    if (this.target.is(':input')) {
 	    	this.applyKeyFilter(this.target, cfg);
