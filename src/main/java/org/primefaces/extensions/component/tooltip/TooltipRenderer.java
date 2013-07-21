@@ -93,12 +93,12 @@ public class TooltipRenderer extends CoreRenderer {
 		if (mouseTracking) {
 			writer.write(",hide:{fixed:true}");
 		} else if (shared && !global) {
-			writer.write(",show:{target:$('" + target + "')" + ",delay:" + tooltip.getShowDelay()
-			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
-			             + ");}}");
-			writer.write(",hide:{target:$('" + target + "')" + ",delay:" + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed()
-			             + ",effect:function(){$(this)." + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength()
-			             + ");}}");
+			writer.write(",show:{target:PrimeFaces.Expressions.resolveComponentsAsSelector('" + target + "')" + ",delay:"
+			             + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
+			             + tooltip.getShowEffectLength() + ");}}");
+			writer.write(",hide:{target:PrimeFaces.Expressions.resolveComponentsAsSelector('" + target + "')" + ",delay:"
+			             + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
+			             + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
 		} else if (autoShow) {
 			writer.write(",show:{when:false,ready:true}");
 			writer.write(",hide:false");
