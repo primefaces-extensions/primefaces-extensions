@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -162,21 +161,10 @@ public class CodeMirrorRenderer extends InputRenderer {
 	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
     	final CodeMirror codeMirror = (CodeMirror) component;
     	final String value = (String) submittedValue;
-    	final Converter converter = codeMirror.getConverter();
+		final Converter converter = ComponentUtils.getConverter(context, component);
 
 		if (converter != null) {
 			return converter.getAsObject(context, codeMirror, value);
-		}
-
-		final ValueExpression ve = codeMirror.getValueExpression("value");
-
-		if (ve != null) {
-		    final Class<?> valueType = ve.getType(context.getELContext());
-		    final Converter converterForType = context.getApplication().createConverter(valueType);
-
-		    if (converterForType != null) {
-		        return converterForType.getAsObject(context, codeMirror, value);
-		    }
 		}
 
 		return value;

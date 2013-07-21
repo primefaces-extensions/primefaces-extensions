@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.ckeditor;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -114,21 +113,10 @@ public class CKEditorRenderer extends InputRenderer {
 	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
     	final CKEditor ckEditor = (CKEditor) component;
     	final String value = (String) submittedValue;
-    	final Converter converter = ckEditor.getConverter();
+		final Converter converter = ComponentUtils.getConverter(context, component);
 
 		if (converter != null) {
 			return converter.getAsObject(context, ckEditor, value);
-		}
-
-		final ValueExpression ve = ckEditor.getValueExpression("value");
-
-		if (ve != null) {
-		    final Class<?> valueType = ve.getType(context.getELContext());
-		    final Converter converterForType = context.getApplication().createConverter(valueType);
-
-		    if (converterForType != null) {
-		        return converterForType.getAsObject(context, ckEditor, value);
-		    }
 		}
 
 		return value;
