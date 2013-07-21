@@ -29,7 +29,6 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 
 /**
  * <code>Tooltip</code> component.
@@ -40,12 +39,13 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
  */
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
                       })
-public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
+public class Tooltip extends UIOutput implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -78,8 +78,7 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 		hideDelay,
 		hideEffect,
 		hideEffectLength,
-		forValue("for"),
-		forSelector;
+		forValue("for");
 
 		private String toString;
 
@@ -255,14 +254,6 @@ public class Tooltip extends UIOutput implements Widget, EnhancedAttachable {
 
 	public void setFor(String forValue) {
 		setAttribute(PropertyKeys.forValue, forValue);
-	}
-
-	public String getForSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
-	}
-
-	public void setForSelector(String forSelector) {
-		setAttribute(PropertyKeys.forSelector, forSelector);
 	}
 
 	public String resolveWidgetVar() {

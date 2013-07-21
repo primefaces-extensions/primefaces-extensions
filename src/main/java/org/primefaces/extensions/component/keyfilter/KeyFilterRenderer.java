@@ -24,7 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -47,6 +47,8 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final KeyFilter keyFilter = (KeyFilter) component;
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
+		final String target = SearchExpressionFacade.resolveComponentForClient(
+				context, keyFilter, keyFilter.getFor());
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
@@ -54,7 +56,7 @@ public class KeyFilterRenderer extends CoreRenderer {
 		writer.write("PrimeFacesExt.cw('KeyFilter', '" + widgetVar + "',{");
 
 		writer.write("id:'" + clientId + "'");
-		writer.write(",target:'" + ComponentUtils.findTarget(context, keyFilter) + "'");
+		writer.write(",target:'" + target + "'");
 
 		if (keyFilter.getRegEx() != null) {
 			writer.write(",regEx:" + keyFilter.getRegEx());

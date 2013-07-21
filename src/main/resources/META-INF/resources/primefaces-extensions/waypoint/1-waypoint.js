@@ -13,7 +13,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     init:function (cfg) {
         this.cfg = cfg;
         this.id = cfg.id;
-        this.target = $(this.cfg.target);
+        this.target = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target);
 
         delete this.cfg.target;
 

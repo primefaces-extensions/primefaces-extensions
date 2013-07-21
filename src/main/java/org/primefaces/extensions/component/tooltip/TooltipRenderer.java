@@ -24,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
@@ -48,8 +49,8 @@ public class TooltipRenderer extends CoreRenderer {
 		boolean mouseTracking = tooltip.isMouseTracking();
 		String target = null;
 
-		if (!global || (tooltip.getFor() != null || tooltip.getForSelector() != null)) {
-			target = ComponentUtils.findTarget(context, tooltip);
+		if (!global || tooltip.getFor() != null) {
+			target = SearchExpressionFacade.resolveComponentsForClient(context, tooltip, tooltip.getFor());
 		}
 
 		startScript(writer, clientId);

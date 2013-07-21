@@ -37,7 +37,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 import org.primefaces.extensions.event.WaypointEvent;
 import org.primefaces.util.Constants;
 
@@ -54,7 +53,7 @@ import org.primefaces.util.Constants;
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "waypoint/waypoint.js")
                       })
-public class Waypoint extends UIComponentBase implements Widget, EnhancedAttachable, ClientBehaviorHolder {
+public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -73,9 +72,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 
 		widgetVar,
 		forValue("for"),
-		forSelector,
 		forContext,
-		forContextSelector,
 		offset,
 		continuous,
 		onlyOnScroll,
@@ -121,28 +118,12 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 		setAttribute(PropertyKeys.forValue, forValue);
 	}
 
-	public String getForSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
-	}
-
-	public void setForSelector(String forSelector) {
-		setAttribute(PropertyKeys.forSelector, forSelector);
-	}
-
 	public String getForContext() {
 		return (String) getStateHelper().eval(PropertyKeys.forContext, null);
 	}
 
 	public void setForContext(String forContext) {
 		setAttribute(PropertyKeys.forContext, forContext);
-	}
-
-	public String getForContextSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forContextSelector, null);
-	}
-
-	public void setForContextSelector(String forContextSelector) {
-		setAttribute(PropertyKeys.forContextSelector, forContextSelector);
 	}
 
 	public String getOffset() {

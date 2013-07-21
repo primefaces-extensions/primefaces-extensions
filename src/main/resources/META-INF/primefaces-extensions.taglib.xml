@@ -1587,14 +1587,6 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-        <attribute>
-            <description>
-                <![CDATA[jQuery selector for any elements to attach the tooltip.]]>
-            </description>
-            <name>forSelector</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
     </tag>
     <tag>
         <description>
@@ -2157,13 +2149,6 @@
             <description><![CDATA[The target input.]]>
             </description>
             <name>for</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[jQuery selector for any elements to attach the keyfilter.]]>
-            </description>
-            <name>forSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -3752,25 +3737,9 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[jQuery selector for any target elements registered as waypoints.]]>
-            </description>
-            <name>forSelector</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
                 <![CDATA[The context (as component) defines which scrollable element the waypoint belongs to and acts within. Default is window (if no context or contextSelector were specified).]]>
             </description>
             <name>forContext</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[The context (as jQuery selector) defines which scrollable element the waypoint belongs to and acts within. Default is window (if no context or contextSelector were specified).]]>
-            </description>
-            <name>forContextSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

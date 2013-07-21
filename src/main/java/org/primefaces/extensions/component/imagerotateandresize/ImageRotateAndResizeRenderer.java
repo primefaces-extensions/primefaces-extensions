@@ -24,7 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -47,7 +47,8 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 		final String clientId = imageRotateAndResize.getClientId(context);
 		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
-		final String target = ComponentUtils.findTarget(context, imageRotateAndResize);
+		final String target = SearchExpressionFacade.resolveComponentForClient(
+				context, imageRotateAndResize, imageRotateAndResize.getFor());
 
 		startScript(writer, clientId);
 

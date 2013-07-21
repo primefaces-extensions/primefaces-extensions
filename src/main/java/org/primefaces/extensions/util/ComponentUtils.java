@@ -23,21 +23,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.faces.FacesException;
 import javax.faces.application.Application;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehavior;
-import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
 
 import org.primefaces.component.api.AjaxSource;
-import org.primefaces.extensions.component.base.Attachable;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 
 /**
  * Component utils for this project.
@@ -57,52 +53,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 
 	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
-	}
-
-	public static String findTarget(final FacesContext context, final Attachable attachable) {
-		if (!(attachable instanceof UIComponent)) {
-			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
-		}
-
-		return findTarget(context, attachable, (UIComponent) attachable);
-	}
-
-	public static String findTarget(final FacesContext context, final Attachable attachable,
-	                                final ClientBehaviorContext cbContext) {
-		if (!(attachable instanceof ClientBehavior)) {
-			throw new FacesException("An attachable component must extend UIComponent or ClientBehavior.");
-		}
-
-		if (cbContext == null) {
-			throw new FacesException("ClientBehaviorContext is null.");
-		}
-
-		return findTarget(context, attachable, cbContext.getComponent());
-	}
-
-	private static String findTarget(final FacesContext context, final Attachable attachable, final UIComponent component) {
-		// try to handle "for" as target
-		final String forValue = attachable.getFor();
-		if (forValue != null) {
-			final UIComponent forComponent = component.findComponent(forValue);
-			if (forComponent == null) {
-				throw new FacesException("Cannot find component '" + forValue + "'.");
-			}
-
-			return escapeJQueryId(forComponent.getClientId(context));
-		}
-
-		// try to handle "forSelector" as target
-		if (attachable instanceof EnhancedAttachable) {
-			final String forSelector = ((EnhancedAttachable) attachable).getForSelector();
-
-			if (forSelector != null) {
-				return forSelector;
-			}
-		}
-
-		// take parent as target
-		return escapeJQueryId(component.getParent().getClientId(context));
 	}
 
 	public static void addComponentResource(final FacesContext context, final String name) {
