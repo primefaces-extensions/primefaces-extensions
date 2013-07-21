@@ -25,7 +25,7 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
             if (this.cfg.forTarget == null) {
                 selector = '*[title]';
             } else {
-                selector = this.cfg.forTarget + '[title]';
+                selector = this.cfg.forTarget.selector + '[title]';
             }
 
             $('body').off('.tooltip').on(this.cfg.show.event + '.tooltip', selector, function(event) {
