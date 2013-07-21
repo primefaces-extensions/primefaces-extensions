@@ -80,7 +80,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		partialSubmit,
 		action,
 		autoRun,
-		actionListener;
+		actionListener,
+		resetValues,
+		ignoreAutoUpdate;
 
 		private String toString;
 
@@ -205,6 +207,26 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public boolean isPartialSubmitSet() {
 		return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
 	}
+	
+	public boolean isResetValues() {
+		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.resetValues, false);
+	}
+
+	public void setResetValues(boolean resetValues) {
+		setAttribute(PropertyKeys.resetValues, resetValues);
+	}
+	
+	public boolean isIgnoreAutoUpdate() {
+		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.ignoreAutoUpdate, false);
+	}
+
+	public void setIgnoreAutoUpdate(boolean ignoreAutoUpdate) {
+		setAttribute(PropertyKeys.ignoreAutoUpdate, ignoreAutoUpdate);
+	}
+
+    public boolean isResetValuesSet() {
+        return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
+    }
 
 	@SuppressWarnings("unchecked")
 	public void setAttribute(final PropertyKeys property, final Object value) {
@@ -330,24 +352,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		return params.get(clientId + "_" + name);
 	}
 
-	
-	//TODO 4.0
 	public boolean isAjaxified() {
 		return true;
-	}
-
-	public boolean isResetValues() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isResetValuesSet() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isIgnoreAutoUpdate() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
