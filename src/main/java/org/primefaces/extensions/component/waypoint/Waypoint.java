@@ -189,10 +189,11 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 		if (isSelfRequest(fc)) {
+			Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("reached".equals(eventName)) {
@@ -216,7 +217,8 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	private boolean isSelfRequest(FacesContext fc) {
-		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+		return this.getClientId(fc)
+		           .equals(fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {

@@ -439,11 +439,12 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-		String clientId = this.getClientId(context);
 
 		if (isSelfRequest(context)) {
+			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+			String clientId = this.getClientId(context);
+
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("add".equals(eventName)) {
@@ -540,7 +541,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
-		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+		           .equals(context.getExternalContext().getRequestParameterMap().get(
+		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
