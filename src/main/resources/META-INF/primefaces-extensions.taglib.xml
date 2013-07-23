@@ -2280,23 +2280,16 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Id of component in terms of findComponent to specify component which sends an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
+                <![CDATA[Specifies component(s) which send(s) an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
             </description>
             <name>source</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Id of the component in terms of findComponent to be blocked.]]>
+            <description><![CDATA[Specifies component(s) or HTML element(s) to be blocked.]]>
             </description>
             <name>target</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[jQuery selector for any elements to be blocked.]]>
-            </description>
-            <name>targetSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

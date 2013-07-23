@@ -11,44 +11,52 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
-		this.sourceId = cfg.source;
-		this.targetId = cfg.target;
+		this.source = cfg.source;
+		this.target = cfg.target;
 	    this.contentId = cfg.content;
 	    this.contentExtern = cfg.contentExtern;
 		this.eventRegEx = cfg.regEx;
+        
+        if (cfg.autoShow) {
+            this.setupAjaxHandlers();
+        }
 		
 		// global settings
 		$.blockUI.defaults.theme = true;
 		$.blockUI.defaults.fadeIn = 0;
 		$.blockUI.defaults.fadeOut = 0;
-		$.blockUI.defaults.applyPlatformOpacityRules = false;
         
         PrimeFacesExt.removeWidgetScript(cfg.id);
     },
     
 	/* public access */
-	setupAjaxSend : function () {
-        var _self = this;
-        $(this.sourceId).ajaxSend(function(event, xhr, ajaxOptions) {
+    setupAjaxHandlers : function () {
+        var $this = this;
+        var $document = $(document);
+        
+        $document.ajaxSend(function(event, jqxhr, settings) {
+            // get IDs of the sources
+            var source = PrimeFaces.Expressions.resolveComponents($this.source);
+            
             // first, check if event should be handled 
-            if (_self.isAppropriateEvent(ajaxOptions)) {
-                _self.block();
+            if ($this.isAppropriateEvent(source, settings)) {
+                $this.block();
+            }
+        });
+        
+        $document.ajaxComplete(function(event, jqxhr, settings) {
+            // get IDs of the sources
+            var source = PrimeFaces.Expressions.resolveComponents($this.source);
+            
+            // first, check if event should be handled
+            if ($this.isAppropriateEvent(source, settings)) {
+                $this.unblock();
             }
         });
 	},
-		
-    setupAjaxComplete : function () {
-        var _self = this;
-        $(this.sourceId).ajaxComplete(function(event, xhr, ajaxOptions) {
-            // first, check if event should be handled
-            if (_self.isAppropriateEvent(ajaxOptions)) {
-                _self.unblock();
-            }
-        });
-    },
 	    
 	block : function () {
-        var targetEl = $(this.targetId);
+        var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
         
         // second, check if the target element has been found
         if (targetEl.length > 0) {
@@ -75,7 +83,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
     },
 	    
 	unblock : function () {
-        var targetEl = $(this.targetId);
+        var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
         
         // second, check if the target element has been found
         if (targetEl.length > 0) {
@@ -86,7 +94,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
             if (typeof blocksCount !== 'undefined') {
                 if (blocksCount == 1) {
                     // unblock the target element and reset the counter
-                    $(this.targetId).unblock();
+                    targetEl.unblock();
                     targetEl.data("blockUI.blocksCount", 0);
                 } else if (blocksCount > 1) {
                     // only decrease the counter
@@ -98,10 +106,14 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		
 	/* private access */
 		
-	isAppropriateEvent : function (ajaxOptions) {
+	isAppropriateEvent : function (source, ajaxOptions) {
         if (typeof ajaxOptions === 'undefined' || ajaxOptions == null ||
             typeof ajaxOptions.data === 'undefined' || ajaxOptions.data == null) {
             return false;
+        }
+        
+        if($.inArray(ajaxOptions.source, source) !== -1) {
+        	return false;
         }
         
         // split options around ampersands

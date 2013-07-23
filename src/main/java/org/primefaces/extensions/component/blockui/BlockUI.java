@@ -63,7 +63,6 @@ public class BlockUI extends UIComponentBase implements Widget {
 		widgetVar,
 		source,
 		target,
-		targetSelector,
 		content,
 		event,
 		autoShow;
@@ -114,14 +113,6 @@ public class BlockUI extends UIComponentBase implements Widget {
 
 	public void setTarget(final String target) {
 		setAttribute(PropertyKeys.target, target);
-	}
-
-	public String getTargetSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.targetSelector, null);
-	}
-
-	public void setTargetSelector(final String targetSelector) {
-		setAttribute(PropertyKeys.targetSelector, targetSelector);
 	}
 
 	public String getContent() {

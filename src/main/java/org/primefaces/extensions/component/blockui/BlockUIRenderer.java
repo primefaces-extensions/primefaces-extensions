@@ -27,6 +27,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -64,35 +65,24 @@ public class BlockUIRenderer extends CoreRenderer {
 		String clientId = blockUI.getClientId(fc);
 
 		// get source
-		UIComponent sourceComponent;
 		String source = blockUI.getSource();
 		if (source == null) {
-			sourceComponent = blockUI.getParent();
+            source = blockUI.getParent().getClientId(fc);
 		} else {
-			sourceComponent = blockUI.findComponent(source);
+			source = SearchExpressionFacade.resolveComponentsForClient(fc, blockUI, source);
 		}
 
-		if (sourceComponent == null) {
+		if (source == null) {
 			throw new FacesException("Cannot find source for blockUI component '" + clientId + "'.");
 		}
 
-		String jqSource = ComponentUtils.escapeJQueryId(sourceComponent.getClientId(fc));
-
 		// get target
-		String jqTarget = null;
 		String target = blockUI.getTarget();
 		if (target != null) {
-			UIComponent targetComponent = blockUI.findComponent(target);
-			if (targetComponent == null) {
-				throw new FacesException("Cannot find target for blockUI component '" + target + "'.");
-			}
-
-			jqTarget = ComponentUtils.escapeJQueryId(targetComponent.getClientId(fc));
-		} else if (blockUI.getTargetSelector() != null) {
-			jqTarget = blockUI.getTargetSelector();
+			target = SearchExpressionFacade.resolveComponentsForClient(fc, blockUI, target);
 		}
 
-		if (jqTarget == null) {
+		if (target == null) {
 			throw new FacesException("Cannot determinate target for blockUI component '" + clientId + "'.");
 		}
 
@@ -127,15 +117,6 @@ public class BlockUIRenderer extends CoreRenderer {
 				sb.append("=");
 				sb.append(arrEvents[i]);
 
-				/* we don't want to support internal events
-				sb.append("|");
-				sb.append(source);
-				sb.append("_(");
-				sb.append(arrEvents[i]);
-				sb.append("=(.)*");
-				sb.append("$)");
-				 */
-
 				if (i + 1 < arrEvents.length) {
 					sb.append("|");
 				}
@@ -153,8 +134,10 @@ public class BlockUIRenderer extends CoreRenderer {
 		writer.write("PrimeFacesExt.cw('BlockUI', '" + widgetVar + "',{");
 
 		writer.write("id:'" + clientId + "'");
-		writer.write(",source:'" + jqSource + "'");
-		writer.write(",target:'" + jqTarget + "'");
+		writer.write(",source:'" + source + "'");
+		writer.write(",target:'" + target + "'");
+        writer.write(",autoShow:" + blockUI.isAutoShow());
+        
 		if (jqContent != null) {
 			writer.write(",content:'" + jqContent + "'");
 		} else {
@@ -164,10 +147,11 @@ public class BlockUIRenderer extends CoreRenderer {
 		writer.write(",contentExtern:" + isContentExtern);
 		writer.write(",regEx:" + eventRegEx + "},true);");
 
+        /*
 		if (blockUI.isAutoShow()) {
 			writer.write(widgetVar + ".setupAjaxSend();");
 			writer.write(widgetVar + ".setupAjaxComplete();");
-		}
+		}*/
 
 		writer.write("});");
 
