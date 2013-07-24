@@ -62,13 +62,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 			final FacesContext context = FacesContext.getCurrentInstance();
 			final ConfigContainer config = ConfigProvider.getConfig(context, false);
 
-			if (config.isWrapPrimeFacesResources()
-				&& libraryName.equalsIgnoreCase(org.primefaces.util.Constants.LIBRARY)) {
-
-				//Handle PrimeFaces resources
-				resource = new PrimeFacesResource(resource);
-
-			} else if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+			if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 
 				//Handle PrimeFaces Extensions resources
 				if (deliverUncompressedFile(resourceName, config, context)) {

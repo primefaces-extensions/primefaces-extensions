@@ -33,7 +33,6 @@ import org.primefaces.extensions.util.Constants;
 public class ConfigContainer {
 
 	private boolean deliverUncompressedResources = true;
-	private boolean wrapPrimeFacesResources = false;
 
 	/**
 	 * Avoid instantiation.
@@ -46,19 +45,9 @@ public class ConfigContainer {
 		if (deliverUncompressedResourcesStringValue != null) {
 			deliverUncompressedResources = Boolean.valueOf(deliverUncompressedResourcesStringValue);
 		}
-
-		final String wrapPrimeFacesResourcesStringValue =
-				externalContext.getInitParameter(Constants.WRAP_PRIME_FACES_RESOURCES_INIT_PARAM);
-		if (wrapPrimeFacesResourcesStringValue != null) {
-			wrapPrimeFacesResources = Boolean.valueOf(wrapPrimeFacesResourcesStringValue);
-		}
 	}
 
 	public boolean isDeliverUncompressedResources() {
 		return deliverUncompressedResources;
-	}
-
-	public boolean isWrapPrimeFacesResources() {
-		return wrapPrimeFacesResources;
 	}
 }
