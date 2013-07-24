@@ -16,7 +16,7 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
             this.toggledExtended = false;
         }
 
-        if (cfg.autoSubmit && !window[cfg.widgetVar]) {
+        if (cfg.autoSubmit && !PF(cfg.widgetVar)) {
             this.submitForm();
         } else if (cfg.isPostback && this.toggledExtended && this.uuid == cfg.uuid) {
             var rows = this.jq.find("tr.pe-dynaform-extendedrow");
