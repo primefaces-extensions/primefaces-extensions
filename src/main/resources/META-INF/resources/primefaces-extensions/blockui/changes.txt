@@ -1,0 +1,5 @@
+0-jquery.blockUI.js:
+------------------------------------------------
+- width 'auto' in "css" and "themedCSS".
+- no backgroundColor and opacity in "overlayCSS".
+

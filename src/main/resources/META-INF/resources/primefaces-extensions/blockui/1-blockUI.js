@@ -15,6 +15,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		this.target = cfg.target;
 	    this.contentId = cfg.content;
 	    this.contentExtern = cfg.contentExtern;
+        this.namingContSep = cfg.namingContSep;
 		this.eventRegEx = cfg.regEx;
         
         if (cfg.autoShow) {
@@ -23,8 +24,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		
 		// global settings
 		$.blockUI.defaults.theme = true;
-		$.blockUI.defaults.fadeIn = 0;
-		$.blockUI.defaults.fadeOut = 0;
+		$.blockUI.defaults.ignoreIfBlocked = true;
         
         PrimeFacesExt.removeWidgetScript(cfg.id);
     },
@@ -34,7 +34,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
         var $document = $(document);
         
-        $document.ajaxSend(function(event, jqxhr, settings) {
+        $document.on('pfAjaxSend', function(e, xhr, settings) {
             // get IDs of the sources
             var source = PrimeFaces.Expressions.resolveComponents($this.source);
             
@@ -44,7 +44,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
             }
         });
         
-        $document.ajaxComplete(function(event, jqxhr, settings) {
+        $document.on('pfAjaxComplete', function(e, xhr, settings) {
             // get IDs of the sources
             var source = PrimeFaces.Expressions.resolveComponents($this.source);
             
@@ -70,6 +70,8 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
             } else {
                 targetEl.block();
             }
+            
+            //$('.blockUI.blockOverlay').css('z-index', ++PrimeFaces.zindex + 10);
     
             // get the current counter
             var blocksCount = targetEl.data("blockUI.blocksCount");
@@ -106,18 +108,31 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		
 	/* private access */
 		
-	isAppropriateEvent : function (source, ajaxOptions) {
-        if (typeof ajaxOptions === 'undefined' || ajaxOptions == null ||
-            typeof ajaxOptions.data === 'undefined' || ajaxOptions.data == null) {
+	isAppropriateEvent : function (source, settings) {
+        if (typeof settings === 'undefined' || settings == null || settings.source == null ||
+            typeof settings.data === 'undefined' || settings.data == null) {
             return false;
         }
+       
+        // check if settings.source is an object and extract id if yes.
+        var sourceId;
+        if (Object.prototype.toString.call(settings.source) === "[object String]") {
+            sourceId = settings.source;   
+        } else {
+            var idx = settings.source.id.lastIndexOf(this.namingContSep);
+            if (idx == -1) {
+                sourceId = settings.source.id; 
+            } else {
+                sourceId = settings.source.id.substring(0, idx);    
+            }
+        }
         
-        if($.inArray(ajaxOptions.source, source) !== -1) {
+        if($.inArray(sourceId, source) == -1) {
         	return false;
         }
         
         // split options around ampersands
-        var params = ajaxOptions.data.split(/&/g);
+        var params = settings.data.split(/&/g);
         
         // loop over the ajax options and try to match events
         for (var i = 0; i < params.length; i++) {

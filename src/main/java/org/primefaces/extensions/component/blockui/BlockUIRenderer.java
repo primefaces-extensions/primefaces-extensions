@@ -21,7 +21,9 @@ package org.primefaces.extensions.component.blockui;
 import java.io.IOException;
 
 import javax.faces.FacesException;
+import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -145,13 +147,8 @@ public class BlockUIRenderer extends CoreRenderer {
 		}
 
 		writer.write(",contentExtern:" + isContentExtern);
+        writer.write(",namingContSep:'" + UINamingContainer.getSeparatorChar(fc) + "'");
 		writer.write(",regEx:" + eventRegEx + "},true);");
-
-        /*
-		if (blockUI.isAutoShow()) {
-			writer.write(widgetVar + ".setupAjaxSend();");
-			writer.write(widgetVar + ".setupAjaxComplete();");
-		}*/
 
 		writer.write("});");
 
