@@ -30,7 +30,7 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
                 _self.box.addClass('ui-state-hover');
             }).mouseout(function () {
                 _self.box.removeClass('ui-state-hover');
-            }).click(function () {
+            }).click(function (event) {
                 _self.toggle(1);
                 if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
             });

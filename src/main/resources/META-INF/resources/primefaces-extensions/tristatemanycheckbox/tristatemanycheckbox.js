@@ -25,12 +25,12 @@ PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             $(this).addClass('ui-state-hover');
         }).mouseout(function () {
             $(this).removeClass('ui-state-hover');
-        }).click(function () {
+        }).click(function (event) {
             _self.toggle($(this),1);
             if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
         });
 
-        this.labels.click(function (e) {
+        this.labels.click(function (event) {
             var element = $(this), input = $(PrimeFaces.escapeClientId(element.attr('for'))), checkbox = input.parent().next();
             checkbox.click();
             if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
