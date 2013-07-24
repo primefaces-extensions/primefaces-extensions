@@ -47,8 +47,12 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final KeyFilter keyFilter = (KeyFilter) component;
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
-		final String target = SearchExpressionFacade.resolveComponentForClient(
+		
+		String target = SearchExpressionFacade.resolveComponentsForClient(
 				context, keyFilter, keyFilter.getFor());
+		if (isValueBlank(target)) {
+			target = component.getParent().getClientId(context);
+		}
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
