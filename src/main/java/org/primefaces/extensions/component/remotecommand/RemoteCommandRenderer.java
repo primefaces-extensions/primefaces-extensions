@@ -105,7 +105,8 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final String name = command.getName();
 
 		final AjaxRequestBuilder builder = new AjaxRequestBuilder(context);
-		builder.source(clientId)
+		builder.init()
+			.source(clientId)
 			.form(form.getClientId(context))
 			.process(component, source.getProcess())
 			.update(component, source.getUpdate())
