@@ -22,7 +22,7 @@ import java.lang.Float;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.lang.reflect.Array;
@@ -51,6 +51,7 @@ import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
 import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.util.Constants;
+import org.primefaces.expression.SearchExpressionFacade;
 
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -96,7 +97,7 @@ public class PDFExporter extends Exporter {
             StringTokenizer st = new StringTokenizer(tableId, ",");
             while (st.hasMoreElements()) {
                 String tableName = (String) st.nextElement();
-                UIComponent component = event.getComponent().findComponent(tableName);
+                UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
                 if (component == null) {
                     throw new FacesException("Cannot find component \"" + tableName + "\" in view.");
                 }
@@ -954,7 +955,7 @@ public class PDFExporter extends Exporter {
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
         externalContext.setResponseContentLength(baos.size());
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", new HashMap<String, Object>());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
         OutputStream out = externalContext.getResponseOutputStream();
         baos.writeTo(out);
         externalContext.responseFlushBuffer();

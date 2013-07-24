@@ -38,6 +38,7 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.util.Constants;
+import org.primefaces.expression.SearchExpressionFacade;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
@@ -55,7 +56,7 @@ import java.io.OutputStream;
 import java.lang.Integer;
 import java.lang.String;
 import java.lang.reflect.Array;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -98,7 +99,7 @@ public class ExcelExporter extends Exporter {
         StringTokenizer st = new StringTokenizer(tableId, ",");
         while (st.hasMoreElements()) {
             String tableName = (String) st.nextElement();
-            UIComponent component = event.getComponent().findComponent(tableName);
+            UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
             if (component == null) {
                 throw new FacesException("Cannot find component \"" + tableName + "\" in view.");
             }
@@ -995,7 +996,7 @@ public class ExcelExporter extends Exporter {
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + filename + ".xlsx");
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", new HashMap<String, Object>());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
 
         OutputStream out = externalContext.getResponseOutputStream();
         generatedExcel.write(out);
