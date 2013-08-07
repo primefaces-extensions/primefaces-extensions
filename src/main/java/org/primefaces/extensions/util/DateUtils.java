@@ -47,7 +47,7 @@ public class DateUtils {
 	public static Date toUtcDate(Calendar calendar, TimeZone localTimeZone, Date localDate) {
 		int offsetFromUTC = localTimeZone.getOffset(localDate.getTime()) * (-1);
 		calendar.setTime(localDate);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
+		//calendar.add(Calendar.MILLISECOND, offsetFromUTC);
 
 		return calendar.getTime();
 	}
@@ -56,7 +56,7 @@ public class DateUtils {
 	public static long toLocalDate(Calendar calendar, TimeZone localTimeZone, Date utcDate) {
 		int offsetFromUTC = localTimeZone.getOffset(utcDate.getTime());
 		calendar.setTime(utcDate);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
+		//calendar.add(Calendar.MILLISECOND, offsetFromUTC);
 
 		return calendar.getTimeInMillis();
 	}
