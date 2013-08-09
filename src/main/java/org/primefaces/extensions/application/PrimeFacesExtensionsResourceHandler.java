@@ -60,7 +60,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 		if (resource != null && libraryName != null) {
 
 			final FacesContext context = FacesContext.getCurrentInstance();
-			final ConfigContainer config = ConfigProvider.getConfig(context, false);
+			final ConfigContainer config = ConfigProvider.getConfig(context);
 
 			if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
 
