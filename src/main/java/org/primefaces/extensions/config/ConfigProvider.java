@@ -31,53 +31,13 @@ public class ConfigProvider {
 
 	private static final String KEY = ConfigContainer.class.getName();
 
-	private static final ThreadLocal<ConfigContainer> CACHE = new ThreadLocal<ConfigContainer>();
-
 	/**
-	 * Gets the one and only {@link ConfigContainer} instance:
-	 *
-	 * - try to lookup it from a {@link ThreadLocal} cache
-	 * - try to get it from the application map
-	 * - create a new instance, store it in the {@link ThreadLocal} cache and in the application map
+	 * Gets the one and only {@link ConfigContainer} instance.
 	 *
 	 * @param context The {@link FacesContext}.
 	 * @return The {@link ConfigContainer} instance.
 	 */
 	public static ConfigContainer getConfig(final FacesContext context) {
-		return getConfig(context, true);
-	}
-
-	/**
-	 * Gets the one and only {@link ConfigContainer} instance:
-	 *
-	 * - try to lookup it from a {@link ThreadLocal} cache
-	 * - try to get it from the application map
-	 * - create a new instance, store it in the {@link ThreadLocal} cache and in the application map
-	 *
-	 * @param context The {@link FacesContext}.
-	 * @param If the {@link ConfigContainer} should be cached in the {@link ThreadLocal} variable.
-	 * @return The {@link ConfigContainer} instance.
-	 */
-	public static ConfigContainer getConfig(final FacesContext context, final boolean cacheInThreadLocal) {
-
-		ConfigContainer container = null;
-
-		if (cacheInThreadLocal) {
-
-			container = CACHE.get();
-			if (container == null) {
-				container = getConfigFromApplicationMap(context);
-				CACHE.set(container);
-			}
-
-		} else {
-			container = getConfigFromApplicationMap(context);
-		}
-
-		return container;
-	}
-
-	private static ConfigContainer getConfigFromApplicationMap(final FacesContext context) {
 
 		ConfigContainer container = (ConfigContainer) context.getExternalContext().getApplicationMap().get(KEY);
 
@@ -88,10 +48,5 @@ public class ConfigProvider {
 		}
 
 		return container;
-	}
-
-	public static void cleanCache()
-	{
-		CACHE.remove();
 	}
 }
