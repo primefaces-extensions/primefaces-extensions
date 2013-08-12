@@ -47,11 +47,9 @@ public class WaypointRenderer extends CoreRenderer {
 		final String clientId = waypoint.getClientId(fc);
 
 		// try to get context (which scrollable element the waypoint belongs to and acts within)
-		String context = SearchExpressionFacade.resolveComponentsForClient(
-				fc, waypoint, waypoint.getForContext());
-		
-		String target = SearchExpressionFacade.resolveComponentsForClient(
-				fc, waypoint, waypoint.getFor());
+		String context = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getForContext());
+
+		String target = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getFor());
 
 		final String widget = waypoint.resolveWidgetVar();
 
@@ -76,8 +74,8 @@ public class WaypointRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, waypoint);
 
-		writer.write("});");
-		writer.write(widget + ".destroy().create();");
+		writer.write("});PF('");
+		writer.write(widget + "').destroy().create();");
 		writer.write("});");
 		endScript(writer);
 	}
