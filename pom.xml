@@ -1,5 +1,4 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<!-- $Id$ -->
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -417,7 +416,7 @@
 				<version>${primefaces.theme.version}</version>
 			</dependency>
 
-			<!-- Resource-Optimizer dependencies -->
+			<!-- Maven plugin(s) dependencies -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
@@ -432,11 +431,6 @@
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
 				<version>3.0.14</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.javascript</groupId>
-				<artifactId>closure-compiler</artifactId>
-				<version>v20130722</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
