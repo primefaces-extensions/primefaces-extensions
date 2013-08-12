@@ -289,7 +289,7 @@
 				<plugin>
 					<groupId>org.primefaces.extensions</groupId>
 					<artifactId>resources-optimizer-maven-plugin</artifactId>
-					<version>0.6</version>
+					<version>1.0.0</version>
 					<executions>
 						<execution>
 							<id>optimize</id>
@@ -421,22 +421,22 @@
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
-				<version>2.2.1</version>
+				<version>3.1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-core</artifactId>
-				<version>2.2.1</version>
+				<version>3.1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>3.0.10</version>
+				<version>3.0.14</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.javascript</groupId>
 				<artifactId>closure-compiler</artifactId>
-				<version>rr2079.1</version>
+				<version>v20130722</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
