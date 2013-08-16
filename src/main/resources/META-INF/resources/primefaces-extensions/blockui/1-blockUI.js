@@ -11,6 +11,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
+        this.id = cfg.id;
 		this.source = cfg.source;
 		this.target = cfg.target;
 	    this.contentId = cfg.content;
@@ -26,7 +27,13 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		$.blockUI.defaults.theme = true;
 		$.blockUI.defaults.ignoreIfBlocked = true;
         
-        PrimeFacesExt.removeWidgetScript(cfg.id);
+        PrimeFacesExt.removeWidgetScript(this.id);
+    },
+    
+    refresh: function(cfg) {
+        $(document).off('pfAjaxSend.' + this.id + ' pfAjaxComplete.' + this.id);
+        
+        this._super(cfg);
     },
     
 	/* public access */
@@ -34,7 +41,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
         var $document = $(document);
         
-        $document.on('pfAjaxSend', function(e, xhr, settings) {
+        $document.on('pfAjaxSend.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
             var source = PrimeFaces.Expressions.resolveComponents($this.source);
             
@@ -44,7 +51,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
             }
         });
         
-        $document.on('pfAjaxComplete', function(e, xhr, settings) {
+        $document.on('pfAjaxComplete.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
             var source = PrimeFaces.Expressions.resolveComponents($this.source);
             
