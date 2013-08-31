@@ -916,8 +916,13 @@ public class PDFExporter extends Exporter {
 
     protected void createCustomFonts(String encoding) {
 
-        this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
-        this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        if (fontName != null && FontFactory.getFont(fontName).getBaseFont() != null) {
+            this.cellFont = FontFactory.getFont(fontName, encoding);
+            this.facetFont = FontFactory.getFont(fontName, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        } else {
+            this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
+            this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        }
         if (facetFontColor != null) {
             this.facetFont.setColor(facetFontColor);
         }
@@ -935,10 +940,6 @@ public class PDFExporter extends Exporter {
         }
         if (cellFontStyle != null) {
             this.cellFont.setStyle(cellFontStyle);
-        }
-        if (fontName != null) {
-            cellFont.setFamily(fontName);
-            facetFont.setFamily(fontName);
         }
     }
 
