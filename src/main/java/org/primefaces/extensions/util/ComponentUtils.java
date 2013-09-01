@@ -55,10 +55,12 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}
 
+	@Deprecated
 	public static void addComponentResource(final FacesContext context, final String name) {
 		addComponentResource(context, name, Constants.LIBRARY, "head");
 	}
 
+	@Deprecated
 	public static void addComponentResource(final FacesContext context, final String name, final String library,
 	                                        final String target) {
 		final Application application = context.getApplication();
@@ -102,6 +104,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	 * @param  text original text as char[]
 	 * @return String escaped text as char[] to be used as JSON value
 	 */
+	@Deprecated
 	public static char[] escapeText(final char[] text) {
 		if (text == null) {
 			return null;
@@ -284,6 +287,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	 * @param  value DOCUMENT_ME
 	 * @return DOCUMENT_ME
 	 */
+	@Deprecated
 	public static String escapeSelector(final String value) {
 		final StringBuilder builder = new StringBuilder();
 
@@ -333,6 +337,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	 * @param  locale given locale
 	 * @return resolved Locale
 	 */
+	@Deprecated
 	public static Locale resolveLocale(Object locale) {
 		if (locale instanceof String) {
 			locale = org.primefaces.util.ComponentUtils.toLocale((String) locale);
