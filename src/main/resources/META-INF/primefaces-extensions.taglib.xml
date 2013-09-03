@@ -2279,6 +2279,18 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Styles for the message when blocking. Styles should be defined as JSON object, e.g. {backgroundColor: 'fff', width: 30%}.]]></description>
+            <name>css</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Styles for the overlay. Styles should be defined as JSON object, e.g. {opacity: 0.4, backgroundColor: 'red'}]]></description>
+            <name>cssOverlay</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>
                 <![CDATA[Specifies component(s) which send(s) an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
             </description>
@@ -2287,7 +2299,8 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Specifies component(s) or HTML element(s) to be blocked.]]>
+            <description>
+                <![CDATA[Specifies component(s) or HTML element(s) to be blocked. If the target is null or not defined, the entire page is blocked.]]>
             </description>
             <name>target</name>
             <required>false</required>
@@ -2314,6 +2327,30 @@
                 <![CDATA[Flag whether the blocking is shown automatically without the need to use JavaScript widget. Default value is false.]]>
             </description>
             <name>autoShow</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Time in millis to wait before auto-unblocking. Don't define it or set to 0 to disable auto-unblock. Default value is 0.]]>
+            </description>
+            <name>timeout</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Set this attribute to true to have the message automatically centered along the X axis. Note: it only effects element blocking (page blocking controlled by CSS via the css attribute). Default value is true.]]>
+            </description>
+            <name>centerX</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Set this attribute to true to have the message automatically centered along the Y axis. Default value is true.]]>
+            </description>
+            <name>centerY</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
