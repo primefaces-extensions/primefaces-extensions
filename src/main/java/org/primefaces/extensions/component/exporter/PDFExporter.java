@@ -810,13 +810,15 @@ public class PDFExporter extends Exporter {
     protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font,String columnType) {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         PdfPCell cell = new PdfPCell(new Paragraph(value, font));
-        //addColumnAlignments(component, cell);
 
         if (facetBackground != null) {
             cell.setBackgroundColor(facetBackground);
         }
         if(columnType.equalsIgnoreCase("header")){
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell=addFacetAlignments(component, cell);
+        }
+        else{
+            cell=addColumnAlignments(component, cell);
         }
         pdfTable.addCell(cell);
     }
@@ -834,14 +836,18 @@ public class PDFExporter extends Exporter {
             }
         }
         PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
-        //addColumnAlignments(components, cell);
+        for (UIComponent component : components) {
+        cell=addColumnAlignments(component, cell);
+        }
         if(columnType.equalsIgnoreCase("header")){
-            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            for (UIComponent component : components) {
+                cell=addFacetAlignments(component, cell);
+            }
         }
         pdfTable.addCell(cell);
     }
 
-    protected void addColumnAlignments(UIComponent component, PdfPCell cell) {
+    protected PdfPCell addColumnAlignments(UIComponent component, PdfPCell cell) {
         if (component instanceof HtmlOutputText) {
             HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
@@ -854,23 +860,23 @@ public class PDFExporter extends Exporter {
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             }
         }
+        return cell;
     }
 
-    protected void addColumnAlignments(List<UIComponent> components, PdfPCell cell) {
-        for (UIComponent component : components) {
+    protected PdfPCell addFacetAlignments(UIComponent component, PdfPCell cell) {
             if (component instanceof HtmlOutputText) {
                 HtmlOutputText output = (HtmlOutputText) component;
                 if (output.getStyle() != null && output.getStyle().contains("left")) {
                     cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 }
-                if (output.getStyle() != null && output.getStyle().contains("right")) {
+                else if (output.getStyle() != null && output.getStyle().contains("right")) {
                     cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 }
-                if (output.getStyle() != null && output.getStyle().contains("center")) {
+                else {
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 }
             }
-        }
+        return cell;
     }
 
     public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) {
