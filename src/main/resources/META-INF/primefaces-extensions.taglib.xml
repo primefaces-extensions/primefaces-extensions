@@ -2398,6 +2398,66 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Marks component as required.]]></description>
+            <name>required</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression referring to a method validationg the input.]]></description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method binding expression referring to a method for handling a valuchangeevent.]]></description>
+            <name>valueChangeListener</name>
+            <required>false</required>
+            <type>javax.faces.event.ValueChangeListener</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when required field validation fails.]]></description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when conversion fails.]]></description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when validation fails.]]></description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Access key to transfer focus to the input element.]]></description>
+            <name>accesskey</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Alternate textual description of the input element.]]></description>
+            <name>alt</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Controls browser autocomplete behavior.]]></description>
+            <name>autocomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Direction indication for text that does not inherit directionality.]]></description>
+            <name>dir</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
+        <attribute>
             <description><![CDATA[Disables the time picker when set to true.]]></description>
             <name>disabled</name>
             <required>false</required>
