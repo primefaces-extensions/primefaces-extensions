@@ -53,10 +53,10 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputNumberRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	
+
 	public final static String INPUTNUMBER_CLASS = "ui-inputNum ui-widget";
-        private  String decimalSeparator;
-        private  String thousandSeparator;
+	private  String decimalSeparator;
+	private  String thousandSeparator;
 
 	/**
 	 * PropertyKeys
@@ -77,7 +77,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		maxValue,
 		roundMethod,
 		decimalPlaces,
-                emptyValue;
+		emptyValue;
 		String toString;
 
 		PropertyKeys(final String toString) {
@@ -93,10 +93,10 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		}
 	}
 
-        public InputNumber() {
+	public InputNumber() {
 		setRendererType(DEFAULT_RENDERER);     
-                decimalSeparator = null;
-                thousandSeparator = null;
+		decimalSeparator = null;
+		thousandSeparator = null;
 	}
 
 	@Override
@@ -175,8 +175,8 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	public void setDecimalPlaces(final String decimalPlaces) {
 		setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
 	}
-        
-        public String getEmptyValue() {
+
+	public String getEmptyValue() {
 		return (String) getStateHelper().eval(PropertyKeys.emptyValue, "empty");
 	}
 
@@ -219,24 +219,24 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 			}
 		}
 	}
-        
-    private String getCalculatedDecimalSepartor(){
-        if(decimalSeparator==null){
-            Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-            DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
-            decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
-        }
-        return decimalSeparator;
-    }
-    
-    private String getCalculatedThousandSeparator(){
-        if(thousandSeparator==null){               
-            Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
-            DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
-            thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
-        }
-        return thousandSeparator;           
-    }
+
+	private String getCalculatedDecimalSepartor(){
+		if(decimalSeparator==null){
+			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
+			decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
+		}
+		return decimalSeparator;
+	}
+
+	private String getCalculatedThousandSeparator(){
+		if(thousandSeparator==null){               
+			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
+			thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
+		}
+		return thousandSeparator;           
+	}
 
 	public String getInputClientId() {
 		return getClientId() + "_input";
