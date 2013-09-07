@@ -101,11 +101,11 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
     
     public void setCss(final String css) {
-   		setAttribute(PropertyKeys.css, css);
+   		getStateHelper().put(PropertyKeys.css, css);
    	}
    
    	public String getCss() {
@@ -113,7 +113,7 @@ public class BlockUI extends UIComponentBase implements Widget {
    	}
     
     public void setCssOverlay(final String cssOverlay) {
-   		setAttribute(PropertyKeys.cssOverlay, cssOverlay);
+   		getStateHelper().put(PropertyKeys.cssOverlay, cssOverlay);
    	}
    
    	public String getCssOverlay() {
@@ -125,7 +125,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setSource(final String source) {
-		setAttribute(PropertyKeys.source, source);
+		getStateHelper().put(PropertyKeys.source, source);
 	}
 
 	public String getTarget() {
@@ -133,7 +133,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setTarget(final String target) {
-		setAttribute(PropertyKeys.target, target);
+		getStateHelper().put(PropertyKeys.target, target);
 	}
 
 	public String getContent() {
@@ -141,7 +141,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setContent(final String content) {
-		setAttribute(PropertyKeys.content, content);
+		getStateHelper().put(PropertyKeys.content, content);
 	}
 
 	public String getEvent() {
@@ -149,7 +149,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setEvent(final String event) {
-		setAttribute(PropertyKeys.event, event);
+		getStateHelper().put(PropertyKeys.event, event);
 	}
 
 	public boolean isAutoShow() {
@@ -157,7 +157,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 	}
 
 	public void setAutoShow(final boolean autoShow) {
-		setAttribute(PropertyKeys.autoShow, autoShow);
+		getStateHelper().put(PropertyKeys.autoShow, autoShow);
 	}
     
     public int getTimeout() {
@@ -165,7 +165,7 @@ public class BlockUI extends UIComponentBase implements Widget {
    	}
    
    	public void setTimeout(final int timeout) {
-   		setAttribute(PropertyKeys.timeout, timeout);
+   		getStateHelper().put(PropertyKeys.timeout, timeout);
    	}
     
     public boolean isCenterX() {
@@ -173,7 +173,7 @@ public class BlockUI extends UIComponentBase implements Widget {
    	}
    
    	public void setCenterX(final boolean centerX) {
-   		setAttribute(PropertyKeys.centerX, centerX);
+   		getStateHelper().put(PropertyKeys.centerX, centerX);
    	}
     
     public boolean isCenterY() {
@@ -181,7 +181,7 @@ public class BlockUI extends UIComponentBase implements Widget {
    	}
    
    	public void setCenterY(final boolean centerY) {
-   		setAttribute(PropertyKeys.centerY, centerY);
+   		getStateHelper().put(PropertyKeys.centerY, centerY);
    	}    
 
 	public String resolveWidgetVar() {
@@ -193,30 +193,5 @@ public class BlockUI extends UIComponentBase implements Widget {
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

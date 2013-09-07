@@ -109,7 +109,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setWidgetVar(String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public boolean isGlobal() {
@@ -117,7 +117,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setGlobal(boolean global) {
-		setAttribute(PropertyKeys.global, global);
+		getStateHelper().put(PropertyKeys.global, global);
 	}
 
 	public boolean isShared() {
@@ -125,7 +125,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setShared(boolean shared) {
-		setAttribute(PropertyKeys.shared, shared);
+		getStateHelper().put(PropertyKeys.shared, shared);
 	}
 
 	public boolean isAutoShow() {
@@ -133,7 +133,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setAutoShow(boolean autoShow) {
-		setAttribute(PropertyKeys.autoShow, autoShow);
+		getStateHelper().put(PropertyKeys.autoShow, autoShow);
 	}
 
 	public boolean isMouseTracking() {
@@ -141,7 +141,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setMouseTracking(boolean mouseTracking) {
-		setAttribute(PropertyKeys.mouseTracking, mouseTracking);
+		getStateHelper().put(PropertyKeys.mouseTracking, mouseTracking);
 	}
 
 	public boolean isFixed() {
@@ -149,7 +149,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setFixed(boolean fixed) {
-		setAttribute(PropertyKeys.fixed, fixed);
+		getStateHelper().put(PropertyKeys.fixed, fixed);
 	}
 
 	public int getAdjustX() {
@@ -157,7 +157,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setAdjustX(int adjustX) {
-		setAttribute(PropertyKeys.adjustX, adjustX);
+		getStateHelper().put(PropertyKeys.adjustX, adjustX);
 	}
 
 	public int getAdjustY() {
@@ -165,7 +165,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setAdjustY(int adjustY) {
-		setAttribute(PropertyKeys.adjustY, adjustY);
+		getStateHelper().put(PropertyKeys.adjustY, adjustY);
 	}
 
 	public String getAtPosition() {
@@ -173,7 +173,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setAtPosition(String atPosition) {
-		setAttribute(PropertyKeys.atPosition, atPosition);
+		getStateHelper().put(PropertyKeys.atPosition, atPosition);
 	}
 
 	public String getMyPosition() {
@@ -181,7 +181,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setMyPosition(String myPosition) {
-		setAttribute(PropertyKeys.myPosition, myPosition);
+		getStateHelper().put(PropertyKeys.myPosition, myPosition);
 	}
 
 	public String getShowEvent() {
@@ -189,7 +189,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setShowEvent(String showEvent) {
-		setAttribute(PropertyKeys.showEvent, showEvent);
+		getStateHelper().put(PropertyKeys.showEvent, showEvent);
 	}
 
 	public int getShowDelay() {
@@ -197,7 +197,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setShowDelay(int showDelay) {
-		setAttribute(PropertyKeys.showDelay, showDelay);
+		getStateHelper().put(PropertyKeys.showDelay, showDelay);
 	}
 
 	public String getShowEffect() {
@@ -205,7 +205,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setShowEffect(String showEffect) {
-		setAttribute(PropertyKeys.showEffect, showEffect);
+		getStateHelper().put(PropertyKeys.showEffect, showEffect);
 	}
 
 	public int getShowEffectLength() {
@@ -213,7 +213,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setShowEffectLength(int showEffectLength) {
-		setAttribute(PropertyKeys.showEffectLength, showEffectLength);
+		getStateHelper().put(PropertyKeys.showEffectLength, showEffectLength);
 	}
 
 	public String getHideEvent() {
@@ -221,7 +221,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setHideEvent(String hideEvent) {
-		setAttribute(PropertyKeys.hideEvent, hideEvent);
+		getStateHelper().put(PropertyKeys.hideEvent, hideEvent);
 	}
 
 	public int getHideDelay() {
@@ -229,7 +229,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setHideDelay(int hideDelay) {
-		setAttribute(PropertyKeys.hideDelay, hideDelay);
+		getStateHelper().put(PropertyKeys.hideDelay, hideDelay);
 	}
 
 	public String getHideEffect() {
@@ -237,7 +237,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setHideEffect(String hideEffect) {
-		setAttribute(PropertyKeys.hideEffect, hideEffect);
+		getStateHelper().put(PropertyKeys.hideEffect, hideEffect);
 	}
 
 	public int getHideEffectLength() {
@@ -245,7 +245,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setHideEffectLength(int hideEffectLength) {
-		setAttribute(PropertyKeys.hideEffectLength, hideEffectLength);
+		getStateHelper().put(PropertyKeys.hideEffectLength, hideEffectLength);
 	}
 
 	public String getFor() {
@@ -253,7 +253,7 @@ public class Tooltip extends UIOutput implements Widget {
 	}
 
 	public void setFor(String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -267,28 +267,4 @@ public class Tooltip extends UIOutput implements Widget {
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
-	}
 }

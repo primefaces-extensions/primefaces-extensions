@@ -137,7 +137,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setAspectRatio(final String aspectRatio) {
-		setAttribute(PropertyKeys.aspectRatio, aspectRatio);
+		getStateHelper().put(PropertyKeys.aspectRatio, aspectRatio);
 	}
 
 	public String getParentSelector() {
@@ -145,7 +145,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setParentSelector(final String parentSelector) {
-		setAttribute(PropertyKeys.parentSelector, parentSelector);
+		getStateHelper().put(PropertyKeys.parentSelector, parentSelector);
 	}
 
 	public Boolean isAutoHide() {
@@ -153,7 +153,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setAutoHide(final Boolean autoHide) {
-		setAttribute(PropertyKeys.autoHide, autoHide);
+		getStateHelper().put(PropertyKeys.autoHide, autoHide);
 	}
 
 	public Integer getFadeSpeed() {
@@ -161,7 +161,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setFadeSpeed(final Integer fadeSpeed) {
-		setAttribute(PropertyKeys.fadeSpeed, fadeSpeed);
+		getStateHelper().put(PropertyKeys.fadeSpeed, fadeSpeed);
 	}
 
 	public Boolean isHandles() {
@@ -169,7 +169,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setHandles(final Boolean handles) {
-		setAttribute(PropertyKeys.handles, handles);
+		getStateHelper().put(PropertyKeys.handles, handles);
 	}
 
 	public Boolean isHide() {
@@ -177,7 +177,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setHide(final Boolean hide) {
-		setAttribute(PropertyKeys.hide, hide);
+		getStateHelper().put(PropertyKeys.hide, hide);
 	}
 
 	public Integer getImageHeight() {
@@ -185,7 +185,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setImageHeight(final Integer imageHeight) {
-		setAttribute(PropertyKeys.imageHeight, imageHeight);
+		getStateHelper().put(PropertyKeys.imageHeight, imageHeight);
 	}
 
 	public Integer getImageWidth() {
@@ -193,7 +193,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setImageWidth(final Integer imageWidth) {
-		setAttribute(PropertyKeys.imageWidth, imageWidth);
+		getStateHelper().put(PropertyKeys.imageWidth, imageWidth);
 	}
 
 	public Boolean isMovable() {
@@ -201,7 +201,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setMovable(final Boolean movable) {
-		setAttribute(PropertyKeys.movable, movable);
+		getStateHelper().put(PropertyKeys.movable, movable);
 	}
 
 	public Boolean isKeyboardSupport() {
@@ -209,7 +209,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setKeyboardSupport(final Boolean keyboardSupport) {
-		setAttribute(PropertyKeys.keyboardSupport, keyboardSupport);
+		getStateHelper().put(PropertyKeys.keyboardSupport, keyboardSupport);
 	}
 
 	public Boolean isPersistent() {
@@ -217,7 +217,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setPersistent(final Boolean persistent) {
-		setAttribute(PropertyKeys.persistent, persistent);
+		getStateHelper().put(PropertyKeys.persistent, persistent);
 	}
 
 	public Boolean isResizable() {
@@ -225,7 +225,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setResizable(final Boolean resizable) {
-		setAttribute(PropertyKeys.resizable, resizable);
+		getStateHelper().put(PropertyKeys.resizable, resizable);
 	}
 
 	public Boolean isShow() {
@@ -233,7 +233,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setShow(final Boolean show) {
-		setAttribute(PropertyKeys.show, show);
+		getStateHelper().put(PropertyKeys.show, show);
 	}
 
 	public Integer getZIndex() {
@@ -241,7 +241,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setZIndex(final Integer zIndex) {
-		setAttribute(PropertyKeys.zIndex, zIndex);
+		getStateHelper().put(PropertyKeys.zIndex, zIndex);
 	}
 
 	public Integer getMaxHeight() {
@@ -249,7 +249,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setMaxHeight(final Integer maxHeight) {
-		setAttribute(PropertyKeys.maxHeight, maxHeight);
+		getStateHelper().put(PropertyKeys.maxHeight, maxHeight);
 	}
 
 	public Integer getMaxWidth() {
@@ -257,7 +257,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setMaxWidth(final Integer maxWidth) {
-		setAttribute(PropertyKeys.maxWidth, maxWidth);
+		getStateHelper().put(PropertyKeys.maxWidth, maxWidth);
 	}
 
 	public Integer getMinHeight() {
@@ -265,7 +265,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setMinHeight(final Integer minHeight) {
-		setAttribute(PropertyKeys.minHeight, minHeight);
+		getStateHelper().put(PropertyKeys.minHeight, minHeight);
 	}
 
 	public Integer getMinWidth() {
@@ -273,7 +273,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setMinWidth(final Integer minWidth) {
-		setAttribute(PropertyKeys.minWidth, minWidth);
+		getStateHelper().put(PropertyKeys.minWidth, minWidth);
 	}
 
 	public String getWidgetVar() {
@@ -281,7 +281,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -289,7 +289,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	}
 
 	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -301,31 +301,6 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	@Override

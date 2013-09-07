@@ -111,7 +111,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -119,7 +119,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -131,31 +131,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	@Override

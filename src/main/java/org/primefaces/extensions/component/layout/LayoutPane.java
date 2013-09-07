@@ -112,7 +112,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setStyleHeader(String styleHeader) {
-		setAttribute(PropertyKeys.styleHeader, styleHeader);
+		getStateHelper().put(PropertyKeys.styleHeader, styleHeader);
 	}
 
 	public String getStyleClassHeader() {
@@ -120,7 +120,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setStyleClassHeader(String styleClassHeader) {
-		setAttribute(PropertyKeys.styleClassHeader, styleClassHeader);
+		getStateHelper().put(PropertyKeys.styleClassHeader, styleClassHeader);
 	}
 
 	public String getStyleContent() {
@@ -128,7 +128,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setStyleContent(String styleContent) {
-		setAttribute(PropertyKeys.styleContent, styleContent);
+		getStateHelper().put(PropertyKeys.styleContent, styleContent);
 	}
 
 	public String getStyleClassContent() {
@@ -136,7 +136,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setStyleClassContent(String styleClassContent) {
-		setAttribute(PropertyKeys.styleClassContent, styleClassContent);
+		getStateHelper().put(PropertyKeys.styleClassContent, styleClassContent);
 	}
 
 	// position "north" | "south" | "west" | "east" | "center"
@@ -145,7 +145,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setPosition(String position) {
-		setAttribute(PropertyKeys.position, position);
+		getStateHelper().put(PropertyKeys.position, position);
 	}
 
 	public String getCombinedPosition() {
@@ -153,7 +153,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setCombinedPosition(String combinedPosition) {
-		setAttribute(PropertyKeys.combinedPosition, combinedPosition);
+		getStateHelper().put(PropertyKeys.combinedPosition, combinedPosition);
 	}
 
 	public boolean isResizable() {
@@ -161,7 +161,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setResizable(boolean resizable) {
-		setAttribute(PropertyKeys.resizable, resizable);
+		getStateHelper().put(PropertyKeys.resizable, resizable);
 	}
 
 	public boolean isClosable() {
@@ -169,7 +169,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setClosable(boolean closable) {
-		setAttribute(PropertyKeys.closable, closable);
+		getStateHelper().put(PropertyKeys.closable, closable);
 	}
 
 	public String getSize() {
@@ -177,7 +177,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setSize(String size) {
-		setAttribute(PropertyKeys.size, size);
+		getStateHelper().put(PropertyKeys.size, size);
 	}
 
 	public String getMinSize() {
@@ -185,7 +185,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMinSize(String minSize) {
-		setAttribute(PropertyKeys.minSize, minSize);
+		getStateHelper().put(PropertyKeys.minSize, minSize);
 	}
 
 	public String getMaxSize() {
@@ -193,7 +193,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMaxSize(String maxSize) {
-		setAttribute(PropertyKeys.maxSize, maxSize);
+		getStateHelper().put(PropertyKeys.maxSize, maxSize);
 	}
 
 	public String getMinWidth() {
@@ -201,7 +201,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMinWidth(String minWidth) {
-		setAttribute(PropertyKeys.minWidth, minWidth);
+		getStateHelper().put(PropertyKeys.minWidth, minWidth);
 	}
 
 	public String getMaxWidth() {
@@ -209,7 +209,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMaxWidth(String maxWidth) {
-		setAttribute(PropertyKeys.maxWidth, maxWidth);
+		getStateHelper().put(PropertyKeys.maxWidth, maxWidth);
 	}
 
 	public String getMinHeight() {
@@ -217,7 +217,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMinHeight(String minHeight) {
-		setAttribute(PropertyKeys.minHeight, minHeight);
+		getStateHelper().put(PropertyKeys.minHeight, minHeight);
 	}
 
 	public String getMaxHeight() {
@@ -225,7 +225,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMaxHeight(String maxHeight) {
-		setAttribute(PropertyKeys.maxHeight, maxHeight);
+		getStateHelper().put(PropertyKeys.maxHeight, maxHeight);
 	}
 
 	public int getSpacingOpen() {
@@ -233,7 +233,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setSpacingOpen(int spacingOpen) {
-		setAttribute(PropertyKeys.spacing_open, spacingOpen);
+		getStateHelper().put(PropertyKeys.spacing_open, spacingOpen);
 	}
 
 	public int getSpacingClosed() {
@@ -241,7 +241,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setSpacingClosed(int spacingClosed) {
-		setAttribute(PropertyKeys.spacing_closed, spacingClosed);
+		getStateHelper().put(PropertyKeys.spacing_closed, spacingClosed);
 	}
 
 	public boolean isInitClosed() {
@@ -249,7 +249,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setInitClosed(boolean initClosed) {
-		setAttribute(PropertyKeys.initClosed, initClosed);
+		getStateHelper().put(PropertyKeys.initClosed, initClosed);
 	}
 
 	public boolean isInitHidden() {
@@ -257,7 +257,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setInitHidden(boolean initHidden) {
-		setAttribute(PropertyKeys.initHidden, initHidden);
+		getStateHelper().put(PropertyKeys.initHidden, initHidden);
 	}
 
 	public boolean isResizeWhileDragging() {
@@ -265,7 +265,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setResizeWhileDragging(boolean resizeWhileDragging) {
-		setAttribute(PropertyKeys.resizeWhileDragging, resizeWhileDragging);
+		getStateHelper().put(PropertyKeys.resizeWhileDragging, resizeWhileDragging);
 	}
 
 	public boolean isMaskContents() {
@@ -273,7 +273,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMaskContents(boolean maskContents) {
-		setAttribute(PropertyKeys.maskContents, maskContents);
+		getStateHelper().put(PropertyKeys.maskContents, maskContents);
 	}
 
 	public boolean isMaskObjects() {
@@ -281,7 +281,7 @@ public class LayoutPane extends UIComponentBase {
 	}
 
 	public void setMaskObjects(boolean maskObjects) {
-		setAttribute(PropertyKeys.maskObjects, maskObjects);
+		getStateHelper().put(PropertyKeys.maskObjects, maskObjects);
 	}
 
 	@Override
@@ -490,30 +490,5 @@ public class LayoutPane extends UIComponentBase {
 		}
 
 		return (Layout) parent;
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

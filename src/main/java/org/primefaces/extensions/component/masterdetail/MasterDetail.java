@@ -124,7 +124,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setLevel(int level) {
-		setAttribute(PropertyKeys.level, level);
+		getStateHelper().put(PropertyKeys.level, level);
 	}
 
 	public Object getContextValue() {
@@ -132,7 +132,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setContextValue(Object contextValue) {
-		setAttribute(PropertyKeys.contextValue, contextValue);
+		getStateHelper().put(PropertyKeys.contextValue, contextValue);
 	}
 
 	public MethodExpression getSelectLevelListener() {
@@ -140,7 +140,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setSelectLevelListener(MethodExpression selectLevelListener) {
-		setAttribute(PropertyKeys.selectLevelListener, selectLevelListener);
+		getStateHelper().put(PropertyKeys.selectLevelListener, selectLevelListener);
 	}
 
 	public boolean isShowBreadcrumb() {
@@ -148,7 +148,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
-		setAttribute(PropertyKeys.showBreadcrumb, showBreadcrumb);
+		getStateHelper().put(PropertyKeys.showBreadcrumb, showBreadcrumb);
 	}
 
 	public boolean isShowAllBreadcrumbItems() {
@@ -156,7 +156,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setShowAllBreadcrumbItems(boolean showAllBreadcrumbItems) {
-		setAttribute(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
+		getStateHelper().put(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
 	}
 
 	public boolean isBreadcrumbAboveHeader() {
@@ -164,7 +164,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setBreadcrumbAboveHeader(boolean breadcrumbAboveHeader) {
-		setAttribute(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
+		getStateHelper().put(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
 	}
 
 	public String getStyle() {
@@ -172,7 +172,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyle(String style) {
-		setAttribute(PropertyKeys.style, style);
+		getStateHelper().put(PropertyKeys.style, style);
 	}
 
 	public String getStyleClass() {
@@ -180,32 +180,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyleClass(String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+		getStateHelper().put(PropertyKeys.styleClass, styleClass);
 	}
 
 	@Override

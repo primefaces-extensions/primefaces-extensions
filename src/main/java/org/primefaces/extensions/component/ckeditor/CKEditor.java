@@ -134,7 +134,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setHeight(final String height) {
-		setAttribute(PropertyKeys.height, height);
+		getStateHelper().put(PropertyKeys.height, height);
 	}
 
 	public String getWidth() {
@@ -142,7 +142,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setWidth(final String width) {
-		setAttribute(PropertyKeys.width, width);
+		getStateHelper().put(PropertyKeys.width, width);
 	}
 
 	public String getTheme() {
@@ -150,7 +150,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setTheme(final String theme) {
-		setAttribute(PropertyKeys.theme, theme);
+		getStateHelper().put(PropertyKeys.theme, theme);
 	}
 
 	public String getSkin() {
@@ -158,7 +158,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setSkin(final String skin) {
-		setAttribute(PropertyKeys.skin, skin);
+		getStateHelper().put(PropertyKeys.skin, skin);
 	}
 
 	public String getInterfaceColor() {
@@ -166,7 +166,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setInterfaceColor(final String interfaceColor) {
-		setAttribute(PropertyKeys.interfaceColor, interfaceColor);
+		getStateHelper().put(PropertyKeys.interfaceColor, interfaceColor);
 	}
 
 	public boolean isReadOnly() {
@@ -174,7 +174,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setReadOnly(final boolean readOnly) {
-		setAttribute(PropertyKeys.readOnly, readOnly);
+		getStateHelper().put(PropertyKeys.readOnly, readOnly);
 	}
 
 	public String getToolbar() {
@@ -182,7 +182,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setToolbar(final String toolbar) {
-		setAttribute(PropertyKeys.toolbar, toolbar);
+		getStateHelper().put(PropertyKeys.toolbar, toolbar);
 	}
 
 	public String getDefaultLanguage() {
@@ -190,7 +190,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setDefaultLanguage(final String defaultLanguage) {
-		setAttribute(PropertyKeys.defaultLanguage, defaultLanguage);
+		getStateHelper().put(PropertyKeys.defaultLanguage, defaultLanguage);
 	}
 
 	public String getLanguage() {
@@ -198,7 +198,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setLanguage(final String language) {
-		setAttribute(PropertyKeys.language, language);
+		getStateHelper().put(PropertyKeys.language, language);
 	}
 
 	public String getContentsCss() {
@@ -206,7 +206,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setContentsCss(final String contentsCss) {
-		setAttribute(PropertyKeys.contentsCss, contentsCss);
+		getStateHelper().put(PropertyKeys.contentsCss, contentsCss);
 	}
 
 	public String getWidgetVar() {
@@ -214,7 +214,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public int getCheckDirtyInterval() {
@@ -222,7 +222,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setCheckDirtyInterval(final int checkDirtyInterval) {
-		setAttribute(PropertyKeys.checkDirtyInterval, checkDirtyInterval);
+		getStateHelper().put(PropertyKeys.checkDirtyInterval, checkDirtyInterval);
 	}
 
 	public String getCustomConfig() {
@@ -230,7 +230,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setCustomConfig(final String customConfig) {
-		setAttribute(PropertyKeys.customConfig, customConfig);
+		getStateHelper().put(PropertyKeys.customConfig, customConfig);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 
 	@Override
 	public void setTabindex(final String tabindex) {
-		setAttribute(PropertyKeys.tabindex, tabindex);
+		getStateHelper().put(PropertyKeys.tabindex, tabindex);
 	}
 
 	public boolean isEscape() {
@@ -248,7 +248,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	}
 
 	public void setEscape(final boolean escape) {
-		setAttribute(PropertyKeys.escape, escape);
+		getStateHelper().put(PropertyKeys.escape, escape);
 	}
 
 	public String resolveWidgetVar() {
@@ -260,30 +260,5 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

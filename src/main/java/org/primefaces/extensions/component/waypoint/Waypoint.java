@@ -107,7 +107,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setWidgetVar(String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -115,7 +115,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setFor(String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String getForContext() {
@@ -123,7 +123,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setForContext(String forContext) {
-		setAttribute(PropertyKeys.forContext, forContext);
+		getStateHelper().put(PropertyKeys.forContext, forContext);
 	}
 
 	public String getOffset() {
@@ -131,7 +131,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setOffset(String offset) {
-		setAttribute(PropertyKeys.offset, offset);
+		getStateHelper().put(PropertyKeys.offset, offset);
 	}
 
 	public boolean isContinuous() {
@@ -139,7 +139,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setContinuous(boolean continuous) {
-		setAttribute(PropertyKeys.continuous, continuous);
+		getStateHelper().put(PropertyKeys.continuous, continuous);
 	}
 
 	public boolean isOnlyOnScroll() {
@@ -147,7 +147,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setOnlyOnScroll(boolean onlyOnScroll) {
-		setAttribute(PropertyKeys.onlyOnScroll, onlyOnScroll);
+		getStateHelper().put(PropertyKeys.onlyOnScroll, onlyOnScroll);
 	}
 
 	public boolean isTriggerOnce() {
@@ -155,7 +155,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setTriggerOnce(boolean triggerOnce) {
-		setAttribute(PropertyKeys.triggerOnce, triggerOnce);
+		getStateHelper().put(PropertyKeys.triggerOnce, triggerOnce);
 	}
 
 	@Override
@@ -230,30 +230,5 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

@@ -106,7 +106,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public boolean isAutoSubmit() {
@@ -114,7 +114,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public void setAutoSubmit(final boolean autoSubmit) {
-		setAttribute(PropertyKeys.autoSubmit, autoSubmit);
+		getStateHelper().put(PropertyKeys.autoSubmit, autoSubmit);
 	}
 
 	public boolean isOpenExtended() {
@@ -122,7 +122,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public void setOpenExtended(final boolean openExtended) {
-		setAttribute(PropertyKeys.openExtended, openExtended);
+		getStateHelper().put(PropertyKeys.openExtended, openExtended);
 	}
 
 	public String getButtonBarPosition() {
@@ -130,11 +130,11 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public void setButtonBarPosition(final String buttonBarPosition) {
-		setAttribute(PropertyKeys.buttonBarPosition, buttonBarPosition);
+		getStateHelper().put(PropertyKeys.buttonBarPosition, buttonBarPosition);
 	}
 
 	public void setStyle(final String style) {
-		setAttribute(PropertyKeys.style, style);
+		getStateHelper().put(PropertyKeys.style, style);
 	}
 
 	public String getStyle() {
@@ -142,7 +142,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public void setStyleClass(final String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
+		getStateHelper().put(PropertyKeys.styleClass, styleClass);
 	}
 
 	public String getStyleClass() {
@@ -158,31 +158,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	public UIDynaFormControl getControlCell(final String type) {

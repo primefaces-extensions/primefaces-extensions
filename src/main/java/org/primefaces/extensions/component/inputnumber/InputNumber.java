@@ -109,7 +109,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getDecimalSeparator() {
@@ -117,7 +117,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setDecimalSeparator(final String decimalSeparator) {
-		setAttribute(PropertyKeys.decimalSeparator, decimalSeparator);
+		getStateHelper().put(PropertyKeys.decimalSeparator, decimalSeparator);
 	}
 
 	public String getThousandSeparator() {
@@ -125,7 +125,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setThousandSeparator(final String thousandSeparator) {
-		setAttribute(PropertyKeys.thousandSeparator, thousandSeparator);
+		getStateHelper().put(PropertyKeys.thousandSeparator, thousandSeparator);
 	}
 
 	public String getSymbol() {
@@ -133,7 +133,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setSymbol(final String symbol) {
-		setAttribute(PropertyKeys.symbol, symbol);
+		getStateHelper().put(PropertyKeys.symbol, symbol);
 	}
 
 	public String getSymbolPosition() {
@@ -141,7 +141,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setSymbolPosition(final String symbolPosition) {
-		setAttribute(PropertyKeys.symbolPosition, symbolPosition);
+		getStateHelper().put(PropertyKeys.symbolPosition, symbolPosition);
 	}
 
 	public String getMinValue() {
@@ -149,7 +149,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setMinValue(final String minValue) {
-		setAttribute(PropertyKeys.minValue, minValue);
+		getStateHelper().put(PropertyKeys.minValue, minValue);
 	}
 
 	public String getMaxValue() {
@@ -157,7 +157,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setMaxValue(final String maxValue) {
-		setAttribute(PropertyKeys.maxValue, maxValue);
+		getStateHelper().put(PropertyKeys.maxValue, maxValue);
 	}
 
 	public String getRoundMethod() {
@@ -165,7 +165,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setRoundMethod(final String roundMethod) {
-		setAttribute(PropertyKeys.roundMethod, roundMethod);
+		getStateHelper().put(PropertyKeys.roundMethod, roundMethod);
 	}
 
 	public String getDecimalPlaces() {
@@ -173,7 +173,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setDecimalPlaces(final String decimalPlaces) {
-		setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
+		getStateHelper().put(PropertyKeys.decimalPlaces, decimalPlaces);
 	}
 
 	public String getEmptyValue() {
@@ -181,7 +181,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public void setEmptyValue(final String emptyValue) {
-		setAttribute(PropertyKeys.emptyValue, emptyValue);
+		getStateHelper().put(PropertyKeys.emptyValue, emptyValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -193,31 +193,6 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final org.primefaces.extensions.component.inputnumber.InputNumber.PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	private String getCalculatedDecimalSepartor(){

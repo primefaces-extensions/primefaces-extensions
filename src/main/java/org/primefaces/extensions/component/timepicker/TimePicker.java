@@ -159,7 +159,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getTimeSeparator() {
@@ -167,7 +167,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setTimeSeparator(final String timeSeparator) {
-		setAttribute(PropertyKeys.timeSeparator, timeSeparator);
+		getStateHelper().put(PropertyKeys.timeSeparator, timeSeparator);
 	}
 
 	public boolean isShowPeriod() {
@@ -175,7 +175,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowPeriod(final boolean showPeriod) {
-		setAttribute(PropertyKeys.showPeriod, showPeriod);
+		getStateHelper().put(PropertyKeys.showPeriod, showPeriod);
 	}
 
 	public String getMode() {
@@ -183,7 +183,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setMode(final String mode) {
-		setAttribute(PropertyKeys.mode, mode);
+		getStateHelper().put(PropertyKeys.mode, mode);
 	}
 
 	public String getDialogPosition() {
@@ -191,7 +191,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setDialogPosition(final String dialogPosition) {
-		setAttribute(PropertyKeys.dialogPosition, dialogPosition);
+		getStateHelper().put(PropertyKeys.dialogPosition, dialogPosition);
 	}
 
 	public String getInputPosition() {
@@ -199,7 +199,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setInputPosition(final String inputPosition) {
-		setAttribute(PropertyKeys.inputPosition, inputPosition);
+		getStateHelper().put(PropertyKeys.inputPosition, inputPosition);
 	}
 
 	public int getStartHours() {
@@ -207,7 +207,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setStartHours(final int startHours) {
-		setAttribute(PropertyKeys.startHours, startHours);
+		getStateHelper().put(PropertyKeys.startHours, startHours);
 	}
 
 	public int getEndHours() {
@@ -215,7 +215,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setEndHours(final int endHours) {
-		setAttribute(PropertyKeys.endHours, endHours);
+		getStateHelper().put(PropertyKeys.endHours, endHours);
 	}
 
 	public int getStartMinutes() {
@@ -223,7 +223,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setStartMinutes(final int startMinutes) {
-		setAttribute(PropertyKeys.startMinutes, startMinutes);
+		getStateHelper().put(PropertyKeys.startMinutes, startMinutes);
 	}
 
 	public int getEndMinutes() {
@@ -231,7 +231,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setEndMinutes(final int endMinutes) {
-		setAttribute(PropertyKeys.endMinutes, endMinutes);
+		getStateHelper().put(PropertyKeys.endMinutes, endMinutes);
 	}
 
 	public int getIntervalMinutes() {
@@ -239,7 +239,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setIntervalMinutes(final int intervalMinutes) {
-		setAttribute(PropertyKeys.intervalMinutes, intervalMinutes);
+		getStateHelper().put(PropertyKeys.intervalMinutes, intervalMinutes);
 	}
 
 	public int getRows() {
@@ -247,7 +247,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setRows(final int rows) {
-		setAttribute(PropertyKeys.rows, rows);
+		getStateHelper().put(PropertyKeys.rows, rows);
 	}
 
 	public boolean isShowHours() {
@@ -255,7 +255,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowHours(final boolean showHours) {
-		setAttribute(PropertyKeys.showHours, showHours);
+		getStateHelper().put(PropertyKeys.showHours, showHours);
 	}
 
 	public boolean isShowMinutes() {
@@ -263,7 +263,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowMinutes(final boolean showMinutes) {
-		setAttribute(PropertyKeys.showMinutes, showMinutes);
+		getStateHelper().put(PropertyKeys.showMinutes, showMinutes);
 	}
 
 	public boolean isShowCloseButton() {
@@ -271,7 +271,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowCloseButton(final boolean showCloseButton) {
-		setAttribute(PropertyKeys.showCloseButton, showCloseButton);
+		getStateHelper().put(PropertyKeys.showCloseButton, showCloseButton);
 	}
 
 	public boolean isShowDeselectButton() {
@@ -279,7 +279,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowDeselectButton(final boolean showDeselectButton) {
-		setAttribute(PropertyKeys.showDeselectButton, showDeselectButton);
+		getStateHelper().put(PropertyKeys.showDeselectButton, showDeselectButton);
 	}
 
 	public boolean isShowNowButton() {
@@ -287,7 +287,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowNowButton(final boolean showNowButton) {
-		setAttribute(PropertyKeys.showNowButton, showNowButton);
+		getStateHelper().put(PropertyKeys.showNowButton, showNowButton);
 	}
 
 	public String getOnHourShow() {
@@ -295,7 +295,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setOnHourShow(final String onHourShow) {
-		setAttribute(PropertyKeys.onHourShow, onHourShow);
+		getStateHelper().put(PropertyKeys.onHourShow, onHourShow);
 	}
 
 	public String getOnMinuteShow() {
@@ -303,7 +303,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setOnMinuteShow(final String onMinuteShow) {
-		setAttribute(PropertyKeys.onMinuteShow, onMinuteShow);
+		getStateHelper().put(PropertyKeys.onMinuteShow, onMinuteShow);
 	}
 
 	public String getShowOn() {
@@ -311,7 +311,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setShowOn(final String showOn) {
-		setAttribute(PropertyKeys.showOn, showOn);
+		getStateHelper().put(PropertyKeys.showOn, showOn);
 	}
 
 	public Object getLocale() {
@@ -319,7 +319,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 	}
 
 	public void setLocale(final Object locale) {
-		setAttribute(PropertyKeys.locale, locale);
+		getStateHelper().put(PropertyKeys.locale, locale);
 	}
 
 	public Locale calculateLocale(final FacesContext fc) {
@@ -424,30 +424,5 @@ public class TimePicker extends HtmlInputText implements Widget {
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

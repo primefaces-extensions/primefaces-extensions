@@ -148,7 +148,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setWidgetVar(String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public TimelineModel getValue() {
@@ -156,7 +156,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setValue(TimelineModel value) {
-		setAttribute(PropertyKeys.value, value);
+		getStateHelper().put(PropertyKeys.value, value);
 	}
 
 	public String getVar() {
@@ -164,7 +164,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setVar(String var) {
-		setAttribute(PropertyKeys.var, var);
+		getStateHelper().put(PropertyKeys.var, var);
 	}
 
 	public Object getLocale() {
@@ -172,7 +172,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setLocale(Object locale) {
-		setAttribute(PropertyKeys.locale, locale);
+		getStateHelper().put(PropertyKeys.locale, locale);
 	}
 
 	public Object getTimeZone() {
@@ -180,7 +180,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setTimeZone(Object timeZone) {
-		setAttribute(PropertyKeys.timeZone, timeZone);
+		getStateHelper().put(PropertyKeys.timeZone, timeZone);
 	}
 
 	public String getStyle() {
@@ -188,7 +188,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setStyle(String style) {
-		setAttribute(PropertyKeys.style, style);
+		getStateHelper().put(PropertyKeys.style, style);
 	}
 
 	public String getStyleClass() {
@@ -196,7 +196,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setStyleClass(String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
+		getStateHelper().put(PropertyKeys.styleClass, styleClass);
 	}
 
 	public String getHeight() {
@@ -204,7 +204,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setHeight(String height) {
-		setAttribute(PropertyKeys.height, height);
+		getStateHelper().put(PropertyKeys.height, height);
 	}
 
 	public int getMinHeight() {
@@ -212,7 +212,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setMinHeight(int minHeight) {
-		setAttribute(PropertyKeys.minHeight, minHeight);
+		getStateHelper().put(PropertyKeys.minHeight, minHeight);
 	}
 
 	public String getWidth() {
@@ -220,7 +220,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setWidth(String width) {
-		setAttribute(PropertyKeys.width, width);
+		getStateHelper().put(PropertyKeys.width, width);
 	}
 
 	public boolean isResponsive() {
@@ -228,7 +228,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setResponsive(boolean responsive) {
-		setAttribute(PropertyKeys.responsive, responsive);
+		getStateHelper().put(PropertyKeys.responsive, responsive);
 	}
 
 	public boolean isAxisOnTop() {
@@ -236,7 +236,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setAxisOnTop(boolean axisOnTop) {
-		setAttribute(PropertyKeys.axisOnTop, axisOnTop);
+		getStateHelper().put(PropertyKeys.axisOnTop, axisOnTop);
 	}
 
 	public int getDragAreaWidth() {
@@ -244,7 +244,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setDragAreaWidth(int dragAreaWidth) {
-		setAttribute(PropertyKeys.dragAreaWidth, dragAreaWidth);
+		getStateHelper().put(PropertyKeys.dragAreaWidth, dragAreaWidth);
 	}
 
 	public boolean isEditable() {
@@ -252,7 +252,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setEditable(boolean editable) {
-		setAttribute(PropertyKeys.editable, editable);
+		getStateHelper().put(PropertyKeys.editable, editable);
 	}
 
 	public boolean isSelectable() {
@@ -260,7 +260,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setSelectable(boolean selectable) {
-		setAttribute(PropertyKeys.selectable, selectable);
+		getStateHelper().put(PropertyKeys.selectable, selectable);
 	}
 
 	public boolean isZoomable() {
@@ -268,7 +268,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setZoomable(boolean zoomable) {
-		setAttribute(PropertyKeys.zoomable, zoomable);
+		getStateHelper().put(PropertyKeys.zoomable, zoomable);
 	}
 
 	public boolean isMoveable() {
@@ -276,7 +276,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setMoveable(boolean moveable) {
-		setAttribute(PropertyKeys.moveable, moveable);
+		getStateHelper().put(PropertyKeys.moveable, moveable);
 	}
 
 	public Date getStart() {
@@ -284,7 +284,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setStart(Date start) {
-		setAttribute(PropertyKeys.start, start);
+		getStateHelper().put(PropertyKeys.start, start);
 	}
 
 	public Date getEnd() {
@@ -292,7 +292,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setEnd(Date end) {
-		setAttribute(PropertyKeys.end, end);
+		getStateHelper().put(PropertyKeys.end, end);
 	}
 
 	public Date getMin() {
@@ -300,7 +300,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setMin(Date min) {
-		setAttribute(PropertyKeys.min, min);
+		getStateHelper().put(PropertyKeys.min, min);
 	}
 
 	public Date getMax() {
@@ -308,7 +308,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setMax(Date max) {
-		setAttribute(PropertyKeys.max, max);
+		getStateHelper().put(PropertyKeys.max, max);
 	}
 
 	public long getZoomMin() {
@@ -316,7 +316,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setZoomMin(long zoomMin) {
-		setAttribute(PropertyKeys.zoomMin, zoomMin);
+		getStateHelper().put(PropertyKeys.zoomMin, zoomMin);
 	}
 
 	public long getZoomMax() {
@@ -324,7 +324,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setZoomMax(long zoomMax) {
-		setAttribute(PropertyKeys.zoomMax, zoomMax);
+		getStateHelper().put(PropertyKeys.zoomMax, zoomMax);
 	}
 
 	public int getEventMargin() {
@@ -332,7 +332,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setEventMargin(int eventMargin) {
-		setAttribute(PropertyKeys.eventMargin, eventMargin);
+		getStateHelper().put(PropertyKeys.eventMargin, eventMargin);
 	}
 
 	public int getEventMarginAxis() {
@@ -340,7 +340,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setEventMarginAxis(int eventMarginAxis) {
-		setAttribute(PropertyKeys.eventMarginAxis, eventMarginAxis);
+		getStateHelper().put(PropertyKeys.eventMarginAxis, eventMarginAxis);
 	}
 
 	public String getEventStyle() {
@@ -348,7 +348,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setEventStyle(String eventStyle) {
-		setAttribute(PropertyKeys.eventStyle, eventStyle);
+		getStateHelper().put(PropertyKeys.eventStyle, eventStyle);
 	}
 
 	public boolean isGroupsChangeable() {
@@ -356,7 +356,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setGroupsChangeable(boolean groupsChangeable) {
-		setAttribute(PropertyKeys.groupsChangeable, groupsChangeable);
+		getStateHelper().put(PropertyKeys.groupsChangeable, groupsChangeable);
 	}
 
 	public boolean isGroupsOnRight() {
@@ -364,7 +364,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setGroupsOnRight(boolean groupsOnRight) {
-		setAttribute(PropertyKeys.groupsOnRight, groupsOnRight);
+		getStateHelper().put(PropertyKeys.groupsOnRight, groupsOnRight);
 	}
 
 	public String getGroupsWidth() {
@@ -372,7 +372,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setGroupsWidth(String groupsWidth) {
-		setAttribute(PropertyKeys.groupsWidth, groupsWidth);
+		getStateHelper().put(PropertyKeys.groupsWidth, groupsWidth);
 	}
 
 	public boolean isSnapEvents() {
@@ -380,7 +380,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setSnapEvents(boolean snapEvents) {
-		setAttribute(PropertyKeys.snapEvents, snapEvents);
+		getStateHelper().put(PropertyKeys.snapEvents, snapEvents);
 	}
 
 	public boolean isStackEvents() {
@@ -388,7 +388,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setStackEvents(boolean stackEvents) {
-		setAttribute(PropertyKeys.stackEvents, stackEvents);
+		getStateHelper().put(PropertyKeys.stackEvents, stackEvents);
 	}
 
 	public boolean isShowCurrentTime() {
@@ -396,7 +396,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setShowCurrentTime(boolean showCurrentTime) {
-		setAttribute(PropertyKeys.showCurrentTime, showCurrentTime);
+		getStateHelper().put(PropertyKeys.showCurrentTime, showCurrentTime);
 	}
 
 	public boolean isShowMajorLabels() {
@@ -404,7 +404,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setShowMajorLabels(boolean showMajorLabels) {
-		setAttribute(PropertyKeys.showMajorLabels, showMajorLabels);
+		getStateHelper().put(PropertyKeys.showMajorLabels, showMajorLabels);
 	}
 
 	public boolean isShowMinorLabels() {
@@ -412,7 +412,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setShowMinorLabels(boolean showMinorLabels) {
-		setAttribute(PropertyKeys.showMinorLabels, showMinorLabels);
+		getStateHelper().put(PropertyKeys.showMinorLabels, showMinorLabels);
 	}
 
 	public boolean isShowButtonNew() {
@@ -420,7 +420,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setShowButtonNew(boolean showButtonNew) {
-		setAttribute(PropertyKeys.showButtonNew, showButtonNew);
+		getStateHelper().put(PropertyKeys.showButtonNew, showButtonNew);
 	}
 
 	public boolean isShowNavigation() {
@@ -428,7 +428,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	}
 
 	public void setShowNavigation(boolean showNavigation) {
-		setAttribute(PropertyKeys.showNavigation, showNavigation);
+		getStateHelper().put(PropertyKeys.showNavigation, showNavigation);
 	}
 
 	@Override
@@ -554,30 +554,5 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }
