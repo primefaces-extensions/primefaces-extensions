@@ -61,11 +61,16 @@ public class BlockUI extends UIComponentBase implements Widget {
 	protected enum PropertyKeys {
 
 		widgetVar,
+        css,
+        cssOverlay,
 		source,
 		target,
 		content,
 		event,
-		autoShow;
+		autoShow,
+        timeout,
+        centerX,
+        centerY;
 
 		private String toString;
 
@@ -98,6 +103,22 @@ public class BlockUI extends UIComponentBase implements Widget {
 	public void setWidgetVar(final String widgetVar) {
 		setAttribute(PropertyKeys.widgetVar, widgetVar);
 	}
+    
+    public void setCss(final String css) {
+   		setAttribute(PropertyKeys.css, css);
+   	}
+   
+   	public String getCss() {
+   		return (String) getStateHelper().eval(PropertyKeys.css, null);
+   	}
+    
+    public void setCssOverlay(final String cssOverlay) {
+   		setAttribute(PropertyKeys.cssOverlay, cssOverlay);
+   	}
+   
+   	public String getCssOverlay() {
+   		return (String) getStateHelper().eval(PropertyKeys.cssOverlay, null);
+   	}    
 
 	public String getSource() {
 		return (String) getStateHelper().eval(PropertyKeys.source, null);
@@ -138,6 +159,30 @@ public class BlockUI extends UIComponentBase implements Widget {
 	public void setAutoShow(final boolean autoShow) {
 		setAttribute(PropertyKeys.autoShow, autoShow);
 	}
+    
+    public int getTimeout() {
+   		return (Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
+   	}
+   
+   	public void setTimeout(final int timeout) {
+   		setAttribute(PropertyKeys.timeout, timeout);
+   	}
+    
+    public boolean isCenterX() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.centerX, true);
+   	}
+   
+   	public void setCenterX(final boolean centerX) {
+   		setAttribute(PropertyKeys.centerX, centerX);
+   	}
+    
+    public boolean isCenterY() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.centerY, true);
+   	}
+   
+   	public void setCenterY(final boolean centerY) {
+   		setAttribute(PropertyKeys.centerY, centerY);
+   	}    
 
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();

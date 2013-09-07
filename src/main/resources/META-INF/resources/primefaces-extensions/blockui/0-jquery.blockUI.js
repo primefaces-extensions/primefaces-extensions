@@ -336,8 +336,8 @@
 			}
 
 			// style the overlay
-			if (!opts.theme /*&& (!opts.applyPlatformOpacityRules)*/)
-				lyr2.css(opts.overlayCSS);
+			//if (!opts.theme /*&& (!opts.applyPlatformOpacityRules)*/)
+		    lyr2.css(opts.overlayCSS);
 			lyr2.css('position', full ? 'fixed' : 'absolute');
 
 			// make iframe layer transparent in IE

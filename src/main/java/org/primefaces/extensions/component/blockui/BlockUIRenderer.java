@@ -84,10 +84,6 @@ public class BlockUIRenderer extends CoreRenderer {
 			target = SearchExpressionFacade.resolveComponentsForClient(fc, blockUI, target);
 		}
 
-		if (target == null) {
-			throw new FacesException("Cannot determinate target for blockUI component '" + clientId + "'.");
-		}
-
 		// get content
 		String jqContent = null;
 		boolean isContentExtern = false;
@@ -137,8 +133,30 @@ public class BlockUIRenderer extends CoreRenderer {
 
 		writer.write("id:'" + clientId + "'");
 		writer.write(",source:'" + source + "'");
-		writer.write(",target:'" + target + "'");
+        
+        if (target != null) {
+		    writer.write(",target:'" + target + "'");
+        }
+        
         writer.write(",autoShow:" + blockUI.isAutoShow());
+        
+        String css = blockUI.getCss();
+        if (css != null) {
+            writer.write(",css:" + css);
+        }
+        
+        String cssOverlay = blockUI.getCssOverlay();
+        if (cssOverlay != null) {
+            writer.write(",overlayCSS:" + cssOverlay);
+        }
+        
+        int timeout = blockUI.getTimeout();
+        if (timeout > 0) {
+            writer.write(",timeout:" + timeout);
+        }
+        
+        writer.write(",centerX:" + blockUI.isCenterX());
+        writer.write(",centerY:" + blockUI.isCenterY());
         
 		if (jqContent != null) {
 			writer.write(",content:'" + jqContent + "'");

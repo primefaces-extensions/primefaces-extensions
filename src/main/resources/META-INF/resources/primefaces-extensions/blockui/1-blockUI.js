@@ -18,6 +18,11 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 	    this.contentExtern = cfg.contentExtern;
         this.namingContSep = cfg.namingContSep;
 		this.eventRegEx = cfg.regEx;
+        this.css = cfg.css;
+        this.overlayCSS = cfg.overlayCSS;
+        this.timeout = cfg.timeout;
+        this.centerX = cfg.centerX;
+        this.centerY = cfg.centerY;
         
         if (cfg.autoShow) {
             this.setupAjaxHandlers();
@@ -63,57 +68,100 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 	},
 	    
 	block : function () {
-        var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
+        var opt;
         
-        // second, check if the target element has been found
-        if (targetEl.length > 0) {
-            // block the target element
-            if (this.contentId != null) {
-                if (this.contentExtern) {
-                    targetEl.block({message: $(this.contentId).clone().show().wrap('<div>').parent().html()});
+        if (this.target) {
+            var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
+            
+            // second, check if the target element has been found
+            if (targetEl.length > 0) {
+                // block the target element
+                opt = this.getOptions();
+                if (opt) {
+                    targetEl.block(opt);
                 } else {
-                    targetEl.block({message: $(this.contentId).html()});
+                    targetEl.block();
                 }
+                
+                //$('.blockUI.blockOverlay').css('z-index', ++PrimeFaces.zindex + 10);
+        
+                // get the current counter
+                var blocksCount = targetEl.data("blockUI.blocksCount");
+                if (typeof blocksCount === 'undefined') {
+                    blocksCount = 0;
+                }
+                
+                // increase the counter
+                targetEl.data("blockUI.blocksCount", blocksCount+1);
+            }
+        } else {
+            // block the entire page
+            opt = this.getOptions();
+            if (opt) {
+                $.blockUI(opt);
             } else {
-                targetEl.block();
+                $.blockUI();
             }
-            
-            //$('.blockUI.blockOverlay').css('z-index', ++PrimeFaces.zindex + 10);
-    
-            // get the current counter
-            var blocksCount = targetEl.data("blockUI.blocksCount");
-            if (typeof blocksCount === 'undefined') {
-                blocksCount = 0;
-            }
-            
-            // increase the counter
-            targetEl.data("blockUI.blocksCount", blocksCount+1);
-        }        
+        }
     },
 	    
 	unblock : function () {
-        var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
-        
-        // second, check if the target element has been found
-        if (targetEl.length > 0) {
-            // get the current counter
-            var blocksCount = targetEl.data("blockUI.blocksCount");
+        if (this.target) {
+            var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
             
-            // check the counter
-            if (typeof blocksCount !== 'undefined') {
-                if (blocksCount == 1) {
-                    // unblock the target element and reset the counter
-                    targetEl.unblock();
-                    targetEl.data("blockUI.blocksCount", 0);
-                } else if (blocksCount > 1) {
-                    // only decrease the counter
-                    targetEl.data("blockUI.blocksCount", blocksCount-1);
+            // second, check if the target element has been found
+            if (targetEl.length > 0) {
+                // get the current counter
+                var blocksCount = targetEl.data("blockUI.blocksCount");
+                
+                // check the counter
+                if (typeof blocksCount !== 'undefined') {
+                    if (blocksCount == 1) {
+                        // unblock the target element and reset the counter
+                        targetEl.unblock();
+                        targetEl.data("blockUI.blocksCount", 0);
+                    } else if (blocksCount > 1) {
+                        // only decrease the counter
+                        targetEl.data("blockUI.blocksCount", blocksCount-1);
+                    }
                 }
             }
+        } else {
+            $.unblockUI();    
         }
     },
 		
 	/* private access */
+    
+    getOptions : function() {
+        var opt = null;
+        
+        if (this.contentId != null) {
+            opt = {};
+            if (this.contentExtern) {
+                opt.message = $(this.contentId).clone().show().wrap('<div>').parent().html(); 
+            } else {
+                opt.message = $(this.contentId).html();
+            }
+
+            if (this.css) {
+                opt.themedCSS = this.css;
+            }
+            
+            if (this.overlayCSS) {
+                opt.overlayCSS = this.overlayCSS;    
+            }
+
+            if (this.timeout) {
+                opt.timeout = this.timeout;    
+            }
+            
+            opt.centerX = this.centerX;
+            opt.centerY = this.centerY;
+        }
+        
+        return opt;
+    },
 		
 	isAppropriateEvent : function (source, settings) {
         if (typeof settings === 'undefined' || settings == null || settings.source == null ||

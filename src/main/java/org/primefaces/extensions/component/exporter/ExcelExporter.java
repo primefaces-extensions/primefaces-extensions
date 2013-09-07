@@ -81,6 +81,13 @@ public class ExcelExporter extends Exporter {
     private Color cellFontColor;
     private String cellFontStyle;
     private String datasetPadding;
+
+    private CellStyle facetStyleLeftAlign;
+    private CellStyle facetStyleCenterAlign;
+    private CellStyle facetStyleRightAlign;
+    private CellStyle cellStyleLeftAlign;
+    private CellStyle cellStyleCenterAlign;
+    private CellStyle cellStyleRightAlign;
     XSSFWorkbook wb;
 
     @Override
@@ -93,6 +100,14 @@ public class ExcelExporter extends Exporter {
         cellStyle = wb.createCellStyle();
         facetStyle = wb.createCellStyle();
         titleStyle = wb.createCellStyle();
+
+        facetStyleLeftAlign = wb.createCellStyle();
+        facetStyleCenterAlign = wb.createCellStyle();
+        facetStyleRightAlign = wb.createCellStyle();
+        cellStyleLeftAlign = wb.createCellStyle();
+        cellStyleCenterAlign = wb.createCellStyle();
+        cellStyleRightAlign = wb.createCellStyle();
+
         createCustomFonts();
 
         int maxColumns = 0;
@@ -689,6 +704,13 @@ public class ExcelExporter extends Exporter {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
+        facetStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        facetStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        facetStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
+        cellStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        cellStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        cellStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
+
         for (UIColumn col : table.getColumns()) {
             if (!col.isRendered()) {
                 continue;
@@ -763,6 +785,13 @@ public class ExcelExporter extends Exporter {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
+        facetStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        facetStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        facetStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
+        cellStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        cellStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        cellStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
+
         for (UIColumn col : table.getColumns()) {
             if (!col.isRendered()) {
                 continue;
@@ -781,6 +810,13 @@ public class ExcelExporter extends Exporter {
     protected void exportCells(DataList list, Sheet sheet) {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
+
+        facetStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        facetStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        facetStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
+        cellStyleLeftAlign.setAlignment((short)CellStyle.ALIGN_LEFT);
+        cellStyleCenterAlign.setAlignment((short)CellStyle.ALIGN_CENTER);
+        cellStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
 
         for (UIComponent component : list.getChildren()) {
             if (component instanceof Column) {
@@ -855,12 +891,9 @@ public class ExcelExporter extends Exporter {
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
         if (type.equalsIgnoreCase("facet")) {
-            // addColumnAlignments(component,facetStyle);
-            cell.setCellStyle(facetStyle);
+            addFacetAlignments(component,cell);
         } else {
-            CellStyle cellStyle = this.cellStyle;
-            cellStyle = addColumnAlignments(component, cellStyle);
-            cell.setCellStyle(cellStyle);
+            addColumnAlignments(component, cell);
         }
 
     }
@@ -884,32 +917,45 @@ public class ExcelExporter extends Exporter {
         cell.setCellValue(new XSSFRichTextString(builder.toString()));
 
         if (type.equalsIgnoreCase("facet")) {
-            //addColumnAlignments(components,facetStyle);
-            cell.setCellStyle(facetStyle);
-        } else {
-            CellStyle cellStyle = this.cellStyle;
             for (UIComponent component : components) {
-                cellStyle = addColumnAlignments(component, cellStyle);
-                cell.setCellStyle(cellStyle);
+            addFacetAlignments(component,cell);
+            }
+        } else {
+            for (UIComponent component : components) {
+             addColumnAlignments(component, cell);
             }
         }
 
     }
 
-    protected CellStyle addColumnAlignments(UIComponent component, CellStyle style) {
+    protected void addColumnAlignments(UIComponent component, Cell cell) {
         if (component instanceof HtmlOutputText) {
             HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
-                style.setAlignment(CellStyle.ALIGN_LEFT);
+                cell.setCellStyle(cellStyleLeftAlign);
             }
             if (output.getStyle() != null && output.getStyle().contains("right")) {
-                style.setAlignment(CellStyle.ALIGN_RIGHT);
+                cell.setCellStyle(cellStyleRightAlign);
             }
             if (output.getStyle() != null && output.getStyle().contains("center")) {
-                style.setAlignment(CellStyle.ALIGN_CENTER);
+                cell.setCellStyle(cellStyleCenterAlign);
             }
         }
-        return style;
+    }
+
+    protected void addFacetAlignments(UIComponent component, Cell cell) {
+        if (component instanceof HtmlOutputText) {
+            HtmlOutputText output = (HtmlOutputText) component;
+            if (output.getStyle() != null && output.getStyle().contains("left")) {
+                cell.setCellStyle(facetStyleLeftAlign);
+            }
+            else if (output.getStyle() != null && output.getStyle().contains("right")) {
+                cell.setCellStyle(facetStyleRightAlign);
+            }
+            else  {
+                cell.setCellStyle(facetStyleCenterAlign);
+            }
+        }
     }
 
     public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) {
@@ -966,12 +1012,13 @@ public class ExcelExporter extends Exporter {
             facetFont.setFontName(fontName);
         }
 
-        cellStyle.setFont(cellFont);
-
         if (facetBackground != null) {
             XSSFColor backgroundColor = new XSSFColor(facetBackground);
             ((XSSFCellStyle) facetStyle).setFillForegroundColor(backgroundColor);
             facetStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+            facetStyleLeftAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+            facetStyleCenterAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+            facetStyleRightAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 
         }
 
@@ -984,8 +1031,16 @@ public class ExcelExporter extends Exporter {
             facetFont.setFontHeightInPoints((short) facetFontSize);
         }
 
+        cellStyle.setFont(cellFont);
+        cellStyleLeftAlign.setFont(cellFont);
+        cellStyleCenterAlign.setFont(cellFont);
+        cellStyleRightAlign.setFont(cellFont);
+
         facetStyle.setFont(facetFont);
-        facetStyle.setAlignment(CellStyle.ALIGN_CENTER);
+        facetStyleLeftAlign.setFont(facetFont);
+        facetStyleCenterAlign.setFont(facetFont);
+        facetStyleRightAlign.setFont(facetFont);
+        //facetStyle.setAlignment(CellStyle.ALIGN_CENTER);
 
     }
 

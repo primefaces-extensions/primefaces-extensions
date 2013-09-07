@@ -2,4 +2,5 @@
 ------------------------------------------------
 - width 'auto' in "css" and "themedCSS".
 - no backgroundColor and opacity in "overlayCSS".
+- apply always overlay settings with lyr2.css(opts.overlayCSS)
 
