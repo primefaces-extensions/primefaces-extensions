@@ -61,15 +61,9 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	public static final String EVENT_WYSIWYG_MODE = "wysiwygMode";
 	public static final String EVENT_SOURCE_MODE = "sourceMode";
 
-	/** Event, which will be fired after the content has been changed (without blur before). */
-	public static final String EVENT_DIRTY = "dirty";
-
-	/** Event, which will be fired after blur, when the content has been changed. */
-	public static final String EVENT_CHANGE = "change";
-
 	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS, EVENT_CHANGE,
-					EVENT_DIRTY, EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
+			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS,
+					EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
 
 	/**
 	 * Properties that are tracked by state saving.
@@ -90,7 +84,6 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 		@Option language,
 		@Option defaultLanguage,
 		@Option contentsCss,
-		@Option checkDirtyInterval,
 		@Option customConfig,
 		@Option tabindex,
 		escape;
@@ -215,14 +208,6 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 
 	public void setWidgetVar(final String widgetVar) {
 		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-	}
-
-	public int getCheckDirtyInterval() {
-		return (Integer) getStateHelper().eval(PropertyKeys.checkDirtyInterval, 1000);
-	}
-
-	public void setCheckDirtyInterval(final int checkDirtyInterval) {
-		getStateHelper().put(PropertyKeys.checkDirtyInterval, checkDirtyInterval);
 	}
 
 	public String getCustomConfig() {

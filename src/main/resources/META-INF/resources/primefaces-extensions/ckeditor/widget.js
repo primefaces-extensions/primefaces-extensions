@@ -63,10 +63,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	init : function(cfg) {
 		this._super(cfg);
-	
-		this.dirtyEventDefined = this.cfg.behaviors && this.cfg.behaviors['dirty'];
-		this.changeEventDefined = this.cfg.behaviors && this.cfg.behaviors['change'];
-	    this.dirtyState = false;
+
 	    this.instance = null;
 	
 		this.options = {};
@@ -163,6 +160,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 		//overwrite save button
 		CKEDITOR.plugins.registered['save'] = {
 			init : function(editor) {
+
 				//get widget
 				var widget = PF(editor.config.widgetVar);
 				var command = editor.addCommand('save', {
@@ -199,152 +197,21 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 		this.fireEvent('initialize');
 		
 		//register blur and focus event
-	    this.instance.on('blur', $.proxy(function() { this.handleBlur(); }, this));
+	    this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
 	    this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
-	
-	    //register callbacks for change event
-	    if (this.changeEventDefined || this.dirtyEventDefined) {  
-	    	
-	    	this.bindChangeEventsForWYSIWYGMode();
-	    	this.bindCommonChangeEvents();
-	
-	    	//changes to WYSIWYG mode
-	    	this.instance.on('contentDom', $.proxy(function() {
-	    		this.bindChangeEventsForWYSIWYGMode();
-	    		this.fireEvent('wysiwygMode');
-	      	}, this));
-	 
-	    	//changes to source mode
-	    	this.instance.on('mode', $.proxy(function(event) {
-				if (this.instance.mode != 'source') {
-					return;    	
-				}
-				this.bindChangeEventsForSourceMode();
-				this.fireEvent('sourceMode');
-	    	}, this));
-	    }
-	
-	    if (this.dirtyEventDefined && this.cfg.checkDirtyInterval !== 0) {
-		    this.dirtyCheckInterval = setInterval($.proxy(this.checkDirtyFromTimer, this), this.cfg.checkDirtyInterval);
-	    }
-	},
 
-	/**
-	 * Binds the common events, which will be used for dirty/change checking.
-	 *
-	 * @private
-	 */
-	bindCommonChangeEvents : function() {
-		this.instance.on('paste', $.proxy(this.checkDirty, this));
-		this.instance.getCommand('undo').on('afterUndo', $.proxy(this.checkDirty, this));
-		this.instance.getCommand('redo').on('afterRedo', $.proxy(this.checkDirty, this));
-	
-		this.instance.on('saveSnapshot', $.proxy(function(event) {
-			if (!event.data || !event.data.contentOnly) {
-				this.checkDirty();
+	    //changes to WYSIWYG mode
+    	this.instance.on('contentDom', $.proxy(function() {
+    		this.fireEvent('wysiwygMode');
+      	}, this));
+ 
+    	//changes to source mode
+    	this.instance.on('mode', $.proxy(function(event) {
+			if (this.instance.mode != 'source') {
+				return;    	
 			}
-		}, this));
-	
-		this.instance.on('afterCommandExec', $.proxy(function(event) {
-			if (event.data.name == 'source') {
-				return;
-			}
-	
-			if (event.data.command.canUndo !== false) {
-				this.checkDirty();
-			}
-		}, this));
-	},
-
-	/**
-	 * Binds the events for the WYSIWYG mode, which will be used for dirty/change checking.
-	 *
-	 * @private
-	 */
-	bindChangeEventsForWYSIWYGMode : function() {
-	    this.instance.document.on('drop', $.proxy(this.checkDirty, this));
-	    this.instance.document.getBody().on('drop', $.proxy(this.checkDirty, this));
-	    this.instance.document.on('keydown', $.proxy(function(event) {
-	    	//do not capture ctrl and meta keys
-	    	if (event.data.$.ctrlKey ||event.data.$.metaKey) {
-	    		return;
-	    	}
-	
-	    	//filter movement keys and related
-	    	var keyCode = event.data.$.keyCode;
-	    	if (keyCode == 8 || keyCode == 13 || keyCode == 32
-	    			|| ( keyCode >= 46 && keyCode <= 90)
-	    			|| ( keyCode >= 96 && keyCode <= 111)
-	    			|| ( keyCode >= 186 && keyCode <= 222)) {
-	    		this.checkDirty();
-	    	}
-	    }, this));
-	},
-
-	/**
-	 * Binds the events for the source mode, which will be used for dirty/change checking.
-	 *
-	 * @private
-	 */
-	bindChangeEventsForSourceMode : function() {
-		this.instance.textarea.on('drop', $.proxy(this.checkDirty, this));
-		this.instance.textarea.on('input', $.proxy(this.checkDirty, this));
-		/*
-		this.instance.textarea.on('keydown', $.proxy(function(event) {
-			//do not capture ctrl and meta keys
-			if (!event.data.$.ctrlKey && !event.data.$.metaKey) {
-				this.checkDirty();
-			}
-		}, this));;
-		*/
-	},
-
-	/**
-	 * Sets the dirty state.
-	 *
-	 * @private
-	 */
-	checkDirty : function() {
-	    if (this.isDirty()) {
-	        this.instance.resetDirty();
-	
-	        if (this.dirtyState === false) {
-	        	this.dirtyState = true;
-	        }
-	        
-	        if (this.dirtyEventDefined) {
-	        	this.fireEvent('dirty');
-	        }
-	    }
-	},
-
-	/**
-	 * Restores the dirtyState and calls check checkDirty();
-	 *
-	 * @private
-	 */
-	checkDirtyFromTimer : function() {
-		this.dirtyState = false;
-		this.checkDirty();
-	},
-
-	/**
-	 * Handles the blur event and fires the change event if required.
-	 *
-	 * @author Thomas Andraschko
-	 * @private
-	 */
-	handleBlur : function() {
-		this.fireEvent('blur');
-	
-		if (this.changeEventDefined) {
-			if (this.dirtyState) {
-			    this.instance.resetDirty();
-			    this.fireEvent('change');
-			}
-	
-			this.dirtyState = false;
-		}
+			this.fireEvent('sourceMode');
+    	}, this));
 	},
 
 	/**
@@ -370,10 +237,6 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 * Destroys the CKEditor instance.
 	 */
 	destroy : function() {
-		if (this.dirtyCheckInterval) {
-			clearInterval(this.dirtyCheckInterval);
-		}
-	
 	    if (this.instance) {
 	        this.instance.destroy(true);
 	        this.instance = null;
@@ -390,7 +253,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 			return false;
 		}
 
-		return this.dirtyState || this.instance.checkDirty();
+		return this.instance.checkDirty();
 	},
 
 	/**
