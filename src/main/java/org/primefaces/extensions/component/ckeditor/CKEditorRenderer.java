@@ -101,6 +101,7 @@ public class CKEditorRenderer extends InputRenderer {
 		writer.write("PrimeFacesExt.cw('" + CKEditor.class.getSimpleName() + "', '" + widgetVar + "', {");
 
 		WidgetRenderer.renderOptions(clientId, writer, ckEditor);
+		writer.write(",widgetVar:'" + ckEditor.resolveWidgetVar() + "'");
 
 		encodeClientBehaviors(context, ckEditor);
 

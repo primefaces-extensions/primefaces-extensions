@@ -45,7 +45,7 @@ CKEDITOR_GETURL = function(resource) {
 			facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/' + resource);
 		}
 	}
-
+	
 	return facesResource;
 }
 
@@ -71,7 +71,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	
 		this.options = {};
 		//add widget to ckeditor config, this is required for the save event
-		this.options.widget = this;
+		this.options.widgetVar = this.cfg.widgetVar;
 	
 		if (this.cfg.skin) {
 			this.options.skin = this.cfg.skin;
@@ -164,7 +164,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 		CKEDITOR.plugins.registered['save'] = {
 			init : function(editor) {
 				//get widget
-				var widget = editor.config.widget;
+				var widget = PF(editor.config.widgetVar);
 				var command = editor.addCommand('save', {
 					modes : { wysiwyg:1, source:1 },
 					exec : function(editor) {
