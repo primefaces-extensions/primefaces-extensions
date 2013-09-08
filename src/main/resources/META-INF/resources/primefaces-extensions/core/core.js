@@ -165,24 +165,6 @@ PrimeFacesExt = {
 	},
 
 	/**
-	 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-	 * 
-	 * @author Thomas Andraschko
-	 * @param {string} url A string containing the URL to which the request is sent.
-	 * @param {function} callback A callback function that is executed if the request succeeds.
-	 * @param {string} cache Appends a unique timestamp if false.
-	 */
-	getScript : function(url, callback, cache) {
-		$.ajax({
-				type: "GET",
-				url: url,
-				success: callback,
-				dataType: "script",
-				cache: cache
-		});
-	},
-
-	/**
 	 * Creates a widget and load the required resources if not already available.
 	 * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
 	 * The file and directory names must be completely in lower case.
@@ -251,7 +233,7 @@ PrimeFacesExt = {
     		//load script
 	        PrimeFacesExt.getScript(script, function() {
 	        	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
-	        }, true);
+	        });
 	    }
 	},
 

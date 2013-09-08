@@ -113,14 +113,14 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 				PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/adapters/jquery.js');		
 	
 			//load ckeditor
-			PrimeFacesExt.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
+			PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
 	
 				//load jquery adapter
-				PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+				PrimeFaces.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 	
 					this.renderDeferred();
 
-				}, this), true);
+				}));
 	
 			}, this), true);
 	
