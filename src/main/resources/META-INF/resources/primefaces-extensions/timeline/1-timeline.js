@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin, reimplemented since 0.7
  */
-PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Initializes the widget.
      *
@@ -14,13 +14,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.id = cfg.id;
 
-        PrimeFacesExt.handleInitialize(this, this.createTimeline);
+        this.renderDeferred();
     },
 
     /**
      * Creates timeline widget with all initialization steps.
      */
-    createTimeline: function () {
+    _render: function () {
         // configure localized text
         this.cfg.opts = PrimeFacesExt.configureLocale('Timeline', this.cfg.opts);
 

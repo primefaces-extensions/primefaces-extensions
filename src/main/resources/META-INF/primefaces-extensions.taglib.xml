@@ -3819,7 +3819,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The target component registered as waypoint.]]>
+                <![CDATA[The target component registered as waypoint. If null, the parent component will be taken as target. Default is null.]]>
             </description>
             <name>for</name>
             <required>false</required>
