@@ -17,17 +17,14 @@
  */
 package org.primefaces.extensions.component.timeline;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -97,6 +94,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		dragAreaWidth,
 		editable,
 		selectable,
+		unselectable,
 		zoomable,
 		moveable,
 		start,
@@ -261,6 +259,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	public void setSelectable(boolean selectable) {
 		getStateHelper().put(PropertyKeys.selectable, selectable);
+	}
+
+	public boolean isUnselectable() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.unselectable, true);
+	}
+
+	public void setUnselectable(boolean unselectable) {
+		getStateHelper().put(PropertyKeys.unselectable, unselectable);
 	}
 
 	public boolean isZoomable() {

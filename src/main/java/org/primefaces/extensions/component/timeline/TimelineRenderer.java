@@ -115,6 +115,7 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",dragAreaWidth:" + timeline.getDragAreaWidth());
 		writer.write(",editable:" + timeline.isEditable());
 		writer.write(",selectable:" + timeline.isSelectable());
+		writer.write(",unselectable:" + timeline.isUnselectable());
 		writer.write(",zoomable:" + timeline.isZoomable());
 		writer.write(",moveable:" + timeline.isMoveable());
 

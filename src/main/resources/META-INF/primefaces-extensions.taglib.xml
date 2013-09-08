@@ -2770,6 +2770,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[If true, you can unselect an item by clicking in the empty space of the timeline. If false, you cannot unselect an item, there will be always one item selected. Default is true.]]>
+            </description>
+            <name>unselectable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[If true, the timeline is zoomable. When the timeline is zoomed, AJAX "rangechange" events are fired. Default is true.]]>
             </description>
             <name>zoomable</name>
