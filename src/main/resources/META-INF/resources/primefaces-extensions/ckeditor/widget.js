@@ -54,7 +54,7 @@ CKEDITOR_GETURL = function(resource) {
  * 
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	
 	/**
 	 * Initializes the widget.
@@ -118,14 +118,14 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 				//load jquery adapter
 				PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 	
-					PrimeFacesExt.handleInitialize(this, this.initialize);
+					this.renderDeferred();
 
 				}, this), true);
 	
 			}, this), true);
 	
 		} else {
-			this.initialize();
+			this.renderDeferred();
 		}
 	},
 
@@ -135,7 +135,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.BaseWidget.extend({
 	 * 
 	 * @private
 	 */
-	initialize : function() {
+	_render : function() {
 		if (!this.instance) {
 			//overwrite save button
 			this.overwriteSaveButton();
