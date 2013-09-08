@@ -195,7 +195,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Skin of the editor. Valid skins are: kama, office2003 and v2.]]>
+            <description><![CDATA[Skin of the editor. Valid skins are: kama and moono.]]>
             </description>
             <name>skin</name>
             <required>false</required>
