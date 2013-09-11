@@ -20,8 +20,8 @@
 		<connection>scm:git:git@github.com:primefaces-extensions/core.git</connection>
 		<developerConnection>scm:git:git@github.com:primefaces-extensions/core.git</developerConnection>
 		<url>https://github.com/primefaces-extensions/core</url>
-	  <tag>HEAD</tag>
-  </scm>
+	  	<tag>HEAD</tag>
+  	</scm>
 
 	<build>
 		<resources>
