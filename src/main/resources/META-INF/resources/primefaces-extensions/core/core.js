@@ -277,16 +277,6 @@ PrimeFacesExt = {
     },
 
 	/**
-	 * Removes the widget's script block from the DOM.
-	 * 
-	 * @author Thomas Andraschko
-	 * @param {string} clientId The id of the widget.
-	 */
-	removeWidgetScript : function(clientId) {
-		$(PrimeFaces.escapeClientId(clientId) + '_s').remove();
-	},
-
-	/**
 	 * The JSF resource identifier.
 	 * 
 	 * @author Thomas Andraschko

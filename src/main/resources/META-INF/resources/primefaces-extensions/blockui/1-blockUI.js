@@ -31,8 +31,8 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 		// global settings
 		$.blockUI.defaults.theme = true;
 		$.blockUI.defaults.ignoreIfBlocked = true;
-        
-        PrimeFacesExt.removeWidgetScript(this.id);
+
+		this.removeScriptElement(this.id);
     },
     
     refresh: function(cfg) {

@@ -16,7 +16,7 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 
 		this.initialized = false;
 		
-		PrimeFacesExt.removeWidgetScript(this.id);
+		this.removeScriptElement(this.id);
 	},
 
 	/**
