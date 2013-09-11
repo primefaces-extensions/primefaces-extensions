@@ -2615,7 +2615,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent)]]>
+            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), lazyload - fired when the events should be lazy loaded. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent)]]>
         </description>
         <tag-name>timeline</tag-name>
         <component>
@@ -2839,6 +2839,14 @@
             <name>zoomMax</name>
             <required>false</required>
             <type>java.lang.Long</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Preload factor is a float value in range from 0 to 1 which can be used for lazy loading of events. When the lazy loading feature is active, the visible time range will be multiplicated by the preload factor. The result of this multiplication specifies the time range on the left and right side of the visible time range which will be considered for the preloading during moving / zooming too. For example, if the visible time range is 5 days and the preload factor is 0.2, the result is 5 * 0.2 = 1 day. That means, 1 days backwards and 1 days onwards will be preloaded. This helps to avoid frequently, time-consuming fetching of events. Default value is 0.0.]]>
+            </description>
+            <name>preloadFactor</name>
+            <required>false</required>
+            <type>java.lang.Float</type>
         </attribute>
         <attribute>
             <description>

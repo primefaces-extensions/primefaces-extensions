@@ -18,11 +18,12 @@
 
 package org.primefaces.extensions.event.timeline;
 
-import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
+import java.util.Date;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
-import java.util.Date;
+
+import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 
 /**
  * Event which is triggered to load events lazy when moving / zooming.
@@ -36,55 +37,49 @@ public class TimelineLazyLoadEvent extends AbstractAjaxBehaviorEvent {
 	/** start time of the first time range for lazy loading */
 	private Date startDateFirst;
 
-    /** end time of the first time range for lazy loading */
+	/** end time of the first time range for lazy loading */
 	private Date endDateFirst;
-    
-    /** start time of the second time range for lazy loading (if any) */
-   	private Date startDateSecond;
-   
-       /** end time of the second time range for lazy loading (if any) */
-   	private Date endDateSecond;    
 
-	public TimelineLazyLoadEvent(UIComponent component, Behavior behavior, Date startDateFirst, Date endDateFirst) {
+	/** start time of the second time range for lazy loading (if any) */
+	private Date startDateSecond;
+
+	/** end time of the second time range for lazy loading (if any) */
+	private Date endDateSecond;
+
+	public TimelineLazyLoadEvent(UIComponent component, Behavior behavior, Date startDateFirst, Date endDateFirst,
+	                             Date startDateSecond, Date endDateSecond) {
 		super(component, behavior);
 		this.startDateFirst = startDateFirst;
 		this.endDateFirst = endDateFirst;
+		this.startDateSecond = startDateSecond;
+		this.endDateSecond = endDateSecond;
 	}
-    
-    public TimelineLazyLoadEvent(UIComponent component, Behavior behavior, Date startDateFirst, Date endDateFirst,
-                                 Date startDateSecond, Date endDateSecond) {
-   		super(component, behavior);
-   		this.startDateFirst = startDateFirst;
-   		this.endDateFirst = endDateFirst;
-        this.startDateSecond = startDateSecond;
-        this.endDateSecond = endDateSecond;
-   	}    
-    
-    public Date getStartDate() {  // alias for getStartDateFirst()
-        return startDateFirst;
-    }
 
-    public Date getEndDate() {   // alias for getEndDateFirst()
-        return endDateFirst;
-    }    
+	public Date getStartDate() { // alias for getStartDateFirst()
+		return startDateFirst;
+	}
 
-    public Date getStartDateFirst() {
-        return startDateFirst;
-    }
+	public Date getEndDate() { // alias for getEndDateFirst()
+		return endDateFirst;
+	}
 
-    public Date getEndDateFirst() {
-        return endDateFirst;
-    }
+	public Date getStartDateFirst() {
+		return startDateFirst;
+	}
 
-    public Date getStartDateSecond() {
-        return startDateSecond;
-    }
+	public Date getEndDateFirst() {
+		return endDateFirst;
+	}
 
-    public Date getEndDateSecond() {
-        return endDateSecond;
-    }
+	public Date getStartDateSecond() {
+		return startDateSecond;
+	}
 
-    public boolean hasTwoRanges() {
-        return startDateSecond != null && endDateSecond != null;
-    }
+	public Date getEndDateSecond() {
+		return endDateSecond;
+	}
+
+	public boolean hasTwoRanges() {
+		return startDateSecond != null && endDateSecond != null;
+	}
 }

@@ -13,6 +13,11 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
+        
+        this.rangeLoadedEvents = {
+            start: null,
+            end: null
+        };
 
         this.renderDeferred();
     },
@@ -219,6 +224,17 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                 this.getBehavior("rangechanged").call(this, null, ext);
             }, this));
         }
+        
+        // "lazyload" event
+        if (this.getBehavior("lazyload")) {
+            // initial page load
+            this.fireLazyLoading();
+            
+            // moving / zooming
+            links.events.addListener(this.instance, 'rangechanged', $.proxy(function () {
+                this.fireLazyLoading();
+            }, this));
+        }
     },
     
     /**
@@ -266,6 +282,38 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         }, this));
         
         return JSON.stringify(newData);
+    },
+    
+    /**
+     * Fires event for lazy loading.
+     */
+    fireLazyLoading: function() {
+        var range = this.getLazyLoadRange();
+        
+        var ext = {
+            params: []
+        };
+        
+        if (typeof range.startFirst !== "undefined" && typeof range.endFirst !== "undefined") {
+            ext.params[0] = {name: this.id + '_startDateFirst', value: range.startFirst};
+            ext.params[1] = {name: this.id + '_endDateFirst', value: range.endFirst}; 
+        }
+        
+        if (typeof range.startSecond !== "undefined" && typeof range.endSecond !== "undefined") {
+            ext.params[2] = {name: this.id + '_startDateSecond', value: range.startSecond};
+            ext.params[3] = {name: this.id + '_endDateSecond', value: range.endSecond};
+        }                
+
+        this.getBehavior("lazyload").call(this, null, ext);
+    },
+
+    /**
+     * Gets time range(s) to be lazy loaded.
+     * 
+     * @return {Object}
+     */
+    getLazyLoadRange: function() {
+        
     },
     
     /**

@@ -104,6 +104,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		max,
 		zoomMin,
 		zoomMax,
+		preloadFactor,
 		eventMargin,
 		eventMarginAxis,
 		eventStyle,
@@ -334,6 +335,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		getStateHelper().put(PropertyKeys.zoomMax, zoomMax);
 	}
 
+	public float getPreloadFactor() {
+		return (Float) getStateHelper().eval(PropertyKeys.preloadFactor, 0.0f);
+	}
+
+	public void setPreloadFactor(float preloadFactor) {
+		getStateHelper().put(PropertyKeys.preloadFactor, preloadFactor);
+	}
+
 	public int getEventMargin() {
 		return (Integer) getStateHelper().eval(PropertyKeys.eventMargin, 10);
 	}
@@ -530,22 +539,13 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			} else if ("lazyload".equals(eventName)) {
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-                TimelineLazyLoadEvent te;
-                
-                String startDateSecond = params.get(clientId + "_startDateSecond");
-                String endDateSecond = params.get(clientId + "_endDateSecond");
-                
-                if (startDateSecond == null || endDateSecond == null) {    
-                    te = new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
-				        DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateFirst")),
-				        DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateFirst")));
-                } else {
-                    te = new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
-				        DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateFirst")),
-				        DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateFirst")),
-                        DateUtils.toUtcDate(calendar, timeZone, startDateSecond),
-                        DateUtils.toUtcDate(calendar, timeZone, endDateSecond));
-                }
+				TimelineLazyLoadEvent te =
+				    new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateFirst")),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateFirst")),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateSecond")),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateSecond")));
+
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
