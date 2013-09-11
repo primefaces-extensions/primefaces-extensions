@@ -67,7 +67,7 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
             }
         }
 
-        this.removeScriptElement(this.id);
+        this.removeScriptElement(id);
     },
 
     show : function() {
