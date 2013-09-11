@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.el.MethodExpression;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UICommand;
