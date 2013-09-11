@@ -60,6 +60,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.Iterator;
 
 /**
  * <code>Exporter</code> component.
@@ -380,10 +381,17 @@ public class ExcelExporter extends Exporter {
 
                 for (int i = 0; i < size; i++) {
                     requestMap.put(var, Array.get(selection, i));
-
                     exportCells(table, sheet);
                 }
-            } else {
+            }
+            else if ( List.class.isAssignableFrom(selection.getClass()) ){
+                 List<?> list = (List<?>) selection;
+                 for(Iterator<? extends Object> it = list.iterator(); it.hasNext();) {
+                 requestMap.put(var,it.next());
+                 exportCells(table, sheet);
+               }
+             }
+            else {
                 requestMap.put(var, selection);
                 exportCells(table, sheet);
             }
