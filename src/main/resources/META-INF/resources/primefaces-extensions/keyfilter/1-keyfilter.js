@@ -22,7 +22,7 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 	    	this.applyKeyFilter(nestedInput, cfg);
 	    }
 	    
-	    PrimeFacesExt.removeWidgetScript(this.id);
+	    this.removeScriptElement(this.id);
 	},
 
 	/**

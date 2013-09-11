@@ -21,7 +21,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
 
         delete this.cfg.target;
 
-        PrimeFacesExt.removeWidgetScript(this.id);
+        this.removeScriptElement(this.id);
     },
 
     /**
