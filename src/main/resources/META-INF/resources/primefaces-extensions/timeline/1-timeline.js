@@ -14,6 +14,8 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         this.cfg = cfg;
         this.id = cfg.id;
         
+        this.pFactor = this.cfg.opts.preloadFactor;
+        
         this.rangeLoadedEvents = {
             start: null,
             end: null
@@ -289,31 +291,99 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
      */
     fireLazyLoading: function() {
         var range = this.getLazyLoadRange();
+        if (range == null) {
+            // don't send event
+            return;
+        }
         
         var ext = {
             params: []
         };
         
-        if (typeof range.startFirst !== "undefined" && typeof range.endFirst !== "undefined") {
+        if (range.startFirst != null && range.endFirst != null) {
             ext.params[0] = {name: this.id + '_startDateFirst', value: range.startFirst};
             ext.params[1] = {name: this.id + '_endDateFirst', value: range.endFirst}; 
         }
         
-        if (typeof range.startSecond !== "undefined" && typeof range.endSecond !== "undefined") {
+        if (range.startSecond != null && range.endSecond != null) {
             ext.params[2] = {name: this.id + '_startDateSecond', value: range.startSecond};
             ext.params[3] = {name: this.id + '_endDateSecond', value: range.endSecond};
-        }                
-
+        }
+          
         this.getBehavior("lazyload").call(this, null, ext);
     },
 
     /**
-     * Gets time range(s) to be lazy loaded.
+     * Gets time range(s) for events to be lazy loaded.
+     * The internal time range for already loaded events will be updated.
      * 
      * @return {Object}
      */
     getLazyLoadRange: function() {
+        var visibleRange = this.instance.getVisibleChartRange();
         
+        if (this.rangeLoadedEvents.start == null || this.rangeLoadedEvents.end == null) {
+            // initial load
+            var pArea = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            this.rangeLoadedEvents.start = visibleRange.start.getTime() - pArea;
+            this.rangeLoadedEvents.end = visibleRange.end.getTime() + pArea;
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: this.rangeLoadedEvents.end,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.end.getTime() > this.rangeLoadedEvents.end) &&
+            (visibleRange.start.getTime() >= this.rangeLoadedEvents.start)) {
+            // moving right
+            var startFirstR = this.rangeLoadedEvents.end + 1;
+            this.rangeLoadedEvents.end = visibleRange.end.getTime() + 
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            
+            return {
+                startFirst: startFirstR,
+                endFirst: this.rangeLoadedEvents.end,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.start.getTime() < this.rangeLoadedEvents.start) &&
+            (visibleRange.end.getTime() <= this.rangeLoadedEvents.end)) {
+            // moving left
+            var endFirstL = this.rangeLoadedEvents.start - 1;
+            this.rangeLoadedEvents.start = visibleRange.start.getTime() -
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: endFirstL,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.start.getTime() < this.rangeLoadedEvents.start) &&
+            (visibleRange.end.getTime() > this.rangeLoadedEvents.end)) {
+            // zooming out
+            var pAreaZ = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            var endFirstZ = this.rangeLoadedEvents.start - 1;
+            var startSecondZ = this.rangeLoadedEvents.end + 1; 
+            this.rangeLoadedEvents.start = visibleRange.start.getTime() - pAreaZ;
+            this.rangeLoadedEvents.end = visibleRange.end.getTime() + pAreaZ;
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: endFirstZ,
+                startSecond: startSecondZ,
+                endSecond: this.rangeLoadedEvents.end
+            };
+        }
+        
+        return null;
     },
     
     /**

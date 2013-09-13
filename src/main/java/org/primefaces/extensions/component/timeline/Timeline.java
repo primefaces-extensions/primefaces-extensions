@@ -70,7 +70,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
-	                                                     "rangechanged"));
+	                                                     "rangechanged", "lazyload"));
 
 	/**
 	 * PropertyKeys
