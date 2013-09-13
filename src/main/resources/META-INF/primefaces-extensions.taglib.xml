@@ -2842,7 +2842,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Preload factor is a positive float value or 0 which can be used for lazy loading of events. When the lazy loading feature is active, the visible time range will be multiplicated by the preload factor. The result of this multiplication specifies the time range on the left and right side of the visible time range which will be considered for the preloading during moving / zooming too. For example, if the visible time range is 5 days and the preload factor is 0.2, the result is 5 * 0.2 = 1 day. That means, 1 days backwards and 1 days onwards will be preloaded. This helps to avoid frequently, time-consuming fetching of events. Default value is 0.]]>
+                <![CDATA[Preload factor is a positive float value or 0 which can be used for lazy loading of events. When the lazy loading feature is active, the calculated time range for preloading will be multiplicated by the preload factor. The result of this multiplication specifies the additional time range which will be considered for the preloading during moving / zooming too. For example, if the calculated time range for preloading is 5 days and the preload factor is 0.2, the result is 5 * 0.2 = 1 day. That means, 1 day backwards and / or 1 day onwards will be added to the original calculated time range. The event's area to be preloaded is wider then. This helps to avoid frequently, time-consuming fetching of events. Default value is 0.]]>
             </description>
             <name>preloadFactor</name>
             <required>false</required>
