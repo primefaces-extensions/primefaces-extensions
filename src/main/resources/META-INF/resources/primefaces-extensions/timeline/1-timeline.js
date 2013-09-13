@@ -14,12 +14,17 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         this.cfg = cfg;
         this.id = cfg.id;
         
-        this.pFactor = this.cfg.opts.preloadFactor;
-        
-        this.rangeLoadedEvents = {
-            start: null,
-            end: null
-        };
+        this.lazy = this.getBehavior("lazyload") != null;
+        if (this.lazy) {
+            this.min = (typeof this.cfg.opts.min !== 'undefined' ? this.cfg.opts.min.getTime() : null);
+            this.max = (typeof this.cfg.opts.max !== 'undefined' ? this.cfg.opts.max.getTime() : null);
+            this.pFactor = this.cfg.opts.preloadFactor;
+            
+            this.rangeLoadedEvents = {
+                start: null,
+                end: null
+            };            
+        }
 
         this.renderDeferred();
     },
@@ -228,7 +233,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         }
         
         // "lazyload" event
-        if (this.getBehavior("lazyload")) {
+        if (this.lazy) {
             // initial page load
             this.fireLazyLoading();
             
@@ -325,8 +330,16 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         if (this.rangeLoadedEvents.start == null || this.rangeLoadedEvents.end == null) {
             // initial load
             var pArea = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
-            this.rangeLoadedEvents.start = visibleRange.start.getTime() - pArea;
-            this.rangeLoadedEvents.end = visibleRange.end.getTime() + pArea;
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() - pArea);
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + pArea);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }
             
             return {
                 startFirst: this.rangeLoadedEvents.start,
@@ -340,8 +353,12 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             (visibleRange.start.getTime() >= this.rangeLoadedEvents.start)) {
             // moving right
             var startFirstR = this.rangeLoadedEvents.end + 1;
-            this.rangeLoadedEvents.end = visibleRange.end.getTime() + 
-                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + 
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor);
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }            
             
             return {
                 startFirst: startFirstR,
@@ -355,8 +372,12 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             (visibleRange.end.getTime() <= this.rangeLoadedEvents.end)) {
             // moving left
             var endFirstL = this.rangeLoadedEvents.start - 1;
-            this.rangeLoadedEvents.start = visibleRange.start.getTime() -
-                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() -
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
             
             return {
                 startFirst: this.rangeLoadedEvents.start,
@@ -372,8 +393,16 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             var pAreaZ = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
             var endFirstZ = this.rangeLoadedEvents.start - 1;
             var startSecondZ = this.rangeLoadedEvents.end + 1; 
-            this.rangeLoadedEvents.start = visibleRange.start.getTime() - pAreaZ;
-            this.rangeLoadedEvents.end = visibleRange.end.getTime() + pAreaZ;
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() - pAreaZ);
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + pAreaZ);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }            
             
             return {
                 startFirst: this.rangeLoadedEvents.start,

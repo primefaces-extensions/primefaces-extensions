@@ -137,7 +137,13 @@ public class TimelineRenderer extends CoreRenderer {
 
 		writer.write(",zoomMin:" + timeline.getZoomMin());
 		writer.write(",zoomMax:" + timeline.getZoomMax());
-		writer.write(",preloadFactor:" + timeline.getPreloadFactor());
+
+		if (timeline.getPreloadFactor() < 0) {
+			writer.write(",preloadFactor:0");
+		} else {
+			writer.write(",preloadFactor:" + timeline.getPreloadFactor());
+		}
+
 		writer.write(",eventMargin:" + timeline.getEventMargin());
 		writer.write(",eventMarginAxis:" + timeline.getEventMarginAxis());
 		writer.write(",style:'" + timeline.getEventStyle() + "'");
