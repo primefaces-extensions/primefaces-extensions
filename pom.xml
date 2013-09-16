@@ -499,7 +499,7 @@
 		<java.version.target>1.5</java.version.target>
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 
-		<primefaces.core.version>4.0-SNAPSHOT</primefaces.core.version>
+		<primefaces.core.version>4.0.RC1</primefaces.core.version>
 		<primefaces.theme.version>1.0.10</primefaces.theme.version>
 	</properties>
 </project>
