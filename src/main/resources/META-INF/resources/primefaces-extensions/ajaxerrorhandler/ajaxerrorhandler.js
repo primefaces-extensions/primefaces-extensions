@@ -3,7 +3,7 @@ PrimeFacesExt.getAjaxErrorHandlerInstance = function() {
 		var instance = new PrimeFacesExt.widget.AjaxErrorHandler();
 
 		//  INIT IS CALLED AUTOMATICALLY ... instance.init();
-		
+
 		PrimeFacesExt.AJAX_ERROR_HANDLER_INSTANCE = instance;
 	}
 
@@ -16,7 +16,7 @@ PrimeFacesExt.getAjaxErrorHandlerInstance = function() {
  * @author Pavol Slany
  */
 PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
-	
+
 	DEFAULT_HOSTNAME : '???unknown???',
 
 	init : function() {
@@ -25,7 +25,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 		this.popupWindowMask = null;
 
 		this.hostname = this.DEFAULT_HOSTNAME;
-		
+
 		this.defaultSettings = {
 			'title': '{error-name}',
 			'body': '{error-message}',
@@ -34,7 +34,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 				document.location.href = document.location.href;
 			},
 			'onerror': function(error, response) {
-				
+
 			}
 		};
 		this.settings = this.defaultSettings;
@@ -51,7 +51,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 		_self.isOveritedAjaxResponse = true;
 
-		$(document).ajaxComplete(function() {
+		var handlerFunction = function() {
 			try {
 				var docPartialUpdate = arguments[3];
 				if (!docPartialUpdate && arguments[1] && arguments[1].responseXML)
@@ -124,13 +124,16 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 					console.error('Unknown response in AjaxExceptionHandler:', e);
 				} catch (ee) {}
 			}
-		});
+		};
+
+		$(document).ajaxComplete(handlerFunction);
+		$(document).on('pfAjaxComplete.ajaxerrorhandler', handlerFunction);
 	},
-	
+
 	isVisible : function() {
 		return this.popupWindow && this.popupWindow.isVisible();
 	},
-	
+
 	hide : function () {
 		if (this.dialogWidget) {
 			this.dialogWidget.hide();
@@ -139,7 +142,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 			this.dialog.remove();
 		}
 	},
-	
+
 	show : function(errorData) {
 		this.hide();
 
@@ -158,7 +161,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 			var dialogHeaderText = $('<span class="ui-dialog-title"></span>');
 			var dialogContent = $('<div class="ui-dialog-content ui-widget-content" style="height: auto;"></div>');
 			var dialogButtonPane = $('<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"></div>')
-			
+
 			//append to DOM
 			dialogHeader.append(dialogHeaderText);
 
@@ -172,7 +175,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 			dialogButton.click(function() {
 				buttonOnclickFunction.call(this);
 			});
-			
+
 			dialogButtonPane.append(dialogButton);
 
 			//add title
@@ -204,7 +207,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 	getDefaultErrorTime : function() {
 		return new Date().toString();
 	},
-	
+
 	findErrorSettings : function(name) {
 		if (!name) {
 			return jQuery.extend({}, this.settings);
@@ -231,7 +234,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 		this.otherSettings[newSettings.type] = jQuery.extend({}, type, newSettings);
 	},
-	
+
 	replaceAll : function(str, key, val) {
 		var newStr;
 
@@ -241,7 +244,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 		return str;
 	},
-	
+
 	replaceVariables : function(obj, variables) {
 		if (!obj) {
 			return text;
@@ -267,7 +270,7 @@ PrimeFacesExt.widget.AjaxErrorHandler = PrimeFaces.widget.BaseWidget.extend({
 
 		return returnValue;
 	},
-	
+
 	setHostname : function(hostname) {
 		this.hostname = hostname;
 	}
