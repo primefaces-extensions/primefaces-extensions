@@ -120,7 +120,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	
 					this.renderDeferred();
 
-				}));
+				}, this));
 	
 			}, this), true);
 	
