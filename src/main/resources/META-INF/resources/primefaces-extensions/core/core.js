@@ -231,7 +231,7 @@ PrimeFacesExt = {
     			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
 
     		//load script
-	        PrimeFacesExt.getScript(script, function() {
+	        PrimeFaces.getScript(script, function() {
 	        	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
 	        });
 	    }
