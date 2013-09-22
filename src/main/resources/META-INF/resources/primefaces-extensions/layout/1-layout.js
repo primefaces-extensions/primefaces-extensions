@@ -39,7 +39,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
 
             if (hiddenParentWidget) {
                 var $this = this;
-                hiddenParentWidget.addOnshowHandler(function () {
+                hiddenParentWidget.addOnshowHandler(this.id, function () {
                     return $this._render();
                 });
             }

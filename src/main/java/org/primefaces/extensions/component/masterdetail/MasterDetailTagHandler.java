@@ -26,6 +26,7 @@ import javax.faces.view.facelets.MetaRuleset;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.facelets.MethodRule;
+import org.primefaces.model.menu.DefaultMenuModel;
 
 /**
  * {@link ComponentHandler} for the <code>MasterDetail</code>.
@@ -64,6 +65,9 @@ public class MasterDetailTagHandler extends ComponentHandler {
 			BreadCrumb breadcrumb =
 			    (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
 			breadcrumb.setId(masterDetail.getId() + "_bc");
+
+			// set empty model
+			breadcrumb.setModel(new DefaultMenuModel());
 
 			// add it to the MasterDetail
 			masterDetail.getChildren().add(breadcrumb);

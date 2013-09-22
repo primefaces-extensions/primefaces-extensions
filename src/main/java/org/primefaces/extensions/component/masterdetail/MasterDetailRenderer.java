@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIParameter;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -34,9 +33,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.component.menuitem.UIMenuItem;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.MenuElement;
+import org.primefaces.model.menu.MenuItem;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -205,7 +206,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 		for (UIComponent child : masterDetail.getChildren()) {
 			if (child instanceof MasterDetailLevel) {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
-				UIMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+				DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
 				if (menuItem == null) {
 					throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
 				}
@@ -265,11 +266,8 @@ public class MasterDetailRenderer extends CoreRenderer {
 					}
 
 					if (!menuItem.isDisabled()) {
-						UIParameter uiParameter = getUIParameterById(menuItem, menuItem.getId() + "_cl");
-						if (uiParameter != null) {
-							// set current level parameter
-							uiParameter.setValue(levelToRender);
-						}
+						// set current level parameter
+						updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL, levelToRender);
 					}
 				}
 
@@ -280,25 +278,31 @@ public class MasterDetailRenderer extends CoreRenderer {
 		}
 	}
 
-	protected UIMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
+	protected DefaultMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
 		String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
-		for (UIComponent child : breadcrumb.getChildren()) {
-			if ((child instanceof UIMenuItem) && menuItemId.equals(child.getId())) {
-				return (UIMenuItem) child;
+		for (MenuElement child : breadcrumb.getModel().getElements()) {
+			if (menuItemId.equals(child.getId())) {
+				return (DefaultMenuItem) child;
 			}
 		}
 
 		return null;
 	}
 
-	protected UIParameter getUIParameterById(UIMenuItem menuItem, String id) {
-		for (UIComponent child : menuItem.getChildren()) {
-			if ((child instanceof UIParameter) && id.equals(child.getId())) {
-				return (UIParameter) child;
-			}
+	protected void updateUIParameter(MenuItem menuItem, String name, Object value) {
+		Map<String, List<String>> params = menuItem.getParams();
+		if (params == null) {
+			return;
 		}
 
-		return null;
+		for (String key : params.keySet()) {
+			if (key.equals(name)) {
+				params.remove(key);
+				menuItem.setParam(name, value);
+
+				break;
+			}
+		}
 	}
 
 	@Override
