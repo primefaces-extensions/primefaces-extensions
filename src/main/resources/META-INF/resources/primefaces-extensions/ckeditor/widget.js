@@ -143,7 +143,13 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 			//remove old instances if required
 			var oldInstance = CKEDITOR.instances[this.id];
 			if (oldInstance) {
-				oldInstance.destroy(true);
+				try {
+					oldInstance.destroy(true);
+				} catch (err) {
+					if (window.console && console.log) {
+						console.log('CKEditor throwed a error while destroying the old instance: ' + err);
+					}
+				}
 			}
 	
 			//initialize ckeditor after all resources were loaded
