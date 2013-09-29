@@ -37,19 +37,20 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         this.cfg.opts = PrimeFacesExt.configureLocale('Timeline', this.cfg.opts);
 
         // instantiate a timeline object
-        this.instance = new links.Timeline(document.getElementById(this.id));
+        var el = document.getElementById(this.id);
+        this.instance = new links.Timeline(el);
 
         // draw the timeline with created data and options
         this.instance.draw(this.cfg.data, this.cfg.opts);
 
         // bind events
-        this.bindEvents();
+        this.bindEvents(el);
     },
 
     /**
      * Binds timeline's events.
      */
-    bindEvents: function () {
+    bindEvents: function (el) {
         if (this.cfg.opts.responsive) {
             var nsevent = "resize.timeline" + PrimeFaces.escapeClientId(this.id);
             $(window).off(nsevent).on(nsevent, $.proxy(function () {
@@ -78,6 +79,11 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         // "add" event
         if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("add")) {
             links.events.addListener(this.instance, 'add', $.proxy(function () {
+                if (this.forbiddenAdd) {
+                    // was fired by drag & drop ==> no actions
+                    return;
+                }
+                
                 var event = this.getSelectedEvent();
                 if (event == null) {
                     return;
@@ -241,6 +247,75 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             links.events.addListener(this.instance, 'rangechanged', $.proxy(function () {
                 this.fireLazyLoading();
             }, this));
+        }
+        
+        // register this timeline as droppable if needed
+        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("drop")) {
+            var droppableOpts = {};
+            if (this.cfg.opts.hoverClass) {
+                droppableOpts.hoverClass = this.cfg.opts.hoverClass;    
+            }
+            
+            if (this.cfg.opts.activeClass) {
+                droppableOpts.activeClass = this.cfg.opts.activeClass;    
+            }
+            
+            if (this.cfg.opts.accept) {
+                droppableOpts.accept = this.cfg.opts.accept;    
+            }
+            
+            if (this.cfg.opts.scope) {
+                droppableOpts.scope = this.cfg.opts.scope;
+            }
+            
+            droppableOpts.drop = $.proxy(function (evt, ui) {
+                // set a flag to check it in the "add" listener which is fired by addItemAtPoint.
+                // if this flag was set, no logic for "add" needs to be executed.
+                this.forbiddenAdd = true;
+                
+                this.instance.addItemAtPoint(evt.pageX, evt.pageY);
+                
+                // reset flag
+                delete this.forbiddenAdd;
+                
+                var event = this.getSelectedEvent();
+                if (event == null) {
+                    return;
+                }
+                
+                var params = [];
+                params.push({
+                    name: this.id + '_startDate',
+                    value: event.start.getTime()
+                });
+                
+                if (event.end) {
+                    params.push({
+                        name: this.id + '_endDate',
+                        value: event.end.getTime()
+                    });    
+                }
+                
+                if (event.group) {
+                    params.push({
+                        name: this.id + '_group',
+                        value: event.group
+                    });    
+                }
+                
+                params.push({
+                    name: this.id + '_dragId',
+                    value: ui.draggable.attr('id')
+                });
+
+                // call the drop listener
+                // parameters event and ui can be accessible in "onstart" (p:ajax) via cfg.ext.event and cfg.ext.ui
+                // or in "execute" (pe:javascript) via ext.event and ext.ui
+                this.getBehavior("drop").call(this, evt, {params: params, event: evt, ui: ui});
+            }, this);
+            
+            // make the timeline droppable
+            $(el).droppable(droppableOpts);
         }
     },
     

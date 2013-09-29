@@ -2615,7 +2615,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), lazyload - fired when the events should be lazy loaded. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent)]]>
+            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), lazyload - fired when the events should be lazy loaded. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent), drop - fired when when an item is dragged and dropped onto the Timeline from outside (org.primefaces.extensions.event.timeline.TimelineDragDropEvent)]]>
         </description>
         <tag-name>timeline</tag-name>
         <component>
@@ -2951,6 +2951,38 @@
             <name>showNavigation</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class to apply when an acceptable draggable is dragged over. Default is null.]]>
+            </description>
+            <name>dropHoverStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class to apply when an acceptable draggable is being dragged over. Default is null.]]>
+            </description>
+            <name>dropActiveStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Selector to define the accepted draggables. Default is null.]]>
+            </description>
+            <name>dropAccept</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Scope key to match draggables and droppables. Default is null.]]>
+            </description>
+            <name>dropScope</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
     <tag>

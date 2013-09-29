@@ -166,6 +166,22 @@ public class TimelineRenderer extends CoreRenderer {
 			writer.write(",locale:'" + timeline.getLocale().toString() + "'");
 		}
 
+		if (timeline.getDropHoverStyleClass() != null) {
+			writer.write(",hoverClass:'" + timeline.getDropHoverStyleClass() + "'");
+		}
+
+		if (timeline.getDropActiveStyleClass() != null) {
+			writer.write(",activeClass:'" + timeline.getDropActiveStyleClass() + "'");
+		}
+
+		if (timeline.getDropAccept() != null) {
+			writer.write(",accept:'" + timeline.getDropAccept() + "'");
+		}
+
+		if (timeline.getDropScope() != null) {
+			writer.write(",scope:'" + timeline.getDropScope() + "'");
+		}
+
 		writer.write("}");
 		encodeClientBehaviors(context, timeline);
 		writer.write("},true);});");

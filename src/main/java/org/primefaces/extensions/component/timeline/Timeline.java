@@ -36,6 +36,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.timeline.TimelineAddEvent;
+import org.primefaces.extensions.event.timeline.TimelineDragDropEvent;
 import org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent;
 import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.event.timeline.TimelineRangeEvent;
@@ -55,6 +56,7 @@ import org.primefaces.util.Constants;
  */
 @ResourceDependencies({
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
@@ -70,7 +72,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
-	                                                     "rangechanged", "lazyload"));
+	                                                     "rangechanged", "lazyload", "drop"));
 
 	/**
 	 * PropertyKeys
@@ -117,7 +119,11 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		showMajorLabels,
 		showMinorLabels,
 		showButtonNew,
-		showNavigation;
+		showNavigation,
+		dropHoverStyleClass,
+		dropActiveStyleClass,
+		dropAccept,
+		dropScope;
 
 		private String toString;
 
@@ -447,6 +453,38 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		getStateHelper().put(PropertyKeys.showNavigation, showNavigation);
 	}
 
+	public String getDropHoverStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.dropHoverStyleClass, null);
+	}
+
+	public void setDropHoverStyleClass(String dropHoverStyleClass) {
+		getStateHelper().put(PropertyKeys.dropHoverStyleClass, dropHoverStyleClass);
+	}
+
+	public String getDropActiveStyleClass() {
+		return (String) getStateHelper().eval(PropertyKeys.dropActiveStyleClass, null);
+	}
+
+	public void setDropActiveStyleClass(String dropActiveStyleClass) {
+		getStateHelper().put(PropertyKeys.dropActiveStyleClass, dropActiveStyleClass);
+	}
+
+	public String getDropAccept() {
+		return (String) getStateHelper().eval(PropertyKeys.dropAccept, null);
+	}
+
+	public void setDropAccept(String dropAccept) {
+		getStateHelper().put(PropertyKeys.dropAccept, dropAccept);
+	}
+
+	public String getDropScope() {
+		return (String) getStateHelper().eval(PropertyKeys.dropScope, null);
+	}
+
+	public void setDropScope(String dropScope) {
+		getStateHelper().put(PropertyKeys.dropScope, dropScope);
+	}
+
 	@Override
 	public Collection<String> getEventNames() {
 		return EVENT_NAMES;
@@ -546,6 +584,19 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateSecond")),
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateSecond")));
 
+				te.setPhaseId(behaviorEvent.getPhaseId());
+				super.queueEvent(te);
+
+				return;
+			} else if ("drop".equals(eventName)) {
+				// preset dragId, start / end date and the group
+				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimelineDragDropEvent te =
+				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
+				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
+				                              params.get(clientId + "_group"), params.get(clientId + "_dragId"));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
