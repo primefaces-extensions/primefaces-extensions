@@ -45,6 +45,7 @@ import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.DateUtils;
+import org.primefaces.extensions.util.visitcallback.UIDataContextCallback;
 import org.primefaces.util.Constants;
 
 /**
@@ -589,14 +590,23 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("drop".equals(eventName)) {
-				// preset dragId, start / end date and the group
+				Object data = null;
+				final String uiDataId = params.get(clientId + "_dragId");
+				if (uiDataId != null) {
+					// draggable is within a data iteration component
+					UIDataContextCallback contextCallback = new UIDataContextCallback(uiDataId);
+					context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
+					data = contextCallback.getData();
+				}
+
+				// preset start / end date, group, dragId and data object
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
 				TimelineDragDropEvent te =
 				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
-				                              params.get(clientId + "_group"), params.get(clientId + "_dragId"));
+				                              params.get(clientId + "_group"), params.get(clientId + "_dragId"), data);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 

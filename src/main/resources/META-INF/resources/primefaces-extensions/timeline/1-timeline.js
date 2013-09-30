@@ -251,7 +251,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         
         // register this timeline as droppable if needed
         if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("drop")) {
-            var droppableOpts = {};
+            var droppableOpts = {tolerance: "pointer"};
             if (this.cfg.opts.hoverClass) {
                 droppableOpts.hoverClass = this.cfg.opts.hoverClass;    
             }
@@ -307,6 +307,15 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     name: this.id + '_dragId',
                     value: ui.draggable.attr('id')
                 });
+                
+                // check if draggable is within a data iteration component
+                var uiData = ui.draggable.closest(".ui-datatable, .ui-datagrid, .ui-datalist");
+                if (uiData.length > 0) {
+                    params.push({
+                        name: this.id + '_uiDataId',
+                        value: uiData.attr('id')
+                    });
+                }
 
                 // call the drop listener
                 // parameters event and ui can be accessible in "onstart" (p:ajax) via cfg.ext.event and cfg.ext.ui
