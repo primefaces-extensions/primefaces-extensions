@@ -2753,7 +2753,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If true, the events can be edited, changed, created and deleted. Events can only be editable when the option selectable is true (default). When editable is true, the timeline can fire AJAX events "change", "edit", "add", "delete".
+                <![CDATA[If true, the events can be edited, changed, created and deleted. Events can only be editable when the option selectable is true (default). When editable is true, the timeline can fire AJAX events "change", "edit", "add", "delete", "drop".
                 This global setting "editable" can be overwritten for individual events by setting a value in field "editable". Default is false.]]>
             </description>
             <name>editable</name>

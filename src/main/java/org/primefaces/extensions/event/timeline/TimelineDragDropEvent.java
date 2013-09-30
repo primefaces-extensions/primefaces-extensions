@@ -24,7 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
 /**
- * Event which is triggered when an item is dragged and dropped onto the Timeline from outside (an external list, etc).
+ * Event which is triggered when an item is dragged and dropped onto the Timeline from the outside (an external list, etc).
  *
  * @author  Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
@@ -35,7 +35,7 @@ public class TimelineDragDropEvent extends TimelineAddEvent {
 	/** client ID of the dragged component */
 	private String dragId;
     
-    /** dragged model object if draggable is within a data iteration component  or null */
+    /** dragged model object if draggable item is within a data iteration component or null */
     private Object data;
 
 	public TimelineDragDropEvent(UIComponent component, Behavior behavior, Date startDate, Date endDate, String group,

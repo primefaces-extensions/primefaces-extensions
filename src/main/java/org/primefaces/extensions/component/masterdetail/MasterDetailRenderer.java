@@ -94,7 +94,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 			masterDetail.updateModel(fc, mdl);
 		} else {
-			// component has been navigated from outside, e.g. GET request or POST update from another component
+			// component has been navigated from the outside, e.g. GET request or POST update from another component
 			mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
 		}
 
