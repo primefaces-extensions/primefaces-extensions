@@ -79,11 +79,6 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
         // "add" event
         if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("add")) {
             links.events.addListener(this.instance, 'add', $.proxy(function () {
-                if (this.forbiddenAdd) {
-                    // was fired by drag & drop ==> no actions
-                    return;
-                }
-                
                 var event = this.getSelectedEvent();
                 if (event == null) {
                     return;
@@ -269,37 +264,36 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             }
             
             droppableOpts.drop = $.proxy(function (evt, ui) {
-                // set a flag to check it in the "add" listener which is fired by addItemAtPoint.
-                // if this flag was set, no logic for "add" needs to be executed.
-                this.forbiddenAdd = true;
+                var inst = this.getInstance();
                 
-                this.instance.addItemAtPoint(evt.pageX, evt.pageY);
+                var x = evt.pageX - links.Timeline.getAbsoluteLeft(inst.dom.content);
+                var y = evt.pageY - links.Timeline.getAbsoluteTop(inst.dom.content);
+            
+                var xstart = inst.screenToTime(x);
+                var xend = inst.screenToTime(x + inst.size.frameWidth / 10); // add 10% of timeline width
                 
-                // reset flag
-                delete this.forbiddenAdd;
-                
-                var event = this.getSelectedEvent();
-                if (event == null) {
-                    return;
+                if (this.cfg.opts.snapEvents) {
+                    inst.step.snap(xstart);
+                    inst.step.snap(xend);
                 }
-                
+            
                 var params = [];
                 params.push({
                     name: this.id + '_startDate',
-                    value: event.start.getTime()
+                    value: xstart.getTime()
                 });
                 
-                if (event.end) {
-                    params.push({
-                        name: this.id + '_endDate',
-                        value: event.end.getTime()
-                    });    
-                }
+                params.push({
+                    name: this.id + '_endDate',
+                    value: xend.getTime()
+                });
                 
-                if (event.group) {
+                var group = inst.getGroupFromHeight(y); // (group may be undefined)
+                
+                if (group) {
                     params.push({
                         name: this.id + '_group',
-                        value: event.group
+                        value: inst.getGroupName(group)
                     });    
                 }
                 
@@ -309,7 +303,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                 });
                 
                 // check if draggable is within a data iteration component
-                var uiData = ui.draggable.closest(".ui-datatable, .ui-datagrid, .ui-datalist");
+                var uiData = ui.draggable.closest(".ui-datatable, .ui-datagrid, .ui-datalist, .ui-carousel");
                 if (uiData.length > 0) {
                     params.push({
                         name: this.id + '_uiDataId',

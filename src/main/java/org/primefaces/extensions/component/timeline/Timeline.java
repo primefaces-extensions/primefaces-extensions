@@ -591,10 +591,12 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				return;
 			} else if ("drop".equals(eventName)) {
 				Object data = null;
-				final String uiDataId = params.get(clientId + "_dragId");
-				if (uiDataId != null) {
+				final String dragId = params.get(clientId + "_dragId");
+				final String uiDataId = params.get(clientId + "_uiDataId");
+
+				if (dragId != null && uiDataId != null) {
 					// draggable is within a data iteration component
-					UIDataContextCallback contextCallback = new UIDataContextCallback(uiDataId);
+					UIDataContextCallback contextCallback = new UIDataContextCallback(dragId);
 					context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
 					data = contextCallback.getData();
 				}
@@ -606,7 +608,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
 				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
-				                              params.get(clientId + "_group"), params.get(clientId + "_dragId"), data);
+				                              params.get(clientId + "_group"), dragId, data);
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 

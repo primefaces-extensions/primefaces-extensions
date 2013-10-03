@@ -29,25 +29,25 @@ import javax.faces.context.FacesContext;
  * @version $Revision: 1.0 $
  * @since   1.0.0
  */
-public class UIDataContextCallback implements ContextCallback
-{
-    private String uiDataId;
-    private Object data;
+public class UIDataContextCallback implements ContextCallback {
 
-    public UIDataContextCallback(String uiDataId) {
-        this.uiDataId = uiDataId;
-    }
+	private String dragId;
+	private Object data;
 
-    public void invokeContextCallback(FacesContext fc, UIComponent component) {
-        UIData uiData = (UIData)component;
-        String[] idTokens = uiDataId.split(String.valueOf(UINamingContainer.getSeparatorChar(fc)));
-        int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
-        uiData.setRowIndex(rowIndex);
-        data = uiData.getRowData();
-        uiData.setRowIndex(-1);
-    }
+	public UIDataContextCallback(String dragId) {
+		this.dragId = dragId;
+	}
 
-    public Object getData() {
-        return data;
-    }
+	public void invokeContextCallback(FacesContext fc, UIComponent component) {
+		UIData uiData = (UIData) component;
+		String[] idTokens = dragId.split(String.valueOf(UINamingContainer.getSeparatorChar(fc)));
+		int rowIndex = Integer.parseInt(idTokens[idTokens.length - 2]);
+		uiData.setRowIndex(rowIndex);
+		data = uiData.getRowData();
+		uiData.setRowIndex(-1);
+	}
+
+	public Object getData() {
+		return data;
+	}
 }
