@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <facelet-taglib version="2.0"
                 xmlns="http://java.sun.com/xml/ns/javaee"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -86,14 +86,14 @@
         <converter>
             <converter-id>org.primefaces.extensions.converter.TimelineEventsConverter</converter-id>
         </converter>
-        <attribute>
+<!--        <attribute>
             <description>
                 <![CDATA[Time zone for UTC / Local date conversion. It can be a TimeZone object as well as a String with time zone Id.]]>
             </description>
             <name>timeZone</name>
             <required>false</required>
             <type>java.lang.Object</type>
-        </attribute>        
+        </attribute>        -->
     </tag>
 
     <!-- Behaviors -->
@@ -2644,9 +2644,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object. If no time zone is provided, the used time zone is TimeZone.getDefault().]]>
+                <![CDATA[Target time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object. If no time zone is provided, the used time zone is TimeZone.getDefault() from the J2EE server.]]>
             </description>
             <name>timeZone</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Time zone that the user's browser / PC is running in. Allows the correct conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object. If no browserTZ is provided, the used time zone is the same as target timeZone.]]>
+            </description>
+            <name>browserTZ</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
