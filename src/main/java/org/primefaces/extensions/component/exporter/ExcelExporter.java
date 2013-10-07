@@ -1023,6 +1023,9 @@ public class ExcelExporter extends Exporter {
         if (facetBackground != null) {
             XSSFColor backgroundColor = new XSSFColor(facetBackground);
             ((XSSFCellStyle) facetStyle).setFillForegroundColor(backgroundColor);
+            ((XSSFCellStyle) facetStyleLeftAlign).setFillForegroundColor(backgroundColor);
+            ((XSSFCellStyle) facetStyleCenterAlign).setFillForegroundColor(backgroundColor);
+            ((XSSFCellStyle) facetStyleRightAlign).setFillForegroundColor(backgroundColor);
             facetStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
             facetStyleLeftAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
             facetStyleCenterAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
