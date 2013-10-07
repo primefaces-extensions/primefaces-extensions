@@ -19,12 +19,7 @@
 package org.primefaces.extensions.util.json;
 
 import java.lang.reflect.Type;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
-
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.DateUtils;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -43,42 +38,17 @@ import com.google.gson.JsonSerializer;
  */
 public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
-	private Object timeZone;
-
 	public DateTypeAdapter() {
 	}
 
-	public DateTypeAdapter(Object timeZone) {
-		this.timeZone = timeZone;
-	}
-
+        @Override
 	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-		if (timeZone == null) {
-			return new JsonPrimitive(src.getTime());
-		} else {
-			TimeZone tz = ComponentUtils.resolveTimeZone(timeZone);
-			Calendar calendar = Calendar.getInstance(tz);
-
-			return new JsonPrimitive(DateUtils.toLocalDate(calendar, tz, src));
-		}
+        	return new JsonPrimitive(src.getTime());
 	}
 
+        @Override
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		if (timeZone == null) {
-			return new Date(json.getAsJsonPrimitive().getAsLong());
-		} else {
-			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-			TimeZone tz = ComponentUtils.resolveTimeZone(timeZone);
-
-			return DateUtils.toUtcDate(calendar, tz, json.getAsJsonPrimitive().getAsLong());
-		}
+		return new Date(json.getAsJsonPrimitive().getAsLong());
 	}
 
-	public Object getTimeZone() {
-		return timeZone;
-	}
-
-	public void setTimeZone(Object timeZone) {
-		this.timeZone = timeZone;
-	}
 }
