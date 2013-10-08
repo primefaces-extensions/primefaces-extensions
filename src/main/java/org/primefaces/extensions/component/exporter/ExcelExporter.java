@@ -600,7 +600,7 @@ public class ExcelExporter extends Exporter {
             for (UIComponent component : headerComponentList) {
                 if (component instanceof org.primefaces.component.row.Row) {
                     org.primefaces.component.row.Row row = (org.primefaces.component.row.Row) component;
-                    int sheetRowIndex = sheet.getLastRowNum() + 1;
+                    int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
                     Row xlRow = sheet.createRow(sheetRowIndex);
                     int i = 0;
                     for (UIComponent rowComponent : row.getChildren()) {
@@ -875,7 +875,7 @@ public class ExcelExporter extends Exporter {
 
     protected void addColumnFacets(SubTable table, Sheet sheet, ColumnType columnType) {
 
-        int sheetRowIndex = sheet.getLastRowNum() + 1;
+        int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
         Row rowHeader = sheet.createRow(sheetRowIndex);
 
         for (UIColumn col : table.getColumns()) {
