@@ -358,12 +358,23 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	 * @return resolved TimeZone
 	 */
 	public static TimeZone resolveTimeZone(Object timeZone) {
+		return resolveTimeZone(timeZone, null);
+	}
+	/**
+	 * Gets a {@link TimeZone defaultTZ} instance by the value of the component attribute "timeZone" which can be String or {@link TimeZone}
+	 * or null.
+	 *
+	 * @param  timeZone given time zone
+	 * @param  default timeZone if the timeZone object doesn't resolve
+	 * @return resolved TimeZone
+	 */
+	public static TimeZone resolveTimeZone(Object timeZone, TimeZone defaultTZ) {
 		if (timeZone instanceof String) {
 			return TimeZone.getTimeZone((String) timeZone);
 		} else if (timeZone instanceof TimeZone) {
 			return (TimeZone) timeZone;
 		} else {
-			return TimeZone.getDefault();
+			return ((defaultTZ == null) ? TimeZone.getDefault() : defaultTZ);
 		}
 	}
 }
