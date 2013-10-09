@@ -195,7 +195,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Skin of the editor. Valid skins are: kama, office2003 and v2.]]>
+            <description><![CDATA[Skin of the editor. Valid skins are: kama and moono.]]>
             </description>
             <name>skin</name>
             <required>false</required>
@@ -1388,28 +1388,6 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[Component to reset submitted values and validation state.]]>
-        </description>
-        <tag-name>resetInput</tag-name>
-        <handler-class>org.primefaces.extensions.component.resetinput.ResetInputTagHandler</handler-class>
-        <attribute>
-            <description>
-                <![CDATA[Id(s) of component(s) in terms of findComponent to specify components to be reseted. That can be space or comma separated list.]]>
-            </description>
-            <name>for</name>
-            <required>true</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Name(s) of one or several accepted events of f:ajax / p:ajax in case when ResetInput is attached to any component with ajax behavior. Several events should be defined as space or comma separated list. If no events are specified, all events will be accepted.]]>
-            </description>
-            <name>event</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-    </tag>
-    <tag>
         <description><![CDATA[Advanced Tooltip component.]]>
         </description>
         <tag-name>tooltip</tag-name>
@@ -1606,14 +1584,6 @@
                 <![CDATA[Id of the component to attach the tooltip.]]>
             </description>
             <name>for</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[jQuery selector for any elements to attach the tooltip.]]>
-            </description>
-            <name>forSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -2183,13 +2153,6 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[jQuery selector for any elements to attach the keyfilter.]]>
-            </description>
-            <name>forSelector</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[Defines the regular expression which should be used for filtering the input.]]>
             </description>
             <name>regEx</name>
@@ -2316,24 +2279,30 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Styles for the message when blocking. Styles should be defined as JSON object, e.g. {backgroundColor: 'fff', width: 30%}.]]></description>
+            <name>css</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Styles for the overlay. Styles should be defined as JSON object, e.g. {opacity: 0.4, backgroundColor: 'red'}]]></description>
+            <name>cssOverlay</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description>
-                <![CDATA[Id of component in terms of findComponent to specify component which sends an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
+                <![CDATA[Specifies component(s) which send(s) an ajax request and triggers blocking. If nothing specified, the parent component is used.]]>
             </description>
             <name>source</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Id of the component in terms of findComponent to be blocked.]]>
+            <description>
+                <![CDATA[Specifies component(s) or HTML element(s) to be blocked. If the target is null or not defined, the entire page is blocked.]]>
             </description>
             <name>target</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[jQuery selector for any elements to be blocked.]]>
-            </description>
-            <name>targetSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -2358,6 +2327,30 @@
                 <![CDATA[Flag whether the blocking is shown automatically without the need to use JavaScript widget. Default value is false.]]>
             </description>
             <name>autoShow</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Time in millis to wait before auto-unblocking. Don't define it or set to 0 to disable auto-unblock. Default value is 0.]]>
+            </description>
+            <name>timeout</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Set this attribute to true to have the message automatically centered along the X axis. Note: it only effects element blocking (page blocking controlled by CSS via the css attribute). Default value is true.]]>
+            </description>
+            <name>centerX</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Set this attribute to true to have the message automatically centered along the Y axis. Default value is true.]]>
+            </description>
+            <name>centerY</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
@@ -2404,6 +2397,66 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Marks component as required.]]></description>
+            <name>required</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression referring to a method validationg the input.]]></description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method binding expression referring to a method for handling a valuchangeevent.]]></description>
+            <name>valueChangeListener</name>
+            <required>false</required>
+            <type>javax.faces.event.ValueChangeListener</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when required field validation fails.]]></description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when conversion fails.]]></description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when validation fails.]]></description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Access key to transfer focus to the input element.]]></description>
+            <name>accesskey</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Alternate textual description of the input element.]]></description>
+            <name>alt</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Controls browser autocomplete behavior.]]></description>
+            <name>autocomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Direction indication for text that does not inherit directionality.]]></description>
+            <name>dir</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>        
         <attribute>
             <description><![CDATA[Disables the time picker when set to true.]]></description>
             <name>disabled</name>
@@ -2562,7 +2615,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent)]]>
+            <![CDATA[Timeline is an interactive visualization chart to visualize events in time. Client behavior events: add - fired when event is about the be added (org.primefaces.extensions.event.timeline.TimelineAddEvent), change - fired after the user modified the start date or end date of an event by moving / dragging the event in the timeline (org.primefaces.extensions.event.timeline.TimelineModificationEvent), edit - fired when event is about to be edited. This event is fired when the user double clicks on an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), delete - fired when event is about to be deleted. That means the user clicked on the "delete event" button on the right of an event (org.primefaces.extensions.event.timeline.TimelineModificationEvent), select - fired when the user clicks on an event (org.primefaces.extensions.event.timeline.TimelineSelectEvent), rangechange - fired when the visible range is changing. Fired repeatedly while the user is modifying the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), rangechanged - fired when the visible range has been changed. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineRangeEvent), lazyload - fired when the events should be lazy loaded. Fired once after the user has modified the visible time by moving / dragging the timeline or by zooming / scrolling (org.primefaces.extensions.event.timeline.TimelineLazyLoadEvent), drop - fired when when an item is dragged and dropped onto the Timeline from outside (org.primefaces.extensions.event.timeline.TimelineDragDropEvent)]]>
         </description>
         <tag-name>timeline</tag-name>
         <component>
@@ -2700,7 +2753,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If true, the events can be edited, changed, created and deleted. Events can only be editable when the option selectable is true (default). When editable is true, the timeline can fire AJAX events "change", "edit", "add", "delete".
+                <![CDATA[If true, the events can be edited, changed, created and deleted. Events can only be editable when the option selectable is true (default). When editable is true, the timeline can fire AJAX events "change", "edit", "add", "delete", "drop".
                 This global setting "editable" can be overwritten for individual events by setting a value in field "editable". Default is false.]]>
             </description>
             <name>editable</name>
@@ -2712,6 +2765,14 @@
                 <![CDATA[If true, events on the timeline are selectable. Selectable events can fire AJAX "select" events. Default is true.]]>
             </description>
             <name>selectable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If true, you can unselect an item by clicking in the empty space of the timeline. If false, you cannot unselect an item, there will be always one item selected. Default is true.]]>
+            </description>
+            <name>unselectable</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
@@ -2778,6 +2839,14 @@
             <name>zoomMax</name>
             <required>false</required>
             <type>java.lang.Long</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Preload factor is a positive float value or 0 which can be used for lazy loading of events. When the lazy loading feature is active, the calculated time range for preloading will be multiplicated by the preload factor. The result of this multiplication specifies the additional time range which will be considered for the preloading during moving / zooming too. For example, if the calculated time range for preloading is 5 days and the preload factor is 0.2, the result is 5 * 0.2 = 1 day. That means, 1 day backwards and / or 1 day onwards will be added to the original calculated time range. The event's area to be preloaded is wider then. This helps to avoid frequently, time-consuming fetching of events. Default value is 0.]]>
+            </description>
+            <name>preloadFactor</name>
+            <required>false</required>
+            <type>java.lang.Float</type>
         </attribute>
         <attribute>
             <description>
@@ -2882,6 +2951,38 @@
             <name>showNavigation</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class to apply when an acceptable draggable is dragged over. Default is null.]]>
+            </description>
+            <name>dropHoverStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class to apply when an acceptable draggable is being dragged over. Default is null.]]>
+            </description>
+            <name>dropActiveStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Selector to define the accepted draggables. Default is null.]]>
+            </description>
+            <name>dropAccept</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Scope key to match draggables and droppables. Default is null.]]>
+            </description>
+            <name>dropScope</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
     </tag>
     <tag>
@@ -3766,17 +3867,9 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The target component registered as waypoint.]]>
+                <![CDATA[The target component registered as waypoint. If null, the parent component will be taken as target. Default is null.]]>
             </description>
             <name>for</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[jQuery selector for any target elements registered as waypoints.]]>
-            </description>
-            <name>forSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -3785,14 +3878,6 @@
                 <![CDATA[The context (as component) defines which scrollable element the waypoint belongs to and acts within. Default is window (if no context or contextSelector were specified).]]>
             </description>
             <name>forContext</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[The context (as jQuery selector) defines which scrollable element the waypoint belongs to and acts within. Default is window (if no context or contextSelector were specified).]]>
-            </description>
-            <name>forContextSelector</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

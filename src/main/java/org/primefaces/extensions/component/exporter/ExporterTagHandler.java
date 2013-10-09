@@ -91,7 +91,6 @@ public class ExporterTagHandler extends TagHandler {
             ValueExpression tableTitleVE = null;
             ValueExpression pageOnlyVE = null;
             ValueExpression selectionOnlyVE = null;
-            ValueExpression excludeColumnsVE = null;
             ValueExpression encodingVE = null;
             MethodExpression preProcessorME = null;
             MethodExpression postProcessorME = null;

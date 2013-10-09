@@ -62,9 +62,9 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 		this.bindSelectChangeCallback();
 		this.bindSelectEndCallback();
 	
-		this.instance = $(this.cfg.target).imgAreaSelect(this.options);
+		this.instance = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
 		
-		PrimeFacesExt.removeWidgetScript(this.id)
+		this.removeScriptElement(this.id);
 	},
 
 	/**
@@ -162,7 +162,7 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 	reload : function() {
 		this.setOptions({remove: true});
 		this.update();
-		this.instance = $(this.cfg.target).imgAreaSelect(this.options);
+		this.instance = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
 	},
 
 	/**

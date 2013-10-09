@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin, reimplemented since 0.7
  */
-PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Initializes the widget.
      *
@@ -13,31 +13,44 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
+        
+        this.lazy = this.getBehavior("lazyload") != null;
+        if (this.lazy) {
+            this.min = (typeof this.cfg.opts.min !== 'undefined' ? this.cfg.opts.min.getTime() : null);
+            this.max = (typeof this.cfg.opts.max !== 'undefined' ? this.cfg.opts.max.getTime() : null);
+            this.pFactor = this.cfg.opts.preloadFactor;
+            
+            this.rangeLoadedEvents = {
+                start: null,
+                end: null
+            };            
+        }
 
-        PrimeFacesExt.handleInitialize(this, this.createTimeline);
+        this.renderDeferred();
     },
 
     /**
      * Creates timeline widget with all initialization steps.
      */
-    createTimeline: function () {
+    _render: function () {
         // configure localized text
         this.cfg.opts = PrimeFacesExt.configureLocale('Timeline', this.cfg.opts);
 
         // instantiate a timeline object
-        this.instance = new links.Timeline(document.getElementById(this.id));
+        var el = document.getElementById(this.id);
+        this.instance = new links.Timeline(el);
 
         // draw the timeline with created data and options
         this.instance.draw(this.cfg.data, this.cfg.opts);
 
         // bind events
-        this.bindEvents();
+        this.bindEvents(el);
     },
 
     /**
      * Binds timeline's events.
      */
-    bindEvents: function () {
+    bindEvents: function (el) {
         if (this.cfg.opts.responsive) {
             var nsevent = "resize.timeline" + PrimeFaces.escapeClientId(this.id);
             $(window).off(nsevent).on(nsevent, $.proxy(function () {
@@ -219,6 +232,94 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
                 this.getBehavior("rangechanged").call(this, null, ext);
             }, this));
         }
+        
+        // "lazyload" event
+        if (this.lazy) {
+            // initial page load
+            this.fireLazyLoading();
+            
+            // moving / zooming
+            links.events.addListener(this.instance, 'rangechanged', $.proxy(function () {
+                this.fireLazyLoading();
+            }, this));
+        }
+        
+        // register this timeline as droppable if needed
+        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("drop")) {
+            var droppableOpts = {tolerance: "pointer"};
+            if (this.cfg.opts.hoverClass) {
+                droppableOpts.hoverClass = this.cfg.opts.hoverClass;    
+            }
+            
+            if (this.cfg.opts.activeClass) {
+                droppableOpts.activeClass = this.cfg.opts.activeClass;    
+            }
+            
+            if (this.cfg.opts.accept) {
+                droppableOpts.accept = this.cfg.opts.accept;    
+            }
+            
+            if (this.cfg.opts.scope) {
+                droppableOpts.scope = this.cfg.opts.scope;
+            }
+            
+            droppableOpts.drop = $.proxy(function (evt, ui) {
+                var inst = this.getInstance();
+                
+                var x = evt.pageX - links.Timeline.getAbsoluteLeft(inst.dom.content);
+                var y = evt.pageY - links.Timeline.getAbsoluteTop(inst.dom.content);
+            
+                var xstart = inst.screenToTime(x);
+                var xend = inst.screenToTime(x + inst.size.frameWidth / 10); // add 10% of timeline width
+                
+                if (this.cfg.opts.snapEvents) {
+                    inst.step.snap(xstart);
+                    inst.step.snap(xend);
+                }
+            
+                var params = [];
+                params.push({
+                    name: this.id + '_startDate',
+                    value: xstart.getTime()
+                });
+                
+                params.push({
+                    name: this.id + '_endDate',
+                    value: xend.getTime()
+                });
+                
+                var group = inst.getGroupFromHeight(y); // (group may be undefined)
+                
+                if (group) {
+                    params.push({
+                        name: this.id + '_group',
+                        value: inst.getGroupName(group)
+                    });    
+                }
+                
+                params.push({
+                    name: this.id + '_dragId',
+                    value: ui.draggable.attr('id')
+                });
+                
+                // check if draggable is within a data iteration component
+                var uiData = ui.draggable.closest(".ui-datatable, .ui-datagrid, .ui-datalist, .ui-carousel");
+                if (uiData.length > 0) {
+                    params.push({
+                        name: this.id + '_uiDataId',
+                        value: uiData.attr('id')
+                    });
+                }
+
+                // call the drop listener
+                // parameters event and ui can be accessible in "onstart" (p:ajax) via cfg.ext.event and cfg.ext.ui
+                // or in "execute" (pe:javascript) via ext.event and ext.ui
+                this.getBehavior("drop").call(this, evt, {params: params, event: evt, ui: ui});
+            }, this);
+            
+            // make the timeline droppable
+            $(el).droppable(droppableOpts);
+        }
     },
     
     /**
@@ -266,6 +367,130 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.BaseWidget.extend({
         }, this));
         
         return JSON.stringify(newData);
+    },
+    
+    /**
+     * Fires event for lazy loading.
+     */
+    fireLazyLoading: function() {
+        var range = this.getLazyLoadRange();
+        if (range == null) {
+            // don't send event
+            return;
+        }
+        
+        var ext = {
+            params: []
+        };
+        
+        if (range.startFirst != null && range.endFirst != null) {
+            ext.params[0] = {name: this.id + '_startDateFirst', value: range.startFirst};
+            ext.params[1] = {name: this.id + '_endDateFirst', value: range.endFirst}; 
+        }
+        
+        if (range.startSecond != null && range.endSecond != null) {
+            ext.params[2] = {name: this.id + '_startDateSecond', value: range.startSecond};
+            ext.params[3] = {name: this.id + '_endDateSecond', value: range.endSecond};
+        }
+          
+        this.getBehavior("lazyload").call(this, null, ext);
+    },
+
+    /**
+     * Gets time range(s) for events to be lazy loaded.
+     * The internal time range for already loaded events will be updated.
+     * 
+     * @return {Object}
+     */
+    getLazyLoadRange: function() {
+        var visibleRange = this.instance.getVisibleChartRange();
+        
+        if (this.rangeLoadedEvents.start == null || this.rangeLoadedEvents.end == null) {
+            // initial load
+            var pArea = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() - pArea);
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + pArea);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: this.rangeLoadedEvents.end,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.end.getTime() > this.rangeLoadedEvents.end) &&
+            (visibleRange.start.getTime() >= this.rangeLoadedEvents.start)) {
+            // moving right
+            var startFirstR = this.rangeLoadedEvents.end + 1;
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + 
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor);
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }            
+            
+            return {
+                startFirst: startFirstR,
+                endFirst: this.rangeLoadedEvents.end,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.start.getTime() < this.rangeLoadedEvents.start) &&
+            (visibleRange.end.getTime() <= this.rangeLoadedEvents.end)) {
+            // moving left
+            var endFirstL = this.rangeLoadedEvents.start - 1;
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() -
+                (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: endFirstL,
+                startSecond: null,
+                endSecond: null
+            };
+        }
+        
+        if ((visibleRange.start.getTime() < this.rangeLoadedEvents.start) &&
+            (visibleRange.end.getTime() > this.rangeLoadedEvents.end)) {
+            // zooming out
+            var pAreaZ = (visibleRange.end.getTime() - visibleRange.start.getTime()) * this.pFactor;
+            var endFirstZ = this.rangeLoadedEvents.start - 1;
+            var startSecondZ = this.rangeLoadedEvents.end + 1; 
+            this.rangeLoadedEvents.start = Math.round(visibleRange.start.getTime() - pAreaZ);
+            this.rangeLoadedEvents.end = Math.round(visibleRange.end.getTime() + pAreaZ);
+            
+            if (this.min != null && this.rangeLoadedEvents.start < this.min) {
+                this.rangeLoadedEvents.start = this.min;
+            }
+            
+            if (this.max != null && this.rangeLoadedEvents.end > this.max) {
+                this.rangeLoadedEvents.end = this.max;
+            }            
+            
+            return {
+                startFirst: this.rangeLoadedEvents.start,
+                endFirst: endFirstZ,
+                startSecond: startSecondZ,
+                endSecond: this.rangeLoadedEvents.end
+            };
+        }
+        
+        return null;
     },
     
     /**

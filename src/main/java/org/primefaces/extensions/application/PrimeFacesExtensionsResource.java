@@ -18,14 +18,8 @@
 
 package org.primefaces.extensions.application;
 
-import java.util.UUID;
-
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.primefaces.extensions.util.VersionProvider;
 
 /**
  * {@link ResourceWrapper} which appends the version of PrimeFaces Extensions to the URL.
@@ -42,13 +36,7 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
 	public PrimeFacesExtensionsResource(final Resource resource) {
 		super();
 		wrapped = resource;
-
-		// get current version
-		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
-			version = "&v=" + VersionProvider.getVersion();
-		} else {
-			version = UUID.randomUUID().toString();
-		}
+		version = "&v=" + this.getClass().getPackage().getSpecificationVersion();
 	}
 
 	@Override

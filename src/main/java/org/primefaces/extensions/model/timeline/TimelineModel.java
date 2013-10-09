@@ -122,11 +122,11 @@ public class TimelineModel implements Serializable {
 		int index = getIndex(event);
 		if (index >= 0) {
 			events.set(index, event);
-		}
 
-		if (timelineUpdater != null) {
-			// update UI
-			timelineUpdater.update(event, index);
+			if (timelineUpdater != null) {
+				// update UI
+				timelineUpdater.update(event, index);
+			}
 		}
 	}
 
@@ -170,11 +170,13 @@ public class TimelineModel implements Serializable {
 	 */
 	public void delete(TimelineEvent event, TimelineUpdater timelineUpdater) {
 		int index = getIndex(event);
-		events.remove(event);
+		if (index >= 0) {
+			events.remove(event);
 
-		if (timelineUpdater != null) {
-			// update UI
-			timelineUpdater.delete(index);
+			if (timelineUpdater != null) {
+				// update UI
+				timelineUpdater.delete(index);
+			}
 		}
 	}
 

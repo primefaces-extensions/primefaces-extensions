@@ -37,7 +37,6 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 import org.primefaces.extensions.event.WaypointEvent;
 import org.primefaces.util.Constants;
 
@@ -54,7 +53,7 @@ import org.primefaces.util.Constants;
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "waypoint/waypoint.js")
                       })
-public class Waypoint extends UIComponentBase implements Widget, EnhancedAttachable, ClientBehaviorHolder {
+public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -73,9 +72,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 
 		widgetVar,
 		forValue("for"),
-		forSelector,
 		forContext,
-		forContextSelector,
 		offset,
 		continuous,
 		onlyOnScroll,
@@ -110,7 +107,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setWidgetVar(String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -118,15 +115,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setFor(String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
-	}
-
-	public String getForSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
-	}
-
-	public void setForSelector(String forSelector) {
-		setAttribute(PropertyKeys.forSelector, forSelector);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String getForContext() {
@@ -134,15 +123,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setForContext(String forContext) {
-		setAttribute(PropertyKeys.forContext, forContext);
-	}
-
-	public String getForContextSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forContextSelector, null);
-	}
-
-	public void setForContextSelector(String forContextSelector) {
-		setAttribute(PropertyKeys.forContextSelector, forContextSelector);
+		getStateHelper().put(PropertyKeys.forContext, forContext);
 	}
 
 	public String getOffset() {
@@ -150,7 +131,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setOffset(String offset) {
-		setAttribute(PropertyKeys.offset, offset);
+		getStateHelper().put(PropertyKeys.offset, offset);
 	}
 
 	public boolean isContinuous() {
@@ -158,7 +139,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setContinuous(boolean continuous) {
-		setAttribute(PropertyKeys.continuous, continuous);
+		getStateHelper().put(PropertyKeys.continuous, continuous);
 	}
 
 	public boolean isOnlyOnScroll() {
@@ -166,7 +147,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setOnlyOnScroll(boolean onlyOnScroll) {
-		setAttribute(PropertyKeys.onlyOnScroll, onlyOnScroll);
+		getStateHelper().put(PropertyKeys.onlyOnScroll, onlyOnScroll);
 	}
 
 	public boolean isTriggerOnce() {
@@ -174,7 +155,7 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	public void setTriggerOnce(boolean triggerOnce) {
-		setAttribute(PropertyKeys.triggerOnce, triggerOnce);
+		getStateHelper().put(PropertyKeys.triggerOnce, triggerOnce);
 	}
 
 	@Override
@@ -208,10 +189,11 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 		if (isSelfRequest(fc)) {
+			Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
 			if ("reached".equals(eventName)) {
@@ -235,7 +217,8 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 	}
 
 	private boolean isSelfRequest(FacesContext fc) {
-		return this.getClientId(fc).equals(fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+		return this.getClientId(fc)
+		           .equals(fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
@@ -247,30 +230,5 @@ public class Waypoint extends UIComponentBase implements Widget, EnhancedAttacha
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

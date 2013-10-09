@@ -36,7 +36,6 @@ import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.Attachable;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
 import org.primefaces.util.Constants;
@@ -50,10 +49,11 @@ import org.primefaces.util.Constants;
  */
 @ResourceDependencies({
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+	@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder, Attachable {
+public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -111,7 +111,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -119,7 +119,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -133,31 +133,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
-	}
-
 	@Override
 	public void queueEvent(final FacesEvent event) {
 		final FacesContext context = FacesContext.getCurrentInstance();
@@ -165,7 +140,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 		final String clientId = getClientId(context);
 
 		if (isRequestSource(clientId, params)) {
-			final String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
+			final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
 			final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
@@ -189,6 +164,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 	}
 
 	private boolean isRequestSource(final String clientId, final Map<String, String> params) {
-		return clientId.equals(params.get(Constants.PARTIAL_SOURCE_PARAM));
+		return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 }

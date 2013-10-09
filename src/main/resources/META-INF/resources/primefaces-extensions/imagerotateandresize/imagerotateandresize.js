@@ -16,7 +16,7 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 
 		this.initialized = false;
 		
-		PrimeFacesExt.removeWidgetScript(this.id);
+		this.removeScriptElement(this.id);
 	},
 
 	/**
@@ -26,7 +26,7 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 	 */
 	initializeLazy : function() {
 		if (!this.initialized) {
-			this.target = $(this.cfg.target)[0];
+			this.target = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target)[0];
 			this.imageSrc = this.target.src;
 			this.imageWidth = this.target.width;
 			this.imageHeight = this.target.height;

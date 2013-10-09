@@ -133,7 +133,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
         // pfs metadata
         $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
 	    
-	    PrimeFacesExt.removeWidgetScript(this.id);
+        this.removeScriptElement(this.id);
 	},
 
 	enableSpinner : function() {

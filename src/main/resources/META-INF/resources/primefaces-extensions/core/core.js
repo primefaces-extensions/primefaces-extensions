@@ -165,24 +165,6 @@ PrimeFacesExt = {
 	},
 
 	/**
-	 * Load a JavaScript file from the server using a GET HTTP request, then execute it.
-	 * 
-	 * @author Thomas Andraschko
-	 * @param {string} url A string containing the URL to which the request is sent.
-	 * @param {function} callback A callback function that is executed if the request succeeds.
-	 * @param {string} cache Appends a unique timestamp if false.
-	 */
-	getScript : function(url, callback, cache) {
-		$.ajax({
-				type: "GET",
-				url: url,
-				success: callback,
-				dataType: "script",
-				cache: cache
-		});
-	},
-
-	/**
 	 * Creates a widget and load the required resources if not already available.
 	 * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
 	 * The file and directory names must be completely in lower case.
@@ -190,7 +172,7 @@ PrimeFacesExt = {
 	 * 
 	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
 	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
 	 */
@@ -206,7 +188,7 @@ PrimeFacesExt = {
 	 * 
 	 * @author Thomas Andraschko
 	 * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-	 * @param {widgetVar} widgetVar The variable in the window object for accessing the widget.
+	 * @param {object} widgetVar The variable in the window object for accessing the widget.
 	 * @param {object} cfg An object with options.
 	 * @param {boolean} hasStyleSheet If the css file should be loaded as well.
 	 */
@@ -249,9 +231,9 @@ PrimeFacesExt = {
     			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
 
     		//load script
-	        PrimeFacesExt.getScript(script, function() {
+	        PrimeFaces.getScript(script, function() {
 	        	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
-	        }, true);
+	        });
 	    }
 	},
 
@@ -264,10 +246,10 @@ PrimeFacesExt = {
 	 * @param {object} cfg An object with options.
 	 */
 	initWidget : function(widgetName, widgetVar, cfg) {
-		if (window[widgetVar]) {
-			window[widgetVar].refresh(cfg);
+		if (PrimeFaces.widgets[widgetVar]) {
+			PrimeFaces.widgets[widgetVar].refresh(cfg);
 		} else {
-			window[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+			PrimeFaces.widgets[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
 		}
 	},
 
@@ -293,47 +275,6 @@ PrimeFacesExt = {
         
         return cfg;
     },
-
-	/**
-	 * Removes the widget's script block from the DOM.
-	 * 
-	 * @author Thomas Andraschko
-	 * @param {string} clientId The id of the widget.
-	 */
-	removeWidgetScript : function(clientId) {
-		$(PrimeFaces.escapeClientId(clientId) + '_s').remove();
-	},
-	
-	/**
-	 * Handles the initializiation of the widget, also in hidden parents.
-	 * 
-	 * @author Thomas Andraschko
-	 * @param {object} widget The widget instance.
-	 * @param {function} initFunction The initialization method of the widget.
-	 */
-	handleInitialize : function(widget, initFunction) {
-
-		var delegate = function() {
-	        return initFunction.apply(widget, arguments);
-	    };
-
-		if (widget.jq.is(':visible')) {		
-			widget.widgetInitialized = true;
-			delegate();
-        } else {
-            var hiddenParent = widget.jq.parents('.ui-hidden-container:first');
-            var hiddenParentWidget = hiddenParent.data('widget');
-
-            if (hiddenParentWidget) {
-                hiddenParentWidget.addOnshowHandler(function() {
-                	if (!widget.widgetInitialized && widget.jq.is(':visible')) {
-                		widget.widgetInitialized = true;
-                		delegate();
-                	}
-                });
-            }
-        }
-	},
 
 	/**
 	 * The JSF resource identifier.

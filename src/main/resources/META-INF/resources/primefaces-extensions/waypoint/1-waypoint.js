@@ -13,11 +13,15 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     init:function (cfg) {
         this.cfg = cfg;
         this.id = cfg.id;
-        this.target = $(this.cfg.target);
+        this.target = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target);
+        
+        if (this.cfg.context) {
+            this.cfg.context = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.context);
+        }
 
         delete this.cfg.target;
 
-        PrimeFacesExt.removeWidgetScript(this.id);
+        this.removeScriptElement(this.id);
     },
 
     /**

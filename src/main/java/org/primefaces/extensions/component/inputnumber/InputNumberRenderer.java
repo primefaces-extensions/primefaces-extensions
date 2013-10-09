@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.logging.Logger;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -45,8 +44,6 @@ import org.primefaces.util.HTML;
  */
 public class InputNumberRenderer extends InputRenderer {
 
-	private static final Logger LOGGER = Logger.getLogger(InputNumberRenderer.class.getName());
-
 	@Override
 	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
 			throws ConverterException {
@@ -60,11 +57,11 @@ public class InputNumberRenderer extends InputRenderer {
 			return doubleConverted;
 		} else {                       
 			if (submittedValueString != null && !submittedValueString.isEmpty()) {				
-                                if(inputNumber.getValue() instanceof BigDecimal) {
-                                    return new BigDecimal(submittedValueString);  
-                                }else{
-                                    return new Double(submittedValueString);
-                                }
+				if(inputNumber.getValue() instanceof BigDecimal) {
+					return new BigDecimal(submittedValueString);  
+				}else{
+					return new Double(submittedValueString);
+				}
 			}
 			return null;
 		}
@@ -74,9 +71,9 @@ public class InputNumberRenderer extends InputRenderer {
 	public void decode(final FacesContext context, final UIComponent component) {
 		InputNumber inputNumber = (InputNumber) component;
 
-        if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
-            return;
-        }
+		if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
+			return;
+		}
 
 		decodeBehaviors(context, inputNumber);
 
@@ -139,9 +136,9 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_input";
 
-        String defaultClass = InputText.STYLE_CLASS;
-        defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
-        defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
+		String defaultClass = InputText.STYLE_CLASS;
+		defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
+		defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
 
 		writer.startElement("input", null);
 		writer.writeAttribute("id", inputId, null);
@@ -171,7 +168,7 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);                
 		startScript(writer, clientId);
-                String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
+		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
 		if (valueToRender == null) {
 			valueToRender = "";
 		}
@@ -238,14 +235,14 @@ public class InputNumberRenderer extends InputRenderer {
 		} else {
 
 			try { 
-                                Object objectToRender; 
-                                if(inputNumber.getValue() instanceof BigDecimal) {
-                                    objectToRender = new BigDecimal(valueToRender);  
-                                }else{
-                                    objectToRender =  new Double(valueToRender);
-                                }
-                               
-                                NumberFormat formatter = new DecimalFormat("#0.0#");
+				Object objectToRender; 
+				if(inputNumber.getValue() instanceof BigDecimal) {
+					objectToRender = new BigDecimal(valueToRender);  
+				}else{
+					objectToRender =  new Double(valueToRender);
+				}
+
+				NumberFormat formatter = new DecimalFormat("#0.0#");
 				formatter.setRoundingMode(RoundingMode.FLOOR);
 				//autoNumeric jquery plugin max and min limits
 				formatter.setMinimumFractionDigits(15);
@@ -253,7 +250,7 @@ public class InputNumberRenderer extends InputRenderer {
 				formatter.setMaximumIntegerDigits(20);
 				String f = formatter.format(objectToRender);
 
-                                //force to english decimal separator
+				//force to english decimal separator
 				f = f.replace(',', '.');
 				return f;
 			} catch (Exception e) {

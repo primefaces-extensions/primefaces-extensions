@@ -24,10 +24,6 @@ import java.util.logging.Logger;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
 
-import org.apache.commons.lang3.StringUtils;
-
-import org.primefaces.extensions.util.VersionProvider;
-
 /**
  * {@link SystemEventListener} which displays the PrimeFaces Extensions version on startup.
  *
@@ -44,8 +40,6 @@ public class PostConstructApplicationEventListener implements SystemEventListene
 	}
 
 	public void processEvent(final SystemEvent event) {
-		if (StringUtils.isNotBlank(VersionProvider.getVersion())) {
-			LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", VersionProvider.getVersion());
-		}
+		LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", this.getClass().getPackage().getSpecificationVersion());
 	}
 }

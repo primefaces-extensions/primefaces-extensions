@@ -115,6 +115,7 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",dragAreaWidth:" + timeline.getDragAreaWidth());
 		writer.write(",editable:" + timeline.isEditable());
 		writer.write(",selectable:" + timeline.isSelectable());
+		writer.write(",unselectable:" + timeline.isUnselectable());
 		writer.write(",zoomable:" + timeline.isZoomable());
 		writer.write(",moveable:" + timeline.isMoveable());
 
@@ -136,6 +137,13 @@ public class TimelineRenderer extends CoreRenderer {
 
 		writer.write(",zoomMin:" + timeline.getZoomMin());
 		writer.write(",zoomMax:" + timeline.getZoomMax());
+
+		if (timeline.getPreloadFactor() < 0) {
+			writer.write(",preloadFactor:0");
+		} else {
+			writer.write(",preloadFactor:" + timeline.getPreloadFactor());
+		}
+
 		writer.write(",eventMargin:" + timeline.getEventMargin());
 		writer.write(",eventMarginAxis:" + timeline.getEventMarginAxis());
 		writer.write(",style:'" + timeline.getEventStyle() + "'");
@@ -156,6 +164,22 @@ public class TimelineRenderer extends CoreRenderer {
 
 		if (timeline.getLocale() != null) {
 			writer.write(",locale:'" + timeline.getLocale().toString() + "'");
+		}
+
+		if (timeline.getDropHoverStyleClass() != null) {
+			writer.write(",hoverClass:'" + timeline.getDropHoverStyleClass() + "'");
+		}
+
+		if (timeline.getDropActiveStyleClass() != null) {
+			writer.write(",activeClass:'" + timeline.getDropActiveStyleClass() + "'");
+		}
+
+		if (timeline.getDropAccept() != null) {
+			writer.write(",accept:'" + timeline.getDropAccept() + "'");
+		}
+
+		if (timeline.getDropScope() != null) {
+			writer.write(",scope:'" + timeline.getDropScope() + "'");
 		}
 
 		writer.write("}");

@@ -14,6 +14,10 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
         var id = cfg.id;
         this.cfg = cfg;
         var _self = this;
+        
+        if (this.cfg.forTarget) {
+            this.cfg.forTarget = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.forTarget);
+        }
 
         if (this.cfg.global) {
             this.cfg.position.container = $(document.body);
@@ -21,7 +25,7 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
             if (this.cfg.forTarget == null) {
                 selector = '*[title]';
             } else {
-                selector = this.cfg.forTarget + '[title]';
+                selector = this.cfg.forTarget.selector + '[title]';
             }
 
             $('body').off('.tooltip').on(this.cfg.show.event + '.tooltip', selector, function(event) {
@@ -63,7 +67,7 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
             }
         }
 
-        PrimeFacesExt.removeWidgetScript(cfg.id)
+        this.removeScriptElement(id);
     },
 
     show : function() {

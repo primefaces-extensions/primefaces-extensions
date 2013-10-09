@@ -30,8 +30,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
-
-import org.primefaces.component.behavior.ajax.AjaxBehaviorListenerImpl;
+import javax.faces.event.AjaxBehaviorListener;
 
 /**
  * Class for all added at runtime listeners specified by SelectDetailLevel.
@@ -40,7 +39,7 @@ import org.primefaces.component.behavior.ajax.AjaxBehaviorListenerImpl;
  * @version $Revision$
  * @since   0.2
  */
-public class SelectDetailLevelListener extends AjaxBehaviorListenerImpl implements ActionListener, StateHolder {
+public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionListener, StateHolder {
 
 	private MethodExpression listener;
 
@@ -58,7 +57,6 @@ public class SelectDetailLevelListener extends AjaxBehaviorListenerImpl implemen
 		process(actionEvent.getComponent());
 	}
 
-	@Override
 	public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
 		process(event.getComponent());
 	}

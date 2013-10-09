@@ -18,8 +18,6 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.el.MethodExpression;
@@ -28,7 +26,6 @@ import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.AbortProcessingException;
@@ -39,7 +36,8 @@ import javax.faces.event.PostRestoreStateEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.component.menuitem.MenuItem;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.MenuModel;
 import org.primefaces.util.Constants;
 
 /**
@@ -56,7 +54,6 @@ public class MasterDetail extends UIComponentBase {
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MasterDetail";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MasterDetailRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String CONTEXT_VALUE_VALUE_EXPRESSION = "mdContextValueVE";
 	public static final String SELECTED_LEVEL_VALUE_EXPRESSION = "selectedLevelVE";
@@ -124,7 +121,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setLevel(int level) {
-		setAttribute(PropertyKeys.level, level);
+		getStateHelper().put(PropertyKeys.level, level);
 	}
 
 	public Object getContextValue() {
@@ -132,7 +129,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setContextValue(Object contextValue) {
-		setAttribute(PropertyKeys.contextValue, contextValue);
+		getStateHelper().put(PropertyKeys.contextValue, contextValue);
 	}
 
 	public MethodExpression getSelectLevelListener() {
@@ -140,7 +137,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setSelectLevelListener(MethodExpression selectLevelListener) {
-		setAttribute(PropertyKeys.selectLevelListener, selectLevelListener);
+		getStateHelper().put(PropertyKeys.selectLevelListener, selectLevelListener);
 	}
 
 	public boolean isShowBreadcrumb() {
@@ -148,7 +145,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
-		setAttribute(PropertyKeys.showBreadcrumb, showBreadcrumb);
+		getStateHelper().put(PropertyKeys.showBreadcrumb, showBreadcrumb);
 	}
 
 	public boolean isShowAllBreadcrumbItems() {
@@ -156,7 +153,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setShowAllBreadcrumbItems(boolean showAllBreadcrumbItems) {
-		setAttribute(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
+		getStateHelper().put(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
 	}
 
 	public boolean isBreadcrumbAboveHeader() {
@@ -164,7 +161,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setBreadcrumbAboveHeader(boolean breadcrumbAboveHeader) {
-		setAttribute(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
+		getStateHelper().put(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
 	}
 
 	public String getStyle() {
@@ -172,7 +169,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyle(String style) {
-		setAttribute(PropertyKeys.style, style);
+		getStateHelper().put(PropertyKeys.style, style);
 	}
 
 	public String getStyleClass() {
@@ -180,32 +177,7 @@ public class MasterDetail extends UIComponentBase {
 	}
 
 	public void setStyleClass(String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+		getStateHelper().put(PropertyKeys.styleClass, styleClass);
 	}
 
 	@Override
@@ -345,7 +317,7 @@ public class MasterDetail extends UIComponentBase {
 		}
 
 		// get component caused this ajax request
-		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM);
+		final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
 		// get resolved context value
@@ -394,7 +366,9 @@ public class MasterDetail extends UIComponentBase {
 			}
 		}
 
-		if (breadCrumb != null && breadCrumb.getChildCount() < 1) {
+		MenuModel model = (breadCrumb != null ? breadCrumb.getModel() : null);
+
+		if (model != null && model.getElements().isEmpty()) {
 			String clientId = getClientId();
 			String menuItemIdPrefix = getId() + "_bcItem_";
 
@@ -403,34 +377,19 @@ public class MasterDetail extends UIComponentBase {
 					int level = ((MasterDetailLevel) child).getLevel();
 
 					// create menu item to detail level
-					MenuItem menuItem = new MenuItem();
+					DefaultMenuItem menuItem = new DefaultMenuItem();
 					menuItem.setId(menuItemIdPrefix + level);
 					menuItem.setAjax(true);
 					menuItem.setImmediate(true);
 					menuItem.setProcess("@none");
 					menuItem.setUpdate(null);
 
-					final String menuItemId = menuItem.getId();
+					// add UIParameter
+					menuItem.setParam(clientId + MasterDetail.SELECT_DETAIL_REQUEST, true);
+					menuItem.setParam(clientId + MasterDetail.CURRENT_LEVEL, -1);
+					menuItem.setParam(clientId + MasterDetail.SELECTED_LEVEL, level);
 
-					UIParameter uiParameter = new UIParameter();
-					uiParameter.setId(menuItemId + "_sdr");
-					uiParameter.setName(clientId + MasterDetail.SELECT_DETAIL_REQUEST);
-					uiParameter.setValue(true);
-					menuItem.getChildren().add(uiParameter);
-
-					uiParameter = new UIParameter();
-					uiParameter.setId(menuItemId + "_cl");
-					uiParameter.setName(clientId + MasterDetail.CURRENT_LEVEL);
-					uiParameter.setValue(-1); // set dummy value and update it in renderer
-					menuItem.getChildren().add(uiParameter);
-
-					uiParameter = new UIParameter();
-					uiParameter.setId(menuItemId + "_sl");
-					uiParameter.setName(clientId + MasterDetail.SELECTED_LEVEL);
-					uiParameter.setValue(level);
-					menuItem.getChildren().add(uiParameter);
-
-					breadCrumb.getChildren().add(menuItem);
+					model.addElement(menuItem);
 				}
 			}
 		}

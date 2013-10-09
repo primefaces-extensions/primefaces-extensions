@@ -20,12 +20,11 @@ package org.primefaces.extensions.component.waypoint;
 
 import java.io.IOException;
 
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -48,17 +47,9 @@ public class WaypointRenderer extends CoreRenderer {
 		final String clientId = waypoint.getClientId(fc);
 
 		// try to get context (which scrollable element the waypoint belongs to and acts within)
-		String context = waypoint.getForContext();
-		if (context != null) {
-			UIComponent forComponent = component.findComponent(context);
-			if (forComponent == null) {
-				throw new FacesException("Cannot find component '" + context + "'.");
-			}
+		String context = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getForContext());
 
-			context = ComponentUtils.escapeJQueryId(forComponent.getClientId(fc));
-		} else {
-			context = waypoint.getForContextSelector();
-		}
+		String target = SearchExpressionFacade.resolveComponentsForClientWithParentFallback(fc, waypoint, waypoint.getFor());
 
 		final String widget = waypoint.resolveWidgetVar();
 
@@ -67,7 +58,7 @@ public class WaypointRenderer extends CoreRenderer {
 
 		writer.write("PrimeFacesExt.cw('Waypoint', '" + widget + "',{");
 		writer.write("id:'" + clientId + "'");
-		writer.write(",target:'" + ComponentUtils.findTarget(fc, waypoint) + "'");
+		writer.write(",target:'" + target + "'");
 
 		if (context != null) {
 			writer.write(",context:'" + context + "'");
@@ -83,8 +74,8 @@ public class WaypointRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, waypoint);
 
-		writer.write("});");
-		writer.write(widget + ".destroy().create();");
+		writer.write("});PF('");
+		writer.write(widget + "').destroy().create();");
 		writer.write("});");
 		endScript(writer);
 	}

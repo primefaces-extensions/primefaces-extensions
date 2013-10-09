@@ -96,7 +96,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getItemLabel() {
@@ -104,7 +104,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setItemLabel(final String itemLabel) {
-		setAttribute(TriStateCheckbox.PropertyKeys.itemLabel, itemLabel);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.itemLabel, itemLabel);
 	}
 
 	public String getStateOneIcon() {
@@ -112,7 +112,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateOneIcon(final String stateOneIcon) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
 	}
 
 	public String getStateTwoIcon() {
@@ -120,7 +120,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateTwoIcon(final String stateTwoIcon) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
 	}
 
 	public String getStateThreeIcon() {
@@ -128,7 +128,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateThreeIcon(final String stateThreeIcon) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
 	}
         
         public String getStateOneTitle() {
@@ -136,7 +136,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateOneTitle(final String stateOneTitle) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
 	}
         
         public String getStateTwoTitle() {
@@ -144,7 +144,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateTwoTitle(final String stateTwoTitle) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
 	}
         
         public String getStateThreeTitle() {
@@ -152,7 +152,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 	}
 
 	public void setStateThreeTitle(final String stateThreeTitle) {
-		setAttribute(TriStateCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
+		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
 
 	public String resolveWidgetVar() {
@@ -164,30 +164,5 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

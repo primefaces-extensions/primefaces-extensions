@@ -101,7 +101,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.widgetVar, widgetVar);
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
 	@Override
 	public void setLayout(final String layout) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.layout, layout);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.layout, layout);
 	}
 
 	public String getStateOneIcon() {
@@ -119,7 +119,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateOneIcon(final String stateOneIcon) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateOneIcon, stateOneIcon);
 	}
 
 	public String getStateTwoIcon() {
@@ -127,7 +127,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateTwoIcon(final String stateTwoIcon) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateTwoIcon, stateTwoIcon);
 	}
 
 	public String getStateThreeIcon() {
@@ -135,7 +135,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateThreeIcon(final String stateThreeIcon) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeIcon, stateThreeIcon);
 	}
 
         public String getStateOneTitle() {
@@ -143,7 +143,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateOneTitle(final String stateOneTitle) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateOneTitle, stateOneTitle);
 	}
         
         public String getStateTwoTitle() {
@@ -151,7 +151,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateTwoTitle(final String stateTwoTitle) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, stateTwoTitle);
 	}
         
         public String getStateThreeTitle() {
@@ -159,7 +159,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
 
 	public void setStateThreeTitle(final String stateThreeTitle) {
-		setAttribute(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
+		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
         
 	public String resolveWidgetVar() {
@@ -171,31 +171,6 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(final TriStateManyCheckbox.PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	@Override

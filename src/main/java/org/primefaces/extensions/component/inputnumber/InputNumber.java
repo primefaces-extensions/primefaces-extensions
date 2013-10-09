@@ -28,6 +28,8 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 
 /**
@@ -44,17 +46,17 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "inputnumber/inputnumber.js")
 })
-public class InputNumber extends HtmlInputText implements Widget {
+public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputNumber";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputNumberRenderer";
 	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
-	
+
 	public final static String INPUTNUMBER_CLASS = "ui-inputNum ui-widget";
-        private  String decimalSeparator;
-        private  String thousandSeparator;
+	private  String decimalSeparator;
+	private  String thousandSeparator;
 
 	/**
 	 * PropertyKeys
@@ -75,7 +77,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 		maxValue,
 		roundMethod,
 		decimalPlaces,
-                emptyValue;
+		emptyValue;
 		String toString;
 
 		PropertyKeys(final String toString) {
@@ -91,10 +93,10 @@ public class InputNumber extends HtmlInputText implements Widget {
 		}
 	}
 
-        public InputNumber() {
+	public InputNumber() {
 		setRendererType(DEFAULT_RENDERER);     
-                decimalSeparator = null;
-                thousandSeparator = null;
+		decimalSeparator = null;
+		thousandSeparator = null;
 	}
 
 	@Override
@@ -107,7 +109,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getDecimalSeparator() {
@@ -115,7 +117,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setDecimalSeparator(final String decimalSeparator) {
-		setAttribute(PropertyKeys.decimalSeparator, decimalSeparator);
+		getStateHelper().put(PropertyKeys.decimalSeparator, decimalSeparator);
 	}
 
 	public String getThousandSeparator() {
@@ -123,7 +125,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setThousandSeparator(final String thousandSeparator) {
-		setAttribute(PropertyKeys.thousandSeparator, thousandSeparator);
+		getStateHelper().put(PropertyKeys.thousandSeparator, thousandSeparator);
 	}
 
 	public String getSymbol() {
@@ -131,7 +133,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setSymbol(final String symbol) {
-		setAttribute(PropertyKeys.symbol, symbol);
+		getStateHelper().put(PropertyKeys.symbol, symbol);
 	}
 
 	public String getSymbolPosition() {
@@ -139,7 +141,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setSymbolPosition(final String symbolPosition) {
-		setAttribute(PropertyKeys.symbolPosition, symbolPosition);
+		getStateHelper().put(PropertyKeys.symbolPosition, symbolPosition);
 	}
 
 	public String getMinValue() {
@@ -147,7 +149,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setMinValue(final String minValue) {
-		setAttribute(PropertyKeys.minValue, minValue);
+		getStateHelper().put(PropertyKeys.minValue, minValue);
 	}
 
 	public String getMaxValue() {
@@ -155,7 +157,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setMaxValue(final String maxValue) {
-		setAttribute(PropertyKeys.maxValue, maxValue);
+		getStateHelper().put(PropertyKeys.maxValue, maxValue);
 	}
 
 	public String getRoundMethod() {
@@ -163,7 +165,7 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setRoundMethod(final String roundMethod) {
-		setAttribute(PropertyKeys.roundMethod, roundMethod);
+		getStateHelper().put(PropertyKeys.roundMethod, roundMethod);
 	}
 
 	public String getDecimalPlaces() {
@@ -171,15 +173,15 @@ public class InputNumber extends HtmlInputText implements Widget {
 	}
 
 	public void setDecimalPlaces(final String decimalPlaces) {
-		setAttribute(PropertyKeys.decimalPlaces, decimalPlaces);
+		getStateHelper().put(PropertyKeys.decimalPlaces, decimalPlaces);
 	}
-        
-        public String getEmptyValue() {
+
+	public String getEmptyValue() {
 		return (String) getStateHelper().eval(PropertyKeys.emptyValue, "empty");
 	}
 
 	public void setEmptyValue(final String emptyValue) {
-		setAttribute(PropertyKeys.emptyValue, emptyValue);
+		getStateHelper().put(PropertyKeys.emptyValue, emptyValue);
 	}
 
 	public String resolveWidgetVar() {
@@ -193,46 +195,25 @@ public class InputNumber extends HtmlInputText implements Widget {
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
 	}
 
-	public void setAttribute(final org.primefaces.extensions.component.inputnumber.InputNumber.PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
+	private String getCalculatedDecimalSepartor(){
+		if(decimalSeparator==null){
+			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
+			decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
 		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+		return decimalSeparator;
 	}
-        
-        private String getCalculatedDecimalSepartor(){
-            if(decimalSeparator==null){
-                Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-                DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
-                decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
-            }
-            return decimalSeparator;
-        }
-        
-        private String getCalculatedThousandSeparator(){
-            if(thousandSeparator==null){               
-                Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
-                DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
-                thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
-            }
-            return thousandSeparator;           
-        }
+
+	private String getCalculatedThousandSeparator(){
+		if(thousandSeparator==null){               
+			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
+			thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
+		}
+		return thousandSeparator;           
+	}
+
+	public String getInputClientId() {
+		return getClientId() + "_input";
+	}
 }

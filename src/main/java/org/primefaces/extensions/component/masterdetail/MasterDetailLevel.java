@@ -79,7 +79,7 @@ public class MasterDetailLevel extends UIComponentBase {
 	}
 
 	public void setLevel(int level) {
-		setAttribute(PropertyKeys.level, level);
+		getStateHelper().put(PropertyKeys.level, level);
 	}
 
 	public String getContextVar() {
@@ -87,7 +87,7 @@ public class MasterDetailLevel extends UIComponentBase {
 	}
 
 	public void setContextVar(String contextVar) {
-		setAttribute(PropertyKeys.contextVar, contextVar);
+		getStateHelper().put(PropertyKeys.contextVar, contextVar);
 	}
 
 	public String getLevelLabel() {
@@ -95,7 +95,7 @@ public class MasterDetailLevel extends UIComponentBase {
 	}
 
 	public void setLevelLabel(String levelLabel) {
-		setAttribute(PropertyKeys.levelLabel, levelLabel);
+		getStateHelper().put(PropertyKeys.levelLabel, levelLabel);
 	}
 
 	public boolean isLevelDisabled() {
@@ -103,31 +103,6 @@ public class MasterDetailLevel extends UIComponentBase {
 	}
 
 	public void setLevelDisabled(boolean levelDisabled) {
-		setAttribute(PropertyKeys.levelDisabled, levelDisabled);
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+		getStateHelper().put(PropertyKeys.levelDisabled, levelDisabled);
 	}
 }

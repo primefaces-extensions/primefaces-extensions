@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.el.MethodExpression;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UICommand;
@@ -80,7 +79,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		partialSubmit,
 		action,
 		autoRun,
-		actionListener;
+		actionListener,
+		resetValues,
+		ignoreAutoUpdate;
 
 		private String toString;
 
@@ -111,7 +112,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setName(final String name) {
-		setAttribute(PropertyKeys.name, name);
+		getStateHelper().put(PropertyKeys.name, name);
 	}
 
 	public String getUpdate() {
@@ -119,7 +120,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setUpdate(final String update) {
-		setAttribute(PropertyKeys.update, update);
+		getStateHelper().put(PropertyKeys.update, update);
 	}
 
 	public String getProcess() {
@@ -127,7 +128,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setProcess(final String process) {
-		setAttribute(PropertyKeys.process, process);
+		getStateHelper().put(PropertyKeys.process, process);
 	}
 
 	public String getOnstart() {
@@ -135,7 +136,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setOnstart(final String onstart) {
-		setAttribute(PropertyKeys.onstart, onstart);
+		getStateHelper().put(PropertyKeys.onstart, onstart);
 	}
 
 	public String getOncomplete() {
@@ -143,7 +144,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setOncomplete(final String oncomplete) {
-		setAttribute(PropertyKeys.oncomplete, oncomplete);
+		getStateHelper().put(PropertyKeys.oncomplete, oncomplete);
 	}
 
 	public String getOnerror() {
@@ -151,7 +152,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setOnerror(final String onerror) {
-		setAttribute(PropertyKeys.onerror, onerror);
+		getStateHelper().put(PropertyKeys.onerror, onerror);
 	}
 
 	public String getOnsuccess() {
@@ -159,7 +160,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setOnsuccess(final String onsuccess) {
-		setAttribute(PropertyKeys.onsuccess, onsuccess);
+		getStateHelper().put(PropertyKeys.onsuccess, onsuccess);
 	}
 
 	public boolean isGlobal() {
@@ -167,7 +168,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setGlobal(final boolean global) {
-		setAttribute(PropertyKeys.global, global);
+		getStateHelper().put(PropertyKeys.global, global);
 	}
 
 	public boolean isAsync() {
@@ -175,7 +176,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setAsync(final boolean async) {
-		setAttribute(PropertyKeys.async, async);
+		getStateHelper().put(PropertyKeys.async, async);
 	}
 
 	public boolean isPartialSubmit() {
@@ -183,7 +184,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setPartialSubmit(final boolean partialSubmit) {
-		setAttribute(PropertyKeys.partialSubmit, partialSubmit);
+		getStateHelper().put(PropertyKeys.partialSubmit, partialSubmit);
 	}
 
 	public boolean isAutoRun() {
@@ -191,7 +192,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public void setAutoRun(final boolean autoRun) {
-		setAttribute(PropertyKeys.autoRun, autoRun);
+		getStateHelper().put(PropertyKeys.autoRun, autoRun);
 	}
 
 	public MethodExpression getActionListenerMethodExpression() {
@@ -205,31 +206,26 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public boolean isPartialSubmitSet() {
 		return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
 	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
+	
+	public boolean isResetValues() {
+		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.resetValues, false);
 	}
+
+	public void setResetValues(boolean resetValues) {
+		getStateHelper().put(PropertyKeys.resetValues, resetValues);
+	}
+	
+	public boolean isIgnoreAutoUpdate() {
+		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.ignoreAutoUpdate, false);
+	}
+
+	public void setIgnoreAutoUpdate(boolean ignoreAutoUpdate) {
+		getStateHelper().put(PropertyKeys.ignoreAutoUpdate, ignoreAutoUpdate);
+	}
+
+    public boolean isResetValuesSet() {
+        return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
+    }
 
 	@Override
 	public void broadcast(final FacesEvent event) throws AbortProcessingException {
@@ -328,5 +324,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		final String clientId = getClientId(context);
 
 		return params.get(clientId + "_" + name);
+	}
+
+	public boolean isAjaxified() {
+		return true;
 	}
 }

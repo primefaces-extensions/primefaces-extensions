@@ -20,6 +20,8 @@ package org.primefaces.extensions.util;
 
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+
 import org.primefaces.extensions.component.base.AbstractParameter;
 
 /**
@@ -30,6 +32,10 @@ import org.primefaces.extensions.component.base.AbstractParameter;
  * @since 0.5
  */
 public class AjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilder {
+
+	public AjaxRequestBuilder(FacesContext context) {
+		super(context);
+	}
 
 	public AjaxRequestBuilder params(final String clientId, final List<AbstractParameter> parameters) {
 		boolean paramWritten = false;

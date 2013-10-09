@@ -145,7 +145,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setTheme(final String theme) {
-		setAttribute(PropertyKeys.theme, theme);
+		getStateHelper().put(PropertyKeys.theme, theme);
 	}
 
 	public String getMode() {
@@ -153,7 +153,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setMode(final String mode) {
-		setAttribute(PropertyKeys.mode, mode);
+		getStateHelper().put(PropertyKeys.mode, mode);
 	}
 
 	public String getKeyMap() {
@@ -161,7 +161,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setKeyMap(final String keyMap) {
-		setAttribute(PropertyKeys.keyMap, keyMap);
+		getStateHelper().put(PropertyKeys.keyMap, keyMap);
 	}
 
 	public String getWidgetVar() {
@@ -169,7 +169,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public Integer getIndentUnit() {
@@ -177,7 +177,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setIndentUnit(final Integer indentUnit) {
-		setAttribute(PropertyKeys.indentUnit, indentUnit);
+		getStateHelper().put(PropertyKeys.indentUnit, indentUnit);
 	}
 
 	public Integer getTabSize() {
@@ -185,7 +185,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setFirstLineNumber(final Integer firstLineNumber) {
-		setAttribute(PropertyKeys.firstLineNumber, firstLineNumber);
+		getStateHelper().put(PropertyKeys.firstLineNumber, firstLineNumber);
 	}
 
 	public Integer getFirstLineNumber() {
@@ -193,7 +193,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setTabSize(final Integer tabSize) {
-		setAttribute(PropertyKeys.tabSize, tabSize);
+		getStateHelper().put(PropertyKeys.tabSize, tabSize);
 	}
 
 	public Boolean isLineNumbers() {
@@ -201,7 +201,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setLineNumbers(final Boolean lineNumbers) {
-		setAttribute(PropertyKeys.lineNumbers, lineNumbers);
+		getStateHelper().put(PropertyKeys.lineNumbers, lineNumbers);
 	}
 
 	public Boolean isSmartIndent() {
@@ -209,7 +209,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setSmartIndent(final Boolean smartIndent) {
-		setAttribute(PropertyKeys.smartIndent, smartIndent);
+		getStateHelper().put(PropertyKeys.smartIndent, smartIndent);
 	}
 
 	public Boolean isReadOnly() {
@@ -217,7 +217,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setReadOnly(final Boolean readOnly) {
-		setAttribute(PropertyKeys.readOnly, readOnly);
+		getStateHelper().put(PropertyKeys.readOnly, readOnly);
 	}
 
 	public Boolean isIndentWithTabs() {
@@ -225,7 +225,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setIndentWithTabs(final Boolean indentWithTabs) {
-		setAttribute(PropertyKeys.indentWithTabs, indentWithTabs);
+		getStateHelper().put(PropertyKeys.indentWithTabs, indentWithTabs);
 	}
 
 	public Boolean isElectricChars() {
@@ -233,7 +233,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setElectricChars(final Boolean electricChars) {
-		setAttribute(PropertyKeys.electricChars, electricChars);
+		getStateHelper().put(PropertyKeys.electricChars, electricChars);
 	}
 
 	public Boolean isLineWrapping() {
@@ -241,7 +241,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setLineWrapping(final Boolean lineWrapping) {
-		setAttribute(PropertyKeys.lineWrapping, lineWrapping);
+		getStateHelper().put(PropertyKeys.lineWrapping, lineWrapping);
 	}
 
 	public Boolean isGutter() {
@@ -249,7 +249,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setGutter(final Boolean gutter) {
-		setAttribute(PropertyKeys.gutter, gutter);
+		getStateHelper().put(PropertyKeys.gutter, gutter);
 	}
 
 	public Boolean isFixedGutter() {
@@ -257,7 +257,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setFixedGutter(final Boolean fixedGutter) {
-		setAttribute(PropertyKeys.fixedGutter, fixedGutter);
+		getStateHelper().put(PropertyKeys.fixedGutter, fixedGutter);
 	}
 
 	public Boolean isMatchBrackets() {
@@ -265,7 +265,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setMatchBrackets(final Boolean matchBrackets) {
-		setAttribute(PropertyKeys.matchBrackets, matchBrackets);
+		getStateHelper().put(PropertyKeys.matchBrackets, matchBrackets);
 	}
 
 	public Integer getWorkTime() {
@@ -273,7 +273,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setWorkTime(final Integer workTime) {
-		setAttribute(PropertyKeys.workTime, workTime);
+		getStateHelper().put(PropertyKeys.workTime, workTime);
 	}
 
 	public Integer getWorkDelay() {
@@ -281,7 +281,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setWorkDelay(final Integer workDelay) {
-		setAttribute(PropertyKeys.workDelay, workDelay);
+		getStateHelper().put(PropertyKeys.workDelay, workDelay);
 	}
 
 	public Integer getPollInterval() {
@@ -289,7 +289,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setPollInterval(final Integer pollInterval) {
-		setAttribute(PropertyKeys.pollInterval, pollInterval);
+		getStateHelper().put(PropertyKeys.pollInterval, pollInterval);
 	}
 
 	public Integer getUndoDepth() {
@@ -297,7 +297,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setUndoDepth(final Integer undoDepth) {
-		setAttribute(PropertyKeys.undoDepth, undoDepth);
+		getStateHelper().put(PropertyKeys.undoDepth, undoDepth);
 	}
 
 	@Override
@@ -307,7 +307,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 
 	@Override
 	public void setTabindex(final String tabindex) {
-		setAttribute(PropertyKeys.tabindex, tabindex);
+		getStateHelper().put(PropertyKeys.tabindex, tabindex);
 	}
 
 	public String getExtraKeys() {
@@ -315,7 +315,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setExtraKeys(final String extraKeys) {
-		setAttribute(PropertyKeys.extraKeys, extraKeys);
+		getStateHelper().put(PropertyKeys.extraKeys, extraKeys);
 	}
 
 	public MethodExpression getCompleteMethod() {
@@ -323,7 +323,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setCompleteMethod(final MethodExpression completeMethod) {
-		setAttribute(PropertyKeys.completeMethod, completeMethod);
+		getStateHelper().put(PropertyKeys.completeMethod, completeMethod);
 	}
 
 	public String getProcess() {
@@ -331,7 +331,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setProcess(final String process) {
-		setAttribute(PropertyKeys.process, process);
+		getStateHelper().put(PropertyKeys.process, process);
 	}
 
 	public String getOnstart() {
@@ -339,7 +339,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setOnstart(final String onstart) {
-		setAttribute(PropertyKeys.onstart, onstart);
+		getStateHelper().put(PropertyKeys.onstart, onstart);
 	}
 
 	public String getOncomplete() {
@@ -347,7 +347,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setOncomplete(final String oncomplete) {
-		setAttribute(PropertyKeys.oncomplete, oncomplete);
+		getStateHelper().put(PropertyKeys.oncomplete, oncomplete);
 	}
 
 	public String getOnerror() {
@@ -355,7 +355,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setOnerror(final String onerror) {
-		setAttribute(PropertyKeys.onerror, onerror);
+		getStateHelper().put(PropertyKeys.onerror, onerror);
 	}
 
 	public String getOnsuccess() {
@@ -363,7 +363,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setOnsuccess(final String onsuccess) {
-		setAttribute(PropertyKeys.onsuccess, onsuccess);
+		getStateHelper().put(PropertyKeys.onsuccess, onsuccess);
 	}
 
 	public boolean isGlobal() {
@@ -371,7 +371,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setGlobal(final boolean global) {
-		setAttribute(PropertyKeys.global, global);
+		getStateHelper().put(PropertyKeys.global, global);
 	}
 
 	public boolean isAsync() {
@@ -379,7 +379,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setAsync(final boolean async) {
-		setAttribute(PropertyKeys.async, async);
+		getStateHelper().put(PropertyKeys.async, async);
 	}
 
 	public boolean isEscape() {
@@ -387,7 +387,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setEscape(final boolean escape) {
-		setAttribute(PropertyKeys.escape, escape);
+		getStateHelper().put(PropertyKeys.escape, escape);
 	}
 
 	public boolean isEscapeSuggestions() {
@@ -395,7 +395,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	}
 
 	public void setEscapeSuggestions(final boolean suggestions) {
-		setAttribute(PropertyKeys.escapeSuggestions, suggestions);
+		getStateHelper().put(PropertyKeys.escapeSuggestions, suggestions);
 	}
 
 	public String resolveWidgetVar() {
@@ -407,31 +407,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 
 	private List<String> suggestions = null;

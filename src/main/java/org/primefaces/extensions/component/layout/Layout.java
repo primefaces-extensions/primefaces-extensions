@@ -18,11 +18,9 @@
 
 package org.primefaces.extensions.component.layout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -69,7 +67,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Layout";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String POSITION_SEPARATOR = "_";
 	public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-all";
@@ -139,7 +136,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setWidgetVar(String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public boolean isFullPage() {
@@ -147,7 +144,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setFullPage(boolean fullPage) {
-		setAttribute(PropertyKeys.fullPage, fullPage);
+		getStateHelper().put(PropertyKeys.fullPage, fullPage);
 	}
 
 	public Object getOptions() {
@@ -155,7 +152,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setOptions(Object options) {
-		setAttribute(PropertyKeys.options, options);
+		getStateHelper().put(PropertyKeys.options, options);
 	}
 
 	public String getStyle() {
@@ -163,7 +160,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setStyle(String style) {
-		setAttribute(PropertyKeys.style, style);
+		getStateHelper().put(PropertyKeys.style, style);
 	}
 
 	public String getStyleClass() {
@@ -171,7 +168,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setStyleClass(String styleClass) {
-		setAttribute(PropertyKeys.styleClass, styleClass);
+		getStateHelper().put(PropertyKeys.styleClass, styleClass);
 	}
 
 	public String getState() {
@@ -179,7 +176,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setState(String state) {
-		setAttribute(PropertyKeys.state, state);
+		getStateHelper().put(PropertyKeys.state, state);
 	}
 
 	public boolean isStateCookie() {
@@ -187,7 +184,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setStateCookie(boolean stateCookie) {
-		setAttribute(PropertyKeys.stateCookie, stateCookie);
+		getStateHelper().put(PropertyKeys.stateCookie, stateCookie);
 	}
 
 	public String getTogglerTipOpen() {
@@ -195,7 +192,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setTogglerTipOpen(String togglerTipOpen) {
-		setAttribute(PropertyKeys.togglerTip_open, togglerTipOpen);
+		getStateHelper().put(PropertyKeys.togglerTip_open, togglerTipOpen);
 	}
 
 	public String getTogglerTipClosed() {
@@ -203,7 +200,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setTogglerTipClosed(String togglerTipClosed) {
-		setAttribute(PropertyKeys.togglerTip_closed, togglerTipClosed);
+		getStateHelper().put(PropertyKeys.togglerTip_closed, togglerTipClosed);
 	}
 
 	public String getResizerTip() {
@@ -211,7 +208,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setResizerTip(String resizerTip) {
-		setAttribute(PropertyKeys.resizerTip, resizerTip);
+		getStateHelper().put(PropertyKeys.resizerTip, resizerTip);
 	}
 
 	public boolean isMaskPanesEarly() {
@@ -219,7 +216,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	}
 
 	public void setMaskPanesEarly(boolean maskPanesEarly) {
-		setAttribute(PropertyKeys.maskPanesEarly, maskPanesEarly);
+		getStateHelper().put(PropertyKeys.maskPanesEarly, maskPanesEarly);
 	}
 
 	@Override
@@ -263,11 +260,12 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		String eventName = params.get(Constants.PARTIAL_BEHAVIOR_EVENT_PARAM);
-		String clientId = this.getClientId(context);
 
 		if (isSelfRequest(context)) {
+			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+			String clientId = this.getClientId(context);
+
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 			LayoutPane pane = getLayoutPane(this, params.get(clientId + "_pane"));
 			if (pane == null) {
@@ -350,7 +348,8 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
 	private boolean isSelfRequest(FacesContext context) {
 		return this.getClientId(context)
-		           .equals(context.getExternalContext().getRequestParameterMap().get(Constants.PARTIAL_SOURCE_PARAM));
+		           .equals(context.getExternalContext().getRequestParameterMap().get(
+		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
 	public String resolveWidgetVar() {
@@ -362,30 +361,5 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	public void setAttribute(PropertyKeys property, Object value) {
-		getStateHelper().put(property, value);
-
-		@SuppressWarnings("unchecked")
-		List<String> setAttributes =
-		    (List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

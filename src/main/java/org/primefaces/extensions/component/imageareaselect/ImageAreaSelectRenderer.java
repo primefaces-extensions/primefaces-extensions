@@ -24,8 +24,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -48,7 +48,8 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 		final String clientId = imageAreaSelect.getClientId(context);
 		final String widgetVar = imageAreaSelect.resolveWidgetVar();
-		final String target = ComponentUtils.findTarget(context, imageAreaSelect);
+		final String target = SearchExpressionFacade.resolveComponentForClient(
+				context, imageAreaSelect, imageAreaSelect.getFor());
 
 		startScript(writer, clientId);
 

@@ -56,7 +56,7 @@ PrimeFacesExt.widget.Spotlight = PrimeFaces.widget.BaseWidget.extend({
 			this.unblock();
 		}
 
-		PrimeFacesExt.removeWidgetScript(this.id);
+		this.removeScriptElement(this.id);
 	},
 
 	enableModality: function() {

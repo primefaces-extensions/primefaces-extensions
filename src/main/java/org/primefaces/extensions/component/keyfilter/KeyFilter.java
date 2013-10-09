@@ -29,7 +29,6 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.EnhancedAttachable;
 
 /**
  * Component class for the <code>KeyFilter</code> component.
@@ -44,7 +43,7 @@ import org.primefaces.extensions.component.base.EnhancedAttachable;
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "keyfilter/keyfilter.js")
 })
-public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttachable {
+public class KeyFilter extends UIComponentBase implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.KeyFilter";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -61,7 +60,6 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 
 		widgetVar,
 		forValue("for"),
-		forSelector,
 		regEx,
 		mask,
 		testFunction,
@@ -96,7 +94,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setWidgetVar(final String widgetVar) {
-		setAttribute(PropertyKeys.widgetVar, widgetVar);
+		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
 	}
 
 	public String getFor() {
@@ -104,15 +102,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setFor(final String forValue) {
-		setAttribute(PropertyKeys.forValue, forValue);
-	}
-
-	public String getForSelector() {
-		return (String) getStateHelper().eval(PropertyKeys.forSelector, null);
-	}
-
-	public void setForSelector(final String forSelector) {
-		setAttribute(PropertyKeys.forSelector, forSelector);
+		getStateHelper().put(PropertyKeys.forValue, forValue);
 	}
 
 	public String getRegEx() {
@@ -120,7 +110,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setRegEx(final String regEx) {
-		setAttribute(PropertyKeys.regEx, regEx);
+		getStateHelper().put(PropertyKeys.regEx, regEx);
 	}
 
 	public String getMask() {
@@ -128,7 +118,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setMask(final String mask) {
-		setAttribute(PropertyKeys.mask, mask);
+		getStateHelper().put(PropertyKeys.mask, mask);
 	}
 
 	public String getTestFunction() {
@@ -136,7 +126,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setTestFunction(final String testFunction) {
-		setAttribute(PropertyKeys.testFunction, testFunction);
+		getStateHelper().put(PropertyKeys.testFunction, testFunction);
 	}
 
 	public Boolean getPreventPaste() {
@@ -144,7 +134,7 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 	}
 
 	public void setPreventPaste(final Boolean preventPaste) {
-		setAttribute(PropertyKeys.preventPaste, preventPaste);
+		getStateHelper().put(PropertyKeys.preventPaste, preventPaste);
 	}
 	
 	public String resolveWidgetVar() {
@@ -156,30 +146,5 @@ public class KeyFilter extends UIComponentBase implements Widget, EnhancedAttach
 		}
 
 		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setAttribute(final PropertyKeys property, final Object value) {
-		getStateHelper().put(property, value);
-
-		List<String> setAttributes =
-				(List<String>) this.getAttributes().get("javax.faces.component.UIComponentBase.attributesThatAreSet");
-		if (setAttributes == null) {
-			final String cname = this.getClass().getName();
-			if (cname != null && cname.startsWith(OPTIMIZED_PACKAGE)) {
-				setAttributes = new ArrayList<String>(6);
-				this.getAttributes().put("javax.faces.component.UIComponentBase.attributesThatAreSet", setAttributes);
-			}
-		}
-
-		if (setAttributes != null && value == null) {
-			final String attributeName = property.toString();
-			final ValueExpression ve = getValueExpression(attributeName);
-			if (ve == null) {
-				setAttributes.remove(attributeName);
-			} else if (!setAttributes.contains(attributeName)) {
-				setAttributes.add(attributeName);
-			}
-		}
 	}
 }

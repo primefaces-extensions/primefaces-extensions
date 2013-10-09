@@ -117,9 +117,9 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 				switch (crudOperationData.getCrudOperation()) {
 				case ADD:
 
-					sb.append(";");
+					sb.append(";PF('");
 					sb.append(widgetVar);
-					sb.append(".addEvent(");
+					sb.append("').addEvent(");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
 					                                       crudOperationData.getEvent()));
 					sb.append(")");
@@ -127,9 +127,9 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 				case UPDATE:
 
-					sb.append(";");
+					sb.append(";PF('");
 					sb.append(widgetVar);
-					sb.append(".changeEvent(");
+					sb.append("').changeEvent(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
@@ -139,27 +139,27 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 
 				case DELETE:
 
-					sb.append(";");
+					sb.append(";PF('");
 					sb.append(widgetVar);
-					sb.append(".deleteEvent(");
+					sb.append("').deleteEvent(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(")");
 					break;
 
 				case SELECT:
 
-					sb.append(";");
+					sb.append(";PF('");
 					sb.append(widgetVar);
-					sb.append(".setSelection(");
+					sb.append("').setSelection(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(")");
 					break;
 
 				case CLEAR:
 
-					sb.append(";");
+					sb.append(";PF('");
 					sb.append(widgetVar);
-					sb.append(".deleteAllEvents()");
+					sb.append("').deleteAllEvents()");
 					break;
 				}
 			}

@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Initializes the widget.
      *
@@ -30,24 +30,23 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.BaseWidget.extend({
         } else if (cfg.serverState) {
             this.stateHiddenField = $(jqId + "_state");
         }
-        
-        var $this = this;
 
         if (this.jqTarget.is(':visible')) {
-            this.createLayout();
+            this._render();
         } else {
-            var hiddenParent = this.jqTarget.parents('.ui-hidden-container:first');
+            var hiddenParent = this.jqTarget.closest('.ui-hidden-container');
             var hiddenParentWidget = hiddenParent.data('widget');
 
             if (hiddenParentWidget) {
-                hiddenParentWidget.addOnshowHandler(function () {
-                    return $this.createLayout();
+                var $this = this;
+                hiddenParentWidget.addOnshowHandler(this.id, function () {
+                    return $this._render();
                 });
             }
         }
     },
 
-    createLayout:function () {
+    _render:function () {
         // create layout
         this.layout = this.jqTarget.layout(this.cfg.options);
 
