@@ -83,7 +83,7 @@ public class TimelineRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = timeline.getClientId(context);
 		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
-		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTZ(), targetTZ);
+		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone(), targetTZ);
 		FastStringWriter fsw = new FastStringWriter();
 		FastStringWriter fswHtml = new FastStringWriter();
 

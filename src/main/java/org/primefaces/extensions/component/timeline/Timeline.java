@@ -18,7 +18,6 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -88,6 +87,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		var,
 		locale,
 		timeZone,
+                browserTimeZone,
 		style,
 		styleClass,
 		height,
@@ -188,6 +188,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	public void setTimeZone(Object timeZone) {
 		getStateHelper().put(PropertyKeys.timeZone, timeZone);
+	}
+
+	public Object getBrowserTimeZone() {
+		return getStateHelper().eval(PropertyKeys.browserTimeZone, null);
+	}
+
+	public void setBrowserTimeZone(Object timeZone) {
+		getStateHelper().put(PropertyKeys.browserTimeZone, timeZone);
 	}
 
 	public String getStyle() {
@@ -504,12 +512,12 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 			if ("add".equals(eventName)) {
 				// preset start / end date and the group
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
 				TimelineAddEvent te =
 				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
-				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
+				                         DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+				                         DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
 				                         params.get(clientId + "_group"));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
@@ -526,10 +534,10 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
 
 					// update start / end date and the group
-					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-					TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-					clonedEvent.setStartDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")));
-					clonedEvent.setEndDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
+					TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+					TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+					clonedEvent.setStartDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")));
+					clonedEvent.setEndDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
 					clonedEvent.setGroup(params.get(clientId + "_group"));
 				}
 
@@ -565,26 +573,25 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				return;
 			} else if ("rangechange".equals(eventName) || "rangechanged".equals(eventName)) {
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
 				TimelineRangeEvent te =
 				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
-				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
+				                           DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+				                           DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
 			} else if ("lazyload".equals(eventName)) {
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
 				TimelineLazyLoadEvent te =
 				    new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateFirst")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateFirst")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateSecond")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateSecond")));
-
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateFirst")),
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateFirst")),
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateSecond")),
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateSecond")));
 				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
@@ -602,14 +609,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				}
 
 				// preset start / end date, group, dragId and data object
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
 				TimelineDragDropEvent te =
 				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
-				                              params.get(clientId + "_group"), dragId, data);
-				te.setPhaseId(behaviorEvent.getPhaseId());
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
+                                                              params.get(clientId + "_group"), dragId, data);
+                                te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
@@ -625,6 +632,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
+        @Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
