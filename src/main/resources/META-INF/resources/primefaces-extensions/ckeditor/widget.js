@@ -185,7 +185,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 					}
 				});
 
-				editor.ui.addButton('Save', {label : editor.lang.save, command : 'save' });
+				editor.ui.addButton('Save', {label : editor.lang.save, command : 'save', title : '' });
 			}
 		}
 	},
