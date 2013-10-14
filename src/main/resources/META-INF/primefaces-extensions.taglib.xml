@@ -246,14 +246,6 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>
-                <![CDATA[Interval in ms for dirty checking. This is not required for the most cases but some internal CKEditor plugins does not throw the events which can be cached to check for changes. This timer checks for changes for the defined interval. Also this feature can be expensive for big documents. Default: 1000ms. 0 = deactivated.]]>
-            </description>
-            <name>checkDirtyInterval</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[Path to a custom CKEditor js config file.]]>
             </description>
             <name>customConfig</name>
@@ -294,6 +286,30 @@
             <name>escape</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when required field validation fails.]]></description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when conversion fails.]]></description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when validation fails.]]></description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression referring to a method validationg the input.]]></description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
         </attribute>
     </tag>
     <tag>
