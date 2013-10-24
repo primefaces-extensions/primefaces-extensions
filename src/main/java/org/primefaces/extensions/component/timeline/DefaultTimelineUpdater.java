@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.timeline;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -112,7 +111,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
 
 		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
-		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone(), targetTZ);
+		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
 
 		try {
 			for (CrudOperationData crudOperationData : crudOperationDatas) {
@@ -173,6 +172,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		}
 	}
 
+        @Override
 	public void afterPhase(PhaseEvent event) {
 		// NOOP.
 	}

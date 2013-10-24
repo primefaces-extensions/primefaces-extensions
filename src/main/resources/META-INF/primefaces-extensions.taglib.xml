@@ -2697,7 +2697,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Time zone that the user's browser / PC is running in. Allows the correct conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object. BrowserTimeZone must be provided if TimeZone is provided, or left empty otherwise. BrowserTimeZone defaults to the target timeZone.]]>
+                <![CDATA[Time zone that the user's browser / PC is running in. Allows the correct conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object. BrowserTimeZone should be provided if TimeZone is provided, or left empty otherwise. BrowserTimeZone defaults to the server's timeZone.]]>
             </description>
             <name>browserTimeZone</name>
             <required>false</required>
