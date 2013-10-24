@@ -18,10 +18,6 @@
 
 package org.primefaces.extensions.component.dynaform;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.extensions.model.dynaform.DynaFormControl;

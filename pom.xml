@@ -90,6 +90,7 @@
 								<include>inputnumber/**</include>
 								<include>waypoint/**</include>
 								<include>timeline/**</include>
+                                <include>fluidgrid/**</include>
 							</includes>
 							<aggregations>
 								<aggregation>
