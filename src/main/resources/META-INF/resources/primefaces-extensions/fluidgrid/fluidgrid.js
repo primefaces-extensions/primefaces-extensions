@@ -22,66 +22,71 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.BaseWidget.extend({
      * Creates this widget with all initialization steps.
      */
     _render: function () {
-        // TODO
+        this.$container = $(PrimeFaces.escapeClientId(this.id));
+        
+        // initialize Masonry after all images have been loaded  
+        this.$container.imagesLoaded($.proxy(function() {
+            this.$container.masonry(this.cfg.opts);
+        }, this));
     },
 
     addItems: function (elements) {
-        //$container.masonry( 'addItems', elements);
+        this.$container.masonry( 'addItems', elements);
     },
     
     appended: function (elements) {
-        //$container.masonry( 'appended', elements);
+        this.$container.masonry( 'appended', elements);
     },
     
     prepended: function (elements) {
-        //$container.masonry( 'prepended', elements);
+        this.$container.masonry( 'prepended', elements);
     },    
 
     bindResize: function () {
-        //$container.masonry('bindResize');
+        this.$container.masonry('bindResize');
     },
 
     unbindResize: function () {
-        //$container.masonry('unbindResize');
+        this.$container.masonry('unbindResize');
     },
     
     destroy: function () {
-        //$container.masonry('destroy');
+        this.$container.masonry('destroy');
     },
     
     getItemElements: function () {
-        //return $container.masonry('getItemElements');
+        return this.$container.masonry('getItemElements');
     },
     
     hide: function () {
-        //$container.masonry('hide');
+        this.$container.masonry('hide');
     },
     
     layout: function () {
-        //$container.masonry();
+        this.$container.masonry();
     },
     
     layoutItems: function (items, isStill) {
-        //$container.masonry('layoutItems', items, isStill);
+        this.$container.masonry('layoutItems', items, isStill);
     },
     
     reloadItems: function () {
-        //$container.masonry('reloadItems');
+        this.$container.masonry('reloadItems');
     },
     
     remove: function (elements) {
-        //$container.masonry( 'remove', elements);
+        this.$container.masonry( 'remove', elements);
     },
     
     reveal: function (items) {
-        //$container.masonry( 'reveal', items);
+        this.$container.masonry( 'reveal', items);
     },
     
     stamp: function (elements) {
-        //$container.masonry( 'stamp', elements);
+        this.$container.masonry( 'stamp', elements);
     },
     
     unstamp: function (elements) {
-        //$container.masonry( 'unstamp', elements);
+        this.$container.masonry( 'unstamp', elements);
     }
 });

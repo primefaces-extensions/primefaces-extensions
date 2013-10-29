@@ -21,46 +21,103 @@ package org.primefaces.extensions.component.fluidgrid;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.renderkit.CoreRenderer;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.Collection;
 
 /**
  * Renderer for {@link FluidGrid} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class FluidGridRenderer extends CoreRenderer
 {
     private static final String GRID_CLASS = "pe-fluidgrid";
-   	private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
-    
+    private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
+
     private static final String LIST_ROLE = "list";
     private static final String LIST_ITEM_ROLE = "listitem";
-    
+
     @Override
-   	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+        FluidGrid fluidGrid = (FluidGrid) component;
+
+        encodeMarkup(fc, fluidGrid);
+        encodeScript(fc, fluidGrid);
+    }
+
+    protected void encodeMarkup(FacesContext fc, FluidGrid fluidGrid) throws IOException {
+        ResponseWriter writer = fc.getResponseWriter();
+        String clientId = fluidGrid.getClientId(fc);
+        String styleClass = fluidGrid.getStyleClass();
+        styleClass = (styleClass == null) ? GRID_CLASS : GRID_CLASS + " " + styleClass;
+
+        writer.startElement("div", fluidGrid);
+        writer.writeAttribute("id", clientId, "id");
+        writer.writeAttribute("class", styleClass, "styleClass");
+        if (fluidGrid.getStyle() != null) {
+            writer.writeAttribute("style", fluidGrid.getStyle(), "style");
+        }
+
+        writer.writeAttribute("role", LIST_ROLE, null);
+
+        if (fluidGrid.getVar() != null) {
+            // dynamic items
+            Object value = fluidGrid.getValue();
+            if (value != null) {
+                if (!(value instanceof Collection<?>)) {
+                    throw new FacesException("Value in FluidGrid must be of type Collection / List");
+                }
+
+                @SuppressWarnings("unchecked")
+                Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+                for (FluidGridItem fluidGridItem : col) {
+                    // set data in request scope
+                    fluidGrid.setData(fluidGridItem);
+
+                    writer.startElement("div", null);
+
+                    // find ui item by type
+                    UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
+
+                    if (uiItem.getStyleClass() != null) {
+                        writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
+                    } else {
+                        writer.writeAttribute("class", GRID_ITEM_CLASS, null);
+                    }
+
+                    writer.writeAttribute("role", LIST_ITEM_ROLE, null);
+
+                    // encode content of pe:fluidGridItem
+                    uiItem.encodeAll(fc);
+
+                    writer.endElement("div");
+                }
+            }
+        } else {
+            // static items
+            // TODO
+        }
+
+        writer.endElement("div");
+    }
+
+    protected void encodeScript(FacesContext fc, FluidGrid fluidGrid) throws IOException {
         // TODO
     }
-    
-    protected void encodeMarkup(FacesContext fc, FluidGrid fluidGrid, Collection<FluidGridItem> items) throws IOException {
-       // TODO 
-    }
-    
-    protected void encodeScript(FacesContext fc, FluidGrid fluidGrid, Collection<FluidGridItem> items) throws IOException {
-        // TODO
-    }
-    
+
     @Override
-   	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-   		//Rendering happens on encodeEnd
-   	}
-   
-   	@Override
-   	public boolean getRendersChildren() {
-   		return true;
-   	}
+    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+        //Rendering happens on encodeEnd
+    }
+
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
 }

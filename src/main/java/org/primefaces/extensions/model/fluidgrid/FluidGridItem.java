@@ -16,8 +16,9 @@
 
 package org.primefaces.extensions.model.fluidgrid;
 
+import java.io.Serializable;
+
 import org.primefaces.extensions.model.common.KeyData;
-import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 
 /**
  * Class representing an item inside of <code>FluidGrid</code>.
@@ -26,23 +27,47 @@ import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
  * @version $Revision$
  * @since   1.1.0
  */
-public class FluidGridItem extends AbstractDynaFormElement implements KeyData
-{
-    public static final String DEFAULT_TYPE = "default";
-    
-    public String getKey() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+public class FluidGridItem implements KeyData, Serializable {
 
-    public void setKey(String key) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+	public static final String DEFAULT_TYPE = "default";
+	private static final String KEY_PREFIX_ITEM = "fgitem";
 
-    public Object getData() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+	private String key;
+	private Object data;
+	private String type;
 
-    public void setData(Object data) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+	public FluidGridItem() {
+	}
+
+	public FluidGridItem(Object data, String type, int pos) {
+		this.data = data;
+		if (type != null) {
+			this.type = type;
+		} else {
+			this.type = DEFAULT_TYPE;
+		}
+
+		// generate key
+		setKey(KEY_PREFIX_ITEM + pos);
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	public String getType() {
+		return type;
+	}
 }
