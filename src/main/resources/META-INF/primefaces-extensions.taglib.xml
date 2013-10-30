@@ -763,7 +763,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[FluidGrid is a grid layout library.]]></description>
+        <description><![CDATA[FluidGrid is a grid layout library. Client behavior events: layoutComplete - fired after a layout and all positioning transitions have been completed. (org.primefaces.extensions.event.LayoutCompleteEvent).]]></description>
         <tag-name>fluidGrid</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.FluidGrid</component-type>

@@ -14,7 +14,14 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
-
+        
+        this.cfg.opts.itemSelector = ".pe-fluidgrid-item";
+        this.cfg.opts.isInitLayout = false;
+        
+        if (this.cfg.opts.stamp) {
+            this.cfg.opts.stamp = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.opts.stamp).get();
+        }
+        
         this.renderDeferred();
     },
 
@@ -27,7 +34,40 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.BaseWidget.extend({
         // initialize Masonry after all images have been loaded  
         this.$container.imagesLoaded($.proxy(function() {
             this.$container.masonry(this.cfg.opts);
+            
+            // bind events
+            this.bindEvents();
+            
+            // trigger layout manually
+            this.$container.masonry();
         }, this));
+    },
+    
+    /**
+     * Binds events.
+     */
+    bindEvents: function () {
+        if (this.getBehavior("layoutComplete")) {
+            this.$container.masonry('off', 'layoutComplete');
+            this.$container.masonry('on', 'layoutComplete', $.proxy(function() {
+                var behavior = this.getBehavior("layoutComplete");
+                var ext = {
+                    params:[]
+                };
+    
+                behavior.call(this, null, ext);
+            }, this));
+        }
+    },
+    
+    /**
+     * Gets behavior callback by name or null.
+     * 
+     * @param name behavior name
+     * @return {Function}
+     */
+    getBehavior: function (name) {
+        return this.cfg.behaviors ? this.cfg.behaviors[name] : null;
     },
 
     addItems: function (elements) {

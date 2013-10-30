@@ -20,8 +20,10 @@ package org.primefaces.extensions.component.fluidgrid;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.event.LayoutCompleteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.util.Constants;
 
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
@@ -29,11 +31,16 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,13 +58,15 @@ import java.util.Map;
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"), 
         @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"), 
         @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")})
-public class FluidGrid extends AbstractDynamicData implements Widget
+public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder
 {
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FluidGridRenderer";
 
     private Map<String, UIFluidGridItem> items;
+
+    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("layoutComplete"));
 
     /**
      * Properties that are tracked by state saving.
@@ -190,6 +199,37 @@ public class FluidGrid extends AbstractDynamicData implements Widget
 
     public void setTransitionDuration(String transitionDuration) {
         getStateHelper().put(PropertyKeys.transitionDuration, transitionDuration);
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public void queueEvent(FacesEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (isSelfRequest(context)) {
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+            if ("layoutComplete".equals(eventName)) {
+                LayoutCompleteEvent layoutCompleteEvent = new LayoutCompleteEvent(
+                        this, ((AjaxBehaviorEvent) event).getBehavior());
+                layoutCompleteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(layoutCompleteEvent);
+
+                return;
+            }
+        }
+
+        super.queueEvent(event);
+    }
+
+    private boolean isSelfRequest(FacesContext context) {
+        return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants
+                .RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     public String resolveWidgetVar() {
