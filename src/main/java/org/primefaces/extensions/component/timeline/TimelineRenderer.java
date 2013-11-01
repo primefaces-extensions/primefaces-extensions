@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -83,8 +82,8 @@ public class TimelineRenderer extends CoreRenderer {
 
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = timeline.getClientId(context);
-		TimeZone timeZone = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
-		Calendar calendar = Calendar.getInstance(timeZone);
+		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
+		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
 		FastStringWriter fsw = new FastStringWriter();
 		FastStringWriter fswHtml = new FastStringWriter();
 
@@ -98,7 +97,7 @@ public class TimelineRenderer extends CoreRenderer {
 		List<TimelineEvent> events = model.getEvents();
 		int size = events != null ? events.size() : 0;
 		for (int i = 0; i < size; i++) {
-			writer.write(encodeEvent(context, fsw, fswHtml, timeline, calendar, timeZone, events.get(i)));
+			writer.write(encodeEvent(context, fsw, fswHtml, timeline, browserTZ, targetTZ, events.get(i)));
 			if (i + 1 < size) {
 				writer.write(",");
 			}
@@ -120,19 +119,19 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",moveable:" + timeline.isMoveable());
 
 		if (timeline.getStart() != null) {
-			writer.write(",start:" + encodeDate(calendar, timeZone, timeline.getStart()));
+			writer.write(",start:" + encodeDate(browserTZ, targetTZ, timeline.getStart()));
 		}
 
 		if (timeline.getEnd() != null) {
-			writer.write(",end:" + encodeDate(calendar, timeZone, timeline.getEnd()));
+			writer.write(",end:" + encodeDate(browserTZ, targetTZ, timeline.getEnd()));
 		}
 
 		if (timeline.getMin() != null) {
-			writer.write(",min:" + encodeDate(calendar, timeZone, timeline.getMin()));
+			writer.write(",min:" + encodeDate(browserTZ, targetTZ, timeline.getMin()));
 		}
 
 		if (timeline.getMax() != null) {
-			writer.write(",max:" + encodeDate(calendar, timeZone, timeline.getMax()));
+			writer.write(",max:" + encodeDate(browserTZ, targetTZ, timeline.getMax()));
 		}
 
 		writer.write(",zoomMin:" + timeline.getZoomMin());
@@ -189,13 +188,13 @@ public class TimelineRenderer extends CoreRenderer {
 	}
 
 	public String encodeEvent(FacesContext context, FastStringWriter fsw, FastStringWriter fswHtml, Timeline timeline,
-	                          Calendar calendar, TimeZone timeZone, TimelineEvent event) throws IOException {
+	                          TimeZone browserTZ, TimeZone targetTZ, TimelineEvent event) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 
-		fsw.write("{\"start\":" + encodeDate(calendar, timeZone, event.getStartDate()));
+		fsw.write("{\"start\":" + encodeDate(browserTZ, targetTZ, event.getStartDate()));
 
 		if (event.getEndDate() != null) {
-			fsw.write(",\"end\":" + encodeDate(calendar, timeZone, event.getEndDate()));
+			fsw.write(",\"end\":" + encodeDate(browserTZ, targetTZ, event.getEndDate()));
 		} else {
 			fsw.write(",\"end\":null");
 		}
@@ -248,8 +247,8 @@ public class TimelineRenderer extends CoreRenderer {
 	}
 
 	// convert from UTC to locale date
-	private String encodeDate(Calendar calendar, TimeZone localTimeZone, Date utcDate) {
-		return "new Date(" + DateUtils.toLocalDate(calendar, localTimeZone, utcDate) + ")";
+	private String encodeDate(TimeZone browserTZ, TimeZone targetTZ, Date utcDate) {
+		return "new Date(" + DateUtils.toLocalDate(browserTZ, targetTZ, utcDate) + ")";
 	}
 
 	@Override

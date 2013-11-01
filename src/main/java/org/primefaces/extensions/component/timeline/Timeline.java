@@ -18,7 +18,6 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -87,6 +86,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		var,
 		locale,
 		timeZone,
+                browserTimeZone,
 		style,
 		styleClass,
 		height,
@@ -187,6 +187,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 	public void setTimeZone(Object timeZone) {
 		getStateHelper().put(PropertyKeys.timeZone, timeZone);
+	}
+
+	public Object getBrowserTimeZone() {
+		return getStateHelper().eval(PropertyKeys.browserTimeZone, null);
+	}
+
+	public void setBrowserTimeZone(Object timeZone) {
+		getStateHelper().put(PropertyKeys.browserTimeZone, timeZone);
 	}
 
 	public String getStyle() {
@@ -500,119 +508,134 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			String clientId = this.getClientId(context);
 
 			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                    switch (eventName) {
+                        case "add":
+{
+                                    // preset start / end date and the group
+                                    TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                                    TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                                    TimelineAddEvent te =
+                                        new TimelineAddEvent(this, behaviorEvent.getBehavior(),
+                                                             DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                                             DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
+                                                             params.get(clientId + "_group"));
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-			if ("add".equals(eventName)) {
-				// preset start / end date and the group
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimelineAddEvent te =
-				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
-				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                         DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
-				                         params.get(clientId + "_group"));
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    return;
+                            }
+                        case "change":
+{
+                                    TimelineEvent clonedEvent = null;
+                                    TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				return;
-			} else if ("change".equals(eventName)) {
-				TimelineEvent clonedEvent = null;
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                                    if (timelineEvent != null) {
+                                            clonedEvent = new TimelineEvent();
+                                            clonedEvent.setData(timelineEvent.getData());
+                                            clonedEvent.setEditable(timelineEvent.isEditable());
+                                            clonedEvent.setStyleClass(timelineEvent.getStyleClass());
 
-				if (timelineEvent != null) {
-					clonedEvent = new TimelineEvent();
-					clonedEvent.setData(timelineEvent.getData());
-					clonedEvent.setEditable(timelineEvent.isEditable());
-					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+                                            // update start / end date and the group
+                                            TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                                            TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                                            clonedEvent.setStartDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")));
+                                            clonedEvent.setEndDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
+                                            clonedEvent.setGroup(params.get(clientId + "_group"));
+                                    }
 
-					// update start / end date and the group
-					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-					TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-					clonedEvent.setStartDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")));
-					clonedEvent.setEndDate(DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
-					clonedEvent.setGroup(params.get(clientId + "_group"));
-				}
+                                    TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    return;
+                            }
+                        case "edit":
+                        case "delete":
+{
+                                    TimelineEvent clonedEvent = null;
+                                    TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				return;
-			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
-				TimelineEvent clonedEvent = null;
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                                    if (timelineEvent != null) {
+                                            clonedEvent = new TimelineEvent();
+                                            clonedEvent.setData(timelineEvent.getData());
+                                            clonedEvent.setStartDate((Date) timelineEvent.getStartDate().clone());
+                                            clonedEvent.setEndDate(timelineEvent.getEndDate() != null ? (Date) timelineEvent.getEndDate().clone() : null);
+                                            clonedEvent.setEditable(timelineEvent.isEditable());
+                                            clonedEvent.setGroup(timelineEvent.getGroup());
+                                            clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+                                    }
 
-				if (timelineEvent != null) {
-					clonedEvent = new TimelineEvent();
-					clonedEvent.setData(timelineEvent.getData());
-					clonedEvent.setStartDate((Date) timelineEvent.getStartDate().clone());
-					clonedEvent.setEndDate(timelineEvent.getEndDate() != null ? (Date) timelineEvent.getEndDate().clone() : null);
-					clonedEvent.setEditable(timelineEvent.isEditable());
-					clonedEvent.setGroup(timelineEvent.getGroup());
-					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
-				}
+                                    TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    return;
+                            }
+                        case "select":
+{
+                                    TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                                    TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				return;
-			} else if ("select".equals(eventName)) {
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
-				TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    return;
+                            }
+                        case "rangechange":
+                        case "rangechanged":
+{
+                                    TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                                    TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                                    TimelineRangeEvent te =
+                                        new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
+                                                               DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                                               DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				return;
-			} else if ("rangechange".equals(eventName) || "rangechanged".equals(eventName)) {
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
-				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                           DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")));
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    return;
+                            }
+                        case "lazyload":
+{
+                                    TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                                    TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                                    TimelineLazyLoadEvent te =
+                                        new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateFirst")),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateFirst")),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateSecond")),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateSecond")));
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				return;
-			} else if ("lazyload".equals(eventName)) {
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimelineLazyLoadEvent te =
-				    new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateFirst")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateFirst")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDateSecond")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDateSecond")));
+                                    return;
+                            }
+                        case "drop":
+{
+                                    Object data = null;
+                                    final String dragId = params.get(clientId + "_dragId");
+                                    final String uiDataId = params.get(clientId + "_uiDataId");
 
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                                    if (dragId != null && uiDataId != null) {
+                                            // draggable is within a data iteration component
+                                            UIDataContextCallback contextCallback = new UIDataContextCallback(dragId);
+                                            context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
+                                            data = contextCallback.getData();
+                                    }
 
-				return;
-			} else if ("drop".equals(eventName)) {
-				Object data = null;
-				final String dragId = params.get(clientId + "_dragId");
-				final String uiDataId = params.get(clientId + "_uiDataId");
+                                    // preset start / end date, group, dragId and data object
+                                    TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                                    TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                                    TimelineDragDropEvent te =
+                                        new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                                                  DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
+                                                                  params.get(clientId + "_group"), dragId, data);
+                                    te.setPhaseId(behaviorEvent.getPhaseId());
+                                    super.queueEvent(te);
 
-				if (dragId != null && uiDataId != null) {
-					// draggable is within a data iteration component
-					UIDataContextCallback contextCallback = new UIDataContextCallback(dragId);
-					context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
-					data = contextCallback.getData();
-				}
-
-				// preset start / end date, group, dragId and data object
-				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-				TimeZone timeZone = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimelineDragDropEvent te =
-				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_startDate")),
-				                              DateUtils.toUtcDate(calendar, timeZone, params.get(clientId + "_endDate")),
-				                              params.get(clientId + "_group"), dragId, data);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
-
-				return;
-			}
+                                    return;
+                            }
+                    }
 		}
 
 		super.queueEvent(event);
@@ -624,6 +647,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
+        @Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

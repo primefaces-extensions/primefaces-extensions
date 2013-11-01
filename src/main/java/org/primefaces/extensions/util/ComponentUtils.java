@@ -357,13 +357,13 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 	 * @param  timeZone given time zone
 	 * @return resolved TimeZone
 	 */
-	public static TimeZone resolveTimeZone(Object timeZone) {
-		if (timeZone instanceof String) {
-			return TimeZone.getTimeZone((String) timeZone);
-		} else if (timeZone instanceof TimeZone) {
-			return (TimeZone) timeZone;
-		} else {
-			return TimeZone.getDefault();
-		}
-	}
+        public static TimeZone resolveTimeZone(Object timeZone) {
+                if (timeZone instanceof String) {
+                        return TimeZone.getTimeZone((String) timeZone);
+                } else if (timeZone instanceof TimeZone) {
+                        return (TimeZone) timeZone;
+                } else {
+                        return TimeZone.getDefault();
+                }
+        }	
 }

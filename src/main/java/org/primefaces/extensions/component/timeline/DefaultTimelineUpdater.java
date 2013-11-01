@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.timeline;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -91,10 +90,12 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		crudOperationDatas.add(new CrudOperationData(CrudOperation.CLEAR));
 	}
 
+        @Override
 	public PhaseId getPhaseId() {
 		return PhaseId.RENDER_RESPONSE;
 	}
 
+        @Override
 	public void beforePhase(PhaseEvent event) {
 		if (crudOperationDatas == null) {
 			return;
@@ -109,8 +110,8 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		TimelineRenderer timelineRenderer =
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
 
-		TimeZone timeZone = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
-		Calendar calendar = Calendar.getInstance(timeZone);
+		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
+		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
 
 		try {
 			for (CrudOperationData crudOperationData : crudOperationDatas) {
@@ -120,7 +121,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(";PF('");
 					sb.append(widgetVar);
 					sb.append("').addEvent(");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
 					                                       crudOperationData.getEvent()));
 					sb.append(")");
 					break;
@@ -132,7 +133,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append("').changeEvent(");
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
-					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, calendar, timeZone,
+					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
 					                                       crudOperationData.getEvent()));
 					sb.append(")");
 					break;
@@ -171,6 +172,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		}
 	}
 
+        @Override
 	public void afterPhase(PhaseEvent event) {
 		// NOOP.
 	}

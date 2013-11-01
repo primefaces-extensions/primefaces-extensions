@@ -16,7 +16,6 @@
 
 package org.primefaces.extensions.util;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -30,34 +29,34 @@ import java.util.TimeZone;
 public class DateUtils {
 
 	// convert from local date to UTC
-	public static Date toUtcDate(Calendar calendar, TimeZone localTimeZone, String localTime) {
-		if (localTime == null) {
+	public static Date toUtcDate(TimeZone browserTZ, TimeZone targetTZ, String localDate) {
+		if (localDate == null) {
 			return null;
 		}
-
-		return toUtcDate(calendar, localTimeZone, Long.valueOf(localTime));
+		return toUtcDate(browserTZ, targetTZ, Long.valueOf(localDate));
 	}
 
 	// convert from local date to UTC
-	public static Date toUtcDate(Calendar calendar, TimeZone localTimeZone, long localTime) {
-		return toUtcDate(calendar, localTimeZone, new Date(localTime));
+	public static Date toUtcDate(TimeZone browserTZ, TimeZone targetTZ, long localDate) {
+		return toUtcDate(browserTZ, targetTZ, new Date(localDate));
 	}
 
 	// convert from local date to UTC
-	public static Date toUtcDate(Calendar calendar, TimeZone localTimeZone, Date localDate) {
-		int offsetFromUTC = localTimeZone.getOffset(localDate.getTime()) * (-1);
-		calendar.setTime(localDate);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
-
-		return calendar.getTime();
+	public static Date toUtcDate(TimeZone browserTZ, TimeZone targetTZ, Date localDate) {
+                if ( localDate == null ) {
+                    return null;
+                }
+                long local = localDate.getTime();
+		int targetOffsetFromUTC = targetTZ.getOffset(local);
+		int browserOffsetFromUTC = browserTZ.getOffset(local);
+                return new Date( local - targetOffsetFromUTC + browserOffsetFromUTC );
 	}
 
 	// convert from UTC to local date
-	public static long toLocalDate(Calendar calendar, TimeZone localTimeZone, Date utcDate) {
-		int offsetFromUTC = localTimeZone.getOffset(utcDate.getTime());
-		calendar.setTime(utcDate);
-		calendar.add(Calendar.MILLISECOND, offsetFromUTC);
-
-		return calendar.getTimeInMillis();
+	public static long toLocalDate(TimeZone browserTZ, TimeZone targetTZ, Date utcDate) {
+                long utc = utcDate.getTime();
+		int targetOffsetFromUTC = targetTZ.getOffset(utc);
+		int browserOffsetFromUTC = browserTZ.getOffset(utc);
+                return utc + targetOffsetFromUTC - browserOffsetFromUTC;
 	}
 }

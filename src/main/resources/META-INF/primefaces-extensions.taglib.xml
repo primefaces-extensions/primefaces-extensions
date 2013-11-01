@@ -65,7 +65,7 @@
             <name>type</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
     </tag>
     <tag>
         <tag-name>convertLocale</tag-name>
@@ -86,14 +86,6 @@
         <converter>
             <converter-id>org.primefaces.extensions.converter.TimelineEventsConverter</converter-id>
         </converter>
-        <attribute>
-            <description>
-                <![CDATA[Time zone for UTC / Local date conversion. It can be a TimeZone object as well as a String with time zone Id.]]>
-            </description>
-            <name>timeZone</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>        
     </tag>
 
     <!-- Behaviors -->
@@ -358,12 +350,12 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
-		<attribute>
-			<description><![CDATA[Method providing suggestions.]]></description>
-			<name>completeMethod</name>
-			<required>false</required>
-			<type>javax.el.MethodExpression</type>
-		</attribute>
+<attribute>
+<description><![CDATA[Method providing suggestions.]]></description>
+<name>completeMethod</name>
+<required>false</required>
+<type>javax.el.MethodExpression</type>
+</attribute>
         <attribute>
             <description><![CDATA[The theme to style the editor with.]]>
             </description>
@@ -977,7 +969,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Table/List header title  to use.</description>
+            <description>Table/List header title to use.</description>
             <name>tableTitle</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -1055,13 +1047,13 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Cell Font Color  to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
+            <description>Cell Font Color to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
             <name>cellFontColor</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Cell Font style  to use.Ex:normal,bold,italic.Default value is normal</description>
+            <description>Cell Font style to use.Ex:normal,bold,italic.Default value is normal</description>
             <name>cellFontStyle</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -1842,7 +1834,7 @@
             <name>options</name>
             <required>false</required>
             <type>java.lang.Object</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Style of the main Layout container element. Default value is null.]]></description>
             <name>style</name>
@@ -2662,7 +2654,7 @@
             <name>dir</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description><![CDATA[Disables the time picker when set to true.]]></description>
             <name>disabled</name>
@@ -2903,9 +2895,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[User time zone to convert start / end dates for displaying. Time zone is useful because dates are normally stored in UTC on the server-side, but should be displayed in browser in user local time zone. The attribute can be either a String or TimeZone object. If no time zone is provided, the used time zone is TimeZone.getDefault().]]>
+                <![CDATA[Target time zone to convert start / end dates for displaying. Time zone is useful when you want to display dates in something other than the user's local time zone. The attribute can be either a String or TimeZone object.]]>
             </description>
             <name>timeZone</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Time zone that the user's browser / PC is running in. Allows the correct conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object. BrowserTimeZone should be provided if TimeZone is provided, or left empty otherwise. BrowserTimeZone defaults to the server's timeZone.]]>
+            </description>
+            <name>browserTimeZone</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
@@ -2960,7 +2960,7 @@
         <attribute>
             <description>
                 <![CDATA[If true, the events can be edited, changed, created and deleted. Events can only be editable when the option selectable is true (default). When editable is true, the timeline can fire AJAX events "change", "edit", "add", "delete", "drop".
-                This global setting "editable" can be overwritten for individual events by setting a value in field "editable". Default is false.]]>
+This global setting "editable" can be overwritten for individual events by setting a value in field "editable". Default is false.]]>
             </description>
             <name>editable</name>
             <required>false</required>
@@ -3503,7 +3503,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Layout of the checkboxes, valid values are “lineDirection”(horizontal) and “pageDirection”(vertical).]]>
+                <![CDATA[Layout of the checkboxes, valid values are �lineDirection�(horizontal) and �pageDirection�(vertical).]]>
             </description>
             <name>layout</name>
             <required>false</required>

@@ -17,7 +17,6 @@
 package org.primefaces.extensions.converter;
 
 import java.util.Date;
-import java.util.TimeZone;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -42,13 +41,11 @@ public class TimelineEventsConverter extends JsonConverter {
 
 	private static final String TYPE_FOR_EVENTS = "java.util.List<org.primefaces.extensions.model.timeline.TimelineEvent>";
 
-	private Object timeZone;
-
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		// register a time zone aware date adapter
 		GsonBuilder gsonBilder = new GsonBuilder();
-		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter(timeZone == null ? TimeZone.getDefault() : timeZone));
+		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		gsonBilder.serializeNulls();
 
 		return gsonBilder.create().fromJson(value, getObjectType(TYPE_FOR_EVENTS, false));
@@ -58,17 +55,9 @@ public class TimelineEventsConverter extends JsonConverter {
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		// register a time zone aware date adapter
 		GsonBuilder gsonBilder = new GsonBuilder();
-		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter(timeZone == null ? TimeZone.getDefault() : timeZone));
+		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 		gsonBilder.serializeNulls();
 
 		return gsonBilder.create().toJson(value, getObjectType(TYPE_FOR_EVENTS, false));
-	}
-
-	public Object getTimeZone() {
-		return timeZone;
-	}
-
-	public void setTimeZone(Object timeZone) {
-		this.timeZone = timeZone;
 	}
 }
