@@ -43,6 +43,14 @@
         <component-class>org.primefaces.extensions.component.dynaform.UIDynaFormControl</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.fluidgrid.FluidGrid</component-type>
+        <component-class>org.primefaces.extensions.component.fluidgrid.FluidGrid</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.UIFluidGridItem</component-type>
+        <component-class>org.primefaces.extensions.component.fluidgrid.UIFluidGridItem</component-class>
+    </component>    
+    <component>
         <component-type>org.primefaces.extensions.component.DataExporter</component-type>
         <component-class>org.primefaces.extensions.component.exporter.DataExporter</component-class>
     </component>
@@ -167,7 +175,12 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.DynaFormRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.dynaform.DynaFormRenderer</renderer-class>
-        </renderer>        
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.FluidGridRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.fluidgrid.FluidGridRenderer</renderer-class>
+        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>

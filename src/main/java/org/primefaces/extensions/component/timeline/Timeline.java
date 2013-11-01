@@ -55,20 +55,19 @@ import org.primefaces.util.Constants;
  * @since   0.7 (reimplemented)
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css")
-                      })
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),        
+    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),        
+    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
+})
 public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	private static final Collection<String> EVENT_NAMES =
 	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",

@@ -238,14 +238,6 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>
-                <![CDATA[Interval in ms for dirty checking. This is not required for the most cases but some internal CKEditor plugins does not throw the events which can be cached to check for changes. This timer checks for changes for the defined interval. Also this feature can be expensive for big documents. Default: 1000ms. 0 = deactivated.]]>
-            </description>
-            <name>checkDirtyInterval</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[Path to a custom CKEditor js config file.]]>
             </description>
             <name>customConfig</name>
@@ -286,6 +278,30 @@
             <name>escape</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when required field validation fails.]]></description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when conversion fails.]]></description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Message to display when validation fails.]]></description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression referring to a method validationg the input.]]></description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
         </attribute>
     </tag>
     <tag>
@@ -739,6 +755,197 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[FluidGrid is a grid layout library. Client behavior events: layoutComplete - fired after a layout and all positioning transitions have been completed. (org.primefaces.extensions.event.LayoutCompleteEvent).]]></description>
+        <tag-name>fluidGrid</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.FluidGrid</component-type>
+            <renderer-type>org.primefaces.extensions.component.FluidGridRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Collection of items (FluidGridItem) representing model of this component.]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the request-scoped variable for the underlaying object for each iteration.]]>
+            </description>
+            <name>var</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:fluidGridItem. This property allows to get the whole clientId of a component within pe:dynaFormControl. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
+            </description>
+            <name>varContainerId</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Horizontal space between item elements (interpreted as pixels). Default is 0.]]>
+            </description>
+            <name>hGutter</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Vertical space between item elements (interpreted as pixels). Default is 0.]]>
+            </description>
+            <name>vGutter</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Sets the width of the container to fit the available number of columns, based on the size of container's parent element. When enabled, you can center the container with CSS. Note: This option does not work with percentage width of items. Default is false.]]>
+            </description>
+            <name>fitWidth</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Controls the horizontal flow of the layout. By default, item elements start positioning at the left. Set to false for right-to-left layouts.]]>
+            </description>
+            <name>originLeft</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Controls the vertical flow of the layout. By default, item elements start positioning at the top. Set to false for bottom-up layouts. It's like Tetris!]]>
+            </description>
+            <name>originTop</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Binds layout to window resizing. It binds layout only when the Masonry instance is first initialized. You can bind and unbind resize layout afterwards with the bindResize and unbindResize client-side widget's methods. Default is true.]]>
+            </description>
+            <name>resizeBound</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Specifies which elements are stamped within the layout. These are special layout elements which will not be laid out. Rather, FluidGrid will layout item elements below stamped elements. You can use here every search expressions supported by PrimeFaces Search Expression Framework. Default is null.]]>
+            </description>
+            <name>stamp</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Duration of the transition when items change position or appearance, set in a CSS time format. To disable all transitions, set this attribute to 0. Default is 0.4s.]]>
+            </description>
+            <name>transitionDuration</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[Specifies an item for a certain typed element within FluidGrid.]]></description>
+        <tag-name>fluidGridItem</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.UIFluidGridItem</component-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Type corresponding to FluidGridItem. Default value is "default".]]>
+            </description>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element for this item. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
         <tag-name>exporter</tag-name>
         <handler-class>
             org.primefaces.extensions.component.exporter.ExporterTagHandler
@@ -863,7 +1070,6 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-
     </tag>
     <tag>
         <tag-name>head</tag-name>
