@@ -18,159 +18,164 @@
 
 package org.primefaces.extensions.component.fluidgrid;
 
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
+import java.util.Collection;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import java.io.IOException;
-import java.util.Collection;
+
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.renderkit.CoreRenderer;
 
 /**
  * Renderer for {@link FluidGrid} component.
  *
- * @author Oleg Varaksin / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since 0.5
+ * @since   0.5
  */
-public class FluidGridRenderer extends CoreRenderer
-{
-    private static final String GRID_CLASS = "pe-fluidgrid";
-    private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
+public class FluidGridRenderer extends CoreRenderer {
 
-    private static final String LIST_ROLE = "list";
-    private static final String LIST_ITEM_ROLE = "listitem";
+	private static final String GRID_CLASS = "pe-fluidgrid";
+	private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
 
-    @Override
-    public void decode(FacesContext context, UIComponent component) {
-        decodeBehaviors(context, component);
-    }
+	private static final String LIST_ROLE = "list";
+	private static final String LIST_ITEM_ROLE = "listitem";
 
-    @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        FluidGrid fluidGrid = (FluidGrid) component;
+	@Override
+	public void decode(FacesContext context, UIComponent component) {
+		decodeBehaviors(context, component);
+	}
 
-        encodeMarkup(fc, fluidGrid);
-        encodeScript(fc, fluidGrid);
-    }
+	@Override
+	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+		FluidGrid fluidGrid = (FluidGrid) component;
 
-    protected void encodeMarkup(FacesContext fc, FluidGrid fluidGrid) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
-        String clientId = fluidGrid.getClientId(fc);
-        String styleClass = fluidGrid.getStyleClass();
-        styleClass = (styleClass == null) ? GRID_CLASS : GRID_CLASS + " " + styleClass;
+		encodeMarkup(fc, fluidGrid);
+		encodeScript(fc, fluidGrid);
+	}
 
-        writer.startElement("div", fluidGrid);
-        writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
-        if (fluidGrid.getStyle() != null) {
-            writer.writeAttribute("style", fluidGrid.getStyle(), "style");
-        }
+	protected void encodeMarkup(FacesContext fc, FluidGrid fluidGrid) throws IOException {
+		ResponseWriter writer = fc.getResponseWriter();
+		String clientId = fluidGrid.getClientId(fc);
+		String styleClass = fluidGrid.getStyleClass();
+		styleClass = (styleClass == null) ? GRID_CLASS : GRID_CLASS + " " + styleClass;
 
-        writer.writeAttribute("role", LIST_ROLE, null);
+		writer.startElement("div", fluidGrid);
+		writer.writeAttribute("id", clientId, "id");
+		writer.writeAttribute("class", styleClass, "styleClass");
+		if (fluidGrid.getStyle() != null) {
+			writer.writeAttribute("style", fluidGrid.getStyle(), "style");
+		}
 
-        if (fluidGrid.getVar() != null) {
-            // dynamic items
-            Object value = fluidGrid.getValue();
-            if (value != null) {
-                if (!(value instanceof Collection<?>)) {
-                    throw new FacesException("Value in FluidGrid must be of type Collection / List");
-                }
+		writer.writeAttribute("role", LIST_ROLE, null);
 
-                @SuppressWarnings("unchecked")
-                Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-                for (FluidGridItem fluidGridItem : col) {
-                    // find ui item by type
-                    UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
+		if (fluidGrid.getVar() != null) {
+			// dynamic items
+			Object value = fluidGrid.getValue();
+			if (value != null) {
+				if (!(value instanceof Collection<?>)) {
+					throw new FacesException("Value in FluidGrid must be of type Collection / List");
+				}
 
-                    if (uiItem.isRendered()) {
-                        // set data in request scope
-                        fluidGrid.setData(fluidGridItem);
+				@SuppressWarnings("unchecked")
+				Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+				for (FluidGridItem fluidGridItem : col) {
+					// find ui item by type
+					UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
 
-                        // render item
-                        renderItem(fc, writer, fluidGrid, uiItem);
-                    }
-                }
-            }
-        } else {
-            // static items
-            for (UIComponent kid : fluidGrid.getChildren()) {
-                if (kid instanceof UIFluidGridItem && kid.isRendered()) {
-                    // render item
-                    renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
-                }
-            }
-        }
+					if (uiItem.isRendered()) {
+						// set data in request scope
+						fluidGrid.setData(fluidGridItem);
 
-        writer.endElement("div");
-    }
+						// render item
+						renderItem(fc, writer, fluidGrid, uiItem);
+					}
+				}
+			}
+		} else {
+			// static items
+			for (UIComponent kid : fluidGrid.getChildren()) {
+				if (kid instanceof UIFluidGridItem && kid.isRendered()) {
+					// render item
+					renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
+				}
+			}
+		}
 
-    protected void encodeScript(FacesContext fc, FluidGrid fluidGrid) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
-        String clientId = fluidGrid.getClientId(fc);
+		writer.endElement("div");
+	}
 
-        startScript(writer, clientId);
+	protected void encodeScript(FacesContext fc, FluidGrid fluidGrid) throws IOException {
+		ResponseWriter writer = fc.getResponseWriter();
+		String clientId = fluidGrid.getClientId(fc);
 
-        writer.write("$(function() {");
-        writer.write("PrimeFacesExt.cw('FluidGrid','" + fluidGrid.resolveWidgetVar() + "',{");
-        writer.write("id:'" + clientId + "'");
-        writer.write(",opts:{");
+		startScript(writer, clientId);
 
-        if (fluidGrid.getHGutter() != 0) {
-            writer.write(",gutter:" + fluidGrid.getHGutter());
-        }
-        
-        writer.write(",isFitWidth:" + fluidGrid.isFitWidth());
-        writer.write(",isOriginLeft:" + fluidGrid.isOriginLeft());
-        writer.write(",isOriginTop:" + fluidGrid.isOriginTop());
-        writer.write(",isResizeBound:" + fluidGrid.isResizeBound());
-        
-        String stamp = SearchExpressionFacade.resolveComponentsForClient(fc, fluidGrid, fluidGrid.getStamp());
-        if (stamp != null) {
-            writer.write(",stamp:'" + stamp + "'");
-        }
-        
-        writer.write(",transitionDuration:'" + fluidGrid.getTransitionDuration() + "'");
+		writer.write("$(function() {");
+		writer.write("PrimeFacesExt.cw('FluidGrid','" + fluidGrid.resolveWidgetVar() + "',{");
+		writer.write("id:'" + clientId + "'");
+		writer.write(",opts:{");
 
-        writer.write("}");
-        encodeClientBehaviors(fc, fluidGrid);
-        writer.write("},true);});");
+		writer.write("isFitWidth:" + fluidGrid.isFitWidth());
+		writer.write(",isOriginLeft:" + fluidGrid.isOriginLeft());
+		writer.write(",isOriginTop:" + fluidGrid.isOriginTop());
+		writer.write(",isResizeBound:" + fluidGrid.isResizeBound());
 
-        endScript(writer);
-    }
+		if (fluidGrid.gethGutter() != 0) {
+			writer.write(",gutter:" + fluidGrid.gethGutter());
+		}
 
-    protected void renderItem(FacesContext fc, ResponseWriter writer, FluidGrid fluidGrid, 
-                              UIFluidGridItem uiItem) throws IOException {
-        writer.startElement("div", null);
+		String stamp = SearchExpressionFacade.resolveComponentsForClient(fc, fluidGrid, fluidGrid.getStamp());
+		if (stamp != null) {
+			writer.write(",stamp:'" + stamp + "'");
+		}
 
-        if (uiItem.getStyleClass() != null) {
-            writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
-        } else {
-            writer.writeAttribute("class", GRID_ITEM_CLASS, null);
-        }
+		if (fluidGrid.getTransitionDuration() != null) {
+			writer.write(",transitionDuration:'" + fluidGrid.getTransitionDuration() + "'");
+		} else {
+			writer.write(",transitionDuration:0");
+		}
 
-        if (fluidGrid.getVGutter() != 0) {
-            writer.writeAttribute("style", "margin-bottom: " + fluidGrid.getVGutter() + "px", null);
-        }
+		writer.write("}");
+		encodeClientBehaviors(fc, fluidGrid);
+		writer.write("},true);});");
 
-        writer.writeAttribute("role", LIST_ITEM_ROLE, null);
+		endScript(writer);
+	}
 
-        // encode content of pe:fluidGridItem
-        uiItem.encodeAll(fc);
+	protected void renderItem(FacesContext fc, ResponseWriter writer, FluidGrid fluidGrid, UIFluidGridItem uiItem)
+	    throws IOException {
+		writer.startElement("div", null);
 
-        writer.endElement("div");
-    }
+		if (uiItem.getStyleClass() != null) {
+			writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
+		} else {
+			writer.writeAttribute("class", GRID_ITEM_CLASS, null);
+		}
 
-    @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        //Rendering happens on encodeEnd
-    }
+		if (fluidGrid.getvGutter() != 0) {
+			writer.writeAttribute("style", "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
+		}
 
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
+		writer.writeAttribute("role", LIST_ITEM_ROLE, null);
+
+		// encode content of pe:fluidGridItem
+		uiItem.encodeAll(fc);
+
+		writer.endElement("div");
+	}
+
+	@Override
+	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+		//Rendering happens on encodeEnd
+	}
+
+	@Override
+	public boolean getRendersChildren() {
+		return true;
+	}
 }

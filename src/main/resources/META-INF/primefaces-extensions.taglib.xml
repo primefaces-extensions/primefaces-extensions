@@ -891,7 +891,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Duration of the transition when items change position or appearance, set in a CSS time format. To disable all transitions, set this attribute to 0. Default is 0.4s.]]>
+                <![CDATA[Duration of the transition when items change position or appearance, set in a CSS time format. To disable all transitions, set this attribute to null. Default is 0.4s.]]>
             </description>
             <name>transitionDuration</name>
             <required>false</required>

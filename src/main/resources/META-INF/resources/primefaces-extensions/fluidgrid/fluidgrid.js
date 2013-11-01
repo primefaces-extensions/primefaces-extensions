@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
 
     /**
      * Initializes the widget.

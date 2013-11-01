@@ -43,7 +43,7 @@
         <component-class>org.primefaces.extensions.component.dynaform.UIDynaFormControl</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.fluidgrid.FluidGrid</component-type>
+        <component-type>org.primefaces.extensions.component.FluidGrid</component-type>
         <component-class>org.primefaces.extensions.component.fluidgrid.FluidGrid</component-class>
     </component>
     <component>
