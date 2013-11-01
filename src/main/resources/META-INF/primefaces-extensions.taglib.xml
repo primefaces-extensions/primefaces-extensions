@@ -2895,7 +2895,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Target time zone to convert start / end dates for displaying. Time zone is useful when you want to display dates in something other than the user's local time zone. The attribute can be either a String or TimeZone object.]]>
+                <![CDATA[Target time zone to convert start / end dates for displaying. This time zone is the time zone the user would like to see dates in UI. The attribute can be either a String or TimeZone object or null. If null, timeZone defaults to the server's time zone the application is running in.]]>
             </description>
             <name>timeZone</name>
             <required>false</required>
@@ -2903,7 +2903,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Time zone that the user's browser / PC is running in. Allows the correct conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object. BrowserTimeZone must be provided if TimeZone is provided, or left empty otherwise. BrowserTimeZone defaults to the target timeZone.]]>
+                <![CDATA[Time zone the user's browser / PC is running in. This time zone allows to correct the conversion of start / end dates to the target timeZone for displaying. The attribute can be either a String or TimeZone object or null. Note: browserTimeZone should be provided if the target timeZone is provided. If null, browserTimeZone defaults to the server's timeZone.]]>
             </description>
             <name>browserTimeZone</name>
             <required>false</required>

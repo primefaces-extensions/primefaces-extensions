@@ -38,17 +38,11 @@ import com.google.gson.JsonSerializer;
  */
 public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
-	public DateTypeAdapter() {
-	}
-
-        @Override
 	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-        	return new JsonPrimitive(src.getTime());
+		return new JsonPrimitive(src.getTime());
 	}
 
-        @Override
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		return new Date(json.getAsJsonPrimitive().getAsLong());
 	}
-
 }

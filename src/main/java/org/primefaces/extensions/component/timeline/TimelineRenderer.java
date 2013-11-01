@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.timeline;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -82,8 +83,10 @@ public class TimelineRenderer extends CoreRenderer {
 
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = timeline.getClientId(context);
+
 		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
-		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone(), targetTZ);
+		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
+
 		FastStringWriter fsw = new FastStringWriter();
 		FastStringWriter fswHtml = new FastStringWriter();
 
@@ -155,7 +158,13 @@ public class TimelineRenderer extends CoreRenderer {
 
 		writer.write(",snapEvents:" + timeline.isSnapEvents());
 		writer.write(",stackEvents:" + timeline.isStackEvents());
-		writer.write(",showCurrentTime:" + timeline.isShowCurrentTime());
+
+		if (timeline.isShowCurrentTime()) {
+			writer.write(",showCurrentTime:" + timeline.isShowCurrentTime());
+			writer.write(",currentTime:"
+			             + encodeDate(browserTZ, targetTZ, Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime()));
+		}
+
 		writer.write(",showMajorLabels:" + timeline.isShowMajorLabels());
 		writer.write(",showMinorLabels:" + timeline.isShowMinorLabels());
 		writer.write(",showButtonNew:" + timeline.isShowButtonNew());

@@ -55,14 +55,14 @@ import org.primefaces.util.Constants;
  * @since   0.7 (reimplemented)
  */
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),        
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),        
-    @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
-})
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),
+                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
+                      })
 public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
@@ -86,7 +86,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		var,
 		locale,
 		timeZone,
-                browserTimeZone,
+		browserTimeZone,
 		style,
 		styleClass,
 		height,
@@ -512,7 +512,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 			if ("add".equals(eventName)) {
 				// preset start / end date and the group
 				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+
 				TimelineAddEvent te =
 				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
 				                         DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
@@ -534,7 +535,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 					// update start / end date and the group
 					TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-					TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+					TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
 					clonedEvent.setStartDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")));
 					clonedEvent.setEndDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
 					clonedEvent.setGroup(params.get(clientId + "_group"));
@@ -573,7 +574,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				return;
 			} else if ("rangechange".equals(eventName) || "rangechanged".equals(eventName)) {
 				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+
 				TimelineRangeEvent te =
 				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
 				                           DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
@@ -584,7 +586,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 				return;
 			} else if ("lazyload".equals(eventName)) {
 				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+
 				TimelineLazyLoadEvent te =
 				    new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
 				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateFirst")),
@@ -609,13 +612,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
 				// preset start / end date, group, dragId and data object
 				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone(), targetTZ);
+				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+
 				TimelineDragDropEvent te =
 				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
 				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
 				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
-                                                              params.get(clientId + "_group"), dragId, data);
-                                te.setPhaseId(behaviorEvent.getPhaseId());
+				                              params.get(clientId + "_group"), dragId, data);
+				te.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(te);
 
 				return;
@@ -631,7 +635,6 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
 	}
 
-        @Override
 	public String resolveWidgetVar() {
 		final FacesContext context = FacesContext.getCurrentInstance();
 		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());

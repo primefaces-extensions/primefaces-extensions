@@ -33,6 +33,7 @@ public class DateUtils {
 		if (localDate == null) {
 			return null;
 		}
+
 		return toUtcDate(browserTZ, targetTZ, Long.valueOf(localDate));
 	}
 
@@ -43,20 +44,23 @@ public class DateUtils {
 
 	// convert from local date to UTC
 	public static Date toUtcDate(TimeZone browserTZ, TimeZone targetTZ, Date localDate) {
-                if ( localDate == null ) {
-                    return null;
-                }
-                long local = localDate.getTime();
+		if (localDate == null) {
+			return null;
+		}
+
+		long local = localDate.getTime();
 		int targetOffsetFromUTC = targetTZ.getOffset(local);
 		int browserOffsetFromUTC = browserTZ.getOffset(local);
-                return new Date( local - targetOffsetFromUTC + browserOffsetFromUTC );
+
+		return new Date(local - targetOffsetFromUTC + browserOffsetFromUTC);
 	}
 
 	// convert from UTC to local date
 	public static long toLocalDate(TimeZone browserTZ, TimeZone targetTZ, Date utcDate) {
-                long utc = utcDate.getTime();
+		long utc = utcDate.getTime();
 		int targetOffsetFromUTC = targetTZ.getOffset(utc);
 		int browserOffsetFromUTC = browserTZ.getOffset(utc);
-                return utc + targetOffsetFromUTC - browserOffsetFromUTC;
+
+		return utc + targetOffsetFromUTC - browserOffsetFromUTC;
 	}
 }

@@ -42,6 +42,11 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
 
         // draw the timeline with created data and options
         this.instance.draw(this.cfg.data, this.cfg.opts);
+        
+        // set current time (workaround)
+        if (this.cfg.opts.currentTime) {
+            this.instance.setCurrentTime(this.cfg.opts.currentTime);
+        }
 
         // bind events
         this.bindEvents(el);
