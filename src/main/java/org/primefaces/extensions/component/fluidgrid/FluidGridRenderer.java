@@ -81,6 +81,13 @@ public class FluidGridRenderer extends CoreRenderer {
 					throw new FacesException("Value in FluidGrid must be of type Collection / List");
 				}
 
+				for (UIComponent kid : fluidGrid.getChildren()) {
+					if (kid.isRendered() && !(kid instanceof UIFluidGridItem)) {
+						// first render children like stamped elements, etc.
+						renderChild(fc, kid);
+					}
+				}
+
 				@SuppressWarnings("unchecked")
 				Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
 				for (FluidGridItem fluidGridItem : col) {
@@ -99,9 +106,14 @@ public class FluidGridRenderer extends CoreRenderer {
 		} else {
 			// static items
 			for (UIComponent kid : fluidGrid.getChildren()) {
-				if (kid instanceof UIFluidGridItem && kid.isRendered()) {
-					// render item
-					renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
+				if (kid.isRendered()) {
+					if (kid instanceof UIFluidGridItem) {
+						// render item
+						renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
+					} else {
+						// render a child like stamped element, etc.
+						renderChild(fc, kid);
+					}
 				}
 			}
 		}

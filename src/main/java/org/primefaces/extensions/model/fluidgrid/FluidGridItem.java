@@ -18,6 +18,8 @@ package org.primefaces.extensions.model.fluidgrid;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
@@ -30,16 +32,25 @@ import org.primefaces.extensions.model.common.KeyData;
 public class FluidGridItem implements KeyData, Serializable {
 
 	public static final String DEFAULT_TYPE = "default";
-	private static final String KEY_PREFIX_ITEM = "fgitem";
 
 	private String key;
 	private Object data;
 	private String type;
 
 	public FluidGridItem() {
+		// generate key
+		setKey(RandomStringUtils.randomAlphanumeric(8));
 	}
 
-	public FluidGridItem(Object data, String type, int pos) {
+	public FluidGridItem(Object data) {
+		this.data = data;
+		this.type = DEFAULT_TYPE;
+
+		// generate key
+		setKey(RandomStringUtils.randomAlphanumeric(8));
+	}
+
+	public FluidGridItem(Object data, String type) {
 		this.data = data;
 		if (type != null) {
 			this.type = type;
@@ -48,7 +59,7 @@ public class FluidGridItem implements KeyData, Serializable {
 		}
 
 		// generate key
-		setKey(KEY_PREFIX_ITEM + pos);
+		setKey(RandomStringUtils.randomAlphanumeric(8));
 	}
 
 	public String getKey() {

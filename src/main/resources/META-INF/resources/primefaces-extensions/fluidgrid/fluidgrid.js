@@ -115,18 +115,18 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
     },
     
     remove: function (elements) {
-        this.$container.masonry( 'remove', elements);
+        this.$container.masonry('remove', elements);
     },
     
     reveal: function (items) {
-        this.$container.masonry( 'reveal', items);
+        this.$container.masonry('reveal', items);
     },
     
     stamp: function (elements) {
-        this.$container.masonry( 'stamp', elements);
+        this.$container.masonry('stamp', elements);
     },
     
     unstamp: function (elements) {
-        this.$container.masonry( 'unstamp', elements);
+        this.$container.masonry('unstamp', elements);
     }
 });
