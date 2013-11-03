@@ -30,9 +30,19 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
      */
     _render: function () {
         this.$container = $(PrimeFaces.escapeClientId(this.id));
-        
-        // initialize Masonry after all images have been loaded  
-        this.$container.imagesLoaded($.proxy(function() {
+               
+        if (this.cfg.opts.hasImages) {
+            // initialize plugin after all images have been loaded
+            this.$container.imagesLoaded($.proxy(function() {
+                this.$container.masonry(this.cfg.opts);
+                
+                // bind events
+                this.bindEvents();
+                
+                // trigger layout manually
+                this.$container.masonry();
+            }, this));
+        } else {
             this.$container.masonry(this.cfg.opts);
             
             // bind events
@@ -40,7 +50,7 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
             
             // trigger layout manually
             this.$container.masonry();
-        }, this));
+        }
     },
     
     /**

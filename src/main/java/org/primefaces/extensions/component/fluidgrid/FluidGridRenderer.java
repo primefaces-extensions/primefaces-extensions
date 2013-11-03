@@ -136,6 +136,7 @@ public class FluidGridRenderer extends CoreRenderer {
 		writer.write(",isOriginLeft:" + fluidGrid.isOriginLeft());
 		writer.write(",isOriginTop:" + fluidGrid.isOriginTop());
 		writer.write(",isResizeBound:" + fluidGrid.isResizeBound());
+		writer.write(",hasImages:" + fluidGrid.isHasImages());
 
 		if (fluidGrid.gethGutter() != 0) {
 			writer.write(",gutter:" + fluidGrid.gethGutter());

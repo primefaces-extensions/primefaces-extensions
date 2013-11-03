@@ -897,6 +897,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean flag if items contain any images. This can fix overlapping items which are caused by items that change size after a layout due to unloaded media like images. Setting this flag allows to layout all items after they have their proper sizes (images have been loaded). Default value is false.]]>
+            </description>
+            <name>hasImages</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Specifies an item for a certain typed element within FluidGrid.]]></description>

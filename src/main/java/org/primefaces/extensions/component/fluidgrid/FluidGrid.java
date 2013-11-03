@@ -89,7 +89,8 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 		originTop,
 		resizeBound,
 		stamp,
-		transitionDuration;
+		transitionDuration,
+		hasImages;
 
 		private String toString;
 
@@ -201,6 +202,14 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 
 	public void setTransitionDuration(String transitionDuration) {
 		getStateHelper().put(PropertyKeys.transitionDuration, transitionDuration);
+	}
+
+	public boolean isHasImages() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.hasImages, false);
+	}
+
+	public void setHasImages(boolean hasImages) {
+		getStateHelper().put(PropertyKeys.hasImages, hasImages);
 	}
 
 	@Override
