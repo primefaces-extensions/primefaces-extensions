@@ -875,7 +875,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Binds layout to window resizing. It binds layout only when the Masonry instance is first initialized. You can bind and unbind resize layout afterwards with the bindResize and unbindResize client-side widget's methods. Default is true.]]>
+                <![CDATA[Binds layout to window resizing. You can bind and unbind resize layout afterwards with the bindResize and unbindResize client-side widget's methods. Default is true.]]>
             </description>
             <name>resizeBound</name>
             <required>false</required>
