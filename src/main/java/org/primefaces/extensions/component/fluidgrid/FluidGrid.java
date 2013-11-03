@@ -56,7 +56,6 @@ import org.primefaces.util.Constants;
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
                           @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
                           @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
                           @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"),
                           @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
@@ -220,22 +219,20 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 	@Override
 	public void queueEvent(FacesEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+		String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-		if (isSelfRequest(context)) {
-			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-			if ("layoutComplete".equals(eventName)) {
+		if ("layoutComplete".equals(eventName)) {
+			if (event instanceof AjaxBehaviorEvent && isSelfRequest(context)) {
 				LayoutCompleteEvent layoutCompleteEvent =
 				    new LayoutCompleteEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
 				layoutCompleteEvent.setPhaseId(event.getPhaseId());
+
 				super.queueEvent(layoutCompleteEvent);
-
-				return;
 			}
+		} else {
+			super.queueEvent(event);
 		}
-
-		super.queueEvent(event);
 	}
 
 	private boolean isSelfRequest(FacesContext context) {
@@ -303,6 +300,11 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 
 	@Override
 	protected void processChildren(FacesContext context, PhaseId phaseId) {
+		if (context.getExternalContext().getRequestParameterMap().containsKey(this.getClientId(context) + "_layoutComplete")) {
+			// don't decode, validate, update children if the processing was triggered by the "layoutComplete" event
+			return;
+		}
+
 		Object value = getValue();
 		if (value != null) {
 			if (!(value instanceof Collection<?>)) {

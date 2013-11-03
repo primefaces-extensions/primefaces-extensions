@@ -62,7 +62,7 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
             this.$container.masonry('on', 'layoutComplete', $.proxy(function() {
                 var behavior = this.getBehavior("layoutComplete");
                 var ext = {
-                    params:[]
+                    params:[{name: this.id + '_layoutComplete', value: true}]
                 };
     
                 behavior.call(this, null, ext);
