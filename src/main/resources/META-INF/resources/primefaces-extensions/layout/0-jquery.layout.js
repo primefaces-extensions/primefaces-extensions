@@ -629,7 +629,7 @@ $.layout.browser = {
 if (b) $.layout.browser[b] = true; // set CURRENT browser
 /*	OLD versions of jQuery only set $.support.boxModel after page is loaded
  *	so if this is IE, use support.boxModel to test for quirks-mode (ONLY IE changes boxModel) */
-if (ie) $(function(){ $.layout.browser.boxModel = $.support.boxModel; });
+// if (ie) $(function(){ $.layout.browser.boxModel = $.support.boxModel; });
 
 
 // DEFAULT OPTIONS
