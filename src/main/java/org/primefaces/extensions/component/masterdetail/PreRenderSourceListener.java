@@ -171,6 +171,7 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 		uiParameter.setId(fc.getViewRoot().createUniqueId(fc, null));
 		uiParameter.setName(paramName);
 		uiParameter.setValue(paramValue);
+        uiParameter.setTransient(true);
 		source.getChildren().add(uiParameter);
 	}
 
