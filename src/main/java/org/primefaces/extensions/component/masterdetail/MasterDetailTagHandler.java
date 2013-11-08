@@ -64,7 +64,7 @@ public class MasterDetailTagHandler extends ComponentHandler {
 			// create BreadCrumb programmatically
 			BreadCrumb breadcrumb =
 			    (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
-			breadcrumb.setId(masterDetail.getId() + "_bc");
+			breadcrumb.setId(masterDetail.getId() + MasterDetail.BREADCRUMB_ID_PREFIX);
 
 			// set empty model
 			breadcrumb.setModel(new DefaultMenuModel());
