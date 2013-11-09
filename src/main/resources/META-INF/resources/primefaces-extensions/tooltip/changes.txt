@@ -1,0 +1,4 @@
+0-jquery.qtip.js:
+------------------------------------------------
+- Removed the log message "Unable to locate content for tooltip! Aborting render of tooltip on element"
+
