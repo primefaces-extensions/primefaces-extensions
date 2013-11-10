@@ -26,7 +26,6 @@ import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.AbortProcessingException;
@@ -70,8 +69,8 @@ public class MasterDetail extends UIComponentBase {
 	public static final String RESET_INPUTS = "_resetInputs";
 	public static final String CURRENT_CONTEXT_VALUE = "_curContextValue";
 	public static final String RESOLVED_CONTEXT_VALUE = "contextValue_";
-    
-    public static final String BREADCRUMB_ID_PREFIX = "_bc";
+
+	public static final String BREADCRUMB_ID_PREFIX = "_bc";
 
 	private MasterDetailLevel detailLevelToProcess;
 	private MasterDetailLevel detailLevelToGo;
@@ -192,22 +191,17 @@ public class MasterDetail extends UIComponentBase {
 			return;
 		}
 
-		String clienId = this.getClientId(fc);
 		PartialViewContext pvc = fc.getPartialViewContext();
-
-		// update the MasterDetail component automatically if the collection
-		// with IDs to be rendered is empty or a breadcrumb item was clicked
-        ExternalContext ec = fc.getExternalContext(); 
-		if (pvc.getRenderIds().isEmpty() || (clienId + MasterDetail.BREADCRUMB_ID_PREFIX).equals(
-            ec.getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM))) {
-			pvc.getRenderIds().add(clienId);
+		if (pvc.getRenderIds().isEmpty()) {
+			// update the MasterDetail component automatically
+			pvc.getRenderIds().add(getClientId(fc));
 		}
 
 		MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 		Object contextValue = getContextValueFromFlow(fc, mdl, true);
 		String contextVar = mdl.getContextVar();
 		if (StringUtils.isNotBlank(contextVar) && contextValue != null) {
-			Map<String, Object> requestMap = ec.getRequestMap();
+			Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
 			requestMap.put(contextVar, contextValue);
 		}
 	}
@@ -381,7 +375,7 @@ public class MasterDetail extends UIComponentBase {
 					menuItem.setAjax(true);
 					menuItem.setImmediate(true);
 					menuItem.setProcess("@none");
-					menuItem.setUpdate(null);
+					menuItem.setUpdate("@parent");
 
 					// add UIParameter
 					menuItem.setParam(clientId + MasterDetail.SELECT_DETAIL_REQUEST, true);

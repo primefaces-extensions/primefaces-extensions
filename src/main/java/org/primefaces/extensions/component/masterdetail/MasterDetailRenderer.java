@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitContext;
@@ -208,7 +207,9 @@ public class MasterDetailRenderer extends CoreRenderer {
 				MasterDetailLevel mdl = (MasterDetailLevel) child;
 				DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
 				if (menuItem == null) {
-					throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
+					// note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
+					//throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
+					return;
 				}
 
 				if (!child.isRendered()) {
