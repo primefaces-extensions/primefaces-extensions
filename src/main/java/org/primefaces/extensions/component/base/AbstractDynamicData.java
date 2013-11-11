@@ -419,23 +419,24 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
 
-		KeyData keyData = getData();
-		if (keyData == null) {
-			requestMap.remove(getVar());
-		} else {
-			requestMap.put(getVar(), keyData.getData());
+		String var = getVar();
+		if (var != null) {
+			KeyData keyData = getData();
+			if (keyData == null) {
+				requestMap.remove(var);
+			} else {
+				requestMap.put(var, keyData.getData());
+			}
 		}
 
 		String varContainerId = getVarContainerId();
-		if (varContainerId == null) {
-			return;
-		}
-
-		String containerClientId = getContainerClientId(fc);
-		if (containerClientId == null) {
-			requestMap.remove(varContainerId);
-		} else {
-			requestMap.put(varContainerId, containerClientId);
+		if (varContainerId != null) {
+			String containerClientId = getContainerClientId(fc);
+			if (containerClientId == null) {
+				requestMap.remove(varContainerId);
+			} else {
+				requestMap.put(varContainerId, containerClientId);
+			}
 		}
 	}
 
