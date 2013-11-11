@@ -29,12 +29,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.PartialResponseWriter;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.view.ViewDeclarationLanguage;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -94,6 +94,30 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 		wrapped.handle();
 	}
 
+	public static String calculateViewUri(final FacesContext context)
+	{
+		final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+		String viewId = (String) requestMap.get("javax.servlet.include.path_info");
+
+		if (viewId == null)
+		{
+			viewId = context.getExternalContext().getRequestPathInfo();
+		}
+
+		if (viewId == null)
+		{
+			viewId = (String) requestMap.get("javax.servlet.include.servlet_path");
+		}
+
+		if (viewId == null)
+		{
+			viewId = context.getExternalContext().getRequestServletPath();
+		}
+
+		return viewId;
+	}
+
+
 	private void handlePartialResponseError(final FacesContext context, final Throwable t) {
 		if (context.getResponseComplete()) {
 			return; // don't write anything if the response is complete
@@ -109,7 +133,7 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			// Workaround for ViewExpiredException if UIViewRoot was not restored ...
 			if (context.getViewRoot() == null) {
 				try {
-					String uri = ((HttpServletRequest) context.getExternalContext().getRequest()).getRequestURI();
+					String uri = calculateViewUri(context);
 					UIViewRoot viewRoot = context.getApplication().getViewHandler().createView(context, uri);
 					context.setViewRoot(viewRoot);
 
