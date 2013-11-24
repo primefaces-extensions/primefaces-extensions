@@ -1078,6 +1078,12 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>The list of components to be skipped in the pdf and excel export</description>
+            <name>skipComponents</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <tag-name>head</tag-name>
