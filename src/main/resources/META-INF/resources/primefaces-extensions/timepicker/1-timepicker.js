@@ -114,7 +114,9 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	
 	    if (this.cfg.disabled) {
 	        this.disable();
-	    }
+	    } else {
+            this.enable();
+        }
 	
 	    if (this.cfg.modeSpinner && !this.cfg.disabled) {
 	        this.enableSpinner();
