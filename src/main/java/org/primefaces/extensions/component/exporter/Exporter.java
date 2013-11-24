@@ -52,6 +52,7 @@ import org.primefaces.extensions.util.ComponentUtils;
  */
 public abstract class Exporter {
 
+    protected String skipComponents;
     protected enum ColumnType {
         HEADER("header"),
         FOOTER("footer");
@@ -145,7 +146,13 @@ public abstract class Exporter {
 
                 return "";
             }
-        } else if (component instanceof ValueHolder) {
+        }
+        if (skipComponents.contains(component.getClass().getName())) {
+          System.out.println("component.getClass().getName()===="+component.getClass().getName());
+          return "";
+          }
+
+          else if (component instanceof ValueHolder) {
 
             if (component instanceof EditableValueHolder) {
                 Object submittedValue = ((EditableValueHolder) component).getSubmittedValue();
@@ -354,5 +361,9 @@ public abstract class Exporter {
 
         return false;
     }
+
+    public void setSkipComponents(String skipComponentsValue) {
+                skipComponents= skipComponentsValue;
+          }
 
 }

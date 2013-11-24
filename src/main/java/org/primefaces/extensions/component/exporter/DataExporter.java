@@ -74,10 +74,12 @@ public class DataExporter implements ActionListener, StateHolder {
 
     private ValueExpression orientation;
 
+    private ValueExpression skipComponents;
+
     public DataExporter() {
     }
 
-    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding, ValueExpression orientation) {
+    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding, ValueExpression orientation, ValueExpression skipComponents) {
         this.target = target;
         this.type = type;
         this.fileName = fileName;
@@ -98,6 +100,7 @@ public class DataExporter implements ActionListener, StateHolder {
         this.cellFontStyle = cellFontStyle;
         this.datasetPadding = datasetPadding;
         this.orientation = orientation;
+        this.skipComponents = skipComponents;
     }
 
     public void processAction(ActionEvent event) {
@@ -162,10 +165,14 @@ public class DataExporter implements ActionListener, StateHolder {
         String orientationValue = "Portrait";
         if (orientation != null)
             orientationValue = (String) orientation.getValue(elContext);
+        String skipComponentsValue="";
+        if (skipComponents != null)
+            skipComponentsValue = (String) skipComponents.getValue(elContext);
 
         try {
             ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
             Exporter exporter = factory.getExporterForType(exportAs);
+            exporter.setSkipComponents(skipComponentsValue);
             exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue, datasetPaddingValue,orientationValue);
             exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, subtable);
             context.responseComplete();
@@ -204,10 +211,11 @@ public class DataExporter implements ActionListener, StateHolder {
         cellFontStyle = (ValueExpression) values[17];
         datasetPadding = (ValueExpression) values[18];
         orientation = (ValueExpression) values[19];
+        skipComponents = (ValueExpression) values[20];
     }
 
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[20];
+        Object values[] = new Object[21];
 
         values[0] = target;
         values[1] = type;
@@ -229,6 +237,7 @@ public class DataExporter implements ActionListener, StateHolder {
         values[17] = cellFontStyle;
         values[18] = datasetPadding;
         values[19] = orientation;
+        values[20] = skipComponents;
 
         return ((Object[]) values);
     }
