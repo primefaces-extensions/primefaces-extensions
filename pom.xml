@@ -50,7 +50,7 @@
 						<exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
 						<exclude>**/META-INF/resources/**/tristatecheckbox/**</exclude>
 						<exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>
-					</excludes>
+                                        </excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -90,7 +90,8 @@
 								<include>inputnumber/**</include>
 								<include>waypoint/**</include>
 								<include>timeline/**</include>
-                                <include>fluidgrid/**</include>
+                                                                <include>fluidgrid/**</include>
+                                                                <include>qrcode/**</include>
 							</includes>
 							<aggregations>
 								<aggregation>

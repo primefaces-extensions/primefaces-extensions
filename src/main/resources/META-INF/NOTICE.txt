@@ -10,3 +10,5 @@ This product includes software developed by Bob Knothe (http://www.decorplanit.c
 This product includes software developed by Caleb Troughton (http://imakewebthings.com/jquery-waypoints/)
 This product includes software developed by Almende (http://almende.github.com/chap-links-library/timeline.html)
 This product includes software developed by David DeSandro (http://masonry.desandro.com/)
+This product includes software developed by Jerome Etienne (http://larsjung.de/qrcode/)
+This product includes software developed by Kazuhiko Arase (http://d-project.googlecode.com/svn/trunk/misc/qrcode/index.html/)

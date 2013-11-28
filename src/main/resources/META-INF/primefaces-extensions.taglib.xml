@@ -3618,6 +3618,13 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Defines if the input is readOnly.]]>
+            </description>
+            <name>readOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
             </description>
             <name>binding</name>
@@ -4257,6 +4264,187 @@ This global setting "editable" can be overwritten for individual events by setti
             <name>styleClass</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description><![CDATA[Generate QR codes dynamically]]></description>
+        <tag-name>qrCode</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.QRCode</component-type>
+            <renderer-type>org.primefaces.extensions.component.QRCodeRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>        
+        <attribute>
+            <description>
+                <![CDATA[Render method: canvas, img or div. Default value is canvas]]>
+            </description>
+            <name>renderMethod</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Render method:  0: normal
+                                         1: label strip
+                                         2: label box
+                                         3: image strip
+                                         4: image box
+                        Default value is 0]]>
+            </description>
+            <name>renderMode</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Version min range. Default value is 1]]>
+            </description>
+            <name>minVersion</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Version max range. Default value is 40]]>
+            </description>
+            <name>maxVersion</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[error correction level: `'L'`, `'M'`, `'Q'` or `'H'. Default value `'L'`]]>
+            </description>
+            <name>ecLevel</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[offset in pixel if drawn onto existing canvas. Default is 0]]>
+            </description>
+            <name>leftOffset</name>
+            <required>false</required>
+            <type>java.lang.Long</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[offset in pixel if drawn onto existing canvas. Default is 0]]>
+            </description>
+            <name>topOffset</name>
+            <required>false</required>
+            <type>java.lang.Long</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Size in pixel. Default is 200px]]>
+            </description>
+            <name>size</name>
+            <required>false</required>
+            <type>java.lang.Long</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[QRCode content text. Default is empty]]>
+            </description>
+            <name>text</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[QRCode content label font. Default is sans]]>
+            </description>
+            <name>fontName</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[QRCode content label color. Default is #000]]>
+            </description>
+            <name>fontColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[QRCode content label. Default is empty]]>
+            </description>
+            <name>label</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Code color or image element. Default is #000]]>
+            </description>
+            <name>fillColor</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[Background color or image element, empty for transparent background. Default is transparent]]>
+            </description>
+            <name>background</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[Corner radius relative to module width: 0.0 .. 0.5. Default value is 0.0]]>
+            </description>
+            <name>radius</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[Quiet zone in modules. Default value is 0.0]]>
+            </description>
+            <name>quiet</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>V
+		<attribute>
+            <description>
+                <![CDATA[Label size percentage. Default value is 0.1]]>
+            </description>
+            <name>mSize</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[Label relative Y position. Default value is 0.5]]>
+            </description>
+            <name>mPosX</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+		<attribute>
+            <description>
+                <![CDATA[Label relative Y position. Default value is 0.5]]>
+            </description>
+            <name>mPosY</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
         </attribute>
     </tag>
 </facelet-taglib>
