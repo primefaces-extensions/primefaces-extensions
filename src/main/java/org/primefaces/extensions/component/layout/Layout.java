@@ -291,7 +291,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 				double height = Double.valueOf(params.get(clientId + "_height"));
 
 				ResizeEvent resizeEvent = new ResizeEvent(pane, behaviorEvent.getBehavior(), width, height);
-				event.setPhaseId(behaviorEvent.getPhaseId());
+				resizeEvent.setPhaseId(behaviorEvent.getPhaseId());
 				super.queueEvent(resizeEvent);
 
 				return;
