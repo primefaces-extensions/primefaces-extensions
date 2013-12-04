@@ -38,6 +38,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * {@link ExceptionHandlerWrapper} which writes a custom XML response for the {@link AjaxErrorHandler} component.
@@ -49,6 +51,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final Logger LOGGER = Logger.getLogger(AjaxExceptionHandler.class.getCanonicalName());
+	private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private ExceptionHandler wrapped = null;
 
@@ -192,10 +195,15 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			writer.endCDATA();
 			writer.endElement("error-stacktrace");
 
-			// Node <error-stacktrace>
+			// Node <error-hostname>
 			writer.startElement("error-hostname", null);
 			writer.write(getHostname());
 			writer.endElement("error-hostname");
+			
+ 			// Node <error-timestamp>
+            		writer.startElement("error-timestamp", null);
+            		writer.write(getTimestamp());
+            		writer.endElement("error-timestamp");			
 
 			UIViewRoot root = context.getViewRoot();
 			AjaxErrorHandlerVisitCallback visitCallback = new AjaxErrorHandlerVisitCallback(errorName);
@@ -299,4 +307,9 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			return "???unknown???";
 		}
 	}
+
+    	protected String getTimestamp() {
+        	return dateFormatter.format(new Date());
+    	}	
+	
 }
