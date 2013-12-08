@@ -51,6 +51,7 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
 		// prevent instantiation
 	}
 
+    @Deprecated
 	public static String escapeComponentId(final String id) {
 		return id.replaceAll(":", "\\\\\\\\:");
 	}

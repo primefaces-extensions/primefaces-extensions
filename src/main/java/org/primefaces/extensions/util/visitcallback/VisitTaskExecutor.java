@@ -26,6 +26,7 @@ import javax.faces.component.visit.VisitResult;
  * @version $Revision: 1.0 $
  * @since   0.7
  */
+@Deprecated
 public interface VisitTaskExecutor {
 
 	/**
