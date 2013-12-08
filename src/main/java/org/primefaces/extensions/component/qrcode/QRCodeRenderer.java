@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.qrcode;
 
 import org.primefaces.extensions.component.tooltip.*;
@@ -31,47 +30,47 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link Tooltip} component.
  *
- * @author  Mauricio Fenoglio / last modified by $Author$
+ * @author Mauricio Fenoglio / last modified by $Author$
  * @version $Revision$
- * @since   1.2.0
+ * @since 1.2.0
  */
 public class QRCodeRenderer extends CoreRenderer {
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		QRCode qrCode = (QRCode) component;
-                encodeMarkup(context, qrCode);
-                encodeScript(context,qrCode);		
-	}
-        
-        protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = qrCode.getClientId(context);                
-		startScript(writer, clientId);
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('QRCode', '" + qrCode.resolveWidgetVar() + "',{"); 
-                WidgetRenderer.renderOptions(clientId, writer, qrCode);
-		writer.write("});});");
-		endScript(writer);
-	}
-        
-        private void encodeMarkup(FacesContext context, QRCode qrCode) throws IOException {
-                ResponseWriter writer = context.getResponseWriter();
-		String clientId = qrCode.getClientId(context);                               
-		writer.startElement("span", null);
-                writer.writeAttribute("id", clientId, null);                                
-		writer.endElement("span");
-        }
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        QRCode qrCode = (QRCode) component;
+        encodeMarkup(context, qrCode);
+        encodeScript(context, qrCode);
+    }
 
-	@Override
-	public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
-		//do nothing
-	}
+    protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = qrCode.getClientId(context);
+        startScript(writer, clientId);
+        writer.write("$(function() {");
+        writer.write("PrimeFacesExt.cw('QRCode', '" + qrCode.resolveWidgetVar() + "',{");
+        WidgetRenderer.renderOptions(clientId, writer, qrCode);
+        writer.write("});});");
+        endScript(writer);
+    }
 
-	@Override
-	public boolean getRendersChildren() {
-		return true;
-	}
-        
+    private void encodeMarkup(FacesContext context, QRCode qrCode) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = qrCode.getClientId(context);
+        writer.startElement("span", null);
+        writer.writeAttribute("id", clientId, null);
+        writer.endElement("span");
+    }
+
+    @Override
+    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+        //do nothing
+    }
+
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
+
 }
