@@ -48,10 +48,7 @@ public class QRCodeRenderer extends CoreRenderer {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = qrCode.getClientId(context);
         startScript(writer, clientId);
-        writer.write("$(function() {");
-        writer.write("PrimeFacesExt.cw('QRCode', '" + qrCode.resolveWidgetVar() + "',{");
-        WidgetRenderer.renderOptions(clientId, writer, qrCode);
-        writer.write("});});");
+        WidgetRenderer.renderWidgetScript(context, clientId, writer, qrCode, false);
         endScript(writer);
     }
 
