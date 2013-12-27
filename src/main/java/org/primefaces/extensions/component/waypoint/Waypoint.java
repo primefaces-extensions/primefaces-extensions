@@ -18,15 +18,10 @@
 
 package org.primefaces.extensions.component.waypoint;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.WaypointEvent;
+import org.primefaces.util.Constants;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -35,10 +30,11 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.event.WaypointEvent;
-import org.primefaces.util.Constants;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Waypoint.
@@ -73,9 +69,10 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 		widgetVar,
 		forValue("for"),
 		forContext,
+        enabled,
+        horizontal,
 		offset,
 		continuous,
-		onlyOnScroll,
 		triggerOnce;
 
 		private String toString;
@@ -125,6 +122,22 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 	public void setForContext(String forContext) {
 		getStateHelper().put(PropertyKeys.forContext, forContext);
 	}
+    
+    public boolean isEnabled() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.enabled, true);
+   	}
+   
+   	public void setEnabled(boolean enabled) {
+   		getStateHelper().put(PropertyKeys.enabled, enabled);
+   	}
+    
+    public boolean isHorizontal() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.horizontal, false);
+   	}
+   
+   	public void setHorizontal(boolean horizontal) {
+   		getStateHelper().put(PropertyKeys.horizontal, horizontal);
+   	}    
 
 	public String getOffset() {
 		return (String) getStateHelper().eval(PropertyKeys.offset, null);
@@ -140,14 +153,6 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 
 	public void setContinuous(boolean continuous) {
 		getStateHelper().put(PropertyKeys.continuous, continuous);
-	}
-
-	public boolean isOnlyOnScroll() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.onlyOnScroll, false);
-	}
-
-	public void setOnlyOnScroll(boolean onlyOnScroll) {
-		getStateHelper().put(PropertyKeys.onlyOnScroll, onlyOnScroll);
 	}
 
 	public boolean isTriggerOnce() {

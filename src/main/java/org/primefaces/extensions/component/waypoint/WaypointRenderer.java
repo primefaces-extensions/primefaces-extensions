@@ -18,14 +18,13 @@
 
 package org.primefaces.extensions.component.waypoint;
 
-import java.io.IOException;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.renderkit.CoreRenderer;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
 
 /**
  * WaypointRenderer.
@@ -69,7 +68,8 @@ public class WaypointRenderer extends CoreRenderer {
 		}
 
 		writer.write(",continuous:" + waypoint.isContinuous());
-		writer.write(",onlyOnScroll:" + waypoint.isOnlyOnScroll());
+		writer.write(",enabled:" + waypoint.isEnabled());
+        writer.write(",horizontal:" + waypoint.isHorizontal());
 		writer.write(",triggerOnce:" + waypoint.isTriggerOnce());
 
 		encodeClientBehaviors(fc, waypoint);

@@ -25,36 +25,27 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
-     * Unbinds all event handlers and unregisters the waypoint(s).
+     * Unbinds all event handlers and unregisters the waypoint(s) associated with these elements.
      */
     destroy:function () {
         this.target.waypoint('destroy');
         return this;
     },
-
+    
     /**
-     * Unregisters the waypoint(s) and wipes any custom options, but leaves the waypoint's event bound.
-     * Calling .register() again in the future would reregister the waypoint(s) and the old handlers would continue to work.
+     * Temporarily disables the waypoint callback function from firing. The waypoint can be re-enabled by calling enable.
      */
-    remove:function () {
-        if (this.isMozilla()) {
-            // mozilla bug https://github.com/imakewebthings/jquery-waypoints/issues/80
-            this.winscrolltop = $(window).scrollTop();
-        }
-        
-        this.target.waypoint('remove');
+    disable:function () {
+        this.target.waypoint('disable');
+        return this;
     },
-
+    
     /**
-     * Registers the waypoint(s) again with all old handlers. This method can be called after .remove().
+     * Re-enables a previously disabled waypoint.
      */
-    register:function () {
-        if (this.isMozilla() && this.winscrolltop) {
-            $(window).scrollTop(this.winscrolltop);
-            delete this.winscrolltop;
-        }
-        
-        this.target.waypoint(this.cfg);
+    enable:function () {
+        this.target.waypoint('enable');
+        return this;
     },
 
     /**
@@ -62,8 +53,8 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
      */
     create:function () {
         var _self = this;
-        this.target.waypoint(function (event, direction) {
-            _self.reached(event, direction, this);
+        this.target.waypoint(function (direction) {
+            _self.reached(direction, this);
         }, this.cfg);    
     },
 
@@ -74,7 +65,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         $.waypoints('refresh');
     },
 
-    reached:function (event, dir, way) {
+    reached:function (dir, way) {
         var behavior = this.cfg.behaviors ? this.cfg.behaviors["reached"] : null;
         if (behavior) {
             var ext = {
@@ -86,15 +77,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
                 waypoint:way
             };
 
-            behavior.call(this, event, ext);
+            behavior.call(this, null, ext);
         }
-
-        event.stopPropagation();
-    },
-    
-    // https://github.com/jquery/jquery-browser
-    isMozilla:function() {
-        var ua = (navigator.userAgent || "").toLowerCase();
-        return ("mozilla" === (ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+))?/.exec(ua) || [])[1]);
     }
 });

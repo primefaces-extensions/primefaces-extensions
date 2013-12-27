@@ -58,6 +58,8 @@ public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 	public static enum Direction {
 
 		DOWN,
-		UP
+		UP,
+        RIGHT,
+        LEFT
 	}
 }
