@@ -18,6 +18,8 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.context) {
             this.cfg.context = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.context);
         }
+        
+        this.destroy().create();
 
         delete this.cfg.target;
 

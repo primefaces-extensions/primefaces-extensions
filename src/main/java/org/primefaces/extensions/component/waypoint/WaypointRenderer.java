@@ -74,9 +74,7 @@ public class WaypointRenderer extends CoreRenderer {
 
 		encodeClientBehaviors(fc, waypoint);
 
-		writer.write("});PF('");
-		writer.write(widget + "').destroy().create();");
-		writer.write("});");
+		writer.write("})});");
 		endScript(writer);
 	}
 }
