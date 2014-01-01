@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
-              version="2.2">
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
 
     <name>primefaces_extensions</name>
 
@@ -49,7 +49,7 @@
     <component>
         <component-type>org.primefaces.extensions.component.UIFluidGridItem</component-type>
         <component-class>org.primefaces.extensions.component.fluidgrid.UIFluidGridItem</component-class>
-    </component>    
+    </component>
     <component>
         <component-type>org.primefaces.extensions.component.DataExporter</component-type>
         <component-class>org.primefaces.extensions.component.exporter.DataExporter</component-class>
@@ -117,16 +117,16 @@
     <component>
         <component-type>org.primefaces.extensions.component.TimePicker</component-type>
         <component-class>org.primefaces.extensions.component.timepicker.TimePicker</component-class>
-    </component>    
-    <component>                        
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.TriStateCheckbox</component-type>
         <component-class>org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.TriStateManyCheckbox</component-type>
         <component-class>org.primefaces.extensions.component.tristatemanycheckbox.TriStateManyCheckbox</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.InputNumber</component-type>
         <component-class>org.primefaces.extensions.component.inputnumber.InputNumber</component-class>
     </component>
@@ -134,23 +134,23 @@
         <component-type>org.primefaces.extensions.component.AjaxErrorHandler</component-type>
         <component-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandler</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.Waypoint</component-type>
         <component-class>org.primefaces.extensions.component.waypoint.Waypoint</component-class>
-    </component>    
-    <component>                        
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.Switch</component-type>
         <component-class>org.primefaces.extensions.component.switchcase.Switch</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.Case</component-type>
         <component-class>org.primefaces.extensions.component.switchcase.Case</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.DefaultCase</component-type>
         <component-class>org.primefaces.extensions.component.switchcase.DefaultCase</component-class>
     </component>
-    <component>                        
+    <component>
         <component-type>org.primefaces.extensions.component.QRCode</component-type>
         <component-class>org.primefaces.extensions.component.qrcode.QRCode</component-class>
     </component>
@@ -219,7 +219,7 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LayoutPaneRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.layout.LayoutPaneRenderer</renderer-class>
-        </renderer>        
+        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.MasterDetailRenderer</renderer-type>
@@ -269,7 +269,7 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.AjaxErrorHandlerRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandlerRenderer</renderer-class>
-        </renderer>        
+        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.WaypointRenderer</renderer-type>
@@ -293,8 +293,7 @@
     </render-kit>
 
     <!--<factory>-->
-        <!--<exception-handler-factory>org.primefaces.extensions.component.ajaxerrorhandler.AjaxExceptionHandlerFactory</exception-handler-factory>-->
+    <!--<exception-handler-factory>org.primefaces.extensions.component.ajaxerrorhandler.AjaxExceptionHandlerFactory</exception-handler-factory>-->
     <!--</factory>-->
-
 
 </faces-config>

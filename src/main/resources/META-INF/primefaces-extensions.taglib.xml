@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<facelet-taglib version="2.2"
-                xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<facelet-taglib version="2.0"
+                xmlns="http://java.sun.com/xml/ns/javaee"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
-    
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+
     <namespace>http://primefaces.org/ui/extensions</namespace>
 
     <!-- Functions -->
@@ -350,12 +350,12 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
-<attribute>
-<description><![CDATA[Method providing suggestions.]]></description>
-<name>completeMethod</name>
-<required>false</required>
-<type>javax.el.MethodExpression</type>
-</attribute>
+        <attribute>
+            <description><![CDATA[Method providing suggestions.]]></description>
+            <name>completeMethod</name>
+            <required>false</required>
+            <type>javax.el.MethodExpression</type>
+        </attribute>
         <attribute>
             <description><![CDATA[The theme to style the editor with.]]>
             </description>
@@ -1019,7 +1019,7 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description>Facet background to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
+            <description>Facet background to use.Ex:Hex Colors like #FFFF00,#FF0000...</description>
             <name>facetBackground</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -1031,7 +1031,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Facet font color to use.Hex Colors like #FFFF00,#FF0000... </description>
+            <description>Facet font color to use.Hex Colors like #FFFF00,#FF0000...</description>
             <name>facetFontColor</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -1055,7 +1055,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description>Cell Font Color to use.Ex:Hex Colors like #FFFF00,#FF0000... </description>
+            <description>Cell Font Color to use.Ex:Hex Colors like #FFFF00,#FF0000...</description>
             <name>cellFontColor</name>
             <required>false</required>
             <type>java.lang.String</type>
@@ -4296,7 +4296,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <name>binding</name>
             <required>false</required>
             <type>javax.faces.component.UIComponent</type>
-        </attribute>        
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[Render method: canvas, img or div. Default value is canvas]]>
@@ -4334,7 +4334,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[error correction level: `'L'`, `'M'`, `'Q'` or `'H'. Default value `'L'`]]>
             </description>
@@ -4342,7 +4342,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[offset in pixel if drawn onto existing canvas. Default is 0]]>
             </description>
@@ -4350,7 +4350,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Long</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[offset in pixel if drawn onto existing canvas. Default is 0]]>
             </description>
@@ -4366,7 +4366,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Long</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[QRCode content text. Default is empty]]>
             </description>
@@ -4374,7 +4374,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[QRCode content label font. Default is sans]]>
             </description>
@@ -4382,7 +4382,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[QRCode content label color. Default is #000]]>
             </description>
@@ -4390,7 +4390,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[QRCode content label. Default is empty]]>
             </description>
@@ -4406,7 +4406,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[Background color or image element, empty for transparent background. Default is transparent]]>
             </description>
@@ -4414,7 +4414,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[Corner radius relative to module width: 0.0 .. 0.5. Default value is 0.0]]>
             </description>
@@ -4422,15 +4422,16 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[Quiet zone in modules. Default value is 0.0]]>
             </description>
             <name>quiet</name>
             <required>false</required>
             <type>java.lang.Double</type>
-        </attribute>V
-		<attribute>
+        </attribute>
+        V
+        <attribute>
             <description>
                 <![CDATA[Label size percentage. Default value is 0.1]]>
             </description>
@@ -4438,7 +4439,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[Label relative Y position. Default value is 0.5]]>
             </description>
@@ -4446,7 +4447,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
-		<attribute>
+        <attribute>
             <description>
                 <![CDATA[Label relative Y position. Default value is 0.5]]>
             </description>

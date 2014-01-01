@@ -21,27 +21,27 @@ import javax.faces.component.visit.VisitResult;
 
 /**
  * Interface for all executor classes which are called by visit callbacks.
+ * It can be used from outside (see the showcase).
  *
- * @author  Oleg Varaksin
+ * @author Oleg Varaksin
  * @version $Revision: 1.0 $
- * @since   0.7
+ * @since 0.7
  */
-@Deprecated
 public interface VisitTaskExecutor {
 
-	/**
-	 * Execute some task on the given component.
-	 *
-	 * @param  component UIComponent
-	 * @return VisitResult (ACCEPT, REJECT, COMPLETE)
-	 */
-	VisitResult execute(UIComponent component);
+    /**
+     * Execute some task on the given component.
+     *
+     * @param component UIComponent
+     * @return VisitResult (ACCEPT, REJECT, COMPLETE)
+     */
+    VisitResult execute(UIComponent component);
 
-	/**
-	 * Should the task on the given component be executed?
-	 *
-	 * @param  component UIComponent
-	 * @return boolean true - the task should be executed, false - otherwise
-	 */
-	boolean shouldExecute(UIComponent component);
+    /**
+     * Should the task on the given component be executed?
+     *
+     * @param component UIComponent
+     * @return boolean true - the task should be executed, false - otherwise
+     */
+    boolean shouldExecute(UIComponent component);
 }

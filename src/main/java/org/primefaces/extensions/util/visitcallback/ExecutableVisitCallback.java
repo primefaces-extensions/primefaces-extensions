@@ -23,25 +23,25 @@ import javax.faces.component.visit.VisitResult;
 
 /**
  * Visit callback to call any "task executor" implementing {@link VisitTaskExecutor} while traversing the component tree.
+ * It can be used from outside (see the showcase).
  *
- * @author  Oleg Varaksin
+ * @author Oleg Varaksin
  * @version $Revision: 1.0 $
- * @since   0.7
+ * @since 0.7
  */
-@Deprecated
 public class ExecutableVisitCallback implements VisitCallback {
 
-	private VisitTaskExecutor visitTaskExecutor;
+    private VisitTaskExecutor visitTaskExecutor;
 
-	public ExecutableVisitCallback(VisitTaskExecutor visitTaskExecutor) {
-		this.visitTaskExecutor = visitTaskExecutor;
-	}
+    public ExecutableVisitCallback(VisitTaskExecutor visitTaskExecutor) {
+        this.visitTaskExecutor = visitTaskExecutor;
+    }
 
-	public VisitResult visit(VisitContext context, UIComponent target) {
-		if (visitTaskExecutor.shouldExecute(target)) {
-			return visitTaskExecutor.execute(target);
-		}
+    public VisitResult visit(VisitContext context, UIComponent target) {
+        if (visitTaskExecutor.shouldExecute(target)) {
+            return visitTaskExecutor.execute(target);
+        }
 
-		return VisitResult.ACCEPT;
-	}
+        return VisitResult.ACCEPT;
+    }
 }
