@@ -175,11 +175,11 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 						if (widget.cfg.behaviors) {
 							var saveCallback = widget.cfg.behaviors['save'];
 						    if (saveCallback) {
-						    	var ext = {
+						    	var options = {
 						    			params: []
 						    	};
 	
-						    	saveCallback.call(widget, null, ext);
+						    	saveCallback.call(widget, options);
 						    }
 						}
 					}
@@ -230,11 +230,11 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 		if (this.cfg.behaviors) {
 			var callback = this.cfg.behaviors[eventName];
 		    if (callback) {
-		    	var ext = {
+		    	var options = {
 		    			params: []
 		    	};
 	
-		    	callback.call(this, null, ext);
+		    	callback.call(this, options);
 		    }
 		}
 	},

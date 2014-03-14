@@ -70,7 +70,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
     reached:function (dir, way) {
         var behavior = this.cfg.behaviors ? this.cfg.behaviors["reached"] : null;
         if (behavior) {
-            var ext = {
+            var options = {
                 params:[
                     {name:this.id + '_direction', value:dir},
                     {name:this.id + '_waypointId', value:$(way).attr('id')}
@@ -79,7 +79,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
                 waypoint:way
             };
 
-            behavior.call(this, null, ext);
+            behavior.call(this, options);
         }
     }
 });

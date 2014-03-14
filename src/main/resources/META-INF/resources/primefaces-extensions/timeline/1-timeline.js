@@ -71,13 +71,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     return;
                 }
                 
-                var ext = {
+                var options = {
                     params: [
                         {name: this.id + '_eventIdx', value: index}
                     ]
                 };
 
-                this.getBehavior("select").call(this, null, ext);
+                this.getBehavior("select").call(this, options);
             }, this));
         }
 
@@ -109,7 +109,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     });    
                 }
 
-                this.getBehavior("add").call(this, null, {params: params});
+                this.getBehavior("add").call(this, {params: params});
             }, this));
         }
         
@@ -156,7 +156,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     });    
                 }
 
-                this.getBehavior("change").call(this, null, {params: params});
+                this.getBehavior("change").call(this, {params: params});
             }, this));
         }
         
@@ -173,13 +173,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     return;
                 }
                 
-                var ext = {
+                var options = {
                     params: [
                         {name: this.id + '_eventIdx', value: index}
                     ]
                 };
 
-                this.getBehavior("edit").call(this, null, ext);
+                this.getBehavior("edit").call(this, options);
             }, this));
         }
         
@@ -196,13 +196,13 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                     return;
                 }
                 
-                var ext = {
+                var options = {
                     params: [
                         {name: this.id + '_eventIdx', value: index}
                     ]
                 };
 
-                this.getBehavior("delete").call(this, null, ext);
+                this.getBehavior("delete").call(this, options);
             }, this));
         }
         
@@ -211,14 +211,14 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             links.events.addListener(this.instance, 'rangechange', $.proxy(function () {
                 var range = this.instance.getVisibleChartRange();
                 
-                var ext = {
+                var options = {
                     params: [
                         {name: this.id + '_startDate', value: range.start.getTime()},
                         {name: this.id + '_endDate', value: range.end.getTime()}
                     ]
                 };
 
-                this.getBehavior("rangechange").call(this, null, ext);
+                this.getBehavior("rangechange").call(this, options);
             }, this));
         }
         
@@ -227,14 +227,14 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             links.events.addListener(this.instance, 'rangechanged', $.proxy(function () {
                 var range = this.instance.getVisibleChartRange();
                 
-                var ext = {
+                var options = {
                     params: [
                         {name: this.id + '_startDate', value: range.start.getTime()},
                         {name: this.id + '_endDate', value: range.end.getTime()}
                     ]
                 };
 
-                this.getBehavior("rangechanged").call(this, null, ext);
+                this.getBehavior("rangechanged").call(this, options);
             }, this));
         }
         
@@ -319,7 +319,7 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                 // call the drop listener
                 // parameters event and ui can be accessible in "onstart" (p:ajax) via cfg.ext.event and cfg.ext.ui
                 // or in "execute" (pe:javascript) via ext.event and ext.ui
-                this.getBehavior("drop").call(this, evt, {params: params, event: evt, ui: ui});
+                this.getBehavior("drop").call(this, {params: params, event: evt, ui: ui});
             }, this);
             
             // make the timeline droppable
@@ -384,21 +384,21 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             return;
         }
         
-        var ext = {
+        var options = {
             params: []
         };
         
         if (range.startFirst != null && range.endFirst != null) {
-            ext.params[0] = {name: this.id + '_startDateFirst', value: range.startFirst};
-            ext.params[1] = {name: this.id + '_endDateFirst', value: range.endFirst}; 
+            options.params[0] = {name: this.id + '_startDateFirst', value: range.startFirst};
+            options.params[1] = {name: this.id + '_endDateFirst', value: range.endFirst}; 
         }
         
         if (range.startSecond != null && range.endSecond != null) {
-            ext.params[2] = {name: this.id + '_startDateSecond', value: range.startSecond};
-            ext.params[3] = {name: this.id + '_endDateSecond', value: range.endSecond};
+            options.params[2] = {name: this.id + '_startDateSecond', value: range.startSecond};
+            options.params[3] = {name: this.id + '_endDateSecond', value: range.endSecond};
         }
           
-        this.getBehavior("lazyload").call(this, null, ext);
+        this.getBehavior("lazyload").call(this, options);
     },
 
     /**

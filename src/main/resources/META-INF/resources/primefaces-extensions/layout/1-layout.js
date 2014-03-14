@@ -67,13 +67,13 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                 var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
-                    var ext = {
+                    var options = {
                         params:[
                             {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
     
-                    behavior.call($this, combinedPosition, ext);
+                    behavior.call($this, options);
                 }
     
                 if ($this.cfg.serverState) {
@@ -83,13 +83,13 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                 var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
-                    var ext = {
+                    var options = {
                         params:[
                             {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
     
-                    behavior.call($this, combinedPosition, ext);
+                    behavior.call($this, options);
                 }
     
                 if ($this.cfg.serverState) {
@@ -102,7 +102,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                     var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['resize'] : null;
                     if (behavior) {
                         var combinedPosition = $(this).data('combinedposition');
-                        var ext = {
+                        var options = {
                             params:[
                                 {name:$this.id + '_pane', value:combinedPosition},
                                 {name:$this.id + '_width', value:layoutPane.state.innerWidth},
@@ -110,7 +110,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                             ]
                         };
     
-                        behavior.call($this, combinedPosition, ext);
+                        behavior.call($this, options);
                     }
     
                     if ($this.cfg.serverState) {
