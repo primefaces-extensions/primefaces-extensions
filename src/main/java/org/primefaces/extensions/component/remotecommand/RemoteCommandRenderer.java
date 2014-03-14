@@ -35,7 +35,7 @@ import javax.faces.event.PhaseId;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
-import org.primefaces.extensions.util.AjaxRequestBuilder;
+import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -104,7 +104,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 		final List<AbstractParameter> parameters = command.getAllParameters();
 		final String name = command.getName();
 
-		final AjaxRequestBuilder builder = new AjaxRequestBuilder(context);
+		final ExtAjaxRequestBuilder builder = new ExtAjaxRequestBuilder(context);
 		builder.init()
 			.source(clientId)
 			.form(form.getClientId(context))
@@ -118,7 +118,8 @@ public class RemoteCommandRenderer extends CoreRenderer {
 			.onstart(source.getOnstart())
 			.onerror(source.getOnerror())
 			.onsuccess(source.getOnsuccess())
-			.oncomplete(source.getOncomplete());
+			.oncomplete(source.getOncomplete())
+            .delay(source.getDelay());
 
 		builder.params(clientId, parameters);
 

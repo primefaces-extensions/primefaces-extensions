@@ -30,8 +30,8 @@ import javax.faces.event.PhaseId;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
-import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -111,50 +111,55 @@ public class CodeMirrorRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final String clientId = codeMirror.getClientId(context);
-		final String widgetVar = codeMirror.resolveWidgetVar();
-
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('" + CodeMirror.class.getSimpleName() + "', '" + widgetVar + "', {");
-
-		WidgetRenderer.renderOptions(clientId, writer, codeMirror);
+        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        wb.initWithDomReady(CodeMirror.class.getSimpleName(), codeMirror.resolveWidgetVar(), codeMirror.getClientId(), "codemirror");
+        wb.attr("theme", codeMirror.getTheme())
+                .attr("mode", codeMirror.getMode())
+                .attr("indentUnit", codeMirror.getIndentUnit())
+                .attr("smartIndent", codeMirror.isSmartIndent())
+                .attr("tabSize", codeMirror.getTabSize())
+                .attr("indentWithTabs", codeMirror.isIndentWithTabs())
+                .attr("electricChars", codeMirror.isElectricChars())
+                .attr("keyMap", codeMirror.getKeyMap())
+                .attr("lineWrapping", codeMirror.isLineWrapping())
+                .attr("lineNumbers", codeMirror.isLineNumbers())
+                .attr("firstLineNumber", codeMirror.getFirstLineNumber())
+                .attr("gutter", codeMirror.isGutter())
+                .attr("fixedGutter", codeMirror.isFixedGutter())
+                .attr("readOnly", codeMirror.isReadOnly())
+                .attr("matchBrackets", codeMirror.isMatchBrackets())
+                .attr("workTime", codeMirror.getWorkTime())
+                .attr("workDelay", codeMirror.getWorkDelay())
+                .attr("pollInterval", codeMirror.getPollInterval())
+                .attr("tabindex", codeMirror.getTabindex())
+                .attr("extraKeys", codeMirror.getExtraKeys())
+                .attr("undoDepth", codeMirror.getUndoDepth());
 
         if (!codeMirror.isGlobal()) {
-        	writer.write(",global:false");
+            wb.attr("global", false);
         }
-
+        if (codeMirror.isAsync()) {
+            wb.attr("async", true);
+        }
         if (codeMirror.getProcess() != null) {
-        	writer.write(",process:'" + SearchExpressionFacade.resolveComponentsForClient(context, codeMirror, codeMirror.getProcess()) + "'");
+            wb.attr("process", SearchExpressionFacade.resolveComponentsForClient(context, codeMirror, codeMirror.getProcess()));
         }
-
         if (codeMirror.getOnstart() != null) {
-        	writer.write(",onstart:function(request) {" + codeMirror.getOnstart() + ";}");
+            wb.callback("onstart", "function(request)", codeMirror.getOnstart());
         }
-
         if (codeMirror.getOncomplete() != null) {
-        	writer.write(",oncomplete:function(xhr, status, args) {" + codeMirror.getOncomplete() + ";}");
+            wb.callback("oncomplete", "function(xhr, status, args)", codeMirror.getOncomplete());
+        }
+        if (codeMirror.getOnsuccess() != null) {
+            wb.callback("onsuccess", "function(data, status, xhr)", codeMirror.getOnsuccess());
+        }
+        if (codeMirror.getOnerror() != null) {
+            wb.callback("onerror", "function(xhr, status, error)", codeMirror.getOnerror());
         }
 
-		if (codeMirror.getOnsuccess() != null) {
-			writer.write(",onsuccess:function(data, status, xhr){" + codeMirror.getOnsuccess() + ";}");
-		}
-
-		if (codeMirror.getOnerror() != null) {
-			writer.write(",onerror:function(xhr, status, error){" + codeMirror.getOnerror() + ";}");
-		}
-
-		if (codeMirror.isAsync()) {
-			writer.write(",async:true");
-		}
-
-		encodeClientBehaviors(context, codeMirror);
-
-		writer.write("}, true);});");
-
-		endScript(writer);
+        encodeClientBehaviors(context, codeMirror);
+        
+        wb.finish();
 	}
 
     @Override

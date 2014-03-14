@@ -18,14 +18,11 @@
 
 package org.primefaces.extensions.component.imageareaselect;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -37,7 +34,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
-import org.primefaces.extensions.renderkit.widget.Option;
 import org.primefaces.util.Constants;
 
 /**
@@ -79,24 +75,24 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
 		widgetVar,
 		forValue("for"),
-		@Option aspectRatio,
-		@Option autoHide,
-		@Option fadeSpeed,
-		@Option handles,
-		@Option hide,
-		@Option imageHeight,
-		@Option imageWidth,
-		@Option movable,
-		@Option persistent,
-		@Option resizable,
-		@Option show,
-		@Option zIndex,
-		@Option maxHeight,
-		@Option maxWidth,
-		@Option minHeight,
-		@Option minWidth,
-		@Option(escapeText = true, useDoubleQuotes = true) parentSelector,
-		@Option keyboardSupport;
+		aspectRatio,
+		autoHide,
+		fadeSpeed,
+		handles,
+		hide,
+		imageHeight,
+		imageWidth,
+		movable,
+		persistent,
+		resizable,
+		show,
+		zIndex,
+		maxHeight,
+		maxWidth,
+		minHeight,
+		minWidth,
+		parentSelector,
+		keyboardSupport;
 
 		private String toString;
 

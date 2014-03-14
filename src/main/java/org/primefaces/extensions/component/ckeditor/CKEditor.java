@@ -18,13 +18,10 @@
 
 package org.primefaces.extensions.component.ckeditor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
@@ -33,7 +30,6 @@ import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
  * Component class for the <code>CKEditor</code> component.
@@ -74,18 +70,18 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option height,
-		@Option width,
-		@Option theme,
-		@Option skin,
-		@Option(useDoubleQuotes = true) toolbar,
-		@Option readOnly,
-		@Option interfaceColor,
-		@Option language,
-		@Option defaultLanguage,
-		@Option contentsCss,
-		@Option customConfig,
-		@Option tabindex,
+		height,
+		width,
+		theme,
+		skin,
+		toolbar,
+		readOnly,
+		interfaceColor,
+		language,
+		defaultLanguage,
+		contentsCss,
+		customConfig,
+		tabindex,
 		escape;
 
 		private String toString;

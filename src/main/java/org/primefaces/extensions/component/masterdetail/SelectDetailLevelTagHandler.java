@@ -145,8 +145,8 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
 				for (List<ClientBehavior> listBehaviors : clientBehaviors) {
 					for (ClientBehavior clientBehavior : listBehaviors) {
-						if (clientBehavior instanceof org.primefaces.component.behavior.ajax.AjaxBehavior) {
-							((org.primefaces.component.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+						if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
+							((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
 							    new SelectDetailLevelListener(me));
 						} else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
 							((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(

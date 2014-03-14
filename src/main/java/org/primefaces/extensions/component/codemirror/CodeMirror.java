@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.el.MethodExpression;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
@@ -37,7 +36,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CompleteEvent;
-import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
  * Component class for the <code>CodeMirror</code> component.
@@ -79,27 +77,27 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	protected enum PropertyKeys {
 
 		widgetVar,
-		@Option theme,
-		@Option mode,
-		@Option indentUnit,
-		@Option smartIndent,
-		@Option tabSize,
-		@Option indentWithTabs,
-		@Option electricChars,
-		@Option keyMap,
-		@Option lineWrapping,
-		@Option lineNumbers,
-		@Option firstLineNumber,
-		@Option gutter,
-		@Option fixedGutter,
-		@Option readOnly,
-		@Option matchBrackets,
-		@Option workTime,
-		@Option workDelay,
-		@Option pollInterval,
-		@Option undoDepth,
-		@Option tabindex,
-		@Option extraKeys,
+		theme,
+		mode,
+		indentUnit,
+		smartIndent,
+		tabSize,
+		indentWithTabs,
+		electricChars,
+		keyMap,
+		lineWrapping,
+		lineNumbers,
+		firstLineNumber,
+		gutter,
+		fixedGutter,
+		readOnly,
+		matchBrackets,
+		workTime,
+		workDelay,
+		pollInterval,
+		undoDepth,
+		tabindex,
+		extraKeys,
 		completeMethod,
 		process,
 		onstart,

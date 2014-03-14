@@ -14,22 +14,23 @@
     background: url("#{resource['primefaces-extensions:imageareaselect/border-h.gif']}") repeat-x left bottom;
 }
 
-.pe-imgageareaselect-border1, .ui-imgageareaselect-border2, .ui-imgageareaselect-border3, .ui-imgageareaselect-border4 {
-    opacity: 0.5;
+.pe-imgageareaselect-border1, .pe-imgageareaselect-border2,
+.pe-imgageareaselect-border3, .pe-imgageareaselect-border4 {
     filter: alpha(opacity=50);
+    opacity: 0.5;
 }
 
 .pe-imgageareaselect-handle {
     background-color: #fff;
     border: solid 1px #000;
-    opacity: 0.5;
     filter: alpha(opacity=50);
+    opacity: 0.5;
 }
 
 .pe-imgageareaselect-outer {
-    background-color: #000;
-    opacity: 0.5;
+    border-color: #000;
     filter: alpha(opacity=50);
+    opacity: 0.5;
 }
 
 .pe-imgageareaselect-selection {

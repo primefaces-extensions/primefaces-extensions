@@ -48,7 +48,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
         
         $document.on('pfAjaxSend.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
-            var source = PrimeFaces.Expressions.resolveComponents($this.source);
+            var source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents($this.source);
             
             // first, check if event should be handled 
             if ($this.isAppropriateEvent(source, settings)) {
@@ -58,7 +58,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
         
         $document.on('pfAjaxComplete.' + this.id, function(e, xhr, settings) {
             // get IDs of the sources
-            var source = PrimeFaces.Expressions.resolveComponents($this.source);
+            var source = PrimeFaces.expressions.SearchExpressionFacade.resolveComponents($this.source);
             
             // first, check if event should be handled
             if ($this.isAppropriateEvent(source, settings)) {
@@ -71,7 +71,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
         var opt;
         
         if (this.target) {
-            var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
+            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.target);
             
             // second, check if the target element has been found
             if (targetEl.length > 0) {
@@ -107,7 +107,7 @@ PrimeFacesExt.widget.BlockUI = PrimeFaces.widget.BaseWidget.extend({
 	    
 	unblock : function () {
         if (this.target) {
-            var targetEl = PrimeFaces.Expressions.resolveComponentsAsSelector(this.target);
+            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.target);
             
             // second, check if the target element has been found
             if (targetEl.length > 0) {

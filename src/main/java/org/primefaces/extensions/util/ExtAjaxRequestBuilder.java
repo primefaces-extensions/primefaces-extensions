@@ -31,13 +31,13 @@ import org.primefaces.extensions.component.base.AbstractParameter;
  * @version $Revision$
  * @since 0.5
  */
-public class AjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilder {
+public class ExtAjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilder {
 
-	public AjaxRequestBuilder(FacesContext context) {
+	public ExtAjaxRequestBuilder(FacesContext context) {
 		super(context);
 	}
 
-	public AjaxRequestBuilder params(final String clientId, final List<AbstractParameter> parameters) {
+	public ExtAjaxRequestBuilder params(final String clientId, final List<AbstractParameter> parameters) {
 		boolean paramWritten = false;
 
 		for (int i = 0; i < parameters.size(); i++) {

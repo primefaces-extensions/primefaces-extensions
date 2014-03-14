@@ -22,10 +22,10 @@ import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
+import org.primefaces.extensions.component.ckeditor.CKEditor;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -44,25 +44,31 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
 	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
-		final String clientId = imageAreaSelect.getClientId(context);
-		final String widgetVar = imageAreaSelect.resolveWidgetVar();
-		final String target = SearchExpressionFacade.resolveComponentForClient(
-				context, imageAreaSelect, imageAreaSelect.getFor());
+		ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('" + ImageAreaSelect.class.getSimpleName() + "', '" + widgetVar + "', {");
-
-		WidgetRenderer.renderOptions(clientId, writer, imageAreaSelect);
-
-		writer.write(",target:'" + target + "'");
+        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId(), "imageareaselect");
+        wb.attr("target", SearchExpressionFacade.resolveComponentForClient(context, imageAreaSelect, imageAreaSelect.getFor()))
+                .attr("aspectRatio", imageAreaSelect.getAspectRatio())
+                .attr("autoHide", imageAreaSelect.isAutoHide())
+                .attr("fadeSpeed", imageAreaSelect.getFadeSpeed())
+                .attr("handles", imageAreaSelect.isHandles())
+                .attr("hide", imageAreaSelect.isHide())
+                .attr("imageHeight", imageAreaSelect.getImageHeight())
+                .attr("imageWidth", imageAreaSelect.getImageWidth())
+                .attr("movable", imageAreaSelect.isMovable())
+                .attr("persistent", imageAreaSelect.isPersistent())
+                .attr("resizable", imageAreaSelect.isPersistent())
+                .attr("show", imageAreaSelect.isShow())
+                .attr("zIndex", imageAreaSelect.getZIndex())
+                .attr("maxHeight", imageAreaSelect.getMaxHeight())
+                .attr("maxWidth", imageAreaSelect.getMaxWidth())
+                .attr("minHeight", imageAreaSelect.getMinHeight())
+                .attr("minWidth", imageAreaSelect.getMinWidth())
+                .attr("keyboardSupport", imageAreaSelect.isKeyboardSupport())
+                .attr("parentSelector", escapeText(imageAreaSelect.getParentSelector()));
 
 		encodeClientBehaviors(context, imageAreaSelect);
-
-		writer.write("}, true);});");
-		endScript(writer);
+        wb.finish();
 	}
 }

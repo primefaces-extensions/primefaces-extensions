@@ -62,7 +62,7 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 		this.bindSelectChangeCallback();
 		this.bindSelectEndCallback();
 	
-		this.instance = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
+		this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
 		
 		this.removeScriptElement(this.id);
 	},
@@ -77,11 +77,11 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectEndCallback = this.cfg.behaviors['selectEnd'];
 		    if (selectEndCallback) {
 				this.options.onSelectEnd = $.proxy(function(img, selection) {
-			    	var ext = {};
+			    	var options = {};
 	
-			    	this.fillSelectEventsParameter(img, selection, ext);
+			    	this.fillSelectEventsParameter(img, selection, options);
 	
-			    	selectEndCallback.call(this, null, ext);
+			    	selectEndCallback.call(this, options);
 			    }, this);
 		    }
 		}
@@ -97,11 +97,11 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectStartCallback = this.cfg.behaviors['selectStart'];
 		    if (selectStartCallback) {
 				this.options.onSelectStart = $.proxy(function(img, selection) {
-			    	var ext = {};
+			    	var options = {};
 			
-			    	this.fillSelectEventsParameter(img, selection, ext);
+			    	this.fillSelectEventsParameter(img, selection, options);
 	
-			    	selectStartCallback.call(this, null, ext);
+			    	selectStartCallback.call(this, options);
 				}, this);
 		    }
 		}
@@ -117,11 +117,11 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 			var selectChangeCallback = this.cfg.behaviors['selectChange'];
 		    if (selectChangeCallback) {
 				this.options.onSelectChange = $.proxy(function(img, selection) {
-			    	var ext = {};
+			    	var options = {};
 			
-			    	this.fillSelectEventsParameter(img, selection, ext);
+			    	this.fillSelectEventsParameter(img, selection, options);
 	
-			    	selectChangeCallback.call(this, null, ext);
+			    	selectChangeCallback.call(this, options);
 				}, this);
 		    }
 		}
@@ -135,8 +135,8 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 	 * @param {object} ext The AJAX extensions object.
 	 * @private
 	 */
-	fillSelectEventsParameter : function(img, selection, ext) {
-		ext.params = [
+	fillSelectEventsParameter : function(img, selection, options) {
+		options.params = [
 		              { name: this.id + '_x1', value: selection.x1 },
 		              { name: this.id + '_x2', value: selection.x2 },
 		              { name: this.id + '_y1', value: selection.y1 },
@@ -162,7 +162,7 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 	reload : function() {
 		this.setOptions({remove: true});
 		this.update();
-		this.instance = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
+		this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
 	},
 
 	/**

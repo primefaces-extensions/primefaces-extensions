@@ -81,7 +81,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		autoRun,
 		actionListener,
 		resetValues,
-		ignoreAutoUpdate;
+		ignoreAutoUpdate,
+        delay;
 
 		private String toString;
 
@@ -227,6 +228,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
     }
 
+	public java.lang.String getDelay() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.delay, null);
+	}
+
+	public void setDelay(java.lang.String delay) {
+		getStateHelper().put(PropertyKeys.delay, delay);
+	}
+    
 	@Override
 	public void broadcast(final FacesEvent event) throws AbortProcessingException {
 		for (FacesListener listener : getFacesListeners(FacesListener.class)) {

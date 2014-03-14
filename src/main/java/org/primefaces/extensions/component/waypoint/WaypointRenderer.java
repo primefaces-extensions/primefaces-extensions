@@ -48,7 +48,7 @@ public class WaypointRenderer extends CoreRenderer {
 		// try to get context (which scrollable element the waypoint belongs to and acts within)
 		String context = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getForContext());
 
-		String target = SearchExpressionFacade.resolveComponentsForClientWithParentFallback(fc, waypoint, waypoint.getFor());
+		String target = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getFor(), SearchExpressionFacade.PARENT_FALLBACK);
 
 		final String widget = waypoint.resolveWidgetVar();
 

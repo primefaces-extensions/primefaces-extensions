@@ -24,7 +24,6 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.renderkit.widget.Option;
 
 /**
  * <code>Tooltip</code> component.
@@ -56,43 +55,24 @@ public class QRCode extends UIOutput implements Widget {
     protected enum PropertyKeys {
 
         widgetVar,
-        @Option(name = "render")
         renderMethod,
-        @Option(name = "mode")
         renderMode,
-        @Option
         minVersion,
-        @Option
         maxVersion,
-        @Option(name = "left")
         leftOffset,
-        @Option(name = "top")
         topOffset,
-        @Option
         size,
-        @Option(name = "fill")
         fillColor,
-        @Option
         ecLevel,
-        @Option
         background,
-        @Option
         text,
-        @Option
         radius,
-        @Option
         quiet,
-        @Option
         mSize,
-        @Option
         mPosX,
-        @Option
         mPosY,
-        @Option
         label,
-        @Option(name="fontname")
         fontName,
-        @Option(name = "fontcolor")
         fontColor;
         private String toString;
 

@@ -240,7 +240,7 @@ public class TimelineRenderer extends CoreRenderer {
 
 			// restore writer
 			context.setResponseWriter(writer);
-			fsw.write(ComponentUtils.escapeHtmlTextInJson(fswHtml.toString()));
+			fsw.write(escapeText(fswHtml.toString()));
 			fswHtml.reset();
 		} else if (event.getData() != null) {
 			fsw.write(event.getData().toString());

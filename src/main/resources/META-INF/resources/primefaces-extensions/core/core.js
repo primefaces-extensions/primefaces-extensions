@@ -196,7 +196,7 @@ PrimeFacesExt = {
 	    if (PrimeFacesExt.widget[widgetName]) {
 	    	PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
 	    } else {
-	    	if (hasStyleSheet === true) {
+	    	if (hasStyleSheet) {
 	    		var styleSheet =
 	    			PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
 

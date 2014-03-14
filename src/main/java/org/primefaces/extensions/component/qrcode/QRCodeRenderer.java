@@ -23,7 +23,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -38,18 +38,35 @@ public class QRCodeRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
         QRCode qrCode = (QRCode) component;
         encodeMarkup(context, qrCode);
         encodeScript(context, qrCode);
     }
 
     protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = qrCode.getClientId(context);
-        startScript(writer, clientId);
-        WidgetRenderer.renderWidgetScript(context, clientId, writer, qrCode, false);
-        endScript(writer);
+        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        wb.initWithDomReady(QRCode.class.getSimpleName(), qrCode.resolveWidgetVar(), qrCode.getClientId());
+        wb.attr("render", qrCode.getRenderMethod())
+                .attr("mode", qrCode.getRenderMode())
+                .attr("minVersion", qrCode.getMinVersion())
+                .attr("maxVersion", qrCode.getMaxVersion())
+                .attr("left", qrCode.getLeftOffset())
+                .attr("top", qrCode.getTopOffset())
+                .attr("size", qrCode.getSize())
+                .attr("fill", qrCode.getFillColor())
+                .attr("ecLevel", qrCode.getEcLevel())
+                .attr("background", qrCode.getBackground())
+                .attr("text", qrCode.getText())
+                .attr("radius", qrCode.getRadius())
+                .attr("quiet", qrCode.getQuiet())
+                .attr("mSize", qrCode.getMSize())
+                .attr("mPosX", qrCode.getMPosX())
+                .attr("mPosY", qrCode.getMPosY())
+                .attr("label", qrCode.getLabel())
+                .attr("fontname", qrCode.getFontName())
+                .attr("fontcolor", qrCode.getFontColor());
+
+        wb.finish();
     }
 
     private void encodeMarkup(FacesContext context, QRCode qrCode) throws IOException {
@@ -69,5 +86,4 @@ public class QRCodeRenderer extends CoreRenderer {
     public boolean getRendersChildren() {
         return true;
     }
-
 }

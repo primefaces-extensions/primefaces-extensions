@@ -93,10 +93,10 @@ public class TooltipRenderer extends CoreRenderer {
 		if (mouseTracking) {
 			writer.write(",hide:{fixed:true}");
 		} else if (shared && !global) {
-			writer.write(",show:{target:PrimeFaces.Expressions.resolveComponentsAsSelector('" + target + "')" + ",delay:"
+			writer.write(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('" + target + "')" + ",delay:"
 			             + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
 			             + tooltip.getShowEffectLength() + ");}}");
-			writer.write(",hide:{target:PrimeFaces.Expressions.resolveComponentsAsSelector('" + target + "')" + ",delay:"
+			writer.write(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('" + target + "')" + ",delay:"
 			             + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
 			             + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
 		} else if (autoShow) {

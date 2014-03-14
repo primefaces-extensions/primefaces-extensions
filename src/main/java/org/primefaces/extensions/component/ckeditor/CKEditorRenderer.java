@@ -26,8 +26,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
-import org.primefaces.extensions.renderkit.widget.WidgetRenderer;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 
 /**
@@ -91,23 +91,22 @@ public class CKEditorRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final String clientId = ckEditor.getClientId(context);
-		final String widgetVar = ckEditor.resolveWidgetVar();
-
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('" + CKEditor.class.getSimpleName() + "', '" + widgetVar + "', {");
-
-		WidgetRenderer.renderOptions(clientId, writer, ckEditor);
-		writer.write(",widgetVar:'" + ckEditor.resolveWidgetVar() + "'");
+        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        wb.initWithDomReady(CKEditor.class.getSimpleName(), ckEditor.resolveWidgetVar(), ckEditor.getClientId());
+        wb.attr("height", ckEditor.getHeight())
+                .attr("width", ckEditor.getWidth())
+                .attr("skin", ckEditor.getSkin())
+                .attr("toolbar", ckEditor.getToolbar())
+                .attr("readOnly", ckEditor.isReadOnly())
+                .attr("interfaceColor", ckEditor.getInterfaceColor())
+                .attr("language", ckEditor.getLanguage())
+                .attr("defaultLanguage", ckEditor.getDefaultLanguage())
+                .attr("contentsCss", ckEditor.getContentsCss())
+                .attr("customConfig", ckEditor.getCustomConfig())
+                .attr("tabindex", ckEditor.getTabindex());
 
 		encodeClientBehaviors(context, ckEditor);
-
-		writer.write("}, true);});");
-
-		endScript(writer);
+        wb.finish();
 	}
 
     @Override

@@ -26,7 +26,7 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 	 */
 	initializeLazy : function() {
 		if (!this.initialized) {
-			this.target = PrimeFaces.Expressions.resolveComponentsAsSelector(this.cfg.target)[0];
+			this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target)[0];
 			this.imageSrc = this.target.src;
 			this.imageWidth = this.target.width;
 			this.imageHeight = this.target.height;
@@ -231,13 +231,13 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 		if (this.cfg.behaviors) {
 			var callback = this.cfg.behaviors['rotate'];
 		    if (callback) {
-		    	var ext = {
+		    	var options = {
 		    			params: [
 		    			         { name: this.id + '_degree', value: this.degree }
 		    			]
 		    	};
 
-		    	callback.call(this, null, ext);
+		    	callback.call(this, options);
 		    }
 		}
 	},
@@ -251,14 +251,14 @@ PrimeFacesExt.widget.ImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 		if (this.cfg.behaviors) {
 			var callback = this.cfg.behaviors['resize'];
 		    if (callback) {
-		    	var ext = {
+		    	var options = {
 		    			params: [
 		    			         { name: this.id + '_width', value: this.newImageWidth },
 		    			         { name: this.id + '_height', value: this.newImageHeight }
 		    			]
 		    	};
 
-		    	callback.call(this, null, ext);
+		    	callback.call(this, options);
 		    }
 		}
 	}
