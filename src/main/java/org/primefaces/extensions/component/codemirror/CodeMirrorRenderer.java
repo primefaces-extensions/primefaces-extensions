@@ -134,8 +134,9 @@ public class CodeMirrorRenderer extends InputRenderer {
                 .attr("tabindex", codeMirror.getTabindex())
                 .attr("undoDepth", codeMirror.getUndoDepth());
         
-        wb.append(",extraKeys:" + codeMirror.getExtraKeys());
-
+        if (codeMirror.getExtraKeys() != null) {
+            wb.append(",extraKeys:" + codeMirror.getExtraKeys());
+        }
         if (!codeMirror.isGlobal()) {
             wb.attr("global", false);
         }

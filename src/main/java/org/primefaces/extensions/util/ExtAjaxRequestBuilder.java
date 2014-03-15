@@ -37,12 +37,12 @@ public class ExtAjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilde
 
 	public static ExtAjaxRequestBuilder get(final FacesContext context) {
 
-		ExtAjaxRequestBuilder arb = (ExtAjaxRequestBuilder) context.getExternalContext().getApplicationMap().get(KEY);
+		ExtAjaxRequestBuilder arb = (ExtAjaxRequestBuilder) context.getExternalContext().getRequestMap().get(KEY);
 
 		if (arb == null) {
 			arb = new ExtAjaxRequestBuilder(context);
 
-			context.getExternalContext().getApplicationMap().put(KEY, arb);
+			context.getExternalContext().getRequestMap().put(KEY, arb);
 		}
 
 		return arb;

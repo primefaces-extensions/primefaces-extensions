@@ -28,12 +28,12 @@ public class ExtWidgetBuilder extends WidgetBuilder {
 
 	public static ExtWidgetBuilder get(final FacesContext context) {
 
-		ExtWidgetBuilder wb = (ExtWidgetBuilder) context.getExternalContext().getApplicationMap().get(KEY);
+		ExtWidgetBuilder wb = (ExtWidgetBuilder) context.getExternalContext().getRequestMap().get(KEY);
 
 		if (wb == null) {
 			wb = new ExtWidgetBuilder(context);
 
-			context.getExternalContext().getApplicationMap().put(KEY, wb);
+			context.getExternalContext().getRequestMap().put(KEY, wb);
 		}
 
 		return wb;
