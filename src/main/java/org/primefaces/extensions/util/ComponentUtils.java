@@ -50,31 +50,6 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
         // prevent instantiation
     }
 
-    @Deprecated
-    public static String escapeComponentId(final String id) {
-        return id.replaceAll(":", "\\\\\\\\:");
-    }
-
-    @Deprecated
-    public static void addComponentResource(final FacesContext context, final String name) {
-        addComponentResource(context, name, Constants.LIBRARY, "head");
-    }
-
-    public static void addComponentResource(final FacesContext context, final String name, final String library,
-                                            final String target) {
-        final Application application = context.getApplication();
-
-        final UIComponent componentResource = application.createComponent(UIOutput.COMPONENT_TYPE);
-        componentResource.setRendererType(application.getResourceHandler().getRendererTypeForResourceName(name));
-        componentResource.setTransient(true);
-        componentResource.setId(context.getViewRoot().createUniqueId());
-        componentResource.getAttributes().put("name", name);
-        componentResource.getAttributes().put("library", library);
-        componentResource.getAttributes().put("target", target);
-
-        context.getViewRoot().addComponentResource(context, componentResource, target);
-    }
-
     public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
         Object submittedValue = evh.getSubmittedValue();
         if (submittedValue == null) {

@@ -111,7 +111,7 @@ public class CodeMirrorRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(CodeMirror.class.getSimpleName(), codeMirror.resolveWidgetVar(), codeMirror.getClientId(), "codemirror");
         wb.attr("theme", codeMirror.getTheme())
                 .attr("mode", codeMirror.getMode())
@@ -132,8 +132,9 @@ public class CodeMirrorRenderer extends InputRenderer {
                 .attr("workDelay", codeMirror.getWorkDelay())
                 .attr("pollInterval", codeMirror.getPollInterval())
                 .attr("tabindex", codeMirror.getTabindex())
-                .attr("extraKeys", codeMirror.getExtraKeys())
                 .attr("undoDepth", codeMirror.getUndoDepth());
+        
+        wb.append(",extraKeys:" + codeMirror.getExtraKeys());
 
         if (!codeMirror.isGlobal()) {
             wb.attr("global", false);

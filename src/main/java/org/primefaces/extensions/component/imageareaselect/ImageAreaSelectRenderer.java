@@ -46,7 +46,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
-        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId(), "imageareaselect");
         wb.attr("target", SearchExpressionFacade.resolveComponentForClient(context, imageAreaSelect, imageAreaSelect.getFor()))
                 .attr("aspectRatio", imageAreaSelect.getAspectRatio())

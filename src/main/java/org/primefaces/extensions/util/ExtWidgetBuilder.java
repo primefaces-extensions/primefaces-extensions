@@ -22,9 +22,23 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import org.primefaces.util.WidgetBuilder;
 
-// TODO 1 instance per FacesContext
 public class ExtWidgetBuilder extends WidgetBuilder {
 
+	private static final String KEY = ExtWidgetBuilder.class.getName();
+
+	public static ExtWidgetBuilder get(final FacesContext context) {
+
+		ExtWidgetBuilder wb = (ExtWidgetBuilder) context.getExternalContext().getApplicationMap().get(KEY);
+
+		if (wb == null) {
+			wb = new ExtWidgetBuilder(context);
+
+			context.getExternalContext().getApplicationMap().put(KEY, wb);
+		}
+
+		return wb;
+	}
+    
     public ExtWidgetBuilder(FacesContext context) {
         super(context);
     }

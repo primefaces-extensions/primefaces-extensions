@@ -25,8 +25,6 @@ import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ClientBehaviorRenderer;
 
-import org.primefaces.extensions.util.ComponentUtils;
-
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
  *

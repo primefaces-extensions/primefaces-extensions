@@ -33,6 +33,21 @@ import org.primefaces.extensions.component.base.AbstractParameter;
  */
 public class ExtAjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilder {
 
+	private static final String KEY = ExtAjaxRequestBuilder.class.getName();
+
+	public static ExtAjaxRequestBuilder get(final FacesContext context) {
+
+		ExtAjaxRequestBuilder arb = (ExtAjaxRequestBuilder) context.getExternalContext().getApplicationMap().get(KEY);
+
+		if (arb == null) {
+			arb = new ExtAjaxRequestBuilder(context);
+
+			context.getExternalContext().getApplicationMap().put(KEY, arb);
+		}
+
+		return arb;
+	}
+    
 	public ExtAjaxRequestBuilder(FacesContext context) {
 		super(context);
 	}

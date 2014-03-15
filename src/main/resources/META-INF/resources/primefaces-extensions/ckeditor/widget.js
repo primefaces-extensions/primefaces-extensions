@@ -47,7 +47,7 @@ CKEDITOR_GETURL = function(resource) {
 	}
 	
 	return facesResource;
-}
+};
 
 /**
  * PrimeFaces Extensions CKEditor Widget.
@@ -187,7 +187,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
 				editor.ui.addButton('Save', {label : editor.lang.save, command : 'save', title : '' });
 			}
-		}
+		};
 	},
 
 	/**

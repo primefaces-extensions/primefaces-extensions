@@ -91,7 +91,7 @@ public class CKEditorRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-        ExtWidgetBuilder wb = new ExtWidgetBuilder(context);
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(CKEditor.class.getSimpleName(), ckEditor.resolveWidgetVar(), ckEditor.getClientId());
         wb.attr("height", ckEditor.getHeight())
                 .attr("width", ckEditor.getWidth())
