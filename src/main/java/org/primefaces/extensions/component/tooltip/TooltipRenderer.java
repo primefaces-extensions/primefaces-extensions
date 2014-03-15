@@ -43,6 +43,7 @@ public class TooltipRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		Tooltip tooltip = (Tooltip) component;
 		String clientId = tooltip.getClientId(context);
+        String widgetVar = tooltip.resolveWidgetVar();
 		boolean global = tooltip.isGlobal();
 		boolean shared = tooltip.isShared();
 		boolean autoShow = tooltip.isAutoShow();
@@ -56,8 +57,9 @@ public class TooltipRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function() {");
 
-		writer.write("PrimeFacesExt.cw('Tooltip', '" + tooltip.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('Tooltip', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",global:" + global);
 		writer.write(",shared:" + shared);
 		writer.write(",autoShow:" + autoShow);

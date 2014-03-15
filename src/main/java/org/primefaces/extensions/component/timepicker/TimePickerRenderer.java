@@ -146,12 +146,14 @@ public class TimePickerRenderer extends InputRenderer {
 	protected void encodeScript(final FacesContext fc, final TimePicker timepicker, final String value) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		final String clientId = timepicker.getClientId(fc);
+        String widgetVar = timepicker.resolveWidgetVar();
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
-		writer.write("PrimeFacesExt.cw('TimePicker', '" + timepicker.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('TimePicker', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",timeSeparator:'" + timepicker.getTimeSeparator() + "'");
 		writer.write(",myPosition:'" + timepicker.getDialogPosition() + "'");
 		writer.write(",atPosition:'" + timepicker.getInputPosition() + "'");

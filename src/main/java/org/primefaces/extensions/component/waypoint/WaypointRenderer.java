@@ -50,13 +50,14 @@ public class WaypointRenderer extends CoreRenderer {
 
 		String target = SearchExpressionFacade.resolveComponentsForClient(fc, waypoint, waypoint.getFor(), SearchExpressionFacade.PARENT_FALLBACK);
 
-		final String widget = waypoint.resolveWidgetVar();
+		final String widgetVar = waypoint.resolveWidgetVar();
 
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
-		writer.write("PrimeFacesExt.cw('Waypoint', '" + widget + "',{");
+		writer.write("PrimeFacesExt.cw('Waypoint', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",target:'" + target + "'");
 
 		if (context != null) {

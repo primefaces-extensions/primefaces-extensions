@@ -166,7 +166,9 @@ public class InputNumberRenderer extends InputRenderer {
 
 	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		String clientId = inputNumber.getClientId(context);                
+		String clientId = inputNumber.getClientId(context);
+        String widgetVar = inputNumber.getWidgetVar();
+        
 		startScript(writer, clientId);
 		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
 		if (valueToRender == null) {
@@ -174,8 +176,9 @@ public class InputNumberRenderer extends InputRenderer {
 		}
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('InputNumber','" + inputNumber.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('InputNumber','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",disabled:" + inputNumber.isDisabled());
 		writer.write(",valueToRender:'" + formatForPlugin(valueToRender,inputNumber) + "'");
 

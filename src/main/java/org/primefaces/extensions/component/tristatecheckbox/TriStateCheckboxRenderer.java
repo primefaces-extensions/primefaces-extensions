@@ -22,6 +22,8 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import org.primefaces.extensions.component.qrcode.QRCode;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -194,18 +196,10 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		}
 	}
 
-	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = checkbox.getClientId(context);
-
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('TriStateCheckbox','" + checkbox.resolveWidgetVar() + "',{");
-		writer.write("id:'" + clientId + "'");
-		encodeClientBehaviors(context, checkbox);
-		writer.write("});});");
-
-		endScript(writer);
+	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {        
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
+        wb.initWithDomReady(TriStateCheckbox.class.getSimpleName(), checkbox.resolveWidgetVar(), checkbox.getClientId());;
+        encodeClientBehaviors(context, checkbox);
+        wb.finish();
 	}
 }

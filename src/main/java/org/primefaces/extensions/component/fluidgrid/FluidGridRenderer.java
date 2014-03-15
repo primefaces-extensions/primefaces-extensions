@@ -124,12 +124,14 @@ public class FluidGridRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext fc, FluidGrid fluidGrid) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = fluidGrid.getClientId(fc);
+        String widgetVar = fluidGrid.resolveWidgetVar();
 
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('FluidGrid','" + fluidGrid.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('FluidGrid','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",opts:{");
 
 		writer.write("isFitWidth:" + fluidGrid.isFitWidth());

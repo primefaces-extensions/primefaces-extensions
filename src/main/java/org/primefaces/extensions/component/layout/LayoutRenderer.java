@@ -118,11 +118,13 @@ public class LayoutRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext fc, Layout layout) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = layout.getClientId(fc);
+        String widgetVar = layout.resolveWidgetVar();
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('Layout', '" + layout.resolveWidgetVar() + "',{");
+		writer.write("PrimeFacesExt.cw('Layout', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 
 		if (layout.isFullPage()) {
 			writer.write(",forTarget:'body'");

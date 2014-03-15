@@ -36,6 +36,7 @@ import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.HTML;
 
@@ -276,18 +277,10 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 	}
 
 	protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = checkbox.getClientId(context);
-
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('TriStateManyCheckbox','" + checkbox.resolveWidgetVar() + "',{");
-		writer.write("id:'" + clientId + "'");
-		encodeClientBehaviors(context, checkbox);
-		writer.write("});});");
-
-		endScript(writer);
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
+        wb.initWithDomReady(TriStateManyCheckbox.class.getSimpleName(), checkbox.resolveWidgetVar(), checkbox.getClientId());;
+        encodeClientBehaviors(context, checkbox);
+        wb.finish();
 	}
 
 	protected void encodeOptionLabel(FacesContext context, TriStateManyCheckbox checkbox, String containerClientId,

@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.blockui;
 import java.io.IOException;
 
 import javax.faces.FacesException;
-import javax.faces.component.NamingContainer;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
@@ -132,6 +131,7 @@ public class BlockUIRenderer extends CoreRenderer {
 		writer.write("PrimeFacesExt.cw('BlockUI', '" + widgetVar + "',{");
 
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",source:'" + source + "'");
         
         if (target != null) {

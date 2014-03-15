@@ -60,6 +60,7 @@ public class KeyFilterRenderer extends CoreRenderer {
 		writer.write("PrimeFacesExt.cw('KeyFilter', '" + widgetVar + "',{");
 
 		writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",target:'" + target + "'");
 
 		if (keyFilter.getRegEx() != null) {

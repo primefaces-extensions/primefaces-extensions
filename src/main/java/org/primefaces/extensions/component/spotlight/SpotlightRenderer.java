@@ -25,6 +25,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
+import org.primefaces.extensions.component.qrcode.QRCode;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 
 /**
  * Renderer for the {@link org.primefaces.extensions.component.spotlight.Spotlight} component.
@@ -56,20 +58,14 @@ public class SpotlightRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	protected void encodeScript(final FacesContext fc, final UIComponent component) throws IOException {
-		ResponseWriter writer = fc.getResponseWriter();
+	protected void encodeScript(final FacesContext context, final UIComponent component) throws IOException {
 		Spotlight spotlight = (Spotlight) component;
-		String clientId = spotlight.getClientId(fc);
 
-		// generate script
-		startScript(writer, clientId);
-		writer.write("$(function() {");	// START OF ANONYM FUNCTION
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
+        wb.initWithDomReady(Spotlight.class.getSimpleName(), spotlight.resolveWidgetVar(), spotlight.getClientId(), "spotlight");
+        wb.attr("blocked", spotlight.isBlocked());
 
-		final String widgetVar = spotlight.resolveWidgetVar();
-		writer.write("PrimeFacesExt.cw('Spotlight', '" + widgetVar + "',{id:'" + clientId + "', blocked: "+ spotlight.isBlocked()+"},true);");
-
-		writer.write("});");			// END OF ANONYM FUNCTION
-		endScript(writer);
+        wb.finish();
 	}
 
 	@Override
