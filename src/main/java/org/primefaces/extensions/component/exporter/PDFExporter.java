@@ -696,7 +696,6 @@ public class PDFExporter extends Exporter {
                 }
             }
         }
-        table.setRowIndex(table.getRowIndex() + 1);
         for (UIComponent component : table.getChildren()) {
             if (component instanceof RowExpansion) {
                 RowExpansion rowExpansion = (RowExpansion) component;
