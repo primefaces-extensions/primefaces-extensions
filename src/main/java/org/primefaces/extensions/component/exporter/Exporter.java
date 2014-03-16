@@ -303,11 +303,12 @@ public abstract class Exporter {
     }
 
     public boolean hasHeaderColumn(DataTable table) {
-        for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
-                UIColumn column = (UIColumn) child;
-
-                if (column.getFacet("header") != null || column.getHeaderText() != null) {
+        for(UIColumn col : table.getColumns()) {
+           if(col instanceof DynamicColumn) {
+                 ((DynamicColumn) col).applyStatelessModel();
+           }
+           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) {
+                if (col.getFacet("header") != null || col.getHeaderText() != null) {
                     return true;
                 }
             }
