@@ -42,6 +42,7 @@ import org.primefaces.component.column.Column;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columns.Columns;
 import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.component.api.DynamicColumn;
 
 
 /**
@@ -268,25 +269,17 @@ public abstract class Exporter {
     protected int getColumnsCount(DataTable table) {
         int count = 0;
 
-        for (UIComponent child : table.getChildren()) {
-            if (!child.isRendered()) {
-                continue;
-            }
+         for(UIColumn col : table.getColumns()) {
+                    if(col instanceof DynamicColumn) {
+                        ((DynamicColumn) col).applyStatelessModel();
+                    }
 
-            if (child instanceof Column) {
-                Column column = (Column) child;
+                    if(!col.isRendered()||!col.isExportable()) {
+                        continue;
+                    }
 
-                if (column.isExportable()) {
                     count++;
                 }
-            } else if (child instanceof Columns) {
-                Columns columns = (Columns) child;
-
-                if (columns.isExportable()) {
-                    count += columns.getRowCount();
-                }
-            }
-        }
 
         return count;
     }
@@ -294,25 +287,17 @@ public abstract class Exporter {
     protected int getColumnsCount(SubTable table) {
         int count = 0;
 
-        for (UIComponent child : table.getChildren()) {
-            if (!child.isRendered()) {
-                continue;
-            }
+         for(UIColumn col : table.getColumns()) {
+                    if(col instanceof DynamicColumn) {
+                        ((DynamicColumn) col).applyStatelessModel();
+                    }
 
-            if (child instanceof Column) {
-                Column column = (Column) child;
+                    if(!col.isRendered()||!col.isExportable()) {
+                        continue;
+                    }
 
-                if (column.isExportable()) {
                     count++;
                 }
-            } else if (child instanceof Columns) {
-                Columns columns = (Columns) child;
-
-                if (columns.isExportable()) {
-                    count += columns.getRowCount();
-                }
-            }
-        }
 
         return count;
     }

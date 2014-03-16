@@ -720,15 +720,12 @@ public class ExcelExporter extends Exporter {
         cellStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
 
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 addColumnValue(row, col.getChildren(), "content");
             }
         }
@@ -800,15 +797,12 @@ public class ExcelExporter extends Exporter {
         cellStyleRightAlign.setAlignment((short)CellStyle.ALIGN_RIGHT);
 
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 addColumnValue(row, col.getChildren(), "content");
             }
         }
@@ -857,15 +851,12 @@ public class ExcelExporter extends Exporter {
         Row rowHeader = sheet.createRow(sheetRowIndex);
 
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 addColumnValue(rowHeader, col.getFacet(columnType.facet()), "facet");
             }
         }
@@ -878,15 +869,12 @@ public class ExcelExporter extends Exporter {
         Row rowHeader = sheet.createRow(sheetRowIndex);
 
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 addColumnValue(rowHeader, col.getFacet(columnType.facet()), "facet");
             }
         }

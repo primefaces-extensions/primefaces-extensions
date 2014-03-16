@@ -659,15 +659,12 @@ public class PDFExporter extends Exporter {
 
     protected void exportCells(DataTable table, PdfPTable pdfTable) {
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 if (col.getSelectionMode() != null) {
                     pdfTable.addCell(new Paragraph(col.getSelectionMode(), this.cellFont));
                     continue;
@@ -727,15 +724,12 @@ public class PDFExporter extends Exporter {
 
     protected void subTableExportCells(SubTable table, PdfPTable pdfTable) {
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 addColumnValue(pdfTable, col.getChildren(), this.cellFont,"data");
             }
         }
@@ -744,15 +738,12 @@ public class PDFExporter extends Exporter {
 
     protected void addColumnFacets(DataTable table, PdfPTable pdfTable, ColumnType columnType) {
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
             PdfPCell cell = null;
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), this.facetFont));
                     if (facetBackground != null) {
@@ -767,7 +758,6 @@ public class PDFExporter extends Exporter {
                     }
                     pdfTable.addCell(cell);
                 } else {
-
                     addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont,columnType.name());
                 }
             }
@@ -776,15 +766,12 @@ public class PDFExporter extends Exporter {
 
     protected void addColumnFacets(SubTable table, PdfPTable pdfTable, ColumnType columnType) {
         for (UIColumn col : table.getColumns()) {
-            if (!col.isRendered()) {
-                continue;
-            }
 
             if (col instanceof DynamicColumn) {
-                ((DynamicColumn) col).applyModel();
+                ((DynamicColumn) col).applyStatelessModel();
             }
             PdfPCell cell = null;
-            if (col.isExportable()) {
+            if (col.isRendered() && col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), this.facetFont));
                     if (facetBackground != null) {
