@@ -332,5 +332,5 @@ PrimeFacesExt.locales.Timeline = {};
  * @constructor
  */
 PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
-	return cfg.execute.call(this, cfg.source, cfg.event, cfg.params, ext);
+	return cfg.execute.call(this, cfg.source, cfg.event, ext.params, ext);
 };

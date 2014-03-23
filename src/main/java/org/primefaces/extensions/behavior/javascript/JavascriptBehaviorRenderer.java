@@ -52,7 +52,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 		script.append("PrimeFacesExt.behavior.Javascript({");
 		script.append("source:'").append(source).append("'");
 		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
-		script.append(",execute:function(source, event, params, ext){");
+		script.append(",execute:function(source,event,params,ext){");
 		script.append(javascriptBehavior.getExecute()).append(";}");
 
 		// params
@@ -79,7 +79,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 			script.append("}");
 		}
 
-		script.append("}, arguments[1]);");
+		script.append("},ext);");
 
 		return script.toString();
 	}
