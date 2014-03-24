@@ -18,14 +18,9 @@
 
 package org.primefaces.extensions.component.ajaxerrorhandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-
 import org.primefaces.component.api.Widget;
 
 /**
@@ -59,6 +54,7 @@ public class AjaxErrorHandler extends UIComponentBase implements Widget {
 	static public enum PropertyKeys {
 		type,
 		title,
+		timestampFormat,
 		body,
 		button,
 		buttonOnclick,
@@ -112,6 +108,14 @@ public class AjaxErrorHandler extends UIComponentBase implements Widget {
 
 	public void setTitle(final String title) {
 		getStateHelper().put(PropertyKeys.title, title);
+	}
+
+	public String getTimestampFormat() {
+		return (String) getStateHelper().eval(PropertyKeys.timestampFormat, null);
+	}
+
+	public void setTimestampFormat(final String timestampFormat) {
+		getStateHelper().put(PropertyKeys.timestampFormat, timestampFormat);
 	}
 
 	public String getBody() {

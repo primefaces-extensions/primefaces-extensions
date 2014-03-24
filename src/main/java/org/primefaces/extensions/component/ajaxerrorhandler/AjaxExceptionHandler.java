@@ -32,14 +32,14 @@ import javax.faces.view.ViewDeclarationLanguage;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * {@link ExceptionHandlerWrapper} which writes a custom XML response for the {@link AjaxErrorHandler} component.
@@ -51,7 +51,6 @@ import java.util.Date;
 public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 
 	private static final Logger LOGGER = Logger.getLogger(AjaxExceptionHandler.class.getCanonicalName());
-	private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private ExceptionHandler wrapped = null;
 
@@ -200,11 +199,6 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			writer.write(getHostname());
 			writer.endElement("error-hostname");
 			
- 			// Node <error-timestamp>
-            		writer.startElement("error-timestamp", null);
-            		writer.write(getTimestamp());
-            		writer.endElement("error-timestamp");			
-
 			UIViewRoot root = context.getViewRoot();
 			AjaxErrorHandlerVisitCallback visitCallback = new AjaxErrorHandlerVisitCallback(errorName);
 			if (root != null) {
@@ -216,6 +210,11 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 					LOGGER.log(Level.SEVERE, "Problem with visitTree in AjaxExceptionHandler: ", e);
 				}
 			}
+
+			// Node <error-timestamp>
+			writer.startElement("error-timestamp", null);
+			writer.write(getTimestamp(visitCallback.getTimestampFormat()));
+			writer.endElement("error-timestamp");
 
 			UIComponent titleFacet = visitCallback.findCurrentTitleFacet();
 			if (titleFacet != null) {
@@ -308,7 +307,9 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 		}
 	}
 
-    	protected String getTimestamp() {
+    	protected String getTimestamp(String format) {
+			if (format == null) format = "yyyy-MM-dd HH:mm:ss";
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(format);
         	return dateFormatter.format(new Date());
     	}	
 	

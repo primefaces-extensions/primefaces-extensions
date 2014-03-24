@@ -41,6 +41,7 @@ public class AjaxErrorHandlerVisitCallback implements VisitCallback {
 	private List<AjaxErrorHandler> typeAjaxErrorHandler = new LinkedList<AjaxErrorHandler>();
 
 	private String type;
+	private String timestampFormat;
 
 	private UIComponent facetTitle = null;
 	private UIComponent facetBody = null;
@@ -60,6 +61,7 @@ public class AjaxErrorHandlerVisitCallback implements VisitCallback {
 		facetTitle = null;
 		facetBody = null;
 		customContent = null;
+		timestampFormat = null;
 
 		List<AjaxErrorHandler> ajaxErrorHandlers = new LinkedList<AjaxErrorHandler>(defaultAjaxErrorHandler);
 		ajaxErrorHandlers.addAll(typeAjaxErrorHandler);
@@ -84,6 +86,11 @@ public class AjaxErrorHandlerVisitCallback implements VisitCallback {
 				customContent = null;
 			}
 
+			if (ajaxErrorHandler.getTimestampFormat() != null) {
+				timestampFormat = ajaxErrorHandler.getTimestampFormat();
+			}
+
+
 			////// title ...
 			// If later ajaxErrorHandler has TITLE attribute => early TITLE in FACET is ignored ...
 			if (ajaxErrorHandler.getTitle() != null) {
@@ -107,10 +114,19 @@ public class AjaxErrorHandlerVisitCallback implements VisitCallback {
 
 	}
 
+	public String getTimestampFormat() {
+		resolveFacetsAndCustomContent();
+		return timestampFormat;
+	}
+
 	public UIComponent findCurrentTitleFacet() {
 		resolveFacetsAndCustomContent();
 
 		return facetTitle;
+	}
+
+	public AjaxErrorHandlerVisitCallback() {
+		super();
 	}
 
 	public UIComponent findCurrentBodyFacet() {
