@@ -32,6 +32,8 @@ import javax.faces.view.ViewDeclarationLanguage;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -192,11 +194,11 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			writer.endCDATA();
 			writer.endElement("error-stacktrace");
 
-			// Node <error-stacktrace>
+			// Node <error-hostname>
 			writer.startElement("error-hostname", null);
 			writer.write(getHostname());
 			writer.endElement("error-hostname");
-
+			
 			UIViewRoot root = context.getViewRoot();
 			AjaxErrorHandlerVisitCallback visitCallback = new AjaxErrorHandlerVisitCallback(errorName);
 			if (root != null) {
@@ -208,6 +210,11 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 					LOGGER.log(Level.SEVERE, "Problem with visitTree in AjaxExceptionHandler: ", e);
 				}
 			}
+
+			// Node <error-timestamp>
+			writer.startElement("error-timestamp", null);
+			writer.write(getTimestamp(visitCallback.getTimestampFormat()));
+			writer.endElement("error-timestamp");
 
 			UIComponent titleFacet = visitCallback.findCurrentTitleFacet();
 			if (titleFacet != null) {
@@ -299,4 +306,11 @@ public class AjaxExceptionHandler extends ExceptionHandlerWrapper {
 			return "???unknown???";
 		}
 	}
+
+    	protected String getTimestamp(String format) {
+			if (format == null) format = "yyyy-MM-dd HH:mm:ss";
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(format);
+        	return dateFormatter.format(new Date());
+    	}	
+	
 }
