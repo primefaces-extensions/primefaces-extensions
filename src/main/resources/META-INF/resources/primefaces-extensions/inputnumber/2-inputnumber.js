@@ -18,7 +18,7 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         this.valueToRender =  cfg.valueToRender;
         this.disabled = cfg.disabled;      
                 
-        var _self = this;             
+        var $this = this;             
 
         //bind events if not disabled
         if (this.disabled) {
@@ -31,18 +31,18 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.skinInput(this.inputExternal);
         
         //copy to hidden input the cleaned value
-        this.inputExternal.bind('keyup', function(event) { 
+        this.inputExternal.on('keyup', function(event) { 
             //filter keys
             var keyCode = event.keyCode;
             if (keyCode == 8 || keyCode == 13 || keyCode == 32
                 || ( keyCode >= 46 && keyCode <= 90)
                 || ( keyCode >= 96 && keyCode <= 111)
                 || ( keyCode >= 186 && keyCode <= 222)) {
-                cleanVal = _self.inputExternal.autoNumeric('get');
+                cleanVal = $this.inputExternal.autoNumeric('get');
                 if(cleanVal != ""){
-                    _self.inputInternal.attr('value', cleanVal);   
+                    $this.inputInternal.attr('value', cleanVal);   
                 }else{
-                    _self.inputInternal.removeAttr('value');
+                    $this.inputInternal.removeAttr('value');
                 }			
             }
         })
@@ -58,10 +58,10 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
             //set the value to the external input the plugin will format it.                 
             this.inputExternal.autoNumeric('set',this.valueToRender);                     
             //then copie the value to the internal input
-            cleanVal = _self.inputExternal.autoNumeric('get');              
-            _self.inputInternal.attr('value', cleanVal);
+            cleanVal = $this.inputExternal.autoNumeric('get');              
+            $this.inputInternal.attr('value', cleanVal);
         }else{
-            _self.inputInternal.removeAttr('value');
+            $this.inputInternal.removeAttr('value');
         }
     },
         

@@ -167,7 +167,7 @@ public class InputNumberRenderer extends InputRenderer {
 	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);
-        String widgetVar = inputNumber.getWidgetVar();
+        String widgetVar = inputNumber.resolveWidgetVar();
         
 		startScript(writer, clientId);
 		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
