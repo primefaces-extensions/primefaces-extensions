@@ -204,11 +204,13 @@ PrimeFacesExt = {
 	    		if ($.browser.msie) {
 	    			var indexToInsert;
 	    			for (var i = 0; i < document.styleSheets.length; i++ ) {
-	    				var currentStyleSheetURL = document.styleSheets[i].href.toString();
-	    			    if (currentStyleSheetURL.indexOf('ln=primefaces') !== -1) {
-	    			    	//add +1 to insert after this style sheet
-	    			    	indexToInsert = i + 1;
-	    			    }
+                        if (document.styleSheets[i].href) {
+                            var currentStyleSheetURL = document.styleSheets[i].href.toString();
+                            if (currentStyleSheetURL.indexOf('ln=primefaces') !== -1) {
+                                //add +1 to insert after this style sheet
+                                indexToInsert = i + 1;
+                            }
+                        }
 	    			}
 
 	    			if (indexToInsert) {
