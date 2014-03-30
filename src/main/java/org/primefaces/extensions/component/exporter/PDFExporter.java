@@ -356,28 +356,34 @@ public class PDFExporter extends Exporter {
         int rows = table.getRows();
         boolean lazy = table.isLazy();
 
-        if (lazy) {
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                if (rowIndex % rows == 0) {
-                    table.setFirst(rowIndex);
-                    table.loadLazyData();
+        if(lazy) {
+                if(rowCount > 0) {
+                     table.setFirst(0);
+                     table.setRows(rowCount);
+                     table.clearLazyCache();
+                     table.loadLazyData();
                 }
 
-                exportRow(table, pdfTable, rowIndex);
+                for(int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+                     exportRow(table, pdfTable, rowIndex);
+                }
+
+                //restore
+                table.setFirst(first);
+                table.setRowIndex(-1);
+                table.clearLazyCache();
+                table.loadLazyData();
+        }
+        else {
+                tableColumnGroup(pdfTable, table, "header");
+                for(int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+                      exportRow(table, pdfTable, rowIndex);
+                }
+                tableColumnGroup(pdfTable, table, "footer");
+                //restore
+                table.setFirst(first);
             }
 
-            //restore
-            table.setFirst(first);
-            table.loadLazyData();
-        } else {
-            tableColumnGroup(pdfTable, table, "header");
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                exportRow(table, pdfTable, rowIndex);
-            }
-            tableColumnGroup(pdfTable, table, "footer");
-            //restore
-            table.setFirst(first);
-        }
     }
 
     protected void subTableExportAll(FacesContext context, SubTable table, PdfPTable pdfTable) {

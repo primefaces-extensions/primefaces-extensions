@@ -262,17 +262,20 @@ public class ExcelExporter extends Exporter {
             }
         } else {
             if (lazy) {
+                if(rowCount > 0) {
+                   table.setFirst(0);
+                   table.setRows(rowCount);
+                   table.clearLazyCache();
+                   table.loadLazyData();
+                }
                 for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                    if (rowIndex % rows == 0) {
-                        table.setFirst(rowIndex);
-                        table.loadLazyData();
-                    }
-
-                    exportRow(table, sheet, rowIndex);
+                   exportRow(table, sheet, rowIndex);
                 }
 
                 //restore
                 table.setFirst(first);
+                table.setRowIndex(-1);
+                table.clearLazyCache();
                 table.loadLazyData();
             } else {
                 for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
@@ -288,36 +291,18 @@ public class ExcelExporter extends Exporter {
         int first = table.getFirst();
         int rowCount = table.getRowCount();
         int rows = table.getRows();
-        boolean lazy = false;
 
-        if (lazy) {
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                if (rowIndex % rows == 0) {
-                    table.setFirst(rowIndex);
-                    // table.loadLazyData();
-                }
-
-                exportRow(table, sheet, rowIndex);
-            }
-
-            //restore
-            table.setFirst(first);
-            // table.loadLazyData();
-        } else {
-            tableColumnGroup(sheet, table, "header");
-            if (hasHeaderColumn(table)) {
-                addColumnFacets(table, sheet, ColumnType.HEADER);
-            }
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                exportRow(table, sheet, rowIndex);
-            }
-            if (hasFooterColumn(table)) {
-                addColumnFacets(table, sheet, ColumnType.FOOTER);
-            }
-            tableColumnGroup(sheet, table, "footer");
-            //restore
-            table.setFirst(first);
+        tableColumnGroup(sheet, table, "header");
+        if (hasHeaderColumn(table)) {
+            addColumnFacets(table, sheet, ColumnType.HEADER);
         }
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            exportRow(table, sheet, rowIndex);
+        }
+        if (hasFooterColumn(table)) {
+            addColumnFacets(table, sheet, ColumnType.FOOTER);
+        }
+        tableColumnGroup(sheet, table, "footer");
 
     }
 
