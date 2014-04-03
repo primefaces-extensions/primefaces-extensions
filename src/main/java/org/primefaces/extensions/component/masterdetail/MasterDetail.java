@@ -18,7 +18,11 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.component.breadcrumb.BreadCrumb;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.MenuModel;
+import org.primefaces.util.Constants;
 
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
@@ -30,15 +34,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ListenerFor;
 import javax.faces.event.PostRestoreStateEvent;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.MenuModel;
-import org.primefaces.util.Constants;
+import java.util.Map;
 
 /**
  * <code>MasterDetail</code> component.
@@ -47,7 +44,6 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  * @since   0.2
  */
-@ListenerFor(systemEventClass = PostRestoreStateEvent.class)
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
 public class MasterDetail extends UIComponentBase {
 
