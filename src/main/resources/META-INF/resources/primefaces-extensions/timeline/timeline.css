@@ -1,9 +1,15 @@
 div.timeline-frame {
+    position: relative;
+    overflow: hidden;
+}
+
+div.timeline-content {
+    position: relative;
     overflow: hidden;
 }
 
 div.timeline-axis {
-    filter: alpha(opacity = 60);
+    filter: alpha(opacity=60);
     -khtml-opacity: 0.6;
     -moz-opacity: 0.6;
     opacity: 0.6;
@@ -17,14 +23,14 @@ div.timeline-axis-grid {
 }
 
 div.timeline-axis-grid-minor {
-    filter: alpha(opacity = 30);
+    filter: alpha(opacity=30);
     -khtml-opacity: 0.3;
     -moz-opacity: 0.3;
     opacity: 0.3;
 }
 
 div.timeline-axis-grid-major {
-    filter: alpha(opacity = 50);
+    filter: alpha(opacity=50);
     -khtml-opacity: 0.5;
     -moz-opacity: 0.5;
     opacity: 0.5;

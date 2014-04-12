@@ -17,22 +17,6 @@
  */
 package org.primefaces.extensions.component.timeline;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-import java.util.TimeZone;
-
-import javax.faces.application.ResourceDependencies;
-import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.FacesEvent;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.timeline.TimelineAddEvent;
 import org.primefaces.extensions.event.timeline.TimelineDragDropEvent;
@@ -46,6 +30,21 @@ import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.DateUtils;
 import org.primefaces.extensions.util.visitcallback.UIDataContextCallback;
 import org.primefaces.util.Constants;
+
+import javax.faces.application.ResourceDependencies;
+import javax.faces.application.ResourceDependency;
+import javax.faces.component.UIComponentBase;
+import javax.faces.component.UINamingContainer;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Timeline component class.
@@ -113,6 +112,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		groupsChangeable,
 		groupsOnRight,
 		groupsWidth,
+        groupsOrder,
 		snapEvents,
 		stackEvents,
 		showCurrentTime,
@@ -120,6 +120,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 		showMinorLabels,
 		showButtonNew,
 		showNavigation,
+        timeChangeable,
 		dropHoverStyleClass,
 		dropActiveStyleClass,
 		dropAccept,
@@ -404,6 +405,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	public void setGroupsWidth(String groupsWidth) {
 		getStateHelper().put(PropertyKeys.groupsWidth, groupsWidth);
 	}
+    
+    public boolean isGroupsOrder() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.groupsOrder, true);
+   	}
+   
+   	public void setGroupsOrder(boolean groupsOrder) {
+   		getStateHelper().put(PropertyKeys.groupsOrder, groupsOrder);
+   	}
 
 	public boolean isSnapEvents() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.snapEvents, true);
@@ -460,6 +469,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 	public void setShowNavigation(boolean showNavigation) {
 		getStateHelper().put(PropertyKeys.showNavigation, showNavigation);
 	}
+    
+    public boolean isTimeChangeable() {
+   		return (Boolean) getStateHelper().eval(PropertyKeys.timeChangeable, true);
+   	}
+   
+   	public void setTimeChangeable(boolean timeChangeable) {
+   		getStateHelper().put(PropertyKeys.timeChangeable, timeChangeable);
+   	}
 
 	public String getDropHoverStyleClass() {
 		return (String) getStateHelper().eval(PropertyKeys.dropHoverStyleClass, null);

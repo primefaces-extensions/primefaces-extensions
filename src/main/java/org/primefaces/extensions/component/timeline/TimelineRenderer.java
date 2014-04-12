@@ -18,24 +18,22 @@
 
 package org.primefaces.extensions.component.timeline;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.DateUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
+
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * TimelineRenderer
@@ -120,6 +118,7 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",unselectable:" + timeline.isUnselectable());
 		writer.write(",zoomable:" + timeline.isZoomable());
 		writer.write(",moveable:" + timeline.isMoveable());
+        writer.write(",timeChangeable:" + timeline.isTimeChangeable());
 
 		if (timeline.getStart() != null) {
 			writer.write(",start:" + encodeDate(browserTZ, targetTZ, timeline.getStart()));
@@ -149,8 +148,9 @@ public class TimelineRenderer extends CoreRenderer {
 		writer.write(",eventMargin:" + timeline.getEventMargin());
 		writer.write(",eventMarginAxis:" + timeline.getEventMarginAxis());
 		writer.write(",style:'" + timeline.getEventStyle() + "'");
-		writer.write(",groupsChangeable:" + timeline.isGroupsChangeable());
+		writer.write(",groupsChangeable:" + timeline.isGroupsChangeable());        
 		writer.write(",groupsOnRight:" + timeline.isGroupsOnRight());
+        writer.write(",groupsOrder:" + timeline.isGroupsOrder());
 
 		if (timeline.getGroupsWidth() != null) {
 			writer.write(",groupsWidth:'" + timeline.getGroupsWidth() + "'");

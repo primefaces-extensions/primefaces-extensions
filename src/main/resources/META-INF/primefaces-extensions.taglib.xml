@@ -3110,6 +3110,14 @@ This global setting "editable" can be overwritten for individual events by setti
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Allows to customize the way groups are ordered. When true (default), groups will be ordered alphabetically. When false, groups will not be ordered at all.]]>
+            </description>
+            <name>groupsOrder</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[By default, the width of the groups legend is adjusted to the group names. A fixed width can be set for the groups legend by specifying the "groupsWidth" as a string, for example "200px". Default is null.]]>
             </description>
             <name>groupsWidth</name>
@@ -3169,6 +3177,14 @@ This global setting "editable" can be overwritten for individual events by setti
                 <![CDATA[Show a navigation menu with buttons to move and zoom the timeline. Default is false.]]>
             </description>
             <name>showNavigation</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If false, items can not be moved or dragged horizontally (neither start time nor end time is changable). This is useful when items should be editable but can only be changed regarding group or content (typical use case: scheduling events). Default is true.]]>
+            </description>
+            <name>timeChangeable</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

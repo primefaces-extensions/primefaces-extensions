@@ -113,9 +113,9 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             }, this));
         }
         
-        // "change" event
-        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.getBehavior("change")) {
-            links.events.addListener(this.instance, 'change', $.proxy(function () {
+        // "change" event (we map it to "changed" event since Timeline 2.7.0)
+        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.cfg.opts.timeChangeable && this.getBehavior("change")) {
+            links.events.addListener(this.instance, 'changed', $.proxy(function () {
                 var index = this.getSelectedIndex();
                 if (index < 0) {
                     return;
@@ -600,6 +600,31 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
     setVisibleRange: function (start, end) {
         return this.instance.setVisibleChartRange(start, end);
     },
+    
+    /**
+     * Moves the timeline the given movefactor to the left or right. Start and end date will be adjusted,
+     * and the timeline will be redrawn. For example, try moveFactor = 0.1 or -0.1. moveFactor is a Number
+     * that determines the moving amount. A positive value will move right, a negative value will move left.
+     *
+     * @param moveFactor Number 
+     */
+    move: function (moveFactor) {
+        return this.instance.move(moveFactor);
+    },
+    
+    /**
+     * Zooms the timeline the given zoomfactor in or out. Start and end date will be adjusted,
+     * and the timeline will be redrawn. You can optionally give a date around which to zoom.
+     * For example, try zoomfactor = 0.1 or -0.1. zoomFactor is a Number that determines the zooming amount.
+     * Positive value will zoom in, negative value will zoom out.
+     * zoomAroundDate is a Date around which to zoom and it is optional.
+     *
+     * @param zoomFactor Number
+     * @param zoomAroundDate Date 
+     */
+    zoom: function (zoomFactor, zoomAroundDate) {
+        return this.instance.zoom(zoomFactor, zoomAroundDate);
+    },    
     
     /**
      * Check if the timeline container is resized, and if so, resize the timeline. Useful when the webpage is resized.
