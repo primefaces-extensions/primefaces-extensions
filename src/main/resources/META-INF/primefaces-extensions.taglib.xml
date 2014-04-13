@@ -2901,6 +2901,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Name of the request-scoped variable for underlaying object in the TimelineGroup for each iteration.]]>
+            </description>
+            <name>varGroup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[User locale for i18n messages. The attribute can be either a String or Locale object.]]>
             </description>
             <name>locale</name>
@@ -3110,7 +3118,7 @@ This global setting "editable" can be overwritten for individual events by setti
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Allows to customize the way groups are ordered. When true (default), groups will be ordered alphabetically. When false, groups will not be ordered at all.]]>
+                <![CDATA[Allows to customize the way groups are ordered. When true (default), groups will be ordered by content alphabetically (when the list of groups is missing) or by native ordering of TimelineGroup object in the list of groups (when the list of groups is available). When false, groups will not be ordered at all.]]>
             </description>
             <name>groupsOrder</name>
             <required>false</required>
@@ -3134,7 +3142,7 @@ This global setting "editable" can be overwritten for individual events by setti
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If true, the events are stacked above each other to prevent overlapping events. This option cannot be used in combination with grouped events. Default is true.]]>
+                <![CDATA[If true, the events are stacked above each other to prevent overlapping events. Default is true.]]>
             </description>
             <name>stackEvents</name>
             <required>false</required>

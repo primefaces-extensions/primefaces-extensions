@@ -15,6 +15,7 @@
  *
  * $Id$
  */
+
 package org.primefaces.extensions.component.timeline;
 
 import org.primefaces.component.api.Widget;
@@ -25,6 +26,7 @@ import org.primefaces.extensions.event.timeline.TimelineModificationEvent;
 import org.primefaces.extensions.event.timeline.TimelineRangeEvent;
 import org.primefaces.extensions.event.timeline.TimelineSelectEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.extensions.model.timeline.TimelineGroup;
 import org.primefaces.extensions.model.timeline.TimelineModel;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.DateUtils;
@@ -43,623 +45,652 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
 /**
  * Timeline component class.
  *
- * @author  Oleg Varaksin / last modified by $Author: $
+ * @author Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
- * @since   0.7 (reimplemented)
+ * @since 0.7 (reimplemented)
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
-                      })
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timeline/timeline.js")
+})
 public class Timeline extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timeline";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
 
-	private static final Collection<String> EVENT_NAMES =
-	    Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
-	                                                     "rangechanged", "lazyload", "drop"));
+    private static final Collection<String> EVENT_NAMES =
+            Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
+                    "rangechanged", "lazyload", "drop"));
 
-	/**
-	 * PropertyKeys
-	 *
-	 * @author  Oleg Varaksin / last modified by $Author: $
-	 * @version $Revision: 1.0 $
-	 */
-	enum PropertyKeys {
+    /**
+     * PropertyKeys
+     *
+     * @author Oleg Varaksin / last modified by $Author: $
+     * @version $Revision: 1.0 $
+     */
+    enum PropertyKeys {
 
-		widgetVar,
-		value,
-		var,
-		locale,
-		timeZone,
-		browserTimeZone,
-		style,
-		styleClass,
-		height,
-		minHeight,
-		width,
-		responsive,
-		axisOnTop,
-		dragAreaWidth,
-		editable,
-		selectable,
-		unselectable,
-		zoomable,
-		moveable,
-		start,
-		end,
-		min,
-		max,
-		zoomMin,
-		zoomMax,
-		preloadFactor,
-		eventMargin,
-		eventMarginAxis,
-		eventStyle,
-		groupsChangeable,
-		groupsOnRight,
-		groupsWidth,
+        widgetVar,
+        value,
+        var,
+        varGroup,
+        locale,
+        timeZone,
+        browserTimeZone,
+        style,
+        styleClass,
+        height,
+        minHeight,
+        width,
+        responsive,
+        axisOnTop,
+        dragAreaWidth,
+        editable,
+        selectable,
+        unselectable,
+        zoomable,
+        moveable,
+        start,
+        end,
+        min,
+        max,
+        zoomMin,
+        zoomMax,
+        preloadFactor,
+        eventMargin,
+        eventMarginAxis,
+        eventStyle,
+        groupsChangeable,
+        groupsOnRight,
+        groupsWidth,
         groupsOrder,
-		snapEvents,
-		stackEvents,
-		showCurrentTime,
-		showMajorLabels,
-		showMinorLabels,
-		showButtonNew,
-		showNavigation,
+        snapEvents,
+        stackEvents,
+        showCurrentTime,
+        showMajorLabels,
+        showMinorLabels,
+        showButtonNew,
+        showNavigation,
         timeChangeable,
-		dropHoverStyleClass,
-		dropActiveStyleClass,
-		dropAccept,
-		dropScope;
-
-		private String toString;
-
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
-
-		PropertyKeys() {
-		}
-
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
-
-	public Timeline() {
-		setRendererType(DEFAULT_RENDERER);
-	}
-
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
-
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
-
-	public void setWidgetVar(String widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-	}
-
-	public TimelineModel getValue() {
-		return (TimelineModel) getStateHelper().eval(PropertyKeys.value, null);
-	}
-
-	public void setValue(TimelineModel value) {
-		getStateHelper().put(PropertyKeys.value, value);
-	}
-
-	public String getVar() {
-		return (String) getStateHelper().eval(PropertyKeys.var, null);
-	}
-
-	public void setVar(String var) {
-		getStateHelper().put(PropertyKeys.var, var);
-	}
-
-	public Object getLocale() {
-		return getStateHelper().eval(PropertyKeys.locale, null);
-	}
-
-	public void setLocale(Object locale) {
-		getStateHelper().put(PropertyKeys.locale, locale);
-	}
-
-	public Object getTimeZone() {
-		return getStateHelper().eval(PropertyKeys.timeZone, null);
-	}
-
-	public void setTimeZone(Object timeZone) {
-		getStateHelper().put(PropertyKeys.timeZone, timeZone);
-	}
-
-	public Object getBrowserTimeZone() {
-		return getStateHelper().eval(PropertyKeys.browserTimeZone, null);
-	}
-
-	public void setBrowserTimeZone(Object timeZone) {
-		getStateHelper().put(PropertyKeys.browserTimeZone, timeZone);
-	}
-
-	public String getStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.style, null);
-	}
-
-	public void setStyle(String style) {
-		getStateHelper().put(PropertyKeys.style, style);
-	}
-
-	public String getStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-	}
-
-	public void setStyleClass(String styleClass) {
-		getStateHelper().put(PropertyKeys.styleClass, styleClass);
-	}
-
-	public String getHeight() {
-		return (String) getStateHelper().eval(PropertyKeys.height, "auto");
-	}
-
-	public void setHeight(String height) {
-		getStateHelper().put(PropertyKeys.height, height);
-	}
-
-	public int getMinHeight() {
-		return (Integer) getStateHelper().eval(PropertyKeys.minHeight, 0);
-	}
+        dropHoverStyleClass,
+        dropActiveStyleClass,
+        dropAccept,
+        dropScope;
+
+        private String toString;
+
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
+
+        PropertyKeys() {
+        }
+
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
+
+    public Timeline() {
+        setRendererType(DEFAULT_RENDERER);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
+
+    public void setWidgetVar(String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
+
+    public TimelineModel getValue() {
+        return (TimelineModel) getStateHelper().eval(PropertyKeys.value, null);
+    }
+
+    public void setValue(TimelineModel value) {
+        getStateHelper().put(PropertyKeys.value, value);
+    }
+
+    public String getVar() {
+        return (String) getStateHelper().eval(PropertyKeys.var, null);
+    }
+
+    public void setVar(String var) {
+        getStateHelper().put(PropertyKeys.var, var);
+    }
+
+    public String getVarGroup() {
+        return (String) getStateHelper().eval(PropertyKeys.varGroup, null);
+    }
+
+    public void setVarGroup(String varGroup) {
+        getStateHelper().put(PropertyKeys.varGroup, varGroup);
+    }
+
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
+
+    public void setLocale(Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
+    public Object getTimeZone() {
+        return getStateHelper().eval(PropertyKeys.timeZone, null);
+    }
+
+    public void setTimeZone(Object timeZone) {
+        getStateHelper().put(PropertyKeys.timeZone, timeZone);
+    }
+
+    public Object getBrowserTimeZone() {
+        return getStateHelper().eval(PropertyKeys.browserTimeZone, null);
+    }
+
+    public void setBrowserTimeZone(Object timeZone) {
+        getStateHelper().put(PropertyKeys.browserTimeZone, timeZone);
+    }
+
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(String style) {
+        getStateHelper().put(PropertyKeys.style, style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public String getHeight() {
+        return (String) getStateHelper().eval(PropertyKeys.height, "auto");
+    }
 
-	public void setMinHeight(int minHeight) {
-		getStateHelper().put(PropertyKeys.minHeight, minHeight);
-	}
+    public void setHeight(String height) {
+        getStateHelper().put(PropertyKeys.height, height);
+    }
 
-	public String getWidth() {
-		return (String) getStateHelper().eval(PropertyKeys.width, "100%");
-	}
+    public int getMinHeight() {
+        return (Integer) getStateHelper().eval(PropertyKeys.minHeight, 0);
+    }
 
-	public void setWidth(String width) {
-		getStateHelper().put(PropertyKeys.width, width);
-	}
+    public void setMinHeight(int minHeight) {
+        getStateHelper().put(PropertyKeys.minHeight, minHeight);
+    }
 
-	public boolean isResponsive() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.responsive, true);
-	}
+    public String getWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.width, "100%");
+    }
 
-	public void setResponsive(boolean responsive) {
-		getStateHelper().put(PropertyKeys.responsive, responsive);
-	}
+    public void setWidth(String width) {
+        getStateHelper().put(PropertyKeys.width, width);
+    }
 
-	public boolean isAxisOnTop() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.axisOnTop, false);
-	}
+    public boolean isResponsive() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.responsive, true);
+    }
 
-	public void setAxisOnTop(boolean axisOnTop) {
-		getStateHelper().put(PropertyKeys.axisOnTop, axisOnTop);
-	}
+    public void setResponsive(boolean responsive) {
+        getStateHelper().put(PropertyKeys.responsive, responsive);
+    }
 
-	public int getDragAreaWidth() {
-		return (Integer) getStateHelper().eval(PropertyKeys.dragAreaWidth, 10);
-	}
+    public boolean isAxisOnTop() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.axisOnTop, false);
+    }
 
-	public void setDragAreaWidth(int dragAreaWidth) {
-		getStateHelper().put(PropertyKeys.dragAreaWidth, dragAreaWidth);
-	}
+    public void setAxisOnTop(boolean axisOnTop) {
+        getStateHelper().put(PropertyKeys.axisOnTop, axisOnTop);
+    }
 
-	public boolean isEditable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.editable, false);
-	}
+    public int getDragAreaWidth() {
+        return (Integer) getStateHelper().eval(PropertyKeys.dragAreaWidth, 10);
+    }
 
-	public void setEditable(boolean editable) {
-		getStateHelper().put(PropertyKeys.editable, editable);
-	}
+    public void setDragAreaWidth(int dragAreaWidth) {
+        getStateHelper().put(PropertyKeys.dragAreaWidth, dragAreaWidth);
+    }
 
-	public boolean isSelectable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.selectable, true);
-	}
+    public boolean isEditable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.editable, false);
+    }
 
-	public void setSelectable(boolean selectable) {
-		getStateHelper().put(PropertyKeys.selectable, selectable);
-	}
+    public void setEditable(boolean editable) {
+        getStateHelper().put(PropertyKeys.editable, editable);
+    }
 
-	public boolean isUnselectable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.unselectable, true);
-	}
+    public boolean isSelectable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.selectable, true);
+    }
 
-	public void setUnselectable(boolean unselectable) {
-		getStateHelper().put(PropertyKeys.unselectable, unselectable);
-	}
+    public void setSelectable(boolean selectable) {
+        getStateHelper().put(PropertyKeys.selectable, selectable);
+    }
 
-	public boolean isZoomable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.zoomable, true);
-	}
+    public boolean isUnselectable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.unselectable, true);
+    }
 
-	public void setZoomable(boolean zoomable) {
-		getStateHelper().put(PropertyKeys.zoomable, zoomable);
-	}
+    public void setUnselectable(boolean unselectable) {
+        getStateHelper().put(PropertyKeys.unselectable, unselectable);
+    }
 
-	public boolean isMoveable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.moveable, true);
-	}
+    public boolean isZoomable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.zoomable, true);
+    }
 
-	public void setMoveable(boolean moveable) {
-		getStateHelper().put(PropertyKeys.moveable, moveable);
-	}
+    public void setZoomable(boolean zoomable) {
+        getStateHelper().put(PropertyKeys.zoomable, zoomable);
+    }
 
-	public Date getStart() {
-		return (Date) getStateHelper().eval(PropertyKeys.start, null);
-	}
+    public boolean isMoveable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.moveable, true);
+    }
 
-	public void setStart(Date start) {
-		getStateHelper().put(PropertyKeys.start, start);
-	}
-
-	public Date getEnd() {
-		return (Date) getStateHelper().eval(PropertyKeys.end, null);
-	}
-
-	public void setEnd(Date end) {
-		getStateHelper().put(PropertyKeys.end, end);
-	}
-
-	public Date getMin() {
-		return (Date) getStateHelper().eval(PropertyKeys.min, null);
-	}
-
-	public void setMin(Date min) {
-		getStateHelper().put(PropertyKeys.min, min);
-	}
-
-	public Date getMax() {
-		return (Date) getStateHelper().eval(PropertyKeys.max, null);
-	}
-
-	public void setMax(Date max) {
-		getStateHelper().put(PropertyKeys.max, max);
-	}
-
-	public long getZoomMin() {
-		return (Long) getStateHelper().eval(PropertyKeys.zoomMin, 10L);
-	}
-
-	public void setZoomMin(long zoomMin) {
-		getStateHelper().put(PropertyKeys.zoomMin, zoomMin);
-	}
-
-	public long getZoomMax() {
-		return (Long) getStateHelper().eval(PropertyKeys.zoomMax, 315360000000000L);
-	}
-
-	public void setZoomMax(long zoomMax) {
-		getStateHelper().put(PropertyKeys.zoomMax, zoomMax);
-	}
-
-	public float getPreloadFactor() {
-		return (Float) getStateHelper().eval(PropertyKeys.preloadFactor, 0.0f);
-	}
-
-	public void setPreloadFactor(float preloadFactor) {
-		getStateHelper().put(PropertyKeys.preloadFactor, preloadFactor);
-	}
-
-	public int getEventMargin() {
-		return (Integer) getStateHelper().eval(PropertyKeys.eventMargin, 10);
-	}
-
-	public void setEventMargin(int eventMargin) {
-		getStateHelper().put(PropertyKeys.eventMargin, eventMargin);
-	}
-
-	public int getEventMarginAxis() {
-		return (Integer) getStateHelper().eval(PropertyKeys.eventMarginAxis, 10);
-	}
-
-	public void setEventMarginAxis(int eventMarginAxis) {
-		getStateHelper().put(PropertyKeys.eventMarginAxis, eventMarginAxis);
-	}
-
-	public String getEventStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.eventStyle, "box");
-	}
-
-	public void setEventStyle(String eventStyle) {
-		getStateHelper().put(PropertyKeys.eventStyle, eventStyle);
-	}
-
-	public boolean isGroupsChangeable() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.groupsChangeable, true);
-	}
-
-	public void setGroupsChangeable(boolean groupsChangeable) {
-		getStateHelper().put(PropertyKeys.groupsChangeable, groupsChangeable);
-	}
-
-	public boolean isGroupsOnRight() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.groupsOnRight, false);
-	}
-
-	public void setGroupsOnRight(boolean groupsOnRight) {
-		getStateHelper().put(PropertyKeys.groupsOnRight, groupsOnRight);
-	}
-
-	public String getGroupsWidth() {
-		return (String) getStateHelper().eval(PropertyKeys.groupsWidth, null);
-	}
-
-	public void setGroupsWidth(String groupsWidth) {
-		getStateHelper().put(PropertyKeys.groupsWidth, groupsWidth);
-	}
-    
+    public void setMoveable(boolean moveable) {
+        getStateHelper().put(PropertyKeys.moveable, moveable);
+    }
+
+    public Date getStart() {
+        return (Date) getStateHelper().eval(PropertyKeys.start, null);
+    }
+
+    public void setStart(Date start) {
+        getStateHelper().put(PropertyKeys.start, start);
+    }
+
+    public Date getEnd() {
+        return (Date) getStateHelper().eval(PropertyKeys.end, null);
+    }
+
+    public void setEnd(Date end) {
+        getStateHelper().put(PropertyKeys.end, end);
+    }
+
+    public Date getMin() {
+        return (Date) getStateHelper().eval(PropertyKeys.min, null);
+    }
+
+    public void setMin(Date min) {
+        getStateHelper().put(PropertyKeys.min, min);
+    }
+
+    public Date getMax() {
+        return (Date) getStateHelper().eval(PropertyKeys.max, null);
+    }
+
+    public void setMax(Date max) {
+        getStateHelper().put(PropertyKeys.max, max);
+    }
+
+    public long getZoomMin() {
+        return (Long) getStateHelper().eval(PropertyKeys.zoomMin, 10L);
+    }
+
+    public void setZoomMin(long zoomMin) {
+        getStateHelper().put(PropertyKeys.zoomMin, zoomMin);
+    }
+
+    public long getZoomMax() {
+        return (Long) getStateHelper().eval(PropertyKeys.zoomMax, 315360000000000L);
+    }
+
+    public void setZoomMax(long zoomMax) {
+        getStateHelper().put(PropertyKeys.zoomMax, zoomMax);
+    }
+
+    public float getPreloadFactor() {
+        return (Float) getStateHelper().eval(PropertyKeys.preloadFactor, 0.0f);
+    }
+
+    public void setPreloadFactor(float preloadFactor) {
+        getStateHelper().put(PropertyKeys.preloadFactor, preloadFactor);
+    }
+
+    public int getEventMargin() {
+        return (Integer) getStateHelper().eval(PropertyKeys.eventMargin, 10);
+    }
+
+    public void setEventMargin(int eventMargin) {
+        getStateHelper().put(PropertyKeys.eventMargin, eventMargin);
+    }
+
+    public int getEventMarginAxis() {
+        return (Integer) getStateHelper().eval(PropertyKeys.eventMarginAxis, 10);
+    }
+
+    public void setEventMarginAxis(int eventMarginAxis) {
+        getStateHelper().put(PropertyKeys.eventMarginAxis, eventMarginAxis);
+    }
+
+    public String getEventStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.eventStyle, "box");
+    }
+
+    public void setEventStyle(String eventStyle) {
+        getStateHelper().put(PropertyKeys.eventStyle, eventStyle);
+    }
+
+    public boolean isGroupsChangeable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.groupsChangeable, true);
+    }
+
+    public void setGroupsChangeable(boolean groupsChangeable) {
+        getStateHelper().put(PropertyKeys.groupsChangeable, groupsChangeable);
+    }
+
+    public boolean isGroupsOnRight() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.groupsOnRight, false);
+    }
+
+    public void setGroupsOnRight(boolean groupsOnRight) {
+        getStateHelper().put(PropertyKeys.groupsOnRight, groupsOnRight);
+    }
+
+    public String getGroupsWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.groupsWidth, null);
+    }
+
+    public void setGroupsWidth(String groupsWidth) {
+        getStateHelper().put(PropertyKeys.groupsWidth, groupsWidth);
+    }
+
     public boolean isGroupsOrder() {
-   		return (Boolean) getStateHelper().eval(PropertyKeys.groupsOrder, true);
-   	}
-   
-   	public void setGroupsOrder(boolean groupsOrder) {
-   		getStateHelper().put(PropertyKeys.groupsOrder, groupsOrder);
-   	}
+        return (Boolean) getStateHelper().eval(PropertyKeys.groupsOrder, true);
+    }
 
-	public boolean isSnapEvents() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.snapEvents, true);
-	}
+    public void setGroupsOrder(boolean groupsOrder) {
+        getStateHelper().put(PropertyKeys.groupsOrder, groupsOrder);
+    }
 
-	public void setSnapEvents(boolean snapEvents) {
-		getStateHelper().put(PropertyKeys.snapEvents, snapEvents);
-	}
+    public boolean isSnapEvents() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.snapEvents, true);
+    }
 
-	public boolean isStackEvents() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.stackEvents, true);
-	}
+    public void setSnapEvents(boolean snapEvents) {
+        getStateHelper().put(PropertyKeys.snapEvents, snapEvents);
+    }
 
-	public void setStackEvents(boolean stackEvents) {
-		getStateHelper().put(PropertyKeys.stackEvents, stackEvents);
-	}
+    public boolean isStackEvents() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.stackEvents, true);
+    }
 
-	public boolean isShowCurrentTime() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showCurrentTime, true);
-	}
+    public void setStackEvents(boolean stackEvents) {
+        getStateHelper().put(PropertyKeys.stackEvents, stackEvents);
+    }
 
-	public void setShowCurrentTime(boolean showCurrentTime) {
-		getStateHelper().put(PropertyKeys.showCurrentTime, showCurrentTime);
-	}
+    public boolean isShowCurrentTime() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showCurrentTime, true);
+    }
 
-	public boolean isShowMajorLabels() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showMajorLabels, true);
-	}
+    public void setShowCurrentTime(boolean showCurrentTime) {
+        getStateHelper().put(PropertyKeys.showCurrentTime, showCurrentTime);
+    }
 
-	public void setShowMajorLabels(boolean showMajorLabels) {
-		getStateHelper().put(PropertyKeys.showMajorLabels, showMajorLabels);
-	}
+    public boolean isShowMajorLabels() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showMajorLabels, true);
+    }
 
-	public boolean isShowMinorLabels() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showMinorLabels, true);
-	}
+    public void setShowMajorLabels(boolean showMajorLabels) {
+        getStateHelper().put(PropertyKeys.showMajorLabels, showMajorLabels);
+    }
 
-	public void setShowMinorLabels(boolean showMinorLabels) {
-		getStateHelper().put(PropertyKeys.showMinorLabels, showMinorLabels);
-	}
+    public boolean isShowMinorLabels() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showMinorLabels, true);
+    }
 
-	public boolean isShowButtonNew() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showButtonNew, false);
-	}
+    public void setShowMinorLabels(boolean showMinorLabels) {
+        getStateHelper().put(PropertyKeys.showMinorLabels, showMinorLabels);
+    }
 
-	public void setShowButtonNew(boolean showButtonNew) {
-		getStateHelper().put(PropertyKeys.showButtonNew, showButtonNew);
-	}
+    public boolean isShowButtonNew() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showButtonNew, false);
+    }
 
-	public boolean isShowNavigation() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.showNavigation, false);
-	}
+    public void setShowButtonNew(boolean showButtonNew) {
+        getStateHelper().put(PropertyKeys.showButtonNew, showButtonNew);
+    }
 
-	public void setShowNavigation(boolean showNavigation) {
-		getStateHelper().put(PropertyKeys.showNavigation, showNavigation);
-	}
-    
+    public boolean isShowNavigation() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showNavigation, false);
+    }
+
+    public void setShowNavigation(boolean showNavigation) {
+        getStateHelper().put(PropertyKeys.showNavigation, showNavigation);
+    }
+
     public boolean isTimeChangeable() {
-   		return (Boolean) getStateHelper().eval(PropertyKeys.timeChangeable, true);
-   	}
-   
-   	public void setTimeChangeable(boolean timeChangeable) {
-   		getStateHelper().put(PropertyKeys.timeChangeable, timeChangeable);
-   	}
+        return (Boolean) getStateHelper().eval(PropertyKeys.timeChangeable, true);
+    }
 
-	public String getDropHoverStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.dropHoverStyleClass, null);
-	}
+    public void setTimeChangeable(boolean timeChangeable) {
+        getStateHelper().put(PropertyKeys.timeChangeable, timeChangeable);
+    }
 
-	public void setDropHoverStyleClass(String dropHoverStyleClass) {
-		getStateHelper().put(PropertyKeys.dropHoverStyleClass, dropHoverStyleClass);
-	}
+    public String getDropHoverStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.dropHoverStyleClass, null);
+    }
 
-	public String getDropActiveStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.dropActiveStyleClass, null);
-	}
+    public void setDropHoverStyleClass(String dropHoverStyleClass) {
+        getStateHelper().put(PropertyKeys.dropHoverStyleClass, dropHoverStyleClass);
+    }
 
-	public void setDropActiveStyleClass(String dropActiveStyleClass) {
-		getStateHelper().put(PropertyKeys.dropActiveStyleClass, dropActiveStyleClass);
-	}
+    public String getDropActiveStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.dropActiveStyleClass, null);
+    }
 
-	public String getDropAccept() {
-		return (String) getStateHelper().eval(PropertyKeys.dropAccept, null);
-	}
+    public void setDropActiveStyleClass(String dropActiveStyleClass) {
+        getStateHelper().put(PropertyKeys.dropActiveStyleClass, dropActiveStyleClass);
+    }
 
-	public void setDropAccept(String dropAccept) {
-		getStateHelper().put(PropertyKeys.dropAccept, dropAccept);
-	}
+    public String getDropAccept() {
+        return (String) getStateHelper().eval(PropertyKeys.dropAccept, null);
+    }
 
-	public String getDropScope() {
-		return (String) getStateHelper().eval(PropertyKeys.dropScope, null);
-	}
+    public void setDropAccept(String dropAccept) {
+        getStateHelper().put(PropertyKeys.dropAccept, dropAccept);
+    }
 
-	public void setDropScope(String dropScope) {
-		getStateHelper().put(PropertyKeys.dropScope, dropScope);
-	}
+    public String getDropScope() {
+        return (String) getStateHelper().eval(PropertyKeys.dropScope, null);
+    }
 
-	@Override
-	public Collection<String> getEventNames() {
-		return EVENT_NAMES;
-	}
+    public void setDropScope(String dropScope) {
+        getStateHelper().put(PropertyKeys.dropScope, dropScope);
+    }
 
-	@Override
-	public void queueEvent(FacesEvent event) {
-		FacesContext context = FacesContext.getCurrentInstance();
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-		if (isSelfRequest(context)) {
-			Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-			String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-			String clientId = this.getClientId(context);
+    @Override
+    public void queueEvent(FacesEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
 
-			AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+        if (isSelfRequest(context)) {
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            String clientId = this.getClientId(context);
 
-			if ("add".equals(eventName)) {
-				// preset start / end date and the group
-				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-				TimelineAddEvent te =
-				    new TimelineAddEvent(this, behaviorEvent.getBehavior(),
-				                         DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
-				                         DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
-				                         params.get(clientId + "_group"));
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+            if ("add".equals(eventName)) {
+                // preset start / end date and the group
+                TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
 
-				return;
-			} else if ("change".equals(eventName)) {
-				TimelineEvent clonedEvent = null;
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                TimelineAddEvent te =
+                        new TimelineAddEvent(this, behaviorEvent.getBehavior(),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
+                                getGroup(params.get(clientId + "_group")));
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				if (timelineEvent != null) {
-					clonedEvent = new TimelineEvent();
-					clonedEvent.setData(timelineEvent.getData());
-					clonedEvent.setEditable(timelineEvent.isEditable());
-					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+                return;
+            } else if ("change".equals(eventName)) {
+                TimelineEvent clonedEvent = null;
+                TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-					// update start / end date and the group
-					TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-					TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
-					clonedEvent.setStartDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")));
-					clonedEvent.setEndDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
-					clonedEvent.setGroup(params.get(clientId + "_group"));
-				}
+                if (timelineEvent != null) {
+                    clonedEvent = new TimelineEvent();
+                    clonedEvent.setData(timelineEvent.getData());
+                    clonedEvent.setEditable(timelineEvent.isEditable());
+                    clonedEvent.setStyleClass(timelineEvent.getStyleClass());
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                    // update start / end date and the group
+                    TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                    TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                    clonedEvent.setStartDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")));
+                    clonedEvent.setEndDate(DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
+                    clonedEvent.setGroup(getGroup(params.get(clientId + "_group")));
+                }
 
-				return;
-			} else if ("edit".equals(eventName) || "delete".equals(eventName)) {
-				TimelineEvent clonedEvent = null;
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				if (timelineEvent != null) {
-					clonedEvent = new TimelineEvent();
-					clonedEvent.setData(timelineEvent.getData());
-					clonedEvent.setStartDate((Date) timelineEvent.getStartDate().clone());
-					clonedEvent.setEndDate(timelineEvent.getEndDate() != null ? (Date) timelineEvent.getEndDate().clone() : null);
-					clonedEvent.setEditable(timelineEvent.isEditable());
-					clonedEvent.setGroup(timelineEvent.getGroup());
-					clonedEvent.setStyleClass(timelineEvent.getStyleClass());
-				}
+                return;
+            } else if ("edit".equals(eventName) || "delete".equals(eventName)) {
+                TimelineEvent clonedEvent = null;
+                TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
-				TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                if (timelineEvent != null) {
+                    clonedEvent = new TimelineEvent();
+                    clonedEvent.setData(timelineEvent.getData());
+                    clonedEvent.setStartDate((Date) timelineEvent.getStartDate().clone());
+                    clonedEvent.setEndDate(timelineEvent.getEndDate() != null ? (Date) timelineEvent.getEndDate().clone() : null);
+                    clonedEvent.setEditable(timelineEvent.isEditable());
+                    clonedEvent.setGroup(timelineEvent.getGroup());
+                    clonedEvent.setStyleClass(timelineEvent.getStyleClass());
+                }
 
-				return;
-			} else if ("select".equals(eventName)) {
-				TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
-				TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                TimelineModificationEvent te = new TimelineModificationEvent(this, behaviorEvent.getBehavior(), clonedEvent);
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				return;
-			} else if ("rangechange".equals(eventName) || "rangechanged".equals(eventName)) {
-				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                return;
+            } else if ("select".equals(eventName)) {
+                TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
+                TimelineSelectEvent te = new TimelineSelectEvent(this, behaviorEvent.getBehavior(), timelineEvent);
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				TimelineRangeEvent te =
-				    new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
-				                           DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
-				                           DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                return;
+            } else if ("rangechange".equals(eventName) || "rangechanged".equals(eventName)) {
+                TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
 
-				return;
-			} else if ("lazyload".equals(eventName)) {
-				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                TimelineRangeEvent te =
+                        new TimelineRangeEvent(this, behaviorEvent.getBehavior(),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")));
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				TimelineLazyLoadEvent te =
-				    new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateFirst")),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateFirst")),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateSecond")),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateSecond")));
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                return;
+            } else if ("lazyload".equals(eventName)) {
+                TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
 
-				return;
-			} else if ("drop".equals(eventName)) {
-				Object data = null;
-				final String dragId = params.get(clientId + "_dragId");
-				final String uiDataId = params.get(clientId + "_uiDataId");
+                TimelineLazyLoadEvent te =
+                        new TimelineLazyLoadEvent(this, behaviorEvent.getBehavior(),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateFirst")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateFirst")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDateSecond")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDateSecond")));
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-				if (dragId != null && uiDataId != null) {
-					// draggable is within a data iteration component
-					UIDataContextCallback contextCallback = new UIDataContextCallback(dragId);
-					context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
-					data = contextCallback.getData();
-				}
+                return;
+            } else if ("drop".equals(eventName)) {
+                Object data = null;
+                final String dragId = params.get(clientId + "_dragId");
+                final String uiDataId = params.get(clientId + "_uiDataId");
 
-				// preset start / end date, group, dragId and data object
-				TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
-				TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
+                if (dragId != null && uiDataId != null) {
+                    // draggable is within a data iteration component
+                    UIDataContextCallback contextCallback = new UIDataContextCallback(dragId);
+                    context.getViewRoot().invokeOnComponent(context, uiDataId, contextCallback);
+                    data = contextCallback.getData();
+                }
 
-				TimelineDragDropEvent te =
-				    new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
-				                              DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
-				                              params.get(clientId + "_group"), dragId, data);
-				te.setPhaseId(behaviorEvent.getPhaseId());
-				super.queueEvent(te);
+                // preset start / end date, group, dragId and data object
+                TimeZone targetTZ = ComponentUtils.resolveTimeZone(getTimeZone());
+                TimeZone browserTZ = ComponentUtils.resolveTimeZone(getBrowserTimeZone());
 
-				return;
-			}
-		}
+                TimelineDragDropEvent te =
+                        new TimelineDragDropEvent(this, behaviorEvent.getBehavior(),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_startDate")),
+                                DateUtils.toUtcDate(browserTZ, targetTZ, params.get(clientId + "_endDate")),
+                                getGroup(params.get(clientId + "_group")), dragId, data);
+                te.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(te);
 
-		super.queueEvent(event);
-	}
+                return;
+            }
+        }
 
-	private boolean isSelfRequest(FacesContext context) {
-		return this.getClientId(context)
-		           .equals(context.getExternalContext().getRequestParameterMap().get(
-		   		                   Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-	}
+        super.queueEvent(event);
+    }
 
-	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+    private String getGroup(String groupParam) {
+        List<TimelineGroup> groups = getValue().getGroups();
+        if (groups == null || groupParam == null) {
+            return groupParam;
+        }
 
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
+        int idx = groupParam.indexOf("</span>");
+        if (idx > -1) {
+            groupParam = groupParam.substring(0, idx);
+            int idxGroupOrder = groupParam.indexOf("#");
+            if (idxGroupOrder > -1) {
+                String groupOrder = groupParam.substring(idxGroupOrder + 1);
+                return groups.get(Integer.valueOf(groupOrder)).getId();
+            }
+        }
 
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-	}
+        return groupParam;
+    }
+
+    private boolean isSelfRequest(FacesContext context) {
+        return this.getClientId(context)
+                .equals(context.getExternalContext().getRequestParameterMap().get(
+                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
+
+    public String resolveWidgetVar() {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+
+        if (userWidgetVar != null) {
+            return userWidgetVar;
+        }
+
+        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+    }
 }

@@ -18,6 +18,16 @@
 
 package org.primefaces.extensions.component.timeline;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.extensions.model.timeline.TimelineEvent;
+import org.primefaces.extensions.model.timeline.TimelineGroup;
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.FastStringWriter;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseEvent;
+import javax.faces.event.PhaseId;
+import javax.faces.event.PhaseListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,16 +35,6 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
-
-import org.primefaces.context.RequestContext;
-import org.primefaces.extensions.model.timeline.TimelineEvent;
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.FastStringWriter;
 
 /**
  * Default implementation of the {@link TimelineUpdater}.
@@ -108,6 +108,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		TimelineRenderer timelineRenderer =
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
 
+        List<TimelineGroup> groups = timeline.getValue().getGroups();
 		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
 		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
 
@@ -120,7 +121,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(widgetVar);
 					sb.append("').addEvent(");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
-					                                       crudOperationData.getEvent()));
+					                                       groups, crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 
@@ -132,7 +133,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
-					                                       crudOperationData.getEvent()));
+					                                       groups, crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 

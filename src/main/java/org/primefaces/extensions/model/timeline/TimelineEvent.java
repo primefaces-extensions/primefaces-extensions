@@ -44,7 +44,8 @@ public class TimelineEvent implements Serializable {
 	/** is this event editable? (optional. if null, see the timeline's attribute "editable" */
 	private Boolean editable;
 
-	/** group this event belongs to (optional) */
+	/** group this event belongs to (optional).
+     * this can be either the group's content or group's position in the list of all groups */
 	private String group;
 
 	/** any custom style class for this event in UI (optional) */
