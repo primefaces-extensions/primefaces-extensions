@@ -33,7 +33,9 @@ import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -95,12 +97,20 @@ public class TimelineRenderer extends CoreRenderer {
         writer.write("id:'" + clientId + "'");
         writer.write(",data:[");
 
-        // encode events
+        Map<String, String> groupsContent = null;
         List<TimelineGroup> groups = model.getGroups();
+        UIComponent groupFacet = timeline.getFacet("group");
+        if (groups != null && groupFacet != null) {
+            // buffer for groups' content
+            groupsContent = new HashMap<String, String>();
+        }
+
         List<TimelineEvent> events = model.getEvents();
         int size = events != null ? events.size() : 0;
         for (int i = 0; i < size; i++) {
-            writer.write(encodeEvent(context, fsw, fswHtml, timeline, browserTZ, targetTZ, groups, events.get(i)));
+            // encode events
+            writer.write(encodeEvent(context, fsw, fswHtml, timeline, browserTZ, targetTZ, groups, groupFacet, groupsContent,
+                    events.get(i)));
             if (i + 1 < size) {
                 writer.write(",");
             }
@@ -199,8 +209,8 @@ public class TimelineRenderer extends CoreRenderer {
     }
 
     public String encodeEvent(FacesContext context, FastStringWriter fsw, FastStringWriter fswHtml, Timeline timeline,
-                              TimeZone browserTZ, TimeZone targetTZ, List<TimelineGroup> groups,
-                              TimelineEvent event) throws IOException {
+                              TimeZone browserTZ, TimeZone targetTZ, List<TimelineGroup> groups, UIComponent groupFacet,
+                              Map<String, String> groupsContent, TimelineEvent event) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         fsw.write("{\"start\":" + encodeDate(browserTZ, targetTZ, event.getStartDate()));
@@ -226,7 +236,7 @@ public class TimelineRenderer extends CoreRenderer {
                     foundGroup = group;
                     break;
                 }
-                
+
                 groupOrder++;
             }
 
@@ -237,28 +247,36 @@ public class TimelineRenderer extends CoreRenderer {
                     // https://groups.google.com/forum/?fromgroups=#!topic/chap-links-library/Bk2fb99LUh4
                     // http://stackoverflow.com/questions/2236385/how-to-convert-java-longs-as-strings-while-keeping-natural-order
                     // we must also pass the order of the group as workaround (extracted in queueEvent(), Timeline.java).
-                    prefix = "<span style='display:none;'>" + String.format("%016x", groupOrder - Long.MIN_VALUE) + "#" + groupOrder + "</span>";
+                    prefix =
+                            "<span style='display:none;'>" + String.format("%016x", groupOrder - Long.MIN_VALUE) + "#" +
+                                    groupOrder + "</span>";
                 } else {
                     prefix = "<span style='display:none;'>#" + groupOrder + "</span>";
                 }
 
-                UIComponent groupFacet = timeline.getFacet("group");
                 if (groupFacet != null) {
-                    Object data = foundGroup.getData();
-                    if (StringUtils.isNotBlank(timeline.getVarGroup()) && data != null) {
-                        context.getExternalContext().getRequestMap().put(timeline.getVarGroup(), data);
+                    String groupContent = groupsContent.get(foundGroup.getId());
+                    if (groupContent != null) {
+                        // content of this group was already rendered ==> reuse it
+                        fsw.write(",\"group\":\"" + groupContent + "\"");
+                    } else {
+                        Object data = foundGroup.getData();
+                        if (StringUtils.isNotBlank(timeline.getVarGroup()) && data != null) {
+                            context.getExternalContext().getRequestMap().put(timeline.getVarGroup(), data);
+                        }
+
+                        ResponseWriter clonedWriter = writer.cloneWithWriter(fswHtml);
+                        context.setResponseWriter(clonedWriter);
+
+                        groupFacet.encodeAll(context);
+
+                        // restore writer
+                        context.setResponseWriter(writer);
+                        // extract the content of the group, first buffer and then render it
+                        groupsContent.put(foundGroup.getId(), prefix + escapeText(fswHtml.toString()));
+                        fsw.write(",\"group\":\"" + groupsContent.get(foundGroup.getId()) + "\"");
+                        fswHtml.reset();
                     }
-
-                    ResponseWriter clonedWriter = writer.cloneWithWriter(fswHtml);
-                    context.setResponseWriter(clonedWriter);
-
-                    groupFacet.encodeAll(context);
-
-                    // restore writer
-                    context.setResponseWriter(writer);
-                    // extract the content of the group
-                    fsw.write(",\"group\":\"" + prefix + escapeText(fswHtml.toString()) + "\"");
-                    fswHtml.reset();
                 } else if (foundGroup.getData() != null) {
                     fsw.write(",\"group\":\"" + prefix + foundGroup.getData().toString() + "\"");
                 }

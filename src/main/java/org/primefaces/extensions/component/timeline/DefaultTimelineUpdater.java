@@ -24,6 +24,7 @@ import org.primefaces.extensions.model.timeline.TimelineGroup;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
@@ -31,7 +32,9 @@ import javax.faces.event.PhaseListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -108,7 +111,14 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 		TimelineRenderer timelineRenderer =
 		    (TimelineRenderer) fc.getRenderKit().getRenderer(Timeline.COMPONENT_FAMILY, Timeline.DEFAULT_RENDERER);
 
+        Map<String, String> groupsContent = null;
         List<TimelineGroup> groups = timeline.getValue().getGroups();
+        UIComponent groupFacet = timeline.getFacet("group");
+        if (groups != null && groupFacet != null) {
+            // buffer for groups' content
+            groupsContent = new HashMap<String, String>();
+        }
+        
 		TimeZone targetTZ = ComponentUtils.resolveTimeZone(timeline.getTimeZone());
 		TimeZone browserTZ = ComponentUtils.resolveTimeZone(timeline.getBrowserTimeZone());
 
@@ -121,7 +131,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(widgetVar);
 					sb.append("').addEvent(");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
-					                                       groups, crudOperationData.getEvent()));
+					                                       groups, groupFacet, groupsContent, crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 
@@ -133,7 +143,7 @@ public class DefaultTimelineUpdater extends TimelineUpdater implements PhaseList
 					sb.append(crudOperationData.getIndex());
 					sb.append(",");
 					sb.append(timelineRenderer.encodeEvent(fc, fsw, fswHtml, timeline, browserTZ, targetTZ,
-					                                       groups, crudOperationData.getEvent()));
+					                                       groups, groupFacet, groupsContent, crudOperationData.getEvent()));
 					sb.append(")");
 					break;
 
