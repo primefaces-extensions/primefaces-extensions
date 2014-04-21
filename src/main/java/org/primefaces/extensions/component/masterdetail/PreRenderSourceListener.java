@@ -18,18 +18,21 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.primefaces.util.ComponentUtils;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
+import javax.faces.component.UIViewRoot;
+import javax.faces.component.UniqueIdVendor;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ComponentSystemEventListener;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * {@link ComponentSystemEventListener} for components with attached <code>SelectDetailLevel</code>.
@@ -168,7 +171,7 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 		}
 
 		UIParameter uiParameter = new UIParameter();
-		uiParameter.setId(fc.getViewRoot().createUniqueId(fc, null));
+		uiParameter.setId(createUniqueId(fc, source));
 		uiParameter.setName(paramName);
 		uiParameter.setValue(paramValue);
         uiParameter.setTransient(true);
@@ -189,4 +192,20 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 			}
 		}
 	}
+    
+    private String createUniqueId(FacesContext fc, UIComponent source) {
+        UniqueIdVendor parentUniqueIdVendor = ComponentUtils.findParentUniqueIdVendor(source);
+
+        if (parentUniqueIdVendor == null) {
+            UIViewRoot viewRoot = fc.getViewRoot();
+
+            if (viewRoot != null) {
+                return viewRoot.createUniqueId(fc, null);
+            } else {
+                throw new FacesException("Cannot create Id for UIParameter attached to " + source.getClass().getCanonicalName());
+            }
+        }        
+        
+        return parentUniqueIdVendor.createUniqueId(fc, null);
+    }
 }

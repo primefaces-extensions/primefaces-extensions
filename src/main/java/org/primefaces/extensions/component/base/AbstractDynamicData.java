@@ -203,7 +203,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
                 UIViewRoot viewRoot = context.getViewRoot();
 
                 if (viewRoot != null) {
-                    id = viewRoot.createUniqueId();
+                    id = viewRoot.createUniqueId(context, null);
                 } else {
                     throw new FacesException("Cannot create clientId for " + this.getClass().getCanonicalName());
                 }
