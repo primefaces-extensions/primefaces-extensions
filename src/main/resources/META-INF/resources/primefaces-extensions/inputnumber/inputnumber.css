@@ -1,0 +1,3 @@
+.pe-inputNumber::-ms-clear {
+   display: none;
+}

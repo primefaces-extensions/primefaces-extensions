@@ -110,6 +110,7 @@
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
+                                <include>inputnumber/inputnumber.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

@@ -19,10 +19,7 @@
 package org.primefaces.extensions.component.inputnumber;
 
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
@@ -43,7 +40,8 @@ import org.primefaces.component.api.Widget;
 	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
 	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
 	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "inputnumber/inputnumber.js")
 })
 public class InputNumber extends HtmlInputText implements Widget, InputHolder {

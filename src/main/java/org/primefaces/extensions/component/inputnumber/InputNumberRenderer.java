@@ -136,7 +136,7 @@ public class InputNumberRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String inputId = clientId + "_input";
 
-		String defaultClass = InputText.STYLE_CLASS;
+		String defaultClass = InputText.STYLE_CLASS + " pe-inputNumber";
 		defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
 		defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
 
@@ -167,7 +167,7 @@ public class InputNumberRenderer extends InputRenderer {
 	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputNumber.getClientId(context);
-        String widgetVar = inputNumber.resolveWidgetVar();
+                String widgetVar = inputNumber.resolveWidgetVar();
         
 		startScript(writer, clientId);
 		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
@@ -178,7 +178,7 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('InputNumber','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
+                writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",disabled:" + inputNumber.isDisabled());
 		writer.write(",valueToRender:'" + formatForPlugin(valueToRender,inputNumber) + "'");
 
