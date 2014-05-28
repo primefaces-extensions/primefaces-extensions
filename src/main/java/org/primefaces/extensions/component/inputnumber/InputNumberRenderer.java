@@ -105,6 +105,10 @@ public class InputNumberRenderer extends InputRenderer {
 		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("class", styleClass, "styleClass");
+		
+		if (inputNumber.getStyle() != null) {
+			writer.writeAttribute("style", inputNumber.getStyle(), "style");
+		}
 
 		encodeOutput(context, inputNumber, clientId);
 		encodeInput(context, inputNumber, clientId);
@@ -154,9 +158,6 @@ public class InputNumberRenderer extends InputRenderer {
 		}
 		if (inputNumber.isDisabled()) {
 			writer.writeAttribute("disabled", "disabled", "disabled");
-		}
-		if (inputNumber.getStyle() != null) {
-			writer.writeAttribute("style", inputNumber.getStyle(), "style");
 		}
 
 		writer.writeAttribute("class", defaultClass, "");
