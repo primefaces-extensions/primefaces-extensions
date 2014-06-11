@@ -83,7 +83,11 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 			this.options.theme = this.cfg.theme;
 		}
 		if (this.cfg.toolbar) {
-			this.options.toolbar = this.cfg.toolbar;
+			if (!(this.cfg.toolbar instanceof Array)) {
+				this.options.toolbar = eval(this.cfg.toolbar);
+			} else {
+				this.options.toolbar = this.cfg.toolbar;
+			}
 		}
 		if (this.cfg.readOnly) {
 			this.options.readOnly = this.cfg.readOnly;
