@@ -252,6 +252,9 @@ PrimeFacesExt = {
 			PrimeFaces.widgets[widgetVar].refresh(cfg);
 		} else {
 			PrimeFaces.widgets[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+                    if(PrimeFaces.settings.legacyWidgetNamespace) {
+                        window[widgetVar] = PrimeFaces.widgets[widgetVar]; 
+                    }
 		}
 	},
 
