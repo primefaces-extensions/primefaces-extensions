@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.ckeditor;
 
 import java.io.IOException;
@@ -29,6 +28,7 @@ import javax.faces.convert.Converter;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.HTML;
 
 /**
  * Renderer for the {@link CKEditor} component.
@@ -39,58 +39,61 @@ import org.primefaces.renderkit.InputRenderer;
  */
 public class CKEditorRenderer extends InputRenderer {
 
-	@Override
-	public void decode(final FacesContext context, final UIComponent component) {
-		final CKEditor ckEditor = (CKEditor) component;
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        final CKEditor ckEditor = (CKEditor) component;
 
-		if (ckEditor.isReadOnly()) {
-			return;
-		}
+        if (ckEditor.isReadOnly()) {
+            return;
+        }
 
-		// set value
+        // set value
         final String clientId = ckEditor.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-        	ckEditor.setSubmittedValue(params.get(clientId));
+            ckEditor.setSubmittedValue(params.get(clientId));
         }
 
         // decode behaviors
-		decodeBehaviors(context, component);
-	}
+        decodeBehaviors(context, component);
+    }
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final CKEditor ckEditor = (CKEditor) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final CKEditor ckEditor = (CKEditor) component;
 
-		encodeMarkup(context, ckEditor);
-		encodeScript(context, ckEditor);
-	}
+        encodeMarkup(context, ckEditor);
+        encodeScript(context, ckEditor);
+    }
 
-	protected void encodeMarkup(final FacesContext context, final CKEditor ckEditor) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final String clientId = ckEditor.getClientId(context);
+    protected void encodeMarkup(final FacesContext context, final CKEditor ckEditor) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = ckEditor.getClientId(context);
 
-		writer.startElement("textarea", ckEditor);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("name", clientId, null);
+        writer.startElement("textarea", ckEditor);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("name", clientId, null);
 
-		if (ckEditor.getTabindex() != null) {
-			writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
-		}
+        if (ckEditor.getTabindex() != null) {
+            writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
+        }
 
-		final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
-		if (valueToRender != null) {
-			if (ckEditor.isEscape()) {
-				writer.writeText(valueToRender, null);
-			} else {
-				writer.write(valueToRender);
-			}
-		}
+        renderPassThruAttributes(context, ckEditor, HTML.INPUT_TEXTAREA_ATTRS);
+        renderDomEvents(context, ckEditor, HTML.INPUT_TEXT_EVENTS);
+        
+        final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
+        if (valueToRender != null) {
+            if (ckEditor.isEscape()) {
+                writer.writeText(valueToRender, null);
+            } else {
+                writer.write(valueToRender);
+            }
+        }
 
-		writer.endElement("textarea");
-	}
+        writer.endElement("textarea");
+    }
 
-	protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
+    protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(CKEditor.class.getSimpleName(), ckEditor.resolveWidgetVar(), ckEditor.getClientId());
         wb.attr("height", ckEditor.getHeight())
@@ -105,20 +108,20 @@ public class CKEditorRenderer extends InputRenderer {
                 .attr("customConfig", ckEditor.getCustomConfig())
                 .attr("tabindex", ckEditor.getTabindex());
 
-		encodeClientBehaviors(context, ckEditor);
+        encodeClientBehaviors(context, ckEditor);
         wb.finish();
-	}
+    }
 
     @Override
-	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
-    	final CKEditor ckEditor = (CKEditor) component;
-    	final String value = (String) submittedValue;
-		final Converter converter = ComponentUtils.getConverter(context, component);
+    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+        final CKEditor ckEditor = (CKEditor) component;
+        final String value = (String) submittedValue;
+        final Converter converter = ComponentUtils.getConverter(context, component);
 
-		if (converter != null) {
-			return converter.getAsObject(context, ckEditor, value);
-		}
+        if (converter != null) {
+            return converter.getAsObject(context, ckEditor, value);
+        }
 
-		return value;
-	}
+        return value;
+    }
 }

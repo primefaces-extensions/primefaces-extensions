@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.inputnumber;
 
 import java.io.IOException;
@@ -44,224 +43,218 @@ import org.primefaces.util.HTML;
  */
 public class InputNumberRenderer extends InputRenderer {
 
-	@Override
-	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
-			throws ConverterException {
+    @Override
+    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
+            throws ConverterException {
 
-		InputNumber inputNumber = (InputNumber) component;
-		Converter converter = inputNumber.getConverter();
-		String submittedValueString = (String) submittedValue;
+        InputNumber inputNumber = (InputNumber) component;
+        Converter converter = inputNumber.getConverter();
+        String submittedValueString = (String) submittedValue;
 
-		if (converter != null) {                       
-			Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
-			return doubleConverted;
-		} else {                       
-			if (submittedValueString != null && !submittedValueString.isEmpty()) {				
-				if(inputNumber.getValue() instanceof BigDecimal) {
-					return new BigDecimal(submittedValueString);  
-				}else{
-					return new Double(submittedValueString);
-				}
-			}
-			return null;
-		}
-	}
+        if (converter != null) {
+            Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
+            return doubleConverted;
+        } else {
+            if (submittedValueString != null && !submittedValueString.isEmpty()) {
+                if (inputNumber.getValue() instanceof BigDecimal) {
+                    return new BigDecimal(submittedValueString);
+                } else {
+                    return new Double(submittedValueString);
+                }
+            }
+            return null;
+        }
+    }
 
-	@Override
-	public void decode(final FacesContext context, final UIComponent component) {
-		InputNumber inputNumber = (InputNumber) component;
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        InputNumber inputNumber = (InputNumber) component;
 
-		if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
-			return;
-		}
+        if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
+            return;
+        }
 
-		decodeBehaviors(context, inputNumber);
+        decodeBehaviors(context, inputNumber);
 
-		String inputId = inputNumber.getClientId(context) + "_hinput";
-		String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
+        String inputId = inputNumber.getClientId(context) + "_hinput";
+        String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
-		if (submittedValue != null) {
-			inputNumber.setSubmittedValue(submittedValue);
-		}
+        if (submittedValue != null) {
+            inputNumber.setSubmittedValue(submittedValue);
+        }
 
-	}
+    }
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		InputNumber inputNumber = (InputNumber) component;
-		encodeMarkup(context, inputNumber);
-		encodeScript(context, inputNumber);
-	}
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        InputNumber inputNumber = (InputNumber) component;
+        encodeMarkup(context, inputNumber);
+        encodeScript(context, inputNumber);
+    }
 
-	protected void encodeMarkup(final FacesContext context, final InputNumber inputNumber) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = inputNumber.getClientId(context);
+    protected void encodeMarkup(final FacesContext context, final InputNumber inputNumber) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = inputNumber.getClientId(context);
 
+        String styleClass = inputNumber.getStyleClass();
+        styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
 
-		String styleClass = inputNumber.getStyleClass();
-		styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
+        writer.startElement("span", null);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("class", styleClass, "styleClass");
 
+        if (inputNumber.getStyle() != null) {
+            writer.writeAttribute("style", inputNumber.getStyle(), "style");
+        }
 
-		writer.startElement("span", null);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", styleClass, "styleClass");
-		
-		if (inputNumber.getStyle() != null) {
-			writer.writeAttribute("style", inputNumber.getStyle(), "style");
-		}
+        encodeOutput(context, inputNumber, clientId);
+        encodeInput(context, inputNumber, clientId);
 
-		encodeOutput(context, inputNumber, clientId);
-		encodeInput(context, inputNumber, clientId);
+        writer.endElement("span");
+    }
 
-		writer.endElement("span");
-	}
+    protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String inputId = clientId + "_hinput";
 
-	protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String inputId = clientId + "_hinput";
+        writer.startElement("input", null);
+        writer.writeAttribute("id", inputId, null);
+        writer.writeAttribute("name", inputId, null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("autocomplete", "off", null);
 
+        if (inputNumber.getOnchange() != null) {
+            writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
+        }
 
-		writer.startElement("input", null);
-		writer.writeAttribute("id", inputId, null);
-		writer.writeAttribute("name", inputId, null);
-		writer.writeAttribute("type", "hidden", null);
-		writer.writeAttribute("autocomplete", "off", null);
+        writer.endElement("input");
 
-		if (inputNumber.getOnchange() != null) {
-			writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
-		}
+    }
 
-		writer.endElement("input");
+    protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
 
-	}
+        ResponseWriter writer = context.getResponseWriter();
+        String inputId = clientId + "_input";
 
-	protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
+        String defaultClass = InputText.STYLE_CLASS + " pe-inputNumber";
+        defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
+        defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
 
-		ResponseWriter writer = context.getResponseWriter();
-		String inputId = clientId + "_input";
+        writer.startElement("input", null);
+        writer.writeAttribute("id", inputId, null);
+        writer.writeAttribute("name", inputId, null);
+        writer.writeAttribute("type", "text", null);
 
-		String defaultClass = InputText.STYLE_CLASS + " pe-inputNumber";
-		defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
-		defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
+        renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, inputNumber, HTML.INPUT_TEXT_EVENTS);
 
-		writer.startElement("input", null);
-		writer.writeAttribute("id", inputId, null);
-		writer.writeAttribute("name", inputId, null);		
-		writer.writeAttribute("type", "text", null);
+        if (inputNumber.isReadonly()) {
+            writer.writeAttribute("readonly", "readonly", "readonly");
+        }
+        if (inputNumber.isDisabled()) {
+            writer.writeAttribute("disabled", "disabled", "disabled");
+        }
 
+        writer.writeAttribute("class", defaultClass, "");
 
-		renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS);
+        writer.endElement("input");
+    }
 
+    protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = inputNumber.getClientId(context);
+        String widgetVar = inputNumber.resolveWidgetVar();
 
-		if (inputNumber.isReadonly()) {
-			writer.writeAttribute("readonly", "readonly", "readonly");
-		}
-		if (inputNumber.isDisabled()) {
-			writer.writeAttribute("disabled", "disabled", "disabled");
-		}
+        startScript(writer, clientId);
+        String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
+        if (valueToRender == null) {
+            valueToRender = "";
+        }
 
-		writer.writeAttribute("class", defaultClass, "");
+        writer.write("$(function() {");
+        writer.write("PrimeFacesExt.cw('InputNumber','" + widgetVar + "',{");
+        writer.write("id:'" + clientId + "'");
+        writer.write(",widgetVar:'" + widgetVar + "'");
+        writer.write(",disabled:" + inputNumber.isDisabled());
+        writer.write(",valueToRender:'" + formatForPlugin(valueToRender, inputNumber) + "'");
 
-		writer.endElement("input");
-	}
+        String metaOptions = getOptions(inputNumber);
+        if (!metaOptions.isEmpty()) {
+            writer.write(",pluginOptions:" + metaOptions);
+        }
+        writer.write("});});");
 
-	protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		String clientId = inputNumber.getClientId(context);
-                String widgetVar = inputNumber.resolveWidgetVar();
-        
-		startScript(writer, clientId);
-		String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
-		if (valueToRender == null) {
-			valueToRender = "";
-		}
+        endScript(writer);
+    }
 
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('InputNumber','" + widgetVar + "',{");
-		writer.write("id:'" + clientId + "'");
-                writer.write(",widgetVar:'" + widgetVar + "'");
-		writer.write(",disabled:" + inputNumber.isDisabled());
-		writer.write(",valueToRender:'" + formatForPlugin(valueToRender,inputNumber) + "'");
+    private String getOptions(final InputNumber inputNumber) {
 
-		String metaOptions = getOptions(inputNumber);
-		if (!metaOptions.isEmpty()) {
-			writer.write(",pluginOptions:" + metaOptions);
-		}
-		encodeClientBehaviors(context, inputNumber);
-		writer.write("});});");
+        String decimalSeparator = inputNumber.getDecimalSeparator();
+        String thousandSeparator = inputNumber.getThousandSeparator();
+        String symbol = inputNumber.getSymbol();
+        String symbolPosition = inputNumber.getSymbolPosition();
+        String minValue = inputNumber.getMinValue();
+        String maxValue = inputNumber.getMaxValue();
+        String roundMethod = inputNumber.getRoundMethod();
+        String decimalPlaces = inputNumber.getDecimalPlaces();
+        String emptyValue = inputNumber.getEmptyValue();
 
-		endScript(writer);
-	}
+        String options = "";
+        options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
+        //empty thousandSeparator must be explicity defined.
+        options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
+        options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
+        options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
+        options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
+        options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
+        options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
+        options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
+        options += "wEmpty: '" + emptyValue + "',";
 
-	private String getOptions(final InputNumber inputNumber) {
+        //if all options are empty return empty
+        if (options.isEmpty()) {
+            return "";
+        }
 
-		String decimalSeparator = inputNumber.getDecimalSeparator();
-		String thousandSeparator = inputNumber.getThousandSeparator();
-		String symbol = inputNumber.getSymbol();
-		String symbolPosition = inputNumber.getSymbolPosition();
-		String minValue = inputNumber.getMinValue();
-		String maxValue = inputNumber.getMaxValue();
-		String roundMethod = inputNumber.getRoundMethod();
-		String decimalPlaces = inputNumber.getDecimalPlaces();
-		String emptyValue = inputNumber.getEmptyValue();
+        //delete the last comma
+        int lastInd = options.length() - 1;
+        if (options.charAt(lastInd) == ',') {
+            options = options.substring(0, lastInd);
+        }
+        return "{" + options + "}";
 
-		String options = "";
-		options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
-		//empty thousandSeparator must be explicity defined.
-		options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
-		options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
-		options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
-		options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
-		options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
-		options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
-		options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
-		options += "wEmpty: '" + emptyValue + "',";
+    }
 
+    private String formatForPlugin(final String valueToRender, final InputNumber inputNumber) {
 
-		//if all options are empty return empty
-		if (options.isEmpty()) {
-			return "";
-		}
+        if (valueToRender == null || valueToRender.isEmpty()) {
+            return "";
+        } else {
 
-		//delete the last comma
-		int lastInd = options.length() - 1;
-		if (options.charAt(lastInd) == ',') {
-			options = options.substring(0, lastInd);
-		}
-		return "{" + options + "}";
+            try {
+                Object objectToRender;
+                if (inputNumber.getValue() instanceof BigDecimal) {
+                    objectToRender = new BigDecimal(valueToRender);
+                } else {
+                    objectToRender = new Double(valueToRender);
+                }
 
-	}
+                NumberFormat formatter = new DecimalFormat("#0.0#");
+                formatter.setRoundingMode(RoundingMode.FLOOR);
+                //autoNumeric jquery plugin max and min limits
+                formatter.setMinimumFractionDigits(15);
+                formatter.setMaximumFractionDigits(15);
+                formatter.setMaximumIntegerDigits(20);
+                String f = formatter.format(objectToRender);
 
-	private String formatForPlugin(final String valueToRender,final InputNumber inputNumber) {
-
-		if (valueToRender == null || valueToRender.isEmpty()) {			
-			return "";
-		} else {
-
-			try { 
-				Object objectToRender; 
-				if(inputNumber.getValue() instanceof BigDecimal) {
-					objectToRender = new BigDecimal(valueToRender);  
-				}else{
-					objectToRender =  new Double(valueToRender);
-				}
-
-				NumberFormat formatter = new DecimalFormat("#0.0#");
-				formatter.setRoundingMode(RoundingMode.FLOOR);
-				//autoNumeric jquery plugin max and min limits
-				formatter.setMinimumFractionDigits(15);
-				formatter.setMaximumFractionDigits(15);
-				formatter.setMaximumIntegerDigits(20);
-				String f = formatter.format(objectToRender);
-
-				//force to english decimal separator
-				f = f.replace(',', '.');
-				return f;
-			} catch (Exception e) {
-				throw new IllegalArgumentException(
-						"Error converting  [" + valueToRender + "] to a double value;", e);
-			}
-		}
-	}
+                //force to english decimal separator
+                f = f.replace(',', '.');
+                return f;
+            } catch (Exception e) {
+                throw new IllegalArgumentException(
+                        "Error converting  [" + valueToRender + "] to a double value;", e);
+            }
+        }
+    }
 
 }

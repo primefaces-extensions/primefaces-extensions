@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.codemirror;
 
 import java.io.IOException;
@@ -33,6 +32,7 @@ import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.HTML;
 
 /**
  * Renderer for the {@link CodeMirror} component.
@@ -43,74 +43,77 @@ import org.primefaces.renderkit.InputRenderer;
  */
 public class CodeMirrorRenderer extends InputRenderer {
 
-	@Override
-	public void decode(final FacesContext facesContext, final UIComponent component) {
-		final CodeMirror codeMirror = (CodeMirror) component;
+    @Override
+    public void decode(final FacesContext facesContext, final UIComponent component) {
+        final CodeMirror codeMirror = (CodeMirror) component;
 
-		if (codeMirror.isReadOnly()) {
-			return;
-		}
+        if (codeMirror.isReadOnly()) {
+            return;
+        }
 
-		// set value
+        // set value
         final String clientId = codeMirror.getClientId(facesContext);
         final Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
-        	codeMirror.setSubmittedValue(params.get(clientId));
+            codeMirror.setSubmittedValue(params.get(clientId));
         }
 
         // decode behaviors
-		decodeBehaviors(facesContext, component);
+        decodeBehaviors(facesContext, component);
 
         // complete event
         final String token = params.get(clientId + "_token");
         if (token != null) {
-        	final String context = params.get(clientId + "_context");
-        	final int line = Integer.parseInt(params.get(clientId + "_line"));
-        	final int column = Integer.parseInt(params.get(clientId + "_column"));
+            final String context = params.get(clientId + "_context");
+            final int line = Integer.parseInt(params.get(clientId + "_line"));
+            final int column = Integer.parseInt(params.get(clientId + "_column"));
 
-        	final CompleteEvent autoCompleteEvent = new CompleteEvent(
-        			codeMirror, token, context, line, column);
+            final CompleteEvent autoCompleteEvent = new CompleteEvent(
+                    codeMirror, token, context, line, column);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
             codeMirror.queueEvent(autoCompleteEvent);
         }
-	}
+    }
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final CodeMirror codeMirror = (CodeMirror) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final CodeMirror codeMirror = (CodeMirror) component;
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String token = params.get(codeMirror.getClientId(context) + "_token");
 
         if (token != null) {
-        	encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
+            encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
         } else {
-    		encodeMarkup(context, codeMirror);
-    		encodeScript(context, codeMirror);
+            encodeMarkup(context, codeMirror);
+            encodeScript(context, codeMirror);
         }
-	}
+    }
 
-	protected void encodeMarkup(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-		final String clientId = codeMirror.getClientId(context);
+    protected void encodeMarkup(final FacesContext context, final CodeMirror codeMirror) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = codeMirror.getClientId(context);
 
-		writer.startElement("textarea", codeMirror);
-		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("name", clientId, null);
+        writer.startElement("textarea", codeMirror);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("name", clientId, null);
 
-		final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
-		if (valueToRender != null) {
-			if (codeMirror.isEscape()) {
-				writer.writeText(valueToRender, null);
-			} else {
-				writer.write(valueToRender);
-			}
-		}
+        renderPassThruAttributes(context, codeMirror, HTML.INPUT_TEXTAREA_ATTRS);
+        renderDomEvents(context, codeMirror, HTML.INPUT_TEXT_EVENTS);
+        
+        final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
+        if (valueToRender != null) {
+            if (codeMirror.isEscape()) {
+                writer.writeText(valueToRender, null);
+            } else {
+                writer.write(valueToRender);
+            }
+        }
 
-		writer.endElement("textarea");
-	}
+        writer.endElement("textarea");
+    }
 
-	protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
+    protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(CodeMirror.class.getSimpleName(), codeMirror.resolveWidgetVar(), codeMirror.getClientId(), "codemirror");
         wb.attr("theme", codeMirror.getTheme())
@@ -133,7 +136,7 @@ public class CodeMirrorRenderer extends InputRenderer {
                 .attr("pollInterval", codeMirror.getPollInterval())
                 .attr("tabindex", codeMirror.getTabindex())
                 .attr("undoDepth", codeMirror.getUndoDepth());
-        
+
         if (codeMirror.getExtraKeys() != null) {
             wb.append(",extraKeys:" + codeMirror.getExtraKeys());
         }
@@ -160,42 +163,42 @@ public class CodeMirrorRenderer extends InputRenderer {
         }
 
         encodeClientBehaviors(context, codeMirror);
-        
+
         wb.finish();
-	}
+    }
 
     @Override
-	public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
-    	final CodeMirror codeMirror = (CodeMirror) component;
-    	final String value = (String) submittedValue;
-		final Converter converter = ComponentUtils.getConverter(context, component);
+    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+        final CodeMirror codeMirror = (CodeMirror) component;
+        final String value = (String) submittedValue;
+        final Converter converter = ComponentUtils.getConverter(context, component);
 
-		if (converter != null) {
-			return converter.getAsObject(context, codeMirror, value);
-		}
+        if (converter != null) {
+            return converter.getAsObject(context, codeMirror, value);
+        }
 
-		return value;
-	}
+        return value;
+    }
 
     protected void encodeSuggestions(final FacesContext context, final CodeMirror codeMirror, final List<String> suggestions) throws IOException {
-    	final ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
 
-    	writer.startElement("ul", codeMirror);
+        writer.startElement("ul", codeMirror);
 
-    	for (int i = 0; i < suggestions.size(); i++) {
-    		final String suggestion = suggestions.get(i);
+        for (int i = 0; i < suggestions.size(); i++) {
+            final String suggestion = suggestions.get(i);
 
-    		writer.startElement("li", null);
+            writer.startElement("li", null);
 
-    		if (codeMirror.isEscapeSuggestions()) {
-    			writer.writeText(suggestion, null);
-    		} else {
-    			writer.write(suggestion);
-    		}
+            if (codeMirror.isEscapeSuggestions()) {
+                writer.writeText(suggestion, null);
+            } else {
+                writer.write(suggestion);
+            }
 
-    		writer.endElement("li");
-    	}
+            writer.endElement("li");
+        }
 
-    	writer.endElement("ul");
+        writer.endElement("ul");
     }
 }
