@@ -47,23 +47,18 @@ public class InputNumberRenderer extends InputRenderer {
     public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
             throws ConverterException {
 
-        InputNumber inputNumber = (InputNumber) component;
-        Converter converter = inputNumber.getConverter();
         String submittedValueString = (String) submittedValue;
-
-        if (converter != null) {
-            Object doubleConverted = converter.getAsObject(context, inputNumber, submittedValueString);
-            return doubleConverted;
-        } else {
-            if (submittedValueString != null && !submittedValueString.isEmpty()) {
-                if (inputNumber.getValue() instanceof BigDecimal) {
-                    return new BigDecimal(submittedValueString);
-                } else {
-                    return new Double(submittedValueString);
-                }
-            }
+        
+        if (ComponentUtils.isValueBlank(submittedValueString)) {
             return null;
         }
+        
+        Converter converter = ComponentUtils.getConverter(context, component);
+        if (converter != null) {
+            return converter.getAsObject(context, component, submittedValueString);
+        }
+
+        return null;
     }
 
     @Override
