@@ -128,7 +128,9 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         dropHoverStyleClass,
         dropActiveStyleClass,
         dropAccept,
-        dropScope;
+        dropScope,
+        animate,
+        animateZoom;
 
         private String toString;
 
@@ -520,6 +522,22 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
 
     public void setDropScope(String dropScope) {
         getStateHelper().put(PropertyKeys.dropScope, dropScope);
+    }
+    
+    public boolean isAnimate() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.animate, true);
+    }
+
+    public void setAnimate(boolean animate) {
+        getStateHelper().put(PropertyKeys.animate, animate);
+    }
+    
+    public boolean isAnimateZoom() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.animateZoom, true);
+    }
+
+    public void setAnimateZoom(boolean animateZoom) {
+        getStateHelper().put(PropertyKeys.animateZoom, animateZoom);
     }
 
     @Override

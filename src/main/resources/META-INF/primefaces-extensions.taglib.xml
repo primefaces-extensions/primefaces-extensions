@@ -3228,6 +3228,22 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When true, events are moved animated when resizing or moving them. This is very pleasing for the eye, but does require more computational power. Default is true.]]>
+            </description>
+            <name>animate</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When true, events are moved animated when zooming the Timeline. This looks cool, but does require more computational power. Default is true.]]>
+            </description>
+            <name>animateZoom</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[]]>

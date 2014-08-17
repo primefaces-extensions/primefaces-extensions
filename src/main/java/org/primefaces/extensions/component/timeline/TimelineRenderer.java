@@ -201,6 +201,9 @@ public class TimelineRenderer extends CoreRenderer {
         if (timeline.getDropScope() != null) {
             writer.write(",scope:'" + timeline.getDropScope() + "'");
         }
+        
+        writer.write(",animate:" + timeline.isAnimate());        
+        writer.write(",animateZoom:" + timeline.isAnimateZoom());
 
         writer.write("}");
         encodeClientBehaviors(context, timeline);
