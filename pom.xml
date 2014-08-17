@@ -505,7 +505,7 @@
         <java.version.target>1.5</java.version.target>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 
-        <jsf.version>2.2.6</jsf.version>
+        <jsf.version>2.2.8</jsf.version>
         <primefaces.core.version>5.0</primefaces.core.version>
         <primefaces.theme.version>1.0.10</primefaces.theme.version>
     </properties>
