@@ -13,11 +13,10 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
         this._super(cfg);
         this.cfg = cfg;
         this.id = cfg.id;
+        this.jq = $(cfg.forTarget);
+        this.stateHiddenField = null;
 
         var jqId = PrimeFaces.escapeClientId(this.id);
-        
-        this.jqTarget = $(cfg.forTarget);
-        this.stateHiddenField = null;
 
         if (cfg.clientState) {
             this.cfg.options.stateManagement = {
@@ -30,32 +29,20 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
         } else if (cfg.serverState) {
             this.stateHiddenField = $(jqId + "_state");
         }
-
-        if (this.jqTarget.is(':visible')) {
-            this._render();
-        } else {
-            var hiddenParent = this.jqTarget.closest('.ui-hidden-container');
-            var hiddenParentWidget = hiddenParent.data('widget');
-
-            if (hiddenParentWidget) {
-                var $this = this;
-                hiddenParentWidget.addOnshowHandler(this.id, function () {
-                    return $this._render();
-                });
-            }
-        }
+        
+        this.renderDeferred();
     },
 
     _render:function () {
         // create layout
-        this.layout = this.jqTarget.layout(this.cfg.options);
+        this.layout = this.jq.layout(this.cfg.options);
 
         if (this.cfg.serverState) {
             this.layout.loadState(this.cfg.state);
         }
 
         // bind "open", "close" and "resize" events
-        this.bindEvents(this.jqTarget);
+        this.bindEvents(this.jq);
     },
     
     bindEvents:function(parent) {
@@ -121,7 +108,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     toggle:function (pane) {
-        this.jqTarget.find(".ui-layout-pane").
+        this.jq.find(".ui-layout-pane").
             each(function() {
                 var combinedPosition = $(this).data('combinedposition');
                 if (combinedPosition && combinedPosition === pane) {
@@ -132,7 +119,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     close:function (pane) {
-        var panes = this.jqTarget.find(".ui-layout-pane");
+        var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i=0; i < length; i++) {
             var combinedPosition = $(panes[i]).data('combinedposition');
@@ -144,7 +131,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     open:function (pane) {
-        var panes = this.jqTarget.find(".ui-layout-pane");
+        var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i=0; i < length; i++) {
             var combinedPosition = $(panes[i]).data('combinedposition');
@@ -156,7 +143,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     sizePane:function (pane, size) {
-        var panes = this.jqTarget.find(".ui-layout-pane");
+        var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i=0; i < length; i++) {
             var combinedPosition = $(panes[i]).data('combinedposition');
@@ -168,7 +155,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     },
     
     sizeContent:function (pane) {
-        var panes = this.jqTarget.find(".ui-layout-pane");
+        var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
         for (var i=0; i < length; i++) {
             var combinedPosition = $(panes[i]).data('combinedposition');
@@ -183,7 +170,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
     update:function (pane, options) {
         var $this = this;
         
-        this.jqTarget.find(".ui-layout-pane").
+        this.jq.find(".ui-layout-pane").
             each(function() {
                 var $this = $(this);
                 var combinedPosition = $this.data('combinedposition');
