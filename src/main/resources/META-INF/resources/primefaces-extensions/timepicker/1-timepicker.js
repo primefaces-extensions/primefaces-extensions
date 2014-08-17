@@ -143,6 +143,7 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	    
 	    $(this.jqId).children('.pe-timepicker-button').
 	    removeClass('ui-state-disabled').
+        off('mouseover mouseout mouseup mousedown').
 	    on({
 	        mouseover: function(){
 	            $(this).addClass('ui-state-hover');
