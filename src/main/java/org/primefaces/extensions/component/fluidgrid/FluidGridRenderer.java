@@ -18,17 +18,16 @@
 
 package org.primefaces.extensions.component.fluidgrid;
 
-import java.io.IOException;
-import java.util.Collection;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.renderkit.CoreRenderer;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Renderer for {@link FluidGrid} component.
@@ -131,7 +130,7 @@ public class FluidGridRenderer extends CoreRenderer {
 		writer.write("$(function() {");
 		writer.write("PrimeFacesExt.cw('FluidGrid','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
+        //writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",opts:{");
 
 		writer.write("isFitWidth:" + fluidGrid.isFitWidth());

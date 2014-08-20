@@ -51,6 +51,15 @@ PrimeFacesExt.widget.FluidGrid = PrimeFaces.widget.DeferredWidget.extend({
             // trigger layout manually
             this.$container.masonry();
         }
+        
+        // check if the fluid grid is within a layout pane / unit
+        var layoutPane = this.$container.closest(".ui-layout-pane");
+        if (layoutPane.length > 0) {
+            layoutPane.on('layoutpaneonresize', $.proxy(function () {
+                // re-layout the grid
+                this.$container.masonry();
+            }, this));
+        }
     },
     
     /**
