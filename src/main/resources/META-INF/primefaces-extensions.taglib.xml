@@ -2957,7 +2957,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Check if the timeline container is resized, and if so, resize the timeline. Useful when the webpage is resized. Default is true.]]>
+                <![CDATA[Check if the timeline container is resized, and if so, resize the timeline. Useful when the webpage (browser window) or a layout pane / unit containing the timeline component is resized. Default is true.]]>
             </description>
             <name>responsive</name>
             <required>false</required>

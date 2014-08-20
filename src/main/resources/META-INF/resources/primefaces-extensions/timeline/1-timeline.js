@@ -57,10 +57,19 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
      */
     bindEvents: function (el) {
         if (this.cfg.opts.responsive) {
-            var nsevent = "resize.timeline" + PrimeFaces.escapeClientId(this.id);
-            $(window).off(nsevent).on(nsevent, $.proxy(function () {
-                this.instance.checkResize();
-            }, this));
+            var layoutPane = $(el).closest(".ui-layout-pane");
+            if (layoutPane.length > 0) {
+                // timeline is within layout pane / unit ==> resize it when resizing layout pane / unit
+                layoutPane.on('layoutpaneonresize', $.proxy(function () {
+                    this.instance.checkResize();
+                }, this));
+            } else {
+                // resize timeline on window resizing
+                var nsevent = "resize.timeline" + PrimeFaces.escapeClientId(this.id);
+                $(window).off(nsevent).on(nsevent, $.proxy(function () {
+                    this.instance.checkResize();
+                }, this));
+            }
         }
 
         // "select" event
