@@ -383,8 +383,12 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             resetData();
         } else {
             // static items
-            if (super.invokeOnComponent(context, clientId, callback)) {
-                return true;
+            if (getChildCount() > 0) {
+                for (UIComponent child : getChildren()) {
+                    if (child.invokeOnComponent(context, clientId, callback)) {
+                        return true;
+                    }    
+                }
             }
         }
 
