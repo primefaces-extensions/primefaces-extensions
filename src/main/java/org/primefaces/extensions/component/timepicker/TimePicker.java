@@ -18,18 +18,15 @@
 
 package org.primefaces.extensions.component.timepicker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import org.apache.commons.lang3.LocaleUtils;
+import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.BeforeShowEvent;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.TimeSelectEvent;
+import org.primefaces.util.ArrayUtils;
+import org.primefaces.util.Constants;
+import org.primefaces.util.HTML;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UINamingContainer;
@@ -38,16 +35,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
-
-import org.apache.commons.lang3.LocaleUtils;
-
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.event.BeforeShowEvent;
-import org.primefaces.extensions.event.CloseEvent;
-import org.primefaces.extensions.event.TimeSelectEvent;
-import org.primefaces.util.ArrayUtils;
-import org.primefaces.util.Constants;
-import org.primefaces.util.HTML;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <code>TimePicker</code> component.
@@ -128,7 +123,11 @@ public class TimePicker extends HtmlInputText implements Widget {
 		onHourShow,
 		onMinuteShow,
 		showOn,
-		locale;
+		locale,
+        minHour,
+        minMinute,
+        maxHour,
+        maxMinute;
 
 		String toString;
 
@@ -321,6 +320,38 @@ public class TimePicker extends HtmlInputText implements Widget {
 	public void setLocale(final Object locale) {
 		getStateHelper().put(PropertyKeys.locale, locale);
 	}
+    
+    public Integer getMinHour() {
+   		return (Integer) getStateHelper().eval(PropertyKeys.minHour, null);
+   	}
+   
+   	public void setMinHour(final Integer minHour) {
+   		getStateHelper().put(PropertyKeys.minHour, minHour);
+   	}
+    
+    public Integer getMinMinute() {
+   		return (Integer) getStateHelper().eval(PropertyKeys.minMinute, null);
+   	}
+   
+   	public void setMinMinute(final Integer minMinute) {
+   		getStateHelper().put(PropertyKeys.minMinute, minMinute);
+   	}
+    
+    public Integer getMaxHour() {
+   		return (Integer) getStateHelper().eval(PropertyKeys.maxHour, null);
+   	}
+   
+   	public void setMaxHour(final Integer maxHour) {
+   		getStateHelper().put(PropertyKeys.maxHour, maxHour);
+   	}
+    
+    public Integer getMaxMinute() {
+   		return (Integer) getStateHelper().eval(PropertyKeys.maxMinute, null);
+   	}
+   
+   	public void setMaxMinute(final Integer maxMinute) {
+   		getStateHelper().put(PropertyKeys.maxMinute, maxMinute);
+   	}
 
 	public Locale calculateLocale(final FacesContext fc) {
 		if (appropriateLocale == null) {

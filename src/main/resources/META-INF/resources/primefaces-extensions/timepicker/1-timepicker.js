@@ -440,6 +440,14 @@ PrimeFacesExt.widget.TimePicker = PrimeFaces.widget.BaseWidget.extend({
 	setTime : function(time) {
 	    this.jq.fgtimepicker('setTime', time);     
 	},
+    
+    setMinTime : function(hour, minute) {
+   	    this.jq.fgtimepicker('option', {minTime: {hour: hour, minute: minute}});
+   	},
+    
+    setMaxTime : function(hour, minute) {
+   	    this.jq.fgtimepicker('option', {maxTime: {hour: hour, minute: minute}});
+   	},    
 	
 	getTime : function() {
 	    return this.jq.fgtimepicker('getTime');     

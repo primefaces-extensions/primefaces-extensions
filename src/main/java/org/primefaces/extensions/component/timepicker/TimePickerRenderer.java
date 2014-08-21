@@ -18,23 +18,21 @@
 
 package org.primefaces.extensions.component.timepicker;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.extensions.util.MessageUtils;
+import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.MessageFactory;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-
-import org.apache.commons.lang3.StringUtils;
-
-import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.MessageUtils;
-import org.primefaces.renderkit.InputRenderer;
-import org.primefaces.util.MessageFactory;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Renderer for the {@link TimePicker} component.
@@ -192,6 +190,16 @@ public class TimePickerRenderer extends InputRenderer {
 		} else if (timepicker.isInline()) {
 			writer.write(",defaultTime:'" + value + "'");
 		}
+        
+        if (timepicker.getMinHour() != null || timepicker.getMinMinute() != null) {
+            writer.write(",minTime:{hour:" + timepicker.getMinHour());
+            writer.write(",minute:" + timepicker.getMinMinute() + "}");
+        }
+        
+        if (timepicker.getMaxHour() != null || timepicker.getMaxMinute() != null) {
+            writer.write(",maxTime:{hour:" + timepicker.getMaxHour());
+            writer.write(",minute:" + timepicker.getMaxMinute() + "}");
+        }
 
 		encodeClientBehaviors(fc, timepicker);
 
