@@ -12,3 +12,6 @@ This product includes software developed by Almende (http://almende.github.com/c
 This product includes software developed by David DeSandro (http://masonry.desandro.com/)
 This product includes software developed by Jerome Etienne (http://larsjung.de/qrcode/)
 This product includes software developed by Kazuhiko Arase (http://d-project.googlecode.com/svn/trunk/misc/qrcode/index.html/)
+This product includes software developed by Dmitry Baranovskiy (http://raphaeljs.com/)
+This product includes software developed by moment.js (http://momentjs.com/)
+This product includes software developed by underscorejs (http://underscorejs.org/)

@@ -4524,4 +4524,59 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Double</type>
         </attribute>
     </tag>
+    <tag>
+		<tag-name>analogClock</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.AnalogClock</component-type>
+			<renderer-type>org.primefaces.extensions.component.AnalogClockRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIComponent</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[theme of the analogClock. It can also be a ColorTheme object to set a custom theme]]></description>
+			<name>colorTheme</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Name of the client side widget.]]></description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA['server' for using server time, use the client time otherwise]]></description>
+			<name>mode</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[time to display, the default value is current time]]></description>
+			<name>startTime</name>
+			<required>false</required>
+			<type>java.util.Date</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[width of the clock in pixel, set 'auto' to adjust to the width of the container. The default value is 'auto'.]]></description>
+			<name>width</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
+	</tag>
 </facelet-taglib>

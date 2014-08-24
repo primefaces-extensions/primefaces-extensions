@@ -92,6 +92,7 @@
                                 <include>timeline/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>qrcode/**</include>
+                                <include>analogclock/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
