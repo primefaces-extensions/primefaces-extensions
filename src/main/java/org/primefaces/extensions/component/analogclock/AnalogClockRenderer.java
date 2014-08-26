@@ -72,6 +72,7 @@ public class AnalogClockRenderer extends CoreRenderer {
 		map.put("face", ColorUtils.colorToHex(colorTheme.getFace()));
 		map.put("border", ColorUtils.colorToHex(colorTheme.getBorder()));
 		map.put("hourHand", ColorUtils.colorToHex(colorTheme.getHourHand()));
+        map.put("hourSigns", ColorUtils.colorToHex(colorTheme.getHourSigns()));
 		map.put("minuteHand", ColorUtils.colorToHex(colorTheme.getMinuteHand()));
 		map.put("secondHand", ColorUtils.colorToHex(colorTheme.getSecondHand()));
 		map.put("secondSigns", ColorUtils.colorToHex(colorTheme.getHourSigns()));

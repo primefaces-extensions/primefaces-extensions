@@ -21,7 +21,6 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget
                 this.themeObject = PrimeFacesExt.widget.AnalogClock.defaultColorTheme;
             }
 
-
             this.interval = setInterval((function (self) {
                 return function () {
                     self.update();
@@ -54,73 +53,49 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget
 
             this.reloadDimensions();
 
-            this.canvas = Raphael(this.id, this.dimensions.size,
-                this.dimensions.size);
+            this.canvas = Raphael(this.id, this.dimensions.size,this.dimensions.size);
 
-            this.clock = this.canvas.circle(this.dimensions.half,
-                this.dimensions.half, this.dimensions.clock_width);
+            this.clock = this.canvas.circle(this.dimensions.half,this.dimensions.half, this.dimensions.clock_width);
 
             this.draw_hour_signs();
 
             this.draw_hands();
 
-            this.pin = this.canvas.circle(this.dimensions.half,
-                this.dimensions.half, this.dimensions.pin_width);
+            this.pin = this.canvas.circle(this.dimensions.half,this.dimensions.half, this.dimensions.pin_width);
 
             this.update();
         },
 
         draw_hour_signs: function () {
+
+            this.hour_sign = [];
+
             for (i = 0; i < 12; i++) {
+                (function (i,that){
+                    var start_x = that.dimensions.half + Math.round(that.dimensions.hour_sign_min_size * Math.cos(30 * i * Math.PI / 180));
+                    var start_y = that.dimensions.half + Math.round(that.dimensions.hour_sign_min_size * Math.sin(30 * i * Math.PI / 180));
+                    var end_x = that.dimensions.half + Math.round(that.dimensions.hour_sign_max_size * Math.cos(30 * i * Math.PI / 180));
+                    var end_y = that.dimensions.half + Math.round(that.dimensions.hour_sign_max_size * Math.sin(30 * i * Math.PI / 180));
 
-                var start_x = this.dimensions.half
-                    + Math.round(this.dimensions.hour_sign_min_size
-                        * Math.cos(30 * i * Math.PI / 180));
-                var start_y = this.dimensions.half
-                    + Math.round(this.dimensions.hour_sign_min_size
-                        * Math.sin(30 * i * Math.PI / 180));
-                var end_x = this.dimensions.half
-                    + Math.round(this.dimensions.hour_sign_max_size
-                        * Math.cos(30 * i * Math.PI / 180));
-                var end_y = this.dimensions.half
-                    + Math.round(this.dimensions.hour_sign_max_size
-                        * Math.sin(30 * i * Math.PI / 180));
-
-                this.hour_sign = this.canvas.path("M" + start_x + " "
-                    + start_y + "L" + end_x + " " + end_y);
-
+                    that.hour_sign.push(that.canvas.path("M" + start_x + " " + start_y + "L" + end_x + " " + end_y));
+                })(i,this);
             }
         },
 
         draw_hands: function () {
 
-            this.hour_hand = this.canvas.path("M" + this.dimensions.half
-                + " " + this.dimensions.half + "L"
-                + this.dimensions.half + " "
-                + this.dimensions.hour_hand_start_position);
-
-            this.minute_hand = this.canvas.path("M" + this.dimensions.half
-                + " " + this.dimensions.half + "L"
-                + this.dimensions.half + " "
-                + this.dimensions.minute_hand_start_position);
-
-            this.second_hand = this.canvas.path("M" + this.dimensions.half
-                + " " + this.dimensions.half + "L"
-                + this.dimensions.half + " "
-                + this.dimensions.second_hand_start_position);
+            this.hour_hand = this.canvas.path("M" + this.dimensions.half + " " + this.dimensions.half + "L" + this.dimensions.half + " " + this.dimensions.hour_hand_start_position);
+            this.minute_hand = this.canvas.path("M" + this.dimensions.half + " " + this.dimensions.half + "L" + this.dimensions.half + " " + this.dimensions.minute_hand_start_position);
+            this.second_hand = this.canvas.path("M" + this.dimensions.half + " " + this.dimensions.half + "L" + this.dimensions.half + " " + this.dimensions.second_hand_start_position);
 
         },
 
         update: function () {
             var now = this.startTime;
 
-            this.hour_hand.rotate(30 * now.hours()
-                    + (this.startTime.minutes() / 2.5),
-                this.dimensions.half, this.dimensions.half);
-            this.minute_hand.rotate(6 * this.startTime.minutes(),
-                this.dimensions.half, this.dimensions.half);
-            this.second_hand.rotate(6 * this.startTime.seconds(),
-                this.dimensions.half, this.dimensions.half);
+            this.hour_hand.rotate(30 * now.hours() + (this.startTime.minutes() / 2.5),this.dimensions.half, this.dimensions.half);
+            this.minute_hand.rotate(6 * this.startTime.minutes(),this.dimensions.half, this.dimensions.half);
+            this.second_hand.rotate(6 * this.startTime.seconds(),this.dimensions.half, this.dimensions.half);
 
             this.clock.attr({
                 "fill": this.themeObject.face,
@@ -128,24 +103,23 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget
                 "stroke-width": "5"
             });
 
-            this.hour_sign.attr({
-                "stroke": this.themeObject.hourSigns,
-                "stroke-width": this.dimensions.hour_sign_stroke_width
-            });
+            for (var i=0; i<this.hour_sign.length; i++) {
+                this.hour_sign[i].attr({
+                    "stroke": this.themeObject.hourSigns,
+                    "stroke-width": this.dimensions.hour_sign_stroke_width
+                });
+            }
 
             this.hour_hand.attr({
-                stroke: this.themeObject.hourHand,
-                "stroke-width": this.dimensions.hour_hand_stroke_width
+                stroke: this.themeObject.hourHand,"stroke-width": this.dimensions.hour_hand_stroke_width
             });
 
             this.minute_hand.attr({
-                stroke: this.themeObject.minuteHand,
-                "stroke-width": this.dimensions.minute_hand_stroke_width
+                stroke: this.themeObject.minuteHand,"stroke-width": this.dimensions.minute_hand_stroke_width
             });
 
             this.second_hand.attr({
-                stroke: this.themeObject.secondHand,
-                "stroke-width": this.dimensions.second_hand_stroke_width
+                stroke: this.themeObject.secondHand,"stroke-width": this.dimensions.second_hand_stroke_width
             });
 
             this.pin.attr("fill", this.themeObject.pin);
@@ -213,7 +187,7 @@ PrimeFacesExt.widget.AnalogClock.colorThemes = {
     'black-tie': {
         face: '#000000',
         border: '#000000',
-        hourSigns: '#000000',
+        hourSigns: '#FFFFFF',
         hourHand: '#FFFFFF',
         minuteHand: '#FFFFFF',
         secondHand: '#FFFFFF',
