@@ -281,6 +281,14 @@ PrimeFacesExt = {
         return cfg;
     },
 
+    /**
+     * This function need to be invoked after PrimeFaces changeTheme. It's used to sync canvas and svg components to the current theme (pe:analogClock)
+     * @author f.strazzullo
+     */
+    changeTheme: function(newValue){
+        $(document).trigger("PrimeFacesExt.themeChanged",newValue);
+    },
+
 	/**
 	 * The JSF resource identifier.
 	 * 
@@ -339,3 +347,18 @@ PrimeFacesExt.locales.Timeline = {};
 PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
 	return cfg.execute.call(this, cfg.source, cfg.event, ext.params, ext);
 };
+
+/**
+ * Hack to allow the PrimeFacesExt changeTheme to automatically invoked on every theme change
+ * @author f.strazzullo
+ */
+(function(window) {
+
+    var originalChangeTheme = PrimeFaces.changeTheme;
+
+    PrimeFaces.changeTheme = function(newValue){
+        originalChangeTheme(newValue);
+        PrimeFacesExt.changeTheme(newValue);
+    }
+
+})(window);
