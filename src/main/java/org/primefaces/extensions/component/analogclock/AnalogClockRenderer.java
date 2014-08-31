@@ -54,6 +54,7 @@ public class AnalogClockRenderer extends CoreRenderer {
 			if (analogClock.getColorTheme() instanceof String) {
 				ewb.attr("colorTheme", analogClock.getColorTheme().toString());
 			} else {
+                //todo: try to use GSON
 				ewb.attr("themeObject", this.escapeText(new JSONObject(colorThemeToMap((AnalogClockColorModel) analogClock.getColorTheme())).toString()));
 			}
 		}
