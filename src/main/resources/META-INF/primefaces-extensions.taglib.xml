@@ -4679,7 +4679,7 @@ This global setting "editable" can be overwritten for individual events by setti
         <attribute>
             <description><![CDATA[URL of the document to view.]]></description>
             <name>url</name>
-            <required>true</required>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
