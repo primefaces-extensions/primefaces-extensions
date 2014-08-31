@@ -4634,4 +4634,78 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>documentViewer</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.DocumentViewer</component-type>
+            <renderer-type>org.primefaces.extensions.component.DocumentViewerRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[width of the viewer frame.]]></description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[height of the viewer frame.]]></description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[CSS style of the viewer frame.]]></description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[URL of the document to view.]]></description>
+            <name>url</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Controls browser caching mode of the resource. Default is false]]></description>
+            <name>cache</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[set true to use OmniFaces UnmappedResourceHandler. Default is false]]></description>
+            <name>unmapped</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Locale to be used for labels.]]></description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Start page of the document.]]></description>
+            <name>page</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+    </tag>
+
 </facelet-taglib>

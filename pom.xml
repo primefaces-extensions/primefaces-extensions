@@ -68,6 +68,7 @@
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
+                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>

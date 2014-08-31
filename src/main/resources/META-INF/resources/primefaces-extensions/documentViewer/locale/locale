@@ -1,0 +1,312 @@
+[ach]
+@import url(ach/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[af]
+@import url(af/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ak]
+@import url(ak/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[an]
+@import url(an/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ar]
+@import url(ar/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[as]
+@import url(as/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ast]
+@import url(ast/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[az]
+@import url(az/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[be]
+@import url(be/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[bg]
+@import url(bg/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[bn-BD]
+@import url(bn-BD/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[bn-IN]
+@import url(bn-IN/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[br]
+@import url(br/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[bs]
+@import url(bs/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ca]
+@import url(ca/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[cs]
+@import url(cs/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[csb]
+@import url(csb/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[cy]
+@import url(cy/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[da]
+@import url(da/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[de]
+@import url(de/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[el]
+@import url(el/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[en-GB]
+@import url(en-GB/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[en-US]
+@import url(en-US/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[en-ZA]
+@import url(en-ZA/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[eo]
+@import url(eo/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[es-AR]
+@import url(es-AR/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[es-CL]
+@import url(es-CL/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[es-ES]
+@import url(es-ES/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[es-MX]
+@import url(es-MX/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[et]
+@import url(et/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[eu]
+@import url(eu/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[fa]
+@import url(fa/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ff]
+@import url(ff/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[fi]
+@import url(fi/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[fr]
+@import url(fr/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[fy-NL]
+@import url(fy-NL/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ga-IE]
+@import url(ga-IE/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[gd]
+@import url(gd/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[gl]
+@import url(gl/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[gu-IN]
+@import url(gu-IN/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[he]
+@import url(he/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[hi-IN]
+@import url(hi-IN/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[hr]
+@import url(hr/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[hu]
+@import url(hu/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[hy-AM]
+@import url(hy-AM/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[id]
+@import url(id/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[is]
+@import url(is/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[it]
+@import url(it/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ja]
+@import url(ja/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ka]
+@import url(ka/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[kk]
+@import url(kk/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[km]
+@import url(km/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[kn]
+@import url(kn/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ko]
+@import url(ko/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ku]
+@import url(ku/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[lg]
+@import url(lg/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[lij]
+@import url(lij/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[lt]
+@import url(lt/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[lv]
+@import url(lv/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[mai]
+@import url(mai/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[mk]
+@import url(mk/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ml]
+@import url(ml/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[mn]
+@import url(mn/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[mr]
+@import url(mr/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ms]
+@import url(ms/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[my]
+@import url(my/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[nb-NO]
+@import url(nb-NO/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[nl]
+@import url(nl/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[nn-NO]
+@import url(nn-NO/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[nso]
+@import url(nso/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[oc]
+@import url(oc/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[or]
+@import url(or/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[pa-IN]
+@import url(pa-IN/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[pl]
+@import url(pl/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[pt-BR]
+@import url(pt-BR/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[pt-PT]
+@import url(pt-PT/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[rm]
+@import url(rm/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ro]
+@import url(ro/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ru]
+@import url(ru/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[rw]
+@import url(rw/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sah]
+@import url(sah/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[si]
+@import url(si/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sk]
+@import url(sk/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sl]
+@import url(sl/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[son]
+@import url(son/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sq]
+@import url(sq/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sr]
+@import url(sr/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sv-SE]
+@import url(sv-SE/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[sw]
+@import url(sw/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ta]
+@import url(ta/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ta-LK]
+@import url(ta-LK/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[te]
+@import url(te/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[th]
+@import url(th/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[tl]
+@import url(tl/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[tn]
+@import url(tn/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[tr]
+@import url(tr/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[uk]
+@import url(uk/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[ur]
+@import url(ur/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[vi]
+@import url(vi/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[wo]
+@import url(wo/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[xh]
+@import url(xh/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[zh-CN]
+@import url(zh-CN/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[zh-TW]
+@import url(zh-TW/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+
+[zu]
+@import url(zu/viewer.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+

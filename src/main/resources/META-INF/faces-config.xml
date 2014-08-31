@@ -162,6 +162,10 @@
         <component-type>org.primefaces.extensions.component.Gravatar</component-type>
         <component-class>org.primefaces.extensions.component.gravatar.Gravatar</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.DocumentViewer</component-type>
+        <component-class>org.primefaces.extensions.component.documentviewer.DocumentViewer</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -302,6 +306,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.GravatarRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.gravatar.GravatarRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.DocumentViewerRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.documentviewer.DocumentViewerRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
