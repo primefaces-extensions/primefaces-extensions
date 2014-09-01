@@ -66,14 +66,6 @@ public class DocumentViewer extends UIGraphic {
 	public void setCache(boolean _cache) {
 		getStateHelper().put(PropertyKeys.cache, _cache);
 	}
-	
-	public boolean isUnmapped() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.unmapped, false);
-	}
-
-	public void setUnmapped(boolean unmapped) {
-		getStateHelper().put(PropertyKeys.unmapped, unmapped);
-	}
 
 	public Integer getPage(){
 		return (Integer) getStateHelper().eval(PropertyKeys.page);
@@ -97,7 +89,6 @@ public class DocumentViewer extends UIGraphic {
 		name,
 		library,
 		cache,
-		unmapped,
 		page,
 		locale;
 	}

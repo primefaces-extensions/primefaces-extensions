@@ -78,12 +78,8 @@ public class DocumentViewerRenderer extends CoreRenderer {
 	}
 
 	private String getResourceURL(DocumentViewer documentViewer, FacesContext context) {
-		if(documentViewer.isUnmapped()){
-			return "pdf.js_unmapped/viewer.html?";
-		}else{
-			return "documentviewer/viewer.html.jsf?ln=primefaces-extensions-uncompressed&v=" + this.getClass().getPackage().getSpecificationVersion() + "&";
-		}
-		
+        //TODO: manage compressed & uncopressed resouceces
+        return "documentviewer/viewer.html.jsf?ln=primefaces-extensions-uncompressed&v=" + this.getClass().getPackage().getSpecificationVersion() + "&";
 	}
 	
 	private Locale getCalculatedLocale(DocumentViewer documentViewer,FacesContext context){

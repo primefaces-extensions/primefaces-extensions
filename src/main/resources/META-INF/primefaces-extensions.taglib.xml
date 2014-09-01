@@ -4689,12 +4689,6 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[set true to use OmniFaces UnmappedResourceHandler. Default is false]]></description>
-            <name>unmapped</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[Locale to be used for labels.]]></description>
             <name>locale</name>
             <required>false</required>
