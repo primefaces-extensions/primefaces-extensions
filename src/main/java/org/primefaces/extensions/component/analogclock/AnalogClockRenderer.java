@@ -8,6 +8,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.primefaces.extensions.component.analogclock.model.AnalogClockColorModel;
 import org.primefaces.extensions.util.ColorUtils;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
@@ -23,6 +25,8 @@ import org.primefaces.renderkit.CoreRenderer;
 public class AnalogClockRenderer extends CoreRenderer {
 
 	public static final String RENDERER_TYPE = "org.primefaces.extensions.component.AnalogClockRenderer";
+
+    private static final Gson GSON = new GsonBuilder().create();
 
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
@@ -54,8 +58,8 @@ public class AnalogClockRenderer extends CoreRenderer {
 			if (analogClock.getColorTheme() instanceof String) {
 				ewb.attr("colorTheme", analogClock.getColorTheme().toString());
 			} else {
-                //todo: try to use GSON
-				ewb.attr("themeObject", this.escapeText(new JSONObject(colorThemeToMap((AnalogClockColorModel) analogClock.getColorTheme())).toString()));
+                String jsonColors = GSON.toJson(colorThemeToMap((AnalogClockColorModel) analogClock.getColorTheme()));
+                ewb.attr("themeObject", this.escapeText(jsonColors));
 			}
 		}
 
