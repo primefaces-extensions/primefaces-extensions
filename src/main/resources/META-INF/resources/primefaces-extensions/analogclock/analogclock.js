@@ -3,8 +3,8 @@
  *
  * @author f.strazzullo
  */
-PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget
-    .extend({
+PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
+
         init: function (cfg) {
 
             this._super(cfg);

@@ -10,6 +10,17 @@ public class DocumentViewer extends UIGraphic {
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DocumentViewer";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
+    protected static enum PropertyKeys {
+        width,
+        height,
+        style,
+        name,
+        library,
+        cache,
+        page,
+        locale;
+    }
+
     public DocumentViewer(){
         setRendererType(DocumentViewerRenderer.RENDERER_TYPE);
     }
@@ -80,17 +91,6 @@ public class DocumentViewer extends UIGraphic {
 	}
 	public void setLocale(Object _locale) {
 		getStateHelper().put(PropertyKeys.locale, _locale);
-	}
-	
-	protected static enum PropertyKeys {
-		width, 
-		height, 
-		style,
-		name,
-		library,
-		cache,
-		page,
-		locale;
 	}
 
 }

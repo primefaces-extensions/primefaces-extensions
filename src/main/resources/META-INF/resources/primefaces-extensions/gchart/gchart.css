@@ -1,0 +1,6 @@
+table.google-visualization-orgchart-table{
+	/*
+		GChart <--> Boostrap Fix
+	*/
+	border-collapse: inherit !important;
+}

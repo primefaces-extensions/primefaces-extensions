@@ -50,6 +50,7 @@
                         <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
                         <exclude>**/META-INF/resources/**/tristatecheckbox/**</exclude>
                         <exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>
+                        <exclude>**/META-INF/resources/**/gchart/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -113,6 +114,7 @@
                                 <include>masterdetail/masterdetail.css</include>
                                 <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
                                 <include>inputnumber/inputnumber.css</include>
+                                <include>gchart/gchart.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
@@ -136,6 +138,7 @@
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                                 <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
+                                <include>gchart/gchart.js</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

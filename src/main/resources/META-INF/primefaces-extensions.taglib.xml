@@ -4720,5 +4720,11 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Object</type>
         </attribute>
     </tag>
-
+    <tag>
+        <tag-name>gChart</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.GChart</component-type>
+            <renderer-type>org.primefaces.extensions.component.GChartRenderer</renderer-type>
+        </component>
+    </tag>
 </facelet-taglib>
