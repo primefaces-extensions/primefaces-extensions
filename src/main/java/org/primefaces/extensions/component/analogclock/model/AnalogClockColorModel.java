@@ -33,4 +33,6 @@ public interface AnalogClockColorModel extends Serializable {
 
 	public abstract Color getFace();
 
+    public abstract String toJson();
+
 }

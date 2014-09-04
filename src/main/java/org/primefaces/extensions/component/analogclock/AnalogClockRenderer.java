@@ -26,8 +26,6 @@ public class AnalogClockRenderer extends CoreRenderer {
 
 	public static final String RENDERER_TYPE = "org.primefaces.extensions.component.AnalogClockRenderer";
 
-    private static final Gson GSON = new GsonBuilder().create();
-
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		AnalogClock analogClock = (AnalogClock) component;
@@ -58,8 +56,8 @@ public class AnalogClockRenderer extends CoreRenderer {
 			if (analogClock.getColorTheme() instanceof String) {
 				ewb.attr("colorTheme", analogClock.getColorTheme().toString());
 			} else {
-                String jsonColors = GSON.toJson(colorThemeToMap((AnalogClockColorModel) analogClock.getColorTheme()));
-                ewb.attr("themeObject", this.escapeText(jsonColors));
+                AnalogClockColorModel model = (AnalogClockColorModel) analogClock.getColorTheme();
+                ewb.attr("themeObject", this.escapeText(model.toJson()));
 			}
 		}
 
@@ -68,22 +66,6 @@ public class AnalogClockRenderer extends CoreRenderer {
 		}
 
 		ewb.finish();
-	}
-
-	private Map colorThemeToMap(AnalogClockColorModel colorTheme) {
-
-		Map<String, String> map = new HashMap<String, String>(0);
-
-		map.put("face", ColorUtils.colorToHex(colorTheme.getFace()));
-		map.put("border", ColorUtils.colorToHex(colorTheme.getBorder()));
-		map.put("hourHand", ColorUtils.colorToHex(colorTheme.getHourHand()));
-        map.put("hourSigns", ColorUtils.colorToHex(colorTheme.getHourSigns()));
-		map.put("minuteHand", ColorUtils.colorToHex(colorTheme.getMinuteHand()));
-		map.put("secondHand", ColorUtils.colorToHex(colorTheme.getSecondHand()));
-		map.put("secondSigns", ColorUtils.colorToHex(colorTheme.getHourSigns()));
-		map.put("pin", ColorUtils.colorToHex(colorTheme.getPin()));
-
-		return map;
 	}
 
 }
