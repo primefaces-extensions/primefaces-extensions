@@ -1,5 +1,8 @@
 package org.primefaces.extensions.component.gchart.model;
 
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.model.TreeNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,7 +24,20 @@ public class GChartModelBuilder {
 		
 		return this;
 	}
-	
+
+    public GChartModelBuilder importTreeNode(TreeNode root){
+        String label = String.valueOf(root.getData());
+        String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : StringUtils.EMPTY;
+
+        this.addRow(label,parentLabel);
+
+        for(TreeNode node : root.getChildren()){
+            this.importTreeNode(node);
+        }
+
+        return this;
+    }
+
 	public GChartModelBuilder addColumns(String... columns){
 		this.columns.addAll(Arrays.asList(columns));
 		return this;
