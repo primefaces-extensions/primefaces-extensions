@@ -9,13 +9,13 @@ PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
 		var that = this;
 
 		this._super(cfg);
-
-		this.data = cfg.data ? JSON.parse(cfg.data) : [];
-		this.type = cfg.type;
+        this.chart = cfg.chart ? JSON.parse(cfg.chart) : {data:[],options:{},type:""};
+		this.data = this.chart.data;
+		this.type = this.chart.type
 		this.height = cfg.height;
 		this.width = cfg.width;
 		this.title = cfg.title;
-		this.options = cfg.options ? JSON.parse(cfg.options) : {};
+		this.options = this.chart.options;
 		this.input = jQuery(this.jqId+"_hidden");
 		
 		google.load('visualization', '1.0', {

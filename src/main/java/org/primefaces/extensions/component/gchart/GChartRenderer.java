@@ -64,15 +64,8 @@ public class GChartRenderer extends CoreRenderer {
         ExtWidgetBuilder ewb = ExtWidgetBuilder.get(context);
 
 		ewb.init("GChart", widgetVar, clientId);
-		
-		GChartModel m = (GChartModel) chart.getValue();
-		
-		String data = extractDataFromModel(m);
-		String options = new JSONObject(m.getOptions()).toString();
-		
-		ewb.attr("data", this.escapeText(data));
-		ewb.attr("type", m != null ? m.getChartType().getChartName() : "");
-		ewb.attr("options", this.escapeText(options));
+
+		ewb.attr("chart", this.escapeText(((GChartModel) chart.getValue()).toJson()));
 		ewb.attr("title", chart.getTitle());
 		ewb.attr("width", chart.getWidth());
 		ewb.attr("height", chart.getHeight());
@@ -80,29 +73,5 @@ public class GChartRenderer extends CoreRenderer {
 		encodeClientBehaviors(context, chart);
 		
 		ewb.finish();
-	}
-
-	protected String extractDataFromModel(GChartModel m) {
-		
-		String data = new JSONArray().toString();
-		
-		if(m != null){
-			Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
-
-            dataTable.add((Collection<Object>)(Collection<?>)m.getColumns());
-			
-			for (GChartModelRow row : m.getRows()) {
-				Collection<Object> dataRow = new ArrayList<Object>(0);
-				dataRow.add(row.getLabel());
-				dataRow.addAll(row.getValues());
-				
-				dataTable.add(dataRow);
-			}
-			
-			data = new JSONArray(dataTable).toString();
-			
-		}
-		
-		return data;
 	}
 }

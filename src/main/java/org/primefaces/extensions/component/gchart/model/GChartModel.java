@@ -9,4 +9,5 @@ public interface GChartModel extends Serializable{
 	public abstract Collection<String> getColumns();
 	public abstract Map<String,Object> getOptions();
 	public abstract GChartType getChartType();
+    public abstract String toJson();
 }
