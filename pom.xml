@@ -95,6 +95,7 @@
                                 <include>fluidgrid/**</include>
                                 <include>qrcode/**</include>
                                 <include>analogclock/**</include>
+                                <include>knob/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
