@@ -15,10 +15,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.json.JSONArray;
-import org.primefaces.json.JSONException;
+import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.util.Constants;
 
 @ResourceDependencies({
@@ -117,13 +118,7 @@ public class GChart extends UIOutput implements Widget,ClientBehaviorHolder {
                 AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
                 String clientId = this.getClientId(context);
                 
-                Object value = params.get(clientId + "_hidden");
-                try {
-					value = new JSONArray(value.toString());
-				} catch (JSONException e) {
-					e.printStackTrace();
-					value = "";
-				}
+                Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(), JsonArray.class);
                 
                 SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(behaviorEvent.getPhaseId());
