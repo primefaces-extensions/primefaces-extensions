@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.el.ELContext;
+import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
@@ -13,6 +15,7 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.context.RequestContext;
 
 /**
  * <code>Knob</code> component
@@ -46,7 +49,8 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
         widgetVar,
         disabled,
         cursor,
-        thickness;
+        thickness,
+        colorTheme;
     }
 
     public Knob(){
@@ -177,7 +181,23 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
 		this.getStateHelper().put(PropertyKeys.foregroundColor, foregroundColor);
 	}
 
-	public Object getBackgroundColor() {
+    public String getColorTheme() {
+        return (String) getStateHelper().eval(PropertyKeys.colorTheme, getDefaultColorTheme());
+    }
+
+    private String getDefaultColorTheme() {
+        ELContext elContext = getFacesContext().getELContext();
+        ValueExpression defaultThemeVE = getFacesContext().getApplication().getExpressionFactory().createValueExpression(elContext, RequestContext.getCurrentInstance().getApplicationContext().getConfig().getTheme(), String.class);
+        String defaultTheme = (String) defaultThemeVE.getValue(elContext);
+        return defaultTheme;
+    }
+
+    public void setColorTheme(String colorScheme) {
+        getStateHelper().put(PropertyKeys.colorTheme, colorScheme);
+    }
+
+
+    public Object getBackgroundColor() {
 		return getStateHelper().eval(PropertyKeys.backgroundColor);
 	}
 

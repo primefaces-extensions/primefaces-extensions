@@ -4886,6 +4886,12 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Object</type>
         </attribute>
         <attribute>
+            <description><![CDATA[theme of the knob.]]></description>
+            <name>colorTheme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[Disables the input element, default is false.]]></description>
             <name>disabled</name>
             <required>false</required>

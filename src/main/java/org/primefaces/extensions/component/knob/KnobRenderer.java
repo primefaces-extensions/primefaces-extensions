@@ -53,26 +53,6 @@ public class KnobRenderer extends CoreRenderer {
 			writer.writeAttribute("data-thickness", knob.getThickness(), null);
 		}
 
-		if (knob.getForegroundColor() != null) {
-			String fg;
-			if (knob.getForegroundColor() instanceof Color) {
-				fg = ColorUtils.colorToHex((Color) knob.getForegroundColor());
-			} else {
-				fg = knob.getForegroundColor().toString();
-			}
-			writer.writeAttribute("data-fgColor", fg, null);
-		}
-
-		if (knob.getBackgroundColor() != null) {
-			String bg;
-			if (knob.getBackgroundColor() instanceof Color) {
-				bg = ColorUtils.colorToHex((Color) knob.getBackgroundColor());
-			} else {
-				bg = knob.getBackgroundColor().toString();
-			}
-			writer.writeAttribute("data-bgColor", bg, null);
-		}
-
 		if (knob.getWidth() != null) {
 			writer.writeAttribute("data-width", knob.getWidth().toString(), null);
 		}
@@ -89,17 +69,38 @@ public class KnobRenderer extends CoreRenderer {
 		writer.endElement("input");
 	}
 
-	private void encodeScript(FacesContext context, Knob component) throws IOException {
-		String clientId = component.getClientId();
-		String widgetVar = component.resolveWidgetVar();
+	private void encodeScript(FacesContext context, Knob knob) throws IOException {
+		String clientId = knob.getClientId();
+		String widgetVar = knob.resolveWidgetVar();
 
         ExtWidgetBuilder ewb = ExtWidgetBuilder.get(context);
 
 		ewb.initWithDomReady("Knob", widgetVar, clientId);
-		ewb.attr("labelTemplate", component.getLabelTemplate());
-		ewb.callback("onchange", "function(value)", component.getOnchange());
+		ewb.attr("labelTemplate", knob.getLabelTemplate());
+        ewb.attr("colorTheme", knob.getColorTheme());
+		ewb.callback("onchange", "function(value)", knob.getOnchange());
 
-		encodeClientBehaviors(context, component);
+        if (knob.getForegroundColor() != null) {
+            String fg;
+            if (knob.getForegroundColor() instanceof Color) {
+                fg = ColorUtils.colorToHex((Color) knob.getForegroundColor());
+            } else {
+                fg = knob.getForegroundColor().toString();
+            }
+            ewb.attr("fgColor",fg);
+        }
+
+        if (knob.getBackgroundColor() != null) {
+            String bg;
+            if (knob.getBackgroundColor() instanceof Color) {
+                bg = ColorUtils.colorToHex((Color) knob.getBackgroundColor());
+            } else {
+                bg = knob.getBackgroundColor().toString();
+            }
+            ewb.attr("bgColor",bg);
+        }
+
+		encodeClientBehaviors(context, knob);
 
 		ewb.finish();
 	}
