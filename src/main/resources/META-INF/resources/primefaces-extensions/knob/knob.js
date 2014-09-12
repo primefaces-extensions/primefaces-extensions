@@ -5,25 +5,38 @@
  */
 PrimeFacesExt.widget.Knob = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
-		
-		this._super(cfg);
+
+        var that = this;
+
+        this._super(cfg);
 
         this.sync = !(cfg.colorTheme || cfg.fgColor || cfg.bgColor);
-
         this.colorTheme = cfg.colorTheme;
-
 		this.input = jQuery(this.jqId+"_hidden");
-		var that = this;
+        this.min = parseInt(this.jq.data('min'),10);
+        this.max = parseInt(this.jq.data('max'),10);
+        this.step = parseInt(this.jq.data('step'),10);
 
-        if (this.sync) {
-            $(document)
-                .on(
-                "PrimeFacesExt.themeChanged",
-                function (event, theme) {
-                    that.colorTheme = theme;
-                    that.createKnob();
-                });
-        }
+        this.setValue = function(value){
+            this.input.val(value);
+            this.jq.val(value).trigger('change');
+        };
+
+        this.getValue = function(){
+            return parseInt(this.jq.val());
+        };
+
+        this.increment = function(){
+            var value = this.getValue() + this.step;
+            value = value <= this.max ? value : this.max;
+            this.setValue(value);
+        };
+
+        this.decrement = function(){
+            var value = this.getValue() - this.step;
+            value = value >= this.min ? value : this.min;
+            this.setValue(value);
+        };
 
         this.createKnob = function(){
             this.themeObject = PrimeFacesExt.widget.Knob.colorThemes[this.colorTheme || 'aristo'];
@@ -84,8 +97,17 @@ PrimeFacesExt.widget.Knob = PrimeFaces.widget.BaseWidget.extend({
             });
         }
 
-        this.createKnob();
+        if (this.sync) {
+            $(document)
+                .on(
+                "PrimeFacesExt.themeChanged",
+                function (event, theme) {
+                    that.colorTheme = theme;
+                    that.createKnob();
+                });
+        }
 
+        this.createKnob();
 
 	}
 });
