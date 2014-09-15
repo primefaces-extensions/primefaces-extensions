@@ -4932,5 +4932,164 @@ This global setting "editable" can be overwritten for individual events by setti
             <renderer-type>org.primefaces.extensions.component.CountdownRenderer</renderer-type>
             <handler-class>org.primefaces.extensions.component.countdown.CountdownHandler</handler-class>
         </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[set to true to hide the countdown. The listener will be fired anyway]]></description>
+            <name>visible</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Timeut in seconds to do the ajax ajax requests. Default is 10.]]></description>
+            <name>timeout</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Component(s) to be updated with ajax.]]></description>
+            <name>update</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[A method expression to invoke by polling.]]></description>
+            <name>listener</name>
+            <required>false</required>
+            <type>javax.el.MethodExpression</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value that determines the phaseId, when true actions are processed at apply_request_values, when false at invoke_application phase.]]></description>
+            <name>immediate</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute before ajax request is begins.]]></description>
+            <name>onstart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request is completed.]]></description>
+            <name>oncomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Component id(s) to process partially instead of whole view.]]></description>
+            <name>process</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request fails.]]></description>
+            <name>onerror</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when ajax request succeeds.]]></description>
+            <name>onsuccess</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default is true.]]></description>
+            <name>global</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If less than delay milliseconds elapses between calls to request() only the most recent one is sent and all other requests are discarded. The default value of this option is 300. If the value of delay is the literal string 'none' without the quotes, no delay is used.]]></description>
+            <name>delay</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The format to use when diplaying the value. Accepted values are: 'percentage' to diplay the remaining time as percentage. 'Human' to print a human readable interval. Any other value will be evaluated as a moment.js format]]></description>
+            <name>format</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[client-side function used to format the remaining duration]]></description>
+            <name>formatFunction</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[When set to true, ajax requests are not queued. Default is false.]]></description>
+            <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[In autoStart mode, the countdown will start immediatly. Default is true.]]></description>
+            <name>autoStart</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[set to true to false the countdown periodic. Default is true]]></description>
+            <name>singleRun</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[When enabled, only values related to partially processed components would be serialized for ajax
+            instead of whole form.]]></description>
+            <name>partialSubmit</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If true, indicate that this particular Ajax transaction is a value reset transaction. This will cause resetValue() to be called on any EditableValueHolder instances encountered as a result of this ajax transaction. If not specified, or the value is false, no such indication is made.]]></description>
+            <name>resetValues</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[If true, components which autoUpdate="true" will not be updated for this request. If not specified, or the value is false, no such indication is made.]]></description>
+            <name>ignoreAutoUpdate</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler executed every second]]>
+            </description>
+            <name>ontimerstep</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler executed the timeout stops]]>
+            </description>
+            <name>ontimercomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 </facelet-taglib>
