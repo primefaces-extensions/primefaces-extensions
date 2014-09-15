@@ -4922,4 +4922,15 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <description>
+            <![CDATA[Countdown]]>
+        </description>
+        <tag-name>countdown</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Countdown</component-type>
+            <renderer-type>org.primefaces.extensions.component.CountdownRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.countdown.CountdownHandler</handler-class>
+        </component>
+    </tag>
 </facelet-taglib>

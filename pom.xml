@@ -96,6 +96,7 @@
                                 <include>qrcode/**</include>
                                 <include>analogclock/**</include>
                                 <include>knob/**</include>
+                                <include>countdown/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

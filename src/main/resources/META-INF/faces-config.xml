@@ -174,6 +174,10 @@
         <component-type>org.primefaces.extensions.component.Knob</component-type>
         <component-class>org.primefaces.extensions.component.knob.Knob</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.Countdown</component-type>
+        <component-class>org.primefaces.extensions.component.countdown.Countdown</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -329,6 +333,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.KnobRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.knob.KnobRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.CountdownRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.countdown.CountdownRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
