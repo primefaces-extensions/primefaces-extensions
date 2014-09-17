@@ -101,7 +101,7 @@ public class CountdownRenderer extends CoreRenderer {
                 callback("listener","function()",request);
 
         if(StringUtils.isNotEmpty(countdown.getOntimerstep())){
-            ewb.callback("onTimerStep","function(current,total)",countdown.getOntimerstep());
+            ewb.callback("ontimerstep","function(intervalData)",countdown.getOntimerstep());
         }
 
         if(StringUtils.isNotEmpty(countdown.getFormatFunction())){
@@ -109,7 +109,7 @@ public class CountdownRenderer extends CoreRenderer {
         }
 
         if(StringUtils.isNotEmpty(countdown.getOntimercomplete())){
-            ewb.callback("onTimerComplete","function()",countdown.getOntimerstep());
+            ewb.callback("ontimercomplete","function()",countdown.getOntimercomplete());
         }
 
         ewb.finish();
