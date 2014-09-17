@@ -17,7 +17,7 @@ PrimeFacesExt.widget.Countdown = PrimeFaces.widget.BaseWidget.extend({
 
         this.print();
 
-	},
+    },
     print:function(){
 
         var value = this.currentTimeout;
@@ -49,30 +49,37 @@ PrimeFacesExt.widget.Countdown = PrimeFaces.widget.BaseWidget.extend({
             });
         }
     },
-	start : function() {
+    start : function() {
 
         var that = this;
 
-        that.interval = setInterval(function(){
-            that.doStep();
-            if(that.currentTimeout <= 0){
-                if(that.cfg.listener){
-                    that.cfg.listener();
+        if(!this.interval){
+            this.interval = setInterval(function(){
+                that.doStep();
+                if(that.currentTimeout <= 0){
+                    if(that.cfg.listener){
+                        that.cfg.listener();
+                    }
+                    if(that.cfg.ontimercomplete){
+                        that.cfg.ontimercomplete();
+                    }
+                    if(that.cfg.singleRun){
+                        clearInterval(that.interval);
+                        this.interval = null;
+                    }else{
+                        that.currentTimeout = that.originalTimeout;
+                        that.print();
+                    }
                 }
-                if(that.cfg.ontimercomplete){
-                    that.cfg.ontimercomplete();
-                }
-                if(that.cfg.singleRun){
-                    clearInterval(that.interval);
-                }else{
-                    that.currentTimeout = that.originalTimeout;
-                    that.print();
-                }
-            }
-        }, 1000);
-	},
+            }, 1000);
+        }
+
+    },
     pause: function(){
-        clearInterval(this.interval);
+        if(this.interval){
+            clearInterval(this.interval);
+            this.interval = null;
+        }
     },
     stop: function(silent){
         if(!silent && this.cfg.listener){
@@ -83,10 +90,16 @@ PrimeFacesExt.widget.Countdown = PrimeFaces.widget.BaseWidget.extend({
         }
         if(this.interval){
             clearInterval(this.interval);
+            this.interval = null;
         }
 
         this.currentTimeout = this.originalTimeout;
+        this.print();
 
+    },
+    restart:function(silent){
+        this.stop(silent);
+        this.start();
     }
 
 });
