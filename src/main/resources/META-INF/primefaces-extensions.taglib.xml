@@ -4868,8 +4868,14 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Float</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Widht of the component]]></description>
+            <description><![CDATA[Width of the component]]></description>
             <name>width</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Height of the component]]></description>
+            <name>height</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
