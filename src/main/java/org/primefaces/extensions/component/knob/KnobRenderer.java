@@ -56,6 +56,10 @@ public class KnobRenderer extends CoreRenderer {
 		if (knob.getWidth() != null) {
 			writer.writeAttribute("data-width", knob.getWidth().toString(), null);
 		}
+		
+		if (knob.getHeight() != null) {
+			writer.writeAttribute("data-height", knob.getHeight().toString(), null);
+		}
 
 		writer.writeAttribute("class", "knob", null);
 

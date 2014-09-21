@@ -42,6 +42,7 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
         showLabel,
         labelTemplate,
         onchange,
+        height,
         width,
         step,
         min,
@@ -113,6 +114,14 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
 
 	public void setStep(int step) {
 		this.getStateHelper().put(PropertyKeys.step, step);
+	}
+	
+	public Object getHeight() {
+		return this.getStateHelper().eval(PropertyKeys.height);
+	}
+	
+	public void setHeight(Object height) {
+		this.getStateHelper().put(PropertyKeys.height, height);
 	}
 
 	public Object getWidth() {
