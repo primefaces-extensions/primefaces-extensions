@@ -1,312 +1,312 @@
 [ach]
-@import url(ach.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ach.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [af]
-@import url(af.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(af.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ak]
-@import url(ak.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ak.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [an]
-@import url(an.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(an.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ar]
-@import url(ar.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ar.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [as]
-@import url(as.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(as.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ast]
-@import url(ast.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ast.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [az]
-@import url(az.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(az.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [be]
-@import url(be.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(be.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [bg]
-@import url(bg.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(bg.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [bn-BD]
-@import url(bn-BD.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(bn-BD.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [bn-IN]
-@import url(bn-IN.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(bn-IN.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [br]
-@import url(br.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(br.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [bs]
-@import url(bs.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(bs.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ca]
-@import url(ca.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ca.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [cs]
-@import url(cs.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(cs.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [csb]
-@import url(csb.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(csb.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [cy]
-@import url(cy.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(cy.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [da]
-@import url(da.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(da.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [de]
-@import url(de.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(de.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [el]
-@import url(el.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(el.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [en-GB]
-@import url(en-GB.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(en-GB.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [en-US]
-@import url(en-US.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(en-US.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [en-ZA]
-@import url(en-ZA.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(en-ZA.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [eo]
-@import url(eo.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(eo.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [es-AR]
-@import url(es-AR.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(es-AR.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [es-CL]
-@import url(es-CL.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(es-CL.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [es-ES]
-@import url(es-ES.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(es-ES.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [es-MX]
-@import url(es-MX.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(es-MX.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [et]
-@import url(et.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(et.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [eu]
-@import url(eu.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(eu.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [fa]
-@import url(fa.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(fa.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ff]
-@import url(ff.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ff.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [fi]
-@import url(fi.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(fi.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [fr]
-@import url(fr.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(fr.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [fy-NL]
-@import url(fy-NL.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(fy-NL.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ga-IE]
-@import url(ga-IE.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ga-IE.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [gd]
-@import url(gd.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(gd.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [gl]
-@import url(gl.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(gl.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [gu-IN]
-@import url(gu-IN.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(gu-IN.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [he]
-@import url(he.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(he.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [hi-IN]
-@import url(hi-IN.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(hi-IN.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [hr]
-@import url(hr.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(hr.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [hu]
-@import url(hu.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(hu.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [hy-AM]
-@import url(hy-AM.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(hy-AM.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [id]
-@import url(id.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(id.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [is]
-@import url(is.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(is.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [it]
-@import url(it.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(it.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ja]
-@import url(ja.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ja.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ka]
-@import url(ka.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ka.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [kk]
-@import url(kk.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(kk.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [km]
-@import url(km.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(km.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [kn]
-@import url(kn.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(kn.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ko]
-@import url(ko.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ko.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ku]
-@import url(ku.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ku.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [lg]
-@import url(lg.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(lg.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [lij]
-@import url(lij.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(lij.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [lt]
-@import url(lt.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(lt.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [lv]
-@import url(lv.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(lv.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [mai]
-@import url(mai.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(mai.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [mk]
-@import url(mk.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(mk.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ml]
-@import url(ml.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ml.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [mn]
-@import url(mn.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(mn.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [mr]
-@import url(mr.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(mr.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ms]
-@import url(ms.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ms.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [my]
-@import url(my.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(my.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [nb-NO]
-@import url(nb-NO.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(nb-NO.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [nl]
-@import url(nl.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(nl.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [nn-NO]
-@import url(nn-NO.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(nn-NO.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [nso]
-@import url(nso.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(nso.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [oc]
-@import url(oc.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(oc.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [or]
-@import url(or.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(or.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [pa-IN]
-@import url(pa-IN.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(pa-IN.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [pl]
-@import url(pl.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(pl.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [pt-BR]
-@import url(pt-BR.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(pt-BR.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [pt-PT]
-@import url(pt-PT.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(pt-PT.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [rm]
-@import url(rm.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(rm.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ro]
-@import url(ro.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ro.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ru]
-@import url(ru.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ru.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [rw]
-@import url(rw.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(rw.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sah]
-@import url(sah.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sah.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [si]
-@import url(si.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(si.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sk]
-@import url(sk.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sk.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sl]
-@import url(sl.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sl.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [son]
-@import url(son.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(son.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sq]
-@import url(sq.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sq.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sr]
-@import url(sr.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sr.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sv-SE]
-@import url(sv-SE.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sv-SE.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [sw]
-@import url(sw.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(sw.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ta]
-@import url(ta.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ta.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ta-LK]
-@import url(ta-LK.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ta-LK.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [te]
-@import url(te.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(te.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [th]
-@import url(th.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(th.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [tl]
-@import url(tl.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(tl.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [tn]
-@import url(tn.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(tn.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [tr]
-@import url(tr.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(tr.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [uk]
-@import url(uk.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(uk.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [ur]
-@import url(ur.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(ur.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [vi]
-@import url(vi.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(vi.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [wo]
-@import url(wo.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(wo.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [xh]
-@import url(xh.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(xh.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [zh-CN]
-@import url(zh-CN.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(zh-CN.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [zh-TW]
-@import url(zh-TW.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(zh-TW.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
 [zu]
-@import url(zu.locale.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
+@import url(zu.locale.txt.jsf?ln=primefaces-extensions-uncompressed&v=${project.version})
 
