@@ -8,8 +8,9 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
     init : function(cfg) {
         this._super(cfg);
         this.cfg = cfg;
+        this.forward = cfg.forward;
         this.originalTimeout = cfg.timeout;
-        this.currentTimeout = cfg.timeout;
+        this.currentTimeout = this.forward ? 0 : cfg.timeout;
 
         if(cfg.autoStart){
             this.start();
@@ -40,7 +41,7 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
         this.jq.html(value);
     },
     doStep: function(){
-        this.currentTimeout--;
+        this.currentTimeout += this.forward ? 1 : -1;
         this.print();
         if(this.cfg.ontimerstep){
             this.cfg.ontimerstep({
@@ -52,11 +53,15 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
     start : function() {
 
         var that = this;
+        var end;
 
         if(!this.interval){
             this.interval = setInterval(function(){
                 that.doStep();
-                if(that.currentTimeout <= 0){
+
+                end = that.forward ? that.currentTimeout >= that.originalTimeout : that.currentTimeout <= 0;
+
+                if(end){
                     if(that.cfg.listener){
                         that.cfg.listener();
                     }
@@ -67,7 +72,7 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
                         clearInterval(that.interval);
                         this.interval = null;
                     }else{
-                        that.currentTimeout = that.originalTimeout;
+                        that.currentTimeout = that.forward ? 0 : that.originalTimeout;
                         that.print();
                     }
                 }
@@ -93,7 +98,7 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
             this.interval = null;
         }
 
-        this.currentTimeout = this.originalTimeout;
+        this.currentTimeout = this.forward ? 0 : this.originalTimeout;
         this.print();
 
     },

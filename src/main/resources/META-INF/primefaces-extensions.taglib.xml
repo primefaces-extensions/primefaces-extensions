@@ -5059,6 +5059,12 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Use this attribute to set the timer direction. Default value is false (backward)]]></description>
+            <name>forward</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[set to true to false the timer periodic. Default is true]]></description>
             <name>singleRun</name>
             <required>false</required>

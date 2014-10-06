@@ -96,6 +96,7 @@ public class TimerRenderer extends CoreRenderer {
                 attr("singleRun", timer.isSingleRun()).
                 attr("format", timer.getFormat()).
                 attr("autoStart", timer.isAutoStart()).
+                attr("forward", timer.isForward()).
                 callback("listener","function()",request);
 
         if(StringUtils.isNotEmpty(timer.getOntimerstep())){

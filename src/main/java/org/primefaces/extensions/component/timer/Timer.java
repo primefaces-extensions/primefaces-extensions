@@ -56,6 +56,7 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         ,styleClass
         ,ignoreAutoUpdate
         ,visible
+        ,forward
         ,formatFunction;
 
         String toString;
@@ -268,6 +269,14 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         getStateHelper().put(PropertyKeys.visible, _visible);
     }
 
+    public boolean isForward() {
+        return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.forward, false);
+    }
+    public void setForward(boolean _forward) {
+        getStateHelper().put(PropertyKeys.forward, _forward);
+    }
+
+
     public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
         super.broadcast(event); //backward compatibility
 
@@ -278,7 +287,6 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
             me.invoke(facesContext.getELContext(), new Object[] {});
         }
     }
-
 
     public String resolveWidgetVar() {
         FacesContext context = getFacesContext();
