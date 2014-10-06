@@ -1,26 +1,18 @@
-package org.primefaces.extensions.component.countdown;
+package org.primefaces.extensions.component.timer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
-import org.primefaces.component.clock.ClockRenderer;
-import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.commandbutton.CommandButtonRenderer;
-import org.primefaces.component.panel.Panel;
-import org.primefaces.component.poll.Poll;
-import org.primefaces.context.RequestContext;
 
 import javax.el.MethodExpression;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 
 /**
- * Countdown component
+ * Timer component
  * @author f.strazzullo
  */
 @ResourceDependencies({
@@ -28,14 +20,14 @@ import javax.faces.context.FacesContext;
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
         @ResourceDependency(library = "primefaces", name = "primefaces.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "countdown/countdown.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "countdown/countdown.js")
+        @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.js")
 })
-public class Countdown extends UIComponentBase implements Widget,AjaxSource{
+public class Timer extends UIComponentBase implements Widget,AjaxSource{
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Countdown";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timer";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String STYLE_CLASS = "ui-countdown ui-widget ui-widget-header ui-corner-all";
+    public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
     private static final int DEFAULT_TIMEOUT = 10;
 
     protected enum PropertyKeys {
@@ -79,8 +71,8 @@ public class Countdown extends UIComponentBase implements Widget,AjaxSource{
         }
     }
 
-    public Countdown(){
-        setRendererType(CountdownRenderer.RENDERER_TYPE);
+    public Timer(){
+        setRendererType(TimerRenderer.RENDERER_TYPE);
     }
 
     @Override

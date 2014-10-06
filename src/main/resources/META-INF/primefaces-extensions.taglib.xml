@@ -4930,13 +4930,13 @@ This global setting "editable" can be overwritten for individual events by setti
     </tag>
     <tag>
         <description>
-            <![CDATA[Countdown]]>
+            <![CDATA[Timer Component]]>
         </description>
-        <tag-name>countdown</tag-name>
+        <tag-name>timer</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.Countdown</component-type>
-            <renderer-type>org.primefaces.extensions.component.CountdownRenderer</renderer-type>
-            <handler-class>org.primefaces.extensions.component.countdown.CountdownHandler</handler-class>
+            <component-type>org.primefaces.extensions.component.Timer</component-type>
+            <renderer-type>org.primefaces.extensions.component.TimerRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.timer.TimerHandler</handler-class>
         </component>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
@@ -4951,7 +4951,7 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[set to true to hide the countdown. The listener will be fired anyway]]></description>
+            <description><![CDATA[set to true to hide the timer. The listener will be fired anyway]]></description>
             <name>visible</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
@@ -5053,13 +5053,13 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[In autoStart mode, the countdown will start immediatly. Default is true.]]></description>
+            <description><![CDATA[In autoStart mode, the timer will start immediatly. Default is true.]]></description>
             <name>autoStart</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[set to true to false the countdown periodic. Default is true]]></description>
+            <description><![CDATA[set to true to false the timer periodic. Default is true]]></description>
             <name>singleRun</name>
             <required>false</required>
             <type>java.lang.Boolean</type>

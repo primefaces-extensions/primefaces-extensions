@@ -1,4 +1,4 @@
-package org.primefaces.extensions.component.countdown;
+package org.primefaces.extensions.component.timer;
 
 import org.primefaces.facelets.MethodRule;
 
@@ -8,13 +8,13 @@ import javax.faces.view.facelets.MetaRule;
 import javax.faces.view.facelets.MetaRuleset;
 
 /**
- * Handler for {@link org.primefaces.extensions.component.countdown.Countdown}
+ * Handler for {@link Timer}
  */
-public class CountdownHandler extends ComponentHandler {
+public class TimerHandler extends ComponentHandler {
 
 	private static final MetaRule LISTENER = new MethodRule("listener", null, new Class[0]);
 	
-	public CountdownHandler(ComponentConfig config) {
+	public TimerHandler(ComponentConfig config) {
 		super(config);
 	}
 

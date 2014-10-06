@@ -1,9 +1,9 @@
 /**
- * Primefaces Extension Countdown Widget
+ * Primefaces Extension Timer Widget
  *
  * @author f.strazzullo
  */
-PrimeFacesExt.widget.Countdown = PrimeFaces.widget.BaseWidget.extend({
+PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
 
     init : function(cfg) {
         this._super(cfg);

@@ -175,8 +175,8 @@
         <component-class>org.primefaces.extensions.component.knob.Knob</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Countdown</component-type>
-        <component-class>org.primefaces.extensions.component.countdown.Countdown</component-class>
+        <component-type>org.primefaces.extensions.component.Timer</component-type>
+        <component-class>org.primefaces.extensions.component.timer.Timer</component-class>
     </component>
 
     <converter>
@@ -336,8 +336,8 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.CountdownRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.countdown.CountdownRenderer</renderer-class>
+            <renderer-type>org.primefaces.extensions.component.TimerRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.timer.TimerRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
