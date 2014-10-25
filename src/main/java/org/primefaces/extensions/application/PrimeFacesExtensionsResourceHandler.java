@@ -55,42 +55,43 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
     @Override
     public Resource createResource(final String resourceName, final String libraryName) {
-        Resource resource = super.createResource(resourceName, libraryName);
-        return wrapIfNecessary(resource, resourceName, libraryName);
-    }
-
-    public Resource createResource(String resourceName, String libraryName, String contentType) {
-        Resource resource = super.createResource(resourceName, libraryName, contentType);
-        return wrapIfNecessary(resource, resourceName, libraryName);
-    }
-
-    protected Resource wrapIfNecessary(Resource resource, final String resourceName, final String libraryName) {
-        if (resource == null || libraryName == null || !libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
-            return resource;
-        }
-
-        // handle PrimeFaces Extensions resources
-        Resource wrappedResource;
-        final FacesContext context = FacesContext.getCurrentInstance();
-        if (deliverUncompressedFile(resourceName, ConfigProvider.getConfig(context), context)) {
-            // get uncompressed resource if the project stage == development
-            wrappedResource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
-            if (wrappedResource != null) {
-                wrappedResource = new PrimeFacesExtensionsResource(wrappedResource);
+        if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
+            Resource resource;
+            FacesContext context = FacesContext.getCurrentInstance();
+            if (deliverUncompressedFile(resourceName, ConfigProvider.getConfig(context), context)) {
+                // get uncompressed resource if the project stage == development
+                resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+            } else {
+                resource = super.createResource(resourceName, libraryName);
             }
-        } else {
-            wrappedResource = new PrimeFacesExtensionsResource(resource);
+
+            return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
         }
 
-        return wrappedResource;
+        return super.createResource(resourceName, libraryName);
+    }
+
+    @Override
+    public Resource createResource(String resourceName, String libraryName, String contentType) {
+        if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
+            Resource resource;
+            FacesContext context = FacesContext.getCurrentInstance();
+            if (deliverUncompressedFile(resourceName, ConfigProvider.getConfig(context), context)) {
+                // get uncompressed resource if the project stage == development
+                resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED, contentType);
+            } else {
+                resource = super.createResource(resourceName, libraryName, contentType);
+            }
+
+            return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
+        }
+
+        return super.createResource(resourceName, libraryName, contentType);
     }
 
     protected boolean deliverUncompressedFile(final String resourceName,
                                               final ConfigContainer config, final FacesContext context) {
-
-        if (config.isDeliverUncompressedResources()
-                && context.isProjectStage(ProjectStage.Development)) {
-
+        if (config.isDeliverUncompressedResources() && context.isProjectStage(ProjectStage.Development)) {
             if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
                 for (final String exclude : UNCOMPRESSED_EXCLUDES) {
                     if (resourceName.contains(exclude)) {
