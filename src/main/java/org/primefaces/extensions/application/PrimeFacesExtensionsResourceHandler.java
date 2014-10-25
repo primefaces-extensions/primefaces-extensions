@@ -18,15 +18,15 @@
 
 package org.primefaces.extensions.application;
 
+import org.primefaces.extensions.config.ConfigContainer;
+import org.primefaces.extensions.config.ConfigProvider;
+import org.primefaces.extensions.util.Constants;
+
 import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.extensions.config.ConfigContainer;
-import org.primefaces.extensions.config.ConfigProvider;
-import org.primefaces.extensions.util.Constants;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
@@ -38,64 +38,70 @@ import org.primefaces.extensions.util.Constants;
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
-	public static final String[] UNCOMPRESSED_EXCLUDES = new String[] { "ckeditor/" };
+    public static final String[] UNCOMPRESSED_EXCLUDES = new String[]{"ckeditor/"};
 
-	private final ResourceHandler wrapped;
+    private final ResourceHandler wrapped;
 
-	public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
-		super();
+    public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
+        super();
 
-		wrapped = resourceHandler;
-	}
+        wrapped = resourceHandler;
+    }
 
-	@Override
-	public ResourceHandler getWrapped() {
-		return wrapped;
-	}
+    @Override
+    public ResourceHandler getWrapped() {
+        return wrapped;
+    }
 
-	@Override
-	public Resource createResource(final String resourceName, final String libraryName) {
-		Resource resource = super.createResource(resourceName, libraryName);
+    @Override
+    public Resource createResource(final String resourceName, final String libraryName) {
+        Resource resource = super.createResource(resourceName, libraryName);
+        return wrapIfNecessary(resource, resourceName, libraryName);
+    }
 
-		if (resource != null && libraryName != null) {
+    public Resource createResource(String resourceName, String libraryName, String contentType) {
+        Resource resource = super.createResource(resourceName, libraryName, contentType);
+        return wrapIfNecessary(resource, resourceName, libraryName);
+    }
 
-			final FacesContext context = FacesContext.getCurrentInstance();
-			final ConfigContainer config = ConfigProvider.getConfig(context);
+    protected Resource wrapIfNecessary(Resource resource, final String resourceName, final String libraryName) {
+        if (resource == null || libraryName == null || !libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+            return resource;
+        }
 
-			if (libraryName.equalsIgnoreCase(Constants.LIBRARY)) {
+        // handle PrimeFaces Extensions resources
+        Resource wrappedResource;
+        final FacesContext context = FacesContext.getCurrentInstance();
+        if (deliverUncompressedFile(resourceName, ConfigProvider.getConfig(context), context)) {
+            // get uncompressed resource if the project stage == development
+            wrappedResource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
+            if (wrappedResource != null) {
+                wrappedResource = new PrimeFacesExtensionsResource(wrappedResource);
+            }
+        } else {
+            wrappedResource = new PrimeFacesExtensionsResource(resource);
+        }
 
-				//Handle PrimeFaces Extensions resources
-				if (deliverUncompressedFile(resourceName, config, context)) {
-					//get uncompressed resource if project stage == development
-					resource = super.createResource(resourceName, Constants.LIBRARY_UNCOMPRESSED);
-				}
+        return wrappedResource;
+    }
 
-				if (resource != null) {
-					resource = new PrimeFacesExtensionsResource(resource);
-				}
-			}
-		}
+    protected boolean deliverUncompressedFile(final String resourceName,
+                                              final ConfigContainer config, final FacesContext context) {
 
-		return resource;
-	}
+        if (config.isDeliverUncompressedResources()
+                && context.isProjectStage(ProjectStage.Development)) {
 
-	protected boolean deliverUncompressedFile(final String resourceName,
-			final ConfigContainer config, final FacesContext context) {
+            if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
+                for (final String exclude : UNCOMPRESSED_EXCLUDES) {
+                    if (resourceName.contains(exclude)) {
+                        return false;
+                    }
+                }
 
-		if (config.isDeliverUncompressedResources()
-				&& context.isProjectStage(ProjectStage.Development)) {
+                return config.isDeliverUncompressedResources();
+            }
+        }
 
-			if (resourceName.endsWith(Constants.EXTENSION_CSS) || resourceName.endsWith(Constants.EXTENSION_JS)) {
-				for (final String exclude : UNCOMPRESSED_EXCLUDES) {
-					if (resourceName.contains(exclude)) {
-						return false;
-					}
-				}
-
-				return config.isDeliverUncompressedResources();
-			}
-		}
-
-		return false;
-	}
+        return false;
+    }
 }
