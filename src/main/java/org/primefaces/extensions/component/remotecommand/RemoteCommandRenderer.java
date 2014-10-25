@@ -113,13 +113,14 @@ public class RemoteCommandRenderer extends CoreRenderer {
 			.async(source.isAsync())
 			.global(source.isGlobal())
 			.partialSubmit(source.isPartialSubmit(), command.isPartialSubmitSet())
-            .resetValues(source.isResetValues(), source.isResetValuesSet())
-            .ignoreAutoUpdate(source.isIgnoreAutoUpdate())
+                        .resetValues(source.isResetValues(), source.isResetValuesSet())
+                        .ignoreAutoUpdate(source.isIgnoreAutoUpdate())
 			.onstart(source.getOnstart())
 			.onerror(source.getOnerror())
 			.onsuccess(source.getOnsuccess())
 			.oncomplete(source.getOncomplete())
-            .delay(source.getDelay());
+                        .delay(source.getDelay())
+                        .timeout(source.getTimeout());
 
 		builder.params(clientId, parameters);
 

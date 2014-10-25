@@ -240,7 +240,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 
                 
 
-		String iconClass = HTML.CHECKBOX_ICON_CLASS;
+		String iconClass = "ui-chkbox-icon ui-c"; //HTML.CHECKBOX_ICON_CLASS;
                 String activeTitle = "";
 		if (valCheck == 0) {
 			iconClass = iconClass + " " + stateOneIconClass;

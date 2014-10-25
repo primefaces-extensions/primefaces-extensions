@@ -82,7 +82,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		actionListener,
 		resetValues,
 		ignoreAutoUpdate,
-        delay;
+                delay,
+                timeout;
 
 		private String toString;
 
@@ -224,9 +225,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		getStateHelper().put(PropertyKeys.ignoreAutoUpdate, ignoreAutoUpdate);
 	}
 
-    public boolean isResetValuesSet() {
-        return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
-    }
+        public boolean isResetValuesSet() {
+            return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
+        }
 
 	public java.lang.String getDelay() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.delay, null);
@@ -234,6 +235,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public void setDelay(java.lang.String delay) {
 		getStateHelper().put(PropertyKeys.delay, delay);
+	}
+        
+	public int getTimeout() {
+		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
+	}
+
+	public void setTimeout(int timeout) {
+		getStateHelper().put(PropertyKeys.timeout, timeout);
 	}
     
 	@Override

@@ -113,7 +113,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
 				return context.getExternalContext().encodeResourceURL(requestPath);
 			}
 		} else {
-			return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer,documentViewer.isCache());
+			return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer,documentViewer.isCache(), "sc");
 		}
 	}
 }
