@@ -31,10 +31,10 @@ public class GChartRenderer extends CoreRenderer {
 	
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-		GChart analogClock = (GChart) component;
+		GChart gChart = (GChart) component;
 
-		encodeMarkup(context, analogClock);
-		encodeScript(context, analogClock);
+		encodeMarkup(context, gChart);
+		encodeScript(context, gChart);
 	}
 
 	protected void encodeMarkup(FacesContext context, GChart chart)	throws IOException {
