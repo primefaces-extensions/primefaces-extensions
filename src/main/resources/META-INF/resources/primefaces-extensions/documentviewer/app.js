@@ -547,7 +547,7 @@ if (typeof PDFJS === 'undefined') {
       return;
     }
   } catch (e) { }
-  window.localStorage = {
+  window['localStorage'] = {
     data: Object.create(null),
     getItem: function (key) {
       return this.data[key];
@@ -4925,7 +4925,7 @@ var Annotation = (function AnnotationClosure() {
 
     var params = {
       dict: dict,
-      ref: ref,
+      ref: ref
     };
 
     var annotation = new Constructor(params);

@@ -5,6 +5,11 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIGraphic;
 
+@ResourceDependencies({
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class DocumentViewer extends UIGraphic {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DocumentViewer";
