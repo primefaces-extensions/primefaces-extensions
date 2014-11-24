@@ -771,7 +771,8 @@ document.webL10n = (function(window, document, undefined) {
             }
             if (reImport.test(line)) { // @import rule?
               match = reImport.exec(line);
-              loadImport(baseURL + match[1]); // load the resource synchronously
+              var url = window.parent.PrimeFacesExt.getFacesResource('/documentviewer/locale/' + match[1],'primefaces-extensions-uncompressed','${project.version}');
+              loadImport(url); // load the resource synchronously
             }
           }
 
@@ -785,6 +786,7 @@ document.webL10n = (function(window, document, undefined) {
 
       // import another *.properties file
       function loadImport(url) {
+        console.log('loading url ' + url);
         xhrLoadText(url, function(content) {
           parseRawLines(content, false); // don't allow recursive imports
         }, null, false); // load synchronously
