@@ -3686,9 +3686,9 @@ This global setting "editable" can be overwritten for individual events by setti
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines if the input is readOnly.]]>
+            <description><![CDATA[Defines if the input is readonly.]]>
             </description>
-            <name>readOnly</name>
+            <name>readonly</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
