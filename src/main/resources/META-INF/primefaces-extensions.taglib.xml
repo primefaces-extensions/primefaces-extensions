@@ -201,9 +201,9 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Defines if the editor is readOnly.]]>
+            <description><![CDATA[Defines if the editor is readonly.]]>
             </description>
-            <name>readOnly</name>
+            <name>readonly</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
