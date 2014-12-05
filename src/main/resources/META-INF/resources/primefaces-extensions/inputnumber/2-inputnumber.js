@@ -31,21 +31,14 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.skinInput(this.inputExternal);
         
         //copy to hidden input the cleaned value
-        this.inputExternal.on('keyup', function(event) { 
-            //filter keys
-            var keyCode = event.keyCode;
-            if (keyCode == 8 || keyCode == 13 || keyCode == 32
-                || ( keyCode >= 46 && keyCode <= 90)
-                || ( keyCode >= 96 && keyCode <= 111)
-                || ( keyCode >= 186 && keyCode <= 222)) {
-                cleanVal = $this.inputExternal.autoNumeric('get');
-                if(cleanVal != ""){
-                    $this.inputInternal.attr('value', cleanVal);   
-                }else{
-                    $this.inputInternal.removeAttr('value');
-                }			
+        this.inputExternal.on('change', function(event) {
+            cleanVal = $this.inputExternal.autoNumeric('get');
+            if(cleanVal != ""){
+                $this.inputInternal.attr('value', cleanVal);
+            }else{
+                $this.inputInternal.removeAttr('value');
             }
-        })
+        });
                 
         this.inputExternal.autoNumeric('init', this.plugOptArray);
                        
