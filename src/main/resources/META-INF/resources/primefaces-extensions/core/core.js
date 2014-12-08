@@ -43,7 +43,7 @@ PrimeFacesExt = {
 		}
 
 		var extractedVersion = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
-		if (version) {
+		if (version && version.length > 0) {
 			scriptURI = scriptURI.replace('v=' + extractedVersion, 'v=' + version);
 		} else {
 			scriptURI = scriptURI.replace('v=' + extractedVersion, '');
@@ -61,7 +61,13 @@ PrimeFacesExt = {
 	getPrimeFacesExtensionsVersion : function() {
 		if (!PrimeFacesExt.VERSION) {
 			var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
-			PrimeFacesExt.VERSION = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
+			var result = RegExp('[?&]v=([^&]*)').exec(scriptURI);
+			if (result && result.length > 0) {
+				PrimeFacesExt.VERSION = result[1];
+			}
+			else {
+				PrimeFacesExt.VERSION = '';
+			}
 		}
 
 		return PrimeFacesExt.VERSION;
