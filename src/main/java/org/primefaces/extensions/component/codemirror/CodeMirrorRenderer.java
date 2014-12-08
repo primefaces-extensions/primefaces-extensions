@@ -15,234 +15,190 @@
  *
  * $Id$
  */
-package org.primefaces.extensions.component.inputnumber;
+package org.primefaces.extensions.component.codemirror;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
+import javax.faces.event.PhaseId;
 
-import org.primefaces.component.inputtext.InputText;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.event.CompleteEvent;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 
 /**
- * InputNumberRenderer
+ * Renderer for the {@link CodeMirror} component.
  *
- * @author Mauricio Fenoglio / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since 0.3
  */
-public class InputNumberRenderer extends InputRenderer {
+public class CodeMirrorRenderer extends InputRenderer {
 
     @Override
-    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue)
-            throws ConverterException {
+    public void decode(final FacesContext facesContext, final UIComponent component) {
+        final CodeMirror codeMirror = (CodeMirror) component;
 
-        String submittedValueString = (String) submittedValue;
-
-        if (ComponentUtils.isValueBlank(submittedValueString)) {
-            return null;
-        }
-
-        Converter converter = ComponentUtils.getConverter(context, component);
-        if (converter != null) {
-            return converter.getAsObject(context, component, submittedValueString);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        InputNumber inputNumber = (InputNumber) component;
-
-        if (inputNumber.isDisabled() || inputNumber.isReadonly()) {
+        if (codeMirror.isReadOnly()) {
             return;
         }
 
-        decodeBehaviors(context, inputNumber);
-
-        String inputId = inputNumber.getClientId(context) + "_hinput";
-        String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
-
-        if (submittedValue != null) {
-            inputNumber.setSubmittedValue(submittedValue);
+        // set value
+        final String clientId = codeMirror.getClientId(facesContext);
+        final Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
+        if (params.containsKey(clientId)) {
+            codeMirror.setSubmittedValue(params.get(clientId));
         }
 
+        // decode behaviors
+        decodeBehaviors(facesContext, component);
+
+        // complete event
+        final String token = params.get(clientId + "_token");
+        if (token != null) {
+            final String context = params.get(clientId + "_context");
+            final int line = Integer.parseInt(params.get(clientId + "_line"));
+            final int column = Integer.parseInt(params.get(clientId + "_column"));
+
+            final CompleteEvent autoCompleteEvent = new CompleteEvent(
+                    codeMirror, token, context, line, column);
+            autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
+            codeMirror.queueEvent(autoCompleteEvent);
+        }
     }
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        InputNumber inputNumber = (InputNumber) component;
-        encodeMarkup(context, inputNumber);
-        encodeScript(context, inputNumber);
+        final CodeMirror codeMirror = (CodeMirror) component;
+
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String token = params.get(codeMirror.getClientId(context) + "_token");
+
+        if (token != null) {
+            encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
+        } else {
+            encodeMarkup(context, codeMirror);
+            encodeScript(context, codeMirror);
+        }
     }
 
-    protected void encodeMarkup(final FacesContext context, final InputNumber inputNumber) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = inputNumber.getClientId(context);
+    protected void encodeMarkup(final FacesContext context, final CodeMirror codeMirror) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = codeMirror.getClientId(context);
 
-        String styleClass = inputNumber.getStyleClass();
-        styleClass = styleClass == null ? InputNumber.INPUTNUMBER_CLASS : InputNumber.INPUTNUMBER_CLASS + " " + styleClass;
-
-        writer.startElement("span", null);
+        writer.startElement("textarea", codeMirror);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute("name", clientId, null);
 
-        if (inputNumber.getStyle() != null) {
-            writer.writeAttribute("style", inputNumber.getStyle(), "style");
+        renderPassThruAttributes(context, codeMirror, HTML.INPUT_TEXTAREA_ATTRS);
+        renderDomEvents(context, codeMirror, HTML.INPUT_TEXT_EVENTS);
+        
+        final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
+        if (valueToRender != null) {
+            if (codeMirror.isEscape()) {
+                writer.writeText(valueToRender, null);
+            } else {
+                writer.write(valueToRender);
+            }
         }
 
-        encodeOutput(context, inputNumber, clientId);
-        encodeInput(context, inputNumber, clientId);
-
-        writer.endElement("span");
+        writer.endElement("textarea");
     }
 
-    protected void encodeInput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String inputId = clientId + "_hinput";
-
-        writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, null);
-        writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("autocomplete", "off", null);
-
-        if (inputNumber.getOnchange() != null) {
-            writer.writeAttribute("onchange", inputNumber.getOnchange(), null);
-        }
-
-        writer.endElement("input");
-
-    }
-
-    protected void encodeOutput(final FacesContext context, final InputNumber inputNumber, final String clientId) throws IOException {
-
-        ResponseWriter writer = context.getResponseWriter();
-        String inputId = clientId + "_input";
-
-        String defaultClass = InputText.STYLE_CLASS + " pe-inputNumber";
-        defaultClass = inputNumber.isValid() ? defaultClass : defaultClass + " ui-state-error";
-        defaultClass = !inputNumber.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
-
-        writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, null);
-        writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", "text", null);
-
-        renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, inputNumber, HTML.INPUT_TEXT_EVENTS);
-
-        if (inputNumber.isReadonly()) {
-            writer.writeAttribute("readonly", "readonly", "readonly");
-        }
-        if (inputNumber.isDisabled()) {
-            writer.writeAttribute("disabled", "disabled", "disabled");
-        }
-
-        writer.writeAttribute("class", defaultClass, "");
-
-        writer.endElement("input");
-    }
-
-    protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
-        String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
-        if (valueToRender == null) {
-            valueToRender = "";
-        }
-
+    protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(InputNumber.class.getSimpleName(), inputNumber.resolveWidgetVar(), inputNumber.getClientId(), "inputnumber");
-        wb.attr("disabled", inputNumber.isDisabled())
-                .attr("valueToRender", formatForPlugin(valueToRender, inputNumber));
+        wb.initWithDomReady(CodeMirror.class.getSimpleName(), codeMirror.resolveWidgetVar(), codeMirror.getClientId(), "codemirror");
+        wb.attr("theme", codeMirror.getTheme())
+                .attr("mode", codeMirror.getMode())
+                .attr("indentUnit", codeMirror.getIndentUnit())
+                .attr("smartIndent", codeMirror.isSmartIndent())
+                .attr("tabSize", codeMirror.getTabSize())
+                .attr("indentWithTabs", codeMirror.isIndentWithTabs())
+                .attr("electricChars", codeMirror.isElectricChars())
+                .attr("keyMap", codeMirror.getKeyMap())
+                .attr("lineWrapping", codeMirror.isLineWrapping())
+                .attr("lineNumbers", codeMirror.isLineNumbers())
+                .attr("firstLineNumber", codeMirror.getFirstLineNumber())
+                .attr("gutter", codeMirror.isGutter())
+                .attr("fixedGutter", codeMirror.isFixedGutter())
+                .attr("readOnly", codeMirror.isReadOnly())
+                .attr("matchBrackets", codeMirror.isMatchBrackets())
+                .attr("workTime", codeMirror.getWorkTime())
+                .attr("workDelay", codeMirror.getWorkDelay())
+                .attr("pollInterval", codeMirror.getPollInterval())
+                .attr("tabindex", codeMirror.getTabindex())
+                .attr("undoDepth", codeMirror.getUndoDepth());
 
-        String metaOptions = getOptions(inputNumber);
-        if (!metaOptions.isEmpty()) {
-            wb.nativeAttr("pluginOptions", metaOptions);
+        if (codeMirror.getExtraKeys() != null) {
+            wb.append(",extraKeys:" + codeMirror.getExtraKeys());
         }
+        if (!codeMirror.isGlobal()) {
+            wb.attr("global", false);
+        }
+        if (codeMirror.isAsync()) {
+            wb.attr("async", true);
+        }
+        if (codeMirror.getProcess() != null) {
+            wb.attr("process", SearchExpressionFacade.resolveComponentsForClient(context, codeMirror, codeMirror.getProcess()));
+        }
+        if (codeMirror.getOnstart() != null) {
+            wb.callback("onstart", "function(request)", codeMirror.getOnstart());
+        }
+        if (codeMirror.getOncomplete() != null) {
+            wb.callback("oncomplete", "function(xhr, status, args)", codeMirror.getOncomplete());
+        }
+        if (codeMirror.getOnsuccess() != null) {
+            wb.callback("onsuccess", "function(data, status, xhr)", codeMirror.getOnsuccess());
+        }
+        if (codeMirror.getOnerror() != null) {
+            wb.callback("onerror", "function(xhr, status, error)", codeMirror.getOnerror());
+        }
+
+        encodeClientBehaviors(context, codeMirror);
 
         wb.finish();
     }
 
-    private String getOptions(final InputNumber inputNumber) {
+    @Override
+    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+        final CodeMirror codeMirror = (CodeMirror) component;
+        final String value = (String) submittedValue;
+        final Converter converter = ComponentUtils.getConverter(context, component);
 
-        String decimalSeparator = inputNumber.getDecimalSeparator();
-        String thousandSeparator = inputNumber.getThousandSeparator();
-        String symbol = inputNumber.getSymbol();
-        String symbolPosition = inputNumber.getSymbolPosition();
-        String minValue = inputNumber.getMinValue();
-        String maxValue = inputNumber.getMaxValue();
-        String roundMethod = inputNumber.getRoundMethod();
-        String decimalPlaces = inputNumber.getDecimalPlaces();
-        String emptyValue = inputNumber.getEmptyValue();
-
-        String options = "";
-        options += decimalSeparator.isEmpty() ? "" : "aDec:\"" + escapeText(decimalSeparator) + "\",";
-        //empty thousandSeparator must be explicity defined.
-        options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep:\"" + escapeText(thousandSeparator) + "\",";
-        options += symbol.isEmpty() ? "" : "aSign:\"" + escapeText(symbol) + "\",";
-        options += symbolPosition.isEmpty() ? "" : "pSign:\"" + escapeText(symbolPosition) + "\",";
-        options += minValue.isEmpty() ? "" : "vMin:\"" + escapeText(minValue) + "\",";
-        options += maxValue.isEmpty() ? "" : "vMax:\"" + escapeText(maxValue) + "\",";
-        options += roundMethod.isEmpty() ? "" : "mRound:\"" + escapeText(roundMethod) + "\",";
-        options += decimalPlaces.isEmpty() ? "" : "mDec:\"" + escapeText(decimalPlaces) + "\",";
-        options += "wEmpty:\"" + escapeText(emptyValue) + "\",";
-
-        //if all options are empty return empty
-        if (options.isEmpty()) {
-            return "";
+        if (converter != null) {
+            return converter.getAsObject(context, codeMirror, value);
         }
 
-        //delete the last comma
-        int lastInd = options.length() - 1;
-        if (options.charAt(lastInd) == ',') {
-            options = options.substring(0, lastInd);
-        }
-        return "{" + options + "}";
-
+        return value;
     }
 
-    private String formatForPlugin(final String valueToRender, final InputNumber inputNumber) {
+    protected void encodeSuggestions(final FacesContext context, final CodeMirror codeMirror, final List<String> suggestions) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
 
-        if (valueToRender == null || valueToRender.isEmpty()) {
-            return "";
-        } else {
+        writer.startElement("ul", codeMirror);
 
-            try {
-                Object objectToRender;
-                if (inputNumber.getValue() instanceof BigDecimal) {
-                    objectToRender = new BigDecimal(valueToRender);
-                } else {
-                    objectToRender = new Double(valueToRender);
-                }
+        for (int i = 0; i < suggestions.size(); i++) {
+            final String suggestion = suggestions.get(i);
 
-                NumberFormat formatter = new DecimalFormat("#0.0#");
-                formatter.setRoundingMode(RoundingMode.FLOOR);
-                //autoNumeric jquery plugin max and min limits
-                formatter.setMinimumFractionDigits(15);
-                formatter.setMaximumFractionDigits(15);
-                formatter.setMaximumIntegerDigits(20);
-                String f = formatter.format(objectToRender);
+            writer.startElement("li", null);
 
-                //force to english decimal separator
-                f = f.replace(',', '.');
-                return f;
-            } catch (Exception e) {
-                throw new IllegalArgumentException(
-                        "Error converting  [" + valueToRender + "] to a double value;", e);
+            if (codeMirror.isEscapeSuggestions()) {
+                writer.writeText(suggestion, null);
+            } else {
+                writer.write(suggestion);
             }
-        }
-    }
 
+            writer.endElement("li");
+        }
+
+        writer.endElement("ul");
+    }
 }
