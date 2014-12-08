@@ -30,6 +30,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -48,11 +49,11 @@ public class InputNumberRenderer extends InputRenderer {
             throws ConverterException {
 
         String submittedValueString = (String) submittedValue;
-        
+
         if (ComponentUtils.isValueBlank(submittedValueString)) {
             return null;
         }
-        
+
         Converter converter = ComponentUtils.getConverter(context, component);
         if (converter != null) {
             return converter.getAsObject(context, component, submittedValueString);
@@ -156,30 +157,22 @@ public class InputNumberRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = inputNumber.getClientId(context);
-        String widgetVar = inputNumber.resolveWidgetVar();
-
-        startScript(writer, clientId);
         String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
         if (valueToRender == null) {
             valueToRender = "";
         }
 
-        writer.write("$(function() {");
-        writer.write("PrimeFacesExt.cw('InputNumber','" + widgetVar + "',{");
-        writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
-        writer.write(",disabled:" + inputNumber.isDisabled());
-        writer.write(",valueToRender:'" + formatForPlugin(valueToRender, inputNumber) + "'");
+        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
+        wb.initWithDomReady(InputNumber.class.getSimpleName(), inputNumber.resolveWidgetVar(), inputNumber.getClientId(), "inputnumber");
+        wb.attr("disabled", inputNumber.isDisabled())
+                .attr("valueToRender", formatForPlugin(valueToRender, inputNumber));
 
         String metaOptions = getOptions(inputNumber);
         if (!metaOptions.isEmpty()) {
-            writer.write(",pluginOptions:" + metaOptions);
+            wb.nativeAttr("pluginOptions", metaOptions);
         }
-        writer.write("});});");
 
-        endScript(writer);
+        wb.finish();
     }
 
     private String getOptions(final InputNumber inputNumber) {
@@ -195,16 +188,16 @@ public class InputNumberRenderer extends InputRenderer {
         String emptyValue = inputNumber.getEmptyValue();
 
         String options = "";
-        options += decimalSeparator.isEmpty() ? "" : "aDec: '" + decimalSeparator + "',";
+        options += decimalSeparator.isEmpty() ? "" : "aDec:\"" + escapeText(decimalSeparator) + "\",";
         //empty thousandSeparator must be explicity defined.
-        options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep: '" + thousandSeparator + "',";
-        options += symbol.isEmpty() ? "" : "aSign: '" + symbol + "',";
-        options += symbolPosition.isEmpty() ? "" : "pSign: '" + symbolPosition + "',";
-        options += minValue.isEmpty() ? "" : "vMin: '" + minValue + "',";
-        options += maxValue.isEmpty() ? "" : "vMax: '" + maxValue + "',";
-        options += roundMethod.isEmpty() ? "" : "mRound: '" + roundMethod + "',";
-        options += decimalPlaces.isEmpty() ? "" : "mDec: '" + decimalPlaces + "',";
-        options += "wEmpty: '" + emptyValue + "',";
+        options += thousandSeparator.isEmpty() ? "aSep:''," : "aSep:\"" + escapeText(thousandSeparator) + "\",";
+        options += symbol.isEmpty() ? "" : "aSign:\"" + escapeText(symbol) + "\",";
+        options += symbolPosition.isEmpty() ? "" : "pSign:\"" + escapeText(symbolPosition) + "\",";
+        options += minValue.isEmpty() ? "" : "vMin:\"" + escapeText(minValue) + "\",";
+        options += maxValue.isEmpty() ? "" : "vMax:\"" + escapeText(maxValue) + "\",";
+        options += roundMethod.isEmpty() ? "" : "mRound:\"" + escapeText(roundMethod) + "\",";
+        options += decimalPlaces.isEmpty() ? "" : "mDec:\"" + escapeText(decimalPlaces) + "\",";
+        options += "wEmpty:\"" + escapeText(emptyValue) + "\",";
 
         //if all options are empty return empty
         if (options.isEmpty()) {
