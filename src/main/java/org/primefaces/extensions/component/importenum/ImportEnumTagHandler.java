@@ -21,6 +21,7 @@ package org.primefaces.extensions.component.importenum;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -46,7 +47,8 @@ public class ImportEnumTagHandler extends TagHandler {
 
 	private static final String DEFAULT_ALL_SUFFIX = "ALL_VALUES";
 
-	private static final Map<ClassLoader, Map<Class<?>, Map<String, Object>>> CACHE = new ConcurrentHashMap<ClassLoader, Map<Class<?>, Map<String, Object>>>();
+	private static final ConcurrentMap<ClassLoader, ConcurrentMap<Class<?>, Map<String, Object>>> CACHE =
+	    new ConcurrentHashMap<ClassLoader, ConcurrentMap<Class<?>, Map<String, Object>>>();
 
 	private final TagAttribute typeTagAttribute;
 	private final TagAttribute varTagAttribute;
@@ -128,7 +130,7 @@ public class ImportEnumTagHandler extends TagHandler {
 				CACHE.put(classLoader, new ConcurrentHashMap<Class<?>, Map<String, Object>>());
 			}
 
-			final Map<Class<?>, Map<String, Object>> cache = CACHE.get(classLoader);
+			final ConcurrentMap<Class<?>, Map<String, Object>> cache = CACHE.get(classLoader);
 
 			final Map<String, Object> enums;
 
