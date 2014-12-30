@@ -56,10 +56,12 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	public static final String EVENT_FOCUS = "focus";
 	public static final String EVENT_WYSIWYG_MODE = "wysiwygMode";
 	public static final String EVENT_SOURCE_MODE = "sourceMode";
+        public static final String EVENT_DIRTY = "dirty";
+        public static final String EVENT_CHANGE = "change";
 
 	private static final Collection<String> EVENT_NAMES =
 			Collections.unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS,
-					EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE));
+					EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE, EVENT_DIRTY, EVENT_CHANGE));
 
 	/**
 	 * Properties that are tracked by state saving.

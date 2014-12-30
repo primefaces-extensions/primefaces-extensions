@@ -198,7 +198,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 			}
 		};
 	},
-
+            
     /**
      * This method will be called when the CKEditor was initialized. 
      *
@@ -227,8 +227,74 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 }
                 this.fireEvent('sourceMode');
             }, this));
-	},
+	
+        //check dirty- and changed events
+        this.isDirtyEventDefined = (this.cfg.behaviors && this.cfg.behaviors['dirty']) ? true : false;
+        this.isChangeEventDefined = (this.cfg.behaviors && this.cfg.behaviors['change']) ? true : false;
+    
+        var editable = this.instance.editable();
+        editable.attachListener(editable, 'cut', $.proxy(function(event) {
+                this.checkChange();
+                this.checkDirty();
+        }, this));
+        editable.attachListener(editable, 'paste', $.proxy(function(event) {
+                this.checkChange();
+                this.checkDirty();                
+        }, this));
+        editable.attachListener(editable, 'keydown', $.proxy(function(event) {
+                // do not capture ctrl and meta keys
+                if (event.data.$.ctrlKey || event.data.$.metaKey) {
+                        return;
+                }
 
+                // filter movement keys and related
+                var keyCode = event.data.$.keyCode;
+                if (keyCode == 8 || keyCode == 13 || keyCode == 32
+                                || (keyCode >= 46 && keyCode <= 90)
+                                || (keyCode >= 96 && keyCode <= 111)
+                                || (keyCode >= 186 && keyCode <= 222)) {
+                        this.checkChange();
+                        this.checkDirty();
+                }
+        }, this));
+
+        this.instance.on('blur', $.proxy(function() {
+                // this.checkChange(); // editor has built in 'change on blur' check
+                this.checkDirty();
+                var editor = this.getEditorInstance();
+                editor.dirtyFired = false;
+        }, this));
+    },
+
+    /**
+     * This method checks if this editor instance is dirty (content has changed)
+     * and fires a dirty event if it was not fired since last entering the editor.
+     *
+     * @private
+     */
+    checkDirty : function() {
+	if (this.isDirtyEventDefined) {
+		var editor = this.getEditorInstance();
+		if (!editor.dirtyFired && editor.checkDirty()) { // checkDirty means isDirty
+			// fires the dirty event only once!
+			this.fireEvent('dirty');
+			editor.dirtyFired = true;
+		}
+	}
+    },
+
+    /**
+     * This method checks if this editor instance is change (content has changed)
+     * and fires a cahnge event if so.
+     *
+     * @private
+     */
+    checkChange : function() {
+	if (this.isChangeEventDefined) {
+            this.fireEvent('change');
+	}
+    },
+                
 	/**
 	 * This method fires an event if the behavior was defined.
 	 *
