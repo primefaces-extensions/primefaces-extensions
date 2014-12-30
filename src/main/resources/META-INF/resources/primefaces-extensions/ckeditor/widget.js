@@ -259,10 +259,8 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }, this));
 
         this.instance.on('blur', $.proxy(function() {
-                // this.checkChange(); // editor has built in 'change on blur' check
                 this.checkDirty();
-                var editor = this.getEditorInstance();
-                editor.dirtyFired = false;
+                this.instance.dirtyFired = false;
         }, this));
     },
 
@@ -274,11 +272,10 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
      */
     checkDirty : function() {
 	if (this.isDirtyEventDefined) {
-		var editor = this.getEditorInstance();
-		if (!editor.dirtyFired && editor.checkDirty()) { // checkDirty means isDirty
+		if (!this.instance.dirtyFired && this.instance.checkDirty()) { // checkDirty means isDirty
 			// fires the dirty event only once!
 			this.fireEvent('dirty');
-			editor.dirtyFired = true;
+			this.instance.dirtyFired = true;
 		}
 	}
     },
