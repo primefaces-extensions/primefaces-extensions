@@ -163,7 +163,7 @@ public class InputNumberRenderer extends InputRenderer {
         }
 
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(InputNumber.class.getSimpleName(), inputNumber.resolveWidgetVar(), inputNumber.getClientId(),);
+        wb.initWithDomReady(InputNumber.class.getSimpleName(), inputNumber.resolveWidgetVar(), inputNumber.getClientId());
         wb.attr("disabled", inputNumber.isDisabled())
                 .attr("valueToRender", formatForPlugin(valueToRender, inputNumber));
 
