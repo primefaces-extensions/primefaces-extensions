@@ -79,7 +79,7 @@ public class TimerRenderer extends CoreRenderer {
                 .async(timer.isAsync())
                 .global(timer.isGlobal())
                 .delay(timer.getDelay())
-                .partialSubmit(timer.isPartialSubmit(), timer.isPartialSubmitSet())
+                .partialSubmit(timer.isPartialSubmit(), timer.isPartialSubmitSet(), timer.getPartialSubmitFilter())
                 .resetValues(timer.isResetValues(), timer.isResetValuesSet())
                 .ignoreAutoUpdate(timer.isIgnoreAutoUpdate())
                 .onstart(timer.getOnstart())

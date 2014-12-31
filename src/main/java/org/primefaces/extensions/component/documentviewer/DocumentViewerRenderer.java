@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import org.primefaces.application.resource.DynamicContentType;
 
 public class DocumentViewerRenderer extends CoreRenderer {
     public static final String RENDERER_TYPE = "org.primefaces.extensions.component.DocumentViewerRenderer";
@@ -111,7 +112,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
                 return context.getExternalContext().encodeResourceURL(requestPath);
             }
         } else {
-            return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer,documentViewer.isCache(), "sc");
+            return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer,documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT);
         }
     }
 }

@@ -48,7 +48,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId(), "imageareaselect");
-        wb.attr("target", SearchExpressionFacade.resolveComponentForClient(context, imageAreaSelect, imageAreaSelect.getFor()))
+        wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
                 .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                 .attr("autoHide", imageAreaSelect.isAutoHide())
                 .attr("fadeSpeed", imageAreaSelect.getFadeSpeed())

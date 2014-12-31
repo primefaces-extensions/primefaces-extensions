@@ -143,7 +143,7 @@ public class FluidGridRenderer extends CoreRenderer {
 			writer.write(",gutter:" + fluidGrid.gethGutter());
 		}
 
-		String stamp = SearchExpressionFacade.resolveComponentsForClient(fc, fluidGrid, fluidGrid.getStamp());
+		String stamp = SearchExpressionFacade.resolveClientIds(fc, fluidGrid, fluidGrid.getStamp());
 		if (stamp != null) {
 			writer.write(",stamp:'" + stamp + "'");
 		}

@@ -70,7 +70,7 @@ public class BlockUIRenderer extends CoreRenderer {
 		if (source == null) {
             source = blockUI.getParent().getClientId(fc);
 		} else {
-			source = SearchExpressionFacade.resolveComponentsForClient(fc, blockUI, source);
+			source = SearchExpressionFacade.resolveClientIds(fc, blockUI, source);
 		}
 
 		if (source == null) {
@@ -80,7 +80,7 @@ public class BlockUIRenderer extends CoreRenderer {
 		// get target
 		String target = blockUI.getTarget();
 		if (target != null) {
-			target = SearchExpressionFacade.resolveComponentsForClient(fc, blockUI, target);
+			target = SearchExpressionFacade.resolveClientIds(fc, blockUI, target);
 		}
 
 		// get content

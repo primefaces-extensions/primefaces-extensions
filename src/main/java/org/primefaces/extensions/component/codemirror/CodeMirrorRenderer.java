@@ -147,7 +147,7 @@ public class CodeMirrorRenderer extends InputRenderer {
             wb.attr("async", true);
         }
         if (codeMirror.getProcess() != null) {
-            wb.attr("process", SearchExpressionFacade.resolveComponentsForClient(context, codeMirror, codeMirror.getProcess()));
+            wb.attr("process", SearchExpressionFacade.resolveClientIds(context, codeMirror, codeMirror.getProcess()));
         }
         if (codeMirror.getOnstart() != null) {
             wb.callback("onstart", "function(request)", codeMirror.getOnstart());

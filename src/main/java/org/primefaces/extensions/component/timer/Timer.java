@@ -57,7 +57,8 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         ,ignoreAutoUpdate
         ,visible
         ,forward
-        ,formatFunction;
+        ,formatFunction,
+        partialSubmitFilter;
 
         String toString;
 
@@ -276,6 +277,12 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         getStateHelper().put(PropertyKeys.forward, _forward);
     }
 
+	public java.lang.String getPartialSubmitFilter() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.partialSubmitFilter, null);
+	}
+	public void setPartialSubmitFilter(java.lang.String _partialSubmitFilter) {
+		getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
+	}
 
     public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
         super.broadcast(event); //backward compatibility

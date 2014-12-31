@@ -214,4 +214,9 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	public String getInputClientId() {
 		return getClientId() + "_input";
 	}
+    
+
+    public String getValidatableInputClientId() {
+        return getClientId() + "_hinput";
+    }
 }

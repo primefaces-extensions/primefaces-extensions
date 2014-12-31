@@ -55,80 +55,16 @@ import org.primefaces.util.Constants;
  */
 public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
-	private static final String FACET_FIRST = "first";
-	private static final String FACET_MIDDLE = "middle";
-	private static final String FACET_LAST = "last";
-	private static final String PREFIX_PRIMEFACES = "primefaces-";
-	private static final String THEME_DEFAULT = "aristo";
-
 	@Override
-	public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
+	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		final ResponseWriter writer = context.getResponseWriter();
 		final Head head = (Head) component;
-
-		writer.startElement("head", component);
-
-		final List<UIComponent> styles = new ArrayList<UIComponent>();
-		final List<UIComponent> scripts = new ArrayList<UIComponent>();
-		fillScriptsAndStyles(context, styles, scripts);
-
-		// encode first facet
-		encodeFacet(context, component, FACET_FIRST);
-
-		// encode themes
-		encodeTheme(context);
-
-		// encode CSS resources
-		for (final UIComponent style : styles) {
-			style.encodeAll(context);
-		}
-
-		// encode middle facet
-		encodeFacet(context, component, FACET_MIDDLE);
-
-		// encode JS resources
-		for (final UIComponent script : scripts) {
-			script.encodeAll(context);
-		}
 
 		// encode title and shortcut icon
 		encodeTitle(head, writer);
 		encodeShortcutIcon(head, writer);
-	}
-
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
-
-		// encode last facet
-		encodeFacet(context, component, FACET_LAST);
-		writer.endElement("head");
-	}
-
-	private void encodeTheme(final FacesContext context) throws IOException {
-		String theme = null;
-
-		final String themeParamValue = context.getExternalContext().getInitParameter(Constants.ContextParams.THEME);
-		if (themeParamValue == null) {
-			theme = THEME_DEFAULT;
-		} else {
-			final ELContext elContext = context.getELContext();
-			final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-			final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
-
-			theme = (String) ve.getValue(elContext);
-		}
-
-		if (theme != null && !theme.equalsIgnoreCase("none")) {
-			encodeTheme(context, PREFIX_PRIMEFACES + theme, "theme.css");
-		}
-	}
-
-	private void encodeFacet(final FacesContext context, final UIComponent component, final String name) throws IOException {
-		final UIComponent facet = component.getFacet(name);
-		if (facet != null) {
-			facet.encodeAll(context);
-		}
+        
+        super.encodeEnd(context, component);
 	}
 
 	private void encodeTitle(final Head head, final ResponseWriter writer) throws IOException {
@@ -145,20 +81,6 @@ public class HeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 			writer.writeAttribute("rel", "shortcut icon", null);
 			writer.writeAttribute("href", head.getShortcutIcon(), null);
 			writer.endElement("link");
-		}
-	}
-
-	private void fillScriptsAndStyles(final FacesContext context, final List<UIComponent> styles,
-			final List<UIComponent> scripts) {
-		final UIViewRoot viewRoot = context.getViewRoot();
-		final List<UIComponent> resources = viewRoot.getComponentResources(context, "head");
-
-		for (final UIComponent resource : resources) {
-			if (org.primefaces.extensions.util.Constants.RENDERER_TYPE_STYLESHEET.equals(resource.getRendererType())) {
-				styles.add(resource);
-			} else if (org.primefaces.extensions.util.Constants.RENDERER_TYPE_SCRIPT.equals(resource.getRendererType())) {
-				scripts.add(resource);
-			}
 		}
 	}
 }

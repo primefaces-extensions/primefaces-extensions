@@ -48,8 +48,7 @@ public class KeyFilterRenderer extends CoreRenderer {
 		final String clientId = keyFilter.getClientId(context);
 		final String widgetVar = keyFilter.resolveWidgetVar();
 		
-		String target = SearchExpressionFacade.resolveComponentsForClient(
-				context, keyFilter, keyFilter.getFor());
+		String target = SearchExpressionFacade.resolveClientIds(context, keyFilter, keyFilter.getFor());
 		if (isValueBlank(target)) {
 			target = component.getParent().getClientId(context);
 		}

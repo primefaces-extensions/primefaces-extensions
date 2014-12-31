@@ -51,7 +51,7 @@ public class TooltipRenderer extends CoreRenderer {
 		String target = null;
 
 		if (!global || tooltip.getFor() != null) {
-			target = SearchExpressionFacade.resolveComponentsForClient(context, tooltip, tooltip.getFor());
+			target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
 		}
 
 		startScript(writer, clientId);

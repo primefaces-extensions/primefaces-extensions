@@ -82,8 +82,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		actionListener,
 		resetValues,
 		ignoreAutoUpdate,
-                delay,
-                timeout;
+        delay,
+        timeout,
+        partialSubmitFilter;
 
 		private String toString;
 
@@ -243,6 +244,13 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
 	public void setTimeout(int timeout) {
 		getStateHelper().put(PropertyKeys.timeout, timeout);
+	}
+    
+	public java.lang.String getPartialSubmitFilter() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.partialSubmitFilter, null);
+	}
+	public void setPartialSubmitFilter(java.lang.String _partialSubmitFilter) {
+		getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
 	}
     
 	@Override
