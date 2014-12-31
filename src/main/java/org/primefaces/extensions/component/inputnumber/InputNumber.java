@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * InputNumber
@@ -183,14 +184,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(org.primefaces.extensions.component.inputnumber.InputNumber.PropertyKeys.widgetVar.toString());
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
-
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 
 	private String getCalculatedDecimalSepartor(){

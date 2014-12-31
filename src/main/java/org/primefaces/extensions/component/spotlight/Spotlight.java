@@ -28,6 +28,7 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Spotlight</code> component.
@@ -116,13 +117,6 @@ public class Spotlight extends UIComponentBase implements Widget {
 	}
 
 	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
-
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 }

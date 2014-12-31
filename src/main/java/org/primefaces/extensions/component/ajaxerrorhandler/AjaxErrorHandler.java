@@ -22,6 +22,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * Component class for the <code>AjaxErrorHandler</code> component.
@@ -159,6 +160,6 @@ public class AjaxErrorHandler extends UIComponentBase implements Widget {
 	}
 
 	public String resolveWidgetVar() {
-		return (String) getAttributes().get(PropertyKeys.widgetVar.toString());
+		return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 }

@@ -39,6 +39,7 @@ import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>DynaForm</code> component.
@@ -149,14 +150,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	}
 
 	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
-
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 
 	public UIDynaFormControl getControlCell(final String type) {

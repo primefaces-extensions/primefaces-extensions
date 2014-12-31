@@ -701,14 +701,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                         Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    public String resolveWidgetVar() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
-
-        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+	public String resolveWidgetVar() {
+        return org.primefaces.util.ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+	}
 }

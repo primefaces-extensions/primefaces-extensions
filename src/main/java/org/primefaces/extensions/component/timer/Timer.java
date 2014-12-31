@@ -10,6 +10,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * Timer component
@@ -295,14 +296,8 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         }
     }
 
-    public String resolveWidgetVar() {
-        FacesContext context = getFacesContext();
-        String userWidgetVar = (String) getAttributes().get("widgetVar");
-
-        if(userWidgetVar != null)
-            return userWidgetVar;
-        else
-            return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+	public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+	}
 
 }

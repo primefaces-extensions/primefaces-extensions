@@ -24,6 +24,7 @@ import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Tooltip</code> component.
@@ -258,14 +259,7 @@ public class QRCode extends UIOutput implements Widget {
         getStateHelper().put(PropertyKeys.mSize, mSize);
     }    
 
-    public String resolveWidgetVar() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
-
-        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+	public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+	}
 }

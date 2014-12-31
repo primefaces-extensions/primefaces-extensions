@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.context.RequestContext;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Knob</code> component
@@ -81,15 +82,7 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
 	}
 
 	public String resolveWidgetVar() {
-		FacesContext context = getFacesContext();
-		String userWidgetVar = (String) getAttributes().get("widgetVar");
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		} else {
-			return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-		}
-
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 
 	public int getMin() {

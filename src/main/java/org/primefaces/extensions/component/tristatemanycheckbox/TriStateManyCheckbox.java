@@ -33,6 +33,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.MessageFactory;
 
 /**
@@ -163,14 +164,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	}
         
 	public String resolveWidgetVar() {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final String userWidgetVar = (String) getAttributes().get(TriStateManyCheckbox.PropertyKeys.widgetVar.toString());
-
-		if (userWidgetVar != null) {
-			return userWidgetVar;
-		}
-
-		return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 
 	@Override

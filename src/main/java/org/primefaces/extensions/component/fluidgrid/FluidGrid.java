@@ -43,6 +43,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>FluidGrid</code> component.
@@ -239,16 +240,9 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                 .RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    public String resolveWidgetVar() {
-        final FacesContext context = FacesContext.getCurrentInstance();
-        final String userWidgetVar = (String) getAttributes().get(PropertyKeys.widgetVar.toString());
-
-        if (userWidgetVar != null) {
-            return userWidgetVar;
-        }
-
-        return "widget_" + getClientId(context).replaceAll("-|" + UINamingContainer.getSeparatorChar(context), "_");
-    }
+	public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+	}
 
     public UIFluidGridItem getItem(String type) {
         UIFluidGridItem item = getItems().get(type);

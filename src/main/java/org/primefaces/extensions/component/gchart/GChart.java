@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.json.GsonConverter;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 @ResourceDependencies({
@@ -94,16 +95,7 @@ public class GChart extends UIOutput implements Widget,ClientBehaviorHolder {
 	}
 
 	public String resolveWidgetVar() {
-		FacesContext context = getFacesContext();
-		String userWidgetVar = (String) getAttributes().get("widgetVar");
-
-		if (userWidgetVar != null)
-			return userWidgetVar;
-		else
-			return "widget_"
-					+ getClientId(context).replaceAll(
-							"-|" + UINamingContainer.getSeparatorChar(context),
-							"_");
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 	
 	@Override
