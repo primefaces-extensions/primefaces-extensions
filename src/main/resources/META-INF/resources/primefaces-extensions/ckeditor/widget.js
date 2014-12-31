@@ -259,7 +259,6 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }, this));
 
         this.instance.on('blur', $.proxy(function() {
-                this.checkDirty();
                 this.instance.dirtyFired = false;
         }, this));
     },
