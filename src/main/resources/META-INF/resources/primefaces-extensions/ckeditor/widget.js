@@ -242,25 +242,25 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 this.checkDirty();                
         }, this));
         editable.attachListener(editable, 'keydown', $.proxy(function(event) {
-                // do not capture ctrl and meta keys
-                if (event.data.$.ctrlKey || event.data.$.metaKey) {
-                        return;
-                }
+            // do not capture ctrl and meta keys
+            if (event.data.$.ctrlKey || event.data.$.metaKey) {
+                return;
+            }
 
-                // filter movement keys and related
-                var keyCode = event.data.$.keyCode;
-                if (keyCode == 8 || keyCode == 13 || keyCode == 32
-                                || (keyCode >= 46 && keyCode <= 90)
-                                || (keyCode >= 96 && keyCode <= 111)
-                                || (keyCode >= 186 && keyCode <= 222)) {
-                        this.checkChange();
-                        this.checkDirty();
-                }
+            // filter movement keys and related
+            var keyCode = event.data.$.keyCode;
+            if (keyCode == 8 || keyCode == 13 || keyCode == 32
+                            || (keyCode >= 46 && keyCode <= 90)
+                            || (keyCode >= 96 && keyCode <= 111)
+                            || (keyCode >= 186 && keyCode <= 222)) {
+                this.checkChange();
+                this.checkDirty();
+            }
         }, this));
 
         this.instance.on('blur', $.proxy(function() {
-                this.checkDirty();
-                this.instance.dirtyFired = false;
+            this.checkDirty();
+            this.instance.dirtyFired = false;
         }, this));
     },
 
@@ -287,9 +287,9 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     checkChange : function() {
-	if (this.isChangeEventDefined) {
+        if (this.isChangeEventDefined) {
             this.fireEvent('change');
-	}
+        }
     },
                 
 	/**
