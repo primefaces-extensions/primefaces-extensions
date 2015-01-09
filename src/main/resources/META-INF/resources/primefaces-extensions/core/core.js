@@ -49,7 +49,8 @@ PrimeFacesExt = {
 			scriptURI = scriptURI.replace('v=' + extractedVersion, '');
 		}
 
-        return location.protocol + '//' + location.host + scriptURI;
+                var prefix = window.location.protocol + '//' + window.location.host;
+                return scriptURI.indexOf(prefix) >= 0 ? scriptURI : prefix + scriptURI;
 	},
 
     /**
@@ -164,7 +165,10 @@ PrimeFacesExt = {
      */
 	getPrimeFacesExtensionsScriptURI : function() {
 		if (!PrimeFacesExt.SCRIPT_URI) {
-			PrimeFacesExt.SCRIPT_URI = $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/primefaces-extensions.js"]').attr('src');
+			PrimeFacesExt.SCRIPT_URI = $('script[src*="/javax.faces.resource/primefaces-extensions.js"]').attr('src');
+			if (!PrimeFacesExt.SCRIPT_URI) {
+				PrimeFacesExt.SCRIPT_URI = $('script[src*="javax.faces.resource=primefaces-extensions.js"]').attr('src');
+			}
 		}
 
 		return PrimeFacesExt.SCRIPT_URI;
@@ -294,15 +298,6 @@ PrimeFacesExt = {
     changeTheme: function(newValue){
         $(document).trigger("PrimeFacesExt.themeChanged",newValue);
     },
-
-	/**
-	 * The JSF resource identifier.
-	 * 
-	 * @author Thomas Andraschko
-	 * @type {string}
-	 * @constant
-	 */
-	RESOURCE_IDENTIFIER : '/javax.faces.resource',
 
 	/**
 	 * The name of the PrimeFaces Extensions resource library.
