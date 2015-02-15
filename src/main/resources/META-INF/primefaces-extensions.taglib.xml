@@ -811,7 +811,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:fluidGridItem. This property allows to get the whole clientId of a component within pe:dynaFormControl. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
+                <![CDATA[Name of the request-scoped variable which contains the prefix of the client Id within pe:fluidGridItem. This property allows to get the whole clientId of a component within pe:fluidGridItem. The whole client Id is sometimes required for JavaScript or RequestContext.update(...).]]>
             </description>
             <name>varContainerId</name>
             <required>false</required>
