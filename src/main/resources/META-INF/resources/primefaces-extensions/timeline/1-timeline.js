@@ -38,10 +38,10 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
 
         // instantiate a timeline object
         var el = document.getElementById(this.id);
-        this.instance = new links.Timeline(el);
+        this.instance = new links.Timeline(el, this.cfg.opts);
 
         // draw the timeline with created data and options
-        this.instance.draw(this.cfg.data, this.cfg.opts);
+        this.instance.draw(this.cfg.data, null);
         
         // set current time (workaround)
         if (this.cfg.opts.currentTime) {
