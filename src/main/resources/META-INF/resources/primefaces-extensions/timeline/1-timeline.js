@@ -122,9 +122,9 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
             }, this));
         }
         
-        // "change" event (we map it to "changed" event since Timeline 2.7.0)
+        // "change" event
         if (this.cfg.opts.selectable && this.cfg.opts.editable && this.cfg.opts.timeChangeable && this.getBehavior("change")) {
-            links.events.addListener(this.instance, 'changed', $.proxy(function () {
+            links.events.addListener(this.instance, 'change', $.proxy(function () {
                 var index = this.getSelectedIndex();
                 if (index < 0) {
                     return;
@@ -166,6 +166,53 @@ PrimeFacesExt.widget.Timeline = PrimeFaces.widget.DeferredWidget.extend({
                 }
 
                 this.getBehavior("change").call(this, {params: params});
+            }, this));
+        }
+        
+        // "changed" event
+        if (this.cfg.opts.selectable && this.cfg.opts.editable && this.cfg.opts.timeChangeable && this.getBehavior("changed")) {
+            links.events.addListener(this.instance, 'changed', $.proxy(function () {
+                var index = this.getSelectedIndex();
+                if (index < 0) {
+                    return;
+                }
+                
+                var event = this.getEvent(index);
+                if (event == null) {
+                    return;
+                }
+                
+                if (!this.instance.isEditable(event)) {
+                    // only editable events can be changed
+                    return;
+                }
+                
+                var params = [];
+                params.push({
+                    name: this.id + '_eventIdx',
+                    value: index
+                });
+                
+                params.push({
+                    name: this.id + '_startDate',
+                    value: event.start.getTime()
+                });
+                
+                if (event.end) {
+                    params.push({
+                        name: this.id + '_endDate',
+                        value: event.end.getTime()
+                    });    
+                }
+                
+                if (event.group) {
+                    params.push({
+                        name: this.id + '_group',
+                        value: event.group
+                    });    
+                }
+
+                this.getBehavior("changed").call(this, {params: params});
             }, this));
         }
         

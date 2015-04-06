@@ -36,7 +36,6 @@ import org.primefaces.util.Constants;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -72,8 +71,8 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimelineRenderer";
 
     private static final Collection<String> EVENT_NAMES =
-            Collections.unmodifiableCollection(Arrays.asList("add", "change", "edit", "delete", "select", "rangechange",
-                    "rangechanged", "lazyload", "drop"));
+            Collections.unmodifiableCollection(Arrays.asList("add", "change", "changed", "edit", "delete", "select",
+                    "rangechange", "rangechanged", "lazyload", "drop"));
 
     /**
      * PropertyKeys
@@ -116,6 +115,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         groupsChangeable,
         groupsOnRight,
         groupsWidth,
+        groupMinHeight,
         groupsOrder,
         snapEvents,
         stackEvents,
@@ -420,6 +420,14 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
         getStateHelper().put(PropertyKeys.groupsWidth, groupsWidth);
     }
 
+    public int getGroupMinHeight() {
+        return (Integer) getStateHelper().eval(PropertyKeys.groupMinHeight, 0);
+    }
+
+    public void setGroupMinHeight(int groupMinHeight) {
+        getStateHelper().put(PropertyKeys.groupMinHeight, groupMinHeight);
+    }
+
     public boolean isGroupsOrder() {
         return (Boolean) getStateHelper().eval(PropertyKeys.groupsOrder, true);
     }
@@ -523,7 +531,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
     public void setDropScope(String dropScope) {
         getStateHelper().put(PropertyKeys.dropScope, dropScope);
     }
-    
+
     public boolean isAnimate() {
         return (Boolean) getStateHelper().eval(PropertyKeys.animate, true);
     }
@@ -531,7 +539,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
     public void setAnimate(boolean animate) {
         getStateHelper().put(PropertyKeys.animate, animate);
     }
-    
+
     public boolean isAnimateZoom() {
         return (Boolean) getStateHelper().eval(PropertyKeys.animateZoom, true);
     }
@@ -570,7 +578,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                 super.queueEvent(te);
 
                 return;
-            } else if ("change".equals(eventName)) {
+            } else if ("change".equals(eventName) || "changed".equals(eventName)) {
                 TimelineEvent clonedEvent = null;
                 TimelineEvent timelineEvent = getValue().getEvent(params.get(clientId + "_eventIdx"));
 
@@ -701,7 +709,7 @@ public class Timeline extends UIComponentBase implements Widget, ClientBehaviorH
                         Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-	public String resolveWidgetVar() {
+    public String resolveWidgetVar() {
         return org.primefaces.util.ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+    }
 }

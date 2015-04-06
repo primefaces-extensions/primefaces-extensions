@@ -163,6 +163,7 @@ public class TimelineRenderer extends CoreRenderer {
         writer.write(",groupsChangeable:" + timeline.isGroupsChangeable());
         writer.write(",groupsOnRight:" + timeline.isGroupsOnRight());
         writer.write(",groupsOrder:" + timeline.isGroupsOrder());
+        writer.write(",groupMinHeight:" + timeline.getGroupMinHeight());
 
         if (timeline.getGroupsWidth() != null) {
             writer.write(",groupsWidth:'" + timeline.getGroupsWidth() + "'");

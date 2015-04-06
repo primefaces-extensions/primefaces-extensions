@@ -4918,13 +4918,13 @@ links.Timeline.prototype.changeItem = function (index, itemData, preventRender) 
 
     // replace item, merge the changes
     var newItem = this.createItem({
-        'start':   itemData.hasOwnProperty('start') ?   itemData.start :   oldItem.start,
-        'end':     itemData.hasOwnProperty('end') ?     itemData.end :     oldItem.end,
-        'content': itemData.hasOwnProperty('content') ? itemData.content : oldItem.content,
-        'group':   itemData.hasOwnProperty('group') ?   itemData.group :   this.getGroupName(oldItem.group),
+        'start':     itemData.hasOwnProperty('start') ?     itemData.start     : oldItem.start,
+        'end':       itemData.hasOwnProperty('end') ?       itemData.end       : oldItem.end,
+        'content':   itemData.hasOwnProperty('content') ?   itemData.content   : oldItem.content,
+        'group':     itemData.hasOwnProperty('group') ?     itemData.group     : this.getGroupName(oldItem.group),
         'className': itemData.hasOwnProperty('className') ? itemData.className : oldItem.className,
-        'editable':  itemData.hasOwnProperty('editable') ?  itemData.editable :  oldItem.editable,
-        'type':      itemData.hasOwnProperty('type') ?      itemData.type :      oldItem.type
+        'editable':  itemData.hasOwnProperty('editable') ?  itemData.editable  : oldItem.editable,
+        'type':      itemData.hasOwnProperty('type') ?      itemData.type      : (itemData.end ? 'range' : 'box')
     });
     this.items[index] = newItem;
 
