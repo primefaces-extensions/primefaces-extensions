@@ -22,7 +22,7 @@ PrimeFacesExt.widget.QRCode = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.mode > 2 && this.cfg.render !== 'image') {
             this.cfg.mode = 1;
         }
-        console.log(this.cfg);
+        
         this.instance = this.container.qrcode(this.cfg);
     },
     toHexColor: function(value) {
