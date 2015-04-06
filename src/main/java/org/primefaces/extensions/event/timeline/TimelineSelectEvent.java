@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013 PrimeFaces Extensions.
+ * Copyright 2011-2015 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 
 package org.primefaces.extensions.event.timeline;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.behavior.Behavior;
-
 import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
+
+import javax.faces.component.UIComponent;
+import javax.faces.component.behavior.Behavior;
 
 /**
  * Event which is triggered when a new timeline event was selected.

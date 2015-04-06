@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 PrimeFaces Extensions.
+ * Copyright 2011-2015 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,10 @@
 
 package org.primefaces.extensions.application;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * {@link SystemEventListener} which displays the PrimeFaces Extensions version on startup.

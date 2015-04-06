@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2012 PrimeFaces Extensions.
+ * Copyright 2011-2015 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,13 @@
 
 package org.primefaces.extensions.component.switchcase;
 
-import java.io.IOException;
+import org.primefaces.renderkit.CoreRenderer;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
 
 /**
  * Renderer for the {@link Switch} component.
