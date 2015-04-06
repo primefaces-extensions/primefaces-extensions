@@ -143,7 +143,7 @@ PrimeFacesExt = {
         if (!PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES) {
             var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
 
-            PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES = scriptURI.indexOf(this.RESOURCE_LIBRARY_UNCOMPRESSED) !== -1;
+            PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES = scriptURI.indexOf(PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED) !== -1;
         }
 
         return PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES;
