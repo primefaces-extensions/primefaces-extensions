@@ -63,7 +63,11 @@ public abstract class AbstractDynaFormElement implements Serializable {
 		return row;
 	}
 
-	public int getColumn() {
+    void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
 		return column;
 	}
 

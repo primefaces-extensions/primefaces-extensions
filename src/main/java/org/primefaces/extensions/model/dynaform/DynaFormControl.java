@@ -75,7 +75,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 		return type;
 	}
 
-	private void generateKey() {
+	void generateKey() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn());
 		if (isExtended()) {

@@ -153,4 +153,8 @@ public class DynaFormRow implements Serializable {
 	public int getTotalColspan() {
 		return totalColspan;
 	}
+
+    void setRow(int row) {
+        this.row = row;
+    }
 }
