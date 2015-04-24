@@ -30,13 +30,22 @@ PrimeFacesExt.widget.InputNumber = PrimeFaces.widget.BaseWidget.extend({
         //Visual effects
         PrimeFaces.skinInput(this.inputExternal);
         
+        // backup onchange, should be executed after our onchange
+        var originalOnchange = this.inputExternal.attr('onchange');
+        this.inputExternal.attr('onchange', null);
+        
         //copy to hidden input the cleaned value
-        this.inputExternal.on('change', function(event) {
-            cleanVal = $this.inputExternal.autoNumeric('get');
-            if(cleanVal != ""){
-                $this.inputInternal.attr('value', cleanVal);
-            }else{
-                $this.inputInternal.removeAttr('value');
+        this.inputExternal.off('change').on('change', function(event) {
+            // skip second event triggered from the autoNumeric plugin
+            if (event.originalEvent) {
+                cleanVal = $this.inputExternal.autoNumeric('get');
+                if (cleanVal != ""){
+                    $this.inputInternal.attr('value', cleanVal);
+                } else {
+                    $this.inputInternal.removeAttr('value');
+                }
+
+                eval(originalOnchange);
             }
         });
                 
