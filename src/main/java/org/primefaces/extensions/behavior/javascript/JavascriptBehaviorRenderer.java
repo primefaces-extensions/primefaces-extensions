@@ -18,12 +18,15 @@
 
 package org.primefaces.extensions.behavior.javascript;
 
+import org.primefaces.component.api.ClientBehaviorRenderingMode;
+
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ClientBehaviorRenderer;
+import java.util.Collection;
 
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
@@ -79,7 +82,23 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 			script.append("}");
 		}
 
-		script.append("},ext);");
+        ClientBehaviorRenderingMode renderingMode = null;
+        Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
+        
+        if (behaviorParameters != null && !behaviorParameters.isEmpty()) {
+            for (ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
+                if (behaviorParameter.getValue() != null && behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
+                    renderingMode = (ClientBehaviorRenderingMode) behaviorParameter.getValue();
+                    break;
+                }
+            }
+        }
+
+        if(ClientBehaviorRenderingMode.UNOBSTRUSIVE.equals(renderingMode)) {
+            script.append("},ext);");
+        } else {
+            script.append("});");
+        }
 
 		return script.toString();
 	}
