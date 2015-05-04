@@ -14,6 +14,7 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.Widget;
 import org.primefaces.context.RequestContext;
 import org.primefaces.util.ComponentUtils;
@@ -36,8 +37,9 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
 	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("change"));
+	private static final String DEFAULT_THEME = "aristo";
 
-    protected static enum PropertyKeys {
+	protected static enum PropertyKeys {
         foregroundColor,
         backgroundColor,
         showLabel,
@@ -188,10 +190,13 @@ public class Knob extends UIInput implements Widget, ClientBehaviorHolder {
     }
 
     private String getDefaultColorTheme() {
-        ELContext elContext = getFacesContext().getELContext();
-        ValueExpression defaultThemeVE = getFacesContext().getApplication().getExpressionFactory().createValueExpression(elContext, RequestContext.getCurrentInstance().getApplicationContext().getConfig().getTheme(), String.class);
-        String defaultTheme = (String) defaultThemeVE.getValue(elContext);
-        return defaultTheme;
+		String defaultTheme = DEFAULT_THEME;
+		if(StringUtils.isNotEmpty(RequestContext.getCurrentInstance().getApplicationContext().getConfig().getTheme())){
+			ELContext elContext = getFacesContext().getELContext();
+			ValueExpression defaultThemeVE = getFacesContext().getApplication().getExpressionFactory().createValueExpression(elContext, RequestContext.getCurrentInstance().getApplicationContext().getConfig().getTheme(), String.class);
+			defaultTheme = (String) defaultThemeVE.getValue(elContext);
+		}
+		return defaultTheme;
     }
 
     public void setColorTheme(String colorScheme) {
