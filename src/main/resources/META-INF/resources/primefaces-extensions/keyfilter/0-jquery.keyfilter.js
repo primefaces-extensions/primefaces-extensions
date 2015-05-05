@@ -130,6 +130,42 @@
 		});
 	};
 
+	/**
+	* Call when regExAll is define.
+	*/
+	$.fn.inputFilter = function(re)
+	{
+		return this.keypress(function(e)
+		{
+			if (e.ctrlKey || e.altKey)
+			{
+				return;
+			}
+			var k = getKey(e);
+			if($.browser.mozilla && (isNavKeyPress(e) || k == Keys.BACKSPACE || (k == Keys.DELETE && e.charCode == 0)))
+			{
+				return;
+			}
+			var c = getCharCode(e), cc = $(e.currentTarget).val() + String.fromCharCode(c), ok = true;
+			if(!$.browser.mozilla && (isSpecialKey(e) || !cc))
+			{
+				return;
+			}
+			if ($.isFunction(re))
+			{
+				ok = re.call(this, cc);
+			}
+			else
+			{
+				ok = re.test(cc);
+			}
+			if(!ok)
+			{
+				e.preventDefault();
+			}
+		});
+	}
+
 	$.extend($.fn.keyfilter, {
 		defaults: {
 			masks: defaultMasks

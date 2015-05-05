@@ -64,6 +64,8 @@ public class KeyFilterRenderer extends CoreRenderer {
 
 		if (keyFilter.getRegEx() != null) {
 			writer.write(",regEx:" + keyFilter.getRegEx());
+		} else if(keyFilter.getRegExAll() != null) {
+			writer.write(",regExAll:" + keyFilter.getRegExAll());
 		} else if (keyFilter.getMask() != null) {
 			writer.write(",mask:'" + keyFilter.getMask() + "'");
 		} else if (keyFilter.getTestFunction() != null) {
