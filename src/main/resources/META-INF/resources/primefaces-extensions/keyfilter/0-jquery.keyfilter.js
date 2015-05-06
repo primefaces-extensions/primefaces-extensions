@@ -135,33 +135,21 @@
 	*/
 	$.fn.inputFilter = function(re)
 	{
-		return this.keypress(function(e)
+		var oldValue;
+		this.on('keypress', function(e){
+			oldValue = e.currentTarget.value;
+		});
+
+		return this.on('input', function(e)
 		{
-			if (e.ctrlKey || e.altKey)
+			var ok = true;
+			if (!$.isFunction(re))
 			{
-				return;
-			}
-			var k = getKey(e);
-			if($.browser.mozilla && (isNavKeyPress(e) || k == Keys.BACKSPACE || (k == Keys.DELETE && e.charCode == 0)))
-			{
-				return;
-			}
-			var c = getCharCode(e), cc = $(e.currentTarget).val() + String.fromCharCode(c), ok = true;
-			if(!$.browser.mozilla && (isSpecialKey(e) || !cc))
-			{
-				return;
-			}
-			if ($.isFunction(re))
-			{
-				ok = re.call(this, cc);
-			}
-			else
-			{
-				ok = re.test(cc);
+				ok = re.test(this.value);
 			}
 			if(!ok)
 			{
-				e.preventDefault();
+				e.currentTarget.value = oldValue;
 			}
 		});
 	}
