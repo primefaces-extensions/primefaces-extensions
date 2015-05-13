@@ -136,19 +136,14 @@
 	$.fn.inputFilter = function(re)
 	{
 		var oldValue;
-		this.on('keypress', function(e){
-			oldValue = e.currentTarget.value;
-		});
-
 		return this.on('input', function(e)
 		{
-			var ok = true;
-			if (!$.isFunction(re))
-			{
-				ok = re.test(this.value);
+			var ok = re.test(this.value);
+			
+			if(ok) {
+				oldValue = this.value;
 			}
-			if(!ok)
-			{
+			else {
 				e.currentTarget.value = oldValue;
 			}
 		});

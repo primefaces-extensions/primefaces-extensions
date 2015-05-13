@@ -2374,7 +2374,7 @@
         <attribute>
             <description><![CDATA[Defines the regular expression which should be used to test the complete input.]]>
             </description>
-            <name>regExAll</name>
+            <name>inputRegEx</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
