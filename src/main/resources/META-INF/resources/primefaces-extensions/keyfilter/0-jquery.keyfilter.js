@@ -135,16 +135,16 @@
 	*/
 	$.fn.inputFilter = function(re)
 	{
-		var oldValue;
+		var previousValue;
 		return this.on('input', function(e)
 		{
 			var ok = re.test(this.value);
 			
 			if(ok) {
-				oldValue = this.value;
+				previousValue = this.value;
 			}
 			else {
-				e.currentTarget.value = oldValue;
+				e.currentTarget.value = previousValue;
 			}
 		});
 	}
