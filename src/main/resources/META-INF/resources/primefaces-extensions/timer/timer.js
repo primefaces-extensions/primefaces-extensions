@@ -19,6 +19,9 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
         this.print();
 
     },
+    currentTimeInSecs: function() {
+      return parseInt((new Date()).getTime() / 1000, 10);
+    },
     print:function(){
 
         var value = this.currentTimeout;
@@ -41,7 +44,9 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
         this.jq.html(value);
     },
     doStep: function(){
-        this.currentTimeout += this.forward ? 1 : -1;
+        var seconds = this._currentTimeInSecs() - this.prevTime;
+        this.prevTime = this._currentTimeInSecs();
+        this.currentTimeout += this.forward ? seconds : (0 - seconds);
         this.print();
         if(this.cfg.ontimerstep){
             this.cfg.ontimerstep({
@@ -54,6 +59,7 @@ PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
 
         var that = this;
         var end;
+        this.prevTime = this._currentTimeInSecs();
 
         if(!this.interval){
             this.interval = setInterval(function(){
