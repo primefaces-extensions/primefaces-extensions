@@ -144,7 +144,7 @@
 				previousValue = this.value;
 			}
 			else {
-				e.currentTarget.value = previousValue;
+				e.currentTarget.value = previousValue || '';
 			}
 		});
 	}
