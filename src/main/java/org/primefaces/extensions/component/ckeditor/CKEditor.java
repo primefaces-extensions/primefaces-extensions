@@ -78,7 +78,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 		theme,
 		skin,
 		toolbar,
-		readOnly,
+		readonly,
 		interfaceColor,
 		language,
 		defaultLanguage,
@@ -161,12 +161,14 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 		getStateHelper().put(PropertyKeys.interfaceColor, interfaceColor);
 	}
 
-	public boolean isReadOnly() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
+    @Override
+	public boolean isReadonly() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.readonly, false);
 	}
 
-	public void setReadOnly(final boolean readOnly) {
-		getStateHelper().put(PropertyKeys.readOnly, readOnly);
+    @Override
+	public void setReadonly(final boolean readonly) {
+		getStateHelper().put(PropertyKeys.readonly, readonly);
 	}
 
 	public String getToolbar() {
