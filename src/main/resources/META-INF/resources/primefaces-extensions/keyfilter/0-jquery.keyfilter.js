@@ -130,25 +130,6 @@
 		});
 	};
 
-	/**
-	* Call when regExAll is define.
-	*/
-	$.fn.inputFilter = function(re)
-	{
-		var previousValue;
-		return this.on('input', function(e)
-		{
-			var ok = re.test(this.value);
-			
-			if(ok) {
-				previousValue = this.value;
-			}
-			else {
-				e.currentTarget.value = previousValue || '';
-			}
-		});
-	}
-
 	$.extend($.fn.keyfilter, {
 		defaults: {
 			masks: defaultMasks
