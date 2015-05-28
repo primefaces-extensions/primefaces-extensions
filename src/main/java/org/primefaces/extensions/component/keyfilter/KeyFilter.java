@@ -62,6 +62,7 @@ public class KeyFilter extends UIComponentBase implements Widget {
 		widgetVar,
 		forValue("for"),
 		regEx,
+		inputRegEx,
 		mask,
 		testFunction,
 		preventPaste;
@@ -112,6 +113,14 @@ public class KeyFilter extends UIComponentBase implements Widget {
 
 	public void setRegEx(final String regEx) {
 		getStateHelper().put(PropertyKeys.regEx, regEx);
+	}
+
+	public String getInputRegEx() {
+		return (String) getStateHelper().eval(PropertyKeys.inputRegEx, null);
+	}
+
+	public void setInputRegEx(final String inputRegEx) {
+		getStateHelper().put(PropertyKeys.inputRegEx, inputRegEx);
 	}
 
 	public String getMask() {
