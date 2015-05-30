@@ -42,7 +42,6 @@
                         <!-- These are folders whose resources are merged into one big CSS and JS file. -->
                         <exclude>**/META-INF/resources/**/core/**</exclude>
                         <exclude>**/META-INF/resources/**/ckeditor/**</exclude>
-                        <exclude>**/META-INF/resources/**/ajaxerrorhandler/**</exclude>
                         <exclude>**/META-INF/resources/**/spotlight/**</exclude>
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>
@@ -113,7 +112,6 @@
                             <includes>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>ajaxerrorhandler/ajaxerrorhandler.css</include>
                                 <include>inputnumber/inputnumber.css</include>
                                 <include>gchart/gchart.css</include>
                             </includes>
@@ -132,7 +130,6 @@
                         <resourcesSet>
                             <includes>
                                 <include>core/core.js</include>
-                                <include>ajaxerrorhandler/ajaxerrorhandler.js</include>
                                 <include>spotlight/spotlight.js</include>
                                 <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>

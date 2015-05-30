@@ -131,10 +131,6 @@
         <component-class>org.primefaces.extensions.component.inputnumber.InputNumber</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.AjaxErrorHandler</component-type>
-        <component-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandler</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Waypoint</component-type>
         <component-class>org.primefaces.extensions.component.waypoint.Waypoint</component-class>
     </component>
@@ -291,11 +287,6 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.AjaxErrorHandlerRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.ajaxerrorhandler.AjaxErrorHandlerRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.WaypointRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.waypoint.WaypointRenderer</renderer-class>
         </renderer>
@@ -345,9 +336,5 @@
             <client-behavior-renderer-class>org.primefaces.extensions.behavior.javascript.JavascriptBehaviorRenderer</client-behavior-renderer-class>
         </client-behavior-renderer>
     </render-kit>
-
-    <!--<factory>-->
-    <!--<exception-handler-factory>org.primefaces.extensions.component.ajaxerrorhandler.AjaxExceptionHandlerFactory</exception-handler-factory>-->
-    <!--</factory>-->
-
+    
 </faces-config>
