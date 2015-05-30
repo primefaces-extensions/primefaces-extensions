@@ -43,7 +43,7 @@ public class CKEditorRenderer extends InputRenderer {
     public void decode(final FacesContext context, final UIComponent component) {
         final CKEditor ckEditor = (CKEditor) component;
 
-        if (ckEditor.isReadOnly()) {
+        if (ckEditor.isReadonly()) {
             return;
         }
 
@@ -100,7 +100,7 @@ public class CKEditorRenderer extends InputRenderer {
                 .attr("width", ckEditor.getWidth())
                 .attr("skin", ckEditor.getSkin())
                 .attr("toolbar", ckEditor.getToolbar())
-                .attr("readOnly", ckEditor.isReadOnly())
+                .attr("readOnly", ckEditor.isReadonly())
                 .attr("interfaceColor", ckEditor.getInterfaceColor())
                 .attr("language", ckEditor.getLanguage())
                 .attr("defaultLanguage", ckEditor.getDefaultLanguage())

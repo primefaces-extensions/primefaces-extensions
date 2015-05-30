@@ -91,7 +91,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 		firstLineNumber,
 		gutter,
 		fixedGutter,
-		readOnly,
+		readonly,
 		matchBrackets,
 		workTime,
 		workDelay,
@@ -211,12 +211,14 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 		getStateHelper().put(PropertyKeys.smartIndent, smartIndent);
 	}
 
-	public Boolean isReadOnly() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.readOnly, false);
+    @Override
+	public boolean isReadonly() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.readonly, false);
 	}
 
-	public void setReadOnly(final Boolean readOnly) {
-		getStateHelper().put(PropertyKeys.readOnly, readOnly);
+    @Override
+	public void setReadonly(final boolean readonly) {
+		getStateHelper().put(PropertyKeys.readonly, readonly);
 	}
 
 	public Boolean isIndentWithTabs() {

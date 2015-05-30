@@ -35,6 +35,18 @@ PrimeFacesExt.widget.KeyFilter = PrimeFaces.widget.BaseWidget.extend({
 	applyKeyFilter : function(input, cfg) {
 		if (this.cfg.regEx) {
 			input.keyfilter(this.cfg.regEx);
+		} else if(this.cfg.inputRegEx) {
+			var inputRegEx = this.cfg.inputRegEx;
+		 	var previousInputValue = '';
+			input.on('input', function(e) {
+				var ok = inputRegEx.test(this.value);
+				if(ok) {
+					previousInputValue = this.value;
+				}
+				else {
+					this.value = previousInputValue;
+				}
+			});
 		} else if (this.cfg.testFunction) {
 			input.keyfilter(this.cfg.testFunction);
 		} else if (this.cfg.mask) {

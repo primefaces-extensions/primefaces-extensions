@@ -47,7 +47,7 @@ public class CodeMirrorRenderer extends InputRenderer {
     public void decode(final FacesContext facesContext, final UIComponent component) {
         final CodeMirror codeMirror = (CodeMirror) component;
 
-        if (codeMirror.isReadOnly()) {
+        if (codeMirror.isReadonly()) {
             return;
         }
 
@@ -129,7 +129,7 @@ public class CodeMirrorRenderer extends InputRenderer {
                 .attr("firstLineNumber", codeMirror.getFirstLineNumber())
                 .attr("gutter", codeMirror.isGutter())
                 .attr("fixedGutter", codeMirror.isFixedGutter())
-                .attr("readOnly", codeMirror.isReadOnly())
+                .attr("readOnly", codeMirror.isReadonly())
                 .attr("matchBrackets", codeMirror.isMatchBrackets())
                 .attr("workTime", codeMirror.getWorkTime())
                 .attr("workDelay", codeMirror.getWorkDelay())
