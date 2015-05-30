@@ -18,12 +18,12 @@
 
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
+import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
+import org.primefaces.extensions.util.ExtWidgetBuilder;
+import org.primefaces.renderkit.SelectManyRenderer;
+import org.primefaces.util.HTML;
+
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -34,11 +34,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
-import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
-import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
-import org.primefaces.renderkit.SelectManyRenderer;
-import org.primefaces.util.HTML;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * TriStateManyCheckboxRenderer
@@ -332,6 +333,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 	}
 
 	@Override
+    @SuppressWarnings("unchecked")
 	protected Map<String, Object> getValues(UIComponent component) {
 		UISelectMany selectMany = (UISelectMany) component;
 		Object value = selectMany.getValue();

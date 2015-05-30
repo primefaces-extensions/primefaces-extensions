@@ -1,10 +1,8 @@
 package org.primefaces.extensions.component.gchart.model;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.primefaces.extensions.util.json.GsonConverter;
-import org.primefaces.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,8 +57,8 @@ class DefaultGChartModel implements GChartModel{
         return GsonConverter.getGson().toJson(root);
     }
 
+    @SuppressWarnings("unchecked")
     protected JsonElement extractData() {
-
         Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
 
         dataTable.add((Collection<Object>)(Collection<?>)this.getColumns());
