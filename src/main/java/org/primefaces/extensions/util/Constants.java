@@ -28,16 +28,9 @@ package org.primefaces.extensions.util;
 public final class Constants {
 
 	public static final String LIBRARY = "primefaces-extensions";
-	public static final String LIBRARY_UNCOMPRESSED = "primefaces-extensions-uncompressed";
-
-	public static final String DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM =
-			"org.primefaces.extensions.DELIVER_UNCOMPRESSED_RESOURCES";
 
 	public static final String EXTENSION_CSS = ".css";
 	public static final String EXTENSION_JS = ".js";
-
-	public static final String RENDERER_TYPE_SCRIPT = "javax.faces.resource.Script";
-	public static final String RENDERER_TYPE_STYLESHEET = "javax.faces.resource.Stylesheet";
 
 	/**
 	 * Avoid instantiation.

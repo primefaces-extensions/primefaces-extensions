@@ -18,10 +18,7 @@
 
 package org.primefaces.extensions.config;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-
-import org.primefaces.extensions.util.Constants;
 
 /**
  * Container for all config parameters.
@@ -32,22 +29,9 @@ import org.primefaces.extensions.util.Constants;
  */
 public class ConfigContainer {
 
-	private boolean deliverUncompressedResources = true;
-
-	/**
-	 * Avoid instantiation.
-	 */
-	public ConfigContainer(final FacesContext context) {
-		final ExternalContext externalContext = context.getExternalContext();
-
-		final String deliverUncompressedResourcesStringValue =
-				externalContext.getInitParameter(Constants.DELIVER_UNCOMPRESSED_RESOURCES_INIT_PARAM);
-		if (deliverUncompressedResourcesStringValue != null) {
-			deliverUncompressedResources = Boolean.valueOf(deliverUncompressedResourcesStringValue);
-		}
-	}
-
-	public boolean isDeliverUncompressedResources() {
-		return deliverUncompressedResources;
-	}
+    /**
+     * Avoid instantiation.
+     */
+    public ConfigContainer(final FacesContext context) {
+    }
 }

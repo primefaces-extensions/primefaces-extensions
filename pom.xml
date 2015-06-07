@@ -53,32 +53,10 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${resources.dir.uncompressed}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-optimizer-maven-plugin</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
                 <configuration>
-                    <createSourceMap>true</createSourceMap>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
@@ -101,11 +79,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
-                                </aggregation>
-                                <aggregation>
-                                    <withoutCompress>true</withoutCompress>
-                                    <inputDir>${resources.dir.uncompressed}</inputDir>
-                                    <subDirMode>true</subDirMode>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -120,11 +94,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/primefaces-extensions.css</outputFile>
-                                </aggregation>
-                                <aggregation>
-                                    <withoutCompress>true</withoutCompress>
-                                    <inputDir>${resources.dir.uncompressed}</inputDir>
-                                    <outputFile>${resources.dir.uncompressed}/primefaces-extensions.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -143,38 +113,12 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/primefaces-extensions.js</outputFile>
-                                </aggregation>
-                                <aggregation>
-                                    <withoutCompress>true</withoutCompress>
-                                    <inputDir>${resources.dir.uncompressed}</inputDir>
-                                    <outputFile>${resources.dir.uncompressed}/primefaces-extensions.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
                     </resourcesSets>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>${project.name}-sourcemap-${project.version}</finalName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>package-all</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/create-sourcemap.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
@@ -240,4 +184,9 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    
+    <properties>
+        <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
+        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/</sourceMap.sourceMapRoot>
+    </properties>
 </project>
