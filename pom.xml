@@ -187,6 +187,6 @@
     
     <properties>
         <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
-        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/</sourceMap.sourceMapRoot>
+        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>
     </properties>
 </project>
