@@ -34,7 +34,7 @@ PrimeFacesExt = {
     getFacesResource: function (name, library, version) {
         var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
 
-        scriptURI = scriptURI.replace('/primefaces-extensions.js', name);
+        scriptURI = scriptURI.replace('primefaces-extensions.js', name);
 
         if (PrimeFacesExt.useUncompressedResources) {
             scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED, 'ln=' + library);
