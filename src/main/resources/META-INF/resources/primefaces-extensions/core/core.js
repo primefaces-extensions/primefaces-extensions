@@ -34,6 +34,11 @@ PrimeFacesExt = {
     getFacesResource: function (name, library, version) {
         var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
 
+        if (name.indexOf('/') === 0)
+        {
+            name = name.substring(1, name.length);
+        }
+
         scriptURI = scriptURI.replace('primefaces-extensions.js', name);
 
         if (PrimeFacesExt.useUncompressedResources) {
@@ -199,11 +204,11 @@ PrimeFacesExt = {
             PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
         } else {
             if (hasStyleSheet) {
-                var cssResource = PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
+                var cssResource = PrimeFacesExt.getPrimeFacesExtensionsResource(widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
                 $('head').append(cssResource);
             }
 
-            var script = PrimeFacesExt.getPrimeFacesExtensionsResource('/' + widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
+            var script = PrimeFacesExt.getPrimeFacesExtensionsResource(widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
 
             //load script
             PrimeFaces.getScript(script, function () {

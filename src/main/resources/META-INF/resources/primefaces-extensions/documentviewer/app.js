@@ -771,7 +771,7 @@ document.webL10n = (function(window, document, undefined) {
             }
             if (reImport.test(line)) { // @import rule?
               match = reImport.exec(line);
-              var url = window.parent.PrimeFacesExt.getFacesResource('/documentviewer/locale/' + match[1],'primefaces-extensions-uncompressed','${project.version}');
+              var url = window.parent.PrimeFacesExt.getFacesResource('documentviewer/locale/' + match[1],'primefaces-extensions-uncompressed','${project.version}');
               loadImport(url); // load the resource synchronously
             }
           }
@@ -6103,7 +6103,7 @@ var WorkerTransport = (function WorkerTransportClosure() {
     // as it arrives on the worker. Chrome added this with version 15.
     if (!globalScope.PDFJS.disableWorker && typeof Worker !== 'undefined') {
       var workerSrc = PDFJS.workerSrc;
-      
+
       if (!workerSrc) {
         error('No PDFJS.workerSrc specified');
       }
@@ -6111,7 +6111,7 @@ var WorkerTransport = (function WorkerTransportClosure() {
       try {
         // Some versions of FF can't create a worker on localhost, see:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=683280
-	      workerSrc = window.parent.PrimeFacesExt.getFacesResource('/documentviewer/pdf.worker.js','primefaces-extensions-uncompressed','${project.version}');
+	      workerSrc = window.parent.PrimeFacesExt.getFacesResource('documentviewer/pdf.worker.js','primefaces-extensions-uncompressed','${project.version}');
         var worker = new Worker(workerSrc);
         var messageHandler = new MessageHandler('main', worker);
         this.messageHandler = messageHandler;
@@ -11282,7 +11282,7 @@ var PDFFindController = {
         if (!this.hadMatch) {
           // No point in wrapping there were no matches.
           this.updateMatch(false);
-          // while matches were not found, searching for a page 
+          // while matches were not found, searching for a page
           // with matches should nevertheless halt.
           return true;
         }
@@ -12565,7 +12565,7 @@ var DocumentProperties = {
 
   parseDate: function documentPropertiesParseDate(inputDate) {
     // This is implemented according to the PDF specification (see
-    // http://www.gnupdf.org/Date for an overview), but note that 
+    // http://www.gnupdf.org/Date for an overview), but note that
     // Adobe Reader doesn't handle changing the date to universal time
     // and doesn't use the user's time zone (they're effectively ignoring
     // the HH' and mm' parts of the date string).

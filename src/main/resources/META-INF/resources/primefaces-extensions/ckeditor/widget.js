@@ -1,6 +1,6 @@
 /**
  * Resolves the resources for the CKEditor.
- * 
+ *
  * @param {string} resource The requested resource from CKEditor.
  * @returns {string} The faces resource URL.
  */
@@ -43,7 +43,7 @@ CKEDITOR_GETURL = function(resource) {
             }
         } else {
             if (resource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER) === -1) {
-                facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/' + resource);
+                facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('ckeditor/' + resource);
             }
             else {
                 facesResource = resource;
@@ -56,14 +56,14 @@ CKEDITOR_GETURL = function(resource) {
 
 /**
  * PrimeFaces Extensions CKEditor Widget.
- * 
+ *
  * @author Thomas Andraschko
  */
 PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
-	
+
 	/**
 	 * Initializes the widget.
-	 * 
+	 *
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
@@ -119,7 +119,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
                     PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/ckeditor.js');
 
                 var jQueryAdapterScriptURI =
-                    PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/adapters/jquery.js');		
+                    PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/adapters/jquery.js');
 
                 //load ckeditor
                 PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
@@ -141,7 +141,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	/**
 	 * Initializes the CKEditor instance.
 	 * This method will be called when the resources for the CKEditor are loaded.
-	 * 
+	 *
 	 * @private
 	 */
 	_render : function() {
@@ -187,7 +187,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 						    	var options = {
 						    			params: []
 						    	};
-	
+
 						    	saveCallback.call(widget, options);
 						    }
 						}
@@ -198,9 +198,9 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 			}
 		};
 	},
-            
+
     /**
-     * This method will be called when the CKEditor was initialized. 
+     * This method will be called when the CKEditor was initialized.
      *
      * @private
      */
@@ -210,7 +210,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         //fire initialize event
         this.fireEvent('initialize');
-		
+
         //register blur and focus event
         this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
         this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
@@ -219,19 +219,19 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
     	this.instance.on('contentDom', $.proxy(function() {
     		this.fireEvent('wysiwygMode');
       	}, this));
- 
+
     	//changes to source mode
     	this.instance.on('mode', $.proxy(function(event) {
                 if (this.instance.mode != 'source') {
-                        return;    	
+                        return;
                 }
                 this.fireEvent('sourceMode');
             }, this));
-	
+
         //check dirty- and changed events
         this.isDirtyEventDefined = (this.cfg.behaviors && this.cfg.behaviors['dirty']) ? true : false;
         this.isChangeEventDefined = (this.cfg.behaviors && this.cfg.behaviors['change']) ? true : false;
-    
+
         var editable = this.instance.editable();
         editable.attachListener(editable, 'cut', $.proxy(function(event) {
                 this.checkChange();
@@ -239,7 +239,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }, this));
         editable.attachListener(editable, 'paste', $.proxy(function(event) {
                 this.checkChange();
-                this.checkDirty();                
+                this.checkDirty();
         }, this));
         editable.attachListener(editable, 'keydown', $.proxy(function(event) {
             // do not capture ctrl and meta keys
@@ -290,7 +290,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
             this.fireEvent('change');
         }
     },
-                
+
 	/**
 	 * This method fires an event if the behavior was defined.
 	 *
@@ -324,7 +324,7 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 }
 	        this.instance = null;
 	    }
-	
+
 	    this.jq.show();
 	},
 
