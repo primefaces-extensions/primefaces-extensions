@@ -39,6 +39,12 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.imageWidth) {
                 this.options.imageWidth = this.cfg.imageWidth;
         }
+        if (this.cfg.maxHeight) {
+                this.options.maxHeight = this.cfg.maxHeight;
+        }
+        if (this.cfg.maxWidth) {
+                this.options.maxWidth = this.cfg.maxWidth;
+        }
         if (this.cfg.movable) {
                 this.options.movable = this.cfg.movable;
         }
