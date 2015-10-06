@@ -22,7 +22,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 
@@ -76,6 +75,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		maxValue,
 		roundMethod,
 		decimalPlaces,
+                labelledBy,
 		emptyValue;
 		String toString;
 
@@ -93,7 +93,7 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 	}
 
 	public InputNumber() {
-		setRendererType(DEFAULT_RENDERER);     
+		setRendererType(DEFAULT_RENDERER);
 		decimalSeparator = null;
 		thousandSeparator = null;
 	}
@@ -183,33 +183,44 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		getStateHelper().put(PropertyKeys.emptyValue, emptyValue);
 	}
 
+        @Override
+        public void setLabelledBy(String labelledBy) {
+            getStateHelper().put(PropertyKeys.labelledBy, labelledBy);
+        }
+
+        @Override
+        public String getLabelledBy() {
+            return (String) getStateHelper().get(PropertyKeys.labelledBy);
+        }
+
 	public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+            return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
 
 	private String getCalculatedDecimalSepartor(){
-		if(decimalSeparator==null){
+		if (decimalSeparator==null){
 			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);               
+			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
 			decimalSeparator = Character.toString(decimalFormatSymbols.getDecimalSeparator());
 		}
 		return decimalSeparator;
 	}
 
 	private String getCalculatedThousandSeparator(){
-		if(thousandSeparator==null){               
-			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();                
+		if (thousandSeparator==null){
+			Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 			DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(locale);
-			thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());              
+			thousandSeparator =  Character.toString(decimalFormatSymbols.getGroupingSeparator());
 		}
-		return thousandSeparator;           
+		return thousandSeparator;
 	}
 
+        @Override
 	public String getInputClientId() {
 		return getClientId() + "_input";
 	}
-    
 
+    @Override
     public String getValidatableInputClientId() {
         return getClientId() + "_hinput";
     }

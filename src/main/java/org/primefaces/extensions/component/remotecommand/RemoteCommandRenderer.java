@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.remotecommand;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.component.base.AbstractParameter;
 import org.primefaces.extensions.component.parameters.AssignableParameter;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -37,6 +36,7 @@ import javax.faces.event.PhaseId;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.primefaces.util.ComponentTraversalUtils;
 
 /**
  * Renderer for the {@link RemoteCommand} component.
@@ -88,7 +88,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final UIComponent form = ComponentUtils.findParentForm(context, component);
+        final UIComponent form = ComponentTraversalUtils.closestForm(context, component);
 
         if (form == null) {
             throw new FacesException("Component " + component.getClientId(context)

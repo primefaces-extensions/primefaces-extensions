@@ -8,7 +8,6 @@ import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import org.primefaces.util.ComponentUtils;
 
@@ -59,7 +58,8 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         ,visible
         ,forward
         ,formatFunction,
-        partialSubmitFilter;
+        partialSubmitFilter,
+        form;
 
         String toString;
 
@@ -285,6 +285,13 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
 		getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
 	}
 
+	public java.lang.String getForm() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.form, null);
+	}
+	public void setForm(java.lang.String _form) {
+		getStateHelper().put(PropertyKeys.form, _form);
+	}
+        
     public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
         super.broadcast(event); //backward compatibility
 

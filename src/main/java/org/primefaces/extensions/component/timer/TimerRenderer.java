@@ -5,7 +5,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
-import org.primefaces.util.ComponentUtils;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -14,6 +13,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 import java.io.IOException;
+import org.primefaces.util.ComponentTraversalUtils;
 
 /**
  * Renderer for {@link Timer}
@@ -64,7 +64,7 @@ public class TimerRenderer extends CoreRenderer {
         String clientId = timer.getClientId(context);
         String widgetVar = timer.resolveWidgetVar();
 
-        UIComponent form = ComponentUtils.findParentForm(context, timer);
+        UIComponent form = ComponentTraversalUtils.closestForm(context, timer);
         if(form == null) {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }

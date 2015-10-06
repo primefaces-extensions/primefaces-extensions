@@ -18,7 +18,6 @@
 
 package org.primefaces.extensions.component.masterdetail;
 
-import org.primefaces.util.ComponentUtils;
 
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
@@ -33,6 +32,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.primefaces.util.ComponentTraversalUtils;
 
 /**
  * {@link ComponentSystemEventListener} for components with attached <code>SelectDetailLevel</code>.
@@ -192,9 +192,9 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 			}
 		}
 	}
-    
+
     private String createUniqueId(FacesContext fc, UIComponent source) {
-        UniqueIdVendor parentUniqueIdVendor = ComponentUtils.findParentUniqueIdVendor(source);
+        UniqueIdVendor parentUniqueIdVendor = ComponentTraversalUtils.closestUniqueIdVendor(source);
 
         if (parentUniqueIdVendor == null) {
             UIViewRoot viewRoot = fc.getViewRoot();
@@ -204,8 +204,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
             } else {
                 throw new FacesException("Cannot create Id for UIParameter attached to " + source.getClass().getCanonicalName());
             }
-        }        
-        
+        }
+
         return parentUniqueIdVendor.createUniqueId(fc, null);
     }
 }

@@ -84,7 +84,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 		ignoreAutoUpdate,
         delay,
         timeout,
-        partialSubmitFilter;
+        partialSubmitFilter,
+        form;
 
 		private String toString;
 
@@ -209,7 +210,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public boolean isPartialSubmitSet() {
 		return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
 	}
-	
+
 	public boolean isResetValues() {
 		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.resetValues, false);
 	}
@@ -217,7 +218,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public void setResetValues(boolean resetValues) {
 		getStateHelper().put(PropertyKeys.resetValues, resetValues);
 	}
-	
+
 	public boolean isIgnoreAutoUpdate() {
 		return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.ignoreAutoUpdate, false);
 	}
@@ -237,7 +238,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public void setDelay(java.lang.String delay) {
 		getStateHelper().put(PropertyKeys.delay, delay);
 	}
-        
+
 	public int getTimeout() {
 		return (java.lang.Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
 	}
@@ -245,14 +246,21 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	public void setTimeout(int timeout) {
 		getStateHelper().put(PropertyKeys.timeout, timeout);
 	}
-    
+
 	public java.lang.String getPartialSubmitFilter() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.partialSubmitFilter, null);
 	}
 	public void setPartialSubmitFilter(java.lang.String _partialSubmitFilter) {
 		getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
 	}
-    
+
+	public java.lang.String getForm() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.form, null);
+	}
+	public void setForm(java.lang.String _form) {
+		getStateHelper().put(PropertyKeys.form, _form);
+	}
+
 	@Override
 	public void broadcast(final FacesEvent event) throws AbortProcessingException {
 		for (FacesListener listener : getFacesListeners(FacesListener.class)) {

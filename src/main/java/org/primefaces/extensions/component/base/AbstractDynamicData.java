@@ -21,7 +21,6 @@ package org.primefaces.extensions.component.base;
 import org.primefaces.extensions.event.EventDataWrapper;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.util.SavedEditableValueState;
-import org.primefaces.util.ComponentUtils;
 
 import javax.faces.FacesException;
 import javax.faces.application.Application;
@@ -45,6 +44,7 @@ import javax.faces.event.PostValidateEvent;
 import javax.faces.event.PreValidateEvent;
 import javax.faces.render.Renderer;
 import java.util.Map;
+import org.primefaces.util.ComponentTraversalUtils;
 
 /**
  * Abstract base class for all components with dynamic behavior like UIData.
@@ -197,7 +197,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
         String id = getId();
         if (id == null) {
-            UniqueIdVendor parentUniqueIdVendor = ComponentUtils.findParentUniqueIdVendor(this);
+            UniqueIdVendor parentUniqueIdVendor = ComponentTraversalUtils.closestUniqueIdVendor(this);
 
             if (parentUniqueIdVendor == null) {
                 UIViewRoot viewRoot = context.getViewRoot();
@@ -214,7 +214,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             this.setId(id);
         }
 
-        UIComponent namingContainer = ComponentUtils.findParentNamingContainer(this);
+        UIComponent namingContainer = ComponentTraversalUtils.closestNamingContainer(this);
         if (namingContainer != null) {
             String containerClientId = namingContainer.getContainerClientId(context);
 
