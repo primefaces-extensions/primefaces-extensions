@@ -200,6 +200,8 @@ PrimeFacesExt = {
      * @param {boolean} hasStyleSheet If the css file should be loaded as well.
      */
     createWidget: function (widgetName, widgetVar, cfg, hasStyleSheet) {
+        cfg.widgetVar = widgetVar;
+
         if (PrimeFacesExt.widget[widgetName]) {
             PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
         } else {

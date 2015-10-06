@@ -157,7 +157,8 @@ public class InputNumberRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final InputNumber inputNumber) throws IOException {
-        String valueToRender = ComponentUtils.getValueToRender(context, inputNumber);
+        Object value = inputNumber.getValue();
+        String valueToRender = ComponentUtils.getValueToRender(context, inputNumber, value);
         if (valueToRender == null) {
             valueToRender = "";
         }
@@ -165,7 +166,7 @@ public class InputNumberRenderer extends InputRenderer {
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
         wb.initWithDomReady(InputNumber.class.getSimpleName(), inputNumber.resolveWidgetVar(), inputNumber.getClientId());
         wb.attr("disabled", inputNumber.isDisabled())
-                .attr("valueToRender", formatForPlugin(valueToRender, inputNumber));
+                .attr("valueToRender", formatForPlugin(valueToRender, inputNumber, value));
 
         String metaOptions = getOptions(inputNumber);
         if (!metaOptions.isEmpty()) {
@@ -213,7 +214,7 @@ public class InputNumberRenderer extends InputRenderer {
 
     }
 
-    private String formatForPlugin(final String valueToRender, final InputNumber inputNumber) {
+    private String formatForPlugin(final String valueToRender, final InputNumber inputNumber, final Object value) {
 
         if (valueToRender == null || valueToRender.isEmpty()) {
             return "";
@@ -221,7 +222,7 @@ public class InputNumberRenderer extends InputRenderer {
 
             try {
                 Object objectToRender;
-                if (inputNumber.getValue() instanceof BigDecimal) {
+                if (value instanceof BigDecimal) {
                     objectToRender = new BigDecimal(valueToRender);
                 } else {
                     objectToRender = new Double(valueToRender);

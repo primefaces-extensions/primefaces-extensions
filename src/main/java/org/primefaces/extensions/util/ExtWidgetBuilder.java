@@ -38,7 +38,7 @@ public class ExtWidgetBuilder extends WidgetBuilder {
 
 		return wb;
 	}
-    
+
     public ExtWidgetBuilder(FacesContext context) {
         super(context);
     }
@@ -46,7 +46,7 @@ public class ExtWidgetBuilder extends WidgetBuilder {
     protected WidgetBuilder init(String widgetClass, String widgetVar, String id, String resourcePath, boolean endFunction) throws IOException {
     	this.resourcePath = resourcePath;
     	this.endFunction = endFunction;
-    	
+
         context.getResponseWriter().write("PrimeFacesExt.cw(\"");
         context.getResponseWriter().write(widgetClass);
         context.getResponseWriter().write("\",\"");
@@ -54,13 +54,7 @@ public class ExtWidgetBuilder extends WidgetBuilder {
         context.getResponseWriter().write("\",{");
         context.getResponseWriter().write("id:\"");
         context.getResponseWriter().write(id);
-        if (widgetVar == null) {
-        	context.getResponseWriter().write("\"");
-        } else {
-	        context.getResponseWriter().write("\",widgetVar:\"");
-	        context.getResponseWriter().write(widgetVar);
-	        context.getResponseWriter().write("\"");
-        }
+        context.getResponseWriter().write("\"");
 
         return this;
     }
