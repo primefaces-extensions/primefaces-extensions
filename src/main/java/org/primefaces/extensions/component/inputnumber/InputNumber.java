@@ -76,7 +76,9 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
 		roundMethod,
 		decimalPlaces,
                 labelledBy,
-		emptyValue;
+		emptyValue,
+                type;
+
 		String toString;
 
 		PropertyKeys(final String toString) {
@@ -192,6 +194,14 @@ public class InputNumber extends HtmlInputText implements Widget, InputHolder {
         public String getLabelledBy() {
             return (String) getStateHelper().get(PropertyKeys.labelledBy);
         }
+
+	public String getType() {
+		return (String) getStateHelper().eval(PropertyKeys.type, "text");
+	}
+
+	public void setType(final String type) {
+		getStateHelper().put(PropertyKeys.type, type);
+	}
 
 	public String resolveWidgetVar() {
             return ComponentUtils.resolveWidgetVar(getFacesContext(), this);

@@ -139,7 +139,7 @@ public class InputNumberRenderer extends InputRenderer {
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", "text", null);
+        writer.writeAttribute("type", inputNumber.getType(), null);
 
         renderPassThruAttributes(context, inputNumber, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
         renderDomEvents(context, inputNumber, HTML.INPUT_TEXT_EVENTS);

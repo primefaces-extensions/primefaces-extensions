@@ -4029,6 +4029,13 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+            <defaultValue>text</defaultValue>
+            <description>Input field type. Default is text.</description>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Util tag to import constants.]]>
