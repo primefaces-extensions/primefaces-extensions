@@ -59,7 +59,7 @@ public class InputNumberRenderer extends InputRenderer {
             return converter.getAsObject(context, component, submittedValueString);
         }
 
-        return null;
+        return submittedValue;
     }
 
     @Override
