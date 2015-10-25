@@ -18,9 +18,9 @@
 
 package org.primefaces.extensions.component.dynaform;
 
-import javax.faces.component.UIComponentBase;
-
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
+
+import javax.faces.component.UIComponentBase;
 
 /**
  * <code>UIDynaFormControl</code> component.
@@ -44,6 +44,7 @@ public class UIDynaFormControl extends UIComponentBase {
 
 		type,
 		forVal("for"),
+        style,
 		styleClass;
 
 		private String toString;
@@ -85,6 +86,14 @@ public class UIDynaFormControl extends UIComponentBase {
 	public void setFor(final String forValue) {
 		getStateHelper().put(PropertyKeys.forVal, forValue);
 	}
+    
+    public void setStyle(final String style) {
+   		getStateHelper().put(PropertyKeys.style, style);
+   	}
+   
+   	public String getStyle() {
+   		return (String) getStateHelper().eval(PropertyKeys.style, null);
+   	}
 
 	public void setStyleClass(final String styleClass) {
 		getStateHelper().put(PropertyKeys.styleClass, styleClass);

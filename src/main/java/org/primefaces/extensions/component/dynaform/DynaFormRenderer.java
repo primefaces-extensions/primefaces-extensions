@@ -18,15 +18,6 @@
 
 package org.primefaces.extensions.component.dynaform;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Logger;
-
-import javax.faces.component.EditableValueHolder;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
@@ -34,6 +25,14 @@ import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
+
+import javax.faces.component.EditableValueHolder;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -256,6 +255,10 @@ public class DynaFormRenderer extends CoreRenderer {
 
 					// find control's cell by type
 					UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+                    
+                    if (cell.getStyle() != null) {
+                        writer.writeAttribute("style", cell.getStyle(), null);
+                    }
 
 					if (cell.getStyleClass() != null) {
 						styleClass = styleClass + " " + cell.getStyleClass();
@@ -267,7 +270,7 @@ public class DynaFormRenderer extends CoreRenderer {
 					cell.encodeAll(fc);
 				}
 
-				writer.endElement("td");
+                writer.endElement("td");
 			}
 
 			writer.endElement("tr");

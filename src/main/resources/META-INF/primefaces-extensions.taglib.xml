@@ -765,6 +765,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Style of the container element for this control. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Style class of the container element for this control. Default value is null.]]>
             </description>
             <name>styleClass</name>
