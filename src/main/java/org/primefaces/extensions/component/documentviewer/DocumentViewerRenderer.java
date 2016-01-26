@@ -68,6 +68,10 @@ public class DocumentViewerRenderer extends CoreRenderer {
         if(documentViewer.getPage() != null){
             params.add("page="+documentViewer.getPage());
         }
+		
+		if(documentViewer.getZoom() != null){
+            params.add("zoom=" + documentViewer.getZoom());
+        }
 
         if(!params.isEmpty()){
             return "#" + StringUtils.join(params, "&");

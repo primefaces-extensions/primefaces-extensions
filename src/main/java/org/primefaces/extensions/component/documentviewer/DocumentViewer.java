@@ -23,7 +23,8 @@ public class DocumentViewer extends UIGraphic {
         library,
         cache,
         page,
-        locale;
+        locale,
+		zoom;
     }
 
     public DocumentViewer(){
@@ -98,4 +99,11 @@ public class DocumentViewer extends UIGraphic {
 		getStateHelper().put(PropertyKeys.locale, _locale);
 	}
 
+	public void setZoom(String zoom) {
+		getStateHelper().put(PropertyKeys.zoom, zoom);
+	}
+	
+	public String getZoom() {
+		return (String) getStateHelper().eval(PropertyKeys.zoom, null);
+	}
 }

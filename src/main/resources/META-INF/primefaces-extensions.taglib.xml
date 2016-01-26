@@ -4675,6 +4675,12 @@ This global setting "editable" can be overwritten for individual events by setti
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+		<attribute>
+            <description><![CDATA[Start page of the document.]]></description>
+            <name>zoom</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
         <attribute>
             <description><![CDATA[Name of the document]]></description>
             <name>name</name>
