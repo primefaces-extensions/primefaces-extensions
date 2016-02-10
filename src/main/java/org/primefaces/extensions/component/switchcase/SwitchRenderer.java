@@ -58,6 +58,9 @@ public class SwitchRenderer extends CoreRenderer {
 						|| caseComponent.getValue().equals(switchComponent.getValue())) {
 
 					caseToRender = caseComponent;
+					if (caseToRender != null || defaultCase != null) {
+						break;
+					}
 				}
 
 			} else if (child instanceof DefaultCase) {
