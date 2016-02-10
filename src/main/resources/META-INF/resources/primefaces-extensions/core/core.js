@@ -86,10 +86,9 @@ PrimeFacesExt = {
     },
 
     /**
-     * Gets the URL extensions of current included resources. For example: jsf/xhtml.
+     * Gets the URL extensions of current included resources. For example: jsf or xhtml.
      * This should only be used if extensions mapping is used.
      *
-     * @author Thomas Andraschko
      * @returns {string} The URL extension.
      */
     getResourceUrlExtension: function () {
@@ -126,9 +125,9 @@ PrimeFacesExt = {
      */
     getPrimeFacesExtensionsScriptURI: function () {
         if (!PrimeFacesExt.SCRIPT_URI) {
-            PrimeFacesExt.SCRIPT_URI = $('script[src*="/' + PrimeFacesExt.RESOURCE_IDENTIFIER + '/primefaces-extensions.js"]').attr('src');
+            PrimeFacesExt.SCRIPT_URI = $('script[src*="/' + PrimeFaces.RESOURCE_IDENTIFIER + '/primefaces-extensions.js"]').attr('src');
             if (!PrimeFacesExt.SCRIPT_URI) {
-                PrimeFacesExt.SCRIPT_URI = $('script[src*="' + PrimeFacesExt.RESOURCE_IDENTIFIER + '=primefaces-extensions.js"]').attr('src');
+                PrimeFacesExt.SCRIPT_URI = $('script[src*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=primefaces-extensions.js"]').attr('src');
             }
         }
 
@@ -234,15 +233,6 @@ PrimeFacesExt = {
     changeTheme: function (newValue) {
         $(document).trigger("PrimeFacesExt.themeChanged", newValue);
     },
-
-    /**
-     * The JSF resource identifier.
-     *
-     * @author Thomas Andraschko
-     * @type {string}
-     * @constant
-     */
-    RESOURCE_IDENTIFIER: 'javax.faces.resource',
 
     /**
      * The name of the PrimeFaces Extensions resource library.

@@ -21,20 +21,20 @@ CKEDITOR_GETURL = function(resource) {
                 //remove append resource from url
                 facesResource = resource.substring(0, resource.length - appendedResource.length);
 
-                var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
+                var resourceIdentiferPosition = facesResource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER);
 
                 if (PrimeFacesExt.isExtensionMapping()) {
                     var extensionMappingPosition = facesResource.lastIndexOf('.' + PrimeFacesExt.getResourceUrlExtension());
 
                     //extract resource
-                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
+                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
                     facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
                 } else {
                     var questionMarkPosition = facesResource.indexOf('?');
 
                     //extract resource
-                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
+                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
                     facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
                 }
@@ -42,7 +42,7 @@ CKEDITOR_GETURL = function(resource) {
                 facesResource = resource;
             }
         } else {
-            if (resource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER) === -1) {
+            if (resource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER) === -1) {
                 facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('ckeditor/' + resource);
             }
             else {
