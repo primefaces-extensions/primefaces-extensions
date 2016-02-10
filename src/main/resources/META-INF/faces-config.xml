@@ -99,10 +99,6 @@
         <component-class>org.primefaces.extensions.component.masterdetail.MasterDetailLevel</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.KeyFilter</component-type>
-        <component-class>org.primefaces.extensions.component.keyfilter.KeyFilter</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Spotlight</component-type>
         <component-class>org.primefaces.extensions.component.spotlight.Spotlight</component-class>
     </component>
@@ -165,10 +161,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.GChart</component-type>
         <component-class>org.primefaces.extensions.component.gchart.GChart</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Knob</component-type>
-        <component-class>org.primefaces.extensions.component.knob.Knob</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.Timer</component-type>
@@ -247,11 +239,6 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.KeyFilterRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.keyfilter.KeyFilterRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.SpotlightRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.spotlight.SpotlightRenderer</renderer-class>
         </renderer>
@@ -319,11 +306,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.GChartRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.gchart.GChartRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.KnobRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.knob.KnobRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
