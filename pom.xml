@@ -64,14 +64,11 @@
                                 <include>layout/**</include>
                                 <include>timepicker/**</include>
                                 <include>tooltip/**</include>
-                                <include>keyfilter/**</include>
-                                <include>inputnumber/**</include>
                                 <include>waypoint/**</include>
                                 <include>timeline/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>qrcode/**</include>
                                 <include>analogclock/**</include>
-                                <include>knob/**</include>
                                 <include>timer/**</include>
                             </includes>
                             <aggregations>
@@ -86,7 +83,6 @@
                             <includes>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>inputnumber/inputnumber.css</include>
                                 <include>gchart/gchart.css</include>
                             </includes>
                             <aggregations>
