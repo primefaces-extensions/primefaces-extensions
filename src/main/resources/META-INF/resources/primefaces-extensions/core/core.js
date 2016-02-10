@@ -23,42 +23,6 @@ PrimeFacesExt = {
     },
 
     /**
-     * Builds a resource URL for given parameters.
-     *
-     * @author Thomas Andraschko
-     * @param {string} name The name of the resource. For example: /core/core.js
-     * @param {string} library The library of the resource. For example: primefaces-extensions
-     * @param {string} version The version of the library. For example: 0.2.0-SNAPSHOT
-     * @returns {string} The resource URL.
-     */
-    getFacesResource: function (name, library, version) {
-        var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
-
-        if (name.indexOf('/') === 0)
-        {
-            name = name.substring(1, name.length);
-        }
-
-        scriptURI = scriptURI.replace('primefaces-extensions.js', name);
-
-        if (PrimeFacesExt.useUncompressedResources) {
-            scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED, 'ln=' + library);
-        } else {
-            scriptURI = scriptURI.replace('ln=' + PrimeFacesExt.RESOURCE_LIBRARY, 'ln=' + library);
-        }
-
-        var extractedVersion = RegExp('[?&]v=([^&]*)').exec(scriptURI)[1];
-        if (version && version.length > 0) {
-            scriptURI = scriptURI.replace('v=' + extractedVersion, 'v=' + version);
-        } else {
-            scriptURI = scriptURI.replace('v=' + extractedVersion, '');
-        }
-
-        var prefix = window.location.protocol + '//' + window.location.host;
-        return scriptURI.indexOf(prefix) >= 0 ? scriptURI : prefix + scriptURI;
-    },
-
-    /**
      * Gets the version of the current PrimeFaces Extensions library.
      *
      * @author Thomas Andraschko
@@ -90,7 +54,7 @@ PrimeFacesExt = {
             resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED;
         }
 
-        return PrimeFacesExt.getFacesResource(name, resourceLibrary, PrimeFacesExt.getPrimeFacesExtensionsVersion());
+        return PrimeFaces.getFacesResource(name, resourceLibrary, PrimeFacesExt.getPrimeFacesExtensionsVersion());
     },
 
     /**
@@ -101,7 +65,7 @@ PrimeFacesExt = {
      * @returns {string} The resource URL.
      */
     getPrimeFacesExtensionsCompressedResource: function (name) {
-        return PrimeFacesExt.getFacesResource(name, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.getPrimeFacesExtensionsVersion());
+        return PrimeFaces.getFacesResource(name, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.getPrimeFacesExtensionsVersion());
     },
 
     /**
