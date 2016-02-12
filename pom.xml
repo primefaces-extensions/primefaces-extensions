@@ -9,7 +9,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>6.0-SNAPSHOT</version>
     <name>primefaces-extensions</name>
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
@@ -151,6 +151,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
+            <version>6.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Component dependencies -->
@@ -179,7 +180,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
+
     <properties>
         <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
         <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>

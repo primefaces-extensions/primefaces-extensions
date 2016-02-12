@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.event;
 
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import java.util.Date;
 
 import javax.faces.component.UIComponent;

@@ -23,7 +23,7 @@ import java.util.Date;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
-import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
  * Event which is triggered when a new timeline event is added.

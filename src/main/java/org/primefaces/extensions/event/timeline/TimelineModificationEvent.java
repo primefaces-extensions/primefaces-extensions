@@ -21,7 +21,7 @@ package org.primefaces.extensions.event.timeline;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
-import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 /**

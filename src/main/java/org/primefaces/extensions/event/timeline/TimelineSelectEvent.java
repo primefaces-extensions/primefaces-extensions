@@ -18,7 +18,7 @@
 
 package org.primefaces.extensions.event.timeline;
 
-import org.primefaces.extensions.event.AbstractAjaxBehaviorEvent;
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import org.primefaces.extensions.model.timeline.TimelineEvent;
 
 import javax.faces.component.UIComponent;
