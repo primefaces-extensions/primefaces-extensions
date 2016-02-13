@@ -9,16 +9,7 @@ PrimeFacesExt = {
      * @returns {string} The URL extensions.
      */
     getRequestUrlExtension: function () {
-        return PrimeFacesExt.getUrlExtension(location.href);
-    },
-
-    /**
-     * Gets the extension of the given URL.
-     *
-     * @author Thomas Andraschko
-     * @returns {string} The URL extensions.
-     */
-    getUrlExtension: function (url) {
+        var url = location.href;
         return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).substr(url.lastIndexOf("."));
     },
 
