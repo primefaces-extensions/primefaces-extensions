@@ -771,7 +771,9 @@ document.webL10n = (function(window, document, undefined) {
             }
             if (reImport.test(line)) { // @import rule?
               match = reImport.exec(line);
-              var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],'primefaces-extensions-uncompressed','${project.version}');
+              var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
+                    window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                    window.parent.PrimeFacesExt.VERSION);
               loadImport(url); // load the resource synchronously
             }
           }
@@ -6111,7 +6113,9 @@ var WorkerTransport = (function WorkerTransportClosure() {
       try {
         // Some versions of FF can't create a worker on localhost, see:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=683280
-        workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js','primefaces-extensions-uncompressed','${project.version}');
+        workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js',
+            window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+            window.parent.PrimeFacesExt.VERSION);
         var worker = new Worker(workerSrc);
         var messageHandler = new MessageHandler('main', worker);
         this.messageHandler = messageHandler;

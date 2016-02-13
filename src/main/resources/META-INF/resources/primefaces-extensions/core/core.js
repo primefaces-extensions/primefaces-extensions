@@ -23,52 +23,6 @@ PrimeFacesExt = {
     },
 
     /**
-     * Gets the version of the current PrimeFaces Extensions library.
-     *
-     * @author Thomas Andraschko
-     * @returns {string} The PrimeFaces Extensions version.
-     */
-    getPrimeFacesExtensionsVersion: function () {
-        if (!PrimeFacesExt.VERSION) {
-            var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
-            var result = RegExp('[?&]v=([^&]*)').exec(scriptURI);
-            if (result && result.length > 0) {
-                PrimeFacesExt.VERSION = result[1];
-            } else {
-                PrimeFacesExt.VERSION = '';
-            }
-        }
-
-        return PrimeFacesExt.VERSION;
-    },
-
-    /**
-     * Builds a resource URL for a PrimeFaces Extensions resource.
-     *
-     * @author Thomas Andraschko
-     * @returns {string} The resource URL.
-     */
-    getPrimeFacesExtensionsResource: function (name) {
-        var resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY;
-        if (PrimeFacesExt.useUncompressedResources) {
-            resourceLibrary = PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED;
-        }
-
-        return PrimeFaces.getFacesResource(name, resourceLibrary, PrimeFacesExt.getPrimeFacesExtensionsVersion());
-    },
-
-    /**
-     * Builds a resource URL for a PrimeFaces Extensions Compressed resource.
-     *
-     * @author Thomas Andraschko
-     * @param {string} name The name of the resource. For example: /core/core.js
-     * @returns {string} The resource URL.
-     */
-    getPrimeFacesExtensionsCompressedResource: function (name) {
-        return PrimeFaces.getFacesResource(name, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.getPrimeFacesExtensionsVersion());
-    },
-
-    /**
      * Checks if the FacesServlet is mapped with extension mapping. For example: .jsf/.xhtml.
      *
      * @author Thomas Andraschko
@@ -100,23 +54,7 @@ PrimeFacesExt = {
 
         return PrimeFacesExt.RESOURCE_URL_EXTENSION;
     },
-
-    /**
-     * Checks if the current included scripts are uncompressed.
-     *
-     * @author Thomas Andraschko
-     * @returns {boolean} If uncompresed resources are used.
-     */
-    useUncompressedResources: function () {
-        if (!PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES) {
-            var scriptURI = PrimeFacesExt.getPrimeFacesExtensionsScriptURI();
-
-            PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES = scriptURI.indexOf(PrimeFacesExt.RESOURCE_LIBRARY_UNCOMPRESSED) !== -1;
-        }
-
-        return PrimeFacesExt.USE_UNCOMPRESSED_RESOURCES;
-    },
-
+    
     /**
      * Gets the resource URI of the current included primefaces-extensions.js.
      *
@@ -242,15 +180,8 @@ PrimeFacesExt = {
      * @constant
      */
     RESOURCE_LIBRARY: 'primefaces-extensions',
-
-    /**
-     * The name of the PrimeFaces Extensions Uncompressed resource library.
-     *
-     * @author Thomas Andraschko
-     * @type {string}
-     * @constant
-     */
-    RESOURCE_LIBRARY_UNCOMPRESSED: 'primefaces-extensions-uncompressed'
+    
+    VERSION: '${project.version}'
 };
 
 /**
