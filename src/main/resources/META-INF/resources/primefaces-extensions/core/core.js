@@ -2,16 +2,6 @@
  * @namespace The PrimeFaces Extensions root namespace.
  */
 PrimeFacesExt = {
-    /**
-     * Gets the extension of the current request URL.
-     *
-     * @author Thomas Andraschko
-     * @returns {string} The URL extensions.
-     */
-    getRequestUrlExtension: function () {
-        var url = location.href;
-        return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).substr(url.lastIndexOf("."));
-    },
 
     /**
      * Checks if the FacesServlet is mapped with extension mapping. For example: .jsf/.xhtml.
