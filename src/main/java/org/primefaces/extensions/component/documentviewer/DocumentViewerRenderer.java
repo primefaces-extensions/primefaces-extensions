@@ -10,7 +10,6 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.FacesRenderer;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -116,7 +115,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
                 return context.getExternalContext().encodeResourceURL(requestPath);
             }
         } else {
-            return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer,documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT);
+            return DynamicResourceBuilder.build(context,documentViewer.getValue(), documentViewer, documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true);
         }
     }
 }

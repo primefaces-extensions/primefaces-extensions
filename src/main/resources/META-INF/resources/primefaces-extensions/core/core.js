@@ -63,10 +63,9 @@ PrimeFacesExt = {
      * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
      * @param {object} widgetVar The variable in the window object for accessing the widget.
      * @param {object} cfg An object with options.
-     * @param {boolean} hasStyleSheet If the css file should be loaded as well.
      */
-    cw: function (widgetName, widgetVar, cfg, hasStyleSheet) {
-        PrimeFacesExt.createWidget(widgetName, widgetVar, cfg, hasStyleSheet);
+    cw: function (widgetName, widgetVar, cfg) {
+        PrimeFacesExt.createWidget(widgetName, widgetVar, cfg);
     },
 
     /**
@@ -81,44 +80,24 @@ PrimeFacesExt = {
      * @param {object} cfg An object with options.
      * @param {boolean} hasStyleSheet If the css file should be loaded as well.
      */
-    createWidget: function (widgetName, widgetVar, cfg, hasStyleSheet) {
+    createWidget: function (widgetName, widgetVar, cfg) {
         cfg.widgetVar = widgetVar;
 
         if (PrimeFacesExt.widget[widgetName]) {
-            PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
-        } else {
-            if (hasStyleSheet) {
-                var cssResource = PrimeFacesExt.getPrimeFacesExtensionsResource(widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.css');
-                $('head').append(cssResource);
+            if (PrimeFaces.widgets[widgetVar]) {
+                PrimeFaces.widgets[widgetVar].refresh(cfg);
             }
-
-            var script = PrimeFacesExt.getPrimeFacesExtensionsResource(widgetName.toLowerCase() + '/' + widgetName.toLowerCase() + '.js');
-
-            //load script
-            PrimeFaces.getScript(script, function () {
-                setTimeout(function () {
-                    PrimeFacesExt.initWidget(widgetName, widgetVar, cfg);
-                }, 100);
-            });
+            else {
+                PrimeFaces.widgets[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
+                if (PrimeFaces.settings.legacyWidgetNamespace) {
+                    window[widgetVar] = PrimeFaces.widgets[widgetVar];
+                }
+            }
         }
-    },
-
-    /**
-     * Creates the widget or calls "refresh" if already available.
-     *
-     * @author Thomas Andraschko
-     * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-     * @param {string} widgetVar The variable in the window object for accessing the widget.
-     * @param {object} cfg An object with options.
-     */
-    initWidget: function (widgetName, widgetVar, cfg) {
-        if (PrimeFaces.widgets[widgetVar]) {
-            PrimeFaces.widgets[widgetVar].refresh(cfg);
-        } else {
-            PrimeFaces.widgets[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
-            if (PrimeFaces.settings.legacyWidgetNamespace) {
-                window[widgetVar] = PrimeFaces.widgets[widgetVar];
-            }
+        // widget script not loaded
+        else {
+            // should be loaded by our dynamic resource handling, log a error
+            PrimeFaces.error("Widget not available: " + widgetName);
         }
     },
 

@@ -25,7 +25,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
-import org.primefaces.extensions.component.qrcode.QRCode;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 
 /**
@@ -62,7 +61,7 @@ public class SpotlightRenderer extends CoreRenderer {
 		Spotlight spotlight = (Spotlight) component;
 
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(Spotlight.class.getSimpleName(), spotlight.resolveWidgetVar(), spotlight.getClientId(), "spotlight");
+        wb.initWithDomReady(Spotlight.class.getSimpleName(), spotlight.resolveWidgetVar(), spotlight.getClientId());
         wb.attr("blocked", spotlight.isBlocked());
 
         wb.finish();

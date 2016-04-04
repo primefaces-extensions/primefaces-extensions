@@ -43,8 +43,8 @@ public class ExtWidgetBuilder extends WidgetBuilder {
         super(context);
     }
 
-    protected WidgetBuilder init(String widgetClass, String widgetVar, String id, String resourcePath, boolean endFunction) throws IOException {
-    	this.resourcePath = resourcePath;
+    @Override
+    protected WidgetBuilder init(String widgetClass, String widgetVar, String id, boolean endFunction) throws IOException {
     	this.endFunction = endFunction;
 
         context.getResponseWriter().write("PrimeFacesExt.cw(\"");

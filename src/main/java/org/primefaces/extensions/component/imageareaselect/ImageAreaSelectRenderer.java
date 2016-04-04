@@ -24,7 +24,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.component.ckeditor.CKEditor;
 import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -47,7 +46,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 		ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
         ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId(), "imageareaselect");
+        wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
                 .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                 .attr("autoHide", imageAreaSelect.isAutoHide())
