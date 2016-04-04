@@ -48,9 +48,10 @@ import org.primefaces.extensions.component.parameters.MethodParameter;
  * @since   0.2
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class RemoteCommand extends UICommand implements AjaxSource {
 

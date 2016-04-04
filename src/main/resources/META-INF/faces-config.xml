@@ -107,10 +107,6 @@
         <component-class>org.primefaces.extensions.component.blockui.BlockUI</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Timeline</component-type>
-        <component-class>org.primefaces.extensions.component.timeline.Timeline</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.TimePicker</component-type>
         <component-class>org.primefaces.extensions.component.timepicker.TimePicker</component-class>
     </component>
@@ -246,11 +242,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.BlockUIRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.blockui.BlockUIRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.TimelineRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.timeline.TimelineRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

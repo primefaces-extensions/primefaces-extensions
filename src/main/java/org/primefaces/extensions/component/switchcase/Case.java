@@ -18,11 +18,6 @@
 
 package org.primefaces.extensions.component.switchcase;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
-
 /**
  * Component class for the <code>Case</code> component.
  *
@@ -34,7 +29,6 @@ public class Case extends DefaultCase {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Case";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

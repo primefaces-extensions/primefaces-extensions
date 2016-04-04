@@ -29,7 +29,6 @@ import org.primefaces.util.HTML;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -53,13 +52,14 @@ import org.primefaces.util.ComponentUtils;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-                      })
+        @ResourceDependency(library = "primefaces", name = "components.css"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
+})
 public class TimePicker extends HtmlInputText implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";

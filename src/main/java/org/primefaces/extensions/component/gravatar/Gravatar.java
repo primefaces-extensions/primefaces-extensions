@@ -3,10 +3,10 @@ package org.primefaces.extensions.component.gravatar;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.FacesComponent;
 import javax.faces.component.UIOutput;
 
-public class Gravatar extends UIOutput{
+public class Gravatar extends UIOutput {
+    
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Gravatar";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	

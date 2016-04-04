@@ -29,7 +29,6 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -54,13 +53,13 @@ import org.primefaces.util.Constants;
  * @since   0.2
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
-                      })
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
+})
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	private static final Logger LOG = Logger.getLogger(Layout.class.getName());

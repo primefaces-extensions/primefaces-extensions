@@ -18,16 +18,12 @@
 
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
@@ -44,17 +40,17 @@ import org.primefaces.util.MessageFactory;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
+        @ResourceDependency(library = "primefaces", name = "components.css"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateManyCheckbox";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * PropertyKeys

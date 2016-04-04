@@ -25,7 +25,6 @@ import org.primefaces.util.Constants;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -45,17 +44,17 @@ import org.primefaces.util.ComponentUtils;
  * @since   0.6
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "waypoint/waypoint.js")
-                      })
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "waypoint/waypoint.js")
+})
 public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Waypoint";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.WaypointRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("reached"));
 

@@ -16,9 +16,10 @@ import org.primefaces.util.ComponentUtils;
  * @author f.strazzullo
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "primefaces.js"),
+        @ResourceDependency(library = "primefaces", name = "components.css"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.css"),
         @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.js")
@@ -27,6 +28,7 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timer";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    
     public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
     private static final int DEFAULT_TIMEOUT = 10;
 

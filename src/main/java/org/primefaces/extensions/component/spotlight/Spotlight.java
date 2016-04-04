@@ -20,14 +20,9 @@ package org.primefaces.extensions.component.spotlight;
 
 import org.primefaces.component.api.Widget;
 
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import javax.faces.component.UINamingContainer;
-import javax.faces.context.FacesContext;
-import java.util.ArrayList;
-import java.util.List;
 import org.primefaces.util.ComponentUtils;
 
 /**
@@ -38,9 +33,10 @@ import org.primefaces.util.ComponentUtils;
  * @since   0.5
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.css"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+    @ResourceDependency(library = "primefaces", name = "components.css"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+    @ResourceDependency(library = "primefaces", name = "core.js"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
 	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })

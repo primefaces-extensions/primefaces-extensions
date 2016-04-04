@@ -18,10 +18,6 @@
 
 package org.primefaces.extensions.component.switchcase;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponentBase;
 
 /**
@@ -36,7 +32,6 @@ public class Switch extends UIComponentBase {
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SwitchRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 	
 	/**
 	 * Properties that are tracked by state saving.

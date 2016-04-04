@@ -19,9 +19,7 @@ package org.primefaces.extensions.component.qrcode;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
@@ -34,11 +32,11 @@ import org.primefaces.util.ComponentUtils;
  * @since 1.2.0
  */
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-    @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "qrcode/qrcode.js")
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "qrcode/qrcode.js")
 })
 public class QRCode extends UIOutput implements Widget {
 
