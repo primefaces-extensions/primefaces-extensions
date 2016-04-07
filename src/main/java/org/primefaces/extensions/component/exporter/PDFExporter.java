@@ -520,34 +520,35 @@ public class PDFExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
-                            value = column.getHeaderText();
-                        } else
-                            value = column.getFooterText();
-                        int rowSpan = column.getRowspan();
-                        int colSpan = column.getColspan();
-                        PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
-                        if (facetBackground != null) {
-                            cell.setBackgroundColor(facetBackground);
-                        }
-                        if (rowSpan > 1) {
-                            cell.setVerticalAlignment(Element.ALIGN_CENTER);
-                            cell.setRowspan(rowSpan);
-
-
-                        }
-                        if (colSpan > 1) {
+                        if (column.isRendered() && column.isExportable()) {
+                            if (facetType.equalsIgnoreCase("header")) {
+                                value = column.getHeaderText();
+                            } else
+                                value = column.getFooterText();
+                            int rowSpan = column.getRowspan();
+                            int colSpan = column.getColspan();
+                            PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
+                            if (facetBackground != null) {
+                                cell.setBackgroundColor(facetBackground);
+                            }
+                            if (rowSpan > 1) {
+                                cell.setVerticalAlignment(Element.ALIGN_CENTER);
+                                cell.setRowspan(rowSpan);
+    
+    
+                            }
+                            if (colSpan > 1) {
+                                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                                cell.setColspan(colSpan);
+    
+    
+                            }
+                            // addColumnAlignments(component,cell);
+                            if (facetType.equalsIgnoreCase("header")) {
                             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                            cell.setColspan(colSpan);
-
-
+                            }
+                            pdfTable.addCell(cell);
                         }
-                        // addColumnAlignments(component,cell);
-                        if (facetType.equalsIgnoreCase("header")) {
-                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                        }
-                        pdfTable.addCell(cell);
-
                     }
                 }
 
