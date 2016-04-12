@@ -57,7 +57,7 @@ public class TooltipRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function() {");
 
-		writer.write("PrimeFacesExt.cw('Tooltip', '" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtTooltip', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
         writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",global:" + global);

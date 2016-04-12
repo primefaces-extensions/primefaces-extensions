@@ -3,7 +3,7 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -32,41 +32,41 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
                 _self.box.removeClass('ui-state-hover');
             }).click(function (event) {
                 _self.toggle(1);
-                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
             });
 
             //toggle state on label click
             this.itemLabel.click(function () {
                 _self.toggle(1);
-                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
             });
 
             //adding accesibility
-            this.box.bind('keydown', function(event) {                
+            this.box.bind('keydown', function(event) {
                 switch(event.keyCode){
                     case 38:
                         _self.toggle(1);
-                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                         break;
                     case 40:
                         _self.toggle(-1);
-                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                         break;
                     case 39:
                         _self.toggle(1);
-                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                         break;
                     case 37:
                         _self.toggle(-1);
-                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                         break;
                     case 32:
                         _self.toggle(1);
-                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
-                        break; 
-                }    
+                        if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                        break;
+                }
             });
-            
+
             // client behaviors
             if (this.cfg.behaviors) {
                 PrimeFaces.attachBehaviors(this.input, this.cfg.behaviors);
@@ -93,13 +93,13 @@ PrimeFacesExt.widget.TriStateCheckbox = PrimeFaces.widget.BaseWidget.extend({
             // remove old icon and add the new one
             var iconsClasses = this.box.data('iconstates');
             this.icon.removeClass(iconsClasses[oldValue]).addClass(iconsClasses[newValue]);
-            
+
             // change title to the new one
             var iconTitles = this.box.data('titlestates');
             if(iconTitles!=null && iconTitles.length>0){
                 this.box.attr('title', iconTitles[newValue]);
             }
-           
+
             // fire change event
             this.input.change();
         }

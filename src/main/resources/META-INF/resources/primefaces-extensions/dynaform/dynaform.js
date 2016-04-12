@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtDynaForm = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -28,7 +28,7 @@ PrimeFacesExt.widget.DynaForm = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         }
-        
+
         this.uuid = cfg.uuid;
     },
 

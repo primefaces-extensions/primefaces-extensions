@@ -26,13 +26,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
+import org.primefaces.context.RequestContext;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.HTML;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link CodeMirror} component.
@@ -114,8 +115,8 @@ public class CodeMirrorRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(CodeMirror.class.getSimpleName(), codeMirror.resolveWidgetVar(), codeMirror.getClientId());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtCodeMirror", codeMirror.resolveWidgetVar(), codeMirror.getClientId());
         wb.attr("theme", codeMirror.getTheme())
                 .attr("mode", codeMirror.getMode())
                 .attr("indentUnit", codeMirror.getIndentUnit())

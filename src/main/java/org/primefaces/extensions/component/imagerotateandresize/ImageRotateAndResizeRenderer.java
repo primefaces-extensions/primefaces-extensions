@@ -53,7 +53,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('" + ImageRotateAndResize.class.getSimpleName() + "', '" + widgetVar + "', {");
+		writer.write("PrimeFaces.cw('ExtImageRotateAndResize', '" + widgetVar + "', {");
 
 		writer.write("id:'" + clientId + "'");
 		writer.write(",target:'" + target + "'");

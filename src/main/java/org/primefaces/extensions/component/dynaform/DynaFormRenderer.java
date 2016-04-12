@@ -134,7 +134,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('DynaForm','" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtDynaForm','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",uuid:'" + dynaFormModel.getUuid() + "'");

@@ -55,7 +55,7 @@ public class WaypointRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
-		writer.write("PrimeFacesExt.cw('Waypoint', '" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtWaypoint', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
         writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",target:'" + target + "'");

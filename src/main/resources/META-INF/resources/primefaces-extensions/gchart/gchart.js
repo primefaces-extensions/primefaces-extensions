@@ -3,7 +3,7 @@
  *
  * @author f.strazzullo
  */
-PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
 
 		var that = this;
@@ -17,11 +17,11 @@ PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
 		this.title = cfg.title;
 		this.options = this.chart.options;
 		this.input = jQuery(this.jqId+"_hidden");
-		
+
 		google.load('visualization', '1.0', {
-			'packages' : [ PrimeFacesExt.widget.GChart.packages[this.type] || 'corechart' ]
+			'packages' : [ PrimeFaces.widget.ExtGChart.packages[this.type] || 'corechart' ]
 		});
-		
+
 		jQuery(document).ready(function(){
 			if (google.visualization) {
 				that.draw();
@@ -31,7 +31,7 @@ PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
 				});
 			}
 		});
-		
+
 	},
 
 	draw : function() {
@@ -39,18 +39,18 @@ PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
 		var dataTable = google.visualization.arrayToDataTable(this.data);
 
 		var that = this;
-		
+
 		this.options.title = this.title;
 		this.options.width = parseInt(this.width,10);
 		this.options.height = parseInt(this.height,10);
-		
+
 		this.wrapper = new google.visualization.ChartWrapper({
 			chartType : this.type,
 			dataTable : dataTable,
 			options : this.options,
 			containerId : this.id
 		});
-		
+
 		if(this.cfg.behaviors && this.cfg.behaviors.select) {
 			google.visualization.events.addListener(this.wrapper, 'select', function(e){
 				console.log(that.wrapper.getChart().getSelection());
@@ -65,7 +65,7 @@ PrimeFacesExt.widget.GChart = PrimeFaces.widget.BaseWidget.extend({
 
 });
 
-PrimeFacesExt.widget.GChart.packages = {
+PrimeFaces.widget.ExtGChart.packages = {
 		GeoChart: 'geochart',
 		OrgChart: 'orgchart'
 }

@@ -59,7 +59,7 @@ CKEDITOR_GETURL = function(resource) {
  *
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
 	/**
 	 * Initializes the widget.

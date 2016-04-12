@@ -3,7 +3,7 @@
  *
  * @author Pavol Slany
  */
-PrimeFacesExt.widget.Spotlight = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtSpotlight = PrimeFaces.widget.BaseWidget.extend({
 
 	/**
 	 * Initializes the widget.
@@ -15,15 +15,15 @@ PrimeFacesExt.widget.Spotlight = PrimeFaces.widget.BaseWidget.extend({
 		this.blocked = cfg.blocked;
 		this.content = $(PrimeFaces.escapeClientId(this.id));
 
-		PrimeFacesExt.widget.Spotlight.cache = PrimeFacesExt.widget.Spotlight.cache || {};
+		PrimeFaces.widget.ExtSpotlight.cache = PrimeFaces.widget.ExtSpotlight.cache || {};
 
 		////////////////////////
 		// Mask
 		this.getMask = function () {
-			var mask = PrimeFacesExt.widget.Spotlight.cache['PrimeFacesExt.widget.Spotlight.MaskAround:' + this.id];
+			var mask = PrimeFaces.widget.ExtSpotlight.cache['PrimeFaces.widget.ExtSpotlight.MaskAround:' + this.id];
 			if (!mask) {
-				mask = new PrimeFacesExt.widget.Spotlight.MaskAround(this.id);
-				PrimeFacesExt.widget.Spotlight.cache['PrimeFacesExt.widget.Spotlight.MaskAround:' + this.id] = mask;
+				mask = new PrimeFaces.widget.ExtSpotlight.MaskAround(this.id);
+				PrimeFaces.widget.ExtSpotlight.cache['PrimeFaces.widget.ExtSpotlight.MaskAround:' + this.id] = mask;
 			}
 			return (this.getMask = function () {
 				return mask
@@ -105,7 +105,7 @@ PrimeFacesExt.widget.Spotlight = PrimeFaces.widget.BaseWidget.extend({
 /**
  * @author Pavol Slany
  */
-PrimeFacesExt.widget.Spotlight.MaskAround = function (elementId) {
+PrimeFaces.widget.ExtSpotlight.MaskAround = function (elementId) {
 	var maskId = elementId + '_maskAround';
 
 	var destinationOpacity = function () {

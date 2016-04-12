@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -14,7 +14,7 @@ PrimeFacesExt.widget.Tooltip = PrimeFaces.widget.BaseWidget.extend({
         var id = cfg.id;
         this.cfg = cfg;
         var _self = this;
-        
+
         if (this.cfg.forTarget) {
             this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
         }

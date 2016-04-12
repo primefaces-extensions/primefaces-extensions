@@ -3,11 +3,11 @@
  *
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
-	
+PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
+
     /**
      * Initializes the widget.
-     * 
+     *
      * @param {object} cfg The widget configuration.
      */
     init : function(cfg) {
@@ -176,7 +176,7 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
         this.instance = null;
         PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect({remove:true});
     },
-    
+
     refresh : function(cfg) {
         this.destroy();
         this.init(cfg);
@@ -184,8 +184,8 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Cancel the current selection.
-     * This method hides the selection/outer area, 
-     * so no call to update() is necessary (as opposed to setSelection()). 
+     * This method hides the selection/outer area,
+     * so no call to update() is necessary (as opposed to setSelection()).
      */
     cancelSelection : function() {
         this.instance.cancelSelection();
@@ -202,10 +202,10 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Set the current selection.
-     * This method only sets the internal representation of selection in the plugin instance, 
-     * it does not update the visual interface. 
-     * If you want the new selection to be shown, call update() right after setSelection(). 
-     * Also make sure that the show option is set to true. 
+     * This method only sets the internal representation of selection in the plugin instance,
+     * it does not update the visual interface.
+     * If you want the new selection to be shown, call update() right after setSelection().
+     * Also make sure that the show option is set to true.
      *
      * @param {int} x1 X coordinate of the top left corner of the selection area.
      * @param {int} y1 Y coordinate of the top left corner of the selection area.
@@ -227,10 +227,10 @@ PrimeFacesExt.widget.ImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Set the plugin options.
-     * This method only sets the internal representation of selection in the plugin instance, 
+     * This method only sets the internal representation of selection in the plugin instance,
      * it does not update the visual interface.
-     * If you want the new selection to be shown, call update() right after setSelection(). 
-     * Also make sure that the show option is set to true. 
+     * If you want the new selection to be shown, call update() right after setSelection().
+     * Also make sure that the show option is set to true.
      *
      * @param {object} options The options for the widget.
      */

@@ -22,10 +22,11 @@ import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link ImageAreaSelect} component.
@@ -45,8 +46,8 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
 		ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(ImageAreaSelect.class.getSimpleName(), imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtImageAreaSelect", imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
                 .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                 .attr("autoHide", imageAreaSelect.isAutoHide())

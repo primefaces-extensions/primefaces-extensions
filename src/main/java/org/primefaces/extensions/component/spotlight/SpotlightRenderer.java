@@ -15,7 +15,6 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.spotlight;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +24,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
+import org.primefaces.context.RequestContext;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link org.primefaces.extensions.component.spotlight.Spotlight} component.
@@ -60,9 +60,9 @@ public class SpotlightRenderer extends CoreRenderer {
 	protected void encodeScript(final FacesContext context, final UIComponent component) throws IOException {
 		Spotlight spotlight = (Spotlight) component;
 
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(Spotlight.class.getSimpleName(), spotlight.resolveWidgetVar(), spotlight.getClientId());
-        wb.attr("blocked", spotlight.isBlocked());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtSpotlight", spotlight.resolveWidgetVar(), spotlight.getClientId())
+            .attr("blocked", spotlight.isBlocked());
 
         wb.finish();
 	}
