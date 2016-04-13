@@ -35,7 +35,7 @@ PrimeFacesExt = {
 
         return PrimeFacesExt.RESOURCE_URL_EXTENSION;
     },
-    
+
     /**
      * Gets the resource URI of the current included primefaces-extensions.js.
      *
@@ -51,54 +51,6 @@ PrimeFacesExt = {
         }
 
         return PrimeFacesExt.SCRIPT_URI;
-    },
-
-    /**
-     * Creates a widget and load the required resources if not already available.
-     * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
-     * The file and directory names must be completely in lower case.
-     * For example: /imageareaselect/imageareaselect.js.
-     *
-     * @author Thomas Andraschko
-     * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-     * @param {object} widgetVar The variable in the window object for accessing the widget.
-     * @param {object} cfg An object with options.
-     */
-    cw: function (widgetName, widgetVar, cfg) {
-        PrimeFacesExt.createWidget(widgetName, widgetVar, cfg);
-    },
-
-    /**
-     * Creates a widget and load the required resources if not already available.
-     * The .js and .css must has the same name as the widget and must be placed inside a directory with also the name.
-     * The file and directory names must be completely in lower case.
-     * For example: /imageareaselect/imageareaselect.js.
-     *
-     * @author Thomas Andraschko
-     * @param {string} widgetName The name of the widget. For example: ImageAreaSelect.
-     * @param {object} widgetVar The variable in the window object for accessing the widget.
-     * @param {object} cfg An object with options.
-     * @param {boolean} hasStyleSheet If the css file should be loaded as well.
-     */
-    createWidget: function (widgetName, widgetVar, cfg) {
-        cfg.widgetVar = widgetVar;
-
-        if (PrimeFacesExt.widget[widgetName]) {
-            if (PrimeFaces.widgets[widgetVar]) {
-                PrimeFaces.widgets[widgetVar].refresh(cfg);
-            }
-            else {
-                PrimeFaces.widgets[widgetVar] = new PrimeFacesExt.widget[widgetName](cfg);
-                if (PrimeFaces.settings.legacyWidgetNamespace) {
-                    window[widgetVar] = PrimeFaces.widgets[widgetVar];
-                }
-            }
-        }
-        // widget script not loaded
-        else {
-            // should be loaded by our dynamic resource handling, log a error
-            PrimeFaces.error("Widget not available: " + widgetName);
-        }
     },
 
     /**
@@ -140,7 +92,7 @@ PrimeFacesExt = {
      * @constant
      */
     RESOURCE_LIBRARY: 'primefaces-extensions',
-    
+
     VERSION: '${project.version}'
 };
 
