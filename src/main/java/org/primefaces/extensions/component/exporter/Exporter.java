@@ -15,35 +15,28 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import java.io.IOException;
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.el.MethodExpression;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.ValueHolder;
-import javax.faces.component.html.HtmlCommandLink;
-import javax.faces.component.html.HtmlCommandButton;
-import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.component.html.*;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
-import javax.faces.component.html.HtmlSelectOneMenu;
-
+import org.primefaces.component.api.DynamicColumn;
+import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.celleditor.CellEditor;
+import org.primefaces.component.column.Column;
+import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.roweditor.RowEditor;
-import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.subtable.SubTable;
-import org.primefaces.component.column.Column;
-import org.primefaces.component.api.UIColumn;
-import org.primefaces.component.columns.Columns;
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.component.api.DynamicColumn;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <code>Exporter</code> component.
@@ -114,6 +107,13 @@ public abstract class Exporter {
                 return "";
             }
         }
+        if (component instanceof HtmlOutputLink) {
+            HtmlOutputLink link = (HtmlOutputLink) component;
+
+            for(UIComponent child : link.getChildren()) {
+                    return exportValue(context, child);
+                }
+        }
         if (component instanceof HtmlCommandButton) {
             HtmlCommandButton button = (HtmlCommandButton) component;
             Object value = button.getValue();
@@ -149,8 +149,7 @@ public abstract class Exporter {
             }
         }
         if (skipComponents.contains(component.getClass().getName())) {
-          System.out.println("component.getClass().getName()===="+component.getClass().getName());
-          return "";
+            return "";
           }
 
           else if (component instanceof ValueHolder) {
