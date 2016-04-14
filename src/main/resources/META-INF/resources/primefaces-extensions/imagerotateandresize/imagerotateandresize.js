@@ -10,9 +10,9 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 	 *
 	 * @param {object} cfg The widget configuration.
 	 */
-	init : function(cfg) {
-		this.id = cfg.id;
-		this.cfg = cfg;
+    init : function(cfg) {
+        this.id = cfg.id;
+        this.cfg = cfg;
 
 		this.initialized = false;
 
