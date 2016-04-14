@@ -14,7 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 public class GravatarRenderer extends CoreRenderer {
-	public static final String RENDERER_TYPE = "org.primefaces.extensions.component.GravatarRenderer";
+
+	
 	
 	private static final MessageDigest md;
 	

@@ -37,8 +37,6 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class AnalogClockRenderer extends CoreRenderer {
 
-	public static final String RENDERER_TYPE = "org.primefaces.extensions.component.AnalogClockRenderer";
-
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		AnalogClock analogClock = (AnalogClock) component;

@@ -27,12 +27,9 @@ import javax.faces.context.ResponseWriter;
 import java.io.IOException;
 import org.primefaces.context.RequestContext;
 
-
 public class GChartRenderer extends CoreRenderer {
 
-	public static final String RENDERER_TYPE = "org.primefaces.extensions.component.GChartRenderer";
-
-        @Override
+    @Override
 	public void decode(FacesContext context, UIComponent component) {
 		super.decode(context, component);
 		decodeBehaviors(context, component);
@@ -70,8 +67,7 @@ public class GChartRenderer extends CoreRenderer {
 		String clientId = chart.getClientId();
 		String widgetVar = chart.resolveWidgetVar();
 
-                WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
-
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
 		wb.init("ExtGChart", widgetVar, clientId)
                     .attr("chart", this.escapeText(((GChartModel) chart.getValue()).toJson()))
                     .attr("title", chart.getTitle())

@@ -29,10 +29,11 @@ import org.primefaces.util.Constants;
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class GChart extends UIOutput implements Widget,ClientBehaviorHolder {
+public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
     
     static final String DEFAULT_TYPE = "select";
 	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
@@ -45,9 +46,10 @@ public class GChart extends UIOutput implements Widget,ClientBehaviorHolder {
     }
 
     public GChart(){
-        setRendererType(GChartRenderer.RENDERER_TYPE);
+        setRendererType(DEFAULT_RENDERER);
     }
 
+    @Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
 	}
@@ -94,6 +96,7 @@ public class GChart extends UIOutput implements Widget,ClientBehaviorHolder {
 		getStateHelper().put(PropertyKeys.title, title);
 	}
 
+    @Override
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}

@@ -151,6 +151,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
 
+    @Override
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}

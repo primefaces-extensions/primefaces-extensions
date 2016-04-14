@@ -159,6 +159,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 		getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
         
+    @Override
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
