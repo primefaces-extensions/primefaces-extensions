@@ -14,6 +14,7 @@ public class DocumentViewer extends UIGraphic {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DocumentViewer";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DocumentViewerRenderer";
 
     protected static enum PropertyKeys {
         width,
@@ -28,7 +29,7 @@ public class DocumentViewer extends UIGraphic {
     }
 
     public DocumentViewer(){
-        setRendererType(DocumentViewerRenderer.RENDERER_TYPE);
+        setRendererType(DEFAULT_RENDERER);
     }
 
 	@Override

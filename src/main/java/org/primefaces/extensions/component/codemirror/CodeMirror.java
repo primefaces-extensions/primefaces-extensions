@@ -58,7 +58,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CodeMirrorRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_CHANGE = "change";
 	public static final String EVENT_HIGHLIGHT_COMPLETE = "highlightComplete";

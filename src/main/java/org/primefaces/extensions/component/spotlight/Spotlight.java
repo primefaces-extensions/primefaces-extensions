@@ -45,7 +45,6 @@ public class Spotlight extends UIComponentBase implements Widget {
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Spotlight";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SpotlightRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

@@ -38,7 +38,6 @@ import org.primefaces.extensions.util.DummyValueExpression;
 public class MethodParameter extends AbstractParameter {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MethodParameter";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

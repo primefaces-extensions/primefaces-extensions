@@ -18,10 +18,6 @@
 
 package org.primefaces.extensions.component.base;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
 import javax.faces.component.UIOutput;
 
 /**
@@ -34,7 +30,6 @@ import javax.faces.component.UIOutput;
 public abstract class AbstractParameter extends UIOutput {
 
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

@@ -48,7 +48,6 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CKEditor";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CKEditorRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_SAVE = "save";
 	public static final String EVENT_INITIALIZE = "initialize";

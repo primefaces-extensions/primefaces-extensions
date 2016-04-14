@@ -31,7 +31,6 @@ public class MasterDetailLevel extends UIComponentBase {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MasterDetailLevel";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

@@ -56,7 +56,6 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageAreaSelect";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageAreaSelectRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_SELECT_END = "selectEnd";
 	public static final String EVENT_SELECT_START = "selectStart";

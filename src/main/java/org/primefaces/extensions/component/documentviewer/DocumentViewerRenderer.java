@@ -19,7 +19,6 @@ import java.util.Locale;
 import org.primefaces.application.resource.DynamicContentType;
 
 public class DocumentViewerRenderer extends CoreRenderer {
-    public static final String RENDERER_TYPE = "org.primefaces.extensions.component.DocumentViewerRenderer";
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {

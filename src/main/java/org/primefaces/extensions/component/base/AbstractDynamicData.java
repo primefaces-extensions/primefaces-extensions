@@ -55,8 +55,6 @@ import org.primefaces.util.ComponentTraversalUtils;
  */
 public abstract class AbstractDynamicData extends UIComponentBase implements NamingContainer, UniqueIdVendor {
 
-    protected static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
-
     protected KeyData data;
     private String clientId = null;
     private StringBuilder idBuilder = new StringBuilder();
