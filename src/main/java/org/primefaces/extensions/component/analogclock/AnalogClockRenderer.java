@@ -60,7 +60,7 @@ public class AnalogClockRenderer extends CoreRenderer {
 
 		WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
 
-		wb.initWithDomReady("AnalogClock", widgetVar, clientId)
+		wb.initWithDomReady("ExtAnalogClock", widgetVar, clientId)
                     .attr("mode", analogClock.getMode())
                     .attr("time", analogClock.getStartTime() != null ? analogClock.getStartTime().getTime() : null);
 		if (analogClock.getColorTheme() != null) {
