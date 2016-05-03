@@ -20,7 +20,7 @@ package org.primefaces.extensions.component.tristatecheckbox;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.html.HtmlInputText;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
 
@@ -38,7 +38,7 @@ import org.primefaces.util.ComponentUtils;
 		@ResourceDependency(library = "primefaces", name = "core.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
-public class TriStateCheckbox extends HtmlInputText implements Widget {
+public class TriStateCheckbox extends HtmlSelectBooleanCheckbox implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateCheckbox";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
