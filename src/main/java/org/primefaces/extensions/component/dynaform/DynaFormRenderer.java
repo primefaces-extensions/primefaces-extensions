@@ -74,11 +74,11 @@ public class DynaFormRenderer extends CoreRenderer {
 
 		// get model
 		DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
-		encodeMarkup(fc, dynaForm, dynaFormModel);
+		encodeMarkup(fc, dynaForm, dynaFormModel, true);
 		encodeScript(fc, dynaForm, dynaFormModel);
 	}
 
-	protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
+	protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel, boolean encodeFacet) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = dynaForm.getClientId(fc);
 
@@ -100,26 +100,31 @@ public class DynaFormRenderer extends CoreRenderer {
 		int totalColspan = getTotalColspan(dynaFormModel);
 		String bbPosition = dynaForm.getButtonBarPosition();
 
-		if ("top".equals(bbPosition) || "both".equals(bbPosition)) {
+		if (encodeFacet && "top".equals(bbPosition) || "both".equals(bbPosition)) {
 			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_TOP_CLASS, BUTTON_BAR_ROLE, false, true);
 		}
 
-		encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, false, true);
+		if(encodeFacet) {
+			encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, false, true);
+		}
 
 		// encode regular grid
 		encodeBody(fc, dynaForm, dynaFormModel.getRegularRows(), false, true);
 
-		encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
-		encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
-		            dynaForm.isOpenExtended());
-
+		if(encodeFacet) {
+			encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
+			encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
+					dynaForm.isOpenExtended());
+		}
 		// encode extended grid
 		encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), true, dynaForm.isOpenExtended());
 
-		encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
-		            dynaForm.isOpenExtended());
+		if(encodeFacet) {
+			encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
+					dynaForm.isOpenExtended());
+		}
 
-		if ("bottom".equals(bbPosition) || "both".equals(bbPosition)) {
+		if (encodeFacet && "bottom".equals(bbPosition) || "both".equals(bbPosition)) {
 			encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_BOTTOM_CLASS, BUTTON_BAR_ROLE, false,
 			            true);
 		}
@@ -134,7 +139,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('DynaForm','" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtDynaForm','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
 		writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",uuid:'" + dynaFormModel.getUuid() + "'");
@@ -248,7 +253,15 @@ public class DynaFormRenderer extends CoreRenderer {
 					}
 
 					writer.endElement("label");
-				} else {
+				}  else if(element instanceof DynaFormNestedModel){
+					DynaFormNestedModel nestedModel = (DynaFormNestedModel) element;
+					
+					// render nested model
+					writer.writeAttribute("class", styleClass, null);
+					writer.writeAttribute("role", GRID_CELL_ROLE, null);
+					
+					encodeMarkup(fc, dynaForm, nestedModel.getModel(), false);
+				} else if(element instanceof DynaFormControl){
 					// render control
 					DynaFormControl control = (DynaFormControl) element;
 					dynaForm.setData(control);
