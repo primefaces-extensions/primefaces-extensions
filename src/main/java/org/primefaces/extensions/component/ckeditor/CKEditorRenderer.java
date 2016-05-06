@@ -24,11 +24,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
+import org.primefaces.context.RequestContext;
 
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.HTML;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link CKEditor} component.
@@ -94,8 +95,8 @@ public class CKEditorRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(CKEditor.class.getSimpleName(), ckEditor.resolveWidgetVar(), ckEditor.getClientId());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtCKEditor", ckEditor.resolveWidgetVar(), ckEditor.getClientId());
         wb.attr("height", ckEditor.getHeight())
                 .attr("width", ckEditor.getWidth())
                 .attr("skin", ckEditor.getSkin())

@@ -2,14 +2,14 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
-        <version>4.0.0</version>
+        <version>6.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>4.1.0-SNAPSHOT</version>
+    <version>6.0-SNAPSHOT</version>
     <name>primefaces-extensions</name>
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
@@ -64,14 +64,11 @@
                                 <include>layout/**</include>
                                 <include>timepicker/**</include>
                                 <include>tooltip/**</include>
-                                <include>keyfilter/**</include>
-                                <include>inputnumber/**</include>
                                 <include>waypoint/**</include>
                                 <include>timeline/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>qrcode/**</include>
                                 <include>analogclock/**</include>
-                                <include>knob/**</include>
                                 <include>timer/**</include>
                             </includes>
                             <aggregations>
@@ -86,7 +83,6 @@
                             <includes>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
-                                <include>inputnumber/inputnumber.css</include>
                                 <include>gchart/gchart.css</include>
                             </includes>
                             <aggregations>
@@ -183,7 +179,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
+
     <properties>
         <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
         <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>

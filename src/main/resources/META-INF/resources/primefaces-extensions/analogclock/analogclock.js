@@ -3,7 +3,7 @@
  *
  * @author f.strazzullo
  */
-PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtAnalogClock = PrimeFaces.widget.BaseWidget.extend({
 
         init: function (cfg) {
 
@@ -15,10 +15,10 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
 
             this.colorTheme = cfg.colorTheme || 'aristo';
 
-            this.themeObject = cfg.themeObject ? JSON.parse(cfg.themeObject) : PrimeFacesExt.widget.AnalogClock.colorThemes[this.colorTheme];
+            this.themeObject = cfg.themeObject ? JSON.parse(cfg.themeObject) : PrimeFaces.widget.ExtAnalogClock.colorThemes[this.colorTheme];
 
             if (!this.themeObject) {
-                this.themeObject = PrimeFacesExt.widget.AnalogClock.defaultColorTheme;
+                this.themeObject = PrimeFaces.widget.ExtAnalogClock.defaultColorTheme;
             }
 
             this.interval = setInterval((function (self) {
@@ -35,7 +35,7 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
                     "PrimeFacesExt.themeChanged",
                     function (event, theme) {
                         that.colorTheme = theme;
-                        that.themeObject = PrimeFaces.widget.AnalogClock.colorThemes[that.colorTheme];
+                        that.themeObject = PrimeFaces.widget.ExtAnalogClock.colorThemes[that.colorTheme];
                         that.update();
                         console.log("changed in " + theme);
                     });
@@ -46,7 +46,7 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
         reloadDimensions: function(){
             var width = _.isFinite(this.cfg.width) ? this.cfg.width : this.jq.width();
 
-            this.dimensions = new PrimeFacesExt.widget.AnalogClock.Dimensions(width);
+            this.dimensions = new PrimeFaces.widget.ExtAnalogClock.Dimensions(width);
 
         },
         draw: function () {
@@ -129,7 +129,7 @@ PrimeFacesExt.widget.AnalogClock = PrimeFaces.widget.BaseWidget.extend({
 
     });
 
-PrimeFacesExt.widget.AnalogClock.colorThemes = {
+PrimeFaces.widget.ExtAnalogClock.colorThemes = {
     afterdark: {
         face: '#6F6F6F',
         border: '#EEFFEE',
@@ -474,9 +474,9 @@ PrimeFacesExt.widget.AnalogClock.colorThemes = {
     }
 }
 
-PrimeFacesExt.widget.AnalogClock.defaultColorTheme = PrimeFacesExt.widget.AnalogClock.colorThemes.aristo;
+PrimeFaces.widget.ExtAnalogClock.defaultColorTheme = PrimeFaces.widget.ExtAnalogClock.colorThemes.aristo;
 
-PrimeFacesExt.widget.AnalogClock.Dimensions = function (size) {
+PrimeFaces.widget.ExtAnalogClock.Dimensions = function (size) {
     this.size = size;
 
     this.half = Math.floor(size / 2);

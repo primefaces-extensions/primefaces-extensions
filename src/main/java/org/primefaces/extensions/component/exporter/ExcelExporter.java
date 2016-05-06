@@ -414,7 +414,7 @@ public class ExcelExporter extends Exporter {
                     sheetRowIndex, //first row (0-based)
                     sheetRowIndex, //last row  (0-based)
                     0, //first column (0-based)
-                    columnCount  //last column  (0-based)
+                    columnCount - 1 //last column  (0-based)
             ));
 
         }
@@ -450,7 +450,7 @@ public class ExcelExporter extends Exporter {
                     sheetRowIndex, //first row (0-based)
                     sheetRowIndex, //last row  (0-based)
                     0, //first column (0-based)
-                    columnCount  //last column  (0-based)
+                    columnCount - 1  //last column  (0-based)
             ));
 
 

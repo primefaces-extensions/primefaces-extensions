@@ -12,38 +12,38 @@ CKEDITOR_GETURL = function(resource) {
         facesResource = resource.replace('?resolve=false', '');
     } else {
         //already wrapped?
-        var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion());
+        var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.VERSION);
         if (libraryVersionIndex !== -1) {
             //look for appended resource
-            var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.getPrimeFacesExtensionsVersion()).length);
+            var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.VERSION).length);
 
             if (appendedResource.length > 0) {
                 //remove append resource from url
                 facesResource = resource.substring(0, resource.length - appendedResource.length);
 
-                var resourceIdentiferPosition = facesResource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER);
+                var resourceIdentiferPosition = facesResource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER);
 
                 if (PrimeFacesExt.isExtensionMapping()) {
                     var extensionMappingPosition = facesResource.lastIndexOf('.' + PrimeFacesExt.getResourceUrlExtension());
 
                     //extract resource
-                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
+                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
-                    facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 } else {
                     var questionMarkPosition = facesResource.indexOf('?');
 
                     //extract resource
-                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFacesExt.RESOURCE_IDENTIFIER.length, questionMarkPosition);
+                    var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-                    facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource(extractedResource + appendedResource);
+                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 }
             } else {
                 facesResource = resource;
             }
         } else {
-            if (resource.indexOf(PrimeFacesExt.RESOURCE_IDENTIFIER) === -1) {
-                facesResource = PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('ckeditor/' + resource);
+            if (resource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER) === -1) {
+                facesResource = PrimeFaces.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
             }
             else {
                 facesResource = resource;
@@ -59,7 +59,7 @@ CKEDITOR_GETURL = function(resource) {
  *
  * @author Thomas Andraschko
  */
-PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
 	/**
 	 * Initializes the widget.
@@ -116,10 +116,10 @@ PrimeFacesExt.widget.CKEditor = PrimeFaces.widget.DeferredWidget.extend({
             //check if ckeditor is already included
             if (!$.fn.ckeditor) {
                 var ckEditorScriptURI =
-                    PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/ckeditor.js');
+                    PrimeFaces.getFacesResource('/ckeditor/ckeditor.js', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
                 var jQueryAdapterScriptURI =
-                    PrimeFacesExt.getPrimeFacesExtensionsCompressedResource('/ckeditor/adapters/jquery.js');
+                    PrimeFaces.getFacesResource('/ckeditor/adapters/jquery.js', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
                 //load ckeditor
                 PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {

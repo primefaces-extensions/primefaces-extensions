@@ -3,12 +3,13 @@ package org.primefaces.extensions.component.gravatar;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.FacesComponent;
 import javax.faces.component.UIOutput;
 
-public class Gravatar extends UIOutput{
+public class Gravatar extends UIOutput {
+    
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Gravatar";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GravatarRenderer";
 	
 	public static final List<String> NOT_FOUND_VALUES = new ArrayList<String>();
 	
@@ -30,7 +31,7 @@ public class Gravatar extends UIOutput{
     }
 
     public Gravatar(){
-        setRendererType(GravatarRenderer.RENDERER_TYPE);
+        setRendererType(DEFAULT_RENDERER);
     }
 
 	@Override

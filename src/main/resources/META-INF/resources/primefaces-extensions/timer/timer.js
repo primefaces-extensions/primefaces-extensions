@@ -3,7 +3,7 @@
  *
  * @author f.strazzullo
  */
-PrimeFacesExt.widget.Timer = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
 
     init : function(cfg) {
         this._super(cfg);

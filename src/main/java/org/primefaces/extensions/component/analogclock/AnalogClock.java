@@ -24,7 +24,8 @@ import org.primefaces.util.ComponentUtils;
  */
 @ResourceDependencies({
 		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-		@ResourceDependency(library = "primefaces", name = "primefaces.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
 		@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
 		@ResourceDependency(library = "primefaces-extensions", name = "analogclock/analogclock.js")
 })
@@ -32,6 +33,8 @@ public class AnalogClock extends UIComponentBase implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.AnalogClock";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AnalogClockRenderer";
+
     private static final String DEFAULT_THEME = "aristo";
 
     protected static enum PropertyKeys {
@@ -39,7 +42,7 @@ public class AnalogClock extends UIComponentBase implements Widget {
 	}
 
 	public AnalogClock() {
-		setRendererType(AnalogClockRenderer.RENDERER_TYPE);
+		setRendererType(DEFAULT_RENDERER);
 	}
 
 	@Override

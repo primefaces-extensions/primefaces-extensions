@@ -18,14 +18,9 @@
 
 package org.primefaces.extensions.component.tristatecheckbox;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.el.ValueExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
-import javax.faces.component.html.HtmlInputText;
-import javax.faces.context.FacesContext;
+import javax.faces.component.html.HtmlSelectBooleanCheckbox;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
 
@@ -37,17 +32,17 @@ import org.primefaces.util.ComponentUtils;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-                      })
-public class TriStateCheckbox extends HtmlInputText implements Widget {
+        @ResourceDependency(library = "primefaces", name = "components.css"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
+public class TriStateCheckbox extends HtmlSelectBooleanCheckbox implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TriStateCheckbox";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String UI_ICON = "ui-icon ";
 
@@ -156,6 +151,7 @@ public class TriStateCheckbox extends HtmlInputText implements Widget {
 		getStateHelper().put(TriStateCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
 	}
 
+    @Override
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}

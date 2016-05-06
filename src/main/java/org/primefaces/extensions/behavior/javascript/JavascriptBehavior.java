@@ -38,7 +38,12 @@ import javax.faces.context.FacesContext;
  * @version $Revision$
  * @since 0.2
  */
-@ResourceDependencies({ @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js") })
+@ResourceDependencies({
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+})
 public class JavascriptBehavior extends ClientBehaviorBase {
 
 	public final static String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";

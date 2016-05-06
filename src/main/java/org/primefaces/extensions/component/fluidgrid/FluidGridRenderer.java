@@ -128,7 +128,7 @@ public class FluidGridRenderer extends CoreRenderer {
 		startScript(writer, clientId);
 
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('FluidGrid','" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtFluidGrid','" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
         //writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",opts:{");

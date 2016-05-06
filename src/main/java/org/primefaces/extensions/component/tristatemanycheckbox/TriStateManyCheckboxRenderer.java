@@ -20,7 +20,6 @@ package org.primefaces.extensions.component.tristatemanycheckbox;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.HTML;
 
@@ -40,6 +39,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.primefaces.context.RequestContext;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * TriStateManyCheckboxRenderer
@@ -278,8 +279,8 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 	}
 
 	protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(TriStateManyCheckbox.class.getSimpleName(), checkbox.resolveWidgetVar(), checkbox.getClientId());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtTriStateManyCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());
         encodeClientBehaviors(context, checkbox);
         wb.finish();
 	}

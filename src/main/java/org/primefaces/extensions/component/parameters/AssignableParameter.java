@@ -35,7 +35,6 @@ import org.primefaces.extensions.component.base.AbstractParameter;
 public class AssignableParameter extends AbstractParameter {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.AssignableParameter";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	/**
 	 * Properties that are tracked by state saving.

@@ -128,7 +128,7 @@ public class BlockUIRenderer extends CoreRenderer {
 		writer.write("$(function() {");
 
 		final String widgetVar = blockUI.resolveWidgetVar();
-		writer.write("PrimeFacesExt.cw('BlockUI', '" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtBlockUI', '" + widgetVar + "',{");
 
 		writer.write("id:'" + clientId + "'");
         writer.write(",widgetVar:'" + widgetVar + "'");

@@ -2448,11 +2448,15 @@ html[dir='rtl'] #documentPropertiesOverlay .row > * {
 
     <script type="text/javascript">
         //Adding l10n file
-        var l10nNodeUrl = window.parent.PrimeFacesExt.getFacesResource('documentviewer/locale/locales.txt','primefaces-extensions-uncompressed','${project.version}');
+        var l10nNodeUrl = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/locales.txt',
+                window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                window.parent.PrimeFacesExt.VERSION);
         var l10nNode = window.parent.jQuery("<link rel='resource' type='application/l10n' href='" + l10nNodeUrl + "'/>").get(0);
         document.getElementsByTagName('head')[0].appendChild(l10nNode);
 
-        var scriptUrl = window.parent.PrimeFacesExt.getFacesResource('documentviewer/app.js','primefaces-extensions-uncompressed','${project.version}');
+        var scriptUrl = window.parent.PrimeFaces.getFacesResource('documentviewer/app.js',
+                window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                window.parent.PrimeFacesExt.VERSION);
 
         var loadPdf = function(data){
             eval(data);

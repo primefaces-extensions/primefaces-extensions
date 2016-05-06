@@ -23,9 +23,10 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
+import org.primefaces.context.RequestContext;
 
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Tooltip} component.
@@ -44,8 +45,8 @@ public class QRCodeRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(QRCode.class.getSimpleName(), qrCode.resolveWidgetVar(), qrCode.getClientId());
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtQRCode", qrCode.resolveWidgetVar(), qrCode.getClientId());
         wb.attr("render", qrCode.getRenderMethod())
                 .attr("mode", qrCode.getRenderMode())
                 .attr("minVersion", qrCode.getMinVersion())

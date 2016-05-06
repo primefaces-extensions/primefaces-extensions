@@ -149,7 +149,7 @@ public class TimePickerRenderer extends InputRenderer {
 		startScript(writer, clientId);
 		writer.write("$(function(){");
 
-		writer.write("PrimeFacesExt.cw('TimePicker', '" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtTimePicker', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
         writer.write(",widgetVar:'" + widgetVar + "'");
 		writer.write(",timeSeparator:'" + timepicker.getTimeSeparator() + "'");

@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.event;
 
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 

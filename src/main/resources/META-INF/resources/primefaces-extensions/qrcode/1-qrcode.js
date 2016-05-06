@@ -3,10 +3,10 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFacesExt.widget.QRCode = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtQRCode = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Initializes the widget.
-     * 
+     *
      * @param {object} cfg The widget configuration.
      */
     init: function(cfg) {
@@ -22,7 +22,7 @@ PrimeFacesExt.widget.QRCode = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.mode > 2 && this.cfg.render !== 'image') {
             this.cfg.mode = 1;
         }
-        
+
         this.instance = this.container.qrcode(this.cfg);
     },
     toHexColor: function(value) {

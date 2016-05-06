@@ -30,7 +30,6 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
@@ -52,12 +51,14 @@ import org.primefaces.util.ComponentUtils;
  * @version $Revision$
  * @since 1.1.0
  */
-@ResourceDependencies({@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"), 
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"), 
-        @ResourceDependency(library = "primefaces", name = "primefaces.js"), 
+@ResourceDependencies({
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"), 
         @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"), 
-        @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")})
+        @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
+})
 public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder
 {
 

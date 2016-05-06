@@ -22,10 +22,11 @@ import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
+import org.primefaces.context.RequestContext;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link ImageRotateAndResize} component.
@@ -43,25 +44,13 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
 	@Override
 	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final ResponseWriter writer = context.getResponseWriter();
 		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
-		final String clientId = imageRotateAndResize.getClientId(context);
-		final String widgetVar = imageRotateAndResize.resolveWidgetVar();
-		final String target = SearchExpressionFacade.resolveClientId(
-				context, imageRotateAndResize, imageRotateAndResize.getFor());
 
-		startScript(writer, clientId);
-
-		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('" + ImageRotateAndResize.class.getSimpleName() + "', '" + widgetVar + "', {");
-
-		writer.write("id:'" + clientId + "'");
-		writer.write(",target:'" + target + "'");
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
+        wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageRotateAndResize, imageRotateAndResize.getFor()));
 
 		encodeClientBehaviors(context, imageRotateAndResize);
-
-		writer.write("});});");
-
-		endScript(writer);
+        wb.finish();
 	}
 }

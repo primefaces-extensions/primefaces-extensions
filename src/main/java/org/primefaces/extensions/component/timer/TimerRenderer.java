@@ -1,8 +1,24 @@
+/*
+ * Copyright 2011-2015 PrimeFaces Extensions
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * $Id$
+ */
 package org.primefaces.extensions.component.timer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
 
@@ -14,6 +30,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 import java.io.IOException;
 import org.primefaces.util.ComponentTraversalUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link Timer}
@@ -89,9 +106,9 @@ public class TimerRenderer extends CoreRenderer {
                 .params(timer)
                 .build();
 
-        ExtWidgetBuilder ewb = ExtWidgetBuilder.get(context);
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
 
-        ewb.initWithDomReady("Timer", widgetVar, clientId).
+        wb.initWithDomReady("ExtTimer", widgetVar, clientId).
                 attr("timeout", timer.getTimeout()).
                 attr("singleRun", timer.isSingleRun()).
                 attr("format", timer.getFormat()).
@@ -100,18 +117,18 @@ public class TimerRenderer extends CoreRenderer {
                 callback("listener","function()",request);
 
         if(StringUtils.isNotEmpty(timer.getOntimerstep())){
-            ewb.callback("ontimerstep","function(intervalData)", timer.getOntimerstep());
+            wb.callback("ontimerstep","function(intervalData)", timer.getOntimerstep());
         }
 
         if(StringUtils.isNotEmpty(timer.getFormatFunction())){
-            ewb.callback("formatFunction","function(value)", timer.getFormatFunction());
+            wb.callback("formatFunction","function(value)", timer.getFormatFunction());
         }
 
         if(StringUtils.isNotEmpty(timer.getOntimercomplete())){
-            ewb.callback("ontimercomplete","function()", timer.getOntimercomplete());
+            wb.callback("ontimercomplete","function()", timer.getOntimercomplete());
         }
 
-        ewb.finish();
+        wb.finish();
 	}
 
 }

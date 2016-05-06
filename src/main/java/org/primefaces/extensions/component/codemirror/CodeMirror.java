@@ -27,7 +27,6 @@ import java.util.List;
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
@@ -46,19 +45,19 @@ import org.primefaces.util.ComponentUtils;
  * @since 0.3
  */
 @ResourceDependencies({
-	@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-	@ResourceDependency(library = "primefaces", name = "primefaces.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
-	@ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
 })
 public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CodeMirrorRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String EVENT_CHANGE = "change";
 	public static final String EVENT_HIGHLIGHT_COMPLETE = "highlightComplete";

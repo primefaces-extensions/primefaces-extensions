@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -14,11 +14,11 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.id = cfg.id;
         this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target);
-        
+
         if (this.cfg.context) {
             this.cfg.context = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.context);
         }
-        
+
         this.destroy().create();
 
         delete this.cfg.target;
@@ -33,7 +33,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         this.target.waypoint('destroy');
         return this;
     },
-    
+
     /**
      * Temporarily disables the waypoint callback function from firing. The waypoint can be re-enabled by calling enable.
      */
@@ -41,7 +41,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         this.target.waypoint('disable');
         return this;
     },
-    
+
     /**
      * Re-enables a previously disabled waypoint.
      */
@@ -57,7 +57,7 @@ PrimeFacesExt.widget.Waypoint = PrimeFaces.widget.BaseWidget.extend({
         var _self = this;
         this.target.waypoint(function (direction) {
             _self.reached(direction, this);
-        }, this.cfg);    
+        }, this.cfg);
     },
 
     /**

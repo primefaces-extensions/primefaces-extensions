@@ -22,11 +22,11 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.extensions.component.qrcode.QRCode;
-import org.primefaces.extensions.util.ExtWidgetBuilder;
+import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * TriStateCheckboxRenderer
@@ -197,8 +197,8 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 	}
 
 	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {        
-        ExtWidgetBuilder wb = ExtWidgetBuilder.get(context);
-        wb.initWithDomReady(TriStateCheckbox.class.getSimpleName(), checkbox.resolveWidgetVar(), checkbox.getClientId());;
+        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtTriStateCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());;
         encodeClientBehaviors(context, checkbox);
         wb.finish();
 	}

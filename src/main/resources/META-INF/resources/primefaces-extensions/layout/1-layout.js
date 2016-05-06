@@ -3,7 +3,7 @@
  *
  * @author Oleg Varaksin
  */
-PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Initializes the widget.
      *
@@ -29,7 +29,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
         } else if (cfg.serverState) {
             this.stateHiddenField = $(jqId + "_state");
         }
-        
+
         this.renderDeferred();
     },
 
@@ -44,7 +44,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
         // bind "open", "close" and "resize" events
         this.bindEvents(this.jq);
     },
-    
+
     bindEvents:function(parent) {
         var $this = this;
 
@@ -59,10 +59,10 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                             {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
-    
+
                     behavior.call($this, options);
                 }
-    
+
                 if ($this.cfg.serverState) {
                     $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
@@ -75,16 +75,16 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                             {name:$this.id + '_pane', value:combinedPosition}
                         ]
                     };
-    
+
                     behavior.call($this, options);
                 }
-    
+
                 if ($this.cfg.serverState) {
                     $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                 }
             }).on("layoutpaneonresize", function () {
                 var layoutPane = $(this).data("layoutPane");
-    
+
                 if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
                     var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['resize'] : null;
                     if (behavior) {
@@ -96,15 +96,15 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
                                 {name:$this.id + '_height', value:layoutPane.state.innerHeight}
                             ]
                         };
-    
+
                         behavior.call($this, options);
                     }
-    
+
                     if ($this.cfg.serverState) {
                         $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
                     }
                 }
-            });        
+            });
     },
 
     toggle:function (pane) {
@@ -126,7 +126,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
             if (combinedPosition && combinedPosition === pane) {
                 $(panes[i]).trigger("layoutpaneclose");
                 break;
-            }            
+            }
         }
     },
 
@@ -138,7 +138,7 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
             if (combinedPosition && combinedPosition === pane) {
                 $(panes[i]).trigger("layoutpaneopen");
                 break;
-            }            
+            }
         }
     },
 
@@ -150,10 +150,10 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
             if (combinedPosition && combinedPosition === pane) {
                 $(panes[i]).trigger("layoutpanesize", [size]);
                 break;
-            }            
+            }
         }
     },
-    
+
     sizeContent:function (pane) {
         var panes = this.jq.find(".ui-layout-pane");
         var length = panes.length;
@@ -162,34 +162,34 @@ PrimeFacesExt.widget.Layout = PrimeFaces.widget.DeferredWidget.extend({
             if (combinedPosition && combinedPosition === pane) {
                 $(panes[i]).trigger("layoutpanesizecontent");
                 break;
-            }            
+            }
         }
-    }    
-    
+    }
+
     /*
     update:function (pane, options) {
         var $this = this;
-        
+
         this.jq.find(".ui-layout-pane").
             each(function() {
                 var $this = $(this);
                 var combinedPosition = $this.data('combinedposition');
                 if (combinedPosition && combinedPosition === pane) {
-                    
+
                     // update child options
                     var $layoutContainer = $this.closest(".ui-layout-container");
                     if ($layoutContainer.length) {
                         var innerLayout = $layoutContainer.data("layout");
-                        
+
                         innerLayout.destroy();
                         $layoutContainer.layout(options != null ? options : {});
-                        
+
                         // bind "open", "close" and "resize" events
-                        $this.bindEvents($this);                        
-                    }                    
-                    
+                        $this.bindEvents($this);
+                    }
+
                     return false;
                 }
             });
-    }*/   
+    }*/
 });

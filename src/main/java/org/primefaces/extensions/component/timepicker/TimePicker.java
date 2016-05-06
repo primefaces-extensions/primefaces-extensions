@@ -29,7 +29,6 @@ import org.primefaces.util.HTML;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -53,19 +52,19 @@ import org.primefaces.util.ComponentUtils;
  * @since   0.3
  */
 @ResourceDependencies({
-                          @ResourceDependency(library = "primefaces", name = "primefaces.css"),
-                          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-                          @ResourceDependency(library = "primefaces", name = "primefaces.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
-                          @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-                      })
+        @ResourceDependency(library = "primefaces", name = "components.css"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "core.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
+        @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
+})
 public class TimePicker extends HtmlInputText implements Widget {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
-	private static final String OPTIMIZED_PACKAGE = "org.primefaces.extensions.component.";
 
 	public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
 	public static final String INPUT_CLASS = "ui-inputfield pe-timepicker-input ui-state-default ui-corner-all";

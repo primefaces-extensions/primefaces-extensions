@@ -3,7 +3,7 @@
  *
  * @author Mauricio Fenoglio
  */
-PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -27,41 +27,41 @@ PrimeFacesExt.widget.TriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
             $(this).removeClass('ui-state-hover');
         }).click(function (event) {
             _self.toggle($(this),1);
-            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
         });
 
         this.labels.click(function (event) {
             var element = $(this), input = $(PrimeFaces.escapeClientId(element.attr('for'))), checkbox = input.parent().next();
             checkbox.click();
-            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
         });
 
         //adding accesibility
-        this.outputs.bind('keydown', function(event) {           
+        this.outputs.bind('keydown', function(event) {
             switch(event.keyCode){
                 case 38:
                     _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                     break;
                 case 40:
                     _self.toggle($(this),-1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                     break;
                 case 39:
                     _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                     break;
                 case 37:
                     _self.toggle($(this),-1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
                     break;
                 case 32:
                     _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } 
-                    break; 
-            }    
+                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    break;
+            }
         });
-        
+
         // client behaviors
         if (this.cfg.behaviors) {
             PrimeFaces.attachBehaviors(this.inputs, this.cfg.behaviors);

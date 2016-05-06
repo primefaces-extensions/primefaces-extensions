@@ -122,7 +122,7 @@ public class LayoutRenderer extends CoreRenderer {
 
 		startScript(writer, clientId);
 		writer.write("$(function() {");
-		writer.write("PrimeFacesExt.cw('Layout', '" + widgetVar + "',{");
+		writer.write("PrimeFaces.cw('ExtLayout', '" + widgetVar + "',{");
 		writer.write("id:'" + clientId + "'");
         writer.write(",widgetVar:'" + widgetVar + "'");
 

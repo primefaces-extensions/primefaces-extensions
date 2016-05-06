@@ -1,5 +1,0 @@
-timeline.css:
-------------------------------------------------
-- Fixed css background image for delete icon
-	background: url("#{resource['primefaces-extensions:timeline/deleteEvent.png']}") no-repeat center;
-
