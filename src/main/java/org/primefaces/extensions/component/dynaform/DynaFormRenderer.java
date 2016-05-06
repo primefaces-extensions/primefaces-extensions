@@ -23,6 +23,7 @@ import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.model.dynaform.DynaFormNestedModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 
