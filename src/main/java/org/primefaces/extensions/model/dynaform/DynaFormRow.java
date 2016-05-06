@@ -105,6 +105,34 @@ public class DynaFormRow implements Serializable {
 		return dynaFormControl;
 	}
 
+	/***
+	 * Adds nested model with colspan = 1 and rowspan = 1.
+	 * @param model
+	 * @param colspan colspan
+	 * @param rowspan colspan
+	 * @return DynaFormNestedModel added model
+	 */
+	public DynaFormNestedModel addNestedModel(DynaFormModel model) {
+		return addNestedModel(model, 1, 1);
+	}
+	
+	/***
+	 * Adds nested model with given colspan and rowspan.
+	 * @param model
+	 * @param colspan
+	 * @param rowspan
+	 * @return DynaFormNestedModel added model
+	 */
+	public DynaFormNestedModel addNestedModel(DynaFormModel model, int colspan, int rowspan) {
+		DynaFormNestedModel nestedModel = new DynaFormNestedModel(model, colspan, rowspan, row, elements.size() + 1, extended);
+
+		elements.add(nestedModel);
+		dynaFormModel.getControls().addAll(model.getControls());
+		totalColspan = totalColspan + colspan;
+
+		return nestedModel;
+	}
+	
 	/**
 	 * Adds a label with given text, colspan = 1 and rowspan = 1.
 	 *
