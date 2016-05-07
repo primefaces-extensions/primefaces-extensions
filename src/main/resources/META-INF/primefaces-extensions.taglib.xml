@@ -3565,7 +3565,6 @@
             <required>false</required>
             <type>java.lang.Double</type>
         </attribute>
-        V
         <attribute>
             <description>
                 <![CDATA[Label size percentage. Default value is 0.1]]>
