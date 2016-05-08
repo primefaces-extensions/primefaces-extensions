@@ -710,6 +710,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Comma separated list of label and control style classes. Default value is null.]]>
+            </description>
+            <name>columnClasses</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description><![CDATA[Specifies a control for a certain typed element within DynaForm.]]></description>

@@ -74,7 +74,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		openExtended,
 		buttonBarPosition, // top, bottom, both
 		style,
-		styleClass;
+		styleClass,
+		columnClasses;
 
 		private String toString;
 
@@ -148,6 +149,14 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
 	}
 
+	public void setColumnClasses(java.lang.String columnClasses) {
+		getStateHelper().put(PropertyKeys.columnClasses, columnClasses);
+	}
+
+	public java.lang.String getColumnClasses() {
+		return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
+	}
+	
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}

@@ -38,9 +38,9 @@ import java.util.logging.Logger;
 /**
  * Renderer for {@link DynaForm} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class DynaFormRenderer extends CoreRenderer {
 
@@ -68,6 +68,8 @@ public class DynaFormRenderer extends CoreRenderer {
 
 	private static final String BUTTON_BAR_ROLE = "toolbar";
 	private static final String GRID_CELL_ROLE = "gridcell";
+
+	private static final String[] EMPTY_COLUMN_CLASSES = new String[]{"", ""};
 
 	@Override
 	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -188,6 +190,11 @@ public class DynaFormRenderer extends CoreRenderer {
 
 		ResponseWriter writer = fc.getResponseWriter();
 
+		String columnClassesValue = dynaForm.getColumnClasses();
+		String[] columnClasses = columnClassesValue == null ? EMPTY_COLUMN_CLASSES : columnClassesValue.split(",");
+		String labelCommonClass = columnClasses[0].trim();
+		String controlCommonClass = columnClasses.length > 1 ? columnClasses[1].trim() : EMPTY_COLUMN_CLASSES[1];
+
 		for (DynaFormRow dynaFormRow : dynaFormRows) {
 			writer.startElement("tr", null);
 			if (extended) {
@@ -228,7 +235,7 @@ public class DynaFormRenderer extends CoreRenderer {
 					// render label
 					DynaFormLabel label = (DynaFormLabel) element;
 
-					writer.writeAttribute("class", styleClass + " " + LABEL_CLASS, null);
+					writer.writeAttribute("class", (styleClass + " " + LABEL_CLASS + " " + labelCommonClass).trim(), null);
 					writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
 					writer.startElement("label", null);
@@ -254,37 +261,37 @@ public class DynaFormRenderer extends CoreRenderer {
 					}
 
 					writer.endElement("label");
-				}  else if(element instanceof DynaFormNestedModel){
+				} else if (element instanceof DynaFormNestedModel) {
 					DynaFormNestedModel nestedModel = (DynaFormNestedModel) element;
-					
+
 					// render nested model
 					writer.writeAttribute("class", styleClass, null);
 					writer.writeAttribute("role", GRID_CELL_ROLE, null);
-					
+
 					encodeMarkup(fc, dynaForm, nestedModel.getModel(), false);
-				} else if(element instanceof DynaFormControl){
+				} else if (element instanceof DynaFormControl) {
 					// render control
 					DynaFormControl control = (DynaFormControl) element;
 					dynaForm.setData(control);
 
 					// find control's cell by type
 					UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
-                    
-                    if (cell.getStyle() != null) {
-                        writer.writeAttribute("style", cell.getStyle(), null);
-                    }
+
+					if (cell.getStyle() != null) {
+						writer.writeAttribute("style", cell.getStyle(), null);
+					}
 
 					if (cell.getStyleClass() != null) {
 						styleClass = styleClass + " " + cell.getStyleClass();
 					}
 
-					writer.writeAttribute("class", styleClass, null);
+					writer.writeAttribute("class", (styleClass + " " + controlCommonClass).trim(), null);
 					writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
 					cell.encodeAll(fc);
 				}
 
-                writer.endElement("td");
+				writer.endElement("td");
 			}
 
 			writer.endElement("tr");
