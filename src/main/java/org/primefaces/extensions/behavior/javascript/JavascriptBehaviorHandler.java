@@ -19,6 +19,7 @@
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.application.Application;
+import javax.faces.component.UIComponent;
 import javax.faces.view.BehaviorHolderAttachedObjectHandler;
 import javax.faces.view.facelets.BehaviorConfig;
 import javax.faces.view.facelets.FaceletContext;
@@ -46,7 +47,8 @@ public class JavascriptBehaviorHandler extends AbstractBehaviorHandler<Javascrip
 		this.disabled = this.getAttribute(JavascriptBehavior.PropertyKeys.disabled.name());
 	}
 
-	protected JavascriptBehavior createBehavior(final FaceletContext faceletContext, final String eventName) {
+        @Override
+	protected JavascriptBehavior createBehavior(final FaceletContext faceletContext, final String eventName, UIComponent component) {
 		final Application application = faceletContext.getFacesContext().getApplication();
 		final JavascriptBehavior behavior = (JavascriptBehavior) application.createBehavior(JavascriptBehavior.BEHAVIOR_ID);
 
