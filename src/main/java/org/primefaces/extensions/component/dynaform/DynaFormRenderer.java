@@ -23,7 +23,7 @@ import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.extensions.model.dynaform.DynaFormNestedModel;
+import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 
@@ -261,8 +261,8 @@ public class DynaFormRenderer extends CoreRenderer {
 					}
 
 					writer.endElement("label");
-				} else if (element instanceof DynaFormNestedModel) {
-					DynaFormNestedModel nestedModel = (DynaFormNestedModel) element;
+				} else if (element instanceof DynaFormModelElement) {
+					DynaFormModelElement nestedModel = (DynaFormModelElement) element;
 
 					// render nested model
 					writer.writeAttribute("class", styleClass, null);

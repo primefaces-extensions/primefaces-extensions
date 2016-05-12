@@ -7,11 +7,11 @@ package org.primefaces.extensions.model.dynaform;
  * @version $Revision$
  * @since   4.0.0
  */
-public class DynaFormNestedModel extends AbstractDynaFormElement {
+public class DynaFormModelElement extends AbstractDynaFormElement {
 
 	private DynaFormModel model;
 
-	public DynaFormNestedModel(DynaFormModel model, int colspan, int rowspan, int row, int column, boolean extended) {
+	public DynaFormModelElement(DynaFormModel model, int colspan, int rowspan, int row, int column, boolean extended) {
 		super(colspan, rowspan, row, column, extended);
 		this.model = model;
 	}
