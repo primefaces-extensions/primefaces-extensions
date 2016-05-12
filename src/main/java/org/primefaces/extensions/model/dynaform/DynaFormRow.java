@@ -110,7 +110,7 @@ public class DynaFormRow implements Serializable {
 	 * @param model
 	 * @param colspan colspan
 	 * @param rowspan colspan
-	 * @return DynaFormNestedModel added model
+	 * @return DynaFormModelElement added model
 	 */
 	public DynaFormModelElement addModel(DynaFormModel model) {
 		return addModel(model, 1, 1);
@@ -121,7 +121,7 @@ public class DynaFormRow implements Serializable {
 	 * @param model
 	 * @param colspan
 	 * @param rowspan
-	 * @return DynaFormNestedModel added model
+	 * @return DynaFormModelElement added model
 	 */
 	public DynaFormModelElement addModel(DynaFormModel model, int colspan, int rowspan) {
 		DynaFormModelElement nestedModel = new DynaFormModelElement(model, colspan, rowspan, row, elements.size() + 1, extended);
