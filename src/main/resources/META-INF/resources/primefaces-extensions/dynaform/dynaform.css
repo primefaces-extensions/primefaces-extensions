@@ -13,17 +13,17 @@
     white-space: nowrap;
 }
 
-.pe-dynaform-cell[colspan] input,
-.pe-dynaform-cell[colspan] textarea,
-.pe-dynaform-cell[colspan] select {
-    width: 100%;    
+.pe-dynaform-cell[colspan] > input,
+.pe-dynaform-cell[colspan] > textarea,
+.pe-dynaform-cell[colspan] > select {
+    width: 100%;
 }
 
 /* for IE8 because it thinks all td elements have a colspan */
-.pe-dynaform-cell[colspan="1"] input,
-.pe-dynaform-cell[colspan="1"] textarea,
-.pe-dynaform-cell[colspan="1"] select {
-    width: auto;    
+.pe-dynaform-cell[colspan="1"] > input,
+.pe-dynaform-cell[colspan="1"] > textarea,
+.pe-dynaform-cell[colspan="1"] > select {
+    width: auto;
 }
 
 .pe-dynaform-cell-last {
