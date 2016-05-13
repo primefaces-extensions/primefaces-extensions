@@ -261,14 +261,6 @@ public class DynaFormRenderer extends CoreRenderer {
 					}
 
 					writer.endElement("label");
-				} else if (element instanceof DynaFormModelElement) {
-					DynaFormModelElement nestedModel = (DynaFormModelElement) element;
-
-					// render nested model
-					writer.writeAttribute("class", styleClass, null);
-					writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
-					encodeMarkup(fc, dynaForm, nestedModel.getModel(), false);
 				} else if (element instanceof DynaFormControl) {
 					// render control
 					DynaFormControl control = (DynaFormControl) element;
@@ -289,7 +281,15 @@ public class DynaFormRenderer extends CoreRenderer {
 					writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
 					cell.encodeAll(fc);
-				}
+				} else if (element instanceof DynaFormModelElement) {
+                    DynaFormModelElement nestedModel = (DynaFormModelElement) element;
+
+                    // render nested model
+                    writer.writeAttribute("class", styleClass, null);
+                    writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+                    encodeMarkup(fc, dynaForm, nestedModel.getModel(), false);
+                }
 
 				writer.endElement("td");
 			}
