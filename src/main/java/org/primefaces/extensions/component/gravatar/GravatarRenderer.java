@@ -15,7 +15,7 @@ import org.primefaces.renderkit.CoreRenderer;
 
 public class GravatarRenderer extends CoreRenderer {
 
-	private final String BASE_URL = "https://www.gravatar.com/";	
+	private final String BASE_URL = "www.gravatar.com";	
 	
 	private static final MessageDigest md;
 	
@@ -53,13 +53,20 @@ public class GravatarRenderer extends CoreRenderer {
 
 	}
 
-	protected String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException {
+	private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException {
             
 		boolean qrCode = gravatar.isQrCode();
 		Integer size = gravatar.getSize();
 		String notFound = gravatar.getNotFound();
                 
-                String url = this.BASE_URL;
+                String url;
+                
+                // check if the request must be made over a secure layer or not
+                if (gravatar.isSecure()) {
+                    url = "https://" + this.BASE_URL + "/";
+                } else {
+                    url = "http://" + this.BASE_URL + "/";
+                }
 		
 		if(!qrCode){
 			url += "avatar/";
