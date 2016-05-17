@@ -60,14 +60,14 @@ public class Gravatar extends UIOutput {
 		return Boolean.TRUE.equals(this.getStateHelper().eval(PropertyKeys.qrCode,false));
 	}
 	
-        public boolean isSecure(){
-		return Boolean.TRUE.equals(this.getStateHelper().eval(PropertyKeys.secure,true));
-	}
-	
 	public void setQrCode(boolean qrCode) {
 		this.getStateHelper().put(PropertyKeys.qrCode, qrCode);
 	}
 	
+        public boolean isSecure(){
+		return Boolean.TRUE.equals(this.getStateHelper().eval(PropertyKeys.secure,true));
+	}
+        
         public void setSecure(boolean secure) {
 		this.getStateHelper().put(PropertyKeys.secure, secure);
 	}
