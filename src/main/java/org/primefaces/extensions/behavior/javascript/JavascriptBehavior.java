@@ -63,8 +63,6 @@ public class JavascriptBehavior extends AbstractBehavior {
 
 	public void setExecute(final String execute) {
 		setLiteral(PropertyKeys.execute, execute);
-
-		clearInitialState();
 	}
 
 	public boolean isDisabled() {
@@ -73,8 +71,6 @@ public class JavascriptBehavior extends AbstractBehavior {
 
 	public void setDisabled(boolean disabled) {
 		setLiteral(PropertyKeys.disabled, disabled);
-
-		clearInitialState();
 	}
 
 	@Override
