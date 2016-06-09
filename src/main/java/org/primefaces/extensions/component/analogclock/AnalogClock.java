@@ -35,7 +35,7 @@ public class AnalogClock extends UIComponentBase implements Widget {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.AnalogClockRenderer";
 
-    private static final String DEFAULT_THEME = "aristo";
+    private static final String DEFAULT_THEME = "omega";
 
     protected static enum PropertyKeys {
 		colorTheme, width, widgetVar, startTime, mode;

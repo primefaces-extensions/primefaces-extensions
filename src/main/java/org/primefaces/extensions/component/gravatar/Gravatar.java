@@ -27,7 +27,8 @@ public class Gravatar extends UIOutput {
         notFound,
         size,
         style,
-        qrCode;
+        qrCode,
+        secure;
     }
 
     public Gravatar(){
@@ -61,6 +62,14 @@ public class Gravatar extends UIOutput {
 	
 	public void setQrCode(boolean qrCode) {
 		this.getStateHelper().put(PropertyKeys.qrCode, qrCode);
+	}
+	
+        public boolean isSecure(){
+		return Boolean.TRUE.equals(this.getStateHelper().eval(PropertyKeys.secure,true));
+	}
+        
+        public void setSecure(boolean secure) {
+		this.getStateHelper().put(PropertyKeys.secure, secure);
 	}
 	
 	public String getNotFound(){
