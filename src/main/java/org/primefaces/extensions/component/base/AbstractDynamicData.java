@@ -58,6 +58,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
     protected KeyData data;
     private String clientId = null;
     private StringBuilder idBuilder = new StringBuilder();
+    private Boolean isNested = null;
 
     /**
      * Properties that are tracked by state saving.
@@ -268,22 +269,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         }
 
         pushComponentToEL(context, this);
-
-        @SuppressWarnings("unchecked")
-        Map<String, SavedEditableValueState> saved =
-                (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
-
-        FacesMessage.Severity sev = context.getMaximumSeverity();
-        boolean hasErrors = (sev != null && (FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0));
-
-        if (saved == null) {
-            getStateHelper().remove(PropertyKeys.saved);
-        } else if (!hasErrors) {
-            for (SavedEditableValueState saveState : saved.values()) {
-                saveState.reset();
-            }
-        }
-
+        preDecode(context);
         processFacets(context, PhaseId.APPLY_REQUEST_VALUES, this);
         processChildren(context, PhaseId.APPLY_REQUEST_VALUES);
 
@@ -325,6 +311,40 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         processFacets(context, PhaseId.UPDATE_MODEL_VALUES, this);
         processChildren(context, PhaseId.UPDATE_MODEL_VALUES);
         popComponentFromEL(context);
+    }
+
+    protected void preDecode(FacesContext context) {
+        Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
+        if (null == saved || !keepSaved(context)) {
+            getStateHelper().remove(PropertyKeys.saved);
+        }
+    }
+
+    private boolean keepSaved(FacesContext context) {
+        return (contextHasErrorMessages(context) || isNestedWithinIterator());
+    }
+
+    private boolean contextHasErrorMessages(FacesContext context) {
+        FacesMessage.Severity sev = context.getMaximumSeverity();
+        return (sev != null && (FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0));
+    }
+
+    protected Boolean isNestedWithinIterator() {
+        if (isNested == null) {
+            UIComponent parent = this;
+            while (null != (parent = parent.getParent())) {
+                if (parent.getClass().getName().endsWith("UIRepeat")) {
+                    isNested = Boolean.TRUE;
+                    break;
+                }
+            }
+            if (isNested == null) {
+                isNested = Boolean.FALSE;
+            }
+            return isNested;
+        } else {
+            return isNested;
+        }
     }
 
     @Override
