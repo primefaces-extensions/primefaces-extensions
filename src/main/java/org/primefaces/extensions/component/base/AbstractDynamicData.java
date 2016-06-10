@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.component.base;
 
+import org.primefaces.component.api.UITabPanel;
 import org.primefaces.extensions.event.EventDataWrapper;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.util.SavedEditableValueState;
@@ -333,7 +334,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         if (isNested == null) {
             UIComponent parent = this;
             while (null != (parent = parent.getParent())) {
-                if (parent.getClass().getName().endsWith("UIRepeat")) {
+                if (parent instanceof javax.faces.component.UIData
+                        || parent.getClass().getName().endsWith("UIRepeat")
+                        || (parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating())) {
                     isNested = Boolean.TRUE;
                     break;
                 }
@@ -341,10 +344,8 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             if (isNested == null) {
                 isNested = Boolean.FALSE;
             }
-            return isNested;
-        } else {
-            return isNested;
         }
+        return isNested;
     }
 
     @Override
