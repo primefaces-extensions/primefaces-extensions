@@ -86,7 +86,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -191,8 +191,8 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
     @Override
     public String getClientId(FacesContext context) {
-        if (this.clientId != null) {
-            return this.clientId;
+        if (clientId != null) {
+            return clientId;
         }
 
         String id = getId();
@@ -211,7 +211,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
                 id = parentUniqueIdVendor.createUniqueId(context, null);
             }
 
-            this.setId(id);
+            setId(id);
         }
 
         UIComponent namingContainer = ComponentTraversalUtils.closestNamingContainer(this);
@@ -219,30 +219,30 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             String containerClientId = namingContainer.getContainerClientId(context);
 
             if (containerClientId != null) {
-                this.clientId =
-                        this.idBuilder.append(containerClientId).append(UINamingContainer.getSeparatorChar(context)).append(id)
+                clientId =
+                        idBuilder.append(containerClientId).append(UINamingContainer.getSeparatorChar(context)).append(id)
                                 .toString();
-                this.idBuilder.setLength(0);
+                idBuilder.setLength(0);
             } else {
-                this.clientId = id;
+                clientId = id;
             }
         } else {
-            this.clientId = id;
+            clientId = id;
         }
 
         Renderer renderer = getRenderer(context);
         if (renderer != null) {
-            this.clientId = renderer.convertClientId(context, this.clientId);
+            clientId = renderer.convertClientId(context, clientId);
         }
 
-        return this.clientId;
+        return clientId;
     }
 
     @Override
     public void setId(String id) {
         super.setId(id);
 
-        this.clientId = null;
+        clientId = null;
     }
 
     @Override
@@ -437,7 +437,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
         try {
             if (clientId.equals(super.getClientId(context))) {
-                this.pushComponentToEL(context, getCompositeComponentParent(this));
+                pushComponentToEL(context, getCompositeComponentParent(this));
                 callback.invokeContextCallback(context, this);
 
                 return true;
