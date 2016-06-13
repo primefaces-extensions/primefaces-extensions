@@ -19,9 +19,12 @@
 package org.primefaces.extensions.component.tristatecheckbox;
 
 import java.io.IOException;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import org.apache.commons.lang3.math.NumberUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -67,12 +70,7 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = checkbox.getClientId(context);
 
-		int valCheck = 0;
-		try {
-			valCheck = Integer.valueOf(ComponentUtils.getValueToRender(context, checkbox));
-		} catch (Exception ex) {
-			valCheck = 0;
-		}
+		int valCheck = NumberUtils.toInt(ComponentUtils.getValueToRender(context, checkbox));
 
 		if (valCheck > 2 || valCheck < 0) {
 			valCheck = 0;
@@ -146,9 +144,9 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
 
                 String statesTitles =
-		    "[\"" + checkbox.getStateOneTitle() + "\",\"" 
+		    "[\"" + checkbox.getStateOneTitle() + "\",\""
                        + checkbox.getStateTwoTitle() + "\",\"" + checkbox.getStateThreeTitle() + "\"]";
-                                
+
 		String iconClass = "ui-chkbox-icon ui-c"; //HTML.CHECKBOX_ICON_CLASS;
                 String activeTitle = "";
 		if (valCheck == 0) {
@@ -161,26 +159,26 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 			iconClass = iconClass + " " + stataThreeIconClass;
                         activeTitle = checkbox.getStateThreeTitle();
 		}
-                
+
                 String dataTitles = "";
                 String titleAtt = "";
-                
-                if(!checkbox.getStateOneTitle().isEmpty() 
+
+                if(!checkbox.getStateOneTitle().isEmpty()
                     || !checkbox.getStateTwoTitle().isEmpty() || !checkbox.getStateThreeTitle().isEmpty()){
                         dataTitles = "data-titlestates='" + statesTitles + "' ";
                         titleAtt = " title=\"" + activeTitle + "\" ";
                 }
-                
-                String tabIndexTag = " tabIndex=0 ";                
+
+                String tabIndexTag = " tabIndex=0 ";
                 if(checkbox.getTabindex()!=null){
                     tabIndexTag = "tabIndex=" + checkbox.getTabindex() + " ";
-                }               
-                                                
+                }
+
 		// preparation with singe quotes for .data('iconstates')
 		writer.write("<div " + tabIndexTag + titleAtt + "class=\"" + styleClass + "\" data-iconstates='" + statesIconsClasses + "' "
                                 + dataTitles + ">"
                                 + "<span class=\"" + iconClass + "\"></span></div>");
-                
+
 	}
 
 	protected void encodeItemLabel(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
@@ -196,7 +194,7 @@ public class TriStateCheckboxRenderer extends InputRenderer {
 		}
 	}
 
-	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {        
+	protected void encodeScript(final FacesContext context, final TriStateCheckbox checkbox) throws IOException {
         WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
         wb.initWithDomReady("ExtTriStateCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());;
         encodeClientBehaviors(context, checkbox);
