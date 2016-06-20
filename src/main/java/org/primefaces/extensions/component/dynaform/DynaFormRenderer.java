@@ -25,6 +25,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
+import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.CoreRenderer;
 
 import javax.faces.component.EditableValueHolder;
@@ -318,15 +319,16 @@ public class DynaFormRenderer extends CoreRenderer {
 						continue;
 					}
 
+					UIComponent valueHolder = ComponentUtils.deepestEditableValueHolderTarget(target);
 					String targetClientId =
-					    (target instanceof InputHolder) ? ((InputHolder) target).getInputClientId() : target.getClientId(fc);
+					    (valueHolder instanceof InputHolder) ? ((InputHolder) valueHolder).getInputClientId() : valueHolder.getClientId(fc);
 
 					dynaFormLabel.setTargetClientId(targetClientId);
-					dynaFormLabel.setTargetValid(((EditableValueHolder) target).isValid());
-					dynaFormLabel.setTargetRequired(((EditableValueHolder) target).isRequired());
+					dynaFormLabel.setTargetValid(((EditableValueHolder) valueHolder).isValid());
+					dynaFormLabel.setTargetRequired(((EditableValueHolder) valueHolder).isRequired());
 
 					if (dynaFormLabel.getValue() != null) {
-						target.getAttributes().put("label", dynaFormLabel.getValue());
+						valueHolder.getAttributes().put("label", dynaFormLabel.getValue());
 					}
 				}
 			}

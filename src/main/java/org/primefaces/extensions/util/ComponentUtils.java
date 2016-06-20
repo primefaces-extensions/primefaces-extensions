@@ -20,6 +20,7 @@ package org.primefaces.extensions.util;
 
 import org.primefaces.component.api.AjaxSource;
 
+import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
@@ -27,6 +28,10 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
+import javax.faces.view.AttachedObjectTarget;
+import javax.faces.view.EditableValueHolderAttachedObjectTarget;
+
+import java.beans.BeanInfo;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -189,5 +194,35 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
         } else {
             return TimeZone.getDefault();
         }
+    }
+
+    /**
+     * Gets the deepest <code>EditableValueHolder</code> component contained in parent composite parameter.
+     * If not defined, returns parent parameter. Otherwise the deepest <code>EditableValueHolder</code>.
+     * @param parent root component
+     * @return the deepest <code>EditableValueHolder</code> component if any, otherwise the parent parameter.
+     */
+    public static UIComponent deepestEditableValueHolderTarget(UIComponent parent) {
+        UIComponent deepest = parent;
+
+        if (UIComponent.isCompositeComponent(parent)) {
+            BeanInfo info = (BeanInfo) parent.getAttributes().get(UIComponent.BEANINFO_KEY);
+            List<AttachedObjectTarget> targets = (List<AttachedObjectTarget>) info.getBeanDescriptor()
+                    .getValue(AttachedObjectTarget.ATTACHED_OBJECT_TARGETS_KEY);
+
+            for (AttachedObjectTarget target : targets) {
+                if (target instanceof EditableValueHolderAttachedObjectTarget) {
+                    UIComponent children = parent.findComponent(target.getName());
+                    if (children == null) {
+                        throw new FacesException(
+                                "Cannot find editableValueHolder with name: \"" + target.getName() + "\"");
+                    }
+                    deepest = deepestEditableValueHolderTarget(children);
+                    break;
+                }
+            }
+        }
+
+        return deepest;
     }
 }
