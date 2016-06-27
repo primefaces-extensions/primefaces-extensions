@@ -181,7 +181,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Skin of the editor. Valid skins are: kama and moono.]]>
+            <description><![CDATA[Skin of the editor. Valid skins are: flat, icy_orange, kama, minimalist, moono, Moono_blue, moonocolor, moono-dark, office2013.]]>
             </description>
             <name>skin</name>
             <required>false</required>
