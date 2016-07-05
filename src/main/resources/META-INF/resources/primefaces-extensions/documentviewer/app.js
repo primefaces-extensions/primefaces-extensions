@@ -771,7 +771,9 @@ document.webL10n = (function(window, document, undefined) {
             }
             if (reImport.test(line)) { // @import rule?
               match = reImport.exec(line);
-              var url = window.parent.PrimeFacesExt.getFacesResource('documentviewer/locale/' + match[1],'primefaces-extensions-uncompressed','${project.version}');
+              var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
+                    window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                    window.parent.PrimeFacesExt.VERSION);
               loadImport(url); // load the resource synchronously
             }
           }
@@ -6111,7 +6113,9 @@ var WorkerTransport = (function WorkerTransportClosure() {
       try {
         // Some versions of FF can't create a worker on localhost, see:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=683280
-	      workerSrc = window.parent.PrimeFacesExt.getFacesResource('documentviewer/pdf.worker.js','primefaces-extensions-uncompressed','${project.version}');
+        workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js',
+            window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+            window.parent.PrimeFacesExt.VERSION);
         var worker = new Worker(workerSrc);
         var messageHandler = new MessageHandler('main', worker);
         this.messageHandler = messageHandler;
@@ -10141,8 +10145,8 @@ var MAX_AUTO_SCALE = 1.25;
 var MIN_SCALE = 0.25;
 var MAX_SCALE = 4.0;
 var VIEW_HISTORY_MEMORY = 20;
-var SCALE_SELECT_CONTAINER_PADDING = 16;
-var SCALE_SELECT_PADDING = 14;
+var SCALE_SELECT_CONTAINER_PADDING = 8;
+var SCALE_SELECT_PADDING = 22;
 var THUMBNAIL_SCROLL_MARGIN = -19;
 var USE_ONLY_CSS_ZOOM = false;
 var CLEANUP_TIMEOUT = 30000;
@@ -15521,7 +15525,7 @@ window.addEventListener('localized', function localized(evt) {
     if (container.clientWidth > 0) {
       var select = document.getElementById('scaleSelect');
       select.setAttribute('style', 'min-width: inherit;');
-      var width = select.offsetWidth + SCALE_SELECT_CONTAINER_PADDING;
+      var width = select.clientWidth + SCALE_SELECT_CONTAINER_PADDING;
       select.setAttribute('style', 'min-width: ' +
                                    (width + SCALE_SELECT_PADDING) + 'px;');
       container.setAttribute('style', 'min-width: ' + width + 'px; ' +
