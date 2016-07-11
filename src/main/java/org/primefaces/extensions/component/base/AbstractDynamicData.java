@@ -316,8 +316,12 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
     protected void preDecode(FacesContext context) {
         Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper().get(PropertyKeys.saved);
-        if (null == saved || !keepSaved(context)) {
+        if (null == saved) {
             getStateHelper().remove(PropertyKeys.saved);
+        } else if (!keepSaved(context)) {
+            for (SavedEditableValueState saveState : saved.values()) {
+                saveState.reset();
+            }
         }
     }
 
