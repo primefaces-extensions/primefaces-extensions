@@ -18,6 +18,7 @@
 
 package org.primefaces.extensions.model.dynaform;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -33,10 +34,6 @@ import org.primefaces.extensions.model.common.KeyData;
 public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
 	public static final String DEFAULT_TYPE = "default";
-	private static final String KEY_PREFIX_ROW = "r";
-	private static final String KEY_PREFIX_COLUMN = "c";
-	private static final String KEY_SUFFIX_REGULAR = "reg";
-	private static final String KEY_SUFFIX_EXTENDED = "ext";
 
 	private String key;
 	private Object data;
@@ -76,15 +73,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 	}
 
 	void generateKey() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn());
-		if (isExtended()) {
-			sb.append(KEY_SUFFIX_EXTENDED);
-		} else {
-			sb.append(KEY_SUFFIX_REGULAR);
-		}
-
-		setKey(sb.toString());
+		setKey(RandomStringUtils.randomAlphanumeric(8));
 	}
 
 	@Override
