@@ -67,8 +67,9 @@ public class Switch extends UIComponentBase {
 	}
 	
 	public Switch() {
+        setRendererType(null);
 	}
-	
+
 	@Override
 	public String getFamily() {
 		return COMPONENT_FAMILY;
