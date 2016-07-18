@@ -3297,7 +3297,6 @@
         <tag-name>switch</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Switch</component-type>
-            <renderer-type>org.primefaces.extensions.component.SwitchRenderer</renderer-type>
         </component>
         <attribute>
             <description>
