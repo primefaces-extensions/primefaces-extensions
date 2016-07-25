@@ -96,7 +96,14 @@ public class DynaFormRow implements Serializable {
 	 * @return DynaFormControl added control
 	 */
 	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
-		DynaFormControl dynaFormControl = new DynaFormControl(data, type, colspan, rowspan, row, elements.size() + 1, extended);
+		DynaFormControl dynaFormControl = new DynaFormControl(data,
+															  type,
+															  colspan,
+															  rowspan,
+															  row,
+															  elements.size() + 1,
+															  dynaFormModel.getControls().size() + 1,
+															  extended);
 
 		elements.add(dynaFormControl);
 		dynaFormModel.getControls().add(dynaFormControl);
@@ -115,7 +122,7 @@ public class DynaFormRow implements Serializable {
 	public DynaFormModelElement addModel(DynaFormModel model) {
 		return addModel(model, 1, 1);
 	}
-	
+
 	/***
 	 * Adds nested model with given colspan and rowspan.
 	 * @param model
@@ -124,7 +131,13 @@ public class DynaFormRow implements Serializable {
 	 * @return DynaFormModelElement added model
 	 */
 	public DynaFormModelElement addModel(DynaFormModel model, int colspan, int rowspan) {
-		DynaFormModelElement nestedModel = new DynaFormModelElement(model, colspan, rowspan, row, elements.size() + 1, extended);
+		DynaFormModelElement nestedModel = new DynaFormModelElement(model,
+																	colspan,
+																	rowspan,
+																	row,
+																	elements.size() + 1,
+																	dynaFormModel.getControls().size() + 1,
+																	extended);
 
 		elements.add(nestedModel);
 		dynaFormModel.getControls().addAll(model.getControls());
@@ -132,7 +145,7 @@ public class DynaFormRow implements Serializable {
 
 		return nestedModel;
 	}
-	
+
 	/**
 	 * Adds a label with given text, colspan = 1 and rowspan = 1.
 	 *

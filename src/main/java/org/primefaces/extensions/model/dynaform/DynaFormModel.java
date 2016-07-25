@@ -179,7 +179,10 @@ public class DynaFormModel implements Serializable {
             for (AbstractDynaFormElement element : dynaFormRow.getElements()) {
                 element.setRow(row);
                 if (element instanceof DynaFormControl) {
-                    ((DynaFormControl) element).generateKey();
+                     DynaFormControl control = ((DynaFormControl) element);
+                     int delta = rowToBeRemoved.getElements().size();
+                     control.setPosition(control.getPosition() - delta);
+                     control.generateKey();
                 }
             }
         }

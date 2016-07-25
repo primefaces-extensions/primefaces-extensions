@@ -18,7 +18,6 @@
 
 package org.primefaces.extensions.model.dynaform;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -27,9 +26,9 @@ import org.primefaces.extensions.model.common.KeyData;
 /**
  * Class representing a control inside of <code>DynaForm</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
@@ -38,9 +37,18 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 	private String key;
 	private Object data;
 	private String type;
+	private int position;
 
-	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, boolean extended) {
+	private static final String KEY_PREFIX_ROW = "r";
+	private static final String KEY_PREFIX_COLUMN = "c";
+	private static final String KEY_SUFFIX_REGULAR = "reg";
+	private static final String KEY_SUFFIX_EXTENDED = "ext";
+	private static final String KEY_SUFFIX_POSITION = "p";
+
+	public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, int position,
+			boolean extended) {
 		super(colspan, rowspan, row, column, extended);
+		this.position = position;
 
 		this.data = data;
 		if (type != null) {
@@ -72,8 +80,53 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 		return type;
 	}
 
+	public int getPosition() {
+		return position;
+	}
+
+	void setPosition(int position) {
+		this.position = position;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + position;
+
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+
+		if (!super.equals(o)) {
+			return false;
+		}
+
+		if (getClass() != o.getClass()) {
+			return false;
+		}
+
+		DynaFormControl that = (DynaFormControl) o;
+		if (position != that.position) {
+			return false;
+		}
+		return true;
+	}
+
 	void generateKey() {
-		setKey(RandomStringUtils.randomAlphanumeric(8));
+		StringBuilder sb = new StringBuilder();
+		sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn()).append(KEY_SUFFIX_POSITION).append(getPosition());
+		if (isExtended()) {
+			sb.append(KEY_SUFFIX_EXTENDED);
+		} else {
+			sb.append(KEY_SUFFIX_REGULAR);
+		}
+		setKey(sb.toString());
 	}
 
 	@Override
@@ -82,6 +135,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 		                                                                  .append("type", type).append("colspan", getColspan())
 		                                                                  .append("rowspan", getRowspan()).append("row", getRow())
 		                                                                  .append("column", getColumn())
-		                                                                  .append("extended", isExtended()).toString();
+		                                                                  .append("extended", isExtended())
+		                                                                  .append("position", getPosition()).toString();
 	}
 }
