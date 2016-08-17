@@ -62,7 +62,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     private String generateHashString(DocumentViewer documentViewer,FacesContext context) {
 
         List<String> params = new ArrayList<String>(1);
-        params.add("locale=" + getCalculatedLocale(documentViewer, context));
+        params.add("locale=" + getCalculatedLocale(documentViewer, context).toString().replaceAll( "_", "-" ));
         if(documentViewer.getPage() != null){
             params.add("page="+documentViewer.getPage());
         }
@@ -91,7 +91,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
             if(locale instanceof Locale){
                 return (Locale) locale;
             }else if(locale instanceof String){
-                return ComponentUtils.toLocale((String) locale);
+                return ComponentUtils.toLocale(((String) locale).replaceAll( "-", "_" ));
             }else{
                 throw new IllegalArgumentException("Type:" + locale.getClass() + " is not a valid locale type for calendar:" + documentViewer.getClientId(context));
             }

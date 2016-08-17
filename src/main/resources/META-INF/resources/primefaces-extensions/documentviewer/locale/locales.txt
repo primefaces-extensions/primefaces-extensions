@@ -61,6 +61,9 @@
 [el]
 @import url(el.locale.txt)
 
+[en]
+@import url(en-GB.locale.txt)
+
 [en-GB]
 @import url(en-GB.locale.txt)
 
@@ -72,6 +75,9 @@
 
 [eo]
 @import url(eo.locale.txt)
+
+[es]
+@import url(es-ES.locale.txt)
 
 [es-AR]
 @import url(es-AR.locale.txt)
@@ -219,6 +225,9 @@
 
 [pl]
 @import url(pl.locale.txt)
+
+[pt]
+@import url(pt-PT.locale.txt)
 
 [pt-BR]
 @import url(pt-BR.locale.txt)
