@@ -502,6 +502,9 @@ public class ExcelExporter extends Exporter {
                     int i = 0;
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
+                        if(!column.isExportable()||!column.isRendered()){
+                        	continue;
+                        }
                         String value = null;
                         if (facetType.equalsIgnoreCase("header")) {
                             value = column.getHeaderText();
