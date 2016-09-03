@@ -52,6 +52,8 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.";
 
+    public static final String UI_ICON = "ui-icon ";
+    
 	/**
 	 * PropertyKeys
 	 *

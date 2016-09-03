@@ -19,7 +19,6 @@
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
-import org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.HTML;
 
@@ -225,13 +224,13 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
 		//if stateIcon is defined use it insted of default icons.
 		String stateOneIconClass =
-		    checkbox.getStateOneIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateOneIcon() : "";
+		    checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon() : "";
 		String stateTwoIconClass =
-		    checkbox.getStateTwoIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateTwoIcon()
-		                                       : TriStateCheckbox.UI_ICON + "ui-icon-check";
+		    checkbox.getStateTwoIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateTwoIcon()
+		                                       : TriStateManyCheckbox.UI_ICON + "ui-icon-check";
 		String stataThreeIconClass =
-		    checkbox.getStateThreeIcon() != null ? TriStateCheckbox.UI_ICON + checkbox.getStateThreeIcon()
-		                                         : TriStateCheckbox.UI_ICON + "ui-icon-closethick";
+		    checkbox.getStateThreeIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateThreeIcon()
+		                                         : TriStateManyCheckbox.UI_ICON + "ui-icon-closethick";
 
 		String statesIconsClasses =
 		    "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
