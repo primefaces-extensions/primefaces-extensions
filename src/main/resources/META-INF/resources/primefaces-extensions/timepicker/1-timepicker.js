@@ -136,34 +136,44 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
 
         this.removeScriptElement(this.id);
+        
+        this.originalValue = this.jq.val();
 	},
 
 	enableSpinner : function() {
 	    var _self = this;
 
-	    $(this.jqId).children('.pe-timepicker-button').
-	    removeClass('ui-state-disabled').
-        off('mouseover mouseout mouseup mousedown').
-	    on({
-	        mouseover: function(){
-	            $(this).addClass('ui-state-hover');
-	        },
-	        mouseout: function(){
-	            $(this).removeClass('ui-state-hover');
-	        },
-	        mouseup: function(){
-	            $(this).removeClass('ui-state-active');
-	        },
-	        mousedown: function(e){
-	            var el = $(this);
-	            el.addClass('ui-state-active');
+	    $(this.jqId).children('.pe-timepicker-button')
+                .removeClass('ui-state-disabled')
+                .off('mouseover mouseout mouseup mousedown')
+                .on({
+                    mouseover: function(){
+                        $(this).addClass('ui-state-hover');
+                    },
+                    mouseout: function(){
+                        $(this).removeClass('ui-state-hover');
+                        
+                        clearInterval(_self.spinnerInterval);
+                    },
+                    mouseup: function(){
+                        $(this).removeClass('ui-state-active');
+                        
+                        clearInterval(_self.spinnerInterval);
+                    },
+                    mousedown: function(e){
+                        var el = $(this);
+                        el.addClass('ui-state-active');
 
-	            var dir = el.hasClass('pe-timepicker-up') ? 1 : -1;
-	            _self.spin(dir);
+                        var dir = el.hasClass('pe-timepicker-up') ? 1 : -1;
+                        _self.spin(dir);
 
-                e.preventDefault();
-	        }
-	    });
+                        _self.spinnerInterval = setInterval(function() {
+                            _self.spin(dir);
+                        }, 200);
+
+                        e.preventDefault();
+                    }
+                });
 	},
 
 	disableSpinner : function() {
@@ -176,8 +186,8 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	spin : function(dir) {
 	    var time = this.jq.val();
 	    if (!time) {
-	        // empty
-	        return;
+            // if the value is empty, set 00:00 and process with spinning
+	        this.jq.val('00:00');
 	    }
 
 	    var newTime = null;
@@ -483,7 +493,11 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.modeSpinner) {
 	        this.enableSpinner();
         }
-	}
+	},
+    
+    reset : function(cfg) {
+        this.jq.val(this.originalValue);
+    }
 });
 
 // default i18n
