@@ -127,7 +127,8 @@ public class TimePicker extends HtmlInputText implements Widget {
         minHour,
         minMinute,
         maxHour,
-        maxMinute;
+        maxMinute,
+        readonlyInput;
 
 		String toString;
 
@@ -352,6 +353,14 @@ public class TimePicker extends HtmlInputText implements Widget {
    	public void setMaxMinute(final Integer maxMinute) {
    		getStateHelper().put(PropertyKeys.maxMinute, maxMinute);
    	}
+    
+	public boolean isReadonlyInput() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.readonlyInput, false);
+	}
+
+	public void setReadonlyInput(boolean _readonlyInput) {
+		getStateHelper().put(PropertyKeys.readonlyInput, _readonlyInput);
+	}
 
 	public Locale calculateLocale(final FacesContext fc) {
 		if (appropriateLocale == null) {

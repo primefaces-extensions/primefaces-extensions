@@ -92,6 +92,10 @@ public class TimePickerRenderer extends InputRenderer {
 		writer.writeAttribute("type", timepicker.isInline() ? "hidden" : "text", null);
 		writer.writeAttribute("autocomplete", "off", null);
 
+        if (timepicker.isReadonlyInput()) {
+            writer.writeAttribute("readonly", "readonly", null);
+        }
+        
 		if (StringUtils.isNotBlank(value)) {
 			writer.writeAttribute("value", value, null);
 		}
