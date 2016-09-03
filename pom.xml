@@ -42,7 +42,6 @@
                         <!-- These are folders whose resources are merged into one big CSS and JS file. -->
                         <exclude>**/META-INF/resources/**/core/**</exclude>
                         <exclude>**/META-INF/resources/**/ckeditor/**</exclude>
-                        <exclude>**/META-INF/resources/**/spotlight/**</exclude>
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>
                         <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
@@ -95,7 +94,6 @@
                         <resourcesSet>
                             <includes>
                                 <include>core/core.js</include>
-                                <include>spotlight/spotlight.js</include>
                                 <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
