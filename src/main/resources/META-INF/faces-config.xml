@@ -111,10 +111,6 @@
         <component-class>org.primefaces.extensions.component.timepicker.TimePicker</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.TriStateCheckbox</component-type>
-        <component-class>org.primefaces.extensions.component.tristatecheckbox.TriStateCheckbox</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.TriStateManyCheckbox</component-type>
         <component-class>org.primefaces.extensions.component.tristatemanycheckbox.TriStateManyCheckbox</component-class>
     </component>
@@ -243,11 +239,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.TimePickerRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.timepicker.TimePickerRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.TriStateCheckboxRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.tristatecheckbox.TriStateCheckboxRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

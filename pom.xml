@@ -46,7 +46,6 @@
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>
                         <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
-                        <exclude>**/META-INF/resources/**/tristatecheckbox/**</exclude>
                         <exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>
                         <exclude>**/META-INF/resources/**/gchart/**</exclude>
                     </excludes>
