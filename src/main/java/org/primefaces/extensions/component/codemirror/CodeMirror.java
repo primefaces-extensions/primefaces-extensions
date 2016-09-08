@@ -46,12 +46,11 @@ import org.primefaces.util.ComponentUtils;
  */
 @ResourceDependencies({
 		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+		@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
 		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "codemirror/mode/modes.js")
+		@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+		@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
+		@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css")
 })
 public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
 
