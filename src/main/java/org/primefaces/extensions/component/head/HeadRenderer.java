@@ -19,18 +19,9 @@
 package org.primefaces.extensions.component.head;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ELContext;
-import javax.el.ExpressionFactory;
-import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
-import org.primefaces.util.Constants;
 
 /**
  * Renderer for the {@link Head} component.

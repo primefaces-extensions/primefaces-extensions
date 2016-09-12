@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.FacesComponent;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
@@ -23,112 +21,114 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+         @ResourceDependency(library = "primefaces", name = "core.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
-    
-    static final String DEFAULT_TYPE = "select";
-	private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
+   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
+   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
 
-    protected static enum PropertyKeys {
-        widgetVar,
-        width,
-        height,
-        title;
-    }
+   static final String DEFAULT_TYPE = "select";
+   private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
-    public GChart(){
-        setRendererType(DEFAULT_RENDERER);
-    }
+   protected static enum PropertyKeys {
+      widgetVar, 
+      width, 
+      height, 
+      title;
+   }
 
-    @Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+   public GChart() {
+      setRendererType(DEFAULT_RENDERER);
+   }
 
-	@Override
-	public Collection<String> getEventNames() {
-		return EVENT_NAMES;
-	}
+   @Override
+   public String getFamily() {
+      return COMPONENT_FAMILY;
+   }
 
-	@Override
-	public String getDefaultEventName() {
-		return DEFAULT_TYPE;
-	}
+   @Override
+   public Collection<String> getEventNames() {
+      return EVENT_NAMES;
+   }
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
+   @Override
+   public String getDefaultEventName() {
+      return DEFAULT_TYPE;
+   }
 
-	public void setWidgetVar(String _widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-	}
-	
-	public Integer getWidth() {
-		return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
-	}
+   public String getWidgetVar() {
+      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+   }
 
-	public void setWidth(Integer width) {
-		this.getStateHelper().put(PropertyKeys.width, width);
-	}
+   public void setWidgetVar(String _widgetVar) {
+      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+   }
 
-	public Integer getHeight() {
-		return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
-	}
+   public Integer getWidth() {
+      return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
+   }
 
-	public void setHeight(Integer width) {
-		this.getStateHelper().put(PropertyKeys.height, width);
-	}
-	
-	public String getTitle() {
-		return (String) getStateHelper().eval(PropertyKeys.title, null);
-	}
+   public void setWidth(Integer width) {
+      this.getStateHelper().put(PropertyKeys.width, width);
+   }
 
-	public void setTitle(String title) {
-		getStateHelper().put(PropertyKeys.title, title);
-	}
+   public Integer getHeight() {
+      return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
+   }
 
-    @Override
-	public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
-	
-	@Override
-	public void queueEvent(FacesEvent event) {
-		
-		FacesContext context = getFacesContext();
-		if(isRequestSource(context) && event instanceof AjaxBehaviorEvent) {
-           Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+   public void setHeight(Integer width) {
+      this.getStateHelper().put(PropertyKeys.height, width);
+   }
 
-            if(eventName.equals("select")) {
-                AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-                String clientId = this.getClientId(context);
-                
-                Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(), JsonArray.class);
-                
-                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
-                selectEvent.setPhaseId(behaviorEvent.getPhaseId());
+   public String getTitle() {
+      return (String) getStateHelper().eval(PropertyKeys.title, null);
+   }
 
-                super.queueEvent(selectEvent);
-            }
-        }
-        else {
-            super.queueEvent(event);
-        }
-	}
-	
-	public boolean isRequestSource(FacesContext context) {
-        String partialSource = context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
+   public void setTitle(String title) {
+      getStateHelper().put(PropertyKeys.title, title);
+   }
 
-        return partialSource != null && this.getClientId(context).equals(partialSource);
-    }
+   @Override
+   public String resolveWidgetVar() {
+      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+   }
+
+   @Override
+   public void queueEvent(FacesEvent event) {
+
+      FacesContext context = getFacesContext();
+      if (isRequestSource(context) && event instanceof AjaxBehaviorEvent) {
+         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+         String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+         if (eventName.equals("select")) {
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            String clientId = this.getClientId(context);
+
+            Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
+                     JsonArray.class);
+
+            SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
+            selectEvent.setPhaseId(behaviorEvent.getPhaseId());
+
+            super.queueEvent(selectEvent);
+         }
+      } else {
+         super.queueEvent(event);
+      }
+   }
+
+   public boolean isRequestSource(FacesContext context) {
+      String partialSource = context.getExternalContext().getRequestParameterMap()
+               .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
+
+      return partialSource != null && this.getClientId(context).equals(partialSource);
+   }
 }

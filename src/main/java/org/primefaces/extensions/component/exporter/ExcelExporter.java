@@ -61,7 +61,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Iterator;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 /**
  * <code>Exporter</code> component.
@@ -212,7 +211,6 @@ public class ExcelExporter extends Exporter {
 
         int first = table.getFirst();
         int rowCount = table.getRowCount();
-        int rows = table.getRows();
         boolean lazy = table.isLazy();
         int i = 0;
         if (subTable) {
@@ -287,9 +285,7 @@ public class ExcelExporter extends Exporter {
     }
 
     protected void exportAll(FacesContext context, SubTable table, Sheet sheet) {
-        int first = table.getFirst();
         int rowCount = table.getRowCount();
-        int rows = table.getRows();
 
         tableColumnGroup(sheet, table, "header");
         if (hasHeaderColumn(table)) {

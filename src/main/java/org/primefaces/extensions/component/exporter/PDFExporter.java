@@ -353,7 +353,6 @@ public class PDFExporter extends Exporter {
     protected void exportAll(FacesContext context, DataTable table, PdfPTable pdfTable) {
         int first = table.getFirst();
         int rowCount = table.getRowCount();
-        int rows = table.getRows();
         boolean lazy = table.isLazy();
 
         if(lazy) {
@@ -892,23 +891,23 @@ public class PDFExporter extends Exporter {
             this.fontName = fontName;
         }
         if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.facetFontStyle = "" + facetFont.NORMAL;
+            this.facetFontStyle = "" + Font.NORMAL;
         }
         if (facetFontStyle.equalsIgnoreCase("BOLD")) {
-            this.facetFontStyle = "" + facetFont.BOLD;
+            this.facetFontStyle = "" + Font.BOLD;
         }
         if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.facetFontStyle = "" + facetFont.ITALIC;
+            this.facetFontStyle = "" + Font.ITALIC;
         }
 
         if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.cellFontStyle = "" + cellFont.NORMAL;
+            this.cellFontStyle = "" + Font.NORMAL;
         }
         if (cellFontStyle.equalsIgnoreCase("BOLD")) {
-            this.cellFontStyle = "" + cellFont.BOLD;
+            this.cellFontStyle = "" + Font.BOLD;
         }
         if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.cellFontStyle = "" + cellFont.ITALIC;
+            this.cellFontStyle = "" + Font.ITALIC;
         }
 
     }

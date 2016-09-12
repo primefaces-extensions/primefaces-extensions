@@ -18,10 +18,6 @@
 
 package org.primefaces.extensions.component.layout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;

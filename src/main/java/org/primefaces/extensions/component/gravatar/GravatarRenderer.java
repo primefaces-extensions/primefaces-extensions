@@ -15,95 +15,83 @@ import org.primefaces.renderkit.CoreRenderer;
 
 public class GravatarRenderer extends CoreRenderer {
 
-	private final String BASE_URL = "www.gravatar.com";	
-	
-	private static final MessageDigest md;
-	
-	static{
-		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	@Override
-	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-		this.encodeMarkup(context, (Gravatar) component);
-	}
-	
-	private void encodeMarkup(FacesContext context,	Gravatar gravatar) throws IOException {
+   private final String BASE_URL = "www.gravatar.com";
 
-		ResponseWriter writer = context.getResponseWriter();
+   @Override
+   public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+      this.encodeMarkup(context, (Gravatar) component);
+   }
 
+   private void encodeMarkup(FacesContext context, Gravatar gravatar) throws IOException {
 
-		writer.startElement("img", gravatar);
-		writer.writeAttribute("id", gravatar.getClientId(), null);
-		writer.writeAttribute("style", gravatar.getStyle(), null);
-		
-		String url;
-		try {
-			url = this.generateURL(gravatar);
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
-		}
-		
-		writer.writeAttribute("src",url, null);
-		writer.endElement("img");
+      ResponseWriter writer = context.getResponseWriter();
 
-	}
+      writer.startElement("img", gravatar);
+      writer.writeAttribute("id", gravatar.getClientId(), null);
+      writer.writeAttribute("style", gravatar.getStyle(), null);
 
-	private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException {
-            
-		boolean qrCode = gravatar.isQrCode();
-		Integer size = gravatar.getSize();
-		String notFound = gravatar.getNotFound();
-                
-                String url;
-                
-                // check if the request must be made over a secure layer or not
-                if (gravatar.isSecure()) {
-                    url = "https://" + this.BASE_URL + "/";
-                } else {
-                    url = "http://" + this.BASE_URL + "/";
-                }
-		
-		if(!qrCode){
-			url += "avatar/";
-		}
-		
-		url += generateMailHash(gravatar);
-		
-		url += qrCode ? ".qr" : ".jpg";
-		
-		List<String> params = new ArrayList<String>();
-		
-		if(size != null){
-			params.add("s=" + size);
-		}
-		
-		if(StringUtils.isNotEmpty(notFound) && !notFound.equals("default") && Gravatar.NOT_FOUND_VALUES.contains(notFound)){
-			params.add("d=" + notFound);
-		}
-		
-		if(params.size() > 0){
-			url += "?" + StringUtils.join(params, "&");
-		}
-		
-		return url;
-	}
+      String url;
+      try {
+         url = this.generateURL(gravatar);
+      } catch (NoSuchAlgorithmException e) {
+         throw new RuntimeException(e);
+      }
 
-	private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException {
-		
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(String.valueOf(gravatar.getValue()).getBytes());
-		byte[] digest = md.digest();
-		StringBuffer sb = new StringBuffer();
-		for (byte b : digest) {
-			sb.append(String.format("%02x", b & 0xff));
-		}
-		return sb.toString();
-	}
+      writer.writeAttribute("src", url, null);
+      writer.endElement("img");
 
+   }
+
+   private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException {
+
+      boolean qrCode = gravatar.isQrCode();
+      Integer size = gravatar.getSize();
+      String notFound = gravatar.getNotFound();
+
+      String url;
+
+      // check if the request must be made over a secure layer or not
+      if (gravatar.isSecure()) {
+         url = "https://" + this.BASE_URL + "/";
+      } else {
+         url = "http://" + this.BASE_URL + "/";
+      }
+
+      if (!qrCode) {
+         url += "avatar/";
+      }
+
+      url += generateMailHash(gravatar);
+
+      url += qrCode ? ".qr" : ".jpg";
+
+      List<String> params = new ArrayList<String>();
+
+      if (size != null) {
+         params.add("s=" + size);
+      }
+
+      if (StringUtils.isNotEmpty(notFound) && !notFound.equals("default")
+               && Gravatar.NOT_FOUND_VALUES.contains(notFound)) {
+         params.add("d=" + notFound);
+      }
+
+      if (params.size() > 0) {
+         url += "?" + StringUtils.join(params, "&");
+      }
+
+      return url;
+   }
+
+   private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(String.valueOf(gravatar.getValue()).getBytes());
+      byte[] digest = md.digest();
+      StringBuffer sb = new StringBuffer();
+      for (byte b : digest) {
+         sb.append(String.format("%02x", b & 0xff));
+      }
+      return sb.toString();
+   }
 
 }

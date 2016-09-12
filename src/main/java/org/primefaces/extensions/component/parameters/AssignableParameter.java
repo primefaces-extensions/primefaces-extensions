@@ -18,9 +18,6 @@
 
 package org.primefaces.extensions.component.parameters;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.el.ValueExpression;
 
 import org.primefaces.extensions.component.base.AbstractParameter;

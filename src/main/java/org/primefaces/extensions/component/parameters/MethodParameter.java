@@ -18,8 +18,6 @@
 
 package org.primefaces.extensions.component.parameters;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.el.ValueExpression;
