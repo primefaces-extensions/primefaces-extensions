@@ -40,11 +40,11 @@ import org.primefaces.util.MessageFactory;
  * @since   0.3
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "primefaces", name = "components.css"),
+      @ResourceDependency(library = "primefaces", name = "components.css"),
 		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+      @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
 		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+      @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
@@ -223,8 +223,8 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 			Iterator<Object> it = mapValues.values().iterator();
 			boolean cCheck = true;
 			while (it.hasNext() && cCheck) {
-				Object val = it.next();
-				if (!"0".equals(this.getConverter().getAsString(context, this, value))) {
+				final Object val = it.next();
+				if (!"0".equals(this.getConverter().getAsString(context, this, val))) {
 					cCheck = false;
 				}
 			}
