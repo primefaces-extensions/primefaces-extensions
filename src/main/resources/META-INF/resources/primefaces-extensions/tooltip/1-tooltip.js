@@ -14,18 +14,18 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
         var id = cfg.id;
         this.cfg = cfg;
         var _self = this;
+        var targetSelectors = null;
 
         if (this.cfg.forTarget) {
-            this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
+        	this.targetSelectors = this.resolveComponentsAsSelectorString(this.cfg.forTarget);
+        	this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
         }
 
         if (this.cfg.global) {
             this.cfg.position.container = $(document.body);
-            var selector;
-            if (this.cfg.forTarget == null) {
-                selector = '*[title]';
-            } else {
-                selector = this.cfg.forTarget.selector + '[title]';
+            var selector = '*[title]';
+            if (this.targetSelectors) {
+                selector = this.targetSelectors.join(", ");
             }
 
             $('body').off('.tooltip').on(this.cfg.show.event + '.tooltip', selector, function(event) {
@@ -34,11 +34,8 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
                     return;
                 }
 
-                el.attr('oldtitle', el.attr('title')).attr('title', '');
-
                 var extCfg = _self.cfg;
-                extCfg.content = {};
-                extCfg.content.text = el.attr('oldtitle');
+                extCfg.content.text = el.attr('title');
                 extCfg.show.ready = true;
                 el.qtip(extCfg, event);
             });
@@ -96,11 +93,56 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.forTarget) {
             $(this.cfg.forTarget).qtip('reposition');
         }
-    }
+    },
+    
+    /**
+     * Convertes expressions into an array of Jquery Selectors. 
+     * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
+     */
+    resolveComponentsAsSelectorString: function(expressions) {
+		var splittedExpressions = PrimeFaces.expressions.SearchExpressionFacade.splitExpressions(expressions);
+		var elements = [];
+
+		if (splittedExpressions) {
+			for (var i = 0; i < splittedExpressions.length; ++i) {
+				var expression =  $.trim(splittedExpressions[i]);
+				if (expression.length > 0) {
+
+					// skip unresolvable keywords
+					if (expression == '@none' || expression == '@all') {
+						continue;
+					}
+
+					// just a id
+					if (expression.indexOf("@") == -1) {
+						elements.push(expression);
+					}
+					// @widget
+					else if (expression.indexOf("@widgetVar(") == 0) {
+						var widgetVar = expression.substring(11, expression.length - 1);
+						var widget = PrimeFaces.widgets[widgetVar];
+
+						if (widget) {
+							elements.push(widget.id);
+						} else {
+							PrimeFaces.error("Widget for widgetVar \"" + widgetVar + "\" not avaiable");
+						}
+					}
+					// PFS
+					else if (expression.indexOf("@(") == 0) {
+						//converts pfs to jq selector e.g. @(div.mystyle :input) to div.mystyle :input
+						elements.push(expression.substring(2, expression.length - 1));
+					}
+				}
+			}
+		}
+
+		return elements;
+	},
 });
 
 $.fn.qtip.defaults.style.widget = true;
-$.fn.qtip.defaults.style.classes = "ui-tooltip-rounded ui-tooltip-shadow";
+$.fn.qtip.defaults.style.classes = "";
 
 // copied from https://github.com/louisremi/jquery-smartresize/ to hanlde proper window.resize
 (function($) {

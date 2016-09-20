@@ -1725,6 +1725,22 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Style class of the tooltip will override ThemeRoller theme. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Header or Titlebar of the tooltip. Not applicable on global tooltips. Default value is null.]]>
+            </description>
+            <name>header</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[A positive or negative pixel value by which to offset the tooltip in the horizontal plane (x-axis). Negative values cause a reduction in the value (moves tooltip to the left). Default value is 0.]]>
             </description>
             <name>adjustX</name>

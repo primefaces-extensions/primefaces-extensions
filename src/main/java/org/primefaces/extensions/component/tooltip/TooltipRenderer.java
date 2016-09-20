@@ -24,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
@@ -32,111 +33,135 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link Tooltip} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class TooltipRenderer extends CoreRenderer {
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		Tooltip tooltip = (Tooltip) component;
-		String clientId = tooltip.getClientId(context);
-        String widgetVar = tooltip.resolveWidgetVar();
-		boolean global = tooltip.isGlobal();
-		boolean shared = tooltip.isShared();
-		boolean autoShow = tooltip.isAutoShow();
-		boolean mouseTracking = tooltip.isMouseTracking();
-		String target = null;
+   @Override
+   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+      ResponseWriter writer = context.getResponseWriter();
+      Tooltip tooltip = (Tooltip) component;
+      String clientId = tooltip.getClientId(context);
+      String widgetVar = tooltip.resolveWidgetVar();
+      String header = tooltip.getHeader();
+      String styleClass = tooltip.getStyleClass();
+      boolean global = tooltip.isGlobal();
+      boolean shared = tooltip.isShared();
+      boolean autoShow = tooltip.isAutoShow();
+      boolean mouseTracking = tooltip.isMouseTracking();
+      String target = null;
 
-		if (!global || tooltip.getFor() != null) {
-			target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
-		}
+      if (!global || tooltip.getFor() != null) {
+         target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
+      }
 
-		startScript(writer, clientId);
-		writer.write("$(function() {");
+      startScript(writer, clientId);
+      writer.write("$(function() {");
 
-		writer.write("PrimeFaces.cw('ExtTooltip', '" + widgetVar + "',{");
-		writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
-		writer.write(",global:" + global);
-		writer.write(",shared:" + shared);
-		writer.write(",autoShow:" + autoShow);
+      writer.write("PrimeFaces.cw('ExtTooltip', '" + widgetVar + "',{");
+      writer.write("id:'" + clientId + "'");
+      writer.write(",widgetVar:'" + widgetVar + "'");
+      writer.write(",global:" + global);
+      writer.write(",shared:" + shared);
+      writer.write(",autoShow:" + autoShow);
 
-		if (target == null) {
-			writer.write(",forTarget:null");
-		} else {
-			writer.write(",forTarget:'" + target + "'");
-		}
+      if (target == null) {
+         writer.write(",forTarget:null");
+      } else {
+         writer.write(",forTarget:'" + target + "'");
+      }
 
-		if (!global) {
-			writer.write(",content:\"");
-			if (tooltip.getChildCount() > 0) {
-				FastStringWriter fsw = new FastStringWriter();
-				ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
-				context.setResponseWriter(clonedWriter);
+      // content
+      writer.write(",content: {");
+      String text = null;
+      if (tooltip.getChildCount() > 0) {
+         FastStringWriter fsw = new FastStringWriter();
+         ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+         context.setResponseWriter(clonedWriter);
+         renderChildren(context, tooltip);
+         context.setResponseWriter(writer);
+         text = fsw.toString();
+      } else {
+         String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
+         if (valueToRender != null) {
+            text = valueToRender;
+         }
+      }
 
-				renderChildren(context, tooltip);
+      boolean hasText = !global && StringUtils.isNotBlank(text);
+      if (hasText) {
+         writer.write("text:'" + escapeText(text) + "'");
+      }
 
-				context.setResponseWriter(writer);
-				writer.write(escapeText(fsw.toString()));
-			} else {
-				String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
-				if (valueToRender != null) {
-					writer.write(escapeText(valueToRender));
-				}
-			}
+      if (StringUtils.isNotBlank(header)) {
+         String headerValue = "";
+         if (hasText) {
+            headerValue = ",";
+         }
+         headerValue = headerValue + "title:'" + escapeText(header) + "'";
+         writer.write(headerValue);
+      }
+      writer.write("}");
 
-			writer.write("\"");
-		}
+      // style (if no class is set it will default to ThemeRoller widget=true)
+      boolean isStyled = StringUtils.isNotBlank(styleClass);
+      writer.write(",style: {");
+      writer.write("widget:" + !isStyled);
+      if (isStyled) {
+         writer.write(",classes:'" + styleClass + "'");
+      }
+      writer.write("}");
 
-		// events
-		if (mouseTracking) {
-			writer.write(",hide:{fixed:true}");
-		} else if (shared && !global) {
-			writer.write(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('" + target + "')" + ",delay:"
-			             + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
-			             + tooltip.getShowEffectLength() + ");}}");
-			writer.write(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('" + target + "')" + ",delay:"
-			             + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
-			             + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
-		} else if (autoShow) {
-			writer.write(",show:{when:false,ready:true}");
-			writer.write(",hide:false");
-		} else {
-			writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
-			             + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
-			             + ");}}");
-			writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
-			             + tooltip.isFixed() + ",effect:function(){$(this)." + tooltip.getHideEffect() + "("
-			             + tooltip.getHideEffectLength() + ");}}");
-		}
+      // events
+      if (mouseTracking) {
+         writer.write(",hide:{fixed:true}");
+      } else if (shared && !global) {
+         writer.write(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
+                  + target + "')" + ",delay:"
+                  + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
+                  + tooltip.getShowEffectLength() + ");}}");
+         writer.write(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
+                  + target + "')" + ",delay:"
+                  + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
+                  + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
+      } else if (autoShow) {
+         writer.write(",show:{when:false,ready:true}");
+         writer.write(",hide:false");
+      } else {
+         writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
+                  + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
+                  + ");}}");
+         writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
+                  + tooltip.isFixed() + ",effect:function(){$(this)." + tooltip.getHideEffect() + "("
+                  + tooltip.getHideEffectLength() + ");}}");
+      }
 
-		// position
-		writer.write(",position: {");
-		writer.write("at:'" + tooltip.getAtPosition() + "'");
-		writer.write(",my:'" + tooltip.getMyPosition() + "'");
-		writer.write(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
-		writer.write(",viewport:$(window)");
-		if (mouseTracking) {
-			writer.write(",target:'mouse'");
-		} else if (shared && !global) {
-			writer.write(",target:'event'");
-			writer.write(",effect:false");
-		}
+      // position
+      writer.write(",position: {");
+      writer.write("at:'" + tooltip.getAtPosition() + "'");
+      writer.write(",my:'" + tooltip.getMyPosition() + "'");
+      writer.write(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
+      writer.write(",viewport:$(window)");
+      if (mouseTracking) {
+         writer.write(",target:'mouse'");
+      } else if (shared && !global) {
+         writer.write(",target:'event'");
+         writer.write(",effect:false");
+      }
 
-		writer.write("}},true);});");
-		endScript(writer);
-	}
+      writer.write("}},true);});");
+      endScript(writer);
+   }
 
-	@Override
-	public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
-		//do nothing
-	}
+   @Override
+   public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+      // do nothing
+   }
 
-	@Override
-	public boolean getRendersChildren() {
-		return true;
-	}
+   @Override
+   public boolean getRendersChildren() {
+      return true;
+   }
 }

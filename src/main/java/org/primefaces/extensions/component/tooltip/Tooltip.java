@@ -28,17 +28,17 @@ import org.primefaces.util.ComponentUtils;
 /**
  * <code>Tooltip</code> component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author  Oleg Varaksin / last modified by Melloware
  * @version $Revision$
  * @since   0.2
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+         @ResourceDependency(library = "primefaces", name = "core.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
+         @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
 })
 public class Tooltip extends UIOutput implements Widget {
 
@@ -60,6 +60,7 @@ public class Tooltip extends UIOutput implements Widget {
 		autoShow,
 		mouseTracking,
 		fixed,
+		header,
 		adjustX,
 		adjustY,
 		atPosition,
@@ -68,6 +69,7 @@ public class Tooltip extends UIOutput implements Widget {
 		showDelay,
 		showEffect,
 		showEffectLength,
+		styleClass,
 		hideEvent,
 		hideDelay,
 		hideEffect,
@@ -253,5 +255,21 @@ public class Tooltip extends UIOutput implements Widget {
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
+	
+   public String getStyleClass() {
+       return (String) getStateHelper().eval(PropertyKeys.styleClass);
+   }
+
+   public void setStyleClass(String styleClass) {
+       getStateHelper().put(PropertyKeys.styleClass, styleClass);
+   }
+   
+   public String getHeader() {
+      return (String) getStateHelper().eval(PropertyKeys.header);
+  }
+
+  public void setHeader(String header) {
+      getStateHelper().put(PropertyKeys.header, header);
+  }
 
 }
