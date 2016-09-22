@@ -29,6 +29,7 @@ import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Tooltip} component.
@@ -40,10 +41,8 @@ public class TooltipRenderer extends CoreRenderer {
 
    @Override
    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final ResponseWriter writer = context.getResponseWriter();
       final Tooltip tooltip = (Tooltip) component;
       final String clientId = tooltip.getClientId(context);
-      final String widgetVar = tooltip.resolveWidgetVar();
       final String header = tooltip.getHeader();
       final String styleClass = tooltip.getStyleClass();
       final boolean global = tooltip.isGlobal();
@@ -56,26 +55,22 @@ public class TooltipRenderer extends CoreRenderer {
          target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
       }
 
-      startScript(writer, clientId);
-      writer.write("$(function() {");
-
-      writer.write("PrimeFaces.cw('ExtTooltip', '" + widgetVar + "',{");
-      writer.write("id:'" + clientId + "'");
-      writer.write(",widgetVar:'" + widgetVar + "'");
-      writer.write(",global:" + global);
-      writer.write(",shared:" + shared);
-      writer.write(",autoShow:" + autoShow);
-
+      final WidgetBuilder wb = getWidgetBuilder(context);
+      wb.initWithDomReady("ExtTooltip",tooltip.resolveWidgetVar(), clientId);
+      wb.attr("global", global);
+      wb.attr("shared", shared);
+      wb.attr("autoShow", autoShow);
       if (target == null) {
-         writer.write(",forTarget:null");
+         wb.nativeAttr("forTarget", null);
       } else {
-         writer.write(",forTarget:'" + target + "'");
+         wb.attr("forTarget", target);
       }
-
+      
       // content
-      writer.write(",content: {");
+      wb.append(",content: {");
       String text = null;
       if (tooltip.getChildCount() > 0) {
+         final ResponseWriter writer = context.getResponseWriter();
          final FastStringWriter fsw = new FastStringWriter();
          final ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
          context.setResponseWriter(clonedWriter);
@@ -91,7 +86,7 @@ public class TooltipRenderer extends CoreRenderer {
 
       final boolean hasText = !global && StringUtils.isNotBlank(text);
       if (hasText) {
-         writer.write("text: \"" + escapeText(text) + "\"");
+         wb.append("text: \"" + escapeText(text) + "\"");
       }
 
       if (StringUtils.isNotBlank(header)) {
@@ -100,58 +95,58 @@ public class TooltipRenderer extends CoreRenderer {
             headerValue = ",";
          }
          headerValue = headerValue + "title: \"" + escapeText(header) + "\"";
-         writer.write(headerValue);
+         wb.append(headerValue);
       }
-      writer.write("}");
+      wb.append("}");
 
       // style (if no class is set it will default to ThemeRoller widget=true)
       final boolean isStyled = StringUtils.isNotBlank(styleClass);
-      writer.write(",style: {");
-      writer.write("widget:" + !isStyled);
+      wb.append(",style: {");
+      wb.append("widget:" + !isStyled);
       if (isStyled) {
-         writer.write(",classes:'" + styleClass + "'");
+         wb.append(",classes:'" + styleClass + "'");
       }
-      writer.write("}");
+      wb.append("}");
 
       // events
       if (mouseTracking) {
-         writer.write(",hide:{fixed:true}");
+         wb.append(",hide:{fixed:true}");
       } else if (shared && !global) {
-         writer.write(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
+         wb.append(",show:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
                   + target + "')" + ",delay:"
                   + tooltip.getShowDelay() + ",effect:function(){$(this)." + tooltip.getShowEffect() + "("
                   + tooltip.getShowEffectLength() + ");}}");
-         writer.write(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
+         wb.append(",hide:{target:PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector('"
                   + target + "')" + ",delay:"
                   + tooltip.getHideDelay() + ",fixed:" + tooltip.isFixed() + ",effect:function(){$(this)."
                   + tooltip.getHideEffect() + "(" + tooltip.getHideEffectLength() + ");}}");
       } else if (autoShow) {
-         writer.write(",show:{when:false,ready:true}");
-         writer.write(",hide:false");
+         wb.append(",show:{when:false,ready:true}");
+         wb.append(",hide:false");
       } else {
-         writer.write(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
+         wb.append(",show:{event:'" + tooltip.getShowEvent() + "',delay:" + tooltip.getShowDelay()
                   + ",effect:function(){$(this)." + tooltip.getShowEffect() + "(" + tooltip.getShowEffectLength()
                   + ");}}");
-         writer.write(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
+         wb.append(",hide:{event:'" + tooltip.getHideEvent() + "',delay:" + tooltip.getHideDelay() + ",fixed:"
                   + tooltip.isFixed() + ",effect:function(){$(this)." + tooltip.getHideEffect() + "("
                   + tooltip.getHideEffectLength() + ");}}");
       }
 
       // position
-      writer.write(",position: {");
-      writer.write("at:'" + tooltip.getAtPosition() + "'");
-      writer.write(",my:'" + tooltip.getMyPosition() + "'");
-      writer.write(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
-      writer.write(",viewport:$(window)");
+      wb.append(",position: {");
+      wb.append("at:'" + tooltip.getAtPosition() + "'");
+      wb.append(",my:'" + tooltip.getMyPosition() + "'");
+      wb.append(",adjust:{x:" + tooltip.getAdjustX() + ",y:" + tooltip.getAdjustY() + "}");
+      wb.append(",viewport:$(window)");
       if (mouseTracking) {
-         writer.write(",target:'mouse'");
+         wb.append(",target:'mouse'");
       } else if (shared && !global) {
-         writer.write(",target:'event'");
-         writer.write(",effect:false");
+         wb.append(",target:'event'");
+         wb.append(",effect:false");
       }
-
-      writer.write("}},true);});");
-      endScript(writer);
+      wb.append("}");
+      
+      wb.finish();
    }
 
    @Override

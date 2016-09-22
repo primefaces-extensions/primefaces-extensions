@@ -19,7 +19,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 		var targetSelectors = null;
 
 		if (this.cfg.forTarget) {
-			this.targetSelectors = this.resolveCssSelectors(this.cfg.forTarget);
+			this.targetSelectors = PrimeFaces.expressions.CssSelectorResolver.resolveCssSelectors(this.cfg.forTarget);
 			this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
 		}
 
@@ -61,7 +61,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 			if (this.cfg.autoShow) {
 				var nsevent = "debouncedresize.tooltip" + this.jqId;
 				$(window).off(nsevent).on(nsevent, function(event) {
-					$(_self.cfg.forTarget).qtip('reposition');
+					_self.cfg.forTarget.qtip('reposition');
 				});
 			}
 		}
@@ -88,37 +88,41 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 
 	show : function() {
 		if (this.cfg.forTarget) {
-			$(this.cfg.forTarget).qtip('show');
+			this.cfg.forTarget.qtip('show');
 		}
 	},
 
 	hide : function() {
 		if (this.cfg.forTarget) {
-			$(this.cfg.forTarget).qtip('hide');
+			this.cfg.forTarget.qtip('hide');
 		}
 	},
 
 	destroy : function() {
 		if (this.cfg.forTarget) {
-			$(this.cfg.forTarget).qtip('destroy');
+			this.cfg.forTarget.qtip('destroy');
 
 			if (this.cfg.autoShow) {
-				$(window).off("debouncedresize.tooltip" + PrimeFaces.escapeClientId(this.cfg.id));
+				$(window).off("debouncedresize.tooltip" + this.jqId);
 			}
 		}
 	},
 
 	reposition : function() {
 		if (this.cfg.forTarget) {
-			$(this.cfg.forTarget).qtip('reposition');
+			this.cfg.forTarget.qtip('reposition');
 		}
 	},
 
-	/**
-	 * Converts expressions into an array of Jquery Selectors. 
-	 * 
-	 * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
-	 */
+});
+
+/**
+ * Converts expressions into an array of Jquery Selectors.
+ * 
+ * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
+ */
+PrimeFaces.expressions.CssSelectorResolver = {
+		
 	resolveCssSelectors : function(expressions) {
 		var splittedExpressions = PrimeFaces.expressions.SearchExpressionFacade.splitExpressions(expressions);
 		var elements = [];
@@ -150,7 +154,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 					}
 					// PFS
 					else if (expression.indexOf("@(") == 0) {
-						// converts pfs to jq selector e.g. @(div.mystyle :input) to div.mystyle :input
+						// converts pfs to jq selector e.g. @(div.mystyle) to div.mystyle
 						elements.push(expression.substring(2, expression.length - 1));
 					}
 				}
@@ -159,12 +163,17 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 
 		return elements;
 	}
-});
+};
 
+// qTip2 Global Defaults
 $.fn.qtip.defaults.style.widget = true;
 $.fn.qtip.defaults.style.classes = "";
 
-// copied from https://github.com/louisremi/jquery-smartresize/ to hanlde proper window.resize
+/**
+ * Handle proper window.resize events.
+ * 
+ * Copied from https://github.com/louisremi/jquery-smartresize/ 
+ */
 (function($) {
 
 	var $event = $.event, $special, resizeTimeout;

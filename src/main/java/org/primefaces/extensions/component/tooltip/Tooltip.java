@@ -53,8 +53,27 @@ public class Tooltip extends UIOutput implements Widget {
     */
    protected enum PropertyKeys {
 
-      widgetVar, global, shared, autoShow, mouseTracking, fixed, header, adjustX, adjustY, atPosition, myPosition, showEvent, showDelay, showEffect, showEffectLength, styleClass, hideEvent, hideDelay, hideEffect, hideEffectLength, forValue(
-               "for");
+      widgetVar, 
+      global, 
+      shared, 
+      autoShow, 
+      mouseTracking, 
+      fixed, 
+      header, 
+      adjustX, 
+      adjustY, 
+      atPosition, 
+      myPosition, 
+      showEvent, 
+      showDelay, 
+      showEffect, 
+      showEffectLength, 
+      styleClass, 
+      hideEvent, 
+      hideDelay, 
+      hideEffect, 
+      hideEffectLength, 
+      forValue("for");
 
       private String toString;
 
