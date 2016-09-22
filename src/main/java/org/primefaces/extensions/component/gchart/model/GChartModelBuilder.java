@@ -63,7 +63,6 @@ public class GChartModelBuilder {
 		return this;
 	}
 	public GChartModel build(){
-		//TODO generate exceptions
 		return new DefaultGChartModel(rows, gChartType, options, columns);
 	}
 }
