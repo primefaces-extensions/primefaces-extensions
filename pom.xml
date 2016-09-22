@@ -6,18 +6,16 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
     <packaging>jar</packaging>
-    <version>6.1.0-SNAPSHOT</version>
     <name>primefaces-extensions</name>
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
     </description>
 
     <scm>
-        <connection>scm:git:git@github.com:primefaces-extensions/core.git</connection>
-        <developerConnection>scm:git:git@github.com:primefaces-extensions/core.git</developerConnection>
+        <connection>scm:git:git://github.com/primefaces-extensions/core.git</connection>
+        <developerConnection>scm:git:ssh://github.com:primefaces-extensions/core.git</developerConnection>
         <url>https://github.com/primefaces-extensions/core</url>
         <tag>HEAD</tag>
     </scm>
@@ -57,17 +55,17 @@
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
+                                <include>analogclock/**</include>
                                 <include>blockui/**</include>
+                                <include>fluidgrid/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
+                                <include>qrcode/**</include>
+                                <include>timeline/**</include>
                                 <include>timepicker/**</include>
+                                <include>timer/**</include>
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
-                                <include>timeline/**</include>
-                                <include>fluidgrid/**</include>
-                                <include>qrcode/**</include>
-                                <include>analogclock/**</include>
-                                <include>timer/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
