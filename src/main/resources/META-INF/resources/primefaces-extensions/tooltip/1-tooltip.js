@@ -115,7 +115,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 	},
 
 	/**
-	 * Convertes expressions into an array of Jquery Selectors. 
+	 * Converts expressions into an array of Jquery Selectors. 
 	 * 
 	 * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
 	 */
