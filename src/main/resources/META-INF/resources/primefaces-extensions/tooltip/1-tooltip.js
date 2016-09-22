@@ -1,111 +1,131 @@
 /**
  * PrimeFaces Extensions Tooltip Widget.
- *
+ * 
  * @author Oleg Varaksin
+ * @author Melloware
  */
 PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 
-    /**
-     * Initializes the widget.
-     *
-     * @param {object} cfg The widget configuration.
-     */
-    init : function(cfg) {
-        var id = cfg.id;
-        this.cfg = cfg;
-        var _self = this;
-        var targetSelectors = null;
+	/**
+	 * Initializes the widget.
+	 * 
+	 * @param {object}
+	 *            cfg The widget configuration.
+	 */
+	init : function(cfg) {
+		this._super(cfg);
+		this.cfg = cfg;
+		var _self = this;
+		var targetSelectors = null;
 
-        if (this.cfg.forTarget) {
-        	this.targetSelectors = this.resolveComponentsAsSelectorString(this.cfg.forTarget);
-        	this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
-        }
+		if (this.cfg.forTarget) {
+			this.targetSelectors = this.resolveCssSelectors(this.cfg.forTarget);
+			this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
+		}
 
-        if (this.cfg.global) {
-            this.cfg.position.container = $(document.body);
-            var selector = '*[title]';
-            if (this.targetSelectors) {
-                selector = this.targetSelectors.join(", ");
-            }
+		if (this.cfg.global) {
+			this.cfg.position.container = $(document.body);
 
-            $('body').off('.tooltip').on(this.cfg.show.event + '.tooltip', selector, function(event) {
-                var el = $(this);
-                if (el.is(':disabled')) {
-                    return;
-                }
+			// now select all tooltips on page or just the for="" selector
+			var selector = '*[title]';
+			if (this.targetSelectors) {
+				selector = this.targetSelectors.join(", ");
+			}
 
-                var extCfg = _self.cfg;
-                extCfg.content.text = el.attr('title');
-                extCfg.show.ready = true;
-                el.qtip(extCfg, event);
-            });
-        } else if (this.cfg.shared) {
-            var jqId = PrimeFaces.escapeClientId(id);
+			$('body').off('.tooltip').on(this.cfg.show.event + '.tooltip', selector, function(event) {
+				var el = $(this);
+				if (el.is(':disabled')) {
+					return;
+				}
 
-            // remove previous container element to support ajax updates
-            $(document.body).children('#ui-tooltip-shared-' + jqId).remove();
-            // create a new one
-            var sharedDiv = $("<div id='ui-tooltip-shared-" + jqId + "'/>");
-            sharedDiv.appendTo(document.body);
+				var extCfg = _self.cfg;
+				extCfg.content.text = el.attr('title');
+				extCfg.show.ready = true;
 
-            this.cfg.position.container = sharedDiv;
-            $('<div/>').qtip(this.cfg);
-        } else {
-            this.cfg.position.container = $(document.body);
+				_self.applyTooltip(el, extCfg, event);
+			});
+		} else if (this.cfg.shared) {
+			// remove previous container element to support ajax updates
+			$(document.body).children('#ui-tooltip-shared-' + this.jqId).remove();
+			// create a new one
+			var sharedDiv = $("<div id='ui-tooltip-shared-" + this.jqId + "'/>");
+			sharedDiv.appendTo(document.body);
 
-            // delete previous tooltip to support ajax updates and create a new one
-            $(this.cfg.forTarget).qtip('destroy').qtip(this.cfg);
+			this.cfg.position.container = sharedDiv;
+			$('<div/>').qtip(this.cfg);
+		} else {
+			this.cfg.position.container = $(document.body);
 
-            if (this.cfg.autoShow) {
-                var nsevent = "debouncedresize.tooltip" + PrimeFaces.escapeClientId(id);
-                $(window).off(nsevent).on(nsevent, function(event) {
-                    $(_self.cfg.forTarget).qtip('reposition');
-                });
-            }
-        }
+			this.applyTooltip($(this.cfg.forTarget), this.cfg);
 
-        this.removeScriptElement(id);
-    },
+			if (this.cfg.autoShow) {
+				var nsevent = "debouncedresize.tooltip" + this.jqId;
+				$(window).off(nsevent).on(nsevent, function(event) {
+					$(_self.cfg.forTarget).qtip('reposition');
+				});
+			}
+		}
+	},
 
-    show : function() {
-        if (this.cfg.forTarget) {
-            $(this.cfg.forTarget).qtip('show');
-        }
-    },
+	/**
+	 * Apply the QTip to Jquery object by deleting the old tip first. Delete
+	 * previous tooltip to support ajax updates and create a new one
+	 * 
+	 * @param jq
+	 *            the Jquery object to apply to
+	 * @param cfg
+	 *            the JSON configuation for the tooltip
+	 * @param event
+	 *            the optional event to attach to
+	 */
+	applyTooltip : function(jq, cfg, event) {
+		if (event) {
+			jq.qtip('destroy').qtip(cfg, event);
+		} else {
+			jq.qtip('destroy').qtip(cfg);
+		}
+	},
 
-    hide : function() {
-        if (this.cfg.forTarget) {
-            $(this.cfg.forTarget).qtip('hide');
-        }
-    },
+	show : function() {
+		if (this.cfg.forTarget) {
+			$(this.cfg.forTarget).qtip('show');
+		}
+	},
 
-    destroy : function() {
-        if (this.cfg.forTarget) {
-            $(this.cfg.forTarget).qtip('destroy');
+	hide : function() {
+		if (this.cfg.forTarget) {
+			$(this.cfg.forTarget).qtip('hide');
+		}
+	},
 
-            if (this.cfg.autoShow) {
-                $(window).off("debouncedresize.tooltip" + PrimeFaces.escapeClientId(this.cfg.id));
-            }
-        }
-    },
+	destroy : function() {
+		if (this.cfg.forTarget) {
+			$(this.cfg.forTarget).qtip('destroy');
 
-    reposition : function() {
-        if (this.cfg.forTarget) {
-            $(this.cfg.forTarget).qtip('reposition');
-        }
-    },
-    
-    /**
-     * Convertes expressions into an array of Jquery Selectors. 
-     * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
-     */
-    resolveComponentsAsSelectorString: function(expressions) {
+			if (this.cfg.autoShow) {
+				$(window).off("debouncedresize.tooltip" + PrimeFaces.escapeClientId(this.cfg.id));
+			}
+		}
+	},
+
+	reposition : function() {
+		if (this.cfg.forTarget) {
+			$(this.cfg.forTarget).qtip('reposition');
+		}
+	},
+
+	/**
+	 * Convertes expressions into an array of Jquery Selectors. 
+	 * 
+	 * e.g. @(div.mystyle :input) @(.ui-inputtext) to 'div.mystyle :input, .ui-inputtext'
+	 */
+	resolveCssSelectors : function(expressions) {
 		var splittedExpressions = PrimeFaces.expressions.SearchExpressionFacade.splitExpressions(expressions);
 		var elements = [];
 
 		if (splittedExpressions) {
 			for (var i = 0; i < splittedExpressions.length; ++i) {
-				var expression =  $.trim(splittedExpressions[i]);
+				var expression = $.trim(splittedExpressions[i]);
 				if (expression.length > 0) {
 
 					// skip unresolvable keywords
@@ -130,7 +150,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 					}
 					// PFS
 					else if (expression.indexOf("@(") == 0) {
-						//converts pfs to jq selector e.g. @(div.mystyle :input) to div.mystyle :input
+						// converts pfs to jq selector e.g. @(div.mystyle :input) to div.mystyle :input
 						elements.push(expression.substring(2, expression.length - 1));
 					}
 				}
@@ -138,7 +158,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 		}
 
 		return elements;
-	},
+	}
 });
 
 $.fn.qtip.defaults.style.widget = true;
@@ -147,34 +167,30 @@ $.fn.qtip.defaults.style.classes = "";
 // copied from https://github.com/louisremi/jquery-smartresize/ to hanlde proper window.resize
 (function($) {
 
-    var $event = $.event,
-            $special,
-            resizeTimeout;
+	var $event = $.event, $special, resizeTimeout;
 
-    $special = $event.special.debouncedresize = {
-        setup: function() {
-            $(this).on("resize", $special.handler);
-        },
-        teardown: function() {
-            $(this).off("resize", $special.handler);
-        },
-        handler: function(event, execAsap) {
-            // Save the context
-            var context = this,
-                    args = arguments,
-                    dispatch = function() {
-                        // set correct event type
-                        event.type = "debouncedresize";
-                        $event.dispatch.apply(context, args);
-                    };
+	$special = $event.special.debouncedresize = {
+		setup : function() {
+			$(this).on("resize", $special.handler);
+		},
+		teardown : function() {
+			$(this).off("resize", $special.handler);
+		},
+		handler : function(event, execAsap) {
+			// Save the context
+			var context = this, args = arguments, dispatch = function() {
+				// set correct event type
+				event.type = "debouncedresize";
+				$event.dispatch.apply(context, args);
+			};
 
-            if (resizeTimeout) {
-                clearTimeout(resizeTimeout);
-            }
+			if (resizeTimeout) {
+				clearTimeout(resizeTimeout);
+			}
 
-            execAsap ? dispatch() : resizeTimeout = setTimeout(dispatch, $special.threshold);
-        },
-        threshold: 250
-    };
+			execAsap ? dispatch() : resizeTimeout = setTimeout(dispatch, $special.threshold);
+		},
+		threshold : 250
+	};
 
 })(jQuery);

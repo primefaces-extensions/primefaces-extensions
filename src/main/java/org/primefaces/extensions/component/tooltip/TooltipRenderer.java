@@ -26,31 +26,30 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * Renderer for the {@link Tooltip} component.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
 public class TooltipRenderer extends CoreRenderer {
 
    @Override
    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      ResponseWriter writer = context.getResponseWriter();
-      Tooltip tooltip = (Tooltip) component;
-      String clientId = tooltip.getClientId(context);
-      String widgetVar = tooltip.resolveWidgetVar();
-      String header = tooltip.getHeader();
-      String styleClass = tooltip.getStyleClass();
-      boolean global = tooltip.isGlobal();
-      boolean shared = tooltip.isShared();
-      boolean autoShow = tooltip.isAutoShow();
-      boolean mouseTracking = tooltip.isMouseTracking();
+      final ResponseWriter writer = context.getResponseWriter();
+      final Tooltip tooltip = (Tooltip) component;
+      final String clientId = tooltip.getClientId(context);
+      final String widgetVar = tooltip.resolveWidgetVar();
+      final String header = tooltip.getHeader();
+      final String styleClass = tooltip.getStyleClass();
+      final boolean global = tooltip.isGlobal();
+      final boolean shared = tooltip.isShared();
+      final boolean autoShow = tooltip.isAutoShow();
+      final boolean mouseTracking = tooltip.isMouseTracking();
       String target = null;
 
       if (!global || tooltip.getFor() != null) {
@@ -77,22 +76,22 @@ public class TooltipRenderer extends CoreRenderer {
       writer.write(",content: {");
       String text = null;
       if (tooltip.getChildCount() > 0) {
-         FastStringWriter fsw = new FastStringWriter();
-         ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+         final FastStringWriter fsw = new FastStringWriter();
+         final ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
          context.setResponseWriter(clonedWriter);
          renderChildren(context, tooltip);
          context.setResponseWriter(writer);
          text = fsw.toString();
       } else {
-         String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
+         final String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
          if (valueToRender != null) {
             text = valueToRender;
          }
       }
 
-      boolean hasText = !global && StringUtils.isNotBlank(text);
+      final boolean hasText = !global && StringUtils.isNotBlank(text);
       if (hasText) {
-         writer.write("text:'" + escapeText(text) + "'");
+         writer.write("text: \"" + escapeText(text) + "\"");
       }
 
       if (StringUtils.isNotBlank(header)) {
@@ -100,13 +99,13 @@ public class TooltipRenderer extends CoreRenderer {
          if (hasText) {
             headerValue = ",";
          }
-         headerValue = headerValue + "title:'" + escapeText(header) + "'";
+         headerValue = headerValue + "title: \"" + escapeText(header) + "\"";
          writer.write(headerValue);
       }
       writer.write("}");
 
       // style (if no class is set it will default to ThemeRoller widget=true)
-      boolean isStyled = StringUtils.isNotBlank(styleClass);
+      final boolean isStyled = StringUtils.isNotBlank(styleClass);
       writer.write(",style: {");
       writer.write("widget:" + !isStyled);
       if (isStyled) {
