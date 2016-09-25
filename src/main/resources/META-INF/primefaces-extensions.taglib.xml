@@ -115,6 +115,108 @@
 
     <!-- Components -->
     <tag>
+        <description><![CDATA[Calculator adds a popup calculator to a given input field.]]></description>
+        <tag-name>calculator</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Calculator</component-type>
+            <renderer-type>org.primefaces.extensions.component.CalculatorRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[When to display the calculator: 'focus' for popup on focus, 'button' for trigger button, 'both' for either, 'operator' for non-numeric character entered, 'opbutton' for operator/button combination.]]></description>
+            <name>showOn</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The layout of keys: 'standard', scientific', or a custom defined layout.]]></description>
+            <name>layout</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]></description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The number of digits of precision to use in rounding for display. Default is 10.]]>
+            </description>
+            <name>precision</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[True if right-to-left language, false if left-to-right. Default is false.]]>
+            </description>
+            <name>rtl</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The target input.]]></description>
+            <name>for</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute  before a popup calculator opens and allows the field value to be altered before use.]]>
+            </description>
+            <name>onopen</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when the calculator closes and provides the (possibly updated) field value, and the calculator instance object.]]>
+            </description>
+            <name>onclose</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute for each activated button and provides the button's label, the current calculator value, and the calculator instance object.]]>
+            </description>
+            <name>onbutton</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
         <description>
             <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-ckeditor:*.jar artifact. Client behavior events: save - fired when the save button will be pressed (javax.faces.event.AjaxBehaviorEvent), initialize - fired after the editor was successfully intialized (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent), wysiwygMode - fired after switching to the wysiwyg mode (javax.faces.event.AjaxBehaviorEvent), sourceMode - fired after switching to the source mode (javax.faces.event.AjaxBehaviorEvent), dirty - fired once after the content has been changed; will be fired again after a change occurs if the editor gains focus after a blur (javax.faces.event.AjaxBehaviorEvent), change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent).]]>
         </description>

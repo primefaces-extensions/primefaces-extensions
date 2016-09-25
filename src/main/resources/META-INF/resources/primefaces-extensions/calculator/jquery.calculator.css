@@ -1,0 +1,161 @@
+/* Main style sheet for jQuery Calculator v2.0.1 */
+div.is-calculator, span.is-calculator {
+	position: relative;
+}
+button.calculator-trigger {
+	width: 25px;
+	padding: 0px;
+}
+img.calculator-trigger {
+	margin: 2px;
+	vertical-align: middle;
+}
+.calculator-popup {
+	display: none;
+	z-index: 10;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #888;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	color: #000;
+	background-color: #f4f4f4;
+	font-family: Arial,Helvetica,sans-serif;
+}
+.calculator-keyentry {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 0px;
+}
+.calculator-inline {
+	position: relative;
+	border: 1px solid #888;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #f4f4f4;
+}
+.calculator-inline .calculator-close {
+	display: none;
+}
+.calculator-disabled {
+	position: absolute;
+	z-index: 100;
+	background-color: white;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.calculator-rtl {
+	direction: rtl;
+}
+.calculator-prompt {
+	clear: both;
+	text-align: center;
+}
+.calculator-prompt.ui-widget-header {
+	margin: 2px;
+}
+.calculator-result {
+	clear: both;
+	margin: 2px;
+	padding: 0px 2px;
+	text-align: right;
+	background-color: #fff;
+	border: 1px inset #000;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	font-size: 110%;
+}
+.calculator-result span {
+	display: inline-block;
+	width: 100%;
+}
+.calculator-result .calculator-formula {
+	font-size: 60%;
+}
+.calculator-focussed {
+	background-color: #ffc;
+}
+.calculator-row {
+	clear: both;
+	width: 100%;
+}
+.calculator-space {
+	float: left;
+	margin: 2px;
+	width: 28px;
+}
+.calculator-half-space {
+	float: left;
+	margin: 1px;
+	width: 14px;
+}
+.calculator-row button {
+	position: relative;
+	float: left;
+	margin: 2px;
+	padding: 0px;
+	height: 22px;
+	background-color: #f4f4f4;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	text-align: center;
+	cursor: pointer;
+}
+.calculator-row .calculator-ctrl {
+	width: 60px;
+	background-color: #e8e8e8;
+}
+.calculator-row .calculator-undo, .calculator-row .calculator-clear-error, .calculator-row .calculator-clear {
+	width: 28px;
+}
+.calculator-row .calculator-base, .calculator-row .calculator-angle {
+	width: 28px;
+	font-size: 70%;
+}
+.calculator-row .calculator-base-active, .calculator-row .calculator-angle-active {
+	border: 2px inset #fff;
+}
+.calculator-digit, .calculator-oper {
+	width: 28px;
+}
+.calculator-mem-empty, .calculator-digit[disabled] {
+	color: #888;
+}
+.calculator-row .calculator-trig {
+	font-size: 70%;
+}
+@-moz-document url-prefix() { // Firefox
+	.calculator-trig, .calculator-base {
+		text-indent: -3px;
+	}
+}
+.calculator-key-down {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+.calculator-keystroke {
+	display: none;
+	width: 16px;
+	height: 14px;
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	color: #000;
+	background-color: #fff;
+	border: 1px solid #888;
+	font-size: 80%;
+}
+.calculator-angle .calculator-keystroke, .calculator-base .calculator-keystroke, .calculator-trig .calculator-keystroke {
+	top: -2px;
+	font-size: 95%;
+}
+.calculator-keyname {
+	width: 22px;
+	font-size: 70%;
+}

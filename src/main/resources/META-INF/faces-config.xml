@@ -27,6 +27,10 @@
     </behavior>
 
     <component>
+        <component-type>org.primefaces.extensions.component.Calculator</component-type>
+        <component-class>org.primefaces.extensions.component.calculator.Calculator</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.CKEditor</component-type>
         <component-class>org.primefaces.extensions.component.ckeditor.CKEditor</component-class>
     </component>
@@ -161,6 +165,11 @@
     </converter>
 
     <render-kit>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.CalculatorRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.calculator.CalculatorRenderer</renderer-class>
+        </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.CKEditorRenderer</renderer-type>
