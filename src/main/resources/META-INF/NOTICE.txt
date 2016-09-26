@@ -16,3 +16,4 @@ This product includes software developed by Dmitry Baranovskiy (http://raphaeljs
 This product includes software developed by moment.js (http://momentjs.com/)
 This product includes software developed by underscorejs (http://underscorejs.org/)
 This product includes software developed by Mozilla Foundation (http://mozilla.github.io/pdf.js/)
+This product includes software developed by Keith Wood (https://github.com/kbwood/calculator)
