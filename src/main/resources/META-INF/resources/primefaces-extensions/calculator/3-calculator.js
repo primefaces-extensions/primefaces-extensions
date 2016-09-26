@@ -38,6 +38,12 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 	 */
 	_applyCalculator : function(input, cfg) {
 		this.input = input;
+		
+		// do not attach calculator if field is readonly
+		if (this.input[0].readOnly) {
+            return;
+        }
+		
 		var layout = cfg.layout;
 		
 		if (layout) {
