@@ -30,8 +30,8 @@ import org.primefaces.context.RequestContext;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 

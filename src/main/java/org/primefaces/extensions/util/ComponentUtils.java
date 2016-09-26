@@ -44,7 +44,7 @@ import org.primefaces.component.api.AjaxSource;
  * @version $Revision$
  * @since 0.2
  */
-public class ComponentUtils extends org.primefaces.util.ComponentUtils {
+public class ComponentUtils {
 
    /**
     * Prevent instantiation.
@@ -68,13 +68,14 @@ public class ComponentUtils extends org.primefaces.util.ComponentUtils {
          } else if (submittedValue instanceof String) {
             // convert submitted value by registred (implicit or explicit)
             // converter
-            final Converter converter = getConverter(fc, component);
+            final Converter converter = org.primefaces.util.ComponentUtils.getConverter(fc, component);
             if (converter != null) {
                return converter.getAsObject(fc, component, (String) submittedValue);
             }
          }
       } catch (final Exception e) {
          // an conversion error occured
+         return null;
       }
 
       return submittedValue;

@@ -189,6 +189,6 @@ public class DynaFormModel implements Serializable {
     }
 
     public boolean isExistExtendedGrid() {
-        return (getExtendedRows() != null && !getExtendedRows().isEmpty());
+        return getExtendedRows() != null && !getExtendedRows().isEmpty();
     }
 }

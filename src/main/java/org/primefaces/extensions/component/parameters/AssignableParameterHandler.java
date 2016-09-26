@@ -49,10 +49,8 @@ public class AssignableParameterHandler extends ComponentHandler {
 
 		@Override
 		public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
-			if (meta.isTargetInstanceOf(AssignableParameter.class)) {
-				if (AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
-					return new AssignToValueExpressionMetadata(attribute);
-				}
+			if (meta.isTargetInstanceOf(AssignableParameter.class) && AssignableParameter.PropertyKeys.assignTo.toString().equals(name)) {
+			   return new AssignToValueExpressionMetadata(attribute);
 			}
 
 			return null;

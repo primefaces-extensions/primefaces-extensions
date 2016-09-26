@@ -15,55 +15,51 @@
  */
 package org.primefaces.extensions.component.exporter;
 
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.Float;
-import java.lang.Integer;
-import java.lang.String;
-import java.lang.StringBuilder;
+import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.lang.reflect.Array;
 import java.util.Map;
-import java.awt.Color;
+import java.util.StringTokenizer;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIPanel;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.component.UIPanel;
 
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.datalist.DataList;
-import org.primefaces.component.row.Row;
-import org.primefaces.component.subtable.SubTable;
-import org.primefaces.component.summaryrow.SummaryRow;
-import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
+import org.primefaces.component.datalist.DataList;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.outputpanel.OutputPanel;
-import org.primefaces.util.Constants;
+import org.primefaces.component.row.Row;
+import org.primefaces.component.rowexpansion.RowExpansion;
+import org.primefaces.component.subtable.SubTable;
+import org.primefaces.component.summaryrow.SummaryRow;
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.util.Constants;
 
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.Rectangle;
 import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * <code>Exporter</code> component.
@@ -268,7 +264,7 @@ public class PDFExporter extends Exporter {
         PdfPTable pdfTable = new PdfPTable(1);
         if (list.getHeader() != null) {
             String value = exportValue(FacesContext.getCurrentInstance(), list.getHeader());
-            PdfPCell cell = new PdfPCell(new Paragraph((value), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -292,7 +288,7 @@ public class PDFExporter extends Exporter {
 
         if (list.getFooter() != null) {
             String value = exportValue(FacesContext.getCurrentInstance(), list.getFooter());
-            PdfPCell cell = new PdfPCell(new Paragraph((value), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -434,12 +430,12 @@ public class PDFExporter extends Exporter {
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             } else if (component instanceof UIPanel || component instanceof OutputPanel) {
-                String header = "";
-                for (UIComponent child : component.getChildren()) {
-                    headerValue = exportValue(context, child);
-                    header = header + headerValue;
-                }
-                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                StringBuilder header = new StringBuilder("");
+                for(UIComponent child:component.getChildren())  {
+                       headerValue = exportValue(context, child);
+                       header.append(headerValue);
+                    }
+                PdfPCell cell = new PdfPCell(new Paragraph(header.toString(), this.facetFont));
                 if (facetBackground != null) {
                     cell.setBackgroundColor(facetBackground);
                 }
@@ -452,7 +448,7 @@ public class PDFExporter extends Exporter {
             } else {
                 headerValue = exportFacetValue(context, component);
             }
-            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph(headerValue, this.facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -475,12 +471,12 @@ public class PDFExporter extends Exporter {
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             } else if (component instanceof UIPanel || component instanceof OutputPanel) {
-                String header = "";
-                for (UIComponent child : component.getChildren()) {
-                    headerValue = exportValue(context, child);
-                    header = header + headerValue;
-                }
-                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                StringBuilder header = new StringBuilder("");
+                for(UIComponent child:component.getChildren())  {
+                       headerValue = exportValue(context, child);
+                       header.append(headerValue);
+                    }
+                PdfPCell cell = new PdfPCell(new Paragraph(header.toString(), this.facetFont));
                 if (facetBackground != null) {
                     cell.setBackgroundColor(facetBackground);
                 }
@@ -493,7 +489,7 @@ public class PDFExporter extends Exporter {
             } else {
                 headerValue = exportFacetValue(context, component);
             }
-            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph(headerValue, this.facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }

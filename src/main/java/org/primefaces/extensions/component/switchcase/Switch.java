@@ -93,12 +93,12 @@ public class Switch extends UIComponentBase {
 			if (child instanceof Case) {
 				final Case caseComponent = (Case) child;
 
-				if ((caseComponent.getValue() == null && this.getValue() != null)
-						|| (this.getValue() == null && caseComponent.getValue() != null)) {
+				if ((caseComponent.getValue() == null && this.getValue() != null)  //NOPMD
+						|| (this.getValue() == null && caseComponent.getValue() != null)) { //NOPMD
 					continue;
 				}
-				if ((caseComponent.getValue() == null && this.getValue() == null)
-						|| caseComponent.getValue().equals(this.getValue())) {
+				if ((caseComponent.getValue() == null && this.getValue() == null) //NOPMD
+						|| caseComponent.getValue().equals(this.getValue())) { //NOPMD
 
 					caseToRender = caseComponent;
 					// mustn't break, because need to set rendered=false to other cases (e.g. for visitTree correctness)

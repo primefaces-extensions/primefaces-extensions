@@ -60,7 +60,7 @@
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.Head</component-type>
-        <component-class>org.primefaces.extensions.component.head.Head</component-class>
+        <component-class>org.primefaces.extensions.component.head.ExtHead</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.ImageAreaSelect</component-type>
@@ -193,7 +193,7 @@
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.HeadRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.head.HeadRenderer</renderer-class>
+            <renderer-class>org.primefaces.extensions.component.head.ExtHeadRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

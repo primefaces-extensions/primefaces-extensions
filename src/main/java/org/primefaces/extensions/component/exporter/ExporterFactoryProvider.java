@@ -38,7 +38,7 @@ public class ExporterFactoryProvider {
             ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
             for (ExporterFactory currentFactory : loader) {
                 factory = currentFactory;
-                break;
+                break; //NOPMD
             }
 
             if (factory == null) {

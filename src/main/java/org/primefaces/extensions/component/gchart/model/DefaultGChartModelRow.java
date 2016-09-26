@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class DefaultGChartModelRow implements GChartModelRow {
+   
+   private static final long serialVersionUID = -4757917806522708660L;
 	
 	private final String label;
 	private final List<Object> values;

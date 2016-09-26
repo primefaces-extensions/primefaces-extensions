@@ -1,8 +1,10 @@
 package org.primefaces.extensions.component.gchart.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface GChartModelRow {
-	public abstract Collection<Object> getValues();
-	public abstract String getLabel();
+public interface GChartModelRow extends Serializable {
+   Collection<Object> getValues();
+
+   String getLabel();
 }

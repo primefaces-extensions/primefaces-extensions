@@ -65,6 +65,7 @@ public class MessageUtils {
 					detail = bundle.getString(key + "_detail");
 				} catch (MissingResourceException e) {
 					// ignore
+				   detail = null;
 				}
 			}
 		}
@@ -82,6 +83,7 @@ public class MessageUtils {
 				detail = bundle.getString(key + "_detail");
 			} catch (MissingResourceException e) {
 				// ignore
+			   detail = null;
 			}
 		}
 

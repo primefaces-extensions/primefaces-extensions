@@ -26,8 +26,8 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import org.primefaces.context.RequestContext;
 
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 

@@ -15,52 +15,50 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import javax.faces.component.html.HtmlOutputText;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.PrintSetup;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.primefaces.component.rowexpansion.RowExpansion;
-import org.primefaces.component.api.DynamicColumn;
-import org.primefaces.component.api.UIColumn;
-import org.primefaces.component.column.Column;
-import org.primefaces.component.columngroup.ColumnGroup;
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.datalist.DataList;
-import org.primefaces.component.subtable.SubTable;
-import org.primefaces.util.Constants;
-import org.primefaces.expression.SearchExpressionFacade;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Array;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIPanel;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.component.UIPanel;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.Integer;
-import java.lang.String;
-import java.lang.reflect.Array;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Iterator;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.WorkbookUtil;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.component.api.DynamicColumn;
+import org.primefaces.component.api.UIColumn;
+import org.primefaces.component.column.Column;
+import org.primefaces.component.columngroup.ColumnGroup;
+import org.primefaces.component.datalist.DataList;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.rowexpansion.RowExpansion;
+import org.primefaces.component.subtable.SubTable;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Exporter</code> component.
@@ -388,12 +386,12 @@ public class ExcelExporter extends Exporter {
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             } else if (component instanceof UIPanel) {
-                 String header="";
+                 StringBuilder header = new StringBuilder("");
                      for(UIComponent child:component.getChildren())  {
                             headerValue = exportValue(context, child);
-                            header=header+headerValue;
+                            header.append(headerValue);
                          }
-                headerValue = header;
+                headerValue = header.toString();
           }
             else {
                 headerValue = exportFacetValue(context, component);
@@ -425,12 +423,12 @@ public class ExcelExporter extends Exporter {
             } else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             } else if (component instanceof UIPanel) {
-            String header="";
-            for(UIComponent child:component.getChildren())  {
-                headerValue = exportValue(context, child);
-                header=header+headerValue;
-            }
-            headerValue = header;
+               StringBuilder header = new StringBuilder("");
+               for(UIComponent child:component.getChildren())  {
+                   headerValue = exportValue(context, child);
+                   header.append(headerValue);
+                }
+                headerValue = header.toString();
         } else {
                 headerValue = exportFacetValue(context, component);
             }
@@ -837,13 +835,11 @@ public class ExcelExporter extends Exporter {
                 ((DynamicColumn) col).applyStatelessModel();
             }
 
-            if (col.isRendered() && col.isExportable()) {
-                if (col.getFacet(columnType.facet()) != null) {
-                    if (rowHeader == null) {
-                        rowHeader = sheet.createRow(sheetRowIndex);
-                    }
-                    addColumnValue(rowHeader, col.getFacet(columnType.facet()), "facet");
-                }                
+            if (col.isRendered() && col.isExportable() && col.getFacet(columnType.facet()) != null) {
+                if (rowHeader == null) {
+                    rowHeader = sheet.createRow(sheetRowIndex);
+                }
+                addColumnValue(rowHeader, col.getFacet(columnType.facet()), "facet");
             }
         }
 
@@ -953,9 +949,9 @@ public class ExcelExporter extends Exporter {
             this.cellFontColor = Color.decode(cellFontColor);
         }
 
-        this.facetFontSize = new Short(facetFontSize);
+        this.facetFontSize = Short.valueOf(facetFontSize);
         this.facetFontStyle = facetFontStyle;
-        this.cellFontSize = new Short(cellFontSize);
+        this.cellFontSize = Short.valueOf(cellFontSize);
         this.cellFontStyle = cellFontStyle;
         this.datasetPadding = datasetPadding;
 

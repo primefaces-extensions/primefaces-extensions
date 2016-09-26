@@ -62,12 +62,10 @@ public class RemoteCommandHandler extends ComponentHandler {
 
 		@Override
 		public Metadata applyRule(final String name, final TagAttribute attribute, final MetadataTarget meta) {
-			if (meta.isTargetInstanceOf(RemoteCommand.class)) {
-				if (RemoteCommand.PropertyKeys.actionListener.toString().equals(name)) {
+			if (meta.isTargetInstanceOf(RemoteCommand.class) && RemoteCommand.PropertyKeys.actionListener.toString().equals(name)) {
 					final Method method = meta.getWriteMethod("actionListenerMethodExpression");
 
 					return new ActionListenerMetadata(attribute, method, parameters);
-				}
 			}
 
 			return null;

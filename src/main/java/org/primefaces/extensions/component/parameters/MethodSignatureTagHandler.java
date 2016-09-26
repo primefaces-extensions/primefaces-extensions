@@ -19,6 +19,7 @@
 package org.primefaces.extensions.component.parameters;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -57,7 +58,10 @@ public class MethodSignatureTagHandler extends TagHandler {
 	}
 
 	public Class<?>[] getParameterTypes() {
-		return parameterTypes;
+	   if (parameterTypes != null) {
+	      return  Arrays.copyOf(parameterTypes, parameterTypes.length);
+      }
+		return null;
 	}
 
 	private Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {

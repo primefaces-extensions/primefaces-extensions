@@ -80,9 +80,9 @@ public class MasterDetailRenderer extends CoreRenderer {
 				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
 				for (EditableValueHolder editableValueHolder : editableValueHolders) {
 					String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
-					if (resetAll || (ArrayUtils.contains(riIds, clientId))) {
+					if (resetAll || ArrayUtils.contains(riIds, clientId)) {
 						editableValueHolder.resetValue();
-					} else if (preserveAll || (ArrayUtils.contains(piIds, clientId))) {
+					} else if (preserveAll || ArrayUtils.contains(piIds, clientId)) {
 						editableValueHolder.setValue(ComponentUtils.getConvertedSubmittedValue(fc, editableValueHolder));
 					} else {
 						// default behavior
@@ -228,7 +228,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
 					Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
 					String contextVar = mdl.getContextVar();
-					boolean putContext = (StringUtils.isNotBlank(contextVar) && contextValue != null);
+					boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
 
 					if (putContext) {
 						Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();

@@ -32,7 +32,7 @@ import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.roweditor.RowEditor;
 import org.primefaces.component.subtable.SubTable;
-import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.util.ComponentUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public abstract class Exporter {
             HtmlOutputLink link = (HtmlOutputLink) component;
 
             for(UIComponent child : link.getChildren()) {
-                    return exportValue(context, child);
+                    return exportValue(context, child); //NOPMD
                 }
         }
         if (component instanceof HtmlCommandButton) {
@@ -182,10 +182,7 @@ public abstract class Exporter {
         } else {
             //This would get the plain texts on UIInstructions when using Facelets
             String value = component.toString();
-            if (value != null)
-                return value.trim();
-            else
-                return "";
+            return value.trim();
         }
     }
 
@@ -214,11 +211,7 @@ public abstract class Exporter {
             //This would get the plain texts on UIInstructions when using Facelets
             String value = component.toString();
 
-            if (value != null) {
-                return value.trim();
-            } else {
-                return "";
-            }
+            return value.trim();
         }
 
     }
@@ -306,8 +299,8 @@ public abstract class Exporter {
            if(col instanceof DynamicColumn) {
                  ((DynamicColumn) col).applyStatelessModel();
            }
-           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) {
-                if (col.getFacet("header") != null || col.getHeaderText() != null) {
+           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) { //NOPMD
+                if (col.getFacet("header") != null || col.getHeaderText() != null) { //NOPMD
                     return true;
                 }
             }
@@ -319,7 +312,7 @@ public abstract class Exporter {
 
     public boolean hasHeaderColumn(SubTable table) {
         for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
+            if (child.isRendered() && child instanceof UIColumn) {
                 UIColumn column = (UIColumn) child;
 
                 if (column.getFacet("header") != null || column.getHeaderText() != null) {
@@ -334,7 +327,7 @@ public abstract class Exporter {
 
     public boolean hasFooterColumn(SubTable table) {
         for (UIComponent child : table.getChildren()) {
-            if (child.isRendered() && (child instanceof UIColumn)) {
+            if (child.isRendered() && child instanceof UIColumn) {
                 UIColumn column = (UIColumn) child;
 
                 if (column.getFacet("footer") != null || column.getHeaderText() != null) {

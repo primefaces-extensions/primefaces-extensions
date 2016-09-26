@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -55,10 +55,9 @@ public class TagUtils {
 
 		Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
 
-		final Set<String> keys = mapBehaviors.keySet();
-		for (String key : keys) {
-			if (ArrayUtils.contains(arrEvents, key)) {
-				behaviors.add(mapBehaviors.get(key));
+		for (Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
+			if (ArrayUtils.contains(arrEvents, entry.getKey())) {
+				behaviors.add(entry.getValue());
 			}
 		}
 

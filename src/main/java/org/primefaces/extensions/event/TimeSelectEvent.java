@@ -25,23 +25,29 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
+ * Event which is triggered by the
+ * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 @SuppressWarnings("serial")
 public class TimeSelectEvent extends AbstractAjaxBehaviorEvent {
 
-	private Date time;
+   private Date time;
 
-	public TimeSelectEvent(final UIComponent component, final Behavior behavior, final Date time) {
-		super(component, behavior);
-		this.time = time;
-	}
+   public TimeSelectEvent(final UIComponent component, final Behavior behavior, final Date time) {
+      super(component, behavior);
+      if (time != null) {
+         this.time = new Date(time.getTime()); // make copy to not have mutable ref
+      }
+   }
 
-	public Date getTime() {
-		return time;
-	}
+   public Date getTime() {
+      if (time != null) {
+         return new Date(time.getTime()); // make copy to not have mutable ref
+      }
+      return null;
+   }
 }

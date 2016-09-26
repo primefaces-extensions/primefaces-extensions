@@ -11,7 +11,7 @@ public class Gravatar extends UIOutput {
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GravatarRenderer";
 	
-	public static final List<String> NOT_FOUND_VALUES = new ArrayList<String>();
+	static final List<String> NOT_FOUND_VALUES = new ArrayList<String>();
 	
 	static{
 		NOT_FOUND_VALUES.add("default");

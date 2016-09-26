@@ -1,6 +1,7 @@
 package org.primefaces.extensions.component.gravatar;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import org.primefaces.renderkit.CoreRenderer;
 
 public class GravatarRenderer extends CoreRenderer {
 
-   private final String BASE_URL = "www.gravatar.com";
+   private static final String BASE_URL = "www.gravatar.com";
 
    @Override
    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
@@ -52,9 +53,9 @@ public class GravatarRenderer extends CoreRenderer {
 
       // check if the request must be made over a secure layer or not
       if (gravatar.isSecure()) {
-         url = "https://" + this.BASE_URL + "/";
+         url = "https://" + BASE_URL + "/";
       } else {
-         url = "http://" + this.BASE_URL + "/";
+         url = "http://" + BASE_URL + "/";
       }
 
       if (!qrCode) {
@@ -85,7 +86,7 @@ public class GravatarRenderer extends CoreRenderer {
 
    private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException {
       MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(String.valueOf(gravatar.getValue()).getBytes());
+      md.update(String.valueOf(gravatar.getValue()).getBytes(StandardCharsets.UTF_8));
       byte[] digest = md.digest();
       StringBuffer sb = new StringBuffer();
       for (byte b : digest) {

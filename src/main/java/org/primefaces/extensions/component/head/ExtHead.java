@@ -21,13 +21,13 @@ package org.primefaces.extensions.component.head;
 import javax.faces.component.UIOutput;
 
 /**
- * Component class for the <code>Head</code> component.
+ * Component class for the <code>ExtHead</code> component.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
  * @since 0.2
  */
-public class Head extends UIOutput {
+public class ExtHead extends UIOutput {
 
 	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Head";
 	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -59,7 +59,7 @@ public class Head extends UIOutput {
 		}
 	}
 
-	public Head() {
+	public ExtHead() {
 		setRendererType(DEFAULT_RENDERER);
 	}
 

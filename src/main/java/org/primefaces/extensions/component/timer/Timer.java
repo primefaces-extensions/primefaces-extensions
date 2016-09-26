@@ -113,10 +113,10 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
         getStateHelper().put(PropertyKeys.update, _update);
     }
 
-    public javax.el.MethodExpression getListener() {
-        return (javax.el.MethodExpression) getStateHelper().eval(PropertyKeys.listener, null);
+    public MethodExpression getListener() {
+        return (MethodExpression) getStateHelper().eval(PropertyKeys.listener, null);
     }
-    public void setListener(javax.el.MethodExpression _listener) {
+    public void setListener(MethodExpression _listener) {
         getStateHelper().put(PropertyKeys.listener, _listener);
     }
 
@@ -226,11 +226,11 @@ public class Timer extends UIComponentBase implements Widget,AjaxSource{
     }
 
     public boolean isPartialSubmitSet() {
-        return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
+        return getStateHelper().get(PropertyKeys.partialSubmit) != null || this.getValueExpression("partialSubmit") != null;
     }
 
     public boolean isResetValuesSet() {
-        return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
+        return getStateHelper().get(PropertyKeys.resetValues) != null || this.getValueExpression("resetValues") != null;
     }
 
     public boolean isAjaxified() {

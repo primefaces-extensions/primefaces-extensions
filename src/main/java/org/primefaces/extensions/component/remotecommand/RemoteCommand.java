@@ -208,7 +208,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
 	public boolean isPartialSubmitSet() {
-		return (getStateHelper().get(PropertyKeys.partialSubmit) != null) || (this.getValueExpression("partialSubmit") != null);
+		return getStateHelper().get(PropertyKeys.partialSubmit) != null || this.getValueExpression("partialSubmit") != null;
 	}
 
 	public boolean isResetValues() {
@@ -228,7 +228,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 	}
 
         public boolean isResetValuesSet() {
-            return (getStateHelper().get(PropertyKeys.resetValues) != null) || (this.getValueExpression("resetValues") != null);
+            return getStateHelper().get(PropertyKeys.resetValues) != null || this.getValueExpression("resetValues") != null;
         }
 
 	public java.lang.String getDelay() {

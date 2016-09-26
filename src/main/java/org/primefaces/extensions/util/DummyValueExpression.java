@@ -63,7 +63,7 @@ public class DummyValueExpression extends ValueExpression {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return false;
+		return this == obj;
 	}
 
 	@Override

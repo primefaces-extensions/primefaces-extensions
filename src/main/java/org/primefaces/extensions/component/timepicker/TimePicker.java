@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -75,7 +76,7 @@ public class TimePicker extends HtmlInputText implements Widget {
    public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
    public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
-   public static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(new String[] {
+   static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(new String[] {
             "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"
    }, HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
 
@@ -408,8 +409,8 @@ public class TimePicker extends HtmlInputText implements Widget {
       super.validate(fc);
 
       if (isValid()) {
-         for (final String string : customEvents.keySet()) {
-            final AjaxBehaviorEvent behaviorEvent = customEvents.get(string);
+         for (final Entry<String, AjaxBehaviorEvent> entry : customEvents.entrySet()) {
+            final AjaxBehaviorEvent behaviorEvent = entry.getValue();
             final TimeSelectEvent timeSelectEvent = new TimeSelectEvent(this, behaviorEvent.getBehavior(),
                      (Date) getValue());
 

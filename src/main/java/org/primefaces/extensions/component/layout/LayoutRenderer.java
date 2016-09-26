@@ -28,9 +28,9 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * Renderer for the {@link Layout} component.
@@ -51,7 +51,7 @@ public class LayoutRenderer extends CoreRenderer {
 		ResponseWriter writer = fc.getResponseWriter();
 		Layout layout = (Layout) component;
 
-		boolean buildOptions = (layout.getOptions() == null);
+		boolean buildOptions = layout.getOptions() == null;
 		layout.setBuildOptions(buildOptions);
 
 		if (buildOptions) {

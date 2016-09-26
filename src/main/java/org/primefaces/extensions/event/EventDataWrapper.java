@@ -44,7 +44,7 @@ public class EventDataWrapper extends FacesEvent {
 	}
 
 	public FacesEvent getFacesEvent() {
-		return (this.event);
+		return this.event;
 	}
 
 	public KeyData getData() {
@@ -53,7 +53,7 @@ public class EventDataWrapper extends FacesEvent {
 
 	@Override
 	public PhaseId getPhaseId() {
-		return (this.event.getPhaseId());
+		return this.event.getPhaseId();
 	}
 
 	@Override

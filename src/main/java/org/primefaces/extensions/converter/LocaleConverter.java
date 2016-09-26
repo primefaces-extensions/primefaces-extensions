@@ -85,7 +85,7 @@ public class LocaleConverter implements Converter, Serializable {
 		final String[] parts = replacedLocale.split("_");
 		if (parts.length == 0
 		    || !parts[0].matches("[a-zA-Z]{2,2}")
-		    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
+		    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) { //NOPMD
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
 			                                              "'" + locale + "' does not represent a valid locale",
 			                                              StringUtils.EMPTY));

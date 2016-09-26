@@ -36,7 +36,7 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
 
 	public ParameterizedTypeImpl(Type rawType, Type[] actualTypeArguments, Type owner) {
 		this.rawType = rawType;
-		this.actualTypeArguments = actualTypeArguments;
+		this.actualTypeArguments = Arrays.copyOf(actualTypeArguments, actualTypeArguments.length);
 		this.owner = owner;
 	}
 
@@ -45,7 +45,7 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
 	}
 
 	public Type[] getActualTypeArguments() {
-		return actualTypeArguments;
+	   return Arrays.copyOf(actualTypeArguments, actualTypeArguments.length);
 	}
 
 	public Type getOwnerType() {
@@ -67,8 +67,8 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
 		Type thatOwner = that.getOwnerType();
 		Type thatRawType = that.getRawType();
 
-		return (owner == null ? thatOwner == null : owner.equals(thatOwner))
-		       && (rawType == null ? thatRawType == null : rawType.equals(thatRawType))
+		return (owner == null ? thatOwner == null : owner.equals(thatOwner)) //NOPMD
+		       && (rawType == null ? thatRawType == null : rawType.equals(thatRawType)) //NOPMD
 		       && Arrays.equals(actualTypeArguments, that.getActualTypeArguments());
 	}
 

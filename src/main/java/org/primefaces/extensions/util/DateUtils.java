@@ -34,7 +34,7 @@ public class DateUtils {
 			return null;
 		}
 
-		return toUtcDate(browserTZ, targetTZ, Long.valueOf(localDate));
+		return toUtcDate(browserTZ, targetTZ, Long.parseLong(localDate));
 	}
 
 	// convert from local date to UTC

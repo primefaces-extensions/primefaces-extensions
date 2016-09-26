@@ -129,6 +129,6 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
       String partialSource = context.getExternalContext().getRequestParameterMap()
                .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 
-      return partialSource != null && this.getClientId(context).equals(partialSource);
+      return this.getClientId(context).equals(partialSource);
    }
 }

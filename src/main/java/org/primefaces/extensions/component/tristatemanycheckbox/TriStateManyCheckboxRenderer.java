@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import org.primefaces.context.RequestContext;
 import org.primefaces.util.WidgetBuilder;
@@ -136,9 +137,9 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 		}
 
 		if (converter != null && submittedMap == null) {
-			for (String keyMapO : values.keySet()) {
-				String keyValue = converter.getAsString(context, checkbox, values.get(keyMapO));
-				values.put(keyMapO, keyValue);
+			for (Entry<String, Object> entry : values.entrySet()) {
+				String keyValue = converter.getAsString(context, checkbox, entry.getValue());
+				values.put(entry.getKey(), keyValue);
 			}
 		}
 
@@ -219,7 +220,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 	                                  final boolean disabled) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String styleClass = HTML.CHECKBOX_BOX_CLASS;
-		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
+		styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass; //NOPMD
 		styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
 		//if stateIcon is defined use it insted of default icons.
@@ -321,7 +322,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 			}
 
 			if (valueArray.containsKey(itemValue)) {
-				retInt = Integer.valueOf(((String) valueArray.get(itemValue)));
+				retInt = Integer.parseInt(((String) valueArray.get(itemValue)));
 
 				return retInt % 3;
 			} else {
@@ -376,7 +377,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
 			//need to reverse the order of element on the map to take the value as on decode.
 			Set<String> keys = ret.keySet();
-			String[] tempArray = (String[]) keys.toArray();
+			String[] tempArray = (String[]) keys.toArray(new String[keys.size()]);
 
 			int length = tempArray.length;
 			for (int i = length - 1; i >= 0; i--) {

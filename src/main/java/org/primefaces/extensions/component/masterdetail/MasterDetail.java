@@ -247,7 +247,7 @@ public class MasterDetail extends UIComponentBase {
 
 		// selected level != null
 		if (strSelectedLevel != null) {
-			int selectedLevel = Integer.valueOf(strSelectedLevel);
+			int selectedLevel = Integer.parseInt(strSelectedLevel);
 			detailLevelToGo = getDetailLevelByLevel(selectedLevel);
 			if (detailLevelToGo != null) {
 				return detailLevelToGo;
@@ -259,7 +259,7 @@ public class MasterDetail extends UIComponentBase {
 		int step;
 		if (strSelectedStep != null) {
 			// selected step != null
-			step = Integer.valueOf(strSelectedStep);
+			step = Integer.parseInt(strSelectedStep);
 		} else {
 			// selected level and selected step are null ==> go to the next level
 			step = 1;
@@ -399,7 +399,7 @@ public class MasterDetail extends UIComponentBase {
 			throw new FacesException("Current level is missing in request.");
 		}
 
-		int currentLevel = Integer.valueOf(strCurrentLevel);
+		int currentLevel = Integer.parseInt(strCurrentLevel);
 		int count = 0;
 
 		for (UIComponent child : getChildren()) {
