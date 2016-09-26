@@ -23,9 +23,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang3.LocaleUtils;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
 
@@ -105,23 +103,10 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
       return COMPONENT_FAMILY;
    }
 
-   public Locale calculateLocale(final FacesContext fc) {
+   public Locale calculateLocale() {
       if (appropriateLocale == null) {
-         final Object userLocale = getLocale();
-         if (userLocale != null) {
-            if (userLocale instanceof String) {
-               appropriateLocale = LocaleUtils.toLocale((String) userLocale);
-            } else if (userLocale instanceof java.util.Locale) {
-               appropriateLocale = (Locale) userLocale;
-            } else {
-               throw new IllegalArgumentException(userLocale.getClass() + " is not a valid locale for calculator:"
-                        + this.getClientId(fc));
-            }
-         } else {
-            appropriateLocale = fc.getViewRoot().getLocale();
-         }
+         appropriateLocale = org.primefaces.extensions.util.ComponentUtils.resolveLocale(getLocale());
       }
-
       return appropriateLocale;
    }
 

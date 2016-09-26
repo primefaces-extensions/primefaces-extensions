@@ -59,7 +59,7 @@ public class CalculatorRenderer extends CoreRenderer {
       wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
       wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));
       wb.attr("precision", calculator.getPrecision());
-      wb.attr("locale", calculator.calculateLocale(context).toString());
+      wb.attr("locale", calculator.calculateLocale().toString());
       wb.attr("isRTL", calculator.isRtl());
       wb.attr("calculatorClass", calculator.getStyleClass());
 
