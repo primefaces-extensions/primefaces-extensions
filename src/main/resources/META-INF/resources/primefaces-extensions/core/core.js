@@ -144,7 +144,6 @@ PrimeFacesExt.locales = {};
  * @namespace Namespaces for components with localized text.
  */
 PrimeFacesExt.locales.TimePicker = {};
-PrimeFacesExt.locales.Timeline = {};
 
 /**
  * JavaScript behavior.
