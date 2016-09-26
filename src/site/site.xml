@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.1.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd">
+
+	<bannerLeft>
+		<name>PrimeFaces Extensions</name>
+		<alt>PrimeFaces Extensions</alt>
+		<src>images/logo.png</src>
+		<href>http://primefaces-extensions.github.io/</href>
+		<height>82</height>
+	</bannerLeft>
+
+	<bannerRight>
+		<name>PrimeFaces Extensions</name>
+		<alt>PrimeFaces Extensions</alt>
+		<src>images/title.png</src>
+		<href>http://primefaces-extensions.github.io/</href>
+		<height>82</height>
+	</bannerRight>
+
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-default-skin</artifactId>
+	</skin>
+
+	<publishDate format="dd MMM yyyy" position="left" />
+	<version position="left" />
+
+	<body>
+
+		<head>
+			<![CDATA[<link rel="icon" href="favicon.ico"/>]]>
+			<![CDATA[<link rel="shortcut icon" href="favicon.ico"/>]]>
+		</head>
+
+
+		<links>
+			<item name="GitHub" href="http://primefaces-extensions.github.io/" />
+			<item name="Showcase" href="http://www.primefaces.org/showcase-ext/views/home.jsf" />
+		</links>
+
+		<menu name="${project.name}">
+			<item name="About" href="index.html"/>
+			<item name="Team" href="team-list.html"/>
+			<item name="GitHub" href="http://primefaces-extensions.github.io/" />
+			<item name="Issues" href="http://github.com/primefaces-extensions/primefaces-extensions.github.com/issues" />
+		</menu>
+
+		<menu name="Reference">
+			<item name="Showcase" href="http://www.primefaces.org/showcase-ext/views/home.jsf" />
+			<item name="JavaDoc" href="apidocs/index.html" />
+			<item name="Source Code" href="xref/index.html" />
+			<item name="Dependencies" href="dependencies.html" />
+		</menu>
+
+		<menu ref="reports" />
+
+	</body>
+
+	<poweredBy>
+		<logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png"/>
+	</poweredBy>
+
+</project>
