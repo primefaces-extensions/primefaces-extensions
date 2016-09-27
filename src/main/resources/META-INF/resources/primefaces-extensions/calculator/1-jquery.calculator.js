@@ -886,7 +886,7 @@
 						(def[0].match(/^#mem(Clear|Recall)$/) && !inst.memory ?
 						' ' + this._memEmptyClass : '')))) +
 						// Common
-						(inst.options.useThemeRoller ? ' ui-state-default' : '') +
+						(inst.options.useThemeRoller ? ' ui-button ui-widget ui-state-default ui-corner-all' : '') +
 						(styles ? ' ' + styles : '') + '" ' +
 						(status ? 'title="' + status + '"' : '') + '>' +
 						(code === '_.' ? inst.options.decimalChar : label) +
