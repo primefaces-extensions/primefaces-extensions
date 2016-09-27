@@ -59,7 +59,9 @@
 	</body>
 
 	<poweredBy>
+		<logo name="PrimeFaces" href="http://www.primefaces.org/" img="images/primefaces.png"/>
 		<logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png"/>
+		<logo name="GitHub" href="http://github.com/primefaces-extensions" img="images/github.png"/>
 	</poweredBy>
 
 </project>
