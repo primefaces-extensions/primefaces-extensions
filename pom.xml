@@ -96,7 +96,6 @@
                                 <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
-                                <include>tristatecheckbox/tristatecheckbox.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>
                                 <include>gchart/gchart.js</include>
                             </includes>

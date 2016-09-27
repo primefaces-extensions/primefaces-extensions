@@ -67,7 +67,11 @@ document_properties.title=Vlastnosti dokumentu…
 document_properties_label=Vlastnosti dokumentu…
 document_properties_file_name=Názov súboru:
 document_properties_file_size=Veľkosť súboru:
+# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in kilobytes, respectively in bytes.
 document_properties_kb={{size_kb}} kB ({{size_b}} bajtov)
+# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in megabytes, respectively in bytes.
 document_properties_mb={{size_mb}} MB ({{size_b}} bajtov)
 document_properties_title=Názov:
 document_properties_author=Autor:
@@ -75,6 +79,8 @@ document_properties_subject=Predmet:
 document_properties_keywords=Kľúčové slová:
 document_properties_creation_date=Dátum vytvorenia:
 document_properties_modification_date=Dátum úpravy:
+# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
+# will be replaced by the creation/modification date, and time, of the PDF file.
 document_properties_date_string={{date}}, {{time}}
 document_properties_creator=Vytvoril:
 document_properties_producer=Tvorca PDF:
@@ -88,7 +94,9 @@ document_properties_close=Zavrieť
 toggle_sidebar.title=Prepnúť bočný panel
 toggle_sidebar_label=Prepnúť bočný panel
 outline.title=Zobraziť prehľad dokumentu
-outline_label=Prehľad documentu
+outline_label=Prehľad dokumentu
+attachments.title=Zobraziť prílohy
+attachments_label=Prílohy
 thumbs.title=Zobraziť miniatúry
 thumbs_label=Miniatúry
 findbar.title=Hľadať v dokumente
@@ -138,12 +146,16 @@ page_scale_width=Na šírku strany
 page_scale_fit=Na veľkosť strany
 page_scale_auto=Automatická veľkosť
 page_scale_actual=Skutočná veľkosť
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=Chyba
 loading_error=Počas načítavania dokumentu PDF sa vyskytla chyba.
 invalid_file_error=Neplatný alebo poškodený súbor PDF.
 missing_file_error=Chýbajúci súbor PDF.
+unexpected_response_error=Neočakávaná odpoveď zo servera.
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
@@ -158,4 +170,4 @@ password_cancel=Zrušiť
 printing_not_supported=Upozornenie: tlač nie je v tomto prehliadači plne podporovaná.
 printing_not_ready=Upozornenie: súbor PDF nie je plne načítaný pre tlač.
 web_fonts_disabled=Webové písma sú vypnuté: nie je možné použiť písma vložené do súboru PDF.
-document_colors_disabled=Dokumenty PDF nemajú povolené používať vlastné farby, pretože voľba \'Povoliť stránkam používať vlastné farby\' je v nastaveniach prehliadača vypnutá.
+document_colors_not_allowed=Dokumenty PDF nemajú povolené používať vlastné farby, pretože voľba "Povoliť stránkam používať vlastné farby" je v nastaveniach prehliadača vypnutá.

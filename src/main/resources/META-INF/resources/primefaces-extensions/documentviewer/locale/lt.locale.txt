@@ -30,12 +30,12 @@ zoom_out_label=Sumažinti
 zoom_in.title=Padidinti
 zoom_in_label=Padidinti
 zoom.title=Mastelis
-print.title=Spausdinti
-print_label=Spausdinti
 presentation_mode.title=Pereiti į pateikties veikseną
 presentation_mode_label=Pateikties veiksena
 open_file.title=Atverti failą
 open_file_label=Atverti
+print.title=Spausdinti
+print_label=Spausdinti
 download.title=Parsiųsti
 download_label=Parsiųsti
 bookmark.title=Esamojo rodinio saitas (kopijavimui ar atvėrimui kitame lange)
@@ -67,7 +67,11 @@ document_properties.title=Dokumento savybės…
 document_properties_label=Dokumento savybės…
 document_properties_file_name=Failo vardas:
 document_properties_file_size=Failo dydis:
+# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in kilobytes, respectively in bytes.
 document_properties_kb={{size_kb}} KB ({{size_b}} B)
+# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in megabytes, respectively in bytes.
 document_properties_mb={{size_mb}} MB ({{size_b}} B)
 document_properties_title=Antraštė:
 document_properties_author=Autorius:
@@ -75,6 +79,8 @@ document_properties_subject=Tema:
 document_properties_keywords=Reikšminiai žodžiai:
 document_properties_creation_date=Sukūrimo data:
 document_properties_modification_date=Modifikavimo data:
+# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
+# will be replaced by the creation/modification date, and time, of the PDF file.
 document_properties_date_string={{date}}, {{time}}
 document_properties_creator=Kūrėjas:
 document_properties_producer=PDF generatorius:
@@ -89,6 +95,8 @@ toggle_sidebar.title=Rodyti / slėpti šoninį polangį
 toggle_sidebar_label=Šoninis polangis
 outline.title=Rodyti dokumento metmenis
 outline_label=Dokumento metmenys
+attachments.title=Rodyti priedus
+attachments_label=Priedai
 thumbs.title=Rodyti puslapių miniatiūras
 thumbs_label=Miniatiūros
 findbar.title=Ieškoti dokumente
@@ -138,12 +146,16 @@ page_scale_width=Priderinti prie lapo pločio
 page_scale_fit=Pritaikyti prie lapo dydžio
 page_scale_auto=Automatinis mastelis
 page_scale_actual=Tikras dydis
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=Klaida
 loading_error=Įkeliant PDF failą, įvyko klaida.
 invalid_file_error=Tai nėra PDF failas arba jis yra sugadintas.
 missing_file_error=PDF failas nerastas.
+unexpected_response_error=Netikėtas serverio atsakas.
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
@@ -157,5 +169,5 @@ password_cancel=Atsisakyti
 
 printing_not_supported=Dėmesio! Spausdinimas šioje naršyklėje nėra pilnai realizuotas.
 printing_not_ready=Dėmesio! PDF failas dar nėra pilnai įkeltas spausdinimui.
-web_fonts_disabled=Neįgalinti saityno šriftai – šiame PDF faile esančių šriftų naudoti negalima.
-document_colors_disabled=PDF dokumentams neleidžiama nurodyti savo spalvų, nes išjungta naršyklės nuostata „Leisti tinklalapiams nurodyti spalvas“.
+web_fonts_disabled=Saityno šriftai išjungti – PDF faile esančių šriftų naudoti negalima.
+document_colors_not_allowed=PDF dokumentams neleidžiama nurodyti savo spalvų, nes išjungta naršyklės nuostata „Leisti tinklalapiams nurodyti spalvas“.

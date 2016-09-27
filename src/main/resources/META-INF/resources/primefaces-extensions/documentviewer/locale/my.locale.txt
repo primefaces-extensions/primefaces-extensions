@@ -42,10 +42,51 @@ bookmark.title=လက်ရှိ မြင်ကွင်း (ဝင်းဒ�
 bookmark_label=လက်ရှိ မြင်ကွင်း
 
 # Secondary toolbar and context menu
+tools.title=ကိရိယာများ
+tools_label=ကိရိယာများ
+first_page.title=ပထမ စာမျက်နှာသို့
+first_page.label=ပထမ စာမျက်နှာသို့
+first_page_label=ပထမ စာမျက်နှာသို့
+last_page.title=နောက်ဆုံး စာမျက်နှာသို့
+last_page.label=နောက်ဆုံး စာမျက်နှာသို့
+last_page_label=နောက်ဆုံး စာမျက်နှာသို့
+page_rotate_cw.title=နာရီလက်တံ အတိုင်း
+page_rotate_cw.label=နာရီလက်တံ အတိုင်း
+page_rotate_cw_label=နာရီလက်တံ အတိုင်း
+page_rotate_ccw.title=နာရီလက်တံ ပြောင်းပြန်
+page_rotate_ccw.label=နာရီလက်တံ ပြောင်းပြန်
+page_rotate_ccw_label=နာရီလက်တံ ပြောင်းပြန်
 
+hand_tool_enable.title=လက်ကိုင် ကိရိယာအားသုံး
+hand_tool_enable_label=လက်ကိုင် ကိရိယာဖွင့်
+hand_tool_disable.title=လက်ကိုင် ကိရိယာအားပိတ်
+hand_tool_disable_label=လက်ကိုင်ကိရိယာ အားပိတ်
 
 # Document properties dialog box
+document_properties.title=မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
+document_properties_label=မှတ်တမ်းမှတ်ရာ ဂုဏ်သတ္တိများ
+document_properties_file_name=ဖိုင် :
+document_properties_file_size=ဖိုင်ဆိုဒ် :
+# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in kilobytes, respectively in bytes.
+document_properties_kb={{size_kb}} ကီလိုဘိုတ် ({size_kb}}ဘိုတ်)
+# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in megabytes, respectively in bytes.
+document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
 document_properties_title=ခေါင်းစဉ်‌ -
+document_properties_author=ရေးသားသူ:
+document_properties_subject=အကြောင်းအရာ:\u0020
+document_properties_keywords=သော့ချက် စာလုံး:
+document_properties_creation_date=ထုတ်လုပ်ရက်စွဲ:
+document_properties_modification_date=ပြင်ဆင်ရက်စွဲ:
+# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
+# will be replaced by the creation/modification date, and time, of the PDF file.
+document_properties_date_string={{date}}, {{time}}
+document_properties_creator=ဖန်တီးသူ:
+document_properties_producer=PDF ထုတ်လုပ်သူ:
+document_properties_version=PDF ဗားရှင်း:
+document_properties_page_count=စာမျက်နှာအရေအတွက်:
+document_properties_close=ပိတ်
 
 # Tooltips and alt text for side panel toolbar buttons
 # (the _label strings are alt text for the buttons, the .title strings are
@@ -54,6 +95,8 @@ toggle_sidebar.title=ဘေးတန်းဖွင့်ပိတ်
 toggle_sidebar_label=ဖွင့်ပိတ် ဆလိုက်ဒါ
 outline.title=စာတမ်း မူကြမ်း ကိုပြပါ
 outline_label=စာတမ်း မူကြမ်း
+attachments.title=တွဲချက်များ ပြပါ
+attachments_label=တွဲထားချက်များ
 thumbs.title=ပုံရိပ်ငယ်များကို ပြပါ
 thumbs_label=ပုံရိပ်ငယ်များ
 findbar.title=Find in Document
@@ -82,6 +125,7 @@ find_not_found=စကားစု မတွေ့ရဘူး
 # Error panel labels
 error_more_info=နောက်ထပ်အချက်အလက်များ
 error_less_info=အနည်းငယ်မျှသော သတင်းအချက်အလက်
+error_close=ပိတ်
 # LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
 # replaced by the PDF.JS version and build ID.
 error_version_info=PDF.js v{{version}} (build: {{build}})
@@ -102,22 +146,28 @@ page_scale_width=စာမျက်နှာ အကျယ်
 page_scale_fit=စာမျက်နှာ ကွက်တိ
 page_scale_auto=အလိုအလျောက် ချုံ့ချဲ့
 page_scale_actual=အမှန်တကယ်ရှိတဲ့ အရွယ်
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=အမှား
 loading_error=PDF ဖိုင် ကိုဆွဲတင်နေချိန်မှာ အမှားတစ်ခုတွေ့ရပါတယ်။
 invalid_file_error=မရသော သို့ ပျက်နေသော PDF ဖိုင်
 missing_file_error=PDF ပျောက်ဆုံး
+unexpected_response_error=မမျှော်လင့်ထားသော ဆာဗာမှ ပြန်ကြားချက်
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
 # the PDF spec (32000-1:2008 Table 169 – Annotation types).
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 text_annotation_type.alt=[{{type}} အဓိပ္ပာယ်ဖွင့်ဆိုချက်]
+password_label=PDF အားဖွင့်ရန် ပတ်စ်ဝတ်အားထည့်ပါ
+password_invalid=စာဝှက် မှားသည်။ ထပ်ကြိုးစားကြည့်ပါ။
 password_ok=OK
 password_cancel=ပယ်​ဖျက်ပါ
 
 printing_not_supported=သတိပေးချက်၊ပရင့်ထုတ်ခြင်းကိုဤဘယောက်ဆာသည် ပြည့်ဝစွာထောက်ပံ့မထားပါ ။
 printing_not_ready=သတိပေးချက်: ယခု PDF ဖိုင်သည် ပုံနှိပ်ရန် မပြည့်စုံပါ
 web_fonts_disabled=Web fonts are disabled: unable to use embedded PDF fonts.
-document_colors_disabled=PDF ဖိုင်အား ၎င်းဤ ကိုယ်ပိုင်အရောင်များကို အသုံးပြုခွင့်မပေးထားပါ ။ 'စာမျက်နှာအားလုံးအားအရောင်ရွေးချယ်ခွင့်' အား ယခု ဘယောက်ဆာတွင် ပိတ်ထားခြင်းကြောင့်ဖြစ် သှ်
+document_colors_not_allowed=PDF ဖိုင်အား ၎င်းဤ ကိုယ်ပိုင်အရောင်များကို အသုံးပြုခွင့်မပေးထားပါ ။ 'စာမျက်နှာအားလုံးအားအရောင်ရွေးချယ်ခွင့်' အား ယခု ဘယောက်ဆာတွင် ပိတ်ထားခြင်းကြောင့်ဖြစ် သှ်

@@ -57,10 +57,36 @@ page_rotate_ccw.title=Roteer anti-kloksgewys
 page_rotate_ccw.label=Roteer anti-kloksgewys
 page_rotate_ccw_label=Roteer anti-kloksgewys
 
+hand_tool_enable.title=Aktiveer handjie
+hand_tool_enable_label=Aktiveer handjie
+hand_tool_disable.title=Deaktiveer handjie
+hand_tool_disable_label=Deaktiveer handjie
 
 # Document properties dialog box
+document_properties.title=Dokumenteienskappe…
+document_properties_label=Dokumenteienskappe…
 document_properties_file_name=Lêernaam:
+document_properties_file_size=Lêergrootte:
+# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in kilobytes, respectively in bytes.
+document_properties_kb={{size_kb}} kG ({{size_b}} grepe)
+# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in megabytes, respectively in bytes.
+document_properties_mb={{size_mb}} MG ({{size_b}} grepe)
 document_properties_title=Titel:
+document_properties_author=Outeur:
+document_properties_subject=Onderwerp:
+document_properties_keywords=Sleutelwoorde:
+document_properties_creation_date=Skeppingsdatum:
+document_properties_modification_date=Wysigingsdatum:
+# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
+# will be replaced by the creation/modification date, and time, of the PDF file.
+document_properties_date_string={{date}}, {{time}}
+document_properties_creator=Skepper:
+document_properties_producer=PDF-vervaardiger:
+document_properties_version=PDF-weergawe:
+document_properties_page_count=Aantal bladsye:
+document_properties_close=Sluit
 
 # Tooltips and alt text for side panel toolbar buttons
 # (the _label strings are alt text for the buttons, the .title strings are
@@ -69,6 +95,8 @@ toggle_sidebar.title=Sypaneel aan/af
 toggle_sidebar_label=Sypaneel aan/af
 outline.title=Wys dokumentoorsig
 outline_label=Dokumentoorsig
+attachments.title=Wys aanhegsels
+attachments_label=Aanhegsels
 thumbs.title=Wys duimnaels
 thumbs_label=Duimnaels
 findbar.title=Soek in dokument
@@ -97,6 +125,7 @@ find_not_found=Frase nie gevind nie
 # Error panel labels
 error_more_info=Meer inligting
 error_less_info=Minder inligting
+error_close=Sluit
 # LOCALIZATION NOTE (error_version_info): "{{version}}" and "{{build}}" will be
 # replaced by the PDF.JS version and build ID.
 error_version_info=PDF.js v{{version}} (ID: {{build}})
@@ -117,12 +146,16 @@ page_scale_width=Bladsywydte
 page_scale_fit=Pas bladsy
 page_scale_auto=Outomatiese zoem
 page_scale_actual=Werklike grootte
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=Fout
 loading_error='n Fout het voorgekom met die laai van die PDF.
 invalid_file_error=Ongeldige of korrupte PDF-lêer.
 missing_file_error=PDF-lêer is weg.
+unexpected_response_error=Onverwagse antwoord van bediener.
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
@@ -137,4 +170,4 @@ password_cancel=Kanselleer
 printing_not_supported=Waarskuwing: Dié blaaier ondersteun nie drukwerk ten volle nie.
 printing_not_ready=Waarskuwing: Die PDF is nog nie volledig gelaai vir drukwerk nie.
 web_fonts_disabled=Webfonte is gedeaktiveer: kan nie PDF-fonte wat ingebed is, gebruik nie.
-document_colors_disabled=PDF-dokumente word nie toegelaat om hul eie kleure te gebruik nie: 'Laat bladsye toe om hul eie kleure te kies' is gedeaktiveer in die blaaier.
+document_colors_not_allowed=PDF-dokumente word nie toegelaat om hul eie kleure te gebruik nie: 'Laat bladsye toe om hul eie kleure te kies' is gedeaktiveer in die blaaier.

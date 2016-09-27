@@ -1,0 +1,35 @@
+1. Download latest pdf.js
+
+2. Combine the following files into pdf.viewer.js in order. compatibility.js > l10n.js > pdf.js > viewer.js
+
+3. Run viewer.css through http://dataurl.net/ to turn all images into BASE64 encoded in CSS.
+
+4. Put the new CSS from #3 right into the <style></style> of the viewer.html
+
+5. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
+
+   var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
+                    window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                    window.parent.PrimeFacesExt.VERSION);
+
+  PDFJS.workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js',
+            window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+            window.parent.PrimeFacesExt.VERSION);
+
+6. Allow language changing by disabling debug check by changing...
+
+  if (PDFViewerApplication.preferencePdfBugEnabled) {
+  
+  to
+  
+  if (true) {
+  
+7. Compress and minify pdf.worker.js.
+
+8. In the /web/locale directory of the distribution run this DOS script..
+
+@echo off
+for /r %%a in (viewer.properties) do for %%b in ("%%~dpa\.") do ren "%%~a" "%%~nxb.locale.txt"
+pause
+
+This renames all viewer.properties correctly.  Then move the new XX.locale.txt files into the /locale folder of PFE.

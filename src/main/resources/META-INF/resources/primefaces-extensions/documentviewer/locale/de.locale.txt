@@ -89,6 +89,8 @@ toggle_sidebar.title=Sidebar umschalten
 toggle_sidebar_label=Sidebar umschalten
 outline.title=Dokumentstruktur anzeigen
 outline_label=Dokumentstruktur
+attachments.title=Anhänge anzeigen
+attachments_label=Anhänge
 thumbs.title=Miniaturansichten anzeigen
 thumbs_label=Miniaturansichten
 findbar.title=Dokument durchsuchen
@@ -137,13 +139,17 @@ rendering_error=Beim Darstellen der Seite trat ein Fehler auf.
 page_scale_width=Seitenbreite
 page_scale_fit=Seitengröße
 page_scale_auto=Automatischer Zoom
-page_scale_actual=Derzeitige Größe
+page_scale_actual=Originalgröße
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=Fehler
 loading_error=Beim Laden der PDF-Datei trat ein Fehler auf.
 invalid_file_error=Ungültige oder beschädigte PDF-Datei
 missing_file_error=Fehlende PDF-Datei
+unexpected_response_error=Unerwartete Antwort des Servers
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
@@ -158,4 +164,4 @@ password_cancel=Abbrechen
 printing_not_supported=Warnung: Die Drucken-Funktion wird durch diesen Browser nicht vollständig unterstützt.
 printing_not_ready=Warnung: Die PDF-Datei ist nicht vollständig geladen, dies ist für das Drucken aber empfohlen.
 web_fonts_disabled=Web-Schriftarten sind deaktiviert: Eingebettete PDF-Schriftarten konnten nicht geladen werden.
-document_colors_disabled=PDF-Dokumenten ist es nicht erlaubt, ihre eigenen Farben zu verwenden: \'Seiten das Verwenden von eigenen Farben erlauben\' ist im Browser deaktiviert.
+document_colors_not_allowed=PDF-Dokumenten ist es nicht erlaubt, ihre eigenen Farben zu verwenden: 'Seiten das Verwenden von eigenen Farben erlauben' ist im Browser deaktiviert.

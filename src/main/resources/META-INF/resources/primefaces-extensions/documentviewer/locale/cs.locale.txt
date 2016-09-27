@@ -30,7 +30,7 @@ zoom_out_label=Zmenšit
 zoom_in.title=Zvětší velikost
 zoom_in_label=Zvětšit
 zoom.title=Nastaví velikost
-presentation_mode.title=Přepne režimu prezentace
+presentation_mode.title=Přepne do režimu prezentace
 presentation_mode_label=Režim prezentace
 open_file.title=Otevře soubor
 open_file_label=Otevřít
@@ -67,14 +67,20 @@ document_properties.title=Vlastnosti dokumentu…
 document_properties_label=Vlastnosti dokumentu…
 document_properties_file_name=Název souboru:
 document_properties_file_size=Velikost souboru:
-document_properties_kb={{size_kb}} kB ({{size_b}} bytes)
-document_properties_mb={{size_mb}} MB ({{size_b}} bytes)
+# LOCALIZATION NOTE (document_properties_kb): "{{size_kb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in kilobytes, respectively in bytes.
+document_properties_kb={{size_kb}} KB ({{size_b}} bajtů)
+# LOCALIZATION NOTE (document_properties_mb): "{{size_mb}}" and "{{size_b}}"
+# will be replaced by the PDF file size in megabytes, respectively in bytes.
+document_properties_mb={{size_mb}} MB ({{size_b}} bajtů)
 document_properties_title=Nadpis:
 document_properties_author=Autor:
 document_properties_subject=Subjekt:
 document_properties_keywords=Klíčová slova:
 document_properties_creation_date=Datum vytvoření:
 document_properties_modification_date=Datum úpravy:
+# LOCALIZATION NOTE (document_properties_date_string): "{{date}}" and "{{time}}"
+# will be replaced by the creation/modification date, and time, of the PDF file.
 document_properties_date_string={{date}}, {{time}}
 document_properties_creator=Vytvořil:
 document_properties_producer=Tvůrce PDF:
@@ -89,6 +95,8 @@ toggle_sidebar.title=Postranní lišta
 toggle_sidebar_label=Postranní lišta
 outline.title=Zobrazí osnovu dokumentu
 outline_label=Osnova dokumentu
+attachments.title=Zobrazí přílohy
+attachments_label=Přílohy
 thumbs.title=Zobrazí náhledy
 thumbs_label=Náhledy
 findbar.title=Najde v dokumentu
@@ -111,7 +119,7 @@ find_next_label=Další
 find_highlight=Zvýraznit
 find_match_case_label=Rozlišovat velikost
 find_reached_top=Dosažen začátek dokumentu, pokračuje se od konce
-find_reached_bottom=Dosažen konec dokumentu, pokračuje se o začátku
+find_reached_bottom=Dosažen konec dokumentu, pokračuje se od začátku
 find_not_found=Hledané spojení nenalezeno
 
 # Error panel labels
@@ -137,13 +145,17 @@ rendering_error=Při vykreslování stránky nastala chyba.
 page_scale_width=Podle šířky
 page_scale_fit=Podle výšky
 page_scale_auto=Automatická velikost
-page_scale_actual=Aktuální velikost
+page_scale_actual=Skutečná velikost
+# LOCALIZATION NOTE (page_scale_percent): "{{scale}}" will be replaced by a
+# numerical scale value.
+page_scale_percent={{scale}}%
 
 # Loading indicator messages
 loading_error_indicator=Chyba
 loading_error=Při nahrávání PDF nastala chyba.
 invalid_file_error=Neplatný nebo chybný soubor PDF.
 missing_file_error=Chybí soubor PDF.
+unexpected_response_error=Neočekávaná odpověď serveru.
 
 # LOCALIZATION NOTE (text_annotation_type.alt): This is used as a tooltip.
 # "{{type}}" will be replaced with an annotation type from a list defined in
@@ -158,4 +170,4 @@ password_cancel=Zrušit
 printing_not_supported=Upozornění: Tisk není v tomto prohlížeči plně podporován.
 printing_not_ready=Upozornění: Dokument PDF není kompletně načten.
 web_fonts_disabled=Webová písma jsou zakázána, proto není možné použít vložená písma PDF.
-document_colors_disabled=PDF dokumenty nemají povoleny používání vlastních barev: volba \'Povolit stránkám používat vlastní barvy namísto výše zvolených\' je v prohlížeči deaktivována.
+document_colors_not_allowed=PDF dokumenty nemají povoleno používat vlastní barvy: volba 'Povolit stránkám používat vlastní barvy' je v prohlížeči deaktivována.
