@@ -74,12 +74,12 @@ public class DocumentViewerRenderer extends CoreRenderer {
       srcBuilder.append(getResourceURL(context));
       srcBuilder.append("&file=");
       srcBuilder.append(imageSrc);
-      srcBuilder.append(generateHashString(documentViewer, context));
+      srcBuilder.append(generateHashString(documentViewer));
 
       return srcBuilder.toString();
    }
 
-   private String generateHashString(final DocumentViewer documentViewer, final FacesContext context) {
+   private String generateHashString(final DocumentViewer documentViewer) {
       final List<String> params = new ArrayList<String>(1);
       params.add("locale=" + documentViewer.calculateLocale().toString().replaceAll("_", "-"));
       if (documentViewer.getPage() != null) {
