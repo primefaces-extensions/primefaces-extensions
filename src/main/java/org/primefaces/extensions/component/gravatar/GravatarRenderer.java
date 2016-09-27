@@ -1,7 +1,7 @@
 package org.primefaces.extensions.component.gravatar;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class GravatarRenderer extends CoreRenderer {
 
    }
 
-   private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException {
+   private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
       boolean qrCode = gravatar.isQrCode();
       Integer size = gravatar.getSize();
@@ -84,9 +84,9 @@ public class GravatarRenderer extends CoreRenderer {
       return url;
    }
 
-   private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException {
+   private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
       MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(String.valueOf(gravatar.getValue()).getBytes(StandardCharsets.UTF_8));
+      md.update(String.valueOf(gravatar.getValue()).getBytes("UTF-8"));
       byte[] digest = md.digest();
       StringBuffer sb = new StringBuffer();
       for (byte b : digest) {
