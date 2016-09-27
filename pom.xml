@@ -234,7 +234,7 @@
                                 <findbugsXmlOutput>true</findbugsXmlOutput>
                                 <!-- Optional directory to put findbugs xml report -->
                                 <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
-                                <omitVisitors></omitVisitors>
+                                <omitVisitors>UselessParentheses</omitVisitors>
                             </configuration>
                         </plugin>
                         <plugin>

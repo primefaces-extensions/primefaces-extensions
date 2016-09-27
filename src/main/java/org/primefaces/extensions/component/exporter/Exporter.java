@@ -111,7 +111,7 @@ public abstract class Exporter {
             HtmlOutputLink link = (HtmlOutputLink) component;
 
             for(UIComponent child : link.getChildren()) {
-                    return exportValue(context, child); //NOPMD
+                    return exportValue(context, child); 
                 }
         }
         if (component instanceof HtmlCommandButton) {
@@ -299,8 +299,8 @@ public abstract class Exporter {
            if(col instanceof DynamicColumn) {
                  ((DynamicColumn) col).applyStatelessModel();
            }
-           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) { //NOPMD
-                if (col.getFacet("header") != null || col.getHeaderText() != null) { //NOPMD
+           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) { 
+                if (col.getFacet("header") != null || col.getHeaderText() != null) { 
                     return true;
                 }
             }

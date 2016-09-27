@@ -340,7 +340,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
    private boolean contextHasErrorMessages(final FacesContext context) {
       final FacesMessage.Severity sev = context.getMaximumSeverity();
-      return sev != null && FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0; // NOPMD
+      return sev != null && FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0; 
    }
 
    protected Boolean isNestedWithinIterator() {
@@ -349,7 +349,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
          while (null != (parent = parent.getParent())) {
             if (parent instanceof javax.faces.component.UIData
                      || parent.getClass().getName().endsWith("UIRepeat")
-                     || parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating()) { // NOPMD
+                     || parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating()) { 
                isNested = Boolean.TRUE;
                break;
             }

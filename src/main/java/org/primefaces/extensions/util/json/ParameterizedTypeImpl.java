@@ -67,8 +67,8 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
 		Type thatOwner = that.getOwnerType();
 		Type thatRawType = that.getRawType();
 
-		return (owner == null ? thatOwner == null : owner.equals(thatOwner)) //NOPMD
-		       && (rawType == null ? thatRawType == null : rawType.equals(thatRawType)) //NOPMD
+		return (owner == null ? thatOwner == null : owner.equals(thatOwner)) 
+		       && (rawType == null ? thatRawType == null : rawType.equals(thatRawType)) 
 		       && Arrays.equals(actualTypeArguments, that.getActualTypeArguments());
 	}
 
