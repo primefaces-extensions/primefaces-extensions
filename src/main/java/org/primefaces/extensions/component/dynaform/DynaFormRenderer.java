@@ -321,7 +321,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
 					UIComponent valueHolder = ComponentUtils.deepestEditableValueHolderTarget(target);
 					String targetClientId =
-					    (valueHolder instanceof InputHolder) ? ((InputHolder) valueHolder).getInputClientId() : valueHolder.getClientId(fc); //NOPMD
+					    (valueHolder instanceof InputHolder) ? ((InputHolder) valueHolder).getInputClientId() : valueHolder.getClientId(fc); 
 
 					dynaFormLabel.setTargetClientId(targetClientId);
 					dynaFormLabel.setTargetValid(((EditableValueHolder) valueHolder).isValid());
