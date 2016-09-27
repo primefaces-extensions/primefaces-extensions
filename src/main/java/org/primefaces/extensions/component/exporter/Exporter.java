@@ -110,9 +110,10 @@ public abstract class Exporter {
         if (component instanceof HtmlOutputLink) {
             HtmlOutputLink link = (HtmlOutputLink) component;
 
-            for(UIComponent child : link.getChildren()) {
-                    return exportValue(context, child); 
-                }
+            List<UIComponent> children = link.getChildren();
+            if (children != null) {
+               return exportValue(context, children.get(0)); 
+            }
         }
         if (component instanceof HtmlCommandButton) {
             HtmlCommandButton button = (HtmlCommandButton) component;
@@ -299,10 +300,10 @@ public abstract class Exporter {
            if(col instanceof DynamicColumn) {
                  ((DynamicColumn) col).applyStatelessModel();
            }
-           if (col.isRendered() && (col instanceof UIColumn || col instanceof DynamicColumn)) { 
-                if (col.getFacet("header") != null || col.getHeaderText() != null) { 
+           if (col.isRendered() 
+                    && (col instanceof UIColumn || col instanceof DynamicColumn) 
+                    && (col.getFacet("header") != null || col.getHeaderText() != null)) { 
                     return true;
-                }
             }
 
         }

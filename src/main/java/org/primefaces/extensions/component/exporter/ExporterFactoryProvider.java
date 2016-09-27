@@ -15,10 +15,10 @@
  */
 package org.primefaces.extensions.component.exporter;
 
+import java.util.ServiceLoader;
+
 import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
-
-import java.util.ServiceLoader;
 
 /**
  * <code>Exporter</code> component.
@@ -36,9 +36,8 @@ public class ExporterFactoryProvider {
 
         if (factory == null) {
             ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
-            for (ExporterFactory currentFactory : loader) {
-                factory = currentFactory;
-                break; 
+            if (loader != null) {
+               factory = loader.iterator().next();
             }
 
             if (factory == null) {

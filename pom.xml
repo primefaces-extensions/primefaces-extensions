@@ -153,8 +153,6 @@
                                             <link>http://docs.oracle.com/javase/6/docs/api/</link>
                                             <link>http://www.slf4j.org/apidocs/</link>
                                         </links>
-                                        <excludePackageNames>*.protobuf.*</excludePackageNames>
-                                        <excludePackageNames>*.common.model.*</excludePackageNames>
                                     </configuration>
                                     <reports>
                                         <report>javadoc</report>
@@ -222,6 +220,9 @@
                                     <excludeRoot>${basedir}/target/generated-sources/xjc</excludeRoot>
                                     <excludeRoot>${basedir}/target/generated-sources/cxf</excludeRoot>
                                 </excludeRoots>
+                                <rulesets>
+                                    <ruleset>${basedir}/pmd-rulesets.xml</ruleset>
+                                </rulesets>
                             </configuration>
                         </plugin>
                         <plugin>
@@ -234,7 +235,7 @@
                                 <findbugsXmlOutput>true</findbugsXmlOutput>
                                 <!-- Optional directory to put findbugs xml report -->
                                 <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
-                                <omitVisitors>UselessParentheses</omitVisitors>
+                                <omitVisitors/>
                             </configuration>
                         </plugin>
                         <plugin>
