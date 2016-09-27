@@ -1,0 +1,19 @@
+  -------
+  PrimeFaces Extensions
+  -------
+
+PrimeFaces Extensions
+
+  PrimeFaces Extensions project is a community driven open source project which has an aim to be a lightweight and fast JSF 2 component library in additional to <<PrimeFaces>> - a rapidly evolving component set and more. We are big fans of PrimeFaces. This project is an extended component set with useful components missing in other JSF 2 libraries or with improved components which already exist somewhere but don't work there smoothly. It only uses standards and is highly compatible with existing JSF 2 frameworks. We use one of the best JavaScript framework jQuery behind the scenes with its amazing widgets, plugins, themes and Ajax interactions. We avoid on purpose other JS / UI frameworks in order to have a high compatibility between components.
+
+  PrimeFaces Extensions is an open source project licensed under Apache License V2. The CKEditor add-on, like the CKEditor itself, is distributed under the GPL, LGPL and MPL.
+  
+Apache Maven
+
++----------------------------------------+
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <version>${project.version}</version>
+</dependency>
++----------------------------------------+
