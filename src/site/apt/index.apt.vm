@@ -8,7 +8,7 @@ PrimeFaces Extensions
 
   PrimeFaces Extensions is an open source project licensed under Apache License V2. The CKEditor add-on, like the CKEditor itself, is distributed under the GPL, LGPL and MPL.
   
-Apache Maven
+* Apache Maven
 
 +----------------------------------------+
 <dependency>
