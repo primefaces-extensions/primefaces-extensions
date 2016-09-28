@@ -97,7 +97,7 @@
 			@property [cookiePath=''] {string} The path for the memory cookie.
 			@property [useDegrees=false] {boolean} <code>true</code> to use degress for trigonometric functions, <code>false</code> for radians.
 			@property [constrainInput=true] {boolean} <code>true</code> to restrict typed characters to numerics, <code>false</code> to allow anything.
-			@property [onUse=null] {openCallback} Define a callback function when the Use button is pressed to use the value.
+			@property [onUse=null] {useCallback} Define a callback function when the Use button is pressed to use the value.
 			@property [onOpen=null] {openCallback} Define a callback function before the panel is opened.
 			@property [onButton=null] {buttonCallback} Define a callback function when a button is activated.
 			@property [onClose=null] {closeCallback} Define a callback function when the panel is closed. */
@@ -1409,4 +1409,3 @@
 	});
 
 })(jQuery);
- 
