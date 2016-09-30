@@ -23,26 +23,6 @@ PrimeFacesExt = {
     },
 
     /**
-     * Finds a widgetVar by its id.
-     * 
-     * Note: this equals to the expression #{p:widgetVar('form:dialogId')}
-     * (Server-side evaluation)
-     * 
-     * @author Hatem Alimam
-     * @author Melloware
-     * @param {string}
-     *        id the ID of the component to get the widgetVar for
-     * @return {object} NULL if not found or the widget object if found
-     */
-    getWidgetVarById : function(id) {
-        for ( var propertyName in PrimeFaces.widgets) {
-            if (PrimeFaces.widgets[propertyName].id === id) {
-                return PrimeFaces.widgets[propertyName];
-            }
-        }
-    },
-
-    /**
      * Gets the URL extensions of current included resources. For example: jsf
      * or xhtml. This should only be used if extensions mapping is used.
      * 

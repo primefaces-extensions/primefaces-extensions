@@ -76,7 +76,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 				// PF InputNumber must call custom setValue() function
 				if (id.endsWith("_input")) {
 					id = id.replace("_input", "");
-					var widget = PrimeFacesExt.getWidgetVarById(id);
+					var widget = PrimeFaces.getWidgetById(id);
 					if (widget) {
 						widget.setValue(value);
 					} else {
