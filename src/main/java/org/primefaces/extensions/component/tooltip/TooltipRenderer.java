@@ -56,7 +56,7 @@ public class TooltipRenderer extends CoreRenderer {
       }
 
       final WidgetBuilder wb = getWidgetBuilder(context);
-      wb.initWithDomReady("ExtTooltip",tooltip.resolveWidgetVar(), clientId);
+      wb.initWithDomReady("ExtTooltip", tooltip.resolveWidgetVar(), clientId);
       wb.attr("global", global);
       wb.attr("shared", shared);
       wb.attr("autoShow", autoShow);
@@ -65,12 +65,13 @@ public class TooltipRenderer extends CoreRenderer {
       } else {
          wb.attr("forTarget", target);
       }
-      
+
+      final ResponseWriter writer = context.getResponseWriter();
+
       // content
       wb.append(",content: {");
       String text = null;
       if (tooltip.getChildCount() > 0) {
-         final ResponseWriter writer = context.getResponseWriter();
          final FastStringWriter fsw = new FastStringWriter();
          final ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
          context.setResponseWriter(clonedWriter);
@@ -144,9 +145,8 @@ public class TooltipRenderer extends CoreRenderer {
          wb.append(",target:'event'");
          wb.append(",effect:false");
       }
-      wb.append("}");
-      
-      wb.finish();
+      wb.append("}},true);});");
+      endScript(writer);
    }
 
    @Override
