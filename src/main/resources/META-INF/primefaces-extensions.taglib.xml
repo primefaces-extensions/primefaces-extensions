@@ -341,6 +341,13 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Defines if the CKEditor Advanced Content Filter is enabled or disabled. Default is true.]]>
+            </description>
+            <name>advancedContentFilter</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>

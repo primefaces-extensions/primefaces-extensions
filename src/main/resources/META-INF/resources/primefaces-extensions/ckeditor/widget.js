@@ -67,86 +67,89 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	 * @param {object} cfg The widget configuration.
 	 */
 	init : function(cfg) {
-		this._super(cfg);
+        this._super(cfg);
 
-	    this.instance = null;
+        this.instance = null;
 
-            this.options = {};
-            //add widget to ckeditor config, this is required for the save event
-            this.options.widgetVar = this.cfg.widgetVar;
+        this.options = {};
+        // add widget to ckeditor config, this is required for the save event
+        this.options.widgetVar = this.cfg.widgetVar;
 
-            if (this.cfg.skin) {
-                this.options.skin = this.cfg.skin;
-            }
-            if (this.cfg.width) {
-                this.options.width = this.cfg.width;
-            }
-            if (this.cfg.height) {
-                this.options.height = this.cfg.height;
-            }
-            if (this.cfg.theme) {
-                this.options.theme = this.cfg.theme;
-            }
-            if (this.cfg.toolbar) {
-                if (!(this.cfg.toolbar instanceof Array)) {
-                    this.options.toolbar = eval(this.cfg.toolbar);
-                } else {
-                    this.options.toolbar = this.cfg.toolbar;
-                }
-            }
-            if (this.cfg.readOnly) {
-                this.options.readOnly = this.cfg.readOnly;
-            }
-            if (this.cfg.interfaceColor) {
-                this.options.uiColor = this.cfg.interfaceColor;
-            }
-            if (this.cfg.language) {
-                this.options.language = this.cfg.language;
-            }
-            if (this.cfg.defaultLanguage) {
-                this.options.defaultLanguage = this.cfg.defaultLanguage;
-            }
-            if (this.cfg.contentsCss) {
-                this.options.contentsCss = this.cfg.contentsCss;
-            }
-            if (this.cfg.customConfig) {
-                this.options.customConfig = this.cfg.customConfig + "?resolve=false";
-            }
-
-            //check if ckeditor is already included
-            if (!$.fn.ckeditor) {
-                var ckEditorScriptURI =
-                    PrimeFaces.getFacesResource('/ckeditor/ckeditor.js', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
-
-                var jQueryAdapterScriptURI =
-                    PrimeFaces.getFacesResource('/ckeditor/adapters/jquery.js', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
-
-                //load ckeditor
-                PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
-
-                    //load jquery adapter
-                    PrimeFaces.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
-
-                            this.renderDeferred();
-
-                    }, this));
-
-                }, this), true);
-
+        if (this.cfg.skin) {
+            this.options.skin = this.cfg.skin;
+        }
+        if (this.cfg.width) {
+            this.options.width = this.cfg.width;
+        }
+        if (this.cfg.height) {
+            this.options.height = this.cfg.height;
+        }
+        if (this.cfg.theme) {
+            this.options.theme = this.cfg.theme;
+        }
+        if (this.cfg.toolbar) {
+            if (!(this.cfg.toolbar instanceof Array)) {
+                this.options.toolbar = eval(this.cfg.toolbar);
             } else {
-                    this.renderDeferred();
+                this.options.toolbar = this.cfg.toolbar;
             }
+        }
+        if (this.cfg.readOnly) {
+            this.options.readOnly = this.cfg.readOnly;
+        }
+        if (this.cfg.interfaceColor) {
+            this.options.uiColor = this.cfg.interfaceColor;
+        }
+        if (this.cfg.language) {
+            this.options.language = this.cfg.language;
+        }
+        if (this.cfg.defaultLanguage) {
+            this.options.defaultLanguage = this.cfg.defaultLanguage;
+        }
+        if (this.cfg.contentsCss) {
+            this.options.contentsCss = this.cfg.contentsCss;
+        }
+        if (this.cfg.customConfig) {
+            this.options.customConfig = this.cfg.customConfig + "?resolve=false";
+        }
+
+        // check if ckeditor is already included
+        if (!$.fn.ckeditor) {
+            var ckEditorScriptURI = PrimeFaces.getFacesResource('/ckeditor/ckeditor.js',
+                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+
+            var jQueryAdapterScriptURI = PrimeFaces.getFacesResource('/ckeditor/adapters/jquery.js',
+                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+
+            // load ckeditor
+            PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
+
+                // load jquery adapter
+                PrimeFaces.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+
+                    this.renderDeferred();
+
+                }, this));
+
+            }, this), true);
+
+        } else {
+            this.renderDeferred();
+        }
+
+        // Issue #414 enable/disable ACF
+        CKEDITOR.config.allowedContent = !this.cfg.advancedContentFilter;
 	},
 
 	/**
-	 * Initializes the CKEditor instance.
-	 * This method will be called when the resources for the CKEditor are loaded.
-	 *
-	 * @private
-	 */
+     * Initializes the CKEditor instance. This method will be called when the
+     * resources for the CKEditor are loaded.
+     * 
+     * @private
+     */
 	_render : function() {
             if (!this.instance) {
-                //overwrite save button
+                // overwrite save button
                 this.overwriteSaveButton();
 
                 //remove old instances if required

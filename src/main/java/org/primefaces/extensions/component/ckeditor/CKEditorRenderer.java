@@ -107,6 +107,7 @@ public class CKEditorRenderer extends InputRenderer {
                 .attr("defaultLanguage", ckEditor.getDefaultLanguage())
                 .attr("contentsCss", ckEditor.getContentsCss())
                 .attr("customConfig", ckEditor.getCustomConfig())
+                .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
                 .attr("tabindex", ckEditor.getTabindex());
 
         encodeClientBehaviors(context, ckEditor);
