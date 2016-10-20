@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.component.exporter;
 
+import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import javax.faces.FacesException;
@@ -37,7 +38,10 @@ public class ExporterFactoryProvider {
         if (factory == null) {
             ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
             if (loader != null) {
-               factory = loader.iterator().next();
+               Iterator<ExporterFactory> iterator = loader.iterator();
+               if (iterator.hasNext()) {
+                  factory = iterator.next();
+               }
             }
 
             if (factory == null) {
