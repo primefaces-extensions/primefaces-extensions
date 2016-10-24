@@ -166,6 +166,8 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
                 //initialize ckeditor after all resources were loaded
                 this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
+                // Issue #415: set readOnly attribute to the config file
+                CKEDITOR.instances[this.id].config.readOnly = this.cfg.readOnly;
             }
 	},
 
