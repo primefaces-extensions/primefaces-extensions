@@ -138,7 +138,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         // Issue #414 enable/disable ACF
-        CKEDITOR.config.allowedContent = !this.cfg.advancedContentFilter;
+        CKEDITOR.instances[this.id].config.allowedContent = !this.cfg.advancedContentFilter;
 	},
 
 	/**
