@@ -208,10 +208,12 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         //get instance
         this.instance = this.jq.ckeditorGet();
         
+        var thisConfig =  CKEDITOR.instances[this.id].config;
+
         // Issue #414 enable/disable ACF
-        CKEDITOR.instances[this.id].config.allowedContent = !this.cfg.advancedContentFilter;
+        thisConfig.allowedContent = !this.cfg.advancedContentFilter;
         // Issue #415: set readOnly attribute to the config file
-        CKEDITOR.instances[this.id].config.readOnly = this.cfg.readOnly;
+        thisConfig.readOnly = this.cfg.readOnly;
 
         //fire initialize event
         this.fireEvent('initialize');
