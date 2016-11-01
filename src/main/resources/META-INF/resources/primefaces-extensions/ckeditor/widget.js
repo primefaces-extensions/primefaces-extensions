@@ -163,6 +163,12 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
                 //initialize ckeditor after all resources were loaded
                 this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
+                
+                var thisConfig =  CKEDITOR.instances[this.id].config;
+                // Issue #414 enable/disable ACF
+                thisConfig.allowedContent = !this.cfg.advancedContentFilter;
+                // Issue #415: set readOnly attribute to the config file
+                thisConfig.readOnly = this.cfg.readOnly;
             }
 	},
 
@@ -207,13 +213,6 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     initialized : function() {
         //get instance
         this.instance = this.jq.ckeditorGet();
-        
-        var thisConfig =  CKEDITOR.instances[this.id].config;
-
-        // Issue #414 enable/disable ACF
-        thisConfig.allowedContent = !this.cfg.advancedContentFilter;
-        // Issue #415: set readOnly attribute to the config file
-        thisConfig.readOnly = this.cfg.readOnly;
 
         //fire initialize event
         this.fireEvent('initialize');
