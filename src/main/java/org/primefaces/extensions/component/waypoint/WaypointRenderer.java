@@ -25,7 +25,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import java.io.IOException;
-import org.primefaces.expression.SearchExpressionHint;
 
 /**
  * WaypointRenderer.
@@ -49,7 +48,7 @@ public class WaypointRenderer extends CoreRenderer {
 		// try to get context (which scrollable element the waypoint belongs to and acts within)
 		String context = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getForContext());
 
-		String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(), SearchExpressionHint.PARENT_FALLBACK);
+		String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(), SearchExpressionFacade.Options.PARENT_FALLBACK);
 
 		final String widgetVar = waypoint.resolveWidgetVar();
 
