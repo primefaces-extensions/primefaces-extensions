@@ -32,7 +32,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.DynamicResourceBuilder;
+import org.primefaces.util.DynamicContentSrcBuilder;
 
 /**
  * Renderer for the {@link DocumentViewer} component.
@@ -119,7 +119,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
             return context.getExternalContext().encodeResourceURL(requestPath);
          }
       } else {
-         return DynamicResourceBuilder.build(context, documentViewer.getValue(), documentViewer,
+         return DynamicContentSrcBuilder.build(context, documentViewer.getValue(), documentViewer,
                   documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true);
       }
    }
