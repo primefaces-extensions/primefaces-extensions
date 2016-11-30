@@ -3920,4 +3920,192 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <description><![CDATA[SlideOut adds a tab slideout from the screen edge.]]></description>
+        <tag-name>slideout</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.SlideOut</component-type>
+            <renderer-type>org.primefaces.extensions.component.SlideOutRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Action which will open the panel, 'hover' or 'click'.]]></description>
+            <name>showOn</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Text value to display on the handle. Default value is null.]]>
+            </description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Icon image to display on the handle. Default value is null.]]>
+            </description>
+            <name>icon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Location on screen either left, right, top or bottom. Default value is right.]]>
+            </description>
+            <name>location</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Speed of the slide out animation. Default is 300.]]>
+            </description>
+            <name>animateSpeed</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[How many bounces when 'bounce' is called. Default is 4.]]>
+            </description>
+            <name>bounceTimes</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[How far bounce event will move everything. Default value is 50px.]]>
+            </description>
+            <name>bounceDistance</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[True to have the tab follow the scroll of the window.]]>
+            </description>
+            <name>sticky</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Close the tab when the rest of screen is clicked. Default is true.]]>
+            </description>
+            <name>clickScreenToClose</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Automatically open tab on DOM load. Default is false.]]>
+            </description>
+            <name>autoOpen</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Panel distance from top or left (bottom or right if offsetReverse is true). Default value is 200px.]]>
+            </description>
+            <name>offset</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Panel is aligned with right or bottom of window. Default is false.]]>
+            </description>
+            <name>offsetReverse</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Handle distance from top or left. If null, detects panel border to align handle nicely. Default value is NULL.]]>
+            </description>
+            <name>handleOffset</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Handle is aligned with right or bottom of window. Default is false.]]>
+            </description>
+            <name>handleOffsetReverse</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the tab handle element. Default value is null.]]>
+            </description>
+            <name>handleStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline style applied to the tab handle element. Default value is null.]]>
+            </description>
+            <name>handleStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the slideout container element. Default value is null.]]>
+            </description>
+            <name>panelStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline style applied to the slideout container element. Default value is null.]]>
+            </description>
+            <name>panelStyle</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when the slideout opens.]]>
+            </description>
+            <name>onopen</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when the slideout closes.]]>
+            </description>
+            <name>onclose</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 </facelet-taglib>

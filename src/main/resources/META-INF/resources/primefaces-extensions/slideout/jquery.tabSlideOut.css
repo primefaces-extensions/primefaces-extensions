@@ -1,0 +1,71 @@
+/*
+    tabSlideOUt v2.2
+
+    By  Michael Fielding / www.hawkip.com
+    License: GPL v2.0
+*/
+
+/* Uncomment this to hide tabs and panels when printed.
+@media print {
+    .tabSlideOutPanel, .tabSlideOutTab {
+        display: none;
+    }
+}
+*/
+
+.ui-slideouttab-icon {
+    display: inline-block;
+}
+.ui-slideouttab-panel {
+    border: 2px solid grey;
+}
+.ui-slideouttab-handle, .ui-slideouttab-panel {
+    background-color: white;
+    padding: 0.4em;
+    box-sizing: border-box;
+    z-index: 999;
+}
+.ui-slideouttab-handle {
+    cursor: pointer;
+    color: white;
+    background-color: grey; 
+}
+
+.ui-slideouttab-handle-image {
+    transform: rotate(0);
+}
+
+.ui-slideouttab-right .ui-slideouttab-handle {
+    transform-origin: 0% 0%;
+    transform: rotate(-90deg) translate(-100%,-100%);   
+}
+.ui-slideouttab-right .ui-slideouttab-handle-reverse {
+    transform-origin: 0% 100%;
+    transform: rotate(-90deg);
+}
+.ui-slideouttab-left .ui-slideouttab-handle {
+    transform-origin: 100% 0%;
+    transform: rotate(-90deg);   
+}
+.ui-slideouttab-left .ui-slideouttab-handle-reverse {
+    transform-origin: 100% 100%;
+    transform: rotate(-90deg) translate(100%,100%);   
+}
+
+/* turn font awesome icon in a tab upright */
+.ui-slideouttab-left .ui-slideouttab-handle>.fa-icon, 
+.ui-slideouttab-right .ui-slideouttab-handle>.fa-icon { 
+    transform: rotate(90deg);
+}
+.ui-slideouttab-handle>.fa-icon {
+    margin-left: 0.5em;
+}
+
+.ui-slideouttab-top .ui-slideouttab-handle-rounded,
+.ui-slideouttab-left .ui-slideouttab-handle-rounded {
+    border-radius: 0 0 4px 4px;
+}
+.ui-slideouttab-right .ui-slideouttab-handle-rounded, 
+.ui-slideouttab-bottom .ui-slideouttab-handle-rounded {
+    border-radius: 4px 4px 0 0;
+}

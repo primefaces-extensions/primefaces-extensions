@@ -62,7 +62,7 @@
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>qrcode/**</include>
-                                <include>timeline/**</include>
+                                <include>slideout/**</include>
                                 <include>timepicker/**</include>
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>
