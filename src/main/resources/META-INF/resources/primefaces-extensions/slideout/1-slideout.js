@@ -1,7 +1,7 @@
 /**
  * PrimeFaces Extensions SlideOut Widget.
  * 
- * @author Melloware info@melloware.com
+ * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
 PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
@@ -21,7 +21,7 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
-     * Applies the SlideOut to the given jQuery selector object. 
+     * Applies the SlideOut to the given jQuery selector object.
      * 
      * @param {object}
      *        cfg The widget configuration.
@@ -34,6 +34,32 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
 
         // create the slideout
         this.jq.tabSlideOut(opts);
+        
+        // bind "open", "close" events
+        this._bindEvents();
+    },
+    
+    /**
+     * Binds all events to p:ajax events
+     * 
+     * @private
+     */
+    _bindEvents : function() {
+        var $this = this;
+        
+        this.jq.on("slideouttabopen",function () {
+            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
+            if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+        }).on("slideouttabclose",function () {
+            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
+            if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+        });
     },
 
     /**

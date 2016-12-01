@@ -3921,7 +3921,7 @@
         </attribute>
     </tag>
     <tag>
-        <description><![CDATA[SlideOut adds a tab slideout from the screen edge.]]></description>
+        <description><![CDATA[SlideOut adds a tab slideout from the screen edge.  Client behavior events: open - fires when the slideout is opened (org.primefaces.extensions.event.OpenEvent), close - fires when the slideout is closed (org.primefaces.extensions.event.CloseEvent).]]></description>
         <tag-name>slideout</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.SlideOut</component-type>

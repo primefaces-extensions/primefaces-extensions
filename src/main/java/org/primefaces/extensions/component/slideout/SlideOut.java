@@ -17,13 +17,23 @@
  */
 package org.primefaces.extensions.component.slideout;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * <code>SlideOut</code> component.
@@ -46,6 +56,9 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SlideOutRenderer";
 
    public static final String HANDLE_CLASS = "ui-slideout-handle ui-slideouttab-handle-rounded";
+
+   private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
 
    protected enum PropertyKeys {
 
@@ -109,6 +122,74 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
    @Override
    public String getFamily() {
       return COMPONENT_FAMILY;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public Collection<String> getEventNames() {
+      return EVENT_NAMES;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processDecodes(final FacesContext fc) {
+      if (isSelfRequest(fc)) {
+         decode(fc);
+      } else {
+         super.processDecodes(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processValidators(final FacesContext fc) {
+      if (!isSelfRequest(fc)) {
+         super.processValidators(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processUpdates(final FacesContext fc) {
+      if (!isSelfRequest(fc)) {
+         super.processUpdates(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void queueEvent(final FacesEvent event) {
+      final FacesContext fc = FacesContext.getCurrentInstance();
+      final String eventName = fc.getExternalContext().getRequestParameterMap()
+               .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+      if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+         if (OpenEvent.NAME.equals(eventName)) {
+            final OpenEvent openEvent = new OpenEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+            openEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(openEvent);
+
+            return;
+         } else if (CloseEvent.NAME.equals(eventName)) {
+            final CloseEvent closeEvent = new CloseEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+            closeEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(closeEvent);
+
+            return;
+         }
+      }
+
+      super.queueEvent(event);
    }
 
    public String getWidgetVar() {
@@ -277,6 +358,12 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
 
    public void setOnclose(final String _onClose) {
       getStateHelper().put(PropertyKeys.onclose, _onClose);
+   }
+
+   private boolean isSelfRequest(final FacesContext context) {
+      return this.getClientId(context)
+               .equals(context.getExternalContext().getRequestParameterMap().get(
+                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
    }
 
 }
