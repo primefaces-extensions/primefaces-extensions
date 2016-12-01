@@ -18,35 +18,39 @@
 
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
+
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize} and
- * {@link org.primefaces.extensions.component.layout.Layout} components.
+ * Event which is triggered by the
+ * {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize}
+ * and {@link org.primefaces.extensions.component.layout.Layout} components.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.1
+ * @since 0.1
  */
 @SuppressWarnings("serial")
 public class ResizeEvent extends AbstractAjaxBehaviorEvent {
 
-	private double width;
-	private double height;
+   public static final String NAME = "resize";
 
-	public ResizeEvent(final UIComponent component, final Behavior behavior, final double width, final double height) {
-		super(component, behavior);
-		this.width = width;
-		this.height = height;
-	}
+   private final double width;
+   private final double height;
 
-	public final double getWidth() {
-		return width;
-	}
+   public ResizeEvent(final UIComponent component, final Behavior behavior, final double width, final double height) {
+      super(component, behavior);
+      this.width = width;
+      this.height = height;
+   }
 
-	public final double getHeight() {
-		return height;
-	}
+   public final double getWidth() {
+      return width;
+   }
+
+   public final double getHeight() {
+      return height;
+   }
 }
