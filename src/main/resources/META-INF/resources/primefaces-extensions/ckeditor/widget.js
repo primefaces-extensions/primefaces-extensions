@@ -200,7 +200,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 					}
 				});
 
-				editor.ui.addButton('Save', {label : editor.lang.save, command : 'save', title : '' });
+				editor.ui.addButton('Save', {label : editor.lang.save.toolbar, command : 'save', title : editor.lang.save.toolbar });
 			}
 		};
 	},
