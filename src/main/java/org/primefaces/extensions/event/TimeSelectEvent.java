@@ -18,11 +18,12 @@
 
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import java.util.Date;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
+
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
  * Event which is triggered by the
@@ -35,12 +36,15 @@ import javax.faces.component.behavior.Behavior;
 @SuppressWarnings("serial")
 public class TimeSelectEvent extends AbstractAjaxBehaviorEvent {
 
+   public static final String NAME = "timeSelect";
+
    private Date time;
 
    public TimeSelectEvent(final UIComponent component, final Behavior behavior, final Date time) {
       super(component, behavior);
       if (time != null) {
-         this.time = new Date(time.getTime()); // make copy to not have mutable ref
+         this.time = new Date(time.getTime()); // make copy to not have mutable
+                                               // ref
       }
    }
 

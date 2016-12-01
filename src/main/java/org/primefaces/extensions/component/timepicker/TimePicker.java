@@ -87,7 +87,7 @@ public class TimePicker extends HtmlInputText implements Widget {
    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(
             Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
                      "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
-                     "mouseup", "beforeShow", "timeSelect", "close"));
+                     "mouseup", BeforeShowEvent.NAME, TimeSelectEvent.NAME, CloseEvent.NAME));
 
    private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
 
@@ -381,18 +381,18 @@ public class TimePicker extends HtmlInputText implements Widget {
                .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
       if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-         if ("timeSelect".equals(eventName)) {
-            customEvents.put("timeSelect", (AjaxBehaviorEvent) event);
+         if (TimeSelectEvent.NAME.equals(eventName)) {
+            customEvents.put(TimeSelectEvent.NAME, (AjaxBehaviorEvent) event);
 
             return;
-         } else if ("beforeShow".equals(eventName)) {
+         } else if (BeforeShowEvent.NAME.equals(eventName)) {
             final BeforeShowEvent beforeShowEvent = new BeforeShowEvent(this,
                      ((AjaxBehaviorEvent) event).getBehavior());
             beforeShowEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(beforeShowEvent);
 
             return;
-         } else if ("close".equals(eventName)) {
+         } else if (CloseEvent.NAME.equals(eventName)) {
             final CloseEvent closeEvent = new CloseEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
             closeEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(closeEvent);
