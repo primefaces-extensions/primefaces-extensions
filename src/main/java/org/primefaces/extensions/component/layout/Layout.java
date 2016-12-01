@@ -93,7 +93,19 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
     */
    enum PropertyKeys {
 
-      widgetVar, fullPage, options, style, styleClass, state, stateCookie, togglerTip_open, togglerTip_closed, resizerTip, maskPanesEarly;
+      // @formatter:off
+      widgetVar,
+      fullPage,
+      options,
+      style,
+      styleClass,
+      state,
+      stateCookie,
+      togglerTip_open,
+      togglerTip_closed,
+      resizerTip,
+      maskPanesEarly;
+      // @formatter:on
 
       private String toString;
 
