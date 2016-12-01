@@ -1,5 +1,5 @@
 /*
-    tabSlideOUt v2.2
+    tabSlideOUt v2.3.1
 
     By William Paoli: http://wpaoli.building58.com
     Contributions by:
@@ -85,7 +85,7 @@
             {
                 case 'open':
                     if ( !isOpen() )
-                        this.children('.ui-slideouttab-handle').click(function(e){e.preventDefault();}).click();
+                        this.children('.ui-slideouttab-handle').click();
                     break;
                 case 'close':
                     if ( isOpen() )
@@ -273,10 +273,10 @@
                 
                 var param = [];
                 param[edge] = '-' + size;
-                panel.animate(param, settings.speed, function(){
+                panel.removeClass('ui-slideouttab-open').animate(param, settings.speed, function(){
                     panel.trigger('slideouttabclose');
                     settings.onClose();
-                }).removeClass('ui-slideouttab-open');
+                });
             };
 
             var slideOut = function() {
@@ -284,9 +284,9 @@
                 // show everything except the border along the edge we're on
                 param[edge] = '-'+borderWidth(panel,edge)+'px';
                 panel.animate(param,  settings.speed, function(){
-                    panel.trigger('slideouttabopen');
+                    panel.addClass('ui-slideouttab-open').trigger('slideouttabopen');
                     settings.onOpen();
-                }).addClass('ui-slideouttab-open');
+                });
             };
             
             // animate the tab in and out
@@ -393,11 +393,10 @@
             //choose which type of action to bind
             if (settings.action === 'click') {
                 clickAction();
-            } else if (settings.action === 'hover') {
+            }
+
+            if (settings.action === 'hover') {
                 hoverAction();
-            } else {
-                // default to click action
-                clickAction();
             }
 
             if (settings.onLoadSlideOut) {
