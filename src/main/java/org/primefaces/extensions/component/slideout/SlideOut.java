@@ -20,6 +20,7 @@ package org.primefaces.extensions.component.slideout;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -170,18 +171,19 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
    @Override
    public void queueEvent(final FacesEvent event) {
       final FacesContext fc = FacesContext.getCurrentInstance();
-      final String eventName = fc.getExternalContext().getRequestParameterMap()
-               .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+      final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+      final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
       if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
          if (OpenEvent.NAME.equals(eventName)) {
-            final OpenEvent openEvent = new OpenEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+            final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
             openEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(openEvent);
 
             return;
          } else if (CloseEvent.NAME.equals(eventName)) {
-            final CloseEvent closeEvent = new CloseEvent(this, ((AjaxBehaviorEvent) event).getBehavior());
+            final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
             closeEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(closeEvent);
 
