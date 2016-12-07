@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2016 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,68 +15,61 @@
  *
  * $Id$
  */
-
 package org.primefaces.extensions.component.waypoint;
 
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.expression.SearchExpressionHint;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
-import java.io.IOException;
+
+import org.primefaces.context.RequestContext;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionHint;
+import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
- * WaypointRenderer.
+ * Renderer for the {@link Waypoint} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
+ * @since 0.6
  */
 public class WaypointRenderer extends CoreRenderer {
 
-	@Override
-	public void decode(FacesContext context, UIComponent component) {
-		decodeBehaviors(context, component);
-	}
+   @Override
+   public void decode(final FacesContext context, final UIComponent component) {
+      decodeBehaviors(context, component);
+   }
 
-	@Override
-	public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
-		ResponseWriter writer = fc.getResponseWriter();
-		Waypoint waypoint = (Waypoint) component;
-		final String clientId = waypoint.getClientId(fc);
+   @Override
+   public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+      final Waypoint waypoint = (Waypoint) component;
+      encodeScript(fc, waypoint);
+   }
 
-		// try to get context (which scrollable element the waypoint belongs to and acts within)
-		String context = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getForContext());
+   private void encodeScript(final FacesContext fc, final Waypoint waypoint) throws IOException {
+      final String context = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getForContext());
+      final String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(),
+               SearchExpressionHint.PARENT_FALLBACK);
 
-		String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(), SearchExpressionHint.PARENT_FALLBACK);
+      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+      wb.initWithDomReady("ExtWaypoint", waypoint.resolveWidgetVar(), waypoint.getClientId(fc));
+      wb.attr("target", target);
+      wb.attr("continuous", waypoint.isContinuous());
+      wb.attr("enabled", waypoint.isEnabled());
+      wb.attr("horizontal", waypoint.isHorizontal());
+      wb.attr("triggerOnce", waypoint.isTriggerOnce());
 
-		final String widgetVar = waypoint.resolveWidgetVar();
+      if (context != null) {
+         wb.attr("context", context);
+      }
 
-		startScript(writer, clientId);
-		writer.write("$(function(){");
+      if (waypoint.getOffset() != null) {
+         wb.nativeAttr("offset", waypoint.getOffset());
+      }
 
-		writer.write("PrimeFaces.cw('ExtWaypoint', '" + widgetVar + "',{");
-		writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
-		writer.write(",target:'" + target + "'");
+      encodeClientBehaviors(fc, waypoint);
 
-		if (context != null) {
-			writer.write(",context:'" + context + "'");
-		}
-
-		if (waypoint.getOffset() != null) {
-			writer.write(",offset:" + waypoint.getOffset());
-		}
-
-		writer.write(",continuous:" + waypoint.isContinuous());
-		writer.write(",enabled:" + waypoint.isEnabled());
-        writer.write(",horizontal:" + waypoint.isHorizontal());
-		writer.write(",triggerOnce:" + waypoint.isTriggerOnce());
-
-		encodeClientBehaviors(fc, waypoint);
-
-		writer.write("})});");
-		endScript(writer);
-	}
+      wb.finish();
+   }
 }

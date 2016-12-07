@@ -18,49 +18,45 @@
 
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
+
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.waypoint.Waypoint} component.
+ * Event which is triggered by the
+ * {@link org.primefaces.extensions.component.waypoint.Waypoint} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by Melloware
  * @version $Revision$
- * @since   0.6
+ * @since 0.6
  */
 @SuppressWarnings("serial")
 public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 
-	private Direction direction;
+   public static final String NAME = "reached";
 
-	private String waypointId; // client Id of the current waypoint
+   private final Direction direction;
 
-	public WaypointEvent(UIComponent component, Behavior behavior, Direction direction, String waypointId) {
-		super(component, behavior);
-		this.direction = direction;
-		this.waypointId = waypointId;
-	}
+   private final String waypointId; // client Id of the current waypoint
 
-	public Direction getDirection() {
-		return direction;
-	}
+   public static enum Direction {
+      DOWN, UP, RIGHT, LEFT
+   }
 
-	public String getWaypointId() {
-		return waypointId;
-	}
+   public WaypointEvent(final UIComponent component, final Behavior behavior, final Direction direction,
+            final String waypointId) {
+      super(component, behavior);
+      this.direction = direction;
+      this.waypointId = waypointId;
+   }
 
-	/**
-	 * Direction
-	 *
-	 * @author  Oleg Varaksin / last modified by $Author$
-	 * @version $Revision$
-	 */
-	public static enum Direction {
+   public Direction getDirection() {
+      return direction;
+   }
 
-		DOWN,
-		UP,
-        RIGHT,
-        LEFT
-	}
+   public String getWaypointId() {
+      return waypointId;
+   }
+
 }
