@@ -137,6 +137,14 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
     * {@inheritDoc}
     */
    @Override
+   public String getDefaultEventName() {
+      return OpenEvent.NAME;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
    public void processDecodes(final FacesContext fc) {
       if (isSelfRequest(fc)) {
          decode(fc);
@@ -171,11 +179,12 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
    @Override
    public void queueEvent(final FacesEvent event) {
       final FacesContext fc = FacesContext.getCurrentInstance();
-      final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-      final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
       if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+         final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
          final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+
          if (OpenEvent.NAME.equals(eventName)) {
             final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
             openEvent.setPhaseId(event.getPhaseId());
