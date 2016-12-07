@@ -31,7 +31,7 @@ import org.primefaces.util.WidgetBuilder;
 /**
  * Renderer for the {@link Calculator} component.
  *
- * @author Melloware info@melloware.com
+ * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
 public class CalculatorRenderer extends CoreRenderer {

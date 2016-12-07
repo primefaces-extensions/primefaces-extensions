@@ -17,20 +17,32 @@
  */
 package org.primefaces.extensions.component.calculator;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.ButtonEvent;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Calculator</code> component.
  *
- * @author Melloware info@melloware.com
+ * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
 @ResourceDependencies({
@@ -46,6 +58,9 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";
    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CalculatorRenderer";
+
+   private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ButtonEvent.NAME));
 
    private Locale appropriateLocale;
 
@@ -101,6 +116,84 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
    @Override
    public String getFamily() {
       return COMPONENT_FAMILY;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public Collection<String> getEventNames() {
+      return EVENT_NAMES;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processDecodes(final FacesContext fc) {
+      if (isSelfRequest(fc)) {
+         decode(fc);
+      } else {
+         super.processDecodes(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processValidators(final FacesContext fc) {
+      if (!isSelfRequest(fc)) {
+         super.processValidators(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void processUpdates(final FacesContext fc) {
+      if (!isSelfRequest(fc)) {
+         super.processUpdates(fc);
+      }
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public void queueEvent(final FacesEvent event) {
+      final FacesContext fc = FacesContext.getCurrentInstance();
+      final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+      final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+      final String clientId = this.getClientId(fc);
+
+      if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+         if (OpenEvent.NAME.equals(eventName)) {
+            final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
+            openEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(openEvent);
+
+            return;
+         } else if (CloseEvent.NAME.equals(eventName)) {
+            final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
+            closeEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(closeEvent);
+
+            return;
+         } else if (ButtonEvent.NAME.equals(eventName)) {
+            final String name = params.get(clientId + "_button");
+            final BigDecimal value = new BigDecimal(params.get(clientId + "_value"));
+            final ButtonEvent buttonEvent = new ButtonEvent(this, behaviorEvent.getBehavior(), name, value);
+            buttonEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(buttonEvent);
+
+            return;
+         }
+      }
+
+      super.queueEvent(event);
    }
 
    public Locale calculateLocale() {
@@ -196,6 +289,12 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
 
    public void setOnbutton(final String _onButton) {
       getStateHelper().put(PropertyKeys.onbutton, _onButton);
+   }
+
+   private boolean isSelfRequest(final FacesContext context) {
+      return this.getClientId(context)
+               .equals(context.getExternalContext().getRequestParameterMap().get(
+                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
    }
 
 }

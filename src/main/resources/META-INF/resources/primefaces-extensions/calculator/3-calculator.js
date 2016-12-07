@@ -92,7 +92,47 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 		
 		// create the calculator
 		input.calculator('destroy').calculator(opts);
+		
+		// bind "open", "close" events
+        this._bindEvents();
 	},
+	
+	/**
+     * Binds all events to p:ajax events
+     * 
+     * @private
+     */
+    _bindEvents : function() {
+        var $this = this;
+        
+        this.input.on("calculatoropen",function () {
+            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
+            if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+        }).on("calculatorclose",function () {
+            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
+            if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+        }).on("calculatorbutton",function (event, buttonName, calculatorValue) {
+            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['button'] : null;
+            if (behavior) {
+                var options = {
+                        params : [ {
+                            name : $this.id + '_button',
+                            value : buttonName
+                        }, {
+                            name : $this.id + '_value',
+                            value : calculatorValue
+                        } ]
+                    };
+                behavior.call($this, options);
+            }
+        });
+    },
 	
 	show : function() {
 		if (this.input) {

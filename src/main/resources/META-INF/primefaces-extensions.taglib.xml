@@ -115,7 +115,7 @@
 
     <!-- Components -->
     <tag>
-        <description><![CDATA[Calculator adds a popup calculator to a given input field.]]></description>
+        <description><![CDATA[Calculator adds a popup calculator to a given input field. Client behavior events: open - fires when the calculator is opened (org.primefaces.extensions.event.OpenEvent), close - fires when the calculator is closed (org.primefaces.extensions.event.CloseEvent), button - fires when each calculator button is pressed (org.primefaces.extensions.event.ButtonEvent).]]></description>
         <tag-name>calculator</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.Calculator</component-type>

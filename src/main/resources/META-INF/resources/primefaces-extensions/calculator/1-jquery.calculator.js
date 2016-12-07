@@ -518,6 +518,7 @@
 				inst.options.onOpen.apply((inst._input ? inst._input[0] : null),  // trigger custom callback
 					[(inst._inline ? inst.curValue : inst._input.val()), inst]);
 			}
+			$(input).trigger('calculatoropen');
 			plugin._reset(inst, inst._input.val());
 			plugin._updateCalculator(inst);
 			// and adjust position before showing
@@ -715,6 +716,7 @@
 				this._lastInput = null;
 			}
 			this._curInst = null;
+			$(inst._input).trigger('calculatorclose');
 		},
 
 		/** Close calculator if clicked elsewhere.
@@ -942,6 +944,7 @@
 				inst.options.onButton.apply((inst._input ? inst._input[0] : null),
 					[label, inst.dispValue, inst]);  // trigger custom callback
 			}
+			$(inst._input).trigger('calculatorbutton', [label, inst.dispValue]);
 		},
 
 		/** Handle a button press.
