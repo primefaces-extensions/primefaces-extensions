@@ -112,7 +112,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 		if (this.cfg.forTarget) {
 			this.cfg.forTarget.qtip('reposition');
 		}
-	},
+	}
 
 });
 

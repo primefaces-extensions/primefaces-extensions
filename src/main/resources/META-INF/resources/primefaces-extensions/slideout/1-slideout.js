@@ -28,9 +28,8 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
      * @private
      */
     _applySlideOut : function(cfg) {
-        // make a copy of the cfg
-        var opts={};
-        Object.keys(cfg).forEach((key) => opts[key] = cfg[key]);
+        // make a copy of the configuration
+        var opts = $.extend(true, {}, cfg);
 
         // create the slideout
         this.jq.tabSlideOut(opts);
@@ -95,6 +94,6 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
      */
     isOpen : function() {
         return this.jq.tabSlideOut('isOpen');
-    },
+    }
 
 });

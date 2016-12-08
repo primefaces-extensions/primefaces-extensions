@@ -59,9 +59,8 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 			}
 		}
 		
-		// make a copy of the cfg
-		var opts={};
-		Object.keys(cfg).forEach((key) => opts[key] = cfg[key]);
+		// make a copy of the configuration
+		var opts = $.extend(true, {}, cfg);
 		
 		// set language
 		if (opts.locale) {
