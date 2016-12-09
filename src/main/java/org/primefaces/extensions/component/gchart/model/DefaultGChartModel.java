@@ -14,7 +14,7 @@ class DefaultGChartModel implements GChartModel{
 	private static final long serialVersionUID = -4757917806522708660L;
 	
 	public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
-			Map<String, Object> options, List<String> columns) {
+			Map<String, Object> options, List<Object> columns) {
 		super();
 		this.rows = rows;
 		this.gChartType = gChartType;
@@ -25,7 +25,7 @@ class DefaultGChartModel implements GChartModel{
 	private List<GChartModelRow> rows;
 	private GChartType gChartType;
 	private Map<String,Object> options;
-	private List<String> columns;
+	private List<Object> columns;
 
 	public GChartType getgChartType() {
 		return gChartType;
@@ -35,7 +35,7 @@ class DefaultGChartModel implements GChartModel{
 		return options;
 	}
 
-	public Collection<String> getColumns() {
+	public Collection<Object> getColumns() {
 		return columns;
 	}
 
@@ -61,7 +61,7 @@ class DefaultGChartModel implements GChartModel{
     protected JsonElement extractData() {
         Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
 
-        dataTable.add((Collection<Object>)(Collection<?>)this.getColumns());
+        dataTable.add(this.getColumns());
 
         for (GChartModelRow row : this.getRows()) {
             Collection<Object> dataRow = new ArrayList<Object>(0);
