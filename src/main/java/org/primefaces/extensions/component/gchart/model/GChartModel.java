@@ -7,7 +7,7 @@ import java.util.Map;
 public interface GChartModel extends Serializable {
    Collection<GChartModelRow> getRows();
 
-   Collection<String> getColumns();
+   Collection<Object> getColumns();
 
    Map<String, Object> getOptions();
 

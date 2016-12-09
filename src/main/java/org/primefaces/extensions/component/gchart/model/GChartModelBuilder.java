@@ -14,7 +14,7 @@ public class GChartModelBuilder {
 	private List<GChartModelRow> rows = new ArrayList<GChartModelRow>(0);
 	private GChartType gChartType;
 	private Map<String,Object> options = new HashMap<String, Object>(0);
-	private List<String> columns = new ArrayList<String>(0);
+	private List<Object> columns = new ArrayList<Object>(0);
 	
 	public GChartModelBuilder setChartType(GChartType chartType){
 		if(gChartType != null){
@@ -38,12 +38,12 @@ public class GChartModelBuilder {
         return this;
     }
 
-	public GChartModelBuilder addColumns(String... columns){
+	public GChartModelBuilder addColumns(Object... columns){
 		this.columns.addAll(Arrays.asList(columns));
 		return this;
 	}
 	
-	public GChartModelBuilder addColumns(Collection<String> columns){
+	public GChartModelBuilder addColumns(Collection<Object> columns){
 		this.columns.addAll(columns);
 		return this;
 	}
