@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -137,7 +136,7 @@ public class SlideOutRenderer extends CoreRenderer {
     * Create the Javascript.
     */
    private void encodeScript(final FacesContext context, final SlideOut slideOut) throws IOException {
-      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+      final WidgetBuilder wb = getWidgetBuilder(context);
       final String clientId = slideOut.getClientId(context);
       final String handleId = getHandleId(context, slideOut);
       wb.initWithDomReady("ExtSlideOut", slideOut.resolveWidgetVar(), clientId);

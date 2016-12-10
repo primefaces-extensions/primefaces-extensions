@@ -23,7 +23,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -53,7 +52,7 @@ public class CalculatorRenderer extends CoreRenderer {
          target = calculator.getParent().getClientId(context);
       }
 
-      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+      final WidgetBuilder wb = getWidgetBuilder(context);
       wb.initWithDomReady("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
       wb.attr("target", target);
       wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
