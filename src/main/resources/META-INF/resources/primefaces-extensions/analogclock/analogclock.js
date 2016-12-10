@@ -124,7 +124,7 @@ PrimeFaces.widget.ExtAnalogClock = PrimeFaces.widget.BaseWidget.extend({
 
             this.pin.attr("fill", this.themeObject.pin);
 
-            this.startTime.add('s', 1);
+            this.startTime.add(1, 's');
         }
 
     });
