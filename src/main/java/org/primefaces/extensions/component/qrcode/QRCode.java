@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2016 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,33 +25,26 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
 
 /**
- * <code>Tooltip</code> component.
+ * <code>QRCode</code> component.
  *
- * @author Mauricio Fenoglio / last modified by $Author$
- * @version $Revision$
+ * @author Mauricio Fenoglio / last modified by Melloware
  * @since 1.2.0
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "qrcode/qrcode.js")
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+         @ResourceDependency(library = "primefaces", name = "core.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "qrcode/qrcode.js")
 })
 public class QRCode extends UIOutput implements Widget {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.QRCode";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.QRCodeRenderer";
+   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.QRCode";
+   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.QRCodeRenderer";
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    protected enum PropertyKeys {
-
+   protected enum PropertyKeys {
+      //@formatter:off
         widgetVar,
         renderMethod,
         renderMode,
@@ -72,191 +65,195 @@ public class QRCode extends UIOutput implements Widget {
         label,
         fontName,
         fontColor;
-        private String toString;
+       //@formatter:on
 
-        PropertyKeys(String toString) {
-            this.toString = toString;
-        }
+      private String toString;
 
-        PropertyKeys() {
-        }
+      PropertyKeys(final String toString) {
+         this.toString = toString;
+      }
 
-        @Override
-        public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
-        }
-    }
+      PropertyKeys() {
+      }
 
-    public QRCode() {
-        setRendererType(DEFAULT_RENDERER);
-    }
-    
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
+      @Override
+      public String toString() {
+         return toString != null ? toString : super.toString();
+      }
+   }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+   public QRCode() {
+      setRendererType(DEFAULT_RENDERER);
+   }
 
-    public void setWidgetVar(final String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+   @Override
+   public String getFamily() {
+      return COMPONENT_FAMILY;
+   }
 
-    public String getRenderMethod() {
-        return (String) getStateHelper().eval(PropertyKeys.renderMethod, null);
-    }
+   @Override
+   public String resolveWidgetVar() {
+      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+   }
 
-    public void setRenderMethod(final String renderMethod) {
-        getStateHelper().put(PropertyKeys.renderMethod, renderMethod);
-    }
+   public String getWidgetVar() {
+      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+   }
 
-    public int getMinVersion() {
-        return (Integer) getStateHelper().eval(PropertyKeys.minVersion, 1);
-    }
+   public void setWidgetVar(final String widgetVar) {
+      getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+   }
 
-    public void setMinVersion(final int minVersion) {
-        getStateHelper().put(PropertyKeys.minVersion, minVersion);
-    }
+   public String getRenderMethod() {
+      return (String) getStateHelper().eval(PropertyKeys.renderMethod, null);
+   }
 
-    public int getMaxVersion() {
-        return (Integer) getStateHelper().eval(PropertyKeys.maxVersion, 40);
-    }
+   public void setRenderMethod(final String renderMethod) {
+      getStateHelper().put(PropertyKeys.renderMethod, renderMethod);
+   }
 
-    public void setMaxVersion(final int maxVersion) {
-        getStateHelper().put(PropertyKeys.maxVersion, maxVersion);
-    }
+   public int getMinVersion() {
+      return (Integer) getStateHelper().eval(PropertyKeys.minVersion, 1);
+   }
 
-    public int getLeftOffset() {
-        return (Integer) getStateHelper().eval(PropertyKeys.leftOffset, 0);
-    }
+   public void setMinVersion(final int minVersion) {
+      getStateHelper().put(PropertyKeys.minVersion, minVersion);
+   }
 
-    public void setLeftOffset(final int leftOffset) {
-        getStateHelper().put(PropertyKeys.leftOffset, leftOffset);
-    }
+   public int getMaxVersion() {
+      return (Integer) getStateHelper().eval(PropertyKeys.maxVersion, 40);
+   }
 
-    public int getTopOffset() {
-        return (Integer) getStateHelper().eval(PropertyKeys.topOffset, 0);
-    }
+   public void setMaxVersion(final int maxVersion) {
+      getStateHelper().put(PropertyKeys.maxVersion, maxVersion);
+   }
 
-    public void setTopOffset(final int topOffset) {
-        getStateHelper().put(PropertyKeys.topOffset, topOffset);
-    }
+   public int getLeftOffset() {
+      return (Integer) getStateHelper().eval(PropertyKeys.leftOffset, 0);
+   }
 
-    public int getSize() {
-        return (Integer) getStateHelper().eval(PropertyKeys.size, 200);
-    }
+   public void setLeftOffset(final int leftOffset) {
+      getStateHelper().put(PropertyKeys.leftOffset, leftOffset);
+   }
 
-    public void setSize(final int size) {
-        getStateHelper().put(PropertyKeys.size, size);
-    }
+   public int getTopOffset() {
+      return (Integer) getStateHelper().eval(PropertyKeys.topOffset, 0);
+   }
 
-    public String getFillColor() {
-        return (String) getStateHelper().eval(PropertyKeys.fillColor, null);
-    }
+   public void setTopOffset(final int topOffset) {
+      getStateHelper().put(PropertyKeys.topOffset, topOffset);
+   }
 
-    public void setFillColor(final String fillColor) {
-        getStateHelper().put(PropertyKeys.fillColor, fillColor);
-    }
+   public int getSize() {
+      return (Integer) getStateHelper().eval(PropertyKeys.size, 200);
+   }
 
-    public String getBackground() {
-        return (String) getStateHelper().eval(PropertyKeys.background, null);
-    }
+   public void setSize(final int size) {
+      getStateHelper().put(PropertyKeys.size, size);
+   }
 
-    public void setBackground(final String background) {
-        getStateHelper().put(PropertyKeys.background, background);
-    }
+   public String getFillColor() {
+      return (String) getStateHelper().eval(PropertyKeys.fillColor, null);
+   }
 
-    public String getText() {
-        return (String) getStateHelper().eval(PropertyKeys.text, null);
-    }
+   public void setFillColor(final String fillColor) {
+      getStateHelper().put(PropertyKeys.fillColor, fillColor);
+   }
 
-    public void setText(String text) {
-        getStateHelper().put(PropertyKeys.text, text);
-    }
+   public String getBackground() {
+      return (String) getStateHelper().eval(PropertyKeys.background, null);
+   }
 
-    public String getLabel() {
-        return (String) getStateHelper().eval(PropertyKeys.label, null);
-    }
+   public void setBackground(final String background) {
+      getStateHelper().put(PropertyKeys.background, background);
+   }
 
-    public void setLabel(String text) {
-        getStateHelper().put(PropertyKeys.label, text);
-    }
+   public String getText() {
+      return (String) getStateHelper().eval(PropertyKeys.text, null);
+   }
 
-    public Double getRadius() {
-        return (Double) getStateHelper().eval(PropertyKeys.radius, 0d);
-    }
+   public void setText(final String text) {
+      getStateHelper().put(PropertyKeys.text, text);
+   }
 
-    public void setRadius(Double radius) {
-        getStateHelper().put(PropertyKeys.radius, radius);
-    }
+   public String getLabel() {
+      return (String) getStateHelper().eval(PropertyKeys.label, null);
+   }
 
-    public Integer getQuiet() {
-        return (Integer) getStateHelper().eval(PropertyKeys.quiet, 0);
-    }
+   public void setLabel(final String text) {
+      getStateHelper().put(PropertyKeys.label, text);
+   }
 
-    public void setQuiet(final Integer quiet) {
-        getStateHelper().put(PropertyKeys.quiet, quiet);
-    }
-    
-    public String getEcLevel() {
-        return (String) getStateHelper().eval(PropertyKeys.ecLevel, "L");
-    }
+   public Double getRadius() {
+      return (Double) getStateHelper().eval(PropertyKeys.radius, 0d);
+   }
 
-    public void setEcLevel(final String ecLevel) {
-        getStateHelper().put(PropertyKeys.ecLevel, ecLevel);
-    }
+   public void setRadius(final Double radius) {
+      getStateHelper().put(PropertyKeys.radius, radius);
+   }
 
-    public Integer getRenderMode() {
-        return (Integer) getStateHelper().eval(PropertyKeys.renderMode, 0);
-    }
+   public Integer getQuiet() {
+      return (Integer) getStateHelper().eval(PropertyKeys.quiet, 0);
+   }
 
-    public void setRenderMode(Integer renderMode) {
-        getStateHelper().put(PropertyKeys.renderMode, renderMode);
-    }
-    
-    public String getFontColor() {
-        return (String) getStateHelper().eval(PropertyKeys.fontColor, null);
-    }
+   public void setQuiet(final Integer quiet) {
+      getStateHelper().put(PropertyKeys.quiet, quiet);
+   }
 
-    public void setFontColor(String fontColor) {
-        getStateHelper().put(PropertyKeys.fontColor, fontColor);
-    }
-    
-    public String getFontName() {
-        return (String) getStateHelper().eval(PropertyKeys.fontName, null);
-    }
+   public String getEcLevel() {
+      return (String) getStateHelper().eval(PropertyKeys.ecLevel, "L");
+   }
 
-    public void setFontName(String fontColor) {
-        getStateHelper().put(PropertyKeys.fontName, fontColor);
-    }
-    
-    public Double getMPosX() {
-        return (Double) getStateHelper().eval(PropertyKeys.mPosX, 0.5d);
-    }
+   public void setEcLevel(final String ecLevel) {
+      getStateHelper().put(PropertyKeys.ecLevel, ecLevel);
+   }
 
-    public void setMPosX(Double mPosX) {
-        getStateHelper().put(PropertyKeys.mPosX, mPosX);
-    }
-    
-    public Double getMPosY() {
-        return (Double) getStateHelper().eval(PropertyKeys.mPosY, 0.5d);
-    }
+   public Integer getRenderMode() {
+      return (Integer) getStateHelper().eval(PropertyKeys.renderMode, 0);
+   }
 
-    public void setMPosY(Double mPosY) {
-        getStateHelper().put(PropertyKeys.mPosY, mPosY);
-    }
-    
-    public Double getMSize() {
-        return (Double) getStateHelper().eval(PropertyKeys.mSize, 0.1d);
-    }
+   public void setRenderMode(final Integer renderMode) {
+      getStateHelper().put(PropertyKeys.renderMode, renderMode);
+   }
 
-    public void setMSize(Double mSize) {
-        getStateHelper().put(PropertyKeys.mSize, mSize);
-    }    
+   public String getFontColor() {
+      return (String) getStateHelper().eval(PropertyKeys.fontColor, null);
+   }
 
-	public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+   public void setFontColor(final String fontColor) {
+      getStateHelper().put(PropertyKeys.fontColor, fontColor);
+   }
+
+   public String getFontName() {
+      return (String) getStateHelper().eval(PropertyKeys.fontName, null);
+   }
+
+   public void setFontName(final String fontColor) {
+      getStateHelper().put(PropertyKeys.fontName, fontColor);
+   }
+
+   public Double getMPosX() {
+      return (Double) getStateHelper().eval(PropertyKeys.mPosX, 0.5d);
+   }
+
+   public void setMPosX(final Double mPosX) {
+      getStateHelper().put(PropertyKeys.mPosX, mPosX);
+   }
+
+   public Double getMPosY() {
+      return (Double) getStateHelper().eval(PropertyKeys.mPosY, 0.5d);
+   }
+
+   public void setMPosY(final Double mPosY) {
+      getStateHelper().put(PropertyKeys.mPosY, mPosY);
+   }
+
+   public Double getMSize() {
+      return (Double) getStateHelper().eval(PropertyKeys.mSize, 0.1d);
+   }
+
+   public void setMSize(final Double mSize) {
+      getStateHelper().put(PropertyKeys.mSize, mSize);
+   }
+
 }

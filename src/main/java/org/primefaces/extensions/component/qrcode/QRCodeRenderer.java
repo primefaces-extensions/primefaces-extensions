@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2016 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,74 +17,71 @@
  */
 package org.primefaces.extensions.component.qrcode;
 
-import org.primefaces.extensions.component.tooltip.*;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.context.RequestContext;
 
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 /**
- * Renderer for the {@link Tooltip} component.
+ * Renderer for the {@link QRCode} component.
  *
- * @author Mauricio Fenoglio / last modified by $Author$
- * @version $Revision$
+ * @author Mauricio Fenoglio / last modified by Melloware
  * @since 1.2.0
  */
 public class QRCodeRenderer extends CoreRenderer {
 
-    @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        QRCode qrCode = (QRCode) component;
-        encodeMarkup(context, qrCode);
-        encodeScript(context, qrCode);
-    }
+   @Override
+   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+      final QRCode qrCode = (QRCode) component;
+      encodeMarkup(context, qrCode);
+      encodeScript(context, qrCode);
+   }
 
-    protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
-        wb.initWithDomReady("ExtQRCode", qrCode.resolveWidgetVar(), qrCode.getClientId());
-        wb.attr("render", qrCode.getRenderMethod())
-                .attr("mode", qrCode.getRenderMode())
-                .attr("minVersion", qrCode.getMinVersion())
-                .attr("maxVersion", qrCode.getMaxVersion())
-                .attr("left", qrCode.getLeftOffset())
-                .attr("top", qrCode.getTopOffset())
-                .attr("size", qrCode.getSize())
-                .attr("fill", qrCode.getFillColor())
-                .attr("ecLevel", qrCode.getEcLevel())
-                .attr("background", qrCode.getBackground())
-                .attr("text", qrCode.getText())
-                .attr("radius", qrCode.getRadius())
-                .attr("quiet", qrCode.getQuiet())
-                .attr("mSize", qrCode.getMSize())
-                .attr("mPosX", qrCode.getMPosX())
-                .attr("mPosY", qrCode.getMPosY())
-                .attr("label", qrCode.getLabel())
-                .attr("fontname", qrCode.getFontName())
-                .attr("fontcolor", qrCode.getFontColor());
+   protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
+      final WidgetBuilder wb = getWidgetBuilder(context);
+      wb.initWithDomReady("ExtQRCode", qrCode.resolveWidgetVar(), qrCode.getClientId());
+      wb.attr("render", qrCode.getRenderMethod())
+               .attr("mode", qrCode.getRenderMode())
+               .attr("minVersion", qrCode.getMinVersion())
+               .attr("maxVersion", qrCode.getMaxVersion())
+               .attr("left", qrCode.getLeftOffset())
+               .attr("top", qrCode.getTopOffset())
+               .attr("size", qrCode.getSize())
+               .attr("fill", qrCode.getFillColor())
+               .attr("ecLevel", qrCode.getEcLevel())
+               .attr("background", qrCode.getBackground())
+               .attr("text", qrCode.getText())
+               .attr("radius", qrCode.getRadius())
+               .attr("quiet", qrCode.getQuiet())
+               .attr("mSize", qrCode.getMSize())
+               .attr("mPosX", qrCode.getMPosX())
+               .attr("mPosY", qrCode.getMPosY())
+               .attr("label", qrCode.getLabel())
+               .attr("fontname", qrCode.getFontName())
+               .attr("fontcolor", qrCode.getFontColor());
 
-        wb.finish();
-    }
+      wb.finish();
+   }
 
-    private void encodeMarkup(FacesContext context, QRCode qrCode) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = qrCode.getClientId(context);
-        writer.startElement("span", null);
-        writer.writeAttribute("id", clientId, null);
-        writer.endElement("span");
-    }
+   private void encodeMarkup(final FacesContext context, final QRCode qrCode) throws IOException {
+      final ResponseWriter writer = context.getResponseWriter();
+      final String clientId = qrCode.getClientId(context);
+      writer.startElement("span", null);
+      writer.writeAttribute("id", clientId, null);
+      writer.endElement("span");
+   }
 
-    @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
-        //do nothing
-    }
+   @Override
+   public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+      // do nothing
+   }
 
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
+   @Override
+   public boolean getRendersChildren() {
+      return true;
+   }
 }
