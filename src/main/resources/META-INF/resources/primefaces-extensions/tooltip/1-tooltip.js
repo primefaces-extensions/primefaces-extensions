@@ -27,7 +27,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 			this.cfg.position.container = $(document.body);
 
 			// now select all tooltips on page or just the for="" selector
-			var selector = '*[title]';
+			var selector = '[title][title!=""]';
 			if (this.targetSelectors) {
 				selector = this.targetSelectors.join(", ");
 			}
