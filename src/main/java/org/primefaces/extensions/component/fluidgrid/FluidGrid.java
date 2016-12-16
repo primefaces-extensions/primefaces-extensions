@@ -18,12 +18,11 @@
 
 package org.primefaces.extensions.component.fluidgrid;
 
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.component.base.AbstractDynamicData;
-import org.primefaces.extensions.event.LayoutCompleteEvent;
-import org.primefaces.extensions.model.common.KeyData;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.util.Constants;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
@@ -37,441 +36,449 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.event.LayoutCompleteEvent;
+import org.primefaces.extensions.model.common.KeyData;
+import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * <code>FluidGrid</code> component.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
  * @since 1.1.0
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"), 
-        @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"), 
-        @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+         @ResourceDependency(library = "primefaces", name = "core.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+         @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"),
+         @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
 })
-public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder
-{
+public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";
-    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FluidGridRenderer";
+   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";
+   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+   public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FluidGridRenderer";
 
-    private Map<String, UIFluidGridItem> items;
+   private Map<String, UIFluidGridItem> items;
 
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList("layoutComplete"));
+   private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList("layoutComplete"));
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Oleg Varaksin / last modified by $Author$
-     * @version $Revision$
-     */
-    protected enum PropertyKeys
-    {
+   /**
+    * Properties that are tracked by state saving.
+    *
+    * @author Oleg Varaksin / last modified by Melloware
+    */
+   protected enum PropertyKeys {
 
-        widgetVar,
-        style,
-        styleClass,
-        hGutter,
-        vGutter,
-        fitWidth,
-        originLeft,
-        originTop,
-        resizeBound,
-        stamp,
-        transitionDuration,
-        hasImages;
+      // @formatter:off
+      widgetVar,
+      style,
+      styleClass,
+      hGutter,
+      vGutter,
+      fitWidth,
+      originLeft,
+      originTop,
+      resizeBound,
+      stamp,
+      transitionDuration,
+      hasImages;
+      // @formatter:on
 
-        private String toString;
+      private String toString;
 
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
+      PropertyKeys(final String toString) {
+         this.toString = toString;
+      }
 
-        PropertyKeys() {
-        }
+      PropertyKeys() {
+      }
 
-        @Override
-        public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
-        }
-    }
+      @Override
+      public String toString() {
+         return toString != null ? toString : super.toString();
+      }
+   }
 
-    public FluidGrid() {
-        setRendererType(DEFAULT_RENDERER);
-    }
+   public FluidGrid() {
+      setRendererType(DEFAULT_RENDERER);
+   }
 
-    @Override
-    public String getFamily() {
-        return COMPONENT_FAMILY;
-    }
+   @Override
+   public String getFamily() {
+      return COMPONENT_FAMILY;
+   }
 
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
+   public String getWidgetVar() {
+      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+   }
 
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-    }
+   public void setWidgetVar(final String widgetVar) {
+      getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+   }
 
-    public String getStyle() {
-        return (String) getStateHelper().eval(PropertyKeys.style, null);
-    }
+   public String getStyle() {
+      return (String) getStateHelper().eval(PropertyKeys.style, null);
+   }
 
-    public void setStyle(String style) {
-        getStateHelper().put(PropertyKeys.style, style);
-    }
+   public void setStyle(final String style) {
+      getStateHelper().put(PropertyKeys.style, style);
+   }
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-    }
+   public String getStyleClass() {
+      return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+   }
 
-    public void setStyleClass(String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
+   public void setStyleClass(final String styleClass) {
+      getStateHelper().put(PropertyKeys.styleClass, styleClass);
+   }
 
-    public int gethGutter() {
-        return (Integer) getStateHelper().eval(PropertyKeys.hGutter, 0);
-    }
+   public int gethGutter() {
+      return (Integer) getStateHelper().eval(PropertyKeys.hGutter, 0);
+   }
 
-    public void sethGutter(int hGutter) {
-        getStateHelper().put(PropertyKeys.hGutter, hGutter);
-    }
+   public void sethGutter(final int hGutter) {
+      getStateHelper().put(PropertyKeys.hGutter, hGutter);
+   }
 
-    public int getvGutter() {
-        return (Integer) getStateHelper().eval(PropertyKeys.vGutter, 0);
-    }
+   public int getvGutter() {
+      return (Integer) getStateHelper().eval(PropertyKeys.vGutter, 0);
+   }
 
-    public void setvGutter(int vGutter) {
-        getStateHelper().put(PropertyKeys.vGutter, vGutter);
-    }
+   public void setvGutter(final int vGutter) {
+      getStateHelper().put(PropertyKeys.vGutter, vGutter);
+   }
 
-    public boolean isFitWidth() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fitWidth, false);
-    }
+   public boolean isFitWidth() {
+      return (Boolean) getStateHelper().eval(PropertyKeys.fitWidth, false);
+   }
 
-    public void setFitWidth(boolean fitWidth) {
-        getStateHelper().put(PropertyKeys.fitWidth, fitWidth);
-    }
+   public void setFitWidth(final boolean fitWidth) {
+      getStateHelper().put(PropertyKeys.fitWidth, fitWidth);
+   }
 
-    public boolean isOriginLeft() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.originLeft, true);
-    }
+   public boolean isOriginLeft() {
+      return (Boolean) getStateHelper().eval(PropertyKeys.originLeft, true);
+   }
 
-    public void setOriginLeft(boolean originLeft) {
-        getStateHelper().put(PropertyKeys.originLeft, originLeft);
-    }
+   public void setOriginLeft(final boolean originLeft) {
+      getStateHelper().put(PropertyKeys.originLeft, originLeft);
+   }
 
-    public boolean isOriginTop() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.originTop, true);
-    }
+   public boolean isOriginTop() {
+      return (Boolean) getStateHelper().eval(PropertyKeys.originTop, true);
+   }
 
-    public void setOriginTop(boolean originTop) {
-        getStateHelper().put(PropertyKeys.originTop, originTop);
-    }
+   public void setOriginTop(final boolean originTop) {
+      getStateHelper().put(PropertyKeys.originTop, originTop);
+   }
 
-    public boolean isResizeBound() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.resizeBound, true);
-    }
+   public boolean isResizeBound() {
+      return (Boolean) getStateHelper().eval(PropertyKeys.resizeBound, true);
+   }
 
-    public void setResizeBound(boolean resizeBound) {
-        getStateHelper().put(PropertyKeys.resizeBound, resizeBound);
-    }
+   public void setResizeBound(final boolean resizeBound) {
+      getStateHelper().put(PropertyKeys.resizeBound, resizeBound);
+   }
 
-    public String getStamp() {
-        return (String) getStateHelper().eval(PropertyKeys.stamp, null);
-    }
+   public String getStamp() {
+      return (String) getStateHelper().eval(PropertyKeys.stamp, null);
+   }
 
-    public void setStamp(String stamp) {
-        getStateHelper().put(PropertyKeys.stamp, stamp);
-    }
+   public void setStamp(final String stamp) {
+      getStateHelper().put(PropertyKeys.stamp, stamp);
+   }
 
-    public String getTransitionDuration() {
-        return (String) getStateHelper().eval(PropertyKeys.transitionDuration, "0.4s");
-    }
+   public String getTransitionDuration() {
+      return (String) getStateHelper().eval(PropertyKeys.transitionDuration, "0.4s");
+   }
 
-    public void setTransitionDuration(String transitionDuration) {
-        getStateHelper().put(PropertyKeys.transitionDuration, transitionDuration);
-    }
+   public void setTransitionDuration(final String transitionDuration) {
+      getStateHelper().put(PropertyKeys.transitionDuration, transitionDuration);
+   }
 
-    public boolean isHasImages() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.hasImages, false);
-    }
+   public boolean isHasImages() {
+      return (Boolean) getStateHelper().eval(PropertyKeys.hasImages, false);
+   }
 
-    public void setHasImages(boolean hasImages) {
-        getStateHelper().put(PropertyKeys.hasImages, hasImages);
-    }
+   public void setHasImages(final boolean hasImages) {
+      getStateHelper().put(PropertyKeys.hasImages, hasImages);
+   }
 
-    @Override
-    public Collection<String> getEventNames() {
-        return EVENT_NAMES;
-    }
+   @Override
+   public Collection<String> getEventNames() {
+      return EVENT_NAMES;
+   }
 
-    @Override
-    public void queueEvent(FacesEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+   @Override
+   public void queueEvent(final FacesEvent event) {
+      final FacesContext context = FacesContext.getCurrentInstance();
+      final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+      final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-        if ("layoutComplete".equals(eventName)) {
-            if (event instanceof AjaxBehaviorEvent && isSelfRequest(context)) {
-                LayoutCompleteEvent layoutCompleteEvent = new LayoutCompleteEvent(this, ((AjaxBehaviorEvent) event).getBehavior
-                        ());
-                layoutCompleteEvent.setPhaseId(event.getPhaseId());
+      if ("layoutComplete".equals(eventName)) {
+         if (event instanceof AjaxBehaviorEvent && isSelfRequest(context)) {
+            final LayoutCompleteEvent layoutCompleteEvent = new LayoutCompleteEvent(this,
+                     ((AjaxBehaviorEvent) event).getBehavior());
+            layoutCompleteEvent.setPhaseId(event.getPhaseId());
 
-                super.queueEvent(layoutCompleteEvent);
+            super.queueEvent(layoutCompleteEvent);
+         }
+      } else {
+         super.queueEvent(event);
+      }
+   }
+
+   private boolean isSelfRequest(final FacesContext context) {
+      return this.getClientId(context).equals(
+               context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+   }
+
+   @Override
+   public String resolveWidgetVar() {
+      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+   }
+
+   public UIFluidGridItem getItem(final String type) {
+      final UIFluidGridItem item = getItems().get(type);
+
+      if (item == null) {
+         throw new FacesException("UIFluidGridItem to type " + type + " was not found");
+      } else {
+         return item;
+      }
+   }
+
+   protected Map<String, UIFluidGridItem> getItems() {
+      if (items == null) {
+         items = new HashMap<String, UIFluidGridItem>();
+         for (final UIComponent child : getChildren()) {
+            if (child instanceof UIFluidGridItem) {
+               final UIFluidGridItem fluidGridItem = (UIFluidGridItem) child;
+               items.put(fluidGridItem.getType(), fluidGridItem);
             }
-        } else {
-            super.queueEvent(event);
-        }
-    }
+         }
+      }
 
-    private boolean isSelfRequest(FacesContext context) {
-        return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap().get(Constants
-                .RequestParams.PARTIAL_SOURCE_PARAM));
-    }
+      return items;
+   }
 
-	public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+   @Override
+   protected KeyData findData(final String key) {
+      final Object value = getValue();
+      if (value == null) {
+         return null;
+      }
 
-    public UIFluidGridItem getItem(String type) {
-        UIFluidGridItem item = getItems().get(type);
+      if (!(value instanceof Collection<?>)) {
+         throw new FacesException("Value in FluidGrid must be of type Collection / List");
+      }
 
-        if (item == null) {
-            throw new FacesException("UIFluidGridItem to type " + type + " was not found");
-        } else {
-            return item;
-        }
-    }
+      @SuppressWarnings("unchecked")
+      final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+      for (final FluidGridItem fluidGridItem : col) {
+         if (key.equals(fluidGridItem.getKey())) {
+            return fluidGridItem;
+         }
+      }
 
-    protected Map<String, UIFluidGridItem> getItems() {
-        if (items == null) {
-            items = new HashMap<String, UIFluidGridItem>();
-            for (UIComponent child : getChildren()) {
-                if (child instanceof UIFluidGridItem) {
-                    UIFluidGridItem fluidGridItem = (UIFluidGridItem) child;
-                    items.put(fluidGridItem.getType(), fluidGridItem);
-                }
+      return null;
+   }
+
+   @Override
+   protected void processChildren(final FacesContext context, final PhaseId phaseId) {
+      if (context.getExternalContext().getRequestParameterMap()
+               .containsKey(this.getClientId(context) + "_layoutComplete")) {
+         // don't decode, validate, update children if the processing was
+         // triggered by the "layoutComplete" event
+         return;
+      }
+
+      if (getVar() != null) {
+         // dynamic items
+         final Object value = getValue();
+         if (value != null) {
+            if (!(value instanceof Collection<?>)) {
+               throw new FacesException("Value in FluidGrid must be of type Collection / List");
             }
-        }
 
-        return items;
-    }
+            @SuppressWarnings("unchecked")
+            final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+            for (final FluidGridItem fluidGridItem : col) {
+               processFluidGridDynamicItems(context, phaseId, fluidGridItem);
+            }
+         }
 
-    @Override
-    protected KeyData findData(String key) {
-        Object value = getValue();
-        if (value == null) {
-            return null;
-        }
+         resetData();
+      } else {
+         // static items
+         processFluidGridStaticItems(context, phaseId);
+      }
+   }
 
-        if (!(value instanceof Collection<?>)) {
+   @Override
+   protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
+      if (getVar() != null) {
+         // dynamic items
+         final Object value = getValue();
+         if (value == null) {
+            return false;
+         }
+
+         if (!(value instanceof Collection<?>)) {
             throw new FacesException("Value in FluidGrid must be of type Collection / List");
-        }
+         }
 
-        @SuppressWarnings("unchecked")
-        Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-        for (FluidGridItem fluidGridItem : col) {
-            if (key.equals(fluidGridItem.getKey())) {
-                return fluidGridItem;
+         @SuppressWarnings("unchecked")
+         final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+         for (final FluidGridItem fluidGridItem : col) {
+            if (visitFluidGridDynamicItems(context, callback, fluidGridItem)) {
+               return true;
             }
-        }
+         }
 
-        return null;
-    }
+         resetData();
+      } else {
+         // static items
+         if (visitFluidGridStaticItems(context, callback)) {
+            return true;
+         }
+      }
 
-    @Override
-    protected void processChildren(FacesContext context, PhaseId phaseId) {
-        if (context.getExternalContext().getRequestParameterMap().containsKey(this.getClientId(context) + "_layoutComplete")) {
-            // don't decode, validate, update children if the processing was triggered by the "layoutComplete" event
-            return;
-        }
+      return false;
+   }
 
-        if (getVar() != null) {
-            // dynamic items
-            Object value = getValue();
-            if (value != null) {
-                if (!(value instanceof Collection<?>)) {
-                    throw new FacesException("Value in FluidGrid must be of type Collection / List");
-                }
+   @Override
+   protected boolean invokeOnChildren(final FacesContext context, final String clientId,
+            final ContextCallback callback) {
+      if (getVar() != null) {
+         // dynamic items
+         final Object value = getValue();
+         if (value == null) {
+            return false;
+         }
 
-                @SuppressWarnings("unchecked")
-                Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-                for (FluidGridItem fluidGridItem : col) {
-                    processFluidGridDynamicItems(context, phaseId, fluidGridItem);
-                }
+         if (!(value instanceof Collection<?>)) {
+            throw new FacesException("Value in FluidGrid must be of type Collection / List");
+         }
+
+         @SuppressWarnings("unchecked")
+         final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+         for (final FluidGridItem fluidGridItem : col) {
+            setData(fluidGridItem);
+
+            if (super.invokeOnComponent(context, clientId, callback)) {
+               return true;
             }
+         }
 
-            resetData();
-        } else {
-            // static items
-            processFluidGridStaticItems(context, phaseId);
-        }
-    }
-
-    @Override
-    protected boolean visitChildren(VisitContext context, VisitCallback callback) {
-        if (getVar() != null) {
-            // dynamic items
-            Object value = getValue();
-            if (value == null) {
-                return false;
+         resetData();
+      } else {
+         // static items
+         if (getChildCount() > 0) {
+            for (final UIComponent child : getChildren()) {
+               if (child.invokeOnComponent(context, clientId, callback)) {
+                  return true;
+               }
             }
+         }
+      }
 
-            if (!(value instanceof Collection<?>)) {
-                throw new FacesException("Value in FluidGrid must be of type Collection / List");
-            }
+      return false;
+   }
 
-            @SuppressWarnings("unchecked")
-            Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-            for (FluidGridItem fluidGridItem : col) {
-                if (visitFluidGridDynamicItems(context, callback, fluidGridItem)) {
-                    return true;
-                }
-            }
+   private void processFluidGridDynamicItems(final FacesContext context, final PhaseId phaseId,
+            final FluidGridItem fluidGridItem) {
+      for (final UIComponent kid : getChildren()) {
+         if (!(kid instanceof UIFluidGridItem) || !kid.isRendered()
+                  || !((UIFluidGridItem) kid).getType().equals(fluidGridItem.getType())) {
+            continue;
+         }
 
-            resetData();
-        } else {
-            // static items
-            if (visitFluidGridStaticItems(context, callback)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
-    protected boolean invokeOnChildren(FacesContext context, String clientId, ContextCallback callback) {
-        if (getVar() != null) {
-            // dynamic items
-            Object value = getValue();
-            if (value == null) {
-                return false;
+         for (final UIComponent grandkid : kid.getChildren()) {
+            if (!grandkid.isRendered()) {
+               continue;
             }
 
-            if (!(value instanceof Collection<?>)) {
-                throw new FacesException("Value in FluidGrid must be of type Collection / List");
+            setData(fluidGridItem);
+            if (getData() == null) {
+               return;
             }
 
-            @SuppressWarnings("unchecked")
-            Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-            for (FluidGridItem fluidGridItem : col) {
-                setData(fluidGridItem);
+            if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+               grandkid.processDecodes(context);
+            } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+               grandkid.processValidators(context);
+            } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+               grandkid.processUpdates(context);
+            } else {
+               throw new IllegalArgumentException();
+            }
+         }
+      }
+   }
 
-                if (super.invokeOnComponent(context, clientId, callback)) {
-                    return true;
-                }
+   private void processFluidGridStaticItems(final FacesContext context, final PhaseId phaseId) {
+      for (final UIComponent kid : getChildren()) {
+         if (!(kid instanceof UIFluidGridItem) || !kid.isRendered()) {
+            continue;
+         }
+
+         for (final UIComponent grandkid : kid.getChildren()) {
+            if (!grandkid.isRendered()) {
+               continue;
             }
 
-            resetData();
-        } else {
-            // static items
-            if (getChildCount() > 0) {
-                for (UIComponent child : getChildren()) {
-                    if (child.invokeOnComponent(context, clientId, callback)) {
-                        return true;
-                    }    
-                }
+            if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+               grandkid.processDecodes(context);
+            } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+               grandkid.processValidators(context);
+            } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+               grandkid.processUpdates(context);
+            } else {
+               throw new IllegalArgumentException();
             }
-        }
+         }
+      }
+   }
 
-        return false;
-    }
+   private boolean visitFluidGridDynamicItems(final VisitContext context, final VisitCallback callback,
+            final FluidGridItem fluidGridItem) {
+      if (getChildCount() > 0) {
+         for (final UIComponent child : getChildren()) {
+            if (child instanceof UIFluidGridItem
+                     && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
+               setData(fluidGridItem);
+               if (getData() == null) {
+                  return false;
+               }
 
-    private void processFluidGridDynamicItems(FacesContext context, PhaseId phaseId, FluidGridItem fluidGridItem) {
-        for (UIComponent kid : getChildren()) {
-            if (!(kid instanceof UIFluidGridItem) || !kid.isRendered() || !((UIFluidGridItem) kid).getType().equals
-                    (fluidGridItem.getType())) {
-                continue;
+               if (child.visitTree(context, callback)) {
+                  return true;
+               }
             }
+         }
+      }
 
-            for (UIComponent grandkid : kid.getChildren()) {
-                if (!grandkid.isRendered()) {
-                    continue;
-                }
+      return false;
+   }
 
-                setData(fluidGridItem);
-                if (getData() == null) {
-                    return;
-                }
-
-                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
-                    grandkid.processDecodes(context);
-                } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
-                    grandkid.processValidators(context);
-                } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
-                    grandkid.processUpdates(context);
-                } else {
-                    throw new IllegalArgumentException();
-                }
+   private boolean visitFluidGridStaticItems(final VisitContext context, final VisitCallback callback) {
+      if (getChildCount() > 0) {
+         for (final UIComponent child : getChildren()) {
+            if (child instanceof UIFluidGridItem && child.visitTree(context, callback)) {
+               return true;
             }
-        }
-    }
+         }
+      }
 
-    private void processFluidGridStaticItems(FacesContext context, PhaseId phaseId) {
-        for (UIComponent kid : getChildren()) {
-            if (!(kid instanceof UIFluidGridItem) || !kid.isRendered()) {
-                continue;
-            }
-
-            for (UIComponent grandkid : kid.getChildren()) {
-                if (!grandkid.isRendered()) {
-                    continue;
-                }
-
-                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
-                    grandkid.processDecodes(context);
-                } else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
-                    grandkid.processValidators(context);
-                } else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
-                    grandkid.processUpdates(context);
-                } else {
-                    throw new IllegalArgumentException();
-                }
-            }
-        }
-    }
-
-    private boolean visitFluidGridDynamicItems(VisitContext context, VisitCallback callback, FluidGridItem fluidGridItem) {
-        if (getChildCount() > 0) {
-            for (UIComponent child : getChildren()) {
-                if (child instanceof UIFluidGridItem && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
-                    setData(fluidGridItem);
-                    if (getData() == null) {
-                        return false;
-                    }
-
-                    if (child.visitTree(context, callback)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private boolean visitFluidGridStaticItems(VisitContext context, VisitCallback callback) {
-        if (getChildCount() > 0) {
-            for (UIComponent child : getChildren()) {
-                if (child instanceof UIFluidGridItem && child.visitTree(context, callback)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+      return false;
+   }
 }

@@ -18,178 +18,174 @@
 
 package org.primefaces.extensions.component.fluidgrid;
 
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
+import java.util.Collection;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import java.io.IOException;
-import java.util.Collection;
+
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link FluidGrid} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
- * @version $Revision$
- * @since   0.5
+ * @author Oleg Varaksin / last modified by Melloware
+ * @since 0.5
  */
 public class FluidGridRenderer extends CoreRenderer {
 
-	private static final String GRID_CLASS = "pe-fluidgrid";
-	private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
+   private static final String GRID_CLASS = "pe-fluidgrid";
+   private static final String GRID_ITEM_CLASS = "pe-fluidgrid-item";
 
-	private static final String LIST_ROLE = "list";
-	private static final String LIST_ITEM_ROLE = "listitem";
+   private static final String LIST_ROLE = "list";
+   private static final String LIST_ITEM_ROLE = "listitem";
 
-	@Override
-	public void decode(FacesContext context, UIComponent component) {
-		decodeBehaviors(context, component);
-	}
+   @Override
+   public void decode(final FacesContext context, final UIComponent component) {
+      decodeBehaviors(context, component);
+   }
 
-	@Override
-	public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-		FluidGrid fluidGrid = (FluidGrid) component;
+   @Override
+   public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+      final FluidGrid fluidGrid = (FluidGrid) component;
 
-		encodeMarkup(fc, fluidGrid);
-		encodeScript(fc, fluidGrid);
-	}
+      encodeMarkup(fc, fluidGrid);
+      encodeScript(fc, fluidGrid);
+   }
 
-	protected void encodeMarkup(FacesContext fc, FluidGrid fluidGrid) throws IOException {
-		ResponseWriter writer = fc.getResponseWriter();
-		String clientId = fluidGrid.getClientId(fc);
-		String styleClass = fluidGrid.getStyleClass();
-		styleClass = (styleClass == null) ? GRID_CLASS : GRID_CLASS + " " + styleClass;
+   protected void encodeMarkup(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
+      final ResponseWriter writer = fc.getResponseWriter();
+      final String clientId = fluidGrid.getClientId(fc);
+      String styleClass = fluidGrid.getStyleClass();
+      styleClass = styleClass == null ? GRID_CLASS : GRID_CLASS + " " + styleClass;
 
-		writer.startElement("div", fluidGrid);
-		writer.writeAttribute("id", clientId, "id");
-		writer.writeAttribute("class", styleClass, "styleClass");
-		if (fluidGrid.getStyle() != null) {
-			writer.writeAttribute("style", fluidGrid.getStyle(), "style");
-		}
+      writer.startElement("div", fluidGrid);
+      writer.writeAttribute("id", clientId, "id");
+      writer.writeAttribute("class", styleClass, "styleClass");
+      if (fluidGrid.getStyle() != null) {
+         writer.writeAttribute("style", fluidGrid.getStyle(), "style");
+      }
 
-		writer.writeAttribute("role", LIST_ROLE, null);
+      writer.writeAttribute("role", LIST_ROLE, null);
 
-		if (fluidGrid.getVar() != null) {
-			// dynamic items
-			Object value = fluidGrid.getValue();
-			if (value != null) {
-				if (!(value instanceof Collection<?>)) {
-					throw new FacesException("Value in FluidGrid must be of type Collection / List");
-				}
+      if (fluidGrid.getVar() != null) {
+         // dynamic items
+         final Object value = fluidGrid.getValue();
+         if (value != null) {
+            if (!(value instanceof Collection<?>)) {
+               throw new FacesException("Value in FluidGrid must be of type Collection / List");
+            }
 
-				for (UIComponent kid : fluidGrid.getChildren()) {
-					if (kid.isRendered() && !(kid instanceof UIFluidGridItem)) {
-						// first render children like stamped elements, etc.
-						renderChild(fc, kid);
-					}
-				}
+            for (final UIComponent kid : fluidGrid.getChildren()) {
+               if (kid.isRendered() && !(kid instanceof UIFluidGridItem)) {
+                  // first render children like stamped elements, etc.
+                  renderChild(fc, kid);
+               }
+            }
 
-				@SuppressWarnings("unchecked")
-				Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-				for (FluidGridItem fluidGridItem : col) {
-					// find ui item by type
-					UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
+            @SuppressWarnings("unchecked")
+            final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
+            for (final FluidGridItem fluidGridItem : col) {
+               // find ui item by type
+               final UIFluidGridItem uiItem = fluidGrid.getItem(fluidGridItem.getType());
 
-					if (uiItem.isRendered()) {
-						// set data in request scope
-						fluidGrid.setData(fluidGridItem);
+               if (uiItem.isRendered()) {
+                  // set data in request scope
+                  fluidGrid.setData(fluidGridItem);
 
-						// render item
-						renderItem(fc, writer, fluidGrid, uiItem);
-					}
-				}
-			}
-		} else {
-			// static items
-			for (UIComponent kid : fluidGrid.getChildren()) {
-				if (kid.isRendered()) {
-					if (kid instanceof UIFluidGridItem) {
-						// render item
-						renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
-					} else {
-						// render a child like stamped element, etc.
-						renderChild(fc, kid);
-					}
-				}
-			}
-		}
+                  // render item
+                  renderItem(fc, writer, fluidGrid, uiItem);
+               }
+            }
+         }
+      } else {
+         // static items
+         for (final UIComponent kid : fluidGrid.getChildren()) {
+            if (kid.isRendered()) {
+               if (kid instanceof UIFluidGridItem) {
+                  // render item
+                  renderItem(fc, writer, fluidGrid, (UIFluidGridItem) kid);
+               } else {
+                  // render a child like stamped element, etc.
+                  renderChild(fc, kid);
+               }
+            }
+         }
+      }
 
-		writer.endElement("div");
-	}
+      writer.endElement("div");
+   }
 
-	protected void encodeScript(FacesContext fc, FluidGrid fluidGrid) throws IOException {
-		ResponseWriter writer = fc.getResponseWriter();
-		String clientId = fluidGrid.getClientId(fc);
-        String widgetVar = fluidGrid.resolveWidgetVar();
+   protected void encodeScript(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
+      final ResponseWriter writer = fc.getResponseWriter();
+      final String clientId = fluidGrid.getClientId(fc);
 
-		startScript(writer, clientId);
+      final WidgetBuilder wb = getWidgetBuilder(fc);
+      wb.initWithDomReady("ExtFluidGrid", fluidGrid.resolveWidgetVar(), clientId);
+      wb.append(",opts:{");
+      wb.append("isFitWidth:" + fluidGrid.isFitWidth());
+      wb.append(",isOriginLeft:" + fluidGrid.isOriginLeft());
+      wb.append(",isOriginTop:" + fluidGrid.isOriginTop());
+      wb.append(",isResizeBound:" + fluidGrid.isResizeBound());
+      wb.append(",hasImages:" + fluidGrid.isHasImages());
 
-		writer.write("$(function() {");
-		writer.write("PrimeFaces.cw('ExtFluidGrid','" + widgetVar + "',{");
-		writer.write("id:'" + clientId + "'");
-        //writer.write(",widgetVar:'" + widgetVar + "'");
-		writer.write(",opts:{");
+      if (fluidGrid.gethGutter() != 0) {
+         wb.append(",gutter:" + fluidGrid.gethGutter());
+      }
 
-		writer.write("isFitWidth:" + fluidGrid.isFitWidth());
-		writer.write(",isOriginLeft:" + fluidGrid.isOriginLeft());
-		writer.write(",isOriginTop:" + fluidGrid.isOriginTop());
-		writer.write(",isResizeBound:" + fluidGrid.isResizeBound());
-		writer.write(",hasImages:" + fluidGrid.isHasImages());
+      final String stamp = SearchExpressionFacade.resolveClientIds(fc, fluidGrid, fluidGrid.getStamp());
+      if (stamp != null) {
+         wb.append(",stamp:'" + stamp + "'");
+      }
 
-		if (fluidGrid.gethGutter() != 0) {
-			writer.write(",gutter:" + fluidGrid.gethGutter());
-		}
+      if (fluidGrid.getTransitionDuration() != null) {
+         wb.append(",transitionDuration:'" + fluidGrid.getTransitionDuration() + "'");
+      } else {
+         wb.append(",transitionDuration:0");
+      }
 
-		String stamp = SearchExpressionFacade.resolveClientIds(fc, fluidGrid, fluidGrid.getStamp());
-		if (stamp != null) {
-			writer.write(",stamp:'" + stamp + "'");
-		}
+      wb.append("}");
 
-		if (fluidGrid.getTransitionDuration() != null) {
-			writer.write(",transitionDuration:'" + fluidGrid.getTransitionDuration() + "'");
-		} else {
-			writer.write(",transitionDuration:0");
-		}
+      encodeClientBehaviors(fc, fluidGrid);
+      wb.append("},true);});");
+      endScript(writer);
+   }
 
-		writer.write("}");
-		encodeClientBehaviors(fc, fluidGrid);
-		writer.write("},true);});");
+   protected void renderItem(final FacesContext fc, final ResponseWriter writer, final FluidGrid fluidGrid,
+            final UIFluidGridItem uiItem)
+            throws IOException {
+      writer.startElement("div", null);
 
-		endScript(writer);
-	}
+      if (uiItem.getStyleClass() != null) {
+         writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
+      } else {
+         writer.writeAttribute("class", GRID_ITEM_CLASS, null);
+      }
 
-	protected void renderItem(FacesContext fc, ResponseWriter writer, FluidGrid fluidGrid, UIFluidGridItem uiItem)
-	    throws IOException {
-		writer.startElement("div", null);
+      if (fluidGrid.getvGutter() != 0) {
+         writer.writeAttribute("style", "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
+      }
 
-		if (uiItem.getStyleClass() != null) {
-			writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
-		} else {
-			writer.writeAttribute("class", GRID_ITEM_CLASS, null);
-		}
+      writer.writeAttribute("role", LIST_ITEM_ROLE, null);
 
-		if (fluidGrid.getvGutter() != 0) {
-			writer.writeAttribute("style", "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
-		}
+      // encode content of pe:fluidGridItem
+      uiItem.encodeAll(fc);
 
-		writer.writeAttribute("role", LIST_ITEM_ROLE, null);
+      writer.endElement("div");
+   }
 
-		// encode content of pe:fluidGridItem
-		uiItem.encodeAll(fc);
+   @Override
+   public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+      // Rendering happens on encodeEnd
+   }
 
-		writer.endElement("div");
-	}
-
-	@Override
-	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-		//Rendering happens on encodeEnd
-	}
-
-	@Override
-	public boolean getRendersChildren() {
-		return true;
-	}
+   @Override
+   public boolean getRendersChildren() {
+      return true;
+   }
 }

@@ -19,66 +19,68 @@ package org.primefaces.extensions.model.fluidgrid;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.RandomStringUtils;
-
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
  * Class representing an item inside of <code>FluidGrid</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
- * @version $Revision$
- * @since   1.1.0
+ * @author Oleg Varaksin / last modified by Melloware
+ * @since 1.1.0
  */
 public class FluidGridItem implements KeyData, Serializable {
 
-	public static final String DEFAULT_TYPE = "default";
+   public static final String DEFAULT_TYPE = "default";
 
-	private String key;
-	private Object data;
-	private String type;
+   private String key;
+   private Object data;
+   private String type;
 
-	public FluidGridItem() {
-		// generate key
-		setKey(RandomStringUtils.randomAlphanumeric(8));
-	}
+   public FluidGridItem() {
+      // generate key
+      setKey(RandomStringUtils.randomAlphanumeric(8));
+   }
 
-	public FluidGridItem(Object data) {
-		this.data = data;
-		this.type = DEFAULT_TYPE;
+   public FluidGridItem(final Object data) {
+      this.data = data;
+      type = DEFAULT_TYPE;
 
-		// generate key
-		setKey(RandomStringUtils.randomAlphanumeric(8));
-	}
+      // generate key
+      setKey(RandomStringUtils.randomAlphanumeric(8));
+   }
 
-	public FluidGridItem(Object data, String type) {
-		this.data = data;
-		if (type != null) {
-			this.type = type;
-		} else {
-			this.type = DEFAULT_TYPE;
-		}
+   public FluidGridItem(final Object data, final String type) {
+      this.data = data;
+      if (type != null) {
+         this.type = type;
+      } else {
+         this.type = DEFAULT_TYPE;
+      }
 
-		// generate key
-		setKey(RandomStringUtils.randomAlphanumeric(8));
-	}
+      // generate key
+      setKey(RandomStringUtils.randomAlphanumeric(8));
+   }
 
-	public String getKey() {
-		return key;
-	}
+   @Override
+   public String getKey() {
+      return key;
+   }
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+   @Override
+   public void setKey(final String key) {
+      this.key = key;
+   }
 
-	public Object getData() {
-		return data;
-	}
+   @Override
+   public Object getData() {
+      return data;
+   }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+   @Override
+   public void setData(final Object data) {
+      this.data = data;
+   }
 
-	public String getType() {
-		return type;
-	}
+   public String getType() {
+      return type;
+   }
 }
