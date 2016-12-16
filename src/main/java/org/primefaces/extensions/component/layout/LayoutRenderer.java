@@ -35,8 +35,7 @@ import org.primefaces.util.WidgetBuilder;
 /**
  * Renderer for the {@link Layout} component.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
 public class LayoutRenderer extends CoreRenderer {

@@ -46,8 +46,7 @@ import org.primefaces.util.Constants;
 /**
  * <code>Layout</code> component.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
 @ResourceDependencies({
@@ -88,10 +87,9 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
    /**
     * Properties that are tracked by state saving.
     *
-    * @author Oleg Varaksin / last modified by $Author$
-    * @version $Revision$
+    * @author Oleg Varaksin / last modified by Melloware
     */
-   enum PropertyKeys {
+   public enum PropertyKeys {
 
       // @formatter:off
       widgetVar,
@@ -101,9 +99,10 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
       styleClass,
       state,
       stateCookie,
-      togglerTip_open,
-      togglerTip_closed,
-      resizerTip,
+      togglerTip_open("Open"),
+      togglerTip_closed("Close"),
+      resizerTip("Resize"),
+      sliderTip("Slide"),
       maskPanesEarly;
       // @formatter:on
 
@@ -209,6 +208,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
    public void setResizerTip(final String resizerTip) {
       getStateHelper().put(PropertyKeys.resizerTip, resizerTip);
+   }
+
+   public String getSliderTip() {
+      return (String) getStateHelper().eval(PropertyKeys.sliderTip, null);
+   }
+
+   public void setSliderTip(final String sliderTip) {
+      getStateHelper().put(PropertyKeys.sliderTip, sliderTip);
    }
 
    public boolean isMaskPanesEarly() {

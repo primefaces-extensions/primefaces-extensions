@@ -20,272 +20,317 @@ package org.primefaces.extensions.model.layout;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.primefaces.extensions.renderkit.layout.GsonLayoutOptions;
 
 /**
  * Model class representing layout options.
  *
- * @author  Oleg Varaksin / last modified by $Author$
- * @version $Revision$
- * @since   0.6.0
+ * @author Oleg Varaksin / last modified by Melloware
+ * @since 0.6.0
  */
 public class LayoutOptions implements Serializable {
 
-	private String id;
+   private String id;
 
-	// direct options
-	private Map<String, Object> options = new HashMap<String, Object>();
+   // direct options
+   private Map<String, Object> options = new HashMap<String, Object>();
 
-	// options for all panes
-	private LayoutOptions panes;
+   // options for all panes
+   private LayoutOptions defaults;
 
-	// options for every specific pane (depends on position)
-	private LayoutOptions north;
-	private LayoutOptions south;
-	private LayoutOptions west;
-	private LayoutOptions east;
-	private LayoutOptions center;
+   // tooltips
+   private LayoutOptions tips;
 
-	// options for child layout
-	private LayoutOptions child;
+   // options for every specific pane (depends on position)
+   private LayoutOptions north;
+   private LayoutOptions south;
+   private LayoutOptions west;
+   private LayoutOptions east;
+   private LayoutOptions center;
 
-	public LayoutOptions() {
-	}
+   // options for child layout
+   private LayoutOptions child;
 
-	public LayoutOptions(String id) {
-		this.id = id;
-	}
+   public LayoutOptions() {
+   }
 
-	public String getId() {
-		return id;
-	}
+   public LayoutOptions(final String id) {
+      this.id = id;
+   }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+   public String getId() {
+      return id;
+   }
 
-	public Map<String, Object> getOptions() {
-		return options;
-	}
+   public void setId(final String id) {
+      this.id = id;
+   }
 
-	public void setOptions(Map<String, Object> options) {
-		this.options = options;
-	}
+   public Map<String, Object> getOptions() {
+      return options;
+   }
 
-	public void addOption(String key, Object value) {
-		options.put(key, value);
-	}
+   public void setOptions(final Map<String, Object> options) {
+      this.options = options;
+   }
 
-	public void setPanesOptions(LayoutOptions layoutOptions) {
-		panes = layoutOptions;
-	}
+   public void addOption(final String key, final Object value) {
+      options.put(key, value);
+   }
 
-	public LayoutOptions getPanesOptions() {
-		return panes;
-	}
+   public void addOptions(final Map<String, Object> options) {
+      options.putAll(options);
+   }
 
-	public void setNorthOptions(LayoutOptions layoutOptions) {
-		north = layoutOptions;
-	}
+   public void setPanesOptions(final LayoutOptions layoutOptions) {
+      defaults = layoutOptions;
+   }
 
-	public LayoutOptions getNorthOptions() {
-		return north;
-	}
+   public LayoutOptions getPanesOptions() {
+      return defaults;
+   }
 
-	public void setSouthOptions(LayoutOptions layoutOptions) {
-		south = layoutOptions;
-	}
+   public final LayoutOptions getTips() {
+      return tips;
+   }
 
-	public LayoutOptions getSouthOptions() {
-		return south;
-	}
+   public final void setTips(final LayoutOptions tips) {
+      this.tips = tips;
+   }
 
-	public void setWestOptions(LayoutOptions layoutOptions) {
-		west = layoutOptions;
-	}
+   public void setNorthOptions(final LayoutOptions layoutOptions) {
+      north = layoutOptions;
+   }
 
-	public LayoutOptions getWestOptions() {
-		return west;
-	}
+   public LayoutOptions getNorthOptions() {
+      return north;
+   }
 
-	public void setEastOptions(LayoutOptions layoutOptions) {
-		east = layoutOptions;
-	}
+   public void setSouthOptions(final LayoutOptions layoutOptions) {
+      south = layoutOptions;
+   }
 
-	public LayoutOptions getEastOptions() {
-		return east;
-	}
+   public LayoutOptions getSouthOptions() {
+      return south;
+   }
 
-	public void setCenterOptions(LayoutOptions layoutOptions) {
-		center = layoutOptions;
-	}
+   public void setWestOptions(final LayoutOptions layoutOptions) {
+      west = layoutOptions;
+   }
 
-	public LayoutOptions getCenterOptions() {
-		return center;
-	}
+   public LayoutOptions getWestOptions() {
+      return west;
+   }
 
-	public void setChildOptions(LayoutOptions layoutOptions) {
-		child = layoutOptions;
-	}
+   public void setEastOptions(final LayoutOptions layoutOptions) {
+      east = layoutOptions;
+   }
 
-	public LayoutOptions getChildOptions() {
-		return child;
-	}
+   public LayoutOptions getEastOptions() {
+      return east;
+   }
 
-	public LayoutOptions getLayoutOptions(String id) {
-		if (id == null) {
-			return null;
-		}
+   public void setCenterOptions(final LayoutOptions layoutOptions) {
+      center = layoutOptions;
+   }
 
-		LayoutOptions loOptions = null;
+   public LayoutOptions getCenterOptions() {
+      return center;
+   }
 
-		if (child != null) {
-			if (id.equals(child.getId())) {
-				return child;
-			} else {
-				loOptions = child.getLayoutOptions(id);
-			}
-		}
+   public void setChildOptions(final LayoutOptions layoutOptions) {
+      child = layoutOptions;
+   }
 
-		if (loOptions == null && panes != null) {
-			if (id.equals(panes.getId())) {
-				return panes;
-			} else {
-				loOptions = panes.getLayoutOptions(id);
-			}
-		}
+   public LayoutOptions getChildOptions() {
+      return child;
+   }
 
-		if (loOptions == null && center != null) {
-			if (id.equals(center.getId())) {
-				return center;
-			} else {
-				loOptions = center.getLayoutOptions(id);
-			}
-		}
+   public Set<LayoutOptions> getDirectionPanes() {
+      final Set<LayoutOptions> result = new HashSet<LayoutOptions>();
+      result.add(getCenterOptions());
+      result.add(getNorthOptions());
+      result.add(getEastOptions());
+      result.add(getWestOptions());
+      result.add(getSouthOptions());
+      return result;
+   }
 
-		if (loOptions == null && north != null) {
-			if (id.equals(north.getId())) {
-				return north;
-			} else {
-				loOptions = north.getLayoutOptions(id);
-			}
-		}
+   public LayoutOptions getLayoutOptions(final String id) {
+      if (id == null) {
+         return null;
+      }
 
-		if (loOptions == null && south != null) {
-			if (id.equals(south.getId())) {
-				return south;
-			} else {
-				loOptions = south.getLayoutOptions(id);
-			}
-		}
+      LayoutOptions loOptions = null;
 
-		if (loOptions == null && east != null) {
-			if (id.equals(east.getId())) {
-				return east;
-			} else {
-				loOptions = east.getLayoutOptions(id);
-			}
-		}
+      if (child != null) {
+         if (id.equals(child.getId())) {
+            return child;
+         } else {
+            loOptions = child.getLayoutOptions(id);
+         }
+      }
 
-		if (loOptions == null && west != null) {
-			if (id.equals(west.getId())) {
-				return west;
-			} else {
-				loOptions = west.getLayoutOptions(id);
-			}
-		}
+      if (loOptions == null && defaults != null) {
+         if (id.equals(defaults.getId())) {
+            return defaults;
+         } else {
+            loOptions = defaults.getLayoutOptions(id);
+         }
+      }
 
-		return loOptions;
-	}
+      if (loOptions == null && tips != null) {
+         if (id.equals(tips.getId())) {
+            return tips;
+         } else {
+            loOptions = tips.getLayoutOptions(id);
+         }
+      }
 
-	public boolean replace(String id, LayoutOptions layoutOptions) {
-		boolean replaced = false;
+      if (loOptions == null && center != null) {
+         if (id.equals(center.getId())) {
+            return center;
+         } else {
+            loOptions = center.getLayoutOptions(id);
+         }
+      }
 
-		if (id == null) {
-			return replaced;
-		}
+      if (loOptions == null && north != null) {
+         if (id.equals(north.getId())) {
+            return north;
+         } else {
+            loOptions = north.getLayoutOptions(id);
+         }
+      }
 
-		if (child != null) {
-			if (id.equals(child.getId())) {
-				child = layoutOptions;
+      if (loOptions == null && south != null) {
+         if (id.equals(south.getId())) {
+            return south;
+         } else {
+            loOptions = south.getLayoutOptions(id);
+         }
+      }
 
-				return true;
-			} else {
-				replaced = child.replace(id, layoutOptions);
-			}
-		}
+      if (loOptions == null && east != null) {
+         if (id.equals(east.getId())) {
+            return east;
+         } else {
+            loOptions = east.getLayoutOptions(id);
+         }
+      }
 
-		if (!replaced && panes != null) {
-			if (id.equals(panes.getId())) {
-				panes = layoutOptions;
+      if (loOptions == null && west != null) {
+         if (id.equals(west.getId())) {
+            return west;
+         } else {
+            loOptions = west.getLayoutOptions(id);
+         }
+      }
 
-				return true;
-			} else {
-				replaced = panes.replace(id, layoutOptions);
-			}
-		}
+      return loOptions;
+   }
 
-		if (!replaced && center != null) {
-			if (id.equals(center.getId())) {
-				center = layoutOptions;
+   public boolean replace(final String id, final LayoutOptions layoutOptions) {
+      boolean replaced = false;
 
-				return true;
-			} else {
-				replaced = center.replace(id, layoutOptions);
-			}
-		}
+      if (id == null) {
+         return replaced;
+      }
 
-		if (!replaced && north != null) {
-			if (id.equals(north.getId())) {
-				north = layoutOptions;
+      if (child != null) {
+         if (id.equals(child.getId())) {
+            child = layoutOptions;
 
-				return true;
-			} else {
-				replaced = north.replace(id, layoutOptions);
-			}
-		}
+            return true;
+         } else {
+            replaced = child.replace(id, layoutOptions);
+         }
+      }
 
-		if (!replaced && south != null) {
-			if (id.equals(south.getId())) {
-				south = layoutOptions;
+      if (!replaced && defaults != null) {
+         if (id.equals(defaults.getId())) {
+            defaults = layoutOptions;
 
-				return true;
-			} else {
-				replaced = south.replace(id, layoutOptions);
-			}
-		}
+            return true;
+         } else {
+            replaced = defaults.replace(id, layoutOptions);
+         }
+      }
 
-		if (!replaced && east != null) {
-			if (id.equals(east.getId())) {
-				east = layoutOptions;
+      if (!replaced && tips != null) {
+         if (id.equals(tips.getId())) {
+            tips = layoutOptions;
 
-				return true;
-			} else {
-				replaced = east.replace(id, layoutOptions);
-			}
-		}
+            return true;
+         } else {
+            replaced = tips.replace(id, layoutOptions);
+         }
+      }
 
-		if (!replaced && west != null) {
-			if (id.equals(west.getId())) {
-				west = layoutOptions;
+      if (!replaced && center != null) {
+         if (id.equals(center.getId())) {
+            center = layoutOptions;
 
-				return true;
-			} else {
-				replaced = west.replace(id, layoutOptions);
-			}
-		}
+            return true;
+         } else {
+            replaced = center.replace(id, layoutOptions);
+         }
+      }
 
-		return replaced;
-	}
+      if (!replaced && north != null) {
+         if (id.equals(north.getId())) {
+            north = layoutOptions;
 
-	/**
-	 * Serializes layout options to JSON string.
-	 *
-	 * @return Layout options as JSON string
-	 */
-	public String toJson() {
-		return GsonLayoutOptions.getGson().toJson(this);
-	}
+            return true;
+         } else {
+            replaced = north.replace(id, layoutOptions);
+         }
+      }
+
+      if (!replaced && south != null) {
+         if (id.equals(south.getId())) {
+            south = layoutOptions;
+
+            return true;
+         } else {
+            replaced = south.replace(id, layoutOptions);
+         }
+      }
+
+      if (!replaced && east != null) {
+         if (id.equals(east.getId())) {
+            east = layoutOptions;
+
+            return true;
+         } else {
+            replaced = east.replace(id, layoutOptions);
+         }
+      }
+
+      if (!replaced && west != null) {
+         if (id.equals(west.getId())) {
+            west = layoutOptions;
+
+            return true;
+         } else {
+            replaced = west.replace(id, layoutOptions);
+         }
+      }
+
+      return replaced;
+   }
+
+   /**
+    * Serializes layout options to JSON string.
+    *
+    * @return Layout options as JSON string
+    */
+   public String toJson() {
+      return GsonLayoutOptions.getGson().toJson(this);
+   }
+
 }
