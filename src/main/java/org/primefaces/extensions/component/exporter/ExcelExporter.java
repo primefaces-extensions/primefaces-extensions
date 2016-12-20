@@ -109,6 +109,10 @@ public class ExcelExporter extends Exporter {
 
         createCustomFonts();
 
+        if (preProcessor != null) {
+           preProcessor.invoke(context.getELContext(), new Object[]{wb});
+        }
+
         int maxColumns = 0;
         StringTokenizer st = new StringTokenizer(tableId, ",");
         while (st.hasMoreElements()) {
@@ -123,9 +127,7 @@ public class ExcelExporter extends Exporter {
 
             DataList list;
             DataTable table;
-            if (preProcessor != null) {
-                preProcessor.invoke(context.getELContext(), new Object[]{wb});
-            }
+
             if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains("" + ",")) {
                 Row titleRow = sheet.createRow(sheet.getLastRowNum());
                 int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
@@ -179,9 +181,7 @@ public class ExcelExporter extends Exporter {
                     tableColumnGroup(sheet, table, "footer");
                 }
                 table.setRowIndex(-1);
-                if (postProcessor != null) {
-                    postProcessor.invoke(context.getELContext(), new Object[]{wb});
-                }
+    
                 int cols = table.getColumnsCount();
 
                 if (maxColumns < cols) {
@@ -189,6 +189,10 @@ public class ExcelExporter extends Exporter {
                 }
             }
             sheet.createRow(sheet.getLastRowNum() + Integer.parseInt(datasetPadding));
+        }
+
+        if (postProcessor != null) {
+           postProcessor.invoke(context.getELContext(), new Object[]{wb});
         }
 
         if (!subTable)

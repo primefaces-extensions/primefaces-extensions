@@ -90,6 +90,11 @@ public class PDFExporter extends Exporter {
             document.setPageSize(PageSize.A4.rotate());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PdfWriter.getInstance(document, baos);
+
+            if (preProcessor != null) {
+               preProcessor.invoke(context.getELContext(), new Object[]{document});
+            }
+
             StringTokenizer st = new StringTokenizer(tableId, ",");
             while (st.hasMoreElements()) {
                 String tableName = (String) st.nextElement();
@@ -99,10 +104,6 @@ public class PDFExporter extends Exporter {
                 }
                 if (!(component instanceof DataTable || component instanceof DataList)) {
                     throw new FacesException("Unsupported datasource target:\"" + component.getClass().getName() + "\", exporter must target a PrimeFaces DataTable/DataList.");
-                }
-
-                if (preProcessor != null) {
-                    preProcessor.invoke(context.getELContext(), new Object[]{document});
                 }
 
                 if (!document.isOpen()) {
@@ -136,13 +137,12 @@ public class PDFExporter extends Exporter {
                 Paragraph preface = new Paragraph();
                 addEmptyLine(preface, datasetPadding);
                 document.add(preface);
-
-
-                if (postProcessor != null) {
-                    postProcessor.invoke(context.getELContext(), new Object[]{document});
-                }
             }
             document.close();
+
+            if (postProcessor != null) {
+               postProcessor.invoke(context.getELContext(), new Object[]{document});
+            }
 
             writePDFToResponse(context.getExternalContext(), baos, filename);
 
