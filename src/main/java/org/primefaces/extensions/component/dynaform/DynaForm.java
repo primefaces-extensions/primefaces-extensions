@@ -88,7 +88,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
 		@Override
 		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
+			return ((toString != null) ? toString : super.toString());
 		}
 	}
 
@@ -156,7 +156,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 	public java.lang.String getColumnClasses() {
 		return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
 	}
-	
+
 	public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
 	}
@@ -278,14 +278,14 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 				continue;
 			}
 
+			setData(dynaFormControl);
+			if (getData() == null) {
+				return;
+			}
+
 			for (UIComponent grandkid : kid.getChildren()) {
 				if (!grandkid.isRendered()) {
 					continue;
-				}
-
-				setData(dynaFormControl);
-				if (getData() == null) {
-					return;
 				}
 
 				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
