@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -59,7 +60,7 @@ public class CalculatorRenderer extends CoreRenderer {
       wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));
       wb.attr("precision", calculator.getPrecision());
       wb.attr("locale", calculator.calculateLocale().toString());
-      wb.attr("isRTL", calculator.isRtl());
+      wb.attr("isRTL", ComponentUtils.isRTL(context, calculator));
       wb.attr("calculatorClass", calculator.getStyleClass());
 
       if (calculator.getOnopen() != null) {

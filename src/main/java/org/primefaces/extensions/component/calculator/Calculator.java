@@ -32,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ButtonEvent;
 import org.primefaces.extensions.event.CloseEvent;
@@ -53,7 +54,7 @@ import org.primefaces.util.Constants;
          @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.css"),
          @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.js")
 })
-public class Calculator extends UIComponentBase implements ClientBehaviorHolder, Widget {
+public class Calculator extends UIComponentBase implements ClientBehaviorHolder, Widget, RTLAware {
 
    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";
    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -72,7 +73,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
       layout,
       locale,
       precision,
-      rtl,
+      dir,
       styleClass,
       onopen,
       onbutton,
@@ -132,6 +133,14 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
    @Override
    public String getDefaultEventName() {
       return OpenEvent.NAME;
+   }
+
+   /**
+    * {@inheritDoc}
+    */
+   @Override
+   public boolean isRTL() {
+      return getDir().equalsIgnoreCase("rtl");
    }
 
    /**
@@ -260,12 +269,12 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
       getStateHelper().put(PropertyKeys.precision, _precision);
    }
 
-   public void setRtl(final boolean _rtl) {
-      getStateHelper().put(PropertyKeys.rtl, _rtl);
+   public void setDir(final String _dir) {
+      getStateHelper().put(PropertyKeys.dir, _dir);
    }
 
-   public boolean isRtl() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.rtl, false);
+   public String getDir() {
+      return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
    }
 
    public String getStyleClass() {

@@ -174,11 +174,11 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[True if right-to-left language, false if left-to-right. Default is false.]]>
+                <![CDATA[Defines text direction, valid values are "ltr" (default) and "rtl".]]>
             </description>
-            <name>rtl</name>
+            <name>dir</name>
             <required>false</required>
-            <type>java.lang.Boolean</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
