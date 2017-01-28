@@ -120,7 +120,8 @@ public class DocumentViewerRenderer extends CoreRenderer {
          }
       } else {
          return DynamicContentSrcBuilder.build(context, documentViewer.getValue(), documentViewer,
-                  documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true);
+                  documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true) + "&download="
+                  + documentViewer.getDownload();
       }
    }
 }

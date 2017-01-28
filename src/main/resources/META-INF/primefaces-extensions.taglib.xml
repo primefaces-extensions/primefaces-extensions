@@ -3698,6 +3698,12 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[If streamed content this will be the name of the download file. NOTE: Must end in .pdf for PDF.js to pick it up!]]></description>
+            <name>download</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
             <description><![CDATA[Start page of the document.]]></description>
             <name>zoom</name>
@@ -3705,7 +3711,7 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[Name of the document]]></description>
+            <description><![CDATA[Name of the document.]]></description>
             <name>name</name>
             <required>false</required>
             <type>java.lang.String</type>

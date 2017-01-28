@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 PrimeFaces Extensions
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.component.documentviewer;
 
@@ -27,7 +25,7 @@ import javax.faces.component.UIGraphic;
  * <code>DocumentViewer</code> component.
  *
  * @author f.strazzullo
- * @author Melloware info@melloware.com
+ * @author Melloware mellowaredev@gmail.com
  * @since 3.0.0
  */
 @ResourceDependencies({
@@ -41,7 +39,7 @@ public class DocumentViewer extends UIGraphic {
    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DocumentViewer";
    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DocumentViewerRenderer";
-   
+
    private Locale appropriateLocale;
 
    protected static enum PropertyKeys {
@@ -53,6 +51,7 @@ public class DocumentViewer extends UIGraphic {
         library,
         cache,
         page,
+        download,
         locale,
 		  zoom;
        //@formatter:on
@@ -66,7 +65,7 @@ public class DocumentViewer extends UIGraphic {
    public String getFamily() {
       return COMPONENT_FAMILY;
    }
-   
+
    public Locale calculateLocale() {
       if (appropriateLocale == null) {
          appropriateLocale = org.primefaces.extensions.util.ComponentUtils.resolveLocale(getLocale());
@@ -128,6 +127,14 @@ public class DocumentViewer extends UIGraphic {
 
    public void setPage(final Integer page) {
       this.getStateHelper().put(PropertyKeys.page, page);
+   }
+
+   public void setDownload(final String download) {
+      getStateHelper().put(PropertyKeys.download, download);
+   }
+
+   public String getDownload() {
+      return (String) getStateHelper().eval(PropertyKeys.download, null);
    }
 
    public Object getLocale() {

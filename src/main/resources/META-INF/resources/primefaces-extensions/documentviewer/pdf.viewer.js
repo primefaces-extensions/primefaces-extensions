@@ -15709,6 +15709,7 @@ function noContextMenuHandler(e) {
  * @return {String} Guessed PDF file name.
  */
 function getPDFFileNameFromURL(url) {
+  console.log(url);
   var reURI = /^(?:([^:]+:)?\/\/[^\/]+)?([^?#]*)(\?[^#]*)?(#.*)?$/;
   //            SCHEME      HOST         1.PATH  2.QUERY   3.REF
   // Pattern to get last matching NAME.pdf
