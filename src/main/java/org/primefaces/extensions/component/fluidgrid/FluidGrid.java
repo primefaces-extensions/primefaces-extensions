@@ -373,10 +373,6 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
          final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
          for (final FluidGridItem fluidGridItem : col) {
             setData(fluidGridItem);
-
-            if (super.invokeOnComponent(context, clientId, callback)) {
-               return true;
-            }
          }
 
          resetData();
