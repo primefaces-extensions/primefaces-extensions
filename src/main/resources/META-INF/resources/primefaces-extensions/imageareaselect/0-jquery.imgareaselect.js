@@ -1127,7 +1127,7 @@ $.imgAreaSelect = function (img, options) {
 
     /* Do the dreaded browser detection */
     var msie = (/msie ([\w.]+)/i.exec(ua)||[])[1],
-        safari = /webkit/i.test(ua) && !/chrome/i.test(ua);
+        safari = /webkit/i.test(ua);
 
     /* 
      * Traverse the image's parent elements (up to <body>) and find the
