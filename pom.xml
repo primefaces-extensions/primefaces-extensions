@@ -58,6 +58,7 @@
                                 <include>analogclock/**</include>
                                 <include>blockui/**</include>
                                 <include>calculator/**</include>
+                                <include>clipboard/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>

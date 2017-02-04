@@ -408,6 +408,79 @@
         </attribute>
     </tag>
     <tag>
+        <description><![CDATA[Clipboard allows copy/cut functions without the need for Flash. Client behavior events: success - fires when the clipboard sucessfully copies/cuts (org.primefaces.extensions.event.ClipboardSuccessEvent), error - fires when the clipboard fails to copy/cut (org.primefaces.extensions.event.ClipboardErrorEvent).]]></description>
+        <tag-name>clipboard</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Clipboard</component-type>
+            <renderer-type>org.primefaces.extensions.component.ClipboardRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Action whether to 'copy' or 'cut'. Default is 'copy'.]]></description>
+            <name>action</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[The trigger to execute the action. Typically a button.]]></description>
+            <name>trigger</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The target component to copy/cut the text from.]]></description>
+            <name>target</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If you don't use target you can set text to the value you want copied/cut. Default is 'PrimeFaces Rocks!' if you forget to set it.]]>
+            </description>
+            <name>text</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute if text is successfully copied/cut.]]>
+            </description>
+            <name>onsuccess</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Javascript handler to execute when text fails to copy/cut to clipboard.]]>
+            </description>
+            <name>onerror</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
         <description>
             <![CDATA[NOTICE: You must also include the org.primefaces.extensions.resources-codemirror:*.jar artifact. Client behavior events: change - fired every time the content of the editor is changed (javax.faces.event.AjaxBehaviorEvent), highlightComplete - fired whenever the editor's content has been fully highlighted (javax.faces.event.AjaxBehaviorEvent), focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent), blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent).]]>
         </description>

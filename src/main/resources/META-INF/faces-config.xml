@@ -35,6 +35,10 @@
         <component-class>org.primefaces.extensions.component.ckeditor.CKEditor</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.Clipboard</component-type>
+        <component-class>org.primefaces.extensions.component.clipboard.Clipboard</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.CodeMirror</component-type>
         <component-class>org.primefaces.extensions.component.codemirror.CodeMirror</component-class>
     </component>
@@ -178,6 +182,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.CKEditorRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.ckeditor.CKEditorRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.ClipboardRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.clipboard.ClipboardRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
