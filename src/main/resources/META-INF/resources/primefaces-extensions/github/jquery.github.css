@@ -1,0 +1,206 @@
+/* Github Box */
+
+.github-box-wrap {
+	display: inline-block;
+	width: 46%;
+	margin-right: 0.6em;
+	margin-left: 0.6em;
+	margin-bottom: 2em;
+}
+
+.github-box {
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	background: #fafafa;
+	border: 1px solid #ddd;
+	color: #666;
+	border-radius: 5px;
+	width: 100%;
+}
+
+.github-box a {
+	color: #4183C4;
+	border: none;
+}
+
+/* Github Box Header */
+
+.github-box .github-box-header {
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	border-radius: 5px 5px 0 0;
+	background: #fcfcfc;
+	background: -moz-linear-gradient(#fcfcfc, #ebebeb);
+	background: -webkit-linear-gradient(#fcfcfc, #ebebeb);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc',endColorstr='#ebebeb')";
+}
+
+.github-box .github-box-header h3 {
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	font-size: 16px;
+	color: gray;
+	margin: 0;
+	padding: 10px 10px 10px 10px;
+}
+
+.github-box .github-box-header h3 a {
+	font-weight: bold
+}
+
+/* Github Box Header - Stats */
+
+.github-box .github-box-header .github-stats {
+	line-height: 36px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 21px;
+	height: 21px;
+}
+
+.github-box .github-box-header .github-stats a {
+	display: inline-block;
+	height: 21px;
+	color: #666;
+	padding: 0 5px 0 5px;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	opacity: 0.7;
+	vertical-align: top;
+}
+
+.github-box .github-box-header .github-stats a:hover {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	opacity: 1;
+}
+
+.github-box .github-box-header .github-stats a:before {
+	font-family: 'EntypoRegular';
+	content: attr(data-icon);
+	display: inline-block;
+	speak: none;
+	padding-right: 2px;
+	font-size: 2em;
+}
+
+.github-box .github-box-header .github-stats .repo-stars {
+	border-right: 1px solid #ddd;
+}
+
+.github-box .github-box-header .github-stats .repo-forks {
+	padding-left: 2px;
+	border-right: 1px solid #ddd;
+}
+
+/* Github Box Content */
+
+.github-box .github-box-content {
+	padding: 10px;
+	font-weight: 300;
+	font-size: 0.7em;
+}
+
+.github-box .github-box-content p {
+	margin: 0;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.github-box .github-box-content .repo-link {
+	font-weight: bold;
+}
+
+/* Github Box Download */
+
+.github-box .github-box-download {
+	position: relative;
+	border-top: 1px solid #ddd;
+	background: white;
+	border-radius: 0 0 3px 3px;
+	padding: 10px;
+	height: 24px;
+}
+
+.github-box .github-box-download .repo-update {
+	margin: 0;
+	font-size: 11px;
+	color: #666;
+	line-height: 24px;
+}
+
+.github-box .github-box-download .repo-update strong {
+	font-size: 12px;
+	font-weight: bold;
+	color: #000;
+}
+
+.github-box .github-box-download .repo-download {
+	position: absolute;
+	display: block;
+	top: 10px;
+	right: 10px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	color: #666;
+	font-weight: bold;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+	padding: 0 10px;
+	border: 1px solid #ddd;
+	border-bottom-color: #bbb;
+	border-radius: 3px;
+	display: block;
+	width: 24px;
+	padding: 0;
+	background: -webkit-linear-gradient(whiteSmoke, #E5E5E5);
+	background: -moz-linear-gradient(#f1f7fa, #dbeaf1);
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	opacity: 1;
+}
+
+.github-box .github-box-download .repo-download:hover {
+	color: #527894;
+	border-color: #cfe3ed;
+	border-bottom-color: #9fc7db;
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	opacity: 1;
+}
+
+.github-box .github-box-download .repo-download:before {
+	font-family: 'EntypoRegular';
+	text-indent: 0px;
+	content: attr(data-icon);
+	display: inline-block;
+	speak: none;
+	font-size: 2.0em;
+	padding: 0 6px;
+}
+
+/* Breakpoint content-driven */
+
+@media all and (max-width: 678px) {
+	.github-box-wrap {
+		display: block;
+		width: inherit;
+		margin-right: 0;
+	}
+}
+
+/* Fonts */
+
+@font-face {
+	font-family: 'EntypoRegular';
+	src: url("#{resource['primefaces-extensions:github/Entypo-webfont.eot']}");
+	src: url("#{resource['primefaces-extensions:github/Entypo-webfont.eot']}?#iefix") format('embedded-opentype'),
+		 url("#{resource['primefaces-extensions:github/Entypo-webfont.woff']}") format('woff'),
+		 url("#{resource['primefaces-extensions:github/Entypo-webfont.ttf']}") format('truetype'),
+		 url("#{resource['primefaces-extensions:github/Entypo-webfont.svg']}#EntypoRegular") format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

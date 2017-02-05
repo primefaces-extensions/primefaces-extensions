@@ -60,6 +60,7 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>fluidgrid/**</include>
+                                <include>github/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>qrcode/**</include>
