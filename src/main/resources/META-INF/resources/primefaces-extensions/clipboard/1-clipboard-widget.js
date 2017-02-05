@@ -119,12 +119,6 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         });
     },
     
-    clearSelection : function() {
-        if (this.clipboard) {
-            this.clipboard.clearSelection();
-        }
-    },
-
     destroy : function() {
         if (this.clipboard) {
             this.clipboard.destroy();
