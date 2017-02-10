@@ -70,6 +70,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this._super(cfg);
 
         this.instance = null;
+        this.initializing = false;
 
         this.options = {};
         // add widget to ckeditor config, this is required for the save event
@@ -145,7 +146,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
 	_render : function() {
-            if (!this.instance) {
+            if (!this.instance && this.initializing === false) {
+                this.initializing = true;
+                PrimeFaces.info('Rendering CKEditor: ' + this.id);
                 // overwrite save button
                 this.overwriteSaveButton();
 
@@ -164,11 +167,14 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 //initialize ckeditor after all resources were loaded
                 this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
                 
-                var thisConfig =  CKEDITOR.instances[this.id].config;
-                // Issue #414 enable/disable ACF
-                thisConfig.allowedContent = !this.cfg.advancedContentFilter;
-                // Issue #415: set readOnly attribute to the config file
-                thisConfig.readOnly = this.cfg.readOnly;
+                if (CKEDITOR.instances[this.id]) {
+                    var thisConfig =  CKEDITOR.instances[this.id].config;
+                    // Issue #414 enable/disable ACF
+                    thisConfig.allowedContent = !this.cfg.advancedContentFilter;
+                    // Issue #415: set readOnly attribute to the config file
+                    thisConfig.readOnly = this.cfg.readOnly;
+                }
+                PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
             }
 	},
 
@@ -211,6 +217,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     initialized : function() {
+        PrimeFaces.info("Initialized: " + this.id);
         //get instance
         this.instance = this.jq.ckeditorGet();
 
@@ -267,6 +274,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.instance.on('blur', $.proxy(function() {
             this.instance.dirtyFired = false;
         }, this));
+        
+        // let the widget know we are done initializing
+        this.initializing = false;
     },
 
     /**
