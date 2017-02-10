@@ -83,4 +83,47 @@ public class FluidGridItem implements KeyData, Serializable {
    public String getType() {
       return type;
    }
+
+   @Override
+   public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + (key == null ? 0 : key.hashCode());
+      return result;
+   }
+
+   @Override
+   public boolean equals(final Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (obj == null) {
+         return false;
+      }
+      if (!(obj instanceof FluidGridItem)) {
+         return false;
+      }
+      final FluidGridItem other = (FluidGridItem) obj;
+      if (key == null) {
+         if (other.key != null) {
+            return false;
+         }
+      } else if (!key.equals(other.key)) {
+         return false;
+      }
+      return true;
+   }
+
+   @Override
+   public String toString() {
+      final StringBuilder builder = new StringBuilder();
+      builder.append("FluidGridItem [key=");
+      builder.append(key);
+      builder.append(", data=");
+      builder.append(data);
+      builder.append(", type=");
+      builder.append(type);
+      builder.append("]");
+      return builder.toString();
+   }
 }
