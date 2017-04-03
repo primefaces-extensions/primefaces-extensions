@@ -203,37 +203,4 @@ public class ComponentUtils {
          return TimeZone.getDefault();
       }
    }
-
-   /**
-    * Gets the deepest <code>EditableValueHolder</code> component contained in
-    * parent composite parameter. If not defined, returns parent parameter.
-    * Otherwise the deepest <code>EditableValueHolder</code>.
-    *
-    * @param parent root component
-    * @return the deepest <code>EditableValueHolder</code> component if any,
-    *         otherwise the parent parameter.
-    */
-   public static UIComponent deepestEditableValueHolderTarget(final UIComponent parent) {
-      UIComponent deepest = parent;
-
-      if (UIComponent.isCompositeComponent(parent)) {
-         final BeanInfo info = (BeanInfo) parent.getAttributes().get(UIComponent.BEANINFO_KEY);
-         final List<AttachedObjectTarget> targets = (List<AttachedObjectTarget>) info.getBeanDescriptor()
-                  .getValue(AttachedObjectTarget.ATTACHED_OBJECT_TARGETS_KEY);
-
-         for (final AttachedObjectTarget target : targets) {
-            if (target instanceof EditableValueHolderAttachedObjectTarget) {
-               final UIComponent children = parent.findComponent(target.getName());
-               if (children == null) {
-                  throw new FacesException(
-                           "Cannot find editableValueHolder with name: \"" + target.getName() + "\"");
-               }
-               deepest = deepestEditableValueHolderTarget(children);
-               break;
-            }
-         }
-      }
-
-      return deepest;
-   }
 }
