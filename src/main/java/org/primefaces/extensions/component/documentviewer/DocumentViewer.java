@@ -53,6 +53,8 @@ public class DocumentViewer extends UIGraphic {
         page,
         download,
         locale,
+        nameddest,
+        pagemode,
 		  zoom;
        //@formatter:on
    }
@@ -135,6 +137,22 @@ public class DocumentViewer extends UIGraphic {
 
    public String getDownload() {
       return (String) getStateHelper().eval(PropertyKeys.download, null);
+   }
+
+   public void setNameddest(final String nameddest) {
+      getStateHelper().put(PropertyKeys.nameddest, nameddest);
+   }
+
+   public String getNameddest() {
+      return (String) getStateHelper().eval(PropertyKeys.nameddest, null);
+   }
+
+   public void setPagemode(final String pagemode) {
+      getStateHelper().put(PropertyKeys.pagemode, pagemode);
+   }
+
+   public String getPagemode() {
+      return (String) getStateHelper().eval(PropertyKeys.pagemode, null);
    }
 
    public Object getLocale() {

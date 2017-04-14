@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 PrimeFaces Extensions
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.component.documentviewer;
 
@@ -38,7 +36,7 @@ import org.primefaces.util.DynamicContentSrcBuilder;
  * Renderer for the {@link DocumentViewer} component.
  *
  * @author f.strazzullo
- * @author Melloware info@melloware.com
+ * @author Melloware mellowaredev@gmail.com
  * @since 3.0.0
  */
 public class DocumentViewerRenderer extends CoreRenderer {
@@ -80,20 +78,34 @@ public class DocumentViewerRenderer extends CoreRenderer {
    }
 
    private String generateHashString(final DocumentViewer documentViewer) {
-      final List<String> params = new ArrayList<String>(1);
+      final List<String> params = new ArrayList<String>(4);
       params.add("locale=" + documentViewer.calculateLocale().toString().replaceAll("_", "-"));
+
+      // page: page number. Example: page=2
       if (documentViewer.getPage() != null) {
          params.add("page=" + documentViewer.getPage());
       }
 
-      if (documentViewer.getZoom() != null) {
+      // zoom level. Example: zoom=200 (accepted formats: '[zoom],[left],[top]',
+      // 'page-width', 'page-height', 'page-fit', 'auto')
+      if (StringUtils.isNotBlank(documentViewer.getZoom())) {
          params.add("zoom=" + documentViewer.getZoom());
+      }
+
+      // nameddest: go to a named destination
+      if (StringUtils.isNotBlank(documentViewer.getNameddest())) {
+         params.add("nameddest=" + documentViewer.getNameddest());
+      }
+
+      // pagemode: either "thumbs" or "bookmarks". Example: pagemode=thumbs
+      if (StringUtils.isNotBlank(documentViewer.getPagemode())) {
+         params.add("pagemode=" + documentViewer.getPagemode());
       }
 
       if (!params.isEmpty()) {
          return "#" + StringUtils.join(params, "&");
       } else {
-         return "";
+         return StringUtils.EMPTY;
       }
    }
 

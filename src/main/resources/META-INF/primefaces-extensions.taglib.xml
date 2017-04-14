@@ -3841,7 +3841,13 @@
             <description><![CDATA[Start page of the document.]]></description>
             <name>page</name>
             <required>false</required>
-            <type>java.lang.Object</type>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Pagemode: either "thumbs" or "bookmarks".]]></description>
+            <name>pagemode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description><![CDATA[If streamed content this will be the name of the download file. NOTE: Must end in .pdf for PDF.js to pick it up!]]></description>
@@ -3858,6 +3864,12 @@
         <attribute>
             <description><![CDATA[Name of the document.]]></description>
             <name>name</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Nameddest: go to a named destination in the document.]]></description>
+            <name>nameddest</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
