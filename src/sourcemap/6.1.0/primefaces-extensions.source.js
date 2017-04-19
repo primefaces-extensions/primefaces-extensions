@@ -102,7 +102,7 @@ PrimeFacesExt = {
      */
     RESOURCE_LIBRARY : 'primefaces-extensions',
 
-    VERSION : '6.1.0-SNAPSHOT'
+    VERSION : '6.1.0'
 };
 
 /**
