@@ -48,8 +48,10 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         if (cfg.target) {
             $.extend(true, opts, {
                 target : function(trigger) {
-                    var input = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(cfg.target)
-                    return document.querySelector('#' + input[0].id);
+                    var input = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(cfg.target);
+                    var selector = input[0].id;
+                    selector = selector.replace(new RegExp(':', 'g'), '\\:');
+                    return document.querySelector('#' + selector);
                 }
             });
         } else if (cfg.text) {
