@@ -1,6 +1,6 @@
 /**
  * @preserve
- * jquery.layout 1.4.4
+ * jquery.layout 1.5.12
  * $Date: 2014-11-29 08:00:00 (Sat, 29 November 2014) $
  * $Rev: 1.0404 $
  *
@@ -740,7 +740,7 @@
                 md: 768,
                 sm: 576,
                 xs: 0
-            }
+            }, responsiveAnimate: false
             , closable: true  // pane can open & close
             , resizable: true  // when open, pane can be resized
             , slidable: true  // when closed, pane can 'slide open' over other panes - closes on mouse-out
@@ -1617,6 +1617,22 @@
             delete s.creatingLayout;
 
             resizeAll();
+
+            $.each(["south", "north", "east", "west"], function (i, pane) {
+                if (!$Ps[pane])
+                    return; // no pane - SKIP
+                o = options[pane];
+                s = state[pane];
+
+                $P = $Ps[pane];
+                if (o.initHidden)
+                {
+                    hide(pane);
+                } else if (o.initClosed)
+                {
+                    close(pane);
+                }
+            });
 
             return state.initialized;
         }
@@ -4475,6 +4491,9 @@
                     , shrunkW = (sC.innerWidth < oldW)
                     , $P, o, s
                     ;
+
+            var shrunk = shrunkH || shrunkW;
+
             // NOTE special order for sizing: S-N-E-W
             $.each(["south", "north", "east", "west"], function (i, pane) {
                 if (!$Ps[pane])
@@ -4483,6 +4502,7 @@
                 s = state[pane];
 
                 var paneResponsive = false;
+                var paneRespondedState = false;
                 var windowWidth = $(window).width();
 
                 if ((o !== null && o !== 'undefined') && o.responsive)
@@ -4527,51 +4547,57 @@
                             paneResponsive = true; //hide
                         }
                 }
-                if (s.autoResize && s.size != o.size) // resize pane to original size set in options
+                if (s.autoResize && s.size !== o.size) // resize pane to original size set in options
                 {
-                    if (s.isVisible)
-                        if (paneResponsive)
+                    if (paneResponsive && s.isVisible)
+                    {
+                        if (o.closable)
                         {
-                            if (o.closable)
-                            {
-                                close(pane, true, true); // true = force, true = noAnimation
-                            } else
-                            {
-                                hide(pane, true); // true = noAnimation
-                            }
+                            close(pane, true, !o.responsiveAnimate); // true = force, true = noAnimation
                         } else
                         {
+                            hide(pane, !o.responsiveAnimate); // true = noAnimation
+                        }
+                        s.responded = true;
+                    } else
+                    {
+                        if (s.responded) {
                             if (o.closable)
                             {
-                                open(pane, true, true, true); // true = force, true = noAnimation
+                                open(pane, false, !o.responsiveAnimate); // true = force, true = noAnimation
                             } else
                             {
-                                show(pane, true, true, true); // true = open/NoAnimation/NoAlert
+                                show(pane, true, !o.responsiveAnimate); // true = open/NoAnimation/NoAlert
                             }
+                            s.responded = false;
                         }
+                    }
                     sizePane(pane, o.size, true, true, true); // true=skipCallback/noAnimation/forceResize
                 } else {
                     setSizeLimits(pane);
-
-                    /* if (paneResponsive)
-                     {
-                     if (o.closable)
-                     {
-                     close(pane, true, true); // true = force, true = noAnimation
-                     } else
-                     {
-                     hide(pane, true); // true = noAnimation
-                     }
-                     } else
-                     {
-                     if (o.closable)
-                     {
-                     open(pane, true, true, true); // true = force, true = noAnimation
-                     } else
-                     {
-                     show(pane, true, true, true); // true = open/NoAnimation/NoAlert
-                     }
-                     }*/
+                    if (paneResponsive)
+                    {
+                        if (o.closable)
+                        {
+                            close(pane, true, !o.responsiveAnimate); // true = force, true = noAnimation
+                        } else
+                        {
+                            hide(pane, !o.responsiveAnimate); // true = noAnimation
+                        }
+                        s.responded = true;
+                    } else
+                    {
+                        if (s.responded) {
+                            if (o.closable)
+                            {
+                                open(pane, false, !o.responsiveAnimate); // true = force, true = noAnimation
+                            } else
+                            {
+                                show(pane, true, !o.responsiveAnimate); // true = open/NoAnimation/NoAlert
+                            }
+                            s.responded = false;
+                        }
+                    }
                     makePaneFit(pane, false, true, true); // true=skipCallback/forceResize
                 }
             });
