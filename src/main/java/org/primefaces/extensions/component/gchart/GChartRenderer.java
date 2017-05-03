@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,69 +13,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id$
  */
 package org.primefaces.extensions.component.gchart;
 
-import org.primefaces.extensions.component.gchart.model.GChartModel;
-import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
+import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import java.io.IOException;
+
 import org.primefaces.context.RequestContext;
+import org.primefaces.extensions.component.gchart.model.GChartModel;
+import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 public class GChartRenderer extends CoreRenderer {
 
-    @Override
-	public void decode(FacesContext context, UIComponent component) {
-		super.decode(context, component);
-		decodeBehaviors(context, component);
-	}
-	
-	@Override
-	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-		GChart gChart = (GChart) component;
+   @Override
+   public void decode(final FacesContext context, final UIComponent component) {
+      super.decode(context, component);
+      decodeBehaviors(context, component);
+   }
 
-		encodeMarkup(context, gChart);
-		encodeScript(context, gChart);
-	}
+   @Override
+   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+      final GChart gChart = (GChart) component;
 
-	protected void encodeMarkup(FacesContext context, GChart chart)	throws IOException {
-		ResponseWriter writer = context.getResponseWriter();
-		
-		writer.startElement("input", chart);
-		writer.writeAttribute("id", chart.getClientId() + "_hidden",null);
-		writer.writeAttribute("name",chart.getClientId() + "_hidden", null);
-		writer.writeAttribute("type", "hidden", null);
-		writer.endElement("input");
+      encodeMarkup(context, gChart);
+      encodeScript(context, gChart);
+   }
 
-		writer.startElement("div", chart);
-		writer.writeAttribute("id", chart.getClientId(), null);
-		writer.endElement("div");
-		
-		this.startScript(writer, chart.getClientId());
-		writer.writeAttribute("src", "https://www.google.com/jsapi", null);
-		this.endScript(writer);
-		
-	}
+   protected void encodeMarkup(final FacesContext context, final GChart chart) throws IOException {
+      final ResponseWriter writer = context.getResponseWriter();
 
-	protected void encodeScript(FacesContext context, GChart chart) throws IOException {
+      writer.startElement("input", chart);
+      writer.writeAttribute("id", chart.getClientId() + "_hidden", null);
+      writer.writeAttribute("name", chart.getClientId() + "_hidden", null);
+      writer.writeAttribute("type", "hidden", null);
+      writer.endElement("input");
 
-		String clientId = chart.getClientId();
-		String widgetVar = chart.resolveWidgetVar();
+      writer.startElement("div", chart);
+      writer.writeAttribute("id", chart.getClientId(), null);
+      writer.endElement("div");
+   }
 
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
-		wb.init("ExtGChart", widgetVar, clientId)
-                    .attr("chart", this.escapeText(((GChartModel) chart.getValue()).toJson()))
-                    .attr("title", chart.getTitle())
-                    .attr("width", chart.getWidth())
-                    .attr("height", chart.getHeight());
-		
-		encodeClientBehaviors(context, chart);
-		
-		wb.finish();
-	}
+   protected void encodeScript(final FacesContext context, final GChart chart) throws IOException {
+
+      final String clientId = chart.getClientId();
+      final String widgetVar = chart.resolveWidgetVar();
+
+      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+      wb.init("ExtGChart", widgetVar, clientId)
+               .attr("chart", escapeText(((GChartModel) chart.getValue()).toJson()))
+               .attr("title", chart.getTitle())
+               .attr("width", chart.getWidth())
+               .attr("height", chart.getHeight());
+
+      encodeClientBehaviors(context, chart);
+
+      wb.finish();
+   }
 }
