@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Id$
  */
 
 package org.primefaces.extensions.util;
 
-import java.beans.BeanInfo;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
@@ -32,16 +29,14 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
-import javax.faces.view.AttachedObjectTarget;
-import javax.faces.view.EditableValueHolderAttachedObjectTarget;
 
 import org.primefaces.component.api.AjaxSource;
 
 /**
  * Component utils for this project.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin / last modified by Melloware
+ * @version 0.2
  * @since 0.2
  */
 public class ComponentUtils {
