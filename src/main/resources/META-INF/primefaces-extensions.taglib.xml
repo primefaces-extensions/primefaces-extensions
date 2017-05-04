@@ -3542,7 +3542,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[error correction level: `'L'`, `'M'`, `'Q'` or `'H'. Default value `'L'`]]>
+                <![CDATA[error correction level: ''L'', ''M'', ''Q'' or ''H'. Default value ''L'']]>
             </description>
             <name>ecLevel</name>
             <required>false</required>
@@ -3856,7 +3856,7 @@
             <type>java.lang.String</type>
         </attribute>
 		<attribute>
-            <description><![CDATA[Start page of the document.]]></description>
+            <description><![CDATA[Zoom level. Example: zoom=200 (accepted formats: '[zoom],[left],[top]', 'page-width', 'page-height', 'page-fit', 'auto')]]></description>
             <name>zoom</name>
             <required>false</required>
             <type>java.lang.String</type>
