@@ -27,6 +27,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 
         if (input.length === 0) {
             alert('Calculator must use for="target" or be nested inside an input!');
+            console.error('Calculator must use for="target" or be nested inside an input!');
         } else {
             this._applyCalculator(input, cfg);
         }
