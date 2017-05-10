@@ -18,12 +18,18 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
 		this.cfg = cfg;
 		this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target);
 
+		var input = this.target;
 		if (this.target.is(':input')) {
-			this._applyCalculator(this.target, cfg);
-		} else {
-			var nestedInput = $(':not(:submit):not(:button):input:visible:enabled:first', this.target);
-			this._applyCalculator(nestedInput, cfg);
-		}
+            input = this.target; 
+        } else {
+            input = $(':not(:submit):not(:button):input:visible:enabled:first', this.target);
+        }
+		
+		if (input.length === 0) {
+		    alert('Calculator must use for="target" or be nested inside an input!');  
+        } else {
+            this._applyCalculator(input, cfg);
+        }
 	},
 
 	/**
