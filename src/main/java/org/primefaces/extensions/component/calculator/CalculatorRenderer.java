@@ -19,7 +19,9 @@ package org.primefaces.extensions.component.calculator;
 
 import java.io.IOException;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +53,11 @@ public class CalculatorRenderer extends CoreRenderer {
       String target = SearchExpressionFacade.resolveClientIds(context, calculator, calculator.getFor());
       if (isValueBlank(target)) {
          target = calculator.getParent().getClientId(context);
+      }
+      
+      UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
+      if(!(targetComponent instanceof UIInput)) {
+	  throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
       }
 
       final WidgetBuilder wb = getWidgetBuilder(context);
