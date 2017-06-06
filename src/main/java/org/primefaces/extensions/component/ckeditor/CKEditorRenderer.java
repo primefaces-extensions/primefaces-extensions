@@ -104,9 +104,15 @@ public class CKEditorRenderer extends InputRenderer {
                 .attr("readOnly", ckEditor.isReadonly())
                 .attr("interfaceColor", ckEditor.getInterfaceColor())
                 .attr("language", ckEditor.getLanguage())
-                .attr("defaultLanguage", ckEditor.getDefaultLanguage())
-                .attr("contentsCss", ckEditor.getContentsCss())
-                .attr("customConfig", ckEditor.getCustomConfig())
+                .attr("defaultLanguage", ckEditor.getDefaultLanguage());
+        if (ckEditor.getContentsCss() != null && ckEditor.getContentsCss().startsWith("[")) {
+            // new :: Array of CSS-Files :: ['/path/css1.css','/path/css2.css']
+            wb.nativeAttr("contentsCss", ckEditor.getContentsCss());
+        } else {
+            // default behaviour
+            wb.attr("contentsCss", ckEditor.getContentsCss());
+        }
+        wb.attr("customConfig", ckEditor.getCustomConfig())
                 .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
                 .attr("tabindex", ckEditor.getTabindex());
 
