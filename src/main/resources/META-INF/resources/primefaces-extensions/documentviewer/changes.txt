@@ -16,6 +16,11 @@
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
 
+Remove this check...
+    if (fileOrigin !== viewerOrigin) {
+      throw new Error('file origin does not match viewer\'s');
+    }
+
 6. Allow language changing by disabling debug check by changing...
 
   if (PDFViewerApplication.preferencePdfBugEnabled) {
