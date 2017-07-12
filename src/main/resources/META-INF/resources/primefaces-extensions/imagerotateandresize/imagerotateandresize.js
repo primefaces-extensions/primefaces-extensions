@@ -143,83 +143,53 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
 		var cos = Math.cos(rotation);
 		var sin = Math.sin(rotation);
 
-		//check for < IE9, otherwise use canvas
-		if ($.browser.msie && parseInt($.browser.version) <= 8) {
-			//create new image
-			var image = document.createElement('img');
+		//create canvas instead of img
+		var canvas = document.createElement('canvas');
 
-			image.onload = $.proxy(function() {
-				//set new size
-				image.height = this.newImageHeight;
-				image.width = this.newImageWidth;
+		//new image with new size
+		var newImage = new Image();
 
-				//apply rotation for IE
-				image.style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (sin * -1) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')";
+		newImage.onload = $.proxy(function() {
+			//rotate
+			canvas.style.width = canvas.width = Math.abs(cos * newImage.width) + Math.abs(sin * newImage.height);
+			canvas.style.height = canvas.height = Math.abs(cos * newImage.height) + Math.abs(sin * newImage.width);
 
-				//replace old image with new generated one
-				image.id = this.target.id;
-				this.target.parentNode.replaceChild(image, this.target);
-				this.target = image;
+			var context = canvas.getContext('2d');
+			context.save();
 
-				if (fireResizeEvent) {
-					this.fireResizeEvent();
-				}
-				if (fireRotateEvent) {
-					this.fireRotateEvent();
-				}
+			if (rotation <= Math.PI/2) {
+				context.translate(sin * newImage.height, 0);
+			} else if (rotation <= Math.PI) {
+				context.translate(canvas.width, (cos * -1) * newImage.height);
+			} else if (rotation <= 1.5 * Math.PI) {
+				context.translate((cos * -1) * newImage.width, canvas.height);
+			} else {
+				context.translate(0, (sin * -1) * newImage.width);
+			}
 
-			}, this);
+			context.rotate(rotation);
+			context.drawImage(newImage, 0, 0, newImage.width, newImage.height);
+			context.restore();
 
-			image.src = this.imageSrc;
+			//replace image with canvas and set src attribute
+			canvas.id = this.target.id;
+			canvas.src = this.target.src;
+			this.target.parentNode.replaceChild(canvas, this.target);
+			this.target = canvas;
 
-		} else {
-			//create canvas instead of img
-			var canvas = document.createElement('canvas');
+			if (fireResizeEvent) {
+				this.fireResizeEvent();
+			}
+			if (fireRotateEvent) {
+				this.fireRotateEvent();
+			}
 
-			//new image with new size
-			var newImage = new Image();
+		}, this);
 
-			newImage.onload = $.proxy(function() {
-				//rotate
-				canvas.style.width = canvas.width = Math.abs(cos * newImage.width) + Math.abs(sin * newImage.height);
-				canvas.style.height = canvas.height = Math.abs(cos * newImage.height) + Math.abs(sin * newImage.width);
-
-				var context = canvas.getContext('2d');
-				context.save();
-
-				if (rotation <= Math.PI/2) {
-					context.translate(sin * newImage.height, 0);
-				} else if (rotation <= Math.PI) {
-					context.translate(canvas.width, (cos * -1) * newImage.height);
-				} else if (rotation <= 1.5 * Math.PI) {
-					context.translate((cos * -1) * newImage.width, canvas.height);
-				} else {
-					context.translate(0, (sin * -1) * newImage.width);
-				}
-
-				context.rotate(rotation);
-				context.drawImage(newImage, 0, 0, newImage.width, newImage.height);
-				context.restore();
-
-				//replace image with canvas and set src attribute
-				canvas.id = this.target.id;
-				canvas.src = this.target.src;
-				this.target.parentNode.replaceChild(canvas, this.target);
-				this.target = canvas;
-
-				if (fireResizeEvent) {
-					this.fireResizeEvent();
-				}
-				if (fireRotateEvent) {
-					this.fireRotateEvent();
-				}
-
-			}, this);
-
-			newImage.src = this.imageSrc;
-			newImage.width = this.newImageWidth;
-			newImage.height = this.newImageHeight;
-		}
+		newImage.src = this.imageSrc;
+		newImage.width = this.newImageWidth;
+		newImage.height = this.newImageHeight;
+		
 	},
 
 	/**
