@@ -138,11 +138,12 @@ public class PDFExporter extends Exporter {
                 addEmptyLine(preface, datasetPadding);
                 document.add(preface);
             }
-            document.close();
 
             if (postProcessor != null) {
                postProcessor.invoke(context.getELContext(), new Object[]{document});
             }
+            
+            document.close();
 
             writePDFToResponse(context.getExternalContext(), baos, filename);
 
