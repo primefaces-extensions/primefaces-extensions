@@ -455,6 +455,11 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 				}
 			}
 
+                        // skip if the component is not a children
+                        if (!clientId.startsWith(this.getClientId(context))) {
+                            return false;
+                        }
+                        
 			return invokeOnChildren(context, clientId, callback);
 		} catch (final FacesException fe) {
 			throw fe;
