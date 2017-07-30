@@ -27,6 +27,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
@@ -257,18 +258,35 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
 		}
 
-		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-		for (DynaFormControl dynaFormControl : dynaFormControls) {
-			setData(dynaFormControl);
+                if (this.getChildCount() > 0) {
+                    String key = clientId.substring(this.getClientId().length() + 1);
+                    key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
-			if (super.invokeOnComponent(context, clientId, callback)) {
-				return true;
-			}
-		}
+                    List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+                    for (DynaFormControl dynaFormControl : dynaFormControls) {
+                        if (dynaFormControl.getKey().equals(key)) {
 
-		resetData();
+                            UIDynaFormControl uiDynaFormControl = this.getControlCell(dynaFormControl.getType());
 
-		return false;
+                            try {
+                                setData(dynaFormControl);
+
+                                if (uiDynaFormControl.invokeOnComponent(context, clientId, callback)) {
+                                    return true;
+                                }
+                            }
+                            finally {
+                                resetData();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                resetData();
+
+                return false;
 	}
 
 	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
