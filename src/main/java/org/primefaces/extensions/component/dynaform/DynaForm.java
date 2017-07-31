@@ -259,18 +259,25 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 		}
 
                 if (this.getChildCount() > 0) {
-                    String key = clientId.substring(this.getClientId().length() + 1);
+                    // extract the dynaFormControl key from the clientId
+                    // it's simliar to rowKey in UIData
+                    String key = clientId.substring(getClientId().length() + 1);
                     key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
                     List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
                     for (DynaFormControl dynaFormControl : dynaFormControls) {
+                        
+                        // determine associated DynaFormControl
                         if (dynaFormControl.getKey().equals(key)) {
 
-                            UIDynaFormControl uiDynaFormControl = this.getControlCell(dynaFormControl.getType());
+                            // get UI control for DynaFormControl
+                            UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
 
                             try {
+                                // push the associated data before visiting the child components
                                 setData(dynaFormControl);
 
+                                // visit childs
                                 if (uiDynaFormControl.invokeOnComponent(context, clientId, callback)) {
                                     return true;
                                 }
@@ -283,8 +290,6 @@ public class DynaForm extends AbstractDynamicData implements Widget {
                         }
                     }
                 }
-
-                resetData();
 
                 return false;
 	}
