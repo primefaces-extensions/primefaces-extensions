@@ -29,6 +29,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
@@ -355,40 +356,66 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
       return false;
    }
 
-   @Override
-   protected boolean invokeOnChildren(final FacesContext context, final String clientId,
-            final ContextCallback callback) {
-      if (getVar() != null) {
-         // dynamic items
-         final Object value = getValue();
-         if (value == null) {
-            return false;
-         }
+    @Override
+    protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
 
-         if (!(value instanceof Collection<?>)) {
-            throw new FacesException("Value in FluidGrid must be of type Collection / List");
-         }
+        Object value = getValue();
+        if (value == null) {
+           return false;
+        }
 
-         @SuppressWarnings("unchecked")
-         final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
-         for (final FluidGridItem fluidGridItem : col) {
-            setData(fluidGridItem);
-         }
+        if (!(value instanceof Collection<?>)) {
+           throw new FacesException("Value in FluidGrid must be of type Collection / List");
+        }
 
-         resetData();
-      } else {
-         // static items
-         if (getChildCount() > 0) {
-            for (final UIComponent child : getChildren()) {
-               if (child.invokeOnComponent(context, clientId, callback)) {
-                  return true;
-               }
-            }
-         }
-      }
-
-      return false;
-   }
+        if (this.getChildCount() > 0) {
+            // extract the fluidGridItem key from the clientId
+            // it's simliar to rowKey in UIData
+            String key = clientId.substring(this.getClientId().length() + 1);
+            key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
+            
+            Collection<FluidGridItem> fluidGridItems = (Collection<FluidGridItem>) value;
+            for (FluidGridItem fluidGridItem : fluidGridItems) {
+                
+                // determine associated FluidGridItem
+                if (fluidGridItem.getKey().equals(key)) {
+                
+                    // get UI control for FluidGridItem
+                    UIFluidGridItem uiFluidGridItem = null;
+                    if (getVar() == null) {
+                        for (UIComponent child : getChildren()) {
+                           if (child instanceof UIFluidGridItem && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
+                              uiFluidGridItem = (UIFluidGridItem) child;
+                           }
+                        }
+                    }
+                    else {
+                        uiFluidGridItem = (UIFluidGridItem) this.getChildren().get(0);
+                    }
+                    
+                    if (uiFluidGridItem == null) {
+                        continue;
+                    }
+                    
+                    try {
+                        // push the associated data before visiting the child components
+                        setData(fluidGridItem);
+                        
+                        // visit childs
+                        if (uiFluidGridItem.invokeOnComponent(context, clientId, callback)) {
+                            return true;
+                        }
+                    }
+                    finally {
+                        resetData();
+                    }
+                    
+                }
+            }            
+        }
+        
+        return false;
+    }
 
    private void processFluidGridDynamicItems(final FacesContext context, final PhaseId phaseId,
             final FluidGridItem fluidGridItem) {
