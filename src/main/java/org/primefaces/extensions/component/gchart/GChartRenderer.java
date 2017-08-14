@@ -64,7 +64,7 @@ public class GChartRenderer extends CoreRenderer {
 
       final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
       wb.init("ExtGChart", widgetVar, clientId)
-               .attr("chart", escapeText(((GChartModel) chart.getValue()).toJson()))
+               .attr("chart", ((GChartModel) chart.getValue()).toJson())
                .attr("title", chart.getTitle())
                .attr("width", chart.getWidth())
                .attr("height", chart.getHeight());

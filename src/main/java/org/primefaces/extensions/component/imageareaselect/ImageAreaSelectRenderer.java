@@ -66,7 +66,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
                 .attr("minHeight", imageAreaSelect.getMinHeight())
                 .attr("minWidth", imageAreaSelect.getMinWidth())
                 .attr("keyboardSupport", imageAreaSelect.isKeyboardSupport())
-                .attr("parentSelector", escapeText(imageAreaSelect.getParentSelector()));
+                .attr("parentSelector", imageAreaSelect.getParentSelector());
 
 		encodeClientBehaviors(context, imageAreaSelect);
         wb.finish();

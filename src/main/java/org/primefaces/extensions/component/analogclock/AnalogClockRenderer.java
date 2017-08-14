@@ -68,7 +68,7 @@ public class AnalogClockRenderer extends CoreRenderer {
 				wb.attr("colorTheme", analogClock.getColorTheme().toString());
 			} else {
                 AnalogClockColorModel model = (AnalogClockColorModel) analogClock.getColorTheme();
-                wb.attr("themeObject", this.escapeText(model.toJson()));
+                wb.attr("themeObject", model.toJson());
 			}
 		}
 
