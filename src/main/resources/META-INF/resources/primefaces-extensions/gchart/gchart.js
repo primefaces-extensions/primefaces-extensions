@@ -20,11 +20,15 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
         this.height = cfg.height;
         this.width = cfg.width;
         this.title = cfg.title;
+        this.apiKey = cfg.apiKey;
         this.options = this.chart.options;
         this.input = jQuery(this.jqId + "_hidden");
 
         google.charts.load('current', {
-            packages : [ 'corechart', 'geochart', 'orgchart' ]
+            packages : [ 'corechart', 'geochart', 'orgchart' ],
+            // Note: you will need to get a mapsApiKey for your project.
+            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+            mapsApiKey: this.apiKey
         });
 
         jQuery(document).ready(function() {

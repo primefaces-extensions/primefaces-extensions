@@ -13,12 +13,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
-import com.google.gson.JsonArray;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+
+import com.google.gson.JsonArray;
 
 @ResourceDependencies({
          @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
@@ -29,6 +30,8 @@ import org.primefaces.util.Constants;
 })
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
+   public final static String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";
+
    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
@@ -38,10 +41,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
             .unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
    protected static enum PropertyKeys {
-      widgetVar, 
-      width, 
-      height, 
-      title;
+      widgetVar, width, height, title, apiKey;
    }
 
    public GChart() {
@@ -93,6 +93,14 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
    public void setTitle(String title) {
       getStateHelper().put(PropertyKeys.title, title);
+   }
+
+   public String getApiKey() {
+      return (String) getStateHelper().eval(PropertyKeys.apiKey, null);
+   }
+
+   public void setApiKey(String apiKey) {
+      getStateHelper().put(PropertyKeys.apiKey, apiKey);
    }
 
    @Override

@@ -3946,6 +3946,13 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[Google Maps API Key. Can also be provided globally in web.xml as primefaces.GOOGLE_MAPS_API_KEY]]>
+            </description>
+            <name>apiKey</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>

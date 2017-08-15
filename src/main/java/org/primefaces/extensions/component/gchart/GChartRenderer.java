@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.component.gchart.model.GChartModel;
 import org.primefaces.renderkit.CoreRenderer;
@@ -62,15 +63,32 @@ public class GChartRenderer extends CoreRenderer {
       final String clientId = chart.getClientId();
       final String widgetVar = chart.resolveWidgetVar();
 
+      String apiKey = chart.getApiKey();
+      if (StringUtils.isBlank(apiKey)) {
+         apiKey = getApiKey(context, chart);
+      }
+
       final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
       wb.init("ExtGChart", widgetVar, clientId)
                .attr("chart", ((GChartModel) chart.getValue()).toJson())
                .attr("title", chart.getTitle())
+               .attr("apiKey", apiKey)
                .attr("width", chart.getWidth())
                .attr("height", chart.getHeight());
 
       encodeClientBehaviors(context, chart);
 
       wb.finish();
+   }
+
+   protected String getApiKey(FacesContext context, GChart chart) {
+      String key = null;
+      try {
+         String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
+         key = context.getApplication().evaluateExpressionGet(context, initParam, String.class);
+      } catch (Exception e) {
+         key = null;
+      }
+      return key;
    }
 }
