@@ -117,13 +117,15 @@ public class LayoutRenderer extends CoreRenderer {
    protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
       final ResponseWriter writer = fc.getResponseWriter();
       final String clientId = layout.getClientId(fc);
+
       final WidgetBuilder wb = getWidgetBuilder(fc);
       wb.initWithDomReady("ExtLayout", layout.resolveWidgetVar(), clientId);
       wb.attr("clientState", layout.isStateCookie());
+
       if (layout.isFullPage()) {
          wb.attr("forTarget", "body");
       } else {
-         wb.attr("forTarget", ComponentUtils.escapeJQueryId(clientId));
+         wb.selectorAttr("forTarget", ComponentUtils.escapeJQueryId(clientId));
       }
 
       final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
