@@ -21,8 +21,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.layout.Layout} and
+ * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} and
  * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
  * @author Oleg Varaksin / last modified by $Author$
@@ -32,9 +31,9 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class CloseEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "close";
+    public static final String NAME = "close";
 
-   public CloseEvent(final UIComponent component, final Behavior behavior) {
-      super(component, behavior);
-   }
+    public CloseEvent(final UIComponent component, final Behavior behavior) {
+        super(component, behavior);
+    }
 }

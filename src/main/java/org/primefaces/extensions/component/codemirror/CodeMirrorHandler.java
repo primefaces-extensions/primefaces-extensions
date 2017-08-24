@@ -33,17 +33,17 @@ import org.primefaces.facelets.MethodRule;
  */
 public class CodeMirrorHandler extends ComponentHandler {
 
-	public CodeMirrorHandler(final ComponentConfig config) {
-		super(config);
-	}
+    public CodeMirrorHandler(final ComponentConfig config) {
+        super(config);
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(final Class type) {
-		final MetaRuleset metaRuleset = super.createMetaRuleset(type);
+    @Override
+    @SuppressWarnings("unchecked")
+    protected MetaRuleset createMetaRuleset(final Class type) {
+        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
+        metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
 
-		return metaRuleset;
-	}
+        return metaRuleset;
+    }
 }

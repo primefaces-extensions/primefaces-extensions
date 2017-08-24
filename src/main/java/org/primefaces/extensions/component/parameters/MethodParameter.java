@@ -26,76 +26,75 @@ import org.primefaces.extensions.util.DummyValueExpression;
 /**
  * Component class for the <code>MethodParameter</code> component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class MethodParameter extends AbstractParameter {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MethodParameter";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MethodParameter";
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author  Thomas Andraschko / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Thomas Andraschko / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
 
-		type;
+        type;
 
-		private String toString;
+        private String toString;
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys() {
-		}
+        PropertyKeys() {
+        }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-	public MethodParameter() {
-		setRendererType(null);
-	}
+    public MethodParameter() {
+        setRendererType(null);
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	public String getType() {
-		return (String) getStateHelper().eval(PropertyKeys.type, null);
-	}
+    public String getType() {
+        return (String) getStateHelper().eval(PropertyKeys.type, null);
+    }
 
-	public void setType(final String type) {
-		getStateHelper().put(PropertyKeys.type, type);
-	}
+    public void setType(final String type) {
+        getStateHelper().put(PropertyKeys.type, type);
+    }
 
-	/**
-	 * Enables converters to get the value type from the "value" expression.
-	 *
-	 * @param  name DOCUMENT_ME
-	 * @return DOCUMENT_ME
-	 */
-	@Override
-	public ValueExpression getValueExpression(final String name) {
-		if ("value".equals(name)) {
-			//get type from parent component
-			//MethodSignatureTagHandler stores all parameters to the parent component
-			final UIComponent parent = getParent();
-			final Map<String, Object> parentAttribtues = parent.getAttributes();
-			final Class<?>[] parameterTypes =
-					(Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
-			final Class<?> parameterType = parameterTypes[parent.getChildren().indexOf(this)];
+    /**
+     * Enables converters to get the value type from the "value" expression.
+     *
+     * @param name DOCUMENT_ME
+     * @return DOCUMENT_ME
+     */
+    @Override
+    public ValueExpression getValueExpression(final String name) {
+        if ("value".equals(name)) {
+            // get type from parent component
+            // MethodSignatureTagHandler stores all parameters to the parent component
+            final UIComponent parent = getParent();
+            final Map<String, Object> parentAttribtues = parent.getAttributes();
+            final Class<?>[] parameterTypes = (Class<?>[]) parentAttribtues.get(MethodSignatureTagHandler.PARAMETERS_TYPES_ATTRIBUTE_NAME);
+            final Class<?> parameterType = parameterTypes[parent.getChildren().indexOf(this)];
 
-			return new DummyValueExpression(parameterType);
-		}
+            return new DummyValueExpression(parameterType);
+        }
 
-		return super.getValueExpression(name);
-	}
+        return super.getValueExpression(name);
+    }
 }

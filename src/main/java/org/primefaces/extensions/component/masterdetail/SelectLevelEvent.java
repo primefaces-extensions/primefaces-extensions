@@ -22,40 +22,40 @@ import javax.faces.event.FacesListener;
 /**
  * Event class for master-detail navigation.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class SelectLevelEvent extends FacesEvent {
 
-	private int currentLevel;
-	private int newLevel;
+    private int currentLevel;
+    private int newLevel;
 
-	public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
-		super(component);
-		this.currentLevel = currentLevel;
-		this.newLevel = newLevel;
-	}
+    public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
+        super(component);
+        this.currentLevel = currentLevel;
+        this.newLevel = newLevel;
+    }
 
-	@Override
-	public boolean isAppropriateListener(FacesListener listener) {
-		return false;
-	}
+    @Override
+    public boolean isAppropriateListener(FacesListener listener) {
+        return false;
+    }
 
-	@Override
-	public void processListener(FacesListener listener) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void processListener(FacesListener listener) {
+        throw new UnsupportedOperationException();
+    }
 
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 
-	public int getNewLevel() {
-		return newLevel;
-	}
+    public int getNewLevel() {
+        return newLevel;
+    }
 
-	public boolean isEntered(int level) {
-		return newLevel == level && currentLevel != level;
-	}
+    public boolean isEntered(int level) {
+        return newLevel == level && currentLevel != level;
+    }
 }

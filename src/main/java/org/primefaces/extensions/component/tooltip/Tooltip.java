@@ -29,244 +29,246 @@ import org.primefaces.util.ComponentUtils;
  * @since 0.2
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
 })
 public class Tooltip extends UIOutput implements Widget {
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TooltipRenderer";
 
-   /**
-    * Properties that are tracked by state saving.
-    *
-    * @author Oleg Varaksin / last modified by $Author$
-    * @version $Revision$
-    */
-   protected enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Oleg Varaksin / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
 
-      widgetVar, 
-      global, 
-      shared, 
-      autoShow, 
-      mouseTracking, 
-      fixed, 
-      header, 
-      adjustX, 
-      adjustY, 
-      atPosition, 
-      myPosition, 
-      showEvent, 
-      showDelay, 
-      showEffect, 
-      showEffectLength, 
-      styleClass, 
-      hideEvent, 
-      hideDelay, 
-      hideEffect, 
-      hideEffectLength, 
-      forValue("for");
+        //@formatter:off
+        widgetVar, 
+        global, 
+        shared, 
+        autoShow,
+        mouseTracking, 
+        fixed, 
+        header, 
+        adjustX, 
+        adjustY, 
+        atPosition, 
+        myPosition, 
+        showEvent, 
+        showDelay, 
+        showEffect, 
+        showEffectLength, 
+        styleClass, 
+        hideEvent, 
+        hideDelay, 
+        hideEffect, 
+        hideEffectLength, 
+        forValue("for");
+        //@formatter:on
 
-      private String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   public Tooltip() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+    public Tooltip() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setWidgetVar(final String widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-   }
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
 
-   public boolean isGlobal() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.global, false);
-   }
+    public boolean isGlobal() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.global, false);
+    }
 
-   public void setGlobal(final boolean global) {
-      getStateHelper().put(PropertyKeys.global, global);
-   }
+    public void setGlobal(final boolean global) {
+        getStateHelper().put(PropertyKeys.global, global);
+    }
 
-   public boolean isShared() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.shared, false);
-   }
+    public boolean isShared() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.shared, false);
+    }
 
-   public void setShared(final boolean shared) {
-      getStateHelper().put(PropertyKeys.shared, shared);
-   }
+    public void setShared(final boolean shared) {
+        getStateHelper().put(PropertyKeys.shared, shared);
+    }
 
-   public boolean isAutoShow() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.autoShow, false);
-   }
+    public boolean isAutoShow() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoShow, false);
+    }
 
-   public void setAutoShow(final boolean autoShow) {
-      getStateHelper().put(PropertyKeys.autoShow, autoShow);
-   }
+    public void setAutoShow(final boolean autoShow) {
+        getStateHelper().put(PropertyKeys.autoShow, autoShow);
+    }
 
-   public boolean isMouseTracking() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.mouseTracking, false);
-   }
+    public boolean isMouseTracking() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.mouseTracking, false);
+    }
 
-   public void setMouseTracking(final boolean mouseTracking) {
-      getStateHelper().put(PropertyKeys.mouseTracking, mouseTracking);
-   }
+    public void setMouseTracking(final boolean mouseTracking) {
+        getStateHelper().put(PropertyKeys.mouseTracking, mouseTracking);
+    }
 
-   public boolean isFixed() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.fixed, false);
-   }
+    public boolean isFixed() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.fixed, false);
+    }
 
-   public void setFixed(final boolean fixed) {
-      getStateHelper().put(PropertyKeys.fixed, fixed);
-   }
+    public void setFixed(final boolean fixed) {
+        getStateHelper().put(PropertyKeys.fixed, fixed);
+    }
 
-   public int getAdjustX() {
-      return (Integer) getStateHelper().eval(PropertyKeys.adjustX, 0);
-   }
+    public int getAdjustX() {
+        return (Integer) getStateHelper().eval(PropertyKeys.adjustX, 0);
+    }
 
-   public void setAdjustX(final int adjustX) {
-      getStateHelper().put(PropertyKeys.adjustX, adjustX);
-   }
+    public void setAdjustX(final int adjustX) {
+        getStateHelper().put(PropertyKeys.adjustX, adjustX);
+    }
 
-   public int getAdjustY() {
-      return (Integer) getStateHelper().eval(PropertyKeys.adjustY, 0);
-   }
+    public int getAdjustY() {
+        return (Integer) getStateHelper().eval(PropertyKeys.adjustY, 0);
+    }
 
-   public void setAdjustY(final int adjustY) {
-      getStateHelper().put(PropertyKeys.adjustY, adjustY);
-   }
+    public void setAdjustY(final int adjustY) {
+        getStateHelper().put(PropertyKeys.adjustY, adjustY);
+    }
 
-   public String getAtPosition() {
-      return (String) getStateHelper().eval(PropertyKeys.atPosition, "bottom right");
-   }
+    public String getAtPosition() {
+        return (String) getStateHelper().eval(PropertyKeys.atPosition, "bottom right");
+    }
 
-   public void setAtPosition(final String atPosition) {
-      getStateHelper().put(PropertyKeys.atPosition, atPosition);
-   }
+    public void setAtPosition(final String atPosition) {
+        getStateHelper().put(PropertyKeys.atPosition, atPosition);
+    }
 
-   public String getMyPosition() {
-      return (String) getStateHelper().eval(PropertyKeys.myPosition, "top left");
-   }
+    public String getMyPosition() {
+        return (String) getStateHelper().eval(PropertyKeys.myPosition, "top left");
+    }
 
-   public void setMyPosition(final String myPosition) {
-      getStateHelper().put(PropertyKeys.myPosition, myPosition);
-   }
+    public void setMyPosition(final String myPosition) {
+        getStateHelper().put(PropertyKeys.myPosition, myPosition);
+    }
 
-   public String getShowEvent() {
-      return (String) getStateHelper().eval(PropertyKeys.showEvent, "mouseenter");
-   }
+    public String getShowEvent() {
+        return (String) getStateHelper().eval(PropertyKeys.showEvent, "mouseenter");
+    }
 
-   public void setShowEvent(final String showEvent) {
-      getStateHelper().put(PropertyKeys.showEvent, showEvent);
-   }
+    public void setShowEvent(final String showEvent) {
+        getStateHelper().put(PropertyKeys.showEvent, showEvent);
+    }
 
-   public int getShowDelay() {
-      return (Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
-   }
+    public int getShowDelay() {
+        return (Integer) getStateHelper().eval(PropertyKeys.showDelay, 0);
+    }
 
-   public void setShowDelay(final int showDelay) {
-      getStateHelper().put(PropertyKeys.showDelay, showDelay);
-   }
+    public void setShowDelay(final int showDelay) {
+        getStateHelper().put(PropertyKeys.showDelay, showDelay);
+    }
 
-   public String getShowEffect() {
-      return (String) getStateHelper().eval(PropertyKeys.showEffect, "fadeIn");
-   }
+    public String getShowEffect() {
+        return (String) getStateHelper().eval(PropertyKeys.showEffect, "fadeIn");
+    }
 
-   public void setShowEffect(final String showEffect) {
-      getStateHelper().put(PropertyKeys.showEffect, showEffect);
-   }
+    public void setShowEffect(final String showEffect) {
+        getStateHelper().put(PropertyKeys.showEffect, showEffect);
+    }
 
-   public int getShowEffectLength() {
-      return (Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
-   }
+    public int getShowEffectLength() {
+        return (Integer) getStateHelper().eval(PropertyKeys.showEffectLength, 500);
+    }
 
-   public void setShowEffectLength(final int showEffectLength) {
-      getStateHelper().put(PropertyKeys.showEffectLength, showEffectLength);
-   }
+    public void setShowEffectLength(final int showEffectLength) {
+        getStateHelper().put(PropertyKeys.showEffectLength, showEffectLength);
+    }
 
-   public String getHideEvent() {
-      return (String) getStateHelper().eval(PropertyKeys.hideEvent, "mouseleave");
-   }
+    public String getHideEvent() {
+        return (String) getStateHelper().eval(PropertyKeys.hideEvent, "mouseleave");
+    }
 
-   public void setHideEvent(final String hideEvent) {
-      getStateHelper().put(PropertyKeys.hideEvent, hideEvent);
-   }
+    public void setHideEvent(final String hideEvent) {
+        getStateHelper().put(PropertyKeys.hideEvent, hideEvent);
+    }
 
-   public int getHideDelay() {
-      return (Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
-   }
+    public int getHideDelay() {
+        return (Integer) getStateHelper().eval(PropertyKeys.hideDelay, 0);
+    }
 
-   public void setHideDelay(final int hideDelay) {
-      getStateHelper().put(PropertyKeys.hideDelay, hideDelay);
-   }
+    public void setHideDelay(final int hideDelay) {
+        getStateHelper().put(PropertyKeys.hideDelay, hideDelay);
+    }
 
-   public String getHideEffect() {
-      return (String) getStateHelper().eval(PropertyKeys.hideEffect, "fadeOut");
-   }
+    public String getHideEffect() {
+        return (String) getStateHelper().eval(PropertyKeys.hideEffect, "fadeOut");
+    }
 
-   public void setHideEffect(final String hideEffect) {
-      getStateHelper().put(PropertyKeys.hideEffect, hideEffect);
-   }
+    public void setHideEffect(final String hideEffect) {
+        getStateHelper().put(PropertyKeys.hideEffect, hideEffect);
+    }
 
-   public int getHideEffectLength() {
-      return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
-   }
+    public int getHideEffectLength() {
+        return (Integer) getStateHelper().eval(PropertyKeys.hideEffectLength, 500);
+    }
 
-   public void setHideEffectLength(final int hideEffectLength) {
-      getStateHelper().put(PropertyKeys.hideEffectLength, hideEffectLength);
-   }
+    public void setHideEffectLength(final int hideEffectLength) {
+        getStateHelper().put(PropertyKeys.hideEffectLength, hideEffectLength);
+    }
 
-   public String getFor() {
-      return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-   }
+    public String getFor() {
+        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+    }
 
-   public void setFor(final String forValue) {
-      getStateHelper().put(PropertyKeys.forValue, forValue);
-   }
+    public void setFor(final String forValue) {
+        getStateHelper().put(PropertyKeys.forValue, forValue);
+    }
 
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   public String getStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.styleClass);
-   }
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass);
+    }
 
-   public void setStyleClass(final String styleClass) {
-      getStateHelper().put(PropertyKeys.styleClass, styleClass);
-   }
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
 
-   public String getHeader() {
-      return (String) getStateHelper().eval(PropertyKeys.header);
-   }
+    public String getHeader() {
+        return (String) getStateHelper().eval(PropertyKeys.header);
+    }
 
-   public void setHeader(final String header) {
-      getStateHelper().put(PropertyKeys.header, header);
-   }
+    public void setHeader(final String header) {
+        getStateHelper().put(PropertyKeys.header, header);
+    }
 
 }

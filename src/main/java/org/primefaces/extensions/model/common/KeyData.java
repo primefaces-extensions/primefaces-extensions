@@ -18,17 +18,17 @@ package org.primefaces.extensions.model.common;
 /**
  * Data wrapper interface with unique key.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public interface KeyData {
 
-	String getKey();
+    String getKey();
 
-	void setKey(String key);
+    void setKey(String key);
 
-	Object getData();
+    Object getData();
 
-	void setData(Object data);
+    void setData(Object data);
 }

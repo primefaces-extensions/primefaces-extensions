@@ -22,175 +22,177 @@ import java.util.List;
 /**
  * Class representing a row inside of <code>DynaForm</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class DynaFormRow implements Serializable {
 
-	private static final long serialVersionUID = 20120514L;
+    private static final long serialVersionUID = 20120514L;
 
-	private int row;
-	private boolean extended;
-	private int totalColspan = 0;
-	private DynaFormModel dynaFormModel;
+    private int row;
+    private boolean extended;
+    private int totalColspan = 0;
+    private DynaFormModel dynaFormModel;
 
-	// all elements (label and controls) in this row
-	private List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
+    // all elements (label and controls) in this row
+    private List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
 
-	/**
-	 * This constructor is required for serialization. Please do not remove.
-	 */
-	public DynaFormRow() {
-	}
+    /**
+     * This constructor is required for serialization. Please do not remove.
+     */
+    public DynaFormRow() {
+    }
 
-	public DynaFormRow(int row, boolean extended, DynaFormModel dynaFormModel) {
-		this.row = row;
-		this.extended = extended;
-		this.dynaFormModel = dynaFormModel;
-	}
+    public DynaFormRow(int row, boolean extended, DynaFormModel dynaFormModel) {
+        this.row = row;
+        this.extended = extended;
+        this.dynaFormModel = dynaFormModel;
+    }
 
-	/**
-	 * Adds control with data, default type, colspan = 1 and rowspan = 1.
-	 *
-	 * @param  data data object
-	 * @return DynaFormControl added control
-	 */
-	public DynaFormControl addControl(Object data) {
-		return addControl(data, DynaFormControl.DEFAULT_TYPE, 1, 1);
-	}
+    /**
+     * Adds control with data, default type, colspan = 1 and rowspan = 1.
+     *
+     * @param data data object
+     * @return DynaFormControl added control
+     */
+    public DynaFormControl addControl(Object data) {
+        return addControl(data, DynaFormControl.DEFAULT_TYPE, 1, 1);
+    }
 
-	/**
-	 * Adds control with given data, type, colspan = 1 and rowspan = 1.
-	 *
-	 * @param  data data object
-	 * @param  type type to match the type attribute in pe:dynaFormControl
-	 * @return DynaFormControl added control
-	 */
-	public DynaFormControl addControl(Object data, String type) {
-		return addControl(data, type, 1, 1);
-	}
+    /**
+     * Adds control with given data, type, colspan = 1 and rowspan = 1.
+     *
+     * @param data data object
+     * @param type type to match the type attribute in pe:dynaFormControl
+     * @return DynaFormControl added control
+     */
+    public DynaFormControl addControl(Object data, String type) {
+        return addControl(data, type, 1, 1);
+    }
 
-	/**
-	 * Adds control with given data, default type, colspan and rowspan.
-	 *
-	 * @param  data    data object
-	 * @param  colspan colspan
-	 * @param  rowspan rowspan
-	 * @return DynaFormControl added control
-	 */
-	public DynaFormControl addControl(Object data, int colspan, int rowspan) {
-		return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
-	}
+    /**
+     * Adds control with given data, default type, colspan and rowspan.
+     *
+     * @param data data object
+     * @param colspan colspan
+     * @param rowspan rowspan
+     * @return DynaFormControl added control
+     */
+    public DynaFormControl addControl(Object data, int colspan, int rowspan) {
+        return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
+    }
 
-	/**
-	 * Adds control with given data, type, colspan and rowspan.
-	 *
-	 * @param  data    data object
-	 * @param  type    type to match the type attribute in pe:dynaFormControl
-	 * @param  colspan colspan
-	 * @param  rowspan rowspan
-	 * @return DynaFormControl added control
-	 */
-	public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
-		DynaFormControl dynaFormControl = new DynaFormControl(data,
-															  type,
-															  colspan,
-															  rowspan,
-															  row,
-															  elements.size() + 1,
-															  dynaFormModel.getControls().size() + 1,
-															  extended);
+    /**
+     * Adds control with given data, type, colspan and rowspan.
+     *
+     * @param data data object
+     * @param type type to match the type attribute in pe:dynaFormControl
+     * @param colspan colspan
+     * @param rowspan rowspan
+     * @return DynaFormControl added control
+     */
+    public DynaFormControl addControl(Object data, String type, int colspan, int rowspan) {
+        DynaFormControl dynaFormControl = new DynaFormControl(data,
+                    type,
+                    colspan,
+                    rowspan,
+                    row,
+                    elements.size() + 1,
+                    dynaFormModel.getControls().size() + 1,
+                    extended);
 
-		elements.add(dynaFormControl);
-		dynaFormModel.getControls().add(dynaFormControl);
-		totalColspan = totalColspan + colspan;
+        elements.add(dynaFormControl);
+        dynaFormModel.getControls().add(dynaFormControl);
+        totalColspan = totalColspan + colspan;
 
-		return dynaFormControl;
-	}
+        return dynaFormControl;
+    }
 
-	/***
-	 * Adds nested model with colspan = 1 and rowspan = 1.
-	 * @param model
-	 * @param colspan colspan
-	 * @param rowspan colspan
-	 * @return DynaFormModelElement added model
-	 */
-	public DynaFormModelElement addModel(DynaFormModel model) {
-		return addModel(model, 1, 1);
-	}
+    /***
+     * Adds nested model with colspan = 1 and rowspan = 1.
+     * 
+     * @param model
+     * @param colspan colspan
+     * @param rowspan colspan
+     * @return DynaFormModelElement added model
+     */
+    public DynaFormModelElement addModel(DynaFormModel model) {
+        return addModel(model, 1, 1);
+    }
 
-	/***
-	 * Adds nested model with given colspan and rowspan.
-	 * @param model
-	 * @param colspan
-	 * @param rowspan
-	 * @return DynaFormModelElement added model
-	 */
-	public DynaFormModelElement addModel(DynaFormModel model, int colspan, int rowspan) {
-		DynaFormModelElement nestedModel = new DynaFormModelElement(model,
-																	colspan,
-																	rowspan,
-																	row,
-																	elements.size() + 1,
-																	dynaFormModel.getControls().size() + 1,
-																	extended);
+    /***
+     * Adds nested model with given colspan and rowspan.
+     * 
+     * @param model
+     * @param colspan
+     * @param rowspan
+     * @return DynaFormModelElement added model
+     */
+    public DynaFormModelElement addModel(DynaFormModel model, int colspan, int rowspan) {
+        DynaFormModelElement nestedModel = new DynaFormModelElement(model,
+                    colspan,
+                    rowspan,
+                    row,
+                    elements.size() + 1,
+                    dynaFormModel.getControls().size() + 1,
+                    extended);
 
-		elements.add(nestedModel);
-		dynaFormModel.getControls().addAll(model.getControls());
-		totalColspan = totalColspan + colspan;
+        elements.add(nestedModel);
+        dynaFormModel.getControls().addAll(model.getControls());
+        totalColspan = totalColspan + colspan;
 
-		return nestedModel;
-	}
+        return nestedModel;
+    }
 
-	/**
-	 * Adds a label with given text, colspan = 1 and rowspan = 1.
-	 *
-	 * @param  value label text
-	 * @return DynaFormLabel added label
-	 */
-	public DynaFormLabel addLabel(String value) {
-		return addLabel(value, true, 1, 1);
-	}
+    /**
+     * Adds a label with given text, colspan = 1 and rowspan = 1.
+     *
+     * @param value label text
+     * @return DynaFormLabel added label
+     */
+    public DynaFormLabel addLabel(String value) {
+        return addLabel(value, true, 1, 1);
+    }
 
-	/**
-	 * Adds a label with given text, colspan and rowspan.
-	 *
-	 * @param  value   label text
-	 * @param  colspan colspan
-	 * @param  rowspan rowspan
-	 * @return DynaFormLabel added label
-	 */
-	public DynaFormLabel addLabel(String value, int colspan, int rowspan) {
-		return addLabel(value, true, colspan, rowspan);
-	}
+    /**
+     * Adds a label with given text, colspan and rowspan.
+     *
+     * @param value label text
+     * @param colspan colspan
+     * @param rowspan rowspan
+     * @return DynaFormLabel added label
+     */
+    public DynaFormLabel addLabel(String value, int colspan, int rowspan) {
+        return addLabel(value, true, colspan, rowspan);
+    }
 
-	/**
-	 * Adds a label with given text, escape flag, colspan and rowspan.
-	 *
-	 * @param  value   label text
-	 * @param  escape  boolean flag if the label text should escaped or not
-	 * @param  colspan colspan
-	 * @param  rowspan rowspan
-	 * @return DynaFormLabel added label
-	 */
-	public DynaFormLabel addLabel(String value, boolean escape, int colspan, int rowspan) {
-		DynaFormLabel dynaFormLabel = new DynaFormLabel(value, escape, colspan, rowspan, row, elements.size() + 1, extended);
+    /**
+     * Adds a label with given text, escape flag, colspan and rowspan.
+     *
+     * @param value label text
+     * @param escape boolean flag if the label text should escaped or not
+     * @param colspan colspan
+     * @param rowspan rowspan
+     * @return DynaFormLabel added label
+     */
+    public DynaFormLabel addLabel(String value, boolean escape, int colspan, int rowspan) {
+        DynaFormLabel dynaFormLabel = new DynaFormLabel(value, escape, colspan, rowspan, row, elements.size() + 1, extended);
 
-		elements.add(dynaFormLabel);
-		dynaFormModel.getLabels().add(dynaFormLabel);
-		totalColspan = totalColspan + colspan;
+        elements.add(dynaFormLabel);
+        dynaFormModel.getLabels().add(dynaFormLabel);
+        totalColspan = totalColspan + colspan;
 
-		return dynaFormLabel;
-	}
+        return dynaFormLabel;
+    }
 
-	public List<AbstractDynaFormElement> getElements() {
-		return elements;
-	}
+    public List<AbstractDynaFormElement> getElements() {
+        return elements;
+    }
 
-	public int getTotalColspan() {
-		return totalColspan;
-	}
+    public int getTotalColspan() {
+        return totalColspan;
+    }
 
     void setRow(int row) {
         this.row = row;

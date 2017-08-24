@@ -23,21 +23,21 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson to convert layout options.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class GsonLayoutOptions {
 
-	private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
-	private Gson gson;
+    private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
+    private Gson gson;
 
-	private GsonLayoutOptions() {
-		GsonBuilder gsonBilder = new GsonBuilder();
-		gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
-		gson = gsonBilder.create();
-	}
+    private GsonLayoutOptions() {
+        GsonBuilder gsonBilder = new GsonBuilder();
+        gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
+        gson = gsonBilder.create();
+    }
 
-	public static Gson getGson() {
-		return INSTANCE.gson;
-	}
+    public static Gson getGson() {
+        return INSTANCE.gson;
+    }
 }

@@ -16,22 +16,17 @@
 package org.primefaces.extensions.component.gchart.model;
 
 public enum GChartType {
-   
-	PIE("PieChart"),
-	AREA("AreaChart"),
-	BAR("BarChart"),
-	GEO("GeoChart"),
-	ORGANIZATIONAL("OrgChart"),
-	COLUMN("ColumnChart"),
-	LINE("LineChart");
-	
-	public String getChartName() {
-		return chartName;
-	}
 
-	private GChartType(String chartName) {
-		this.chartName = chartName;
-	}
+    PIE("PieChart"), AREA("AreaChart"), BAR("BarChart"), GEO("GeoChart"), ORGANIZATIONAL("OrgChart"), COLUMN("ColumnChart"), LINE("LineChart");
 
-	private String chartName;
+    private String chartName;
+
+    private GChartType(String chartName) {
+        this.chartName = chartName;
+    }
+
+    public String getChartName() {
+        return chartName;
+    }
+
 }

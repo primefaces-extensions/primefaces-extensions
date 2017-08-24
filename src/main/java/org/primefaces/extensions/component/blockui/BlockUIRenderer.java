@@ -39,134 +39,137 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class BlockUIRenderer extends CoreRenderer {
 
-   @Override
-   public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-      encodeMarkup(fc, component);
-      encodeScript(fc, component);
-   }
+    @Override
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+        encodeMarkup(fc, component);
+        encodeScript(fc, component);
+    }
 
-   protected void encodeMarkup(final FacesContext fc, final UIComponent component) throws IOException {
-      BlockUI blockUI = (BlockUI) component;
-      if (blockUI.getContent() == null && blockUI.getChildCount() > 0) {
-         ResponseWriter writer = fc.getResponseWriter();
-         writer.startElement("div", null);
-         writer.writeAttribute("id", blockUI.getClientId(fc) + "_content", null);
-         writer.writeAttribute("style", "display: none;", null);
-         renderChildren(fc, component);
-         writer.endElement("div");
-      }
-   }
+    protected void encodeMarkup(final FacesContext fc, final UIComponent component) throws IOException {
+        BlockUI blockUI = (BlockUI) component;
+        if (blockUI.getContent() == null && blockUI.getChildCount() > 0) {
+            ResponseWriter writer = fc.getResponseWriter();
+            writer.startElement("div", null);
+            writer.writeAttribute("id", blockUI.getClientId(fc) + "_content", null);
+            writer.writeAttribute("style", "display: none;", null);
+            renderChildren(fc, component);
+            writer.endElement("div");
+        }
+    }
 
-   protected void encodeScript(final FacesContext fc, final UIComponent component) throws IOException {
-      ResponseWriter writer = fc.getResponseWriter();
-      BlockUI blockUI = (BlockUI) component;
-      String clientId = blockUI.getClientId(fc);
+    protected void encodeScript(final FacesContext fc, final UIComponent component) throws IOException {
+        ResponseWriter writer = fc.getResponseWriter();
+        BlockUI blockUI = (BlockUI) component;
+        String clientId = blockUI.getClientId(fc);
 
-      // get source
-      String source = blockUI.getSource();
-      if (source == null) {
-         source = blockUI.getParent().getClientId(fc);
-      } else {
-         source = SearchExpressionFacade.resolveClientIds(fc, blockUI, source);
-      }
+        // get source
+        String source = blockUI.getSource();
+        if (source == null) {
+            source = blockUI.getParent().getClientId(fc);
+        }
+        else {
+            source = SearchExpressionFacade.resolveClientIds(fc, blockUI, source);
+        }
 
-      if (source == null) {
-         throw new FacesException("Cannot find source for blockUI component '" + clientId + "'.");
-      }
+        if (source == null) {
+            throw new FacesException("Cannot find source for blockUI component '" + clientId + "'.");
+        }
 
-      // get target
-      String target = blockUI.getTarget();
-      if (target != null) {
-         target = SearchExpressionFacade.resolveClientIds(fc, blockUI, target);
-      }
+        // get target
+        String target = blockUI.getTarget();
+        if (target != null) {
+            target = SearchExpressionFacade.resolveClientIds(fc, blockUI, target);
+        }
 
-      // get content
-      String jqContent = null;
-      boolean isContentExtern = false;
-      if (blockUI.getContent() != null) {
-         UIComponent contentComponent = blockUI.findComponent(blockUI.getContent());
-         if (contentComponent == null) {
-            throw new FacesException("Cannot find content for blockUI component '" + clientId + "'.");
-         }
-
-         jqContent = ComponentUtils.escapeJQueryId(contentComponent.getClientId(fc));
-         isContentExtern = true;
-      } else if (blockUI.getChildCount() > 0) {
-         jqContent = ComponentUtils.escapeJQueryId(clientId + "_content");
-      }
-
-      // get reg. expression
-      String eventRegEx;
-      String events = blockUI.getEvent();
-
-      if (StringUtils.isBlank(events)) {
-         // no events means all events of the given source are accepted
-         eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
-      } else {
-         String[] arrEvents = events.split("[\\s,]+");
-         StringBuilder sb = new StringBuilder("/");
-
-         for (int i = 0; i < arrEvents.length; i++) {
-            sb.append(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            sb.append("=");
-            sb.append(arrEvents[i]);
-
-            if (i + 1 < arrEvents.length) {
-               sb.append("|");
+        // get content
+        String jqContent = null;
+        boolean isContentExtern = false;
+        if (blockUI.getContent() != null) {
+            UIComponent contentComponent = blockUI.findComponent(blockUI.getContent());
+            if (contentComponent == null) {
+                throw new FacesException("Cannot find content for blockUI component '" + clientId + "'.");
             }
-         }
 
-         sb.append("/");
-         eventRegEx = sb.toString();
-      }
+            jqContent = ComponentUtils.escapeJQueryId(contentComponent.getClientId(fc));
+            isContentExtern = true;
+        }
+        else if (blockUI.getChildCount() > 0) {
+            jqContent = ComponentUtils.escapeJQueryId(clientId + "_content");
+        }
 
-      // generate script
-      final WidgetBuilder wb = getWidgetBuilder(fc);
-      wb.initWithDomReady("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
-      wb.attr("source", source);
-      if (target != null) {
-         wb.attr("target", target);
-      }
+        // get reg. expression
+        String eventRegEx;
+        String events = blockUI.getEvent();
 
-      wb.attr("autoShow", blockUI.isAutoShow());
+        if (StringUtils.isBlank(events)) {
+            // no events means all events of the given source are accepted
+            eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
+        }
+        else {
+            String[] arrEvents = events.split("[\\s,]+");
+            StringBuilder sb = new StringBuilder("/");
 
-      String css = blockUI.getCss();
-      if (css != null) {
-         wb.attr("css", css);
-      }
+            for (int i = 0; i < arrEvents.length; i++) {
+                sb.append(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+                sb.append("=");
+                sb.append(arrEvents[i]);
 
-      String cssOverlay = blockUI.getCssOverlay();
-      if (cssOverlay != null) {
-         wb.attr("overlayCSS", cssOverlay);
-      }
+                if (i + 1 < arrEvents.length) {
+                    sb.append("|");
+                }
+            }
 
-      int timeout = blockUI.getTimeout();
-      if (timeout > 0) {
-         wb.attr("timeout", timeout);
-      }
+            sb.append("/");
+            eventRegEx = sb.toString();
+        }
 
-      wb.attr("centerX", blockUI.isCenterX());
-      wb.attr("centerY", blockUI.isCenterY());
+        // generate script
+        final WidgetBuilder wb = getWidgetBuilder(fc);
+        wb.initWithDomReady("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
+        wb.attr("source", source);
+        if (target != null) {
+            wb.attr("target", target);
+        }
 
-      if (jqContent != null) {
-         wb.selectorAttr("content", jqContent);
-      }
+        wb.attr("autoShow", blockUI.isAutoShow());
 
-      wb.attr("contentExtern", isContentExtern);
-      wb.attr("namingContSep", Character.toString(UINamingContainer.getSeparatorChar(fc)));
-      wb.nativeAttr("regEx", eventRegEx);
+        String css = blockUI.getCss();
+        if (css != null) {
+            wb.attr("css", css);
+        }
 
-      wb.append("},true);});");
-      endScript(writer);
-   }
+        String cssOverlay = blockUI.getCssOverlay();
+        if (cssOverlay != null) {
+            wb.attr("overlayCSS", cssOverlay);
+        }
 
-   @Override
-   public boolean getRendersChildren() {
-      return true;
-   }
+        int timeout = blockUI.getTimeout();
+        if (timeout > 0) {
+            wb.attr("timeout", timeout);
+        }
 
-   @Override
-   public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
-      // nothing to do
-   }
+        wb.attr("centerX", blockUI.isCenterX());
+        wb.attr("centerY", blockUI.isCenterY());
+
+        if (jqContent != null) {
+            wb.selectorAttr("content", jqContent);
+        }
+
+        wb.attr("contentExtern", isContentExtern);
+        wb.attr("namingContSep", Character.toString(UINamingContainer.getSeparatorChar(fc)));
+        wb.nativeAttr("regEx", eventRegEx);
+
+        wb.append("},true);});");
+        endScript(writer);
+    }
+
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
+
+    @Override
+    public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+        // nothing to do
+    }
 }

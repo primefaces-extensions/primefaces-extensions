@@ -21,9 +21,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.clipboard.Clipboard} component
- * when the copy/cut action has succeeded.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.clipboard.Clipboard} component when the copy/cut action has succeeded.
  *
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
@@ -31,58 +29,56 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class ClipboardSuccessEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "success";
+    public static final String NAME = "success";
 
-   /**
-    * action: return the action we aim at the target element. This will return
-    * either copy or cut
-    */
-   private final String action;
+    /**
+     * action: return the action we aim at the target element. This will return either copy or cut
+     */
+    private final String action;
 
-   /**
-    * text: only returned upon the success event. It returns the text that has
-    * been copied or cut from the target element.
-    */
-   private final String text;
+    /**
+     * text: only returned upon the success event. It returns the text that has been copied or cut from the target element.
+     */
+    private final String text;
 
-   /**
-    * trigger: returns the element which triggered the copy or the cut action.
-    */
-   private final String trigger;
+    /**
+     * trigger: returns the element which triggered the copy or the cut action.
+     */
+    private final String trigger;
 
-   public ClipboardSuccessEvent(final UIComponent component, final Behavior behavior, final String action,
-            final String text, final String trigger) {
-      super(component, behavior);
-      this.action = action;
-      this.text = text;
-      this.trigger = trigger;
-   }
+    public ClipboardSuccessEvent(final UIComponent component, final Behavior behavior, final String action,
+                final String text, final String trigger) {
+        super(component, behavior);
+        this.action = action;
+        this.text = text;
+        this.trigger = trigger;
+    }
 
-   /**
-    * Gets the {@link #action}.
-    * 
-    * @return Returns the {@link #action}.
-    */
-   public final String getAction() {
-      return action;
-   }
+    /**
+     * Gets the {@link #action}.
+     * 
+     * @return Returns the {@link #action}.
+     */
+    public final String getAction() {
+        return action;
+    }
 
-   /**
-    * Gets the {@link #text}.
-    * 
-    * @return Returns the {@link #text}.
-    */
-   public final String getText() {
-      return text;
-   }
+    /**
+     * Gets the {@link #text}.
+     * 
+     * @return Returns the {@link #text}.
+     */
+    public final String getText() {
+        return text;
+    }
 
-   /**
-    * Gets the {@link #trigger}.
-    * 
-    * @return Returns the {@link #trigger}.
-    */
-   public final String getTrigger() {
-      return trigger;
-   }
+    /**
+     * Gets the {@link #trigger}.
+     * 
+     * @return Returns the {@link #trigger}.
+     */
+    public final String getTrigger() {
+        return trigger;
+    }
 
 }

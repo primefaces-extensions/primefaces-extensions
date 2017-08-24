@@ -21,9 +21,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.clipboard.Clipboard} component
- * when the copy/cut action has failed.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.clipboard.Clipboard} component when the copy/cut action has failed.
  *
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
@@ -31,42 +29,41 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class ClipboardErrorEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "error";
+    public static final String NAME = "error";
 
-   /**
-    * action: return the action we aim at the target element. This will return
-    * either copy or cut
-    */
-   private final String action;
+    /**
+     * action: return the action we aim at the target element. This will return either copy or cut
+     */
+    private final String action;
 
-   /**
-    * trigger: returns the element which triggered the copy or the cut action.
-    */
-   private final String trigger;
+    /**
+     * trigger: returns the element which triggered the copy or the cut action.
+     */
+    private final String trigger;
 
-   public ClipboardErrorEvent(final UIComponent component, final Behavior behavior, final String action,
-            final String trigger) {
-      super(component, behavior);
-      this.action = action;
-      this.trigger = trigger;
-   }
+    public ClipboardErrorEvent(final UIComponent component, final Behavior behavior, final String action,
+                final String trigger) {
+        super(component, behavior);
+        this.action = action;
+        this.trigger = trigger;
+    }
 
-   /**
-    * Gets the {@link #action}.
-    *
-    * @return Returns the {@link #action}.
-    */
-   public final String getAction() {
-      return action;
-   }
+    /**
+     * Gets the {@link #action}.
+     *
+     * @return Returns the {@link #action}.
+     */
+    public final String getAction() {
+        return action;
+    }
 
-   /**
-    * Gets the {@link #trigger}.
-    *
-    * @return Returns the {@link #trigger}.
-    */
-   public final String getTrigger() {
-      return trigger;
-   }
+    /**
+     * Gets the {@link #trigger}.
+     *
+     * @return Returns the {@link #trigger}.
+     */
+    public final String getTrigger() {
+        return trigger;
+    }
 
 }

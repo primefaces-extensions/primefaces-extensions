@@ -97,7 +97,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
         writer.writeAttribute("role", "grid", null);
 
-		// prepare labels with informations about corresponding control components
+        // prepare labels with informations about corresponding control components
         preRenderLabel(fc, dynaForm, dynaFormModel);
 
         int totalColspan = getTotalColspan(dynaFormModel);
@@ -117,14 +117,14 @@ public class DynaFormRenderer extends CoreRenderer {
         if (encodeFacet) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
             encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
-                    dynaForm.isOpenExtended());
+                        dynaForm.isOpenExtended());
         }
         // encode extended grid
         encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), true, dynaForm.isOpenExtended());
 
         if (encodeFacet) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
-                    dynaForm.isOpenExtended());
+                        dynaForm.isOpenExtended());
         }
 
         if (encodeFacet && "bottom".equals(bbPosition) || "both".equals(bbPosition)) {
@@ -152,7 +152,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
-            boolean extended, boolean visible) throws IOException {
+                boolean extended, boolean visible) throws IOException {
         final UIComponent facet = dynaForm.getFacet(name);
         if (facet != null && facet.isRendered()) {
             ResponseWriter writer = fc.getResponseWriter();
@@ -181,8 +181,8 @@ public class DynaFormRenderer extends CoreRenderer {
         }
     }
 
-	protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
-	                          boolean visible) throws IOException {
+    protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
+                boolean visible) throws IOException {
         if (dynaFormRows == null || dynaFormRows.isEmpty()) {
             return;
         }
@@ -247,7 +247,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     if (label.getValue() != null) {
                         if (label.isEscape()) {
                             writer.writeText(label.getValue(), "value");
-                        } else {
+                        }
+                        else {
                             writer.write(label.getValue());
                         }
                     }
@@ -260,7 +261,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     }
 
                     writer.endElement("label");
-                } else if (element instanceof DynaFormControl) {
+                }
+                else if (element instanceof DynaFormControl) {
                     // render control
                     DynaFormControl control = (DynaFormControl) element;
                     dynaForm.setData(control);
@@ -280,7 +282,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
                     cell.encodeAll(fc);
-                } else if (element instanceof DynaFormModelElement) {
+                }
+                else if (element instanceof DynaFormModelElement) {
                     DynaFormModelElement nestedModel = (DynaFormModelElement) element;
 
                     // render nested model
@@ -317,9 +320,9 @@ public class DynaFormRenderer extends CoreRenderer {
                         continue;
                     }
 
-                    String targetClientId = (target instanceof InputHolder) 
-                            ? ((InputHolder) target).getInputClientId()
-                            : target.getClientId(fc);
+                    String targetClientId = (target instanceof InputHolder)
+                                ? ((InputHolder) target).getInputClientId()
+                                : target.getClientId(fc);
                     dynaFormLabel.setTargetClientId(targetClientId);
 
                     ContextCallback callback = new ContextCallback() {
@@ -333,7 +336,8 @@ public class DynaFormRenderer extends CoreRenderer {
 
                     if (CompositeUtils.isComposite(target)) {
                         CompositeUtils.invokeOnDeepestEditableValueHolder(fc, target, callback);
-                    } else {
+                    }
+                    else {
                         callback.invokeContextCallback(fc, target);
                     }
 

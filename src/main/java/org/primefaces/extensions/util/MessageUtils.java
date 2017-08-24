@@ -29,89 +29,90 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Message utils.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 public class MessageUtils {
 
-	public static final String FACES_MESSAGES = "javax.faces.Messages";
+    public static final String FACES_MESSAGES = "javax.faces.Messages";
 
-	public static FacesMessage getMessage(final Locale locale, final FacesMessage.Severity severity, final String key,
-	                                      final Object... params) {
-		String summary = null;
-		String detail = null;
-		ResourceBundle bundle;
-		String bundleName;
+    public static FacesMessage getMessage(final Locale locale, final FacesMessage.Severity severity, final String key,
+                final Object... params) {
+        String summary = null;
+        String detail = null;
+        ResourceBundle bundle;
+        String bundleName;
 
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final Application application = context.getApplication();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final Application application = context.getApplication();
 
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		if (loader == null) {
-			loader = application.getClass().getClassLoader();
-		}
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        if (loader == null) {
+            loader = application.getClass().getClassLoader();
+        }
 
-		// try to find message in user provided bundle
-		bundleName = application.getMessageBundle();
-		if (bundleName != null) {
-			bundle = ResourceBundle.getBundle(bundleName, (locale != null ? locale : context.getViewRoot().getLocale()), loader);
-			if (bundle != null) {
-				try {
-					summary = bundle.getString(key);
-					detail = bundle.getString(key + "_detail");
-				} catch (MissingResourceException e) {
-					// ignore
-				   detail = null;
-				}
-			}
-		}
+        // try to find message in user provided bundle
+        bundleName = application.getMessageBundle();
+        if (bundleName != null) {
+            bundle = ResourceBundle.getBundle(bundleName, (locale != null ? locale : context.getViewRoot().getLocale()), loader);
+            if (bundle != null) {
+                try {
+                    summary = bundle.getString(key);
+                    detail = bundle.getString(key + "_detail");
+                }
+                catch (MissingResourceException e) {
+                    // ignore
+                    detail = null;
+                }
+            }
+        }
 
-		if (summary == null) {
-			// try to find message in JSF standard provided bundle
-			bundle =
-			    ResourceBundle.getBundle(FACES_MESSAGES, (locale != null ? locale : context.getViewRoot().getLocale()), loader);
-			if (bundle == null) {
-				throw new NullPointerException();
-			}
+        if (summary == null) {
+            // try to find message in JSF standard provided bundle
+            bundle = ResourceBundle.getBundle(FACES_MESSAGES, (locale != null ? locale : context.getViewRoot().getLocale()), loader);
+            if (bundle == null) {
+                throw new NullPointerException();
+            }
 
-			try {
-				summary = bundle.getString(key);
-				detail = bundle.getString(key + "_detail");
-			} catch (MissingResourceException e) {
-				// ignore
-			   detail = null;
-			}
-		}
+            try {
+                summary = bundle.getString(key);
+                detail = bundle.getString(key + "_detail");
+            }
+            catch (MissingResourceException e) {
+                // ignore
+                detail = null;
+            }
+        }
 
-		if (summary != null && params != null) {
-			summary = MessageFormat.format(summary, params);
-		}
+        if (summary != null && params != null) {
+            summary = MessageFormat.format(summary, params);
+        }
 
-		if (detail != null && params != null) {
-			detail = MessageFormat.format(detail, params);
-		}
+        if (detail != null && params != null) {
+            detail = MessageFormat.format(detail, params);
+        }
 
-		if (summary != null) {
-			return new FacesMessage(severity, summary, (detail != null ? detail : StringUtils.EMPTY));
-		}
+        if (summary != null) {
+            return new FacesMessage(severity, summary, (detail != null ? detail : StringUtils.EMPTY));
+        }
 
-		return new FacesMessage(severity, "???" + key + "???", (detail != null ? detail : StringUtils.EMPTY));
-	}
+        return new FacesMessage(severity, "???" + key + "???", (detail != null ? detail : StringUtils.EMPTY));
+    }
 
-	public static FacesMessage getMessage(final FacesMessage.Severity severity, final String key, final Object... params) {
-		// let current locale to be calculated
-		return getMessage(null, severity, key, params);
-	}
+    public static FacesMessage getMessage(final FacesMessage.Severity severity, final String key, final Object... params) {
+        // let current locale to be calculated
+        return getMessage(null, severity, key, params);
+    }
 
-	public static FacesMessage getMessage(final Locale locale, final String key, final Object... params) {
-		// set severity to error
-		return getMessage(locale, FacesMessage.SEVERITY_ERROR, key, params);
-	}
+    public static FacesMessage getMessage(final Locale locale, final String key, final Object... params) {
+        // set severity to error
+        return getMessage(locale, FacesMessage.SEVERITY_ERROR, key, params);
+    }
 
-	public static FacesMessage getMessage(final String key, final Object... params) {
-		// let current locale to be calculated
-		// set severity to error
-		return getMessage(null, FacesMessage.SEVERITY_ERROR, key, params);
-	}
+    public static FacesMessage getMessage(final String key, final Object... params) {
+        // let current locale to be calculated
+        // set severity to error
+        return getMessage(null, FacesMessage.SEVERITY_ERROR, key, params);
+    }
 }

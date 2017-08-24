@@ -15,15 +15,24 @@
  */
 package org.primefaces.extensions.component.exporter;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.el.MethodExpression;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIData;
 import javax.faces.component.ValueHolder;
-import javax.faces.component.html.*;
+import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlGraphicImage;
+import javax.faces.component.html.HtmlOutputLink;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
+
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.celleditor.CellEditor;
@@ -34,10 +43,6 @@ import org.primefaces.component.roweditor.RowEditor;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.util.ComponentUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <code>Exporter</code> component.
  *
@@ -47,9 +52,9 @@ import java.util.List;
 public abstract class Exporter {
 
     protected String skipComponents;
+
     protected enum ColumnType {
-        HEADER("header"),
-        FOOTER("footer");
+        HEADER("header"), FOOTER("footer");
 
         private final String facet;
 
@@ -67,14 +72,13 @@ public abstract class Exporter {
         }
     }
 
-    ;
-
     public abstract void export(ActionEvent event, String tableId, FacesContext facesContext,
-                                String outputFileName, String tableTitleValue, boolean pageOnly, boolean selectionOnly,
-                                String encodingType, MethodExpression preProcessor,
-                                MethodExpression postProcessor, boolean subTable) throws IOException;
+                String outputFileName, String tableTitleValue, boolean pageOnly, boolean selectionOnly,
+                String encodingType, MethodExpression preProcessor,
+                MethodExpression postProcessor, boolean subTable) throws IOException;
 
-    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) throws IOException;
+    public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName,
+                String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) throws IOException;
 
     protected String exportValue(FacesContext context, UIComponent component) {
 
@@ -96,8 +100,9 @@ public abstract class Exporter {
 
             if (value != null) {
                 return String.valueOf(value);
-            } else {
-                //export first value holder
+            }
+            else {
+                // export first value holder
                 for (UIComponent child : link.getChildren()) {
                     if (child instanceof ValueHolder) {
                         return exportValue(context, child);
@@ -112,7 +117,7 @@ public abstract class Exporter {
 
             List<UIComponent> children = link.getChildren();
             if (children != null) {
-               return exportValue(context, children.get(0)); 
+                return exportValue(context, children.get(0));
             }
         }
         if (component instanceof HtmlCommandButton) {
@@ -121,8 +126,9 @@ public abstract class Exporter {
 
             if (value != null) {
                 return String.valueOf(value);
-            } else {
-                //export first value holder
+            }
+            else {
+                // export first value holder
                 for (UIComponent child : button.getChildren()) {
                     if (child instanceof ValueHolder) {
                         return exportValue(context, child);
@@ -138,8 +144,9 @@ public abstract class Exporter {
 
             if (value != null) {
                 return String.valueOf(value);
-            } else {
-                //export first value holder
+            }
+            else {
+                // export first value holder
                 for (UIComponent child : oneMenu.getChildren()) {
                     if (child instanceof ValueHolder) {
                         return exportValue(context, child);
@@ -151,9 +158,9 @@ public abstract class Exporter {
         }
         if (skipComponents.contains(component.getClass().getName())) {
             return "";
-          }
+        }
 
-          else if (component instanceof ValueHolder) {
+        else if (component instanceof ValueHolder) {
 
             if (component instanceof EditableValueHolder) {
                 Object submittedValue = ((EditableValueHolder) component).getSubmittedValue();
@@ -164,24 +171,27 @@ public abstract class Exporter {
 
             ValueHolder valueHolder = (ValueHolder) component;
             Object value = valueHolder.getValue();
-            if (value == null)
+            if (value == null) {
                 return "";
+            }
 
-            //first ask the converter
+            // first ask the converter
             if (valueHolder.getConverter() != null) {
                 return valueHolder.getConverter().getAsString(context, component, value);
             }
-            //Try to guess
+            // Try to guess
             else {
-                        Converter converterForType = ComponentUtils.getConverter(context,component);
-                        if (converterForType != null)
-                            return converterForType.getAsString(context, component, value);
+                Converter converterForType = ComponentUtils.getConverter(context, component);
+                if (converterForType != null) {
+                    return converterForType.getAsString(context, component, value);
+                }
             }
 
-            //No converter found just return the value as string
+            // No converter found just return the value as string
             return value.toString();
-        } else {
-            //This would get the plain texts on UIInstructions when using Facelets
+        }
+        else {
+            // This would get the plain texts on UIInstructions when using Facelets
             String value = component.toString();
             return value.trim();
         }
@@ -203,13 +213,14 @@ public abstract class Exporter {
                 return "";
             }
 
-            //first ask the converter
+            // first ask the converter
             if (valueHolder.getConverter() != null) {
                 return valueHolder.getConverter().getAsString(context, component, value);
             }
             return value.toString();
-        } else {
-            //This would get the plain texts on UIInstructions when using Facelets
+        }
+        else {
+            // This would get the plain texts on UIInstructions when using Facelets
             String value = component.toString();
 
             return value.trim();
@@ -245,7 +256,8 @@ public abstract class Exporter {
                     }
                 }
                 return input.toString();
-            } else {
+            }
+            else {
                 if (component.isRendered()) {
                     String value = exportValue(FacesContext.getCurrentInstance(), component);
 
@@ -262,17 +274,17 @@ public abstract class Exporter {
     protected int getColumnsCount(DataTable table) {
         int count = 0;
 
-         for(UIColumn col : table.getColumns()) {
-                    if(col instanceof DynamicColumn) {
-                        ((DynamicColumn) col).applyStatelessModel();
-                    }
+        for (UIColumn col : table.getColumns()) {
+            if (col instanceof DynamicColumn) {
+                ((DynamicColumn) col).applyStatelessModel();
+            }
 
-                    if(!col.isRendered()||!col.isExportable()) {
-                        continue;
-                    }
+            if (!col.isRendered() || !col.isExportable()) {
+                continue;
+            }
 
-                    count++;
-                }
+            count++;
+        }
 
         return count;
     }
@@ -280,30 +292,30 @@ public abstract class Exporter {
     protected int getColumnsCount(SubTable table) {
         int count = 0;
 
-         for(UIColumn col : table.getColumns()) {
-                    if(col instanceof DynamicColumn) {
-                        ((DynamicColumn) col).applyStatelessModel();
-                    }
+        for (UIColumn col : table.getColumns()) {
+            if (col instanceof DynamicColumn) {
+                ((DynamicColumn) col).applyStatelessModel();
+            }
 
-                    if(!col.isRendered()||!col.isExportable()) {
-                        continue;
-                    }
+            if (!col.isRendered() || !col.isExportable()) {
+                continue;
+            }
 
-                    count++;
-                }
+            count++;
+        }
 
         return count;
     }
 
     public boolean hasHeaderColumn(DataTable table) {
-        for(UIColumn col : table.getColumns()) {
-           if(col instanceof DynamicColumn) {
-                 ((DynamicColumn) col).applyStatelessModel();
-           }
-           if (col.isRendered() 
-                    && (col instanceof UIColumn || col instanceof DynamicColumn) 
-                    && (col.getFacet("header") != null || col.getHeaderText() != null)) { 
-                    return true;
+        for (UIColumn col : table.getColumns()) {
+            if (col instanceof DynamicColumn) {
+                ((DynamicColumn) col).applyStatelessModel();
+            }
+            if (col.isRendered()
+                        && (col instanceof UIColumn || col instanceof DynamicColumn)
+                        && (col.getFacet("header") != null || col.getHeaderText() != null)) {
+                return true;
             }
 
         }
@@ -342,7 +354,7 @@ public abstract class Exporter {
     }
 
     public void setSkipComponents(String skipComponentsValue) {
-                skipComponents= skipComponentsValue;
-          }
+        skipComponents = skipComponentsValue;
+    }
 
 }

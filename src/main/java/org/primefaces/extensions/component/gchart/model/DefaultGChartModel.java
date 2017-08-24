@@ -15,59 +15,60 @@
  */
 package org.primefaces.extensions.component.gchart.model;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import org.primefaces.extensions.util.json.GsonConverter;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-class DefaultGChartModel implements GChartModel{
+import org.primefaces.extensions.util.json.GsonConverter;
 
-	private static final long serialVersionUID = -4757917806522708660L;
-	
-	public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
-			Map<String, Object> options, List<Object> columns) {
-		super();
-		this.rows = rows;
-		this.gChartType = gChartType;
-		this.options = options;
-		this.columns = columns;
-	}
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-	private List<GChartModelRow> rows;
-	private GChartType gChartType;
-	private Map<String,Object> options;
-	private List<Object> columns;
+class DefaultGChartModel implements GChartModel {
 
-	public GChartType getgChartType() {
-		return gChartType;
-	}
+    private static final long serialVersionUID = -4757917806522708660L;
 
-	public Map<String, Object> getOptions() {
-		return options;
-	}
+    private List<GChartModelRow> rows;
+    private GChartType gChartType;
+    private Map<String, Object> options;
+    private List<Object> columns;
 
-	public Collection<Object> getColumns() {
-		return columns;
-	}
+    public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
+                Map<String, Object> options, List<Object> columns) {
+        super();
+        this.rows = rows;
+        this.gChartType = gChartType;
+        this.options = options;
+        this.columns = columns;
+    }
 
-	public GChartType getChartType() {
-		return gChartType;
-	}
+    public GChartType getgChartType() {
+        return gChartType;
+    }
+
+    public Map<String, Object> getOptions() {
+        return options;
+    }
+
+    public Collection<Object> getColumns() {
+        return columns;
+    }
+
+    public GChartType getChartType() {
+        return gChartType;
+    }
 
     public Collection<GChartModelRow> getRows() {
-		return rows;
-	}
+        return rows;
+    }
 
     public String toJson() {
         JsonObject root = new JsonObject();
 
-        root.addProperty("type",this.getChartType().getChartName());
+        root.addProperty("type", this.getChartType().getChartName());
         root.add("options", GsonConverter.getGson().toJsonTree(this.getOptions()));
-        root.add("data",extractData());
+        root.add("data", extractData());
 
         return GsonConverter.getGson().toJson(root);
     }

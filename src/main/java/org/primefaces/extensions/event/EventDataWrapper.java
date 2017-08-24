@@ -25,46 +25,46 @@ import org.primefaces.extensions.model.common.KeyData;
 /**
  * Event wrapper.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class EventDataWrapper extends FacesEvent {
 
-	private FacesEvent event = null;
-	private KeyData data = null;
+    private FacesEvent event = null;
+    private KeyData data = null;
 
-	public EventDataWrapper(final UIComponent component, final FacesEvent event, final KeyData data) {
-		super(component);
-		this.event = event;
-		this.data = data;
-	}
+    public EventDataWrapper(final UIComponent component, final FacesEvent event, final KeyData data) {
+        super(component);
+        this.event = event;
+        this.data = data;
+    }
 
-	public FacesEvent getFacesEvent() {
-		return this.event;
-	}
+    public FacesEvent getFacesEvent() {
+        return this.event;
+    }
 
-	public KeyData getData() {
-		return data;
-	}
+    public KeyData getData() {
+        return data;
+    }
 
-	@Override
-	public PhaseId getPhaseId() {
-		return this.event.getPhaseId();
-	}
+    @Override
+    public PhaseId getPhaseId() {
+        return this.event.getPhaseId();
+    }
 
-	@Override
-	public void setPhaseId(PhaseId phaseId) {
-		this.event.setPhaseId(phaseId);
-	}
+    @Override
+    public void setPhaseId(PhaseId phaseId) {
+        this.event.setPhaseId(phaseId);
+    }
 
-	@Override
-	public boolean isAppropriateListener(FacesListener listener) {
-		return false;
-	}
+    @Override
+    public boolean isAppropriateListener(FacesListener listener) {
+        return false;
+    }
 
-	@Override
-	public void processListener(FacesListener listener) {
-		throw new IllegalStateException("processListener is not supported in EventWrapper");
-	}
+    @Override
+    public void processListener(FacesListener listener) {
+        throw new IllegalStateException("processListener is not supported in EventWrapper");
+    }
 }

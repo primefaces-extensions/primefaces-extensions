@@ -20,79 +20,79 @@ import java.io.Serializable;
 /**
  * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public abstract class AbstractDynaFormElement implements Serializable {
 
-	private static final long serialVersionUID = 20120514L;
+    private static final long serialVersionUID = 20120514L;
 
-	private int colspan = 1;
-	private int rowspan = 1;
-	private int row;
-	private int column;
-	private boolean extended;
+    private int colspan = 1;
+    private int rowspan = 1;
+    private int row;
+    private int column;
+    private boolean extended;
 
-	/**
-	 * This constructor is required for serialization. Please do not remove.
-	 */
-	public AbstractDynaFormElement() {
-	}
+    /**
+     * This constructor is required for serialization. Please do not remove.
+     */
+    public AbstractDynaFormElement() {
+    }
 
-	public AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
-		this.colspan = colspan;
-		this.rowspan = rowspan;
-		this.row = row;
-		this.column = column;
-		this.extended = extended;
-	}
+    public AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
+        this.colspan = colspan;
+        this.rowspan = rowspan;
+        this.row = row;
+        this.column = column;
+        this.extended = extended;
+    }
 
-	public int getColspan() {
-		return colspan;
-	}
+    public int getColspan() {
+        return colspan;
+    }
 
-	public int getRowspan() {
-		return rowspan;
-	}
+    public int getRowspan() {
+        return rowspan;
+    }
 
-	public int getRow() {
-		return row;
-	}
+    public int getRow() {
+        return row;
+    }
 
     void setRow(int row) {
         this.row = row;
     }
 
     public int getColumn() {
-		return column;
-	}
+        return column;
+    }
 
-	public boolean isExtended() {
-		return extended;
-	}
+    public boolean isExtended() {
+        return extended;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
 
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		AbstractDynaFormElement that = (AbstractDynaFormElement) o;
+        AbstractDynaFormElement that = (AbstractDynaFormElement) o;
 
-		return row == that.row && column == that.column && extended == that.extended;
-	}
+        return row == that.row && column == that.column && extended == that.extended;
+    }
 
-	@Override
-	public int hashCode() {
-		int result = row;
-		result = 31 * result + column;
-		result = 31 * result + (extended ? 1 : 0);
+    @Override
+    public int hashCode() {
+        int result = row;
+        result = 31 * result + column;
+        result = 31 * result + (extended ? 1 : 0);
 
-		return result;
-	}
+        return result;
+    }
 }

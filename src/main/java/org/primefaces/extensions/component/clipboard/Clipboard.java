@@ -41,214 +41,224 @@ import org.primefaces.util.Constants;
  * @since 6.1
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "components.css"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "clipboard/clipboard.js")
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "clipboard/clipboard.js")
 })
 public class Clipboard extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Clipboard";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ClipboardRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Clipboard";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ClipboardRenderer";
 
-   private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(ClipboardSuccessEvent.NAME, ClipboardErrorEvent.NAME));
+    private static final Collection<String> EVENT_NAMES = Collections
+                .unmodifiableCollection(Arrays.asList(ClipboardSuccessEvent.NAME, ClipboardErrorEvent.NAME));
 
-   protected enum PropertyKeys {
+    protected enum PropertyKeys {
 
-      // @formatter:off
-      widgetVar,
-      action,
-      trigger,
-      target,
-      text,
-      onsuccess,
-      onerror;
-      // @formatter:on
+        // @formatter:off
+        widgetVar,
+        action,
+        trigger,
+        target,
+        text,
+        onsuccess,
+        onerror;
+        // @formatter:on
 
-      String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        public String getToString() {
+            return toString;
+        }
 
-   /**
-    * Default constructor
-    */
-   public Clipboard() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+        public void setToString(String toString) {
+            this.toString = toString;
+        }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    /**
+     * Default constructor
+     */
+    public Clipboard() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public Collection<String> getEventNames() {
-      return EVENT_NAMES;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getDefaultEventName() {
-      return ClipboardSuccessEvent.NAME;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processDecodes(final FacesContext fc) {
-      if (isSelfRequest(fc)) {
-         decode(fc);
-      } else {
-         super.processDecodes(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processValidators(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processValidators(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getDefaultEventName() {
+        return ClipboardSuccessEvent.NAME;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processUpdates(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processUpdates(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processDecodes(final FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        }
+        else {
+            super.processDecodes(fc);
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void queueEvent(final FacesEvent event) {
-      final FacesContext fc = FacesContext.getCurrentInstance();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processValidators(fc);
+        }
+    }
 
-      if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-         final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-         final String clientId = this.getClientId(fc);
-         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-         final String action = params.get(clientId + "_action");
-         final String trigger = params.get(clientId + "_trigger");
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processUpdates(fc);
+        }
+    }
 
-         if (ClipboardSuccessEvent.NAME.equals(eventName)) {
-            final String text = params.get(clientId + "_text");
-            final ClipboardSuccessEvent successEvent = new ClipboardSuccessEvent(this, behaviorEvent.getBehavior(),
-                     action, text, trigger);
-            successEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(successEvent);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
 
-            return;
-         } else if (ClipboardErrorEvent.NAME.equals(eventName)) {
-            final ClipboardErrorEvent errorEvent = new ClipboardErrorEvent(this, behaviorEvent.getBehavior(), action,
-                     trigger);
-            errorEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(errorEvent);
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = this.getClientId(fc);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final String action = params.get(clientId + "_action");
+            final String trigger = params.get(clientId + "_trigger");
 
-            return;
-         }
-      }
+            if (ClipboardSuccessEvent.NAME.equals(eventName)) {
+                final String text = params.get(clientId + "_text");
+                final ClipboardSuccessEvent successEvent = new ClipboardSuccessEvent(this, behaviorEvent.getBehavior(),
+                            action, text, trigger);
+                successEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(successEvent);
 
-      super.queueEvent(event);
-   }
+                return;
+            }
+            else if (ClipboardErrorEvent.NAME.equals(eventName)) {
+                final ClipboardErrorEvent errorEvent = new ClipboardErrorEvent(this, behaviorEvent.getBehavior(), action,
+                            trigger);
+                errorEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(errorEvent);
 
-   private boolean isSelfRequest(final FacesContext context) {
-      return this.getClientId(context)
-               .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-   }
+                return;
+            }
+        }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+        super.queueEvent(event);
+    }
 
-   public void setWidgetVar(final String _widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-   }
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
 
-   public String getAction() {
-      return (String) getStateHelper().eval(PropertyKeys.action, "copy");
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setAction(final String _action) {
-      getStateHelper().put(PropertyKeys.action, _action);
-   }
+    public void setWidgetVar(final String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-   public String getTrigger() {
-      return (String) getStateHelper().eval(PropertyKeys.trigger, null);
-   }
+    public String getAction() {
+        return (String) getStateHelper().eval(PropertyKeys.action, "copy");
+    }
 
-   public void setTrigger(final String _trigger) {
-      getStateHelper().put(PropertyKeys.trigger, _trigger);
-   }
+    public void setAction(final String _action) {
+        getStateHelper().put(PropertyKeys.action, _action);
+    }
 
-   public String getTarget() {
-      return (String) getStateHelper().eval(PropertyKeys.target, null);
-   }
+    public String getTrigger() {
+        return (String) getStateHelper().eval(PropertyKeys.trigger, null);
+    }
 
-   public void setTarget(final String _target) {
-      getStateHelper().put(PropertyKeys.target, _target);
-   }
+    public void setTrigger(final String _trigger) {
+        getStateHelper().put(PropertyKeys.trigger, _trigger);
+    }
 
-   public String getText() {
-      return (String) getStateHelper().eval(PropertyKeys.text, "PrimeFaces Rocks!");
-   }
+    public String getTarget() {
+        return (String) getStateHelper().eval(PropertyKeys.target, null);
+    }
 
-   public void setText(final String _text) {
-      getStateHelper().put(PropertyKeys.text, _text);
-   }
+    public void setTarget(final String _target) {
+        getStateHelper().put(PropertyKeys.target, _target);
+    }
 
-   public String getOnsuccess() {
-      return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
-   }
+    public String getText() {
+        return (String) getStateHelper().eval(PropertyKeys.text, "PrimeFaces Rocks!");
+    }
 
-   public void setOnsuccess(final String _onSuccess) {
-      getStateHelper().put(PropertyKeys.onsuccess, _onSuccess);
-   }
+    public void setText(final String _text) {
+        getStateHelper().put(PropertyKeys.text, _text);
+    }
 
-   public String getOnerror() {
-      return (String) getStateHelper().eval(PropertyKeys.onerror, null);
-   }
+    public String getOnsuccess() {
+        return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
+    }
 
-   public void setOnerror(final String _onError) {
-      getStateHelper().put(PropertyKeys.onerror, _onError);
-   }
+    public void setOnsuccess(final String _onSuccess) {
+        getStateHelper().put(PropertyKeys.onsuccess, _onSuccess);
+    }
+
+    public String getOnerror() {
+        return (String) getStateHelper().eval(PropertyKeys.onerror, null);
+    }
+
+    public void setOnerror(final String _onError) {
+        getStateHelper().put(PropertyKeys.onerror, _onError);
+    }
 }

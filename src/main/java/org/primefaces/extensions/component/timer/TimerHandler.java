@@ -15,29 +15,29 @@
  */
 package org.primefaces.extensions.component.timer;
 
-import org.primefaces.facelets.MethodRule;
-
 import javax.faces.view.facelets.ComponentConfig;
 import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.MetaRule;
 import javax.faces.view.facelets.MetaRuleset;
+
+import org.primefaces.facelets.MethodRule;
 
 /**
  * Handler for {@link Timer}
  */
 public class TimerHandler extends ComponentHandler {
 
-	private static final MetaRule LISTENER = new MethodRule("listener", null, new Class[0]);
-	
-	public TimerHandler(ComponentConfig config) {
-		super(config);
-	}
+    private static final MetaRule LISTENER = new MethodRule("listener", null, new Class[0]);
 
-	protected MetaRuleset createMetaRuleset(Class type) {
-		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+    public TimerHandler(ComponentConfig config) {
+        super(config);
+    }
 
-		metaRuleset.addRule(LISTENER);
+    protected MetaRuleset createMetaRuleset(Class type) {
+        MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		return metaRuleset;
-	}
+        metaRuleset.addRule(LISTENER);
+
+        return metaRuleset;
+    }
 }

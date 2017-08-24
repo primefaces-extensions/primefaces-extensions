@@ -23,25 +23,25 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public final class GsonConverter {
 
-	private static final GsonConverter INSTANCE = new GsonConverter();
-	private Gson gson;
+    private static final GsonConverter INSTANCE = new GsonConverter();
+    private Gson gson;
 
-	private GsonConverter() {
-		GsonBuilder gsonBilder = new GsonBuilder();
+    private GsonConverter() {
+        GsonBuilder gsonBilder = new GsonBuilder();
 
-		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
-		gsonBilder.serializeNulls();
+        gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+        gsonBilder.serializeNulls();
 
-		gson = gsonBilder.create();
-	}
+        gson = gsonBilder.create();
+    }
 
-	public static Gson getGson() {
-		return INSTANCE.gson;
-	}
+    public static Gson getGson() {
+        return INSTANCE.gson;
+    }
 }

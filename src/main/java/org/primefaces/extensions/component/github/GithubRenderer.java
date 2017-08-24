@@ -33,42 +33,42 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class GithubRenderer extends CoreRenderer {
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final Github github = (Github) component;
-      encodeMarkup(context, github);
-      encodeScript(context, github);
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final Github github = (Github) component;
+        encodeMarkup(context, github);
+        encodeScript(context, github);
+    }
 
-   /**
-    * Create the HTML markup for the DOM.
-    */
-   private void encodeMarkup(final FacesContext context, final Github github) throws IOException {
-      final ResponseWriter writer = context.getResponseWriter();
-      final String clientId = github.getClientId(context);
-      final String widgetVar = github.resolveWidgetVar();
+    /**
+     * Create the HTML markup for the DOM.
+     */
+    private void encodeMarkup(final FacesContext context, final Github github) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = github.getClientId(context);
+        final String widgetVar = github.resolveWidgetVar();
 
-      writer.startElement("div", github);
-      writer.writeAttribute("id", clientId, "id");
-      writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-      writer.writeAttribute("data-repo", github.getRepository(), "data-repo");
-      writer.endElement("div");
-   }
+        writer.startElement("div", github);
+        writer.writeAttribute("id", clientId, "id");
+        writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute("data-repo", github.getRepository(), "data-repo");
+        writer.endElement("div");
+    }
 
-   /**
-    * Create the Javascript.
-    */
-   private void encodeScript(final FacesContext context, final Github github) throws IOException {
-      final WidgetBuilder wb = getWidgetBuilder(context);
-      final String clientId = github.getClientId(context);
-      wb.initWithDomReady("ExtGitHub", github.resolveWidgetVar(), clientId);
-      wb.attr("iconForks", github.isIconForks());
-      wb.attr("iconIssues", github.isIconIssues());
-      wb.attr("iconStars", github.isIconStars());
-      wb.finish();
-   }
+    /**
+     * Create the Javascript.
+     */
+    private void encodeScript(final FacesContext context, final Github github) throws IOException {
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        final String clientId = github.getClientId(context);
+        wb.initWithDomReady("ExtGitHub", github.resolveWidgetVar(), clientId);
+        wb.attr("iconForks", github.isIconForks());
+        wb.attr("iconIssues", github.isIconIssues());
+        wb.attr("iconStars", github.isIconStars());
+        wb.finish();
+    }
 
 }

@@ -28,101 +28,103 @@ import org.primefaces.extensions.model.common.KeyData;
  */
 public class FluidGridItem implements KeyData, Serializable {
 
-   public static final String DEFAULT_TYPE = "default";
+    public static final String DEFAULT_TYPE = "default";
 
-   private String key;
-   private Object data;
-   private String type;
+    private String key;
+    private Object data;
+    private String type;
 
-   public FluidGridItem() {
-      // generate key
-      setKey(RandomStringUtils.randomAlphanumeric(8));
-   }
+    public FluidGridItem() {
+        // generate key
+        setKey(RandomStringUtils.randomAlphanumeric(8));
+    }
 
-   public FluidGridItem(final Object data) {
-      this.data = data;
-      type = DEFAULT_TYPE;
+    public FluidGridItem(final Object data) {
+        this.data = data;
+        type = DEFAULT_TYPE;
 
-      // generate key
-      setKey(RandomStringUtils.randomAlphanumeric(8));
-   }
+        // generate key
+        setKey(RandomStringUtils.randomAlphanumeric(8));
+    }
 
-   public FluidGridItem(final Object data, final String type) {
-      this.data = data;
-      if (type != null) {
-         this.type = type;
-      } else {
-         this.type = DEFAULT_TYPE;
-      }
+    public FluidGridItem(final Object data, final String type) {
+        this.data = data;
+        if (type != null) {
+            this.type = type;
+        }
+        else {
+            this.type = DEFAULT_TYPE;
+        }
 
-      // generate key
-      setKey(RandomStringUtils.randomAlphanumeric(8));
-   }
+        // generate key
+        setKey(RandomStringUtils.randomAlphanumeric(8));
+    }
 
-   @Override
-   public String getKey() {
-      return key;
-   }
+    @Override
+    public String getKey() {
+        return key;
+    }
 
-   @Override
-   public void setKey(final String key) {
-      this.key = key;
-   }
+    @Override
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
-   @Override
-   public Object getData() {
-      return data;
-   }
+    @Override
+    public Object getData() {
+        return data;
+    }
 
-   @Override
-   public void setData(final Object data) {
-      this.data = data;
-   }
+    @Override
+    public void setData(final Object data) {
+        this.data = data;
+    }
 
-   public String getType() {
-      return type;
-   }
+    public String getType() {
+        return type;
+    }
 
-   @Override
-   public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (key == null ? 0 : key.hashCode());
-      return result;
-   }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (key == null ? 0 : key.hashCode());
+        return result;
+    }
 
-   @Override
-   public boolean equals(final Object obj) {
-      if (this == obj) {
-         return true;
-      }
-      if (obj == null) {
-         return false;
-      }
-      if (!(obj instanceof FluidGridItem)) {
-         return false;
-      }
-      final FluidGridItem other = (FluidGridItem) obj;
-      if (key == null) {
-         if (other.key != null) {
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
-         }
-      } else if (!key.equals(other.key)) {
-         return false;
-      }
-      return true;
-   }
+        }
+        if (!(obj instanceof FluidGridItem)) {
+            return false;
+        }
+        final FluidGridItem other = (FluidGridItem) obj;
+        if (key == null) {
+            if (other.key != null) {
+                return false;
+            }
+        }
+        else if (!key.equals(other.key)) {
+            return false;
+        }
+        return true;
+    }
 
-   @Override
-   public String toString() {
-      final StringBuilder builder = new StringBuilder();
-      builder.append("FluidGridItem [key=");
-      builder.append(key);
-      builder.append(", data=");
-      builder.append(data);
-      builder.append(", type=");
-      builder.append(type);
-      builder.append("]");
-      return builder.toString();
-   }
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("FluidGridItem [key=");
+        builder.append(key);
+        builder.append(", data=");
+        builder.append(data);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append("]");
+        return builder.toString();
+    }
 }

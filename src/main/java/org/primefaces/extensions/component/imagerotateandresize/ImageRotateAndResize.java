@@ -42,114 +42,113 @@ import org.primefaces.util.Constants;
  * @since 0.1
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class ImageRotateAndResize extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ImageRotateAndResize";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String EVENT_ROTATE = "rotate";
+    public static final String EVENT_RESIZE = "resize";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ImageRotateAndResizeRenderer";
 
-	public static final String EVENT_ROTATE = "rotate";
-	public static final String EVENT_RESIZE = "resize";
+    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
 
-	private static final Collection<String> EVENT_NAMES =
-			Collections.unmodifiableCollection(Arrays.asList(EVENT_ROTATE, EVENT_RESIZE));
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Thomas Andraschko / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author  Thomas Andraschko / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
+        widgetVar, forValue("for");
 
-		widgetVar,
-		forValue("for");
+        private String toString;
 
-		private String toString;
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys() {
+        }
 
-		PropertyKeys() {
-		}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
+    public ImageRotateAndResize() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-	public ImageRotateAndResize() {
-		setRendererType(DEFAULT_RENDERER);
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-	@Override
-	public Collection<String> getEventNames() {
-		return EVENT_NAMES;
-	}
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
 
-	public void setWidgetVar(final String widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-	}
+    public String getFor() {
+        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+    }
 
-	public String getFor() {
-		return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-	}
+    public void setFor(final String forValue) {
+        getStateHelper().put(PropertyKeys.forValue, forValue);
+    }
 
-	public void setFor(final String forValue) {
-		getStateHelper().put(PropertyKeys.forValue, forValue);
-	}
-
-	public String resolveWidgetVar() {
+    public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+    }
 
-	@Override
-	public void queueEvent(final FacesEvent event) {
-		final FacesContext context = FacesContext.getCurrentInstance();
-		final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		final String clientId = getClientId(context);
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String clientId = getClientId(context);
 
-		if (isRequestSource(clientId, params)) {
-			final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        if (isRequestSource(clientId, params)) {
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-			final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
+            final BehaviorEvent behaviorEvent = (BehaviorEvent) event;
 
-			if (eventName.equals(EVENT_RESIZE)) {
-				final double width = Double.parseDouble(params.get(clientId + "_width"));
-				final double height = Double.parseDouble(params.get(clientId + "_height"));
+            if (eventName.equals(EVENT_RESIZE)) {
+                final double width = Double.parseDouble(params.get(clientId + "_width"));
+                final double height = Double.parseDouble(params.get(clientId + "_height"));
 
-				final ResizeEvent resizeEvent = new ResizeEvent(this, behaviorEvent.getBehavior(), width, height);
+                final ResizeEvent resizeEvent = new ResizeEvent(this, behaviorEvent.getBehavior(), width, height);
 
-				super.queueEvent(resizeEvent);
-			} else if (eventName.equals(EVENT_ROTATE)) {
-				final int degree = Integer.parseInt(params.get(clientId + "_degree"));
+                super.queueEvent(resizeEvent);
+            }
+            else if (eventName.equals(EVENT_ROTATE)) {
+                final int degree = Integer.parseInt(params.get(clientId + "_degree"));
 
-				final RotateEvent rotateEvent = new RotateEvent(this, behaviorEvent.getBehavior(), degree);
+                final RotateEvent rotateEvent = new RotateEvent(this, behaviorEvent.getBehavior(), degree);
 
-				super.queueEvent(rotateEvent);
-			}
-		} else {
-			super.queueEvent(event);
-		}
-	}
+                super.queueEvent(rotateEvent);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
+    }
 
-	private boolean isRequestSource(final String clientId, final Map<String, String> params) {
-		return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-	}
+    private boolean isRequestSource(final String clientId, final Map<String, String> params) {
+        return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
 }

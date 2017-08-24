@@ -39,119 +39,120 @@ import org.primefaces.extensions.util.TagUtils;
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class SelectDetailLevelTagHandler extends TagHandler {
 
-	private final TagAttribute contextValue;
-	private final TagAttribute listener;
-	private final TagAttribute level;
-	private final TagAttribute step;
-	private final TagAttribute preserveInputs;
-	private final TagAttribute resetInputs;
-	private final TagAttribute event;
+    private final TagAttribute contextValue;
+    private final TagAttribute listener;
+    private final TagAttribute level;
+    private final TagAttribute step;
+    private final TagAttribute preserveInputs;
+    private final TagAttribute resetInputs;
+    private final TagAttribute event;
 
-	public SelectDetailLevelTagHandler(TagConfig config) {
-		super(config);
-		this.contextValue = getAttribute("contextValue");
-		this.listener = getAttribute("listener");
-		this.level = getAttribute("level");
-		this.step = getAttribute("step");
-		this.preserveInputs = getAttribute("preserveInputs");
-		this.resetInputs = getAttribute("resetInputs");
-		this.event = super.getAttribute("event");
-	}
+    public SelectDetailLevelTagHandler(TagConfig config) {
+        super(config);
+        this.contextValue = getAttribute("contextValue");
+        this.listener = getAttribute("listener");
+        this.level = getAttribute("level");
+        this.step = getAttribute("step");
+        this.preserveInputs = getAttribute("preserveInputs");
+        this.resetInputs = getAttribute("resetInputs");
+        this.event = super.getAttribute("event");
+    }
 
-	public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
-		if (!ComponentUtils.isAjaxifiedComponent(parent)) {
-			throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
-		}
+    public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
+        if (!ComponentUtils.isAjaxifiedComponent(parent)) {
+            throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
+        }
 
-		if (!ComponentHandler.isNew(parent)) {
-			return;
-		}
+        if (!ComponentHandler.isNew(parent)) {
+            return;
+        }
 
-		// get value expression for contextValue attribute of this tag handler
-		ValueExpression contextValueVE = null;
-		if (contextValue != null) {
-			contextValueVE = contextValue.getValueExpression(ctx, Object.class);
-			if (contextValueVE != null) {
-				// store valid value expression in the attributes map
-				parent.getAttributes().put(MasterDetail.CONTEXT_VALUE_VALUE_EXPRESSION, contextValueVE);
-			}
-		}
+        // get value expression for contextValue attribute of this tag handler
+        ValueExpression contextValueVE = null;
+        if (contextValue != null) {
+            contextValueVE = contextValue.getValueExpression(ctx, Object.class);
+            if (contextValueVE != null) {
+                // store valid value expression in the attributes map
+                parent.getAttributes().put(MasterDetail.CONTEXT_VALUE_VALUE_EXPRESSION, contextValueVE);
+            }
+        }
 
-		// get value expression for level attribute of this tag handler
-		ValueExpression selectedLevelVE = null;
-		if (level != null) {
-			selectedLevelVE = level.getValueExpression(ctx, int.class);
-			if (selectedLevelVE != null) {
-				// store valid value expression in the attributes map
-				parent.getAttributes().put(MasterDetail.SELECTED_LEVEL_VALUE_EXPRESSION, selectedLevelVE);
-			}
-		}
+        // get value expression for level attribute of this tag handler
+        ValueExpression selectedLevelVE = null;
+        if (level != null) {
+            selectedLevelVE = level.getValueExpression(ctx, int.class);
+            if (selectedLevelVE != null) {
+                // store valid value expression in the attributes map
+                parent.getAttributes().put(MasterDetail.SELECTED_LEVEL_VALUE_EXPRESSION, selectedLevelVE);
+            }
+        }
 
-		// get value expression for step attribute of this tag handler
-		ValueExpression selectedStepVE = null;
-		if (step != null) {
-			selectedStepVE = step.getValueExpression(ctx, int.class);
-			if (selectedStepVE != null) {
-				// store valid value expression in the attributes map
-				parent.getAttributes().put(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION, selectedStepVE);
-			}
-		}
+        // get value expression for step attribute of this tag handler
+        ValueExpression selectedStepVE = null;
+        if (step != null) {
+            selectedStepVE = step.getValueExpression(ctx, int.class);
+            if (selectedStepVE != null) {
+                // store valid value expression in the attributes map
+                parent.getAttributes().put(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION, selectedStepVE);
+            }
+        }
 
-		// get value expression for preserveInputs attribute of this tag handler
-		ValueExpression preserveInputsVE = null;
-		if (preserveInputs != null) {
-			preserveInputsVE = preserveInputs.getValueExpression(ctx, String.class);
-			if (preserveInputsVE != null) {
-				// store valid value expression in the attributes map
-				parent.getAttributes().put(MasterDetail.PRESERVE_INPUTS_VALUE_EXPRESSION, preserveInputsVE);
-			}
-		}
+        // get value expression for preserveInputs attribute of this tag handler
+        ValueExpression preserveInputsVE = null;
+        if (preserveInputs != null) {
+            preserveInputsVE = preserveInputs.getValueExpression(ctx, String.class);
+            if (preserveInputsVE != null) {
+                // store valid value expression in the attributes map
+                parent.getAttributes().put(MasterDetail.PRESERVE_INPUTS_VALUE_EXPRESSION, preserveInputsVE);
+            }
+        }
 
-		// get value expression for resetInputs attribute of this tag handler
-		ValueExpression resetInputsVE = null;
-		if (resetInputs != null) {
-			resetInputsVE = resetInputs.getValueExpression(ctx, String.class);
-			if (resetInputsVE != null) {
-				// store valid value expression in the attributes map
-				parent.getAttributes().put(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION, resetInputsVE);
-			}
-		}
+        // get value expression for resetInputs attribute of this tag handler
+        ValueExpression resetInputsVE = null;
+        if (resetInputs != null) {
+            resetInputsVE = resetInputs.getValueExpression(ctx, String.class);
+            if (resetInputsVE != null) {
+                // store valid value expression in the attributes map
+                parent.getAttributes().put(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION, resetInputsVE);
+            }
+        }
 
-		// register a ComponentSystemEventListener
-		parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderSourceListener());
+        // register a ComponentSystemEventListener
+        parent.subscribeToEvent(PreRenderComponentEvent.class, new PreRenderSourceListener());
 
-		// register an ActionListener / AjaxBehaviorListener
-		if (listener != null) {
-			MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
+        // register an ActionListener / AjaxBehaviorListener
+        if (listener != null) {
+            MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] { Object.class });
 
-			if (parent instanceof ActionSource) {
-				((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
-			} else if (parent instanceof ClientBehaviorHolder) {
-				// find attached f:ajax / p:ajax corresponding to supported events
-				Collection<List<ClientBehavior>> clientBehaviors =
-				    TagUtils.getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
-				if (clientBehaviors == null || clientBehaviors.isEmpty()) {
-					return;
-				}
+            if (parent instanceof ActionSource) {
+                ((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
+            }
+            else if (parent instanceof ClientBehaviorHolder) {
+                // find attached f:ajax / p:ajax corresponding to supported events
+                Collection<List<ClientBehavior>> clientBehaviors = TagUtils.getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
+                if (clientBehaviors == null || clientBehaviors.isEmpty()) {
+                    return;
+                }
 
-				for (List<ClientBehavior> listBehaviors : clientBehaviors) {
-					for (ClientBehavior clientBehavior : listBehaviors) {
-						if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
-							((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
-							    new SelectDetailLevelListener(me));
-						} else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
-							((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
-							    new SelectDetailLevelListener(me));
-						}
-					}
-				}
-			}
-		}
-	}
+                for (List<ClientBehavior> listBehaviors : clientBehaviors) {
+                    for (ClientBehavior clientBehavior : listBehaviors) {
+                        if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
+                            ((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+                                        new SelectDetailLevelListener(me));
+                        }
+                        else if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior) {
+                            ((javax.faces.component.behavior.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
+                                        new SelectDetailLevelListener(me));
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

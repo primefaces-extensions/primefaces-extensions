@@ -32,95 +32,95 @@ import javax.faces.event.AjaxBehaviorListener;
 /**
  * Class for all added at runtime listeners specified by SelectDetailLevel.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionListener, StateHolder {
 
-	private MethodExpression listener;
+    private MethodExpression listener;
 
-	/**
-	 * This constructor is required for serialization. Please do not remove.
-	 */
-	public SelectDetailLevelListener() {
-	}
+    /**
+     * This constructor is required for serialization. Please do not remove.
+     */
+    public SelectDetailLevelListener() {
+    }
 
-	public SelectDetailLevelListener(MethodExpression listener) {
-		this.listener = listener;
-	}
+    public SelectDetailLevelListener(MethodExpression listener) {
+        this.listener = listener;
+    }
 
-	public void processAction(ActionEvent actionEvent) {
-		process(actionEvent.getComponent());
-	}
+    public void processAction(ActionEvent actionEvent) {
+        process(actionEvent.getComponent());
+    }
 
-	public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
-		process(event.getComponent());
-	}
+    public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
+        process(event.getComponent());
+    }
 
-	public void process(UIComponent source) {
-		final FacesContext fc = FacesContext.getCurrentInstance();
-		final String clientId = source.getClientId(fc);
+    public void process(UIComponent source) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
+        final String clientId = source.getClientId(fc);
 
-		// find master detail level component
-		MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
-		if (masterDetailLevel == null) {
-			throw new FacesException(
-			    "MasterDetailLevel was not found. SelectDetailLevel can be only used inside of MasterDetailLevel.");
-		}
+        // find master detail level component
+        MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
+        if (masterDetailLevel == null) {
+            throw new FacesException(
+                        "MasterDetailLevel was not found. SelectDetailLevel can be only used inside of MasterDetailLevel.");
+        }
 
-		// get resolved context value
-		@SuppressWarnings("unchecked")
-		Map<String, Object> contextValues =
-		    (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
-		if (contextValues == null) {
-			contextValues = new HashMap<String, Object>();
-		}
+        // get resolved context value
+        @SuppressWarnings("unchecked")
+        Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
+        if (contextValues == null) {
+            contextValues = new HashMap<String, Object>();
+        }
 
-		// get current context value
-		Object contextValue = contextValues.get(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
+        // get current context value
+        Object contextValue = contextValues.get(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
 
-		// invoke listener and get new context value
-		Object newContextValue = listener.invoke(fc.getELContext(), new Object[] {contextValue});
+        // invoke listener and get new context value
+        Object newContextValue = listener.invoke(fc.getELContext(), new Object[] { contextValue });
 
-		// make new context value available in MasterDetail component
-		if (newContextValue != null) {
-			contextValues.put(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId, newContextValue);
-		} else {
-			contextValues.remove(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
-		}
-	}
+        // make new context value available in MasterDetail component
+        if (newContextValue != null) {
+            contextValues.put(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId, newContextValue);
+        }
+        else {
+            contextValues.remove(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
+        }
+    }
 
-	public boolean isTransient() {
-		return false;
-	}
+    public boolean isTransient() {
+        return false;
+    }
 
-	public void restoreState(FacesContext facesContext, Object state) {
-		Object[] values = (Object[]) state;
-		listener = (MethodExpression) values[0];
-	}
+    public void restoreState(FacesContext facesContext, Object state) {
+        Object[] values = (Object[]) state;
+        listener = (MethodExpression) values[0];
+    }
 
-	public Object saveState(final FacesContext facesContext) {
-		Object[] values = new Object[1];
-		values[0] = listener;
+    public Object saveState(final FacesContext facesContext) {
+        Object[] values = new Object[1];
+        values[0] = listener;
 
-		return values;
-	}
+        return values;
+    }
 
-	public void setTransient(boolean value) {
-	}
+    public void setTransient(boolean value) {
+    }
 
-	private MasterDetailLevel findMasterDetailLevel(UIComponent component) {
-		UIComponent parent = component.getParent();
+    private MasterDetailLevel findMasterDetailLevel(UIComponent component) {
+        UIComponent parent = component.getParent();
 
-		while (parent != null) {
-			if (parent instanceof MasterDetailLevel) {
-				return (MasterDetailLevel) parent;
-			}
+        while (parent != null) {
+            if (parent instanceof MasterDetailLevel) {
+                return (MasterDetailLevel) parent;
+            }
 
-			parent = parent.getParent();
-		}
+            parent = parent.getParent();
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

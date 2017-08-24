@@ -28,65 +28,65 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * FooNonGeneric
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class FooNonGeneric {
 
-	private int count;
-	private Date startDate;
-	private Date endDate;
-	private List<String> messages = new ArrayList<String>();
+    private int count;
+    private Date startDate;
+    private Date endDate;
+    private List<String> messages = new ArrayList<String>();
 
-	public FooNonGeneric() {
-		count = 5;
-		startDate = new Date();
-		endDate = new Date(startDate.getTime() + 360000);
+    public FooNonGeneric() {
+        count = 5;
+        startDate = new Date();
+        endDate = new Date(startDate.getTime() + 360000);
 
-		for (int i = 1; i <= 10; i++) {
-			messages.add("Message string " + i);
-		}
-	}
+        for (int i = 1; i <= 10; i++) {
+            messages.add("Message string " + i);
+        }
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public int getCount() {
+        return count;
+    }
 
-	public void setCount(int count) {
-		this.count = count;
-	}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public Date getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-	public List<String> getMessages() {
-		return messages;
-	}
+    public List<String> getMessages() {
+        return messages;
+    }
 
-	public void setMessages(List<String> messages) {
-		this.messages = messages;
-	}
+    public void setMessages(List<String> messages) {
+        this.messages = messages;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		return EqualsBuilder.reflectionEquals(this, o);
-	}
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

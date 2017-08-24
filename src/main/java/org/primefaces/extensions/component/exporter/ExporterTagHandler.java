@@ -125,10 +125,10 @@ public class ExporterTagHandler extends TagHandler {
                 selectionOnlyVE = selectionOnly.getValueExpression(faceletContext, Object.class);
             }
             if (preProcessor != null) {
-                preProcessorME = preProcessor.getMethodExpression(faceletContext, null, new Class[]{Object.class});
+                preProcessorME = preProcessor.getMethodExpression(faceletContext, null, new Class[] { Object.class });
             }
             if (postProcessor != null) {
-                postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[]{Object.class});
+                postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[] { Object.class });
             }
             if (subTable != null) {
                 subTableVE = subTable.getValueExpression(faceletContext, Object.class);
@@ -165,13 +165,14 @@ public class ExporterTagHandler extends TagHandler {
             }
             if (skipComponents != null) {
                 skipComponentsVE = skipComponents.getValueExpression(faceletContext, Object.class);
-             }
+            }
 
             ActionSource actionSource = (ActionSource) parent;
-            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME, postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, fontNameVE, cellFontSizeVE, cellFontColorVE, cellFontStyleVE, datasetPaddingVE, orientationVE,skipComponentsVE));
+            actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME,
+                        postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, fontNameVE, cellFontSizeVE,
+                        cellFontColorVE, cellFontStyleVE, datasetPaddingVE, orientationVE, skipComponentsVE));
 
         }
     }
 
 }
-

@@ -26,46 +26,46 @@ import javax.faces.component.UIOutput;
  */
 public abstract class AbstractParameter extends UIOutput {
 
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author Thomas Andraschko / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
-		name;
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Thomas Andraschko / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
+        name;
 
-		private String toString;
+        private String toString;
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys() {
-		}
+        PropertyKeys() {
+        }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-	public AbstractParameter() {
-		setRendererType(null);
-	}
+    public AbstractParameter() {
+        setRendererType(null);
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	public String getName() {
-		return (String) getStateHelper().eval(PropertyKeys.name, null);
-	}
+    public String getName() {
+        return (String) getStateHelper().eval(PropertyKeys.name, null);
+    }
 
-	public void setName(final String name) {
-		getStateHelper().put(PropertyKeys.name, name);
-	}
+    public void setName(final String name) {
+        getStateHelper().put(PropertyKeys.name, name);
+    }
 }

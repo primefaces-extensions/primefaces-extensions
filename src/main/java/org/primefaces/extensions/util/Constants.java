@@ -18,20 +18,20 @@ package org.primefaces.extensions.util;
 /**
  * Global constants for the project.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public final class Constants {
 
-	public static final String LIBRARY = "primefaces-extensions";
+    public static final String LIBRARY = "primefaces-extensions";
 
-	public static final String EXTENSION_CSS = ".css";
-	public static final String EXTENSION_JS = ".js";
+    public static final String EXTENSION_CSS = ".css";
+    public static final String EXTENSION_JS = ".js";
 
-	/**
-	 * Avoid instantiation.
-	 */
-	private Constants() {
-	}
+    /**
+     * Avoid instantiation.
+     */
+    private Constants() {
+    }
 }

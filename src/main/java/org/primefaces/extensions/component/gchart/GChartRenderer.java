@@ -29,65 +29,66 @@ import org.primefaces.util.WidgetBuilder;
 
 public class GChartRenderer extends CoreRenderer {
 
-   @Override
-   public void decode(final FacesContext context, final UIComponent component) {
-      super.decode(context, component);
-      decodeBehaviors(context, component);
-   }
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        super.decode(context, component);
+        decodeBehaviors(context, component);
+    }
 
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final GChart gChart = (GChart) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final GChart gChart = (GChart) component;
 
-      encodeMarkup(context, gChart);
-      encodeScript(context, gChart);
-   }
+        encodeMarkup(context, gChart);
+        encodeScript(context, gChart);
+    }
 
-   protected void encodeMarkup(final FacesContext context, final GChart chart) throws IOException {
-      final ResponseWriter writer = context.getResponseWriter();
+    protected void encodeMarkup(final FacesContext context, final GChart chart) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
 
-      writer.startElement("input", chart);
-      writer.writeAttribute("id", chart.getClientId() + "_hidden", null);
-      writer.writeAttribute("name", chart.getClientId() + "_hidden", null);
-      writer.writeAttribute("type", "hidden", null);
-      writer.endElement("input");
+        writer.startElement("input", chart);
+        writer.writeAttribute("id", chart.getClientId() + "_hidden", null);
+        writer.writeAttribute("name", chart.getClientId() + "_hidden", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.endElement("input");
 
-      writer.startElement("div", chart);
-      writer.writeAttribute("id", chart.getClientId(), null);
-      writer.endElement("div");
-   }
+        writer.startElement("div", chart);
+        writer.writeAttribute("id", chart.getClientId(), null);
+        writer.endElement("div");
+    }
 
-   protected void encodeScript(final FacesContext context, final GChart chart) throws IOException {
+    protected void encodeScript(final FacesContext context, final GChart chart) throws IOException {
 
-      final String clientId = chart.getClientId();
-      final String widgetVar = chart.resolveWidgetVar();
+        final String clientId = chart.getClientId();
+        final String widgetVar = chart.resolveWidgetVar();
 
-      String apiKey = chart.getApiKey();
-      if (StringUtils.isBlank(apiKey)) {
-         apiKey = getApiKey(context, chart);
-      }
+        String apiKey = chart.getApiKey();
+        if (StringUtils.isBlank(apiKey)) {
+            apiKey = getApiKey(context, chart);
+        }
 
-      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
-      wb.init("ExtGChart", widgetVar, clientId)
-               .attr("chart", ((GChartModel) chart.getValue()).toJson())
-               .attr("title", chart.getTitle())
-               .attr("apiKey", apiKey)
-               .attr("width", chart.getWidth())
-               .attr("height", chart.getHeight());
+        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.init("ExtGChart", widgetVar, clientId)
+                    .attr("chart", ((GChartModel) chart.getValue()).toJson())
+                    .attr("title", chart.getTitle())
+                    .attr("apiKey", apiKey)
+                    .attr("width", chart.getWidth())
+                    .attr("height", chart.getHeight());
 
-      encodeClientBehaviors(context, chart);
+        encodeClientBehaviors(context, chart);
 
-      wb.finish();
-   }
+        wb.finish();
+    }
 
-   protected String getApiKey(FacesContext context, GChart chart) {
-      String key = null;
-      try {
-         String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
-         key = context.getApplication().evaluateExpressionGet(context, initParam, String.class);
-      } catch (Exception e) {
-         key = null;
-      }
-      return key;
-   }
+    protected String getApiKey(FacesContext context, GChart chart) {
+        String key = null;
+        try {
+            String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
+            key = context.getApplication().evaluateExpressionGet(context, initParam, String.class);
+        }
+        catch (Exception e) {
+            key = null;
+        }
+        return key;
+    }
 }

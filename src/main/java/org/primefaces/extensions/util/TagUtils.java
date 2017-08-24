@@ -31,33 +31,33 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * Utils class for tag handlers.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5.1
+ * @since 0.5.1
  */
 public class TagUtils {
 
-	public static Collection<List<ClientBehavior>> getClientBehaviors(FaceletContext context, TagAttribute event,
-	                                                                  ClientBehaviorHolder clientBehaviorHolder) {
-		Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
-		if (mapBehaviors == null || mapBehaviors.isEmpty()) {
-			return null;
-		}
+    public static Collection<List<ClientBehavior>> getClientBehaviors(FaceletContext context, TagAttribute event,
+                ClientBehaviorHolder clientBehaviorHolder) {
+        Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
+        if (mapBehaviors == null || mapBehaviors.isEmpty()) {
+            return null;
+        }
 
-		String events = (event != null ? event.getValue(context) : null);
-		String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
-		if (arrEvents == null || arrEvents.length < 1) {
-			return mapBehaviors.values();
-		}
+        String events = (event != null ? event.getValue(context) : null);
+        String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
+        if (arrEvents == null || arrEvents.length < 1) {
+            return mapBehaviors.values();
+        }
 
-		Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
+        Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
 
-		for (Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
-			if (ArrayUtils.contains(arrEvents, entry.getKey())) {
-				behaviors.add(entry.getValue());
-			}
-		}
+        for (Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
+            if (ArrayUtils.contains(arrEvents, entry.getKey())) {
+                behaviors.add(entry.getValue());
+            }
+        }
 
-		return behaviors;
-	}
+        return behaviors;
+    }
 }

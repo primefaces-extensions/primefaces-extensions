@@ -15,29 +15,29 @@
  */
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
+
 /**
- * Event which is triggered by the {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize}
- * component.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize} component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.1
+ * @since 0.1
  */
 @SuppressWarnings("serial")
 public class RotateEvent extends AbstractAjaxBehaviorEvent {
 
-	private int degree;
+    private int degree;
 
-	public RotateEvent(final UIComponent component, final Behavior behavior, final int degree) {
-		super(component, behavior);
-		this.degree = degree;
-	}
+    public RotateEvent(final UIComponent component, final Behavior behavior, final int degree) {
+        super(component, behavior);
+        this.degree = degree;
+    }
 
-	public int getDegree() {
-		return degree;
-	}
+    public int getDegree() {
+        return degree;
+    }
 }

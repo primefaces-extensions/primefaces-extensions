@@ -22,17 +22,17 @@ import javax.faces.view.facelets.TagAttribute;
 /**
  * {@link ComponentHandler} for the <code>MasterDetailLevel</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class MasterDetailLevelTagHandler extends ComponentHandler {
 
-	@SuppressWarnings("unused") //check required attribute
-	private final TagAttribute level;
+    @SuppressWarnings("unused") // check required attribute
+    private final TagAttribute level;
 
-	public MasterDetailLevelTagHandler(final ComponentConfig config) {
-		super(config);
-		this.level = getRequiredAttribute("level");
-	}
+    public MasterDetailLevelTagHandler(final ComponentConfig config) {
+        super(config);
+        this.level = getRequiredAttribute("level");
+    }
 }

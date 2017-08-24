@@ -29,17 +29,17 @@ import org.primefaces.util.ComponentUtils;
  * @since 6.1
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "github/github.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "github/github.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "github/github.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "github/github.js")
 })
 public class Github extends UIComponentBase implements Widget {
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Github";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GithubRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Github";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GithubRenderer";
 
-   protected enum PropertyKeys {
+    protected enum PropertyKeys {
 
       // @formatter:off
       widgetVar,
@@ -48,101 +48,109 @@ public class Github extends UIComponentBase implements Widget {
       iconForks,
       iconIssues,
       style,
-      styleClass,;
+      styleClass;
       // @formatter:on
 
-      String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        public String getToString() {
+            return toString;
+        }
 
-   /**
-    * Default constructor
-    */
-   public Github() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+        public void setToString(String toString) {
+            this.toString = toString;
+        }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    /**
+     * Default constructor
+     */
+    public Github() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   public void setWidgetVar(final String _widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   public String getRepository() {
-      return (String) getStateHelper().eval(PropertyKeys.repository, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setRepository(final String _repository) {
-      getStateHelper().put(PropertyKeys.repository, _repository);
-   }
+    public void setWidgetVar(final String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-   public void setIconStars(final boolean _iconStars) {
-      getStateHelper().put(PropertyKeys.iconStars, _iconStars);
-   }
+    public String getRepository() {
+        return (String) getStateHelper().eval(PropertyKeys.repository, null);
+    }
 
-   public boolean isIconStars() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.iconStars, true);
-   }
+    public void setRepository(final String _repository) {
+        getStateHelper().put(PropertyKeys.repository, _repository);
+    }
 
-   public void setIconForks(final boolean _iconForks) {
-      getStateHelper().put(PropertyKeys.iconForks, _iconForks);
-   }
+    public void setIconStars(final boolean _iconStars) {
+        getStateHelper().put(PropertyKeys.iconStars, _iconStars);
+    }
 
-   public boolean isIconForks() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.iconForks, true);
-   }
+    public boolean isIconStars() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.iconStars, true);
+    }
 
-   public void setIconIssues(final boolean _iconIssues) {
-      getStateHelper().put(PropertyKeys.iconIssues, _iconIssues);
-   }
+    public void setIconForks(final boolean _iconForks) {
+        getStateHelper().put(PropertyKeys.iconForks, _iconForks);
+    }
 
-   public boolean isIconIssues() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.iconIssues, true);
-   }
+    public boolean isIconForks() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.iconForks, true);
+    }
 
-   public String getStyle() {
-      return (String) getStateHelper().eval(PropertyKeys.style, null);
-   }
+    public void setIconIssues(final boolean _iconIssues) {
+        getStateHelper().put(PropertyKeys.iconIssues, _iconIssues);
+    }
 
-   public void setStyle(final String _style) {
-      getStateHelper().put(PropertyKeys.style, _style);
-   }
+    public boolean isIconIssues() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.iconIssues, true);
+    }
 
-   public String getStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-   }
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
 
-   public void setStyleClass(final String _styleClass) {
-      getStateHelper().put(PropertyKeys.styleClass, _styleClass);
-   }
+    public void setStyle(final String _style) {
+        getStateHelper().put(PropertyKeys.style, _style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String _styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    }
 
 }

@@ -25,34 +25,34 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 
 /**
- * Callback calling while MasterDetailLevel's subtree is visiting. The aim of this callback is gathering of all components
- * implementing {@link javax.faces.component.EditableValueHolder} below the subtree.
+ * Callback calling while MasterDetailLevel's subtree is visiting. The aim of this callback is gathering of all components implementing
+ * {@link javax.faces.component.EditableValueHolder} below the subtree.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5.1
+ * @since 0.5.1
  */
 public class MasterDetailLevelVisitCallback implements VisitCallback {
 
-	private List<EditableValueHolder> editableValueHolders = new ArrayList<EditableValueHolder>();
+    private List<EditableValueHolder> editableValueHolders = new ArrayList<EditableValueHolder>();
 
-	public VisitResult visit(VisitContext context, UIComponent target) {
-		if (target instanceof MasterDetailLevel) {
-			return VisitResult.ACCEPT;
-		}
+    public VisitResult visit(VisitContext context, UIComponent target) {
+        if (target instanceof MasterDetailLevel) {
+            return VisitResult.ACCEPT;
+        }
 
-		if (!target.isRendered()) {
-			return VisitResult.REJECT;
-		}
+        if (!target.isRendered()) {
+            return VisitResult.REJECT;
+        }
 
-		if (target instanceof EditableValueHolder) {
-			editableValueHolders.add((EditableValueHolder) target);
-		}
+        if (target instanceof EditableValueHolder) {
+            editableValueHolders.add((EditableValueHolder) target);
+        }
 
-		return VisitResult.ACCEPT;
-	}
+        return VisitResult.ACCEPT;
+    }
 
-	public List<EditableValueHolder> getEditableValueHolders() {
-		return editableValueHolders;
-	}
+    public List<EditableValueHolder> getEditableValueHolders() {
+        return editableValueHolders;
+    }
 }

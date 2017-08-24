@@ -37,121 +37,127 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class LayoutRenderer extends CoreRenderer {
 
-   @Override
-   public void decode(final FacesContext fc, final UIComponent component) {
-      decodeBehaviors(fc, component);
-   }
+    @Override
+    public void decode(final FacesContext fc, final UIComponent component) {
+        decodeBehaviors(fc, component);
+    }
 
-   @Override
-   public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
-      ResponseWriter writer = fc.getResponseWriter();
-      final Layout layout = (Layout) component;
+    @Override
+    public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
+        ResponseWriter writer = fc.getResponseWriter();
+        final Layout layout = (Layout) component;
 
-      final boolean buildOptions = layout.getOptions() == null;
-      layout.setBuildOptions(buildOptions);
+        final boolean buildOptions = layout.getOptions() == null;
+        layout.setBuildOptions(buildOptions);
 
-      if (buildOptions) {
-         final FastStringWriter fsw = new FastStringWriter();
-         layout.setOriginalWriter(writer);
-         layout.setFastStringWriter(fsw);
-         fc.setResponseWriter(writer.cloneWithWriter(fsw));
-         writer = fc.getResponseWriter();
-      } else {
-         encodeScript(fc, layout);
-      }
+        if (buildOptions) {
+            final FastStringWriter fsw = new FastStringWriter();
+            layout.setOriginalWriter(writer);
+            layout.setFastStringWriter(fsw);
+            fc.setResponseWriter(writer.cloneWithWriter(fsw));
+            writer = fc.getResponseWriter();
+        }
+        else {
+            encodeScript(fc, layout);
+        }
 
-      if (!layout.isFullPage()) {
-         writer.startElement("div", layout);
-         writer.writeAttribute("id", layout.getClientId(fc), "id");
+        if (!layout.isFullPage()) {
+            writer.startElement("div", layout);
+            writer.writeAttribute("id", layout.getClientId(fc), "id");
 
-         if (layout.getStyle() != null) {
-            writer.writeAttribute("style", layout.getStyle(), "style");
-         }
+            if (layout.getStyle() != null) {
+                writer.writeAttribute("style", layout.getStyle(), "style");
+            }
 
-         if (layout.getStyleClass() != null) {
-            writer.writeAttribute("class", layout.getStyleClass(), "styleClass");
-         }
-      }
-   }
+            if (layout.getStyleClass() != null) {
+                writer.writeAttribute("class", layout.getStyleClass(), "styleClass");
+            }
+        }
+    }
 
-   @Override
-   public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-      final ResponseWriter writer = fc.getResponseWriter();
-      final Layout layout = (Layout) component;
+    @Override
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+        final ResponseWriter writer = fc.getResponseWriter();
+        final Layout layout = (Layout) component;
 
-      if (!layout.isFullPage()) {
-         if (!layout.isStateCookie()) {
-            // render hidden field for server-side state saving
-            final String clientId = layout.getClientId(fc);
-            writer.startElement("input", null);
-            writer.writeAttribute("type", "hidden", null);
-            writer.writeAttribute("id", clientId + "_state", null);
-            writer.writeAttribute("name", clientId + "_state", null);
-            writer.writeAttribute("autocomplete", "off", null);
-            writer.endElement("input");
-         }
+        if (!layout.isFullPage()) {
+            if (!layout.isStateCookie()) {
+                // render hidden field for server-side state saving
+                final String clientId = layout.getClientId(fc);
+                writer.startElement("input", null);
+                writer.writeAttribute("type", "hidden", null);
+                writer.writeAttribute("id", clientId + "_state", null);
+                writer.writeAttribute("name", clientId + "_state", null);
+                writer.writeAttribute("autocomplete", "off", null);
+                writer.endElement("input");
+            }
 
-         writer.endElement("div");
-      }
+            writer.endElement("div");
+        }
 
-      if (layout.isBuildOptions()) {
-         fc.setResponseWriter(layout.getOriginalWriter());
-         encodeScript(fc, layout);
-         fc.getResponseWriter().write(layout.getFastStringWriter().toString());
-         layout.removeOptions();
-         layout.setOriginalWriter(null);
-         layout.setFastStringWriter(null);
-      }
+        if (layout.isBuildOptions()) {
+            fc.setResponseWriter(layout.getOriginalWriter());
+            encodeScript(fc, layout);
+            fc.getResponseWriter().write(layout.getFastStringWriter().toString());
+            layout.removeOptions();
+            layout.setOriginalWriter(null);
+            layout.setFastStringWriter(null);
+        }
 
-      layout.setBuildOptions(false);
-   }
+        layout.setBuildOptions(false);
+    }
 
-   @Override
-   public boolean getRendersChildren() {
-      return false;
-   }
+    @Override
+    public boolean getRendersChildren() {
+        return false;
+    }
 
-   protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
-      final ResponseWriter writer = fc.getResponseWriter();
-      final String clientId = layout.getClientId(fc);
+    protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
+        final ResponseWriter writer = fc.getResponseWriter();
+        final String clientId = layout.getClientId(fc);
 
-      final WidgetBuilder wb = getWidgetBuilder(fc);
-      wb.initWithDomReady("ExtLayout", layout.resolveWidgetVar(), clientId);
-      wb.attr("clientState", layout.isStateCookie());
+        final WidgetBuilder wb = getWidgetBuilder(fc);
+        wb.initWithDomReady("ExtLayout", layout.resolveWidgetVar(), clientId);
+        wb.attr("clientState", layout.isStateCookie());
 
-      if (layout.isFullPage()) {
-         wb.attr("forTarget", "body");
-      } else {
-         wb.selectorAttr("forTarget", ComponentUtils.escapeJQueryId(clientId));
-      }
+        if (layout.isFullPage()) {
+            wb.attr("forTarget", "body");
+        }
+        else {
+            wb.selectorAttr("forTarget", ComponentUtils.escapeJQueryId(clientId));
+        }
 
-      final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
-      if (stateVE != null && !layout.isFullPage() && !layout.isStateCookie()) {
-         wb.attr("serverState", true);
+        final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
+        if (stateVE != null && !layout.isFullPage() && !layout.isStateCookie()) {
+            wb.attr("serverState", true);
 
-         final String state = layout.getState();
-         if (StringUtils.isNotBlank(state)) {
-            wb.attr("state", state);
-         } else {
-            wb.nativeAttr("state", "{}");
-         }
-      } else {
-         wb.attr("serverState", false);
-      }
+            final String state = layout.getState();
+            if (StringUtils.isNotBlank(state)) {
+                wb.attr("state", state);
+            }
+            else {
+                wb.nativeAttr("state", "{}");
+            }
+        }
+        else {
+            wb.attr("serverState", false);
+        }
 
-      final Object layoutOptions = layout.getOptions();
-      if (layoutOptions instanceof LayoutOptions) {
-         wb.append(",options:" + ((LayoutOptions) layoutOptions).toJson());
-      } else if (layoutOptions instanceof String) {
-         // already serialized as JSON string
-         wb.append(",options:" + layoutOptions.toString());
-      } else {
-         wb.append(",options:{}");
-      }
+        final Object layoutOptions = layout.getOptions();
+        if (layoutOptions instanceof LayoutOptions) {
+            wb.append(",options:" + ((LayoutOptions) layoutOptions).toJson());
+        }
+        else if (layoutOptions instanceof String) {
+            // already serialized as JSON string
+            wb.append(",options:" + layoutOptions.toString());
+        }
+        else {
+            wb.append(",options:{}");
+        }
 
-      encodeClientBehaviors(fc, layout);
+        encodeClientBehaviors(fc, layout);
 
-      wb.append("},true);});");
-      endScript(writer);
-   }
+        wb.append("},true);});");
+        endScript(writer);
+    }
 }

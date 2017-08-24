@@ -40,304 +40,303 @@ import org.primefaces.util.ComponentUtils;
 /**
  * <code>DynaForm</code> component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class DynaForm extends AbstractDynamicData implements Widget {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.DynaFormRenderer";
 
-	private Map<String, UIDynaFormControl> cells;
+    private Map<String, UIDynaFormControl> cells;
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author  Oleg Varaksin / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Oleg Varaksin / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
 
-		widgetVar,
-		autoSubmit,
-		openExtended,
-		buttonBarPosition, // top, bottom, both
-		style,
-		styleClass,
-		columnClasses;
+        widgetVar, autoSubmit, openExtended, buttonBarPosition, // top, bottom, both
+        style, styleClass, columnClasses;
 
-		private String toString;
+        private String toString;
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys() {
-		}
+        PropertyKeys() {
+        }
 
-		@Override
-		public String toString() {
-			return ((toString != null) ? toString : super.toString());
-		}
-	}
+        @Override
+        public String toString() {
+            return ((toString != null) ? toString : super.toString());
+        }
+    }
 
-	public DynaForm() {
-		setRendererType(DEFAULT_RENDERER);
-	}
+    public DynaForm() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-	public void setWidgetVar(final String widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-	}
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
 
-	public boolean isAutoSubmit() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.autoSubmit, false);
-	}
+    public boolean isAutoSubmit() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoSubmit, false);
+    }
 
-	public void setAutoSubmit(final boolean autoSubmit) {
-		getStateHelper().put(PropertyKeys.autoSubmit, autoSubmit);
-	}
+    public void setAutoSubmit(final boolean autoSubmit) {
+        getStateHelper().put(PropertyKeys.autoSubmit, autoSubmit);
+    }
 
-	public boolean isOpenExtended() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.openExtended, false);
-	}
+    public boolean isOpenExtended() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.openExtended, false);
+    }
 
-	public void setOpenExtended(final boolean openExtended) {
-		getStateHelper().put(PropertyKeys.openExtended, openExtended);
-	}
+    public void setOpenExtended(final boolean openExtended) {
+        getStateHelper().put(PropertyKeys.openExtended, openExtended);
+    }
 
-	public String getButtonBarPosition() {
-		return (String) getStateHelper().eval(PropertyKeys.buttonBarPosition, "bottom");
-	}
+    public String getButtonBarPosition() {
+        return (String) getStateHelper().eval(PropertyKeys.buttonBarPosition, "bottom");
+    }
 
-	public void setButtonBarPosition(final String buttonBarPosition) {
-		getStateHelper().put(PropertyKeys.buttonBarPosition, buttonBarPosition);
-	}
+    public void setButtonBarPosition(final String buttonBarPosition) {
+        getStateHelper().put(PropertyKeys.buttonBarPosition, buttonBarPosition);
+    }
 
-	public void setStyle(final String style) {
-		getStateHelper().put(PropertyKeys.style, style);
-	}
+    public void setStyle(final String style) {
+        getStateHelper().put(PropertyKeys.style, style);
+    }
 
-	public String getStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.style, null);
-	}
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
 
-	public void setStyleClass(final String styleClass) {
-		getStateHelper().put(PropertyKeys.styleClass, styleClass);
-	}
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
 
-	public String getStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-	}
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
 
-	public void setColumnClasses(java.lang.String columnClasses) {
-		getStateHelper().put(PropertyKeys.columnClasses, columnClasses);
-	}
+    public void setColumnClasses(java.lang.String columnClasses) {
+        getStateHelper().put(PropertyKeys.columnClasses, columnClasses);
+    }
 
-	public java.lang.String getColumnClasses() {
-		return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
-	}
+    public java.lang.String getColumnClasses() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
+    }
 
-	public String resolveWidgetVar() {
+    public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+    }
 
-	public UIDynaFormControl getControlCell(final String type) {
-		UIDynaFormControl cell = getControlCells().get(type);
+    public UIDynaFormControl getControlCell(final String type) {
+        UIDynaFormControl cell = getControlCells().get(type);
 
-		if (cell == null) {
-			throw new FacesException("UIDynaFormControl to type " + type + " was not found");
-		} else {
-			return cell;
-		}
-	}
+        if (cell == null) {
+            throw new FacesException("UIDynaFormControl to type " + type + " was not found");
+        }
+        else {
+            return cell;
+        }
+    }
 
-	protected Map<String, UIDynaFormControl> getControlCells() {
-		if (cells == null) {
-			cells = new HashMap<String, UIDynaFormControl>();
-			for (UIComponent child : getChildren()) {
-				if (child instanceof UIDynaFormControl) {
-					UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
-					cells.put(dynaFormCell.getType(), dynaFormCell);
-				}
-			}
-		}
+    protected Map<String, UIDynaFormControl> getControlCells() {
+        if (cells == null) {
+            cells = new HashMap<String, UIDynaFormControl>();
+            for (UIComponent child : getChildren()) {
+                if (child instanceof UIDynaFormControl) {
+                    UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
+                    cells.put(dynaFormCell.getType(), dynaFormCell);
+                }
+            }
+        }
 
-		return cells;
-	}
+        return cells;
+    }
 
-	@Override
-	protected KeyData findData(final String key) {
-		Object value = getValue();
-		if (value == null) {
-			return null;
-		}
+    @Override
+    protected KeyData findData(final String key) {
+        Object value = getValue();
+        if (value == null) {
+            return null;
+        }
 
-		if (!(value instanceof DynaFormModel)) {
-			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-		}
+        if (!(value instanceof DynaFormModel)) {
+            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+        }
 
-		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-		for (DynaFormControl dynaFormControl : dynaFormControls) {
-			if (key.equals(dynaFormControl.getKey())) {
-				return dynaFormControl;
-			}
-		}
+        List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+        for (DynaFormControl dynaFormControl : dynaFormControls) {
+            if (key.equals(dynaFormControl.getKey())) {
+                return dynaFormControl;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	protected void processChildren(final FacesContext context, final PhaseId phaseId) {
-		Object value = getValue();
-		if (value != null) {
-			if (!(value instanceof DynaFormModel)) {
-				throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-			}
+    @Override
+    protected void processChildren(final FacesContext context, final PhaseId phaseId) {
+        Object value = getValue();
+        if (value != null) {
+            if (!(value instanceof DynaFormModel)) {
+                throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+            }
 
-			List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-			for (DynaFormControl dynaFormControl : dynaFormControls) {
-				processDynaFormCells(context, phaseId, dynaFormControl);
-			}
-		}
+            List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+            for (DynaFormControl dynaFormControl : dynaFormControls) {
+                processDynaFormCells(context, phaseId, dynaFormControl);
+            }
+        }
 
-		resetData();
-	}
+        resetData();
+    }
 
-	@Override
-	protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
-		Object value = getValue();
-		if (value == null) {
-			return false;
-		}
+    @Override
+    protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
+        Object value = getValue();
+        if (value == null) {
+            return false;
+        }
 
-		if (!(value instanceof DynaFormModel)) {
-			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-		}
+        if (!(value instanceof DynaFormModel)) {
+            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+        }
 
-		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-		for (DynaFormControl dynaFormControl : dynaFormControls) {
-			if (visitDynaFormCells(context, callback, dynaFormControl)) {
-				return true;
-			}
-		}
+        List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+        for (DynaFormControl dynaFormControl : dynaFormControls) {
+            if (visitDynaFormCells(context, callback, dynaFormControl)) {
+                return true;
+            }
+        }
 
-		resetData();
+        resetData();
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
-		Object value = getValue();
-		if (value == null) {
-			return false;
-		}
+    @Override
+    protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
+        Object value = getValue();
+        if (value == null) {
+            return false;
+        }
 
-		if (!(value instanceof DynaFormModel)) {
-			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-		}
+        if (!(value instanceof DynaFormModel)) {
+            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+        }
 
-                if (this.getChildCount() > 0) {
-                    // extract the dynaFormControl key from the clientId
-                    // it's simliar to rowKey in UIData
-                    String key = clientId.substring(getClientId().length() + 1);
-                    key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
+        if (this.getChildCount() > 0) {
+            // extract the dynaFormControl key from the clientId
+            // it's simliar to rowKey in UIData
+            String key = clientId.substring(getClientId().length() + 1);
+            key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
-                    List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-                    for (DynaFormControl dynaFormControl : dynaFormControls) {
-                        
-                        // determine associated DynaFormControl
-                        if (dynaFormControl.getKey().equals(key)) {
+            List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+            for (DynaFormControl dynaFormControl : dynaFormControls) {
 
-                            // get UI control for DynaFormControl
-                            UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
+                // determine associated DynaFormControl
+                if (dynaFormControl.getKey().equals(key)) {
 
-                            try {
-                                // push the associated data before visiting the child components
-                                setData(dynaFormControl);
+                    // get UI control for DynaFormControl
+                    UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
 
-                                // visit childs
-                                if (uiDynaFormControl.invokeOnComponent(context, clientId, callback)) {
-                                    return true;
-                                }
-                            }
-                            finally {
-                                resetData();
-                            }
+                    try {
+                        // push the associated data before visiting the child components
+                        setData(dynaFormControl);
 
-                            break;
+                        // visit childs
+                        if (uiDynaFormControl.invokeOnComponent(context, clientId, callback)) {
+                            return true;
                         }
                     }
+                    finally {
+                        resetData();
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
+        for (UIComponent kid : getChildren()) {
+            if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()
+                        || !((UIDynaFormControl) kid).getType().equals(dynaFormControl.getType())) {
+                continue;
+            }
+
+            setData(dynaFormControl);
+            if (getData() == null) {
+                return;
+            }
+
+            for (UIComponent grandkid : kid.getChildren()) {
+                if (!grandkid.isRendered()) {
+                    continue;
                 }
 
-                return false;
-	}
+                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+                    grandkid.processDecodes(context);
+                }
+                else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+                    grandkid.processValidators(context);
+                }
+                else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+                    grandkid.processUpdates(context);
+                }
+                else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
 
-	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
-		for (UIComponent kid : getChildren()) {
-			if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()
-					|| !((UIDynaFormControl) kid).getType().equals(dynaFormControl.getType())) {
-				continue;
-			}
+    private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback, final DynaFormControl dynaFormControl) {
+        if (getChildCount() > 0) {
+            for (UIComponent child : getChildren()) {
+                if (child instanceof UIDynaFormControl
+                            && ((UIDynaFormControl) child).getType().equals(dynaFormControl.getType())) {
+                    setData(dynaFormControl);
+                    if (getData() == null) {
+                        return false;
+                    }
 
-			setData(dynaFormControl);
-			if (getData() == null) {
-				return;
-			}
+                    if (child.visitTree(context, callback)) {
+                        return true;
+                    }
+                }
+            }
+        }
 
-			for (UIComponent grandkid : kid.getChildren()) {
-				if (!grandkid.isRendered()) {
-					continue;
-				}
-
-				if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
-					grandkid.processDecodes(context);
-				} else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
-					grandkid.processValidators(context);
-				} else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
-					grandkid.processUpdates(context);
-				} else {
-					throw new IllegalArgumentException();
-				}
-			}
-		}
-	}
-
-	private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback, final DynaFormControl dynaFormControl) {
-		if (getChildCount() > 0) {
-			for (UIComponent child : getChildren()) {
-				if (child instanceof UIDynaFormControl
-						&& ((UIDynaFormControl) child).getType().equals(dynaFormControl.getType())) {
-					setData(dynaFormControl);
-					if (getData() == null) {
-						return false;
-					}
-
-					if (child.visitTree(context, callback)) {
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
+        return false;
+    }
 }

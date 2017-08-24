@@ -29,17 +29,17 @@ import com.google.gson.JsonSerializer;
 /**
  * Gson Serializer / Deserializer for {@link Date}.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.6.2
+ * @since 0.6.2
  */
 public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
-	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-		return new JsonPrimitive(src.getTime());
-	}
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src.getTime());
+    }
 
-	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return new Date(json.getAsJsonPrimitive().getAsLong());
-	}
+    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return new Date(json.getAsJsonPrimitive().getAsLong());
+    }
 }

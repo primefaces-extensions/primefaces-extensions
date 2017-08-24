@@ -28,7 +28,7 @@ public class CompleteEvent extends FacesEvent {
     private final int column;
 
     public CompleteEvent(final UIComponent component, final String token, final String context,
-    		final int line, final int column) {
+                final int line, final int column) {
         super(component);
         this.token = token;
         this.context = context;
@@ -54,11 +54,11 @@ public class CompleteEvent extends FacesEvent {
         return context;
     }
 
-	public int getLine() {
-		return line;
-	}
+    public int getLine() {
+        return line;
+    }
 
-	public int getColumn() {
-		return column;
-	}
+    public int getColumn() {
+        return column;
+    }
 }

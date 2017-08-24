@@ -38,97 +38,99 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class CKEditorRenderer extends InputRenderer {
 
-   @Override
-   public void decode(final FacesContext context, final UIComponent component) {
-      final CKEditor ckEditor = (CKEditor) component;
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        final CKEditor ckEditor = (CKEditor) component;
 
-      if (ckEditor.isReadonly()) {
-         return;
-      }
+        if (ckEditor.isReadonly()) {
+            return;
+        }
 
-      // set value
-      final String clientId = ckEditor.getClientId(context);
-      final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-      if (params.containsKey(clientId)) {
-         ckEditor.setSubmittedValue(params.get(clientId));
-      }
+        // set value
+        final String clientId = ckEditor.getClientId(context);
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        if (params.containsKey(clientId)) {
+            ckEditor.setSubmittedValue(params.get(clientId));
+        }
 
-      // decode behaviors
-      decodeBehaviors(context, component);
-   }
+        // decode behaviors
+        decodeBehaviors(context, component);
+    }
 
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final CKEditor ckEditor = (CKEditor) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final CKEditor ckEditor = (CKEditor) component;
 
-      encodeMarkup(context, ckEditor);
-      encodeScript(context, ckEditor);
-   }
+        encodeMarkup(context, ckEditor);
+        encodeScript(context, ckEditor);
+    }
 
-   protected void encodeMarkup(final FacesContext context, final CKEditor ckEditor) throws IOException {
-      final ResponseWriter writer = context.getResponseWriter();
-      final String clientId = ckEditor.getClientId(context);
+    protected void encodeMarkup(final FacesContext context, final CKEditor ckEditor) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = ckEditor.getClientId(context);
 
-      writer.startElement("textarea", ckEditor);
-      writer.writeAttribute("id", clientId, null);
-      writer.writeAttribute("name", clientId, null);
+        writer.startElement("textarea", ckEditor);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("name", clientId, null);
 
-      if (ckEditor.getTabindex() != null) {
-         writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
-      }
+        if (ckEditor.getTabindex() != null) {
+            writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
+        }
 
-      renderPassThruAttributes(context, ckEditor, HTML.INPUT_TEXTAREA_ATTRS);
-      renderDomEvents(context, ckEditor, HTML.INPUT_TEXT_EVENTS);
+        renderPassThruAttributes(context, ckEditor, HTML.INPUT_TEXTAREA_ATTRS);
+        renderDomEvents(context, ckEditor, HTML.INPUT_TEXT_EVENTS);
 
-      final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
-      if (valueToRender != null) {
-         if (ckEditor.isEscape()) {
-            writer.writeText(valueToRender, null);
-         } else {
-            writer.write(valueToRender);
-         }
-      }
+        final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
+        if (valueToRender != null) {
+            if (ckEditor.isEscape()) {
+                writer.writeText(valueToRender, null);
+            }
+            else {
+                writer.write(valueToRender);
+            }
+        }
 
-      writer.endElement("textarea");
-   }
+        writer.endElement("textarea");
+    }
 
-   protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-      final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
-      wb.initWithDomReady("ExtCKEditor", ckEditor.resolveWidgetVar(), ckEditor.getClientId());
-      wb.attr("height", ckEditor.getHeight())
-               .attr("width", ckEditor.getWidth())
-               .attr("skin", ckEditor.getSkin())
-               .attr("toolbar", ckEditor.getToolbar())
-               .attr("readOnly", ckEditor.isReadonly())
-               .attr("interfaceColor", ckEditor.getInterfaceColor())
-               .attr("language", ckEditor.getLanguage())
-               .attr("defaultLanguage", ckEditor.getDefaultLanguage());
-      if (ckEditor.getContentsCss() != null && ckEditor.getContentsCss().startsWith("[")) {
-         // new :: Array of CSS-Files :: ['/path/css1.css','/path/css2.css']
-         wb.nativeAttr("contentsCss", ckEditor.getContentsCss());
-      } else {
-         // default behaviour
-         wb.attr("contentsCss", ckEditor.getContentsCss());
-      }
-      wb.attr("customConfig", ckEditor.getCustomConfig())
-               .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
-               .attr("tabindex", ckEditor.getTabindex());
+    protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
+        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        wb.initWithDomReady("ExtCKEditor", ckEditor.resolveWidgetVar(), ckEditor.getClientId());
+        wb.attr("height", ckEditor.getHeight())
+                    .attr("width", ckEditor.getWidth())
+                    .attr("skin", ckEditor.getSkin())
+                    .attr("toolbar", ckEditor.getToolbar())
+                    .attr("readOnly", ckEditor.isReadonly())
+                    .attr("interfaceColor", ckEditor.getInterfaceColor())
+                    .attr("language", ckEditor.getLanguage())
+                    .attr("defaultLanguage", ckEditor.getDefaultLanguage());
+        if (ckEditor.getContentsCss() != null && ckEditor.getContentsCss().startsWith("[")) {
+            // new :: Array of CSS-Files :: ['/path/css1.css','/path/css2.css']
+            wb.nativeAttr("contentsCss", ckEditor.getContentsCss());
+        }
+        else {
+            // default behaviour
+            wb.attr("contentsCss", ckEditor.getContentsCss());
+        }
+        wb.attr("customConfig", ckEditor.getCustomConfig())
+                    .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
+                    .attr("tabindex", ckEditor.getTabindex());
 
-      encodeClientBehaviors(context, ckEditor);
-      wb.finish();
-   }
+        encodeClientBehaviors(context, ckEditor);
+        wb.finish();
+    }
 
-   @Override
-   public Object getConvertedValue(final FacesContext context, final UIComponent component,
-            final Object submittedValue) {
-      final CKEditor ckEditor = (CKEditor) component;
-      final String value = (String) submittedValue;
-      final Converter converter = ComponentUtils.getConverter(context, component);
+    @Override
+    public Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object submittedValue) {
+        final CKEditor ckEditor = (CKEditor) component;
+        final String value = (String) submittedValue;
+        final Converter converter = ComponentUtils.getConverter(context, component);
 
-      if (converter != null) {
-         return converter.getAsObject(context, ckEditor, value);
-      }
+        if (converter != null) {
+            return converter.getAsObject(context, ckEditor, value);
+        }
 
-      return value;
-   }
+        return value;
+    }
 }

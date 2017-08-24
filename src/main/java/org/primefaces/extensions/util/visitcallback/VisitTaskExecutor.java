@@ -19,8 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitResult;
 
 /**
- * Interface for all executor classes which are called by visit callbacks.
- * It can be used from outside (see the showcase).
+ * Interface for all executor classes which are called by visit callbacks. It can be used from outside (see the showcase).
  *
  * @author Oleg Varaksin
  * @version $Revision: 1.0 $

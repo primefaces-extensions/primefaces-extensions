@@ -45,272 +45,283 @@ import org.primefaces.util.Constants;
  * @since 6.1
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "components.css"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.js")
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.js")
 })
 public class Calculator extends UIComponentBase implements ClientBehaviorHolder, Widget, RTLAware {
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CalculatorRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CalculatorRenderer";
 
-   private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ButtonEvent.NAME));
+    private static final Collection<String> EVENT_NAMES = Collections
+                .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ButtonEvent.NAME));
 
-   private Locale appropriateLocale;
+    private Locale appropriateLocale;
 
-   protected enum PropertyKeys {
+    protected enum PropertyKeys {
 
-      // @formatter:off
-      widgetVar,
-      showOn,
-      layout,
-      locale,
-      precision,
-      dir,
-      styleClass,
-      onopen,
-      onbutton,
-      onclose,
-      forValue("for");
-      // @formatter:on
+        // @formatter:off
+        widgetVar,
+        showOn,
+        layout,
+        locale,
+        precision,
+        dir,
+        styleClass,
+        onopen,
+        onbutton,
+        onclose,
+        forValue("for");
+        // @formatter:on
 
-      String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        public String getToString() {
+            return toString;
+        }
 
-   /**
-    * Default constructor
-    */
-   public Calculator() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+        public void setToString(String toString) {
+            this.toString = toString;
+        }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    /**
+     * Default constructor
+     */
+    public Calculator() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public Collection<String> getEventNames() {
-      return EVENT_NAMES;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getDefaultEventName() {
-      return OpenEvent.NAME;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public boolean isRTL() {
-      return getDir().equalsIgnoreCase("rtl");
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processDecodes(final FacesContext fc) {
-      if (isSelfRequest(fc)) {
-         decode(fc);
-      } else {
-         super.processDecodes(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getDefaultEventName() {
+        return OpenEvent.NAME;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processValidators(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processValidators(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRTL() {
+        return getDir().equalsIgnoreCase("rtl");
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processUpdates(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processUpdates(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processDecodes(final FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        }
+        else {
+            super.processDecodes(fc);
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void queueEvent(final FacesEvent event) {
-      final FacesContext fc = FacesContext.getCurrentInstance();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processValidators(fc);
+        }
+    }
 
-      if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-         final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-         final String clientId = this.getClientId(fc);
-         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processUpdates(fc);
+        }
+    }
 
-         if (OpenEvent.NAME.equals(eventName)) {
-            final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
-            openEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(openEvent);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
 
-            return;
-         } else if (CloseEvent.NAME.equals(eventName)) {
-            final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
-            closeEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(closeEvent);
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = this.getClientId(fc);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            return;
-         } else if (ButtonEvent.NAME.equals(eventName)) {
-            final String name = params.get(clientId + "_button");
-            final BigDecimal value = new BigDecimal(params.get(clientId + "_value"));
-            final ButtonEvent buttonEvent = new ButtonEvent(this, behaviorEvent.getBehavior(), name, value);
-            buttonEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(buttonEvent);
+            if (OpenEvent.NAME.equals(eventName)) {
+                final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
+                openEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(openEvent);
 
-            return;
-         }
-      }
+                return;
+            }
+            else if (CloseEvent.NAME.equals(eventName)) {
+                final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
+                closeEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(closeEvent);
 
-      super.queueEvent(event);
-   }
+                return;
+            }
+            else if (ButtonEvent.NAME.equals(eventName)) {
+                final String name = params.get(clientId + "_button");
+                final BigDecimal value = new BigDecimal(params.get(clientId + "_value"));
+                final ButtonEvent buttonEvent = new ButtonEvent(this, behaviorEvent.getBehavior(), name, value);
+                buttonEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(buttonEvent);
 
-   public Locale calculateLocale() {
-      if (appropriateLocale == null) {
-         appropriateLocale = org.primefaces.extensions.util.ComponentUtils.resolveLocale(getLocale());
-      }
-      return appropriateLocale;
-   }
+                return;
+            }
+        }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+        super.queueEvent(event);
+    }
 
-   public void setWidgetVar(final String _widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-   }
+    public Locale calculateLocale() {
+        if (appropriateLocale == null) {
+            appropriateLocale = org.primefaces.extensions.util.ComponentUtils.resolveLocale(getLocale());
+        }
+        return appropriateLocale;
+    }
 
-   public String getFor() {
-      return (String) getStateHelper().eval(PropertyKeys.forValue, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setFor(final String _for) {
-      getStateHelper().put(PropertyKeys.forValue, _for);
-   }
+    public void setWidgetVar(final String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-   public String getShowOn() {
-      return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
-   }
+    public String getFor() {
+        return (String) getStateHelper().eval(PropertyKeys.forValue, null);
+    }
 
-   public void setShowOn(final String _showOn) {
-      getStateHelper().put(PropertyKeys.showOn, _showOn);
-   }
+    public void setFor(final String _for) {
+        getStateHelper().put(PropertyKeys.forValue, _for);
+    }
 
-   public String getLayout() {
-      return (String) getStateHelper().eval(PropertyKeys.layout, "standard");
-   }
+    public String getShowOn() {
+        return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
+    }
 
-   public void setLayout(final String _layout) {
-      getStateHelper().put(PropertyKeys.layout, _layout);
-   }
+    public void setShowOn(final String _showOn) {
+        getStateHelper().put(PropertyKeys.showOn, _showOn);
+    }
 
-   public Object getLocale() {
-      return getStateHelper().eval(PropertyKeys.locale, null);
-   }
+    public String getLayout() {
+        return (String) getStateHelper().eval(PropertyKeys.layout, "standard");
+    }
 
-   public void setLocale(final Object locale) {
-      getStateHelper().put(PropertyKeys.locale, locale);
-   }
+    public void setLayout(final String _layout) {
+        getStateHelper().put(PropertyKeys.layout, _layout);
+    }
 
-   public int getPrecision() {
-      return (Integer) getStateHelper().eval(PropertyKeys.precision, 10);
-   }
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
 
-   public void setPrecision(final int _precision) {
-      getStateHelper().put(PropertyKeys.precision, _precision);
-   }
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
+    }
 
-   public void setDir(final String _dir) {
-      getStateHelper().put(PropertyKeys.dir, _dir);
-   }
+    public int getPrecision() {
+        return (Integer) getStateHelper().eval(PropertyKeys.precision, 10);
+    }
 
-   public String getDir() {
-      return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
-   }
+    public void setPrecision(final int _precision) {
+        getStateHelper().put(PropertyKeys.precision, _precision);
+    }
 
-   public String getStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-   }
+    public void setDir(final String _dir) {
+        getStateHelper().put(PropertyKeys.dir, _dir);
+    }
 
-   public void setStyleClass(final String _styleClass) {
-      getStateHelper().put(PropertyKeys.styleClass, _styleClass);
-   }
+    public String getDir() {
+        return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
+    }
 
-   public String getOnopen() {
-      return (String) getStateHelper().eval(PropertyKeys.onopen, null);
-   }
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
 
-   public void setOnopen(final String _onOpen) {
-      getStateHelper().put(PropertyKeys.onopen, _onOpen);
-   }
+    public void setStyleClass(final String _styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    }
 
-   public String getOnclose() {
-      return (String) getStateHelper().eval(PropertyKeys.onclose, null);
-   }
+    public String getOnopen() {
+        return (String) getStateHelper().eval(PropertyKeys.onopen, null);
+    }
 
-   public void setOnclose(final String _onClose) {
-      getStateHelper().put(PropertyKeys.onclose, _onClose);
-   }
+    public void setOnopen(final String _onOpen) {
+        getStateHelper().put(PropertyKeys.onopen, _onOpen);
+    }
 
-   public String getOnbutton() {
-      return (String) getStateHelper().eval(PropertyKeys.onbutton, null);
-   }
+    public String getOnclose() {
+        return (String) getStateHelper().eval(PropertyKeys.onclose, null);
+    }
 
-   public void setOnbutton(final String _onButton) {
-      getStateHelper().put(PropertyKeys.onbutton, _onButton);
-   }
+    public void setOnclose(final String _onClose) {
+        getStateHelper().put(PropertyKeys.onclose, _onClose);
+    }
 
-   private boolean isSelfRequest(final FacesContext context) {
-      return this.getClientId(context)
-               .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-   }
+    public String getOnbutton() {
+        return (String) getStateHelper().eval(PropertyKeys.onbutton, null);
+    }
+
+    public void setOnbutton(final String _onButton) {
+        getStateHelper().put(PropertyKeys.onbutton, _onButton);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
 
 }

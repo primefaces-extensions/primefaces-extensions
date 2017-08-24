@@ -27,21 +27,21 @@ import java.net.URLEncoder;
  */
 public class URLEncoderWrapper {
 
-	/**
-	 * Prevent instantiation.
-	 */
-	private URLEncoderWrapper() {
+    /**
+     * Prevent instantiation.
+     */
+    private URLEncoderWrapper() {
 
-	}
+    }
 
-	/**
-	 * Encodes the given string with the {@link URLEncoder#encode(String)} and UTF-8.
-	 * 
-	 * @param string The value which should be encoded.
-	 * @return The encoded value.
-	 * @throws UnsupportedEncodingException If UTF-8 is not available.
-	 */
-	public static String encode(final String string) throws UnsupportedEncodingException {
-		return URLEncoder.encode(string, "UTF-8");
-	}
+    /**
+     * Encodes the given string with the {@link URLEncoder#encode(String)} and UTF-8.
+     * 
+     * @param string The value which should be encoded.
+     * @return The encoded value.
+     * @throws UnsupportedEncodingException If UTF-8 is not available.
+     */
+    public static String encode(final String string) throws UnsupportedEncodingException {
+        return URLEncoder.encode(string, "UTF-8");
+    }
 }

@@ -15,15 +15,15 @@
  */
 package org.primefaces.extensions.application;
 
-import org.primefaces.extensions.util.Constants;
-
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
+import org.primefaces.extensions.util.Constants;
+
 /**
- * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
- * appends the version of PrimeFaces Extensions in the {@link PrimeFacesExtensionsResource}.
+ * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and appends the version of PrimeFaces Extensions in the
+ * {@link PrimeFacesExtensionsResource}.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$

@@ -15,7 +15,7 @@
  */
 package org.primefaces.extensions.behavior.javascript;
 
-import org.primefaces.component.api.ClientBehaviorRenderingMode;
+import java.util.Collection;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
@@ -23,7 +23,8 @@ import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorContext;
 import javax.faces.context.FacesContext;
 import javax.faces.render.ClientBehaviorRenderer;
-import java.util.Collection;
+
+import org.primefaces.component.api.ClientBehaviorRenderingMode;
 
 /**
  * {@link ClientBehaviorRenderer} implementation for the {@link JavascriptBehavior}.
@@ -34,54 +35,55 @@ import java.util.Collection;
  */
 public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
 
-	@Override
-	public String getScript(final ClientBehaviorContext behaviorContext, final ClientBehavior behavior) {
-		final JavascriptBehavior javascriptBehavior = (JavascriptBehavior) behavior;
-		if (javascriptBehavior.isDisabled()) {
-			return null;
-		}
+    @Override
+    public String getScript(final ClientBehaviorContext behaviorContext, final ClientBehavior behavior) {
+        final JavascriptBehavior javascriptBehavior = (JavascriptBehavior) behavior;
+        if (javascriptBehavior.isDisabled()) {
+            return null;
+        }
 
-		final FacesContext context = behaviorContext.getFacesContext();
-		final UIComponent component = behaviorContext.getComponent();
-		String source = behaviorContext.getSourceId();
-		if (source == null) {
-			source = component.getClientId(context);
-		}
+        final FacesContext context = behaviorContext.getFacesContext();
+        final UIComponent component = behaviorContext.getComponent();
+        String source = behaviorContext.getSourceId();
+        if (source == null) {
+            source = component.getClientId(context);
+        }
 
-		final StringBuilder script = new StringBuilder();
-		script.append("PrimeFacesExt.behavior.Javascript({");
-		script.append("source:'").append(source).append("'");
-		script.append(",event:'").append(behaviorContext.getEventName()).append("'");
-		script.append(",execute:function(source,event,params,ext){");
-		script.append(javascriptBehavior.getExecute()).append(";}");
+        final StringBuilder script = new StringBuilder();
+        script.append("PrimeFacesExt.behavior.Javascript({");
+        script.append("source:'").append(source).append("'");
+        script.append(",event:'").append(behaviorContext.getEventName()).append("'");
+        script.append(",execute:function(source,event,params,ext){");
+        script.append(javascriptBehavior.getExecute()).append(";}");
 
-		// params
-		boolean paramWritten = false;
+        // params
+        boolean paramWritten = false;
 
-		for (final UIComponent child : component.getChildren()) {
-			if (child instanceof UIParameter) {
-				final UIParameter parameter = (UIParameter) child;
+        for (final UIComponent child : component.getChildren()) {
+            if (child instanceof UIParameter) {
+                final UIParameter parameter = (UIParameter) child;
 
-				if (paramWritten) {
-					script.append(",");
-				} else {
-					paramWritten = true;
-					script.append(",params:{");
-				}
+                if (paramWritten) {
+                    script.append(",");
+                }
+                else {
+                    paramWritten = true;
+                    script.append(",params:{");
+                }
 
-				script.append("'");
-				script.append(parameter.getName()).append("':'").append(parameter.getValue());
-				script.append("'");
-			}
-		}
+                script.append("'");
+                script.append(parameter.getName()).append("':'").append(parameter.getValue());
+                script.append("'");
+            }
+        }
 
-		if (paramWritten) {
-			script.append("}");
-		}
+        if (paramWritten) {
+            script.append("}");
+        }
 
         ClientBehaviorRenderingMode renderingMode = null;
         Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
-        
+
         if (behaviorParameters != null && !behaviorParameters.isEmpty()) {
             for (ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
                 if (behaviorParameter.getValue() != null && behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
@@ -91,12 +93,13 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
             }
         }
 
-        if(ClientBehaviorRenderingMode.UNOBSTRUSIVE.equals(renderingMode)) {
+        if (ClientBehaviorRenderingMode.UNOBSTRUSIVE.equals(renderingMode)) {
             script.append("},ext);");
-        } else {
+        }
+        else {
             script.append("});");
         }
 
-		return script.toString();
-	}
+        return script.toString();
+    }
 }

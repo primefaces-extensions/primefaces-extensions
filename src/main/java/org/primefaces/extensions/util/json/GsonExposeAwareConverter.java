@@ -23,26 +23,26 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson which exludes fields without @Expose annotation.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   1.1.0
+ * @since 1.1.0
  */
 public final class GsonExposeAwareConverter {
 
-	private static final GsonExposeAwareConverter INSTANCE = new GsonExposeAwareConverter();
-	private Gson gson;
+    private static final GsonExposeAwareConverter INSTANCE = new GsonExposeAwareConverter();
+    private Gson gson;
 
-	private GsonExposeAwareConverter() {
-		GsonBuilder gsonBilder = new GsonBuilder();
+    private GsonExposeAwareConverter() {
+        GsonBuilder gsonBilder = new GsonBuilder();
 
-		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
-		gsonBilder.serializeNulls();
-		gsonBilder.excludeFieldsWithoutExposeAnnotation();
+        gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+        gsonBilder.serializeNulls();
+        gsonBilder.excludeFieldsWithoutExposeAnnotation();
 
-		gson = gsonBilder.create();
-	}
+        gson = gsonBilder.create();
+    }
 
-	public static Gson getGson() {
-		return INSTANCE.gson;
-	}
+    public static Gson getGson() {
+        return INSTANCE.gson;
+    }
 }

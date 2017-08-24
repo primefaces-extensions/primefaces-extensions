@@ -24,37 +24,37 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * FooGeneric
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class FooGeneric<A, B> {
 
-	private A a;
-	private B b;
+    private A a;
+    private B b;
 
-	public A getA() {
-		return a;
-	}
+    public A getA() {
+        return a;
+    }
 
-	public void setA(A a) {
-		this.a = a;
-	}
+    public void setA(A a) {
+        this.a = a;
+    }
 
-	public B getB() {
-		return b;
-	}
+    public B getB() {
+        return b;
+    }
 
-	public void setB(B b) {
-		this.b = b;
-	}
+    public void setB(B b) {
+        this.b = b;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		return EqualsBuilder.reflectionEquals(this, o);
-	}
+    @Override
+    public boolean equals(Object o) {
+        return EqualsBuilder.reflectionEquals(this, o);
+    }
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 }

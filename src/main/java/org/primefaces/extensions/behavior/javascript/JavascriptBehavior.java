@@ -28,50 +28,55 @@ import org.primefaces.behavior.base.AbstractBehavior;
  * @since 0.2
  */
 @ResourceDependencies({
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-		@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-		@ResourceDependency(library = "primefaces", name = "core.js"),
-		@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class JavascriptBehavior extends AbstractBehavior {
 
-	public final static String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.behavior.JavascriptBehaviorRenderer";
+    public final static String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.behavior.JavascriptBehaviorRenderer";
 
-	public enum PropertyKeys {
-		disabled(Boolean.class),
-		execute(String.class);
+    public enum PropertyKeys {
 
-		final Class<?> expectedType;
+        disabled(Boolean.class), execute(String.class);
 
-		PropertyKeys(Class<?> expectedType) {
-			this.expectedType = expectedType;
-		}
-	}
+        private final Class<?> expectedType;
 
-	@Override
-	public String getRendererType() {
-		return DEFAULT_RENDERER;
-	}
+        PropertyKeys(Class<?> expectedType) {
+            this.expectedType = expectedType;
+        }
 
-	public final String getExecute() {
-		return eval(PropertyKeys.execute, null);
-	}
+        public Class<?> getExpectedType() {
+            return expectedType;
+        }
 
-	public void setExecute(final String execute) {
-		setLiteral(PropertyKeys.execute, execute);
-	}
+    }
 
-	public boolean isDisabled() {
-		return eval(PropertyKeys.disabled, Boolean.FALSE);
-	}
+    @Override
+    public String getRendererType() {
+        return DEFAULT_RENDERER;
+    }
 
-	public void setDisabled(boolean disabled) {
-		setLiteral(PropertyKeys.disabled, disabled);
-	}
+    public final String getExecute() {
+        return eval(PropertyKeys.execute, null);
+    }
 
-	@Override
-	protected Enum<?>[] getAllProperties() {
-		return PropertyKeys.values();
-	}
+    public void setExecute(final String execute) {
+        setLiteral(PropertyKeys.execute, execute);
+    }
+
+    public boolean isDisabled() {
+        return eval(PropertyKeys.disabled, Boolean.FALSE);
+    }
+
+    public void setDisabled(boolean disabled) {
+        setLiteral(PropertyKeys.disabled, disabled);
+    }
+
+    @Override
+    protected Enum<?>[] getAllProperties() {
+        return PropertyKeys.values();
+    }
 }

@@ -37,121 +37,121 @@ import org.primefaces.util.Constants;
 import com.google.gson.JsonArray;
 
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 })
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
-   public final static String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";
+    public final static String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
 
-   static final String DEFAULT_TYPE = "select";
-   private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
+    private static final String DEFAULT_TYPE = "select";
+    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
-   protected static enum PropertyKeys {
-      widgetVar, width, height, title, apiKey;
-   }
+    protected static enum PropertyKeys {
+        widgetVar, width, height, title, apiKey;
+    }
 
-   public GChart() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+    public GChart() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   @Override
-   public Collection<String> getEventNames() {
-      return EVENT_NAMES;
-   }
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-   @Override
-   public String getDefaultEventName() {
-      return DEFAULT_TYPE;
-   }
+    @Override
+    public String getDefaultEventName() {
+        return DEFAULT_TYPE;
+    }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setWidgetVar(String _widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-   }
+    public void setWidgetVar(String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-   public Integer getWidth() {
-      return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
-   }
+    public Integer getWidth() {
+        return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
+    }
 
-   public void setWidth(Integer width) {
-      this.getStateHelper().put(PropertyKeys.width, width);
-   }
+    public void setWidth(Integer width) {
+        this.getStateHelper().put(PropertyKeys.width, width);
+    }
 
-   public Integer getHeight() {
-      return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
-   }
+    public Integer getHeight() {
+        return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
+    }
 
-   public void setHeight(Integer width) {
-      this.getStateHelper().put(PropertyKeys.height, width);
-   }
+    public void setHeight(Integer width) {
+        this.getStateHelper().put(PropertyKeys.height, width);
+    }
 
-   public String getTitle() {
-      return (String) getStateHelper().eval(PropertyKeys.title, null);
-   }
+    public String getTitle() {
+        return (String) getStateHelper().eval(PropertyKeys.title, null);
+    }
 
-   public void setTitle(String title) {
-      getStateHelper().put(PropertyKeys.title, title);
-   }
+    public void setTitle(String title) {
+        getStateHelper().put(PropertyKeys.title, title);
+    }
 
-   public String getApiKey() {
-      return (String) getStateHelper().eval(PropertyKeys.apiKey, null);
-   }
+    public String getApiKey() {
+        return (String) getStateHelper().eval(PropertyKeys.apiKey, null);
+    }
 
-   public void setApiKey(String apiKey) {
-      getStateHelper().put(PropertyKeys.apiKey, apiKey);
-   }
+    public void setApiKey(String apiKey) {
+        getStateHelper().put(PropertyKeys.apiKey, apiKey);
+    }
 
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   @Override
-   public void queueEvent(FacesEvent event) {
+    @Override
+    public void queueEvent(FacesEvent event) {
 
-      FacesContext context = getFacesContext();
-      if (isRequestSource(context) && event instanceof AjaxBehaviorEvent) {
-         Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-         String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        FacesContext context = getFacesContext();
+        if (isRequestSource(context) && event instanceof AjaxBehaviorEvent) {
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-         if (eventName.equals("select")) {
-            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            String clientId = this.getClientId(context);
+            if (eventName.equals("select")) {
+                AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                String clientId = this.getClientId(context);
 
-            Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
-                     JsonArray.class);
+                Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
+                            JsonArray.class);
 
-            SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
-            selectEvent.setPhaseId(behaviorEvent.getPhaseId());
+                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
+                selectEvent.setPhaseId(behaviorEvent.getPhaseId());
 
-            super.queueEvent(selectEvent);
-         }
-      } else {
-         super.queueEvent(event);
-      }
-   }
+                super.queueEvent(selectEvent);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
+    }
 
-   public boolean isRequestSource(FacesContext context) {
-      String partialSource = context.getExternalContext().getRequestParameterMap()
-               .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
+    public boolean isRequestSource(FacesContext context) {
+        String partialSource = context.getExternalContext().getRequestParameterMap()
+                    .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 
-      return this.getClientId(context).equals(partialSource);
-   }
+        return this.getClientId(context).equals(partialSource);
+    }
 }

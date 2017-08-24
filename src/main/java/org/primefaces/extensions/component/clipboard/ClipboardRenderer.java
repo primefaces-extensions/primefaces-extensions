@@ -33,44 +33,44 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class ClipboardRenderer extends CoreRenderer {
 
-   @Override
-   public void decode(final FacesContext context, final UIComponent component) {
-      decodeBehaviors(context, component);
-   }
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        decodeBehaviors(context, component);
+    }
 
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final Clipboard clipboard = (Clipboard) component;
-      encodeScript(context, clipboard);
-   }
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final Clipboard clipboard = (Clipboard) component;
+        encodeScript(context, clipboard);
+    }
 
-   private void encodeScript(final FacesContext context, final Clipboard clipboard) throws IOException {
-      String trigger = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTrigger());
-      if (isValueBlank(trigger)) {
-         trigger = clipboard.getParent().getClientId(context);
-      }
+    private void encodeScript(final FacesContext context, final Clipboard clipboard) throws IOException {
+        String trigger = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTrigger());
+        if (isValueBlank(trigger)) {
+            trigger = clipboard.getParent().getClientId(context);
+        }
 
-      final String target = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTarget());
+        final String target = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTarget());
 
-      final WidgetBuilder wb = getWidgetBuilder(context);
-      wb.initWithDomReady("ExtClipboard", clipboard.resolveWidgetVar(), clipboard.getClientId(context));
-      wb.attr("action", StringUtils.lowerCase(clipboard.getAction()));
-      wb.attr("trigger", trigger);
-      wb.attr("target", target);
-      wb.attr("text", clipboard.getText());
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.initWithDomReady("ExtClipboard", clipboard.resolveWidgetVar(), clipboard.getClientId(context));
+        wb.attr("action", StringUtils.lowerCase(clipboard.getAction()));
+        wb.attr("trigger", trigger);
+        wb.attr("target", target);
+        wb.attr("text", clipboard.getText());
 
-      if (clipboard.getOnsuccess() != null) {
-         // Define a callback function if cut/copy succeeds
-         wb.callback("onSuccess", "function(e)", clipboard.getOnsuccess());
-      }
-      if (clipboard.getOnerror() != null) {
-         // Define a callback function if cut/copy fails
-         wb.callback("onError", "function(e)", clipboard.getOnerror());
-      }
+        if (clipboard.getOnsuccess() != null) {
+            // Define a callback function if cut/copy succeeds
+            wb.callback("onSuccess", "function(e)", clipboard.getOnsuccess());
+        }
+        if (clipboard.getOnerror() != null) {
+            // Define a callback function if cut/copy fails
+            wb.callback("onError", "function(e)", clipboard.getOnerror());
+        }
 
-      encodeClientBehaviors(context, clipboard);
+        encodeClientBehaviors(context, clipboard);
 
-      wb.finish();
-   }
+        wb.finish();
+    }
 
 }

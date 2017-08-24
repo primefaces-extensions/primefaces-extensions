@@ -36,54 +36,54 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class CalculatorRenderer extends CoreRenderer {
 
-   @Override
-   public void decode(final FacesContext context, final UIComponent component) {
-      decodeBehaviors(context, component);
-   }
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        decodeBehaviors(context, component);
+    }
 
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final Calculator calculator = (Calculator) component;
-      encodeScript(context, calculator);
-   }
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final Calculator calculator = (Calculator) component;
+        encodeScript(context, calculator);
+    }
 
-   private void encodeScript(final FacesContext context, final Calculator calculator) throws IOException {
-      String target = SearchExpressionFacade.resolveClientIds(context, calculator, calculator.getFor());
-      if (isValueBlank(target)) {
-         target = calculator.getParent().getClientId(context);
-      }
-      
-      UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
-      if(!(targetComponent instanceof UIInput)) {
-	  throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
-      }
+    private void encodeScript(final FacesContext context, final Calculator calculator) throws IOException {
+        String target = SearchExpressionFacade.resolveClientIds(context, calculator, calculator.getFor());
+        if (isValueBlank(target)) {
+            target = calculator.getParent().getClientId(context);
+        }
 
-      final WidgetBuilder wb = getWidgetBuilder(context);
-      wb.initWithDomReady("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
-      wb.attr("target", target);
-      wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
-      wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));
-      wb.attr("precision", calculator.getPrecision());
-      wb.attr("locale", calculator.calculateLocale().toString());
-      wb.attr("isRTL", ComponentUtils.isRTL(context, calculator));
-      wb.attr("calculatorClass", calculator.getStyleClass());
+        UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
+        if (!(targetComponent instanceof UIInput)) {
+            throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
+        }
 
-      if (calculator.getOnopen() != null) {
-         // Define a callback function before the panel is opened
-         wb.callback("onOpen", "function(value, inst)", calculator.getOnopen());
-      }
-      if (calculator.getOnclose() != null) {
-         // Define a callback function when the panel is closed
-         wb.callback("onClose", "function(value, inst)", calculator.getOnclose());
-      }
-      if (calculator.getOnbutton() != null) {
-         // Define a callback function when a button is activated
-         wb.callback("onButton", "function(label, value, inst)", calculator.getOnbutton());
-      }
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.initWithDomReady("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
+        wb.attr("target", target);
+        wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
+        wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));
+        wb.attr("precision", calculator.getPrecision());
+        wb.attr("locale", calculator.calculateLocale().toString());
+        wb.attr("isRTL", ComponentUtils.isRTL(context, calculator));
+        wb.attr("calculatorClass", calculator.getStyleClass());
 
-      encodeClientBehaviors(context, calculator);
+        if (calculator.getOnopen() != null) {
+            // Define a callback function before the panel is opened
+            wb.callback("onOpen", "function(value, inst)", calculator.getOnopen());
+        }
+        if (calculator.getOnclose() != null) {
+            // Define a callback function when the panel is closed
+            wb.callback("onClose", "function(value, inst)", calculator.getOnclose());
+        }
+        if (calculator.getOnbutton() != null) {
+            // Define a callback function when a button is activated
+            wb.callback("onButton", "function(label, value, inst)", calculator.getOnbutton());
+        }
 
-      wb.finish();
-   }
+        encodeClientBehaviors(context, calculator);
+
+        wb.finish();
+    }
 
 }

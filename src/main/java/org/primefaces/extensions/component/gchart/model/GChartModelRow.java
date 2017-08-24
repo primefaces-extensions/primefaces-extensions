@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 public interface GChartModelRow extends Serializable {
-   Collection<Object> getValues();
+    Collection<Object> getValues();
 
-   String getLabel();
+    String getLabel();
 }

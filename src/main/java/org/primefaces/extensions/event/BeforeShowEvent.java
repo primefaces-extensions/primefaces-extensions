@@ -21,8 +21,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
@@ -31,9 +30,9 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class BeforeShowEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "beforeShow";
+    public static final String NAME = "beforeShow";
 
-   public BeforeShowEvent(final UIComponent component, final Behavior behavior) {
-      super(component, behavior);
-   }
+    public BeforeShowEvent(final UIComponent component, final Behavior behavior) {
+        super(component, behavior);
+    }
 }

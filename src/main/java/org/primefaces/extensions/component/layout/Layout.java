@@ -48,46 +48,45 @@ import org.primefaces.util.Constants;
  * @since 0.2
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
 })
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
-   private static final Logger LOG = Logger.getLogger(Layout.class.getName());
+    public static final String POSITION_SEPARATOR = "_";
+    public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-all";
+    public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
+    public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
+    public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
+    public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content";
+    public static final String PANE_POSITION_CENTER = "center";
+    public static final String PANE_POSITION_NORTH = "north";
+    public static final String PANE_POSITION_SOUTH = "south";
+    public static final String PANE_POSITION_WEST = "west";
+    public static final String PANE_POSITION_EAST = "east";
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Layout";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Layout";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LayoutRenderer";
 
-   public static final String POSITION_SEPARATOR = "_";
-   public static final String STYLE_CLASS_PANE = "ui-widget-content ui-corner-all";
-   public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
-   public static final String STYLE_CLASS_PANE_HEADER = "ui-widget-header ui-corner-top pe-layout-pane-header";
-   public static final String STYLE_CLASS_PANE_CONTENT = "pe-layout-pane-content";
-   public static final String STYLE_CLASS_LAYOUT_CONTENT = "ui-layout-content";
-   public static final String PANE_POSITION_CENTER = "center";
-   public static final String PANE_POSITION_NORTH = "north";
-   public static final String PANE_POSITION_SOUTH = "south";
-   public static final String PANE_POSITION_WEST = "west";
-   public static final String PANE_POSITION_EAST = "east";
+    private static final Collection<String> EVENT_NAMES = Collections
+                .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ResizeEvent.NAME));
+    private static final Logger LOG = Logger.getLogger(Layout.class.getName());
 
-   private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ResizeEvent.NAME));
+    private ResponseWriter originalWriter;
+    private FastStringWriter fsw;
+    private boolean buildOptions;
 
-   private ResponseWriter originalWriter;
-   private FastStringWriter fsw;
-   private boolean buildOptions;
-
-   /**
-    * Properties that are tracked by state saving.
-    *
-    * @author Oleg Varaksin / last modified by Melloware
-    */
-   public enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Oleg Varaksin / last modified by Melloware
+     */
+    public enum PropertyKeys {
 
       // @formatter:off
       widgetVar,
@@ -104,261 +103,265 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
       maskPanesEarly;
       // @formatter:on
 
-      private String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   public Layout() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+    public Layout() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setWidgetVar(final String widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-   }
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
 
-   public boolean isFullPage() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.fullPage, true);
-   }
+    public boolean isFullPage() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.fullPage, true);
+    }
 
-   public void setFullPage(final boolean fullPage) {
-      getStateHelper().put(PropertyKeys.fullPage, fullPage);
-   }
+    public void setFullPage(final boolean fullPage) {
+        getStateHelper().put(PropertyKeys.fullPage, fullPage);
+    }
 
-   public Object getOptions() {
-      return getStateHelper().eval(PropertyKeys.options, null);
-   }
+    public Object getOptions() {
+        return getStateHelper().eval(PropertyKeys.options, null);
+    }
 
-   public void setOptions(final Object options) {
-      getStateHelper().put(PropertyKeys.options, options);
-   }
+    public void setOptions(final Object options) {
+        getStateHelper().put(PropertyKeys.options, options);
+    }
 
-   public String getStyle() {
-      return (String) getStateHelper().eval(PropertyKeys.style, null);
-   }
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
 
-   public void setStyle(final String style) {
-      getStateHelper().put(PropertyKeys.style, style);
-   }
+    public void setStyle(final String style) {
+        getStateHelper().put(PropertyKeys.style, style);
+    }
 
-   public String getStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-   }
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
 
-   public void setStyleClass(final String styleClass) {
-      getStateHelper().put(PropertyKeys.styleClass, styleClass);
-   }
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
 
-   public String getState() {
-      return (String) getStateHelper().eval(PropertyKeys.state, null);
-   }
+    public String getState() {
+        return (String) getStateHelper().eval(PropertyKeys.state, null);
+    }
 
-   public void setState(final String state) {
-      getStateHelper().put(PropertyKeys.state, state);
-   }
+    public void setState(final String state) {
+        getStateHelper().put(PropertyKeys.state, state);
+    }
 
-   public boolean isStateCookie() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.stateCookie, false);
-   }
+    public boolean isStateCookie() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.stateCookie, false);
+    }
 
-   public void setStateCookie(final boolean stateCookie) {
-      getStateHelper().put(PropertyKeys.stateCookie, stateCookie);
-   }
+    public void setStateCookie(final boolean stateCookie) {
+        getStateHelper().put(PropertyKeys.stateCookie, stateCookie);
+    }
 
-   public String getTogglerTipOpen() {
-      return (String) getStateHelper().eval(PropertyKeys.togglerTip_open, null);
-   }
+    public String getTogglerTipOpen() {
+        return (String) getStateHelper().eval(PropertyKeys.togglerTip_open, null);
+    }
 
-   public void setTogglerTipOpen(final String togglerTipOpen) {
-      getStateHelper().put(PropertyKeys.togglerTip_open, togglerTipOpen);
-   }
+    public void setTogglerTipOpen(final String togglerTipOpen) {
+        getStateHelper().put(PropertyKeys.togglerTip_open, togglerTipOpen);
+    }
 
-   public String getTogglerTipClosed() {
-      return (String) getStateHelper().eval(PropertyKeys.togglerTip_closed, null);
-   }
+    public String getTogglerTipClosed() {
+        return (String) getStateHelper().eval(PropertyKeys.togglerTip_closed, null);
+    }
 
-   public void setTogglerTipClosed(final String togglerTipClosed) {
-      getStateHelper().put(PropertyKeys.togglerTip_closed, togglerTipClosed);
-   }
+    public void setTogglerTipClosed(final String togglerTipClosed) {
+        getStateHelper().put(PropertyKeys.togglerTip_closed, togglerTipClosed);
+    }
 
-   public String getResizerTip() {
-      return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
-   }
+    public String getResizerTip() {
+        return (String) getStateHelper().eval(PropertyKeys.resizerTip, null);
+    }
 
-   public void setResizerTip(final String resizerTip) {
-      getStateHelper().put(PropertyKeys.resizerTip, resizerTip);
-   }
+    public void setResizerTip(final String resizerTip) {
+        getStateHelper().put(PropertyKeys.resizerTip, resizerTip);
+    }
 
-   public String getSliderTip() {
-      return (String) getStateHelper().eval(PropertyKeys.sliderTip, null);
-   }
+    public String getSliderTip() {
+        return (String) getStateHelper().eval(PropertyKeys.sliderTip, null);
+    }
 
-   public void setSliderTip(final String sliderTip) {
-      getStateHelper().put(PropertyKeys.sliderTip, sliderTip);
-   }
+    public void setSliderTip(final String sliderTip) {
+        getStateHelper().put(PropertyKeys.sliderTip, sliderTip);
+    }
 
-   public boolean isMaskPanesEarly() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.maskPanesEarly, false);
-   }
+    public boolean isMaskPanesEarly() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.maskPanesEarly, false);
+    }
 
-   public void setMaskPanesEarly(final boolean maskPanesEarly) {
-      getStateHelper().put(PropertyKeys.maskPanesEarly, maskPanesEarly);
-   }
+    public void setMaskPanesEarly(final boolean maskPanesEarly) {
+        getStateHelper().put(PropertyKeys.maskPanesEarly, maskPanesEarly);
+    }
 
-   @Override
-   public Collection<String> getEventNames() {
-      return EVENT_NAMES;
-   }
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-   @Override
-   public void processDecodes(final FacesContext fc) {
-      if (isSelfRequest(fc)) {
-         decode(fc);
-      } else {
-         super.processDecodes(fc);
-      }
-   }
+    @Override
+    public void processDecodes(final FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        }
+        else {
+            super.processDecodes(fc);
+        }
+    }
 
-   @Override
-   public void processValidators(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processValidators(fc);
-      }
-   }
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processValidators(fc);
+        }
+    }
 
-   @Override
-   public void processUpdates(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processUpdates(fc);
-      }
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processUpdates(fc);
+        }
 
-      final String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
-      if (StringUtils.isNotBlank(state)) {
-         final ValueExpression stateVE = getValueExpression(PropertyKeys.state.toString());
-         if (stateVE != null) {
-            // save "state"
-            stateVE.setValue(fc.getELContext(), state);
-            getStateHelper().remove(PropertyKeys.state);
-         }
-      }
-   }
-
-   @Override
-   public void queueEvent(final FacesEvent event) {
-      final FacesContext context = FacesContext.getCurrentInstance();
-
-      if (isSelfRequest(context)) {
-         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-         final String clientId = this.getClientId(context);
-
-         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-         final LayoutPane pane = getLayoutPane(this, params.get(clientId + "_pane"));
-         if (pane == null) {
-            LOG.warning("LayoutPane by request parameter '" + params.get(clientId + "_pane") + "' was not found");
-
-            return;
-         }
-
-         if (OpenEvent.NAME.equals(eventName)) {
-            final OpenEvent openEvent = new OpenEvent(pane, behaviorEvent.getBehavior());
-            openEvent.setPhaseId(behaviorEvent.getPhaseId());
-            super.queueEvent(openEvent);
-
-            return;
-         } else if (CloseEvent.NAME.equals(eventName)) {
-            final CloseEvent closeEvent = new CloseEvent(pane, behaviorEvent.getBehavior());
-            closeEvent.setPhaseId(behaviorEvent.getPhaseId());
-            super.queueEvent(closeEvent);
-
-            return;
-         } else if (ResizeEvent.NAME.equals(eventName)) {
-            final double width = Double.valueOf(params.get(clientId + "_width"));
-            final double height = Double.valueOf(params.get(clientId + "_height"));
-
-            final ResizeEvent resizeEvent = new ResizeEvent(pane, behaviorEvent.getBehavior(), width, height);
-            resizeEvent.setPhaseId(behaviorEvent.getPhaseId());
-            super.queueEvent(resizeEvent);
-
-            return;
-         }
-      }
-
-      super.queueEvent(event);
-   }
-
-   public LayoutPane getLayoutPane(final UIComponent component, final String combinedPosition) {
-      for (final UIComponent child : component.getChildren()) {
-         if (child instanceof LayoutPane) {
-            if (((LayoutPane) child).getCombinedPosition().equals(combinedPosition)) {
-               return (LayoutPane) child;
-            } else {
-               final LayoutPane pane = getLayoutPane(child, combinedPosition);
-               if (pane != null) {
-                  return pane;
-               }
+        final String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
+        if (StringUtils.isNotBlank(state)) {
+            final ValueExpression stateVE = getValueExpression(PropertyKeys.state.toString());
+            if (stateVE != null) {
+                // save "state"
+                stateVE.setValue(fc.getELContext(), state);
+                getStateHelper().remove(PropertyKeys.state);
             }
-         }
-      }
+        }
+    }
 
-      return null;
-   }
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext context = FacesContext.getCurrentInstance();
 
-   public ResponseWriter getOriginalWriter() {
-      return originalWriter;
-   }
+        if (isSelfRequest(context)) {
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = this.getClientId(context);
 
-   public void setOriginalWriter(final ResponseWriter originalWriter) {
-      this.originalWriter = originalWriter;
-   }
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final LayoutPane pane = getLayoutPane(this, params.get(clientId + "_pane"));
+            if (pane == null) {
+                LOG.warning("LayoutPane by request parameter '" + params.get(clientId + "_pane") + "' was not found");
 
-   public FastStringWriter getFastStringWriter() {
-      return fsw;
-   }
+                return;
+            }
 
-   public void setFastStringWriter(final FastStringWriter fsw) {
-      this.fsw = fsw;
-   }
+            if (OpenEvent.NAME.equals(eventName)) {
+                final OpenEvent openEvent = new OpenEvent(pane, behaviorEvent.getBehavior());
+                openEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(openEvent);
 
-   public boolean isBuildOptions() {
-      return buildOptions;
-   }
+                return;
+            }
+            else if (CloseEvent.NAME.equals(eventName)) {
+                final CloseEvent closeEvent = new CloseEvent(pane, behaviorEvent.getBehavior());
+                closeEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(closeEvent);
 
-   public void setBuildOptions(final boolean buildOptions) {
-      this.buildOptions = buildOptions;
-   }
+                return;
+            }
+            else if (ResizeEvent.NAME.equals(eventName)) {
+                final double width = Double.valueOf(params.get(clientId + "_width"));
+                final double height = Double.valueOf(params.get(clientId + "_height"));
 
-   public void removeOptions() {
-      getStateHelper().remove(PropertyKeys.options);
-   }
+                final ResizeEvent resizeEvent = new ResizeEvent(pane, behaviorEvent.getBehavior(), width, height);
+                resizeEvent.setPhaseId(behaviorEvent.getPhaseId());
+                super.queueEvent(resizeEvent);
 
-   private boolean isSelfRequest(final FacesContext context) {
-      return this.getClientId(context)
-               .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-   }
+                return;
+            }
+        }
 
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+        super.queueEvent(event);
+    }
+
+    public LayoutPane getLayoutPane(final UIComponent component, final String combinedPosition) {
+        for (final UIComponent child : component.getChildren()) {
+            if (child instanceof LayoutPane) {
+                if (((LayoutPane) child).getCombinedPosition().equals(combinedPosition)) {
+                    return (LayoutPane) child;
+                }
+                else {
+                    final LayoutPane pane = getLayoutPane(child, combinedPosition);
+                    if (pane != null) {
+                        return pane;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public ResponseWriter getOriginalWriter() {
+        return originalWriter;
+    }
+
+    public void setOriginalWriter(final ResponseWriter originalWriter) {
+        this.originalWriter = originalWriter;
+    }
+
+    public FastStringWriter getFastStringWriter() {
+        return fsw;
+    }
+
+    public void setFastStringWriter(final FastStringWriter fsw) {
+        this.fsw = fsw;
+    }
+
+    public boolean isBuildOptions() {
+        return buildOptions;
+    }
+
+    public void setBuildOptions(final boolean buildOptions) {
+        this.buildOptions = buildOptions;
+    }
+
+    public void removeOptions() {
+        getStateHelper().remove(PropertyKeys.options);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
+
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 }

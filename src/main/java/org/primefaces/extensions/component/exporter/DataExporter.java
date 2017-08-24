@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.component.exporter;
 
+import java.io.IOException;
+
 import javax.el.ELContext;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
@@ -23,8 +25,6 @@ import javax.faces.component.StateHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
-
-import java.io.IOException;
 
 /**
  * <code>Exporter</code> component.
@@ -79,7 +79,11 @@ public class DataExporter implements ActionListener, StateHolder {
     public DataExporter() {
     }
 
-    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly, ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor, ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor, ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor, ValueExpression cellFontStyle, ValueExpression datasetPadding, ValueExpression orientation, ValueExpression skipComponents) {
+    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly,
+                ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor,
+                ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor,
+                ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor,
+                ValueExpression cellFontStyle, ValueExpression datasetPadding, ValueExpression orientation, ValueExpression skipComponents) {
         this.target = target;
         this.type = type;
         this.fileName = fileName;
@@ -123,60 +127,77 @@ public class DataExporter implements ActionListener, StateHolder {
 
         boolean isPageOnly = false;
         if (pageOnly != null) {
-            isPageOnly = pageOnly.isLiteralText() ? Boolean.valueOf(pageOnly.getValue(context.getELContext()).toString()) : (Boolean) pageOnly.getValue(context.getELContext());
+            isPageOnly = pageOnly.isLiteralText() ? Boolean.valueOf(pageOnly.getValue(context.getELContext()).toString())
+                        : (Boolean) pageOnly.getValue(context.getELContext());
         }
 
         boolean isSelectionOnly = false;
         if (selectionOnly != null) {
-            isSelectionOnly = selectionOnly.isLiteralText() ? Boolean.valueOf(selectionOnly.getValue(context.getELContext()).toString()) : (Boolean) selectionOnly.getValue(context.getELContext());
+            isSelectionOnly = selectionOnly.isLiteralText() ? Boolean.valueOf(selectionOnly.getValue(context.getELContext()).toString())
+                        : (Boolean) selectionOnly.getValue(context.getELContext());
         }
 
         boolean subtable = false;
         if (subTable != null) {
-            subtable = subTable.isLiteralText() ? Boolean.valueOf(subTable.getValue(context.getELContext()).toString()) : (Boolean) subTable.getValue(context.getELContext());
+            subtable = subTable.isLiteralText() ? Boolean.valueOf(subTable.getValue(context.getELContext()).toString())
+                        : (Boolean) subTable.getValue(context.getELContext());
         }
         String facetBackgroundValue = null;
-        if (facetBackground != null)
+        if (facetBackground != null) {
             facetBackgroundValue = (String) facetBackground.getValue(elContext);
+        }
         String facetFontSizeValue = "10";
-        if (facetFontSize != null)
+        if (facetFontSize != null) {
             facetFontSizeValue = (String) facetFontSize.getValue(elContext);
+        }
         String facetFontColorValue = null;
-        if (facetFontColor != null)
+        if (facetFontColor != null) {
             facetFontColorValue = (String) facetFontColor.getValue(elContext);
+        }
         String facetFontStyleValue = "BOLD";
-        if (facetFontStyle != null)
+        if (facetFontStyle != null) {
             facetFontStyleValue = (String) facetFontStyle.getValue(elContext);
+        }
         String fontNameValue = null;
-        if (fontName != null)
+        if (fontName != null) {
             fontNameValue = (String) fontName.getValue(elContext);
+        }
         String cellFontSizeValue = "8";
-        if (cellFontSize != null)
+        if (cellFontSize != null) {
             cellFontSizeValue = (String) cellFontSize.getValue(elContext);
+        }
         String cellFontColorValue = null;
-        if (cellFontColor != null)
+        if (cellFontColor != null) {
             cellFontColorValue = (String) cellFontColor.getValue(elContext);
+        }
         String cellFontStyleValue = "NORMAL";
-        if (cellFontStyle != null)
+        if (cellFontStyle != null) {
             cellFontStyleValue = (String) cellFontStyle.getValue(elContext);
+        }
         String datasetPaddingValue = "5";
-        if (datasetPadding != null)
+        if (datasetPadding != null) {
             datasetPaddingValue = (String) datasetPadding.getValue(elContext);
+        }
         String orientationValue = "Portrait";
-        if (orientation != null)
+        if (orientation != null) {
             orientationValue = (String) orientation.getValue(elContext);
-        String skipComponentsValue="";
-        if (skipComponents != null)
+        }
+        String skipComponentsValue = "";
+        if (skipComponents != null) {
             skipComponentsValue = (String) skipComponents.getValue(elContext);
+        }
 
         try {
             ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
             Exporter exporter = factory.getExporterForType(exportAs);
             exporter.setSkipComponents(skipComponentsValue);
-            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue, cellFontColorValue, cellFontStyleValue, datasetPaddingValue,orientationValue);
-            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor, subtable);
+            exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue,
+                        cellFontColorValue, cellFontStyleValue, datasetPaddingValue, orientationValue);
+            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor,
+                        subtable);
             context.responseComplete();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new FacesException(e);
         }
     }

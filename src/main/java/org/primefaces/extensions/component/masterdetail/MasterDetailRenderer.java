@@ -27,7 +27,6 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.extensions.util.FastStringWriter;
@@ -39,277 +38,284 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link MasterDetail} component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class MasterDetailRenderer extends CoreRenderer {
 
-	private static final String FACET_HEADER = "header";
-	private static final String FACET_FOOTER = "footer";
-	private static final String FACET_LABEL = "label";
+    private static final String FACET_HEADER = "header";
+    private static final String FACET_FOOTER = "footer";
+    private static final String FACET_LABEL = "label";
 
-	@Override
-	public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
-		MasterDetail masterDetail = (MasterDetail) component;
-		MasterDetailLevel mdl;
+    @Override
+    public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
+        MasterDetail masterDetail = (MasterDetail) component;
+        MasterDetailLevel mdl;
 
-		if (masterDetail.isSelectDetailRequest(fc)) {
-			// component has been navigated via SelectDetailLevel
-			MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
+        if (masterDetail.isSelectDetailRequest(fc)) {
+            // component has been navigated via SelectDetailLevel
+            MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
 
-			if (fc.isValidationFailed()) {
-				mdl = mdlToProcess;
-			} else {
-				mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
+            if (fc.isValidationFailed()) {
+                mdl = mdlToProcess;
+            }
+            else {
+                mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
 
-				// reset last saved validation state and stored values of editable components
-				MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
-				mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
+                // reset last saved validation state and stored values of editable components
+                MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
+                mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
-				String preserveInputs = masterDetail.getPreserveInputs(fc);
-				String resetInputs = masterDetail.getResetInputs(fc);
-				String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
-				String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
-				boolean preserveAll = ArrayUtils.contains(piIds, "@all");
-				boolean resetAll = ArrayUtils.contains(riIds, "@all");
+                String preserveInputs = masterDetail.getPreserveInputs(fc);
+                String resetInputs = masterDetail.getResetInputs(fc);
+                String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
+                String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
+                boolean preserveAll = ArrayUtils.contains(piIds, "@all");
+                boolean resetAll = ArrayUtils.contains(riIds, "@all");
 
-				final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-				for (EditableValueHolder editableValueHolder : editableValueHolders) {
-					String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
-					if (resetAll || ArrayUtils.contains(riIds, clientId)) {
-						editableValueHolder.resetValue();
-					} else if (preserveAll || ArrayUtils.contains(piIds, clientId)) {
-						editableValueHolder.setValue(ComponentUtils.getConvertedSubmittedValue(fc, editableValueHolder));
-					} else {
-						// default behavior
-						editableValueHolder.resetValue();
-					}
-				}
-			}
+                final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
+                for (EditableValueHolder editableValueHolder : editableValueHolders) {
+                    String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
+                    if (resetAll || ArrayUtils.contains(riIds, clientId)) {
+                        editableValueHolder.resetValue();
+                    }
+                    else if (preserveAll || ArrayUtils.contains(piIds, clientId)) {
+                        editableValueHolder.setValue(ComponentUtils.getConvertedSubmittedValue(fc, editableValueHolder));
+                    }
+                    else {
+                        // default behavior
+                        editableValueHolder.resetValue();
+                    }
+                }
+            }
 
-			masterDetail.updateModel(fc, mdl);
-		} else {
-			// component has been navigated from the outside, e.g. GET request or POST update from another component
-			mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
-		}
+            masterDetail.updateModel(fc, mdl);
+        }
+        else {
+            // component has been navigated from the outside, e.g. GET request or POST update from another component
+            mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
+        }
 
-		// render MasterDetailLevel
-		encodeMarkup(fc, masterDetail, mdl);
+        // render MasterDetailLevel
+        encodeMarkup(fc, masterDetail, mdl);
 
-		// reset calculated values
-		masterDetail.resetCalculatedValues();
-	}
+        // reset calculated values
+        masterDetail.resetCalculatedValues();
+    }
 
-	protected MasterDetailLevel getDetailLevelToEncode(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdlToProcess,
-	                                                   MasterDetailLevel mdlToGo) {
-		if (masterDetail.getSelectLevelListener() != null) {
-			SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
-			int levelToEncode =
-			    (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] {selectLevelEvent});
-			if (levelToEncode != mdlToGo.getLevel()) {
-				// new MasterDetailLevel to go
-				return masterDetail.getDetailLevelByLevel(levelToEncode);
-			}
-		}
+    protected MasterDetailLevel getDetailLevelToEncode(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdlToProcess,
+                MasterDetailLevel mdlToGo) {
+        if (masterDetail.getSelectLevelListener() != null) {
+            SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
+            int levelToEncode = (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] { selectLevelEvent });
+            if (levelToEncode != mdlToGo.getLevel()) {
+                // new MasterDetailLevel to go
+                return masterDetail.getDetailLevelByLevel(levelToEncode);
+            }
+        }
 
-		return mdlToGo;
-	}
+        return mdlToGo;
+    }
 
-	protected void encodeMarkup(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
-		ResponseWriter writer = fc.getResponseWriter();
-		String clientId = masterDetail.getClientId(fc);
-		String styleClass =
-		    masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
+    protected void encodeMarkup(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+        ResponseWriter writer = fc.getResponseWriter();
+        String clientId = masterDetail.getClientId(fc);
+        String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
 
-		writer.startElement("div", masterDetail);
-		writer.writeAttribute("id", clientId, "id");
-		writer.writeAttribute("class", styleClass, "styleClass");
-		if (masterDetail.getStyle() != null) {
-			writer.writeAttribute("style", masterDetail.getStyle(), "style");
-		}
+        writer.startElement("div", masterDetail);
+        writer.writeAttribute("id", clientId, "id");
+        writer.writeAttribute("class", styleClass, "styleClass");
+        if (masterDetail.getStyle() != null) {
+            writer.writeAttribute("style", masterDetail.getStyle(), "style");
+        }
 
-		if (masterDetail.isShowBreadcrumb()) {
-			if (masterDetail.isBreadcrumbAboveHeader()) {
-				// render breadcrumb and then header
-				renderBreadcrumb(fc, masterDetail, mdl);
-				encodeFacet(fc, masterDetail, FACET_HEADER);
-			} else {
-				// render header and then breadcrumb
-				encodeFacet(fc, masterDetail, FACET_HEADER);
-				renderBreadcrumb(fc, masterDetail, mdl);
-			}
-		} else {
-			// render header without breadcrumb
-			encodeFacet(fc, masterDetail, FACET_HEADER);
-		}
+        if (masterDetail.isShowBreadcrumb()) {
+            if (masterDetail.isBreadcrumbAboveHeader()) {
+                // render breadcrumb and then header
+                renderBreadcrumb(fc, masterDetail, mdl);
+                encodeFacet(fc, masterDetail, FACET_HEADER);
+            }
+            else {
+                // render header and then breadcrumb
+                encodeFacet(fc, masterDetail, FACET_HEADER);
+                renderBreadcrumb(fc, masterDetail, mdl);
+            }
+        }
+        else {
+            // render header without breadcrumb
+            encodeFacet(fc, masterDetail, FACET_HEADER);
+        }
 
-		// render container for MasterDetailLevel
-		writer.startElement("div", null);
-		writer.writeAttribute("id", clientId + "_detaillevel", "id");
-		writer.writeAttribute("class", "pe-master-detail-level", null);
+        // render container for MasterDetailLevel
+        writer.startElement("div", null);
+        writer.writeAttribute("id", clientId + "_detaillevel", "id");
+        writer.writeAttribute("class", "pe-master-detail-level", null);
 
-		// try to get context value if contextVar exists
-		Object contextValue = null;
-		String contextVar = mdl.getContextVar();
-		if (StringUtils.isNotBlank(contextVar)) {
-			contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
-		}
+        // try to get context value if contextVar exists
+        Object contextValue = null;
+        String contextVar = mdl.getContextVar();
+        if (StringUtils.isNotBlank(contextVar)) {
+            contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
+        }
 
-		if (contextValue != null) {
-			Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
-			requestMap.put(contextVar, contextValue);
-		}
+        if (contextValue != null) {
+            Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+            requestMap.put(contextVar, contextValue);
+        }
 
-		// render MasterDetailLevel
-		mdl.encodeAll(fc);
+        // render MasterDetailLevel
+        mdl.encodeAll(fc);
 
-		if (contextValue != null) {
-			fc.getExternalContext().getRequestMap().remove(contextVar);
-		}
+        if (contextValue != null) {
+            fc.getExternalContext().getRequestMap().remove(contextVar);
+        }
 
-		writer.endElement("div");
+        writer.endElement("div");
 
-		// render footer
-		encodeFacet(fc, masterDetail, FACET_FOOTER);
-		writer.endElement("div");
-	}
+        // render footer
+        encodeFacet(fc, masterDetail, FACET_FOOTER);
+        writer.endElement("div");
+    }
 
-	protected void renderBreadcrumb(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
-		// get breadcrumb and its current model
-		BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
+    protected void renderBreadcrumb(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+        // get breadcrumb and its current model
+        BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
 
-		// update breadcrumb items
-		updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
+        // update breadcrumb items
+        updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
 
-		// render breadcrumb
-		breadcrumb.encodeAll(fc);
-	}
+        // render breadcrumb
+        breadcrumb.encodeAll(fc);
+    }
 
-	protected void encodeFacet(FacesContext fc, UIComponent component, String name) throws IOException {
-		final UIComponent facet = component.getFacet(name);
-		if (facet != null) {
-			facet.encodeAll(fc);
-		}
-	}
+    protected void encodeFacet(FacesContext fc, UIComponent component, String name) throws IOException {
+        final UIComponent facet = component.getFacet(name);
+        if (facet != null) {
+            facet.encodeAll(fc);
+        }
+    }
 
-	protected void updateBreadcrumb(FacesContext fc, BreadCrumb breadcrumb, MasterDetail masterDetail,
-	                                MasterDetailLevel mdlToRender) throws IOException {
-		boolean lastMdlFound = false;
-		int levelToRender = mdlToRender.getLevel();
-		boolean isShowAllBreadcrumbItems = masterDetail.isShowAllBreadcrumbItems();
+    protected void updateBreadcrumb(FacesContext fc, BreadCrumb breadcrumb, MasterDetail masterDetail,
+                MasterDetailLevel mdlToRender) throws IOException {
+        boolean lastMdlFound = false;
+        int levelToRender = mdlToRender.getLevel();
+        boolean isShowAllBreadcrumbItems = masterDetail.isShowAllBreadcrumbItems();
 
-		for (UIComponent child : masterDetail.getChildren()) {
-			if (child instanceof MasterDetailLevel) {
-				MasterDetailLevel mdl = (MasterDetailLevel) child;
-				DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
-				if (menuItem == null) {
-					// note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
-					//throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
-					return;
-				}
+        for (UIComponent child : masterDetail.getChildren()) {
+            if (child instanceof MasterDetailLevel) {
+                MasterDetailLevel mdl = (MasterDetailLevel) child;
+                DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+                if (menuItem == null) {
+                    // note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
+                    // throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
+                    return;
+                }
 
-				if (!child.isRendered()) {
-					menuItem.setRendered(false);
-					if (!lastMdlFound) {
-						lastMdlFound = mdl.getLevel() == mdlToRender.getLevel();
-					}
+                if (!child.isRendered()) {
+                    menuItem.setRendered(false);
+                    if (!lastMdlFound) {
+                        lastMdlFound = mdl.getLevel() == mdlToRender.getLevel();
+                    }
 
-					continue;
-				}
+                    continue;
+                }
 
-				if (lastMdlFound && !isShowAllBreadcrumbItems) {
-					menuItem.setRendered(false);
-				} else {
-					menuItem.setRendered(true);
+                if (lastMdlFound && !isShowAllBreadcrumbItems) {
+                    menuItem.setRendered(false);
+                }
+                else {
+                    menuItem.setRendered(true);
 
-					Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
-					String contextVar = mdl.getContextVar();
-					boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
+                    Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
+                    String contextVar = mdl.getContextVar();
+                    boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
 
-					if (putContext) {
-						Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
-						requestMap.put(contextVar, contextValue);
-					}
+                    if (putContext) {
+                        Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+                        requestMap.put(contextVar, contextValue);
+                    }
 
-					final UIComponent facet = mdl.getFacet(FACET_LABEL);
-					if (facet != null) {
-						// swap writers
-						ResponseWriter writer = fc.getResponseWriter();
-						FastStringWriter fsw = new FastStringWriter();
-						ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
-						fc.setResponseWriter(clonedWriter);
+                    final UIComponent facet = mdl.getFacet(FACET_LABEL);
+                    if (facet != null) {
+                        // swap writers
+                        ResponseWriter writer = fc.getResponseWriter();
+                        FastStringWriter fsw = new FastStringWriter();
+                        ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+                        fc.setResponseWriter(clonedWriter);
 
-						// render facet's children
-						facet.encodeAll(fc);
+                        // render facet's children
+                        facet.encodeAll(fc);
 
-						// restore the original writer
-						fc.setResponseWriter(writer);
+                        // restore the original writer
+                        fc.setResponseWriter(writer);
 
-						// set menuitem label from facet
-						menuItem.setValue(fsw.toString());
-					} else {
-						// set menuitem label from tag attribute
-						menuItem.setValue(mdl.getLevelLabel());
-					}
+                        // set menuitem label from facet
+                        menuItem.setValue(fsw.toString());
+                    }
+                    else {
+                        // set menuitem label from tag attribute
+                        menuItem.setValue(mdl.getLevelLabel());
+                    }
 
-					if (isShowAllBreadcrumbItems && lastMdlFound) {
-						menuItem.setDisabled(true);
-					} else {
-						menuItem.setDisabled(mdl.isLevelDisabled());
-					}
+                    if (isShowAllBreadcrumbItems && lastMdlFound) {
+                        menuItem.setDisabled(true);
+                    }
+                    else {
+                        menuItem.setDisabled(mdl.isLevelDisabled());
+                    }
 
-					if (putContext) {
-						fc.getExternalContext().getRequestMap().remove(contextVar);
-					}
+                    if (putContext) {
+                        fc.getExternalContext().getRequestMap().remove(contextVar);
+                    }
 
-					if (!menuItem.isDisabled()) {
-						// set current level parameter
-						updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL, levelToRender);
-					}
-				}
+                    if (!menuItem.isDisabled()) {
+                        // set current level parameter
+                        updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL, levelToRender);
+                    }
+                }
 
-				if (!lastMdlFound) {
-					lastMdlFound = mdl.getLevel() == mdlToRender.getLevel();
-				}
-			}
-		}
-	}
+                if (!lastMdlFound) {
+                    lastMdlFound = mdl.getLevel() == mdlToRender.getLevel();
+                }
+            }
+        }
+    }
 
-	protected DefaultMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
-		String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
-		for (MenuElement child : breadcrumb.getModel().getElements()) {
-			if (menuItemId.equals(child.getId())) {
-				return (DefaultMenuItem) child;
-			}
-		}
+    protected DefaultMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
+        String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
+        for (MenuElement child : breadcrumb.getModel().getElements()) {
+            if (menuItemId.equals(child.getId())) {
+                return (DefaultMenuItem) child;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	protected void updateUIParameter(MenuItem menuItem, String name, Object value) {
-		Map<String, List<String>> params = menuItem.getParams();
-		if (params == null) {
-			return;
-		}
+    protected void updateUIParameter(MenuItem menuItem, String name, Object value) {
+        Map<String, List<String>> params = menuItem.getParams();
+        if (params == null) {
+            return;
+        }
 
-		for (String key : params.keySet()) {
-			if (key.equals(name)) {
-				params.remove(key);
-				menuItem.setParam(name, value);
+        for (String key : params.keySet()) {
+            if (key.equals(name)) {
+                params.remove(key);
+                menuItem.setParam(name, value);
 
-				break;
-			}
-		}
-	}
+                break;
+            }
+        }
+    }
 
-	@Override
-	public void encodeChildren(FacesContext fc, UIComponent component) throws IOException {
-		// rendering happens on encodeEnd
-	}
+    @Override
+    public void encodeChildren(FacesContext fc, UIComponent component) throws IOException {
+        // rendering happens on encodeEnd
+    }
 
-	@Override
-	public boolean getRendersChildren() {
-		return true;
-	}
+    @Override
+    public boolean getRendersChildren() {
+        return true;
+    }
 }

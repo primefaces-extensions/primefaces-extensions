@@ -41,25 +41,25 @@ import org.primefaces.util.Constants;
  * @since 6.1
  */
 @ResourceDependencies({
-         @ResourceDependency(library = "primefaces", name = "components.css"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-         @ResourceDependency(library = "primefaces", name = "core.js"),
-         @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.css"),
-         @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.js")
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.js")
 })
 public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
-   public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SlideOut";
-   public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-   private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SlideOutRenderer";
+    public static final String HANDLE_CLASS = "ui-slideout-handle ui-slideouttab-handle-rounded";
 
-   public static final String HANDLE_CLASS = "ui-slideout-handle ui-slideouttab-handle-rounded";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SlideOut";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SlideOutRenderer";
 
-   private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
+    private static final Collection<String> EVENT_NAMES = Collections
+                .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
 
-   protected enum PropertyKeys {
+    protected enum PropertyKeys {
 
       // @formatter:off
       widgetVar,
@@ -85,294 +85,304 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
       onclose;
       // @formatter:on
 
-      String toString;
+        private String toString;
 
-      PropertyKeys(final String toString) {
-         this.toString = toString;
-      }
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-      PropertyKeys() {
-      }
+        PropertyKeys() {
+        }
 
-      @Override
-      public String toString() {
-         return toString != null ? toString : super.toString();
-      }
-   }
+        public String getToString() {
+            return toString;
+        }
 
-   /**
-    * Default constructor
-    */
-   public SlideOut() {
-      setRendererType(DEFAULT_RENDERER);
-   }
+        public void setToString(String toString) {
+            this.toString = toString;
+        }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String resolveWidgetVar() {
-      return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-   }
+        @Override
+        public String toString() {
+            return toString != null ? toString : super.toString();
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getFamily() {
-      return COMPONENT_FAMILY;
-   }
+    /**
+     * Default constructor
+     */
+    public SlideOut() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public Collection<String> getEventNames() {
-      return EVENT_NAMES;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public String getDefaultEventName() {
-      return OpenEvent.NAME;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processDecodes(final FacesContext fc) {
-      if (isSelfRequest(fc)) {
-         decode(fc);
-      } else {
-         super.processDecodes(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processValidators(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processValidators(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getDefaultEventName() {
+        return OpenEvent.NAME;
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void processUpdates(final FacesContext fc) {
-      if (!isSelfRequest(fc)) {
-         super.processUpdates(fc);
-      }
-   }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processDecodes(final FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        }
+        else {
+            super.processDecodes(fc);
+        }
+    }
 
-   /**
-    * {@inheritDoc}
-    */
-   @Override
-   public void queueEvent(final FacesEvent event) {
-      final FacesContext fc = FacesContext.getCurrentInstance();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processValidators(fc);
+        }
+    }
 
-      if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-         final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-         final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processUpdates(fc);
+        }
+    }
 
-         if (OpenEvent.NAME.equals(eventName)) {
-            final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
-            openEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(openEvent);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
 
-            return;
-         } else if (CloseEvent.NAME.equals(eventName)) {
-            final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
-            closeEvent.setPhaseId(event.getPhaseId());
-            super.queueEvent(closeEvent);
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
-            return;
-         }
-      }
+            if (OpenEvent.NAME.equals(eventName)) {
+                final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
+                openEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(openEvent);
 
-      super.queueEvent(event);
-   }
+                return;
+            }
+            else if (CloseEvent.NAME.equals(eventName)) {
+                final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
+                closeEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(closeEvent);
 
-   public String getWidgetVar() {
-      return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-   }
+                return;
+            }
+        }
 
-   public void setWidgetVar(final String _widgetVar) {
-      getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
-   }
+        super.queueEvent(event);
+    }
 
-   public String getPanelStyle() {
-      return (String) getStateHelper().eval(PropertyKeys.panelStyle, null);
-   }
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-   public void setPanelStyle(final String _panelStyle) {
-      getStateHelper().put(PropertyKeys.panelStyle, _panelStyle);
-   }
+    public void setWidgetVar(final String _widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    }
 
-   public String getPanelStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.panelStyleClass, null);
-   }
+    public String getPanelStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.panelStyle, null);
+    }
 
-   public void setPanelStyleClass(final String _panelStyleClass) {
-      getStateHelper().put(PropertyKeys.panelStyleClass, _panelStyleClass);
-   }
+    public void setPanelStyle(final String _panelStyle) {
+        getStateHelper().put(PropertyKeys.panelStyle, _panelStyle);
+    }
 
-   public String getHandleStyle() {
-      return (String) getStateHelper().eval(PropertyKeys.handleStyle, null);
-   }
+    public String getPanelStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.panelStyleClass, null);
+    }
 
-   public void setHandleStyle(final String _handleStyle) {
-      getStateHelper().put(PropertyKeys.handleStyle, _handleStyle);
-   }
+    public void setPanelStyleClass(final String _panelStyleClass) {
+        getStateHelper().put(PropertyKeys.panelStyleClass, _panelStyleClass);
+    }
 
-   public String getHandleStyleClass() {
-      return (String) getStateHelper().eval(PropertyKeys.handleStyleClass, null);
-   }
+    public String getHandleStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.handleStyle, null);
+    }
 
-   public void setHandleStyleClass(final String _handleStyleClass) {
-      getStateHelper().put(PropertyKeys.handleStyleClass, _handleStyleClass);
-   }
+    public void setHandleStyle(final String _handleStyle) {
+        getStateHelper().put(PropertyKeys.handleStyle, _handleStyle);
+    }
 
-   public String getTitle() {
-      return (String) getStateHelper().eval(PropertyKeys.title, null);
-   }
+    public String getHandleStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.handleStyleClass, null);
+    }
 
-   public void setTitle(final String _title) {
-      getStateHelper().put(PropertyKeys.title, _title);
-   }
+    public void setHandleStyleClass(final String _handleStyleClass) {
+        getStateHelper().put(PropertyKeys.handleStyleClass, _handleStyleClass);
+    }
 
-   public String getIcon() {
-      return (String) getStateHelper().eval(PropertyKeys.icon, null);
-   }
+    public String getTitle() {
+        return (String) getStateHelper().eval(PropertyKeys.title, null);
+    }
 
-   public void setIcon(final String _icon) {
-      getStateHelper().put(PropertyKeys.icon, _icon);
-   }
+    public void setTitle(final String _title) {
+        getStateHelper().put(PropertyKeys.title, _title);
+    }
 
-   public String getShowOn() {
-      return (String) getStateHelper().eval(PropertyKeys.showOn, "click");
-   }
+    public String getIcon() {
+        return (String) getStateHelper().eval(PropertyKeys.icon, null);
+    }
 
-   public void setShowOn(final String _showOn) {
-      getStateHelper().put(PropertyKeys.showOn, _showOn);
-   }
+    public void setIcon(final String _icon) {
+        getStateHelper().put(PropertyKeys.icon, _icon);
+    }
 
-   public String getLocation() {
-      return (String) getStateHelper().eval(PropertyKeys.location, "right");
-   }
+    public String getShowOn() {
+        return (String) getStateHelper().eval(PropertyKeys.showOn, "click");
+    }
 
-   public void setLocation(final String _location) {
-      getStateHelper().put(PropertyKeys.location, _location);
-   }
+    public void setShowOn(final String _showOn) {
+        getStateHelper().put(PropertyKeys.showOn, _showOn);
+    }
 
-   public String getOffset() {
-      return (String) getStateHelper().eval(PropertyKeys.offset, "200px");
-   }
+    public String getLocation() {
+        return (String) getStateHelper().eval(PropertyKeys.location, "right");
+    }
 
-   public void setOffset(final String _offset) {
-      getStateHelper().put(PropertyKeys.offset, _offset);
-   }
+    public void setLocation(final String _location) {
+        getStateHelper().put(PropertyKeys.location, _location);
+    }
 
-   public void setOffsetReverse(final boolean _offsetReverse) {
-      getStateHelper().put(PropertyKeys.offsetReverse, _offsetReverse);
-   }
+    public String getOffset() {
+        return (String) getStateHelper().eval(PropertyKeys.offset, "200px");
+    }
 
-   public boolean isOffsetReverse() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.offsetReverse, false);
-   }
+    public void setOffset(final String _offset) {
+        getStateHelper().put(PropertyKeys.offset, _offset);
+    }
 
-   public String getHandleOffset() {
-      return (String) getStateHelper().eval(PropertyKeys.handleOffset, null);
-   }
+    public void setOffsetReverse(final boolean _offsetReverse) {
+        getStateHelper().put(PropertyKeys.offsetReverse, _offsetReverse);
+    }
 
-   public void setHandleOffset(final String _handleOffset) {
-      getStateHelper().put(PropertyKeys.handleOffset, _handleOffset);
-   }
+    public boolean isOffsetReverse() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.offsetReverse, false);
+    }
 
-   public void setHandleOffsetReverse(final boolean _handleOffsetReverse) {
-      getStateHelper().put(PropertyKeys.handleOffsetReverse, _handleOffsetReverse);
-   }
+    public String getHandleOffset() {
+        return (String) getStateHelper().eval(PropertyKeys.handleOffset, null);
+    }
 
-   public boolean isHandleOffsetReverse() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.handleOffsetReverse, false);
-   }
+    public void setHandleOffset(final String _handleOffset) {
+        getStateHelper().put(PropertyKeys.handleOffset, _handleOffset);
+    }
 
-   public void setSticky(final boolean _sticky) {
-      getStateHelper().put(PropertyKeys.sticky, _sticky);
-   }
+    public void setHandleOffsetReverse(final boolean _handleOffsetReverse) {
+        getStateHelper().put(PropertyKeys.handleOffsetReverse, _handleOffsetReverse);
+    }
 
-   public boolean isSticky() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.sticky, false);
-   }
+    public boolean isHandleOffsetReverse() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.handleOffsetReverse, false);
+    }
 
-   public void setClickScreenToClose(final boolean _clickScreenToClose) {
-      getStateHelper().put(PropertyKeys.clickScreenToClose, _clickScreenToClose);
-   }
+    public void setSticky(final boolean _sticky) {
+        getStateHelper().put(PropertyKeys.sticky, _sticky);
+    }
 
-   public boolean isClickScreenToClose() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.clickScreenToClose, true);
-   }
+    public boolean isSticky() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.sticky, false);
+    }
 
-   public void setAutoOpen(final boolean _autoOpen) {
-      getStateHelper().put(PropertyKeys.autoOpen, _autoOpen);
-   }
+    public void setClickScreenToClose(final boolean _clickScreenToClose) {
+        getStateHelper().put(PropertyKeys.clickScreenToClose, _clickScreenToClose);
+    }
 
-   public boolean isAutoOpen() {
-      return (Boolean) getStateHelper().eval(PropertyKeys.autoOpen, false);
-   }
+    public boolean isClickScreenToClose() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.clickScreenToClose, true);
+    }
 
-   public int getAnimateSpeed() {
-      return (Integer) getStateHelper().eval(PropertyKeys.animateSpeed, 300);
-   }
+    public void setAutoOpen(final boolean _autoOpen) {
+        getStateHelper().put(PropertyKeys.autoOpen, _autoOpen);
+    }
 
-   public void setAnimateSpeed(final int _animateSpeed) {
-      getStateHelper().put(PropertyKeys.animateSpeed, _animateSpeed);
-   }
+    public boolean isAutoOpen() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoOpen, false);
+    }
 
-   public String getBounceDistance() {
-      return (String) getStateHelper().eval(PropertyKeys.bounceDistance, "50px");
-   }
+    public int getAnimateSpeed() {
+        return (Integer) getStateHelper().eval(PropertyKeys.animateSpeed, 300);
+    }
 
-   public void setBounceDistance(final String _offset) {
-      getStateHelper().put(PropertyKeys.bounceDistance, _offset);
-   }
+    public void setAnimateSpeed(final int _animateSpeed) {
+        getStateHelper().put(PropertyKeys.animateSpeed, _animateSpeed);
+    }
 
-   public int getBounceTimes() {
-      return (Integer) getStateHelper().eval(PropertyKeys.bounceTimes, 4);
-   }
+    public String getBounceDistance() {
+        return (String) getStateHelper().eval(PropertyKeys.bounceDistance, "50px");
+    }
 
-   public void setBounceTimes(final int _bounceTimes) {
-      getStateHelper().put(PropertyKeys.bounceTimes, _bounceTimes);
-   }
+    public void setBounceDistance(final String _offset) {
+        getStateHelper().put(PropertyKeys.bounceDistance, _offset);
+    }
 
-   public String getOnopen() {
-      return (String) getStateHelper().eval(PropertyKeys.onopen, null);
-   }
+    public int getBounceTimes() {
+        return (Integer) getStateHelper().eval(PropertyKeys.bounceTimes, 4);
+    }
 
-   public void setOnopen(final String _onOpen) {
-      getStateHelper().put(PropertyKeys.onopen, _onOpen);
-   }
+    public void setBounceTimes(final int _bounceTimes) {
+        getStateHelper().put(PropertyKeys.bounceTimes, _bounceTimes);
+    }
 
-   public String getOnclose() {
-      return (String) getStateHelper().eval(PropertyKeys.onclose, null);
-   }
+    public String getOnopen() {
+        return (String) getStateHelper().eval(PropertyKeys.onopen, null);
+    }
 
-   public void setOnclose(final String _onClose) {
-      getStateHelper().put(PropertyKeys.onclose, _onClose);
-   }
+    public void setOnopen(final String _onOpen) {
+        getStateHelper().put(PropertyKeys.onopen, _onOpen);
+    }
 
-   private boolean isSelfRequest(final FacesContext context) {
-      return this.getClientId(context)
-               .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
-   }
+    public String getOnclose() {
+        return (String) getStateHelper().eval(PropertyKeys.onclose, null);
+    }
+
+    public void setOnclose(final String _onClose) {
+        getStateHelper().put(PropertyKeys.onclose, _onClose);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
 
 }

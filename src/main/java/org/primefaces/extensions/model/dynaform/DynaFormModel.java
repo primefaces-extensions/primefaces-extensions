@@ -151,7 +151,8 @@ public class DynaFormModel implements Serializable {
         for (AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
             if (element instanceof DynaFormControl) {
                 controlsToBeRemoved.add((DynaFormControl) element);
-            } else if (element instanceof DynaFormLabel) {
+            }
+            else if (element instanceof DynaFormLabel) {
                 labelsToBeRemoved.add((DynaFormLabel) element);
             }
         }
@@ -176,10 +177,10 @@ public class DynaFormModel implements Serializable {
             for (AbstractDynaFormElement element : dynaFormRow.getElements()) {
                 element.setRow(row);
                 if (element instanceof DynaFormControl) {
-                     DynaFormControl control = ((DynaFormControl) element);
-                     int delta = rowToBeRemoved.getElements().size();
-                     control.setPosition(control.getPosition() - delta);
-                     control.generateKey();
+                    DynaFormControl control = ((DynaFormControl) element);
+                    int delta = rowToBeRemoved.getElements().size();
+                    control.setPosition(control.getPosition() - delta);
+                    control.generateKey();
                 }
             }
         }

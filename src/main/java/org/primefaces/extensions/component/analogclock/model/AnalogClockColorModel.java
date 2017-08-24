@@ -20,34 +20,34 @@ import java.io.Serializable;
 
 public interface AnalogClockColorModel extends Serializable {
 
-   void setPin(Color pin);
+    void setPin(Color pin);
 
-   Color getPin();
+    Color getPin();
 
-   void setSecondHand(Color secondHand);
+    void setSecondHand(Color secondHand);
 
-   Color getSecondHand();
+    Color getSecondHand();
 
-   void setMinuteHand(Color minuteHand);
+    void setMinuteHand(Color minuteHand);
 
-   Color getMinuteHand();
+    Color getMinuteHand();
 
-   void setHourHand(Color hourHand);
+    void setHourHand(Color hourHand);
 
-   Color getHourHand();
+    Color getHourHand();
 
-   void setHourSigns(Color hourSigns);
+    void setHourSigns(Color hourSigns);
 
-   Color getHourSigns();
+    Color getHourSigns();
 
-   void setBorder(Color border);
+    void setBorder(Color border);
 
-   Color getBorder();
+    Color getBorder();
 
-   void setFace(Color face);
+    void setFace(Color face);
 
-   Color getFace();
+    Color getFace();
 
-   String toJson();
+    String toJson();
 
 }

@@ -23,9 +23,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.calculator.Calculator} component
- * when a button is pressed.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.calculator.Calculator} component when a button is pressed.
  *
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
@@ -33,23 +31,23 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class ButtonEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "button";
+    public static final String NAME = "button";
 
-   private final String name;
-   private final BigDecimal value;
+    private final String name;
+    private final BigDecimal value;
 
-   public ButtonEvent(final UIComponent component, final Behavior behavior, final String name, final BigDecimal value) {
-      super(component, behavior);
-      this.name = name;
-      this.value = value;
-   }
+    public ButtonEvent(final UIComponent component, final Behavior behavior, final String name, final BigDecimal value) {
+        super(component, behavior);
+        this.name = name;
+        this.value = value;
+    }
 
-   public final String getName() {
-      return name;
-   }
+    public final String getName() {
+        return name;
+    }
 
-   public final BigDecimal getValue() {
-      return value;
-   }
+    public final BigDecimal getValue() {
+        return value;
+    }
 
 }

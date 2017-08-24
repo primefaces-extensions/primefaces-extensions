@@ -21,8 +21,8 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 
 /**
- * Visit callback to call any "task executor" implementing {@link VisitTaskExecutor} while traversing the component tree.
- * It can be used from outside (see the showcase).
+ * Visit callback to call any "task executor" implementing {@link VisitTaskExecutor} while traversing the component tree. It can be used from outside (see the
+ * showcase).
  *
  * @author Oleg Varaksin
  * @version $Revision: 1.0 $

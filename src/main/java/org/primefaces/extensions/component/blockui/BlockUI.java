@@ -25,158 +25,148 @@ import org.primefaces.util.ComponentUtils;
 /**
  * <code>BlockUI</code> component.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "components.css"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-    @ResourceDependency(library = "primefaces", name = "core.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.css"),
-    @ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.js")
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "blockui/blockui.js")
 })
 public class BlockUI extends UIComponentBase implements Widget {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.BlockUI";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.BlockUIRenderer";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.BlockUI";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.BlockUIRenderer";
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author  Oleg Varaksin / last modified by $Author$
-	 * @version $Revision$
-	 */
-	protected enum PropertyKeys {
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Oleg Varaksin / last modified by $Author$
+     * @version $Revision$
+     */
+    protected enum PropertyKeys {
 
-		widgetVar,
-        css,
-        cssOverlay,
-		source,
-		target,
-		content,
-		event,
-		autoShow,
-        timeout,
-        centerX,
-        centerY;
+        widgetVar, css, cssOverlay, source, target, content, event, autoShow, timeout, centerX, centerY;
 
-		private String toString;
+        private String toString;
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		PropertyKeys() {
-		}
+        PropertyKeys() {
+        }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-	public BlockUI() {
-		setRendererType(DEFAULT_RENDERER);
-	}
+    public BlockUI() {
+        setRendererType(DEFAULT_RENDERER);
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	public String getWidgetVar() {
-		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-	}
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
 
-	public void setWidgetVar(final String widgetVar) {
-		getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
-	}
-    
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
+
     public void setCss(final String css) {
-   		getStateHelper().put(PropertyKeys.css, css);
-   	}
-   
-   	public String getCss() {
-   		return (String) getStateHelper().eval(PropertyKeys.css, null);
-   	}
-    
+        getStateHelper().put(PropertyKeys.css, css);
+    }
+
+    public String getCss() {
+        return (String) getStateHelper().eval(PropertyKeys.css, null);
+    }
+
     public void setCssOverlay(final String cssOverlay) {
-   		getStateHelper().put(PropertyKeys.cssOverlay, cssOverlay);
-   	}
-   
-   	public String getCssOverlay() {
-   		return (String) getStateHelper().eval(PropertyKeys.cssOverlay, null);
-   	}    
+        getStateHelper().put(PropertyKeys.cssOverlay, cssOverlay);
+    }
 
-	public String getSource() {
-		return (String) getStateHelper().eval(PropertyKeys.source, null);
-	}
+    public String getCssOverlay() {
+        return (String) getStateHelper().eval(PropertyKeys.cssOverlay, null);
+    }
 
-	public void setSource(final String source) {
-		getStateHelper().put(PropertyKeys.source, source);
-	}
+    public String getSource() {
+        return (String) getStateHelper().eval(PropertyKeys.source, null);
+    }
 
-	public String getTarget() {
-		return (String) getStateHelper().eval(PropertyKeys.target, null);
-	}
+    public void setSource(final String source) {
+        getStateHelper().put(PropertyKeys.source, source);
+    }
 
-	public void setTarget(final String target) {
-		getStateHelper().put(PropertyKeys.target, target);
-	}
+    public String getTarget() {
+        return (String) getStateHelper().eval(PropertyKeys.target, null);
+    }
 
-	public String getContent() {
-		return (String) getStateHelper().eval(PropertyKeys.content, null);
-	}
+    public void setTarget(final String target) {
+        getStateHelper().put(PropertyKeys.target, target);
+    }
 
-	public void setContent(final String content) {
-		getStateHelper().put(PropertyKeys.content, content);
-	}
+    public String getContent() {
+        return (String) getStateHelper().eval(PropertyKeys.content, null);
+    }
 
-	public String getEvent() {
-		return (String) getStateHelper().eval(PropertyKeys.event, null);
-	}
+    public void setContent(final String content) {
+        getStateHelper().put(PropertyKeys.content, content);
+    }
 
-	public void setEvent(final String event) {
-		getStateHelper().put(PropertyKeys.event, event);
-	}
+    public String getEvent() {
+        return (String) getStateHelper().eval(PropertyKeys.event, null);
+    }
 
-	public boolean isAutoShow() {
-		return (Boolean) getStateHelper().eval(PropertyKeys.autoShow, false);
-	}
+    public void setEvent(final String event) {
+        getStateHelper().put(PropertyKeys.event, event);
+    }
 
-	public void setAutoShow(final boolean autoShow) {
-		getStateHelper().put(PropertyKeys.autoShow, autoShow);
-	}
-    
+    public boolean isAutoShow() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoShow, false);
+    }
+
+    public void setAutoShow(final boolean autoShow) {
+        getStateHelper().put(PropertyKeys.autoShow, autoShow);
+    }
+
     public int getTimeout() {
-   		return (Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
-   	}
-   
-   	public void setTimeout(final int timeout) {
-   		getStateHelper().put(PropertyKeys.timeout, timeout);
-   	}
-    
-    public boolean isCenterX() {
-   		return (Boolean) getStateHelper().eval(PropertyKeys.centerX, true);
-   	}
-   
-   	public void setCenterX(final boolean centerX) {
-   		getStateHelper().put(PropertyKeys.centerX, centerX);
-   	}
-    
-    public boolean isCenterY() {
-   		return (Boolean) getStateHelper().eval(PropertyKeys.centerY, true);
-   	}
-   
-   	public void setCenterY(final boolean centerY) {
-   		getStateHelper().put(PropertyKeys.centerY, centerY);
-   	}    
+        return (Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
+    }
 
-	public String resolveWidgetVar() {
+    public void setTimeout(final int timeout) {
+        getStateHelper().put(PropertyKeys.timeout, timeout);
+    }
+
+    public boolean isCenterX() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.centerX, true);
+    }
+
+    public void setCenterX(final boolean centerX) {
+        getStateHelper().put(PropertyKeys.centerX, centerX);
+    }
+
+    public boolean isCenterY() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.centerY, true);
+    }
+
+    public void setCenterY(final boolean centerY) {
+        getStateHelper().put(PropertyKeys.centerY, centerY);
+    }
+
+    public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-	}
+    }
 }

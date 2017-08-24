@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.switchcase;
 
 import java.io.IOException;
+
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
@@ -35,124 +36,126 @@ import javax.faces.event.PhaseId;
  */
 public class Switch extends UIComponentBase {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-	
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author Michael Gmeiner / last modified by $Author: $
-	 * @version $Revision: $
-	 */
-	protected enum PropertyKeys {
-		
-		value;
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-		private String toString;
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Michael Gmeiner / last modified by $Author: $
+     * @version $Revision: $
+     */
+    protected enum PropertyKeys {
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        value;
 
-		PropertyKeys() {
-		}
+        private String toString;
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
-	
-	public Switch() {
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
+
+        PropertyKeys() {
+        }
+
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
+
+    public Switch() {
         setRendererType(null);
-	}
+    }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
-	
-	public Object getValue() {
-		return getStateHelper().eval(PropertyKeys.value, null);
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
 
-	public void setValue(final Object value) {
-		getStateHelper().put(PropertyKeys.value, value);
-	}
+    public Object getValue() {
+        return getStateHelper().eval(PropertyKeys.value, null);
+    }
 
-	private void evaluate() {
-		DefaultCase caseToRender = null;
-		DefaultCase defaultCase = null;
+    public void setValue(final Object value) {
+        getStateHelper().put(PropertyKeys.value, value);
+    }
 
-		for (UIComponent child : this.getChildren()) {
-			child.setRendered(false);
+    private void evaluate() {
+        DefaultCase caseToRender = null;
+        DefaultCase defaultCase = null;
 
-			if (child instanceof Case) {
-				final Case caseComponent = (Case) child;
+        for (UIComponent child : this.getChildren()) {
+            child.setRendered(false);
 
-				if ((caseComponent.getValue() == null && this.getValue() != null)  
-						|| (this.getValue() == null && caseComponent.getValue() != null)) { 
-					continue;
-				}
-				if ((caseComponent.getValue() == null && this.getValue() == null) 
-						|| caseComponent.getValue().equals(this.getValue())) { 
+            if (child instanceof Case) {
+                final Case caseComponent = (Case) child;
 
-					caseToRender = caseComponent;
-					// mustn't break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
-				}
-			} else if (child instanceof DefaultCase) {
-				defaultCase = (DefaultCase) child;
-			} else {
-				throw new FacesException("Switch only accepts case or defaultCase as children.");
-			}
-		}
+                if ((caseComponent.getValue() == null && this.getValue() != null)
+                            || (this.getValue() == null && caseComponent.getValue() != null)) {
+                    continue;
+                }
+                if ((caseComponent.getValue() == null && this.getValue() == null)
+                            || caseComponent.getValue().equals(this.getValue())) {
 
-		if (caseToRender == null) {
-			caseToRender = defaultCase;
-		}
+                    caseToRender = caseComponent;
+                    // mustn't break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
+                }
+            }
+            else if (child instanceof DefaultCase) {
+                defaultCase = (DefaultCase) child;
+            }
+            else {
+                throw new FacesException("Switch only accepts case or defaultCase as children.");
+            }
+        }
 
-		if (caseToRender != null) {
-			caseToRender.setRendered(true);
-		}
-	}
+        if (caseToRender == null) {
+            caseToRender = defaultCase;
+        }
 
-	@Override
-	public void processDecodes(FacesContext context) {
-		evaluate();
-		super.processDecodes(context);
-	}
+        if (caseToRender != null) {
+            caseToRender.setRendered(true);
+        }
+    }
 
-	@Override
-	public void processValidators(FacesContext context) {
-		evaluate();
-		super.processValidators(context);
-	}
+    @Override
+    public void processDecodes(FacesContext context) {
+        evaluate();
+        super.processDecodes(context);
+    }
 
-	@Override
-	public void processUpdates(FacesContext context) {
-		evaluate();
-		super.processUpdates(context);
-	}
+    @Override
+    public void processValidators(FacesContext context) {
+        evaluate();
+        super.processValidators(context);
+    }
 
-	@Override
-	public void broadcast(FacesEvent event) throws AbortProcessingException {
-		evaluate();
-		super.broadcast(event);
-	}
+    @Override
+    public void processUpdates(FacesContext context) {
+        evaluate();
+        super.processUpdates(context);
+    }
 
-	@Override
-	public boolean visitTree(VisitContext context, VisitCallback callback) {
-		// mustn't evaluate cases during Restore View
-		if (context.getFacesContext().getCurrentPhaseId() != PhaseId.RESTORE_VIEW) {
-			evaluate();
-		}
-		return super.visitTree(context, callback);
-	}
+    @Override
+    public void broadcast(FacesEvent event) throws AbortProcessingException {
+        evaluate();
+        super.broadcast(event);
+    }
 
-	@Override
-	public void encodeBegin(FacesContext context) throws IOException {
-		evaluate();
-		super.encodeBegin(context);
-	}
+    @Override
+    public boolean visitTree(VisitContext context, VisitCallback callback) {
+        // mustn't evaluate cases during Restore View
+        if (context.getFacesContext().getCurrentPhaseId() != PhaseId.RESTORE_VIEW) {
+            evaluate();
+        }
+        return super.visitTree(context, callback);
+    }
+
+    @Override
+    public void encodeBegin(FacesContext context) throws IOException {
+        evaluate();
+        super.encodeBegin(context);
+    }
 
 }

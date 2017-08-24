@@ -31,83 +31,85 @@ import org.primefaces.renderkit.CoreRenderer;
 
 public class GravatarRenderer extends CoreRenderer {
 
-   private static final String BASE_URL = "www.gravatar.com";
+    private static final String BASE_URL = "www.gravatar.com";
 
-   @Override
-   public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-      this.encodeMarkup(context, (Gravatar) component);
-   }
+    @Override
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        this.encodeMarkup(context, (Gravatar) component);
+    }
 
-   private void encodeMarkup(FacesContext context, Gravatar gravatar) throws IOException {
+    private void encodeMarkup(FacesContext context, Gravatar gravatar) throws IOException {
 
-      ResponseWriter writer = context.getResponseWriter();
+        ResponseWriter writer = context.getResponseWriter();
 
-      writer.startElement("img", gravatar);
-      writer.writeAttribute("id", gravatar.getClientId(), null);
-      writer.writeAttribute("style", gravatar.getStyle(), null);
+        writer.startElement("img", gravatar);
+        writer.writeAttribute("id", gravatar.getClientId(), null);
+        writer.writeAttribute("style", gravatar.getStyle(), null);
 
-      String url;
-      try {
-         url = this.generateURL(gravatar);
-      } catch (NoSuchAlgorithmException e) {
-         throw new RuntimeException(e);
-      }
+        String url;
+        try {
+            url = this.generateURL(gravatar);
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 
-      writer.writeAttribute("src", url, null);
-      writer.endElement("img");
+        writer.writeAttribute("src", url, null);
+        writer.endElement("img");
 
-   }
+    }
 
-   private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    private String generateURL(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 
-      boolean qrCode = gravatar.isQrCode();
-      Integer size = gravatar.getSize();
-      String notFound = gravatar.getNotFound();
+        boolean qrCode = gravatar.isQrCode();
+        Integer size = gravatar.getSize();
+        String notFound = gravatar.getNotFound();
 
-      String url;
+        String url;
 
-      // check if the request must be made over a secure layer or not
-      if (gravatar.isSecure()) {
-         url = "https://" + BASE_URL + "/";
-      } else {
-         url = "http://" + BASE_URL + "/";
-      }
+        // check if the request must be made over a secure layer or not
+        if (gravatar.isSecure()) {
+            url = "https://" + BASE_URL + "/";
+        }
+        else {
+            url = "http://" + BASE_URL + "/";
+        }
 
-      if (!qrCode) {
-         url += "avatar/";
-      }
+        if (!qrCode) {
+            url += "avatar/";
+        }
 
-      url += generateMailHash(gravatar);
+        url += generateMailHash(gravatar);
 
-      url += qrCode ? ".qr" : ".jpg";
+        url += qrCode ? ".qr" : ".jpg";
 
-      List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<String>();
 
-      if (size != null) {
-         params.add("s=" + size);
-      }
+        if (size != null) {
+            params.add("s=" + size);
+        }
 
-      if (StringUtils.isNotEmpty(notFound) && !notFound.equals("default")
-               && Gravatar.NOT_FOUND_VALUES.contains(notFound)) {
-         params.add("d=" + notFound);
-      }
+        if (StringUtils.isNotEmpty(notFound) && !notFound.equals("default")
+                    && Gravatar.NOT_FOUND_VALUES.contains(notFound)) {
+            params.add("d=" + notFound);
+        }
 
-      if (params.size() > 0) {
-         url += "?" + StringUtils.join(params, "&");
-      }
+        if (params.size() > 0) {
+            url += "?" + StringUtils.join(params, "&");
+        }
 
-      return url;
-   }
+        return url;
+    }
 
-   private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(String.valueOf(gravatar.getValue()).getBytes("UTF-8"));
-      byte[] digest = md.digest();
-      StringBuffer sb = new StringBuffer();
-      for (byte b : digest) {
-         sb.append(String.format("%02x", b & 0xff));
-      }
-      return sb.toString();
-   }
+    private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(String.valueOf(gravatar.getValue()).getBytes("UTF-8"));
+        byte[] digest = md.digest();
+        StringBuffer sb = new StringBuffer();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb.toString();
+    }
 
 }

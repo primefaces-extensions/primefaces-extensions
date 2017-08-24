@@ -31,91 +31,94 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * {@link Converter} which converts a string to a {@link java.util.Locale} an vice-versa.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.LocaleConverter")
 public class LocaleConverter implements Converter, Serializable {
 
-	private static final long serialVersionUID = 20121214L;
+    private static final long serialVersionUID = 20121214L;
 
-	private char separator = '_';
+    private char separator = '_';
 
-	public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
-		if (StringUtils.isBlank(value)) {
-			return fc.getApplication().getDefaultLocale();
-		}
+    public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
+        if (StringUtils.isBlank(value)) {
+            return fc.getApplication().getDefaultLocale();
+        }
 
-		return getLocaleObject(value, separator);
-	}
+        return getLocaleObject(value, separator);
+    }
 
-	public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
-		if (value == null) {
-			final Locale defaultLocale = fc.getApplication().getDefaultLocale();
-			if (defaultLocale == null) {
-				return null;
-			}
+    public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
+        if (value == null) {
+            final Locale defaultLocale = fc.getApplication().getDefaultLocale();
+            if (defaultLocale == null) {
+                return null;
+            }
 
-			return getLocaleString(defaultLocale, separator);
-		}
+            return getLocaleString(defaultLocale, separator);
+        }
 
-		if (value instanceof String) {
-			return (String) value;
-		} else if (value instanceof Locale) {
-			return getLocaleString((Locale) value, separator);
-		} else {
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			                                              "Wrong type: '" + value.getClass().getSimpleName()
-			                                              + "' is not 'Locale'.", StringUtils.EMPTY));
-		}
-	}
+        if (value instanceof String) {
+            return (String) value;
+        }
+        else if (value instanceof Locale) {
+            return getLocaleString((Locale) value, separator);
+        }
+        else {
+            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Wrong type: '" + value.getClass().getSimpleName()
+                                    + "' is not 'Locale'.",
+                        StringUtils.EMPTY));
+        }
+    }
 
-	public static Locale getLocaleObject(final String locale, final char seperator) {
-		String replacedLocale = locale;
-		if (seperator != '-' && seperator != '_') {
-			replacedLocale = replacedLocale.replace(seperator, '_');
-		}
+    public static Locale getLocaleObject(final String locale, final char seperator) {
+        String replacedLocale = locale;
+        if (seperator != '-' && seperator != '_') {
+            replacedLocale = replacedLocale.replace(seperator, '_');
+        }
 
-		replacedLocale = replacedLocale.replace('-', '_');
+        replacedLocale = replacedLocale.replace('-', '_');
 
-		final String[] parts = replacedLocale.split("_");
-		if (parts.length == 0
-		    || !parts[0].matches("[a-zA-Z]{2,2}")
-		    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) { 
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			                                              "'" + locale + "' does not represent a valid locale",
-			                                              StringUtils.EMPTY));
-		}
+        final String[] parts = replacedLocale.split("_");
+        if (parts.length == 0
+                    || !parts[0].matches("[a-zA-Z]{2,2}")
+                    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
+            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "'" + locale + "' does not represent a valid locale",
+                        StringUtils.EMPTY));
+        }
 
-		switch (parts.length) {
-		case 3:
-			return new Locale(parts[0], parts[1], parts[2]);
+        switch (parts.length) {
+            case 3:
+                return new Locale(parts[0], parts[1], parts[2]);
 
-		case 2:
-			return new Locale(parts[0], parts[1]);
+            case 2:
+                return new Locale(parts[0], parts[1]);
 
-		case 1:
-			return new Locale(parts[0]);
+            case 1:
+                return new Locale(parts[0]);
 
-		default:
-			return new Locale(parts[0], parts[1], StringUtils.join(ArrayUtils.subarray(parts, 2, parts.length), '_'));
-		}
-	}
+            default:
+                return new Locale(parts[0], parts[1], StringUtils.join(ArrayUtils.subarray(parts, 2, parts.length), '_'));
+        }
+    }
 
-	public static String getLocaleString(final Locale locale, final char seperator) {
-		if (StringUtils.isBlank(locale.getCountry())) {
-			return locale.getLanguage();
-		}
+    public static String getLocaleString(final Locale locale, final char seperator) {
+        if (StringUtils.isBlank(locale.getCountry())) {
+            return locale.getLanguage();
+        }
 
-		return locale.getLanguage() + seperator + locale.getCountry();
-	}
+        return locale.getLanguage() + seperator + locale.getCountry();
+    }
 
-	public char getSeparator() {
-		return separator;
-	}
+    public char getSeparator() {
+        return separator;
+    }
 
-	public void setSeparator(char separator) {
-		this.separator = separator;
-	}
+    public void setSeparator(char separator) {
+        this.separator = separator;
+    }
 }

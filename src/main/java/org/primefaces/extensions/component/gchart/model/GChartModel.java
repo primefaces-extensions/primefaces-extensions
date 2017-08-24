@@ -20,13 +20,13 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface GChartModel extends Serializable {
-   Collection<GChartModelRow> getRows();
+    Collection<GChartModelRow> getRows();
 
-   Collection<Object> getColumns();
+    Collection<Object> getColumns();
 
-   Map<String, Object> getOptions();
+    Map<String, Object> getOptions();
 
-   GChartType getChartType();
+    GChartType getChartType();
 
-   String toJson();
+    String toJson();
 }

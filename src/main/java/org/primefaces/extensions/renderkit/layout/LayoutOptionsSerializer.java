@@ -35,59 +35,61 @@ import com.google.gson.JsonSerializer;
  */
 public class LayoutOptionsSerializer implements JsonSerializer<LayoutOptions> {
 
-   @Override
-   public JsonElement serialize(final LayoutOptions src, final Type typeOfSrc, final JsonSerializationContext context) {
-      final JsonObject result = new JsonObject();
+    @Override
+    public JsonElement serialize(final LayoutOptions src, final Type typeOfSrc, final JsonSerializationContext context) {
+        final JsonObject result = new JsonObject();
 
-      final Set<Map.Entry<String, Object>> options = src.getOptions().entrySet();
-      for (final Map.Entry<String, Object> entry : options) {
-         final Object value = entry.getValue();
-         JsonPrimitive jsonPrimitive = null;
+        final Set<Map.Entry<String, Object>> options = src.getOptions().entrySet();
+        for (final Map.Entry<String, Object> entry : options) {
+            final Object value = entry.getValue();
+            JsonPrimitive jsonPrimitive = null;
 
-         if (value instanceof Boolean) {
-            jsonPrimitive = new JsonPrimitive((Boolean) value);
-         } else if (value instanceof Number) {
-            jsonPrimitive = new JsonPrimitive((Number) value);
-         } else if (value instanceof String) {
-            jsonPrimitive = new JsonPrimitive((String) value);
-         }
+            if (value instanceof Boolean) {
+                jsonPrimitive = new JsonPrimitive((Boolean) value);
+            }
+            else if (value instanceof Number) {
+                jsonPrimitive = new JsonPrimitive((Number) value);
+            }
+            else if (value instanceof String) {
+                jsonPrimitive = new JsonPrimitive((String) value);
+            }
 
-         result.add(entry.getKey(), jsonPrimitive);
-      }
+            result.add(entry.getKey(), jsonPrimitive);
+        }
 
-      if (src.getPanesOptions() != null) {
-         result.add("defaults", context.serialize(src.getPanesOptions(), src.getPanesOptions().getClass()));
-      }
+        if (src.getPanesOptions() != null) {
+            result.add("defaults", context.serialize(src.getPanesOptions(), src.getPanesOptions().getClass()));
+        }
 
-      if (src.getTips() != null) {
-         result.add("tips", context.serialize(src.getTips(), src.getTips().getClass()));
-      }
+        if (src.getTips() != null) {
+            result.add("tips", context.serialize(src.getTips(), src.getTips().getClass()));
+        }
 
-      if (src.getNorthOptions() != null) {
-         result.add("north", context.serialize(src.getNorthOptions(), src.getNorthOptions().getClass()));
-      }
+        if (src.getNorthOptions() != null) {
+            result.add("north", context.serialize(src.getNorthOptions(), src.getNorthOptions().getClass()));
+        }
 
-      if (src.getSouthOptions() != null) {
-         result.add("south", context.serialize(src.getSouthOptions(), src.getSouthOptions().getClass()));
-      }
+        if (src.getSouthOptions() != null) {
+            result.add("south", context.serialize(src.getSouthOptions(), src.getSouthOptions().getClass()));
+        }
 
-      if (src.getWestOptions() != null) {
-         result.add("west", context.serialize(src.getWestOptions(), src.getWestOptions().getClass()));
-      }
+        if (src.getWestOptions() != null) {
+            result.add("west", context.serialize(src.getWestOptions(), src.getWestOptions().getClass()));
+        }
 
-      if (src.getEastOptions() != null) {
-         result.add("east", context.serialize(src.getEastOptions(), src.getEastOptions().getClass()));
-      }
+        if (src.getEastOptions() != null) {
+            result.add("east", context.serialize(src.getEastOptions(), src.getEastOptions().getClass()));
+        }
 
-      if (src.getCenterOptions() != null) {
-         result.add("center", context.serialize(src.getCenterOptions(), src.getCenterOptions().getClass()));
-      }
+        if (src.getCenterOptions() != null) {
+            result.add("center", context.serialize(src.getCenterOptions(), src.getCenterOptions().getClass()));
+        }
 
-      if (src.getChildOptions() != null) {
-         result.add("children", context.serialize(src.getChildOptions(), src.getChildOptions().getClass()));
-      }
+        if (src.getChildOptions() != null) {
+            result.add("children", context.serialize(src.getChildOptions(), src.getChildOptions().getClass()));
+        }
 
-      return result;
-   }
+        return result;
+    }
 
 }

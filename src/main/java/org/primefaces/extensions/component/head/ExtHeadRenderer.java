@@ -22,8 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 /**
- * Renderer for the {@link ExtHead} component which extends PF
- * {@link org.primefaces.renderkit.HeadRenderer}.
+ * Renderer for the {@link ExtHead} component which extends PF {@link org.primefaces.renderkit.HeadRenderer}.
  * <p>
  * Ordering of rendered resources:
  * </p>
@@ -46,32 +45,32 @@ import javax.faces.context.ResponseWriter;
  */
 public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
-   @Override
-   public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-      final ResponseWriter writer = context.getResponseWriter();
-      final ExtHead extHead = (ExtHead) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final ExtHead extHead = (ExtHead) component;
 
-      // encode title and shortcut icon
-      encodeTitle(extHead, writer);
-      encodeShortcutIcon(extHead, writer);
+        // encode title and shortcut icon
+        encodeTitle(extHead, writer);
+        encodeShortcutIcon(extHead, writer);
 
-      super.encodeEnd(context, component);
-   }
+        super.encodeEnd(context, component);
+    }
 
-   private void encodeTitle(final ExtHead extHead, final ResponseWriter writer) throws IOException {
-      if (extHead.getTitle() != null) {
-         writer.startElement("title", null);
-         writer.write(extHead.getTitle());
-         writer.endElement("title");
-      }
-   }
+    private void encodeTitle(final ExtHead extHead, final ResponseWriter writer) throws IOException {
+        if (extHead.getTitle() != null) {
+            writer.startElement("title", null);
+            writer.write(extHead.getTitle());
+            writer.endElement("title");
+        }
+    }
 
-   private void encodeShortcutIcon(final ExtHead extHead, final ResponseWriter writer) throws IOException {
-      if (extHead.getShortcutIcon() != null) {
-         writer.startElement("link", null);
-         writer.writeAttribute("rel", "shortcut icon", null);
-         writer.writeAttribute("href", extHead.getShortcutIcon(), null);
-         writer.endElement("link");
-      }
-   }
+    private void encodeShortcutIcon(final ExtHead extHead, final ResponseWriter writer) throws IOException {
+        if (extHead.getShortcutIcon() != null) {
+            writer.startElement("link", null);
+            writer.writeAttribute("rel", "shortcut icon", null);
+            writer.writeAttribute("href", extHead.getShortcutIcon(), null);
+            writer.endElement("link");
+        }
+    }
 }
