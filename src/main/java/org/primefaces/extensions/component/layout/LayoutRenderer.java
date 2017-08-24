@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -124,7 +123,7 @@ public class LayoutRenderer extends CoreRenderer {
             wb.attr("forTarget", "body");
         }
         else {
-            wb.selectorAttr("forTarget", ComponentUtils.escapeJQueryId(clientId));
+            wb.selectorAttr("forTarget", "#" + clientId);
         }
 
         final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());

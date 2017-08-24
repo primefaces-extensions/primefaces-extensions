@@ -29,7 +29,6 @@ import javax.faces.convert.ConverterException;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
 
@@ -179,7 +178,7 @@ public class TimePickerRenderer extends InputRenderer {
 
         if (!"focus".equals(timepicker.getShowOn())) {
             wb.attr("showOn", timepicker.getShowOn());
-            wb.selectorAttr("button", ComponentUtils.escapeJQueryId(clientId) + " .pe-timepicker-trigger");
+            wb.selectorAttr("button", "#" + clientId + " .pe-timepicker-trigger");
         }
 
         wb.attr("locale", timepicker.calculateLocale().toString());

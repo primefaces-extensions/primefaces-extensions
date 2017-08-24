@@ -26,7 +26,6 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
 
@@ -90,11 +89,11 @@ public class BlockUIRenderer extends CoreRenderer {
                 throw new FacesException("Cannot find content for blockUI component '" + clientId + "'.");
             }
 
-            jqContent = ComponentUtils.escapeJQueryId(contentComponent.getClientId(fc));
+            jqContent = "#" + contentComponent.getClientId(fc);
             isContentExtern = true;
         }
         else if (blockUI.getChildCount() > 0) {
-            jqContent = ComponentUtils.escapeJQueryId(clientId + "_content");
+            jqContent = "#" + clientId + "_content";
         }
 
         // get reg. expression
