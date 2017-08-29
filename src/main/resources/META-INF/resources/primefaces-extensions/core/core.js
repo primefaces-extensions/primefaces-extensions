@@ -85,7 +85,7 @@ PrimeFacesExt = {
 
     /**
      * This function need to be invoked after PrimeFaces changeTheme. It's used
-     * to sync canvas and svg components to the current theme (pe:analogClock)
+     * to sync canvas and svg components to the current theme.
      * 
      * @author f.strazzullo
      */

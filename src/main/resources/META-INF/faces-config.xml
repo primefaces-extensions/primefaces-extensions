@@ -147,10 +147,6 @@
         <component-class>org.primefaces.extensions.component.qrcode.QRCode</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.AnalogClock</component-type>
-        <component-class>org.primefaces.extensions.component.analogclock.AnalogClock</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Gravatar</component-type>
         <component-class>org.primefaces.extensions.component.gravatar.Gravatar</component-class>
     </component>
@@ -276,11 +272,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.QRCodeRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.qrcode.QRCodeRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.AnalogClockRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.analogclock.AnalogClockRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
