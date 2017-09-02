@@ -80,6 +80,16 @@ public abstract class Exporter {
     public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName,
                 String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) throws IOException;
 
+    protected String exportColumnByFunction(FacesContext context, org.primefaces.component.api.UIColumn column) {
+        MethodExpression exportFunction = column.getExportFunction();
+
+        if (exportFunction != null) {
+            return (String) exportFunction.invoke(context.getELContext(), new Object[] { column });
+        }
+
+        return "";
+    }
+
     protected String exportValue(FacesContext context, UIComponent component) {
 
         if (component instanceof CellEditor) {
@@ -87,7 +97,6 @@ public abstract class Exporter {
         }
         if (component instanceof RowEditor) {
             return (String) "RowEditor";
-            // return (String) component.getAttributes().get("alt");
         }
 
         if (component instanceof HtmlGraphicImage) {
@@ -159,7 +168,6 @@ public abstract class Exporter {
         if (skipComponents.contains(component.getClass().getName())) {
             return "";
         }
-
         else if (component instanceof ValueHolder) {
 
             if (component instanceof EditableValueHolder) {

@@ -725,7 +725,7 @@ public class ExcelExporter extends Exporter {
             }
 
             if (col.isRendered() && col.isExportable()) {
-                addColumnValue(row, col.getChildren(), "content");
+                addColumnValue(row, col.getChildren(), "content", col);
             }
         }
         FacesContext context = null;
@@ -804,7 +804,7 @@ public class ExcelExporter extends Exporter {
             }
 
             if (col.isRendered() && col.isExportable()) {
-                addColumnValue(row, col.getChildren(), "content");
+                addColumnValue(row, col.getChildren(), "content", col);
             }
         }
     }
@@ -901,35 +901,39 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void addColumnValue(Row row, List<UIComponent> components, String type) {
+    protected void addColumnValue(Row row, List<UIComponent> components, String columnType, UIColumn column) {
         int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
         Cell cell = row.createCell(cellIndex);
-        StringBuilder builder = new StringBuilder();
         FacesContext context = FacesContext.getCurrentInstance();
 
-        for (UIComponent component : components) {
-            if (component.isRendered()) {
-                String value = exportValue(context, component);
+        if (column.getExportFunction() != null) {
+            cell.setCellValue(new XSSFRichTextString(exportColumnByFunction(context, column)));
+        }
+        else {
+            StringBuilder builder = new StringBuilder();
+            for (UIComponent component : components) {
+                if (component.isRendered()) {
+                    String value = exportValue(context, component);
 
-                if (value != null) {
-                    builder.append(value);
+                    if (value != null) {
+                        builder.append(value);
+                    }
+                }
+            }
+
+            cell.setCellValue(new XSSFRichTextString(builder.toString()));
+
+            if (columnType.equalsIgnoreCase("facet")) {
+                for (UIComponent component : components) {
+                    addFacetAlignments(component, cell);
+                }
+            }
+            else {
+                for (UIComponent component : components) {
+                    addColumnAlignments(component, cell);
                 }
             }
         }
-
-        cell.setCellValue(new XSSFRichTextString(builder.toString()));
-
-        if (type.equalsIgnoreCase("facet")) {
-            for (UIComponent component : components) {
-                addFacetAlignments(component, cell);
-            }
-        }
-        else {
-            for (UIComponent component : components) {
-                addColumnAlignments(component, cell);
-            }
-        }
-
     }
 
     protected void addColumnAlignments(UIComponent component, Cell cell) {

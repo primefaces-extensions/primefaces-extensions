@@ -688,7 +688,7 @@ public class PDFExporter extends Exporter {
                     pdfTable.addCell(new Paragraph(col.getSelectionMode(), this.cellFont));
                     continue;
                 }
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data");
+                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data", col);
             }
 
         }
@@ -748,7 +748,7 @@ public class PDFExporter extends Exporter {
             }
 
             if (col.isRendered() && col.isExportable()) {
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data");
+                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data", col);
             }
         }
     }
@@ -830,28 +830,38 @@ public class PDFExporter extends Exporter {
         pdfTable.addCell(cell);
     }
 
-    protected void addColumnValue(PdfPTable pdfTable, List<UIComponent> components, Font font, String columnType) {
-        StringBuilder builder = new StringBuilder();
+    protected void addColumnValue(PdfPTable pdfTable, List<UIComponent> components, Font font, String columnType, UIColumn column) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        PdfPCell cell = null;
 
-        for (UIComponent component : components) {
-            if (component.isRendered()) {
-                String value = exportValue(FacesContext.getCurrentInstance(), component);
+        if (column.getExportFunction() != null) {
+            cell = new PdfPCell(new Paragraph(exportColumnByFunction(context, column), font));
+        }
+        else {
+            StringBuilder builder = new StringBuilder();
+            for (UIComponent component : components) {
+                if (component.isRendered()) {
+                    String value = exportValue(context, component);
 
-                if (value != null) {
-                    builder.append(value);
+                    if (value != null) {
+                        builder.append(value);
+                    }
+                }
+            }
+            cell = new PdfPCell(new Paragraph(builder.toString(), font));
+            for (UIComponent component : components) {
+                cell = addColumnAlignments(component, cell);
+            }
+            if (columnType.equalsIgnoreCase("header")) {
+                for (UIComponent component : components) {
+                    cell = addFacetAlignments(component, cell);
                 }
             }
         }
-        PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
-        for (UIComponent component : components) {
-            cell = addColumnAlignments(component, cell);
+
+        if (cell != null) {
+            pdfTable.addCell(cell);
         }
-        if (columnType.equalsIgnoreCase("header")) {
-            for (UIComponent component : components) {
-                cell = addFacetAlignments(component, cell);
-            }
-        }
-        pdfTable.addCell(cell);
     }
 
     protected PdfPCell addColumnAlignments(UIComponent component, PdfPCell cell) {
