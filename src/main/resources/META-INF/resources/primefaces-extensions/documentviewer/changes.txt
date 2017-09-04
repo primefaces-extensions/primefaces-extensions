@@ -8,10 +8,24 @@
 
 5. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
 
-   var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
+In 1l10.js replace this..
+             if (match) { // @import rule?
+                loadImport(baseURL + match[1], nextEntry);
+                return;
+              }
+			  
+with:
+
+              match = reImport.exec(line);
+              if (match) { // @import rule?
+                var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
                     window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
                     window.parent.PrimeFacesExt.VERSION);
+                loadImport(url, nextEntry);
+                return;
+              }
 
+And change this variable:
   PDFJS.workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js',
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
@@ -21,13 +35,11 @@ Remove this check...
       throw new Error('file origin does not match viewer\'s');
     }
 
-6. Allow language changing by disabling debug check by changing...
+6. Allow language changing by disabling debug check by moving this code outside debug block...
 
-  if (PDFViewerApplication.preferencePdfBugEnabled) {
-  
-  to
-  
-  if (true) {
+  if ('locale' in hashParams) {
+    PDFJS.locale = hashParams['locale'];
+  }
   
 7. Compress and minify pdf.worker.js.
 
