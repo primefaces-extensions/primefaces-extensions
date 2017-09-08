@@ -21,7 +21,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.FastStringWriter;
@@ -76,7 +75,7 @@ public class TooltipRenderer extends CoreRenderer {
             context.setResponseWriter(clonedWriter);
             renderChildren(context, tooltip);
             context.setResponseWriter(writer);
-            text = StringEscapeUtils.unescapeHtml4(fsw.toString());
+            text = fsw.toString();
         }
         else {
             final String valueToRender = ComponentUtils.getValueToRender(context, tooltip);
