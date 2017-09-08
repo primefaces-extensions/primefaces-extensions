@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.FacesException;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitContext;
@@ -119,6 +120,9 @@ public class MasterDetailRenderer extends CoreRenderer {
     }
 
     protected void encodeMarkup(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+        if (mdl == null) {
+            throw new FacesException("MasterDetailLevel must be nested inside a MasterDetail component!");
+        }
         ResponseWriter writer = fc.getResponseWriter();
         String clientId = masterDetail.getClientId(fc);
         String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
