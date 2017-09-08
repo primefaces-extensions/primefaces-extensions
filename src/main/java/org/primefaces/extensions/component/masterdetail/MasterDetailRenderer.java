@@ -25,16 +25,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.render.Renderer;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
-import org.primefaces.extensions.util.ComponentUtils;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuItem;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.FastStringWriter;
 
 /**
@@ -83,7 +85,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                         editableValueHolder.resetValue();
                     }
                     else if (preserveAll || ArrayUtils.contains(piIds, clientId)) {
-                        editableValueHolder.setValue(ComponentUtils.getConvertedSubmittedValue(fc, editableValueHolder));
+                        editableValueHolder.setValue(getConvertedSubmittedValue(fc, editableValueHolder));
                     }
                     else {
                         // default behavior
@@ -322,5 +324,44 @@ public class MasterDetailRenderer extends CoreRenderer {
     @Override
     public boolean getRendersChildren() {
         return true;
+    }
+
+    public static Object getConvertedSubmittedValue(final FacesContext fc, final EditableValueHolder evh) {
+        final Object submittedValue = evh.getSubmittedValue();
+        if (submittedValue == null) {
+            return null;
+        }
+
+        try {
+            final UIComponent component = (UIComponent) evh;
+            final Renderer renderer = getRenderer(fc, component);
+            if (renderer != null) {
+                // convert submitted value by renderer
+                return renderer.getConvertedValue(fc, component, submittedValue);
+            }
+            else if (submittedValue instanceof String) {
+                // convert submitted value by registred (implicit or explicit)
+                // converter
+                final Converter converter = ComponentUtils.getConverter(fc, component);
+                if (converter != null) {
+                    return converter.getAsObject(fc, component, (String) submittedValue);
+                }
+            }
+        }
+        catch (final Exception e) {
+            // an conversion error occured
+            return null;
+        }
+
+        return submittedValue;
+    }
+
+    public static Renderer getRenderer(final FacesContext fc, final UIComponent component) {
+        final String rendererType = component.getRendererType();
+        if (rendererType != null) {
+            return fc.getRenderKit().getRenderer(component.getFamily(), rendererType);
+        }
+
+        return null;
     }
 }

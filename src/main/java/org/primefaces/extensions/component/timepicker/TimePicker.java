@@ -360,7 +360,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = org.primefaces.extensions.util.ComponentUtils.resolveLocale(getLocale());
+            appropriateLocale = org.primefaces.extensions.util.LocaleUtils.resolveLocale(getLocale());
         }
         return appropriateLocale;
     }

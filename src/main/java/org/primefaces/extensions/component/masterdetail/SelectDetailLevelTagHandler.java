@@ -33,7 +33,7 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
-import org.primefaces.extensions.util.ComponentUtils;
+import org.primefaces.component.api.AjaxSource;
 import org.primefaces.extensions.util.TagUtils;
 
 /**
@@ -65,7 +65,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
     }
 
     public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
-        if (!ComponentUtils.isAjaxifiedComponent(parent)) {
+        if (!isAjaxifiedComponent(parent)) {
             throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
         }
 
@@ -154,5 +154,30 @@ public class SelectDetailLevelTagHandler extends TagHandler {
                 }
             }
         }
+    }
+
+    public static boolean isAjaxifiedComponent(final UIComponent component) {
+        // check for ajax source
+        if (component instanceof AjaxSource && ((AjaxSource) component).isAjaxified()) {
+            return true;
+        }
+
+        if (component instanceof ClientBehaviorHolder) {
+            // check for attached f:ajax / p:ajax
+            final Collection<List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors()
+                        .values();
+            if (!behaviors.isEmpty()) {
+                for (final List<ClientBehavior> listBehaviors : behaviors) {
+                    for (final ClientBehavior clientBehavior : listBehaviors) {
+                        if (clientBehavior instanceof javax.faces.component.behavior.AjaxBehavior
+                                    || clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

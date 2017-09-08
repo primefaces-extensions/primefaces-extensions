@@ -9,7 +9,7 @@
     <!-- Functions -->
     <function>
         <function-name>escapeSelector</function-name>
-        <function-class>org.primefaces.extensions.util.ComponentUtils</function-class>
+        <function-class>org.primefaces.util.ComponentUtils</function-class>
         <function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
     </function>
 
