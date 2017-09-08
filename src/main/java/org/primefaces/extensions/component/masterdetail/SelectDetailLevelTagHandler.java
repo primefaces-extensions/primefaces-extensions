@@ -16,8 +16,11 @@
 package org.primefaces.extensions.component.masterdetail;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
@@ -33,8 +36,8 @@ import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.primefaces.component.api.AjaxSource;
-import org.primefaces.extensions.util.TagUtils;
 
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
@@ -135,7 +138,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
             }
             else if (parent instanceof ClientBehaviorHolder) {
                 // find attached f:ajax / p:ajax corresponding to supported events
-                Collection<List<ClientBehavior>> clientBehaviors = TagUtils.getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
+                Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
                 if (clientBehaviors == null || clientBehaviors.isEmpty()) {
                     return;
                 }
@@ -179,5 +182,29 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         return false;
+    }
+
+    public static Collection<List<ClientBehavior>> getClientBehaviors(FaceletContext context, TagAttribute event,
+                ClientBehaviorHolder clientBehaviorHolder) {
+        Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
+        if (mapBehaviors == null || mapBehaviors.isEmpty()) {
+            return null;
+        }
+
+        String events = (event != null ? event.getValue(context) : null);
+        String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
+        if (arrEvents == null || arrEvents.length < 1) {
+            return mapBehaviors.values();
+        }
+
+        Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
+
+        for (Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
+            if (ArrayUtils.contains(arrEvents, entry.getKey())) {
+                behaviors.add(entry.getValue());
+            }
+        }
+
+        return behaviors;
     }
 }
