@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.ComponentUtils;
@@ -255,7 +256,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                         fc.setResponseWriter(writer);
 
                         // set menuitem label from facet
-                        menuItem.setValue(fsw.toString());
+                        menuItem.setValue(StringEscapeUtils.unescapeHtml4(fsw.toString()));
                     }
                     else {
                         // set menuitem label from tag attribute
