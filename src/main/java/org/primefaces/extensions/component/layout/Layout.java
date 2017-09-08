@@ -37,9 +37,9 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
-import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.FastStringWriter;
 
 /**
  * <code>Layout</code> component.

@@ -31,11 +31,11 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.ComponentUtils;
-import org.primefaces.extensions.util.FastStringWriter;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuItem;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.FastStringWriter;
 
 /**
  * Renderer for the {@link MasterDetail} component.
