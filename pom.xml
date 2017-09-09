@@ -38,6 +38,9 @@
 						<!-- These are folders whose resources are merged into one big CSS and JS file. -->
 						<exclude>**/META-INF/resources/**/core/**</exclude>
 						<exclude>**/META-INF/resources/**/ckeditor/**</exclude>
+						<exclude>**/META-INF/resources/**/codemirror/lib/**</exclude>
+						<exclude>**/META-INF/resources/**/codemirror/theme/**</exclude>
+						<exclude>**/META-INF/resources/**/codemirror/LICENSE</exclude>
 						<exclude>**/META-INF/resources/**/dynaform/**</exclude>
 						<exclude>**/META-INF/resources/**/masterdetail/**</exclude>
 						<exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
@@ -71,6 +74,32 @@
 								<aggregation>
 									<inputDir>${resources.dir.compressed}</inputDir>
 									<subDirMode>true</subDirMode>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>codemirror/lib/codemirror.js</include>
+								<include>codemirror/widget.js</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/codemirror/codemirror.js</outputFile>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>codemirror/lib/**/*.css</include>
+								<include>codemirror/theme/*.css</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/codemirror/codemirror.css</outputFile>
 									<withoutCompress>${withoutCompress}</withoutCompress>
 								</aggregation>
 							</aggregations>

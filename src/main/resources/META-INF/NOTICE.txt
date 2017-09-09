@@ -1,4 +1,4 @@
-This product includes software developed by Prime Technology (http://www.prime.com.tr/)
+This product includes software developed by PrimeTek (https://www.primefaces.org/)
 This product includes software developed by The jQuery Project (http://jquery.com)
 This product includes software developed by Michal Wojciechowski (http://odyniec.net/)
 This product includes software developed by Craig Thompson (http://craigsworks.com/projects/qtip2/)
@@ -17,3 +17,4 @@ This product includes software developed by Mozilla Foundation (http://mozilla.g
 This product includes software developed by Keith Wood (https://github.com/kbwood/calculator)
 This product includes software developed by Zeno Rocha (https://clipboardjs.com)
 This product includes software developed by Michael Fielding (https://github.com/hawk-ip/jquery.tabSlideOut.js)
+This product includes software developed by Marijn Haverbeke (http://codemirror.net/)
