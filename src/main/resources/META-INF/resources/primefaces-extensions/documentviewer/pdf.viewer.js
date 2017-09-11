@@ -12503,12 +12503,12 @@ function webViewerInitialized() {
     fileInput.value = null;
   }
   var PDFJS = pdfjsLib.PDFJS;
+  var hash = document.location.hash.substring(1);
+  var hashParams = parseQueryString(hash);
   if ('locale' in hashParams) {
     PDFJS.locale = hashParams['locale'];
   }
   if (PDFViewerApplication.viewerPrefs['pdfBugEnabled']) {
-    var hash = document.location.hash.substring(1);
-    var hashParams = parseQueryString(hash);
     if ('disableworker' in hashParams) {
       PDFJS.disableWorker = hashParams['disableworker'] === 'true';
     }
