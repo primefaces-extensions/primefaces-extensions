@@ -37,6 +37,6 @@ public class PostConstructApplicationEventListener implements SystemEventListene
     }
 
     public void processEvent(final SystemEvent event) {
-        LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", this.getClass().getPackage().getSpecificationVersion());
+        LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", this.getClass().getPackage().getImplementationVersion());
     }
 }
