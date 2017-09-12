@@ -40,6 +40,7 @@ import org.primefaces.util.ArrayUtils;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * <code>TimePicker</code> component.
@@ -360,7 +361,7 @@ public class TimePicker extends HtmlInputText implements Widget {
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = org.primefaces.extensions.util.LocaleUtils.resolveLocale(getLocale());
+            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
         }
         return appropriateLocale;
     }

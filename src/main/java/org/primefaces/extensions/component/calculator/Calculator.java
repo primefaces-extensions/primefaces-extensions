@@ -37,6 +37,7 @@ import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * <code>Calculator</code> component.
@@ -225,7 +226,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = org.primefaces.extensions.util.LocaleUtils.resolveLocale(getLocale());
+            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
         }
         return appropriateLocale;
     }

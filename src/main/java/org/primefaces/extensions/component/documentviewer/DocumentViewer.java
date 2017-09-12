@@ -20,6 +20,9 @@ import java.util.Locale;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIGraphic;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.util.LocaleUtils;
 
 /**
  * <code>DocumentViewer</code> component.
@@ -70,7 +73,7 @@ public class DocumentViewer extends UIGraphic {
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = org.primefaces.extensions.util.LocaleUtils.resolveLocale(getLocale());
+            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
         }
         return appropriateLocale;
     }
