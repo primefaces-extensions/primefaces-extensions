@@ -56,7 +56,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
         };
         this.element[contextKey] = this.id;
         contexts[this.id] = this;
-        $element.bind(scrollEvent, function() {
+        $element.on(scrollEvent, function() {
           var scrollHandler;
 
           if (!(_this.didScroll || isTouch)) {
@@ -68,7 +68,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
             return window.setTimeout(scrollHandler, $[wps].settings.scrollThrottle);
           }
         });
-        $element.bind(resizeEvent, function() {
+        $element.on(resizeEvent, function() {
           var resizeHandler;
 
           if (!_this.didResize) {
@@ -195,7 +195,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 
       Context.prototype.checkEmpty = function() {
         if ($.isEmptyObject(this.waypoints.horizontal) && $.isEmptyObject(this.waypoints.vertical)) {
-          this.$element.unbind([resizeEvent, scrollEvent].join(' '));
+          this.$element.off([resizeEvent, scrollEvent].join(' '));
           return delete contexts[this.id];
         }
       };
@@ -417,7 +417,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
           waypoints[axis] = $.map(arr, function(waypoint) {
             return waypoint.element;
           });
-          return waypoints[axis] = $.unique(waypoints[axis]);
+          return waypoints[axis] = $.uniqueSort(waypoints[axis]);
         });
         return waypoints;
       },
