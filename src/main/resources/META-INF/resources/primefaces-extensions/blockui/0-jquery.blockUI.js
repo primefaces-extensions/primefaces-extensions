@@ -550,13 +550,13 @@
 			// bind anchors and inputs for mouse and key events
 			var events = 'mousedown mouseup keydown keypress keyup touchstart touchend touchmove';
 			if (b)
-				$(document).bind(events, opts, handler);
+				$(document).on((events, opts, handler);
 			else
-				$(document).unbind(events, handler);
+				$(document).off(events, handler);
 
 		// former impl...
 		//		var $e = $('a,:input');
-		//		b ? $e.bind(events, opts, handler) : $e.unbind(events, handler);
+		//		b ? $e.on(events, opts, handler) : $e.off(events, handler);
 		}
 
 		// event handler to suppress keyboard/mouse events when blocking

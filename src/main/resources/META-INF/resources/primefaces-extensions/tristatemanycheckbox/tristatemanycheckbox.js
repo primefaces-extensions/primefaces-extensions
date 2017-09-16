@@ -37,7 +37,7 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
         });
 
         //adding accesibility
-        this.outputs.bind('keydown', function(event) {
+        this.outputs.on('keydown', function(event) {
             switch(event.keyCode){
                 case 38:
                     _self.toggle($(this),1);

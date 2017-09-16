@@ -1,5 +1,7 @@
 /*
  * jQuery UI Timepicker
+ * 
+ * Version 0.3.3
  *
  * Copyright 2010-2013, Francois Gelinas
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -275,15 +277,15 @@
                 inst.append = $('<span class="' + this._appendClass + '">' + appendText + '</span>');
                 input[isRTL ? 'before' : 'after'](inst.append);
             }
-            input.unbind('focus.timepicker', this._showTimepicker);
-            input.unbind('click.timepicker', this._adjustZIndex);
+            input.off('focus.timepicker', this._showTimepicker);
+            input.off('click.timepicker', this._adjustZIndex);
 
             if (inst.trigger) { inst.trigger.remove(); }
 
             var showOn = this._get(inst, 'showOn');
             if (showOn == 'focus' || showOn == 'both') { // pop-up time picker when in the marked field
-                input.bind("focus.timepicker", this._showTimepicker);
-                input.bind("click.timepicker", this._adjustZIndex);
+                input.on("focus.timepicker", this._showTimepicker);
+                input.on("click.timepicker", this._adjustZIndex);
             }
             if (showOn == 'button' || showOn == 'both') { // pop-up time picker when 'button' element is clicked
                 var button = this._get(inst, 'button');
@@ -294,7 +296,7 @@
                     input.after(button);
                 }
 
-                $(button).bind("click.timepicker", function () {
+                $(button).on("click.timepicker", function () {
                     if ($.fgtimepicker._timepickerShowing && $.fgtimepicker._lastInput == input[0]) {
                         $.fgtimepicker._hideTimepicker();
                     } else if (!inst.input.is(':disabled')) {
@@ -315,7 +317,7 @@
             divSpan.addClass(this.markerClassName).append(inst.tpDiv).
                 bind("setData.timepicker", function(event, key, value){
                     inst.settings[key] = value;
-                }).bind("getData.timepicker", function(event, key){
+                }).on("getData.timepicker", function(event, key){
                     return this._get(inst, key);
                 });
             $.data(target, PROP_NAME, inst);
@@ -482,23 +484,23 @@
             // then letting the browser interpret the inline events)
             // the binding for the minute cells also exists in _updateMinuteDisplay
             .find('.ui-timepicker-minute-cell')
-                .unbind()
-                .bind("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectMinutes, this))
-                .bind("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectMinutes, this))
+                .off()
+                .on("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectMinutes, this))
+                .on("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectMinutes, this))
             .end()
             .find('.ui-timepicker-hour-cell')
-                .unbind()
-                .bind("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectHours, this))
-                .bind("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectHours, this))
+                .off()
+                .on("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectHours, this))
+                .on("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectHours, this))
             .end()
 			.find('.ui-timepicker td a')
-                .unbind()
-				.bind('mouseout', function () {
+                .off()
+				.on('mouseout', function () {
 				    $(this).removeClass('ui-state-hover');
 				    if (this.className.indexOf('ui-timepicker-prev') != -1) $(this).removeClass('ui-timepicker-prev-hover');
 				    if (this.className.indexOf('ui-timepicker-next') != -1) $(this).removeClass('ui-timepicker-next-hover');
 				})
-				.bind('mouseover', function () {
+				.on('mouseover', function () {
 				    if ( ! self._isDisabledTimepicker(inst.inline ? inst.tpDiv.parent()[0] : inst.input[0])) {
 				        $(this).parents('.ui-timepicker-calendar').find('a').removeClass('ui-state-hover');
 				        $(this).addClass('ui-state-hover');
@@ -510,13 +512,13 @@
 			.find('.' + this._dayOverClass + ' a')
 				.trigger('mouseover')
 			.end()
-            .find('.ui-timepicker-now').bind("click", function(e) {
+            .find('.ui-timepicker-now').on("click", function(e) {
                     $.fgtimepicker.selectNow(e);
             }).end()
-            .find('.ui-timepicker-deselect').bind("click",function(e) {
+            .find('.ui-timepicker-deselect').on("click",function(e) {
                     $.fgtimepicker.deselectTime(e);
             }).end()
-            .find('.ui-timepicker-close').bind("click",function(e) {
+            .find('.ui-timepicker-close').on("click",function(e) {
                     $.fgtimepicker._hideTimepicker();
             }).end();
         },
@@ -673,8 +675,8 @@
                 // then letting the browser interpret the inline events)
                 // yes I know, duplicate code, sorry
 /*                .find('.ui-timepicker-minute-cell')
-                    .bind("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectMinutes, this))
-                    .bind("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectMinutes, this));
+                    .on("click", { fromDoubleClick:false }, $.proxy($.fgtimepicker.selectMinutes, this))
+                    .on("dblclick", { fromDoubleClick:true }, $.proxy($.fgtimepicker.selectMinutes, this));
 */
 
         },
@@ -881,8 +883,8 @@
                 inst.append.remove();
                 inst.trigger.remove();
                 $target.removeClass(this.markerClassName)
-                    .unbind('focus.timepicker', this._showTimepicker)
-                    .unbind('click.timepicker', this._adjustZIndex);
+                    .off('focus.timepicker', this._showTimepicker)
+                    .off('click.timepicker', this._adjustZIndex);
             } else if (nodeName == 'div' || nodeName == 'span')
                 $target.removeClass(this.markerClassName).empty();
         },
@@ -1063,7 +1065,7 @@
 
         /* Tidy up after a dialog display. */
         _tidyDialog: function (inst) {
-            inst.tpDiv.removeClass(this._dialogClass).unbind('.ui-timepicker');
+            inst.tpDiv.removeClass(this._dialogClass).off('.ui-timepicker');
         },
 
         /* Retrieve the instance data for the target control.

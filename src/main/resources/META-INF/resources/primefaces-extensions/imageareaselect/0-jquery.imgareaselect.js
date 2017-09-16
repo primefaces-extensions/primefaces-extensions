@@ -387,7 +387,7 @@ $.imgAreaSelect = function (img, options) {
              * current handler
              */
             if ($.imgAreaSelect.keyPress != docKeyPress)
-                $(document).unbind($.imgAreaSelect.keyPress,
+                $(document).off($.imgAreaSelect.keyPress,
                     $.imgAreaSelect.onKeyPress);
 
             if (options.keys)

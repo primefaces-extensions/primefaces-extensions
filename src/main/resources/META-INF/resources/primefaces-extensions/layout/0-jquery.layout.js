@@ -3082,8 +3082,8 @@
          */
         , destroy = function (evt_or_destroyChildren, destroyChildren) {
             // UNBIND layout events and remove global object
-            $(window).unbind("." + sID);  // resize & unload
-            $(document).unbind("." + sID); // keyDown (hotkeys)
+            $(window).off("." + sID);  // resize & unload
+            $(document).off("." + sID); // keyDown (hotkeys)
 
             if (typeof evt_or_destroyChildren === "object")
                 // stopPropagation if called by trigger("layoutdestroy") - use evtPane utility
@@ -3099,7 +3099,7 @@
                     .removeData("layout")
                     .removeData("layoutContainer")
                     .removeClass(options.containerClass)
-                    .unbind("." + sID) // remove ALL Layout events
+                    .off("." + sID) // remove ALL Layout events
                     ;
 
             // remove all mask elements that have been created
@@ -3222,10 +3222,10 @@
                         .removeData("layoutRole")
                         .removeData("layoutEdge")
                         .removeData("autoHidden") // in case set
-                        .unbind("." + sID) // remove ALL Layout events
+                        .off("." + sID) // remove ALL Layout events
                         // TODO: remove these extra unbind commands when jQuery is fixed
-                        //.unbind("mouseenter"+ sID)
-                        //.unbind("mouseleave"+ sID)
+                        //.off("mouseenter"+ sID)
+                        //.off("mouseleave"+ sID)
                         ;
                 // do NOT reset CSS if this pane/content is STILL the container of a nested layout!
                 // the nested layout will reset its 'container' CSS when/if it is destroyed
@@ -4916,7 +4916,7 @@
             // is closable is disable, then pane MUST be open!
             if (state[pane].isClosed)
                 open(pane, false, true);
-            $T.unbind("." + sID)
+            $T.off("." + sID)
                     .css("visibility", hide ? "hidden" : "visible") // instead of hide(), which creates logic issues
                     .css("cursor", "default")
                     .attr("title", "");
@@ -5918,11 +5918,11 @@ jQuery.cookie = function (name, value, options) {
 
         /**
          * Convert stringified JSON back to a hash object
-         * @see  $.parseJSON(), adding in jQuery 1.4.1
+         * @see  JSON.parse, adding in jQuery 1.4.1
          */
         , decodeJSON: function (str) {
             try {
-                return $.parseJSON ? $.parseJSON(str) : window["eval"]("(" + str + ")") || {};
+                return JSON.parse ? JSON.parse(str) : window["eval"]("(" + str + ")") || {};
             } catch (e) {
                 return {};
             }
