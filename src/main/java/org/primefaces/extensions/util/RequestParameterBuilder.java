@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.converter.JsonConverter;
 import org.primefaces.extensions.converter.JsonExposeAwareConverter;
 
@@ -79,8 +78,8 @@ public class RequestParameterBuilder {
      *            {@link JsonExposeAwareConverter} is used.
      */
     public RequestParameterBuilder(String url, JsonConverter jsonConverter) {
-        buffer = new StringBuilder((url != null) ? url : StringUtils.EMPTY);
-        originalUrl = (url != null) ? url : StringUtils.EMPTY;
+        buffer = new StringBuilder((url != null) ? url : org.primefaces.util.Constants.EMPTY_STRING);
+        originalUrl = (url != null) ? url : org.primefaces.util.Constants.EMPTY_STRING;
 
         this.jsonConverter = jsonConverter == null ? new JsonExposeAwareConverter(false) : jsonConverter;
 

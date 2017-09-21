@@ -42,6 +42,7 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.roweditor.RowEditor;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Exporter</code> component.
@@ -87,7 +88,7 @@ public abstract class Exporter {
             return (String) exportFunction.invoke(context.getELContext(), new Object[] { column });
         }
 
-        return "";
+        return Constants.EMPTY_STRING;
     }
 
     protected String exportValue(FacesContext context, UIComponent component) {
@@ -118,7 +119,7 @@ public abstract class Exporter {
                     }
                 }
 
-                return "";
+                return Constants.EMPTY_STRING;
             }
         }
         if (component instanceof HtmlOutputLink) {
@@ -144,7 +145,7 @@ public abstract class Exporter {
                     }
                 }
 
-                return "";
+                return Constants.EMPTY_STRING;
             }
         }
         if (component instanceof HtmlSelectOneMenu) {
@@ -162,11 +163,11 @@ public abstract class Exporter {
                     }
                 }
 
-                return "";
+                return Constants.EMPTY_STRING;
             }
         }
         if (skipComponents.contains(component.getClass().getName())) {
-            return "";
+            return Constants.EMPTY_STRING;
         }
         else if (component instanceof ValueHolder) {
 
@@ -180,7 +181,7 @@ public abstract class Exporter {
             ValueHolder valueHolder = (ValueHolder) component;
             Object value = valueHolder.getValue();
             if (value == null) {
-                return "";
+                return Constants.EMPTY_STRING;
             }
 
             // first ask the converter
@@ -218,7 +219,7 @@ public abstract class Exporter {
             ValueHolder valueHolder = (ValueHolder) component;
             Object value = valueHolder.getValue();
             if (value == null) {
-                return "";
+                return Constants.EMPTY_STRING;
             }
 
             // first ask the converter

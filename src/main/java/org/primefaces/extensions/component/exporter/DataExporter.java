@@ -26,6 +26,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
+import org.primefaces.util.Constants;
+
 /**
  * <code>Exporter</code> component.
  *
@@ -115,7 +117,7 @@ public class DataExporter implements ActionListener, StateHolder {
         String exportAs = (String) type.getValue(elContext);
         String outputFileName = (String) fileName.getValue(elContext);
 
-        String tableTitleValue = "";
+        String tableTitleValue = Constants.EMPTY_STRING;
         if (tableTitle != null) {
             tableTitleValue = (String) tableTitle.getValue(elContext);
         }
@@ -182,7 +184,7 @@ public class DataExporter implements ActionListener, StateHolder {
         if (orientation != null) {
             orientationValue = (String) orientation.getValue(elContext);
         }
-        String skipComponentsValue = "";
+        String skipComponentsValue = Constants.EMPTY_STRING;
         if (skipComponents != null) {
             skipComponentsValue = (String) skipComponents.getValue(elContext);
         }

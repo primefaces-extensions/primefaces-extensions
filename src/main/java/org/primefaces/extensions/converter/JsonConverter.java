@@ -33,6 +33,7 @@ import javax.faces.convert.FacesConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.extensions.util.json.ParameterizedTypeImpl;
+import org.primefaces.util.Constants;
 
 /**
  * {@link Converter} which converts a JSON string to an object an vice-versa.
@@ -104,7 +105,7 @@ public class JsonConverter implements Converter, Serializable {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Type argument can not be a primitive type, but it was " + type
                                         + ".",
-                            StringUtils.EMPTY));
+                            Constants.EMPTY_STRING));
             }
         }
 
@@ -125,7 +126,7 @@ public class JsonConverter implements Converter, Serializable {
             catch (ClassNotFoundException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Class " + type.substring(0, arrayBracketIdx) + " not found",
-                            StringUtils.EMPTY));
+                            Constants.EMPTY_STRING));
             }
         }
 
@@ -135,14 +136,14 @@ public class JsonConverter implements Converter, Serializable {
             }
             catch (ClassNotFoundException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Class " + type + " not found",
-                            StringUtils.EMPTY));
+                            Constants.EMPTY_STRING));
             }
         }
 
         int rightBracketIdx = type.lastIndexOf(">");
         if (rightBracketIdx < 0) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
-                        StringUtils.EMPTY));
+                        Constants.EMPTY_STRING));
         }
 
         Class rawType;
@@ -152,7 +153,7 @@ public class JsonConverter implements Converter, Serializable {
         catch (ClassNotFoundException e) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Class " + type.substring(0, leftBracketIdx) + " not found",
-                        StringUtils.EMPTY));
+                        Constants.EMPTY_STRING));
         }
 
         String strTypeArgs = type.substring(leftBracketIdx + 1, rightBracketIdx);
@@ -182,7 +183,7 @@ public class JsonConverter implements Converter, Serializable {
 
         if (listTypeArgs.isEmpty()) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
-                        StringUtils.EMPTY));
+                        Constants.EMPTY_STRING));
         }
 
         int size = listTypeArgs.size();

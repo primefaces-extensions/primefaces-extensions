@@ -24,8 +24,6 @@ import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Message utils.
  *
@@ -94,10 +92,10 @@ public class MessageUtils {
         }
 
         if (summary != null) {
-            return new FacesMessage(severity, summary, (detail != null ? detail : StringUtils.EMPTY));
+            return new FacesMessage(severity, summary, (detail != null ? detail : org.primefaces.util.Constants.EMPTY_STRING));
         }
 
-        return new FacesMessage(severity, "???" + key + "???", (detail != null ? detail : StringUtils.EMPTY));
+        return new FacesMessage(severity, "???" + key + "???", (detail != null ? detail : org.primefaces.util.Constants.EMPTY_STRING));
     }
 
     public static FacesMessage getMessage(final FacesMessage.Severity severity, final String key, final Object... params) {

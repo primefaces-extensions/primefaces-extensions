@@ -29,6 +29,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -73,7 +74,7 @@ public class TimerRenderer extends CoreRenderer {
         writer.startElement("span", timer);
         writer.writeAttribute("id", timer.getClientId(), null);
         writer.writeAttribute("class", Timer.STYLE_CLASS + " " + timer.getStyleClass(), "styleclass");
-        writer.writeAttribute("style", (!timer.isVisible() ? "display:none;" : "") + timer.getStyle(), "style");
+        writer.writeAttribute("style", (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), "style");
         writer.endElement("span");
     }
 

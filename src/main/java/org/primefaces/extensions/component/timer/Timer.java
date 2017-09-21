@@ -21,10 +21,10 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * Timer component
@@ -285,7 +285,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     public java.lang.String getStyle() {
-        return (java.lang.String) getStateHelper().eval(PropertyKeys.style, StringUtils.EMPTY);
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.style, Constants.EMPTY_STRING);
     }
 
     public void setFormat(String format) {
@@ -293,7 +293,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     public String getFormat() {
-        return (String) getStateHelper().eval(PropertyKeys.format, StringUtils.EMPTY);
+        return (String) getStateHelper().eval(PropertyKeys.format, Constants.EMPTY_STRING);
     }
 
     public void setFormatFunction(String format) {
@@ -301,7 +301,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     public String getFormatFunction() {
-        return (String) getStateHelper().eval(PropertyKeys.formatFunction, StringUtils.EMPTY);
+        return (String) getStateHelper().eval(PropertyKeys.formatFunction, Constants.EMPTY_STRING);
     }
 
     public void setStyle(java.lang.String style) {
@@ -309,7 +309,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     public java.lang.String getStyleClass() {
-        return (java.lang.String) getStateHelper().eval(PropertyKeys.styleClass, StringUtils.EMPTY);
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.styleClass, Constants.EMPTY_STRING);
     }
 
     public void setStyleClass(java.lang.String styleClass) {

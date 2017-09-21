@@ -29,6 +29,7 @@ import javax.faces.validator.ValidatorException;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.MessageFactory;
 
 /**
@@ -147,7 +148,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
     }
 
     public String getStateOneTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateOneTitle, "");
+        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateOneTitle, Constants.EMPTY_STRING);
     }
 
     public void setStateOneTitle(final String stateOneTitle) {
@@ -155,7 +156,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
     }
 
     public String getStateTwoTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, "");
+        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateTwoTitle, Constants.EMPTY_STRING);
     }
 
     public void setStateTwoTitle(final String stateTwoTitle) {
@@ -163,7 +164,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
     }
 
     public String getStateThreeTitle() {
-        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, "");
+        return (String) getStateHelper().eval(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, Constants.EMPTY_STRING);
     }
 
     public void setStateThreeTitle(final String stateThreeTitle) {

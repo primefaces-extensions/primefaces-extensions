@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.TreeNode;
+import org.primefaces.util.Constants;
 
 public class GChartModelBuilder {
     private List<GChartModelRow> rows = new ArrayList<GChartModelRow>(0);
@@ -42,7 +42,7 @@ public class GChartModelBuilder {
 
     public GChartModelBuilder importTreeNode(TreeNode root) {
         String label = String.valueOf(root.getData());
-        String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : StringUtils.EMPTY;
+        String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : Constants.EMPTY_STRING;
 
         this.addRow(label, parentLabel);
 

@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.WidgetBuilder;
 
@@ -90,7 +91,7 @@ public class TooltipRenderer extends CoreRenderer {
         }
 
         if (StringUtils.isNotBlank(header)) {
-            String headerValue = "";
+            String headerValue = Constants.EMPTY_STRING;
             if (hasText) {
                 headerValue = ",";
             }

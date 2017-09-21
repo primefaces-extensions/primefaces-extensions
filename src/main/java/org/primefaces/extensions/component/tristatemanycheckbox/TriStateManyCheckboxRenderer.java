@@ -37,6 +37,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.SelectManyRenderer;
+import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
@@ -169,7 +170,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         String itemValue = (String) option.getValue();
 
         int valueInput = getValueForInput(context, component, itemValue, values, converter);
-        if (option.isNoSelectionOption() && values != null && "".equals(itemValue)) {
+        if (option.isNoSelectionOption() && values != null && Constants.EMPTY_STRING.equals(itemValue)) {
             return;
         }
 
@@ -224,7 +225,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
         // if stateIcon is defined use it insted of default icons.
-        String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon() : "";
+        String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon() : Constants.EMPTY_STRING;
         String stateTwoIconClass = checkbox.getStateTwoIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateTwoIcon()
                     : TriStateManyCheckbox.UI_ICON + "ui-icon-check";
         String stataThreeIconClass = checkbox.getStateThreeIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateThreeIcon()
@@ -236,7 +237,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                     + checkbox.getStateTwoTitle() + "\",\"" + checkbox.getStateThreeTitle() + "\"]";
 
         String iconClass = "ui-chkbox-icon ui-c"; // HTML.CHECKBOX_ICON_CLASS;
-        String activeTitle = "";
+        String activeTitle = Constants.EMPTY_STRING;
         if (valCheck == 0) {
             iconClass = iconClass + " " + stateOneIconClass;
             activeTitle = checkbox.getStateOneTitle();
@@ -250,8 +251,8 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
             activeTitle = checkbox.getStateThreeTitle();
         }
 
-        String dataTitles = "";
-        String titleAtt = "";
+        String dataTitles = Constants.EMPTY_STRING;
+        String titleAtt = Constants.EMPTY_STRING;
 
         if (!checkbox.getStateOneTitle().isEmpty()
                     || !checkbox.getStateTwoTitle().isEmpty() || !checkbox.getStateThreeTitle().isEmpty()) {

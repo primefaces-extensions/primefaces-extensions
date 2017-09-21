@@ -27,6 +27,7 @@ import javax.faces.convert.FacesConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.util.Constants;
 
 /**
  * {@link Converter} which converts a string to a {@link java.util.Locale} an vice-versa.
@@ -70,7 +71,7 @@ public class LocaleConverter implements Converter, Serializable {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Wrong type: '" + value.getClass().getSimpleName()
                                     + "' is not 'Locale'.",
-                        StringUtils.EMPTY));
+                        Constants.EMPTY_STRING));
         }
     }
 
@@ -88,7 +89,7 @@ public class LocaleConverter implements Converter, Serializable {
                     || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "'" + locale + "' does not represent a valid locale",
-                        StringUtils.EMPTY));
+                        Constants.EMPTY_STRING));
         }
 
         switch (parts.length) {

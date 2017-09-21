@@ -29,6 +29,7 @@ import javax.faces.convert.ConverterException;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.Constants;
 import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
 
@@ -185,7 +186,7 @@ public class TimePickerRenderer extends InputRenderer {
         wb.attr("disabled", timepicker.isDisabled() || timepicker.isReadonly());
 
         if (StringUtils.isBlank(value)) {
-            wb.attr("defaultTime", StringUtils.EMPTY);
+            wb.attr("defaultTime", Constants.EMPTY_STRING);
         }
         else if (timepicker.isInline()) {
             wb.attr("defaultTime", value);

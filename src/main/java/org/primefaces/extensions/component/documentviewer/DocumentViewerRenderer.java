@@ -30,6 +30,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.Constants;
 import org.primefaces.util.DynamicContentSrcBuilder;
 
 /**
@@ -54,8 +55,8 @@ public class DocumentViewerRenderer extends CoreRenderer {
         writer.writeAttribute("style", documentViewer.getStyle(), null);
         writer.writeAttribute("width", documentViewer.getWidth() != null ? documentViewer.getWidth() : "100%", null);
         writer.writeAttribute("height", documentViewer.getHeight(), null);
-        writer.writeAttribute("allowfullscreen", StringUtils.EMPTY, null);
-        writer.writeAttribute("webkitallowfullscreen", StringUtils.EMPTY, null);
+        writer.writeAttribute("allowfullscreen", Constants.EMPTY_STRING, null);
+        writer.writeAttribute("webkitallowfullscreen", Constants.EMPTY_STRING, null);
         writer.writeAttribute("src", generateSrc(context, documentViewer), null);
         writer.endElement("iframe");
     }
@@ -107,7 +108,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
             return "#" + StringUtils.join(params, "&");
         }
         else {
-            return StringUtils.EMPTY;
+            return Constants.EMPTY_STRING;
         }
     }
 

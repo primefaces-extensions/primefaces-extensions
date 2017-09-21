@@ -34,6 +34,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.CompositeUtils;
+import org.primefaces.util.Constants;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -69,7 +70,7 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String BUTTON_BAR_ROLE = "toolbar";
     private static final String GRID_CELL_ROLE = "gridcell";
 
-    private static final String[] EMPTY_COLUMN_CLASSES = new String[] { "", "" };
+    private static final String[] EMPTY_COLUMN_CLASSES = new String[] { Constants.EMPTY_STRING, Constants.EMPTY_STRING };
 
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {

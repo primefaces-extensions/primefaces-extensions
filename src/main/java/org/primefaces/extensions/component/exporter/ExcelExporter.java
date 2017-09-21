@@ -131,7 +131,7 @@ public class ExcelExporter extends Exporter {
             DataList list;
             DataTable table;
 
-            if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains("" + ",")) {
+            if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(Constants.EMPTY_STRING + ",")) {
                 Row titleRow = sheet.createRow(sheet.getLastRowNum());
                 int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
                 Cell cell = titleRow.createCell(cellIndex);
@@ -403,7 +403,7 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel) {
-                StringBuilder header = new StringBuilder("");
+                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
@@ -442,7 +442,7 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel) {
-                StringBuilder header = new StringBuilder("");
+                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
@@ -890,7 +890,7 @@ public class ExcelExporter extends Exporter {
     protected void addColumnValue(Row row, UIComponent component, String type) {
         int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
         Cell cell = row.createCell(cellIndex);
-        String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
+        String value = component == null ? Constants.EMPTY_STRING : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
         if (type.equalsIgnoreCase("facet")) {
             addFacetAlignments(component, cell);

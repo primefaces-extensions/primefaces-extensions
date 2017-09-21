@@ -112,7 +112,7 @@ public class PDFExporter extends Exporter {
                 if (!document.isOpen()) {
                     document.open();
                 }
-                if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains("" + ",")) {
+                if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(Constants.EMPTY_STRING + ",")) {
 
                     Font tableTitleFont = FontFactory.getFont(FontFactory.TIMES, encodingType, Font.DEFAULTSIZE, Font.BOLD);
                     Paragraph title = new Paragraph(tableTitle, tableTitleFont);
@@ -325,7 +325,7 @@ public class PDFExporter extends Exporter {
     }
 
     protected String exportPageOnly(int first, DataList list, int rowsToExport, StringBuilder input) {
-        String output = "";
+        String output = Constants.EMPTY_STRING;
         for (int rowIndex = first; rowIndex < rowsToExport; rowIndex++) {
             output = addColumnValues(list, input);
         }
@@ -423,7 +423,7 @@ public class PDFExporter extends Exporter {
     }
 
     protected String exportAll(DataList list, int rowCount, StringBuilder input) {
-        String output = "";
+        String output = Constants.EMPTY_STRING;
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             list.setRowIndex(rowIndex);
             output = addColumnValues(list, input);
@@ -444,7 +444,7 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel || component instanceof OutputPanel) {
-                StringBuilder header = new StringBuilder("");
+                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
@@ -488,7 +488,7 @@ public class PDFExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel || component instanceof OutputPanel) {
-                StringBuilder header = new StringBuilder("");
+                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
@@ -815,7 +815,7 @@ public class PDFExporter extends Exporter {
     }
 
     protected void addColumnValue(PdfPTable pdfTable, UIComponent component, Font font, String columnType) {
-        String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
+        String value = component == null ? Constants.EMPTY_STRING : exportValue(FacesContext.getCurrentInstance(), component);
         PdfPCell cell = new PdfPCell(new Paragraph(value, font));
 
         if (facetBackground != null) {
@@ -917,23 +917,23 @@ public class PDFExporter extends Exporter {
             this.fontName = fontName;
         }
         if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.facetFontStyle = "" + Font.NORMAL;
+            this.facetFontStyle = Constants.EMPTY_STRING + Font.NORMAL;
         }
         if (facetFontStyle.equalsIgnoreCase("BOLD")) {
-            this.facetFontStyle = "" + Font.BOLD;
+            this.facetFontStyle = Constants.EMPTY_STRING + Font.BOLD;
         }
         if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.facetFontStyle = "" + Font.ITALIC;
+            this.facetFontStyle = Constants.EMPTY_STRING + Font.ITALIC;
         }
 
         if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
-            this.cellFontStyle = "" + Font.NORMAL;
+            this.cellFontStyle = Constants.EMPTY_STRING + Font.NORMAL;
         }
         if (cellFontStyle.equalsIgnoreCase("BOLD")) {
-            this.cellFontStyle = "" + Font.BOLD;
+            this.cellFontStyle = Constants.EMPTY_STRING + Font.BOLD;
         }
         if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
-            this.cellFontStyle = "" + Font.ITALIC;
+            this.cellFontStyle = Constants.EMPTY_STRING + Font.ITALIC;
         }
 
     }
