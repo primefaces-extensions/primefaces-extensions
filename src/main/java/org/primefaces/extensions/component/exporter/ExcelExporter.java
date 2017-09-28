@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -377,9 +378,9 @@ public class ExcelExporter extends Exporter {
                     exportCells(table, sheet);
                 }
             }
-            else if (List.class.isAssignableFrom(selection.getClass())) {
-                List<?> list = (List<?>) selection;
-                for (Iterator<? extends Object> it = list.iterator(); it.hasNext();) {
+            else if (Collection.class.isAssignableFrom(selection.getClass())) {
+                Collection<?> collection = (Collection<?>) selection;
+                for (Iterator<? extends Object> it = collection.iterator(); it.hasNext();) {
                     requestMap.put(var, it.next());
                     exportCells(table, sheet);
                 }

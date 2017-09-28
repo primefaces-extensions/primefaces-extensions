@@ -20,7 +20,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -202,7 +204,6 @@ public class PDFExporter extends Exporter {
                 }
 
                 if (hasFooterColumn(subtable)) {
-
                     addColumnFacets(subtable, pdfTable, ColumnType.FOOTER);
                 }
 
@@ -345,13 +346,18 @@ public class PDFExporter extends Exporter {
 
                 for (int i = 0; i < size; i++) {
                     requestMap.put(var, Array.get(selection, i));
-
+                    exportCells(table, pdfTable);
+                }
+            }
+            else if (Collection.class.isAssignableFrom(selection.getClass())) {
+                Collection<?> collection = (Collection<?>) selection;
+                for (Iterator<? extends Object> it = collection.iterator(); it.hasNext();) {
+                    requestMap.put(var, it.next());
                     exportCells(table, pdfTable);
                 }
             }
             else {
                 requestMap.put(var, selection);
-
                 exportCells(table, pdfTable);
             }
         }
