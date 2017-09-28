@@ -550,7 +550,7 @@
 			// bind anchors and inputs for mouse and key events
 			var events = 'mousedown mouseup keydown keypress keyup touchstart touchend touchmove';
 			if (b)
-				$(document).on((events, opts, handler);
+				$(document).on(events, opts, handler);
 			else
 				$(document).off(events, handler);
 
