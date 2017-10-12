@@ -335,7 +335,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                     this.instance.destroy(true);
                 } catch (err) {
                     if (window.console && console.log) {
-                        console.log('CKEditor throwed a error while destroying the old instance: ' + err);
+                        console.log('CKEditor throwed an error while destroying the old instance: ' + err);
                     }
                 }
 	        this.instance = null;
