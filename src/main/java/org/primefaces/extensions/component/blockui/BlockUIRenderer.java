@@ -139,7 +139,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
         String cssOverlay = blockUI.getCssOverlay();
         if (cssOverlay != null) {
-            wb.attr("overlayCSS", cssOverlay);
+            wb.nativeAttr("overlayCSS", cssOverlay);
         }
 
         int timeout = blockUI.getTimeout();
