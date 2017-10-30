@@ -39,10 +39,13 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -138,7 +141,7 @@ public class ExcelExporter extends Exporter {
                 Cell cell = titleRow.createCell(cellIndex);
                 cell.setCellValue(new XSSFRichTextString(tableTitle));
                 Font titleFont = wb.createFont();
-                titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+                titleFont.setBold(true);
                 titleStyle.setFont(titleFont);
                 cell.setCellStyle(titleStyle);
                 sheet.createRow(sheet.getLastRowNum() + 3);
@@ -518,8 +521,8 @@ public class ExcelExporter extends Exporter {
     }
 
     protected void tableColumnGroup(Sheet sheet, DataTable table, String facetType) {
-        facetStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        facetStyleCenterAlign.setVerticalAlignment((short) CellStyle.VERTICAL_CENTER);
+        facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        facetStyleCenterAlign.setVerticalAlignment(VerticalAlignment.CENTER);
         facetStyleCenterAlign.setWrapText(true);
 
         ColumnGroup cg = table.getColumnGroup(facetType);
@@ -710,14 +713,14 @@ public class ExcelExporter extends Exporter {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
-        facetStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        facetStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        facetStyleCenterAlign.setVerticalAlignment((short) CellStyle.VERTICAL_CENTER);
+        facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        facetStyleCenterAlign.setVerticalAlignment(VerticalAlignment.CENTER);
         facetStyleCenterAlign.setWrapText(true);
-        facetStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
-        cellStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        cellStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        cellStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
+        facetStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
+        cellStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
         for (UIColumn col : table.getColumns()) {
 
@@ -789,14 +792,14 @@ public class ExcelExporter extends Exporter {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
-        facetStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        facetStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        facetStyleCenterAlign.setVerticalAlignment((short) CellStyle.VERTICAL_CENTER);
+        facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        facetStyleCenterAlign.setVerticalAlignment(VerticalAlignment.CENTER);
         facetStyleCenterAlign.setWrapText(true);
-        facetStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
-        cellStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        cellStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        cellStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
+        facetStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
+        cellStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
         for (UIColumn col : table.getColumns()) {
 
@@ -814,14 +817,14 @@ public class ExcelExporter extends Exporter {
         int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(sheetRowIndex);
 
-        facetStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        facetStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        facetStyleCenterAlign.setVerticalAlignment((short) CellStyle.VERTICAL_CENTER);
+        facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        facetStyleCenterAlign.setVerticalAlignment(VerticalAlignment.CENTER);
         facetStyleCenterAlign.setWrapText(true);
-        facetStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
-        cellStyleLeftAlign.setAlignment((short) CellStyle.ALIGN_LEFT);
-        cellStyleCenterAlign.setAlignment((short) CellStyle.ALIGN_CENTER);
-        cellStyleRightAlign.setAlignment((short) CellStyle.ALIGN_RIGHT);
+        facetStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
+        cellStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
+        cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
+        cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
         for (UIComponent component : list.getChildren()) {
             if (component instanceof Column) {
@@ -1004,14 +1007,14 @@ public class ExcelExporter extends Exporter {
         }
 
         if (cellFontStyle.equalsIgnoreCase("BOLD")) {
-            cellFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            cellFont.setBold(true);
         }
         if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
             cellFont.setItalic(true);
         }
 
         if (facetFontStyle.equalsIgnoreCase("BOLD")) {
-            facetFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            facetFont.setBold(true);
         }
         if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
             facetFont.setItalic(true);
@@ -1028,11 +1031,10 @@ public class ExcelExporter extends Exporter {
             ((XSSFCellStyle) facetStyleLeftAlign).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleCenterAlign).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleRightAlign).setFillForegroundColor(backgroundColor);
-            facetStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-            facetStyleLeftAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-            facetStyleCenterAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-            facetStyleRightAlign.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-
+            facetStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            facetStyleLeftAlign.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            facetStyleCenterAlign.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            facetStyleRightAlign.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
 
         if (facetFontColor != null) {
