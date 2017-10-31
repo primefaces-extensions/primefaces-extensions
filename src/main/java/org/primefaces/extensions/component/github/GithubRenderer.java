@@ -55,6 +55,12 @@ public class GithubRenderer extends CoreRenderer {
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.writeAttribute("data-repo", github.getRepository(), "data-repo");
+        if (github.getStyleClass() != null) {
+            writer.writeAttribute("class", github.getStyleClass(), "styleClass");
+        }
+        if (github.getStyle() != null) {
+            writer.writeAttribute("style", github.getStyle(), "style");
+        }
         writer.endElement("div");
     }
 

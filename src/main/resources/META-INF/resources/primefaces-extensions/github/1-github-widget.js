@@ -15,6 +15,8 @@ PrimeFaces.widget.ExtGitHub = PrimeFaces.widget.BaseWidget.extend({
     init : function(cfg) {
         this._super(cfg);
         this.id = cfg.id;
+
+        // make a copy of the configuration
         var opts = $.extend(true, {}, cfg);
 
         // create the GitHub
