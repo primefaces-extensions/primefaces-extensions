@@ -65,6 +65,7 @@
 								<include>layout/**</include>
 								<include>qrcode/**</include>
 								<include>slideout/**</include>
+                                <include>social/**</include>                
 								<include>timepicker/**</include>
 								<include>timer/**</include>
 								<include>tooltip/**</include>
