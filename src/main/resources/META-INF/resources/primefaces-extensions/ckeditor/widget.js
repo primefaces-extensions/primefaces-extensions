@@ -224,6 +224,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         //fire initialize event
         this.fireEvent('initialize');
 
+        //GitHub #501 blur immediately
+        CKEDITOR.focusManager._.blurDelay = 0;
+
         //register blur and focus event
         this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
         this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
