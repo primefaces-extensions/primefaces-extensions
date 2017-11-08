@@ -4398,4 +4398,108 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+    <tag>
+        <description><![CDATA[Speedtest adds a view with Speedtest gauges. Fires an event when the speedtest has been finished.]]></description>
+        <tag-name>speedtest</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Speedtest</component-type>
+            <renderer-type>org.primefaces.extensions.component.SpeedtestRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Name of the client side widget.]]></description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[File name (URL) of the dummy file to download. Best results with an 5MB random-test-file.]]>
+            </description>
+            <name>file</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Caption of Ping result. Default is 'Ping'.]]></description>
+            <name>captionPing</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Caption of Jitter result. Default is 'Jitter'.]]></description>
+            <name>captionJitter</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Caption of Download result. Default is 'Download'.]]></description>
+            <name>captionDownload</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Caption of Upload result.  Default is 'Upload'.]]></description>
+            <name>captionUpload</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Color of Ping result.  Default is '#993333'.]]></description>
+            <name>colorPing</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Color of Jitter result.  Default is '#d2900a'.]]></description>
+            <name>colorJitter</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Color of Download result.  Default is '#339933'.]]></description>
+            <name>colorDownload</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Color of Upload result.  Default is '#333399'.]]></description>
+            <name>colorUpload</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 </facelet-taglib>
