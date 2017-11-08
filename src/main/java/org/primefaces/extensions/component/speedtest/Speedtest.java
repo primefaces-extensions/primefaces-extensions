@@ -45,6 +45,7 @@ import org.primefaces.util.Constants;
             @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces", name = "raphael/raphael.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "speedtest/speedtest.js")
 })
 public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, Widget {
