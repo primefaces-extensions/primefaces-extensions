@@ -81,7 +81,7 @@ public abstract class Exporter {
     public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName,
                 String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) throws IOException;
 
-    protected String exportColumnByFunction(FacesContext context, org.primefaces.component.api.UIColumn column) {
+    protected String exportColumnByFunction(FacesContext context, UIColumn column) {
         MethodExpression exportFunction = column.getExportFunction();
 
         if (exportFunction != null) {

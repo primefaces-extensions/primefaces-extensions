@@ -101,7 +101,7 @@ public class MasterDetailRenderer extends CoreRenderer {
             mdl = masterDetail.getDetailLevelByLevel(masterDetail.getLevel());
         }
 
-        if (mdl == null && masterDetail != null) {
+        if (mdl == null) {
             throw new FacesException(
                         "MasterDetailLevel [Level=" + String.valueOf(masterDetail.getLevel()) + "] must be nested inside a MasterDetail component!");
         }

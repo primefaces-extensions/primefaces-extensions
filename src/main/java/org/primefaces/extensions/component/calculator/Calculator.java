@@ -89,14 +89,6 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
         PropertyKeys() {
         }
 
-        public String getToString() {
-            return toString;
-        }
-
-        public void setToString(String toString) {
-            this.toString = toString;
-        }
-
         @Override
         public String toString() {
             return toString != null ? toString : super.toString();

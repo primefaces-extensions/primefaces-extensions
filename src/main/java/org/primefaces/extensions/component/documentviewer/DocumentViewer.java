@@ -45,7 +45,7 @@ public class DocumentViewer extends UIGraphic {
 
     private Locale appropriateLocale;
 
-    protected static enum PropertyKeys {
+    protected enum PropertyKeys {
         //@formatter:off
         width, 
         height, 

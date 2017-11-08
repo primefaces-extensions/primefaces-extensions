@@ -36,7 +36,7 @@ public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 
     private final String waypointId; // client Id of the current waypoint
 
-    public static enum Direction {
+    public enum Direction {
         DOWN, UP, RIGHT, LEFT
     }
 

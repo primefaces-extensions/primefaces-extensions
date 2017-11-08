@@ -57,7 +57,7 @@ public class ExporterFactoryProvider {
 
 class DefaultExporterFactory implements ExporterFactory {
 
-    static public enum ExporterType {
+    public enum ExporterType {
         PDF, XLSX
     }
 

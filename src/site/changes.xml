@@ -7,7 +7,17 @@
 		<title>PrimeFaces Extensions</title>
 	</properties>
 	<body>
-		<release version="6.1.0" date="2017-01-01" description="Primefaces 6.1">
+		<release version="6.2" date="2017-11-15" description="Primefaces 6.2">
+			<action dev="melloware" type="update">
+       Primefaces 6.2 includes new Social Media and Speedtest components.
+			</action>
+		</release>
+		<release version="6.1.1" date="2017-06-09" description="Primefaces 6.1.1">
+			<action dev="melloware" type="update">
+       Primefaces 6.1.1 bugfix release still compatible with Community Edition PF 6.1.
+			</action>
+		</release>
+		<release version="6.1.0" date="2017-04-19" description="Primefaces 6.1">
 			<action dev="melloware" type="update">
        Primefaces 6.1 latest version available which includes many new features, browser fixes, and security fixes
 			</action>

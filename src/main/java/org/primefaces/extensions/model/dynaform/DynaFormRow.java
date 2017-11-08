@@ -112,9 +112,7 @@ public class DynaFormRow implements Serializable {
     /***
      * Adds nested model with colspan = 1 and rowspan = 1.
      * 
-     * @param model
-     * @param colspan colspan
-     * @param rowspan colspan
+     * @param model the DynaFormModel
      * @return DynaFormModelElement added model
      */
     public DynaFormModelElement addModel(DynaFormModel model) {

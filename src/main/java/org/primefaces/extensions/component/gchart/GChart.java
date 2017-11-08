@@ -54,7 +54,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     private static final String DEFAULT_TYPE = "select";
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
-    protected static enum PropertyKeys {
+    protected enum PropertyKeys {
         widgetVar, width, height, title, apiKey;
     }
 

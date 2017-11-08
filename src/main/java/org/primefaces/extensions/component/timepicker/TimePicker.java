@@ -72,18 +72,18 @@ public class TimePicker extends HtmlInputText implements Widget {
     public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
     public static final String TIME_MESSAGE_KEY = "javax.faces.converter.DateTimeConverter.TIME";
-    public static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(
-                new String[] { "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title" },
-                HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
-
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimePicker";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
 
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(
+    static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(
                 Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
                             "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
                             "mouseup", BeforeShowEvent.NAME, TimeSelectEvent.NAME, CloseEvent.NAME));
+
+    static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(
+                new String[] { "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title" },
+                HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
     private Locale appropriateLocale;
@@ -126,14 +126,6 @@ public class TimePicker extends HtmlInputText implements Widget {
         }
 
         PropertyKeys() {
-        }
-
-        public String getToString() {
-            return toString;
-        }
-
-        public void setToString(String toString) {
-            this.toString = toString;
         }
 
         @Override
