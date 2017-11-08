@@ -4430,6 +4430,30 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[File name (URL) of the dummy file to download. Best results with an 5MB random-test-file.]]>
+            </description>
+            <name>file</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[Caption of Ping result. Default is 'Ping'.]]></description>
             <name>captionPing</name>
             <required>false</required>

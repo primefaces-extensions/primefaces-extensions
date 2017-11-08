@@ -100,6 +100,12 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
     _C2MBps : function(bytes) {
         return Math.round(100 * bytes * 8 / 1024 / 1024) / 100;
     },
+    _GetFileName : function() {
+        var $this = this;
+        var ret = "";
+        ret = ret + String($this.cfg.File);
+        return ret;
+    },
     _SinglePing : function(cnt, upLoadDatas) {
         var $this = this;
         var pMSC = 0;
@@ -107,7 +113,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + "?id=" + start,
+            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function (msg) {
                 pMSC = $this._DiffMS(start);
@@ -140,7 +146,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
             async: false,
             cache: false,
             type: 'GET',
-            url: PrimeFaces.getFacesResource('speedtest/dummy.payload', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + "?id=" + start,
+            url: $this._GetFileName() + '?id=' + start,
             success: function (msg) {
                 $this.downSpeed = $this._C2MBps(msg.length / ($this._DiffMS(start) / 1000));
             },
@@ -156,7 +162,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + "?id=" + start,
+            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function (msg) {
                 $this.upSpeed = $this._C2MBps(upLoadDatas.length / ($this._DiffMS(start) / 1000));

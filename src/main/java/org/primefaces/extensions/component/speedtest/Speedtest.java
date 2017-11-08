@@ -43,7 +43,7 @@ import java.util.Map;
             @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
             @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "speedtest/raphael-min.js"),
+            @ResourceDependency(library = "primefaces", name = "raphael/raphael.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "speedtest/justgage.min.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "speedtest/speedtest.js")
 })
@@ -64,7 +64,10 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         colorPing,
         colorJitter,
         colorDownload,
-        colorUpload;
+        colorUpload,
+        file,
+        style,
+        styleClass;
         // @formatter:on
         private String toString;
         PropertyKeys(final String toString) {
@@ -221,5 +224,28 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
     }
     public void setColorUpload(final String _colorUpload) {
         getStateHelper().put(PropertyKeys.colorUpload, _colorUpload);
+    }
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(final String _style) {
+        getStateHelper().put(PropertyKeys.style, _style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String _styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    }
+
+    public String getFile() {
+        return (String) getStateHelper().eval(PropertyKeys.file, null);
+    }
+
+    public void setFile(final String _File) {
+        getStateHelper().put(PropertyKeys.file, _File);
     }
 }

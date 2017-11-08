@@ -61,6 +61,12 @@ public class SpeedtestRenderer extends CoreRenderer {
         // Generate Speedtest:
         writer.startElement("div", speedtest);
         writer.writeAttribute("id", clientId + "SpeedTest", "id");
+        if (speedtest.getStyleClass() != null) {
+            writer.writeAttribute("class", speedtest.getStyleClass(), "styleClass");
+        }
+        if (speedtest.getStyle() != null) {
+            writer.writeAttribute("style", speedtest.getStyle(), "style");
+        }
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.startElement("div",speedtest);
         writer.writeAttribute("class", "ui-g",null);
@@ -113,6 +119,7 @@ public class SpeedtestRenderer extends CoreRenderer {
         wb.attr("ColorJitter", speedtest.getColorJitter());
         wb.attr("ColorDownload", speedtest.getColorDownload());
         wb.attr("ColorUpload", speedtest.getColorUpload());
+        wb.attr("File", speedtest.getFile());
         encodeClientBehaviors(context, speedtest);
         wb.finish();
     }
