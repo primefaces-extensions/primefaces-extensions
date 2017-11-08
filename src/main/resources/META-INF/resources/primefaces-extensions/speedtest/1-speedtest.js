@@ -1,13 +1,14 @@
 /**
  * PrimeFaces Extensions Speedtest Widget.
- *
- * @author @author ssibitz ssibitz@me.com
- * @since 6.1
+ * 
+ * @author ssibitz ssibitz@me.com
+ * @since 6.2
  */
 PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
+    
     /**
      * Initializes the widget.
-     *
+     * 
      * @param {object}
      *        cfg The widget configuration.
      */
@@ -113,7 +114,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
+            url: PrimeFaces.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function (msg) {
                 pMSC = $this._DiffMS(start);
@@ -162,7 +163,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFaces.getFacesResource('speedtest/dummy.post', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
+            url: PrimeFaces.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function (msg) {
                 $this.upSpeed = $this._C2MBps(upLoadDatas.length / ($this._DiffMS(start) / 1000));

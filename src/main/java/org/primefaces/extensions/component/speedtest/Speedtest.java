@@ -15,10 +15,10 @@
  */
 package org.primefaces.extensions.component.speedtest;
 
-import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.event.SpeedTestEvent;
-import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.Constants;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependencies;
@@ -28,30 +28,30 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
+
+import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.SpeedTestEvent;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Speedtest</code> component.
  *
  * @author ssibitz ssibitz@me.com
- * @since 6.1
+ * @since 6.2
  */
 @ResourceDependencies({
             @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
             @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces", name = "raphael/raphael.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "speedtest/justgage.min.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "speedtest/speedtest.js")
 })
 public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
-    public static final String  COMPONENT_FAMILY    = "org.primefaces.extensions.component";
-    public static final String  COMPONENT_TYPE      = COMPONENT_FAMILY + ".Speedtest";
-    private static final String DEFAULT_RENDERER    = COMPONENT_FAMILY + ".SpeedtestRenderer";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String COMPONENT_TYPE = COMPONENT_FAMILY + ".Speedtest";
+    private static final String DEFAULT_RENDERER = COMPONENT_FAMILY + ".SpeedtestRenderer";
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(SpeedTestEvent.NAME));
 
     protected enum PropertyKeys {
@@ -70,17 +70,22 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         styleClass;
         // @formatter:on
         private String toString;
+
         PropertyKeys(final String toString) {
             this.toString = toString;
         }
+
         PropertyKeys() {
         }
+
         public String getToString() {
             return toString;
         }
+
         public void setToString(String toString) {
             this.toString = toString;
         }
+
         @Override
         public String toString() {
             return toString != null ? toString : super.toString();
@@ -151,12 +156,12 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             if (SpeedTestEvent.NAME.equals(eventName)) {
                 // Get parameters:
-                final Double pingTimeMS             = convertParam(clientId, "_PingTimeMS", params);
-                final Double jitterTimeMS           = convertParam(clientId, "_JitterTimeMS", params);
-                final Double speedMbpsDownload      = convertParam(clientId, "_SpeedMbpsDownload", params);
-                final Double speedMbpsUpload        = convertParam(clientId, "_SpeedMbpsUpload", params);
+                final Double pingTimeMS = convertParam(clientId, "_PingTimeMS", params);
+                final Double jitterTimeMS = convertParam(clientId, "_JitterTimeMS", params);
+                final Double speedMbpsDownload = convertParam(clientId, "_SpeedMbpsDownload", params);
+                final Double speedMbpsUpload = convertParam(clientId, "_SpeedMbpsUpload", params);
                 final SpeedTestEvent speedtestEvent = new SpeedTestEvent(this, behaviorEvent.getBehavior(),
-                        pingTimeMS, jitterTimeMS, speedMbpsDownload, speedMbpsUpload);
+                            pingTimeMS, jitterTimeMS, speedMbpsDownload, speedMbpsUpload);
                 speedtestEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(speedtestEvent);
                 return;
@@ -167,64 +172,82 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
 
     private boolean isSelfRequest(final FacesContext context) {
         return this.getClientId(context)
-                .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     public String getWidgetVar() {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
+
     public void setWidgetVar(final String _widgetVar) {
         getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
     }
+
     public String getCaptionPing() {
         return (String) getStateHelper().eval(PropertyKeys.captionPing, "Ping");
     }
+
     public void setCaptionPing(final String _captionPing) {
         getStateHelper().put(PropertyKeys.captionPing, _captionPing);
     }
+
     public String getCaptionJitter() {
         return (String) getStateHelper().eval(PropertyKeys.captionJitter, "Jitter");
     }
+
     public void setCaptionJitter(final String _captionJitter) {
         getStateHelper().put(PropertyKeys.captionJitter, _captionJitter);
     }
+
     public String getCaptionDownload() {
         return (String) getStateHelper().eval(PropertyKeys.captionDownload, "Download");
     }
+
     public void setCaptionDownload(final String _captionDownload) {
         getStateHelper().put(PropertyKeys.captionDownload, _captionDownload);
     }
+
     public String getCaptionUpload() {
         return (String) getStateHelper().eval(PropertyKeys.captionUpload, "Upload");
     }
+
     public void setCaptionUpload(final String _captionUpload) {
         getStateHelper().put(PropertyKeys.captionUpload, _captionUpload);
     }
+
     public String getColorPing() {
         return (String) getStateHelper().eval(PropertyKeys.colorPing, "#993333");
     }
+
     public void setColorPing(final String _colorPing) {
         getStateHelper().put(PropertyKeys.colorPing, _colorPing);
     }
+
     public String getColorJitter() {
         return (String) getStateHelper().eval(PropertyKeys.colorJitter, "#d2900a");
     }
+
     public void setColorJitter(final String _colorJitter) {
         getStateHelper().put(PropertyKeys.colorJitter, _colorJitter);
     }
+
     public String getColorDownload() {
         return (String) getStateHelper().eval(PropertyKeys.colorDownload, "#339933");
     }
+
     public void setColorDownload(final String _colorDownload) {
         getStateHelper().put(PropertyKeys.colorDownload, _colorDownload);
     }
+
     public String getColorUpload() {
         return (String) getStateHelper().eval(PropertyKeys.colorUpload, "#333399");
     }
+
     public void setColorUpload(final String _colorUpload) {
         getStateHelper().put(PropertyKeys.colorUpload, _colorUpload);
     }
+
     public String getStyle() {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
