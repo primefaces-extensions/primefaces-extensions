@@ -3747,16 +3747,16 @@
             <type>javax.faces.component.UIComponent</type>
         </attribute>
         <attribute>
-            <description><![CDATA[width of the viewer frame.]]></description>
+            <description><![CDATA[Width of the viewer frame. Default to 100%.]]></description>
             <name>width</name>
             <required>false</required>
-            <type>java.lang.Integer</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[height of the viewer frame.]]></description>
+            <description><![CDATA[Height of the viewer frame.]]></description>
             <name>height</name>
             <required>false</required>
-            <type>java.lang.Integer</type>
+            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description><![CDATA[CSS style of the viewer frame.]]></description>

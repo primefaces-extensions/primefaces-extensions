@@ -49,7 +49,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     }
 
     private void encodeMarkup(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
-        // Section 508 frame title for assisted techology
+        // Section 508 frame title for assisted technology
         String title = documentViewer.getTitle() != null ? documentViewer.getTitle() : documentViewer.getName();
         title = StringUtils.defaultString(title, "Document Viewer");
 
