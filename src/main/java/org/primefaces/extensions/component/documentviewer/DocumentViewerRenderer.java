@@ -49,10 +49,15 @@ public class DocumentViewerRenderer extends CoreRenderer {
     }
 
     private void encodeMarkup(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
+        // Section 508 frame title for assisted techology
+        String title = documentViewer.getTitle() != null ? documentViewer.getTitle() : documentViewer.getName();
+        title = StringUtils.defaultString(title, "Document Viewer");
+
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("iframe", documentViewer);
         writer.writeAttribute("id", documentViewer.getClientId(), null);
         writer.writeAttribute("style", documentViewer.getStyle(), null);
+        writer.writeAttribute("title", title, null);
         writer.writeAttribute("width", documentViewer.getWidth() != null ? documentViewer.getWidth() : "100%", null);
         writer.writeAttribute("height", documentViewer.getHeight(), null);
         writer.writeAttribute("allowfullscreen", Constants.EMPTY_STRING, null);

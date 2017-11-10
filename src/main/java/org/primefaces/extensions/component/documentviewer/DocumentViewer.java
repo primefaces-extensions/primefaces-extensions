@@ -50,6 +50,7 @@ public class DocumentViewer extends UIGraphic {
         width, 
         height, 
         style, 
+        title, 
         name, 
         library, 
         cache, 
@@ -108,6 +109,14 @@ public class DocumentViewer extends UIGraphic {
 
     public void setName(final String _name) {
         getStateHelper().put(PropertyKeys.name, _name);
+    }
+
+    public String getTitle() {
+        return (String) getStateHelper().eval(PropertyKeys.title, null);
+    }
+
+    public void setTitle(final String _title) {
+        getStateHelper().put(PropertyKeys.title, _title);
     }
 
     public String getLibrary() {

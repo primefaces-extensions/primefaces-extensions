@@ -3765,6 +3765,12 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Title of the viewer frame per Section 508.]]></description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[URL of the document to view.]]></description>
             <name>url</name>
             <required>false</required>
