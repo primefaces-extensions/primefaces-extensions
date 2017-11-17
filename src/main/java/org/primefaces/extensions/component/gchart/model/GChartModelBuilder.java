@@ -33,7 +33,7 @@ public class GChartModelBuilder {
 
     public GChartModelBuilder setChartType(GChartType chartType) {
         if (gChartType != null) {
-            throw new IllegalStateException("Type already setted");
+            throw new IllegalStateException("GChart Type already set");
         }
         this.gChartType = chartType;
 
