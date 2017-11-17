@@ -17,7 +17,16 @@ package org.primefaces.extensions.component.gchart.model;
 
 public enum GChartType {
 
-    PIE("PieChart"), AREA("AreaChart"), BAR("BarChart"), GEO("GeoChart"), ORGANIZATIONAL("OrgChart"), COLUMN("ColumnChart"), LINE("LineChart");
+    // @formatter:off
+    PIE("PieChart"), 
+    AREA("AreaChart"), 
+    BAR("BarChart"), 
+    GEO("GeoChart"), 
+    ORGANIZATIONAL("OrgChart"), 
+    COLUMN("ColumnChart"), 
+    LINE("LineChart"), 
+    SCATTER("ScatterChart");
+    // @formatter:on
 
     private String chartName;
 
