@@ -156,7 +156,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 var oldInstance = CKEDITOR.instances[this.id];
                 if (oldInstance) {
                     try {
-                        oldInstance.destroy(true);
+                        this.destroyOnUpdate(oldInstance);
                     } catch (err) {
                         if (window.console && console.log) {
                             console.log('CKEditor threw an error while destroying the old instance: ' + err);
@@ -280,6 +280,34 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         
         // let the widget know we are done initializing
         this.initializing = false;
+    },
+
+    /**
+     * This method will be called to clean up the old instance on update
+     *
+     * @private
+     */
+    destroyOnUpdate: function( instance ) {
+        if(instance) {
+            instance.fire( 'beforeDestroy' );
+    
+            if ( instance.filter ) {
+                instance.filter.destroy();
+                delete instance.filter;
+            }
+    
+            delete instance.activeFilter;
+    
+            instance.status = 'destroyed';
+    
+            instance.fire( 'destroy' );
+    
+            // Plug off all listeners to prevent any further events firing.
+            instance.removeAllListeners();
+    
+            CKEDITOR.remove( instance );
+            CKEDITOR.fire( 'instanceDestroyed', null, instance );
+        }
     },
 
     /**
