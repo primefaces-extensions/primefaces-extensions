@@ -35,6 +35,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.CompositeUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -142,20 +143,13 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
+        WidgetBuilder wb = getWidgetBuilder(fc);
         String clientId = dynaForm.getClientId(fc);
-        String widgetVar = dynaForm.resolveWidgetVar();
-
-        startScript(writer, clientId);
-        writer.write("$(function() {");
-        writer.write("PrimeFaces.cw('ExtDynaForm','" + widgetVar + "',{");
-        writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
-        writer.write(",uuid:'" + dynaFormModel.getUuid() + "'");
-        writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
-        writer.write(",isPostback:" + fc.isPostback());
-        writer.write("});});");
-        endScript(writer);
+        wb.initWithDomReady("ExtDynaForm", dynaForm.resolveWidgetVar(), clientId);
+        wb.attr("uuid", dynaFormModel.getUuid());
+        wb.attr("autoSubmit", dynaForm.isAutoSubmit());
+        wb.attr("isPostback", fc.isPostback());
+        wb.finish();
     }
 
     protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
