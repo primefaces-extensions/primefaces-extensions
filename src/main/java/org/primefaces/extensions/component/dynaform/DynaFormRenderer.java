@@ -32,9 +32,9 @@ import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
-import org.primefaces.extensions.util.Constants;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.CompositeUtils;
+import org.primefaces.util.Constants;
 
 /**
  * Renderer for {@link DynaForm} component.

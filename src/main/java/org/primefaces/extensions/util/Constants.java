@@ -29,8 +29,6 @@ public final class Constants {
     public static final String EXTENSION_CSS = ".css";
     public static final String EXTENSION_JS = ".js";
 
-    public static final String EMPTY_STRING = "";
-
     /**
      * Avoid instantiation.
      */
