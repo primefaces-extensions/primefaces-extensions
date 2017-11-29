@@ -12,14 +12,21 @@ CKEDITOR_GETURL = function(resource) {
         facesResource = resource.replace('?resolve=false', '');
     } else {
         //already wrapped?
-        var libraryVersionIndex = resource.indexOf('v=' + PrimeFacesExt.VERSION);
+        var libraryVersion = 'v=' + PrimeFacesExt.VERSION;
+        var libraryVersionIndex = resource.indexOf(libraryVersion);
         if (libraryVersionIndex !== -1) {
             //look for appended resource
-            var appendedResource = resource.substring(libraryVersionIndex + ('v=' + PrimeFacesExt.VERSION).length);
+            var appendedResource = resource.substring(libraryVersionIndex + (libraryVersion).length);
 
             if (appendedResource.length > 0) {
                 //remove append resource from url
                 facesResource = resource.substring(0, resource.length - appendedResource.length);
+                
+                // GitHub ##509 check for URL param
+                if (appendedResource.startsWith('&')) {
+                    // example: replace &conversationContext=33
+                    appendedResource = appendedResource.replace(/&\w+=\d+/, '');
+                }
 
                 var resourceIdentiferPosition = facesResource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER);
 
@@ -36,7 +43,7 @@ CKEDITOR_GETURL = function(resource) {
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFaces.getFacesResource(extractedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 }
             } else {
                 facesResource = resource;
