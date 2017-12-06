@@ -90,7 +90,7 @@ public class Switch extends UIComponentBase {
                 final Object caseValue = caseComponent.getValue();
 
                 // TODO: switch this to Objects.equals in Java7
-                if (ObjectUtils.equals(evaluate, caseValue) || StringUtils.equalsIgnoreCase(String.valueOf(evaluate), String.valueOf(caseValue))) {
+                if (ObjectUtils.equals(evaluate, caseValue))) {
                     caseToRender = caseComponent;
                     // must not break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
                 }
