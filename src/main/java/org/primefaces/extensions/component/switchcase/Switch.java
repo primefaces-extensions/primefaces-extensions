@@ -27,11 +27,13 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Component class for the <code>Switch</code> component.
  *
- * @author Michael Gmeiner / last modified by $Author: $
- * @version $Revision: $
+ * @author Michael Gmeiner / last modified by Melloware
  * @since 0.6
  */
 public class Switch extends UIComponentBase {
@@ -39,12 +41,6 @@ public class Switch extends UIComponentBase {
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-    /**
-     * Properties that are tracked by state saving.
-     *
-     * @author Michael Gmeiner / last modified by $Author: $
-     * @version $Revision: $
-     */
     protected enum PropertyKeys {
 
         value;
@@ -90,16 +86,13 @@ public class Switch extends UIComponentBase {
 
             if (child instanceof Case) {
                 final Case caseComponent = (Case) child;
+                final Object evaluate = this.getValue();
+                final Object caseValue = caseComponent.getValue();
 
-                if ((caseComponent.getValue() == null && this.getValue() != null)
-                            || (this.getValue() == null && caseComponent.getValue() != null)) {
-                    continue;
-                }
-                if ((caseComponent.getValue() == null && this.getValue() == null)
-                            || caseComponent.getValue().equals(this.getValue())) {
-
+                // TODO: switch this to Objects.equals in Java7
+                if (ObjectUtils.equals(evaluate, caseValue) || StringUtils.equalsIgnoreCase(String.valueOf(evaluate), String.valueOf(caseValue))) {
                     caseToRender = caseComponent;
-                    // mustn't break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
+                    // must not break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
                 }
             }
             else if (child instanceof DefaultCase) {
