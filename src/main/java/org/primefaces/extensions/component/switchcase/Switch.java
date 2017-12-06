@@ -28,7 +28,6 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Component class for the <code>Switch</code> component.
@@ -90,9 +89,8 @@ public class Switch extends UIComponentBase {
                 final Object caseValue = caseComponent.getValue();
 
                 // TODO: switch this to Objects.equals in Java7
-                if (ObjectUtils.equals(evaluate, caseValue))) {
+                if (ObjectUtils.equals(evaluate, caseValue)) {
                     caseToRender = caseComponent;
-                    // must not break, because need to set rendered=false to other cases (e.g. for visitTree correctness)
                 }
             }
             else if (child instanceof DefaultCase) {
