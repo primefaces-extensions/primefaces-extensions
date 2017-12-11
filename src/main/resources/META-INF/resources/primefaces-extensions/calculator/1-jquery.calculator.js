@@ -727,8 +727,8 @@
 				return;
 			}
 			var target = $(event.target);
-			if (!target.parents().andSelf().hasClass(plugin._mainDivClass) && !target.hasClass(plugin._getMarker()) &&
-					!target.parents().andSelf().hasClass(plugin._triggerClass) && plugin._showingCalculator) {
+			if (!target.parents().addBack().hasClass(plugin._mainDivClass) && !target.hasClass(plugin._getMarker()) &&
+					!target.parents().addBack().hasClass(plugin._triggerClass) && plugin._showingCalculator) {
 				plugin.hide();
 			}
 		},
