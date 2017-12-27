@@ -149,8 +149,9 @@ public class TooltipRenderer extends CoreRenderer {
             wb.append(",target:'event'");
             wb.append(",effect:false");
         }
-        wb.append("}},true);});");
-        endScript(writer);
+        wb.append("}");
+        
+        wb.finish();
     }
 
     @Override

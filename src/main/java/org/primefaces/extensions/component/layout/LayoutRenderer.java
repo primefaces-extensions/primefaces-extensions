@@ -112,7 +112,6 @@ public class LayoutRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
-        final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = layout.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
@@ -156,7 +155,6 @@ public class LayoutRenderer extends CoreRenderer {
 
         encodeClientBehaviors(fc, layout);
 
-        wb.append("},true);});");
-        endScript(writer);
+        wb.finish();
     }
 }
