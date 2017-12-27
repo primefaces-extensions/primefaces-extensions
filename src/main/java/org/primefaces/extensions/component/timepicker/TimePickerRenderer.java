@@ -147,7 +147,6 @@ public class TimePickerRenderer extends InputRenderer {
 
     protected void encodeScript(final FacesContext fc, final TimePicker timepicker, final String value)
                 throws IOException {
-        final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = timepicker.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
@@ -204,8 +203,7 @@ public class TimePickerRenderer extends InputRenderer {
 
         encodeClientBehaviors(fc, timepicker);
 
-        wb.append("},true);});");
-        endScript(writer);
+        wb.finish();
     }
 
     protected static String getValueAsString(final FacesContext fc, final TimePicker timepicker) {
