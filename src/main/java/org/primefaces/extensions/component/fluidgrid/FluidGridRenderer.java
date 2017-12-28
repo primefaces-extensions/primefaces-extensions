@@ -121,7 +121,6 @@ public class FluidGridRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
-        final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = fluidGrid.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
@@ -152,8 +151,7 @@ public class FluidGridRenderer extends CoreRenderer {
         wb.append("}");
 
         encodeClientBehaviors(fc, fluidGrid);
-        wb.append("},true);});");
-        endScript(writer);
+        wb.finish();
     }
 
     protected void renderItem(final FacesContext fc, final ResponseWriter writer, final FluidGrid fluidGrid,

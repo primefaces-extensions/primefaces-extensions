@@ -57,7 +57,6 @@ public class BlockUIRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext fc, final UIComponent component) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
         BlockUI blockUI = (BlockUI) component;
         String clientId = blockUI.getClientId(fc);
 
@@ -158,8 +157,7 @@ public class BlockUIRenderer extends CoreRenderer {
         wb.attr("namingContSep", Character.toString(UINamingContainer.getSeparatorChar(fc)));
         wb.nativeAttr("regEx", eventRegEx);
 
-        wb.append("},true);});");
-        endScript(writer);
+        wb.finish();
     }
 
     @Override
