@@ -53,6 +53,8 @@
 				<groupId>org.primefaces.extensions</groupId>
 				<artifactId>resources-optimizer-maven-plugin</artifactId>
 				<configuration>
+					<useDataUri>true</useDataUri>
+					<imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
 					<resourcesSets>
 						<resourcesSet>
 							<includes>
@@ -138,13 +140,6 @@
 							</aggregations>
 						</resourcesSet>
 					</resourcesSets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
 			</plugin>
 			<plugin>
