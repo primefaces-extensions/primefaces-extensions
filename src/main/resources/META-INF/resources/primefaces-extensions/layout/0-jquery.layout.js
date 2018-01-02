@@ -1,16 +1,16 @@
 /**
  * @preserve
  * jquery.layout 1.5.12
- * $Date: 2014-11-29 08:00:00 (Sat, 29 November 2014) $
- * $Rev: 1.0404 $
+ * $Date: 2017-11-29 08:00:00 (Sat, 29 November 2017) $
+ * $Rev: 1.0512 $
  *
- * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
+ * Copyright (c) 2014 Kevin Dalman (https://github.com/allpro/layout)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
  *
  * Dual licensed under the GPL (http://www.gnu.org/licenses/gpl.html)
  * and MIT (http://www.opensource.org/licenses/mit-license.php) licenses.
  *
- * SEE: http://layout.jquery-dev.com/LICENSE.txt
+ * SEE: https://github.com/allpro/layout/blob/master/LICENSE.txt
  *
  * Changelog: http://layout.jquery-dev.com/changelog.cfm
  *
@@ -27,9 +27,6 @@
  * {?string} nullable type (sometimes NULL) - default for {Object}
  * {number=} optional parameter
  * {*}   ALL types
- */
-/* TODO for jQ 2.x
- * check $.fn.disableSelection - this is in jQuery UI 1.9.x
  */
 
 // NOTE: For best readability, view with a fixed-width font and tabs equal to 4-chars
@@ -67,8 +64,8 @@
      * GENERIC $.layout METHODS - used by all layouts
      */
     $.layout = {
-        version: "1.4.4"
-        , revision: 1.0404 // eg: ver 1.4.4 = rev 1.0404 - major(n+).minor(nn)+patch(nn+)
+        version: "1.5.12"
+        , revision: 1.0512 // eg: ver 1.4.4 = rev 1.0404 - major(n+).minor(nn)+patch(nn+)
 
                 // $.layout.browser REPLACES $.browser
         , browser: {} // set below
