@@ -156,7 +156,7 @@ public class SlideOutRenderer extends CoreRenderer {
         final String handleId = getHandleId(context, slideOut);
         wb.initWithDomReady("ExtSlideOut", slideOut.resolveWidgetVar(), clientId);
         wb.attr("tabLocation", slideOut.getLocation());
-        wb.attr("tabHandle", "#" + handleId);
+        wb.attr("tabHandle", handleId);
         wb.attr("speed", slideOut.getAnimateSpeed());
         wb.attr("action", StringUtils.lowerCase(slideOut.getShowOn()));
         wb.attr("clickScreenToClose", slideOut.isClickScreenToClose());
@@ -167,6 +167,7 @@ public class SlideOutRenderer extends CoreRenderer {
         wb.attr("handleOffsetReverse", slideOut.isHandleOffsetReverse());
         wb.attr("bounceTimes", slideOut.getBounceTimes());
         wb.attr("bounceDistance", slideOut.getBounceDistance());
+        wb.nativeAttr("clickScreenToCloseFilters", "['.ui-slideouttab-panel', 'button', 'a']");
 
         if (slideOut.getHandleOffset() != null) {
             wb.attr("handleOffset", slideOut.getHandleOffset());

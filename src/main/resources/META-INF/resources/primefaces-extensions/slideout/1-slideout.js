@@ -30,6 +30,8 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
     _applySlideOut : function(cfg) {
         // make a copy of the configuration
         var opts = $.extend(true, {}, cfg);
+        
+        opts.tabHandle = PrimeFaces.escapeClientId(opts.tabHandle);
 
         // create the slideout
         this.jq.tabSlideOut(opts);
