@@ -5,7 +5,7 @@
     Contributions by:
         Michael Fielding
     License: GPL v3.0
-    Original location: http://code.google.com/p/tab-slide-out
+    Original location: https://github.com/hawk-ip/jquery.tabSlideOut.js
 
     To use this you need an element for the tab panel content ('panel'), and inside it an element for the 
     tab which will stick out from the window edge and be clickable ('handle'). By default the selector 
