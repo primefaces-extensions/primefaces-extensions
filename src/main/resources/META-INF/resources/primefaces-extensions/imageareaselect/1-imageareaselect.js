@@ -188,7 +188,9 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
      * so no call to update() is necessary (as opposed to setSelection()).
      */
     cancelSelection : function() {
-        this.instance.cancelSelection();
+        if (this.instance) {
+            this.instance.cancelSelection();
+        }
     },
 
     /**
