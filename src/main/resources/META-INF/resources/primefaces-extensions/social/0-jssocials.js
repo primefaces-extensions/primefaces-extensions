@@ -432,7 +432,7 @@
 
         email: {
             label: "E-mail",
-            logo: "fa fa-at",
+            logo: "fas fa-at",
             shareUrl: "mailto:{to}?subject={text}&body={url}",
             countUrl: "",
             shareIn: "self"
