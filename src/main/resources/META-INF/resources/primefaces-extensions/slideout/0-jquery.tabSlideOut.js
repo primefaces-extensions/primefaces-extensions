@@ -1,11 +1,9 @@
 /*
     tabSlideOUt v2.4
 
-    By William Paoli: http://wpaoli.building58.com
-    Contributions by:
-        Michael Fielding
+    Originally by William Paoli: http://code.google.com/p/tab-slide-out
+    Maintained by Michael Fielding: https://github.com/hawk-ip/jquery.tabSlideOut.js
     License: GPL v3.0
-    Original location: https://github.com/hawk-ip/jquery.tabSlideOut.js
 
     To use this you need an element for the tab panel content ('panel'), and inside it an element for the 
     tab which will stick out from the window edge and be clickable ('handle'). By default the selector 
@@ -32,7 +30,7 @@
         
     You can also send JQuery events to initiate actions:
     
-        $('#my-tab').trigger('open'); // opens it
+    $('#my-tab').trigger('open'); // opens it
         $('#my-tab').trigger('close'); // closes it
         $('#my-tab').trigger('toggle'); // toggles it
         $('#my-tab').trigger('bounce'); // bounces the tab
