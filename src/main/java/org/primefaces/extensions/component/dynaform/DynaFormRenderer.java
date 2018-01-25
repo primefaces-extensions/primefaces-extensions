@@ -62,7 +62,7 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String LABEL_CLASS = "pe-dynaform-label";
     private static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
     private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
-    private static final String LABEL_CONTROL_CLASS_FORMAT = "pe-dynaform-%s-label";
+    private static final String LABEL_CONTROL_TYPE_CLASS_FORMAT = "pe-dynaform-%s-label";
 
     private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
     private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
@@ -304,10 +304,10 @@ public class DynaFormRenderer extends CoreRenderer {
         dynaForm.resetData();
     }
 
-    protected void preRenderLabel(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) {
-        for (final DynaFormLabel dynaFormLabel : dynaFormModel.getLabels()) {
+    protected void preRenderLabel(FacesContext fc, DynaForm dynaForm, DynaFormModel model) {
+        for (final DynaFormLabel label : model.getLabels()) {
             // get corresponding control if any
-            DynaFormControl control = dynaFormLabel.getForControl();
+            DynaFormControl control = label.getForControl();
             if (control != null) {
                 // find control's cell by type
                 UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
@@ -325,14 +325,14 @@ public class DynaFormRenderer extends CoreRenderer {
                     String targetClientId = (target instanceof InputHolder)
                                 ? ((InputHolder) target).getInputClientId()
                                 : target.getClientId(fc);
-                    dynaFormLabel.setTargetClientId(targetClientId);
+                    label.setTargetClientId(targetClientId);
 
                     ContextCallback callback = new ContextCallback() {
 
                         @Override
                         public void invokeContextCallback(FacesContext context, UIComponent target) {
-                            dynaFormLabel.setTargetValid(((EditableValueHolder) target).isValid());
-                            dynaFormLabel.setTargetRequired(((EditableValueHolder) target).isRequired());
+                            label.setTargetValid(((EditableValueHolder) target).isValid());
+                            label.setTargetRequired(((EditableValueHolder) target).isRequired());
                         }
                     };
 
@@ -343,11 +343,11 @@ public class DynaFormRenderer extends CoreRenderer {
                         callback.invokeContextCallback(fc, target);
                     }
 
-                    if (dynaFormLabel.getValue() != null) {
-                        target.getAttributes().put("label", dynaFormLabel.getValue());
+                    if (label.getValue() != null) {
+                        target.getAttributes().put("label", label.getValue());
                     }
 
-                    dynaFormLabel.setStyleClass(String.format(LABEL_CONTROL_CLASS_FORMAT, control.getType().toLowerCase()));
+                    label.setStyleClass(String.format(LABEL_CONTROL_TYPE_CLASS_FORMAT, control.getType().toLowerCase()));
                 }
             }
         }
