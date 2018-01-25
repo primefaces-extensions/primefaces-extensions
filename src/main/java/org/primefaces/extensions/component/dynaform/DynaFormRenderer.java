@@ -62,6 +62,7 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String LABEL_CLASS = "pe-dynaform-label";
     private static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
     private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
+    private static final String LABEL_CONTROL_CLASS_FORMAT = "pe-dynaform-%s-label";
 
     private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
     private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
@@ -235,7 +236,7 @@ public class DynaFormRenderer extends CoreRenderer {
                     // render label
                     DynaFormLabel label = (DynaFormLabel) element;
 
-                    writer.writeAttribute("class", (styleClass + " " + LABEL_CLASS + " " + labelCommonClass).trim(), null);
+                    writer.writeAttribute("class", (styleClass + " " + LABEL_CLASS + " " + label.getStyleClass() + " " + labelCommonClass).trim(), null);
                     writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
                     writer.startElement("label", null);
@@ -345,6 +346,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     if (dynaFormLabel.getValue() != null) {
                         target.getAttributes().put("label", dynaFormLabel.getValue());
                     }
+
+                    dynaFormLabel.setStyleClass(String.format(LABEL_CONTROL_CLASS_FORMAT, control.getType().toLowerCase()));
                 }
             }
         }
