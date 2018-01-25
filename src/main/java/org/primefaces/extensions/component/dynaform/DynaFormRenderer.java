@@ -25,6 +25,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
@@ -236,7 +237,10 @@ public class DynaFormRenderer extends CoreRenderer {
                     // render label
                     DynaFormLabel label = (DynaFormLabel) element;
 
-                    writer.writeAttribute("class", (styleClass + " " + LABEL_CLASS + " " + label.getStyleClass() + " " + labelCommonClass).trim(), null);
+                    writer.writeAttribute("class", (styleClass 
+                                + " " + LABEL_CLASS
+                                + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
+                                + " " + labelCommonClass).trim(), null);
                     writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
                     writer.startElement("label", null);
