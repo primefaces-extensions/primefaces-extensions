@@ -346,63 +346,65 @@ See https://github.com/adobe-type-tools/cmap-resources
     <div id="printContainer"></div>
 
     <script type="text/javascript">
-	//convenience variables to libraries
+    //convenience variables to libraries
 	var $ = window.parent.jQuery;
-	var pf = window.parent.PrimeFaces;
-	var pfext = window.parent.PrimeFacesExt;
-
-	//Adding l10n file
-	var l10nNodeUrl = pf.getFacesResource('documentviewer/locale/locales.txt',pfext.RESOURCE_LIBRARY, pfext.VERSION);
-	var l10nNode = $("<link rel='resource' type='application/l10n' href='" + l10nNodeUrl + "'/>").get(0);
-	document.getElementsByTagName('head')[0].appendChild(l10nNode);
-
-	//script to properly load the JS file into the head and execute it
-	var load_script = function (url, callback) {
-	    var oDOC = document;
-	    var head = oDOC.head || oDOC.getElementsByTagName("head");
-
-	    // loading code borrowed directly from LABjs itself
-	    setTimeout(function () {
-	        if ("item" in head) { // check if ref is still a live node list
-	            if (!head[0]) { // append_to node not yet ready
-	                setTimeout(arguments.callee, 25);
-	                return;
-	            }
-	            head = head[0]; // reassign from live node list ref to pure node ref
-	            // -- avoids nasty IE bug where changes to DOM
-	            // invalidate live node lists
-	        }
-	        var scriptElem = oDOC.createElement("script"),
-	        scriptdone = false;
-	        scriptElem.onload = scriptElem.onreadystatechange = function () {
-	            if ((scriptElem.readyState && scriptElem.readyState !== "complete" && scriptElem.readyState !== "loaded") || scriptdone) {
-	                return false;
-	            }
-	            scriptElem.onload = scriptElem.onreadystatechange = null;
-	            scriptdone = true;
-	            if (typeof callback === 'function') {
-	                callback();
-	            }
-	        };
-	        scriptElem.src = url;
-	        head.insertBefore(scriptElem, head.firstChild);
-	    }, 0);
-
-	    // required: shim for FF <= 3.5 not having document.readyState
-	    if (oDOC.readyState == null && oDOC.addEventListener) {
-	        oDOC.readyState = "loading";
-	        var handler;
-	        oDOC.addEventListener("DOMContentLoaded", handler = function () {
-	            oDOC.removeEventListener("DOMContentLoaded", handler, false);
-	            oDOC.readyState = "complete";
-	        }, false);
-	    }
-	};
-
-	// load the viewer script on document ready which will cause it to execute
-	// after all resources loaded
-	var appUrl = pf.getFacesResource('documentviewer/pdf.viewer.js', pfext.RESOURCE_LIBRARY, pfext.VERSION);
+	
 	$(document).ready(function () {
+		var pf = window.parent.PrimeFaces;
+		var pfext = window.parent.PrimeFacesExt;
+
+		//Adding l10n file
+		var l10nNodeUrl = pf.getFacesResource('documentviewer/locale/locales.txt',pfext.RESOURCE_LIBRARY, pfext.VERSION);
+		var l10nNode = $("<link rel='resource' type='application/l10n' href='" + l10nNodeUrl + "'/>").get(0);
+		document.getElementsByTagName('head')[0].appendChild(l10nNode);
+
+		//script to properly load the JS file into the head and execute it
+		var load_script = function (url, callback) {
+			var oDOC = document;
+			var head = oDOC.head || oDOC.getElementsByTagName("head");
+
+			// loading code borrowed directly from LABjs itself
+			setTimeout(function () {
+				if ("item" in head) { // check if ref is still a live node list
+					if (!head[0]) { // append_to node not yet ready
+						setTimeout(arguments.callee, 25);
+						return;
+					}
+					head = head[0]; // reassign from live node list ref to pure node ref
+					// -- avoids nasty IE bug where changes to DOM
+					// invalidate live node lists
+				}
+				var scriptElem = oDOC.createElement("script"),
+				scriptdone = false;
+				scriptElem.onload = scriptElem.onreadystatechange = function () {
+					if ((scriptElem.readyState && scriptElem.readyState !== "complete" && scriptElem.readyState !== "loaded") || scriptdone) {
+						return false;
+					}
+					scriptElem.onload = scriptElem.onreadystatechange = null;
+					scriptdone = true;
+					if (typeof callback === 'function') {
+						callback();
+					}
+				};
+				scriptElem.src = url;
+				head.insertBefore(scriptElem, head.firstChild);
+			}, 0);
+
+			// required: shim for FF <= 3.5 not having document.readyState
+			if (oDOC.readyState == null && oDOC.addEventListener) {
+				oDOC.readyState = "loading";
+				var handler;
+				oDOC.addEventListener("DOMContentLoaded", handler = function () {
+					oDOC.removeEventListener("DOMContentLoaded", handler, false);
+					oDOC.readyState = "complete";
+				}, false);
+			}
+		};
+
+		// load the viewer script on document ready which will cause it to execute
+		// after all resources loaded
+		var appUrl = pf.getFacesResource('documentviewer/pdf.viewer.js', pfext.RESOURCE_LIBRARY, pfext.VERSION);
+	
 	    load_script(appUrl, function() {
 	        // callback function
 	        // console.log('pdf.viewer.js script loaded!');
