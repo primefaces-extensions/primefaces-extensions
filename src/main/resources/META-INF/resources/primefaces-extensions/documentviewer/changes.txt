@@ -1,12 +1,16 @@
 1. Download latest pdf.js
 
-2. Combine the following files into pdf.viewer.js in order. compatibility.js > l10n.js > pdf.js > viewer.js
+2. Combine the following files into pdf.viewer.js in order. compatibility.js > l10n.js > pdf.js > viewer.js = pdf.viewer.js
 
-3. Run viewer.css through http://dataurl.net/ to turn all images into BASE64 encoded in CSS.
+3. Copy GruntFile.js and package.json to the downloaded PDF.js\web\ directory.
 
-4. Put the new CSS from #3 right into the <style></style> of the viewer.html
+4. Execute to convert images to data URI:
+	npm install
+	grunt dataUri   https://github.com/ahomu/grunt-data-uri
 
-5. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
+5. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
+
+6. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
 
 In 1l10.js replace this..
              if (match) { // @import rule?
@@ -30,20 +34,30 @@ And change this variable:
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
 
+ return new Promise(function (resolve, reject) {
+        var url =window.parent.PrimeFaces.getFacesResource('documentviewer/cmaps/'+ name + (_this.isCompressed ? '.bcmap' : ''),
+            window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+            window.parent.PrimeFacesExt.VERSION);
+        var request = new XMLHttpRequest();
+
+      image.src = window.parent.PrimeFaces.getFacesResource('documentviewer/images/'+ 'annotation-' + this.data.name.toLowerCase() + '.svg',
+            window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+            window.parent.PrimeFacesExt.VERSION);
+
 Remove this check...
     if (fileOrigin !== viewerOrigin) {
       throw new Error('file origin does not match viewer\'s');
     }
 
-6. Allow language changing by disabling debug check by moving this code outside debug block...
+7. Allow language changing by disabling debug check by moving this code outside debug block...
 
   if ('locale' in hashParams) {
     PDFJS.locale = hashParams['locale'];
   }
   
-7. Compress and minify pdf.worker.js.
+8. Compress and minify pdf.worker.js.
 
-8. In the /web/locale directory of the distribution run this DOS script..
+9. In the /web/locale directory of the distribution run this DOS script..
 
 @echo off
 for /r %%a in (viewer.properties) do for %%b in ("%%~dpa\.") do ren "%%~a" "%%~nxb.locale.txt"
