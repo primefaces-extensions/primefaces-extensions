@@ -124,7 +124,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 
 	    // skin input
 	    if (!this.cfg.modeInline) {
-	        PrimeFaces.skinInput(this.jq);
+	        this.enableInput();
 	    }
 
 	    // client behaviors
@@ -138,6 +138,46 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         this.removeScriptElement(this.id);
         
         this.originalValue = this.jq.val();
+	},
+	
+	enableInput : function() {
+	    var _self = this;
+	    
+	    PrimeFaces.skinInput(this.jq);
+	    
+	    this.jq.on({
+	        keydown: function(e){
+	            var keyCode = $.ui.keyCode;
+	            
+	            switch(e.which) {            
+	                case keyCode.UP:
+	                    _self.spin(1);
+	                break;
+
+	                case keyCode.DOWN:
+	                    _self.spin(-1);
+	                break;
+
+	                default:
+	                    //do nothing
+	                break;
+	            }
+	        },
+	        keyup: function(e){
+	            clearInterval(_self.spinnerInterval);
+	        },
+	        mousewheel: function(event, delta) {
+	            if(_self.jq.is(':focus')) {
+	                if(delta > 0)
+	                    _self.spin(1);
+	                else
+	                    _self.spin(-1);
+	                
+	                clearInterval(_self.spinnerInterval);
+	                return false;
+	            }
+	        }
+	    });
 	},
 
 	enableSpinner : function() {
@@ -312,6 +352,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 
 	    if (newTime != null) {
 	        this.jq.val(newTime);
+	        this.jq.attr('aria-valuenow', newTime);
 	    }
 	},
 
