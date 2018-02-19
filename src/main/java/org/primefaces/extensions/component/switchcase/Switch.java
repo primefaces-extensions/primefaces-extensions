@@ -27,8 +27,6 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 /**
  * Component class for the <code>Switch</code> component.
  *
@@ -89,7 +87,7 @@ public class Switch extends UIComponentBase {
                 final Object caseValue = caseComponent.getValue();
 
                 // TODO: switch this to Objects.equals in Java7
-                if (ObjectUtils.equals(evaluate, caseValue)) {
+                if (equals(evaluate, caseValue)) {
                     caseToRender = caseComponent;
                 }
             }
@@ -147,6 +145,16 @@ public class Switch extends UIComponentBase {
     public void encodeBegin(FacesContext context) throws IOException {
         evaluate();
         super.encodeBegin(context);
+    }
+
+    private boolean equals(final Object object1, final Object object2) {
+        if (object1 == object2) {
+            return true;
+        }
+        if (object1 == null || object2 == null) {
+            return false;
+        }
+        return object1.equals(object2);
     }
 
 }
