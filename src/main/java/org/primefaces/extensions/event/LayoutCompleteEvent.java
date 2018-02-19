@@ -27,7 +27,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 1.1.0
  */
-@SuppressWarnings("serial")
 public class LayoutCompleteEvent extends AbstractAjaxBehaviorEvent {
 
     public LayoutCompleteEvent(final UIComponent component, final Behavior behavior) {

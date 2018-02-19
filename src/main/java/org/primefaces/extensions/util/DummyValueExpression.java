@@ -25,7 +25,6 @@ import javax.el.ValueExpression;
  * @version $Revision$
  * @since 0.5
  */
-@SuppressWarnings("serial")
 public class DummyValueExpression extends ValueExpression {
 
     private Class<?> type;

@@ -28,7 +28,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 0.2
  */
-@SuppressWarnings("serial")
 public class CloseEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "close";

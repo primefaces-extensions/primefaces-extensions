@@ -28,7 +28,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 0.2
  */
-@SuppressWarnings("serial")
 public class OpenEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "open";

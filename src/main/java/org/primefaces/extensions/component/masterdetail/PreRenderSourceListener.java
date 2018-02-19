@@ -112,7 +112,6 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
             return;
         }
 
-        @SuppressWarnings("unchecked")
         Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
         if (contextValues == null) {
             contextValues = new HashMap<String, Object>();

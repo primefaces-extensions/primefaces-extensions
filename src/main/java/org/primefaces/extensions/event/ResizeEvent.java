@@ -28,7 +28,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 0.1
  */
-@SuppressWarnings("serial")
 public class ResizeEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "resize";

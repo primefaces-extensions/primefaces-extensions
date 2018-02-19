@@ -191,7 +191,6 @@ public class JsonConverterTest {
         assertEquals(now, obj);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testCollection() {
         jsonConverter.setType("java.util.Collection<java.lang.Integer>");
@@ -208,7 +207,6 @@ public class JsonConverterTest {
         assertTrue(CollectionUtils.isEqualCollection(list, (Collection<Integer>) obj));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testComplexMap() {
         jsonConverter.setType(

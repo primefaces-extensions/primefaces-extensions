@@ -401,7 +401,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
         super.broadcast(event);

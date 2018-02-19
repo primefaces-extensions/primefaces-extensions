@@ -27,7 +27,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 0.6
  */
-@SuppressWarnings("serial")
 public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "reached";

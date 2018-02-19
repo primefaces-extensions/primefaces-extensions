@@ -26,7 +26,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-@SuppressWarnings("serial")
 public class ClipboardErrorEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "error";

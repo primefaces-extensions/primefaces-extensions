@@ -305,7 +305,6 @@ public class MasterDetail extends UIComponentBase {
 
         // get resolved context value
         Object contextValue = null;
-        @SuppressWarnings("unchecked")
         Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
         if (contextValues != null) {
             contextValue = contextValues.get(RESOLVED_CONTEXT_VALUE + source);

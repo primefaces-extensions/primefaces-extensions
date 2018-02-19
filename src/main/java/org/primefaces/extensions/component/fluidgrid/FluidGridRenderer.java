@@ -85,7 +85,6 @@ public class FluidGridRenderer extends CoreRenderer {
                     }
                 }
 
-                @SuppressWarnings("unchecked")
                 final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
                 for (final FluidGridItem fluidGridItem : col) {
                     // find ui item by type

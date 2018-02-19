@@ -70,7 +70,6 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
         }
 
         // get resolved context value
-        @SuppressWarnings("unchecked")
         Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
         if (contextValues == null) {
             contextValues = new HashMap<String, Object>();

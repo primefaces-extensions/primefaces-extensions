@@ -82,7 +82,6 @@ public class AssignableParameterHandler extends ComponentHandler {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected MetaRuleset createMetaRuleset(final Class type) {
         final MetaRuleset metaRuleset = super.createMetaRuleset(type);
         metaRuleset.addRule(META_RULE);

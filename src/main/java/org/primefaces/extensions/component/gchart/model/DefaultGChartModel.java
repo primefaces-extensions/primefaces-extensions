@@ -73,7 +73,6 @@ class DefaultGChartModel implements GChartModel {
         return GsonConverter.getGson().toJson(root);
     }
 
-    @SuppressWarnings("unchecked")
     protected JsonElement extractData() {
         Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
 

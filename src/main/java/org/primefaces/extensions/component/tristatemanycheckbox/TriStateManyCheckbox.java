@@ -170,7 +170,6 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
     @Override
     protected void validateValue(final FacesContext context, final Object value) {
-        @SuppressWarnings("unchecked")
         Map<Object, Object> mapValues = (Map) value;
 
         // call all validators

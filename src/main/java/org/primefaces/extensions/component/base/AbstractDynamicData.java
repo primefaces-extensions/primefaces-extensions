@@ -545,7 +545,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         // force id reset
         component.setId(component.getId());
 
-        @SuppressWarnings("unchecked")
         final Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper()
                     .get(PropertyKeys.saved);
 
@@ -596,7 +595,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         // force id reset
         component.setId(component.getId());
 
-        @SuppressWarnings("unchecked")
         final Map<String, SavedEditableValueState> saved = (Map<String, SavedEditableValueState>) getStateHelper()
                     .get(PropertyKeys.saved);
 
