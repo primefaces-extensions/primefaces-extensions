@@ -19,7 +19,7 @@
 /* This class is added after the tabs are initialised, otherwise the user sees the 
    tabs slide out of the way when the page is initialised. */
 .ui-slideouttab-ready {
-    transition: transform 0.5s ease 0s;
+    transition: transform 0.50s ease 0.00ms;
 }
 
 /* Hide tabs and panels when printed. */
