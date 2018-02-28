@@ -1,0 +1,88 @@
+/* ------------------------------------ 
+ * jsf-sheet extensions 
+ */
+.ui-handsontable.ui-widget-content {
+    border: none;
+}
+
+.handsontable td.ui-datatable-odd {
+	background: white;
+}
+
+.handsontable th {
+	font-weight: bold;
+}
+
+.handsontable td.area {
+    background: #FC8;
+}
+
+.ui-sheet-error {
+    display:  block;    
+}
+
+.ui-sheet-error .ui-outputlabel-rfi {
+	padding-right: 4px;
+}
+
+.handsontable-inner {
+    overflow: hidden;
+}
+
+.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer  {
+    text-align: center;
+    padding: 4px;
+    color: #777;
+}
+
+.handsontable .wtBorder {
+    background-color: #F30 !important;
+}
+
+.ui-handsontable.ui-state-error {
+	border-width: 2px;
+	border-radius: 7px;
+	color: #222;
+}
+
+.handsontable td.ui-message-error {
+    background: #FCC;
+}
+
+.handsontable th .ui-sortable-column-icon.ui-icon {
+	display: inline-block;
+	position: relative;
+	top: 3px;
+	margin-left: 2px;
+}
+
+.handsontable th.ui-sortable {
+	cursor: pointer;
+}
+
+.handson-filter input {
+    width: 70px;
+}
+
+span.handson-filter {
+    display: block;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+}
+
+.handson-filter select {
+    background: white;
+    color: #222;
+}
+
+/* CSS3 only hack until I can figure out a better way */
+.ui-widget-content .handsontable th:not(:first-child) {
+    border-left: none !important;
+}
+
+/* PF theme select appears smaller in 4.0 */
+.handsontable select {
+    padding: 2px;
+}
+
