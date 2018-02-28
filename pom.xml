@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.primefaces.extensions</groupId>
 		<artifactId>master-pom</artifactId>
-		<version>6.2.RC2-SNAPSHOT</version>
+		<version>6.2</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>primefaces-extensions</artifactId>
@@ -55,6 +55,8 @@
 				<configuration>
 					<useDataUri>true</useDataUri>
 					<imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
+					<languageIn>ECMASCRIPT5</languageIn>
+					<languageOut>ECMASCRIPT5</languageOut>
 					<resourcesSets>
 						<resourcesSet>
 							<includes>
@@ -66,6 +68,7 @@
 								<include>imageareaselect/**</include>
 								<include>layout/**</include>
 								<include>qrcode/**</include>
+								<include>sheet/**</include>
 								<include>slideout/**</include>
 								<include>social/**</include>
 								<include>speedtest/**</include>
