@@ -85,6 +85,7 @@ public class SheetRenderer extends CoreRenderer {
         String clientId = sheet.getClientId(context);
         Integer width = sheet.getWidth();
         Integer height = sheet.getHeight();
+        String style = sheet.getStyle();
 
         // outer div to wrapper table
         responseWriter.startElement("div", null);
@@ -113,7 +114,10 @@ public class SheetRenderer extends CoreRenderer {
         responseWriter.writeAttribute("name", clientId + "_tbl", "clientId");
         responseWriter.writeAttribute("class", "handsontable-inner", "styleClass");
 
-        String style = "";
+        if (style == null) {
+            style = StringUtils.EMPTY;
+        }
+
         if (width != null) {
             style = style + "width: " + width + "px;";
         }
@@ -204,8 +208,6 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
         encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
 
-        wb.nativeAttr("rowHeaders", sheet.isShowRowHeaders().toString());
-
         encodeColHeaders(context, sheet, wb);
         encodeColOptions(context, sheet, wb);
         wb.finish();
@@ -270,8 +272,9 @@ public class SheetRenderer extends CoreRenderer {
     }
 
     /**
-     * Encode the row data. Builds row data, style data and read only object. TODO figure out how to clean this up without having to iterate over data more than
-     * once and still keep it thread safe (no private member field use).
+     * Encode the row data. Builds row data, style data and read only object.
+     * <p>
+     * TODO figure out how to clean this up without having to iterate over data more than once and still keep it thread safe (no private member field use).
      *
      * @param context
      * @param sheet
@@ -279,12 +282,14 @@ public class SheetRenderer extends CoreRenderer {
      * @throws IOException
      */
     protected void encodeData(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-
         JavascriptVarBuilder vbData = new JavascriptVarBuilder(null, false);
         JavascriptVarBuilder vbRowKeys = new JavascriptVarBuilder(null, false);
         JavascriptVarBuilder vbStyle = new JavascriptVarBuilder(null, true);
         JavascriptVarBuilder vbRowStyle = new JavascriptVarBuilder(null, false);
         JavascriptVarBuilder vbReadOnly = new JavascriptVarBuilder(null, true);
+        JavascriptVarBuilder vbRowHeaders = new JavascriptVarBuilder(null, false);
+
+        boolean isCustomHeader = sheet.getRowHeaderValueExpression() != null;
 
         List<Object> values = sheet.getSortedValues();
         int row = 0;
@@ -293,14 +298,30 @@ public class SheetRenderer extends CoreRenderer {
             final String rowKey = sheet.getRowKeyValueAsString(context);
             vbRowKeys.appendArrayValue(rowKey, true);
             encodeRow(context, rowKey, vbData, vbRowStyle, vbStyle, vbReadOnly, sheet, value, row);
+
+            // In case of custom row header evaluate the value expression for every row to set the header
+            if (sheet.isShowRowHeaders() && isCustomHeader) {
+                final String rowHeader = sheet.getRowHeaderValueAsString(context);
+                vbRowHeaders.appendArrayValue(rowHeader, true);
+            }
             row++;
         }
+
         sheet.setRowVar(context, null);
+
         wb.nativeAttr("data", vbData.closeVar().toString());
         wb.nativeAttr("styles", vbStyle.closeVar().toString());
         wb.nativeAttr("rowStyles", vbRowStyle.closeVar().toString());
         wb.nativeAttr("readOnly", vbReadOnly.closeVar().toString());
         wb.nativeAttr("rowKeys", vbRowKeys.closeVar().toString());
+
+        // add the row header as a native attribute
+        if (!isCustomHeader) {
+            wb.nativeAttr("rowHeaders", sheet.isShowRowHeaders().toString());
+        }
+        else {
+            wb.nativeAttr("rowHeaders", vbRowHeaders.closeVar().toString());
+        }
     }
 
     /**

@@ -5171,6 +5171,12 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
+        <attribute>
+            <description><![CDATA[An el expression resolving to a header for each row.  Optional.]]></description>
+            <name>rowHeader</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Property to be used for sorting.]]>
@@ -5195,6 +5201,12 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description><![CDATA[Style of the html container element. Width and Height can be configured here in viewport units]]></description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[The additional style classes for the rendered table.  Multiple classes may be specified delimited by a space.]]>

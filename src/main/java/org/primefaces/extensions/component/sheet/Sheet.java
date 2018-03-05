@@ -132,6 +132,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         showRowHeaders,
 
         /**
+         * The custom row header to be used in place of the standard numeric header value
+         */
+        rowHeader,
+
+        /**
          * Fixed rows when scrolling
          */
         fixedRows,
@@ -155,6 +160,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
          * The global error message to be displayed when the sheet is in error
          */
         errorMessage,
+
+        /**
+         * Style of the html container element
+         */
+        style,
 
         /**
          * User style class for sheet
@@ -852,6 +862,54 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     @Override
     public Object getValue() {
         return getStateHelper().eval(PropertyKeys.value);
+    }
+
+    /**
+     * Update the style value for the component
+     *
+     * @param value
+     */
+    public void setStyle(String value) {
+        getStateHelper().put(PropertyKeys.style, value);
+    }
+
+    /**
+     * The style value
+     *
+     * @return the style value
+     */
+    public String getStyle() {
+        final Object result = getStateHelper().eval(PropertyKeys.style, null);
+        if (result == null) {
+            return null;
+        }
+        return result.toString();
+    }
+
+    /**
+     * Gets the rowHeader value expression defined
+     *
+     * @return a value expression for Row Header or null if the expression is not set
+     */
+    protected ValueExpression getRowHeaderValueExpression() {
+        return getValueExpression(PropertyKeys.rowHeader.name());
+    }
+
+    /**
+     * Gets the row header text value as a string for use in javascript
+     *
+     * @param context
+     * @return
+     */
+    protected String getRowHeaderValueAsString(FacesContext context) {
+        ValueExpression veRowHeader = getRowHeaderValueExpression();
+        final Object value = veRowHeader.getValue(context.getELContext());
+        if (value == null) {
+            return StringUtils.EMPTY;
+        }
+        else {
+            return value.toString();
+        }
     }
 
     /**
