@@ -43,7 +43,7 @@ CKEDITOR_GETURL = function(resource) {
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-                    facesResource = PrimeFaces.getFacesResource(extractedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 }
             } else {
                 facesResource = resource;
