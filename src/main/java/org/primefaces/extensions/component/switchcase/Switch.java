@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.switchcase;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -53,7 +54,7 @@ public class Switch extends UIComponentBase {
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -78,16 +79,15 @@ public class Switch extends UIComponentBase {
         DefaultCase caseToRender = null;
         DefaultCase defaultCase = null;
 
-        for (UIComponent child : this.getChildren()) {
+        for (UIComponent child : getChildren()) {
             child.setRendered(false);
 
             if (child instanceof Case) {
                 final Case caseComponent = (Case) child;
-                final Object evaluate = this.getValue();
+                final Object evaluate = getValue();
                 final Object caseValue = caseComponent.getValue();
 
-                // TODO: switch this to Objects.equals in Java7
-                if (equals(evaluate, caseValue)) {
+                if (Objects.equals(evaluate, caseValue)) {
                     caseToRender = caseComponent;
                 }
             }
@@ -145,16 +145,6 @@ public class Switch extends UIComponentBase {
     public void encodeBegin(FacesContext context) throws IOException {
         evaluate();
         super.encodeBegin(context);
-    }
-
-    private boolean equals(final Object object1, final Object object2) {
-        if (object1 == object2) {
-            return true;
-        }
-        if (object1 == null || object2 == null) {
-            return false;
-        }
-        return object1.equals(object2);
     }
 
 }
