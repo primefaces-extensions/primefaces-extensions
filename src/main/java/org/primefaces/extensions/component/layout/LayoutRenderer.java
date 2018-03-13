@@ -56,9 +56,6 @@ public class LayoutRenderer extends CoreRenderer {
             fc.setResponseWriter(writer.cloneWithWriter(fsw));
             writer = fc.getResponseWriter();
         }
-        else {
-            encodeScript(fc, layout);
-        }
 
         if (!layout.isFullPage()) {
             writer.startElement("div", layout);
@@ -101,6 +98,9 @@ public class LayoutRenderer extends CoreRenderer {
             layout.removeOptions();
             layout.setOriginalWriter(null);
             layout.setFastStringWriter(null);
+        }
+        else {
+            encodeScript(fc, layout);
         }
 
         layout.setBuildOptions(false);
