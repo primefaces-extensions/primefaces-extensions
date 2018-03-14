@@ -25,6 +25,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.WidgetBuilder;
 
@@ -143,7 +144,9 @@ public class LayoutRenderer extends CoreRenderer {
 
         final Object layoutOptions = layout.getOptions();
         if (layoutOptions instanceof LayoutOptions) {
-            wb.append(",options:" + ((LayoutOptions) layoutOptions).toJson());
+            LayoutOptions options = (LayoutOptions) layoutOptions;
+            encodeUnits(fc, layout, options);
+            wb.append(",options:" + options.toJson());
         }
         else if (layoutOptions instanceof String) {
             // already serialized as JSON string
@@ -156,5 +159,15 @@ public class LayoutRenderer extends CoreRenderer {
         encodeClientBehaviors(fc, layout);
 
         wb.finish();
+    }
+
+    protected void encodeUnits(FacesContext context, Layout layout, LayoutOptions options) throws IOException {
+        for (UIComponent child : layout.getChildren()) {
+            if (child.isRendered() && child instanceof LayoutPane) {
+                LayoutPane unit = (LayoutPane) child;
+                unit.setPaneSelector("#" + ComponentUtils.escapeSelector(unit.getClientId(context)));
+                options.addOption(LayoutPane.PropertyKeys.paneSelector.toString(), unit.getPaneSelector());
+            }
+        }
     }
 }
