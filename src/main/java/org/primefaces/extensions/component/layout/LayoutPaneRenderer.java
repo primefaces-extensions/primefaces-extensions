@@ -33,7 +33,7 @@ import org.primefaces.renderkit.CoreRenderer;
 public class LayoutPaneRenderer extends CoreRenderer {
 
     @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeBegin(FacesContext fc, UIComponent component) throws IOException {
         ResponseWriter writer = fc.getResponseWriter();
         LayoutPane layoutPane = (LayoutPane) component;
 
@@ -159,6 +159,11 @@ public class LayoutPaneRenderer extends CoreRenderer {
         else {
             renderChildren(fc, layoutPane);
         }
+    }
+
+    @Override
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+        ResponseWriter writer = fc.getResponseWriter();
 
         writer.endElement("div");
     }
