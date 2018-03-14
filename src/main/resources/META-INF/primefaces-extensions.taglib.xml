@@ -2486,6 +2486,14 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[When closed, can a pane 'slide open' over adjacent panes. Default is true.]]>
+            </description>
+            <name>slidable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Specifies the initial size of a pane in px or %. Default value is null.]]>

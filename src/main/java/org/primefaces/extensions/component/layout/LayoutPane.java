@@ -52,31 +52,33 @@ public class LayoutPane extends UIComponentBase {
     protected enum PropertyKeys {
 
         // @formatter:off
-        position, 
-        combinedPosition, 
-        styleHeader, 
-        styleClassHeader, 
-        styleContent, 
-        styleClassContent, 
-        resizable, 
-        closable, 
-        size, 
-        minSize, 
-        maxSize, 
-        minWidth, 
-        maxWidth, 
-        minHeight, 
-        maxHeight, 
-        spacing_open, 
-        spacing_closed, 
-        initClosed, 
-        initHidden, 
-        resizeWhileDragging, 
-        togglerTip_open("Open"), 
-        togglerTip_closed("Close"), 
-        resizerTip("Resize"), 
-        sliderTip("Slide"), 
-        maskContents, 
+        position,
+        paneSelector,
+        combinedPosition,
+        styleHeader,
+        styleClassHeader,
+        styleContent,
+        styleClassContent,
+        resizable,
+        slideable,
+        closable,
+        size,
+        minSize,
+        maxSize,
+        minWidth,
+        maxWidth,
+        minHeight,
+        maxHeight,
+        spacing_open,
+        spacing_closed,
+        initClosed,
+        initHidden,
+        resizeWhileDragging,
+        togglerTip_open("Open"),
+        togglerTip_closed("Close"),
+        resizerTip("Resize"),
+        sliderTip("Slide"),
+        maskContents,
         maskObjects;
         // @formatter:on
 
@@ -145,6 +147,14 @@ public class LayoutPane extends UIComponentBase {
         getStateHelper().put(PropertyKeys.position, position);
     }
 
+    public String getPaneSelector() {
+        return (String) getStateHelper().eval(PropertyKeys.paneSelector, null);
+    }
+
+    public void setPaneSelector(final String paneSelector) {
+        getStateHelper().put(PropertyKeys.paneSelector, paneSelector);
+    }
+
     public String getCombinedPosition() {
         return (String) getStateHelper().eval(PropertyKeys.combinedPosition, Layout.PANE_POSITION_CENTER);
     }
@@ -191,6 +201,14 @@ public class LayoutPane extends UIComponentBase {
 
     public void setResizable(final boolean resizable) {
         getStateHelper().put(PropertyKeys.resizable, resizable);
+    }
+
+    public boolean isSlidable() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.slideable, true);
+    }
+
+    public void setSlidable(final boolean slideable) {
+        getStateHelper().put(PropertyKeys.slideable, slideable);
     }
 
     public boolean isClosable() {
@@ -337,6 +355,11 @@ public class LayoutPane extends UIComponentBase {
             options.addOption(PropertyKeys.resizable.toString(), isResizable);
         }
 
+        final boolean isSlidable = isSlidable();
+        if (!isSlidable) {
+            options.addOption(PropertyKeys.slideable.toString(), isSlidable);
+        }
+
         final boolean isClosable = isClosable();
         if (!isClosable) {
             options.addOption(PropertyKeys.closable.toString(), isClosable);
@@ -372,6 +395,11 @@ public class LayoutPane extends UIComponentBase {
             if (!isMaskContents) {
                 options.addOption("contentIgnoreSelector", ".ui-layout-mask");
             }
+        }
+
+        final String paneSelector = getPaneSelector();
+        if (paneSelector != null) {
+            options.addOption(PropertyKeys.paneSelector.toString(), paneSelector);
         }
 
         final String size = getSize();
