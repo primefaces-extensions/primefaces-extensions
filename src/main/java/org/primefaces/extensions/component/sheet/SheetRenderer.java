@@ -51,8 +51,8 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Sheet component
      */
     @Override
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
-
+    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+        final ResponseWriter responseWriter = context.getResponseWriter();
         final Sheet sheet = (Sheet) component;
 
         // update column mappings on render
@@ -61,11 +61,8 @@ public class SheetRenderer extends CoreRenderer {
         // sort data
         sheet.sortAndFilter();
 
-        ResponseWriter responseWriter = context.getResponseWriter();
-
         // encode markup
         encodeMarkup(context, sheet, responseWriter);
-
         // encode javascript
         encodeJavascript(context, sheet, responseWriter);
     }
@@ -823,31 +820,6 @@ public class SheetRenderer extends CoreRenderer {
         catch (JSONException e) {
             throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + e.getMessage(), e);
         }
-    }
-
-    /**
-     * Start script element.
-     *
-     * @param writer
-     * @param clientId
-     * @throws IOException
-     */
-    @Override
-    protected void startScript(ResponseWriter writer, String clientId) throws IOException {
-        writer.startElement("script", null);
-        writer.writeAttribute("id", clientId + "_s", null);
-        writer.writeAttribute("type", "text/javascript", null);
-    }
-
-    /**
-     * Stop script element.
-     *
-     * @param writer
-     * @throws IOException
-     */
-    @Override
-    protected void endScript(ResponseWriter writer) throws IOException {
-        writer.endElement("script");
     }
 
     /**
