@@ -363,6 +363,12 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     filterFocusOut: function (sheet, inp) {
         sheet.focusInput.val(null);
     },
+    
+    // clear currently stored input and deltas
+    clearDataInput: function () {
+        this.cfg.delta = {};
+        this.dataInput.val('');
+    },
 
     // method to prevent selection of cells on column header click
     handleHotBeforeOnCellMouseDown: function (event, coords, element) {

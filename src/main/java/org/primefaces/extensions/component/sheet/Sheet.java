@@ -314,39 +314,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * {@inheritDoc}
      */
     @Override
-    public void processDecodes(final FacesContext fc) {
-        if (isSelfRequest(fc)) {
-            decode(fc);
-        }
-        else {
-            super.processDecodes(fc);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void processValidators(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processValidators(fc);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void processUpdates(final FacesContext fc) {
-        if (!isSelfRequest(fc)) {
-            super.processUpdates(fc);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void queueEvent(final FacesEvent event) {
         final FacesContext fc = FacesContext.getCurrentInstance();
 
@@ -1663,14 +1630,9 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         final FacesContext context = FacesContext.getCurrentInstance();
         if (context.getPartialViewContext().isPartialRequest()) {
             final StringBuilder eval = new StringBuilder();
-            final String jQueryId = this.getClientId().replace(":", "\\\\:");
-            final String jsDeltaVar = this.getClientId().replace(":", "_") + "_delta";
-
-            eval.append("$('#");
-            eval.append(jQueryId);
-            eval.append("_input').val('');");
-            eval.append(jsDeltaVar);
-            eval.append("={};");
+            final String jsVar = resolveWidgetVar();
+            eval.append("PF('").append(jsVar).append("')");
+            eval.append(".clearDataInput();");
             RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
         }
     }
