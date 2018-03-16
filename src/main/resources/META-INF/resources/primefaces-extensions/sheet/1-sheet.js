@@ -27,10 +27,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
         // create table
-        this._setupHandsonTable();
+        this.setupHandsonTable();
     },
     
-    _setupHandsonTable: function() {
+    setupHandsonTable: function() {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -45,7 +45,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 col: 1
             },
             cellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                Handsontable.TextCell.renderer.apply(this, arguments);
+                Handsontable.cellTypes.text.renderer.apply(this, arguments);
 
                 var styleClass = '';
                 // append row style (if we have one)
@@ -216,6 +216,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
 
         if ($this.cfg.fixedRowsTop)
             options.fixedRowsTop = $this.cfg.fixedRowsTop;
+        
+        if ($this.cfg.manualColumnResize)
+            options.manualColumnResize = $this.cfg.manualColumnResize;
+
+        if ($this.cfg.manualRowResize)
+            options.manualRowResize = $this.cfg.manualRowResize;
+        
+        if ($this.cfg.manualColumnMove)
+            options.manualColumnMove = $this.cfg.manualColumnMove;
+
+        if ($this.cfg.manualRowMove)
+            options.manualRowMove = $this.cfg.manualRowMove;
 
         if ($this.cfg.height)
             options.height = $this.cfg.height;
@@ -260,6 +272,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 $('#' + focusId).focus()
             }, 100);
         }
+        
+        // repaint HT when the document is loaded to fix all column widths
+        $(document).ready(function(){
+            $this.ht.render();
+        }); 
     },
 
     // updates the row with the new data value
@@ -368,6 +385,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     clearDataInput: function () {
         this.cfg.delta = {};
         this.dataInput.val('');
+    },
+    
+    // tell handstontable to repaint itself
+    redraw: function () {
+        if (this.ht) {
+            this.ht.render();
+        }
     },
 
     // method to prevent selection of cells on column header click

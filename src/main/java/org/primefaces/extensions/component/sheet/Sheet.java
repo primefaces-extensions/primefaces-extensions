@@ -151,6 +151,26 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         fixedCols,
 
         /**
+         * Allow rows to be manually resizable
+         */
+        resizableRows,
+
+        /**
+         * Allow columns to be resizable
+         */
+        resizableCols,
+
+        /**
+         * Allow rows to be manually moved
+         */
+        movableRows,
+
+        /**
+         * Allow columns to be manually moved
+         */
+        movableCols,
+
+        /**
          * The width of the component in pixels
          */
         width,
@@ -334,18 +354,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    /**
-     * Update's the user's custom style class to be added to the div container for the sheet.
-     *
-     * @param styleClass
-     */
     public void setStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
-    /**
-     * The user's custom style class to be added to the div container for the sheet.
-     */
     public String getStyleClass() {
         final Object result = getStateHelper().eval(PropertyKeys.styleClass, null);
         if (result == null) {
@@ -354,20 +366,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the stretcH value for the component
-     *
-     * @param value
-     */
     public void setStretchH(String value) {
         getStateHelper().put(PropertyKeys.stretchH, value);
     }
 
-    /**
-     * The handsontable stretchH value.
-     *
-     * @return the stretchH value
-     */
     public String getStretchH() {
         final Object result = getStateHelper().eval(PropertyKeys.stretchH, null);
         if (result == null) {
@@ -376,20 +378,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the emptyMessage value for the component
-     *
-     * @param value
-     */
     public void setEmptyMessage(String value) {
         getStateHelper().put(PropertyKeys.emptyMessage, value);
     }
 
-    /**
-     * The emptyMessage value.
-     *
-     * @return the emptyMessage value
-     */
     public String getEmptyMessage() {
         final Object result = getStateHelper().eval(PropertyKeys.emptyMessage, null);
         if (result == null) {
@@ -398,20 +390,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the current row style class
-     *
-     * @param styleClass
-     */
     public void setCurrentColClass(String styleClass) {
         getStateHelper().put(PropertyKeys.currentColClass, styleClass);
     }
 
-    /**
-     * The col style class to use for the selected col
-     *
-     * @param styleClass
-     */
     public String getCurrentColClass() {
         final Object result = getStateHelper().eval(PropertyKeys.currentColClass, null);
         if (result == null) {
@@ -420,20 +402,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the current row style class
-     *
-     * @param styleClass
-     */
     public void setCurrentRowClass(String styleClass) {
         getStateHelper().put(PropertyKeys.currentRowClass, styleClass);
     }
 
-    /**
-     * The row style class to use for the selected row
-     *
-     * @param styleClass
-     */
     public String getCurrentRowClass() {
         final Object result = getStateHelper().eval(PropertyKeys.currentRowClass, null);
         if (result == null) {
@@ -442,20 +414,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the current row style class to apply to the row
-     *
-     * @param styleClass
-     */
     public void setRowStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.rowStyleClass, styleClass);
     }
 
-    /**
-     * The row style class to apply to each row
-     *
-     * @param styleClass
-     */
     public String getRowStyleClass() {
         final Object result = getStateHelper().eval(PropertyKeys.rowStyleClass, null);
         if (result == null) {
@@ -464,40 +426,52 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    /**
-     * Update the ShowColumnheaders
-     *
-     * @param value
-     */
     public void setShowColumnHeaders(Boolean value) {
         getStateHelper().put(PropertyKeys.showColumnHeaders, value);
     }
 
-    /**
-     * Flag indicating whether or not column headers are visible
-     *
-     * @return
-     */
     public Boolean isShowColumnHeaders() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showColumnHeaders, true).toString());
     }
 
-    /**
-     * Update the ShowRowHeaders value.
-     *
-     * @param value
-     */
     public void setShowRowHeaders(Boolean value) {
         getStateHelper().put(PropertyKeys.showRowHeaders, value);
     }
 
-    /**
-     * The ShowRowHeaders flag
-     *
-     * @return
-     */
     public Boolean isShowRowHeaders() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showRowHeaders, true).toString());
+    }
+
+    public void setResizableRows(Boolean value) {
+        getStateHelper().put(PropertyKeys.resizableRows, value);
+    }
+
+    public Boolean isResizableRows() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableRows, false).toString());
+    }
+
+    public void setResizableCols(Boolean value) {
+        getStateHelper().put(PropertyKeys.resizableCols, value);
+    }
+
+    public Boolean isResizableCols() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableCols, false).toString());
+    }
+
+    public void setMovableRows(Boolean value) {
+        getStateHelper().put(PropertyKeys.movableRows, value);
+    }
+
+    public Boolean isMovableRows() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableRows, false).toString());
+    }
+
+    public void setMovableCols(Boolean value) {
+        getStateHelper().put(PropertyKeys.movableCols, value);
+    }
+
+    public Boolean isMovableCols() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableCols, false).toString());
     }
 
     /**
@@ -535,20 +509,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         this.columns = columns;
     }
 
-    /**
-     * Updates the fixed row count.
-     *
-     * @param value
-     */
     public void setFixedRows(Integer value) {
         getStateHelper().put(PropertyKeys.fixedRows, value);
     }
 
-    /**
-     * The fixed row count
-     *
-     * @return
-     */
     public Integer getFixedRows() {
         final Object result = getStateHelper().eval(PropertyKeys.fixedRows, null);
         if (result == null) {
@@ -557,20 +521,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Integer.valueOf(result.toString());
     }
 
-    /**
-     * Updates the fixed columns count.
-     *
-     * @param value
-     */
     public void setFixedCols(Integer value) {
         getStateHelper().put(PropertyKeys.fixedCols, value);
     }
 
-    /**
-     * The fixed column count.
-     *
-     * @return
-     */
     public Integer getFixedCols() {
         final Object result = getStateHelper().eval(PropertyKeys.fixedCols, null);
         if (result == null) {
@@ -1631,8 +1585,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         if (context.getPartialViewContext().isPartialRequest()) {
             final StringBuilder eval = new StringBuilder();
             final String jsVar = resolveWidgetVar();
-            eval.append("PF('").append(jsVar).append("')");
-            eval.append(".clearDataInput();");
+            eval.append("PF('").append(jsVar).append("')").append(".clearDataInput();");
             RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
         }
     }
@@ -1677,15 +1630,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
                 final String value = getRenderValueForCell(context, rowKey, col);
                 vbRow.appendArrayValue(value, true);
             }
-            eval.append("PF('" + jsVar + "')");
+            eval.append("PF('").append(jsVar).append("')");
             eval.append(".updateData('");
             eval.append(rowKey);
             eval.append("',");
             eval.append(vbRow.closeVar().toString());
             eval.append(");");
         }
-        eval.append("PF('" + jsVar + "')");
-        eval.append(".ht.render();");
+        eval.append("PF('").append(jsVar).append("')").append(".redraw();");
         RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
     }
 
@@ -1706,7 +1658,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         RequestContext.getCurrentInstance().getScriptsToExecute().add(sb.toString());
 
         sb = new StringBuilder();
-        sb.append("PF('" + widgetVar + "')");
+        sb.append("PF('").append(widgetVar).append("')");
         sb.append(".sheetDiv.removeClass('ui-state-error')");
         if (!getInvalidUpdates().isEmpty()) {
             sb.append(".addClass('ui-state-error')");

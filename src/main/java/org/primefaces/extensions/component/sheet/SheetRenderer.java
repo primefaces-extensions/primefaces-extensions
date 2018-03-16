@@ -195,6 +195,10 @@ public class SheetRenderer extends CoreRenderer {
 
         encodeOptionalNativeAttr(wb, "fixedColumnsLeft", sheet.getFixedCols());
         encodeOptionalNativeAttr(wb, "fixedRowsTop", sheet.getFixedRows());
+        encodeOptionalNativeAttr(wb, "manualColumnResize", sheet.isResizableCols());
+        encodeOptionalNativeAttr(wb, "manualRowResize", sheet.isResizableRows());
+        encodeOptionalNativeAttr(wb, "manualColumnMove", sheet.isMovableCols());
+        encodeOptionalNativeAttr(wb, "manualRowMove", sheet.isMovableRows());
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
         String emptyMessage = sheet.getEmptyMessage();

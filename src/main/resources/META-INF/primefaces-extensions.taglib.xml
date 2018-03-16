@@ -133,6 +133,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
@@ -5026,6 +5034,14 @@
 			<component-type>org.primefaces.extensions.component.Sheet</component-type>
 			<renderer-type>org.primefaces.extensions.component.SheetRenderer</renderer-type>
 		</component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
@@ -5034,6 +5050,14 @@
 			<required>false</required>
 			<type>javax.faces.component.UIComponent</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. 
@@ -5099,6 +5123,38 @@
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allow the columns to be manually resizable. Default to false]]>
+            </description>
+            <name>resizableCols</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allow the rows to be manually resizable. Default to false]]>
+            </description>
+            <name>resizableRows</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allow the columns to be manually moved. Default to false]]>
+            </description>
+            <name>movableCols</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allow the rows to be manually moved. Default to false]]>
+            </description>
+            <name>movableRows</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[The height of the sheet in pixels.  It is recommended you use this property instead of a style class to ensure it is applied to the proper element.  This can be left empty, but performance may suffer.]]>
@@ -5106,14 +5162,6 @@
 			<name>height</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
-		</attribute>
-		<attribute>
-			<description>
-				<![CDATA[Unique identifier of the component in a namingContainer.]]>
-			</description>
-			<name>id</name>
-			<required>false</required>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>
