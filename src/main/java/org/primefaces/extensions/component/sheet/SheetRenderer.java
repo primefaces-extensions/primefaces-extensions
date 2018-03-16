@@ -63,6 +63,7 @@ public class SheetRenderer extends CoreRenderer {
 
         // encode markup
         encodeMarkup(context, sheet, responseWriter);
+
         // encode javascript
         encodeJavascript(context, sheet, responseWriter);
     }

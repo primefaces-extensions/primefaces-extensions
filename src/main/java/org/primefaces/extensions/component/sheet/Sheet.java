@@ -41,17 +41,21 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.context.RequestContext;
-import org.primefaces.extensions.event.SheetUpdate;
+import org.primefaces.extensions.event.SheetEvent;
+import org.primefaces.extensions.model.sheet.SheetUpdate;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.model.BeanPropertyComparator;
 import org.primefaces.model.SortOrder;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 /**
  * Spreadsheet component wrappering the Handsontable jQuery UI component.
@@ -304,6 +308,67 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processDecodes(final FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        }
+        else {
+            super.processDecodes(fc);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processValidators(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processValidators(fc);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void processUpdates(final FacesContext fc) {
+        if (!isSelfRequest(fc)) {
+            super.processUpdates(fc);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
+
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String clientId = this.getClientId(fc);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final SheetEvent sheetEvent = new SheetEvent(this, behaviorEvent.getBehavior());
+            sheetEvent.setPhaseId(event.getPhaseId());
+            super.queueEvent(sheetEvent);
+            System.out.println("Sheet Event!");
+            return;
+        }
+
+        super.queueEvent(event);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     /**
@@ -568,6 +633,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     public void resetSubmitted() {
         submittedValues.clear();
+        updates.clear();
     }
 
     /**
@@ -664,9 +730,16 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             context.getExternalContext().getRequestMap().remove(getVar());
         }
         else {
-            final Object value = rowMap.get(rowKey);
+            final Object value = getRowMap().get(rowKey);
             context.getExternalContext().getRequestMap().put(getVar(), value);
         }
+    }
+
+    protected Map<String, Object> getRowMap() {
+        if (rowMap == null || rowMap.isEmpty()) {
+            reMapRows();
+        }
+        return rowMap;
     }
 
     /**
@@ -1040,6 +1113,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * Remaps the row keys to the sorted and filtered list.
      */
     protected void reMapRows() {
+        rowMap = new HashMap<String, Object>();
         final FacesContext context = FacesContext.getCurrentInstance();
         final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
         final Collection<?> values = (Collection<?>) getValue();
@@ -1216,11 +1290,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     public void setErrorMessage(String value) {
         getStateHelper().put(PropertyKeys.errorMessage, value);
-    }
-
-    @Override
-    public void processValidators(FacesContext context) {
-        super.processValidators(context);
     }
 
     /**
@@ -1608,7 +1677,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             eval.append("={};");
             RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
         }
-
     }
 
     /**
@@ -1720,6 +1788,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             }
             final RowColIndex castOther = (RowColIndex) other;
             return new EqualsBuilder().append(rowKey, castOther.rowKey).append(colIndex, castOther.colIndex).isEquals();
+        }
+
+        @Override
+        public String toString() {
+            return "RowColIndex [rowKey=" + rowKey + ", colIndex=" + colIndex + "]";
         }
 
         @Override

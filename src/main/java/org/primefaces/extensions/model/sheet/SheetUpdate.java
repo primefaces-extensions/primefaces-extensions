@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.event;
+package org.primefaces.extensions.model.sheet;
 
 import java.io.Serializable;
 
@@ -26,8 +26,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @author Mark Lassiter / Melloware
  * @since 6.2
- *        <p>
- *        TODO: extend AbstractAjaxBehaviorEvent
  */
 public class SheetUpdate implements Serializable {
 

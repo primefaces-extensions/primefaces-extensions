@@ -461,8 +461,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                             requiredMessageStr);
             }
             else {
-                // TODO can't get at package protected MessageFactory to do this
-                // right.
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             MESSAGE_REQUIRED,
                             MESSAGE_REQUIRED);

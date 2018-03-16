@@ -27,120 +27,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
         // create table
-        this.setupHandsonTable();
+        this._setupHandsonTable();
     },
-
-    // updates the row with the new data value
-    updateData: function (rowKey, v) {
-        for (var i = 0; i < this.cfg.rowKeys.length; i++)
-            if (this.cfg.rowKeys[i] == rowKey) {
-                this.cfg.data[i] = v;
-                return;
-            }
-    },
-
-    // true if sheet has assigned behavior, otherwise false
-    hasBehavior: function (event) {
-        if (this.cfg.behaviors) {
-            return this.cfg.behaviors[event] != undefined;
-        }
-        return false;
-    },
-
-    // fired when a filter input is edited. firenow indicates the filter
-    // event should be fired immediately (select)
-    filterchange: function (sheet, col, v, firenow) {
-        $(sheet.jqId + '_filter_' + col).val(v);
-        sheet.filterChanged = true;
-
-        if (firenow) {
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
-        }
-    },
-
-    // fired when a sortable column is clicked
-    sortClick: function (sheet, e, col) {
-        if ($(e.target).is(':not(th,span,div)'))
-            return;
-        var sc = sheet.sortByInput.val();
-        if (col == sc) {
-            var so = sheet.sortOrderInput.val();
-            sheet.sortOrderInput.val((so == 'ascending' ? 'descending' : 'ascending'));
-        } else {
-            sheet.sortOrderInput.val('ascending');
-            sheet.sortByInput.val(col);
-        }
-        // destroy editor to avoid posting request after resort
-        sheet.ht.destroyEditor(true);
-        if (sheet.hasBehavior('sort'))
-            sheet.cfg.behaviors['sort'].call(this, 'sort');
-    },
-
-    // eat enter keys for filter inputs so they do not submit form
-    keyDown: function (sheet, e) {
-        e.stopImmediatePropagation();
-        var key = e.which, keyCode = $.ui.keyCode;
-        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
-            e.preventDefault();
-        }
-    },
-
-    // again, eat enter key. but also fire filter event on enter
-    keyUp: function (sheet, e) {
-        e.stopImmediatePropagation();
-        var key = e.which, keyCode = $.ui.keyCode;
-        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
-            // destroy editor to avoid posting request after resort
-            sheet.ht.destroyEditor(true);
-
-            $(e.target).change();
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
-            e.preventDefault();
-        }
-    },
-
-    // keep track of focused filter input. if previous filter altered,
-    // fire filter event
-    filterFocusIn: function (sheet, inp) {
-        // if this call is the result of jQuery setFocus, exit
-        if (sheet.focusing)
-            return;
-
-        // destroy editor to avoid posting request after resort
-        // this causes us to lose focus, so we need to refocus
-        // we need to prevent recursion with this hack
-        sheet.focusing = true;
-        sheet.focusInput.val($(inp).attr('id'));
-        sheet.ht.destroyEditor(true);
-        $(inp).focus();
-        sheet.focusing = false;
-
-        if (sheet.filterChanged && sheet.hasBehavior('filter')) {
-            sheet.filterChanged = false;
-            sheet.cfg.behaviors['filter'].call(this, 'filter');
-        }
-    },
-
-    // remove focused filter tracking when tabbing off
-    filterFocusOut: function (sheet, inp) {
-        sheet.focusInput.val(null);
-    },
-
-    // method to prevent selection of cells on column header click
-    handleHotBeforeOnCellMouseDown: function (event, coords, element) {
-        if (coords.row < 0) {
-            event.stopImmediatePropagation();
-        }
-    },
-
-    // setup the handson table
-    setupHandsonTable: function () {
+    
+    _setupHandsonTable: function() {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -160,12 +50,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 var styleClass = '';
                 // append row style (if we have one)
                 var rowClass = $this.cfg.rowStyles[row];
-                if (rowClass)
+                if (rowClass) {
                     styleClass = rowClass;
+                }
                 // append cell style (if we have one)
                 var cellClass = $this.cfg.styles['r' + row + '_c' + col];
-                if (cellClass)
+                if (cellClass) {
                     styleClass = styleClass.concat(' ').concat(cellClass);
+                }
                 // check for errors
                 var invalidMessage = $this.cfg.errors[$this.cfg.rowKeys[row] + '_c' + col];
                 if (invalidMessage) {
@@ -174,16 +66,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                         + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
                 }
                 // every other row highlighting
-                if (row % 2 == 1)
+                if (row % 2 == 1) {
                     styleClass = styleClass.concat(' ui-datatable-odd');
+                }
                 td.className = td.className.concat(' ').concat(styleClass);
             },
             cells: function (row, col, prop) {
                 var cp = {};
                 cp.renderer = this.cellRenderer;
                 var readonly = $this.cfg.readOnly['r' + row + '_c' + col];
-                if (readonly)
+                if (readonly) {
                     cp.readOnly = true;
+                }
                 return cp;
             },
             afterChange: function (change, source) {
@@ -210,11 +104,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 $this.selectionInput.val(JSON.stringify(sel));
                 if ($this.updated) {
                     $this.updated = false;
-                    if ($this.hasBehavior('change'))
+                    if ($this.hasBehavior('change')) {
                         $this.cfg.behaviors['change'].call(this, 'change');
+                    }
                 } else {
-                    if ($this.hasBehavior('cellSelect'))
+                    if ($this.hasBehavior('cellSelect')) {
                         $this.cfg.behaviors['cellSelect'].call(this, 'cellSelect');
+                    }
                 }
             },
             afterOnCellMouseDown: function (event, coords, TD) {
@@ -222,18 +118,21 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 $this.selectionInput.val(JSON.stringify(sel));
 
                 // only fire event if row is -1 which means its a header
-                if ((coords.row == -1 && coords.col != -1) && $this.hasBehavior('columnSelect'))
+                if ((coords.row == -1 && coords.col != -1) && $this.hasBehavior('columnSelect')) {
                     $this.cfg.behaviors['columnSelect'].call(this, 'columnSelect');
+                }
 
                 // only fire event if col is -1 which means its a header
-                if ((coords.col == -1 && coords.row != -1) && $this.hasBehavior('rowSelect'))
+                if ((coords.col == -1 && coords.row != -1) && $this.hasBehavior('rowSelect')) {
                     $this.cfg.behaviors['rowSelect'].call(this, 'rowSelect');
+                }
             },
             afterDeselect: function () {
                 if ($this.updated) {
                     $this.updated = false;
-                    if ($this.hasBehavior('change'))
+                    if ($this.hasBehavior('change')) {
                         $this.cfg.behaviors['change'].call(this, 'change');
+                    }
                 }
             },
             afterGetColHeader: function (col, TH) {
@@ -360,6 +259,115 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             setTimeout(function () {
                 $('#' + focusId).focus()
             }, 100);
+        }
+    },
+
+    // updates the row with the new data value
+    updateData: function (rowKey, v) {
+        for (var i = 0; i < this.cfg.rowKeys.length; i++)
+            if (this.cfg.rowKeys[i] == rowKey) {
+                this.cfg.data[i] = v;
+                return;
+            }
+    },
+
+    // true if sheet has assigned behavior, otherwise false
+    hasBehavior: function (event) {
+        if (this.cfg.behaviors) {
+            return this.cfg.behaviors[event] != undefined;
+        }
+        return false;
+    },
+
+    // fired when a filter input is edited. firenow indicates the filter
+    // event should be fired immediately (select)
+    filterchange: function (sheet, col, v, firenow) {
+        $(sheet.jqId + '_filter_' + col).val(v);
+        sheet.filterChanged = true;
+
+        if (firenow) {
+            if (sheet.hasBehavior('filter')) {
+                sheet.filterChanged = false;
+                sheet.cfg.behaviors['filter'].call(this, 'filter');
+            }
+        }
+    },
+
+    // fired when a sortable column is clicked
+    sortClick: function (sheet, e, col) {
+        if ($(e.target).is(':not(th,span,div)'))
+            return;
+        var sc = sheet.sortByInput.val();
+        if (col == sc) {
+            var so = sheet.sortOrderInput.val();
+            sheet.sortOrderInput.val((so == 'ascending' ? 'descending' : 'ascending'));
+        } else {
+            sheet.sortOrderInput.val('ascending');
+            sheet.sortByInput.val(col);
+        }
+        // destroy editor to avoid posting request after resort
+        sheet.ht.destroyEditor(true);
+        if (sheet.hasBehavior('sort'))
+            sheet.cfg.behaviors['sort'].call(this, 'sort');
+    },
+
+    // eat enter keys for filter inputs so they do not submit form
+    keyDown: function (sheet, e) {
+        e.stopImmediatePropagation();
+        var key = e.which, keyCode = $.ui.keyCode;
+        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
+            e.preventDefault();
+        }
+    },
+
+    // again, eat enter key. but also fire filter event on enter
+    keyUp: function (sheet, e) {
+        e.stopImmediatePropagation();
+        var key = e.which, keyCode = $.ui.keyCode;
+        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
+            // destroy editor to avoid posting request after resort
+            sheet.ht.destroyEditor(true);
+
+            $(e.target).change();
+            if (sheet.hasBehavior('filter')) {
+                sheet.filterChanged = false;
+                sheet.cfg.behaviors['filter'].call(this, 'filter');
+            }
+            e.preventDefault();
+        }
+    },
+
+    // keep track of focused filter input. if previous filter altered,
+    // fire filter event
+    filterFocusIn: function (sheet, inp) {
+        // if this call is the result of jQuery setFocus, exit
+        if (sheet.focusing)
+            return;
+
+        // destroy editor to avoid posting request after resort
+        // this causes us to lose focus, so we need to refocus
+        // we need to prevent recursion with this hack
+        sheet.focusing = true;
+        sheet.focusInput.val($(inp).attr('id'));
+        sheet.ht.destroyEditor(true);
+        $(inp).focus();
+        sheet.focusing = false;
+
+        if (sheet.filterChanged && sheet.hasBehavior('filter')) {
+            sheet.filterChanged = false;
+            sheet.cfg.behaviors['filter'].call(this, 'filter');
+        }
+    },
+
+    // remove focused filter tracking when tabbing off
+    filterFocusOut: function (sheet, inp) {
+        sheet.focusInput.val(null);
+    },
+
+    // method to prevent selection of cells on column header click
+    handleHotBeforeOnCellMouseDown: function (event, coords, element) {
+        if (coords.row < 0) {
+            event.stopImmediatePropagation();
         }
     }
 });
