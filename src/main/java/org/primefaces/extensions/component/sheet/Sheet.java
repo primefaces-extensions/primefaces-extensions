@@ -351,14 +351,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         final FacesContext fc = FacesContext.getCurrentInstance();
 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final String clientId = this.getClientId(fc);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             final SheetEvent sheetEvent = new SheetEvent(this, behaviorEvent.getBehavior());
             sheetEvent.setPhaseId(event.getPhaseId());
             super.queueEvent(sheetEvent);
-            System.out.println("Sheet Event!");
             return;
         }
 
