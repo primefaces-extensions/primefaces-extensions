@@ -381,7 +381,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      */
     @Override
     public void validate(FacesContext context) {
-
         if (context == null) {
             throw new NullPointerException();
         }

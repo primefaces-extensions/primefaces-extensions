@@ -393,6 +393,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             this.ht.render();
         }
     },
+    
+    // Remove the row from the sheet
+    removeRow: function (index) {
+        if (this.ht) {
+           this.ht.alter('remove_row', index);
+        }
+    },
 
     // method to prevent selection of cells on column header click
     handleHotBeforeOnCellMouseDown: function (event, coords, element) {
