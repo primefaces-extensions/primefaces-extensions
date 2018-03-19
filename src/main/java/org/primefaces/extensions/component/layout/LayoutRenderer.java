@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -49,14 +48,6 @@ public class LayoutRenderer extends CoreRenderer {
 
         final boolean buildOptions = layout.getOptions() == null;
         layout.setBuildOptions(buildOptions);
-
-        if (buildOptions) {
-            final FastStringWriter fsw = new FastStringWriter();
-            layout.setOriginalWriter(writer);
-            layout.setFastStringWriter(fsw);
-            fc.setResponseWriter(writer.cloneWithWriter(fsw));
-            writer = fc.getResponseWriter();
-        }
 
         if (!layout.isFullPage()) {
             writer.startElement("div", layout);
@@ -92,24 +83,9 @@ public class LayoutRenderer extends CoreRenderer {
             writer.endElement("div");
         }
 
-        if (layout.isBuildOptions()) {
-            fc.setResponseWriter(layout.getOriginalWriter());
-            encodeScript(fc, layout);
-            fc.getResponseWriter().write(layout.getFastStringWriter().toString());
-            layout.removeOptions();
-            layout.setOriginalWriter(null);
-            layout.setFastStringWriter(null);
-        }
-        else {
-            encodeScript(fc, layout);
-        }
-
+        encodeScript(fc, layout);
+        layout.removeOptions();
         layout.setBuildOptions(false);
-    }
-
-    @Override
-    public boolean getRendersChildren() {
-        return false;
     }
 
     protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {

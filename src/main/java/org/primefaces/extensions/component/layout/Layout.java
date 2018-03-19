@@ -28,7 +28,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
@@ -39,7 +38,6 @@ import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
-import org.primefaces.util.FastStringWriter;
 
 /**
  * <code>Layout</code> component.
@@ -77,8 +75,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
                 .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME, ResizeEvent.NAME));
     private static final Logger LOG = Logger.getLogger(Layout.class.getName());
 
-    private ResponseWriter originalWriter;
-    private FastStringWriter fsw;
     private boolean buildOptions;
 
     /**
@@ -223,6 +219,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         getStateHelper().put(PropertyKeys.maskPanesEarly, maskPanesEarly);
     }
 
+    public boolean isBuildOptions() {
+        return buildOptions;
+    }
+
+    public void setBuildOptions(final boolean buildOptions) {
+        this.buildOptions = buildOptions;
+    }
+
     @Override
     public Collection<String> getEventNames() {
         return EVENT_NAMES;
@@ -324,30 +328,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         }
 
         return null;
-    }
-
-    public ResponseWriter getOriginalWriter() {
-        return originalWriter;
-    }
-
-    public void setOriginalWriter(final ResponseWriter originalWriter) {
-        this.originalWriter = originalWriter;
-    }
-
-    public FastStringWriter getFastStringWriter() {
-        return fsw;
-    }
-
-    public void setFastStringWriter(final FastStringWriter fsw) {
-        this.fsw = fsw;
-    }
-
-    public boolean isBuildOptions() {
-        return buildOptions;
-    }
-
-    public void setBuildOptions(final boolean buildOptions) {
-        this.buildOptions = buildOptions;
     }
 
     public void removeOptions() {
