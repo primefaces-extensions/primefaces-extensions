@@ -28,13 +28,16 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
      * @private
      */
     _applySlideOut : function(cfg) {
+        var $this = this;
         // make a copy of the configuration
         var opts = $.extend(true, {}, cfg);
         
         opts.tabHandle = PrimeFaces.escapeClientId(opts.tabHandle);
 
         // create the slideout
-        this.jq.tabSlideOut(opts);
+        $(document).ready(function() {
+            $this.jq.tabSlideOut(opts);
+        });
         
         // bind "open", "close" events
         this._bindEvents();
