@@ -303,10 +303,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         sheet.filterChanged = true;
 
         if (firenow) {
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
+            filter();
         }
     },
 
@@ -346,10 +343,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             sheet.ht.destroyEditor(true);
 
             $(e.target).change();
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
+            sheet.filter();
             e.preventDefault();
         }
     },
@@ -370,14 +364,12 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         $(inp).focus();
         sheet.focusing = false;
 
-        if (sheet.filterChanged && sheet.hasBehavior('filter')) {
-            sheet.filterChanged = false;
-            sheet.cfg.behaviors['filter'].call(this, 'filter');
-        }
+        sheet.filter();
     },
 
     // remove focused filter tracking when tabbing off
     filterFocusOut: function (sheet, inp) {
+        sheet.filter();
         sheet.focusInput.val(null);
     },
     
@@ -391,6 +383,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     redraw: function () {
         if (this.ht) {
             this.ht.render();
+        }
+    },
+    
+    // run filtering if it has changed
+    filter: function () {
+        if (this.filterChanged && this.hasBehavior('filter')) {
+            this.filterChanged = false;
+            this.cfg.behaviors['filter'].call(this, 'filter');
         }
     },
     
