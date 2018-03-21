@@ -303,7 +303,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         sheet.filterChanged = true;
 
         if (firenow) {
-            filter();
+            sheet.filter();
         }
     },
 
