@@ -25,7 +25,6 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -49,7 +48,7 @@ public class LayoutRenderer extends CoreRenderer {
         final boolean buildOptions = layout.getOptions() == null;
         layout.setBuildOptions(buildOptions);
 
-        if (!layout.isFullPage()) {
+        if (layout.isElementLayout()) {
             writer.startElement("div", layout);
             writer.writeAttribute("id", layout.getClientId(fc), "id");
 
@@ -68,7 +67,7 @@ public class LayoutRenderer extends CoreRenderer {
         final ResponseWriter writer = fc.getResponseWriter();
         final Layout layout = (Layout) component;
 
-        if (!layout.isFullPage()) {
+        if (layout.isElementLayout()) {
             if (!layout.isStateCookie()) {
                 // render hidden field for server-side state saving
                 final String clientId = layout.getClientId(fc);
@@ -94,12 +93,10 @@ public class LayoutRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(fc);
         wb.initWithDomReady("ExtLayout", layout.resolveWidgetVar(), clientId);
         wb.attr("clientState", layout.isStateCookie());
+        wb.attr("full", layout.isFullPage(), false);
 
-        if (layout.isFullPage()) {
-            wb.attr("forTarget", "body");
-        }
-        else {
-            wb.selectorAttr("forTarget", "#" + clientId);
+        if (layout.isNested()) {
+            wb.attr("parent", layout.getParent().getClientId(fc));
         }
 
         final ValueExpression stateVE = layout.getValueExpression(Layout.PropertyKeys.state.toString());
@@ -121,7 +118,6 @@ public class LayoutRenderer extends CoreRenderer {
         final Object layoutOptions = layout.getOptions();
         if (layoutOptions instanceof LayoutOptions) {
             LayoutOptions options = (LayoutOptions) layoutOptions;
-            encodeUnits(fc, layout, options);
             wb.append(",options:" + options.toJson());
         }
         else if (layoutOptions instanceof String) {
@@ -135,15 +131,5 @@ public class LayoutRenderer extends CoreRenderer {
         encodeClientBehaviors(fc, layout);
 
         wb.finish();
-    }
-
-    protected void encodeUnits(FacesContext context, Layout layout, LayoutOptions options) throws IOException {
-        for (UIComponent child : layout.getChildren()) {
-            if (child.isRendered() && child instanceof LayoutPane) {
-                LayoutPane unit = (LayoutPane) child;
-                unit.setPaneSelector("#" + ComponentUtils.escapeSelector(unit.getClientId(context)));
-                options.addOption(LayoutPane.PropertyKeys.paneSelector.toString(), unit.getPaneSelector());
-            }
-        }
     }
 }

@@ -334,6 +334,14 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         getStateHelper().remove(PropertyKeys.options);
     }
 
+    public boolean isNested() {
+        return getParent() instanceof LayoutPane;
+    }
+
+    public boolean isElementLayout() {
+        return !isNested() && !isFullPage();
+    }
+
     private boolean isSelfRequest(final FacesContext context) {
         return this.getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(

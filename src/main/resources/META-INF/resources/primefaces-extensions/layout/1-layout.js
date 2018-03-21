@@ -17,8 +17,21 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
         this.jq = $(cfg.forTarget);
         this.stateHiddenField = null;
 
-        var jqId = PrimeFaces.escapeClientId(this.id);
+        this.jqId = PrimeFaces.escapeClientId(this.id);
 
+        if(this.cfg.full) {                                                 //full
+            var dialog = $(this.cfg.centerSelector).parents('.ui-dialog-content');
+            if(dialog.length == 1) {                                         // full + dialog
+                this.jq = dialog;
+            } else {
+                this.jq = $('body');
+            }
+        } else if(this.cfg.parent) {                                        //nested
+            this.jq = $(PrimeFaces.escapeClientId(this.cfg.parent));
+        } else {                                                            //element
+            this.jq = $(this.jqId);
+        }
+        
         if (cfg.clientState) {
             this.cfg.options.stateManagement = {
                 enabled : true,
@@ -28,7 +41,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 }
             };
         } else if (cfg.serverState) {
-            this.stateHiddenField = $(jqId + "_state");
+            this.stateHiddenField = $(this.jqId + "_state");
         }
 
         this.renderDeferred();
@@ -40,6 +53,10 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
 
         if (this.cfg.serverState) {
             this.layout.loadState(this.cfg.state);
+        }
+        
+        if(!this.cfg.full) {
+            this.jq.css('overflow','visible');
         }
 
         // bind "open", "close" and "resize" events
