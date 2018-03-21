@@ -175,9 +175,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                         $(TH).find('input').change(function () {
                             $this.filterchange($this, col, this.value, false)
                         }).keydown(function (e) {
-                            $this.keyDown($this, e)
+                            $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
-                            $this.keyUp($this, e)
+                            $this.filterKeyUp($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         }).focusout(function () {
@@ -198,9 +198,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                         $(TH).find('select').change(function () {
                             $this.filterchange($this, col, this.value, true)
                         }).keydown(function (e) {
-                            $this.keyDown($this, e)
+                            $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
-                            $this.keyUp($this, e)
+                            $this.filterKeyUp($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         }).focusout(function () {
@@ -326,7 +326,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     },
 
     // eat enter keys for filter inputs so they do not submit form
-    keyDown: function (sheet, e) {
+    filterKeyDown: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
         if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
@@ -335,7 +335,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     },
 
     // again, eat enter key. but also fire filter event on enter
-    keyUp: function (sheet, e) {
+    filterKeyUp: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
         if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
