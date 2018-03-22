@@ -5354,7 +5354,7 @@
 		</attribute>
 		<attribute>
 			<description>
-				<![CDATA[The column data entry type.  Currently supports "text" and "numeric". "date", "autocomplete" and "checkbox" are experimental.]]>
+				<![CDATA[The column data entry type.  Currently supports "text", "numeric", "date", "password", "dropdown", "autocomplete", and "checkbox" are experimental.]]>
 			</description>
 			<name>colType</name>
 			<required>false</required>
@@ -5417,6 +5417,22 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Password mask defaulted to asterisks *. Note that you can't change symbol used by the input field due to browsers limitations.]]>
+            </description>
+            <name>passwordHashSymbol</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[By default every password has length equal to the length of value that it corresponds with. Use this option to set fixed hash length.]]>
+            </description>
+            <name>passwordHashLength</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient then cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>

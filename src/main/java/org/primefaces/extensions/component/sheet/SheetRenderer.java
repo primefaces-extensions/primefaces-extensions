@@ -104,6 +104,8 @@ public class SheetRenderer extends CoreRenderer {
             responseWriter.writeAttribute("style", "width: " + width + "px;", null);
         }
 
+        encodeHiddenInputs(responseWriter, sheet, clientId);
+        encodeFilterValues(context, responseWriter, sheet, clientId);
         encodeHeader(context, responseWriter, sheet);
 
         // handsontable div
@@ -127,9 +129,6 @@ public class SheetRenderer extends CoreRenderer {
         if (style.length() > 0) {
             responseWriter.writeAttribute("style", style, null);
         }
-
-        encodeHiddenInputs(responseWriter, sheet, clientId);
-        encodeFilterValues(context, responseWriter, sheet, clientId);
 
         responseWriter.endElement("div");
         encodeFooter(context, responseWriter, sheet);
@@ -268,6 +267,22 @@ public class SheetRenderer extends CoreRenderer {
             if (column.isReadonly()) {
                 options.appendProperty("readOnly", "true", false);
             }
+
+            switch (column.getColType()) {
+                case "password":
+                    final Integer passwordLength = column.getPasswordHashLength();
+                    if (passwordLength != null) {
+                        options.appendProperty("hashLength", passwordLength.toString(), false);
+                    }
+                    final String passwordSymbol = column.getPasswordHashSymbol();
+                    if (passwordSymbol != null) {
+                        options.appendProperty("hashSymbol", passwordSymbol, true);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
             vb.appendArrayValue(options.closeVar().toString(), false);
         }
         wb.nativeAttr("columns", vb.closeVar().toString());

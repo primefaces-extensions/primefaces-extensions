@@ -39,7 +39,7 @@ public class JavascriptVarBuilder {
      * @param varName the variable name
      * @param isObject true if build an Object, false if an array.
      */
-    public JavascriptVarBuilder(String varName, boolean isObject) {
+    public JavascriptVarBuilder(final String varName, final boolean isObject) {
         this.isObject = isObject;
         isVar = varName != null;
         if (isVar) {
@@ -75,7 +75,7 @@ public class JavascriptVarBuilder {
      * @param quoted if true, the value is quoted and escaped.
      * @return this builder
      */
-    public JavascriptVarBuilder appendProperty(String propertyName, String propertyValue, boolean quoted) {
+    public JavascriptVarBuilder appendProperty(final String propertyName, final String propertyValue, final boolean quoted) {
         next();
         sb.append(propertyName);
         sb.append(":");
@@ -92,7 +92,7 @@ public class JavascriptVarBuilder {
      * @param quoted
      * @return
      */
-    public JavascriptVarBuilder appendRowColProperty(int row, int col, String propertyValue, boolean quoted) {
+    public JavascriptVarBuilder appendRowColProperty(final int row, final int col, final String propertyValue, final boolean quoted) {
         return appendProperty("r" + row + "_c" + col, propertyValue, quoted);
     }
 
@@ -103,11 +103,11 @@ public class JavascriptVarBuilder {
      * @param quoted if true, the value is quoted and escaped.
      * @return this builder
      */
-    public JavascriptVarBuilder appendText(String value, boolean quoted) {
+    public JavascriptVarBuilder appendText(final String value, final boolean quoted) {
         if (quoted) {
             sb.append("\"");
             if (value != null) {
-                sb.append(ComponentUtils.escapeEcmaScriptText(value));
+                sb.append(ComponentUtils.escapeText(value));
             }
             sb.append("\"");
         }
@@ -124,7 +124,7 @@ public class JavascriptVarBuilder {
      * @param quoted
      * @return
      */
-    public JavascriptVarBuilder appendArrayValue(String value, boolean quoted) {
+    public JavascriptVarBuilder appendArrayValue(final String value, final boolean quoted) {
         next();
         return appendText(value, quoted);
     }

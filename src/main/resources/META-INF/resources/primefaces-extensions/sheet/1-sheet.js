@@ -45,7 +45,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 col: 1
             },
             cellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                Handsontable.cellTypes.text.renderer.apply(this, arguments);
+                Handsontable.renderers.TextRenderer.apply(this, arguments)
 
                 var styleClass = '';
                 // append row style (if we have one)
@@ -73,7 +73,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             },
             cells: function (row, col, prop) {
                 var cp = {};
-                cp.renderer = this.cellRenderer;
+                var column = $this.cfg.columns[col];
+                if (column.type === 'text') {
+                    cp.renderer = this.cellRenderer;
+                }
                 var readonly = $this.cfg.readOnly['r' + row + '_c' + col];
                 if (readonly) {
                     cp.readOnly = true;
