@@ -51,7 +51,7 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Sheet component
      */
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final ResponseWriter responseWriter = context.getResponseWriter();
         final Sheet sheet = (Sheet) component;
 
@@ -75,14 +75,14 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    protected void encodeMarkup(FacesContext context, Sheet sheet, ResponseWriter responseWriter) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter) throws IOException {
         /*
          * <div id="..." name="..." class="" style="">
          */
-        String styleClass = sheet.getStyleClass();
-        String clientId = sheet.getClientId(context);
-        Integer width = sheet.getWidth();
-        Integer height = sheet.getHeight();
+        final String styleClass = sheet.getStyleClass();
+        final String clientId = sheet.getClientId(context);
+        final Integer width = sheet.getWidth();
+        final Integer height = sheet.getHeight();
         String style = sheet.getStyle();
 
         // outer div to wrapper table
@@ -144,7 +144,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param value the value
      * @throws IOException
      */
-    protected void encodeOptionalAttr(WidgetBuilder wb, String attrName, String value) throws IOException {
+    protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value) throws IOException {
         if (value != null) {
             wb.attr(attrName, value);
         }
@@ -158,7 +158,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param value the value
      * @throws IOException
      */
-    protected void encodeOptionalNativeAttr(WidgetBuilder wb, String attrName, Object value) throws IOException {
+    protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value) throws IOException {
         if (value != null) {
             wb.nativeAttr(attrName, value.toString());
         }
@@ -171,7 +171,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    protected void encodeJavascript(FacesContext context, Sheet sheet, ResponseWriter responseWriter)
+    protected void encodeJavascript(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = sheet.getClientId(context);
@@ -220,7 +220,7 @@ public class SheetRenderer extends CoreRenderer {
      *
      * @throws IOException
      */
-    protected void encodeInvalidData(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
+    protected void encodeInvalidData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
         wb.attr("errors", ComponentUtils.escapeText(sheet.getInvalidDataValue()));
     }
 
@@ -232,9 +232,9 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    protected void encodeColHeaders(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-        JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
-        for (SheetColumn column : sheet.getColumns()) {
+    protected void encodeColHeaders(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
+        final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
@@ -251,17 +251,17 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    protected void encodeColOptions(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-        JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
-        for (SheetColumn column : sheet.getColumns()) {
+    protected void encodeColOptions(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
+        final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
 
-            JavascriptVarBuilder options = new JavascriptVarBuilder(null, true);
+            final JavascriptVarBuilder options = new JavascriptVarBuilder(null, true);
             options.appendProperty("type", column.getColType(), true);
             options.appendProperty("copyable", "true", false);
-            Integer width = column.getColWidth();
+            final Integer width = column.getColWidth();
             if (width != null) {
                 options.appendProperty("width", width.toString(), false);
             }
@@ -283,76 +283,74 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    protected void encodeData(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-        JavascriptVarBuilder vbData = new JavascriptVarBuilder(null, false);
-        JavascriptVarBuilder vbRowKeys = new JavascriptVarBuilder(null, false);
-        JavascriptVarBuilder vbStyle = new JavascriptVarBuilder(null, true);
-        JavascriptVarBuilder vbRowStyle = new JavascriptVarBuilder(null, false);
-        JavascriptVarBuilder vbReadOnly = new JavascriptVarBuilder(null, true);
-        JavascriptVarBuilder vbRowHeaders = new JavascriptVarBuilder(null, false);
+    protected void encodeData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
 
-        boolean isCustomHeader = sheet.getRowHeaderValueExpression() != null;
+        final JavascriptVarBuilder jsData = new JavascriptVarBuilder(null, false);
+        final JavascriptVarBuilder jsRowKeys = new JavascriptVarBuilder(null, false);
+        final JavascriptVarBuilder jsStyle = new JavascriptVarBuilder(null, true);
+        final JavascriptVarBuilder jsRowStyle = new JavascriptVarBuilder(null, false);
+        final JavascriptVarBuilder jsReadOnly = new JavascriptVarBuilder(null, true);
+        final JavascriptVarBuilder jsRowHeaders = new JavascriptVarBuilder(null, false);
 
-        List<Object> values = sheet.getSortedValues();
+        final boolean isCustomHeader = sheet.getRowHeaderValueExpression() != null;
+
+        final List<Object> values = sheet.getSortedValues();
         int row = 0;
-        for (Object value : values) {
+        for (final Object value : values) {
             context.getExternalContext().getRequestMap().put(sheet.getVar(), value);
             final String rowKey = sheet.getRowKeyValueAsString(context);
-            vbRowKeys.appendArrayValue(rowKey, true);
-            encodeRow(context, rowKey, vbData, vbRowStyle, vbStyle, vbReadOnly, sheet, value, row);
+            jsRowKeys.appendArrayValue(rowKey, true);
+            encodeRow(context, rowKey, jsData, jsRowStyle, jsStyle, jsReadOnly, sheet, row);
 
             // In case of custom row header evaluate the value expression for every row to set the header
             if (sheet.isShowRowHeaders() && isCustomHeader) {
                 final String rowHeader = sheet.getRowHeaderValueAsString(context);
-                vbRowHeaders.appendArrayValue(rowHeader, true);
+                jsRowHeaders.appendArrayValue(rowHeader, true);
             }
             row++;
         }
 
         sheet.setRowVar(context, null);
 
-        wb.nativeAttr("data", vbData.closeVar().toString());
-        wb.nativeAttr("styles", vbStyle.closeVar().toString());
-        wb.nativeAttr("rowStyles", vbRowStyle.closeVar().toString());
-        wb.nativeAttr("readOnly", vbReadOnly.closeVar().toString());
-        wb.nativeAttr("rowKeys", vbRowKeys.closeVar().toString());
+        wb.nativeAttr("data", jsData.closeVar().toString());
+        wb.nativeAttr("styles", jsStyle.closeVar().toString());
+        wb.nativeAttr("rowStyles", jsRowStyle.closeVar().toString());
+        wb.nativeAttr("readOnly", jsReadOnly.closeVar().toString());
+        wb.nativeAttr("rowKeys", jsRowKeys.closeVar().toString());
 
         // add the row header as a native attribute
         if (!isCustomHeader) {
             wb.nativeAttr("rowHeaders", sheet.isShowRowHeaders().toString());
         }
         else {
-            wb.nativeAttr("rowHeaders", vbRowHeaders.closeVar().toString());
+            wb.nativeAttr("rowHeaders", jsRowHeaders.closeVar().toString());
         }
     }
 
     /**
      * Encode a single row.
      *
-     * @param context
-     * @param vbData
-     * @param vbRowStyle
-     * @param vbStyle
-     * @param vbReadOnly
-     * @param sheet
-     * @param data
-     * @param rowIndex
-     * @throws IOException
+     * @return the JSON row
      */
-    protected void encodeRow(FacesContext context, String rowKey, JavascriptVarBuilder vbData, JavascriptVarBuilder vbRowStyle,
-                JavascriptVarBuilder vbStyle, JavascriptVarBuilder vbReadOnly, Sheet sheet, Object data, int rowIndex) throws IOException {
-
+    protected JavascriptVarBuilder encodeRow(final FacesContext context,
+                final String rowKey,
+                final JavascriptVarBuilder jsData,
+                final JavascriptVarBuilder jsRowStyle,
+                final JavascriptVarBuilder jsStyle,
+                final JavascriptVarBuilder jsReadOnly,
+                final Sheet sheet,
+                final int rowIndex) throws IOException {
         // encode rowStyle (if any)
-        String rowStyleClass = sheet.getRowStyleClass();
+        final String rowStyleClass = sheet.getRowStyleClass();
         if (rowStyleClass == null) {
-            vbRowStyle.appendArrayValue("null", false);
+            jsRowStyle.appendArrayValue("null", false);
         }
         else {
-            vbRowStyle.appendArrayValue(rowStyleClass, true);
+            jsRowStyle.appendArrayValue(rowStyleClass, true);
         }
 
         // data is array of array of data
-        JavascriptVarBuilder vbRow = new JavascriptVarBuilder(null, false);
+        final JavascriptVarBuilder jsRow = new JavascriptVarBuilder(null, false);
         int renderCol = 0;
         for (int col = 0; col < sheet.getColumns().size(); col++) {
             final SheetColumn column = sheet.getColumns().get(col);
@@ -361,24 +359,25 @@ public class SheetRenderer extends CoreRenderer {
             }
 
             // render data value
-            String value = sheet.getRenderValueForCell(context, rowKey, col);
-            vbRow.appendArrayValue(value, true);
+            final String value = sheet.getRenderValueForCell(context, rowKey, col);
+            jsRow.appendArrayValue(value, true);
 
             // custom style
-            String styleClass = column.getStyleClass();
+            final String styleClass = column.getStyleClass();
             if (styleClass != null) {
-                vbStyle.appendRowColProperty(rowIndex, renderCol, styleClass, true);
+                jsStyle.appendRowColProperty(rowIndex, renderCol, styleClass, true);
             }
 
             // read only per cell
-            boolean readOnly = column.isReadonlyCell();
+            final boolean readOnly = column.isReadonlyCell();
             if (readOnly) {
-                vbReadOnly.appendRowColProperty(rowIndex, renderCol, "true", true);
+                jsReadOnly.appendRowColProperty(rowIndex, renderCol, "true", true);
             }
             renderCol++;
         }
-        // close row and append to vbData
-        vbData.appendArrayValue(vbRow.closeVar().toString(), false);
+        // close row and append to jsData
+        jsData.appendArrayValue(jsRow.closeVar().toString(), false);
+        return jsData;
     }
 
     /**
@@ -389,7 +388,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param clientId
      * @throws IOException
      */
-    private void encodeHiddenInputs(ResponseWriter responseWriter, final Sheet sheet, String clientId)
+    private void encodeHiddenInputs(final ResponseWriter responseWriter, final Sheet sheet, final String clientId)
                 throws IOException {
         responseWriter.startElement("input", null);
         responseWriter.writeAttribute("id", clientId + "_input", "id");
@@ -423,7 +422,7 @@ public class SheetRenderer extends CoreRenderer {
         responseWriter.endElement("input");
 
         // sort col and order if specified and supported
-        int sortCol = sheet.getSortColRenderIndex();
+        final int sortCol = sheet.getSortColRenderIndex();
         responseWriter.startElement("input", null);
         responseWriter.writeAttribute("id", clientId + "_sortby", "id");
         responseWriter.writeAttribute("name", clientId + "_sortby", "name");
@@ -447,13 +446,13 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    private void encodeBehaviors(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
+    private void encodeBehaviors(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
         // note we write out the onchange event here so we have the selected
         // cell too
-        Map<String, List<ClientBehavior>> behaviors = sheet.getClientBehaviors();
+        final Map<String, List<ClientBehavior>> behaviors = sheet.getClientBehaviors();
 
         wb.append(",behaviors:{");
-        String clientId = sheet.getClientId();
+        final String clientId = sheet.getClientId();
 
         // sort event (manual since callBack prepends leading comma)
         wb.append("sort").append(":").append("function(s, event)").append("{").append("PrimeFaces.ab({source: '")
@@ -465,27 +464,27 @@ public class SheetRenderer extends CoreRenderer {
                     + "', event: 'filter', process: '" + clientId + "', update: '" + clientId + "'}, arguments[1]);");
 
         if (behaviors.containsKey("change")) {
-            ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
                         "change", sheet.getClientId(context), null);
             wb.callback("change", "function(source, event)", behaviors.get("change").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("cellSelect")) {
-            ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
                         "cellSelect", sheet.getClientId(context), null);
             wb.callback("cellSelect", "function(source, event)",
                         behaviors.get("cellSelect").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("columnSelect")) {
-            ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
                         "columnSelect", sheet.getClientId(context), null);
             wb.callback("columnSelect", "function(source, event)",
                         behaviors.get("columnSelect").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("rowSelect")) {
-            ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context, sheet,
                         "rowSelect", sheet.getClientId(context), null);
             wb.callback("rowSelect", "function(source, event)",
                         behaviors.get("rowSelect").get(0).getScript(behaviorContext));
@@ -502,10 +501,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    private void encodeFooter(FacesContext context, ResponseWriter responseWriter, final Sheet sheet)
+    private void encodeFooter(final FacesContext context, final ResponseWriter responseWriter, final Sheet sheet)
                 throws IOException {
         // footer
-        UIComponent footer = sheet.getFacet("footer");
+        final UIComponent footer = sheet.getFacet("footer");
         if (footer != null) {
             responseWriter.startElement("div", null);
             responseWriter.writeAttribute("class", "ui-datatable-footer ui-widget-header ui-corner-bottom", null);
@@ -522,10 +521,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    private void encodeHeader(FacesContext context, ResponseWriter responseWriter, final Sheet sheet)
+    private void encodeHeader(final FacesContext context, final ResponseWriter responseWriter, final Sheet sheet)
                 throws IOException {
         // header
-        UIComponent header = sheet.getFacet("header");
+        final UIComponent header = sheet.getFacet("header");
         if (header != null) {
             responseWriter.startElement("div", null);
             responseWriter.writeAttribute("class", "ui-datatable-header ui-widget-header ui-corner-top", null);
@@ -542,10 +541,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    protected void encodeFilterValues(FacesContext context, ResponseWriter responseWriter, Sheet sheet, String clientId)
+    protected void encodeFilterValues(final FacesContext context, final ResponseWriter responseWriter, final Sheet sheet, final String clientId)
                 throws IOException {
         int renderIdx = 0;
-        for (SheetColumn column : sheet.getColumns()) {
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
@@ -579,10 +578,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    protected void encodeFilterVar(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-        JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
+    protected void encodeFilterVar(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
+        final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 
-        for (SheetColumn column : sheet.getColumns()) {
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
@@ -592,13 +591,13 @@ public class SheetRenderer extends CoreRenderer {
                 continue;
             }
 
-            Collection<SelectItem> options = column.getFilterOptions();
+            final Collection<SelectItem> options = column.getFilterOptions();
             if (options == null) {
                 vb.appendArrayValue("true", true);
             }
             else {
-                JavascriptVarBuilder vbOptions = new JavascriptVarBuilder(null, false);
-                for (SelectItem item : options) {
+                final JavascriptVarBuilder vbOptions = new JavascriptVarBuilder(null, false);
+                for (final SelectItem item : options) {
                     vbOptions.appendArrayValue("{ label: \"" + item.getLabel() + "\", value: \"" + item.getValue()
                                 + "\"}",
                                 false);
@@ -619,10 +618,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param wb
      * @throws IOException
      */
-    protected void encodeSortVar(FacesContext context, Sheet sheet, WidgetBuilder wb) throws IOException {
-        JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
+    protected void encodeSortVar(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
+        final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 
-        for (SheetColumn column : sheet.getColumns()) {
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
@@ -649,11 +648,11 @@ public class SheetRenderer extends CoreRenderer {
      * @parma component
      */
     @Override
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(final FacesContext context, final UIComponent component) {
         final Sheet sheet = (Sheet) component;
         // update Sheet references to work around issue with getParent sometimes
         // being null
-        for (SheetColumn column : sheet.getColumns()) {
+        for (final SheetColumn column : sheet.getColumns()) {
             column.setSheet(sheet);
         }
 
@@ -662,12 +661,12 @@ public class SheetRenderer extends CoreRenderer {
 
         // get parameters
         // we'll need the request parameters
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String clientId = sheet.getClientId(context);
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String clientId = sheet.getClientId(context);
 
         // get our input fields
-        String jsonUpdates = params.get(clientId + "_input");
-        String jsonSelection = params.get(clientId + "_selection");
+        final String jsonUpdates = params.get(clientId + "_input");
+        final String jsonSelection = params.get(clientId + "_selection");
 
         // decode into submitted values on the Sheet
         decodeSubmittedValues(context, sheet, jsonUpdates);
@@ -681,8 +680,8 @@ public class SheetRenderer extends CoreRenderer {
         // decode filters
         decodeFilters(context, sheet, params, clientId);
 
-        String sortBy = params.get(clientId + "_sortby");
-        String sortOrder = params.get(clientId + "_sortorder");
+        final String sortBy = params.get(clientId + "_sortby");
+        final String sortOrder = params.get(clientId + "_sortorder");
         if (sortBy != null) {
             int col = Integer.valueOf(sortBy);
             if (col >= 0) {
@@ -695,7 +694,7 @@ public class SheetRenderer extends CoreRenderer {
             sheet.setSortOrder(sortOrder);
         }
 
-        String focus = params.get(clientId + "_focus");
+        final String focus = params.get(clientId + "_focus");
         sheet.setFocusId(focus);
     }
 
@@ -707,15 +706,15 @@ public class SheetRenderer extends CoreRenderer {
      * @param params
      * @param clientId
      */
-    protected void decodeFilters(FacesContext context, Sheet sheet, Map<String, String> params, String clientId) {
+    protected void decodeFilters(final FacesContext context, final Sheet sheet, final Map<String, String> params, final String clientId) {
         int renderIdx = 0;
-        for (SheetColumn column : sheet.getColumns()) {
+        for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
 
             if (column.getValueExpression("filterBy") != null) {
-                String value = params.get(clientId + "_filter_" + renderIdx);
+                final String value = params.get(clientId + "_filter_" + renderIdx);
                 column.setFilterValue(value);
             }
 
@@ -730,10 +729,10 @@ public class SheetRenderer extends CoreRenderer {
      * @param component the Component being decodes
      */
     @Override
-    protected void decodeBehaviors(FacesContext context, UIComponent component) {
+    protected void decodeBehaviors(final FacesContext context, final UIComponent component) {
 
         // get current behaviors
-        Map<String, List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors();
+        final Map<String, List<ClientBehavior>> behaviors = ((ClientBehaviorHolder) component).getClientBehaviors();
 
         // if empty, done
         if (behaviors.isEmpty()) {
@@ -741,8 +740,8 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         // get the parameter map and the behaviorEvent fired
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String behaviorEvent = params.get("javax.faces.behavior.event");
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String behaviorEvent = params.get("javax.faces.behavior.event");
 
         // if no event, done
         if (behaviorEvent == null) {
@@ -750,16 +749,16 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         // get behaviors for the event
-        List<ClientBehavior> behaviorsForEvent = behaviors.get(behaviorEvent);
+        final List<ClientBehavior> behaviorsForEvent = behaviors.get(behaviorEvent);
         if (behaviorsForEvent == null || behaviorsForEvent.isEmpty()) {
             return;
         }
 
         // decode event if we are the source
-        String behaviorSource = params.get("javax.faces.source");
-        String clientId = component.getClientId();
+        final String behaviorSource = params.get("javax.faces.source");
+        final String clientId = component.getClientId();
         if (behaviorSource != null && clientId.equals(behaviorSource)) {
-            for (ClientBehavior behavior : behaviorsForEvent) {
+            for (final ClientBehavior behavior : behaviorsForEvent) {
                 behavior.decode(context, component);
             }
         }
@@ -772,21 +771,21 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @param jsonSelection
      */
-    private void decodeSelection(FacesContext context, Sheet sheet, String jsonSelection) {
+    private void decodeSelection(final FacesContext context, final Sheet sheet, final String jsonSelection) {
         if (StringUtils.isEmpty(jsonSelection)) {
             return;
         }
 
         try {
             // data comes in: [ [row, col, oldValue, newValue] ... ]
-            JSONArray array = new JSONArray(jsonSelection);
+            final JSONArray array = new JSONArray(jsonSelection);
             sheet.setSelectedRow(array.getInt(0));
             sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
             sheet.setSelectedLastRow(array.getInt(2));
             sheet.setSelectedLastColumn(array.getInt(3));
             sheet.setSelection(jsonSelection);
         }
-        catch (JSONException e) {
+        catch (final JSONException e) {
             throw new FacesException("Failed parsing Ajax JSON message for cell selection event:" + e.getMessage(), e);
         }
     }
@@ -798,7 +797,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @param jsonData
      */
-    private void decodeSubmittedValues(FacesContext context, Sheet sheet, String jsonData) {
+    private void decodeSubmittedValues(final FacesContext context, final Sheet sheet, final String jsonData) {
         if (StringUtils.isEmpty(jsonData)) {
             return;
         }
@@ -810,19 +809,19 @@ public class SheetRenderer extends CoreRenderer {
             // previous deltas prior to submission
             // we don't care about the property names, just the values, which
             // we'll process in turn
-            JSONObject obj = new JSONObject(jsonData);
-            Iterator<String> keys = obj.keys();
+            final JSONObject obj = new JSONObject(jsonData);
+            final Iterator<String> keys = obj.keys();
             while (keys.hasNext()) {
                 final String key = keys.next();
                 // data comes in: [row, col, oldValue, newValue, rowKey]
-                JSONArray update = obj.getJSONArray(key);
+                final JSONArray update = obj.getJSONArray(key);
                 final String rowKey = update.getString(4);
                 final int col = sheet.getMappedColumn(update.getInt(1));
                 final String newValue = update.getString(3);
                 sheet.setSubmittedValue(context, rowKey, col, newValue);
             }
         }
-        catch (JSONException e) {
+        catch (final JSONException e) {
             throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + e.getMessage(), e);
         }
     }

@@ -279,13 +279,24 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         }); 
     },
 
-    // updates the row with the new data value
-    updateData: function (rowKey, v) {
-        for (var i = 0; i < this.cfg.rowKeys.length; i++)
-            if (this.cfg.rowKeys[i] == rowKey) {
-                this.cfg.data[i] = v;
-                return;
-            }
+    /**
+     * Updates the row with the new data value
+     * 
+     * @param rowIndex the row index
+     * @param data the array of data values for the columns
+     * @param styles the JSON cell style updates
+     * @param readonly the JSON cell read only updates
+     */
+    updateData: function (rowIndex, data, styles, readonly) {
+        // merge the new styles in
+        $.extend(this.cfg.styles, styles);
+        //merge the new readonly cells in
+        $.extend(this.cfg.readOnly, readonly);
+        
+        // update any data rows
+        if (rowIndex <= this.cfg.rowKeys.length) {
+            this.cfg.data[rowIndex] = data;
+        }
     },
 
     // true if sheet has assigned behavior, otherwise false

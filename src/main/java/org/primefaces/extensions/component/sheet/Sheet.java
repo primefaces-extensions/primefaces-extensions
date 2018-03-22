@@ -298,6 +298,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     private Map<String, Object> rowMap;
 
     /**
+     * Map by row keys for row number
+     */
+    private Map<String, Integer> rowNumbers;
+
+    /**
      * Default constructor
      */
     public Sheet() {
@@ -354,7 +359,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
@@ -366,7 +371,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setStretchH(String value) {
+    public void setStretchH(final String value) {
         getStateHelper().put(PropertyKeys.stretchH, value);
     }
 
@@ -378,7 +383,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setEmptyMessage(String value) {
+    public void setEmptyMessage(final String value) {
         getStateHelper().put(PropertyKeys.emptyMessage, value);
     }
 
@@ -390,7 +395,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setCurrentColClass(String styleClass) {
+    public void setCurrentColClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.currentColClass, styleClass);
     }
 
@@ -402,7 +407,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setCurrentRowClass(String styleClass) {
+    public void setCurrentRowClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.currentRowClass, styleClass);
     }
 
@@ -414,7 +419,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setRowStyleClass(String styleClass) {
+    public void setRowStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.rowStyleClass, styleClass);
     }
 
@@ -426,7 +431,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setShowColumnHeaders(Boolean value) {
+    public void setShowColumnHeaders(final Boolean value) {
         getStateHelper().put(PropertyKeys.showColumnHeaders, value);
     }
 
@@ -434,7 +439,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showColumnHeaders, true).toString());
     }
 
-    public void setShowRowHeaders(Boolean value) {
+    public void setShowRowHeaders(final Boolean value) {
         getStateHelper().put(PropertyKeys.showRowHeaders, value);
     }
 
@@ -442,7 +447,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showRowHeaders, true).toString());
     }
 
-    public void setResizableRows(Boolean value) {
+    public void setResizableRows(final Boolean value) {
         getStateHelper().put(PropertyKeys.resizableRows, value);
     }
 
@@ -450,7 +455,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableRows, false).toString());
     }
 
-    public void setResizableCols(Boolean value) {
+    public void setResizableCols(final Boolean value) {
         getStateHelper().put(PropertyKeys.resizableCols, value);
     }
 
@@ -458,7 +463,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableCols, false).toString());
     }
 
-    public void setMovableRows(Boolean value) {
+    public void setMovableRows(final Boolean value) {
         getStateHelper().put(PropertyKeys.movableRows, value);
     }
 
@@ -466,7 +471,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableRows, false).toString());
     }
 
-    public void setMovableCols(Boolean value) {
+    public void setMovableCols(final Boolean value) {
         getStateHelper().put(PropertyKeys.movableCols, value);
     }
 
@@ -492,7 +497,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param parent
      */
-    private void getColumns(UIComponent parent) {
+    private void getColumns(final UIComponent parent) {
         for (final UIComponent child : parent.getChildren()) {
             if (child instanceof SheetColumn) {
                 columns.add((SheetColumn) child);
@@ -505,11 +510,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param columns
      */
-    public void setColumns(List<SheetColumn> columns) {
+    public void setColumns(final List<SheetColumn> columns) {
         this.columns = columns;
     }
 
-    public void setFixedRows(Integer value) {
+    public void setFixedRows(final Integer value) {
         getStateHelper().put(PropertyKeys.fixedRows, value);
     }
 
@@ -521,7 +526,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return Integer.valueOf(result.toString());
     }
 
-    public void setFixedCols(Integer value) {
+    public void setFixedCols(final Integer value) {
         getStateHelper().put(PropertyKeys.fixedCols, value);
     }
 
@@ -594,7 +599,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @param value
      */
-    public void setSubmittedValue(FacesContext context, String rowKey, int col, String value) {
+    public void setSubmittedValue(final FacesContext context, final String rowKey, final int col, final String value) {
         submittedValues.put(new RowColIndex(rowKey, col), value);
     }
 
@@ -605,7 +610,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @return
      */
-    public String getSubmittedValue(String rowKey, int col) {
+    public String getSubmittedValue(final String rowKey, final int col) {
         return submittedValues.get(new RowColIndex(rowKey, col));
     }
 
@@ -616,7 +621,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @param value
      */
-    public void setLocalValue(String rowKey, int col, Object value) {
+    public void setLocalValue(final String rowKey, final int col, final Object value) {
         localValues.put(new RowColIndex(rowKey, col), value);
     }
 
@@ -627,7 +632,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @return
      */
-    public Object getLocalValue(String rowKey, int col) {
+    public Object getLocalValue(final String rowKey, final int col) {
         return localValues.get(new RowColIndex(rowKey, col));
     }
 
@@ -637,7 +642,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context the FacesContext against which to the row var is set. Passed for performance
      * @param rowKey the rowKey string
      */
-    public void setRowVar(FacesContext context, String rowKey) {
+    public void setRowVar(final FacesContext context, final String rowKey) {
 
         if (context == null) {
             return;
@@ -654,7 +659,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     protected Map<String, Object> getRowMap() {
         if (rowMap == null || rowMap.isEmpty()) {
-            reMapRows();
+            remapRows();
         }
         return rowMap;
     }
@@ -667,7 +672,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @return
      */
-    public Object getValueForCell(FacesContext context, String rowKey, int col) {
+    public Object getValueForCell(final FacesContext context, final String rowKey, final int col) {
         // if we have a local value, use it
         // note: can't check for null, as null may be the submitted value
         final RowColIndex index = new RowColIndex(rowKey, col);
@@ -688,7 +693,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param col
      * @return
      */
-    public String getRenderValueForCell(FacesContext context, String rowKey, int col) {
+    public String getRenderValueForCell(final FacesContext context, final String rowKey, final int col) {
 
         // if we have a submitted value still, use it
         // note: can't check for null, as null may be the submitted value
@@ -730,7 +735,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param col
      */
-    public void setSelectedColumn(Integer col) {
+    public void setSelectedColumn(final Integer col) {
         getStateHelper().put(PropertyKeys.selectedColumn, col);
     }
 
@@ -752,7 +757,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param col
      */
-    public void setSelectedLastColumn(Integer col) {
+    public void setSelectedLastColumn(final Integer col) {
         getStateHelper().put(PropertyKeys.selectedLastColumn, col);
     }
 
@@ -787,7 +792,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param row
      */
-    public void setSelectedRow(Integer row) {
+    public void setSelectedRow(final Integer row) {
         getStateHelper().put(PropertyKeys.selectedRow, row);
     }
 
@@ -796,7 +801,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param row
      */
-    public void setSelectedLastRow(Integer row) {
+    public void setSelectedLastRow(final Integer row) {
         getStateHelper().put(PropertyKeys.selectedLastRow, row);
     }
 
@@ -819,7 +824,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param row
      */
-    public void setWidth(Integer value) {
+    public void setWidth(final Integer value) {
         getStateHelper().put(PropertyKeys.width, value);
     }
 
@@ -842,7 +847,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param row
      */
-    public void setHeight(Integer value) {
+    public void setHeight(final Integer value) {
         getStateHelper().put(PropertyKeys.height, value);
     }
 
@@ -855,11 +860,21 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     }
 
     /**
+     * Set the value of the <code>Sheet</code>. This value must be a java.util.List at this time.
+     *
+     * @param value the new value
+     */
+    @Override
+    public void setValue(final Object value) {
+        getStateHelper().put(PropertyKeys.value, value);
+    }
+
+    /**
      * Update the style value for the component
      *
      * @param value
      */
-    public void setStyle(String value) {
+    public void setStyle(final String value) {
         getStateHelper().put(PropertyKeys.style, value);
     }
 
@@ -891,8 +906,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context
      * @return
      */
-    protected String getRowHeaderValueAsString(FacesContext context) {
-        ValueExpression veRowHeader = getRowHeaderValueExpression();
+    protected String getRowHeaderValueAsString(final FacesContext context) {
+        final ValueExpression veRowHeader = getRowHeaderValueExpression();
         final Object value = veRowHeader.getValue(context.getELContext());
         if (value == null) {
             return StringUtils.EMPTY;
@@ -949,7 +964,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param obj
      * @return
      */
-    protected boolean matchesFilter(Object obj) {
+    protected boolean matchesFilter(final Object obj) {
         for (final SheetColumn col : getColumns()) {
             final String filterValue = col.getFilterValue();
             if (StringUtils.isEmpty(filterValue)) {
@@ -980,13 +995,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     public void sortAndFilter() {
         sortedList = new ArrayList<Object>();
         rowMap = new HashMap<String, Object>();
+        rowNumbers = new HashMap<String, Integer>();
 
         final Collection<?> values = (Collection<?>) getValue();
         if (values == null || values.isEmpty()) {
             return;
         }
 
-        reMapRows();
+        remapRows();
 
         boolean filters = false;
         for (final SheetColumn col : getColumns()) {
@@ -998,19 +1014,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
         final FacesContext context = FacesContext.getCurrentInstance();
         final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+        final String var = getVar();
 
         if (filters) {
             // iterate and add those matching the filters
-            final String var = getVar();
             for (final Object obj : values) {
                 requestMap.put(var, obj);
-                try {
-                    if (matchesFilter(obj)) {
-                        sortedList.add(obj);
-                    }
-                }
-                finally {
-                    requestMap.remove(var);
+                if (matchesFilter(obj)) {
+                    sortedList.add(obj);
                 }
             }
         }
@@ -1020,16 +1031,35 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
         final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         if (veSortBy != null) {
-            Collections.sort(sortedList, new BeanPropertyComparator(veSortBy, getVar(), convertSortOrder(), null, false,
+            Collections.sort(sortedList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null, false,
                         Locale.ENGLISH, 0));
         }
 
+        // map filtered rows
+        remapFilteredList();
     }
 
     /**
-     * Remaps the row keys to the sorted and filtered list.
+     * Remaps the row keys in a hash map.
      */
-    protected void reMapRows() {
+    protected void remapFilteredList() {
+        rowNumbers = new HashMap<>(rowMap.size());
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+        final String var = getVar();
+        int row = 0;
+        for (final Object value : sortedList) {
+            requestMap.put(var, value);
+            rowNumbers.put(getRowKeyValueAsString(context), Integer.valueOf(row));
+            row++;
+        }
+        requestMap.remove(var);
+    }
+
+    /**
+     * Remaps the row keys in a hash map.
+     */
+    protected void remapRows() {
         rowMap = new HashMap<String, Object>();
         final FacesContext context = FacesContext.getCurrentInstance();
         final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
@@ -1038,7 +1068,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         for (final Object obj : values) {
             requestMap.put(var, obj);
             try {
-                rowMap.put(getRowKeyValueAsString(context), obj);
+                final String key = getRowKeyValueAsString(context);
+                rowMap.put(key, obj);
             }
             finally {
                 requestMap.remove(var);
@@ -1052,7 +1083,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context the faces context
      * @return a row key value or null if the expression is not set
      */
-    protected Object getRowKeyValue(FacesContext context) {
+    protected Object getRowKeyValue(final FacesContext context) {
         final ValueExpression veRowKey = getValueExpression(PropertyKeys.rowKey.name());
         if (veRowKey == null) {
             throw new RuntimeException("RowKey required on sheet!");
@@ -1070,7 +1101,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context
      * @return
      */
-    protected String getRowKeyValueAsString(Object key) {
+    protected String getRowKeyValueAsString(final Object key) {
         // TODO for now just use toString and remove spaces/etc, but in future
         // we'll want to revisit this to support complex key objects
         final String result = key.toString();
@@ -1083,7 +1114,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context
      * @return
      */
-    protected String getRowKeyValueAsString(FacesContext context) {
+    protected String getRowKeyValueAsString(final FacesContext context) {
         return getRowKeyValueAsString(getRowKeyValue(context));
     }
 
@@ -1104,16 +1135,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     }
 
     /**
-     * Set the value of the <code>Sheet</code>. This value must be a java.util.List at this time.
-     *
-     * @param value the new value
-     */
-    @Override
-    public void setValue(Object value) {
-        getStateHelper().put(PropertyKeys.value, value);
-    }
-
-    /**
      * Return the request-scope attribute under which the data object for the current row will be exposed when iterating. This property is <strong>not</strong>
      * enabled for value binding expressions.
      */
@@ -1127,7 +1148,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param var The new request-scope attribute name
      */
-    public void setVar(String var) {
+    public void setVar(final String var) {
         getStateHelper().put(PropertyKeys.var, var);
     }
 
@@ -1146,7 +1167,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param sortBy
      */
-    public void setSortByValueExpression(ValueExpression sortBy) {
+    public void setSortByValueExpression(final ValueExpression sortBy) {
         // when updating, make sure we store off the original so it may be
         // restored
         // ValueExpression orig = (ValueExpression)
@@ -1174,7 +1195,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param sortOrder
      */
-    public void setSortOrder(java.lang.String sortOrder) {
+    public void setSortOrder(final java.lang.String sortOrder) {
         // when updating, make sure we store off the original so it may be
         // restored
         final String orig = (String) getStateHelper().get(PropertyKeys.origSortOrder);
@@ -1205,7 +1226,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param value
      */
-    public void setErrorMessage(String value) {
+    public void setErrorMessage(final String value) {
         getStateHelper().put(PropertyKeys.errorMessage, value);
     }
 
@@ -1214,7 +1235,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * can proceed to the processUpdates.
      */
     @Override
-    public void validate(FacesContext context) {
+    public void validate(final FacesContext context) {
         // iterate over submitted values and attempt to convert to the proper
         // data type. For successful values, remove from submitted and add to
         // local values map. for failures, add a conversion message and leave in
@@ -1297,7 +1318,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * event anyhow) and if there is a failure attempt to roll back by updating successful model updates with the old value. This may not all be necessary.
      */
     @Override
-    public void updateModel(FacesContext context) {
+    public void updateModel(final FacesContext context) {
         final Iterator<Entry<RowColIndex, Object>> entries = localValues.entrySet().iterator();
         // Keep track of the dirtied rows for ajax callbacks so we can send
         // updates on what was touched
@@ -1332,8 +1353,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * Saves the state of the submitted and local values and the bad updates.
      */
     @Override
-    public Object saveState(FacesContext context) {
-        final Object values[] = new Object[7];
+    public Object saveState(final FacesContext context) {
+        final Object values[] = new Object[8];
         values[0] = super.saveState(context);
         values[1] = submittedValues;
         values[2] = localValues;
@@ -1341,7 +1362,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         values[4] = columnMapping;
         values[5] = sortedList;
         values[6] = rowMap;
-
+        values[7] = rowNumbers;
         return values;
     }
 
@@ -1349,7 +1370,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * Restores the state for the submitted, local and bad values.
      */
     @Override
-    public void restoreState(FacesContext context, Object state) {
+    public void restoreState(final FacesContext context, final Object state) {
         if (state == null) {
             return;
         }
@@ -1362,6 +1383,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         final Object restoredColMappings = values[4];
         final Object restoredSortedList = values[5];
         final Object restoredRowMap = values[6];
+        final Object restoredRowNumbers = values[7];
 
         if (restoredSubmittedValues == null) {
             submittedValues.clear();
@@ -1404,6 +1426,13 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         else {
             rowMap = (Map<String, Object>) restoredRowMap;
         }
+
+        if (restoredRowNumbers == null) {
+            rowNumbers = null;
+        }
+        else {
+            rowNumbers = (Map<String, Integer>) restoredRowNumbers;
+        }
     }
 
     /**
@@ -1420,7 +1449,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param selection the selection to set
      */
-    public void setSelection(String selection) {
+    public void setSelection(final String selection) {
         this.selection = selection;
     }
 
@@ -1443,7 +1472,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @see javax.faces.component.EditableValueHolder#setSubmittedValue(java.lang .Object)
      */
     @Override
-    public void setSubmittedValue(Object submittedValue) {
+    public void setSubmittedValue(final Object submittedValue) {
         if (submittedValue == null) {
             submittedValues.clear();
         }
@@ -1460,19 +1489,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     public List<SheetUpdate> getUpdates() {
         return updates;
-    }
-
-    /**
-     * Appends an update event
-     *
-     * @param rowIndex
-     * @param colIndex
-     * @param rowData
-     * @param oldValue
-     * @param newValue
-     */
-    protected void appendUpdateEvent(Object rowKey, int colIndex, Object rowData, Object oldValue, Object newValue) {
-        updates.add(new SheetUpdate(rowKey, colIndex, rowData, oldValue, newValue));
     }
 
     /**
@@ -1495,7 +1511,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param renderIdx the rendered index
      * @return the mapped index
      */
-    public int getMappedColumn(int renderIdx) {
+    public int getMappedColumn(final int renderIdx) {
         if (columnMapping == null || renderIdx == -1) {
             return renderIdx;
         }
@@ -1514,7 +1530,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param realIdx
      * @return
      */
-    public int getRenderIndexFromRealIdx(int realIdx) {
+    public int getRenderIndexFromRealIdx(final int realIdx) {
         if (columnMapping == null || realIdx == -1) {
             return realIdx;
         }
@@ -1571,7 +1587,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param focusId the focusId to set
      */
-    public void setFocusId(String focusId) {
+    public void setFocusId(final String focusId) {
         this.focusId = focusId;
     }
 
@@ -1612,14 +1628,17 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context the FacesContext
      * @param dirtyRows the set of dirty rows
      */
-    protected void renderRowUpdateScript(FacesContext context, Set<String> dirtyRows) {
+    protected void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {
         final String jsVar = resolveWidgetVar();
         final StringBuilder eval = new StringBuilder();
 
         for (final String rowKey : dirtyRows) {
             setRowVar(context, rowKey);
+            final int rowIndex = rowNumbers.get(rowKey);
             // data is array of array of data
-            final JavascriptVarBuilder vbRow = new JavascriptVarBuilder(null, false);
+            final JavascriptVarBuilder jsRow = new JavascriptVarBuilder(null, false);
+            final JavascriptVarBuilder jsStyle = new JavascriptVarBuilder(null, true);
+            final JavascriptVarBuilder jsReadOnly = new JavascriptVarBuilder(null, true);
             for (int col = 0; col < getColumns().size(); col++) {
                 final SheetColumn column = getColumns().get(col);
                 if (!column.isRendered()) {
@@ -1628,13 +1647,29 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
                 // render data value
                 final String value = getRenderValueForCell(context, rowKey, col);
-                vbRow.appendArrayValue(value, true);
+                jsRow.appendArrayValue(value, true);
+
+                // custom style
+                final String styleClass = column.getStyleClass();
+                if (styleClass != null) {
+                    jsStyle.appendRowColProperty(rowIndex, col, styleClass, true);
+                }
+
+                // read only per cell
+                final boolean readOnly = column.isReadonlyCell();
+                if (readOnly) {
+                    jsReadOnly.appendRowColProperty(rowIndex, col, "true", true);
+                }
             }
             eval.append("PF('").append(jsVar).append("')");
             eval.append(".updateData('");
-            eval.append(rowKey);
+            eval.append(rowIndex);
             eval.append("',");
-            eval.append(vbRow.closeVar().toString());
+            eval.append(jsRow.closeVar().toString());
+            eval.append(",");
+            eval.append(jsStyle.closeVar().toString());
+            eval.append(",");
+            eval.append(jsReadOnly.closeVar().toString());
             eval.append(");");
         }
         eval.append("PF('").append(jsVar).append("')").append(".redraw();");
@@ -1646,7 +1681,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param context the FacesContext
      */
-    protected void renderBadUpdateScript(FacesContext context) {
+    protected void renderBadUpdateScript(final FacesContext context) {
         final String widgetVar = resolveWidgetVar();
         final String invalidValue = getInvalidDataValue();
         StringBuilder sb = new StringBuilder("PF('" + widgetVar + "')");
@@ -1667,6 +1702,19 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     }
 
     /**
+     * Appends an update event
+     *
+     * @param rowIndex
+     * @param colIndex
+     * @param rowData
+     * @param oldValue
+     * @param newValue
+     */
+    protected void appendUpdateEvent(final Object rowKey, final int colIndex, final Object rowData, final Object oldValue, final Object newValue) {
+        updates.add(new SheetUpdate(rowKey, colIndex, rowData, oldValue, newValue));
+    }
+
+    /**
      * Private class used as a key for row,col maps.
      */
     private class RowColIndex implements Serializable {
@@ -1682,7 +1730,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
          * @param row the row represented by this index
          * @param col the column respresented by this index
          */
-        public RowColIndex(String rowKey, Integer col) {
+        public RowColIndex(final String rowKey, final Integer col) {
             this.rowKey = rowKey;
             colIndex = col;
         }
