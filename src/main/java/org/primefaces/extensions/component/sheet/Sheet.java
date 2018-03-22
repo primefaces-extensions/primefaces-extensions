@@ -97,6 +97,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         value,
 
         /**
+         * List to keep the filtered and sorted data.
+         */
+        filteredValue,
+
+        /**
          * Flag indicating whether or not this component is valid.
          */
         valid,
@@ -255,11 +260,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * List of invalid updates
      */
     private List<SheetInvalidUpdate> invalidUpdates;
-
-    /**
-     * The sorted list of data
-     */
-    private List<Object> sortedList;
 
     /**
      * Map of submitted values by row index and column index
@@ -860,6 +860,24 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     }
 
     /**
+     * Holds the filtered and sorted List of values.
+     *
+     * @return a List of sorted and filtered values
+     */
+    public java.util.List getFilteredValue() {
+        return (java.util.List) getStateHelper().eval(PropertyKeys.filteredValue, new ArrayList());
+    }
+
+    /**
+     * Sets the filtered list.
+     *
+     * @param _filteredValue the List to store
+     */
+    public void setFilteredValue(final java.util.List _filteredValue) {
+        getStateHelper().put(PropertyKeys.filteredValue, _filteredValue);
+    }
+
+    /**
      * Set the value of the <code>Sheet</code>. This value must be a java.util.List at this time.
      *
      * @param value the new value
@@ -923,10 +941,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @return
      */
     public List<Object> getSortedValues() {
-        if (sortedList == null) {
-            sortAndFilter();
+        List<Object> filtered = getFilteredValue();
+        if (filtered == null || filtered.isEmpty()) {
+            filtered = sortAndFilter();
         }
-        return sortedList;
+        return filtered;
     }
 
     /**
@@ -992,14 +1011,15 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     /**
      * Sorts and filters the data
      */
-    public void sortAndFilter() {
-        sortedList = new ArrayList<Object>();
+    public List<Object> sortAndFilter() {
+        final List filteredList = getFilteredValue();
+        filteredList.clear();
         rowMap = new HashMap<String, Object>();
         rowNumbers = new HashMap<String, Integer>();
 
         final Collection<?> values = (Collection<?>) getValue();
         if (values == null || values.isEmpty()) {
-            return;
+            return filteredList;
         }
 
         remapRows();
@@ -1021,34 +1041,35 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             for (final Object obj : values) {
                 requestMap.put(var, obj);
                 if (matchesFilter(obj)) {
-                    sortedList.add(obj);
+                    filteredList.add(obj);
                 }
             }
         }
         else {
-            sortedList.addAll(values);
+            filteredList.addAll(values);
         }
 
         final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         if (veSortBy != null) {
-            Collections.sort(sortedList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null, false,
+            Collections.sort(filteredList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null, false,
                         Locale.ENGLISH, 0));
         }
 
         // map filtered rows
-        remapFilteredList();
+        remapFilteredList(filteredList);
+        return filteredList;
     }
 
     /**
      * Remaps the row keys in a hash map.
      */
-    protected void remapFilteredList() {
+    protected void remapFilteredList(final List filteredList) {
         rowNumbers = new HashMap<>(rowMap.size());
         final FacesContext context = FacesContext.getCurrentInstance();
         final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
         final String var = getVar();
         int row = 0;
-        for (final Object value : sortedList) {
+        for (final Object value : filteredList) {
             requestMap.put(var, value);
             rowNumbers.put(getRowKeyValueAsString(context), Integer.valueOf(row));
             row++;
@@ -1360,7 +1381,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         values[2] = localValues;
         values[3] = invalidUpdates;
         values[4] = columnMapping;
-        values[5] = sortedList;
+        values[5] = getFilteredValue();
         values[6] = rowMap;
         values[7] = rowNumbers;
         return values;
@@ -1414,10 +1435,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         }
 
         if (restoredSortedList == null) {
-            sortedList = null;
+            getFilteredValue().clear();
         }
         else {
-            sortedList = (List<Object>) restoredSortedList;
+            setFilteredValue((List<Object>) restoredSortedList);
         }
 
         if (restoredRowMap == null) {
