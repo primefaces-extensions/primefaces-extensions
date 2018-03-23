@@ -27,10 +27,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
         // create table
-        this.setupHandsonTable();
+        this._setupHandsonTable();
     },
     
-    setupHandsonTable: function() {
+    _setupHandsonTable: function() {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -44,38 +44,27 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 row: 0,
                 col: 1
             },
-            cellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                Handsontable.renderers.TextRenderer.apply(this, arguments)
-
-                var styleClass = '';
-                // append row style (if we have one)
-                var rowClass = $this.cfg.rowStyles[row];
-                if (rowClass) {
-                    styleClass = rowClass;
-                }
-                // append cell style (if we have one)
-                var cellClass = $this.cfg.styles['r' + row + '_c' + col];
-                if (cellClass) {
-                    styleClass = styleClass.concat(' ').concat(cellClass);
-                }
-                // check for errors
-                var invalidMessage = $this.cfg.errors[$this.cfg.rowKeys[row] + '_c' + col];
-                if (invalidMessage) {
-                    styleClass = styleClass.concat(' ui-message-error');
-                    td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
-                        + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
-                }
-                // every other row highlighting
-                if (row % 2 == 1) {
-                    styleClass = styleClass.concat(' ui-datatable-odd');
-                }
-                td.className = td.className.concat(' ').concat(styleClass);
+            textCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.TextRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            passwordCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.PasswordRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            numericCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.NumericRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
             cells: function (row, col, prop) {
                 var cp = {};
                 var column = $this.cfg.columns[col];
-                if (column.type === 'text') {
-                    cp.renderer = this.cellRenderer;
+                if (column.type === 'password') {
+                    cp.renderer = this.passwordCellRenderer;
+                } else if (column.type === 'numeric') {
+                    cp.renderer = this.numericCellRenderer;
+                } else {
+                    cp.renderer = this.textCellRenderer;
                 }
                 var readonly = $this.cfg.readOnly['r' + row + '_c' + col];
                 if (readonly) {
@@ -280,6 +269,34 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         $(document).ready(function(){
             $this.ht.render();
         }); 
+    },
+    
+    _defaultCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+        var styleClass = '';
+        // append row style (if we have one)
+        var rowClass = this.cfg.rowStyles[row];
+        if (rowClass) {
+            styleClass = rowClass;
+        }
+        // append cell style (if we have one)
+        var cellClass = this.cfg.styles['r' + row + '_c' + col];
+        if (cellClass) {
+            styleClass = styleClass.concat(' ').concat(cellClass);
+        }
+        // check for errors
+        var invalidMessage = this.cfg.errors[this.cfg.rowKeys[row] + '_c' + col];
+        if (invalidMessage) {
+            styleClass = styleClass.concat(' ui-message-error');
+            td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
+                + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
+        }
+        // every other row highlighting
+        if (row % 2 == 1) {
+            styleClass = styleClass.concat(' ui-datatable-odd');
+        } else {
+            styleClass = styleClass.concat(' ui-datatable-even');
+        }
+        td.className = td.className.concat(' ').concat(styleClass);
     },
 
     /**

@@ -69,6 +69,16 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         passwordHashLength,
 
         /**
+         * Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.
+         */
+        numericPattern,
+
+        /**
+         * Numbers such as currency can be configured for a Locale. Default to en_us.
+         */
+        numericLocale,
+
+        /**
          * Flag indicating whether or not the column is read only
          */
         readonly,
@@ -206,10 +216,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     /**
      * the Handsontable column type.
-     * <p>
-     * TODO make this an enum and limit choices
-     *
-     * @return
      */
     public String getColType() {
         return getStateHelper().eval(PropertyKeys.colType, "text").toString();
@@ -223,12 +229,28 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         getStateHelper().put(PropertyKeys.passwordHashLength, _passwordHashLength);
     }
 
-    public void setPasswordHashSymbol(final String _dir) {
-        getStateHelper().put(PropertyKeys.passwordHashSymbol, _dir);
+    public void setPasswordHashSymbol(final String _passwordHashSymbol) {
+        getStateHelper().put(PropertyKeys.passwordHashSymbol, _passwordHashSymbol);
     }
 
     public String getPasswordHashSymbol() {
         return (String) getStateHelper().eval(PropertyKeys.passwordHashSymbol, "*");
+    }
+
+    public void setNumericPattern(final String _numericPattern) {
+        getStateHelper().put(PropertyKeys.numericPattern, _numericPattern);
+    }
+
+    public String getNumericPattern() {
+        return (String) getStateHelper().eval(PropertyKeys.numericPattern, "0 a");
+    }
+
+    public String getNumericLocale() {
+        return (String) getStateHelper().eval(PropertyKeys.numericLocale, "en-US");
+    }
+
+    public void setNumericLocale(final String locale) {
+        getStateHelper().put(PropertyKeys.numericLocale, locale);
     }
 
     /**

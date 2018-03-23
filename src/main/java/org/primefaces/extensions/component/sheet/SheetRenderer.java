@@ -65,7 +65,7 @@ public class SheetRenderer extends CoreRenderer {
         encodeMarkup(context, sheet, responseWriter);
 
         // encode javascript
-        encodeJavascript(context, sheet, responseWriter);
+        encodeScript(context, sheet, responseWriter);
     }
 
     /**
@@ -170,7 +170,7 @@ public class SheetRenderer extends CoreRenderer {
      * @param sheet
      * @throws IOException
      */
-    protected void encodeJavascript(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
+    protected void encodeScript(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = sheet.getClientId(context);
@@ -278,6 +278,18 @@ public class SheetRenderer extends CoreRenderer {
                     if (passwordSymbol != null) {
                         options.appendProperty("hashSymbol", passwordSymbol, true);
                     }
+                    break;
+                case "numeric":
+                    final JavascriptVarBuilder numeric = new JavascriptVarBuilder(null, true);
+                    final String pattern = column.getNumericPattern();
+                    if (pattern != null) {
+                        numeric.appendProperty("pattern", pattern, true);
+                    }
+                    final String culture = column.getNumericLocale();
+                    if (pattern != null) {
+                        numeric.appendProperty("culture", culture, true);
+                    }
+                    options.appendProperty("numericFormat", numeric.closeVar().toString(), false);
                     break;
                 default:
                     break;
@@ -832,7 +844,7 @@ public class SheetRenderer extends CoreRenderer {
                 final JSONArray update = obj.getJSONArray(key);
                 final String rowKey = update.getString(4);
                 final int col = sheet.getMappedColumn(update.getInt(1));
-                final String newValue = update.getString(3);
+                final String newValue = String.valueOf(update.get(3));
                 sheet.setSubmittedValue(context, rowKey, col, newValue);
             }
         }

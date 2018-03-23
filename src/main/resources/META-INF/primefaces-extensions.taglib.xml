@@ -5433,6 +5433,22 @@
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations..]]>
+            </description>
+            <name>numericPattern</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>numericLocale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient then cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>
