@@ -9,7 +9,7 @@ addons:
 jdk:
   - oraclejdk8
 install:
-- git clone https://github.com/primefaces-extensions/master-pom && cd master-pom && mvn install && cd ..
+  - git clone https://github.com/primefaces-extensions/master-pom && cd master-pom && mvn install && cd ..
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
