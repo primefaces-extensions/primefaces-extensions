@@ -1,0 +1,16 @@
+language: java
+sudo: false
+install: true
+addons:
+  sonarcloud:
+    organization: "primefaces-extensions"
+    token:
+      secure: "kKa+NNy3gf3CJFPTyRdlOMTFzF/zwVAZmNGJM9T0dZ7Uo+1tREQeyh4L81ajNiisdbMoEpSYJ+HudAY20mrbcxNSFJycdZUbkf+F3+8dWgHcrJqMoTRu3EDHD6c3pSRVpmqXfPLaH6y2f+tPKrJ6xoZbxd+9UAKVK+Og/bS0JmA="
+jdk:
+  - oraclejdk8
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
