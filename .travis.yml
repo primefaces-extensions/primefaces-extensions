@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: "primefaces-extensions"
     token:
-      secure: "06c1ac7a24538536eacbdf4198bca0df1e8204e7"
+      secure: "mzvauZAq4RvgTUTTqpJ04ZvoUyQOA21/I5jE2q3969ccYUfJiuhlXgCFr2VrPJMi134NxBlyOZQMFs4GHryq11dt8DT3FCNywvhClyrFar2Bshmw+xLaC6mzloPU+64qNUS3jkJV+JijwyPjIEejkco9B5Dq1lSsQ+93M65FXHY="
 jdk:
   - oraclejdk8
 install:
