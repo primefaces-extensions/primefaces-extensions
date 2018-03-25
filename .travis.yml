@@ -8,6 +8,8 @@ addons:
       secure: "kKa+NNy3gf3CJFPTyRdlOMTFzF/zwVAZmNGJM9T0dZ7Uo+1tREQeyh4L81ajNiisdbMoEpSYJ+HudAY20mrbcxNSFJycdZUbkf+F3+8dWgHcrJqMoTRu3EDHD6c3pSRVpmqXfPLaH6y2f+tPKrJ6xoZbxd+9UAKVK+Og/bS0JmA="
 jdk:
   - oraclejdk8
+install:
+- git clone https://github.com/primefaces-extensions/master-pom.git && cd primefaces-extensions && mvn install && cd ..
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 cache:
