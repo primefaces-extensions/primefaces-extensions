@@ -256,9 +256,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // so we needed to NOT enabled this behavior if the given sheet has the ajax function defined.
         // TODO may make this conditional on whether or not sorting is enabled
         if (!($this.hasBehavior('columnSelect'))) {
-            Handsontable.hooks.add('beforeOnCellMouseDown',
-                    $this.handleHotBeforeOnCellMouseDown, $this.ht);
+            $this.ht.addHook('beforeOnCellMouseDown', $this.handleHotBeforeOnCellMouseDown);
         }
+        
+        // add before key down hook
+        $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length == 0) {
@@ -455,5 +457,30 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         if (coords.row < 0) {
             event.stopImmediatePropagation();
         }
+    },
+    
+    handleHotBeforeKeyDown: function (e) {
+        var row = this.getSelectedLast()[0];
+        var col = this.getSelectedLast()[1];
+        var celltype = this.getCellMeta(row, col).type;
+        
+        // prevent Alpha chars in numeric sheet cells
+        if (celltype === "numeric") {
+            var key = e.charCode || e.keyCode || 0;
+            // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
+            // ONLY home, end, F5, F12, minus (-), period (.)
+            console.log('Key: ' + key + ' Shift: ' + e.shiftKey);
+            var isNumeric = ((key == 8) || (key == 9) || (key == 13) || (key == 46)
+                            || (key == 116) || (key == 123) || (key == 189) || (key == 190) 
+                            || ((key >= 35) && (key <= 40)) || ((key >= 48) && (key <= 57)) 
+                            || ((key >= 96) && (key <= 105)));
+
+            if (!isNumeric || e.shiftKey) {
+                // prevent alpha characters
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        }
     }
+    
 });
