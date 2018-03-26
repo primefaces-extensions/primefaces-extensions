@@ -56,6 +56,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 Handsontable.renderers.NumericRenderer.apply(this, arguments);
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
+            checkboxCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            dateCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.DateRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            timeCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.TimeRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
             cells: function (row, col, prop) {
                 var cp = {};
                 var column = $this.cfg.columns[col];
@@ -63,6 +75,12 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                     cp.renderer = this.passwordCellRenderer;
                 } else if (column.type === 'numeric') {
                     cp.renderer = this.numericCellRenderer;
+                } else if (column.type === 'checkbox') {
+                    cp.renderer = this.checkboxCellRenderer;
+                } else if (column.type === 'date') {
+                    cp.renderer = this.dateCellRenderer;
+                } else if (column.type === 'time') {
+                    cp.renderer = this.timeCellRenderer;
                 } else {
                     cp.renderer = this.textCellRenderer;
                 }

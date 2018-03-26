@@ -79,6 +79,21 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         numericLocale,
 
         /**
+         * Moment.js date format for colType="date". Default is "DD/MM/YYYY"
+         */
+        dateFormat,
+
+        /**
+         * JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration)
+         */
+        datePickerConfig,
+
+        /**
+         * Moment.js time format for colType="date". Default is "h:mm:ss a"
+         */
+        timeFormat,
+
+        /**
          * Flag indicating whether or not the column is read only
          */
         readonly,
@@ -251,6 +266,30 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public void setNumericLocale(final String locale) {
         getStateHelper().put(PropertyKeys.numericLocale, locale);
+    }
+
+    public void setDateFormat(final String _dateFormat) {
+        getStateHelper().put(PropertyKeys.dateFormat, _dateFormat);
+    }
+
+    public String getDateFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.dateFormat, "DD/MM/YYYY");
+    }
+
+    public void setDatePickerConfig(final String _datePickerConfig) {
+        getStateHelper().put(PropertyKeys.datePickerConfig, _datePickerConfig);
+    }
+
+    public String getDatePickerConfig() {
+        return (String) getStateHelper().eval(PropertyKeys.datePickerConfig, null);
+    }
+
+    public void setTimeFormat(final String _timeFormat) {
+        getStateHelper().put(PropertyKeys.timeFormat, _timeFormat);
+    }
+
+    public String getTimeFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.timeFormat, "h:mm:ss a");
     }
 
     /**

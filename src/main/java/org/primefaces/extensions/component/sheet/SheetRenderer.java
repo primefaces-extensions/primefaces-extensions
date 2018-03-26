@@ -291,6 +291,18 @@ public class SheetRenderer extends CoreRenderer {
                     }
                     options.appendProperty("numericFormat", numeric.closeVar().toString(), false);
                     break;
+                case "date":
+                    options.appendProperty("dateFormat", column.getDateFormat(), true);
+                    options.appendProperty("correctFormat", "true", false);
+                    final String dateConfig = column.getDatePickerConfig();
+                    if (dateConfig != null) {
+                        options.appendProperty("datePickerConfig", dateConfig, false);
+                    }
+                    break;
+                case "time":
+                    options.appendProperty("timeFormat", column.getTimeFormat(), true);
+                    options.appendProperty("correctFormat", "true", false);
+                    break;
                 default:
                     break;
             }

@@ -5435,7 +5435,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations..]]>
+                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.]]>
             </description>
             <name>numericPattern</name>
             <required>false</required>
@@ -5448,6 +5448,30 @@
             <name>numericLocale</name>
             <required>false</required>
             <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Moment.js date format for colType="date". Default is "DD/MM/YYYY".]]>
+            </description>
+            <name>dateFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration).]]>
+            </description>
+            <name>datePickerConfig</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Moment.js time format for colType="date". Default is "h:mm:ss a".]]>
+            </description>
+            <name>timeFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
         </attribute>
 		<attribute>
 			<description>
