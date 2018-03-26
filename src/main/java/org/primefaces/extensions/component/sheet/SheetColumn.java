@@ -94,6 +94,32 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         timeFormat,
 
         /**
+         * If true, the autocomplete cells will only accept values that are defined in the source array. Default true.
+         */
+        autoCompleteStrict,
+
+        /**
+         * If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection
+         * advances to the next cell.
+         */
+        autoCompleteAllowInvalid,
+
+        /**
+         * Number of rows visible in the autocomplete dropdown.
+         */
+        autoCompleteVisibleRows,
+
+        /**
+         * If true, trims the dropdown to fit the cell size. Default to true.
+         */
+        autoCompleteTrimDropdown,
+
+        /**
+         * List of values to display in colType="dropdown" or "autocomplete".
+         */
+        selectItems,
+
+        /**
          * Flag indicating whether or not the column is read only
          */
         readonly,
@@ -234,6 +260,46 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      */
     public String getColType() {
         return getStateHelper().eval(PropertyKeys.colType, "text").toString();
+    }
+
+    public Boolean isAutoCompleteAllowInvalid() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
+    }
+
+    public void setAutoCompleteAllowInvalid(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteAllowInvalid, value);
+    }
+
+    public Boolean isAutoCompleteStrict() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteStrict(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteStrict, value);
+    }
+
+    public Boolean isAutoCompleteTrimDropdown() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteTrimDropdown(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteTrimDropdown, value);
+    }
+
+    public void setAutoCompleteVisibleRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.autoCompleteVisibleRows, value);
+    }
+
+    public Integer getAutoCompleteVisibleRows() {
+        return (Integer) getStateHelper().eval(PropertyKeys.autoCompleteVisibleRows, null);
+    }
+
+    public Object getSelectItems() {
+        return getStateHelper().eval(PropertyKeys.selectItems, null);
+    }
+
+    public void setSelectItems(final Object selectItems) {
+        getStateHelper().put(PropertyKeys.selectItems, selectItems);
     }
 
     public Integer getPasswordHashLength() {

@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.sheet;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -303,6 +304,19 @@ public class SheetRenderer extends CoreRenderer {
                     options.appendProperty("timeFormat", column.getTimeFormat(), true);
                     options.appendProperty("correctFormat", "true", false);
                     break;
+                case "dropdown":
+                    encodeSelectItems(column, options);
+                    break;
+                case "autocomplete":
+                    options.appendProperty("strict", column.isAutoCompleteStrict().toString(), false);
+                    options.appendProperty("allowInvalid", column.isAutoCompleteAllowInvalid().toString(), false);
+                    options.appendProperty("trimDropdown", column.isAutoCompleteTrimDropdown().toString(), false);
+                    final Integer visibleRows = column.getAutoCompleteVisibleRows();
+                    if (visibleRows != null) {
+                        options.appendProperty("visibleRows", visibleRows.toString(), false);
+                    }
+                    encodeSelectItems(column, options);
+                    break;
                 default:
                     break;
             }
@@ -310,6 +324,37 @@ public class SheetRenderer extends CoreRenderer {
             vb.appendArrayValue(options.closeVar().toString(), false);
         }
         wb.nativeAttr("columns", vb.closeVar().toString());
+    }
+
+    private void encodeSelectItems(final SheetColumn column, final JavascriptVarBuilder options) {
+        final JavascriptVarBuilder items = new JavascriptVarBuilder(null, false);
+        final Object value = column.getSelectItems();
+        if (value == null) {
+            return;
+        }
+        if (value.getClass().isArray()) {
+            for (int j = 0; j < Array.getLength(value); j++) {
+                final Object item = Array.get(value, j);
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+        else if (value instanceof Collection) {
+            final Collection collection = (Collection) value;
+            for (final Iterator it = collection.iterator(); it.hasNext();) {
+                final Object item = it.next();
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+        else if (value instanceof Map) {
+            final Map map = (Map) value;
+
+            for (final Iterator it = map.keySet().iterator(); it.hasNext();) {
+                final Object item = it.next();
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+
+        options.appendProperty("source", items.closeVar().toString(), false);
     }
 
     /**
@@ -599,7 +644,6 @@ public class SheetRenderer extends CoreRenderer {
 
             renderIdx++;
         }
-
     }
 
     /**

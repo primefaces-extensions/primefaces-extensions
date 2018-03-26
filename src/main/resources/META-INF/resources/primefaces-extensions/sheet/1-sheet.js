@@ -45,7 +45,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 col: 1
             },
             textCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                Handsontable.renderers.TextRenderer.apply(this, arguments);
+                Handsontable.renderers.HtmlRenderer.apply(this, arguments);
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
             passwordCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
@@ -68,6 +68,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 Handsontable.renderers.TimeRenderer.apply(this, arguments);
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
+            dropdownCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.DropdownRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            autocompleteCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.AutocompleteRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
             cells: function (row, col, prop) {
                 var cp = {};
                 var column = $this.cfg.columns[col];
@@ -81,6 +89,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                     cp.renderer = this.dateCellRenderer;
                 } else if (column.type === 'time') {
                     cp.renderer = this.timeCellRenderer;
+                } else if (column.type === 'dropdown') {
+                    cp.renderer = this.dropdownCellRenderer;
+                } else if (column.type === 'autocomplete') {
+                    cp.renderer = this.autocompleteCellRenderer;
                 } else {
                     cp.renderer = this.textCellRenderer;
                 }
@@ -469,7 +481,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             var key = e.charCode || e.keyCode || 0;
             // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
             // ONLY home, end, F5, F12, minus (-), period (.)
-            console.log('Key: ' + key + ' Shift: ' + e.shiftKey);
+            //console.log('Key: ' + key + ' Shift: ' + e.shiftKey);
             var isNumeric = ((key == 8) || (key == 9) || (key == 13) || (key == 46)
                             || (key == 116) || (key == 123) || (key == 189) || (key == 190) 
                             || ((key >= 35) && (key <= 40)) || ((key >= 48) && (key <= 57)) 

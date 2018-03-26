@@ -5473,6 +5473,46 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value if true, the autocomplete cells will only accept values that are defined in the source array. Default true.]]>
+            </description>
+            <name>autoCompleteStrict</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection advances to the next cell.]]>
+            </description>
+            <name>autoCompleteAllowInvalid</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value If true, trims the dropdown to fit the cell size. Default to true.]]>
+            </description>
+            <name>autoCompleteTrimDropdown</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Number of rows visible in the autocomplete dropdown.]]>
+            </description>
+            <name>autoCompleteVisibleRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Collection of values to display in colType="dropdown" or "autocomplete".]]>
+            </description>
+            <name>selectItems</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient then cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>
