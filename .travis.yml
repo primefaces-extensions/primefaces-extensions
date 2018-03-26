@@ -3,9 +3,9 @@ sudo: false
 install: true
 addons:
   sonarcloud:
-    organization: "primefaces-extensions"
+    organization: "pr1m3fac3sext3ns1ons"
     token:
-      secure: "Uj+DOZTTzM7LcNelbl7ycyWNZZEFUuVvaaEaE3gADMZpWcqhFidv0UEYO39vg14X0AT7xlFCpJSgxgx28lh0Oo3rH5Wf1HRo2Ba2HhywQ0E06k59ZRTrJ5SfGAAik4LOaRcs7Zo+3JGGQtiDT8NPD+7ezGol3bmM1iWD0CnhB6k="
+      secure: "UosAYe2y2cCy/wSDzAk7wmGOJGxhjFCKu8twQbTAJd2ch9O1Q/Ka8UcAHl2IiecJgepPtT/Bq4945sDaXAaHO/FrlCm7tPAUKJ+ZuUMs3uBGme2PzZS4x2H5yFGa3iUTS6tvF3v47VLnayZJoNGj8ULg0EvPsDIJESkFvtxcccU="
 jdk:
   - oraclejdk8
 install:
