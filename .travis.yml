@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: "pr1m3fac3sext3ns1ons"
     token:
-      secure: "UosAYe2y2cCy/wSDzAk7wmGOJGxhjFCKu8twQbTAJd2ch9O1Q/Ka8UcAHl2IiecJgepPtT/Bq4945sDaXAaHO/FrlCm7tPAUKJ+ZuUMs3uBGme2PzZS4x2H5yFGa3iUTS6tvF3v47VLnayZJoNGj8ULg0EvPsDIJESkFvtxcccU="
+      secure: "QntGkT4MuZPXBEvVFuLJ+Y1X1JkmgIDbqhf/Qh9jRrpM3d7u0QKZ7WtuEf/sQ7avkD7FE4642J0nPrdL/uLi7ygE+kbeNCmcom2zZgUSTlUi5SX0EJ8HUHPxAPG1gCtUnrfH1DRwzerHV3sT45S1elR/ailBPQCM2EaEzwVWi2g="
 jdk:
   - oraclejdk8
 install:
