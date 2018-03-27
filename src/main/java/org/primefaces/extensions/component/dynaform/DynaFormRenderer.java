@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.dynaform;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,6 +28,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.row.Row;
 import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
@@ -316,57 +318,52 @@ public class DynaFormRenderer extends CoreRenderer {
 
     protected void encodeStatic(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass) throws IOException {
         UIComponent facet = dynaForm.getFacet(name);
-        if (facet == null || facet.isRendered()) {
+        if (facet == null || !facet.isRendered()) {
             return;
         }
 
         ResponseWriter writer = fc.getResponseWriter();
 
         int i = 0;
-        boolean trEncoded = false;
-        for (UIComponent child : facet.getChildren()) {
+        for (Iterator<UIComponent> iter = facet.getChildren().iterator(); iter.hasNext();) {
+            UIComponent child = iter.next();
             if (!child.isRendered()) {
                 continue;
             }
 
-            trEncoded = false;
-            int colMod = i % totalColspan;
-            if (colMod == 0) {
+            String columnClass = CELL_CLASS;
+            if (i % totalColspan == 0) {
                 writer.startElement("tr", null);
                 writer.writeAttribute("role", "row", null);
                 writer.writeAttribute("class", styleClass, null);
-            }
-
-            String columnClass = CELL_CLASS;
-            if (colMod == 0) {
                 columnClass = columnClass + " " + CELL_FIRST_CLASS;
             }
 
-            if ((i + 1)  % totalColspan == 0) {
+            if ((i + 1) % totalColspan == 0) {
                 columnClass = columnClass + " " + CELL_LAST_CLASS;
             }
+
 
             writer.startElement("td", null);
             writer.writeAttribute("role", GRID_CELL_ROLE, null);
             writer.writeAttribute("class", columnClass, null);
-            child.encodeAll(fc);
-            writer.endElement("td");
 
-            i++;
-
-            colMod = i % totalColspan;
-
-            if (colMod == 0) {
-                writer.endElement("tr");
-                trEncoded = true;
+            // <p:row /> is used to define the end of the current <tr />
+            if (child instanceof Row) {
+                int colspan = totalColspan - i;
+                writer.writeAttribute("colspan", colspan, null);
+                i += colspan;
+            } else {
+                child.encodeAll(fc);
+                i++;
             }
-        }
 
-        if (i != 0 && !trEncoded) {
-            writer.startElement("td", null);
-            writer.writeAttribute("colspan", totalColspan - i, null);
             writer.endElement("td");
-            writer.endElement("tr");
+
+            if (i % totalColspan == 0 || !iter.hasNext()) {
+                i = 0;
+                writer.endElement("tr");
+            }
         }
     }
 
