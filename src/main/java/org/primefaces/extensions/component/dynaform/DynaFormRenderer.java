@@ -16,7 +16,7 @@
 package org.primefaces.extensions.component.dynaform;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -322,48 +322,47 @@ public class DynaFormRenderer extends CoreRenderer {
             return;
         }
 
-        ResponseWriter writer = fc.getResponseWriter();
+        List<UIComponent> components = facet instanceof Row
+                ? Collections.singletonList(facet)
+                : facet.getChildren();
 
-        int i = 0;
-        for (Iterator<UIComponent> iter = facet.getChildren().iterator(); iter.hasNext();) {
-            UIComponent child = iter.next();
-            if (!child.isRendered()) {
+        ResponseWriter writer = fc.getResponseWriter();
+        for (UIComponent child : components) {
+            if (!child.isRendered() || !(child instanceof Row)) {
                 continue;
             }
 
-            String columnClass = CELL_CLASS;
-            if (i % totalColspan == 0) {
-                writer.startElement("tr", null);
-                writer.writeAttribute("role", "row", null);
-                writer.writeAttribute("class", styleClass, null);
-                columnClass = columnClass + " " + CELL_FIRST_CLASS;
+            writer.startElement("tr", null);
+            if (shouldWriteId(child)) {
+                writer.writeAttribute("id", child.getClientId(fc), null);
             }
+            writer.writeAttribute("role", "row", null);
+            writer.writeAttribute("class", styleClass, null);
 
-            if ((i + 1) % totalColspan == 0) {
-                columnClass = columnClass + " " + CELL_LAST_CLASS;
-            }
+            int i = 0;
+            for(UIComponent column : child.getChildren()) {
+                if (!column.isRendered()) {
+                    continue;
+                }
 
+                String columnClass = CELL_CLASS;
+                if (i % totalColspan == 0) {
+                    columnClass = columnClass + " " + CELL_FIRST_CLASS;
+                }
 
-            writer.startElement("td", null);
-            writer.writeAttribute("role", GRID_CELL_ROLE, null);
-            writer.writeAttribute("class", columnClass, null);
+                if ((i + 1) % totalColspan == 0) {
+                    columnClass = columnClass + " " + CELL_LAST_CLASS;
+                }
 
-            // <p:row /> is used to define the end of the current <tr />
-            if (child instanceof Row) {
-                int colspan = totalColspan - i;
-                writer.writeAttribute("colspan", colspan, null);
-                i += colspan;
-            } else {
-                child.encodeAll(fc);
+                writer.startElement("td", null);
+                writer.writeAttribute("role", GRID_CELL_ROLE, null);
+                writer.writeAttribute("class", columnClass, null);
+                column.encodeAll(fc);
+                writer.endElement("td");
                 i++;
             }
 
-            writer.endElement("td");
-
-            if (i % totalColspan == 0 || !iter.hasNext()) {
-                i = 0;
-                writer.endElement("tr");
-            }
+            writer.endElement("tr");
         }
     }
 
