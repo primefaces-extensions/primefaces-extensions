@@ -340,7 +340,7 @@ public class DynaFormRenderer extends CoreRenderer {
             writer.writeAttribute("class", styleClass, null);
 
             int i = 0;
-            for(UIComponent column : child.getChildren()) {
+            for (UIComponent column : child.getChildren()) {
                 if (!column.isRendered()) {
                     continue;
                 }
