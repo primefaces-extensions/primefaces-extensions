@@ -3,6 +3,9 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Join the chat athttps://gitter.im/primefaces-extensions](https://badges.gitter.im/primefaces-extensions/primefaces-extensions.svg)](https://gitter.im/primefaces-extensions?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/primefaces-extensions/core.svg?branch=master)](https://travis-ci.org/primefaces-extensions/core)
+[![Quality Status](https://sonarcloud.io/api/project_badges/measure?project=org.primefaces.extensions%3Aprimefaces-extensions&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.primefaces.extensions%3Aprimefaces-extensions)
+
+
 
 PrimeFaces-Extensions Core
 ==========================
