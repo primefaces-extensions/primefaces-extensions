@@ -95,12 +95,14 @@ public class ExcelExporter extends Exporter {
     private CellStyle cellStyleRightAlign;
 
     @Override
-    public void export(ActionEvent event, String tableId, FacesContext context, String filename, String tableTitle, boolean pageOnly, boolean selectionOnly,
-                String encodingType, MethodExpression preProcessor, MethodExpression postProcessor, boolean subTable) throws IOException {
+    public void export(final ActionEvent event, final String tableId, final FacesContext context, final String filename, final String tableTitle,
+                final boolean pageOnly, final boolean selectionOnly,
+                final String encodingType, final MethodExpression preProcessor, final MethodExpression postProcessor, final boolean subTable)
+                throws IOException {
 
         wb = new XSSFWorkbook();
-        String safeName = WorkbookUtil.createSafeSheetName(filename);
-        Sheet sheet = wb.createSheet(safeName);
+        final String safeName = WorkbookUtil.createSafeSheetName(filename);
+        final Sheet sheet = wb.createSheet(safeName);
 
         cellStyle = wb.createCellStyle();
         facetStyle = wb.createCellStyle();
@@ -120,10 +122,10 @@ public class ExcelExporter extends Exporter {
         }
 
         int maxColumns = 0;
-        StringTokenizer st = new StringTokenizer(tableId, ",");
+        final StringTokenizer st = new StringTokenizer(tableId, ",");
         while (st.hasMoreElements()) {
-            String tableName = (String) st.nextElement();
-            UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
+            final String tableName = (String) st.nextElement();
+            final UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
             if (component == null) {
                 throw new FacesException("Cannot find component \"" + tableName + "\" in view.");
             }
@@ -136,11 +138,11 @@ public class ExcelExporter extends Exporter {
             DataTable table;
 
             if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(Constants.EMPTY_STRING + ",")) {
-                Row titleRow = sheet.createRow(sheet.getLastRowNum());
-                int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
-                Cell cell = titleRow.createCell(cellIndex);
+                final Row titleRow = sheet.createRow(sheet.getLastRowNum());
+                final int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
+                final Cell cell = titleRow.createCell(cellIndex);
                 cell.setCellValue(new XSSFRichTextString(tableTitle));
-                Font titleFont = wb.createFont();
+                final Font titleFont = wb.createFont();
                 titleFont.setBold(true);
                 titleStyle.setFont(titleFont);
                 cell.setCellStyle(titleStyle);
@@ -163,7 +165,7 @@ public class ExcelExporter extends Exporter {
             else {
 
                 table = (DataTable) component;
-                int columnsCount = getColumnsCount(table);
+                final int columnsCount = getColumnsCount(table);
 
                 if (table.getHeader() != null && !subTable) {
                     tableFacet(context, sheet, table, columnsCount, "header");
@@ -193,7 +195,7 @@ public class ExcelExporter extends Exporter {
                 }
                 table.setRowIndex(-1);
 
-                int cols = table.getColumnsCount();
+                final int cols = table.getColumnsCount();
 
                 if (maxColumns < cols) {
                     maxColumns = cols;
@@ -212,7 +214,7 @@ public class ExcelExporter extends Exporter {
             }
         }
 
-        PrintSetup printSetup = sheet.getPrintSetup();
+        final PrintSetup printSetup = sheet.getPrintSetup();
         printSetup.setLandscape(true);
         printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE);
         sheet.setPrintGridlines(true);
@@ -221,16 +223,16 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportAll(FacesContext context, DataTable table, Sheet sheet, Boolean subTable) {
+    protected void exportAll(final FacesContext context, final DataTable table, final Sheet sheet, final Boolean subTable) {
 
-        int first = table.getFirst();
-        int rowCount = table.getRowCount();
-        boolean lazy = table.isLazy();
+        final int first = table.getFirst();
+        final int rowCount = table.getRowCount();
+        final boolean lazy = table.isLazy();
         int i = 0;
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
-            int subTableColumnsCount = getColumnsCount(subtable);
+            final int subTableColumnsCount = getColumnsCount(subtable);
 
             if (table.getHeader() != null) {
                 tableFacet(context, sheet, table, subTableColumnsCount, "header");
@@ -300,8 +302,8 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportAll(FacesContext context, SubTable table, Sheet sheet) {
-        int rowCount = table.getRowCount();
+    protected void exportAll(final FacesContext context, final SubTable table, final Sheet sheet) {
+        final int rowCount = table.getRowCount();
 
         tableColumnGroup(sheet, table, "header");
         if (hasHeaderColumn(table)) {
@@ -317,17 +319,17 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportAll(FacesContext context, DataList list, Sheet sheet) {
-        int first = list.getFirst();
-        int rowCount = list.getRowCount();
-        int rows = list.getRows();
-        boolean lazy = false;
+    protected void exportAll(final FacesContext context, final DataList list, final Sheet sheet) {
+        final int first = list.getFirst();
+        final int rowCount = list.getRowCount();
+        final int rows = list.getRows();
+        final boolean lazy = list.isLazy();
 
         if (lazy) {
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 if (rowIndex % rows == 0) {
                     list.setFirst(rowIndex);
-                    // table.loadLazyData();
+                    list.loadLazyData();
                 }
 
                 exportRow(list, sheet, rowIndex);
@@ -335,7 +337,7 @@ public class ExcelExporter extends Exporter {
 
             // restore
             list.setFirst(first);
-            // table.loadLazyData();
+            list.loadLazyData();
         }
         else {
 
@@ -348,33 +350,33 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportPageOnly(FacesContext context, DataTable table, Sheet sheet) {
-        int first = table.getFirst();
-        int rowsToExport = first + table.getRows();
+    protected void exportPageOnly(final FacesContext context, final DataTable table, final Sheet sheet) {
+        final int first = table.getFirst();
+        final int rowsToExport = first + table.getRows();
 
         for (int rowIndex = first; rowIndex < rowsToExport; rowIndex++) {
             exportRow(table, sheet, rowIndex);
         }
     }
 
-    protected void exportPageOnly(FacesContext context, DataList list, Sheet sheet) {
-        int first = list.getFirst();
-        int rowsToExport = first + list.getRows();
+    protected void exportPageOnly(final FacesContext context, final DataList list, final Sheet sheet) {
+        final int first = list.getFirst();
+        final int rowsToExport = first + list.getRows();
 
         for (int rowIndex = first; rowIndex < rowsToExport; rowIndex++) {
             exportRow(list, sheet, rowIndex);
         }
     }
 
-    protected void exportSelectionOnly(FacesContext context, DataTable table, Sheet sheet) {
-        Object selection = table.getSelection();
-        String var = table.getVar();
+    protected void exportSelectionOnly(final FacesContext context, final DataTable table, final Sheet sheet) {
+        final Object selection = table.getSelection();
+        final String var = table.getVar();
 
         if (selection != null) {
-            Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+            final Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
 
             if (selection.getClass().isArray()) {
-                int size = Array.getLength(selection);
+                final int size = Array.getLength(selection);
 
                 for (int i = 0; i < size; i++) {
                     requestMap.put(var, Array.get(selection, i));
@@ -382,8 +384,8 @@ public class ExcelExporter extends Exporter {
                 }
             }
             else if (Collection.class.isAssignableFrom(selection.getClass())) {
-                Collection<?> collection = (Collection<?>) selection;
-                for (Iterator<? extends Object> it = collection.iterator(); it.hasNext();) {
+                final Collection<?> collection = (Collection<?>) selection;
+                for (final Iterator<? extends Object> it = collection.iterator(); it.hasNext();) {
                     requestMap.put(var, it.next());
                     exportCells(table, sheet);
                 }
@@ -395,9 +397,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, DataTable table, int columnCount, String facetType) {
-        Map<String, UIComponent> map = table.getFacets();
-        UIComponent component = map.get(facetType);
+    protected void tableFacet(final FacesContext context, final Sheet sheet, final DataTable table, final int columnCount, final String facetType) {
+        final Map<String, UIComponent> map = table.getFacets();
+        final UIComponent component = map.get(facetType);
         if (component != null) {
             String headerValue;
             if (component instanceof HtmlCommandButton) {
@@ -407,8 +409,8 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel) {
-                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
-                for (UIComponent child : component.getChildren()) {
+                final StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
+                for (final UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
                 }
@@ -418,9 +420,9 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportFacetValue(context, component);
             }
 
-            int sheetRowIndex = sheet.getLastRowNum() + 1;
-            Row row = sheet.createRow(sheetRowIndex);
-            Cell cell = row.createCell((short) 0);
+            final int sheetRowIndex = sheet.getLastRowNum() + 1;
+            final Row row = sheet.createRow(sheetRowIndex);
+            final Cell cell = row.createCell((short) 0);
             cell.setCellValue(headerValue);
             cell.setCellStyle(facetStyle);
 
@@ -434,9 +436,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, SubTable table, int columnCount, String facetType) {
-        Map<String, UIComponent> map = table.getFacets();
-        UIComponent component = map.get(facetType);
+    protected void tableFacet(final FacesContext context, final Sheet sheet, final SubTable table, final int columnCount, final String facetType) {
+        final Map<String, UIComponent> map = table.getFacets();
+        final UIComponent component = map.get(facetType);
         if (component != null) {
             String headerValue;
             if (component instanceof HtmlCommandButton) {
@@ -446,8 +448,8 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof UIPanel) {
-                StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
-                for (UIComponent child : component.getChildren()) {
+                final StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
+                for (final UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
                     header.append(headerValue);
                 }
@@ -457,9 +459,9 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportFacetValue(context, component);
             }
 
-            int sheetRowIndex = sheet.getLastRowNum() + 1;
-            Row row = sheet.createRow(sheetRowIndex);
-            Cell cell = row.createCell((short) 0);
+            final int sheetRowIndex = sheet.getLastRowNum() + 1;
+            final Row row = sheet.createRow(sheetRowIndex);
+            final Cell cell = row.createCell((short) 0);
             cell.setCellValue(headerValue);
             cell.setCellStyle(facetStyle);
 
@@ -473,9 +475,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableFacet(FacesContext context, Sheet sheet, DataList list, String facetType) {
-        Map<String, UIComponent> map = list.getFacets();
-        UIComponent component = map.get(facetType);
+    protected void tableFacet(final FacesContext context, final Sheet sheet, final DataList list, final String facetType) {
+        final Map<String, UIComponent> map = list.getFacets();
+        final UIComponent component = map.get(facetType);
         if (component != null) {
             String headerValue;
             if (component instanceof HtmlCommandButton) {
@@ -488,9 +490,9 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportFacetValue(context, component);
             }
 
-            int sheetRowIndex = sheet.getLastRowNum() + 1;
-            Row row = sheet.createRow(sheetRowIndex);
-            Cell cell = row.createCell((short) 0);
+            final int sheetRowIndex = sheet.getLastRowNum() + 1;
+            final Row row = sheet.createRow(sheetRowIndex);
+            final Cell cell = row.createCell((short) 0);
             cell.setCellValue(headerValue);
             cell.setCellStyle(facetStyle);
 
@@ -504,9 +506,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    private int calculateColumnOffset(Sheet sheet, int row, int col) {
+    private int calculateColumnOffset(final Sheet sheet, final int row, int col) {
         for (int j = 0; j < sheet.getNumMergedRegions(); j++) {
-            CellRangeAddress merged = sheet.getMergedRegion(j);
+            final CellRangeAddress merged = sheet.getMergedRegion(j);
             if (merged.isInRange(row, col)) {
                 col = merged.getLastColumn() + 1;
             }
@@ -514,39 +516,39 @@ public class ExcelExporter extends Exporter {
         return col;
     }
 
-    private void putText(Row xlRow, short col, String text) {
-        Cell cell = xlRow.createCell(col);
+    private void putText(final Row xlRow, final short col, final String text) {
+        final Cell cell = xlRow.createCell(col);
         cell.setCellValue(text);
         cell.setCellStyle(facetStyleCenterAlign);
     }
 
-    protected void tableColumnGroup(Sheet sheet, DataTable table, String facetType) {
+    protected void tableColumnGroup(final Sheet sheet, final DataTable table, final String facetType) {
         facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
         facetStyleCenterAlign.setVerticalAlignment(VerticalAlignment.CENTER);
         facetStyleCenterAlign.setWrapText(true);
 
-        ColumnGroup cg = table.getColumnGroup(facetType);
+        final ColumnGroup cg = table.getColumnGroup(facetType);
         List<UIComponent> headerComponentList = null;
         if (cg != null) {
             headerComponentList = cg.getChildren();
         }
         if (headerComponentList != null) {
-            for (UIComponent component : headerComponentList) {
+            for (final UIComponent component : headerComponentList) {
                 if (component instanceof org.primefaces.component.row.Row) {
-                    org.primefaces.component.row.Row row = (org.primefaces.component.row.Row) component;
-                    int rowIndex = sheet.getLastRowNum() + 1;
-                    Row xlRow = sheet.createRow(rowIndex);
+                    final org.primefaces.component.row.Row row = (org.primefaces.component.row.Row) component;
+                    final int rowIndex = sheet.getLastRowNum() + 1;
+                    final Row xlRow = sheet.createRow(rowIndex);
                     int colIndex = 0;
-                    for (UIComponent rowComponent : row.getChildren()) {
-                        UIColumn column = (UIColumn) rowComponent;
+                    for (final UIComponent rowComponent : row.getChildren()) {
+                        final UIColumn column = (UIColumn) rowComponent;
                         if (!column.isRendered() || !column.isExportable()) {
                             continue;
                         }
 
-                        String text = facetType.equalsIgnoreCase("header") ? column.getHeaderText() : column.getFooterText();
+                        final String text = facetType.equalsIgnoreCase("header") ? column.getHeaderText() : column.getFooterText();
                         // by default column has 1 rowspan && colspan
-                        int rowSpan = column.getRowspan() - 1;
-                        int colSpan = column.getColspan() - 1;
+                        final int rowSpan = column.getRowspan() - 1;
+                        final int colSpan = column.getColspan() - 1;
 
                         if (rowSpan > 0 && colSpan > 0) {
                             colIndex = calculateColumnOffset(sheet, rowIndex, colIndex);
@@ -590,21 +592,21 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void tableColumnGroup(Sheet sheet, SubTable table, String facetType) {
-        ColumnGroup cg = table.getColumnGroup(facetType);
+    protected void tableColumnGroup(final Sheet sheet, final SubTable table, final String facetType) {
+        final ColumnGroup cg = table.getColumnGroup(facetType);
         List<UIComponent> headerComponentList = null;
         if (cg != null) {
             headerComponentList = cg.getChildren();
         }
         if (headerComponentList != null) {
-            for (UIComponent component : headerComponentList) {
+            for (final UIComponent component : headerComponentList) {
                 if (component instanceof org.primefaces.component.row.Row) {
-                    org.primefaces.component.row.Row row = (org.primefaces.component.row.Row) component;
-                    int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
-                    Row xlRow = sheet.createRow(sheetRowIndex);
+                    final org.primefaces.component.row.Row row = (org.primefaces.component.row.Row) component;
+                    final int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
+                    final Row xlRow = sheet.createRow(sheetRowIndex);
                     int i = 0;
-                    for (UIComponent rowComponent : row.getChildren()) {
-                        UIColumn column = (UIColumn) rowComponent;
+                    for (final UIComponent rowComponent : row.getChildren()) {
+                        final UIColumn column = (UIColumn) rowComponent;
                         String value;
                         if (facetType.equalsIgnoreCase("header")) {
                             value = column.getHeaderText();
@@ -612,8 +614,8 @@ public class ExcelExporter extends Exporter {
                         else {
                             value = column.getFooterText();
                         }
-                        int rowSpan = column.getRowspan();
-                        int colSpan = column.getColspan();
+                        final int rowSpan = column.getRowspan();
+                        final int colSpan = column.getColspan();
 
                         Cell cell;
 
@@ -623,7 +625,7 @@ public class ExcelExporter extends Exporter {
                                 cell = xlRow.createCell((short) i);
                                 Boolean rowSpanFlag = false;
                                 for (int j = 0; j < sheet.getNumMergedRegions(); j++) {
-                                    CellRangeAddress merged = sheet.getMergedRegion(j);
+                                    final CellRangeAddress merged = sheet.getMergedRegion(j);
                                     if (merged.isInRange(sheetRowIndex, i)) {
                                         rowSpanFlag = true;
                                     }
@@ -643,7 +645,7 @@ public class ExcelExporter extends Exporter {
                             if (colSpan > 1) {
                                 cell = xlRow.createCell((short) i);
                                 for (int j = 0; j < sheet.getNumMergedRegions(); j++) {
-                                    CellRangeAddress merged = sheet.getMergedRegion(j);
+                                    final CellRangeAddress merged = sheet.getMergedRegion(j);
                                     if (merged.isInRange(sheetRowIndex, i)) {
                                         cell = xlRow.createCell((short) ++i);
                                     }
@@ -662,7 +664,7 @@ public class ExcelExporter extends Exporter {
                         else {
                             cell = xlRow.createCell((short) i);
                             for (int j = 0; j < sheet.getNumMergedRegions(); j++) {
-                                CellRangeAddress merged = sheet.getMergedRegion(j);
+                                final CellRangeAddress merged = sheet.getMergedRegion(j);
                                 if (merged.isInRange(sheetRowIndex, i)) {
                                     cell = xlRow.createCell((short) ++i);
                                 }
@@ -680,7 +682,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportRow(DataTable table, Sheet sheet, int rowIndex) {
+    protected void exportRow(final DataTable table, final Sheet sheet, final int rowIndex) {
         table.setRowIndex(rowIndex);
         if (!table.isRowAvailable()) {
             return;
@@ -689,7 +691,7 @@ public class ExcelExporter extends Exporter {
         exportCells(table, sheet);
     }
 
-    protected void exportRow(SubTable table, Sheet sheet, int rowIndex) {
+    protected void exportRow(final SubTable table, final Sheet sheet, final int rowIndex) {
         table.setRowIndex(rowIndex);
 
         if (!table.isRowAvailable()) {
@@ -699,7 +701,7 @@ public class ExcelExporter extends Exporter {
         exportCells(table, sheet);
     }
 
-    protected void exportRow(DataList list, Sheet sheet, int rowIndex) {
+    protected void exportRow(final DataList list, final Sheet sheet, final int rowIndex) {
         list.setRowIndex(rowIndex);
 
         if (!list.isRowAvailable()) {
@@ -709,9 +711,9 @@ public class ExcelExporter extends Exporter {
         exportCells(list, sheet);
     }
 
-    protected void exportCells(DataTable table, Sheet sheet) {
-        int sheetRowIndex = sheet.getLastRowNum() + 1;
-        Row row = sheet.createRow(sheetRowIndex);
+    protected void exportCells(final DataTable table, final Sheet sheet) {
+        final int sheetRowIndex = sheet.getLastRowNum() + 1;
+        final Row row = sheet.createRow(sheetRowIndex);
 
         facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
         facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
@@ -722,7 +724,7 @@ public class ExcelExporter extends Exporter {
         cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
         cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
-        for (UIColumn col : table.getColumns()) {
+        for (final UIColumn col : table.getColumns()) {
 
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -732,18 +734,18 @@ public class ExcelExporter extends Exporter {
                 addColumnValue(row, col.getChildren(), "content", col);
             }
         }
-        FacesContext context = null;
+        final FacesContext context = null;
         if (table.getRowIndex() == 0) {
-            for (UIComponent component : table.getChildren()) {
+            for (final UIComponent component : table.getChildren()) {
                 if (component instanceof RowExpansion) {
-                    RowExpansion rowExpansion = (RowExpansion) component;
+                    final RowExpansion rowExpansion = (RowExpansion) component;
                     if (rowExpansion.getChildren() != null) {
                         if (rowExpansion.getChildren().get(0) instanceof DataTable) {
-                            DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
+                            final DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
                             childTable.setRowIndex(-1);
                         }
                         if (rowExpansion.getChildren().get(0) instanceof DataList) {
-                            DataList childList = (DataList) rowExpansion.getChildren().get(0);
+                            final DataList childList = (DataList) rowExpansion.getChildren().get(0);
                             childList.setRowIndex(-1);
                         }
                     }
@@ -751,20 +753,20 @@ public class ExcelExporter extends Exporter {
                 }
             }
         }
-        for (UIComponent component : table.getChildren()) {
+        for (final UIComponent component : table.getChildren()) {
             if (component instanceof RowExpansion) {
-                RowExpansion rowExpansion = (RowExpansion) component;
+                final RowExpansion rowExpansion = (RowExpansion) component;
                 if (rowExpansion.getChildren() != null) {
                     if (rowExpansion.getChildren().get(0) instanceof DataList) {
-                        DataList list = (DataList) rowExpansion.getChildren().get(0);
+                        final DataList list = (DataList) rowExpansion.getChildren().get(0);
                         if (list.getHeader() != null) {
                             tableFacet(context, sheet, list, "header");
                         }
                         exportAll(context, list, sheet);
                     }
                     if (rowExpansion.getChildren().get(0) instanceof DataTable) {
-                        DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
-                        int columnsCount = getColumnsCount(childTable);
+                        final DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
+                        final int columnsCount = getColumnsCount(childTable);
 
                         if (childTable.getHeader() != null) {
                             tableFacet(context, sheet, childTable, columnsCount, "header");
@@ -788,9 +790,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportCells(SubTable table, Sheet sheet) {
-        int sheetRowIndex = sheet.getLastRowNum() + 1;
-        Row row = sheet.createRow(sheetRowIndex);
+    protected void exportCells(final SubTable table, final Sheet sheet) {
+        final int sheetRowIndex = sheet.getLastRowNum() + 1;
+        final Row row = sheet.createRow(sheetRowIndex);
 
         facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
         facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
@@ -801,7 +803,7 @@ public class ExcelExporter extends Exporter {
         cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
         cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
-        for (UIColumn col : table.getColumns()) {
+        for (final UIColumn col : table.getColumns()) {
 
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -813,9 +815,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void exportCells(DataList list, Sheet sheet) {
-        int sheetRowIndex = sheet.getLastRowNum() + 1;
-        Row row = sheet.createRow(sheetRowIndex);
+    protected void exportCells(final DataList list, final Sheet sheet) {
+        final int sheetRowIndex = sheet.getLastRowNum() + 1;
+        final Row row = sheet.createRow(sheetRowIndex);
 
         facetStyleLeftAlign.setAlignment(HorizontalAlignment.LEFT);
         facetStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
@@ -826,14 +828,14 @@ public class ExcelExporter extends Exporter {
         cellStyleCenterAlign.setAlignment(HorizontalAlignment.CENTER);
         cellStyleRightAlign.setAlignment(HorizontalAlignment.RIGHT);
 
-        for (UIComponent component : list.getChildren()) {
+        for (final UIComponent component : list.getChildren()) {
             if (component instanceof Column) {
-                UIColumn column = (UIColumn) component;
-                for (UIComponent childComponent : column.getChildren()) {
-                    int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
-                    Cell cell = row.createCell(cellIndex);
+                final UIColumn column = (UIColumn) component;
+                for (final UIComponent childComponent : column.getChildren()) {
+                    final int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+                    final Cell cell = row.createCell(cellIndex);
                     if (component.isRendered()) {
-                        String value = exportValue(FacesContext.getCurrentInstance(), childComponent);
+                        final String value = exportValue(FacesContext.getCurrentInstance(), childComponent);
                         cell.setCellValue(new XSSFRichTextString(value));
                         cell.setCellStyle(cellStyle);
                     }
@@ -841,10 +843,10 @@ public class ExcelExporter extends Exporter {
 
             }
             else {
-                int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
-                Cell cell = row.createCell(cellIndex);
+                final int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+                final Cell cell = row.createCell(cellIndex);
                 if (component.isRendered()) {
-                    String value = exportValue(FacesContext.getCurrentInstance(), component);
+                    final String value = exportValue(FacesContext.getCurrentInstance(), component);
                     cell.setCellValue(new XSSFRichTextString(value));
                     cell.setCellStyle(cellStyle);
                 }
@@ -853,12 +855,12 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void addColumnFacets(DataTable table, Sheet sheet, ColumnType columnType) {
+    protected void addColumnFacets(final DataTable table, final Sheet sheet, final ColumnType columnType) {
 
-        int sheetRowIndex = sheet.getLastRowNum() + 1;
+        final int sheetRowIndex = sheet.getLastRowNum() + 1;
         Row rowHeader = null;
 
-        for (UIColumn col : table.getColumns()) {
+        for (final UIColumn col : table.getColumns()) {
 
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -874,12 +876,12 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void addColumnFacets(SubTable table, Sheet sheet, ColumnType columnType) {
+    protected void addColumnFacets(final SubTable table, final Sheet sheet, final ColumnType columnType) {
 
-        int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
-        Row rowHeader = sheet.createRow(sheetRowIndex);
+        final int sheetRowIndex = sheet.getPhysicalNumberOfRows() > 0 ? sheet.getLastRowNum() + 1 : 0;
+        final Row rowHeader = sheet.createRow(sheetRowIndex);
 
-        for (UIColumn col : table.getColumns()) {
+        for (final UIColumn col : table.getColumns()) {
 
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -891,10 +893,10 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void addColumnValue(Row row, UIComponent component, String type) {
-        int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
-        Cell cell = row.createCell(cellIndex);
-        String value = component == null ? Constants.EMPTY_STRING : exportValue(FacesContext.getCurrentInstance(), component);
+    protected void addColumnValue(final Row row, final UIComponent component, final String type) {
+        final int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+        final Cell cell = row.createCell(cellIndex);
+        final String value = component == null ? Constants.EMPTY_STRING : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
         if (type.equalsIgnoreCase("facet")) {
             addFacetAlignments(component, cell);
@@ -905,19 +907,19 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void addColumnValue(Row row, List<UIComponent> components, String columnType, UIColumn column) {
-        int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
-        Cell cell = row.createCell(cellIndex);
-        FacesContext context = FacesContext.getCurrentInstance();
+    protected void addColumnValue(final Row row, final List<UIComponent> components, final String columnType, final UIColumn column) {
+        final int cellIndex = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+        final Cell cell = row.createCell(cellIndex);
+        final FacesContext context = FacesContext.getCurrentInstance();
 
         if (column.getExportFunction() != null) {
             cell.setCellValue(new XSSFRichTextString(exportColumnByFunction(context, column)));
         }
         else {
-            StringBuilder builder = new StringBuilder();
-            for (UIComponent component : components) {
+            final StringBuilder builder = new StringBuilder();
+            for (final UIComponent component : components) {
                 if (component.isRendered()) {
-                    String value = exportValue(context, component);
+                    final String value = exportValue(context, component);
 
                     if (value != null) {
                         builder.append(value);
@@ -928,21 +930,21 @@ public class ExcelExporter extends Exporter {
             cell.setCellValue(new XSSFRichTextString(builder.toString()));
 
             if (columnType.equalsIgnoreCase("facet")) {
-                for (UIComponent component : components) {
+                for (final UIComponent component : components) {
                     addFacetAlignments(component, cell);
                 }
             }
             else {
-                for (UIComponent component : components) {
+                for (final UIComponent component : components) {
                     addColumnAlignments(component, cell);
                 }
             }
         }
     }
 
-    protected void addColumnAlignments(UIComponent component, Cell cell) {
+    protected void addColumnAlignments(final UIComponent component, final Cell cell) {
         if (component instanceof HtmlOutputText) {
-            HtmlOutputText output = (HtmlOutputText) component;
+            final HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
                 cell.setCellStyle(cellStyleLeftAlign);
             }
@@ -955,9 +957,9 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    protected void addFacetAlignments(UIComponent component, Cell cell) {
+    protected void addFacetAlignments(final UIComponent component, final Cell cell) {
         if (component instanceof HtmlOutputText) {
-            HtmlOutputText output = (HtmlOutputText) component;
+            final HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
                 cell.setCellStyle(facetStyleLeftAlign);
             }
@@ -970,8 +972,10 @@ public class ExcelExporter extends Exporter {
         }
     }
 
-    public void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName, String cellFontSize,
-                String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) {
+    @Override
+    public void customFormat(final String facetBackground, final String facetFontSize, final String facetFontColor, final String facetFontStyle,
+                final String fontName, final String cellFontSize,
+                final String cellFontColor, final String cellFontStyle, final String datasetPadding, final String orientation) {
         if (facetBackground != null) {
             this.facetBackground = Color.decode(facetBackground);
         }
@@ -995,15 +999,15 @@ public class ExcelExporter extends Exporter {
 
     protected void createCustomFonts() {
 
-        Font facetFont = wb.createFont();
-        Font cellFont = wb.createFont();
+        final Font facetFont = wb.createFont();
+        final Font cellFont = wb.createFont();
 
         if (cellFontColor != null) {
-            XSSFColor cellColor = new XSSFColor(cellFontColor);
+            final XSSFColor cellColor = new XSSFColor(cellFontColor);
             ((XSSFFont) cellFont).setColor(cellColor);
         }
         if (cellFontSize != null) {
-            cellFont.setFontHeightInPoints((short) cellFontSize);
+            cellFont.setFontHeightInPoints(cellFontSize);
         }
 
         if (cellFontStyle.equalsIgnoreCase("BOLD")) {
@@ -1026,7 +1030,7 @@ public class ExcelExporter extends Exporter {
         }
 
         if (facetBackground != null) {
-            XSSFColor backgroundColor = new XSSFColor(facetBackground);
+            final XSSFColor backgroundColor = new XSSFColor(facetBackground);
             ((XSSFCellStyle) facetStyle).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleLeftAlign).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleCenterAlign).setFillForegroundColor(backgroundColor);
@@ -1038,12 +1042,12 @@ public class ExcelExporter extends Exporter {
         }
 
         if (facetFontColor != null) {
-            XSSFColor facetColor = new XSSFColor(facetFontColor);
+            final XSSFColor facetColor = new XSSFColor(facetFontColor);
             ((XSSFFont) facetFont).setColor(facetColor);
 
         }
         if (facetFontSize != null) {
-            facetFont.setFontHeightInPoints((short) facetFontSize);
+            facetFont.setFontHeightInPoints(facetFontSize);
         }
 
         cellStyle.setFont(cellFont);
@@ -1059,7 +1063,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void writeExcelToResponse(ExternalContext externalContext, org.apache.poi.ss.usermodel.Workbook generatedExcel, String filename)
+    protected void writeExcelToResponse(final ExternalContext externalContext, final org.apache.poi.ss.usermodel.Workbook generatedExcel, final String filename)
                 throws IOException {
 
         externalContext.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -1069,7 +1073,7 @@ public class ExcelExporter extends Exporter {
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + filename + ".xlsx");
         externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
 
-        OutputStream out = externalContext.getResponseOutputStream();
+        final OutputStream out = externalContext.getResponseOutputStream();
         generatedExcel.write(out);
         externalContext.responseFlushBuffer();
     }
