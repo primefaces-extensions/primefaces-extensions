@@ -4294,6 +4294,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[he code for the language or locale that should be to customize text that might be part of the chart. Default is "en"]]>
+            </description>
+            <name>language</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 	<tag>
 		<description>

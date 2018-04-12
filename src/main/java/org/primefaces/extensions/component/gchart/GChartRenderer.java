@@ -72,6 +72,7 @@ public class GChartRenderer extends CoreRenderer {
                     .attr("chart", ((GChartModel) chart.getValue()).toJson())
                     .attr("title", chart.getTitle())
                     .attr("apiKey", apiKey)
+                    .attr("language", chart.getLanguage())
                     .attr("width", chart.getWidth())
                     .attr("height", chart.getHeight());
 
@@ -80,13 +81,13 @@ public class GChartRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    protected String getApiKey(FacesContext context, GChart chart) {
+    protected String getApiKey(final FacesContext context, final GChart chart) {
         String key = null;
         try {
-            String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
+            final String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
             key = context.getApplication().evaluateExpressionGet(context, initParam, String.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             key = null;
         }
         return key;

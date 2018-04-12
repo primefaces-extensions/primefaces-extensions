@@ -55,7 +55,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
     protected enum PropertyKeys {
-        widgetVar, width, height, title, apiKey;
+        widgetVar, width, height, title, apiKey, language;
     }
 
     public GChart() {
@@ -81,7 +81,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(String _widgetVar) {
+    public void setWidgetVar(final String _widgetVar) {
         getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
     }
 
@@ -89,7 +89,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(final Integer width) {
         this.getStateHelper().put(PropertyKeys.width, width);
     }
 
@@ -97,7 +97,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
     }
 
-    public void setHeight(Integer width) {
+    public void setHeight(final Integer width) {
         this.getStateHelper().put(PropertyKeys.height, width);
     }
 
@@ -105,7 +105,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         return (String) getStateHelper().eval(PropertyKeys.title, null);
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         getStateHelper().put(PropertyKeys.title, title);
     }
 
@@ -113,8 +113,16 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         return (String) getStateHelper().eval(PropertyKeys.apiKey, null);
     }
 
-    public void setApiKey(String apiKey) {
+    public void setApiKey(final String apiKey) {
         getStateHelper().put(PropertyKeys.apiKey, apiKey);
+    }
+
+    public String getLanguage() {
+        return (String) getStateHelper().eval(PropertyKeys.language, "en");
+    }
+
+    public void setLanguage(final String language) {
+        getStateHelper().put(PropertyKeys.language, language);
     }
 
     @Override
@@ -123,21 +131,21 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     }
 
     @Override
-    public void queueEvent(FacesEvent event) {
+    public void queueEvent(final FacesEvent event) {
 
-        FacesContext context = getFacesContext();
+        final FacesContext context = getFacesContext();
         if (isRequestSource(context) && event instanceof AjaxBehaviorEvent) {
-            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
             if (eventName.equals("select")) {
-                AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-                String clientId = this.getClientId(context);
+                final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+                final String clientId = this.getClientId(context);
 
-                Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
+                final Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
                             JsonArray.class);
 
-                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
+                final SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(behaviorEvent.getPhaseId());
 
                 super.queueEvent(selectEvent);
@@ -148,8 +156,8 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         }
     }
 
-    public boolean isRequestSource(FacesContext context) {
-        String partialSource = context.getExternalContext().getRequestParameterMap()
+    public boolean isRequestSource(final FacesContext context) {
+        final String partialSource = context.getExternalContext().getRequestParameterMap()
                     .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 
         return this.getClientId(context).equals(partialSource);
