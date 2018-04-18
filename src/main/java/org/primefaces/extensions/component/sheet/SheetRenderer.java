@@ -287,7 +287,7 @@ public class SheetRenderer extends CoreRenderer {
                         numeric.appendProperty("pattern", pattern, true);
                     }
                     final String culture = column.getNumericLocale();
-                    if (pattern != null) {
+                    if (culture != null) {
                         numeric.appendProperty("culture", culture, true);
                     }
                     options.appendProperty("numericFormat", numeric.closeVar().toString(), false);
