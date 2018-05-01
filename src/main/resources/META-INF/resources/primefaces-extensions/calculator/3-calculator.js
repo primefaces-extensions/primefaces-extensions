@@ -22,7 +22,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         if (this.target.is(':input')) {
             input = this.target;
         } else {
-            input = $(':not(:submit):not(:button):input:visible:enabled:first', this.target);
+            input = $(':not(:submit):not(:button):input:enabled:first', this.target);
         }
 
         if (input.length === 0) {
