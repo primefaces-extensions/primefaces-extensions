@@ -232,6 +232,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         };
+        
+        if ($this.cfg.maxRows)
+            options.maxRows = $this.cfg.maxRows;
+        
+        if ($this.cfg.minRows)
+            options.minRows = $this.cfg.minRows;
+        
+        if ($this.cfg.maxCols)
+            options.maxCols = $this.cfg.maxCols;
+        
+        if ($this.cfg.minCols)
+            options.minCols = $this.cfg.minCols;
 
         if ($this.cfg.fixedColumnsLeft)
             options.fixedColumnsLeft = $this.cfg.fixedColumnsLeft;

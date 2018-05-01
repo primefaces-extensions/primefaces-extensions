@@ -144,6 +144,26 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         rowHeader,
 
         /**
+         * Maximum number of rows.
+         */
+        maxRows,
+
+        /**
+         * Minimum number of rows.
+         */
+        minRows,
+
+        /**
+         * Maximum number of columns.
+         */
+        maxCols,
+
+        /**
+         * Minimum number of columns.
+         */
+        minCols,
+
+        /**
          * Fixed rows when scrolling
          */
         fixedRows,
@@ -510,6 +530,46 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     public void setColumns(final List<SheetColumn> columns) {
         this.columns = columns;
+    }
+
+    public void setMaxRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.maxRows, value);
+    }
+
+    public Integer getMaxRows() {
+        final Object result = getStateHelper().eval(PropertyKeys.maxRows, null);
+        if (result == null) {
+            return null;
+        }
+        return Integer.valueOf(result.toString());
+    }
+
+    public void setMinRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.minRows, value);
+    }
+
+    public Integer getMinRows() {
+        return (Integer) getStateHelper().eval(PropertyKeys.minRows, Integer.valueOf(0));
+    }
+
+    public void setMaxCols(final Integer value) {
+        getStateHelper().put(PropertyKeys.maxCols, value);
+    }
+
+    public Integer getMaxCols() {
+        final Object result = getStateHelper().eval(PropertyKeys.maxCols, null);
+        if (result == null) {
+            return null;
+        }
+        return Integer.valueOf(result.toString());
+    }
+
+    public void setMinCols(final Integer value) {
+        getStateHelper().put(PropertyKeys.minCols, value);
+    }
+
+    public Integer getMinCols() {
+        return (Integer) getStateHelper().eval(PropertyKeys.minCols, Integer.valueOf(0));
     }
 
     public void setFixedRows(final Integer value) {

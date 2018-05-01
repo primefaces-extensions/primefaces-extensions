@@ -5123,6 +5123,38 @@
             <required>false</required>
             <type>java.util.List</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Maximum number of rows. Default is infinity.]]>
+            </description>
+            <name>maxRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Minimum number of rows. At least that many of rows will be created during initialization. Default is 0.]]>
+            </description>
+            <name>minRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Maximum number of columns. Default is infinity.]]>
+            </description>
+            <name>maxCols</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Minimum number of columns. At least that many of columns will be created during initialization. Default is 0.]]>
+            </description>
+            <name>minCols</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[The number of columns to fix or freeze on the left when scrolling.]]>
