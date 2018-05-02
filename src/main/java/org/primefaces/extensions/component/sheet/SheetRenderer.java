@@ -201,14 +201,25 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalNativeAttr(wb, "manualRowMove", sheet.isMovableRows());
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
+        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
+        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
+        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
+        encodeOptionalNativeAttr(wb, "minRows", sheet.getMinRows());
+        encodeOptionalNativeAttr(wb, "minCols", sheet.getMinCols());
+
+        if (sheet.getMaxRows() != null) {
+            encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
+        }
+
+        if (sheet.getMaxCols() != null) {
+            encodeOptionalNativeAttr(wb, "maxCols", sheet.getMaxCols());
+        }
+
         String emptyMessage = sheet.getEmptyMessage();
         if (StringUtils.isEmpty(emptyMessage)) {
             emptyMessage = "No Records Found";
         }
         encodeOptionalAttr(wb, "emptyMessage", emptyMessage);
-        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
-        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
-        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
 
         encodeColHeaders(context, sheet, wb);
         encodeColOptions(context, sheet, wb);
