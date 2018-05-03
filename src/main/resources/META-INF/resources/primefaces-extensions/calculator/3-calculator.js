@@ -176,6 +176,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
     destroy : function() {
         if (this.input) {
             this.input.calculator('destroy');
+            this.input = null;
         }
     }
 });
