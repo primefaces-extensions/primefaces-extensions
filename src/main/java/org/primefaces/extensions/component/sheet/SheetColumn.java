@@ -79,6 +79,47 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         numericLocale,
 
         /**
+         * Moment.js date format for colType="date". Default is "DD/MM/YYYY"
+         */
+        dateFormat,
+
+        /**
+         * JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration)
+         */
+        datePickerConfig,
+
+        /**
+         * Moment.js time format for colType="date". Default is "h:mm:ss a"
+         */
+        timeFormat,
+
+        /**
+         * If true, the autocomplete cells will only accept values that are defined in the source array. Default true.
+         */
+        autoCompleteStrict,
+
+        /**
+         * If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection
+         * advances to the next cell.
+         */
+        autoCompleteAllowInvalid,
+
+        /**
+         * Number of rows visible in the autocomplete dropdown.
+         */
+        autoCompleteVisibleRows,
+
+        /**
+         * If true, trims the dropdown to fit the cell size. Default to true.
+         */
+        autoCompleteTrimDropdown,
+
+        /**
+         * List of values to display in colType="dropdown" or "autocomplete".
+         */
+        selectItems,
+
+        /**
          * Flag indicating whether or not the column is read only
          */
         readonly,
@@ -221,6 +262,46 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         return getStateHelper().eval(PropertyKeys.colType, "text").toString();
     }
 
+    public Boolean isAutoCompleteAllowInvalid() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
+    }
+
+    public void setAutoCompleteAllowInvalid(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteAllowInvalid, value);
+    }
+
+    public Boolean isAutoCompleteStrict() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteStrict(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteStrict, value);
+    }
+
+    public Boolean isAutoCompleteTrimDropdown() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteTrimDropdown(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteTrimDropdown, value);
+    }
+
+    public void setAutoCompleteVisibleRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.autoCompleteVisibleRows, value);
+    }
+
+    public Integer getAutoCompleteVisibleRows() {
+        return (Integer) getStateHelper().eval(PropertyKeys.autoCompleteVisibleRows, null);
+    }
+
+    public Object getSelectItems() {
+        return getStateHelper().eval(PropertyKeys.selectItems, null);
+    }
+
+    public void setSelectItems(final Object selectItems) {
+        getStateHelper().put(PropertyKeys.selectItems, selectItems);
+    }
+
     public Integer getPasswordHashLength() {
         return (Integer) getStateHelper().eval(PropertyKeys.passwordHashLength, null);
     }
@@ -251,6 +332,30 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public void setNumericLocale(final String locale) {
         getStateHelper().put(PropertyKeys.numericLocale, locale);
+    }
+
+    public void setDateFormat(final String _dateFormat) {
+        getStateHelper().put(PropertyKeys.dateFormat, _dateFormat);
+    }
+
+    public String getDateFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.dateFormat, "DD/MM/YYYY");
+    }
+
+    public void setDatePickerConfig(final String _datePickerConfig) {
+        getStateHelper().put(PropertyKeys.datePickerConfig, _datePickerConfig);
+    }
+
+    public String getDatePickerConfig() {
+        return (String) getStateHelper().eval(PropertyKeys.datePickerConfig, null);
+    }
+
+    public void setTimeFormat(final String _timeFormat) {
+        getStateHelper().put(PropertyKeys.timeFormat, _timeFormat);
+    }
+
+    public String getTimeFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.timeFormat, "h:mm:ss a");
     }
 
     /**

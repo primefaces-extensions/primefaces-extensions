@@ -104,13 +104,16 @@ public class SocialRenderer extends CoreRenderer {
 
         // shares array
         wb.append(",shares: [");
-        String[] shares = StringUtils.split(social.getShares(), ',');
+        final String[] shares = StringUtils.split(social.getShares(), ',');
         for (int i = 0; i < shares.length; i++) {
             // { share: "pinterest", media: "http://mysite.com" },
+            final String share = StringUtils.lowerCase(shares[i]);
+            if (StringUtils.isEmpty(share)) {
+                continue;
+            }
             if (i != 0) {
                 wb.append(",");
             }
-            String share = StringUtils.lowerCase(shares[i]);
             wb.append("{");
             addShareProperty(wb, "share", share);
             if (share.equalsIgnoreCase("twitter")) {
@@ -145,7 +148,7 @@ public class SocialRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    private void addShareProperty(WidgetBuilder wb, String property, String value) throws IOException {
+    private void addShareProperty(final WidgetBuilder wb, final String property, final String value) throws IOException {
         if (value != null) {
             wb.append(property);
             wb.append(":\"");
@@ -154,7 +157,7 @@ public class SocialRenderer extends CoreRenderer {
         }
     }
 
-    public void addCallback(WidgetBuilder wb, String name, String signature, String callback) throws IOException {
+    public void addCallback(final WidgetBuilder wb, final String name, final String signature, final String callback) throws IOException {
         if (callback != null) {
             wb.append(name);
             wb.append(":");

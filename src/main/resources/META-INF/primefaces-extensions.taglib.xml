@@ -4294,6 +4294,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[he code for the language or locale that should be to customize text that might be part of the chart. Default is "en"]]>
+            </description>
+            <name>language</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 	<tag>
 		<description>
@@ -5115,6 +5123,38 @@
             <required>false</required>
             <type>java.util.List</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Maximum number of rows. Default is infinity.]]>
+            </description>
+            <name>maxRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Minimum number of rows. At least that many of rows will be created during initialization. Default is 0.]]>
+            </description>
+            <name>minRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Maximum number of columns. Default is infinity.]]>
+            </description>
+            <name>maxCols</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Minimum number of columns. At least that many of columns will be created during initialization. Default is 0.]]>
+            </description>
+            <name>minCols</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[The number of columns to fix or freeze on the left when scrolling.]]>
@@ -5435,7 +5475,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations..]]>
+                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.]]>
             </description>
             <name>numericPattern</name>
             <required>false</required>
@@ -5443,9 +5483,73 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+                <![CDATA[String or java.util.Locale representing user locale. Default is "en-US".]]>
             </description>
             <name>numericLocale</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Moment.js date format for colType="date". Default is "DD/MM/YYYY".]]>
+            </description>
+            <name>dateFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration).]]>
+            </description>
+            <name>datePickerConfig</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Moment.js time format for colType="date". Default is "h:mm:ss a".]]>
+            </description>
+            <name>timeFormat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value if true, the autocomplete cells will only accept values that are defined in the source array. Default true.]]>
+            </description>
+            <name>autoCompleteStrict</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection advances to the next cell.]]>
+            </description>
+            <name>autoCompleteAllowInvalid</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value If true, trims the dropdown to fit the cell size. Default to true.]]>
+            </description>
+            <name>autoCompleteTrimDropdown</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Number of rows visible in the autocomplete dropdown.]]>
+            </description>
+            <name>autoCompleteVisibleRows</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Collection of values to display in colType="dropdown" or "autocomplete".]]>
+            </description>
+            <name>selectItems</name>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>

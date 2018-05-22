@@ -3,15 +3,16 @@ sudo: false
 install: true
 addons:
   sonarcloud:
-    organization: "primefaces-extensions"
+    organization: "pr1m3fac3sext3ns1ons"
     token:
-      secure: "mzvauZAq4RvgTUTTqpJ04ZvoUyQOA21/I5jE2q3969ccYUfJiuhlXgCFr2VrPJMi134NxBlyOZQMFs4GHryq11dt8DT3FCNywvhClyrFar2Bshmw+xLaC6mzloPU+64qNUS3jkJV+JijwyPjIEejkco9B5Dq1lSsQ+93M65FXHY="
+      secure: "QntGkT4MuZPXBEvVFuLJ+Y1X1JkmgIDbqhf/Qh9jRrpM3d7u0QKZ7WtuEf/sQ7avkD7FE4642J0nPrdL/uLi7ygE+kbeNCmcom2zZgUSTlUi5SX0EJ8HUHPxAPG1gCtUnrfH1DRwzerHV3sT45S1elR/ailBPQCM2EaEzwVWi2g="
 jdk:
   - oraclejdk8
 install:
   - git clone https://github.com/primefaces-extensions/master-pom && cd master-pom && mvn install && cd ..
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+  
 cache:
   directories:
     - '$HOME/.m2/repository'

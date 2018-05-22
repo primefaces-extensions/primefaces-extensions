@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.sheet;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -200,14 +201,25 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalNativeAttr(wb, "manualRowMove", sheet.isMovableRows());
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
+        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
+        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
+        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
+        encodeOptionalNativeAttr(wb, "minRows", sheet.getMinRows());
+        encodeOptionalNativeAttr(wb, "minCols", sheet.getMinCols());
+
+        if (sheet.getMaxRows() != null) {
+            encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
+        }
+
+        if (sheet.getMaxCols() != null) {
+            encodeOptionalNativeAttr(wb, "maxCols", sheet.getMaxCols());
+        }
+
         String emptyMessage = sheet.getEmptyMessage();
         if (StringUtils.isEmpty(emptyMessage)) {
             emptyMessage = "No Records Found";
         }
         encodeOptionalAttr(wb, "emptyMessage", emptyMessage);
-        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
-        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
-        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
 
         encodeColHeaders(context, sheet, wb);
         encodeColOptions(context, sheet, wb);
@@ -286,10 +298,35 @@ public class SheetRenderer extends CoreRenderer {
                         numeric.appendProperty("pattern", pattern, true);
                     }
                     final String culture = column.getNumericLocale();
-                    if (pattern != null) {
+                    if (culture != null) {
                         numeric.appendProperty("culture", culture, true);
                     }
                     options.appendProperty("numericFormat", numeric.closeVar().toString(), false);
+                    break;
+                case "date":
+                    options.appendProperty("dateFormat", column.getDateFormat(), true);
+                    options.appendProperty("correctFormat", "true", false);
+                    final String dateConfig = column.getDatePickerConfig();
+                    if (dateConfig != null) {
+                        options.appendProperty("datePickerConfig", dateConfig, false);
+                    }
+                    break;
+                case "time":
+                    options.appendProperty("timeFormat", column.getTimeFormat(), true);
+                    options.appendProperty("correctFormat", "true", false);
+                    break;
+                case "dropdown":
+                    encodeSelectItems(column, options);
+                    break;
+                case "autocomplete":
+                    options.appendProperty("strict", column.isAutoCompleteStrict().toString(), false);
+                    options.appendProperty("allowInvalid", column.isAutoCompleteAllowInvalid().toString(), false);
+                    options.appendProperty("trimDropdown", column.isAutoCompleteTrimDropdown().toString(), false);
+                    final Integer visibleRows = column.getAutoCompleteVisibleRows();
+                    if (visibleRows != null) {
+                        options.appendProperty("visibleRows", visibleRows.toString(), false);
+                    }
+                    encodeSelectItems(column, options);
                     break;
                 default:
                     break;
@@ -298,6 +335,37 @@ public class SheetRenderer extends CoreRenderer {
             vb.appendArrayValue(options.closeVar().toString(), false);
         }
         wb.nativeAttr("columns", vb.closeVar().toString());
+    }
+
+    private void encodeSelectItems(final SheetColumn column, final JavascriptVarBuilder options) {
+        final JavascriptVarBuilder items = new JavascriptVarBuilder(null, false);
+        final Object value = column.getSelectItems();
+        if (value == null) {
+            return;
+        }
+        if (value.getClass().isArray()) {
+            for (int j = 0; j < Array.getLength(value); j++) {
+                final Object item = Array.get(value, j);
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+        else if (value instanceof Collection) {
+            final Collection collection = (Collection) value;
+            for (final Iterator it = collection.iterator(); it.hasNext();) {
+                final Object item = it.next();
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+        else if (value instanceof Map) {
+            final Map map = (Map) value;
+
+            for (final Iterator it = map.keySet().iterator(); it.hasNext();) {
+                final Object item = it.next();
+                items.appendArrayValue(String.valueOf(item), true);
+            }
+        }
+
+        options.appendProperty("source", items.closeVar().toString(), false);
     }
 
     /**
@@ -587,7 +655,6 @@ public class SheetRenderer extends CoreRenderer {
 
             renderIdx++;
         }
-
     }
 
     /**

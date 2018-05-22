@@ -15,7 +15,6 @@
  */
 package org.primefaces.extensions.component.sheet;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,11 +44,10 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.event.SheetEvent;
+import org.primefaces.extensions.model.sheet.SheetRowColIndex;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.model.BeanPropertyComparator;
@@ -144,6 +142,26 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
          * The custom row header to be used in place of the standard numeric header value
          */
         rowHeader,
+
+        /**
+         * Maximum number of rows.
+         */
+        maxRows,
+
+        /**
+         * Minimum number of rows.
+         */
+        minRows,
+
+        /**
+         * Maximum number of columns.
+         */
+        maxCols,
+
+        /**
+         * Minimum number of columns.
+         */
+        minCols,
 
         /**
          * Fixed rows when scrolling
@@ -264,12 +282,12 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     /**
      * Map of submitted values by row index and column index
      */
-    private Map<RowColIndex, String> submittedValues = new HashMap<RowColIndex, String>();
+    private Map<SheetRowColIndex, String> submittedValues = new HashMap<>();
 
     /**
      * Map of local values by row index and column index
      */
-    private Map<RowColIndex, Object> localValues = new HashMap<RowColIndex, Object>();
+    private Map<SheetRowColIndex, Object> localValues = new HashMap<>();
 
     /**
      * The selection data
@@ -514,6 +532,46 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         this.columns = columns;
     }
 
+    public void setMaxRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.maxRows, value);
+    }
+
+    public Integer getMaxRows() {
+        final Object result = getStateHelper().eval(PropertyKeys.maxRows, null);
+        if (result == null) {
+            return null;
+        }
+        return Integer.valueOf(result.toString());
+    }
+
+    public void setMinRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.minRows, value);
+    }
+
+    public Integer getMinRows() {
+        return (Integer) getStateHelper().eval(PropertyKeys.minRows, Integer.valueOf(0));
+    }
+
+    public void setMaxCols(final Integer value) {
+        getStateHelper().put(PropertyKeys.maxCols, value);
+    }
+
+    public Integer getMaxCols() {
+        final Object result = getStateHelper().eval(PropertyKeys.maxCols, null);
+        if (result == null) {
+            return null;
+        }
+        return Integer.valueOf(result.toString());
+    }
+
+    public void setMinCols(final Integer value) {
+        getStateHelper().put(PropertyKeys.minCols, value);
+    }
+
+    public Integer getMinCols() {
+        return (Integer) getStateHelper().eval(PropertyKeys.minCols, Integer.valueOf(0));
+    }
+
     public void setFixedRows(final Integer value) {
         getStateHelper().put(PropertyKeys.fixedRows, value);
     }
@@ -600,7 +658,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param value
      */
     public void setSubmittedValue(final FacesContext context, final String rowKey, final int col, final String value) {
-        submittedValues.put(new RowColIndex(rowKey, col), value);
+        submittedValues.put(new SheetRowColIndex(rowKey, col), value);
     }
 
     /**
@@ -611,7 +669,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @return
      */
     public String getSubmittedValue(final String rowKey, final int col) {
-        return submittedValues.get(new RowColIndex(rowKey, col));
+        return submittedValues.get(new SheetRowColIndex(rowKey, col));
     }
 
     /**
@@ -622,7 +680,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param value
      */
     public void setLocalValue(final String rowKey, final int col, final Object value) {
-        localValues.put(new RowColIndex(rowKey, col), value);
+        localValues.put(new SheetRowColIndex(rowKey, col), value);
     }
 
     /**
@@ -633,7 +691,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @return
      */
     public Object getLocalValue(final String rowKey, final int col) {
-        return localValues.get(new RowColIndex(rowKey, col));
+        return localValues.get(new SheetRowColIndex(rowKey, col));
     }
 
     /**
@@ -675,7 +733,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     public Object getValueForCell(final FacesContext context, final String rowKey, final int col) {
         // if we have a local value, use it
         // note: can't check for null, as null may be the submitted value
-        final RowColIndex index = new RowColIndex(rowKey, col);
+        final SheetRowColIndex index = new SheetRowColIndex(rowKey, col);
         if (localValues.containsKey(index)) {
             return localValues.get(index);
         }
@@ -697,7 +755,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
         // if we have a submitted value still, use it
         // note: can't check for null, as null may be the submitted value
-        final RowColIndex index = new RowColIndex(rowKey, col);
+        final SheetRowColIndex index = new SheetRowColIndex(rowKey, col);
         if (submittedValues.containsKey(index)) {
             return submittedValues.get(index);
         }
@@ -1261,12 +1319,12 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         // data type. For successful values, remove from submitted and add to
         // local values map. for failures, add a conversion message and leave in
         // the submitted state
-        final Iterator<Entry<RowColIndex, String>> entries = submittedValues.entrySet().iterator();
+        final Iterator<Entry<SheetRowColIndex, String>> entries = submittedValues.entrySet().iterator();
         final boolean hadBadUpdates = !getInvalidUpdates().isEmpty();
         getInvalidUpdates().clear();
         while (entries.hasNext()) {
-            final Entry<RowColIndex, String> entry = entries.next();
-            final SheetColumn column = getColumns().get(entry.getKey().colIndex);
+            final Entry<SheetRowColIndex, String> entry = entries.next();
+            final SheetColumn column = getColumns().get(entry.getKey().getColIndex());
             final String newValue = entry.getValue();
             final String rowKey = entry.getKey().getRowKey();
             final int col = entry.getKey().getColIndex();
@@ -1340,12 +1398,12 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     @Override
     public void updateModel(final FacesContext context) {
-        final Iterator<Entry<RowColIndex, Object>> entries = localValues.entrySet().iterator();
+        final Iterator<Entry<SheetRowColIndex, Object>> entries = localValues.entrySet().iterator();
         // Keep track of the dirtied rows for ajax callbacks so we can send
         // updates on what was touched
         final HashSet<String> dirtyRows = new HashSet<String>();
         while (entries.hasNext()) {
-            final Entry<RowColIndex, Object> entry = entries.next();
+            final Entry<SheetRowColIndex, Object> entry = entries.next();
 
             final Object newValue = entry.getValue();
             final String rowKey = entry.getKey().getRowKey();
@@ -1410,14 +1468,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             submittedValues.clear();
         }
         else {
-            submittedValues = (Map<RowColIndex, String>) restoredSubmittedValues;
+            submittedValues = (Map<SheetRowColIndex, String>) restoredSubmittedValues;
         }
 
         if (restoredLocalValues == null) {
             localValues.clear();
         }
         else {
-            localValues = (Map<RowColIndex, Object>) restoredLocalValues;
+            localValues = (Map<SheetRowColIndex, Object>) restoredLocalValues;
         }
 
         if (restoredInvalidUpdates == null) {
@@ -1498,7 +1556,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             submittedValues.clear();
         }
         else {
-            submittedValues = (Map<RowColIndex, String>) submittedValue;
+            submittedValues = (Map<SheetRowColIndex, String>) submittedValue;
         }
 
     }
@@ -1733,69 +1791,5 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      */
     protected void appendUpdateEvent(final Object rowKey, final int colIndex, final Object rowData, final Object oldValue, final Object newValue) {
         updates.add(new SheetUpdate(rowKey, colIndex, rowData, oldValue, newValue));
-    }
-
-    /**
-     * Private class used as a key for row,col maps.
-     */
-    private class RowColIndex implements Serializable {
-
-        private static final long serialVersionUID = 1L;
-
-        private final String rowKey;
-        private final Integer colIndex;
-
-        /**
-         * Constructs an instance of RowColIndex for the row and column specified.
-         *
-         * @param row the row represented by this index
-         * @param col the column respresented by this index
-         */
-        public RowColIndex(final String rowKey, final Integer col) {
-            this.rowKey = rowKey;
-            colIndex = col;
-        }
-
-        /*
-         * (non-Javadoc)
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        @Override
-        public boolean equals(final Object other) {
-            if (!(other instanceof RowColIndex)) {
-                return false;
-            }
-            final RowColIndex castOther = (RowColIndex) other;
-            return new EqualsBuilder().append(rowKey, castOther.rowKey).append(colIndex, castOther.colIndex).isEquals();
-        }
-
-        @Override
-        public String toString() {
-            return "RowColIndex [rowKey=" + rowKey + ", colIndex=" + colIndex + "]";
-        }
-
-        @Override
-        public int hashCode() {
-            return new HashCodeBuilder().append(rowKey).append(colIndex).toHashCode();
-        }
-
-        /**
-         * The rowIndex value.
-         *
-         * @return the rowIndex
-         */
-        public String getRowKey() {
-            return rowKey;
-        }
-
-        /**
-         * The colIndex value.
-         *
-         * @return the colIndex
-         */
-        public Integer getColIndex() {
-            return colIndex;
-        }
-
     }
 }

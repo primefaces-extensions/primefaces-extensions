@@ -3,7 +3,7 @@
  * 
  * @author Oleg Varaksin
  */
-PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
+PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -24,13 +24,16 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
                     this.cfg.opts.stamp).get();
         }
 
-        this.renderDeferred();
+        var $this = this;
+        $(document).ready(function() {
+            $this._applyMasonry();
+        });
     },
 
     /**
      * Creates this widget with all initialization steps.
      */
-    _render : function() {
+    _applyMasonry : function() {
         this.$container = $(PrimeFaces.escapeClientId(this.id));
 
         if (this.cfg.opts.hasImages) {
