@@ -572,6 +572,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             state.setSubmittedValue(input.getSubmittedValue());
             state.setLocalValueSet(input.isLocalValueSet());
             state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
+            state.setDisabled(((UIComponent) input).getAttributes().get("disabled"));
         }
 
         for (final UIComponent child : component.getChildren()) {
@@ -613,6 +614,10 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             input.setLocalValueSet(state.isLocalValueSet());
             if (state.getLabelValue() != null) {
                 ((UIComponent) input).getAttributes().put("label", state.getLabelValue());
+            }
+
+            if (state.getDisabled() != null) {
+                ((UIComponent) input).getAttributes().put("disabled", state.getDisabled());
             }
         }
 

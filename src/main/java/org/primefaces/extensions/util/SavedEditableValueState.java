@@ -39,6 +39,8 @@ public class SavedEditableValueState implements Serializable {
 
     private Object labelValue;
 
+    private Object disabled;
+
     public void reset() {
         submittedValue = null;
         valid = true;
@@ -84,5 +86,13 @@ public class SavedEditableValueState implements Serializable {
 
     public void setLabelValue(Object labelValue) {
         this.labelValue = labelValue;
+    }
+
+    public Object getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Object disabled) {
+        this.disabled = disabled;
     }
 }
