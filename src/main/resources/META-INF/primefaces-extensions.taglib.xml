@@ -5649,5 +5649,77 @@
 			<required>false</required>
 			<type>javax.faces.event.ValueChangeListener</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all active headers in selections. The header will be marked with this class name only when a whole column or row will be selected.]]>
+            </description>
+            <name>activeHeaderStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name added to the commented cells.]]>
+            </description>
+            <name>commentedCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible columns in the current selection.]]>
+            </description>
+            <name>currentColStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible headers in current selection.]]>
+            </description>
+            <name>currentHeaderStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible rows in the current selection.]]>
+            </description>
+            <name>currentRowStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for cells that did not pass validation.]]>
+            </description>
+            <name>invalidCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name added to cells with cell meta wordWrap: false]]>
+            </description>
+            <name>noWordWrapStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for cells that have a placeholder in use.]]>
+            </description>
+            <name>placeholderCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for read-only cells.]]>
+            </description>
+            <name>readOnlyCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 </facelet-taglib>

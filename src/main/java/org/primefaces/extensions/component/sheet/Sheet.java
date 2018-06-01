@@ -219,16 +219,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         styleClass,
 
         /**
-         * The style class to apply to the currently selected row
-         */
-        currentRowClass,
-
-        /**
-         * The style class to apply to the currently selected column
-         */
-        currentColClass,
-
-        /**
          * The row key, used to unqiuely identify each row for update operations
          */
         rowKey,
@@ -266,7 +256,44 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         /**
          * The message displayed when no records are found
          */
-        emptyMessage
+        emptyMessage,
+
+        /**
+         * Active Header style class
+         */
+        activeHeaderStyleClass,
+        /**
+         * Commented cell style class
+         */
+        commentedCellStyleClass,
+        /**
+         * Current column style class
+         */
+        currentColStyleClass,
+        /**
+         * Current header style class
+         */
+        currentHeaderStyleClass,
+        /**
+         * Current row style class
+         */
+        currentRowStyleClass,
+        /**
+         * Invalid cell style class
+         */
+        invalidCellStyleClass,
+        /**
+         * No Word Wrap style class
+         */
+        noWordWrapStyleClass,
+        /**
+         * Placeholder style class
+         */
+        placeholderCellStyleClass,
+        /**
+         * Read only style class
+         */
+        readOnlyCellStyleClass
     }
 
     /**
@@ -413,42 +440,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         return result.toString();
     }
 
-    public void setCurrentColClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.currentColClass, styleClass);
-    }
-
-    public String getCurrentColClass() {
-        final Object result = getStateHelper().eval(PropertyKeys.currentColClass, null);
-        if (result == null) {
-            return null;
-        }
-        return result.toString();
-    }
-
-    public void setCurrentRowClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.currentRowClass, styleClass);
-    }
-
-    public String getCurrentRowClass() {
-        final Object result = getStateHelper().eval(PropertyKeys.currentRowClass, null);
-        if (result == null) {
-            return null;
-        }
-        return result.toString();
-    }
-
-    public void setRowStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.rowStyleClass, styleClass);
-    }
-
-    public String getRowStyleClass() {
-        final Object result = getStateHelper().eval(PropertyKeys.rowStyleClass, null);
-        if (result == null) {
-            return null;
-        }
-        return result.toString();
-    }
-
     public void setShowColumnHeaders(final Boolean value) {
         getStateHelper().put(PropertyKeys.showColumnHeaders, value);
     }
@@ -495,6 +486,86 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     public Boolean isMovableCols() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableCols, false).toString());
+    }
+
+    public void setRowStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.rowStyleClass, styleClass);
+    }
+
+    public String getRowStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.rowStyleClass, null);
+    }
+
+    public String getActiveHeaderStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.activeHeaderStyleClass, null);
+    }
+
+    public void setActiveHeaderStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.activeHeaderStyleClass, _value);
+    }
+
+    public String getCommentedCellStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.commentedCellStyleClass, null);
+    }
+
+    public void setCommentedCellStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.commentedCellStyleClass, _value);
+    }
+
+    public String getCurrentColStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.currentColStyleClass, null);
+    }
+
+    public void setCurrentColStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.currentColStyleClass, _value);
+    }
+
+    public String getCurrentHeaderStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.currentHeaderStyleClass, null);
+    }
+
+    public void setCurrentHeaderStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.currentHeaderStyleClass, _value);
+    }
+
+    public String getCurrentRowStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.currentRowStyleClass, null);
+    }
+
+    public void setCurrentRowStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.currentRowStyleClass, _value);
+    }
+
+    public String getInvalidCellStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.invalidCellStyleClass, null);
+    }
+
+    public void setInvalidCellStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.invalidCellStyleClass, _value);
+    }
+
+    public String getNoWordWrapStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.noWordWrapStyleClass, null);
+    }
+
+    public void setNoWordWrapStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.noWordWrapStyleClass, _value);
+    }
+
+    public String getPlaceholderCellStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.placeholderCellStyleClass, null);
+    }
+
+    public void setPlaceholderCellStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.placeholderCellStyleClass, _value);
+    }
+
+    public String getReadOnlyCellStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.placeholderCellStyleClass, null);
+    }
+
+    public void setReadOnlyCellStyleClass(final String _value) {
+        getStateHelper().put(PropertyKeys.readOnlyCellStyleClass, _value);
     }
 
     /**

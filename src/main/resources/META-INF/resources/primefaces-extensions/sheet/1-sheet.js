@@ -266,11 +266,32 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         if ($this.cfg.height)
             options.height = $this.cfg.height;
 
+        if ($this.cfg.activeHeaderClassName)
+            options.activeHeaderClassName = $this.cfg.activeHeaderClassName;
+ 
+        if ($this.cfg.commentedCellClassName)
+            options.commentedCellClassName = $this.cfg.commentedCellClassName;
+ 
         if ($this.cfg.currentColClassName)
             options.currentColClassName = $this.cfg.currentColClassName;
 
+        if ($this.cfg.currentHeaderClassName)
+            options.currentHeaderClassName = $this.cfg.currentHeaderClassName;
+
         if ($this.cfg.currentRowClassName)
             options.currentRowClassName = $this.cfg.currentRowClassName;
+
+        if ($this.cfg.invalidCellClassName)
+            options.invalidCellClassName = $this.cfg.invalidCellClassName;
+
+        if ($this.cfg.noWordWrapClassName)
+            options.noWordWrapClassName = $this.cfg.noWordWrapClassName;
+
+        if ($this.cfg.placeholderCellClassName)
+            options.placeholderCellClassName = $this.cfg.placeholderCellClassName;
+
+        if ($this.cfg.readOnlyCellClassName)
+            options.readOnlyCellClassName = $this.cfg.readOnlyCellClassName;
 
         $this.tableDiv.handsontable(options);
         $this.ht = $this.tableDiv.data('handsontable');

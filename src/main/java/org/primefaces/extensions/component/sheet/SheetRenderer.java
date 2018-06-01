@@ -202,10 +202,17 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
         encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
-        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowClass());
-        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColClass());
         encodeOptionalNativeAttr(wb, "minRows", sheet.getMinRows());
         encodeOptionalNativeAttr(wb, "minCols", sheet.getMinCols());
+        encodeOptionalAttr(wb, "activeHeaderClassName", sheet.getActiveHeaderStyleClass());
+        encodeOptionalAttr(wb, "commentedCellClassName", sheet.getCommentedCellStyleClass());
+        encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowStyleClass());
+        encodeOptionalAttr(wb, "currentColClassName", sheet.getCurrentColStyleClass());
+        encodeOptionalAttr(wb, "currentHeaderClassName", sheet.getCurrentHeaderStyleClass());
+        encodeOptionalAttr(wb, "invalidCellClassName", sheet.getInvalidCellStyleClass());
+        encodeOptionalAttr(wb, "noWordWrapClassName", sheet.getNoWordWrapStyleClass());
+        encodeOptionalAttr(wb, "placeholderCellClassName", sheet.getPlaceholderCellStyleClass());
+        encodeOptionalAttr(wb, "readOnlyCellClassName", sheet.getReadOnlyCellStyleClass());
 
         if (sheet.getMaxRows() != null) {
             encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
