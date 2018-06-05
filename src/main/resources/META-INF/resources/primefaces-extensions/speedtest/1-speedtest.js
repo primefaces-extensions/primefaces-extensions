@@ -54,10 +54,12 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $this.downSpeed = 0;
         $this.upSpeed = 0;
         // Generate Gauge's
-        $this.gaugeDown = $this._createGage($this.cfg.IdDown, $this.cfg.CaptionDownload, 'Mbps', '#999999', $this.cfg.ColorDownload);
-        $this.gaugeUp = $this._createGage($this.cfg.IdUp, $this.cfg.CaptionUpload, 'Mbps', '#999999', $this.cfg.ColorUpload);
-        $this.gaugePing = $this._createGage($this.cfg.IdPing, $this.cfg.CaptionPing, 'ms', '#999999', $this.cfg.ColorPing);
-        $this.gaugeJitter = $this._createGage($this.cfg.IdJitter, $this.cfg.CaptionJitter, 'ms', '#999999', $this.cfg.ColorJitter);
+        $(document).ready(function(){
+           $this.gaugeDown = $this._createGage($this.cfg.IdDown, $this.cfg.CaptionDownload, 'Mbps', '#999999', $this.cfg.ColorDownload);
+           $this.gaugeUp = $this._createGage($this.cfg.IdUp, $this.cfg.CaptionUpload, 'Mbps', '#999999', $this.cfg.ColorUpload);
+           $this.gaugePing = $this._createGage($this.cfg.IdPing, $this.cfg.CaptionPing, 'ms', '#999999', $this.cfg.ColorPing);
+           $this.gaugeJitter = $this._createGage($this.cfg.IdJitter, $this.cfg.CaptionJitter, 'ms', '#999999', $this.cfg.ColorJitter);
+        });
     },
     _updateGauge : function(gauge, value, maxfactor) {
         var Max = (Math.round(value / maxfactor) + 1) * maxfactor;
