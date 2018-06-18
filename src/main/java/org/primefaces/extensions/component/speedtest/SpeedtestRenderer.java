@@ -107,21 +107,22 @@ public class SpeedtestRenderer extends CoreRenderer {
         if (form == null) {
             throw new FacesException("Speedtest:" + clientId + " needs to be enclosed in a form component");
         }
+        
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtSpeedtest", speedtest.resolveWidgetVar(), clientId);
-        wb.attr("IdDown", clientId + "ggdown");
-        wb.attr("IdUp", clientId + "ggup");
-        wb.attr("IdPing", clientId + "ggping");
-        wb.attr("IdJitter", clientId + "ggjitter");
-        wb.attr("CaptionPing", speedtest.getCaptionPing());
-        wb.attr("CaptionJitter", speedtest.getCaptionJitter());
-        wb.attr("CaptionDownload", speedtest.getCaptionDownload());
-        wb.attr("CaptionUpload", speedtest.getCaptionUpload());
-        wb.attr("ColorPing", speedtest.getColorPing());
-        wb.attr("ColorJitter", speedtest.getColorJitter());
-        wb.attr("ColorDownload", speedtest.getColorDownload());
-        wb.attr("ColorUpload", speedtest.getColorUpload());
-        wb.attr("File", speedtest.getFile());
+        wb.attr("idDown", clientId + "ggdown");
+        wb.attr("idUp", clientId + "ggup");
+        wb.attr("idPing", clientId + "ggping");
+        wb.attr("idJitter", clientId + "ggjitter");
+        wb.attr("captionPing", speedtest.getCaptionPing());
+        wb.attr("captionJitter", speedtest.getCaptionJitter());
+        wb.attr("captionDownload", speedtest.getCaptionDownload());
+        wb.attr("captionUpload", speedtest.getCaptionUpload());
+        wb.attr("colorPing", speedtest.getColorPing());
+        wb.attr("colorJitter", speedtest.getColorJitter());
+        wb.attr("colorDownload", speedtest.getColorDownload());
+        wb.attr("colorUpload", speedtest.getColorUpload());
+        wb.attr("file", speedtest.getFile());
         encodeClientBehaviors(context, speedtest);
         wb.finish();
     }
