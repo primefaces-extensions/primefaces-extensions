@@ -293,7 +293,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         /**
          * Read only style class
          */
-        readOnlyCellStyleClass
+        readOnlyCellStyleClass,
+        /**
+         * Name of javascript function to extend the options of the underlying Handsontable plugin.
+         */
+        extender
     }
 
     /**
@@ -566,6 +570,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     public void setReadOnlyCellStyleClass(final String _value) {
         getStateHelper().put(PropertyKeys.readOnlyCellStyleClass, _value);
+    }
+
+    public String getExtender() {
+        return (String) getStateHelper().eval(PropertyKeys.extender, null);
+    }
+
+    public void setExtender(final String _extender) {
+        getStateHelper().put(PropertyKeys.extender, _extender);
     }
 
     /**

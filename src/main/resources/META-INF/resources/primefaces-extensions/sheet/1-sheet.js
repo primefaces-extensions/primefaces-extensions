@@ -26,6 +26,17 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         this.focusInput = $(this.jqId + '_focus');
         // need to track to avoid recursion
         this.focusing = false;
+        
+        // user extension to configure handsontable
+        var extender = this.cfg.extender
+        if (extender) {
+            if (typeof extender === "function") {
+                extender.call(this);
+            } else {
+                PrimeFaces.error("Extender value is not a javascript function!");
+            }
+        }
+        
         // create table
         this._setupHandsonTable();
     },
@@ -233,66 +244,26 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             }
         };
         
-        if ($this.cfg.maxRows)
-            options.maxRows = $this.cfg.maxRows;
+        // make a copy of the configuration
+        var configuration = $.extend(true, {}, $this.cfg);
         
-        if ($this.cfg.minRows)
-            options.minRows = $this.cfg.minRows;
+        // remove any properties we don't want in the options
+        delete configuration["readOnly"];
+        delete configuration["rowKeys"];
+        delete configuration["columns"];
+        delete configuration["data"];
+        delete configuration["delta"];
+        delete configuration["errors"];
+        delete configuration["filters"];
+        delete configuration["rowKeys"];
+        delete configuration["sortable"];
+        delete configuration["styles"];
+        delete configuration["rowStyles"];
         
-        if ($this.cfg.maxCols)
-            options.maxCols = $this.cfg.maxCols;
+        // merge configuration into options
+        $.extend( options, configuration );
         
-        if ($this.cfg.minCols)
-            options.minCols = $this.cfg.minCols;
-
-        if ($this.cfg.fixedColumnsLeft)
-            options.fixedColumnsLeft = $this.cfg.fixedColumnsLeft;
-
-        if ($this.cfg.fixedRowsTop)
-            options.fixedRowsTop = $this.cfg.fixedRowsTop;
-        
-        if ($this.cfg.manualColumnResize)
-            options.manualColumnResize = $this.cfg.manualColumnResize;
-
-        if ($this.cfg.manualRowResize)
-            options.manualRowResize = $this.cfg.manualRowResize;
-        
-        if ($this.cfg.manualColumnMove)
-            options.manualColumnMove = $this.cfg.manualColumnMove;
-
-        if ($this.cfg.manualRowMove)
-            options.manualRowMove = $this.cfg.manualRowMove;
-
-        if ($this.cfg.height)
-            options.height = $this.cfg.height;
-
-        if ($this.cfg.activeHeaderClassName)
-            options.activeHeaderClassName = $this.cfg.activeHeaderClassName;
- 
-        if ($this.cfg.commentedCellClassName)
-            options.commentedCellClassName = $this.cfg.commentedCellClassName;
- 
-        if ($this.cfg.currentColClassName)
-            options.currentColClassName = $this.cfg.currentColClassName;
-
-        if ($this.cfg.currentHeaderClassName)
-            options.currentHeaderClassName = $this.cfg.currentHeaderClassName;
-
-        if ($this.cfg.currentRowClassName)
-            options.currentRowClassName = $this.cfg.currentRowClassName;
-
-        if ($this.cfg.invalidCellClassName)
-            options.invalidCellClassName = $this.cfg.invalidCellClassName;
-
-        if ($this.cfg.noWordWrapClassName)
-            options.noWordWrapClassName = $this.cfg.noWordWrapClassName;
-
-        if ($this.cfg.placeholderCellClassName)
-            options.placeholderCellClassName = $this.cfg.placeholderCellClassName;
-
-        if ($this.cfg.readOnlyCellClassName)
-            options.readOnlyCellClassName = $this.cfg.readOnlyCellClassName;
-
+        // create the handsontable
         $this.tableDiv.handsontable(options);
         $this.ht = $this.tableDiv.data('handsontable');
 

@@ -201,9 +201,11 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalNativeAttr(wb, "manualRowMove", sheet.isMovableRows());
         encodeOptionalNativeAttr(wb, "width", sheet.getWidth());
         encodeOptionalNativeAttr(wb, "height", sheet.getHeight());
-        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
         encodeOptionalNativeAttr(wb, "minRows", sheet.getMinRows());
         encodeOptionalNativeAttr(wb, "minCols", sheet.getMinCols());
+        encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
+        encodeOptionalNativeAttr(wb, "maxCols", sheet.getMaxCols());
+        encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
         encodeOptionalAttr(wb, "activeHeaderClassName", sheet.getActiveHeaderStyleClass());
         encodeOptionalAttr(wb, "commentedCellClassName", sheet.getCommentedCellStyleClass());
         encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowStyleClass());
@@ -213,14 +215,7 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalAttr(wb, "noWordWrapClassName", sheet.getNoWordWrapStyleClass());
         encodeOptionalAttr(wb, "placeholderCellClassName", sheet.getPlaceholderCellStyleClass());
         encodeOptionalAttr(wb, "readOnlyCellClassName", sheet.getReadOnlyCellStyleClass());
-
-        if (sheet.getMaxRows() != null) {
-            encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
-        }
-
-        if (sheet.getMaxCols() != null) {
-            encodeOptionalNativeAttr(wb, "maxCols", sheet.getMaxCols());
-        }
+        encodeOptionalNativeAttr(wb, "extender", sheet.getExtender());
 
         String emptyMessage = sheet.getEmptyMessage();
         if (StringUtils.isEmpty(emptyMessage)) {
