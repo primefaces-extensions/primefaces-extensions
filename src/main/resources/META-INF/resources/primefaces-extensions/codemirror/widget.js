@@ -21,7 +21,10 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
 
         this.options = this.cfg;
 
-        this.renderDeferred();
+        var $this = this;
+        $(document).ready(function() {
+            $this.renderDeferred();
+        });
     },
 
     _render : function() {
