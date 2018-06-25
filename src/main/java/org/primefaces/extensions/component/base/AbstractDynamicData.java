@@ -615,10 +615,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             if (state.getLabelValue() != null) {
                 ((UIComponent) input).getAttributes().put("label", state.getLabelValue());
             }
-
-            if (state.getDisabled() != null) {
-                ((UIComponent) input).getAttributes().put("disabled", state.getDisabled());
-            }
         }
 
         for (final UIComponent child : component.getChildren()) {
