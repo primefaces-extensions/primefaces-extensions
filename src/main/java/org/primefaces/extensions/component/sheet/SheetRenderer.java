@@ -193,6 +193,7 @@ public class SheetRenderer extends CoreRenderer {
         // behaviors
         encodeBehaviors(context, sheet, wb);
 
+        encodeOptionalNativeAttr(wb, "readOnly", sheet.isReadOnly());
         encodeOptionalNativeAttr(wb, "fixedColumnsLeft", sheet.getFixedCols());
         encodeOptionalNativeAttr(wb, "fixedRowsTop", sheet.getFixedRows());
         encodeOptionalNativeAttr(wb, "manualColumnResize", sheet.isResizableCols());
@@ -412,7 +413,7 @@ public class SheetRenderer extends CoreRenderer {
         wb.nativeAttr("data", jsData.closeVar().toString());
         wb.nativeAttr("styles", jsStyle.closeVar().toString());
         wb.nativeAttr("rowStyles", jsRowStyle.closeVar().toString());
-        wb.nativeAttr("readOnly", jsReadOnly.closeVar().toString());
+        wb.nativeAttr("readOnlyCells", jsReadOnly.closeVar().toString());
         wb.nativeAttr("rowKeys", jsRowKeys.closeVar().toString());
 
         // add the row header as a native attribute

@@ -107,8 +107,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 } else {
                     cp.renderer = this.textCellRenderer;
                 }
-                var readonly = $this.cfg.readOnly['r' + row + '_c' + col];
-                if (readonly) {
+                var readonlyCell = $this.cfg.readOnlyCells['r' + row + '_c' + col];
+                if (readonlyCell) {
                     cp.readOnly = true;
                 }
                 return cp;
@@ -248,7 +248,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         var configuration = $.extend(true, {}, $this.cfg);
         
         // remove any properties we don't want in the options
-        delete configuration["readOnly"];
+        delete configuration["readOnlyCells"];
         delete configuration["rowKeys"];
         delete configuration["columns"];
         delete configuration["data"];
@@ -341,13 +341,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
      * @param rowIndex the row index
      * @param data the array of data values for the columns
      * @param styles the JSON cell style updates
-     * @param readonly the JSON cell read only updates
+     * @param readOnlyCells the JSON cell read only updates
      */
-    updateData: function (rowIndex, data, styles, readonly) {
+    updateData: function (rowIndex, data, styles, readOnlyCells) {
         // merge the new styles in
         $.extend(this.cfg.styles, styles);
         //merge the new readonly cells in
-        $.extend(this.cfg.readOnly, readonly);
+        $.extend(this.cfg.readOnlyCells, readOnlyCells);
         
         // update any data rows
         if (rowIndex <= this.cfg.rowKeys.length) {

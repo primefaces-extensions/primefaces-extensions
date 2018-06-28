@@ -5281,6 +5281,14 @@
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify whether the sheet should be rendered as a read only.  This is more efficient than cell by cell, but renders the entire sheet as read only.]]>
+            </description>
+            <name>readOnly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Property to be used for sorting.]]>
@@ -5367,6 +5375,86 @@
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
+        <attribute>
+            <description>
+               <![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
+            </description>
+            <name>extender</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all active headers in selections. The header will be marked with this class name only when a whole column or row will be selected.]]>
+            </description>
+            <name>activeHeaderStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name added to the commented cells.]]>
+            </description>
+            <name>commentedCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible columns in the current selection.]]>
+            </description>
+            <name>currentColStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible headers in current selection.]]>
+            </description>
+            <name>currentHeaderStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for all visible rows in the current selection.]]>
+            </description>
+            <name>currentRowStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for cells that did not pass validation.]]>
+            </description>
+            <name>invalidCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name added to cells with cell meta wordWrap: false]]>
+            </description>
+            <name>noWordWrapStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for cells that have a placeholder in use.]]>
+            </description>
+            <name>placeholderCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS class name for read-only cells.]]>
+            </description>
+            <name>readOnlyCellStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 	<tag>
 		<description>
@@ -5555,9 +5643,9 @@
         </attribute>
 		<attribute>
 			<description>
-				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient then cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>
+				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient than cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>
 			</description>
-			<name>readonly</name>
+			<name>readOnly</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
@@ -5649,85 +5737,5 @@
 			<required>false</required>
 			<type>javax.faces.event.ValueChangeListener</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all active headers in selections. The header will be marked with this class name only when a whole column or row will be selected.]]>
-            </description>
-            <name>activeHeaderStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name added to the commented cells.]]>
-            </description>
-            <name>commentedCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible columns in the current selection.]]>
-            </description>
-            <name>currentColStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible headers in current selection.]]>
-            </description>
-            <name>currentHeaderStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible rows in the current selection.]]>
-            </description>
-            <name>currentRowStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for cells that did not pass validation.]]>
-            </description>
-            <name>invalidCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name added to cells with cell meta wordWrap: false]]>
-            </description>
-            <name>noWordWrapStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for cells that have a placeholder in use.]]>
-            </description>
-            <name>placeholderCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for read-only cells.]]>
-            </description>
-            <name>readOnlyCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-               <![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
-            </description>
-            <name>extender</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
 	</tag>
 </facelet-taglib>

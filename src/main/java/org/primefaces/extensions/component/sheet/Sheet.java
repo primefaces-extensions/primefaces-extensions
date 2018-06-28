@@ -252,6 +252,10 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
          * The style class to apply to each row in the sheet (EL expression)
          */
         rowStyleClass,
+        /**
+         * Flag indicating whether or not the sheet is read only
+         */
+        readOnly,
 
         /**
          * The message displayed when no records are found
@@ -502,6 +506,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     public String getActiveHeaderStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.activeHeaderStyleClass, null);
+    }
+
+    public void setReadOnly(final Boolean value) {
+        getStateHelper().put(PropertyKeys.readOnly, value);
+    }
+
+    public Boolean isReadOnly() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
     public void setActiveHeaderStyleClass(final String _value) {
