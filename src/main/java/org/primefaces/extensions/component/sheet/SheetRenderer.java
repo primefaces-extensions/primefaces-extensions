@@ -37,7 +37,6 @@ import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -235,7 +234,7 @@ public class SheetRenderer extends CoreRenderer {
      * @throws IOException
      */
     protected void encodeInvalidData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb) throws IOException {
-        wb.attr("errors", ComponentUtils.escapeText(sheet.getInvalidDataValue()));
+        wb.attr("errors", sheet.getInvalidDataValue());
     }
 
     /**
