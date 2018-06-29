@@ -1,4 +1,7 @@
-.*
+.classpath
+.settings
+.project
+.checkstyle
 target
 *.?ar
 *.iml
