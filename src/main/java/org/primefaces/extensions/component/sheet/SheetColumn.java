@@ -147,7 +147,13 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         /**
          * The submitted filtered value
          */
-        filterValue
+        filterValue,
+        /**
+         * A Javascript function, regular expression or a string, which will be used in the process of cell validation. If a function is used, be sure to
+         * execute the callback argument with either true (callback(true)) if the validation passed or with false (callback(false)), if the validation failed.
+         * Note, that this in the function points to the cellProperties object.
+         */
+        onvalidate
     }
 
     private Object localValue;
@@ -356,6 +362,14 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public String getTimeFormat() {
         return (String) getStateHelper().eval(PropertyKeys.timeFormat, "h:mm:ss a");
+    }
+
+    public void setOnvalidate(final String _onvalidate) {
+        getStateHelper().put(PropertyKeys.onvalidate, _onvalidate);
+    }
+
+    public String getOnvalidate() {
+        return (String) getStateHelper().eval(PropertyKeys.onvalidate, null);
     }
 
     /**

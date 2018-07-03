@@ -50,6 +50,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             columns: $this.cfg.columns,
             stretchH: $this.cfg.stretchH || 'all',
             contextMenu: false,
+            allowInvalid: false,
             autoRowSize: !$this.cfg.rowHeaders,
             enterMoves: {
                 row: 0,

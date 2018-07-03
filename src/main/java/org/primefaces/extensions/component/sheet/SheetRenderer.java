@@ -282,6 +282,26 @@ public class SheetRenderer extends CoreRenderer {
                 options.appendProperty("readOnly", "true", false);
             }
 
+            // validate can be a function, regex, or string
+            final String validateFunction = column.getOnvalidate();
+            if (validateFunction != null) {
+                boolean quoted = false;
+                switch (validateFunction) {
+                    case "autocomplete":
+                    case "date":
+                    case "numeric":
+                    case "time":
+                        quoted = true;
+                        break;
+
+                    default:
+                        // its a function or regex!
+                        quoted = false;
+                        break;
+                }
+                options.appendProperty("validator", validateFunction, quoted);
+            }
+
             switch (column.getColType()) {
                 case "password":
                     final Integer passwordLength = column.getPasswordHashLength();
