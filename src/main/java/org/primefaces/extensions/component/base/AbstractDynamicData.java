@@ -338,9 +338,10 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         if (isNested == null) {
             UIComponent parent = this;
             while (null != (parent = parent.getParent())) {
-                if (parent instanceof javax.faces.component.UIData
-                            || parent.getClass().getName().endsWith("UIRepeat")
-                            || parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating()) {
+                if (parent instanceof javax.faces.component.UIData ||
+                            parent.getClass().getName().endsWith("UIRepeat") ||
+                            parent instanceof UITabPanel && ((UITabPanel) parent).isRepeating() ||
+                            parent instanceof AbstractDynamicData) {
                     isNested = Boolean.TRUE;
                     break;
                 }
