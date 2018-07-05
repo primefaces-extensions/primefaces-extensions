@@ -919,26 +919,27 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         try {
-            // data comes in as a JSON Object with named properties for the row
-            // and columns updated
-            // this is so that multiple updates to the same cell overwrite
-            // previous deltas prior to submission
-            // we don't care about the property names, just the values, which
-            // we'll process in turn
+            // data comes in as a JSON Object with named properties for the row and columns updated this is so that
+            // multiple updates to the same cell overwrite previous deltas prior to submission we don't care about
+            // the property names, just the values, which we'll process in turn
             final JSONObject obj = new JSONObject(jsonData);
             final Iterator<String> keys = obj.keys();
             while (keys.hasNext()) {
                 final String key = keys.next();
                 // data comes in: [row, col, oldValue, newValue, rowKey]
                 final JSONArray update = obj.getJSONArray(key);
+                // GitHub #586 pasted more values than rows
+                if (update.isNull(4)) {
+                    continue;
+                }
                 final String rowKey = update.getString(4);
                 final int col = sheet.getMappedColumn(update.getInt(1));
                 final String newValue = String.valueOf(update.get(3));
                 sheet.setSubmittedValue(context, rowKey, col, newValue);
             }
         }
-        catch (final JSONException e) {
-            throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + e.getMessage(), e);
+        catch (final JSONException ex) {
+            throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + ex.getMessage(), ex);
         }
     }
 
