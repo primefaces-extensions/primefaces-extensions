@@ -35,9 +35,7 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
         opts.tabHandle = PrimeFaces.escapeClientId(opts.tabHandle);
 
         // create the slideout
-        $(document).ready(function() {
-            $this.jq.tabSlideOut(opts);
-        });
+        $this.jq.tabSlideOut(opts);
         
         // bind "open", "close" events
         this._bindEvents();

@@ -5,7 +5,7 @@
  * @author Mark Lassiter 
  * @since 6.2
  */
-PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     
     // flag tracking whether or not an update ajax event needs fired
     // after a select cell
@@ -37,11 +37,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             }
         }
         
-        // create table
-        this._setupHandsonTable();
+        this.renderDeferred();
     },
     
-    _setupHandsonTable: function() {
+    _render: function() {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -301,11 +300,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 $('#' + focusId).focus()
             }, 100);
         }
-        
-        // repaint HT when the document is loaded to fix all column widths
-        $(document).ready(function(){
-            $this.ht.render();
-        }); 
     },
     
     _defaultCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {

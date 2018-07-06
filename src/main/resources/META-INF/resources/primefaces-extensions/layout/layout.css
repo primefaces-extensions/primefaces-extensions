@@ -3,14 +3,6 @@
     overflow: hidden;
 }
 
-.ui-layout-north,
-.ui-layout-south,
-.ui-layout-west,
-.ui-layout-east,
-.ui-layout-center {
-    display: none;
-}
-
 .ui-layout-resizer-west-dragging,
 .ui-layout-resizer-west-open-hover {
     background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
