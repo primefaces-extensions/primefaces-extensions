@@ -5305,6 +5305,22 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Case sensitivity for sorting, insensitive by default.]]>
+            </description>
+            <name>caseSensitiveSort</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines where the null values are placed in ascending sort order. Default value is "1" meaning null values are placed at the end in ascending mode and at beginning in descending mode. Set to "-1" for the opposite behavior.]]>
+            </description>
+            <name>nullSortOrder</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[The Handsontable StretchH value.  Affects rendering of the column widths.  Valid values are "none", "hybrid", "last", "all".]]>

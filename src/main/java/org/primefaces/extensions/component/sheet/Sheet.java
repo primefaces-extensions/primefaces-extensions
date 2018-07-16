@@ -234,6 +234,17 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         sortOrder,
 
         /**
+         * Defines where the null values are placed in ascending sort order. Default value is "1" meaning null values are placed at the end in ascending mode
+         * and at beginning in descending mode. Set to "-1" for the opposite behavior.
+         */
+        nullSortOrder,
+
+        /**
+         * Case sensitivity for sorting, insensitive by default.
+         */
+        caseSensitiveSort,
+
+        /**
          * The original sortBy value expression saved off for reset
          */
         origSortBy,
@@ -590,6 +601,22 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     public void setExtender(final String _extender) {
         getStateHelper().put(PropertyKeys.extender, _extender);
+    }
+
+    public void setCaseSensitiveSort(final Boolean value) {
+        getStateHelper().put(PropertyKeys.caseSensitiveSort, value);
+    }
+
+    public Boolean isCaseSensitiveSort() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.caseSensitiveSort, Boolean.FALSE).toString());
+    }
+
+    public Integer getNullSortOrder() {
+        return (Integer) getStateHelper().eval(PropertyKeys.nullSortOrder, Integer.valueOf(1));
+    }
+
+    public void setNullSortOrder(final Integer value) {
+        getStateHelper().put(PropertyKeys.nullSortOrder, value);
     }
 
     /**
@@ -1204,8 +1231,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
         final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         if (veSortBy != null) {
-            Collections.sort(filteredList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null, false,
-                        Locale.ENGLISH, 0));
+            Collections.sort(filteredList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null, isCaseSensitiveSort(),
+                        Locale.ENGLISH, getNullSortOrder()));
         }
 
         // map filtered rows
