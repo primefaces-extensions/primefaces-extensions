@@ -391,7 +391,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     filterKeyDown: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
-        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
+        if (key === keyCode.ENTER) {
             e.preventDefault();
         }
     },
@@ -400,7 +400,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     filterKeyUp: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
-        if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
+        if (key === keyCode.ENTER) {
             // destroy editor to avoid posting request after resort
             sheet.ht.destroyEditor(true);
 
