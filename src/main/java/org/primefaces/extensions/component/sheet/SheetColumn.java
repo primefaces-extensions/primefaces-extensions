@@ -149,6 +149,10 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
          */
         filterValue,
         /**
+         * Controls the visibilty of the column, default is true.
+         */
+        visible,
+        /**
          * A Javascript function, regular expression or a string, which will be used in the process of cell validation. If a function is used, be sure to
          * execute the callback argument with either true (callback(true)) if the validation passed or with false (callback(false)), if the validation failed.
          * Note, that this in the function points to the cellProperties object.
@@ -370,6 +374,14 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public String getOnvalidate() {
         return (String) getStateHelper().eval(PropertyKeys.onvalidate, null);
+    }
+
+    public void setVisible(final Boolean value) {
+        getStateHelper().put(PropertyKeys.visible, value);
+    }
+
+    public Boolean isVisible() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.visible, Boolean.TRUE).toString());
     }
 
     /**

@@ -275,8 +275,16 @@ public class SheetRenderer extends CoreRenderer {
             options.appendProperty("type", column.getColType(), true);
             options.appendProperty("copyable", "true", false);
             final Integer width = column.getColWidth();
+            String calculatedWidth = null;
             if (width != null) {
-                options.appendProperty("width", width.toString(), false);
+                calculatedWidth = width.toString();
+            }
+            // HT doesn't have a hidden property so make column small as possible will leave it in the DOM, if 0 then Handsontable removes it entirely
+            if (!column.isVisible()) {
+                calculatedWidth = "0.1";
+            }
+            if (calculatedWidth != null) {
+                options.appendProperty("width", calculatedWidth, false);
             }
             if (column.isReadonly()) {
                 options.appendProperty("readOnly", "true", false);
