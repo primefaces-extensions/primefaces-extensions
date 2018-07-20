@@ -2990,6 +2990,38 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Fade In time in millis; set to 0 to disable fadeIn on block.]]>
+            </description>
+            <name>fadeIn</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Fade Out time in millis; set to 0 to disable fadeOut on unblock.]]>
+            </description>
+            <name>fadeOut</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Disable if you do not want to show the overlay. Default value is true.]]>
+            </description>
+            <name>showOverlay</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Focus will be placed in the first available input field when page blocking. Default value is true.]]>
+            </description>
+            <name>focusInput</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
 	</tag>
 	<tag>
 		<description>

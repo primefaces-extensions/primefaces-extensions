@@ -52,7 +52,7 @@ public class BlockUI extends UIComponentBase implements Widget {
      */
     protected enum PropertyKeys {
 
-        widgetVar, css, cssOverlay, source, target, content, event, autoShow, timeout, centerX, centerY;
+        widgetVar, css, cssOverlay, source, target, content, event, autoShow, timeout, centerX, centerY, fadeIn, fadeOut, showOverlay, focusInput;
 
         private String toString;
 
@@ -65,7 +65,7 @@ public class BlockUI extends UIComponentBase implements Widget {
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -166,7 +166,41 @@ public class BlockUI extends UIComponentBase implements Widget {
         getStateHelper().put(PropertyKeys.centerY, centerY);
     }
 
+    public int getFadeIn() {
+        return (Integer) getStateHelper().eval(PropertyKeys.fadeIn, 200);
+    }
+
+    public void setFadeIn(final int fadeIn) {
+        getStateHelper().put(PropertyKeys.fadeIn, fadeIn);
+    }
+
+    public int getFadeOut() {
+        return (Integer) getStateHelper().eval(PropertyKeys.fadeOut, 400);
+    }
+
+    public void setFadeOut(final int fadeOut) {
+        getStateHelper().put(PropertyKeys.fadeOut, fadeOut);
+    }
+
+    public void setShowOverlay(final boolean showOverlay) {
+        getStateHelper().put(PropertyKeys.showOverlay, showOverlay);
+    }
+
+    public boolean isShowOverlay() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.showOverlay, true);
+    }
+
+    public void setFocusInput(final boolean focusInput) {
+        getStateHelper().put(PropertyKeys.focusInput, focusInput);
+    }
+
+    public boolean isFocusInput() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.focusInput, true);
+    }
+
+    @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
+
 }

@@ -5,34 +5,37 @@
  */
 PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
-	/**
-	 * Initializes the widget.
-	 *
-	 * @param {object} cfg The widget configuration.
-	 */
-	init : function(cfg) {
-        this.id = cfg.id;
-		this.source = cfg.source;
-		this.target = cfg.target;
-	    this.contentId = cfg.content;
-	    this.contentExtern = cfg.contentExtern;
+    /**
+     * Initializes the widget.
+     *
+     * @param {object} cfg The widget configuration.
+     */
+    init: function(cfg) {
+        this._super(cfg);
+        
+        this.source = cfg.source;
+        this.target = cfg.target;
+        this.contentId = cfg.content;
+        this.contentExtern = cfg.contentExtern;
         this.namingContSep = cfg.namingContSep;
-		this.eventRegEx = cfg.regEx;
+        this.eventRegEx = cfg.regEx;
         this.css = cfg.css;
         this.overlayCSS = cfg.overlayCSS;
         this.timeout = cfg.timeout;
         this.centerX = cfg.centerX;
         this.centerY = cfg.centerY;
+        this.fadeIn = cfg.fadeIn;
+        this.fadeOut = cfg.fadeOut;
+        this.showOverlay = cfg.showOverlay;
+        this.focusInput = cfg.focusInput;
 
         if (cfg.autoShow) {
             this.setupAjaxHandlers();
         }
 
-		// global settings
-		$.blockUI.defaults.theme = true;
-		$.blockUI.defaults.ignoreIfBlocked = true;
-
-		this.removeScriptElement(this.id);
+        // global settings
+        $.blockUI.defaults.theme = true;
+        $.blockUI.defaults.ignoreIfBlocked = true;
     },
 
     refresh: function(cfg) {
@@ -41,8 +44,8 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
     },
 
-	/* public access */
-    setupAjaxHandlers : function () {
+    /* public access */
+    setupAjaxHandlers: function() {
         var $this = this;
         var $document = $(document);
 
@@ -65,9 +68,9 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                 $this.unblock();
             }
         });
-	},
+    },
 
-	block : function () {
+    block: function() {
         var opt;
 
         if (this.target) {
@@ -92,7 +95,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                 }
 
                 // increase the counter
-                targetEl.data("blockUI.blocksCount", blocksCount+1);
+                targetEl.data("blockUI.blocksCount", blocksCount + 1);
             }
         } else {
             // block the entire page
@@ -105,7 +108,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-	unblock : function () {
+    unblock: function() {
         if (this.target) {
             var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.target);
 
@@ -122,7 +125,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                         targetEl.data("blockUI.blocksCount", 0);
                     } else if (blocksCount > 1) {
                         // only decrease the counter
-                        targetEl.data("blockUI.blocksCount", blocksCount-1);
+                        targetEl.data("blockUI.blocksCount", blocksCount - 1);
                     }
                 }
             }
@@ -131,9 +134,9 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-	/* private access */
+    /* private access */
 
-    getOptions : function() {
+    getOptions: function() {
         var opt = null;
 
         if (this.contentId != null) {
@@ -158,12 +161,16 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
             opt.centerX = this.centerX;
             opt.centerY = this.centerY;
+            opt.fadeIn = this.fadeIn;
+            opt.fadeOut = this.fadeOut;
+            opt.showOverlay = this.showOverlay;
+            opt.focusInput = this.focusInput;
         }
 
         return opt;
     },
 
-	isAppropriateEvent : function (source, settings) {
+    isAppropriateEvent: function(source, settings) {
         if (typeof settings === 'undefined' || settings == null || settings.source == null ||
             typeof settings.data === 'undefined' || settings.data == null) {
             return false;
@@ -182,8 +189,8 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
             }
         }
 
-        if($.inArray(sourceId, source) == -1) {
-        	return false;
+        if ($.inArray(sourceId, source) == -1) {
+            return false;
         }
 
         // split options around ampersands
