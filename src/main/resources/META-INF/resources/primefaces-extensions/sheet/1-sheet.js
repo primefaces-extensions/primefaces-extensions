@@ -280,10 +280,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length == 0) {
-            $this.tableDiv.find('tbody')
-                .html(
-                    "<tr><td colspan='" + options.columns.length + "'>" + $this.cfg.emptyMessage
-                    + "</td></tr>")
+            $this.tableDiv.find('.emptyRows').find('tbody').html("<tr><td colspan='" + options.columns.length + "'>" + $this.cfg.emptyMessage + "</td></tr>")
         }
 
         var selval = $this.selectionInput.val();
