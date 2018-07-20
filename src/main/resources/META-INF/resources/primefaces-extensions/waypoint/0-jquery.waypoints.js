@@ -387,9 +387,13 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
       } else if ($.isPlainObject(method)) {
         return methods.init.apply(this, [null, method]);
       } else if (!method) {
-        return $.error("jQuery Waypoints needs a callback function or handler option.");
+         return $.on( "error", function() {
+            alert( "jQuery Waypoints needs a callback function or handler option." )
+         });
       } else {
-        return $.error("The " + method + " method does not exist in jQuery Waypoints.");
+         return $.on( "error", function() {
+            alert( "The " + method + " method does not exist in jQuery Waypoints." )
+         });
       }
     };
     $.fn[wp].defaults = {
