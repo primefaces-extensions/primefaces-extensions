@@ -86,8 +86,6 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                     targetEl.block();
                 }
 
-                //$('.blockUI.blockOverlay').css('z-index', ++PrimeFaces.zindex + 10);
-
                 // get the current counter
                 var blocksCount = targetEl.data("blockUI.blocksCount");
                 if (typeof blocksCount === 'undefined') {
@@ -96,6 +94,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
 
                 // increase the counter
                 targetEl.data("blockUI.blocksCount", blocksCount + 1);
+                targetEl.attr('aria-busy', true);
             }
         } else {
             // block the entire page
@@ -123,6 +122,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
                         // unblock the target element and reset the counter
                         targetEl.unblock();
                         targetEl.data("blockUI.blocksCount", 0);
+                        targetEl.attr('aria-busy', false);
                     } else if (blocksCount > 1) {
                         // only decrease the counter
                         targetEl.data("blockUI.blocksCount", blocksCount - 1);
