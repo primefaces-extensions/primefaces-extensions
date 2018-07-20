@@ -2,6 +2,7 @@
 .settings
 .project
 .checkstyle
+.tern-project
 target
 *.?ar
 *.iml
