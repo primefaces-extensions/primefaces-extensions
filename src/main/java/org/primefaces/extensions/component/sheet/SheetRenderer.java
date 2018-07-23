@@ -125,6 +125,9 @@ public class SheetRenderer extends CoreRenderer {
         if (height != null) {
             style = style + "height: " + height + "px;";
         }
+        else {
+            style = style + "height: 100%;";
+        }
 
         if (style.length() > 0) {
             responseWriter.writeAttribute("style", style, null);
