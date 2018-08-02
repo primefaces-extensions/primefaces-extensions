@@ -358,14 +358,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
     },
 
-    // true if sheet has assigned behavior, otherwise false
-    hasBehavior: function (event) {
-        if (this.cfg.behaviors) {
-            return this.cfg.behaviors[event] != undefined;
-        }
-        return false;
-    },
-
     // fired when a filter input is edited. firenow indicates the filter
     // event should be fired immediately (select)
     filterchange: function (sheet, col, v, firenow) {
