@@ -117,7 +117,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 if (source === 'loadData') {
                     return;
                 }
+                // var change = changes[0]; // [row, prop, oldVal, newVal]
                 var isChanged = false;
+                var cellType = 'normal';
                 for (var i = 0; i < change.length; i++) {
                     if (change[i][2] == change[i][3])
                         continue;
@@ -126,10 +128,19 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     change[i].push($this.cfg.rowKeys[row]);
                     $this.cfg.delta['r' + row + '_c' + col] = change[i];
                     isChanged = true;
+                    cellType = this.getCellMeta(row, col).type;
                 }
                 if (isChanged) {
                     $this.dataInput.val(JSON.stringify($this.cfg.delta));
                     $this.updated = true;
+                    
+                    // GitHub #599
+                    if (cellType === "checkbox" || cellType === "dropdown") {
+                       $this.updated = false;
+                       if ($this.hasBehavior('change')) {
+                           $this.cfg.behaviors['change'].call(this, 'change');
+                       }
+                    }
                 }
             },
             afterSelectionEnd: function (r, c, r2, c2) {
