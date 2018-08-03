@@ -16,7 +16,7 @@ CKEDITOR_GETURL = function(resource) {
             };
         }
     }
-
+	
     //do not resolve
     if (resource.indexOf('?resolve=false') !== -1) {
         facesResource = resource.replace('?resolve=false', '');
@@ -35,13 +35,24 @@ CKEDITOR_GETURL = function(resource) {
                 // GitHub ##509 check for URL param
                 if (appendedResource.startsWith('&')) {
                     // example: replace &conversationContext=33
-                    appendedResource = appendedResource.replace(/&\w+=\d+/, '');
+                    appendedResource = appendedResource.replace(/&\w+=\d+(?:\.\d+)*/, '');
                 }
 
                 var resourceIdentiferPosition = facesResource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER);
 
                 if (PrimeFacesExt.isExtensionMapping()) {
-                    var extensionMappingPosition = facesResource.lastIndexOf('.' + PrimeFacesExt.getResourceUrlExtension());
+                    var extension = '.' + PrimeFacesExt.getResourceUrlExtension();
+                    var extensionMappingPosition = facesResource.lastIndexOf(extension);
+                    if (extensionMappingPosition === -1) {
+                       extensionMappingPosition = facesResource.lastIndexOf('.xhtml');
+                       if (extensionMappingPosition === -1) {
+                          extensionMappingPosition = facesResource.lastIndexOf('.jsf');
+                       }
+                    }
+                    
+                    if (extensionMappingPosition === -1) {
+                       console.error('Could not find .jsf or .xhtml extension!');
+                    }
 
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
