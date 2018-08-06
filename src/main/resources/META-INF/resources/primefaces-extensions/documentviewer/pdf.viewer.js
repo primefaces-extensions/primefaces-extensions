@@ -1780,7 +1780,7 @@ var DOMCMapReaderFactory = function () {
         return Promise.reject(new Error('CMap name must be specified.'));
       }
       return new Promise(function (resolve, reject) {
-        var url =window.parent.PrimeFaces.getFacesResource('documentviewer/cmaps/'+ name + (_this.isCompressed ? '.bcmap' : ''),
+        var url =window.parent.PrimeFacesExt.getFacesResource('documentviewer/cmaps/'+ name + (_this.isCompressed ? '.bcmap' : ''),
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
         var request = new XMLHttpRequest();
@@ -5752,7 +5752,7 @@ var TextAnnotationElement = function (_AnnotationElement2) {
       var image = document.createElement('img');
       image.style.height = this.container.style.height;
       image.style.width = this.container.style.width;
-      image.src = window.parent.PrimeFaces.getFacesResource('documentviewer/images/'+ 'annotation-' + this.data.name.toLowerCase() + '.svg',
+      image.src = window.parent.PrimeFacesExt.getFacesResource('documentviewer/images/'+ 'annotation-' + this.data.name.toLowerCase() + '.svg',
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
       image.alt = '[{{type}} Annotation]';
@@ -19177,7 +19177,7 @@ var DEFAULT_SCALE_DELTA = 1.1;
 var DISABLE_AUTO_FETCH_LOADING_BAR_TIMEOUT = 5000;
 function configure(PDFJS) {
   PDFJS.imageResourcesPath = './images/';
-  PDFJS.workerSrc = window.parent.PrimeFaces.getFacesResource('documentviewer/pdf.worker.js',
+  PDFJS.workerSrc = window.parent.PrimeFacesExt.getFacesResource('documentviewer/pdf.worker.js',
             window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
             window.parent.PrimeFacesExt.VERSION);
   PDFJS.cMapUrl = '../web/cmaps/';
@@ -27808,7 +27808,7 @@ document.webL10n = function (window, document, undefined) {
               }
               match = reImport.exec(line);
               if (match) {
-				  var url = window.parent.PrimeFaces.getFacesResource('documentviewer/locale/' + match[1],
+				  var url = window.parent.PrimeFacesExt.getFacesResource('documentviewer/locale/' + match[1],
                     window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
                     window.parent.PrimeFacesExt.VERSION);
                 loadImport(url, nextEntry);

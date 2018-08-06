@@ -358,7 +358,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 		var pfext = window.parent.PrimeFacesExt;
 
 		//Adding l10n file
-		var l10nNodeUrl = pf.getFacesResource('documentviewer/locale/locales.txt',pfext.RESOURCE_LIBRARY, pfext.VERSION);
+		var l10nNodeUrl = pfext.getFacesResource('documentviewer/locale/locales.txt',pfext.RESOURCE_LIBRARY, pfext.VERSION);
 		var l10nNode = $("<link rel='resource' type='application/l10n' href='" + l10nNodeUrl + "'/>").get(0);
 		document.getElementsByTagName('head')[0].appendChild(l10nNode);
 
@@ -407,7 +407,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 
 		// load the viewer script on document ready which will cause it to execute
 		// after all resources loaded
-		var appUrl = pf.getFacesResource('documentviewer/pdf.viewer.js', pfext.RESOURCE_LIBRARY, pfext.VERSION);
+		var appUrl = pfext.getFacesResource('documentviewer/pdf.viewer.js', pfext.RESOURCE_LIBRARY, pfext.VERSION);
 	
 	    load_script(appUrl, function() {
 	        // callback function

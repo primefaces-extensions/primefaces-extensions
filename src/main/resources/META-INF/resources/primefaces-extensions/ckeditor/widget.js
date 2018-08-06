@@ -57,21 +57,21 @@ CKEDITOR_GETURL = function(resource) {
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
-                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFacesExt.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 } else {
                     var questionMarkPosition = facesResource.indexOf('?');
 
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-                    facesResource = PrimeFaces.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFacesExt.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 }
             } else {
                 facesResource = resource;
             }
         } else {
             if (resource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER) === -1) {
-                facesResource = PrimeFaces.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                facesResource = PrimeFacesExt.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
             }
             else {
                 facesResource = resource;
@@ -144,10 +144,10 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         // check if ckeditor is already included
         if (!$.fn.ckeditor) {
-            var ckEditorScriptURI = PrimeFaces.getFacesResource('/ckeditor/ckeditor.js',
+            var ckEditorScriptURI = PrimeFacesExt.getFacesResource('/ckeditor/ckeditor.js',
                     PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
-            var jQueryAdapterScriptURI = PrimeFaces.getFacesResource('/ckeditor/adapters/jquery.js',
+            var jQueryAdapterScriptURI = PrimeFacesExt.getFacesResource('/ckeditor/adapters/jquery.js',
                     PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
             // load ckeditor
