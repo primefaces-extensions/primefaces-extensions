@@ -59,10 +59,6 @@
         <component-class>org.primefaces.extensions.component.fluidgrid.UIFluidGridItem</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.DataExporter</component-type>
-        <component-class>org.primefaces.extensions.component.exporter.DataExporter</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Github</component-type>
         <component-class>org.primefaces.extensions.component.github.Github</component-class>
     </component>
