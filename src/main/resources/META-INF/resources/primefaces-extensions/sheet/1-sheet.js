@@ -471,8 +471,12 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     },
     
     handleHotBeforeKeyDown: function (e) {
-        var row = this.getSelectedLast()[0];
-        var col = this.getSelectedLast()[1];
+        var selectedLast = this.getSelectedLast();
+        if (!selectedLast) {
+           return;
+        }
+        var row = selectedLast[0];
+        var col = selectedLast[1];
         var celltype = this.getCellMeta(row, col).type;
         
         // prevent Alpha chars in numeric sheet cells
