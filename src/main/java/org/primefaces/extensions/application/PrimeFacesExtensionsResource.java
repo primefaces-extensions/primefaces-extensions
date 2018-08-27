@@ -27,13 +27,13 @@ import javax.faces.application.ResourceWrapper;
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
-    private Resource wrapped;
-    private String version;
+    private final Resource wrapped;
+    private final String version;
 
     public PrimeFacesExtensionsResource(final Resource resource) {
         super();
         wrapped = resource;
-        version = "&v=" + this.getClass().getPackage().getSpecificationVersion();
+        version = "&v=" + this.getClass().getPackage().getImplementationVersion();
     }
 
     @Override
