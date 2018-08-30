@@ -423,12 +423,15 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // this causes us to lose focus, so we need to refocus
         // we need to prevent recursion with this hack
         sheet.focusing = true;
-        sheet.focusInput.val($(inp).attr('id'));
         sheet.ht.destroyEditor(true);
-        $(inp).focus();
-        sheet.focusing = false;
+        // for some reason does not work when focused immediately,
+        setTimeout(function () {
+            sheet.focusInput.val($(inp).attr('id'));
+            $(inp).focus();
+            sheet.focusing = false;
 
-        sheet.filter();
+            sheet.filter();
+        },100);
     },
 
     // remove focused filter tracking when tabbing off
