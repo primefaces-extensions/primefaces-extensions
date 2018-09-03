@@ -20,4 +20,4 @@ This product includes software developed by Michael Fielding (https://github.com
 This product includes software developed by Marijn Haverbeke (http://codemirror.net/)
 This product includes software developed by Artem Tabalin (https://github.com/tabalinas/jssocials)
 This product includes software developed by Handsoncode sp. z o.o. (https://github.com/handsontable/handsontable)
-
+This product includes software developed by Xuebin Dong (@dabeng) (https://github.com/dabeng/OrgChart)
