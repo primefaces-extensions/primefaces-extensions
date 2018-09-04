@@ -76,6 +76,7 @@
 								<include>timer/**</include>
 								<include>tooltip/**</include>
 								<include>waypoint/**</include>
+								<include>orgchart/**</include>
 							</includes>
 							<aggregations>
 								<aggregation>
