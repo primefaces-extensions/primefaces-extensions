@@ -79,7 +79,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
         nodeTitle, //
         extender;
 
-        String toString;
+        private String toString;
 
         PropertyKeys(final String toString) {
             this.toString = toString;
