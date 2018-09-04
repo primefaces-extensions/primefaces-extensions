@@ -16,7 +16,7 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
       this._super(cfg);
       this.id = cfg.id;
       
-      // user extension to configure handsontable
+      // user extension to configure plugin
       var extender = this.cfg.extender
       if (extender) {
           if (typeof extender === "function") {
