@@ -43,45 +43,40 @@ import org.primefaces.util.WidgetBuilder;
 public class OrgChartRenderer extends CoreRenderer {
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final OrgChart orgChart = (OrgChart) component;
         encodeMarkup(context, orgChart);
         encodeScript(context, orgChart);
     }
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(final FacesContext context, final UIComponent component) {
 
-        OrgChart orgChart = (OrgChart) component;
+        final OrgChart orgChart = (OrgChart) component;
 
-        decodeNodeStrucutre(context, orgChart);
+        decodeNodeStructure(context, orgChart);
         decodeBehaviors(context, component);
     }
 
-    /**
-     * 
-     * @param context
-     * @param orgChart
-     */
-    private void decodeNodeStrucutre(FacesContext context, OrgChart orgChart) {
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+    private void decodeNodeStructure(final FacesContext context, final OrgChart orgChart) {
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
-        String hierarchyStr = params.get(orgChart.getClientId() + "_hierarchy");
+        final String hierarchyStr = params.get(orgChart.getClientId() + "_hierarchy");
 
         if (null != hierarchyStr && !hierarchyStr.isEmpty()) {
-            JSONObject hierarchy = new JSONObject(hierarchyStr);
+            final JSONObject hierarchy = new JSONObject(hierarchyStr);
 
-            ValueExpression ve = orgChart.getValueExpression("value");
+            final ValueExpression ve = orgChart.getValueExpression("value");
             OrgChartNode root = (OrgChartNode) ve.getValue(context.getELContext());
 
-            List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
+            final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
 
-            for (OrgChartNode o : orgChartNodes) {
+            for (final OrgChartNode o : orgChartNodes) {
                 o.clearChildren();
             }
 
-            HashMap<String, OrgChartNode> hashMap = OrgChartHelper
-                    .parseOrgChartNodesIntoHashMap(orgChartNodes);
+            final HashMap<String, OrgChartNode> hashMap = OrgChartHelper
+                        .parseOrgChartNodesIntoHashMap(orgChartNodes);
 
             root = null;
 
@@ -92,28 +87,22 @@ public class OrgChartRenderer extends CoreRenderer {
         }
     }
 
-    /**
-     * 
-     * @param orgChartNodes
-     * @param hierarchy
-     * @param parentNode
-     */
-    public OrgChartNode buildNodesFromJSON(HashMap<String, OrgChartNode> orgChartNodes,
-            JSONObject hierarchy, OrgChartNode parentNode) {
-        String id = (String) hierarchy.get("id");
-        OrgChartNode node = orgChartNodes.get(id);
+    public OrgChartNode buildNodesFromJSON(final HashMap<String, OrgChartNode> orgChartNodes,
+                final JSONObject hierarchy, OrgChartNode parentNode) {
+        final String id = (String) hierarchy.get("id");
+        final OrgChartNode node = orgChartNodes.get(id);
 
         if (parentNode == null) {
             parentNode = node;
         }
 
         if (hierarchy.has("children")) {
-            JSONArray array = (JSONArray) hierarchy.get("children");
+            final JSONArray array = (JSONArray) hierarchy.get("children");
 
             for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
+                final JSONObject jsonObject = array.getJSONObject(i);
                 buildNodesFromJSON(orgChartNodes, jsonObject,
-                        orgChartNodes.get(jsonObject.get("id")));
+                            orgChartNodes.get(jsonObject.get("id")));
 
                 parentNode.addChild(orgChartNodes.get(jsonObject.get("id")));
 
@@ -124,13 +113,7 @@ public class OrgChartRenderer extends CoreRenderer {
 
     }
 
-    /**
-     * 
-     * @param context
-     * @param orgChart
-     * @throws IOException
-     */
-    private void encodeMarkup(FacesContext context, final OrgChart orgChart) throws IOException {
+    private void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = orgChart.getClientId();
         final String widgetVar = orgChart.resolveWidgetVar();
@@ -141,14 +124,8 @@ public class OrgChartRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    /**
-     * 
-     * @param context
-     * @param orgChart
-     * @throws IOException
-     */
     private void encodeScript(final FacesContext context, final OrgChart orgChart)
-            throws IOException {
+                throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = orgChart.getClientId(context);
 
@@ -156,13 +133,13 @@ public class OrgChartRenderer extends CoreRenderer {
         if (null != orgChart.getValue()) {
             if (!(orgChart.getValue() instanceof OrgChartNode)) {
                 throw new FacesException("The value attribute must be OrgChartNode");
-            } 
+            }
             else {
                 orgChartNode = (OrgChartNode) orgChart.getValue();
             }
         }
 
-        String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
+        final String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
 
         wb.init("ExtOrgChart", orgChart.resolveWidgetVar(), clientId);
         wb.attr("nodeId", orgChart.getNodeId());
@@ -182,15 +159,16 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.attr("zoomoutLimit", orgChart.getZoomoutLimit());
         wb.attr("verticalDepth", orgChart.getVerticalDepth());
         wb.attr("nodeTitle", orgChart.getNodeTitle());
+        wb.nativeAttr("extender", orgChart.getExtender());
         wb.attr("data", data);
 
         encodeClientBehaviors(context, orgChart);
         wb.finish();
     }
 
-    public JSONObject toJSON(OrgChartNode orgChartNode, List<OrgChartNode> children) {
+    public JSONObject toJSON(final OrgChartNode orgChartNode, final List<OrgChartNode> children) {
 
-        JSONObject json = new JSONObject();
+        final JSONObject json = new JSONObject();
 
         if (null != orgChartNode.getId() && !orgChartNode.getId().isEmpty()) {
             json.put("id", orgChartNode.getId());
@@ -203,10 +181,10 @@ public class OrgChartRenderer extends CoreRenderer {
         }
 
         if (!orgChartNode.getChildren().isEmpty()) {
-            List<JSONObject> jsonChildren = new ArrayList<JSONObject>();
+            final List<JSONObject> jsonChildren = new ArrayList<JSONObject>();
             for (int i = 0; i < orgChartNode.getChildren().size(); i++) {
                 jsonChildren.add(toJSON(orgChartNode.getChildren().get(i),
-                        orgChartNode.getChildren().get(i).getChildren()));
+                            orgChartNode.getChildren().get(i).getChildren()));
             }
             json.put("children", jsonChildren);
         }

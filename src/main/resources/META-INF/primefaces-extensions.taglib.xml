@@ -5889,6 +5889,14 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description>
+               <![CDATA[Name of javascript function to extend the options of the underlying OrgChart JS plugin.]]>
+            </description>
+            <name>extender</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[Using font awesome icon to imply that the node has child nodes. Default is "fa-users"]]></description>
             <name>parentNodeSymbol</name>
             <required>false</required>

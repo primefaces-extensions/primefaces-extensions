@@ -37,17 +37,17 @@ import org.primefaces.util.Constants;
 /**
  * <code>orgchart</code> component.
  *
- * @author @jxmai / last modified by $Author$
+ * @author @jxmai / last modified by Melloware
  * @version $Revision$
  * @since 6.3
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-        @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-        @ResourceDependency(library = "primefaces", name = "core.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js"),
-        @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
 })
 public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
@@ -56,11 +56,28 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.orgchart.OrgChartRenderer";
 
     private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME, OrgChartDropEvent.NAME));
+                .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME, OrgChartDropEvent.NAME));
 
     protected enum PropertyKeys {
-        nodeId, widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension,
-        parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth, nodeTitle;
+        nodeId, //
+        widgetVar, //
+        nodeContent, //
+        direction, //
+        pan, //
+        toggleSiblingsResp, //
+        depth, //
+        exportButton, //
+        exportFilename, //
+        exportFileextension, //
+        parentNodeSymbol, //
+        draggable, //
+        chartClass, //
+        zoom, //
+        zoominLimit, //
+        zoomoutLimit, //
+        verticalDepth, //
+        nodeTitle, //
+        extender;
 
         String toString;
 
@@ -102,45 +119,45 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     }
 
     @Override
-    public void processDecodes(FacesContext fc) {
+    public void processDecodes(final FacesContext fc) {
         if (isSelfRequest(fc)) {
             decode(fc);
-        } 
+        }
         else {
             super.processDecodes(fc);
         }
     }
 
     @Override
-    public void queueEvent(FacesEvent event) {
-        FacesContext fc = FacesContext.getCurrentInstance();
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
-            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             final String clientId = this.getClientId(fc);
 
             if (OrgChartClickEvent.NAME.equals(eventName)) {
 
-                String id = params.get(clientId + "_nodeId");
+                final String id = params.get(clientId + "_nodeId");
 
-                String hierarchyStr = params.get(clientId + "_hierarchy");
+                final String hierarchyStr = params.get(clientId + "_hierarchy");
 
-                OrgChartClickEvent orgChartClickEvent = new OrgChartClickEvent(this,
-                        behaviorEvent.getBehavior(), id, hierarchyStr);
+                final OrgChartClickEvent orgChartClickEvent = new OrgChartClickEvent(this,
+                            behaviorEvent.getBehavior(), id, hierarchyStr);
                 orgChartClickEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartClickEvent);
-            } 
+            }
             else if (OrgChartDropEvent.NAME.equals(eventName)) {
-                String hierarchyStr = params.get(clientId + "_hierarchy");
+                final String hierarchyStr = params.get(clientId + "_hierarchy");
 
-                String draggedNodeId = params.get(clientId + "_draggedNodeId");
+                final String draggedNodeId = params.get(clientId + "_draggedNodeId");
 
-                String droppedZoneId = params.get(clientId + "_droppedZoneId");
+                final String droppedZoneId = params.get(clientId + "_droppedZoneId");
 
-                OrgChartDropEvent orgChartDropEvent = new OrgChartDropEvent(this,
-                        behaviorEvent.getBehavior(), hierarchyStr, draggedNodeId, droppedZoneId);
+                final OrgChartDropEvent orgChartDropEvent = new OrgChartDropEvent(this,
+                            behaviorEvent.getBehavior(), hierarchyStr, draggedNodeId, droppedZoneId);
                 orgChartDropEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartDropEvent);
             }
@@ -149,8 +166,8 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
     private boolean isSelfRequest(final FacesContext context) {
         return this.getClientId(context)
-                .equals(context.getExternalContext().getRequestParameterMap().get(
-                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     public String getNodeId() {
@@ -295,6 +312,14 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
     public void setNodeTitle(final String _nodeTitle) {
         getStateHelper().put(PropertyKeys.nodeTitle, _nodeTitle);
+    }
+
+    public String getExtender() {
+        return (String) getStateHelper().eval(PropertyKeys.extender, null);
+    }
+
+    public void setExtender(final String _extender) {
+        getStateHelper().put(PropertyKeys.extender, _extender);
     }
 
 }
