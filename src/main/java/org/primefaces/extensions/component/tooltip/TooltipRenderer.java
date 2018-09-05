@@ -150,7 +150,7 @@ public class TooltipRenderer extends CoreRenderer {
             wb.append(",effect:false");
         }
         wb.append("}");
-        
+
         wb.finish();
     }
 

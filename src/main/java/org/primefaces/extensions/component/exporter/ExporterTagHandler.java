@@ -60,35 +60,36 @@ public class ExporterTagHandler extends TagHandler {
     private final TagAttribute orientation;
     private final TagAttribute skipComponents;
 
-    public ExporterTagHandler(TagConfig tagConfig) {
+    public ExporterTagHandler(final TagConfig tagConfig) {
         super(tagConfig);
-        this.target = getRequiredAttribute("target");
-        this.type = getRequiredAttribute("type");
-        this.fileName = getAttribute("fileName");
-        this.tableTitle = getAttribute("tableTitle");
-        this.pageOnly = getAttribute("pageOnly");
-        this.selectionOnly = getAttribute("selectionOnly");
-        this.encoding = getAttribute("encoding");
-        this.preProcessor = getAttribute("preProcessor");
-        this.postProcessor = getAttribute("postProcessor");
-        this.subTable = getAttribute("subTable");
-        this.facetBackground = getAttribute("facetBackground");
-        this.facetFontSize = getAttribute("facetFontSize");
-        this.facetFontColor = getAttribute("facetFontColor");
-        this.facetFontStyle = getAttribute("facetFontStyle");
-        this.fontName = getAttribute("fontName");
-        this.cellFontSize = getAttribute("cellFontSize");
-        this.cellFontColor = getAttribute("cellFontColor");
-        this.cellFontStyle = getAttribute("cellFontStyle");
-        this.datasetPadding = getAttribute("datasetPadding");
-        this.orientation = getAttribute("orientation");
-        this.skipComponents = getAttribute("skipComponents");
+        target = getRequiredAttribute("target");
+        type = getRequiredAttribute("type");
+        fileName = getAttribute("fileName");
+        tableTitle = getAttribute("tableTitle");
+        pageOnly = getAttribute("pageOnly");
+        selectionOnly = getAttribute("selectionOnly");
+        encoding = getAttribute("encoding");
+        preProcessor = getAttribute("preProcessor");
+        postProcessor = getAttribute("postProcessor");
+        subTable = getAttribute("subTable");
+        facetBackground = getAttribute("facetBackground");
+        facetFontSize = getAttribute("facetFontSize");
+        facetFontColor = getAttribute("facetFontColor");
+        facetFontStyle = getAttribute("facetFontStyle");
+        fontName = getAttribute("fontName");
+        cellFontSize = getAttribute("cellFontSize");
+        cellFontColor = getAttribute("cellFontColor");
+        cellFontStyle = getAttribute("cellFontStyle");
+        datasetPadding = getAttribute("datasetPadding");
+        orientation = getAttribute("orientation");
+        skipComponents = getAttribute("skipComponents");
     }
 
-    public void apply(FaceletContext faceletContext, UIComponent parent) throws IOException, FacesException, FaceletException, ELException {
+    @Override
+    public void apply(final FaceletContext faceletContext, final UIComponent parent) throws IOException, FacesException, FaceletException, ELException {
         if (ComponentHandler.isNew(parent)) {
-            ValueExpression targetVE = target.getValueExpression(faceletContext, Object.class);
-            ValueExpression typeVE = type.getValueExpression(faceletContext, Object.class);
+            final ValueExpression targetVE = target.getValueExpression(faceletContext, Object.class);
+            final ValueExpression typeVE = type.getValueExpression(faceletContext, Object.class);
             ValueExpression fileNameVE = null;
             ValueExpression tableTitleVE = null;
             ValueExpression pageOnlyVE = null;
@@ -125,10 +126,10 @@ public class ExporterTagHandler extends TagHandler {
                 selectionOnlyVE = selectionOnly.getValueExpression(faceletContext, Object.class);
             }
             if (preProcessor != null) {
-                preProcessorME = preProcessor.getMethodExpression(faceletContext, null, new Class[] { Object.class });
+                preProcessorME = preProcessor.getMethodExpression(faceletContext, null, new Class[] {Object.class});
             }
             if (postProcessor != null) {
-                postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[] { Object.class });
+                postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[] {Object.class});
             }
             if (subTable != null) {
                 subTableVE = subTable.getValueExpression(faceletContext, Object.class);
@@ -167,7 +168,7 @@ public class ExporterTagHandler extends TagHandler {
                 skipComponentsVE = skipComponents.getValueExpression(faceletContext, Object.class);
             }
 
-            ActionSource actionSource = (ActionSource) parent;
+            final ActionSource actionSource = (ActionSource) parent;
             actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, tableTitleVE, pageOnlyVE, selectionOnlyVE, encodingVE, preProcessorME,
                         postProcessorME, subTableVE, facetBackgroundVE, facetFontSizeVE, facetFontColorVE, facetFontStyleVE, fontNameVE, cellFontSizeVE,
                         cellFontColorVE, cellFontStyleVE, datasetPaddingVE, orientationVE, skipComponentsVE));

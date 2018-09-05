@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.UISelectMany;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
@@ -62,16 +63,16 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
      */
     protected enum PropertyKeys {
 
-        //@formatter:off
-        widgetVar, 
-        layout, 
-        stateOneIcon, 
-        stateTwoIcon, 
-        stateThreeIcon, 
-        stateOneTitle, 
-        stateTwoTitle, 
+        //@formatter:off CHECKSTYLE:OFF
+        widgetVar,
+        layout,
+        stateOneIcon,
+        stateTwoIcon,
+        stateThreeIcon,
+        stateOneTitle,
+        stateTwoTitle,
         stateThreeTitle;
-        //@formatter:on
+        //@formatter:on CHECKSTYLE:ON
 
         private String toString;
 
@@ -170,37 +171,37 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
     @Override
     protected void validateValue(final FacesContext context, final Object value) {
-        Map<Object, Object> mapValues = (Map) value;
+        final Map<Object, Object> mapValues = (Map) value;
 
         // call all validators
-        Validator[] validators = this.getValidators();
-        if (this.getValidators() != null) {
-            for (Validator validator : validators) {
-                Iterator<Object> it = mapValues.values().iterator();
+        final Validator[] validators = getValidators();
+        if (getValidators() != null) {
+            for (final Validator validator : validators) {
+                final Iterator<Object> it = mapValues.values().iterator();
                 while (it.hasNext()) {
-                    Object newValue = it.next();
+                    final Object newValue = it.next();
                     try {
                         validator.validate(context, this, newValue);
                     }
-                    catch (ValidatorException ve) {
+                    catch (final ValidatorException ve) {
                         // If the validator throws an exception, we're
                         // invalid, and we need to add a message
                         setValid(false);
 
                         FacesMessage message;
-                        String validatorMessageString = getValidatorMessage();
+                        final String validatorMessageString = getValidatorMessage();
 
                         if (null != validatorMessageString) {
                             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessageString, validatorMessageString);
                             message.setSeverity(FacesMessage.SEVERITY_ERROR);
                         }
                         else {
-                            Collection<FacesMessage> messages = ve.getFacesMessages();
+                            final Collection<FacesMessage> messages = ve.getFacesMessages();
                             if (null != messages) {
                                 message = null;
 
-                                String cid = getClientId(context);
-                                for (FacesMessage m : messages) {
+                                final String cid = getClientId(context);
+                                for (final FacesMessage m : messages) {
                                     context.addMessage(cid, m);
                                 }
                             }
@@ -223,11 +224,11 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
         // value is required, a message is queued
         if (isRequired()
                     && isValid()) {
-            Iterator<Object> it = mapValues.values().iterator();
+            final Iterator<Object> it = mapValues.values().iterator();
             boolean cCheck = true;
             while (it.hasNext() && cCheck) {
                 final Object val = it.next();
-                if (!"0".equals(this.getConverter().getAsString(context, this, val))) {
+                if (!"0".equals(getConverter().getAsString(context, this, val))) {
                     cCheck = false;
                 }
             }
@@ -238,11 +239,11 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
         }
 
         if (doAddMessage) {
-            Object[] params = new Object[2];
+            final Object[] params = new Object[2];
             params[0] = MessageFactory.getLabel(context, this);
 
             // Enqueue an error message if an invalid value was specified
-            FacesMessage message = MessageFactory.getMessage(TriStateManyCheckbox.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+            final FacesMessage message = MessageFactory.getMessage(UISelectMany.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
             context.addMessage(getClientId(context), message);
             setValid(false);
         }

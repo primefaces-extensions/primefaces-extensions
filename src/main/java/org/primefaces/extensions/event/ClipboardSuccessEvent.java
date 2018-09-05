@@ -55,7 +55,7 @@ public class ClipboardSuccessEvent extends AbstractAjaxBehaviorEvent {
 
     /**
      * Gets the {@link #action}.
-     * 
+     *
      * @return Returns the {@link #action}.
      */
     public final String getAction() {
@@ -64,7 +64,7 @@ public class ClipboardSuccessEvent extends AbstractAjaxBehaviorEvent {
 
     /**
      * Gets the {@link #text}.
-     * 
+     *
      * @return Returns the {@link #text}.
      */
     public final String getText() {
@@ -73,7 +73,7 @@ public class ClipboardSuccessEvent extends AbstractAjaxBehaviorEvent {
 
     /**
      * Gets the {@link #trigger}.
-     * 
+     *
      * @return Returns the {@link #trigger}.
      */
     public final String getTrigger() {

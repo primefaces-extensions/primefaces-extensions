@@ -130,7 +130,10 @@ public class OrgChartRenderer extends CoreRenderer {
         final String clientId = orgChart.getClientId(context);
 
         OrgChartNode orgChartNode = null;
-        if (null != orgChart.getValue()) {
+        if (orgChart.getValue() == null) {
+            throw new FacesException("The value attribute must be OrgChartNode");
+        }
+        else {
             if (!(orgChart.getValue() instanceof OrgChartNode)) {
                 throw new FacesException("The value attribute must be OrgChartNode");
             }

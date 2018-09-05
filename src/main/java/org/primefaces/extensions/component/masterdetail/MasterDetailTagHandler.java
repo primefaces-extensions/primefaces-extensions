@@ -34,31 +34,31 @@ import org.primefaces.model.menu.DefaultMenuModel;
  */
 public class MasterDetailTagHandler extends ComponentHandler {
 
-    private static final MethodRule SELECT_LEVEL_LISTENER = new MethodRule("selectLevelListener", int.class, new Class[] { SelectLevelEvent.class });
+    private static final MethodRule SELECT_LEVEL_LISTENER = new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class});
 
     public MasterDetailTagHandler(final ComponentConfig config) {
         super(config);
     }
 
     @Override
-    protected MetaRuleset createMetaRuleset(Class type) {
-        MetaRuleset metaRuleset = super.createMetaRuleset(type);
+    protected MetaRuleset createMetaRuleset(final Class type) {
+        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
         metaRuleset.addRule(SELECT_LEVEL_LISTENER);
 
         return metaRuleset;
     }
 
     @Override
-    public void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent) {
+    public void onComponentPopulated(final FaceletContext ctx, final UIComponent c, final UIComponent parent) {
         if (!isNew(parent)) {
             return;
         }
 
-        MasterDetail masterDetail = (MasterDetail) c;
+        final MasterDetail masterDetail = (MasterDetail) c;
 
         if (!isBreadcrumbAvailable(masterDetail)) {
             // create BreadCrumb programmatically
-            BreadCrumb breadcrumb = (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
+            final BreadCrumb breadcrumb = (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
             breadcrumb.setId(masterDetail.getId() + MasterDetail.BREADCRUMB_ID_PREFIX);
 
             // set empty model
@@ -69,8 +69,8 @@ public class MasterDetailTagHandler extends ComponentHandler {
         }
     }
 
-    private static boolean isBreadcrumbAvailable(MasterDetail masterDetail) {
-        for (UIComponent child : masterDetail.getChildren()) {
+    private static boolean isBreadcrumbAvailable(final MasterDetail masterDetail) {
+        for (final UIComponent child : masterDetail.getChildren()) {
             if (child instanceof BreadCrumb) {
                 return true;
             }

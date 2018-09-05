@@ -70,24 +70,24 @@ public class RemoteCommand extends UICommand implements AjaxSource {
     protected enum PropertyKeys {
 
         //@formatter:off
-        name, 
-        update, 
-        process, 
-        onstart, 
-        oncomplete, 
-        onerror, 
-        onsuccess, 
-        global, 
-        async, 
-        partialSubmit, 
-        action, 
-        autoRun, 
-        actionListener, 
-        resetValues, 
-        ignoreAutoUpdate, 
-        delay, 
-        timeout, 
-        partialSubmitFilter, 
+        name,
+        update,
+        process,
+        onstart,
+        oncomplete,
+        onerror,
+        onsuccess,
+        global,
+        async,
+        partialSubmit,
+        action,
+        autoRun,
+        actionListener,
+        resetValues,
+        ignoreAutoUpdate,
+        delay,
+        timeout,
+        partialSubmitFilter,
         form;
         //@formatter:on
 
@@ -102,7 +102,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -123,6 +123,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.name, name);
     }
 
+    @Override
     public String getUpdate() {
         return (String) getStateHelper().eval(PropertyKeys.update, null);
     }
@@ -131,6 +132,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.update, update);
     }
 
+    @Override
     public String getProcess() {
         return (String) getStateHelper().eval(PropertyKeys.process, null);
     }
@@ -139,6 +141,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.process, process);
     }
 
+    @Override
     public String getOnstart() {
         return (String) getStateHelper().eval(PropertyKeys.onstart, null);
     }
@@ -147,6 +150,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.onstart, onstart);
     }
 
+    @Override
     public String getOncomplete() {
         return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
     }
@@ -155,6 +159,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.oncomplete, oncomplete);
     }
 
+    @Override
     public String getOnerror() {
         return (String) getStateHelper().eval(PropertyKeys.onerror, null);
     }
@@ -163,6 +168,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.onerror, onerror);
     }
 
+    @Override
     public String getOnsuccess() {
         return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
     }
@@ -171,6 +177,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.onsuccess, onsuccess);
     }
 
+    @Override
     public boolean isGlobal() {
         return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
     }
@@ -179,6 +186,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.global, global);
     }
 
+    @Override
     public boolean isAsync() {
         return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
     }
@@ -187,6 +195,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.async, async);
     }
 
+    @Override
     public boolean isPartialSubmit() {
         return (Boolean) getStateHelper().eval(PropertyKeys.partialSubmit, false);
     }
@@ -211,65 +220,73 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         getStateHelper().put(PropertyKeys.actionListener, actionListener);
     }
 
+    @Override
     public boolean isPartialSubmitSet() {
-        return getStateHelper().get(PropertyKeys.partialSubmit) != null || this.getValueExpression("partialSubmit") != null;
+        return getStateHelper().get(PropertyKeys.partialSubmit) != null || getValueExpression("partialSubmit") != null;
     }
 
+    @Override
     public boolean isResetValues() {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.resetValues, false);
     }
 
-    public void setResetValues(boolean resetValues) {
+    public void setResetValues(final boolean resetValues) {
         getStateHelper().put(PropertyKeys.resetValues, resetValues);
     }
 
+    @Override
     public boolean isIgnoreAutoUpdate() {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.ignoreAutoUpdate, false);
     }
 
-    public void setIgnoreAutoUpdate(boolean ignoreAutoUpdate) {
+    public void setIgnoreAutoUpdate(final boolean ignoreAutoUpdate) {
         getStateHelper().put(PropertyKeys.ignoreAutoUpdate, ignoreAutoUpdate);
     }
 
+    @Override
     public boolean isResetValuesSet() {
-        return getStateHelper().get(PropertyKeys.resetValues) != null || this.getValueExpression("resetValues") != null;
+        return getStateHelper().get(PropertyKeys.resetValues) != null || getValueExpression("resetValues") != null;
     }
 
+    @Override
     public java.lang.String getDelay() {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.delay, null);
     }
 
-    public void setDelay(java.lang.String delay) {
+    public void setDelay(final java.lang.String delay) {
         getStateHelper().put(PropertyKeys.delay, delay);
     }
 
+    @Override
     public int getTimeout() {
         return (java.lang.Integer) getStateHelper().eval(PropertyKeys.timeout, 0);
     }
 
-    public void setTimeout(int timeout) {
+    public void setTimeout(final int timeout) {
         getStateHelper().put(PropertyKeys.timeout, timeout);
     }
 
+    @Override
     public java.lang.String getPartialSubmitFilter() {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.partialSubmitFilter, null);
     }
 
-    public void setPartialSubmitFilter(java.lang.String _partialSubmitFilter) {
+    public void setPartialSubmitFilter(final java.lang.String _partialSubmitFilter) {
         getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
     }
 
+    @Override
     public java.lang.String getForm() {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.form, null);
     }
 
-    public void setForm(java.lang.String _form) {
+    public void setForm(final java.lang.String _form) {
         getStateHelper().put(PropertyKeys.form, _form);
     }
 
     @Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
-        for (FacesListener listener : getFacesListeners(FacesListener.class)) {
+        for (final FacesListener listener : getFacesListeners(FacesListener.class)) {
             if (event.isAppropriateListener(listener)) {
                 event.processListener(listener);
             }
@@ -363,6 +380,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         return params.get(clientId + "_" + name);
     }
 
+    @Override
     public boolean isAjaxified() {
         return true;
     }

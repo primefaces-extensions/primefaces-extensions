@@ -56,18 +56,19 @@ public class SelectDetailLevelTagHandler extends TagHandler {
     private final TagAttribute resetInputs;
     private final TagAttribute event;
 
-    public SelectDetailLevelTagHandler(TagConfig config) {
+    public SelectDetailLevelTagHandler(final TagConfig config) {
         super(config);
-        this.contextValue = getAttribute("contextValue");
-        this.listener = getAttribute("listener");
-        this.level = getAttribute("level");
-        this.step = getAttribute("step");
-        this.preserveInputs = getAttribute("preserveInputs");
-        this.resetInputs = getAttribute("resetInputs");
-        this.event = super.getAttribute("event");
+        contextValue = getAttribute("contextValue");
+        listener = getAttribute("listener");
+        level = getAttribute("level");
+        step = getAttribute("step");
+        preserveInputs = getAttribute("preserveInputs");
+        resetInputs = getAttribute("resetInputs");
+        event = super.getAttribute("event");
     }
 
-    public void apply(FaceletContext ctx, UIComponent parent) throws IOException {
+    @Override
+    public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
         if (!isAjaxifiedComponent(parent)) {
             throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
         }
@@ -131,20 +132,20 @@ public class SelectDetailLevelTagHandler extends TagHandler {
 
         // register an ActionListener / AjaxBehaviorListener
         if (listener != null) {
-            MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] { Object.class });
+            final MethodExpression me = listener.getMethodExpression(ctx, Object.class, new Class[] {Object.class});
 
             if (parent instanceof ActionSource) {
                 ((ActionSource) parent).addActionListener(new SelectDetailLevelListener(me));
             }
             else if (parent instanceof ClientBehaviorHolder) {
                 // find attached f:ajax / p:ajax corresponding to supported events
-                Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
+                final Collection<List<ClientBehavior>> clientBehaviors = getClientBehaviors(ctx, event, (ClientBehaviorHolder) parent);
                 if (clientBehaviors == null || clientBehaviors.isEmpty()) {
                     return;
                 }
 
-                for (List<ClientBehavior> listBehaviors : clientBehaviors) {
-                    for (ClientBehavior clientBehavior : listBehaviors) {
+                for (final List<ClientBehavior> listBehaviors : clientBehaviors) {
+                    for (final ClientBehavior clientBehavior : listBehaviors) {
                         if (clientBehavior instanceof org.primefaces.behavior.ajax.AjaxBehavior) {
                             ((org.primefaces.behavior.ajax.AjaxBehavior) clientBehavior).addAjaxBehaviorListener(
                                         new SelectDetailLevelListener(me));
@@ -184,22 +185,22 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         return false;
     }
 
-    public static Collection<List<ClientBehavior>> getClientBehaviors(FaceletContext context, TagAttribute event,
-                ClientBehaviorHolder clientBehaviorHolder) {
-        Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
+    public static Collection<List<ClientBehavior>> getClientBehaviors(final FaceletContext context, final TagAttribute event,
+                final ClientBehaviorHolder clientBehaviorHolder) {
+        final Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
         if (mapBehaviors == null || mapBehaviors.isEmpty()) {
             return null;
         }
 
-        String events = (event != null ? event.getValue(context) : null);
-        String[] arrEvents = (events != null ? events.split("[\\s,]+") : null);
+        final String events = event != null ? event.getValue(context) : null;
+        final String[] arrEvents = events != null ? events.split("[\\s,]+") : null;
         if (arrEvents == null || arrEvents.length < 1) {
             return mapBehaviors.values();
         }
 
-        Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
+        final Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
 
-        for (Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
+        for (final Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
             if (ArrayUtils.contains(arrEvents, entry.getKey())) {
                 behaviors.add(entry.getValue());
             }

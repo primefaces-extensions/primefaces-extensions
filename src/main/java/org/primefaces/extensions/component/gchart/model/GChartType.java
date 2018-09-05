@@ -18,19 +18,19 @@ package org.primefaces.extensions.component.gchart.model;
 public enum GChartType {
 
     // @formatter:off
-    PIE("PieChart"), 
-    AREA("AreaChart"), 
-    BAR("BarChart"), 
-    GEO("GeoChart"), 
-    ORGANIZATIONAL("OrgChart"), 
-    COLUMN("ColumnChart"), 
-    LINE("LineChart"), 
+    PIE("PieChart"),
+    AREA("AreaChart"),
+    BAR("BarChart"),
+    GEO("GeoChart"),
+    ORGANIZATIONAL("OrgChart"),
+    COLUMN("ColumnChart"),
+    LINE("LineChart"),
     SCATTER("ScatterChart");
     // @formatter:on
 
     private String chartName;
 
-    private GChartType(String chartName) {
+    private GChartType(final String chartName) {
         this.chartName = chartName;
     }
 

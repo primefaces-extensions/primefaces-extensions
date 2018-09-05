@@ -69,25 +69,25 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
     protected enum PropertyKeys {
 
         //@formatter:off
-        widgetVar, 
-        forValue("for"), 
-        aspectRatio, 
-        autoHide, 
-        fadeSpeed, 
-        handles, 
-        hide, 
-        imageHeight, 
-        imageWidth, 
-        movable, 
-        persistent, 
-        resizable, 
-        show, 
-        zIndex, 
-        maxHeight, 
-        maxWidth, 
-        minHeight, 
-        minWidth, 
-        parentSelector, 
+        widgetVar,
+        forValue("for"),
+        aspectRatio,
+        autoHide,
+        fadeSpeed,
+        handles,
+        hide,
+        imageHeight,
+        imageWidth,
+        movable,
+        persistent,
+        resizable,
+        show,
+        zIndex,
+        maxHeight,
+        maxWidth,
+        minHeight,
+        minWidth,
+        parentSelector,
         keyboardSupport;
         //@formatter:on
 
@@ -102,7 +102,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -285,6 +285,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
         getStateHelper().put(PropertyKeys.forValue, forValue);
     }
 
+    @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }

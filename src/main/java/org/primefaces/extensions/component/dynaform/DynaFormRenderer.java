@@ -80,25 +80,26 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String BUTTON_BAR_ROLE = "toolbar";
     private static final String GRID_CELL_ROLE = "gridcell";
 
-    private static final String[] EMPTY_COLUMN_CLASSES = new String[] { Constants.EMPTY_STRING, Constants.EMPTY_STRING };
+    private static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
 
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        DynaForm dynaForm = (DynaForm) component;
+        final DynaForm dynaForm = (DynaForm) component;
 
         // get model
-        DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
+        final DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
         encodeMarkup(fc, dynaForm, dynaFormModel, false);
         encodeScript(fc, dynaForm, dynaFormModel);
     }
 
-    protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel, boolean nestedGrid) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
+    protected void encodeMarkup(final FacesContext fc, final DynaForm dynaForm, final DynaFormModel dynaFormModel, final boolean nestedGrid)
+                throws IOException {
+        final ResponseWriter writer = fc.getResponseWriter();
 
         writer.startElement("table", dynaForm);
 
         if (!nestedGrid) {
-            String clientId = dynaForm.getClientId(fc);
+            final String clientId = dynaForm.getClientId(fc);
             writer.writeAttribute("id", clientId, "id");
         }
 
@@ -116,8 +117,8 @@ public class DynaFormRenderer extends CoreRenderer {
         // prepare labels with informations about corresponding control components
         preRenderLabel(fc, dynaForm, dynaFormModel);
 
-        int totalColspan = getTotalColspan(dynaFormModel);
-        String bbPosition = dynaForm.getButtonBarPosition();
+        final int totalColspan = getTotalColspan(dynaFormModel);
+        final String bbPosition = dynaForm.getButtonBarPosition();
 
         if (!nestedGrid) {
             if ("top".equals(bbPosition) || "both".equals(bbPosition)) {
@@ -152,9 +153,9 @@ public class DynaFormRenderer extends CoreRenderer {
         writer.endElement("table");
     }
 
-    protected void encodeScript(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(fc);
-        String clientId = dynaForm.getClientId(fc);
+    protected void encodeScript(final FacesContext fc, final DynaForm dynaForm, final DynaFormModel dynaFormModel) throws IOException {
+        final WidgetBuilder wb = getWidgetBuilder(fc);
+        final String clientId = dynaForm.getClientId(fc);
         wb.initWithDomReady("ExtDynaForm", dynaForm.resolveWidgetVar(), clientId);
         wb.attr("uuid", dynaFormModel.getUuid());
         wb.attr("autoSubmit", dynaForm.isAutoSubmit());
@@ -162,11 +163,12 @@ public class DynaFormRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
-                boolean extended, boolean visible) throws IOException {
+    protected void encodeFacet(final FacesContext fc, final DynaForm dynaForm, final String name, final int totalColspan, final String styleClass,
+                final String role,
+                final boolean extended, final boolean visible) throws IOException {
         final UIComponent facet = dynaForm.getFacet(name);
         if (facet != null && facet.isRendered()) {
-            ResponseWriter writer = fc.getResponseWriter();
+            final ResponseWriter writer = fc.getResponseWriter();
             writer.startElement("tr", null);
             if (extended) {
                 writer.writeAttribute("class", EXTENDED_ROW_CLASS, null);
@@ -192,20 +194,20 @@ public class DynaFormRenderer extends CoreRenderer {
         }
     }
 
-    protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
-                boolean visible) throws IOException {
+    protected void encodeBody(final FacesContext fc, final DynaForm dynaForm, final List<DynaFormRow> dynaFormRows, final boolean extended,
+                final boolean visible) throws IOException {
         if (dynaFormRows == null || dynaFormRows.isEmpty()) {
             return;
         }
 
-        ResponseWriter writer = fc.getResponseWriter();
+        final ResponseWriter writer = fc.getResponseWriter();
 
-        String columnClassesValue = dynaForm.getColumnClasses();
-        String[] columnClasses = columnClassesValue == null ? EMPTY_COLUMN_CLASSES : columnClassesValue.split(",");
-        String labelCommonClass = columnClasses[0].trim();
-        String controlCommonClass = columnClasses.length > 1 ? columnClasses[1].trim() : EMPTY_COLUMN_CLASSES[1];
+        final String columnClassesValue = dynaForm.getColumnClasses();
+        final String[] columnClasses = columnClassesValue == null ? EMPTY_COLUMN_CLASSES : columnClassesValue.split(",");
+        final String labelCommonClass = columnClasses[0].trim();
+        final String controlCommonClass = columnClasses.length > 1 ? columnClasses[1].trim() : EMPTY_COLUMN_CLASSES[1];
 
-        for (DynaFormRow dynaFormRow : dynaFormRows) {
+        for (final DynaFormRow dynaFormRow : dynaFormRows) {
             writer.startElement("tr", null);
             if (extended) {
                 writer.writeAttribute("class", EXTENDED_ROW_CLASS, null);
@@ -217,11 +219,11 @@ public class DynaFormRenderer extends CoreRenderer {
 
             writer.writeAttribute("role", "row", null);
 
-            List<AbstractDynaFormElement> elements = dynaFormRow.getElements();
-            int size = elements.size();
+            final List<AbstractDynaFormElement> elements = dynaFormRow.getElements();
+            final int size = elements.size();
 
             for (int i = 0; i < size; i++) {
-                AbstractDynaFormElement element = elements.get(i);
+                final AbstractDynaFormElement element = elements.get(i);
 
                 writer.startElement("td", null);
                 if (element.getColspan() > 1) {
@@ -243,7 +245,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
                 if (element instanceof DynaFormLabel) {
                     // render label
-                    DynaFormLabel label = (DynaFormLabel) element;
+                    final DynaFormLabel label = (DynaFormLabel) element;
 
                     writer.writeAttribute("class", (styleClass
                                 + " " + LABEL_CLASS
@@ -278,11 +280,11 @@ public class DynaFormRenderer extends CoreRenderer {
                 }
                 else if (element instanceof DynaFormControl) {
                     // render control
-                    DynaFormControl control = (DynaFormControl) element;
+                    final DynaFormControl control = (DynaFormControl) element;
                     dynaForm.setData(control);
 
                     // find control's cell by type
-                    UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+                    final UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
 
                     if (cell.getStyle() != null) {
                         writer.writeAttribute("style", cell.getStyle(), null);
@@ -298,7 +300,7 @@ public class DynaFormRenderer extends CoreRenderer {
                     cell.encodeAll(fc);
                 }
                 else if (element instanceof DynaFormModelElement) {
-                    DynaFormModelElement nestedModel = (DynaFormModelElement) element;
+                    final DynaFormModelElement nestedModel = (DynaFormModelElement) element;
 
                     // render nested model
                     writer.writeAttribute("class", styleClass, null);
@@ -316,18 +318,19 @@ public class DynaFormRenderer extends CoreRenderer {
         dynaForm.resetData();
     }
 
-    protected void encodeStatic(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass) throws IOException {
-        UIComponent facet = dynaForm.getFacet(name);
+    protected void encodeStatic(final FacesContext fc, final DynaForm dynaForm, final String name, final int totalColspan, final String styleClass)
+                throws IOException {
+        final UIComponent facet = dynaForm.getFacet(name);
         if (facet == null || !facet.isRendered()) {
             return;
         }
 
-        List<UIComponent> components = facet instanceof Row
-                ? Collections.singletonList(facet)
-                : facet.getChildren();
+        final List<UIComponent> components = facet instanceof Row
+                    ? Collections.singletonList(facet)
+                    : facet.getChildren();
 
-        ResponseWriter writer = fc.getResponseWriter();
-        for (UIComponent child : components) {
+        final ResponseWriter writer = fc.getResponseWriter();
+        for (final UIComponent child : components) {
             if (!child.isRendered() || !(child instanceof Row)) {
                 continue;
             }
@@ -340,7 +343,7 @@ public class DynaFormRenderer extends CoreRenderer {
             writer.writeAttribute("class", styleClass, null);
 
             int i = 0;
-            for (UIComponent column : child.getChildren()) {
+            for (final UIComponent column : child.getChildren()) {
                 if (!column.isRendered()) {
                     continue;
                 }
@@ -366,33 +369,33 @@ public class DynaFormRenderer extends CoreRenderer {
         }
     }
 
-    protected void preRenderLabel(FacesContext fc, DynaForm dynaForm, DynaFormModel model) {
+    protected void preRenderLabel(final FacesContext fc, final DynaForm dynaForm, final DynaFormModel model) {
         for (final DynaFormLabel label : model.getLabels()) {
             // get corresponding control if any
-            DynaFormControl control = label.getForControl();
+            final DynaFormControl control = label.getForControl();
             if (control != null) {
                 // find control's cell by type
-                UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+                final UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
 
                 if (cell.getFor() != null) {
                     dynaForm.setData(control);
 
-                    UIComponent target = cell.findComponent(cell.getFor());
+                    final UIComponent target = cell.findComponent(cell.getFor());
                     if (target == null) {
                         LOGGER.warning("Cannot find component with identifier " + cell.getFor() + " inside UIDynaFormControl");
 
                         continue;
                     }
 
-                    String targetClientId = (target instanceof InputHolder)
+                    final String targetClientId = target instanceof InputHolder
                                 ? ((InputHolder) target).getInputClientId()
                                 : target.getClientId(fc);
                     label.setTargetClientId(targetClientId);
 
-                    ContextCallback callback = new ContextCallback() {
+                    final ContextCallback callback = new ContextCallback() {
 
                         @Override
-                        public void invokeContextCallback(FacesContext context, UIComponent target) {
+                        public void invokeContextCallback(final FacesContext context, final UIComponent target) {
                             label.setTargetValid(((EditableValueHolder) target).isValid());
                             label.setTargetRequired(((EditableValueHolder) target).isRequired());
                         }
@@ -417,17 +420,17 @@ public class DynaFormRenderer extends CoreRenderer {
         dynaForm.resetData();
     }
 
-    protected int getTotalColspan(DynaFormModel dynaFormModel) {
+    protected int getTotalColspan(final DynaFormModel dynaFormModel) {
         // the main aim of this method is layout check
         int totalColspan = -1;
-        for (DynaFormRow dynaFormRow : dynaFormModel.getRegularRows()) {
+        for (final DynaFormRow dynaFormRow : dynaFormModel.getRegularRows()) {
             if (dynaFormRow.getTotalColspan() > totalColspan) {
                 totalColspan = dynaFormRow.getTotalColspan();
             }
         }
 
         if (dynaFormModel.getExtendedRows() != null) {
-            for (DynaFormRow dynaFormRow : dynaFormModel.getExtendedRows()) {
+            for (final DynaFormRow dynaFormRow : dynaFormModel.getExtendedRows()) {
                 if (dynaFormRow.getTotalColspan() > totalColspan) {
                     totalColspan = dynaFormRow.getTotalColspan();
                 }
@@ -442,7 +445,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
         // Rendering happens on encodeEnd
     }
 

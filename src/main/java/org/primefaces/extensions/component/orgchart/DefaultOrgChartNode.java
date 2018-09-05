@@ -47,27 +47,27 @@ public class DefaultOrgChartNode implements OrgChartNode {
         super();
     }
 
-    public DefaultOrgChartNode(String name, String title) {
+    public DefaultOrgChartNode(final String name, final String title) {
         super();
         this.name = name;
         this.title = title;
     }
 
-    public DefaultOrgChartNode(String id, String name, String title) {
+    public DefaultOrgChartNode(final String id, final String name, final String title) {
         super();
         this.id = id;
         this.name = name;
         this.title = title;
     }
 
-    public DefaultOrgChartNode(String id, String name, String title, Object nodeData) {
+    public DefaultOrgChartNode(final String id, final String name, final String title, final Object nodeData) {
         super();
         this.id = id;
         this.name = name;
         this.title = title;
         this.nodeData = nodeData;
     }
-    
+
     @Override
     public String toString() {
         return "DefaultOrgChartNode [id=" + id + ", name=" + name + ", nodeData=" + nodeData + "]";
@@ -77,14 +77,14 @@ public class DefaultOrgChartNode implements OrgChartNode {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((nodeData == null) ? 0 : nodeData.hashCode());
+        result = prime * result + (id == null ? 0 : id.hashCode());
+        result = prime * result + (name == null ? 0 : name.hashCode());
+        result = prime * result + (nodeData == null ? 0 : nodeData.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -94,12 +94,12 @@ public class DefaultOrgChartNode implements OrgChartNode {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        DefaultOrgChartNode other = (DefaultOrgChartNode) obj;
+        final DefaultOrgChartNode other = (DefaultOrgChartNode) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;
             }
-        } 
+        }
         else if (!id.equals(other.id)) {
             return false;
         }
@@ -107,7 +107,7 @@ public class DefaultOrgChartNode implements OrgChartNode {
             if (other.name != null) {
                 return false;
             }
-        } 
+        }
         else if (!name.equals(other.name)) {
             return false;
         }
@@ -115,83 +115,99 @@ public class DefaultOrgChartNode implements OrgChartNode {
             if (other.nodeData != null) {
                 return false;
             }
-        } 
+        }
         else if (!nodeData.equals(other.nodeData)) {
             return false;
         }
         return true;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    @Override
+    public void setId(final String id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    @Override
+    public void setName(final String name) {
         this.name = name;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    @Override
+    public void setTitle(final String title) {
         this.title = title;
     }
 
+    @Override
     public List<OrgChartNode> getChildren() {
         return children;
     }
 
-    public void setChildren(List<OrgChartNode> children) {
+    @Override
+    public void setChildren(final List<OrgChartNode> children) {
         this.children = children;
     }
 
+    @Override
     public OrgChartNode getParent() {
         return parent;
     }
 
-    public void setParent(OrgChartNode parent) {
+    @Override
+    public void setParent(final OrgChartNode parent) {
         this.parent = parent;
     }
 
-    public void addChild(OrgChartNode child) {
-        this.children.add(child);
+    @Override
+    public void addChild(final OrgChartNode child) {
+        children.add(child);
     }
 
+    @Override
     public void clearChildren() {
-        this.children.clear();
+        children.clear();
     }
 
+    @Override
     public void clearParent() {
-        this.parent = null;
+        parent = null;
     }
 
     public Object getNodeData() {
         return nodeData;
     }
 
-    public void setNodeData(Object nodeData) {
+    public void setNodeData(final Object nodeData) {
         this.nodeData = nodeData;
     }
 
+    @Override
     public String getClassName() {
         return className;
     }
 
-    public void setClassName(String className) {
+    @Override
+    public void setClassName(final String className) {
         this.className = className;
     }
 
+    @Override
     public int getChildCount() {
-        childCount = this.getChildren().size();
+        childCount = getChildren().size();
         return childCount;
     }
 

@@ -34,7 +34,7 @@ import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link Timer}
- * 
+ *
  * @author f.strazzullo
  * @since 3.0.0
  */
@@ -43,11 +43,11 @@ public class TimerRenderer extends CoreRenderer {
     public static final String RENDERER_TYPE = "org.primefaces.extensions.component.TimerRenderer";
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
-        Timer timer = (Timer) component;
+    public void decode(final FacesContext context, final UIComponent component) {
+        final Timer timer = (Timer) component;
 
         if (context.getExternalContext().getRequestParameterMap().containsKey(timer.getClientId(context))) {
-            ActionEvent event = new ActionEvent(timer);
+            final ActionEvent event = new ActionEvent(timer);
             if (timer.isImmediate()) {
                 event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
             }
@@ -60,16 +60,16 @@ public class TimerRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        Timer timer = (Timer) component;
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final Timer timer = (Timer) component;
 
         encodeMarkup(context, timer);
         encodeScript(context, timer);
 
     }
 
-    protected void encodeMarkup(FacesContext context, Timer timer) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+    protected void encodeMarkup(final FacesContext context, final Timer timer) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement("span", timer);
         writer.writeAttribute("id", timer.getClientId(), null);
@@ -78,19 +78,19 @@ public class TimerRenderer extends CoreRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeScript(FacesContext context, Timer timer) throws IOException {
+    protected void encodeScript(final FacesContext context, final Timer timer) throws IOException {
 
-        String clientId = timer.getClientId(context);
-        String widgetVar = timer.resolveWidgetVar();
+        final String clientId = timer.getClientId(context);
+        final String widgetVar = timer.resolveWidgetVar();
 
-        UIComponent form = ComponentTraversalUtils.closestForm(context, timer);
+        final UIComponent form = ComponentTraversalUtils.closestForm(context, timer);
         if (form == null) {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }
 
-        AjaxRequestBuilder builder = RequestContext.getCurrentInstance().getAjaxRequestBuilder();
+        final AjaxRequestBuilder builder = RequestContext.getCurrentInstance().getAjaxRequestBuilder();
 
-        String request = builder.init()
+        final String request = builder.init()
                     .source(clientId)
                     .form(form.getClientId(context))
                     .process(timer, timer.getProcess())
@@ -108,7 +108,7 @@ public class TimerRenderer extends CoreRenderer {
                     .params(timer)
                     .build();
 
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
 
         wb.initWithDomReady("ExtTimer", widgetVar, clientId).attr("timeout", timer.getTimeout())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())

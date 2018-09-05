@@ -20,7 +20,7 @@ import java.net.URLEncoder;
 
 /**
  * Wrapper for the {@link URLEncoder} which always use UTF-8.
- * 
+ *
  * @author Thomas Andraschko / last modified by $Author: $
  * @version $Revision: $
  * @since 0.6.2
@@ -36,7 +36,7 @@ public class URLEncoderWrapper {
 
     /**
      * Encodes the given string with the {@link URLEncoder#encode(String)} and UTF-8.
-     * 
+     *
      * @param string The value which should be encoded.
      * @return The encoded value.
      * @throws UnsupportedEncodingException If UTF-8 is not available.

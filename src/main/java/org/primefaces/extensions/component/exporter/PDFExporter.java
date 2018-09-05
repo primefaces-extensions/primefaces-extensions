@@ -98,7 +98,7 @@ public class PDFExporter extends Exporter {
             PdfWriter.getInstance(document, baos);
 
             if (preProcessor != null) {
-                preProcessor.invoke(context.getELContext(), new Object[] { document });
+                preProcessor.invoke(context.getELContext(), new Object[] {document});
             }
 
             final StringTokenizer st = new StringTokenizer(tableId, ",");
@@ -148,7 +148,7 @@ public class PDFExporter extends Exporter {
             }
 
             if (postProcessor != null) {
-                postProcessor.invoke(context.getELContext(), new Object[] { document });
+                postProcessor.invoke(context.getELContext(), new Object[] {document});
             }
 
             document.close();

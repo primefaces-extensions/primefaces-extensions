@@ -118,7 +118,7 @@ public class ExcelExporter extends Exporter {
         createCustomFonts();
 
         if (preProcessor != null) {
-            preProcessor.invoke(context.getELContext(), new Object[] { wb });
+            preProcessor.invoke(context.getELContext(), new Object[] {wb});
         }
 
         int maxColumns = 0;
@@ -205,7 +205,7 @@ public class ExcelExporter extends Exporter {
         }
 
         if (postProcessor != null) {
-            postProcessor.invoke(context.getELContext(), new Object[] { wb });
+            postProcessor.invoke(context.getELContext(), new Object[] {wb});
         }
 
         if (!subTable) {

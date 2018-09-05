@@ -82,7 +82,7 @@ public class TimePicker extends HtmlInputText implements Widget {
                             "mouseup", BeforeShowEvent.NAME, TimeSelectEvent.NAME, CloseEvent.NAME));
 
     static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(
-                new String[] { "accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title" },
+                new String[] {"accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"},
                 HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
@@ -91,31 +91,31 @@ public class TimePicker extends HtmlInputText implements Widget {
     protected enum PropertyKeys {
 
         //@formatter:off
-        widgetVar, 
-        timeSeparator, 
-        showPeriod, 
-        dialogPosition, 
-        inputPosition, 
-        mode /* 'popup', 'spinner', 'inline' */, 
-        startHours, 
-        endHours, 
-        startMinutes, 
-        endMinutes, 
-        intervalMinutes, 
-        rows, 
-        showHours, 
-        showMinutes, 
-        showCloseButton, 
-        showNowButton, 
-        showDeselectButton, 
-        onHourShow, 
-        onMinuteShow, 
-        showOn, 
-        locale, 
-        minHour, 
-        minMinute, 
-        maxHour, 
-        maxMinute, 
+        widgetVar,
+        timeSeparator,
+        showPeriod,
+        dialogPosition,
+        inputPosition,
+        mode /* 'popup', 'spinner', 'inline' */,
+        startHours,
+        endHours,
+        startMinutes,
+        endMinutes,
+        intervalMinutes,
+        rows,
+        showHours,
+        showMinutes,
+        showCloseButton,
+        showNowButton,
+        showDeselectButton,
+        onHourShow,
+        onMinuteShow,
+        showOn,
+        locale,
+        minHour,
+        minMinute,
+        maxHour,
+        maxMinute,
         readonlyInput;
         //@formatter:on
 
