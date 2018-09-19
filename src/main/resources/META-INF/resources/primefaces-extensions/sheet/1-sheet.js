@@ -486,21 +486,33 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         
         // prevent Alpha chars in numeric sheet cells
         if (celltype === "numeric") {
-            var key = e.charCode || e.keyCode || 0;
+            var evt = e||window.event; // IE support
+            var key = evt.charCode || evt.keyCode || 0;
+            
+            // check for cut and paste
+            var isClipboard = false;
+            var ctrlDown = evt.ctrlKey||evt.metaKey; // Mac support
+
+            // Check for Alt+Gr (http://en.wikipedia.org/wiki/AltGr_key)
+            if (ctrlDown && evt.altKey) isClipboard = false;
+            // Check for ctrl+c, v and x
+            else if (ctrlDown && key==67) isClipboard = true; // c
+            else if (ctrlDown && key==86) isClipboard = true; // v
+            else if (ctrlDown && key==88) isClipboard = true; // x
+            
             // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
             // ONLY home, end, F5, F12, minus (-), period (.)
-            //console.log('Key: ' + key + ' Shift: ' + e.shiftKey);
+            // console.log('Key: ' + key + ' Shift: ' + e.shiftKey + ' Clipboard: ' + isClipboard);
             var isNumeric = ((key == 8) || (key == 9) || (key == 13) || (key == 46)
                             || (key == 116) || (key == 123) || (key == 189) || (key == 190) 
                             || ((key >= 35) && (key <= 40)) || ((key >= 48) && (key <= 57)) 
                             || ((key >= 96) && (key <= 105)));
 
-            if (!isNumeric || e.shiftKey) {
+            if ((!isNumeric && !isClipboard) || e.shiftKey) {
                 // prevent alpha characters
                 e.stopImmediatePropagation();
                 e.preventDefault();
             }
         }
-    }
-    
+    }    
 });
