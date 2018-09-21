@@ -67,7 +67,7 @@ import org.primefaces.util.Constants;
             @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces", name = "components.js"),
             @ResourceDependency(library = "primefaces-extensions", target = "head", name = "sheet/sheet.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "sheet/sheet.js") })
+            @ResourceDependency(library = "primefaces-extensions", name = "sheet/sheet.js")})
 public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValueHolder, Widget {
 
     public static final String EVENT_CELL_SELECT = "cellSelect";
@@ -1829,7 +1829,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @param context the FacesContext
      * @param dirtyRows the set of dirty rows
      */
-    protected void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {
+    public void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {
         final String jsVar = resolveWidgetVar();
         final StringBuilder eval = new StringBuilder();
 
@@ -1882,7 +1882,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      *
      * @param context the FacesContext
      */
-    protected void renderBadUpdateScript(final FacesContext context) {
+    public void renderBadUpdateScript(final FacesContext context) {
         final String widgetVar = resolveWidgetVar();
         final String invalidValue = getInvalidDataValue();
         StringBuilder sb = new StringBuilder("PF('" + widgetVar + "')");
@@ -1904,14 +1904,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     /**
      * Appends an update event
-     *
-     * @param rowIndex
-     * @param colIndex
-     * @param rowData
-     * @param oldValue
-     * @param newValue
      */
-    protected void appendUpdateEvent(final Object rowKey, final int colIndex, final Object rowData, final Object oldValue, final Object newValue) {
+    public void appendUpdateEvent(final Object rowKey, final int colIndex, final Object rowData, final Object oldValue, final Object newValue) {
         updates.add(new SheetUpdate(rowKey, colIndex, rowData, oldValue, newValue));
     }
 }
