@@ -467,6 +467,16 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
            this.ht.alter('remove_row', index);
         }
     },
+    
+    focusFirstError: function () {
+       var errors = this.tableDiv.find('ui-message-error');
+       if (errors.length > 0) {
+           var firstError = errors.first();
+           var col = firstError.index() - 1;
+           var row = firstError.parent().index();
+           this.ht.selectCell(row, col);
+       }
+    },
 
     // method to prevent selection of cells on column header click
     handleHotBeforeOnCellMouseDown: function (event, coords, element) {
