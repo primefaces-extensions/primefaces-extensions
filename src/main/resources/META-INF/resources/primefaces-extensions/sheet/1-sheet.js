@@ -469,7 +469,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     },
     
     focusFirstError: function () {
-       var errors = this.tableDiv.find('ui-message-error');
+       var errors = this.tableDiv.find('.ui-message-error');
        if (errors.length > 0) {
            var firstError = errors.first();
            var col = firstError.index() - 1;
