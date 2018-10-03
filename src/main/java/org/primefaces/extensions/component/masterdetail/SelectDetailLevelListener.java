@@ -46,24 +46,26 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
     public SelectDetailLevelListener() {
     }
 
-    public SelectDetailLevelListener(MethodExpression listener) {
+    public SelectDetailLevelListener(final MethodExpression listener) {
         this.listener = listener;
     }
 
-    public void processAction(ActionEvent actionEvent) {
+    @Override
+    public void processAction(final ActionEvent actionEvent) {
         process(actionEvent.getComponent());
     }
 
-    public void processAjaxBehavior(AjaxBehaviorEvent event) throws AbortProcessingException {
+    @Override
+    public void processAjaxBehavior(final AjaxBehaviorEvent event) throws AbortProcessingException {
         process(event.getComponent());
     }
 
-    public void process(UIComponent source) {
+    public void process(final UIComponent source) {
         final FacesContext fc = FacesContext.getCurrentInstance();
         final String clientId = source.getClientId(fc);
 
         // find master detail level component
-        MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
+        final MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
         if (masterDetailLevel == null) {
             throw new FacesException(
                         "MasterDetailLevel was not found. SelectDetailLevel can be only used inside of MasterDetailLevel.");
@@ -76,10 +78,10 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
         }
 
         // get current context value
-        Object contextValue = contextValues.get(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
+        final Object contextValue = contextValues.get(MasterDetail.RESOLVED_CONTEXT_VALUE + clientId);
 
         // invoke listener and get new context value
-        Object newContextValue = listener.invoke(fc.getELContext(), new Object[] { contextValue });
+        final Object newContextValue = listener.invoke(fc.getELContext(), new Object[] {contextValue});
 
         // make new context value available in MasterDetail component
         if (newContextValue != null) {
@@ -90,26 +92,30 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
         }
     }
 
+    @Override
     public boolean isTransient() {
         return false;
     }
 
-    public void restoreState(FacesContext facesContext, Object state) {
-        Object[] values = (Object[]) state;
+    @Override
+    public void restoreState(final FacesContext facesContext, final Object state) {
+        final Object[] values = (Object[]) state;
         listener = (MethodExpression) values[0];
     }
 
+    @Override
     public Object saveState(final FacesContext facesContext) {
-        Object[] values = new Object[1];
+        final Object[] values = new Object[1];
         values[0] = listener;
 
         return values;
     }
 
-    public void setTransient(boolean value) {
+    @Override
+    public void setTransient(final boolean value) {
     }
 
-    private MasterDetailLevel findMasterDetailLevel(UIComponent component) {
+    private MasterDetailLevel findMasterDetailLevel(final UIComponent component) {
         UIComponent parent = component.getParent();
 
         while (parent != null) {

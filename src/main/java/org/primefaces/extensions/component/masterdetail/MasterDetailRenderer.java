@@ -53,13 +53,13 @@ public class MasterDetailRenderer extends CoreRenderer {
     private static final String FACET_LABEL = "label";
 
     @Override
-    public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
-        MasterDetail masterDetail = (MasterDetail) component;
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
+        final MasterDetail masterDetail = (MasterDetail) component;
         MasterDetailLevel mdl;
 
         if (masterDetail.isSelectDetailRequest(fc)) {
             // component has been navigated via SelectDetailLevel
-            MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
+            final MasterDetailLevel mdlToProcess = masterDetail.getDetailLevelToProcess(fc);
 
             if (fc.isValidationFailed()) {
                 mdl = mdlToProcess;
@@ -68,19 +68,19 @@ public class MasterDetailRenderer extends CoreRenderer {
                 mdl = getDetailLevelToEncode(fc, masterDetail, mdlToProcess, masterDetail.getDetailLevelToGo(fc));
 
                 // reset last saved validation state and stored values of editable components
-                MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
+                final MasterDetailLevelVisitCallback visitCallback = new MasterDetailLevelVisitCallback();
                 mdlToProcess.visitTree(VisitContext.createVisitContext(fc), visitCallback);
 
-                String preserveInputs = masterDetail.getPreserveInputs(fc);
-                String resetInputs = masterDetail.getResetInputs(fc);
-                String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
-                String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
-                boolean preserveAll = ArrayUtils.contains(piIds, "@all");
-                boolean resetAll = ArrayUtils.contains(riIds, "@all");
+                final String preserveInputs = masterDetail.getPreserveInputs(fc);
+                final String resetInputs = masterDetail.getResetInputs(fc);
+                final String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
+                final String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
+                final boolean preserveAll = ArrayUtils.contains(piIds, "@all");
+                final boolean resetAll = ArrayUtils.contains(riIds, "@all");
 
                 final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
-                for (EditableValueHolder editableValueHolder : editableValueHolders) {
-                    String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
+                for (final EditableValueHolder editableValueHolder : editableValueHolders) {
+                    final String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
                     if (resetAll || ArrayUtils.contains(riIds, clientId)) {
                         editableValueHolder.resetValue();
                     }
@@ -113,11 +113,11 @@ public class MasterDetailRenderer extends CoreRenderer {
         masterDetail.resetCalculatedValues();
     }
 
-    protected MasterDetailLevel getDetailLevelToEncode(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdlToProcess,
-                MasterDetailLevel mdlToGo) {
+    protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdlToProcess,
+                final MasterDetailLevel mdlToGo) {
         if (masterDetail.getSelectLevelListener() != null) {
-            SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
-            int levelToEncode = (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] { selectLevelEvent });
+            final SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
+            final int levelToEncode = (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] {selectLevelEvent});
             if (levelToEncode != mdlToGo.getLevel()) {
                 // new MasterDetailLevel to go
                 return masterDetail.getDetailLevelByLevel(levelToEncode);
@@ -127,13 +127,13 @@ public class MasterDetailRenderer extends CoreRenderer {
         return mdlToGo;
     }
 
-    protected void encodeMarkup(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+    protected void encodeMarkup(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl) throws IOException {
         if (mdl == null) {
             throw new FacesException("MasterDetailLevel must be nested inside a MasterDetail component!");
         }
-        ResponseWriter writer = fc.getResponseWriter();
-        String clientId = masterDetail.getClientId(fc);
-        String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
+        final ResponseWriter writer = fc.getResponseWriter();
+        final String clientId = masterDetail.getClientId(fc);
+        final String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
 
         writer.startElement("div", masterDetail);
         writer.writeAttribute("id", clientId, "id");
@@ -166,13 +166,13 @@ public class MasterDetailRenderer extends CoreRenderer {
 
         // try to get context value if contextVar exists
         Object contextValue = null;
-        String contextVar = mdl.getContextVar();
+        final String contextVar = mdl.getContextVar();
         if (StringUtils.isNotBlank(contextVar)) {
             contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
         }
 
         if (contextValue != null) {
-            Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+            final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
             requestMap.put(contextVar, contextValue);
         }
 
@@ -190,9 +190,9 @@ public class MasterDetailRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    protected void renderBreadcrumb(FacesContext fc, MasterDetail masterDetail, MasterDetailLevel mdl) throws IOException {
+    protected void renderBreadcrumb(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl) throws IOException {
         // get breadcrumb and its current model
-        BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
+        final BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
 
         // update breadcrumb items
         updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
@@ -201,23 +201,23 @@ public class MasterDetailRenderer extends CoreRenderer {
         breadcrumb.encodeAll(fc);
     }
 
-    protected void encodeFacet(FacesContext fc, UIComponent component, String name) throws IOException {
+    protected void encodeFacet(final FacesContext fc, final UIComponent component, final String name) throws IOException {
         final UIComponent facet = component.getFacet(name);
         if (facet != null) {
             facet.encodeAll(fc);
         }
     }
 
-    protected void updateBreadcrumb(FacesContext fc, BreadCrumb breadcrumb, MasterDetail masterDetail,
-                MasterDetailLevel mdlToRender) throws IOException {
+    protected void updateBreadcrumb(final FacesContext fc, final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+                final MasterDetailLevel mdlToRender) throws IOException {
         boolean lastMdlFound = false;
-        int levelToRender = mdlToRender.getLevel();
-        boolean isShowAllBreadcrumbItems = masterDetail.isShowAllBreadcrumbItems();
+        final int levelToRender = mdlToRender.getLevel();
+        final boolean isShowAllBreadcrumbItems = masterDetail.isShowAllBreadcrumbItems();
 
-        for (UIComponent child : masterDetail.getChildren()) {
+        for (final UIComponent child : masterDetail.getChildren()) {
             if (child instanceof MasterDetailLevel) {
-                MasterDetailLevel mdl = (MasterDetailLevel) child;
-                DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
+                final MasterDetailLevel mdl = (MasterDetailLevel) child;
+                final DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
                 if (menuItem == null) {
                     // note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
                     // throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
@@ -239,21 +239,21 @@ public class MasterDetailRenderer extends CoreRenderer {
                 else {
                     menuItem.setRendered(true);
 
-                    Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
-                    String contextVar = mdl.getContextVar();
-                    boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
+                    final Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
+                    final String contextVar = mdl.getContextVar();
+                    final boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
 
                     if (putContext) {
-                        Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+                        final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
                         requestMap.put(contextVar, contextValue);
                     }
 
                     final UIComponent facet = mdl.getFacet(FACET_LABEL);
                     if (facet != null) {
                         // swap writers
-                        ResponseWriter writer = fc.getResponseWriter();
-                        FastStringWriter fsw = new FastStringWriter();
-                        ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
+                        final ResponseWriter writer = fc.getResponseWriter();
+                        final FastStringWriter fsw = new FastStringWriter();
+                        final ResponseWriter clonedWriter = writer.cloneWithWriter(fsw);
                         fc.setResponseWriter(clonedWriter);
 
                         // render facet's children
@@ -294,9 +294,9 @@ public class MasterDetailRenderer extends CoreRenderer {
         }
     }
 
-    protected DefaultMenuItem getMenuItemByLevel(BreadCrumb breadcrumb, MasterDetail masterDetail, MasterDetailLevel mdl) {
-        String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
-        for (MenuElement child : breadcrumb.getModel().getElements()) {
+    protected DefaultMenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail masterDetail, final MasterDetailLevel mdl) {
+        final String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
+        for (final MenuElement child : breadcrumb.getModel().getElements()) {
             if (menuItemId.equals(child.getId())) {
                 return (DefaultMenuItem) child;
             }
@@ -305,13 +305,13 @@ public class MasterDetailRenderer extends CoreRenderer {
         return null;
     }
 
-    protected void updateUIParameter(MenuItem menuItem, String name, Object value) {
-        Map<String, List<String>> params = menuItem.getParams();
+    protected void updateUIParameter(final MenuItem menuItem, final String name, final Object value) {
+        final Map<String, List<String>> params = menuItem.getParams();
         if (params == null) {
             return;
         }
 
-        for (String key : params.keySet()) {
+        for (final String key : params.keySet()) {
             if (key.equals(name)) {
                 params.remove(key);
                 menuItem.setParam(name, value);
@@ -322,7 +322,7 @@ public class MasterDetailRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(FacesContext fc, UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
         // rendering happens on encodeEnd
     }
 

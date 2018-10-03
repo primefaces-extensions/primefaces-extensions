@@ -31,11 +31,11 @@ public class DynaFormModel implements Serializable {
 
     private static final long serialVersionUID = 20120514L;
 
-    private String uuid;
-    private List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
+    private final String uuid;
+    private final List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
     private List<DynaFormRow> extendedRows = null;
-    private List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
-    private List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
+    private final List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
+    private final List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
 
     public DynaFormModel() {
         uuid = UUID.randomUUID().toString();
@@ -63,11 +63,11 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Creates a new regular row.
-     * 
+     *
      * @return {@link DynaFormRow}
      */
     public DynaFormRow createRegularRow() {
-        DynaFormRow dynaFormRow = new DynaFormRow(regularRows.size() + 1, false, this);
+        final DynaFormRow dynaFormRow = new DynaFormRow(regularRows.size() + 1, false, this);
         regularRows.add(dynaFormRow);
 
         return dynaFormRow;
@@ -75,7 +75,7 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Creates a new extended row.
-     * 
+     *
      * @return {@link DynaFormRow}
      */
     public DynaFormRow createExtendedRow() {
@@ -83,7 +83,7 @@ public class DynaFormModel implements Serializable {
             extendedRows = new ArrayList<DynaFormRow>();
         }
 
-        DynaFormRow dynaFormRow = new DynaFormRow(extendedRows.size() + 1, true, this);
+        final DynaFormRow dynaFormRow = new DynaFormRow(extendedRows.size() + 1, true, this);
         extendedRows.add(dynaFormRow);
 
         return dynaFormRow;
@@ -91,11 +91,11 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Removes the passed regular row.
-     * 
+     *
      * @param rowToBeRemoved {@link DynaFormRow} to be removed
      */
-    public void removeRegularRow(DynaFormRow rowToBeRemoved) {
-        int idx = (rowToBeRemoved != null ? regularRows.indexOf(rowToBeRemoved) : -1);
+    public void removeRegularRow(final DynaFormRow rowToBeRemoved) {
+        final int idx = rowToBeRemoved != null ? regularRows.indexOf(rowToBeRemoved) : -1;
         if (idx >= 0) {
             removeRow(regularRows, rowToBeRemoved, idx);
         }
@@ -103,10 +103,10 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Removes the regular row by its index (position in the list).
-     * 
+     *
      * @param idx index of the row to be removed
      */
-    public void removeRegularRow(int idx) {
+    public void removeRegularRow(final int idx) {
         DynaFormRow rowToBeRemoved = null;
         if (0 <= idx && idx < regularRows.size()) {
             rowToBeRemoved = regularRows.get(idx);
@@ -119,11 +119,11 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Removes the passed extended row.
-     * 
+     *
      * @param rowToBeRemoved {@link DynaFormRow} to be removed
      */
-    public void removeExtendedRow(DynaFormRow rowToBeRemoved) {
-        int idx = (rowToBeRemoved != null ? extendedRows.indexOf(rowToBeRemoved) : -1);
+    public void removeExtendedRow(final DynaFormRow rowToBeRemoved) {
+        final int idx = rowToBeRemoved != null ? extendedRows.indexOf(rowToBeRemoved) : -1;
         if (idx >= 0) {
             removeRow(extendedRows, rowToBeRemoved, idx);
         }
@@ -131,10 +131,10 @@ public class DynaFormModel implements Serializable {
 
     /**
      * Removes the extended row by its index (position in the list).
-     * 
+     *
      * @param idx index of the row to be removed
      */
-    public void removeExtendedRow(int idx) {
+    public void removeExtendedRow(final int idx) {
         DynaFormRow rowToBeRemoved = null;
         if (0 <= idx && idx < extendedRows.size()) {
             rowToBeRemoved = extendedRows.get(idx);
@@ -145,10 +145,10 @@ public class DynaFormModel implements Serializable {
         }
     }
 
-    private void removeRow(List<DynaFormRow> rows, DynaFormRow rowToBeRemoved, int idx) {
-        List<DynaFormControl> controlsToBeRemoved = new ArrayList<DynaFormControl>();
-        List<DynaFormLabel> labelsToBeRemoved = new ArrayList<DynaFormLabel>();
-        for (AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
+    private void removeRow(final List<DynaFormRow> rows, final DynaFormRow rowToBeRemoved, final int idx) {
+        final List<DynaFormControl> controlsToBeRemoved = new ArrayList<DynaFormControl>();
+        final List<DynaFormLabel> labelsToBeRemoved = new ArrayList<DynaFormLabel>();
+        for (final AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
             if (element instanceof DynaFormControl) {
                 controlsToBeRemoved.add((DynaFormControl) element);
             }
@@ -159,7 +159,7 @@ public class DynaFormModel implements Serializable {
 
         controls.removeAll(controlsToBeRemoved);
         labels.removeAll(labelsToBeRemoved);
-        for (DynaFormLabel label : labels) {
+        for (final DynaFormLabel label : labels) {
             if (label.getForControl() != null && controlsToBeRemoved.contains(label.getForControl())) {
                 // control was removed ==> label should not reference this control anymore
                 label.setForControl(null);
@@ -170,15 +170,15 @@ public class DynaFormModel implements Serializable {
 
         // re-index rows, so that the new row's IDs will be generated correct
         int row = idx;
-        List<DynaFormRow> rowsToBeAdjusted = rows.subList(idx, rows.size());
-        for (DynaFormRow dynaFormRow : rowsToBeAdjusted) {
+        final List<DynaFormRow> rowsToBeAdjusted = rows.subList(idx, rows.size());
+        for (final DynaFormRow dynaFormRow : rowsToBeAdjusted) {
             ++row;
             dynaFormRow.setRow(row);
-            for (AbstractDynaFormElement element : dynaFormRow.getElements()) {
+            for (final AbstractDynaFormElement element : dynaFormRow.getElements()) {
                 element.setRow(row);
                 if (element instanceof DynaFormControl) {
-                    DynaFormControl control = ((DynaFormControl) element);
-                    int delta = rowToBeRemoved.getElements().size();
+                    final DynaFormControl control = (DynaFormControl) element;
+                    final int delta = rowToBeRemoved.getElements().size();
                     control.setPosition(control.getPosition() - delta);
                     control.generateKey();
                 }

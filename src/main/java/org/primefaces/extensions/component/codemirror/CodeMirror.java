@@ -74,37 +74,37 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
     protected enum PropertyKeys {
 
         //@formatter:off
-        widgetVar, 
-        theme, 
-        mode, 
-        indentUnit, 
-        smartIndent, 
-        tabSize, 
-        indentWithTabs, 
-        electricChars, 
-        keyMap, 
-        lineWrapping, 
-        lineNumbers, 
-        firstLineNumber, 
-        gutter, 
-        fixedGutter, 
-        readonly, 
-        matchBrackets, 
-        workTime, 
-        workDelay, 
-        pollInterval, 
-        undoDepth, 
-        tabindex, 
-        extraKeys, 
-        completeMethod, 
-        process, 
-        onstart, 
-        oncomplete, 
-        onerror, 
-        onsuccess, 
-        global, 
-        async, 
-        escape, 
+        widgetVar,
+        theme,
+        mode,
+        indentUnit,
+        smartIndent,
+        tabSize,
+        indentWithTabs,
+        electricChars,
+        keyMap,
+        lineWrapping,
+        lineNumbers,
+        firstLineNumber,
+        gutter,
+        fixedGutter,
+        readonly,
+        matchBrackets,
+        workTime,
+        workDelay,
+        pollInterval,
+        undoDepth,
+        tabindex,
+        extraKeys,
+        completeMethod,
+        process,
+        onstart,
+        oncomplete,
+        onerror,
+        onsuccess,
+        global,
+        async,
+        escape,
         escapeSuggestions;
         //@formatter:on
 
@@ -119,7 +119,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -397,6 +397,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
         getStateHelper().put(PropertyKeys.escapeSuggestions, suggestions);
     }
 
+    @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
@@ -411,7 +412,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
         if (completeMethod != null && event instanceof CompleteEvent) {
             suggestions = (List<String>) completeMethod.invoke(
                         facesContext.getELContext(),
-                        new Object[] { event });
+                        new Object[] {event});
 
             if (suggestions == null) {
                 suggestions = new ArrayList<String>();
@@ -422,6 +423,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
     }
 
     public List<String> getSuggestions() {
-        return this.suggestions;
+        return suggestions;
     }
 }

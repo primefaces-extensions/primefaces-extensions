@@ -67,20 +67,20 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
     protected enum PropertyKeys {
 
         //@formatter:off
-        widgetVar, 
-        height, 
-        width, 
-        theme, 
-        skin, 
-        toolbar, 
-        readonly, 
-        interfaceColor, 
-        language, 
-        defaultLanguage, 
-        contentsCss, 
-        customConfig, 
-        tabindex, 
-        escape, 
+        widgetVar,
+        height,
+        width,
+        theme,
+        skin,
+        toolbar,
+        readonly,
+        interfaceColor,
+        language,
+        defaultLanguage,
+        contentsCss,
+        customConfig,
+        tabindex,
+        escape,
         advancedContentFilter;
         //@formatter:on
 
@@ -95,7 +95,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -242,6 +242,7 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
         getStateHelper().put(PropertyKeys.advancedContentFilter, acf);
     }
 
+    @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }

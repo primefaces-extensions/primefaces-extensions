@@ -51,7 +51,7 @@ public class RemoteCommandHandler extends ComponentHandler {
      */
     private static final class RemoteCommandMetaRule extends MetaRule {
 
-        private Class<?>[] parameters;
+        private final Class<?>[] parameters;
 
         public RemoteCommandMetaRule(final Class<?>[] parameters) {
             this.parameters = parameters;
@@ -80,7 +80,7 @@ public class RemoteCommandHandler extends ComponentHandler {
 
         private final TagAttribute attribute;
         private final Method method;
-        private Class<?>[] parameters;
+        private final Class<?>[] parameters;
 
         public ActionListenerMetadata(final TagAttribute attribute, final Method method, final Class<?>[] parameters) {
             this.attribute = attribute;
@@ -94,12 +94,12 @@ public class RemoteCommandHandler extends ComponentHandler {
 
             // invoke setAction with MethodExpression
             try {
-                method.invoke(instance, new Object[] { expression });
+                method.invoke(instance, new Object[] {expression});
             }
-            catch (InvocationTargetException e) {
+            catch (final InvocationTargetException e) {
                 throw new TagAttributeException(attribute, e.getCause());
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new TagAttributeException(attribute, e);
             }
         }

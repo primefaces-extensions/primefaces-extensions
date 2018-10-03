@@ -47,18 +47,18 @@ public class DocumentViewer extends UIGraphic {
 
     protected enum PropertyKeys {
         //@formatter:off
-        width, 
-        height, 
-        style, 
-        title, 
-        name, 
-        library, 
-        cache, 
-        page, 
-        download, 
-        locale, 
-        nameddest, 
-        pagemode, 
+        width,
+        height,
+        style,
+        title,
+        name,
+        library,
+        cache,
+        page,
+        download,
+        locale,
+        nameddest,
+        pagemode,
         zoom;
        //@formatter:on
     }

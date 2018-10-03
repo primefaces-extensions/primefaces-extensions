@@ -101,13 +101,13 @@ public class SpeedtestRenderer extends CoreRenderer {
     /**
      * Create the Javascript.
      */
-    private void encodeScript(FacesContext context, Speedtest speedtest) throws IOException {
+    private void encodeScript(final FacesContext context, final Speedtest speedtest) throws IOException {
         final String clientId = speedtest.getClientId(context);
-        UIComponent form = ComponentTraversalUtils.closestForm(context, speedtest);
+        final UIComponent form = ComponentTraversalUtils.closestForm(context, speedtest);
         if (form == null) {
             throw new FacesException("Speedtest:" + clientId + " needs to be enclosed in a form component");
         }
-        
+
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtSpeedtest", speedtest.resolveWidgetVar(), clientId);
         wb.attr("idDown", clientId + "ggdown");
