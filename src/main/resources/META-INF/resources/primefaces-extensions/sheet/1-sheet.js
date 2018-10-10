@@ -135,7 +135,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     $this.updated = true;
                     
                     // GitHub #599
-                    if (cellType === "checkbox" || cellType === "dropdown") {
+                    if (cellType === "checkbox" || cellType === "dropdown" || cellType === "autocomplete" || cellType === "date") {
                        $this.updated = false;
                        if ($this.hasBehavior('change')) {
                            $this.cfg.behaviors['change'].call(this, 'change');
