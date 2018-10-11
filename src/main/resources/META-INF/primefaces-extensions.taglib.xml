@@ -5571,7 +5571,7 @@
 		</attribute>
 		<attribute>
 			<description>
-				<![CDATA[Property to define the filter match mode.]]>
+				<![CDATA[Property to define the filter match mode of startsWith, endsWith, contains, exact.]]>
 			</description>
 			<name>filterMatchMode</name>
 			<required>false</required>
