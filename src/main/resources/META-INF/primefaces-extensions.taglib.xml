@@ -5571,6 +5571,14 @@
 		</attribute>
 		<attribute>
 			<description>
+				<![CDATA[Property to define the filter match mode.]]>
+			</description>
+			<name>filterMatchMode</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
 				<![CDATA[A collection of selectitems for filter dropdown.]]>
 			</description>
 			<name>filterOptions</name>
