@@ -145,6 +145,11 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         filterOptions,
 
         /**
+         * The filter match mode: startsWith, endsWith, contains, exact
+         */
+        filterMatchMode,
+
+        /**
          * The submitted filtered value
          */
         filterValue,
@@ -440,6 +445,24 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      */
     public void setFilterValue(final String filterValue) {
         getStateHelper().put(PropertyKeys.filterValue, filterValue);
+    }
+
+    /**
+     * The filter match mode submitted by the user
+     *
+     * @return
+     */
+    public String getFilterMatchMode() {
+        return (String) getStateHelper().get(PropertyKeys.filterMatchMode);
+    }
+
+    /**
+     * Update the filter match mode for this column
+     *
+     * @param filterMatchMode
+     */
+    public void setFilterMatchMode(final String filterMatchMode) {
+        getStateHelper().put(PropertyKeys.filterMatchMode, filterMatchMode);
     }
 
     /**
