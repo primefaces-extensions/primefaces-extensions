@@ -1159,6 +1159,12 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     /**
      * Evaluates the specified item value against the column filters and if they match, returns true, otherwise false.
+     * If no filterMatchMode is given on a column than the "contains" mode is used.
+     * Otherwise the following filterMatchMode values are possible:
+     * - startsWith: Checks if column value starts with the filter value.
+     * - endsWith: Checks if column value ends with the filter value.
+     * - contains: Checks if column value contains the filter value.
+     * - exact: Checks if string representations of column value and filter value are same.
      *
      * @param obj
      * @return
@@ -1176,13 +1182,35 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
                 return false;
             }
 
-            // case-insensitive
-            final String compareA = filterBy.toString().toLowerCase();
-            final String compareB = filterValue.toLowerCase();
+            String filterMatchMode = col.getFilterMatchMode();
+            if (StringUtils.isEmpty(filterMatchMode)) {
+                filterMatchMode = "contains";
+            }
 
-            // TODO need to support match modes
-            if (!compareA.contains(compareB)) {
-                return false;
+            // case-insensitive
+            final String value = filterBy.toString().toLowerCase();
+            final String filter = filterValue.toLowerCase();
+            switch (filterMatchMode) {
+                case "startsWith":
+                    if (!value.startsWith(filter)) {
+                        return false;
+                    }
+                    break;
+                case "endsWith":
+                    if (!value.endsWith(filter)) {
+                        return false;
+                    }
+                    break;
+                case "exact":
+                    if (!value.equals(filter)) {
+                        return false;
+                    }
+                    break;
+                default:
+                    // contains is default
+                    if (!value.contains(filter)) {
+                        return false;
+                    }
             }
         }
         return true;
