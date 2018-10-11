@@ -122,7 +122,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         /**
          * Flag indicating whether or not the column is read only
          */
-        readonly,
+        readOnly,
 
         /**
          * Flag indicating whether or not a cell is read only
@@ -203,8 +203,8 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setReadonly(final Boolean value) {
-        getStateHelper().put(PropertyKeys.readonly, value);
+    public void setReadOnly(final Boolean value) {
+        getStateHelper().put(PropertyKeys.readOnly, value);
     }
 
     /**
@@ -212,8 +212,8 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @return true if read only, otherwise false
      */
-    public Boolean isReadonly() {
-        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readonly, Boolean.FALSE).toString());
+    public Boolean isReadOnly() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
     /**

@@ -289,7 +289,7 @@ public class SheetRenderer extends CoreRenderer {
             if (calculatedWidth != null) {
                 options.appendProperty("width", calculatedWidth, false);
             }
-            if (column.isReadonly()) {
+            if (column.isReadOnly()) {
                 options.appendProperty("readOnly", "true", false);
             }
 
