@@ -109,6 +109,11 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 		var,
 
 		/**
+		 * The IL8N Locale. Default is en-US.
+		 */
+		locale,
+
+		/**
 		 * The selected row
 		 */
 		selectedRow,
@@ -738,6 +743,14 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 			return null;
 		}
 		return Integer.valueOf(result.toString());
+	}
+
+	public String getLocale() {
+		return (String) getStateHelper().eval(PropertyKeys.locale, "en-US");
+	}
+
+	public void setLocale(final String locale) {
+		getStateHelper().put(PropertyKeys.locale, locale);
 	}
 
 	/**

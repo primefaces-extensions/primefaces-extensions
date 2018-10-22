@@ -212,6 +212,7 @@ public class SheetRenderer extends CoreRenderer {
 		encodeOptionalNativeAttr(wb, "maxRows", sheet.getMaxRows());
 		encodeOptionalNativeAttr(wb, "maxCols", sheet.getMaxCols());
 		encodeOptionalAttr(wb, "stretchH", sheet.getStretchH());
+		encodeOptionalAttr(wb, "language", sheet.getLocale());
 		encodeOptionalAttr(wb, "activeHeaderClassName", sheet.getActiveHeaderStyleClass());
 		encodeOptionalAttr(wb, "commentedCellClassName", sheet.getCommentedCellStyleClass());
 		encodeOptionalAttr(wb, "currentRowClassName", sheet.getCurrentRowStyleClass());
