@@ -41,181 +41,189 @@ import org.primefaces.json.JSONObject;
  */
 public class OrgChartHelperTest {
 
-	OrgChartNode root = new DefaultOrgChartNode("root", "root");
+    private OrgChartNode root = new DefaultOrgChartNode("root", "root");
 
-	@Before
-	public void before() {
+    public OrgChartNode getRoot() {
+        return root;
+    }
 
-	}
+    public void setRoot(OrgChartNode root) {
+        this.root = root;
+    }
 
-	@After
-	public void after() {
-		root.clearChildren();
-	}
+    @Before
+    public void before() {
 
-	@Test
-	public void testGetAllNodesTraverseFromRoot() {
+    }
 
-		OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
-		OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
-		OrgChartNode child3 = new DefaultOrgChartNode("children 3", "children 3");
+    @After
+    public void after() {
+        root.clearChildren();
+    }
 
-		child1.setParent(root);
-		child2.setParent(root);
+    @Test
+    public void testGetAllNodesTraverseFromRoot() {
 
-		root.addChild(child1);
-		root.addChild(child2);
+        final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
+        final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
+        final OrgChartNode child3 = new DefaultOrgChartNode("children 3", "children 3");
 
-		List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
+        child1.setParent(root);
+        child2.setParent(root);
 
-		assertEquals(true, orgChartNodes.contains(child1));
-		assertEquals(true, orgChartNodes.contains(child2));
-		assertEquals(false, orgChartNodes.contains(child3));
-		assertEquals(true, orgChartNodes.contains(root));
-		assertEquals(3, orgChartNodes.size());
-	}
+        root.addChild(child1);
+        root.addChild(child2);
 
-	@Test
-	public void testGetAllNodesTraverseFromRoot_2() {
+        final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
 
-		OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
-		OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
-		OrgChartNode child3 = new DefaultOrgChartNode("children 3", "children 3");
-		OrgChartNode grandChild1 = new DefaultOrgChartNode("grand child1", "grand child1");
+        assertEquals(true, orgChartNodes.contains(child1));
+        assertEquals(true, orgChartNodes.contains(child2));
+        assertEquals(false, orgChartNodes.contains(child3));
+        assertEquals(true, orgChartNodes.contains(root));
+        assertEquals(3, orgChartNodes.size());
+    }
 
-		child1.setParent(root);
-		child2.setParent(root);
+    @Test
+    public void testGetAllNodesTraverseFromRootTwo() {
 
-		root.addChild(child1);
-		root.addChild(child2);
+        final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
+        final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
+        final OrgChartNode child3 = new DefaultOrgChartNode("children 3", "children 3");
+        final OrgChartNode grandChild1 = new DefaultOrgChartNode("grand child1", "grand child1");
 
-		child1.addChild(grandChild1);
+        child1.setParent(root);
+        child2.setParent(root);
 
-		List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
-		assertEquals(true, orgChartNodes.contains(child1));
-		assertEquals(true, orgChartNodes.contains(child2));
-		assertEquals(false, orgChartNodes.contains(child3));
-		assertEquals(true, orgChartNodes.contains(root));
-		assertEquals(true, orgChartNodes.contains(grandChild1));
-		assertEquals(4, orgChartNodes.size());
-	}
+        root.addChild(child1);
+        root.addChild(child2);
 
-	@Test
-	public void testParseOrgChartNodesIntoHashMap() {
-		List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
-		OrgChartNode node1 = new DefaultOrgChartNode("id1", "name1", "title1");
-		OrgChartNode node2 = new DefaultOrgChartNode("id2", "name2", "title2");
-		OrgChartNode node3 = new DefaultOrgChartNode("id3", "name3", "title3");
-		orgChartNodes.add(node1);
-		orgChartNodes.add(node2);
-		orgChartNodes.add(node3);
+        child1.addChild(grandChild1);
 
-		HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
+        assertEquals(true, orgChartNodes.contains(child1));
+        assertEquals(true, orgChartNodes.contains(child2));
+        assertEquals(false, orgChartNodes.contains(child3));
+        assertEquals(true, orgChartNodes.contains(root));
+        assertEquals(true, orgChartNodes.contains(grandChild1));
+        assertEquals(4, orgChartNodes.size());
+    }
 
-		assertEquals(node1, hashMap.get("id1"));
-		assertEquals(node2, hashMap.get("id2"));
-		assertEquals(node3, hashMap.get("id3"));
-		assertNotSame(node2, hashMap.get("id3"));
-		assertEquals(3, hashMap.size());
+    @Test
+    public void testParseOrgChartNodesIntoHashMap() {
+        final List<OrgChartNode> orgChartNodes = new ArrayList<>();
+        final OrgChartNode node1 = new DefaultOrgChartNode("id1", "name1", "title1");
+        final OrgChartNode node2 = new DefaultOrgChartNode("id2", "name2", "title2");
+        final OrgChartNode node3 = new DefaultOrgChartNode("id3", "name3", "title3");
+        orgChartNodes.add(node1);
+        orgChartNodes.add(node2);
+        orgChartNodes.add(node3);
 
-	}
+        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-	@Test
-	public void testBuildNodesFromJSON() {
+        assertEquals(node1, hashMap.get("id1"));
+        assertEquals(node2, hashMap.get("id2"));
+        assertEquals(node3, hashMap.get("id3"));
+        assertNotSame(node2, hashMap.get("id3"));
+        assertEquals(3, hashMap.size());
 
-		OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
+    }
 
-		List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
-		OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
-		OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
-		orgChartNodes.add(orgChartNode);
-		orgChartNodes.add(orgChartNode2);
+    @Test
+    public void testBuildNodesFromJSON() {
 
-		HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", "id1");
-		JSONArray jsonArray = new JSONArray();
-		JSONObject jsonObject2 = new JSONObject();
-		jsonObject2.put("id", "id2");
-		jsonArray.put(jsonObject2);
-		jsonObject.put("children", jsonArray);
+        final List<OrgChartNode> orgChartNodes = new ArrayList<>();
+        final OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
+        final OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
+        orgChartNodes.add(orgChartNode);
+        orgChartNodes.add(orgChartNode2);
 
-		OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-		assertEquals("id1", chartNode.getId());
-		assertEquals(1, chartNode.getChildren().size());
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "id1");
+        final JSONArray jsonArray = new JSONArray();
+        final JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("id", "id2");
+        jsonArray.put(jsonObject2);
+        jsonObject.put("children", jsonArray);
 
-	}
+        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
-	@Test
-	public void testBuildNodesFromJSON_2() {
+        assertEquals("id1", chartNode.getId());
+        assertEquals(1, chartNode.getChildren().size());
 
-		OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
+    }
 
-		List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
-		OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
-		OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
-		OrgChartNode orgChartNode3 = new DefaultOrgChartNode("id3", "name3", "title3");
-		orgChartNodes.add(orgChartNode);
-		orgChartNodes.add(orgChartNode2);
-		orgChartNodes.add(orgChartNode3);
+    @Test
+    public void testBuildNodesFromJSONTwo() {
 
-		HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", "id1");
-		JSONArray jsonArray = new JSONArray();
-		JSONObject jsonObject2 = new JSONObject();
-		JSONObject jsonObject3 = new JSONObject();
-		jsonObject2.put("id", "id2");
-		jsonObject3.put("id", "id3");
-		jsonArray.put(jsonObject2);
-		jsonArray.put(jsonObject3);
-		jsonObject.put("children", jsonArray);
+        final List<OrgChartNode> orgChartNodes = new ArrayList<>();
+        final OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
+        final OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
+        final OrgChartNode orgChartNode3 = new DefaultOrgChartNode("id3", "name3", "title3");
+        orgChartNodes.add(orgChartNode);
+        orgChartNodes.add(orgChartNode2);
+        orgChartNodes.add(orgChartNode3);
 
-		OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-		assertEquals("id1", chartNode.getId());
-		assertEquals(2, chartNode.getChildren().size());
-		assertEquals("id2", chartNode.getChildren().get(0).getId());
-		assertEquals("id3", chartNode.getChildren().get(1).getId());
-	}
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "id1");
+        final JSONArray jsonArray = new JSONArray();
+        final JSONObject jsonObject2 = new JSONObject();
+        final JSONObject jsonObject3 = new JSONObject();
+        jsonObject2.put("id", "id2");
+        jsonObject3.put("id", "id3");
+        jsonArray.put(jsonObject2);
+        jsonArray.put(jsonObject3);
+        jsonObject.put("children", jsonArray);
 
-	@Test
-	public void testBuildNodesFromJSON_3() {
+        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
-		OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
+        assertEquals("id1", chartNode.getId());
+        assertEquals(2, chartNode.getChildren().size());
+        assertEquals("id2", chartNode.getChildren().get(0).getId());
+        assertEquals("id3", chartNode.getChildren().get(1).getId());
+    }
 
-		List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
-		OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
-		OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
-		OrgChartNode orgChartNode3 = new DefaultOrgChartNode("id3", "name3", "title3");
-		orgChartNodes.add(orgChartNode);
-		orgChartNodes.add(orgChartNode2);
-		orgChartNodes.add(orgChartNode3);
+    @Test
+    public void testBuildNodesFromJSONThree() {
 
-		HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("id", "id1");
-		JSONArray jsonArray = new JSONArray();
-		JSONArray jsonArray2 = new JSONArray();
-		JSONObject jsonObject2 = new JSONObject();
-		JSONObject jsonObject3 = new JSONObject();
-		jsonObject2.put("id", "id2");
-		jsonObject2.put("children", jsonArray2);
-		jsonObject3.put("id", "id3");
-		jsonArray.put(jsonObject2);
-		jsonArray2.put(jsonObject3);
-		jsonObject.put("children", jsonArray);
+        final List<OrgChartNode> orgChartNodes = new ArrayList<>();
+        final OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
+        final OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
+        final OrgChartNode orgChartNode3 = new DefaultOrgChartNode("id3", "name3", "title3");
+        orgChartNodes.add(orgChartNode);
+        orgChartNodes.add(orgChartNode2);
+        orgChartNodes.add(orgChartNode3);
 
-		OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-		assertEquals("id1", chartNode.getId());
-		assertEquals(1, chartNode.getChildren().size());
-		assertEquals(1, chartNode.getChildren().get(0).getChildren().size());
-		assertEquals("id2", chartNode.getChildren().get(0).getId());
-		assertEquals("id3", chartNode.getChildren().get(0).getChildren().get(0).getId());
-	}
+        final JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "id1");
+        final JSONArray jsonArray = new JSONArray();
+        final JSONArray jsonArray2 = new JSONArray();
+        final JSONObject jsonObject2 = new JSONObject();
+        final JSONObject jsonObject3 = new JSONObject();
+        jsonObject2.put("id", "id2");
+        jsonObject2.put("children", jsonArray2);
+        jsonObject3.put("id", "id3");
+        jsonArray.put(jsonObject2);
+        jsonArray2.put(jsonObject3);
+        jsonObject.put("children", jsonArray);
+
+        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+
+        assertEquals("id1", chartNode.getId());
+        assertEquals(1, chartNode.getChildren().size());
+        assertEquals(1, chartNode.getChildren().get(0).getChildren().size());
+        assertEquals("id2", chartNode.getChildren().get(0).getId());
+        assertEquals("id3", chartNode.getChildren().get(0).getChildren().get(0).getId());
+    }
 }

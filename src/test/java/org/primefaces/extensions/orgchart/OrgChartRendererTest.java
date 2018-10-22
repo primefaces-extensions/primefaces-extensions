@@ -15,7 +15,7 @@
  */
 package org.primefaces.extensions.orgchart;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,31 +33,47 @@ import org.primefaces.extensions.component.orgchart.OrgChartRenderer;
  */
 public class OrgChartRendererTest {
 
-	OrgChartRenderer renderer = new OrgChartRenderer();
+    private OrgChartRenderer renderer = new OrgChartRenderer();
 
-	OrgChartNode root = new DefaultOrgChartNode("root", "root");
+    private OrgChartNode root = new DefaultOrgChartNode("root", "root");
 
-	@Before
-	public void before() {
-		OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
-		OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
+    public OrgChartRenderer getRenderer() {
+        return renderer;
+    }
 
-		child1.setParent(root);
-		child2.setParent(root);
+    public void setRenderer(OrgChartRenderer renderer) {
+        this.renderer = renderer;
+    }
 
-		root.addChild(child1);
-		root.addChild(child2);
-	}
+    public OrgChartNode getRoot() {
+        return root;
+    }
 
-	@After
-	public void after() {
+    public void setRoot(OrgChartNode root) {
+        this.root = root;
+    }
 
-	}
+    @Before
+    public void before() {
+        final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
+        final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
 
-	@Test
-	public void testParent() {
+        child1.setParent(root);
+        child2.setParent(root);
 
-		assertEquals(root, root.getChildren().get(0).getParent());
-	}
+        root.addChild(child1);
+        root.addChild(child2);
+    }
+
+    @After
+    public void after() {
+
+    }
+
+    @Test
+    public void testParent() {
+
+        assertEquals(root, root.getChildren().get(0).getParent());
+    }
 
 }

@@ -84,17 +84,17 @@ public class JsonConverterTest {
     @Test(expected = ConverterException.class)
     public void testClassNotFoundArray() {
         jsonConverter.setType("java.lang.Abc[]");
-        jsonConverter.getAsString(null, null, new Integer[] { 1, 2, 3 });
+        jsonConverter.getAsString(null, null, new Integer[] {1, 2, 3});
     }
 
     @Test
     public void testBoolean() {
         jsonConverter.setType("boolean");
 
-        String json = jsonConverter.getAsString(null, null, true);
+        final String json = jsonConverter.getAsString(null, null, true);
         assertEquals("true", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(true, obj);
     }
 
@@ -102,10 +102,10 @@ public class JsonConverterTest {
     public void testInt() {
         jsonConverter.setType("int");
 
-        String json = jsonConverter.getAsString(null, null, 5);
+        final String json = jsonConverter.getAsString(null, null, 5);
         assertEquals("5", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(5, obj);
     }
 
@@ -113,10 +113,10 @@ public class JsonConverterTest {
     public void testDouble() {
         jsonConverter.setType("double");
 
-        String json = jsonConverter.getAsString(null, null, 10.99);
+        final String json = jsonConverter.getAsString(null, null, 10.99);
         assertEquals("10.99", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(10.99, obj);
     }
 
@@ -124,11 +124,11 @@ public class JsonConverterTest {
     public void testIntArray() {
         jsonConverter.setType("int[]");
 
-        int[] ints = { 1, 2, 3, 4, 5 };
-        String json = jsonConverter.getAsString(null, null, ints);
+        final int[] ints = {1, 2, 3, 4, 5};
+        final String json = jsonConverter.getAsString(null, null, ints);
         assertEquals("[1,2,3,4,5]", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(Arrays.equals(ints, (int[]) obj));
     }
 
@@ -136,11 +136,11 @@ public class JsonConverterTest {
     public void testLongArray() {
         jsonConverter.setType("long[]");
 
-        long[] longs = { 100, 255, 399, 401, 59999 };
-        String json = jsonConverter.getAsString(null, null, longs);
+        final long[] longs = {100, 255, 399, 401, 59999};
+        final String json = jsonConverter.getAsString(null, null, longs);
         assertEquals("[100,255,399,401,59999]", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(Arrays.equals(longs, (long[]) obj));
     }
 
@@ -148,10 +148,10 @@ public class JsonConverterTest {
     public void testStringArray() {
         jsonConverter.setType("java.lang.String[]");
 
-        String[] strings = { "abc", "def", "ghi" };
-        String json = jsonConverter.getAsString(null, null, strings);
+        final String[] strings = {"abc", "def", "ghi"};
+        final String json = jsonConverter.getAsString(null, null, strings);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(Arrays.equals(strings, (String[]) obj));
     }
 
@@ -159,11 +159,11 @@ public class JsonConverterTest {
     public void testString() {
         jsonConverter.setType("java.lang.String");
 
-        String string = "Hello World";
-        String json = jsonConverter.getAsString(null, null, string);
+        final String string = "Hello World";
+        final String json = jsonConverter.getAsString(null, null, string);
         assertEquals("\"Hello World\"", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(string, obj);
     }
 
@@ -171,11 +171,11 @@ public class JsonConverterTest {
     public void testInteger() {
         jsonConverter.setType("java.lang.Integer");
 
-        Integer integer = 60;
-        String json = jsonConverter.getAsString(null, null, integer);
+        final Integer integer = 60;
+        final String json = jsonConverter.getAsString(null, null, integer);
         assertEquals("60", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(integer, obj);
     }
 
@@ -183,11 +183,11 @@ public class JsonConverterTest {
     public void testDate() {
         jsonConverter.setType("java.util.Date");
 
-        Date now = new Date();
-        String json = jsonConverter.getAsString(null, null, now);
+        final Date now = new Date();
+        final String json = jsonConverter.getAsString(null, null, now);
         assertEquals(now.getTime() + "", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertEquals(now, obj);
     }
 
@@ -195,15 +195,15 @@ public class JsonConverterTest {
     public void testCollection() {
         jsonConverter.setType("java.util.Collection<java.lang.Integer>");
 
-        Collection<Integer> list = new ArrayList<Integer>();
+        final Collection<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         list.add(3);
 
-        String json = jsonConverter.getAsString(null, null, list);
+        final String json = jsonConverter.getAsString(null, null, list);
         assertEquals("[1,2,3]", json);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(CollectionUtils.isEqualCollection(list, (Collection<Integer>) obj));
     }
 
@@ -212,17 +212,17 @@ public class JsonConverterTest {
         jsonConverter.setType(
                     "java.util.Map<java.lang.String, org.apache.commons.lang3.tuple.ImmutablePair<java.lang.Integer, java.util.Date>>");
 
-        Map<String, ImmutablePair<Integer, Date>> map = new HashMap<String, ImmutablePair<Integer, Date>>();
+        final Map<String, ImmutablePair<Integer, Date>> map = new HashMap<>();
         GregorianCalendar calendar = new GregorianCalendar(2012, 1, 20);
-        map.put("cat", new ImmutablePair<Integer, Date>(1, calendar.getTime()));
+        map.put("cat", new ImmutablePair<>(1, calendar.getTime()));
         calendar = new GregorianCalendar(2011, 6, 1);
-        map.put("dog", new ImmutablePair<Integer, Date>(2, calendar.getTime()));
+        map.put("dog", new ImmutablePair<>(2, calendar.getTime()));
         calendar = new GregorianCalendar(1999, 10, 15);
-        map.put("unknow", new ImmutablePair<Integer, Date>(3, calendar.getTime()));
+        map.put("unknow", new ImmutablePair<>(3, calendar.getTime()));
 
-        String json = jsonConverter.getAsString(null, null, map);
+        final String json = jsonConverter.getAsString(null, null, map);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(CollectionUtils.isEqualCollection(map.entrySet(),
                     ((Map<String, ImmutablePair<Integer, Date>>) obj).entrySet()));
     }
@@ -231,10 +231,10 @@ public class JsonConverterTest {
     public void testPojoNonGeneric() {
         jsonConverter.setType("org.primefaces.extensions.converter.FooNonGeneric");
 
-        FooNonGeneric fooNonGeneric = new FooNonGeneric();
-        String json = jsonConverter.getAsString(null, null, fooNonGeneric);
+        final FooNonGeneric fooNonGeneric = new FooNonGeneric();
+        final String json = jsonConverter.getAsString(null, null, fooNonGeneric);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(fooNonGeneric.equals(obj));
     }
 
@@ -242,34 +242,35 @@ public class JsonConverterTest {
     public void testPojoGenericSimple() {
         jsonConverter.setType("org.primefaces.extensions.converter.FooGeneric<java.lang.String, java.lang.Integer>");
 
-        FooGeneric<String, Integer> fooGeneric = new FooGeneric<String, Integer>();
+        final FooGeneric<String, Integer> fooGeneric = new FooGeneric<>();
         fooGeneric.setA("test");
         fooGeneric.setB(25);
 
-        String json = jsonConverter.getAsString(null, null, fooGeneric);
+        final String json = jsonConverter.getAsString(null, null, fooGeneric);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(fooGeneric.equals(obj));
     }
 
     @Test
     public void testPojoGenericComplex() {
         jsonConverter.setType(
-                    "org.primefaces.extensions.converter.FooGeneric<int[], org.primefaces.extensions.converter.FooGeneric<org.primefaces.extensions.converter.FooNonGeneric, java.lang.Boolean>>");
+                    "org.primefaces.extensions.converter.FooGeneric<int[], "
+                                + "org.primefaces.extensions.converter.FooGeneric<org.primefaces.extensions.converter.FooNonGeneric, java.lang.Boolean>>");
 
-        FooNonGeneric fooNonGeneric = new FooNonGeneric();
-        FooGeneric<FooNonGeneric, Boolean> fooGenericInnner = new FooGeneric<FooNonGeneric, Boolean>();
+        final FooNonGeneric fooNonGeneric = new FooNonGeneric();
+        final FooGeneric<FooNonGeneric, Boolean> fooGenericInnner = new FooGeneric<>();
         fooGenericInnner.setA(fooNonGeneric);
         fooGenericInnner.setB(false);
 
-        FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericOuter = new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
-        int[] ints = { 1, 2, 3, 4, 5 };
+        final FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericOuter = new FooGeneric<>();
+        final int[] ints = {1, 2, 3, 4, 5};
         fooGenericOuter.setA(ints);
         fooGenericOuter.setB(fooGenericInnner);
 
-        String json = jsonConverter.getAsString(null, null, fooGenericOuter);
+        final String json = jsonConverter.getAsString(null, null, fooGenericOuter);
 
-        Object obj = jsonConverter.getAsObject(null, null, json);
+        final Object obj = jsonConverter.getAsObject(null, null, json);
         assertTrue(fooGenericOuter.equals(obj));
     }
 }
