@@ -20,7 +20,6 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -43,7 +42,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageRotateAndResize, imageRotateAndResize.getFor()));
 

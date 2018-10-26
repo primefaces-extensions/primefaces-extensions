@@ -23,7 +23,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -94,7 +93,7 @@ public class CKEditorRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final CKEditor ckEditor) throws IOException {
-        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        final WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtCKEditor", ckEditor.resolveWidgetVar(), ckEditor.getClientId());
         wb.attr("height", ckEditor.getHeight())
                     .attr("width", ckEditor.getWidth())
