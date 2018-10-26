@@ -108,7 +108,7 @@ public class TimerRenderer extends CoreRenderer {
                     .params(timer)
                     .build();
 
-        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        final WidgetBuilder wb = getWidgetBuilder(context);
 
         wb.initWithDomReady("ExtTimer", widgetVar, clientId).attr("timeout", timer.getTimeout())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())

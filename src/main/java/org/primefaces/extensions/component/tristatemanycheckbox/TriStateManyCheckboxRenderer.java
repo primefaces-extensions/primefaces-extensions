@@ -35,7 +35,6 @@ import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
-import org.primefaces.context.RequestContext;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
@@ -274,7 +273,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtTriStateManyCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());
         encodeClientBehaviors(context, checkbox);
         wb.finish();

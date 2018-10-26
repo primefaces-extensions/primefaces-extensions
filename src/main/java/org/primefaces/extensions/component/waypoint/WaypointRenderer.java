@@ -20,7 +20,6 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.expression.SearchExpressionHint;
 import org.primefaces.renderkit.CoreRenderer;
@@ -50,7 +49,7 @@ public class WaypointRenderer extends CoreRenderer {
         final String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(),
                     SearchExpressionHint.PARENT_FALLBACK);
 
-        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        final WidgetBuilder wb = getWidgetBuilder(fc);
         wb.initWithDomReady("ExtWaypoint", waypoint.resolveWidgetVar(), waypoint.getClientId(fc));
         wb.attr("target", target);
         wb.attr("continuous", waypoint.isContinuous());

@@ -22,7 +22,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.component.gchart.model.GChartModel;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -67,7 +66,7 @@ public class GChartRenderer extends CoreRenderer {
             apiKey = getApiKey(context, chart);
         }
 
-        final WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtGChart", widgetVar, clientId)
                     .attr("chart", ((GChartModel) chart.getValue()).toJson())
                     .attr("title", chart.getTitle())

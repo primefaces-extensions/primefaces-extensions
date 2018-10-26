@@ -25,7 +25,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.renderkit.InputRenderer;
@@ -115,7 +114,7 @@ public class CodeMirrorRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
-        WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
+        WidgetBuilder wb = getWidgetBuilder(context);
         wb.initWithDomReady("ExtCodeMirror", codeMirror.resolveWidgetVar(), codeMirror.getClientId());
         wb.attr("theme", codeMirror.getTheme())
                     .attr("mode", codeMirror.getMode())
