@@ -133,14 +133,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Name of the client side widget.]]>
-            </description>
-            <name>widgetVar</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name of the client side widget.]]>
+			</description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
@@ -2494,14 +2494,14 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[When closed, can a pane 'slide open' over adjacent panes. Default is true.]]>
-            </description>
-            <name>slidable</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[When closed, can a pane 'slide open' over adjacent panes. Default is true.]]>
+			</description>
+			<name>slidable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[Specifies the initial size of a pane in px or %. Default value is null.]]>
@@ -2990,38 +2990,38 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Fade In time in millis; set to 0 to disable fadeIn on block.]]>
-            </description>
-            <name>fadeIn</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Fade Out time in millis; set to 0 to disable fadeOut on unblock.]]>
-            </description>
-            <name>fadeOut</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Disable if you do not want to show the overlay. Default value is true.]]>
-            </description>
-            <name>showOverlay</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Focus will be placed in the first available input field when page blocking. Default value is true.]]>
-            </description>
-            <name>focusInput</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Fade In time in millis; set to 0 to disable fadeIn on block.]]>
+			</description>
+			<name>fadeIn</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Fade Out time in millis; set to 0 to disable fadeOut on unblock.]]>
+			</description>
+			<name>fadeOut</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Disable if you do not want to show the overlay. Default value is true.]]>
+			</description>
+			<name>showOverlay</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Focus will be placed in the first available input field when page blocking. Default value is true.]]>
+			</description>
+			<name>focusInput</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>
@@ -4326,14 +4326,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[he code for the language or locale that should be to customize text that might be part of the chart. Default is "en"]]>
-            </description>
-            <name>language</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[he code for the language or locale that should be to customize text that might be part of the chart. Default is "en"]]>
+			</description>
+			<name>language</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>
@@ -5074,14 +5074,14 @@
 			<component-type>org.primefaces.extensions.component.Sheet</component-type>
 			<renderer-type>org.primefaces.extensions.component.SheetRenderer</renderer-type>
 		</component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Unique identifier of the component in a namingContainer.]]>
+			</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
@@ -5090,14 +5090,14 @@
 			<required>false</required>
 			<type>javax.faces.component.UIComponent</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Name of the client side widget.]]>
-            </description>
-            <name>widgetVar</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name of the client side widget.]]>
+			</description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. 
@@ -5147,46 +5147,46 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[List to keep the filtered/sorted data if filtering/sorting is enabled.]]>
-            </description>
-            <name>filteredValue</name>
-            <required>false</required>
-            <type>java.util.List</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Maximum number of rows. Default is infinity.]]>
-            </description>
-            <name>maxRows</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Minimum number of rows. At least that many of rows will be created during initialization. Default is 0.]]>
-            </description>
-            <name>minRows</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Maximum number of columns. Default is infinity.]]>
-            </description>
-            <name>maxCols</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Minimum number of columns. At least that many of columns will be created during initialization. Default is 0.]]>
-            </description>
-            <name>minCols</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[List to keep the filtered/sorted data if filtering/sorting is enabled.]]>
+			</description>
+			<name>filteredValue</name>
+			<required>false</required>
+			<type>java.util.List</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Maximum number of rows. Default is infinity.]]>
+			</description>
+			<name>maxRows</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Minimum number of rows. At least that many of rows will be created during initialization. Default is 0.]]>
+			</description>
+			<name>minRows</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Maximum number of columns. Default is infinity.]]>
+			</description>
+			<name>maxCols</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Minimum number of columns. At least that many of columns will be created during initialization. Default is 0.]]>
+			</description>
+			<name>minCols</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[The number of columns to fix or freeze on the left when scrolling.]]>
@@ -5219,38 +5219,38 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Allow the columns to be manually resizable. Default to false]]>
-            </description>
-            <name>resizableCols</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Allow the rows to be manually resizable. Default to false]]>
-            </description>
-            <name>resizableRows</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Allow the columns to be manually moved. Default to false]]>
-            </description>
-            <name>movableCols</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Allow the rows to be manually moved. Default to false]]>
-            </description>
-            <name>movableRows</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Allow the columns to be manually resizable. Default to false]]>
+			</description>
+			<name>resizableCols</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Allow the rows to be manually resizable. Default to false]]>
+			</description>
+			<name>resizableRows</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Allow the columns to be manually moved. Default to false]]>
+			</description>
+			<name>movableCols</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Allow the rows to be manually moved. Default to false]]>
+			</description>
+			<name>movableRows</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[The height of the sheet in pixels.  It is recommended you use this property instead of a style class to ensure it is applied to the proper element.  This can be left empty, but performance may suffer.]]>
@@ -5323,20 +5323,22 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
-        <attribute>
-            <description><![CDATA[An el expression resolving to a header for each row.  Optional.]]></description>
-            <name>rowHeader</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value to specify whether the sheet should be rendered as a read only.  This is more efficient than cell by cell, but renders the entire sheet as read only.]]>
-            </description>
-            <name>readOnly</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[An el expression resolving to a header for each row.  Optional.]]>
+			</description>
+			<name>rowHeader</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value to specify whether the sheet should be rendered as a read only.  This is more efficient than cell by cell, but renders the entire sheet as read only.]]>
+			</description>
+			<name>readOnly</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[Property to be used for sorting.]]>
@@ -5353,22 +5355,22 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Case sensitivity for sorting, insensitive by default.]]>
-            </description>
-            <name>caseSensitiveSort</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Defines where the null values are placed in ascending sort order. Default value is "1" meaning null values are placed at the end in ascending mode and at beginning in descending mode. Set to "-1" for the opposite behavior.]]>
-            </description>
-            <name>nullSortOrder</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Case sensitivity for sorting, insensitive by default.]]>
+			</description>
+			<name>caseSensitiveSort</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Defines where the null values are placed in ascending sort order. Default value is "1" meaning null values are placed at the end in ascending mode and at beginning in descending mode. Set to "-1" for the opposite behavior.]]>
+			</description>
+			<name>nullSortOrder</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[The Handsontable StretchH value.  Affects rendering of the column widths.  Valid values are "none", "hybrid", "last", "all".]]>
@@ -5377,12 +5379,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description><![CDATA[Style of the html container element. Width and Height can be configured here in viewport units]]></description>
-            <name>style</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Style of the html container element. Width and Height can be configured here in viewport units]]>
+			</description>
+			<name>style</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[The additional style classes for the rendered table.  Multiple classes may be specified delimited by a space.]]>
@@ -5439,86 +5443,86 @@
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
-        <attribute>
-            <description>
-               <![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
-            </description>
-            <name>extender</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all active headers in selections. The header will be marked with this class name only when a whole column or row will be selected.]]>
-            </description>
-            <name>activeHeaderStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name added to the commented cells.]]>
-            </description>
-            <name>commentedCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible columns in the current selection.]]>
-            </description>
-            <name>currentColStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible headers in current selection.]]>
-            </description>
-            <name>currentHeaderStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for all visible rows in the current selection.]]>
-            </description>
-            <name>currentRowStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for cells that did not pass validation.]]>
-            </description>
-            <name>invalidCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name added to cells with cell meta wordWrap: false]]>
-            </description>
-            <name>noWordWrapStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for cells that have a placeholder in use.]]>
-            </description>
-            <name>placeholderCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[CSS class name for read-only cells.]]>
-            </description>
-            <name>readOnlyCellStyleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
+			</description>
+			<name>extender</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for all active headers in selections. The header will be marked with this class name only when a whole column or row will be selected.]]>
+			</description>
+			<name>activeHeaderStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name added to the commented cells.]]>
+			</description>
+			<name>commentedCellStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for all visible columns in the current selection.]]>
+			</description>
+			<name>currentColStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for all visible headers in current selection.]]>
+			</description>
+			<name>currentHeaderStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for all visible rows in the current selection.]]>
+			</description>
+			<name>currentRowStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for cells that did not pass validation.]]>
+			</description>
+			<name>invalidCellStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name added to cells with cell meta wordWrap: false]]>
+			</description>
+			<name>noWordWrapStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for cells that have a placeholder in use.]]>
+			</description>
+			<name>placeholderCellStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[CSS class name for read-only cells.]]>
+			</description>
+			<name>readOnlyCellStyleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>
@@ -5528,14 +5532,14 @@
 		<component>
 			<component-type>org.primefaces.extensions.component.SheetColumn</component-type>
 		</component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Unique identifier of the component in a namingContainer.]]>
+			</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
@@ -5617,102 +5621,102 @@
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Password mask defaulted to asterisks *. Note that you can't change symbol used by the input field due to browsers limitations.]]>
-            </description>
-            <name>passwordHashSymbol</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[By default every password has length equal to the length of value that it corresponds with. Use this option to set fixed hash length.]]>
-            </description>
-            <name>passwordHashLength</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.]]>
-            </description>
-            <name>numericPattern</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[String or java.util.Locale representing user locale. Default is "en-US".]]>
-            </description>
-            <name>numericLocale</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Moment.js date format for colType="date". Default is "DD/MM/YYYY".]]>
-            </description>
-            <name>dateFormat</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration).]]>
-            </description>
-            <name>datePickerConfig</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Moment.js time format for colType="date". Default is "h:mm:ss a".]]>
-            </description>
-            <name>timeFormat</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value if true, the autocomplete cells will only accept values that are defined in the source array. Default true.]]>
-            </description>
-            <name>autoCompleteStrict</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection advances to the next cell.]]>
-            </description>
-            <name>autoCompleteAllowInvalid</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value If true, trims the dropdown to fit the cell size. Default to true.]]>
-            </description>
-            <name>autoCompleteTrimDropdown</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Number of rows visible in the autocomplete dropdown.]]>
-            </description>
-            <name>autoCompleteVisibleRows</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Collection of values to display in colType="dropdown" or "autocomplete".]]>
-            </description>
-            <name>selectItems</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Password mask defaulted to asterisks *. Note that you can't change symbol used by the input field due to browsers limitations.]]>
+			</description>
+			<name>passwordHashSymbol</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[By default every password has length equal to the length of value that it corresponds with. Use this option to set fixed hash length.]]>
+			</description>
+			<name>passwordHashLength</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.]]>
+			</description>
+			<name>numericPattern</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[String or java.util.Locale representing user locale. Default is "en-US".]]>
+			</description>
+			<name>numericLocale</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Moment.js date format for colType="date". Default is "DD/MM/YYYY".]]>
+			</description>
+			<name>dateFormat</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration).]]>
+			</description>
+			<name>datePickerConfig</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Moment.js time format for colType="date". Default is "h:mm:ss a".]]>
+			</description>
+			<name>timeFormat</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value if true, the autocomplete cells will only accept values that are defined in the source array. Default true.]]>
+			</description>
+			<name>autoCompleteStrict</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection advances to the next cell.]]>
+			</description>
+			<name>autoCompleteAllowInvalid</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value If true, trims the dropdown to fit the cell size. Default to true.]]>
+			</description>
+			<name>autoCompleteTrimDropdown</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Number of rows visible in the autocomplete dropdown.]]>
+			</description>
+			<name>autoCompleteVisibleRows</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Collection of values to display in colType="dropdown" or "autocomplete".]]>
+			</description>
+			<name>selectItems</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[Boolean value to specify whether the column should be rendered as a read only column.  This is more efficient than cell by cell, but renders the entire column as read only. The var value may not be referenced.]]>
@@ -5809,170 +5813,223 @@
 			<required>false</required>
 			<type>javax.faces.event.ValueChangeListener</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Controls the visibilty of the column, default is true.]]>
-            </description>
-            <name>visible</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[A Javascript function, regular expression or a string, which will be used in the process of cell validation. If a function is used, be sure to execute the callback argument with either true (callback(true)) if the validation passed or with false (callback(false)), if the validation failed. Note, that this in the function points to the cellProperties object.]]>
-            </description>
-            <name>onvalidate</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Controls the visibilty of the column, default is true.]]>
+			</description>
+			<name>visible</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[When set to true, the text of the cell content is wrapped if it does not fit in the fixed column width. Default is true.]]>
+			</description>
+			<name>wordWrap</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[A Javascript function, regular expression or a string, which will be used in the process of cell validation. If a function is used, be sure to execute the callback argument with either true (callback(true)) if the validation passed or with false (callback(false)), if the validation failed. Note, that this in the function points to the cellProperties object.]]>
+			</description>
+			<name>onvalidate</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
-	 <tag>
-        <description><![CDATA[OrgChart based on https://github.com/dabeng/OrgChart]]></description>
-        <tag-name>orgchart</tag-name>
-        <component>
-            <component-type>org.primefaces.extensions.component.OrgChart</component-type>
-            <renderer-type>org.primefaces.extensions.component.OrgChartRenderer</renderer-type>
-        </component>
-        <attribute>
-            <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]></description>
-            <name>rendered</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]></description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Value of the component.]]>
-            </description>
-            <name>value</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Name of the client side widget.]]></description>
-            <name>widgetVar</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It sets one property of datasource as unique identifier of every orgchart node. Default is "id"]]></description>
-            <name>nodeId</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It sets one property of datasource as text content of content section of orgchart node. Default is title]]></description>
-            <name>nodeContent</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[The available values are t2b(implies "top to bottom", it's default value), b2t(implies "bottom to top"), l2r(implies "left to right"), r2l(implies "right to left").]]></description>
-            <name>direction</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users could pan the orgchart by mouse drag&drop if they enable this option. Default is false]]></description>
-            <name>pan</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It indicates the level that at the very beginning orgchart is expanded to. Default is 999]]></description>
-            <name>depth</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It enable the export button for orgchart. Default is false]]></description>
-            <name>exportButton</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It's filename when you export current orgchart as a picture. Default is "Orgchart"]]></description>
-            <name>exportFilename</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Available values are png and pdf. Default is "png"]]></description>
-            <name>exportFileextension</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-               <![CDATA[Name of javascript function to extend the options of the underlying OrgChart JS plugin.]]>
-            </description>
-            <name>extender</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Using font awesome icon to imply that the node has child nodes. Default is "fa-users"]]></description>
-            <name>parentNodeSymbol</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users can drag & drop the nodes of orgchart if they enable this option. **Note**: this feature doesn't work on IE due to its poor support for HTML5 drag & drop API. Default is false]]></description>
-            <name>draggable</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[when you wanna instantiate multiple orgcharts on one page, you should add diffent classname to them in order to distinguish them. Default is ""]]></description>
-            <name>chartClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users could zoomin/zoomout the orgchart by mouse wheel if they enable this option. Default is false]]></description>
-            <name>zoom</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Once enable this option, users can show/hide left/right sibling nodes respectively by clicking left/right arrow. Default is false]]></description>
-            <name>toggleSiblingsResp</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users are allowed to set a zoom-in limit. Default is 7]]></description>
-            <name>zoominLimit</name>
-            <required>false</required>
-            <type>java.lang.Number</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users are allowed to set a zoom-out limit. Default is 0.5]]></description>
-            <name>zoomoutLimit</name>
-            <required>false</required>
-            <type>java.lang.Number</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users can make use of this option to align the nodes vertically from the specified depth.]]></description>
-            <name>verticalDepth</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[It sets one property of datasource as text content of title section of orgchart node. In fact, users can create a simple orghcart with only nodeTitle option. Default is "name"]]></description>
-            <name>nodeTitle</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-    </tag>
+	<tag>
+		<description>
+			<![CDATA[OrgChart based on https://github.com/dabeng/OrgChart]]>
+		</description>
+		<tag-name>orgchart</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.OrgChart</component-type>
+			<renderer-type>org.primefaces.extensions.component.OrgChartRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description>
+				<![CDATA[Unique identifier of the component in a namingContainer.]]>
+			</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+			</description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+			</description>
+			<name>binding</name>
+			<required>false</required>
+			<type>javax.faces.component.UIComponent</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Value of the component.]]>
+			</description>
+			<name>value</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name of the client side widget.]]>
+			</description>
+			<name>widgetVar</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It sets one property of datasource as unique identifier of every orgchart node. Default is "id"]]>
+			</description>
+			<name>nodeId</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It sets one property of datasource as text content of content section of orgchart node. Default is title]]>
+			</description>
+			<name>nodeContent</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[The available values are t2b(implies "top to bottom", it's default value), b2t(implies "bottom to top"), l2r(implies "left to right"), r2l(implies "right to left").]]>
+			</description>
+			<name>direction</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users could pan the orgchart by mouse drag&drop if they enable this option. Default is false]]>
+			</description>
+			<name>pan</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It indicates the level that at the very beginning orgchart is expanded to. Default is 999]]>
+			</description>
+			<name>depth</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It enable the export button for orgchart. Default is false]]>
+			</description>
+			<name>exportButton</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It's filename when you export current orgchart as a picture. Default is "Orgchart"]]>
+			</description>
+			<name>exportFilename</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Available values are png and pdf. Default is "png"]]>
+			</description>
+			<name>exportFileextension</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Name of javascript function to extend the options of the underlying OrgChart JS plugin.]]>
+			</description>
+			<name>extender</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Using font awesome icon to imply that the node has child nodes. Default is "fa-users"]]>
+			</description>
+			<name>parentNodeSymbol</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users can drag & drop the nodes of orgchart if they enable this option. **Note**: this feature doesn't work on IE due to its poor support for HTML5 drag & drop API. Default is false]]>
+			</description>
+			<name>draggable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[when you wanna instantiate multiple orgcharts on one page, you should add diffent classname to them in order to distinguish them. Default is ""]]>
+			</description>
+			<name>chartClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users could zoomin/zoomout the orgchart by mouse wheel if they enable this option. Default is false]]>
+			</description>
+			<name>zoom</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Once enable this option, users can show/hide left/right sibling nodes respectively by clicking left/right arrow. Default is false]]>
+			</description>
+			<name>toggleSiblingsResp</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users are allowed to set a zoom-in limit. Default is 7]]>
+			</description>
+			<name>zoominLimit</name>
+			<required>false</required>
+			<type>java.lang.Number</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users are allowed to set a zoom-out limit. Default is 0.5]]>
+			</description>
+			<name>zoomoutLimit</name>
+			<required>false</required>
+			<type>java.lang.Number</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Users can make use of this option to align the nodes vertically from the specified depth.]]>
+			</description>
+			<name>verticalDepth</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[It sets one property of datasource as text content of title section of orgchart node. In fact, users can create a simple orghcart with only nodeTitle option. Default is "name"]]>
+			</description>
+			<name>nodeTitle</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
 </facelet-taglib>

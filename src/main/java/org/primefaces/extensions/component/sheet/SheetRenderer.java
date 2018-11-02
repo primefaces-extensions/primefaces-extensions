@@ -301,6 +301,7 @@ public class SheetRenderer extends CoreRenderer {
             if (column.isReadOnly()) {
                 options.appendProperty("readOnly", "true", false);
             }
+            options.appendProperty("wordWrap", column.isWordWrap().toString(), false);
 
             // validate can be a function, regex, or string
             final String validateFunction = column.getOnvalidate();

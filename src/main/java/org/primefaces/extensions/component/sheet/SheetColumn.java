@@ -158,6 +158,10 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
          */
         visible,
         /**
+         * When set to true, the text of the cell content is wrapped if it does not fit in the fixed column width.
+         */
+        wordWrap,
+        /**
          * A Javascript function, regular expression or a string, which will be used in the process of cell validation. If a function is used, be sure to
          * execute the callback argument with either true (callback(true)) if the validation passed or with false (callback(false)), if the validation failed.
          * Note, that this in the function points to the cellProperties object.
@@ -387,6 +391,14 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public Boolean isVisible() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.visible, Boolean.TRUE).toString());
+    }
+
+    public void setWordWrap(final Boolean value) {
+        getStateHelper().put(PropertyKeys.wordWrap, value);
+    }
+
+    public Boolean isWordWrap() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.wordWrap, Boolean.TRUE).toString());
     }
 
     /**
