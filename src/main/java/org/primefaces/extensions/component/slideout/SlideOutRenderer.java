@@ -119,7 +119,7 @@ public class SlideOutRenderer extends CoreRenderer {
 
         // handle text
         if (slideOut.getTitle() != null) {
-            writer.write(escapeText(slideOut.getTitle()));
+            writer.writeText(slideOut.getTitle(), "title");
         }
 
         writer.endElement("a");
