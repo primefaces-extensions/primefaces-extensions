@@ -2170,6 +2170,30 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS width property to set the width of the tooltip.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS min-width property to set the minimum width of the tooltip. Default to 0px.]]>
+            </description>
+            <name>minWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS max-width property to set the maximum width of the tooltip.]]>
+            </description>
+            <name>maxWidth</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[A positive or negative pixel value by which to offset the tooltip in the horizontal plane (x-axis). Negative values cause a reduction in the value (moves tooltip to the left). Default value is 0.]]>

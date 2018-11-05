@@ -60,6 +60,9 @@ public class Tooltip extends UIOutput implements Widget {
         header,
         adjustX,
         adjustY,
+        width,
+        minWidth,
+        maxWidth,
         atPosition,
         myPosition,
         showEvent,
@@ -160,6 +163,30 @@ public class Tooltip extends UIOutput implements Widget {
 
     public void setAdjustY(final int adjustY) {
         getStateHelper().put(PropertyKeys.adjustY, adjustY);
+    }
+
+    public String getWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.width, null);
+    }
+
+    public void setWidth(final String width) {
+        getStateHelper().put(PropertyKeys.width, width);
+    }
+
+    public String getMinWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.minWidth, "0px");
+    }
+
+    public void setMinWidth(final String minWidth) {
+        getStateHelper().put(PropertyKeys.minWidth, minWidth);
+    }
+
+    public String getMaxWidth() {
+        return (String) getStateHelper().eval(PropertyKeys.maxWidth, null);
+    }
+
+    public void setMaxWidth(final String minWidth) {
+        getStateHelper().put(PropertyKeys.maxWidth, minWidth);
     }
 
     public String getAtPosition() {

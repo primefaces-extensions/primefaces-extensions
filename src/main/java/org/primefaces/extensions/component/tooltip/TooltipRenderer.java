@@ -107,6 +107,15 @@ public class TooltipRenderer extends CoreRenderer {
         if (isStyled) {
             wb.append(",classes:'" + styleClass + "'");
         }
+        if (StringUtils.isNotBlank(tooltip.getWidth())) {
+            wb.append(",width:'" + tooltip.getWidth() + "'");
+        }
+        if (StringUtils.isNotBlank(tooltip.getMinWidth())) {
+            wb.append(",'min-width':'" + tooltip.getMinWidth() + "'");
+        }
+        if (StringUtils.isNotBlank(tooltip.getMaxWidth())) {
+            wb.append(",'max-width':'" + tooltip.getMaxWidth() + "'");
+        }
         wb.append("}");
 
         // events
