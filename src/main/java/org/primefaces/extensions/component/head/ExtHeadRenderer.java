@@ -60,7 +60,7 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
     private void encodeTitle(final ExtHead extHead, final ResponseWriter writer) throws IOException {
         if (extHead.getTitle() != null) {
             writer.startElement("title", null);
-            writer.write(extHead.getTitle());
+            writer.writeText(extHead.getTitle(), "title");
             writer.endElement("title");
         }
     }
