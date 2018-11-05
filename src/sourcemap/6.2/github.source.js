@@ -13,7 +13,7 @@ function GithubRepo( repo ) {
 // Parses HTML template
 GithubRepo.prototype.toHTML = function () {
 	this.pushed_at = this._parsePushedDate( this.pushed_at );
-
+	// FIXME: various XSS vulnerabilities: url, name, description, etc. need to be escaped for HTML
 	return $(
 		"<div class='github-box'>" +
 			"<div class='github-box-header'>" +
