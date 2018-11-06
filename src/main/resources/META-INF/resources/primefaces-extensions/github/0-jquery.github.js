@@ -18,20 +18,20 @@ GithubRepo.prototype.toHTML = function () {
 		"<div class='github-box'>" +
 			"<div class='github-box-header'>" +
 				"<h3>" +
-					"<a href='" + this.url + "'>" + this.name + "</a>" +
+					"<a href='" + PrimeFacesExt.escapeHTML(this.url) + "'>" + PrimeFacesExt.escapeHTML(this.name) + "</a>" +
 				"</h3>" +
 				"<div class='github-stats'>" +
-					"<a class='repo-stars' title='Stars' data-icon='7' href='" + this.url + "/stargazers'>" + this.stargazers + "</a>" +
-					"<a class='repo-forks' title='Forks' data-icon='f' href='" + this.url + "/network'>" + this.forks + "</a>" +
-					"<a class='repo-issues' title='Issues' data-icon='i' href='" + this.url + "/issues'>" + this.open_issues + "</a>" +
+					"<a class='repo-stars' title='Stars' data-icon='7' href='" + PrimeFacesExt.escapeHTML(this.url) + "/stargazers'>" + PrimeFacesExt.escapeHTML(this.stargazers) + "</a>" +
+					"<a class='repo-forks' title='Forks' data-icon='f' href='" + PrimeFacesExt.escapeHTML(this.url) + "/network'>" + PrimeFacesExt.escapeHTML(this.forks) + "</a>" +
+					"<a class='repo-issues' title='Issues' data-icon='i' href='" + PrimeFacesExt.escapeHTML(this.url) + "/issues'>" + (this.open_issues) + "</a>" +
 				"</div>" +
 			"</div>" +
 			"<div class='github-box-content'>" +
-				"<p>" + this.description + " &mdash; <a href='" + this.url + "#readme'>Read More</a></p>" +
+				"<p>" + PrimeFacesExt.escapeHTML(this.description) + " &mdash; <a href='" + PrimeFacesExt.escapeHTML(this.url) + "#readme'>Read More</a></p>" +
 			"</div>" +
 			"<div class='github-box-download'>" +
-				"<p class='repo-update'>Latest commit to <strong>master</strong> on " + this.pushed_at + "</p>" +
-				"<a class='repo-download' title='Download as zip' data-icon='w' href='" + this.url + "/zipball/master'></a>" +
+				"<p class='repo-update'>Latest commit to <strong>master</strong> on " + PrimeFacesExt.escapeHTML(this.pushed_at) + "</p>" +
+				"<a class='repo-download' title='Download as zip' data-icon='w' href='" + PrimeFacesExt.escapeHTML(this.url) + "/zipball/master'></a>" +
 			"</div>" +
 		"</div>");
 };

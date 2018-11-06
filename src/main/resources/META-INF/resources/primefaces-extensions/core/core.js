@@ -155,8 +155,15 @@ PrimeFacesExt = {
       }
 
       return cfg;
+   }, 
+   
+   // TODO Remove when rebased on PF 6.3 
+   escapeHTML: function(value) {
+       return String(value).replace(/[&<>"'`=\/]/g, function (s) {
+           return PrimeFacesExt.entityMap[s];
+       });
    },
-
+    
    /**
     * This function need to be invoked after PrimeFaces changeTheme. It's used
     * to sync canvas and svg components to the current theme.
@@ -213,6 +220,18 @@ PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
    }
 
    return cfg.execute.call(this, cfg.source, cfg.event, params, ext);
+};
+
+// TODO Remove when rebased on PF 6.3
+PrimeFacesExt.entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
 };
 
 /**
