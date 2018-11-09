@@ -36,7 +36,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SheetColumn";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SheetColumnRenderer";
     private static final String MESSAGE_REQUIRED = "A valid value for this column is required.";
 
     /**
@@ -181,7 +180,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Default constructor
      */
     public SheetColumn() {
-        setRendererType(DEFAULT_RENDERER);
+        setRendererType(null);
     }
 
     /*
