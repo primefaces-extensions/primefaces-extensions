@@ -44,8 +44,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.PrimeFaces;
 import org.primefaces.component.api.Widget;
-import org.primefaces.context.RequestContext;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetRowColIndex;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
@@ -54,6 +54,7 @@ import org.primefaces.model.BeanPropertyComparator;
 import org.primefaces.model.SortOrder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * Spreadsheet component wrappering the Handsontable jQuery UI component.
@@ -1136,7 +1137,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         final ValueExpression veRowHeader = getRowHeaderValueExpression();
         final Object value = veRowHeader.getValue(context.getELContext());
         if (value == null) {
-            return StringUtils.EMPTY;
+            return Constants.EMPTY_STRING;
         }
         else {
             return value.toString();
@@ -1197,7 +1198,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
     protected boolean matchesFilter(final Object obj) {
         for (final SheetColumn col : getColumns()) {
             final String filterValue = col.getFilterValue();
-            if (StringUtils.isEmpty(filterValue)) {
+            if (LangUtils.isValueBlank(filterValue)) {
                 continue;
             }
 
@@ -1208,7 +1209,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             }
 
             String filterMatchMode = col.getFilterMatchMode();
-            if (StringUtils.isEmpty(filterMatchMode)) {
+            if (LangUtils.isValueBlank(filterMatchMode)) {
                 filterMatchMode = "contains";
             }
 
@@ -1259,7 +1260,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
         boolean filters = false;
         for (final SheetColumn col : getColumns()) {
-            if (StringUtils.isNotEmpty(col.getFilterValue())) {
+            if (!LangUtils.isValueBlank(col.getFilterValue())) {
                 filters = true;
                 break;
             }
@@ -1356,8 +1357,6 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
      * @return
      */
     protected String getRowKeyValueAsString(final Object key) {
-        // TODO for now just use toString and remove spaces/etc, but in future
-        // we'll want to revisit this to support complex key objects
         final String result = key.toString();
         return "r_" + StringUtils.deleteWhitespace(result);
     }
@@ -1568,8 +1567,8 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
 
     /**
      * Override to update model with local values. Note that this is where things can be fragile in that we can successfully update some values and fail on
-     * others. There is no clean way to roll back the updates, but we also need to fail processing. TODO consider keeping old values as we update (need for
-     * event anyhow) and if there is a failure attempt to roll back by updating successful model updates with the old value. This may not all be necessary.
+     * others. There is no clean way to roll back the updates, but we also need to fail processing. Consider keeping old values as we update (need for event
+     * anyhow) and if there is a failure attempt to roll back by updating successful model updates with the old value. This may not all be necessary.
      */
     @Override
     public void updateModel(final FacesContext context) {
@@ -1856,7 +1855,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             final StringBuilder eval = new StringBuilder();
             final String jsVar = resolveWidgetVar();
             eval.append("PF('").append(jsVar).append("')").append(".clearDataInput();");
-            RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
+            PrimeFaces.current().executeScript(eval.toString());
         }
     }
 
@@ -1928,7 +1927,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
             eval.append(");");
         }
         eval.append("PF('").append(jsVar).append("')").append(".redraw();");
-        RequestContext.getCurrentInstance().getScriptsToExecute().add(eval.toString());
+        PrimeFaces.current().executeScript(eval.toString());
     }
 
     /**
@@ -1945,7 +1944,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         sb.append(";");
         sb.append("PF('" + widgetVar + "')");
         sb.append(".ht.render();");
-        RequestContext.getCurrentInstance().getScriptsToExecute().add(sb.toString());
+        PrimeFaces.current().executeScript(sb.toString());
 
         sb = new StringBuilder();
         sb.append("PF('").append(widgetVar).append("')");
@@ -1953,7 +1952,7 @@ public class Sheet extends UIInput implements ClientBehaviorHolder, EditableValu
         if (!getInvalidUpdates().isEmpty()) {
             sb.append(".addClass('ui-state-error')");
         }
-        RequestContext.getCurrentInstance().getScriptsToExecute().add(sb.toString());
+        PrimeFaces.current().executeScript(sb.toString());
     }
 
     /**

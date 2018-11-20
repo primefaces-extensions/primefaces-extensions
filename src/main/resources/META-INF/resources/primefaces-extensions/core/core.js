@@ -4,58 +4,6 @@
 PrimeFacesExt = {
 
    /**
-    * Builds a resource URL for given parameters.
-    * 
-    * @param {string}
-    *        name The name of the resource. For example: primefaces.js
-    * @param {string}
-    *        library The library of the resource. For example: primefaces
-    * @param {string}
-    *        version The version of the library. For example: 5.1
-    * @returns {string} The resource URL.
-    */
-   getFacesResource : function(name, library, version) {
-      // just get sure - name shoudln't start with a slash
-      if (name.indexOf('/') === 0) {
-         name = name.substring(1, name.length);
-      }
-
-      // find any JS served JSF resource
-      var scriptURI = PrimeFacesExt.getResourceScriptURI();
-      var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
-
-      // replace core.js with our custom name
-      scriptURI = scriptURI.replace(scriptName, name);
-
-      // find the library like ln=primefaces
-      var libraryRegex = new RegExp('[?&]([^&=]*)ln=(.*?)(&|$)');
-
-      // find library to replace e.g. 'ln=primefaces'
-      var currentLibraryName = 'ln=' + libraryRegex.exec(scriptURI)[2];
-
-      // In a portlet environment, url parameters may be namespaced.
-      var namespace = '';
-      var urlParametersAreNamespaced = !(scriptURI.indexOf('?' + currentLibraryName) > -1 || scriptURI.indexOf('&'
-            + currentLibraryName) > -1);
-
-      if (urlParametersAreNamespaced) {
-         namespace = new RegExp('[?&]([^&=]+)' + currentLibraryName + '($|&)').exec(scriptURI)[1];
-      }
-
-      // If the parameters are namespaced, the namespace must be included
-      // when replacing parameters.
-      scriptURI = scriptURI.replace(namespace + currentLibraryName, namespace + 'ln=' + library);
-
-      if (version) {
-         var extractedVersion = new RegExp('[?&]' + namespace + 'v=([^&]*)').exec(scriptURI)[1];
-         scriptURI = scriptURI.replace(namespace + 'v=' + extractedVersion, namespace + 'v=' + version);
-      }
-
-      var prefix = window.location.protocol + '//' + window.location.host;
-      return scriptURI.indexOf(prefix) >= 0 ? scriptURI : prefix + scriptURI;
-   },
-
-   /**
     * Checks if the FacesServlet is mapped with extension mapping. For example:
     * .jsf/.xhtml.
     * 
@@ -157,10 +105,14 @@ PrimeFacesExt = {
       return cfg;
    }, 
    
-   // TODO Remove when rebased on PF 6.3 
-   escapeHTML: function(value) {
-       return String(value).replace(/[&<>"'`=\/]/g, function (s) {
-           return PrimeFacesExt.entityMap[s];
+   getScript: function(url, callback) {
+       $.ajax({
+           type: "GET",
+           url: url,
+           success: callback,
+           dataType: "script",
+           cache: true,
+           async: true
        });
    },
     

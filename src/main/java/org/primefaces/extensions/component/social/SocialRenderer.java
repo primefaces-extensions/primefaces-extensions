@@ -24,8 +24,9 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -79,13 +80,13 @@ public class SocialRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final Social social) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = social.getClientId(context);
-        wb.initWithDomReady("ExtSocial", social.resolveWidgetVar(), clientId);
+        wb.init("ExtSocial", social.resolveWidgetVar(), clientId);
         wb.attr("showLabel", social.isShowLabel());
         wb.attr("shareIn", social.getShareIn());
-        if (StringUtils.isNotBlank(social.getUrl())) {
+        if (!LangUtils.isValueBlank(social.getUrl())) {
             wb.attr("url", social.getUrl());
         }
-        if (StringUtils.isNotBlank(social.getText())) {
+        if (!LangUtils.isValueBlank(social.getText())) {
             wb.attr("text", social.getText());
         }
 
@@ -108,7 +109,7 @@ public class SocialRenderer extends CoreRenderer {
         for (int i = 0; i < shares.length; i++) {
             // { share: "pinterest", media: "http://mysite.com" },
             final String share = StringUtils.lowerCase(shares[i]);
-            if (StringUtils.isEmpty(share)) {
+            if (LangUtils.isValueBlank(share)) {
                 continue;
             }
             if (i != 0) {
@@ -152,7 +153,7 @@ public class SocialRenderer extends CoreRenderer {
         if (value != null) {
             wb.append(property);
             wb.append(":\"");
-            wb.append(ComponentUtils.escapeEcmaScriptText(value));
+            wb.append(EscapeUtils.forJavaScriptAttribute(value));
             wb.append("\"");
         }
     }

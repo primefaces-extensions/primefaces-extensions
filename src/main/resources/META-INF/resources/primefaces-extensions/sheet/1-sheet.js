@@ -137,9 +137,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     // GitHub #599
                     if (cellType === "checkbox" || cellType === "dropdown" || cellType === "autocomplete" || cellType === "date") {
                        $this.updated = false;
-                       if ($this.hasBehavior('change')) {
-                           $this.cfg.behaviors['change'].call(this, 'change');
-                       }
+                       $this.callBehavior('change');
                     }
                 }
             },
@@ -148,13 +146,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 $this.selectionInput.val(JSON.stringify(sel));
                 if ($this.updated) {
                     $this.updated = false;
-                    if ($this.hasBehavior('change')) {
-                        $this.cfg.behaviors['change'].call(this, 'change');
-                    }
+                    $this.callBehavior('change');
                 } else {
-                    if ($this.hasBehavior('cellSelect')) {
-                        $this.cfg.behaviors['cellSelect'].call(this, 'cellSelect');
-                    }
+                    $this.callBehavior('cellSelect');
                 }
             },
             afterOnCellMouseDown: function (event, coords, TD) {
@@ -163,20 +157,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
 
                 // only fire event if row is -1 which means its a header
                 if ((coords.row == -1 && coords.col != -1) && $this.hasBehavior('columnSelect')) {
-                    $this.cfg.behaviors['columnSelect'].call(this, 'columnSelect');
+                    $this.callBehavior('columnSelect');
                 }
 
                 // only fire event if col is -1 which means its a header
                 if ((coords.col == -1 && coords.row != -1) && $this.hasBehavior('rowSelect')) {
-                    $this.cfg.behaviors['rowSelect'].call(this, 'rowSelect');
+                    $this.callBehavior('rowSelect');
                 }
             },
             afterDeselect: function () {
                 if ($this.updated) {
                     $this.updated = false;
-                    if ($this.hasBehavior('change')) {
-                        $this.cfg.behaviors['change'].call(this, 'change');
-                    }
+                    $this.callBehavior('change');
                 }
             },
             afterGetColHeader: function (col, TH) {
@@ -385,8 +377,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
         // destroy editor to avoid posting request after resort
         sheet.ht.destroyEditor(true);
-        if (sheet.hasBehavior('sort'))
-            sheet.cfg.behaviors['sort'].call(this, 'sort');
+        sheet.callBehavior('sort');
     },
 
     // eat enter keys for filter inputs so they do not submit form
@@ -457,7 +448,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     filter: function () {
         if (this.filterChanged && this.hasBehavior('filter')) {
             this.filterChanged = false;
-            this.cfg.behaviors['filter'].call(this, 'filter');
+            this.callBehavior('filter');
         }
     },
     

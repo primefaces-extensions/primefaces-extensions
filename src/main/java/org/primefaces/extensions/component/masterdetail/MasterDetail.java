@@ -29,11 +29,11 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.PostRestoreStateEvent;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuModel;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * <code>MasterDetail</code> component.
@@ -91,7 +91,7 @@ public class MasterDetail extends UIComponentBase {
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -172,22 +172,22 @@ public class MasterDetail extends UIComponentBase {
     public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
         super.processEvent(event);
 
-        FacesContext fc = FacesContext.getCurrentInstance();
+        final FacesContext fc = FacesContext.getCurrentInstance();
         if (!(event instanceof PostRestoreStateEvent) || !isSelectDetailRequest(fc)) {
             return;
         }
 
-        PartialViewContext pvc = fc.getPartialViewContext();
+        final PartialViewContext pvc = fc.getPartialViewContext();
         if (pvc.getRenderIds().isEmpty()) {
             // update the MasterDetail component automatically
             pvc.getRenderIds().add(getClientId(fc));
         }
 
-        MasterDetailLevel mdl = getDetailLevelToProcess(fc);
-        Object contextValue = getContextValueFromFlow(fc, mdl, true);
-        String contextVar = mdl.getContextVar();
-        if (StringUtils.isNotBlank(contextVar) && contextValue != null) {
-            Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
+        final MasterDetailLevel mdl = getDetailLevelToProcess(fc);
+        final Object contextValue = getContextValueFromFlow(fc, mdl, true);
+        final String contextVar = mdl.getContextVar();
+        if (!LangUtils.isValueBlank(contextVar) && contextValue != null) {
+            final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
             requestMap.put(contextVar, contextValue);
         }
     }
@@ -240,7 +240,7 @@ public class MasterDetail extends UIComponentBase {
 
         // selected level != null
         if (strSelectedLevel != null) {
-            int selectedLevel = Integer.parseInt(strSelectedLevel);
+            final int selectedLevel = Integer.parseInt(strSelectedLevel);
             detailLevelToGo = getDetailLevelByLevel(selectedLevel);
             if (detailLevelToGo != null) {
                 return detailLevelToGo;
@@ -265,9 +265,9 @@ public class MasterDetail extends UIComponentBase {
     }
 
     public MasterDetailLevel getDetailLevelByLevel(int level) {
-        for (UIComponent child : getChildren()) {
+        for (final UIComponent child : getChildren()) {
             if (child instanceof MasterDetailLevel) {
-                MasterDetailLevel mdl = (MasterDetailLevel) child;
+                final MasterDetailLevel mdl = (MasterDetailLevel) child;
                 if (mdl.getLevel() == level) {
                     return mdl;
                 }
@@ -292,7 +292,7 @@ public class MasterDetail extends UIComponentBase {
 
     public void updateModel(FacesContext fc, MasterDetailLevel mdlToGo) {
         final int levelToGo = mdlToGo.getLevel();
-        ValueExpression levelVE = this.getValueExpression(PropertyKeys.level.toString());
+        final ValueExpression levelVE = getValueExpression(PropertyKeys.level.toString());
         if (levelVE != null) {
             // update "level"
             levelVE.setValue(fc.getELContext(), levelToGo);
@@ -301,11 +301,11 @@ public class MasterDetail extends UIComponentBase {
 
         // get component caused this ajax request
         final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
-        MasterDetailLevel mdl = getDetailLevelToProcess(fc);
+        final MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
         // get resolved context value
         Object contextValue = null;
-        Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
+        final Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
         if (contextValues != null) {
             contextValue = contextValues.get(RESOLVED_CONTEXT_VALUE + source);
         }
@@ -314,7 +314,7 @@ public class MasterDetail extends UIComponentBase {
             // update current context value for corresponding MasterDetailLevel
             mdlToGo.getAttributes().put(getClientId(fc) + CURRENT_CONTEXT_VALUE, contextValue);
 
-            ValueExpression contextValueVE = this.getValueExpression(PropertyKeys.contextValue.toString());
+            final ValueExpression contextValueVE = getValueExpression(PropertyKeys.contextValue.toString());
             if (contextValueVE != null) {
                 // update "contextValue"
                 contextValueVE.setValue(fc.getELContext(), contextValue);
@@ -325,14 +325,14 @@ public class MasterDetail extends UIComponentBase {
 
     public Object getContextValueFromFlow(FacesContext fc, MasterDetailLevel mdl, boolean includeModel) {
         // try to get context value from internal storage
-        Object contextValue = mdl.getAttributes().get(this.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
+        final Object contextValue = mdl.getAttributes().get(this.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
         if (contextValue != null) {
             return contextValue;
         }
 
         // try to get context value from external storage (e.g. managed bean)
         if (includeModel) {
-            return this.getContextValue();
+            return getContextValue();
         }
 
         return null;
@@ -340,7 +340,7 @@ public class MasterDetail extends UIComponentBase {
 
     public BreadCrumb getBreadcrumb() {
         BreadCrumb breadCrumb = null;
-        for (UIComponent child : this.getChildren()) {
+        for (final UIComponent child : getChildren()) {
             if (child instanceof BreadCrumb) {
                 breadCrumb = (BreadCrumb) child;
 
@@ -348,18 +348,18 @@ public class MasterDetail extends UIComponentBase {
             }
         }
 
-        MenuModel model = (breadCrumb != null ? breadCrumb.getModel() : null);
+        final MenuModel model = breadCrumb != null ? breadCrumb.getModel() : null;
 
         if (model != null && model.getElements().isEmpty()) {
-            String clientId = getClientId();
-            String menuItemIdPrefix = getId() + "_bcItem_";
+            final String clientId = getClientId();
+            final String menuItemIdPrefix = getId() + "_bcItem_";
 
-            for (UIComponent child : getChildren()) {
+            for (final UIComponent child : getChildren()) {
                 if (child instanceof MasterDetailLevel) {
-                    int level = ((MasterDetailLevel) child).getLevel();
+                    final int level = ((MasterDetailLevel) child).getLevel();
 
                     // create menu item to detail level
-                    DefaultMenuItem menuItem = new DefaultMenuItem();
+                    final DefaultMenuItem menuItem = new DefaultMenuItem();
                     menuItem.setId(menuItemIdPrefix + level);
                     menuItem.setAjax(true);
                     menuItem.setImmediate(true);
@@ -392,12 +392,12 @@ public class MasterDetail extends UIComponentBase {
             throw new FacesException("Current level is missing in request.");
         }
 
-        int currentLevel = Integer.parseInt(strCurrentLevel);
+        final int currentLevel = Integer.parseInt(strCurrentLevel);
         int count = 0;
 
-        for (UIComponent child : getChildren()) {
+        for (final UIComponent child : getChildren()) {
             if (child instanceof MasterDetailLevel) {
-                MasterDetailLevel mdl = (MasterDetailLevel) child;
+                final MasterDetailLevel mdl = (MasterDetailLevel) child;
                 count++;
 
                 if (detailLevelToProcess == null && mdl.getLevel() == currentLevel) {
@@ -424,9 +424,9 @@ public class MasterDetail extends UIComponentBase {
         }
 
         int pos = 0;
-        for (UIComponent child : getChildren()) {
+        for (final UIComponent child : getChildren()) {
             if (child instanceof MasterDetailLevel) {
-                MasterDetailLevel mdl = (MasterDetailLevel) child;
+                final MasterDetailLevel mdl = (MasterDetailLevel) child;
                 pos++;
 
                 if (pos == levelPositionToGo) {

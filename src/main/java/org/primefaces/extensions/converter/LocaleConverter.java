@@ -28,6 +28,7 @@ import javax.faces.convert.FacesConverter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * {@link Converter} which converts a string to a {@link java.util.Locale} an vice-versa.
@@ -43,14 +44,16 @@ public class LocaleConverter implements Converter, Serializable {
 
     private char separator = '_';
 
+    @Override
     public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
-        if (StringUtils.isBlank(value)) {
+        if (LangUtils.isValueBlank(value)) {
             return fc.getApplication().getDefaultLocale();
         }
 
         return getLocaleObject(value, separator);
     }
 
+    @Override
     public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
         if (value == null) {
             final Locale defaultLocale = fc.getApplication().getDefaultLocale();
@@ -86,7 +89,7 @@ public class LocaleConverter implements Converter, Serializable {
         final String[] parts = replacedLocale.split("_");
         if (parts.length == 0
                     || !parts[0].matches("[a-zA-Z]{2,2}")
-                    || (parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}"))) {
+                    || parts.length > 1 && parts[1].length() != 0 && !parts[1].matches("[a-zA-Z]{2,2}")) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "'" + locale + "' does not represent a valid locale",
                         Constants.EMPTY_STRING));
@@ -108,7 +111,7 @@ public class LocaleConverter implements Converter, Serializable {
     }
 
     public static String getLocaleString(final Locale locale, final char seperator) {
-        if (StringUtils.isBlank(locale.getCountry())) {
+        if (LangUtils.isValueBlank(locale.getCountry())) {
             return locale.getLanguage();
         }
 

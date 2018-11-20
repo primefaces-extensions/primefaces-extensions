@@ -26,10 +26,10 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
 
@@ -96,7 +96,7 @@ public class TimePickerRenderer extends InputRenderer {
             writer.writeAttribute("readonly", "readonly", null);
         }
 
-        if (StringUtils.isNotBlank(value)) {
+        if (!LangUtils.isValueBlank(value)) {
             writer.writeAttribute("value", value, null);
         }
 
@@ -150,7 +150,7 @@ public class TimePickerRenderer extends InputRenderer {
         final String clientId = timepicker.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.initWithDomReady("ExtTimePicker", timepicker.resolveWidgetVar(), clientId);
+        wb.init("ExtTimePicker", timepicker.resolveWidgetVar(), clientId);
         wb.attr("timeSeparator", timepicker.getTimeSeparator());
         wb.attr("myPosition", timepicker.getDialogPosition());
         wb.attr("atPosition", timepicker.getInputPosition());
@@ -184,7 +184,7 @@ public class TimePickerRenderer extends InputRenderer {
         wb.attr("locale", timepicker.calculateLocale().toString());
         wb.attr("disabled", timepicker.isDisabled() || timepicker.isReadonly());
 
-        if (StringUtils.isBlank(value)) {
+        if (LangUtils.isValueBlank(value)) {
             wb.attr("defaultTime", Constants.EMPTY_STRING);
         }
         else if (timepicker.isInline()) {
@@ -259,7 +259,7 @@ public class TimePickerRenderer extends InputRenderer {
     public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue)
                 throws ConverterException {
         final String value = (String) submittedValue;
-        if (StringUtils.isBlank(value)) {
+        if (LangUtils.isValueBlank(value)) {
             return null;
         }
 

@@ -57,21 +57,21 @@ CKEDITOR_GETURL = function(resource) {
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, extensionMappingPosition);
 
-                    facesResource = PrimeFacesExt.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFaces.resources.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 } else {
                     var questionMarkPosition = facesResource.indexOf('?');
 
                     //extract resource
                     var extractedResource = facesResource.substring(resourceIdentiferPosition + PrimeFaces.RESOURCE_IDENTIFIER.length, questionMarkPosition);
 
-                    facesResource = PrimeFacesExt.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                    facesResource = PrimeFaces.resources.getFacesResource(extractedResource + appendedResource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
                 }
             } else {
                 facesResource = resource;
             }
         } else {
             if (resource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER) === -1) {
-                facesResource = PrimeFacesExt.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                facesResource = PrimeFaces.resources.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
             }
             else {
                 facesResource = resource;
@@ -144,17 +144,17 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         // check if ckeditor is already included
         if (!$.fn.ckeditor) {
-            var ckEditorScriptURI = PrimeFacesExt.getFacesResource('/ckeditor/ckeditor.js',
+            var ckEditorScriptURI = PrimeFaces.resources.getFacesResource('/ckeditor/ckeditor.js',
                     PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
-            var jQueryAdapterScriptURI = PrimeFacesExt.getFacesResource('/ckeditor/adapters/jquery.js',
+            var jQueryAdapterScriptURI = PrimeFaces.resources.getFacesResource('/ckeditor/adapters/jquery.js',
                     PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
             // load ckeditor
-            PrimeFaces.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
+            PrimeFacesExt.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
 
                 // load jquery adapter
-                PrimeFaces.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+                PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
 
                     this.renderDeferred();
 
@@ -221,16 +221,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 				var command = editor.addCommand('save', {
 					modes : { wysiwyg:1, source:1 },
 					exec : function(editor) {
-						if (widget.cfg.behaviors) {
-							var saveCallback = widget.cfg.behaviors['save'];
-						    if (saveCallback) {
-						    	var options = {
-						    			params: []
-						    	};
-
-						    	saveCallback.call(widget, options);
-						    }
-						}
+					    widget.callBehavior('save');
 					}
 				});
 
@@ -273,8 +264,8 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
             }, this));
 
         //check dirty- and changed events
-        this.isDirtyEventDefined = (this.cfg.behaviors && this.cfg.behaviors['dirty']) ? true : false;
-        this.isChangeEventDefined = (this.cfg.behaviors && this.cfg.behaviors['change']) ? true : false;
+        this.isDirtyEventDefined = this.hasBehavior('dirty');
+        this.isChangeEventDefined = this.hasBehavior('change');
 
         var editable = this.instance.editable();
         editable.attachListener(editable, 'cut', $.proxy(function(event) {
@@ -373,16 +364,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	 * @private
 	 */
 	fireEvent : function(eventName) {
-            if (this.cfg.behaviors) {
-                var callback = this.cfg.behaviors[eventName];
-                if (callback) {
-                    var options = {
-                                    params: []
-                    };
-
-                    callback.call(this, options);
-                }
-            }
+        this.callBehavior(eventName);
 	},
 
 	/**

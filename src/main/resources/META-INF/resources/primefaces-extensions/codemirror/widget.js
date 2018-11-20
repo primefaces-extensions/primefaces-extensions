@@ -200,16 +200,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     fireEvent : function(eventName) {
-        if (this.cfg.behaviors) {
-            var callback = this.cfg.behaviors[eventName];
-            if (callback) {
-                var options = {
-                    params : []
-                };
-
-                callback.call(this, options);
-            }
-        }
+        this.callBehavior(eventName);
     },
 
     /**

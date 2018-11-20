@@ -32,6 +32,7 @@ import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.DynamicContentSrcBuilder;
+import org.primefaces.util.LangUtils;
 
 /**
  * Renderer for the {@link DocumentViewer} component.
@@ -85,7 +86,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     }
 
     private String generateHashString(final DocumentViewer documentViewer) {
-        final List<String> params = new ArrayList<String>(4);
+        final List<String> params = new ArrayList<>(4);
         params.add("locale=" + documentViewer.calculateLocale().toString().replaceAll("_", "-"));
 
         // page: page number. Example: page=2
@@ -95,17 +96,17 @@ public class DocumentViewerRenderer extends CoreRenderer {
 
         // zoom level. Example: zoom=200 (accepted formats: '[zoom],[left],[top]',
         // 'page-width', 'page-height', 'page-fit', 'auto')
-        if (StringUtils.isNotBlank(documentViewer.getZoom())) {
+        if (!LangUtils.isValueBlank(documentViewer.getZoom())) {
             params.add("zoom=" + documentViewer.getZoom());
         }
 
         // nameddest: go to a named destination
-        if (StringUtils.isNotBlank(documentViewer.getNameddest())) {
+        if (!LangUtils.isValueBlank(documentViewer.getNameddest())) {
             params.add("nameddest=" + documentViewer.getNameddest());
         }
 
         // pagemode: either "thumbs" or "bookmarks". Example: pagemode=thumbs
-        if (StringUtils.isNotBlank(documentViewer.getPagemode())) {
+        if (!LangUtils.isValueBlank(documentViewer.getPagemode())) {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 

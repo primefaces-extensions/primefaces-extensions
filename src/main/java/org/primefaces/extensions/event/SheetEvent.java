@@ -29,6 +29,8 @@ import org.primefaces.extensions.component.sheet.Sheet;
  */
 public class SheetEvent extends AbstractAjaxBehaviorEvent {
 
+    private static final long serialVersionUID = 1L;
+
     public SheetEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);
     }

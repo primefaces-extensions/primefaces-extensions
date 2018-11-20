@@ -21,12 +21,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.FastStringWriter;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -54,7 +55,7 @@ public class TooltipRenderer extends CoreRenderer {
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtTooltip", tooltip.resolveWidgetVar(), clientId);
+        wb.init("ExtTooltip", tooltip.resolveWidgetVar(), clientId);
         wb.attr("global", global);
         wb.attr("shared", shared);
         wb.attr("autoShow", autoShow);
@@ -85,23 +86,23 @@ public class TooltipRenderer extends CoreRenderer {
             }
         }
 
-        final boolean hasText = !global && StringUtils.isNotBlank(text);
+        final boolean hasText = !global && !LangUtils.isValueBlank(text);
         if (hasText) {
-            wb.append("text: \"" + escapeText(text) + "\"");
+            wb.append("text: \"" + EscapeUtils.forJavaScript(text) + "\"");
         }
 
-        if (StringUtils.isNotBlank(header)) {
+        if (!LangUtils.isValueBlank(header)) {
             String headerValue = Constants.EMPTY_STRING;
             if (hasText) {
                 headerValue = ",";
             }
-            headerValue = headerValue + "title: \"" + escapeText(header) + "\"";
+            headerValue = headerValue + "title: \"" + EscapeUtils.forJavaScript(header) + "\"";
             wb.append(headerValue);
         }
         wb.append("}");
 
         // style (if no class is set it will default to ThemeRoller widget=true)
-        final boolean isStyled = StringUtils.isNotBlank(styleClass);
+        final boolean isStyled = !LangUtils.isValueBlank(styleClass);
         wb.append(",style: {");
         wb.append("widget:" + !isStyled);
         if (isStyled) {

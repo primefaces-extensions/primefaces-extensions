@@ -32,6 +32,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class TimeSelectEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "timeSelect";
+    private static final long serialVersionUID = 1L;
 
     private Date time;
 

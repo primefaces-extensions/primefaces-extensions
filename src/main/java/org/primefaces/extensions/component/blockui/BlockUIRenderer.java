@@ -23,10 +23,10 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -99,7 +99,7 @@ public class BlockUIRenderer extends CoreRenderer {
         String eventRegEx;
         final String events = blockUI.getEvent();
 
-        if (StringUtils.isBlank(events)) {
+        if (LangUtils.isValueBlank(events)) {
             // no events means all events of the given source are accepted
             eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
         }
@@ -123,7 +123,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
         // generate script
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.initWithDomReady("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
+        wb.init("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
         wb.attr("source", source);
         if (target != null) {
             wb.attr("target", target);

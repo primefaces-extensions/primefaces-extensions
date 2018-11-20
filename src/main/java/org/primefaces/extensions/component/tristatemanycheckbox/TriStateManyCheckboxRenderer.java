@@ -36,8 +36,8 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.renderkit.SelectManyRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
@@ -55,14 +55,14 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 throws ConverterException {
         // only convert the values of the maps
         if (submittedValue instanceof Map) {
-            Map<String, Object> mapSub = (Map<String, Object>) submittedValue;
-            List<String> keyValues = new ArrayList<String>(mapSub.keySet());
-            Map<String, Object> mapSubConv = new LinkedHashMap<String, Object>();
-            TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-            Converter converter = checkbox.getConverter();
+            final Map<String, Object> mapSub = (Map<String, Object>) submittedValue;
+            final List<String> keyValues = new ArrayList<>(mapSub.keySet());
+            final Map<String, Object> mapSubConv = new LinkedHashMap<>();
+            final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+            final Converter converter = checkbox.getConverter();
             if (converter != null) {
-                for (String keyVal : keyValues) {
-                    Object mapVal = converter.getAsObject(context, checkbox, (String) mapSub.get(keyVal));
+                for (final String keyVal : keyValues) {
+                    final Object mapVal = converter.getAsObject(context, checkbox, (String) mapSub.get(keyVal));
                     mapSubConv.put(keyVal, mapVal);
                 }
 
@@ -79,15 +79,15 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
-        if (!shouldDecode(component)) {
+        final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+        if (!shouldDecode(checkbox)) {
             return;
         }
 
-        TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
         decodeBehaviors(context, checkbox);
 
-        String submitParam = getSubmitParam(context, checkbox);
-        Map<String, String[]> params = context.getExternalContext().getRequestParameterValuesMap();
+        final String submitParam = getSubmitParam(context, checkbox);
+        final Map<String, String[]> params = context.getExternalContext().getRequestParameterValuesMap();
 
         String[] valuesArray = null;
         if (params.containsKey(submitParam)) {
@@ -99,15 +99,15 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+        final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
         encodeMarkup(context, checkbox);
         encodeScript(context, checkbox);
     }
 
     protected void encodeMarkup(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = checkbox.getClientId(context);
-        String style = checkbox.getStyle();
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = checkbox.getClientId(context);
+        final String style = checkbox.getStyle();
         String styleClass = checkbox.getStyleClass();
         styleClass = styleClass == null ? SelectManyCheckbox.STYLE_CLASS : SelectManyCheckbox.STYLE_CLASS + " " + styleClass;
 
@@ -124,27 +124,27 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     protected void encodeSelectItems(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        List<SelectItem> selectItems = getSelectItems(context, checkbox);
-        Converter converter = checkbox.getConverter();
+        final ResponseWriter writer = context.getResponseWriter();
+        final List<SelectItem> selectItems = getSelectItems(context, checkbox);
+        final Converter converter = checkbox.getConverter();
         Map<String, Object> values = getValues(checkbox);
-        Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
-        String layout = checkbox.getLayout();
-        boolean pageDirection = layout != null && layout.equals("pageDirection");
+        final Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
+        final String layout = checkbox.getLayout();
+        final boolean pageDirection = layout != null && layout.equals("pageDirection");
 
         if (submittedMap != null) {
             values = submittedMap;
         }
 
         if (converter != null && submittedMap == null) {
-            for (Entry<String, Object> entry : values.entrySet()) {
-                String keyValue = converter.getAsString(context, checkbox, entry.getValue());
+            for (final Entry<String, Object> entry : values.entrySet()) {
+                final String keyValue = converter.getAsString(context, checkbox, entry.getValue());
                 values.put(entry.getKey(), keyValue);
             }
         }
 
         int idx = -1;
-        for (SelectItem selectItem : selectItems) {
+        for (final SelectItem selectItem : selectItems) {
             idx++;
             if (pageDirection) {
                 writer.startElement("tr", null);
@@ -159,16 +159,16 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     protected void encodeOption(FacesContext context, UIInput component, Map<String, Object> values, Converter converter,
                 SelectItem option, int idx) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-        String itemValueAsString = String.valueOf(option.getValue());
-        String name = checkbox.getClientId(context);
-        String id = name + UINamingContainer.getSeparatorChar(context) + idx;
-        boolean disabled = option.isDisabled() || checkbox.isDisabled();
+        final ResponseWriter writer = context.getResponseWriter();
+        final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+        final String itemValueAsString = String.valueOf(option.getValue());
+        final String name = checkbox.getClientId(context);
+        final String id = name + UINamingContainer.getSeparatorChar(context) + idx;
+        final boolean disabled = option.isDisabled() || checkbox.isDisabled();
 
-        String itemValue = (String) option.getValue();
+        final String itemValue = (String) option.getValue();
 
-        int valueInput = getValueForInput(context, component, itemValue, values, converter);
+        final int valueInput = getValueForInput(context, component, itemValue, values, converter);
         if (option.isNoSelectionOption() && values != null && Constants.EMPTY_STRING.equals(itemValue)) {
             return;
         }
@@ -191,7 +191,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     protected void encodeOptionInput(FacesContext context, TriStateManyCheckbox checkbox, String id, String name,
                 boolean disabled, String value, int valueInput) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement("div", null);
         writer.writeAttribute("class", HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
@@ -218,22 +218,23 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     protected void encodeOptionOutput(final FacesContext context, final TriStateManyCheckbox checkbox, final int valCheck,
                 final boolean disabled) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
         String styleClass = HTML.CHECKBOX_BOX_CLASS;
-        styleClass = (valCheck == 1 || valCheck == 2) ? styleClass + " ui-state-active" : styleClass;
+        styleClass = valCheck == 1 || valCheck == 2 ? styleClass + " ui-state-active" : styleClass;
         styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
 
         // if stateIcon is defined use it insted of default icons.
-        String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon() : Constants.EMPTY_STRING;
-        String stateTwoIconClass = checkbox.getStateTwoIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateTwoIcon()
+        final String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon()
+                    : Constants.EMPTY_STRING;
+        final String stateTwoIconClass = checkbox.getStateTwoIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateTwoIcon()
                     : TriStateManyCheckbox.UI_ICON + "ui-icon-check";
-        String stataThreeIconClass = checkbox.getStateThreeIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateThreeIcon()
+        final String stataThreeIconClass = checkbox.getStateThreeIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateThreeIcon()
                     : TriStateManyCheckbox.UI_ICON + "ui-icon-closethick";
 
-        String statesIconsClasses = "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
+        final String statesIconsClasses = "[\"" + stateOneIconClass + "\",\"" + stateTwoIconClass + "\",\"" + stataThreeIconClass + "\"]";
 
-        String statesTitles = "[\"" + ComponentUtils.escapeText(checkbox.getStateOneTitle()) + "\",\""
-                    + ComponentUtils.escapeText(checkbox.getStateTwoTitle()) + "\",\"" + ComponentUtils.escapeText(checkbox.getStateThreeTitle()) + "\"]";
+        final String statesTitles = "[\"" + EscapeUtils.forJavaScript(checkbox.getStateOneTitle()) + "\",\""
+                    + EscapeUtils.forJavaScript(checkbox.getStateTwoTitle()) + "\",\"" + EscapeUtils.forJavaScript(checkbox.getStateThreeTitle()) + "\"]";
 
         String iconClass = "ui-chkbox-icon ui-c"; // HTML.CHECKBOX_ICON_CLASS;
         String activeTitle = Constants.EMPTY_STRING;
@@ -258,7 +259,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
             // preparation with singe quotes for .data('titlestates')
             dataTitles = "data-titlestates='" + statesTitles + "' ";
             // active title Att
-            titleAtt = " title=\"" + ComponentUtils.escapeText(activeTitle) + "\" ";
+            titleAtt = " title=\"" + EscapeUtils.forJavaScript(activeTitle) + "\" ";
         }
 
         String tabIndexTag = " tabIndex=0 ";
@@ -274,15 +275,15 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     protected void encodeScript(FacesContext context, TriStateManyCheckbox checkbox) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtTriStateManyCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtTriStateManyCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());
         encodeClientBehaviors(context, checkbox);
         wb.finish();
     }
 
     protected void encodeOptionLabel(FacesContext context, TriStateManyCheckbox checkbox, String containerClientId,
                 SelectItem option, boolean disabled) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
+        final ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement("label", null);
         writer.writeAttribute("for", containerClientId, null);
@@ -317,7 +318,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
             }
 
             if (valueArray.containsKey(itemValue)) {
-                retInt = Integer.parseInt(((String) valueArray.get(itemValue)));
+                retInt = Integer.parseInt((String) valueArray.get(itemValue));
 
                 return retInt % 3;
             }
@@ -325,22 +326,22 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 return retInt;
             }
         }
-        catch (NumberFormatException ex) {
+        catch (final NumberFormatException ex) {
             throw new FacesException("State of '" + component.getClientId() + "' must be an integer representation");
         }
     }
 
     @Override
     protected Map<String, Object> getValues(UIComponent component) {
-        UISelectMany selectMany = (UISelectMany) component;
-        Object value = selectMany.getValue();
+        final UISelectMany selectMany = (UISelectMany) component;
+        final Object value = selectMany.getValue();
 
         if (value == null) {
             return null;
         }
         else if (value instanceof Map) {
             // it should be a Map instance for <ItemStringValue,Value>
-            return ((Map) value);
+            return (Map) value;
         }
         else {
             throw new FacesException("Value of '" + component.getClientId() + "'must be a Map instance");
@@ -348,15 +349,15 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     protected Map<String, Object> getSubmitedMap(FacesContext context, TriStateManyCheckbox checkbox, String[] valuesArray) {
-        List<SelectItem> selectItems = getSelectItems(context, checkbox);
-        Map<String, Object> subValues = new LinkedHashMap<String, Object>();
+        final List<SelectItem> selectItems = getSelectItems(context, checkbox);
+        final Map<String, Object> subValues = new LinkedHashMap<>();
         if (valuesArray != null && valuesArray.length == selectItems.size()) {
             int idx = -1;
-            for (SelectItem item : selectItems) {
+            for (final SelectItem item : selectItems) {
                 idx++;
 
-                String keyMap = (String) item.getValue();
-                Object valueMap = valuesArray[idx];
+                final String keyMap = (String) item.getValue();
+                final Object valueMap = valuesArray[idx];
                 subValues.put(keyMap, valueMap);
             }
 
@@ -368,19 +369,19 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     protected Map<String, Object> getSubmittedFromComp(UIComponent component) {
-        TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-        Map<String, Object> ret = (Map<String, Object>) checkbox.getSubmittedValue();
+        final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
+        final Map<String, Object> ret = (Map<String, Object>) checkbox.getSubmittedValue();
         if (ret != null) {
-            Map<String, Object> subValues = new LinkedHashMap<String, Object>();
+            final Map<String, Object> subValues = new LinkedHashMap<>();
 
             // need to reverse the order of element on the map to take the value as on decode.
-            Set<String> keys = ret.keySet();
-            String[] tempArray = (String[]) keys.toArray(new String[keys.size()]);
+            final Set<String> keys = ret.keySet();
+            final String[] tempArray = keys.toArray(new String[keys.size()]);
 
-            int length = tempArray.length;
+            final int length = tempArray.length;
             for (int i = length - 1; i >= 0; i--) {
-                String key = tempArray[i];
-                Object val = ret.get(key);
+                final String key = tempArray[i];
+                final Object val = ret.get(key);
                 subValues.put(key, val);
             }
 

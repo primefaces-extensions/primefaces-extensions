@@ -28,8 +28,10 @@ import javax.faces.event.FacesListener;
  */
 public class SelectLevelEvent extends FacesEvent {
 
-    private int currentLevel;
-    private int newLevel;
+    private static final long serialVersionUID = 1L;
+
+    private final int currentLevel;
+    private final int newLevel;
 
     public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
         super(component);

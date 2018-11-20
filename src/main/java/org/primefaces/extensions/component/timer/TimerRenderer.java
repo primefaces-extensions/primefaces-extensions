@@ -24,12 +24,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 
-import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
+import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -88,7 +88,7 @@ public class TimerRenderer extends CoreRenderer {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }
 
-        final AjaxRequestBuilder builder = RequestContext.getCurrentInstance().getAjaxRequestBuilder();
+        final AjaxRequestBuilder builder = PrimeRequestContext.getCurrentInstance().getAjaxRequestBuilder();
 
         final String request = builder.init()
                     .source(clientId)
@@ -110,20 +110,20 @@ public class TimerRenderer extends CoreRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.initWithDomReady("ExtTimer", widgetVar, clientId).attr("timeout", timer.getTimeout())
+        wb.init("ExtTimer", widgetVar, clientId).attr("timeout", timer.getTimeout())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
                     .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())
                     .callback("listener", "function()", request);
 
-        if (StringUtils.isNotEmpty(timer.getOntimerstep())) {
+        if (!LangUtils.isValueBlank(timer.getOntimerstep())) {
             wb.callback("ontimerstep", "function(intervalData)", timer.getOntimerstep());
         }
 
-        if (StringUtils.isNotEmpty(timer.getFormatFunction())) {
+        if (!LangUtils.isValueBlank(timer.getFormatFunction())) {
             wb.callback("formatFunction", "function(value)", timer.getFormatFunction());
         }
 
-        if (StringUtils.isNotEmpty(timer.getOntimercomplete())) {
+        if (!LangUtils.isValueBlank(timer.getOntimercomplete())) {
             wb.callback("ontimercomplete", "function()", timer.getOntimercomplete());
         }
 

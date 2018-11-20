@@ -196,18 +196,12 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
      * @private
      */
     fireRotateEvent: function () {
-        if (this.cfg.behaviors) {
-            var callback = this.cfg.behaviors['rotate'];
-            if (callback) {
-                var options = {
-                    params: [
-                        {name: this.id + '_degree', value: this.degree}
-                    ]
-                };
-
-                callback.call(this, options);
-            }
-        }
+        var options = {
+                params: [
+                    {name: this.id + '_degree', value: this.degree}
+                ]
+        };
+        this.callBehavior('rotate', options);
     },
 
     /**
@@ -216,18 +210,12 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
      * @private
      */
     fireResizeEvent: function () {
-        if (this.cfg.behaviors) {
-            var callback = this.cfg.behaviors['resize'];
-            if (callback) {
-                var options = {
-                    params: [
-                        {name: this.id + '_width', value: this.newImageWidth},
-                        {name: this.id + '_height', value: this.newImageHeight}
-                    ]
-                };
-
-                callback.call(this, options);
-            }
-        }
+        var options = {
+                params: [
+                    {name: this.id + '_width', value: this.newImageWidth},
+                    {name: this.id + '_height', value: this.newImageHeight}
+                ]
+        };
+        this.callBehavior('resize', options);
     }
 });

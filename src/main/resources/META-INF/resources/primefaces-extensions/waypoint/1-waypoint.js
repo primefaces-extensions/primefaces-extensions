@@ -73,21 +73,17 @@ PrimeFaces.widget.ExtWaypoint = PrimeFaces.widget.BaseWidget.extend({
     },
 
     reached : function(dir, way) {
-        var behavior = this.cfg.behaviors ? this.cfg.behaviors["reached"] : null;
-        if (behavior) {
-            var options = {
-                params : [ {
-                    name : this.id + '_direction',
-                    value : dir
-                }, {
-                    name : this.id + '_waypointId',
-                    value : $(way).attr('id')
-                } ],
-                direction : dir,
-                waypoint : way
-            };
-
-            behavior.call(this, options);
-        }
+        var options = {
+            params : [ {
+                name : this.id + '_direction',
+                value : dir
+            }, {
+                name : this.id + '_waypointId',
+                value : $(way).attr('id')
+            } ],
+            direction : dir,
+            waypoint : way
+        };
+        this.callBehavior('reached', options);
     }
 });

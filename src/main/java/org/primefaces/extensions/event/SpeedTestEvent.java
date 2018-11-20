@@ -29,6 +29,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class SpeedTestEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "speedtest";
+    private static final long serialVersionUID = 1L;
 
     private final Double pingTimeMS;
 
@@ -41,10 +42,10 @@ public class SpeedTestEvent extends AbstractAjaxBehaviorEvent {
     public SpeedTestEvent(final UIComponent component, final Behavior behavior,
                 final Double _PingTimeMS, final Double _JitterTimeMS, final Double _SpeedMbpsDownload, final Double _SpeedMbpsUpload) {
         super(component, behavior);
-        this.pingTimeMS = _PingTimeMS;
-        this.jitterTimeMS = _JitterTimeMS;
-        this.speedMbpsDownload = _SpeedMbpsDownload;
-        this.speedMbpsUpload = _SpeedMbpsUpload;
+        pingTimeMS = _PingTimeMS;
+        jitterTimeMS = _JitterTimeMS;
+        speedMbpsDownload = _SpeedMbpsDownload;
+        speedMbpsUpload = _SpeedMbpsUpload;
     }
 
     public final Double getPingTimeMS() {

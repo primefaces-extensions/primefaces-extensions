@@ -31,6 +31,8 @@ import org.primefaces.extensions.model.common.KeyData;
  */
 public class EventDataWrapper extends FacesEvent {
 
+    private static final long serialVersionUID = 1L;
+
     private FacesEvent event = null;
     private KeyData data = null;
 
@@ -41,7 +43,7 @@ public class EventDataWrapper extends FacesEvent {
     }
 
     public FacesEvent getFacesEvent() {
-        return this.event;
+        return event;
     }
 
     public KeyData getData() {
@@ -50,12 +52,12 @@ public class EventDataWrapper extends FacesEvent {
 
     @Override
     public PhaseId getPhaseId() {
-        return this.event.getPhaseId();
+        return event.getPhaseId();
     }
 
     @Override
     public void setPhaseId(PhaseId phaseId) {
-        this.event.setPhaseId(phaseId);
+        event.setPhaseId(phaseId);
     }
 
     @Override

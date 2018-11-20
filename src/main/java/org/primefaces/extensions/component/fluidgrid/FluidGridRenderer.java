@@ -123,7 +123,7 @@ public class FluidGridRenderer extends CoreRenderer {
         final String clientId = fluidGrid.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.initWithDomReady("ExtFluidGrid", fluidGrid.resolveWidgetVar(), clientId);
+        wb.init("ExtFluidGrid", fluidGrid.resolveWidgetVar(), clientId);
         wb.append(",opts:{");
         wb.append("isFitWidth:" + fluidGrid.isFitWidth());
         wb.append(",isOriginLeft:" + fluidGrid.isOriginLeft());

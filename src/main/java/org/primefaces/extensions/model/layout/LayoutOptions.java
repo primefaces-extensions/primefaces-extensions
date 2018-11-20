@@ -31,10 +31,12 @@ import org.primefaces.extensions.renderkit.layout.GsonLayoutOptions;
  */
 public class LayoutOptions implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String id;
 
     // direct options
-    private Map<String, Object> options = new HashMap<String, Object>();
+    private Map<String, Object> options = new HashMap<>();
 
     // options for all panes
     private LayoutOptions defaults;
@@ -148,7 +150,7 @@ public class LayoutOptions implements Serializable {
     }
 
     public Set<LayoutOptions> getDirectionPanes() {
-        final Set<LayoutOptions> result = new HashSet<LayoutOptions>();
+        final Set<LayoutOptions> result = new HashSet<>();
         result.add(getCenterOptions());
         result.add(getNorthOptions());
         result.add(getEastOptions());

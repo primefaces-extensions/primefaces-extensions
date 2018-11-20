@@ -53,13 +53,13 @@ public class CalculatorRenderer extends CoreRenderer {
             target = calculator.getParent().getClientId(context);
         }
 
-        UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
+        final UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
         if (!(targetComponent instanceof UIInput)) {
             throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
+        wb.init("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
         wb.attr("target", target);
         wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
         wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));

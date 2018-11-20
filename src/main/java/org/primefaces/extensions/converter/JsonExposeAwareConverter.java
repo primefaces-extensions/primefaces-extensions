@@ -31,6 +31,8 @@ import org.primefaces.extensions.util.json.GsonExposeAwareConverter;
  */
 public class JsonExposeAwareConverter extends JsonConverter {
 
+    private static final long serialVersionUID = 1L;
+
     private boolean excludeFieldsWithoutExposeAnnotation = false;
 
     public JsonExposeAwareConverter() {
@@ -53,7 +55,7 @@ public class JsonExposeAwareConverter extends JsonConverter {
         java.lang.reflect.Type objType;
 
         if (getType() == null) {
-            ValueExpression expression = component.getValueExpression("value");
+            final ValueExpression expression = component.getValueExpression("value");
             objType = expression.getType(context.getELContext());
         }
         else {

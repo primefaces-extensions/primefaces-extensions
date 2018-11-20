@@ -30,6 +30,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class WaypointEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "reached";
+    private static final long serialVersionUID = 1L;
 
     private final Direction direction;
 

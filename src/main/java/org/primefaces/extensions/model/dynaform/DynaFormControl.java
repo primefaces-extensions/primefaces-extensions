@@ -29,6 +29,7 @@ import org.primefaces.extensions.model.common.KeyData;
 public class DynaFormControl extends AbstractDynaFormElement implements KeyData {
 
     public static final String DEFAULT_TYPE = "default";
+    private static final long serialVersionUID = 1L;
     private static final String KEY_PREFIX_ROW = "r";
     private static final String KEY_PREFIX_COLUMN = "c";
     private static final String KEY_SUFFIX_REGULAR = "reg";
@@ -56,18 +57,22 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
         generateKey();
     }
 
+    @Override
     public String getKey() {
         return key;
     }
 
+    @Override
     public void setKey(String key) {
         this.key = key;
     }
 
+    @Override
     public Object getData() {
         return data;
     }
 
+    @Override
     public void setData(Object data) {
         this.data = data;
     }
@@ -107,7 +112,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
             return false;
         }
 
-        DynaFormControl that = (DynaFormControl) o;
+        final DynaFormControl that = (DynaFormControl) o;
         if (position != that.position) {
             return false;
         }
@@ -115,7 +120,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
     }
 
     void generateKey() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn()).append(KEY_SUFFIX_POSITION).append(getPosition());
         if (isExtended()) {
             sb.append(KEY_SUFFIX_EXTENDED);

@@ -40,10 +40,10 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
+        final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
-        WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtImageAreaSelect", imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtImageAreaSelect", imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
                     .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                     .attr("autoHide", imageAreaSelect.isAutoHide())

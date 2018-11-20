@@ -31,6 +31,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class CloseEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "close";
+    private static final long serialVersionUID = 1L;
 
     public CloseEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);

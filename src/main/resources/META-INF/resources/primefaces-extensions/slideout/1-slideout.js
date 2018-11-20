@@ -50,17 +50,9 @@ PrimeFaces.widget.ExtSlideOut = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
         
         this.jq.on("slideouttabopen",function () {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
-            if (behavior) {
-                var options = {};
-                behavior.call($this, options);
-            }
+            $this.callBehavior('open');
         }).on("slideouttabclose",function () {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
-            if (behavior) {
-                var options = {};
-                behavior.call($this, options);
-            }
+            $this.callBehavior('close');
         });
     },
 

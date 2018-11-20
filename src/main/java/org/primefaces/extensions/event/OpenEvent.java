@@ -31,6 +31,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class OpenEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "open";
+    private static final long serialVersionUID = 1L;
 
     public OpenEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);

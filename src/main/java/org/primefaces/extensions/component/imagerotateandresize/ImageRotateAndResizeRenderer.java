@@ -42,8 +42,8 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 
-        WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageRotateAndResize, imageRotateAndResize.getFor()));
 
         encodeClientBehaviors(context, imageRotateAndResize);

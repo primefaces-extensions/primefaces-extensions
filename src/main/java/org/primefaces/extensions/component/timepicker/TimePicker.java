@@ -36,10 +36,10 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
-import org.primefaces.util.ArrayUtils;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -81,11 +81,11 @@ public class TimePicker extends HtmlInputText implements Widget {
                             "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
                             "mouseup", BeforeShowEvent.NAME, TimeSelectEvent.NAME, CloseEvent.NAME));
 
-    static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(
+    static final String[] INPUT_TEXT_ATTRS = LangUtils.concat(
                 new String[] {"accesskey", "alt", "autocomplete", "dir", "lang", "maxlength", "size", "tabindex", "title"},
                 HTML.COMMON_EVENTS, HTML.CHANGE_SELECT_EVENTS, HTML.BLUR_FOCUS_EVENTS);
 
-    private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<String, AjaxBehaviorEvent>();
+    private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;
 
     protected enum PropertyKeys {

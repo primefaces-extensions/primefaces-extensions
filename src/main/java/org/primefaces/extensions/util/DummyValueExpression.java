@@ -27,7 +27,9 @@ import javax.el.ValueExpression;
  */
 public class DummyValueExpression extends ValueExpression {
 
-    private Class<?> type;
+    private static final long serialVersionUID = 1L;
+
+    private final Class<?> type;
 
     public DummyValueExpression(final Class<?> type) {
         this.type = type;

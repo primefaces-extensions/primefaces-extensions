@@ -29,7 +29,9 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  */
 public class RotateEvent extends AbstractAjaxBehaviorEvent {
 
-    private int degree;
+    private static final long serialVersionUID = 1L;
+
+    private final int degree;
 
     public RotateEvent(final UIComponent component, final Behavior behavior, final int degree) {
         super(component, behavior);

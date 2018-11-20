@@ -29,6 +29,7 @@ import org.primefaces.extensions.model.common.KeyData;
 public class FluidGridItem implements KeyData, Serializable {
 
     public static final String DEFAULT_TYPE = "default";
+    private static final long serialVersionUID = 1L;
 
     private String key;
     private Object data;

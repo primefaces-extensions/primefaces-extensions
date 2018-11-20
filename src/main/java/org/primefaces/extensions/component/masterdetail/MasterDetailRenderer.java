@@ -30,7 +30,6 @@ import javax.faces.render.Renderer;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuElement;
@@ -38,6 +37,7 @@ import org.primefaces.model.menu.MenuItem;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.FastStringWriter;
+import org.primefaces.util.LangUtils;
 
 /**
  * Renderer for the {@link MasterDetail} component.
@@ -167,7 +167,7 @@ public class MasterDetailRenderer extends CoreRenderer {
         // try to get context value if contextVar exists
         Object contextValue = null;
         final String contextVar = mdl.getContextVar();
-        if (StringUtils.isNotBlank(contextVar)) {
+        if (!LangUtils.isValueBlank(contextVar)) {
             contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
         }
 
@@ -241,7 +241,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
                     final Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
                     final String contextVar = mdl.getContextVar();
-                    final boolean putContext = StringUtils.isNotBlank(contextVar) && contextValue != null;
+                    final boolean putContext = !LangUtils.isValueBlank(contextVar) && contextValue != null;
 
                     if (putContext) {
                         final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();

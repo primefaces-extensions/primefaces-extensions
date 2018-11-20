@@ -29,6 +29,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class ClipboardSuccessEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "success";
+    private static final long serialVersionUID = 1L;
 
     /**
      * action: return the action we aim at the target element. This will return either copy or cut

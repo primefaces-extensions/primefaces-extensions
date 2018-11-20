@@ -78,22 +78,19 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 
         this.clipboard.on('success', function(e) {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['success'] : null;
-            if (behavior) {
-                var options = {
-                    params : [ {
-                        name : $this.id + '_action',
-                        value : e.action
-                    }, {
-                        name : $this.id + '_text',
-                        value : e.text
-                    }, {
-                        name : $this.id + '_trigger',
-                        value : e.trigger
-                    } ]
-                };
-                behavior.call($this, options);
-            }
+            var options = {
+                params : [ {
+                    name : $this.id + '_action',
+                    value : e.action
+                }, {
+                    name : $this.id + '_text',
+                    value : e.text
+                }, {
+                    name : $this.id + '_trigger',
+                    value : e.trigger
+                } ]
+            };
+            $this.callBehavior('success', options);
 
             if ($this.cfg.onSuccess) {
                 $this.cfg.onSuccess.call(e);
@@ -101,19 +98,16 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         });
 
         this.clipboard.on('error', function(e) {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['error'] : null;
-            if (behavior) {
-                var options = {
-                    params : [ {
-                        name : $this.id + '_action',
-                        value : e.action
-                    }, {
-                        name : $this.id + '_trigger',
-                        value : e.trigger
-                    } ]
-                };
-                behavior.call($this, options);
-            }
+            var options = {
+                params : [ {
+                    name : $this.id + '_action',
+                    value : e.action
+                }, {
+                    name : $this.id + '_trigger',
+                    value : e.trigger
+                } ]
+            };
+            $this.callBehavior('error', options);
 
             if ($this.cfg.onError) {
                 $this.cfg.onError.call(e);

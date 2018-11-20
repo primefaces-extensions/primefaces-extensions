@@ -21,9 +21,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.component.gchart.model.GChartModel;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 public class GChartRenderer extends CoreRenderer {
@@ -62,7 +62,7 @@ public class GChartRenderer extends CoreRenderer {
         final String widgetVar = chart.resolveWidgetVar();
 
         String apiKey = chart.getApiKey();
-        if (StringUtils.isBlank(apiKey)) {
+        if (LangUtils.isValueBlank(apiKey)) {
             apiKey = getApiKey(context, chart);
         }
 

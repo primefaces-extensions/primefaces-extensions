@@ -15,7 +15,7 @@
  */
 package org.primefaces.extensions.util;
 
-import java.io.Serializable;
+import org.primefaces.component.api.SavedState;
 
 /**
  * Keeps state of a component implementing {@link javax.faces.component.EditableValueHolder}. This class is used in
@@ -25,59 +25,19 @@ import java.io.Serializable;
  * @version $Revision$
  * @since 0.5
  */
-public class SavedEditableValueState implements Serializable {
+public class SavedEditableValueState extends SavedState {
 
     private static final long serialVersionUID = 20120425L;
-
-    private Object submittedValue;
-
-    private boolean valid = true;
-
-    private Object value;
-
-    private boolean localValueSet = false;
 
     private Object labelValue;
 
     private Object disabled;
 
     public void reset() {
-        submittedValue = null;
-        valid = true;
-        value = null;
-        localValueSet = false;
-    }
-
-    public Object getSubmittedValue() {
-        return submittedValue;
-    }
-
-    public void setSubmittedValue(Object submittedValue) {
-        this.submittedValue = submittedValue;
-    }
-
-    public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
-
-    public boolean isLocalValueSet() {
-        return localValueSet;
-    }
-
-    public void setLocalValueSet(boolean localValueSet) {
-        this.localValueSet = localValueSet;
+        setSubmittedValue(null);
+        setValid(true);
+        setValue(null);
+        setLocalValueSet(false);
     }
 
     public Object getLabelValue() {

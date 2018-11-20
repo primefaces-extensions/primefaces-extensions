@@ -30,6 +30,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class BeforeShowEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "beforeShow";
+    private static final long serialVersionUID = 1L;
 
     public BeforeShowEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);

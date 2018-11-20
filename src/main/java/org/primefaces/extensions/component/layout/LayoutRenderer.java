@@ -22,9 +22,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -42,7 +42,7 @@ public class LayoutRenderer extends CoreRenderer {
 
     @Override
     public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
+        final ResponseWriter writer = fc.getResponseWriter();
         final Layout layout = (Layout) component;
 
         final boolean buildOptions = layout.getOptions() == null;
@@ -91,7 +91,7 @@ public class LayoutRenderer extends CoreRenderer {
         final String clientId = layout.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.initWithDomReady("ExtLayout", layout.resolveWidgetVar(), clientId);
+        wb.init("ExtLayout", layout.resolveWidgetVar(), clientId);
         wb.attr("clientState", layout.isStateCookie());
         wb.attr("full", layout.isFullPage(), false);
 
@@ -104,7 +104,7 @@ public class LayoutRenderer extends CoreRenderer {
             wb.attr("serverState", true);
 
             final String state = layout.getState();
-            if (StringUtils.isNotBlank(state)) {
+            if (!LangUtils.isValueBlank(state)) {
                 wb.attr("state", state);
             }
             else {
@@ -117,7 +117,7 @@ public class LayoutRenderer extends CoreRenderer {
 
         final Object layoutOptions = layout.getOptions();
         if (layoutOptions instanceof LayoutOptions) {
-            LayoutOptions options = (LayoutOptions) layoutOptions;
+            final LayoutOptions options = (LayoutOptions) layoutOptions;
             wb.append(",options:" + options.toJson());
         }
         else if (layoutOptions instanceof String) {

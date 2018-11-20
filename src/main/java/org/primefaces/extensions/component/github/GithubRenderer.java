@@ -70,7 +70,7 @@ public class GithubRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final Github github) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = github.getClientId(context);
-        wb.initWithDomReady("ExtGitHub", github.resolveWidgetVar(), clientId);
+        wb.init("ExtGitHub", github.resolveWidgetVar(), clientId);
         wb.attr("iconForks", github.isIconForks());
         wb.attr("iconIssues", github.isIconIssues());
         wb.attr("iconStars", github.isIconStars());

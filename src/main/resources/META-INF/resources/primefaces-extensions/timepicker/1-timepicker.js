@@ -357,24 +357,15 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	},
 
 	onbeforeShow : function() {
-	    var behavior = this.cfg.behaviors ? this.cfg.behaviors['beforeShow'] : null;
-	    if (behavior) {
-	        behavior.call(this);
-	    }
+	    this.callBehavior('beforeShow');
 	},
 
 	onclose : function() {
-	    var behavior = this.cfg.behaviors ? this.cfg.behaviors['close'] : null;
-	    if (behavior) {
-	        behavior.call(this);
-	    }
+	    this.callBehavior('close');
 	},
 
 	ontimeSelect : function() {
-	    var behavior = this.cfg.behaviors ? this.cfg.behaviors['timeSelect'] : null;
-	    if (behavior) {
-	        behavior.call(this);
-	    }
+	    this.callBehavior('timeSelect');
 	},
 
 	isAm : function(time) {

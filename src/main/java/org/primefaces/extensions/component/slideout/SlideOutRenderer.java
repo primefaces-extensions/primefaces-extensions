@@ -154,7 +154,7 @@ public class SlideOutRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = slideOut.getClientId(context);
         final String handleId = getHandleId(context, slideOut);
-        wb.initWithDomReady("ExtSlideOut", slideOut.resolveWidgetVar(), clientId);
+        wb.init("ExtSlideOut", slideOut.resolveWidgetVar(), clientId);
         wb.attr("tabLocation", slideOut.getLocation());
         wb.attr("tabHandle", handleId);
         wb.attr("speed", slideOut.getAnimateSpeed());

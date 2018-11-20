@@ -15,7 +15,7 @@
  */
 package org.primefaces.extensions.util;
 
-import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.EscapeUtils;
 
 /**
  * Builds a JavaScript var object or array string. A simple way to generalized a lot of code used in renderers.
@@ -107,7 +107,7 @@ public class JavascriptVarBuilder {
         if (quoted) {
             sb.append("\"");
             if (value != null) {
-                sb.append(ComponentUtils.escapeText(value));
+                sb.append(EscapeUtils.forJavaScript(value));
             }
             sb.append("\"");
         }

@@ -31,6 +31,7 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 public class ButtonEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "button";
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final BigDecimal value;

@@ -28,9 +28,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $this.testUp();
 
         // Call listener function to 'save' results when it's set:
-        var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['speedtest'] : null;
-        if (behavior) {
-            var options = {
+        var options = {
                 params: [
                     { name: $this.id + '_PingTimeMS', value: $this.pingTimeMS },
                     { name: $this.id + '_JitterTimeMS', value: $this.jitterTimeMS },
@@ -38,8 +36,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
                     { name: $this.id + '_SpeedMbpsUpload', value: $this.upSpeed }
                 ]
             };
-            behavior.call($this, options);
-        }
+        $this.callBehavior('speedtest', options);
     },
 
     render: function() {
@@ -123,7 +120,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFacesExt.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
+            url: PrimeFaces.resources.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function(msg) {
                 pMSC = $this.diffMS(start);
@@ -175,7 +172,7 @@ PrimeFaces.widget.ExtSpeedtest = PrimeFaces.widget.BaseWidget.extend({
         $.ajax({
             async: false,
             type: 'POST',
-            url: PrimeFacesExt.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
+            url: PrimeFaces.resources.getFacesResource('speedtest/dummy.html', PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION) + '?id=' + start,
             data: upLoadDatas,
             success: function(msg) {
                 $this.upSpeed = $this.C2MBps(upLoadDatas.length / ($this.diffMS(start) / 1000));

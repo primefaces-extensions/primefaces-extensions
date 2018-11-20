@@ -31,13 +31,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * <code>Layout</code> component.
@@ -256,7 +256,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         }
 
         final String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
-        if (StringUtils.isNotBlank(state)) {
+        if (!LangUtils.isValueBlank(state)) {
             final ValueExpression stateVE = getValueExpression(PropertyKeys.state.toString());
             if (stateVE != null) {
                 // save "state"

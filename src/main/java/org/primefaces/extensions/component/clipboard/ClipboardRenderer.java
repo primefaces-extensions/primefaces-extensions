@@ -53,7 +53,7 @@ public class ClipboardRenderer extends CoreRenderer {
         final String target = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTarget());
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.initWithDomReady("ExtClipboard", clipboard.resolveWidgetVar(), clipboard.getClientId(context));
+        wb.init("ExtClipboard", clipboard.resolveWidgetVar(), clipboard.getClientId(context));
         wb.attr("action", StringUtils.lowerCase(clipboard.getAction()));
         wb.attr("trigger", trigger);
         wb.attr("target", target);

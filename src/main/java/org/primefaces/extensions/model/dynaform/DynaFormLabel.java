@@ -27,7 +27,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class DynaFormLabel extends AbstractDynaFormElement {
 
-    private String value;
+    private static final long serialVersionUID = 1L;
+
+    private final String value;
     private boolean escape = true;
     private DynaFormControl forControl;
     private String targetClientId;
@@ -96,7 +98,7 @@ public class DynaFormLabel extends AbstractDynaFormElement {
                     .append("value", value)
                     .append("escape", escape)
                     .append("forControl",
-                                (forControl != null ? forControl.getKey() : "null"))
+                                forControl != null ? forControl.getKey() : "null")
                     .append("colspan", getColspan())
                     .append("rowspan", getRowspan()).append("row", getRow())
                     .append("column", getColumn())

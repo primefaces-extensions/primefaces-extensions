@@ -29,15 +29,17 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  */
 public class ImageAreaSelectEvent extends AbstractAjaxBehaviorEvent {
 
-    private int height;
-    private int width;
-    private int x1;
-    private int x2;
-    private int y1;
-    private int y2;
-    private int imgHeight;
-    private int imgWidth;
-    private String imgSrc;
+    private static final long serialVersionUID = 1L;
+
+    private final int height;
+    private final int width;
+    private final int x1;
+    private final int x2;
+    private final int y1;
+    private final int y2;
+    private final int imgHeight;
+    private final int imgWidth;
+    private final String imgSrc;
 
     public ImageAreaSelectEvent(final UIComponent component, final Behavior behavior, final int height, final int width,
                 final int x1, final int x2, final int y1, final int y2, final int imgHeight, final int imgWidth,

@@ -112,21 +112,11 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 
         this.input.on("calculatoropen", function() {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['open'] : null;
-            if (behavior) {
-                var options = {};
-                behavior.call($this, options);
-            }
+            $this.callBehavior('open');
         }).on("calculatorclose", function() {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
-            if (behavior) {
-                var options = {};
-                behavior.call($this, options);
-            }
+            $this.callBehavior('close');
         }).on("calculatorbutton", function(event, buttonName, calculatorValue) {
-            var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['button'] : null;
-            if (behavior) {
-                var options = {
+            var options = {
                     params : [ {
                         name : $this.id + '_button',
                         value : buttonName
@@ -134,9 +124,8 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
                         name : $this.id + '_value',
                         value : calculatorValue
                     } ]
-                };
-                behavior.call($this, options);
-            }
+            };
+            $this.callBehavior('button', options);
         });
     },
 

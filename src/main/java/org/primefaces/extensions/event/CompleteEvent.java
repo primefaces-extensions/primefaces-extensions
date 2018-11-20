@@ -21,6 +21,8 @@ import javax.faces.event.FacesListener;
 
 public class CompleteEvent extends FacesEvent {
 
+    private static final long serialVersionUID = 1L;
+
     private final String token;
     private final String context;
     private final int line;

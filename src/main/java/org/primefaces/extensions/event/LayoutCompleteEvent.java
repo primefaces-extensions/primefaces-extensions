@@ -29,6 +29,8 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  */
 public class LayoutCompleteEvent extends AbstractAjaxBehaviorEvent {
 
+    private static final long serialVersionUID = 1L;
+
     public LayoutCompleteEvent(final UIComponent component, final Behavior behavior) {
         super(component, behavior);
     }
