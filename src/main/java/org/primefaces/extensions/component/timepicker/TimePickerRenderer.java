@@ -46,7 +46,7 @@ public class TimePickerRenderer extends InputRenderer {
     public void decode(final FacesContext fc, final UIComponent component) {
         final TimePicker timepicker = (TimePicker) component;
 
-        if (timepicker.isDisabled() || timepicker.isReadonly()) {
+        if (!shouldDecode(timepicker)) {
             return;
         }
 

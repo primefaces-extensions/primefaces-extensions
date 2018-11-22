@@ -41,7 +41,7 @@ public class CKEditorRenderer extends InputRenderer {
     public void decode(final FacesContext context, final UIComponent component) {
         final CKEditor ckEditor = (CKEditor) component;
 
-        if (ckEditor.isReadonly()) {
+        if (!shouldDecode(ckEditor)) {
             return;
         }
 

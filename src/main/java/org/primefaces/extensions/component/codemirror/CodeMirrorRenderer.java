@@ -45,7 +45,7 @@ public class CodeMirrorRenderer extends InputRenderer {
     public void decode(final FacesContext facesContext, final UIComponent component) {
         final CodeMirror codeMirror = (CodeMirror) component;
 
-        if (codeMirror.isReadonly()) {
+        if (!shouldDecode(codeMirror)) {
             return;
         }
 
