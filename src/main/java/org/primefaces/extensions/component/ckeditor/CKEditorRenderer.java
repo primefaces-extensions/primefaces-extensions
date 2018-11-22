@@ -76,8 +76,10 @@ public class CKEditorRenderer extends InputRenderer {
             writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
         }
 
-        renderPassThruAttributes(context, ckEditor, HTML.INPUT_TEXTAREA_ATTRS);
+        renderAccessibilityAttributes(context, ckEditor);
+        renderPassThruAttributes(context, ckEditor, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
         renderDomEvents(context, ckEditor, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, ckEditor);
 
         final String valueToRender = ComponentUtils.getValueToRender(context, ckEditor);
         if (valueToRender != null) {

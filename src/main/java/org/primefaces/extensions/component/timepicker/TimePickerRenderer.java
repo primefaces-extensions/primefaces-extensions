@@ -29,6 +29,7 @@ import javax.faces.convert.ConverterException;
 import org.primefaces.extensions.util.MessageUtils;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.Constants;
+import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
@@ -112,9 +113,12 @@ public class TimePickerRenderer extends InputRenderer {
             if (timepicker.getStyle() != null) {
                 writer.writeAttribute("style", timepicker.getStyle(), null);
             }
-
-            renderPassThruAttributes(fc, timepicker, TimePicker.INPUT_TEXT_ATTRS);
         }
+
+        renderAccessibilityAttributes(fc, timepicker);
+        renderPassThruAttributes(fc, timepicker, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(fc, timepicker, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(fc, timepicker);
 
         writer.endElement("input");
 

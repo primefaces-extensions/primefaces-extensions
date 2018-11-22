@@ -97,8 +97,10 @@ public class CodeMirrorRenderer extends InputRenderer {
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
 
-        renderPassThruAttributes(context, codeMirror, HTML.INPUT_TEXTAREA_ATTRS);
+        renderAccessibilityAttributes(context, codeMirror);
+        renderPassThruAttributes(context, codeMirror, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
         renderDomEvents(context, codeMirror, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, codeMirror);
 
         final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
         if (valueToRender != null) {
