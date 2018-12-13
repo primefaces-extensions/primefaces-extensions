@@ -923,17 +923,17 @@ public class Sheet extends SheetBase {
     /**
      * Maps the rendered column index to the real column index.
      *
-     * @param renderIdx the rendered index
+     * @param renderCol the rendered index
      * @return the mapped index
      */
-    public int getMappedColumn(final int renderIdx) {
-        if (columnMapping == null || renderIdx == -1) {
-            return renderIdx;
+    public int getMappedColumn(final int renderCol) {
+        if (columnMapping == null || renderCol == -1) {
+            return renderCol;
         }
         else {
-            final Integer result = columnMapping.get(renderIdx);
+            final Integer result = columnMapping.get(renderCol);
             if (result == null) {
-                throw new IllegalArgumentException("Invalid index " + renderIdx);
+                throw new IllegalArgumentException("Invalid index " + renderCol);
             }
             return result;
         }
@@ -965,11 +965,11 @@ public class Sheet extends SheetBase {
     public void updateColumnMappings() {
         columnMapping = new HashMap<>();
         int realIdx = 0;
-        int renderIdx = 0;
+        int renderCol = 0;
         for (final SheetColumn column : getColumns()) {
             if (column.isRendered()) {
-                columnMapping.put(renderIdx, realIdx);
-                renderIdx++;
+                columnMapping.put(renderCol, realIdx);
+                renderCol++;
             }
             realIdx++;
         }
@@ -1055,6 +1055,7 @@ public class Sheet extends SheetBase {
             final JavascriptVarBuilder jsRow = new JavascriptVarBuilder(null, false);
             final JavascriptVarBuilder jsStyle = new JavascriptVarBuilder(null, true);
             final JavascriptVarBuilder jsReadOnly = new JavascriptVarBuilder(null, true);
+            int renderCol = 0;
             for (int col = 0; col < getColumns().size(); col++) {
                 final SheetColumn column = getColumns().get(col);
                 if (!column.isRendered()) {
@@ -1068,14 +1069,15 @@ public class Sheet extends SheetBase {
                 // custom style
                 final String styleClass = column.getStyleClass();
                 if (styleClass != null) {
-                    jsStyle.appendRowColProperty(rowIndex, col, styleClass, true);
+                    jsStyle.appendRowColProperty(rowIndex, renderCol, styleClass, true);
                 }
 
                 // read only per cell
                 final boolean readOnly = column.isReadonlyCell();
                 if (readOnly) {
-                    jsReadOnly.appendRowColProperty(rowIndex, col, "true", true);
+                    jsReadOnly.appendRowColProperty(rowIndex, renderCol, "true", true);
                 }
+                renderCol++;
             }
             eval.append("PF('").append(jsVar).append("')");
             eval.append(".updateData('");

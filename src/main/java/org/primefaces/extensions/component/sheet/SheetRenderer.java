@@ -679,7 +679,7 @@ public class SheetRenderer extends CoreRenderer {
      */
     protected void encodeFilterValues(final FacesContext context, final ResponseWriter responseWriter,
                 final Sheet sheet, final String clientId) throws IOException {
-        int renderIdx = 0;
+        int renderCol = 0;
         for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
@@ -687,14 +687,14 @@ public class SheetRenderer extends CoreRenderer {
 
             if (column.getValueExpression("filterBy") != null) {
                 responseWriter.startElement("input", null);
-                responseWriter.writeAttribute("id", clientId + "_filter_" + renderIdx, "id");
-                responseWriter.writeAttribute("name", clientId + "_filter_" + renderIdx, "name");
+                responseWriter.writeAttribute("id", clientId + "_filter_" + renderCol, "id");
+                responseWriter.writeAttribute("name", clientId + "_filter_" + renderCol, "name");
                 responseWriter.writeAttribute("type", "hidden", null);
                 responseWriter.writeAttribute("value", column.getFilterValue(), null);
                 responseWriter.endElement("input");
             }
 
-            renderIdx++;
+            renderCol++;
         }
     }
 
@@ -844,18 +844,18 @@ public class SheetRenderer extends CoreRenderer {
      */
     protected void decodeFilters(final FacesContext context, final Sheet sheet, final Map<String, String> params,
                 final String clientId) {
-        int renderIdx = 0;
+        int renderCol = 0;
         for (final SheetColumn column : sheet.getColumns()) {
             if (!column.isRendered()) {
                 continue;
             }
 
             if (column.getValueExpression("filterBy") != null) {
-                final String value = params.get(clientId + "_filter_" + renderIdx);
+                final String value = params.get(clientId + "_filter_" + renderCol);
                 column.setFilterValue(value);
             }
 
-            renderIdx++;
+            renderCol++;
         }
     }
 
