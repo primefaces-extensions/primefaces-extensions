@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.primefaces.extensions</groupId>
 		<artifactId>master-pom</artifactId>
-		<version>7.0-SNAPSHOT</version>
+		<version>7.0.RC1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>primefaces-extensions</artifactId>
@@ -18,6 +18,18 @@
 		<url>https://github.com/primefaces-extensions/core</url>
 		<tag>HEAD</tag>
 	</scm>
+	<repositories>
+		<repository>
+			<id>primefaces</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<build>
 		<resources>
 			<resource>
