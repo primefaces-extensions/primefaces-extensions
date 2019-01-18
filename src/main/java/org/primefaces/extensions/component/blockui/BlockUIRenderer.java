@@ -139,7 +139,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
         final String css = blockUI.getCss();
         if (css != null) {
-            wb.attr("css", css);
+            wb.nativeAttr("css", css);
         }
 
         final String cssOverlay = blockUI.getCssOverlay();
