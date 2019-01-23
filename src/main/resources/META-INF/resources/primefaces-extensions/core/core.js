@@ -174,18 +174,6 @@ PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
    return cfg.execute.call(this, cfg.source, cfg.event, params, ext);
 };
 
-// TODO Remove when rebased on PF 6.3
-PrimeFacesExt.entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-    '/': '&#x2F;',
-    '`': '&#x60;',
-    '=': '&#x3D;'
-};
-
 /**
  * Hack to allow the PrimeFacesExt changeTheme to automatically invoked on every
  * theme change
