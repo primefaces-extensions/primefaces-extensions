@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
@@ -83,7 +84,7 @@ public class TimerRenderer extends CoreRenderer {
         final String clientId = timer.getClientId(context);
         final String widgetVar = timer.resolveWidgetVar();
 
-        final UIComponent form = ComponentTraversalUtils.closestForm(context, timer);
+        final UIForm form = ComponentTraversalUtils.closestForm(context, timer);
         if (form == null) {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }
@@ -92,7 +93,7 @@ public class TimerRenderer extends CoreRenderer {
 
         final String request = builder.init()
                     .source(clientId)
-                    .form(form.getClientId(context))
+                    .form(timer, timer, form)
                     .process(timer, timer.getProcess())
                     .update(timer, timer.getUpdate())
                     .async(timer.isAsync())

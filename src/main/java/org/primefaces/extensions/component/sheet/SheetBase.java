@@ -18,7 +18,6 @@ package org.primefaces.extensions.component.sheet;
 import java.util.ArrayList;
 
 import javax.el.ValueExpression;
-import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -34,7 +33,7 @@ import org.primefaces.util.ComponentUtils;
  * @author Mark Lassiter / Melloware
  * @since 6.2
  */
-abstract class SheetBase extends UIInput implements ClientBehaviorHolder, EditableValueHolder, Widget {
+abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SheetRenderer";
