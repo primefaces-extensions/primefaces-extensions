@@ -575,7 +575,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
 
             //currently we can't save/restore the disabled: See #571 #644
-            //we also can't change it easily as the var is not not exposed at this time; i would need some refactoring
+            //we also can't change it easily as the var is not not exposed at this time; it would need some refactoring
             /*
             state.setDisabled(((UIComponent) input).getAttributes().get("disabled"));
             */
@@ -623,7 +623,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             }
 
             //currently we can't save/restore the disabled: See #571 #644
-            //we also can't change it easily as the var is not not exposed at this time; i would need some refactoring
+            //we also can't change it easily as the var is not not exposed at this time; it would need some refactoring
             /*
             if (state.getDisabled() != null) {
                 ((UIComponent) input).getAttributes().put("disabled", state.getDisabled());
