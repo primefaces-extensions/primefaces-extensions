@@ -4387,12 +4387,20 @@
 		</attribute>
 		<attribute>
 			<description>
-				<![CDATA[Timeut in seconds to do the ajax ajax requests. Default is 10.]]>
+				<![CDATA[Timeout in seconds to do the ajax ajax requests. Default is 10.]]>
 			</description>
 			<name>timeout</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Interval in milliseconds the timer fires. Default is 1000.]]>
+            </description>
+            <name>interval</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Component(s) to be updated with ajax.]]>

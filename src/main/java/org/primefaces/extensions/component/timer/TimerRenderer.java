@@ -111,7 +111,8 @@ public class TimerRenderer extends CoreRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.init("ExtTimer", widgetVar, clientId).attr("timeout", timer.getTimeout())
+        wb.init("ExtTimer", widgetVar, clientId)
+                    .attr("timeout", timer.getTimeout()).attr("interval", timer.getInterval())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
                     .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())
                     .callback("listener", "function()", request);

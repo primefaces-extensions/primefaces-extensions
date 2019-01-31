@@ -82,7 +82,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
                         that.print();
                     }
                 }
-            }, 1000);
+            }, that.cfg.interval);
         }
 
     },

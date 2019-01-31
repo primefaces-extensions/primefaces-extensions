@@ -46,6 +46,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
     private static final int DEFAULT_TIMEOUT = 10;
+    private static final int DEFAULT_INTERVAL_MS = 1000;
 
     protected enum PropertyKeys {
 
@@ -53,6 +54,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         widgetVar,
         singleRun,
         timeout,
+        interval,
         update,
         listener,
         immediate,
@@ -119,6 +121,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
 
     public void setTimeout(final int timeout) {
         getStateHelper().put(PropertyKeys.timeout, timeout);
+    }
+
+    public int getInterval() {
+        return (Integer) getStateHelper().eval(PropertyKeys.interval, DEFAULT_INTERVAL_MS);
+    }
+
+    public void setInterval(final int interval) {
+        getStateHelper().put(PropertyKeys.interval, interval);
     }
 
     public java.lang.String getWidgetVar() {
