@@ -63,7 +63,7 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         }
 
         // create the Clipboard
-        this.clipboard = new Clipboard(this.trigger[0], opts);
+        this.clipboard = new ClipboardJS(this.trigger[0], opts);
 
         // bind "success", "error" events
         this._bindEvents();
