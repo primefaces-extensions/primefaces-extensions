@@ -4772,6 +4772,38 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler called after opening or closing.]]>
+            </description>
+            <name>onslide</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler called before opening, return false to cancel.]]>
+            </description>
+            <name>onbeforeopen</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler called before closing, return false to cancel.]]>
+            </description>
+            <name>onbeforeclose</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler called before opening or closing, return false to cancel.]]>
+            </description>
+            <name>onbeforeslide</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 	</tag>
 	<tag>
 		<description>

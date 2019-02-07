@@ -81,8 +81,12 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
       animateSpeed,
       bounceDistance, // how far bounce event will move everything
       bounceTimes, // how many bounces when 'bounce' is called
-      onopen,
-      onclose;
+      onopen, // handler called after opening
+      onclose, // handler called after closing
+      onslide, // handler called after opening or closing
+      onbeforeopen, // handler called before opening, return false to cancel
+      onbeforeclose, // handler called before closing, return false to cancel
+      onbeforeslide; // handler called before opening or closing, return false to cancel
       // @formatter:on
 
         private String toString;
@@ -369,6 +373,38 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
 
     public void setOnclose(final String _onClose) {
         getStateHelper().put(PropertyKeys.onclose, _onClose);
+    }
+
+    public String getOnslide() {
+        return (String) getStateHelper().eval(PropertyKeys.onslide, null);
+    }
+
+    public void setOnslide(final String _onslide) {
+        getStateHelper().put(PropertyKeys.onslide, _onslide);
+    }
+
+    public String getOnbeforeopen() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforeopen, null);
+    }
+
+    public void setOnbeforeopen(final String _onBeforeOpen) {
+        getStateHelper().put(PropertyKeys.onbeforeopen, _onBeforeOpen);
+    }
+
+    public String getOnbeforeclose() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforeclose, null);
+    }
+
+    public void setOnbeforeclose(final String _onbeforeClose) {
+        getStateHelper().put(PropertyKeys.onbeforeclose, _onbeforeClose);
+    }
+
+    public String getOnbeforeslide() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforeslide, null);
+    }
+
+    public void setOnbeforeslide(final String _onbeforeslide) {
+        getStateHelper().put(PropertyKeys.onbeforeslide, _onbeforeslide);
     }
 
     private boolean isSelfRequest(final FacesContext context) {

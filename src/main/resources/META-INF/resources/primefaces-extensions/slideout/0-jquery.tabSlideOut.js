@@ -1,23 +1,23 @@
 /*
-    tabSlideOUt v2.4
+    tabSlideOUt v2.5
 
     Originally by William Paoli: http://code.google.com/p/tab-slide-out
     Maintained by Michael Fielding: https://github.com/hawk-ip/jquery.tabSlideOut.js
     License: GPL v3.0
 
     To use this you need an element for the tab panel content ('panel'), and inside it an element for the 
-    tab which will stick out from the window edge and be clickable ('handle'). By default the selector 
-    for handles is '.handle'.
+	tab which will stick out from the window edge and be clickable ('handle'). By default the selector 
+	for handles is '.handle'.
 
     example HTML:
-    
-        <div id="my-tab"><span class="handle">Click me</span>Hello World</div>
+	
+		<div id="my-tab"><span class="handle">Click me</span>Hello World</div>
 
-    example JavaScript (puts the tab on the right, and opens it on hover rather than click):
-    
+	example JavaScript (puts the tab on the right, and opens it on hover rather than click):
+	
         $('#my-tab').tabSlideOut( {'tabLocation':'right','action':'hover'} );
-        
-    Style the tab panel and handle using CSS. Add the class ui-slideouttab-handle-rounded to handles to give them 
+		
+	Style the tab panel and handle using CSS. Add the class ui-slideouttab-handle-rounded to handles to give them 
     rounded outer corners.
 
     You can use some methods to programmatically interact with tabs. Methods except 'isOpen' are chainable.
@@ -27,10 +27,10 @@
         $('#my-tab').tabSlideOut('close'); // closes it
         $('#my-tab').tabSlideOut('toggle'); // toggles it
         $('#my-tab').tabSlideOut('bounce'); // bounces the tab
-        
-    You can also send JQuery events to initiate actions:
-    
-    $('#my-tab').trigger('open'); // opens it
+		
+	You can also send JQuery events to initiate actions:
+	
+	$('#my-tab').trigger('open'); // opens it
         $('#my-tab').trigger('close'); // closes it
         $('#my-tab').trigger('toggle'); // toggles it
         $('#my-tab').trigger('bounce'); // bounces the tab
@@ -43,26 +43,26 @@
             // your code here
         });
 
-    Features are demonstrated on the related demo page.
+	Features are demonstrated on the related demo page.
 */
 (function($){
     $.fn.tabSlideOut = function(callerSettings) {
 
-        /**
-         * @param node Element to get the height of.
-         * @return string e.g. '123px'
-         */
-        function heightAsString( node ) {
-            return parseInt(node.outerHeight()+1, 10) + 'px';
-        }
-        /**
-         * @param node Element to get the width of.
-         * @return string e.g. '123px'
-         */
-        function widthAsString( node ) {
-            return parseInt(node.outerWidth()+1, 10) + 'px';
-        }
-        
+		/**
+		 * @param node Element to get the height of.
+		 * @return string e.g. '123px'
+		 */
+		function heightAsString( node ) {
+			return parseInt(node.outerHeight()+1, 10) + 'px';
+		}
+		/**
+		 * @param node Element to get the width of.
+		 * @return string e.g. '123px'
+		 */
+		function widthAsString( node ) {
+			return parseInt(node.outerWidth()+1, 10) + 'px';
+		}
+		
         /*
          * Get the width of the given border, in pixels.
          * 
@@ -102,10 +102,10 @@
             switch ( callerSettings )
             {
                 case 'open':
-                    this.trigger('open');
+					this.trigger('open');
                     return this;
                 case 'close':
-                    this.trigger('close');
+					this.trigger('close');
                     return this;
                 case 'isOpen':
                     return isOpen();
@@ -126,7 +126,7 @@
                 tabLocation: 'left', // left, right, top or bottom
                 tabHandle: '.handle', // JQuery selector for the tab, can use any JQuery selector
                 action: 'click',  // action which will open the panel, e.g. 'hover'
-                hoverTimeout: 5000, // ms to keep tab open after no longer hovered - only if action = 'hover'
+				hoverTimeout: 5000, // ms to keep tab open after no longer hovered - only if action = 'hover'
                 offset: '200px', // panel dist from top or left (bottom or right if offsetReverse is true)
                 offsetReverse: false, // if true, panel is offset from  right or bottom of window instead of left or top
                 otherOffset: null, // if set, panel size is also set to maintain this dist from bottom or right of view port (top or left if offsetReverse)
@@ -142,19 +142,23 @@
                 clickScreenToClose: true, // close tab when somewhere outside the tab is clicked
                 clickScreenToCloseFilters: ['.ui-slideouttab-panel'], // if click target or parents match any of these, click won't close this tab
                 onOpen: function(){}, // handler called after opening
-                onClose: function(){} // handler called after closing
+                onClose: function(){}, // handler called after closing
+				onSlide: function(){}, // handler called after opening or closing
+				onBeforeOpen: function(){return true;}, // handler called before opening, return false to cancel
+				onBeforeClose: function(){return true;}, // handler called before closing, return false to cancel
+				onBeforeSlide: function(){return true;} // handler called before opening or closing, return false to cancel
             }, callerSettings||{});
 
             var edge = settings.tabLocation; 
             var handle = settings.tabHandle = $(settings.tabHandle,panel);
-            
+			
             panel.addClass('ui-slideouttab-panel')
-                .addClass('ui-slideouttab-'+edge);
+				.addClass('ui-slideouttab-'+edge);
             if ( settings.offsetReverse ) 
-                panel.addClass('ui-slideouttab-panel-reverse');
+				panel.addClass('ui-slideouttab-panel-reverse');
             handle.addClass('ui-slideouttab-handle'); // need this to find it later
             if ( settings.handleOffsetReverse ) 
-                handle.addClass('ui-slideouttab-handle-reverse');
+				handle.addClass('ui-slideouttab-handle-reverse');
             settings.toggleButton = $(settings.toggleButton);
 
             // apply an image to the tab if one is defined
@@ -196,7 +200,7 @@
             if (settings.handleOffset === null) {
                 settings.handleOffset = '-'+borderWidth(panel,settings.handleOffsetFrom)+'px';
             }
-            
+			
             if(edge === 'top' || edge === 'bottom') {
                 /* set left or right edges */
                 panel.css( settings.panelOffsetFrom, settings.offset);
@@ -244,40 +248,46 @@
             settings.toggleButton.click(function(event){
                 event.preventDefault();
             });
-            
-            // now everything is set up, add the class which enables CSS tab animation
-            panel.addClass('ui-slideouttab-ready');
+			
+			// now everything is set up, add the class which enables CSS tab animation
+			panel.addClass('ui-slideouttab-ready');
 
-            var close = function() {
-                panel.removeClass('ui-slideouttab-open').trigger('slideouttabclose');
-                settings.onClose();
-            };
+			var close = function() {
+				if ( settings.onBeforeSlide() && settings.onBeforeClose() ) {
+					panel.removeClass('ui-slideouttab-open').trigger('slideouttabclose');
+					settings.onSlide();
+					settings.onClose();
+				}
+			};
 
-            var open = function() {
-                panel.addClass('ui-slideouttab-open').trigger('slideouttabopen');
-                settings.onOpen();
-            };
-            
-            var toggle = function() {
-                if (isOpen()) {
-                    close();
-                } else {
-                    open();
-                }
-            };
-          
+			var open = function() {
+				if ( settings.onBeforeSlide() && settings.onBeforeOpen() ) {
+					panel.addClass('ui-slideouttab-open').trigger('slideouttabopen');
+					settings.onSlide();
+					settings.onOpen();
+				}
+			};
+			
+			var toggle = function() {
+				if (isOpen()) {
+					close();
+				} else {
+					open();
+				}
+			};
+		  
             // animate the tab in and out when 'bounced'
             var moveIn = [];
             moveIn[edge] = '-=' + settings.bounceDistance;
             var moveOut = [];
             moveOut[edge] = '+=' + settings.bounceDistance;
-            
+			
             var bounceIn = function() {
                 var temp = panel;
                 for ( var i = 0; i < settings.bounceTimes; i++ )
                 {
                     temp = temp.animate(moveIn,  settings.bounceSpeed)
-                       .animate(moveOut,  settings.bounceSpeed);
+					   .animate(moveOut,  settings.bounceSpeed);
                 }
                 panel.trigger('slideouttabbounce');
             };
@@ -293,65 +303,65 @@
             };
 
             // handle clicks in rest of document to close tabs if they're open
-            if ( settings.clickScreenToClose ) {
-                // install a click handler to close tab if anywhere outside the tab is clicked,
-                // that isn't filtered out by the configured filters
+			if ( settings.clickScreenToClose ) {
+				// install a click handler to close tab if anywhere outside the tab is clicked,
+				// that isn't filtered out by the configured filters
                 $(document).click(function(event){
-                    // first check the tab is open and the click isn't inside it
+					// first check the tab is open and the click isn't inside it
                     if ( isOpen() && !panel[0].contains(event.target) ){
-                        // something other than this panel was clicked
-                        var clicked = $(event.target);
-                        
-                        // check to see if any filters return true
-                        for ( var i=0; i< settings.clickScreenToCloseFilters.length; i++ ) {
-                            var filter = settings.clickScreenToCloseFilters[i];
-                            if ( typeof filter === 'string' ) {
-                                // checked clicked element itself, and all parents
-                                if ( clicked.is(filter) || clicked.parents().is(filter)) {
-                                    return; // don't close the tab
-                                }
-                            } else if ( typeof filter === 'function' ) {
-                                // call custom filter
-                                if ( filter.call(panel,event) )
-                                    return; // don't close the tab
-                            }
-                        }
-                        
-                        // we haven't returned true from any filter, so close the tab
+						// something other than this panel was clicked
+						var clicked = $(event.target);
+						
+						// check to see if any filters return true
+						for ( var i=0; i< settings.clickScreenToCloseFilters.length; i++ ) {
+							var filter = settings.clickScreenToCloseFilters[i];
+							if ( typeof filter === 'string' ) {
+								// checked clicked element itself, and all parents
+								if ( clicked.is(filter) || clicked.parents().is(filter)) {
+									return; // don't close the tab
+								}
+							} else if ( typeof filter === 'function' ) {
+								// call custom filter
+								if ( filter.call(panel,event) )
+									return; // don't close the tab
+							}
+						}
+						
+						// we haven't returned true from any filter, so close the tab
                         close();
                     }
                 });
             };
-            
+			
             //choose which type of action to bind
             if (settings.action === 'click') {
                 handle.click(function(event){
-                    toggle();
+					toggle();
                 });
             } else if (settings.action === 'hover') {
-                var timer = null;
+				var timer = null;
                 panel.hover(
                     function(){
                         if (!isOpen()) {
                             open();
                         }
-                        timer = null; // eliminate the timer, ensure we don't close now
+						timer = null; // eliminate the timer, ensure we don't close now
                     },
                     function(){
                         if (isOpen() && timer === null) {
                             timer = setTimeout(function(){
-                                if ( timer )
-                                    close();
-                                timer = null;
-                            }, settings.hoverTimeout);
+								if ( timer )
+									close();
+								timer = null;
+							}, settings.hoverTimeout);
                         }
-                });
+				});
 
-                handle.click(function(event){
-                    if (isOpen()) {
-                        close();
-                    }
-                });
+				handle.click(function(event){
+					if (isOpen()) {
+						close();
+					}
+				});
             }
 
             if (settings.onLoadSlideOut) {
@@ -359,20 +369,20 @@
                 setTimeout(open, 500);
             }
             
-            // custom event handlers -------
-            panel.on('open', function(event) {
+			// custom event handlers -------
+			panel.on('open', function(event) {
                 if (!isOpen()) {
                     open();
                 }
-            });
-            panel.on('close', function(event) {
+			});
+			panel.on('close', function(event) {
                 if (isOpen()) {
                     close();
                 }
-            });
-            panel.on('toggle', function(event) {
-                toggle();
-            });
+			});
+			panel.on('toggle', function(event) {
+				toggle();
+			});
             panel.on('bounce', function(event){
                 if (isOpen()) {
                     bounceIn();
