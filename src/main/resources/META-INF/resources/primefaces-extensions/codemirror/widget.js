@@ -117,7 +117,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
         // lazy get parent form
         if (!this.form) {
             this.form = this.jq.closest("form");
-            this.formId = this.form[0].id;
+            this.formId = this.form.attr('id');
         }
 
         var $this = this;
