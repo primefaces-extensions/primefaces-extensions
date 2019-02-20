@@ -6080,8 +6080,8 @@
     </description>
     <tag-name>inputPhone</tag-name>
     <component>
-      <component-type>org.primefaces.component.InputNumber</component-type>
-      <renderer-type>org.primefaces.component.InputNumberRenderer</renderer-type>
+      <component-type>org.primefaces.extensions.component.InputPhone</component-type>
+      <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
     </component>
     <attribute>
       <description>
@@ -6409,6 +6409,14 @@
                 <![CDATA[The placeholder attribute specifies a short hint that describes the expected value of an input field.]]>
       </description>
       <name>placeholder</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Name of the client side widget.]]>
+      </description>
+      <name>widgetVar</name>
       <required>false</required>
       <type>java.lang.String</type>
     </attribute>

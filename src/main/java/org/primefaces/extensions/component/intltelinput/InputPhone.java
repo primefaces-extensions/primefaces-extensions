@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2019 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,9 @@ package org.primefaces.extensions.component.intltelinput;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
+import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 
 /**
  *
@@ -27,21 +30,22 @@ import javax.faces.component.html.HtmlInputText;
             @ResourceDependency(library = "primefaces-extensions", name = "intltelinput/intlTelInput.min.css"),
             @ResourceDependency(library = "primefaces-extensions", name = "intltelinput/intlTelInput.min.js")
 })
-public class InputPhone extends HtmlInputText {
+public class InputPhone extends HtmlInputText implements Widget, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPhoneRenderer";
-    
+
     public static final String STYLE_CLASS = "ui-inputfield ui-inputphone ui-widget ui-state-default ui-corner-all";
 
     public enum PropertyKeys {
         placeholder,
+        widgetVar,
         type
     }
-    
+
     public InputPhone() {
         setRendererType(DEFAULT_RENDERER);
     }
@@ -49,6 +53,26 @@ public class InputPhone extends HtmlInputText {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public String getInputClientId() {
+        return getClientId() + "_input";
+    }
+
+    @Override
+    public String getValidatableInputClientId() {
+        return getClientId() + "_hinput";
+    }
+
+    @Override
+    public String getLabelledBy() {
+        return (String) getStateHelper().get("labelledby");
+    }
+
+    @Override
+    public void setLabelledBy(String labelledBy) {
+        getStateHelper().put("labelledby", labelledBy);
     }
 
     public String getPlaceholder() {
@@ -59,12 +83,25 @@ public class InputPhone extends HtmlInputText {
         getStateHelper().put(PropertyKeys.placeholder, placeholder);
     }
 
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
+
+    public void setWidgetVar(String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
+    }
+
     public String getType() {
         return (String) getStateHelper().eval(PropertyKeys.type, "tel");
     }
 
     public void setType(String type) {
         getStateHelper().put(PropertyKeys.type, type);
+    }
+
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2019 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.component.inputmask.InputMask;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -29,7 +28,7 @@ import org.primefaces.util.HTML;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  */
 public class InputPhoneRenderer extends InputRenderer {
-    
+
     @Override
     public void decode(FacesContext context, UIComponent component) {
         InputPhone inputPhone = (InputPhone) component;
@@ -58,14 +57,18 @@ public class InputPhoneRenderer extends InputRenderer {
 
     protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
         String clientId = inputPhone.getClientId(context);
-        // TODO either create script or widget
+
+        //WidgetBuilder wb = getWidgetBuilder(context);
+        //wb.init("InputPhone", inputPhone.resolveWidgetVar(), clientId);
+        // TODO handle tag attributes
+        //wb.finish();
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = inputPhone.getClientId(context);
         String styleClass = inputPhone.getStyleClass();
-        String defaultClass = InputMask.STYLE_CLASS;
+        String defaultClass = InputPhone.STYLE_CLASS;
         defaultClass = !inputPhone.isValid() ? defaultClass + " ui-state-error" : defaultClass;
         defaultClass = inputPhone.isDisabled() ? defaultClass + " ui-state-disabled" : defaultClass;
         styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
