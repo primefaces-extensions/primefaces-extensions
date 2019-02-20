@@ -6073,4 +6073,369 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+
+  <tag>
+    <description>
+            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.]]>
+    </description>
+    <tag-name>inputPhone</tag-name>
+    <component>
+      <component-type>org.primefaces.component.InputNumber</component-type>
+      <renderer-type>org.primefaces.component.InputNumberRenderer</renderer-type>
+    </component>
+    <attribute>
+      <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+      </description>
+      <name>id</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+      </description>
+      <name>rendered</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+      </description>
+      <name>binding</name>
+      <required>false</required>
+      <type>javax.faces.component.UIComponent</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Value of the component.]]>
+      </description>
+      <name>value</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance.
+    In case it's a static text, it must refer to a converter id.]]>
+      </description>
+      <name>converter</name>
+      <required>false</required>
+      <type>java.faces.convert.Converter</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
+      </description>
+      <name>immediate</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Marks component as required.]]>
+      </description>
+      <name>required</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A method expression referring to a method validationg the input.]]>
+      </description>
+      <name>validator</name>
+      <required>false</required>
+      <type>javax.faces.validator.Validator</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A method binding expression referring to a method for handling a valuchangeevent.]]>
+      </description>
+      <name>valueChangeListener</name>
+      <required>false</required>
+      <type>javax.faces.event.ValueChangeListener</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when required field validation fails.]]>
+      </description>
+      <name>requiredMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when conversion fails.]]>
+      </description>
+      <name>converterMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when validation fails.]]>
+      </description>
+      <name>validatorMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Access key to transfer focus to the input element.]]>
+      </description>
+      <name>accesskey</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Alternate textual description of the input element.]]>
+      </description>
+      <name>alt</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Controls browser autocomplete behavior.]]>
+      </description>
+      <name>autocomplete</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Direction indication for text that does not inherit directionality.]]>
+      </description>
+      <name>dir</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Disables the input element, default is false.]]>
+      </description>
+      <name>disabled</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A localized user presentable name.]]>
+      </description>
+      <name>label</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Code describing the language used in the generated markup.]]>
+      </description>
+      <name>lang</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Maximum number of characters that may be entered in this field.]]>
+      </description>
+      <name>maxlength</name>
+      <required>false</required>
+      <type>int</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element loses focus.]]>
+      </description>
+      <name>onblur</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element loses focus and its value has been modified since gaining focus.]]>
+      </description>
+      <name>onchange</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element is clicked.]]>
+      </description>
+      <name>onclick</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+      </description>
+      <name>ondblclick</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element receives focus.]]>
+      </description>
+      <name>onfocus</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is pressed down over input element.]]>
+      </description>
+      <name>onkeydown</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is pressed and released over input element.]]>
+      </description>
+      <name>onkeypress</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is released over input element.]]>
+      </description>
+      <name>onkeyup</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is pressed down over input element.]]>
+      </description>
+      <name>onmousedown</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved within input element.]]>
+      </description>
+      <name>onmousemove</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved away from input element.]]>
+      </description>
+      <name>onmouseout</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved onto input element.]]>
+      </description>
+      <name>onmouseover</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is released over input element.]]>
+      </description>
+      <name>onmouseup</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when text within input element is selected by user.]]>
+      </description>
+      <name>onselect</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Flag indicating that this input element will prevent changes by the user.]]>
+      </description>
+      <name>readonly</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Number of characters used to determine the width of the input element.]]>
+      </description>
+      <name>size</name>
+      <required>false</required>
+      <type>int</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Inline style of the component.]]>
+      </description>
+      <name>style</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Style class of the component.]]>
+      </description>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Position of the element in the tabbing order.]]>
+      </description>
+      <name>tabindex</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Advisory tooltip information.]]>
+      </description>
+      <name>title</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[The placeholder attribute specifies a short hint that describes the expected value of an input field.]]>
+      </description>
+      <name>placeholder</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Input field type. Default "tel".]]>
+      </description>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Inline style of the input element.]]>
+      </description>
+      <name>inputStyle</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Style class of the input element.]]>
+      </description>
+      <name>inputStyleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+  
 </facelet-taglib>
