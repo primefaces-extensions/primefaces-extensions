@@ -912,13 +912,13 @@
 .iti-flag {
   height: 15px;
   box-shadow: 0px 0px 1px 0px #888;
-  background-image: url("../img/flags.png");
+  background-image: url("#{resource['primefaces-extensions:intltelinput/flags.png']}");
   background-repeat: no-repeat;
   background-color: #DBDBDB;
   background-position: 20px 0; }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .iti-flag {
-      background-image: url("../img/flags@2x.png"); } }
+      background-image: url("#{resource['primefaces-extensions:intltelinput/flags@2x.png']}"); } }
 
 .iti-flag.np {
   background-color: transparent; }
