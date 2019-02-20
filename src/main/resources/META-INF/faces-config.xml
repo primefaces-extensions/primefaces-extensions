@@ -178,6 +178,10 @@
         <component-type>org.primefaces.extensions.component.Speedtest</component-type>
         <component-class>org.primefaces.extensions.component.speedtest.Speedtest</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.InputPhone</component-type>
+        <component-class>org.primefaces.extensions.component.intltelinput.InputPhone</component-class>
+    </component>
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
@@ -332,6 +336,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.OrgChartRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.orgchart.OrgChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.intltelinput.InputPhoneRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
