@@ -180,7 +180,7 @@
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.InputPhone</component-type>
-        <component-class>org.primefaces.extensions.component.intltelinput.InputPhone</component-class>
+        <component-class>org.primefaces.extensions.component.inputphone.InputPhone</component-class>
     </component>
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -340,7 +340,7 @@
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.intltelinput.InputPhoneRenderer</renderer-class>
+            <renderer-class>org.primefaces.extensions.component.inputphone.InputPhoneRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

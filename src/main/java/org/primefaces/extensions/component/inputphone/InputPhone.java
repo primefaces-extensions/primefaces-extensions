@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.intltelinput;
+package org.primefaces.extensions.component.inputphone;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
@@ -27,8 +27,8 @@ import org.primefaces.util.ComponentUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  */
 @ResourceDependencies({
-            @ResourceDependency(library = "primefaces-extensions", name = "intltelinput/intlTelInput.min.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "intltelinput/intlTelInput.min.js")
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.js")
 })
 public class InputPhone extends HtmlInputText implements Widget, InputHolder {
 
