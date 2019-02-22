@@ -26,9 +26,15 @@ import org.primefaces.util.ComponentUtils;
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  */
+// TODO resources need to be minified (pom?), however utils.js must be excluded and needs to be loaded optionally
 @ResourceDependencies({
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.js")
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputPhoneWidget.js")
 })
 public class InputPhone extends HtmlInputText implements Widget, InputHolder {
 

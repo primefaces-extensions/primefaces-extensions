@@ -22,6 +22,7 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  *
@@ -58,10 +59,10 @@ public class InputPhoneRenderer extends InputRenderer {
     protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
         String clientId = inputPhone.getClientId(context);
 
-        //WidgetBuilder wb = getWidgetBuilder(context);
-        //wb.init("InputPhone", inputPhone.resolveWidgetVar(), clientId);
-        // TODO handle tag attributes
-        //wb.finish();
+        WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
+        wb.attr("target", clientId);
+        wb.finish();
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone) throws IOException {
