@@ -94,20 +94,23 @@ public class InputPhoneRenderer extends InputRenderer {
             wb.attr("separateDialCode", inputPhone.isSeparateDialCode());
         }
         if (inputPhone.isUtilsScriptRequired()) {
-            // TODO load utils
-            wb.attr("utilsScript", "TODO");
+            wb.attr("utilsScript",
+                    context.getApplication()
+                            .getResourceHandler()
+                            .createResource("inputphone/utils.js", "primefaces-extensions")
+                            .getRequestPath());
         }
         wb.finish();
     }
 
-    private static void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
+    private void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
         Collection<String> countries = toCollection(value);
         if (!countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
     }
 
-    private static Collection<String> toCollection(Object object) {
+    private Collection<String> toCollection(Object object) {
         if (String.class.isInstance(object)) {
             String string = ((String) object).replaceAll(" ", "").toLowerCase();
             return Arrays.asList(string.split(","));
