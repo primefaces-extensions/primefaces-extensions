@@ -16,9 +16,13 @@
 package org.primefaces.extensions.component.inputphone;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.json.JSONArray;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -62,7 +66,53 @@ public class InputPhoneRenderer extends InputRenderer {
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
         wb.attr("target", clientId);
+        if (!inputPhone.isAllowDropdown()) {
+            wb.attr("allowDropdown", inputPhone.isAllowDropdown());
+        }
+        if (!inputPhone.isAutoHideDialCode()) {
+            wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode());
+        }
+        if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
+            wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
+        }
+        encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
+        if (!inputPhone.isFormatOnDisplay()) {
+            wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay());
+        }
+        if (StringUtils.isNotEmpty(inputPhone.getInitialCountry())) {
+            wb.attr("initialCountry", inputPhone.getInitialCountry());
+        }
+        if (!inputPhone.isNationalMode()) {
+            wb.attr("nationalMode", inputPhone.isNationalMode());
+        }
+        encodeCountries(wb, "onlyCountries", inputPhone.getOnlyCountries());
+        if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
+            wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
+        }
+        encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
+        if (inputPhone.isSeparateDialCode()) {
+            wb.attr("separateDialCode", inputPhone.isSeparateDialCode());
+        }
+        if (inputPhone.isUtilsScriptRequired()) {
+            // TODO load utils
+            wb.attr("utilsScript", "TODO");
+        }
         wb.finish();
+    }
+
+    private static void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
+        Collection<String> countries = toCollection(value);
+        if (!countries.isEmpty()) {
+            wb.nativeAttr(attribute, new JSONArray(countries).toString());
+        }
+    }
+
+    private static Collection<String> toCollection(Object object) {
+        if (String.class.isInstance(object)) {
+            String string = ((String) object).replaceAll(" ", "").toLowerCase();
+            return Arrays.asList(string.split(","));
+        }
+        return (Collection<String>) object;
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone) throws IOException {

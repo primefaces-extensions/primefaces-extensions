@@ -156,6 +156,10 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
         return (String) getStateHelper().eval(PropertyKeys.autoPlaceholder, AutoPlaceholder.polite.name());
     }
 
+    public AutoPlaceholder getAutoPlaceholderEnum() {
+        return AutoPlaceholder.valueOf(getAutoPlaceholder());
+    }
+
     public void setAutoPlaceholder(String autoPlaceholder) {
         getStateHelper().put(PropertyKeys.autoPlaceholder, autoPlaceholder);
     }
@@ -204,6 +208,10 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
         return (String) getStateHelper().eval(PropertyKeys.placeholderNumberType, PlaceholderNumberType.mobile.name());
     }
 
+    public PlaceholderNumberType getPlaceholderNumberTypeEnum() {
+        return PlaceholderNumberType.valueOf(getPlaceholderNumberType());
+    }
+
     public void setPlaceholderNumberType(String placeholderNumberType) {
         getStateHelper().put(PropertyKeys.placeholderNumberType, placeholderNumberType);
     }
@@ -227,6 +235,10 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
     @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
+
+    public boolean isUtilsScriptRequired() {
+        return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay();
     }
 
 }
