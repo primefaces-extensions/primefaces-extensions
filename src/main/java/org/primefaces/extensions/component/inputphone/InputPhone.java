@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import java.util.Collections;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
@@ -49,7 +50,37 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
     public enum PropertyKeys {
         placeholder,
         widgetVar,
-        type
+        type,
+        allowDropdown,
+        autoHideDialCode,
+        autoPlaceholder,
+        excludeCountries,
+        formatOnDisplay,
+        initialCountry,
+        nationalMode,
+        onlyCountries,
+        placeholderNumberType,
+        preferredCountries,
+        separateDialCode
+    }
+
+    public enum AutoPlaceholder {
+        polite,
+        aggressive,
+        off
+    }
+
+    public enum PlaceholderNumberType {
+        fixed_line,
+        mobile,
+        toll_free,
+        shared_cost,
+        voip,
+        personal_number,
+        pager,
+        uan,
+        voicemail,
+        unknown
     }
 
     public InputPhone() {
@@ -103,6 +134,94 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
 
     public void setType(String type) {
         getStateHelper().put(PropertyKeys.type, type);
+    }
+
+    public boolean isAllowDropdown() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowDropdown, true);
+    }
+
+    public void setAllowDropdown(boolean allowDropdown) {
+        getStateHelper().put(PropertyKeys.allowDropdown, allowDropdown);
+    }
+
+    public boolean isAutoHideDialCode() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoHideDialCode, true);
+    }
+
+    public void setAutoHideDialCode(boolean autoHideDialCode) {
+        getStateHelper().put(PropertyKeys.autoHideDialCode, autoHideDialCode);
+    }
+
+    public String getAutoPlaceholder() {
+        return (String) getStateHelper().eval(PropertyKeys.autoPlaceholder, AutoPlaceholder.polite.name());
+    }
+
+    public void setAutoPlaceholder(String autoPlaceholder) {
+        getStateHelper().put(PropertyKeys.autoPlaceholder, autoPlaceholder);
+    }
+
+    public Object getExcludeCountries() {
+        return getStateHelper().eval(PropertyKeys.excludeCountries, Collections.emptyList());
+    }
+
+    public void setExcludeCountries(Object excludeCountries) {
+        getStateHelper().put(PropertyKeys.excludeCountries, excludeCountries);
+    }
+
+    public boolean isFormatOnDisplay() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.formatOnDisplay, true);
+    }
+
+    public void setFormatOnDisplay(boolean formatOnDisplay) {
+        getStateHelper().put(PropertyKeys.formatOnDisplay, formatOnDisplay);
+    }
+
+    public String getInitialCountry() {
+        return (String) getStateHelper().eval(PropertyKeys.initialCountry, null);
+    }
+
+    public void setInitialCountry(String initialCountry) {
+        getStateHelper().put(PropertyKeys.initialCountry, initialCountry);
+    }
+
+    public boolean isNationalMode() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.nationalMode, true);
+    }
+
+    public void setNationalMode(boolean nationalMode) {
+        getStateHelper().put(PropertyKeys.nationalMode, nationalMode);
+    }
+
+    public Object getOnlyCountries() {
+        return getStateHelper().eval(PropertyKeys.onlyCountries, Collections.emptyList());
+    }
+
+    public void setOnlyCountries(Object onlyCountries) {
+        getStateHelper().put(PropertyKeys.onlyCountries, onlyCountries);
+    }
+
+    public String getPlaceholderNumberType() {
+        return (String) getStateHelper().eval(PropertyKeys.placeholderNumberType, PlaceholderNumberType.mobile.name());
+    }
+
+    public void setPlaceholderNumberType(String placeholderNumberType) {
+        getStateHelper().put(PropertyKeys.placeholderNumberType, placeholderNumberType);
+    }
+
+    public Object getPreferredCountries() {
+        return getStateHelper().eval(PropertyKeys.preferredCountries, Collections.emptyList());
+    }
+
+    public void setPreferredCountries(Object preferredCountries) {
+        getStateHelper().put(PropertyKeys.preferredCountries, preferredCountries);
+    }
+
+    public boolean isSeparateDialCode() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.separateDialCode, false);
+    }
+
+    public void setSeparateDialCode(boolean separateDialCode) {
+        getStateHelper().put(PropertyKeys.separateDialCode, separateDialCode);
     }
 
     @Override

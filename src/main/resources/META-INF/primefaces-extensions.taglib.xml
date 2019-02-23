@@ -6444,6 +6444,108 @@
       <required>false</required>
       <type>java.lang.String</type>
     </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Whether or not to allow the dropdown. If disabled, there is no dropdown arrow, and the selected flag is not clickable.
+Also we display the selected flag on the right instead because it is just a country marker.]]>
+      </description>
+      <name>allowDropdown</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>    
+    <attribute>
+      <description>
+                <![CDATA[If there is just a dial code in the input: remove it on blur or submit.
+This is to prevent just a dial code getting submitted with the form. Requires nationalMode to be set to false.]]>
+      </description>
+      <name>autoHideDialCode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>    
+    <attribute>
+      <description>
+                <![CDATA[Set the input's placeholder to an example number for the selected country, and update it if the country changes.
+You can specify the number type using the placeholderNumberType attribute.
+By default it is set to "polite", which means it will only set the placeholder if the input doesn't already have one.
+You can also set it to "aggressive", which will replace any existing placeholder, or "off". Loads the utils script.]]>
+      </description>
+      <name>autoPlaceholder</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[In the dropdown, display all countries except the ones you specify here.
+Either a comma separated string or collection of ISO 2 country codes. Default is none.]]>
+      </description>
+      <name>excludeCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Format the input value (according to the nationalMode option) during initialisation, and on setNumber.
+Loads the utils script.]]>
+      </description>
+      <name>formatOnDisplay</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Set the initial country selection by specifying it's country code.
+If you leave initialCountry blank, it will default to the first country in the list. Default is blank.]]>
+      </description>
+      <name>initialCountry</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Allow users to enter national numbers (and not have to think about international dial codes).
+Formatting, JS validation and placeholders still work. Defaults is true.]]>
+      </description>
+      <name>nationalMode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[In the dropdown, display only the countries you specify here.
+Either a comma separated string or collection of ISO 2 country codes. Default is null (so all countries).]]>
+      </description>
+      <name>onlyCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Specify one of "fixed_line", "mobile", "toll_free", "shared_cost", "voip", "personal_number", "pager", "uan", "voicemail" or "unknown".
+Default is "mobile".]]>
+      </description>
+      <name>placeholderNumberType</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Specify the countries to appear at the top of the list.
+Either a comma separated string or collection of ISO 2 country codes. Default is none.]]>
+      </description>
+      <name>preferredCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Display the country dial code next to the selected flag so it's not part of the typed number.
+Note that this will disable nationalMode because technically we are dealing with international numbers,
+but with the dial code separated. Default false.]]>
+      </description>
+      <name>separateDialCode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
   </tag>
   
 </facelet-taglib>
