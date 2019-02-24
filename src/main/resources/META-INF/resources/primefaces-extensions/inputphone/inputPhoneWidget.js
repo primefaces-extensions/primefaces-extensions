@@ -15,15 +15,18 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.target = document.querySelector(PrimeFaces.escapeClientId(cfg.target));
-        this.iti = intlTelInput(this.target, cfg);
+        this.input = document.querySelector(this.jqId);
+        this.iti = intlTelInput(this.input, cfg);
+
+        PrimeFaces.skinInput($(this.jqId));
+
         this.bindEvents();
     },
     
     bindEvents: function() {
         var $this = this;
         
-        this.target.addEventListener('countrychange', function(){
+        this.input.addEventListener('countrychange', function(){
           if ($this.hasBehavior('countrySelect')) {
               var country = $this.iti.getSelectedCountryData();
               var ext = {
@@ -36,6 +39,20 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
               $this.callBehavior('countrySelect', ext);
           }          
         });
+    },
+
+    refresh: function(cfg) {
+        if (this.iti) {
+            this.iti.destroy();
+        }
+        this._super(cfg);
+    },
+
+    destroy: function() {
+        this._super();
+        if (this.iti) {
+            this.iti.destroy();
+        }
     }
 
 });

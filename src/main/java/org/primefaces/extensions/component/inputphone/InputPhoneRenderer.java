@@ -65,7 +65,6 @@ public class InputPhoneRenderer extends InputRenderer {
 
         WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
-        wb.attr("target", clientId);
         if (!inputPhone.isAllowDropdown()) {
             wb.attr("allowDropdown", inputPhone.isAllowDropdown());
         }
