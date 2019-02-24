@@ -5419,6 +5419,14 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
+        <attribute>
+            <description>
+                <![CDATA[Choose between selecting a single cell, a range of adjacent cells and multiple ranges of non-contiguous cells..  Valid values are "single", "multiple", "range".]]>
+            </description>
+            <name>selectionMode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
 		<attribute>
 			<description>
 				<![CDATA[Style of the html container element. Width and Height can be configured here in viewport units]]>

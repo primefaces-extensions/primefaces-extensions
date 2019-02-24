@@ -68,6 +68,11 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         locale,
 
         /**
+         * single, range, multiple
+         */
+        selectionMode,
+
+        /**
          * The selected row
          */
         selectedRow,
@@ -577,6 +582,14 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
 
     public void setLocale(final String locale) {
         getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
+    public void setSelectionMode(final String value) {
+        getStateHelper().put(PropertyKeys.selectionMode, value);
+    }
+
+    public String getSelectionMode() {
+        return (String) getStateHelper().eval(PropertyKeys.selectionMode, "multiple");
     }
 
     /**
