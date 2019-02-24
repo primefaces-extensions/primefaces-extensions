@@ -15,13 +15,22 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  *
@@ -37,7 +46,7 @@ import org.primefaces.util.ComponentUtils;
             @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputPhoneWidget.js")
 })
-public class InputPhone extends HtmlInputText implements Widget, InputHolder {
+public class InputPhone extends HtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
 
@@ -46,6 +55,11 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPhoneRenderer";
 
     public static final String STYLE_CLASS = "ui-inputfield ui-inputphone ui-widget ui-state-default ui-corner-all";
+
+    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
+            "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", "countrySelect");
+
+    private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList("countrySelect");
 
     public enum PropertyKeys {
         placeholder,
@@ -239,6 +253,48 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder {
 
     public boolean isUtilsScriptRequired() {
         return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay();
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public Collection<String> getUnobstrusiveEventNames() {
+        return UNOBSTRUSIVE_EVENT_NAMES;
+    }
+
+    @Override
+    public void queueEvent(FacesEvent event) {
+        FacesContext context = getFacesContext();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+        if (eventName != null && event instanceof AjaxBehaviorEvent) {
+            AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
+
+            if (eventName.equals("countrySelect")) {
+                Object selectedCountry = getCountry(getClientId(context), params);
+                SelectEvent selectEvent = new SelectEvent(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
+                selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
+                super.queueEvent(selectEvent);
+            }
+            else {
+                //e.g. blur, focus, change
+                super.queueEvent(event);
+            }
+        }
+        else {
+            //e.g. valueChange
+            super.queueEvent(event);
+        }
+    }
+
+    protected Country getCountry(String clientId, Map<String, String> params) {
+        return new Country(params.get(clientId + "_name"),
+                params.get(clientId + "_iso2"),
+                params.get(clientId + "_dialCode"));
     }
 
 }

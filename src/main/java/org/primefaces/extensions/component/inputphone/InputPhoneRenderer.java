@@ -100,6 +100,9 @@ public class InputPhoneRenderer extends InputRenderer {
                             .createResource("inputphone/utils.js", "primefaces-extensions")
                             .getRequestPath());
         }
+
+        encodeClientBehaviors(context, inputPhone);
+
         wb.finish();
     }
 

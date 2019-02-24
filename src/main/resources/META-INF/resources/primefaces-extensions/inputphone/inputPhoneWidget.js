@@ -16,7 +16,26 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.target = document.querySelector(PrimeFaces.escapeClientId(cfg.target));
-        intlTelInput(this.target, cfg);
+        this.iti = intlTelInput(this.target, cfg);
+        this.bindEvents();
+    },
+    
+    bindEvents: function() {
+        var $this = this;
+        
+        this.target.addEventListener('countrychange', function(){
+          if (this.hasBehavior('countrySelect')) {
+              var country = $this.iti.getSelectedCountryData();
+              var ext = {
+                  params: [
+                      {name: this.id + '_name', value: country.name},
+                      {name: this.id + '_iso2', value: country.iso2},
+                      {name: this.id + '_dialCode', value: country.dialCode}
+                  ]
+              };
+              this.callBehavior('countrySelect', ext);
+          }          
+        });
     }
 
 });
