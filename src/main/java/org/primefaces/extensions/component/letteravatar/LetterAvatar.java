@@ -20,38 +20,30 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
 
-@FacesComponent(value = Letteravatar.COMPONENT_TYPE)
+@FacesComponent(value = LetterAvatar.COMPONENT_TYPE)
 @ResourceDependencies({
-    @ResourceDependency(library = "letteravatar", name = "letteravatar.js")})
-public class Letteravatar extends UIComponentBase {
+    @ResourceDependency(library = "letteravatar", name = "letteravatar.css")
+    ,@ResourceDependency(library = "letteravatar", name = "letteravatar.js")})
+public class LetterAvatar extends UIComponentBase {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Letteravatar";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LetterAvatar";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LetteravatarRenderer";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LetterAvatarRenderer";
 
     protected static enum PropertyKeys {
-        widgetVar,
         style, styleClass,
         value,
         rounded,
         width, height;
     }
 
-    public Letteravatar() {
+    public LetterAvatar() {
         setRendererType(DEFAULT_RENDERER);
     }
 
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    public String getWidgetVar() {
-        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
-    }
-
-    public void setWidgetVar(String widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
     public String getStyle() {
@@ -101,5 +93,8 @@ public class Letteravatar extends UIComponentBase {
     public void setHeight(Integer height) {
         getStateHelper().put(PropertyKeys.height, height);
     }
+
+    public final static String COMPONENT_CLASS = "ui-letteravatar";
+    public final static String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
 
 }

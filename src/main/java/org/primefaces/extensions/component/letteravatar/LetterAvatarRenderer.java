@@ -22,8 +22,8 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
 
-@FacesRenderer(componentFamily = Letteravatar.COMPONENT_FAMILY, rendererType = Letteravatar.DEFAULT_RENDERER)
-public class LetteravatarRenderer extends Renderer {
+@FacesRenderer(componentFamily = LetterAvatar.COMPONENT_FAMILY, rendererType = LetterAvatar.DEFAULT_RENDERER)
+public class LetterAvatarRenderer extends Renderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -31,36 +31,39 @@ public class LetteravatarRenderer extends Renderer {
             throw new NullPointerException("No context defined!");
         }
 
-        final Letteravatar letteravatar = (Letteravatar) component;
+        final LetterAvatar letterAvatar = (LetterAvatar) component;
 
-        encodeMarkup(context, letteravatar);
+        encodeMarkup(context, letterAvatar);
     }
 
-    public void encodeMarkup(FacesContext context, Letteravatar letteravatar) throws IOException {
+    public void encodeMarkup(FacesContext context, LetterAvatar letterAvatar) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        String clientId = letteravatar.getClientId(context);
-        String style = letteravatar.getStyle();
-        String styleClass = letteravatar.getStyleClass();
+        final Integer width = letterAvatar.getWidth();
+        final Integer height = letterAvatar.getHeight();
+        final String avatar = letterAvatar.getValue();
+        final Boolean rounded = letterAvatar.isRounded();
 
-        writer.startElement("img", letteravatar);
+        String clientId = letterAvatar.getClientId(context);
+        String style = letterAvatar.getStyle();
+        String styleClass = letterAvatar.getStyleClass();
+        styleClass = (styleClass == null) ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + " " + styleClass;
+
+        writer.startElement("img", letterAvatar);
         writer.writeAttribute("id", clientId, null);
+
+        if (rounded) {
+            styleClass = styleClass + " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
+        }
         writer.writeAttribute("class", styleClass, "styleClass");
+
         if (style != null) {
             writer.writeAttribute("style", style, "style");
         }
 
-        final Integer width = letteravatar.getWidth();
-        final Integer height = letteravatar.getHeight();
-        final String avatar = letteravatar.getValue();
-        final Boolean rounded = letteravatar.isRounded();
-
         writer.writeAttribute("width", width, null);
         writer.writeAttribute("height", height, null);
         writer.writeAttribute("avatar", avatar, null);
-        if (rounded) {
-            writer.writeAttribute("style", "border-radius: 50%;", null);
-        }
 
         writer.endElement("img");
     }
