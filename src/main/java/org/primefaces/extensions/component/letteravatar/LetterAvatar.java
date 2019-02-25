@@ -20,21 +20,35 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
 
+/**
+ * <code>LetterAvatar</code> component.
+ *
+ * @author https://github.com/aripddev
+ * @since 7.0
+ */
 @FacesComponent(value = LetterAvatar.COMPONENT_TYPE)
 @ResourceDependencies({
-    @ResourceDependency(library = "letteravatar", name = "letteravatar.css")
-    ,@ResourceDependency(library = "letteravatar", name = "letteravatar.js")})
+            @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.js")
+})
 public class LetterAvatar extends UIComponentBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LetterAvatar";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LetterAvatarRenderer";
 
+    public final static String COMPONENT_CLASS = "ui-letteravatar";
+    public final static String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
+
     protected static enum PropertyKeys {
-        style, styleClass,
+        // @formatter:off
+        style,
+        styleClass,
         value,
         rounded,
-        width, height;
+        width,
+        height;
+        // @formatter:on
     }
 
     public LetterAvatar() {
@@ -93,8 +107,5 @@ public class LetterAvatar extends UIComponentBase {
     public void setHeight(Integer height) {
         getStateHelper().put(PropertyKeys.height, height);
     }
-
-    public final static String COMPONENT_CLASS = "ui-letteravatar";
-    public final static String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
 
 }

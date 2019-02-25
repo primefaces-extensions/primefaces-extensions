@@ -16,12 +16,19 @@
 package org.primefaces.extensions.component.letteravatar;
 
 import java.io.IOException;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
 
+/**
+ * Renderer for the {@link LetterAvatar} component.
+ *
+ * @author https://github.com/aripddev
+ * @since 7.0
+ */
 @FacesRenderer(componentFamily = LetterAvatar.COMPONENT_FAMILY, rendererType = LetterAvatar.DEFAULT_RENDERER)
 public class LetterAvatarRenderer extends Renderer {
 
@@ -44,10 +51,10 @@ public class LetterAvatarRenderer extends Renderer {
         final String avatar = letterAvatar.getValue();
         final Boolean rounded = letterAvatar.isRounded();
 
-        String clientId = letterAvatar.getClientId(context);
-        String style = letterAvatar.getStyle();
+        final String clientId = letterAvatar.getClientId(context);
+        final String style = letterAvatar.getStyle();
         String styleClass = letterAvatar.getStyleClass();
-        styleClass = (styleClass == null) ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + " " + styleClass;
+        styleClass = styleClass == null ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + " " + styleClass;
 
         writer.startElement("img", letterAvatar);
         writer.writeAttribute("id", clientId, null);
