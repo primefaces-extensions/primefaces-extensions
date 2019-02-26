@@ -15,11 +15,16 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  */
-public class Country {
+public class Country implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final String iso2;
@@ -41,6 +46,37 @@ public class Country {
 
     public String getDialCode() {
         return dialCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name, this.iso2, this.dialCode);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Country other = (Country) obj;
+        if (!Objects.equals(this.name, other.getName())) {
+            return false;
+        }
+        if (!Objects.equals(this.iso2, other.getIso2())) {
+            return false;
+        }
+        return Objects.equals(this.dialCode, other.getDialCode());
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" + "name=" + name + ", iso2=" + iso2 + ", dialCode=" + dialCode + '}';
     }
 
 }
