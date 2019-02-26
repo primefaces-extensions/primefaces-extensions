@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
+import org.primefaces.extensions.model.inputphone.Country;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
