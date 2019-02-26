@@ -54,7 +54,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPhoneRenderer";
 
-    public static final String STYLE_CLASS = "ui-inputfield ui-inputphone ui-widget ui-state-default ui-corner-all";
+    public static final String STYLE_CLASS = "ui-inputphone ui-widget";
 
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
             "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", "countrySelect");
@@ -75,7 +75,9 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         onlyCountries,
         placeholderNumberType,
         preferredCountries,
-        separateDialCode
+        separateDialCode,
+        inputStyle,
+        inputStyleClass
     }
 
     public enum AutoPlaceholder {
@@ -113,7 +115,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     @Override
     public String getValidatableInputClientId() {
-        return getClientId() + "_hinput";
+        return getClientId() + "_input";
     }
 
     @Override
@@ -244,6 +246,22 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public void setSeparateDialCode(boolean separateDialCode) {
         getStateHelper().put(PropertyKeys.separateDialCode, separateDialCode);
+    }
+
+    public String getInputStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.inputStyle, null);
+    }
+
+    public void setInputStyle(String inputStyle) {
+        getStateHelper().put(PropertyKeys.inputStyle, inputStyle);
+    }
+
+    public String getInputStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.inputStyleClass, null);
+    }
+
+    public void setInputStyleClass(String inputStyleClass) {
+        getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
     }
 
     @Override

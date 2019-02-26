@@ -6546,6 +6546,22 @@ but with the dial code separated. Default false.]]>
       <required>false</required>
       <type>boolean</type>
     </attribute>
+    <attribute>
+      <description>
+          <![CDATA[Inline style of the input element.]]>
+      </description>
+      <name>inputStyle</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+          <![CDATA[Style class of the input element.]]>
+      </description>
+      <name>inputStyleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
   </tag>
   
 </facelet-taglib>

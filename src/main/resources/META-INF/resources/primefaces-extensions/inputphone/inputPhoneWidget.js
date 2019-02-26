@@ -11,14 +11,14 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
+    init: function(cfg) {
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.input = document.querySelector(this.jqId);
+        this.input = document.querySelector(this.jqId + "_input");
         this.iti = intlTelInput(this.input, cfg);
 
-        PrimeFaces.skinInput($(this.jqId));
+        PrimeFaces.skinInput($(this.jqId + "_input"));
 
         this.bindEvents();
     },

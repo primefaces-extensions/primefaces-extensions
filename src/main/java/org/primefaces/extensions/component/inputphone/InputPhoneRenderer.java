@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.json.JSONArray;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -44,8 +45,8 @@ public class InputPhoneRenderer extends InputRenderer {
 
         decodeBehaviors(context, inputPhone);
 
-        String clientId = inputPhone.getClientId(context);
-        String submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId);
+        String inputId = inputPhone.getClientId(context) + "_input";
+        String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
             inputPhone.setSubmittedValue(submittedValue);
@@ -56,8 +57,73 @@ public class InputPhoneRenderer extends InputRenderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         InputPhone inputPhone = (InputPhone) component;
 
-        encodeMarkup(context, inputPhone);
+        Object value = inputPhone.getValue();
+        String valueToRender = ComponentUtils.getValueToRender(context, inputPhone, value);
+        if (valueToRender == null) {
+            valueToRender = "";
+        }
+
+        encodeMarkup(context, inputPhone, valueToRender);
         encodeScript(context, inputPhone);
+    }
+
+    protected void encodeMarkup(FacesContext context, InputPhone inputPhone, String valueToRender) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        String clientId = inputPhone.getClientId(context);
+
+        String styleClass = inputPhone.getStyleClass();
+        styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + " " + styleClass;
+        styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
+
+        writer.startElement("span", inputPhone);
+        writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("class", styleClass, "styleClass");
+
+        if (inputPhone.getStyle() != null) {
+            writer.writeAttribute("style", inputPhone.getStyle(), "style");
+        }
+
+        encodeInput(context, inputPhone, clientId, valueToRender);
+
+        writer.endElement("span");
+    }
+
+    protected void encodeInput(FacesContext context, InputPhone inputPhone, String clientId, String valueToRender)
+            throws IOException {
+
+        ResponseWriter writer = context.getResponseWriter();
+        String inputId = clientId + "_input";
+
+        String inputStyle = inputPhone.getInputStyle();
+        String inputStyleClass = inputPhone.getInputStyleClass();
+
+        String style = inputStyle;
+
+        String styleClass = InputText.STYLE_CLASS;
+        styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
+        styleClass = !inputPhone.isDisabled() ? styleClass : styleClass + " ui-state-disabled";
+        if (!isValueBlank(inputStyleClass)) {
+            styleClass += " " + inputStyleClass;
+        }
+
+        writer.startElement("input", null);
+        writer.writeAttribute("id", inputId, null);
+        writer.writeAttribute("name", inputId, null);
+        writer.writeAttribute("type", inputPhone.getType(), null);
+        writer.writeAttribute("value", valueToRender, null);
+
+        if (!isValueBlank(style)) {
+            writer.writeAttribute("style", style, null);
+        }
+
+        writer.writeAttribute("class", styleClass, null);
+
+        renderAccessibilityAttributes(context, inputPhone);
+        renderPassThruAttributes(context, inputPhone, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, inputPhone, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, inputPhone);
+
+        writer.endElement("input");
     }
 
     protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
@@ -118,40 +184,6 @@ public class InputPhoneRenderer extends InputRenderer {
             return Arrays.asList(string.split(","));
         }
         return (Collection<String>) object;
-    }
-
-    protected void encodeMarkup(FacesContext context, InputPhone inputPhone) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = inputPhone.getClientId(context);
-        String styleClass = inputPhone.getStyleClass();
-        String defaultClass = InputPhone.STYLE_CLASS;
-        defaultClass = !inputPhone.isValid() ? defaultClass + " ui-state-error" : defaultClass;
-        defaultClass = inputPhone.isDisabled() ? defaultClass + " ui-state-disabled" : defaultClass;
-        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
-
-        writer.startElement("input", null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
-        writer.writeAttribute("type", inputPhone.getType(), "text");
-
-        String valueToRender = ComponentUtils.getValueToRender(context, inputPhone);
-        if (valueToRender != null) {
-            writer.writeAttribute("value", valueToRender, null);
-        }
-
-        renderAccessibilityAttributes(context, inputPhone);
-        renderPassThruAttributes(context, inputPhone, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
-        renderDomEvents(context, inputPhone, HTML.INPUT_TEXT_EVENTS);
-
-        if (inputPhone.getStyle() != null) {
-            writer.writeAttribute("style", inputPhone.getStyle(), "style");
-        }
-
-        writer.writeAttribute("class", styleClass, "styleClass");
-
-        renderValidationMetadata(context, inputPhone);
-
-        writer.endElement("input");
     }
 
 }
