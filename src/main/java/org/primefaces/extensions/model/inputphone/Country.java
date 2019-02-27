@@ -19,8 +19,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * JSON model object for country handling of InputPhone.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 7.0
  */
 public class Country implements Serializable {
 
@@ -50,7 +52,7 @@ public class Country implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name, this.iso2, this.dialCode);
+        return Objects.hash(name, iso2, dialCode);
     }
 
     @Override
@@ -65,13 +67,13 @@ public class Country implements Serializable {
             return false;
         }
         final Country other = (Country) obj;
-        if (!Objects.equals(this.name, other.getName())) {
+        if (!Objects.equals(name, other.getName())) {
             return false;
         }
-        if (!Objects.equals(this.iso2, other.getIso2())) {
+        if (!Objects.equals(iso2, other.getIso2())) {
             return false;
         }
-        return Objects.equals(this.dialCode, other.getDialCode());
+        return Objects.equals(dialCode, other.getDialCode());
     }
 
     @Override

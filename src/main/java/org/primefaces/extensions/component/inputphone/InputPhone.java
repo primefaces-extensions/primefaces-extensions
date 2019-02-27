@@ -15,53 +15,55 @@
  */
 package org.primefaces.extensions.component.inputphone;
 
-import org.primefaces.extensions.model.inputphone.Country;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
+
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.model.inputphone.Country;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
 /**
+ * <code>InputPhone</code> component.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 7.0
  */
-// TODO resources need to be minified (pom?), however utils.js must be excluded and needs to be loaded optionally
 @ResourceDependencies({
             @ResourceDependency(library = "primefaces", name = "components.css"),
             @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
             @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/intlTelInput.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputPhoneWidget.js")
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.css"),
+            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.js")
 })
 public class InputPhone extends HtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
-
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPhoneRenderer";
 
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
+    public static final String EVENT_COUNTRY_SELECT = "countrySelect";
 
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
-            "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", "countrySelect");
+                "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", EVENT_COUNTRY_SELECT);
 
     private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList("countrySelect");
 
+    // @formatter:off
     public enum PropertyKeys {
         placeholder,
         widgetVar,
@@ -99,6 +101,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         voicemail,
         unknown
     }
+    // @formatter:on
 
     public InputPhone() {
         setRendererType(DEFAULT_RENDERER);
@@ -286,34 +289,34 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     @Override
     public void queueEvent(FacesEvent event) {
-        FacesContext context = getFacesContext();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+        final FacesContext context = getFacesContext();
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
         if (eventName != null && event instanceof AjaxBehaviorEvent) {
-            AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
+            final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
 
-            if (eventName.equals("countrySelect")) {
-                Object selectedCountry = getCountry(getClientId(context), params);
-                SelectEvent selectEvent = new SelectEvent(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
+            if (EVENT_COUNTRY_SELECT.equals(eventName)) {
+                final Object selectedCountry = getCountry(getClientId(context), params);
+                final SelectEvent selectEvent = new SelectEvent(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
             }
             else {
-                //e.g. blur, focus, change
+                // e.g. blur, focus, change
                 super.queueEvent(event);
             }
         }
         else {
-            //e.g. valueChange
+            // e.g. valueChange
             super.queueEvent(event);
         }
     }
 
     protected Country getCountry(String clientId, Map<String, String> params) {
         return new Country(params.get(clientId + "_name"),
-                params.get(clientId + "_iso2"),
-                params.get(clientId + "_dialCode"));
+                    params.get(clientId + "_iso2"),
+                    params.get(clientId + "_dialCode"));
     }
 
 }

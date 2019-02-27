@@ -18,26 +18,31 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.json.JSONArray;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
 /**
+ * Renderer for the {@link InputPhone} component.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 7.0
  */
 public class InputPhoneRenderer extends InputRenderer {
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
-        InputPhone inputPhone = (InputPhone) component;
+        final InputPhone inputPhone = (InputPhone) component;
 
         if (!shouldDecode(inputPhone)) {
             return;
@@ -45,8 +50,8 @@ public class InputPhoneRenderer extends InputRenderer {
 
         decodeBehaviors(context, inputPhone);
 
-        String inputId = inputPhone.getClientId(context) + "_input";
-        String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
+        final String inputId = inputPhone.getClientId(context) + "_input";
+        final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
             inputPhone.setSubmittedValue(submittedValue);
@@ -55,12 +60,12 @@ public class InputPhoneRenderer extends InputRenderer {
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        InputPhone inputPhone = (InputPhone) component;
+        final InputPhone inputPhone = (InputPhone) component;
 
-        Object value = inputPhone.getValue();
+        final Object value = inputPhone.getValue();
         String valueToRender = ComponentUtils.getValueToRender(context, inputPhone, value);
         if (valueToRender == null) {
-            valueToRender = "";
+            valueToRender = Constants.EMPTY_STRING;
         }
 
         encodeMarkup(context, inputPhone, valueToRender);
@@ -68,8 +73,8 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone, String valueToRender) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = inputPhone.getClientId(context);
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = inputPhone.getClientId(context);
 
         String styleClass = inputPhone.getStyleClass();
         styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + " " + styleClass;
@@ -89,15 +94,15 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     protected void encodeInput(FacesContext context, InputPhone inputPhone, String clientId, String valueToRender)
-            throws IOException {
+                throws IOException {
 
-        ResponseWriter writer = context.getResponseWriter();
-        String inputId = clientId + "_input";
+        final ResponseWriter writer = context.getResponseWriter();
+        final String inputId = clientId + "_input";
 
-        String inputStyle = inputPhone.getInputStyle();
-        String inputStyleClass = inputPhone.getInputStyleClass();
+        final String inputStyle = inputPhone.getInputStyle();
+        final String inputStyleClass = inputPhone.getInputStyleClass();
 
-        String style = inputStyle;
+        final String style = inputStyle;
 
         String styleClass = InputText.STYLE_CLASS;
         styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
@@ -127,9 +132,9 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
-        String clientId = inputPhone.getClientId(context);
+        final String clientId = inputPhone.getClientId(context);
 
-        WidgetBuilder wb = getWidgetBuilder(context);
+        final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
         if (!inputPhone.isAllowDropdown()) {
             wb.attr("allowDropdown", inputPhone.isAllowDropdown());
@@ -160,10 +165,10 @@ public class InputPhoneRenderer extends InputRenderer {
         }
         if (inputPhone.isUtilsScriptRequired()) {
             wb.attr("utilsScript",
-                    context.getApplication()
-                            .getResourceHandler()
-                            .createResource("inputphone/utils.js", "primefaces-extensions")
-                            .getRequestPath());
+                        context.getApplication()
+                                    .getResourceHandler()
+                                    .createResource("inputphone/utils.js", "primefaces-extensions")
+                                    .getRequestPath());
         }
 
         encodeClientBehaviors(context, inputPhone);
@@ -172,7 +177,7 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     private void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
-        Collection<String> countries = toCollection(value);
+        final Collection<String> countries = toCollection(value);
         if (!countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
@@ -180,7 +185,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
     private Collection<String> toCollection(Object object) {
         if (String.class.isInstance(object)) {
-            String string = ((String) object).replaceAll(" ", "").toLowerCase();
+            final String string = ((String) object).replaceAll(" ", Constants.EMPTY_STRING).toLowerCase();
             return Arrays.asList(string.split(","));
         }
         return (Collection<String>) object;

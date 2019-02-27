@@ -89,6 +89,31 @@
 						</resourcesSet>
 						<resourcesSet>
 							<includes>
+								<include>inputphone/intlTelInput.js</include>
+								<include>inputphone/inputphone-widget.js</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/inputphone/inputphone.js</outputFile>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>inputphone/intlTelInput.css</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/inputphone/inputphone.css</outputFile>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
 								<include>codemirror/lib/codemirror.js</include>
 								<include>codemirror/widget.js</include>
 							</includes>
