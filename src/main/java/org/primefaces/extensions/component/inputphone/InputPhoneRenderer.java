@@ -102,8 +102,6 @@ public class InputPhoneRenderer extends InputRenderer {
         final String inputStyle = inputPhone.getInputStyle();
         final String inputStyleClass = inputPhone.getInputStyleClass();
 
-        final String style = inputStyle;
-
         String styleClass = InputText.STYLE_CLASS;
         styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
         styleClass = !inputPhone.isDisabled() ? styleClass : styleClass + " ui-state-disabled";
@@ -117,8 +115,8 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.writeAttribute("type", inputPhone.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
 
-        if (!isValueBlank(style)) {
-            writer.writeAttribute("style", style, null);
+        if (!isValueBlank(inputStyle)) {
+            writer.writeAttribute("style", inputStyle, null);
         }
 
         writer.writeAttribute("class", styleClass, null);

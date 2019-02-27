@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * JSON model object for country handling of InputPhone.
+ * Model object for country handling of InputPhone.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0
