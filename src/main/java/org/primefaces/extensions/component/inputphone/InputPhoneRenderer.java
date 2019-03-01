@@ -18,6 +18,7 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -150,7 +151,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
         if ("auto".equals(inputPhone.getInitialCountry())) {
             if (inputPhone.getGeoIpLookup() == null) {
-                throw new IllegalArgumentException("geoIpLookup is required with initialCountry 'auto'");
+                throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }
             wb.nativeAttr("geoIpLookup", inputPhone.getGeoIpLookup());
         }
