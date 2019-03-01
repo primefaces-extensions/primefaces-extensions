@@ -6636,6 +6636,16 @@ but with the dial code separated. Default false.]]>
       <required>false</required>
       <type>boolean</type>
     </attribute>
+    <attribute>
+      <description>
+                <![CDATA[When setting initialCountry to "auto", you must use this attribute to specify a custom function
+that looks up the user's location, and then calls the success callback with the relevant country code.
+See showcase for an example. Default null.]]>
+      </description>
+      <name>geoIpLookup</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
   </tag>
   
 </facelet-taglib>

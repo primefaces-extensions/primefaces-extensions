@@ -18,14 +18,12 @@ package org.primefaces.extensions.component.inputphone;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
@@ -80,7 +78,8 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         preferredCountries,
         separateDialCode,
         inputStyle,
-        inputStyleClass
+        inputStyleClass,
+        geoIpLookup
     }
 
     public enum AutoPlaceholder {
@@ -266,6 +265,14 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public void setInputStyleClass(String inputStyleClass) {
         getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
+    }
+
+    public String getGeoIpLookup() {
+        return (String) getStateHelper().eval(PropertyKeys.geoIpLookup, null);
+    }
+
+    public void setGeoIpLookup(String geoIpLookup) {
+        getStateHelper().put(PropertyKeys.geoIpLookup, geoIpLookup);
     }
 
     @Override
