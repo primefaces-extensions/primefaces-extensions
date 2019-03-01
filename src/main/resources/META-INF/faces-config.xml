@@ -75,6 +75,10 @@
         <component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.LetterAvatar</component-type>
+        <component-class>org.primefaces.extensions.component.letteravatar.LetterAvatar</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
         <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
     </component>
@@ -178,6 +182,10 @@
         <component-type>org.primefaces.extensions.component.Speedtest</component-type>
         <component-class>org.primefaces.extensions.component.speedtest.Speedtest</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.InputPhone</component-type>
+        <component-class>org.primefaces.extensions.component.inputphone.InputPhone</component-class>
+    </component>
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
@@ -242,6 +250,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.LetterAvatarRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.letteravatar.LetterAvatarRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
@@ -332,6 +345,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.OrgChartRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.orgchart.OrgChartRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.inputphone.InputPhoneRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

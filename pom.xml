@@ -67,6 +67,7 @@
 								<include>github/**</include>
 								<include>imageareaselect/**</include>
 								<include>layout/**</include>
+								<include>letteravatar/**</include>
 								<include>qrcode/**</include>
 								<include>sheet/**</include>
 								<include>slideout/**</include>
@@ -82,6 +83,31 @@
 								<aggregation>
 									<inputDir>${resources.dir.compressed}</inputDir>
 									<subDirMode>true</subDirMode>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>inputphone/intlTelInput.js</include>
+								<include>inputphone/inputphone-widget.js</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/inputphone/inputphone.js</outputFile>
+									<withoutCompress>${withoutCompress}</withoutCompress>
+								</aggregation>
+							</aggregations>
+						</resourcesSet>
+						<resourcesSet>
+							<includes>
+								<include>inputphone/intlTelInput.css</include>
+							</includes>
+							<aggregations>
+								<aggregation>
+									<inputDir>${resources.dir.compressed}</inputDir>
+									<outputFile>${resources.dir.compressed}/inputphone/inputphone.css</outputFile>
 									<withoutCompress>${withoutCompress}</withoutCompress>
 								</aggregation>
 							</aggregations>

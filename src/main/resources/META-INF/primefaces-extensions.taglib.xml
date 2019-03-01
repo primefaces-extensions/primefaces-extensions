@@ -1790,6 +1790,88 @@
 	</tag>
 	<tag>
 		<description>
+			<![CDATA[Generate avatars with initials from names.]]>
+		</description>
+		<tag-name>letterAvatar</tag-name>
+		<component>
+			<component-type>org.primefaces.extensions.component.LetterAvatar</component-type>
+			<renderer-type>org.primefaces.extensions.component.LetterAvatarRenderer</renderer-type>
+		</component>
+		<attribute>
+			<description>
+				<![CDATA[Unique identifier of the component in a namingContainer.]]>
+			</description>
+			<name>id</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+			</description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Inline style of the container element.]]>
+			</description>
+			<name>style</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Style class of the container element.]]>
+			</description>
+			<name>styleClass</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+			</description>
+			<name>rendered</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[The name used to generate initials. You can specify the initals yourself as well. Default: John Doe]]>
+			</description>
+			<name>value</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Boolean specifying if the returned image should be a circle. Default: false]]>
+			</description>
+			<name>rounded</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Avatar image width in pixels. Default: 60]]>
+			</description>
+			<name>width</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Avatar height width in pixels. Default: 60]]>
+			</description>
+			<name>height</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>
 			<![CDATA[RemoteCommand provides a way to execute JSF backing bean methods directly from javascript.]]>
 		</description>
 		<tag-name>remoteCommand</tag-name>
@@ -4393,14 +4475,14 @@
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Interval in milliseconds the timer fires. Default is 1000.]]>
-            </description>
-            <name>interval</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Interval in milliseconds the timer fires. Default is 1000.]]>
+			</description>
+			<name>interval</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
 		<attribute>
 			<description>
 				<![CDATA[Component(s) to be updated with ajax.]]>
@@ -4772,38 +4854,38 @@
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler called after opening or closing.]]>
-            </description>
-            <name>onslide</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler called before opening, return false to cancel.]]>
-            </description>
-            <name>onbeforeopen</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler called before closing, return false to cancel.]]>
-            </description>
-            <name>onbeforeclose</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler called before opening or closing, return false to cancel.]]>
-            </description>
-            <name>onbeforeslide</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
+		<attribute>
+			<description>
+				<![CDATA[Javascript handler called after opening or closing.]]>
+			</description>
+			<name>onslide</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Javascript handler called before opening, return false to cancel.]]>
+			</description>
+			<name>onbeforeopen</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Javascript handler called before closing, return false to cancel.]]>
+			</description>
+			<name>onbeforeclose</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Javascript handler called before opening or closing, return false to cancel.]]>
+			</description>
+			<name>onbeforeslide</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>
@@ -5416,6 +5498,14 @@
 				<![CDATA[The Handsontable StretchH value.  Affects rendering of the column widths.  Valid values are "none", "hybrid", "last", "all".]]>
 			</description>
 			<name>stretchH</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				<![CDATA[Choose between selecting a single cell, a range of adjacent cells and multiple ranges of non-contiguous cells..  Valid values are "single", "multiple", "range".]]>
+			</description>
+			<name>selectionMode</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>
@@ -6073,4 +6163,479 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+
+  <tag>
+    <description>
+            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.]]>
+    </description>
+    <tag-name>inputPhone</tag-name>
+    <component>
+      <component-type>org.primefaces.extensions.component.InputPhone</component-type>
+      <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
+    </component>
+    <attribute>
+      <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+      </description>
+      <name>id</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+      </description>
+      <name>rendered</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+      </description>
+      <name>binding</name>
+      <required>false</required>
+      <type>javax.faces.component.UIComponent</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Value of the component.]]>
+      </description>
+      <name>value</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance.
+    In case it's a static text, it must refer to a converter id.]]>
+      </description>
+      <name>converter</name>
+      <required>false</required>
+      <type>java.faces.convert.Converter</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[When set true, process validations logic is executed at apply request values phase for this component. Default is false.]]>
+      </description>
+      <name>immediate</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Marks component as required.]]>
+      </description>
+      <name>required</name>
+      <required>false</required>
+      <type>java.lang.Boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A method expression referring to a method validationg the input.]]>
+      </description>
+      <name>validator</name>
+      <required>false</required>
+      <type>javax.faces.validator.Validator</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A method binding expression referring to a method for handling a valuchangeevent.]]>
+      </description>
+      <name>valueChangeListener</name>
+      <required>false</required>
+      <type>javax.faces.event.ValueChangeListener</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when required field validation fails.]]>
+      </description>
+      <name>requiredMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when conversion fails.]]>
+      </description>
+      <name>converterMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Message to display when validation fails.]]>
+      </description>
+      <name>validatorMessage</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Access key to transfer focus to the input element.]]>
+      </description>
+      <name>accesskey</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Alternate textual description of the input element.]]>
+      </description>
+      <name>alt</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Controls browser autocomplete behavior.]]>
+      </description>
+      <name>autocomplete</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Direction indication for text that does not inherit directionality.]]>
+      </description>
+      <name>dir</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Disables the input element, default is false.]]>
+      </description>
+      <name>disabled</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[A localized user presentable name.]]>
+      </description>
+      <name>label</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Code describing the language used in the generated markup.]]>
+      </description>
+      <name>lang</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Maximum number of characters that may be entered in this field.]]>
+      </description>
+      <name>maxlength</name>
+      <required>false</required>
+      <type>int</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element loses focus.]]>
+      </description>
+      <name>onblur</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element loses focus and its value has been modified since gaining focus.]]>
+      </description>
+      <name>onchange</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element is clicked.]]>
+      </description>
+      <name>onclick</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element is double clicked.]]>
+      </description>
+      <name>ondblclick</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when input element receives focus.]]>
+      </description>
+      <name>onfocus</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is pressed down over input element.]]>
+      </description>
+      <name>onkeydown</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is pressed and released over input element.]]>
+      </description>
+      <name>onkeypress</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a key is released over input element.]]>
+      </description>
+      <name>onkeyup</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is pressed down over input element.]]>
+      </description>
+      <name>onmousedown</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved within input element.]]>
+      </description>
+      <name>onmousemove</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved away from input element.]]>
+      </description>
+      <name>onmouseout</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is moved onto input element.]]>
+      </description>
+      <name>onmouseover</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when a pointer input element is released over input element.]]>
+      </description>
+      <name>onmouseup</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Client side callback to execute when text within input element is selected by user.]]>
+      </description>
+      <name>onselect</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Flag indicating that this input element will prevent changes by the user.]]>
+      </description>
+      <name>readonly</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Number of characters used to determine the width of the input element.]]>
+      </description>
+      <name>size</name>
+      <required>false</required>
+      <type>int</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Inline style of the component.]]>
+      </description>
+      <name>style</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Style class of the component.]]>
+      </description>
+      <name>styleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Position of the element in the tabbing order.]]>
+      </description>
+      <name>tabindex</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Advisory tooltip information.]]>
+      </description>
+      <name>title</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[The placeholder attribute specifies a short hint that describes the expected value of an input field.]]>
+      </description>
+      <name>placeholder</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Name of the client side widget.]]>
+      </description>
+      <name>widgetVar</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Input field type. Default "tel".]]>
+      </description>
+      <name>type</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Inline style of the input element.]]>
+      </description>
+      <name>inputStyle</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Style class of the input element.]]>
+      </description>
+      <name>inputStyleClass</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Whether or not to allow the dropdown. If disabled, there is no dropdown arrow, and the selected flag is not clickable.
+Also we display the selected flag on the right instead because it is just a country marker.]]>
+      </description>
+      <name>allowDropdown</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>    
+    <attribute>
+      <description>
+                <![CDATA[If there is just a dial code in the input: remove it on blur or submit.
+This is to prevent just a dial code getting submitted with the form. Requires nationalMode to be set to false.]]>
+      </description>
+      <name>autoHideDialCode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>    
+    <attribute>
+      <description>
+                <![CDATA[Set the input's placeholder to an example number for the selected country, and update it if the country changes.
+You can specify the number type using the placeholderNumberType attribute.
+By default it is set to "polite", which means it will only set the placeholder if the input doesn't already have one.
+You can also set it to "aggressive", which will replace any existing placeholder, or "off". Loads the utils script.]]>
+      </description>
+      <name>autoPlaceholder</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[In the dropdown, display all countries except the ones you specify here.
+Either a comma separated string or collection of ISO 2 country codes. Default is none.]]>
+      </description>
+      <name>excludeCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Format the input value (according to the nationalMode option) during initialisation, and on setNumber.
+Loads the utils script.]]>
+      </description>
+      <name>formatOnDisplay</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Set the initial country selection by specifying it's country code.
+If you leave initialCountry blank, it will default to the first country in the list. Default is blank.]]>
+      </description>
+      <name>initialCountry</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Allow users to enter national numbers (and not have to think about international dial codes).
+Formatting, JS validation and placeholders still work. Defaults is true.]]>
+      </description>
+      <name>nationalMode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[In the dropdown, display only the countries you specify here.
+Either a comma separated string or collection of ISO 2 country codes. Default is null (so all countries).]]>
+      </description>
+      <name>onlyCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Specify one of "fixed_line", "mobile", "toll_free", "shared_cost", "voip", "personal_number", "pager", "uan", "voicemail" or "unknown".
+Default is "mobile".]]>
+      </description>
+      <name>placeholderNumberType</name>
+      <required>false</required>
+      <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Specify the countries to appear at the top of the list.
+Either a comma separated string or collection of ISO 2 country codes. Default is none.]]>
+      </description>
+      <name>preferredCountries</name>
+      <required>false</required>
+      <type>java.lang.Object</type>
+    </attribute>
+    <attribute>
+      <description>
+                <![CDATA[Display the country dial code next to the selected flag so it's not part of the typed number.
+Note that this will disable nationalMode because technically we are dealing with international numbers,
+but with the dial code separated. Default false.]]>
+      </description>
+      <name>separateDialCode</name>
+      <required>false</required>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  
 </facelet-taglib>
