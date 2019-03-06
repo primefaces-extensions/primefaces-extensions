@@ -18,7 +18,9 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.input = document.querySelector(this.jqId + "_input");
         this.iti = intlTelInput(this.input, cfg);
 
-        PrimeFaces.skinInput($(this.jqId + "_input"));
+        this.inputJq = $(this.jqId + "_input");
+        this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+        PrimeFaces.skinInput(this.inputJq);
 
         this.bindEvents();
     },
