@@ -893,6 +893,50 @@
 			<type>javax.faces.event.ValueChangeListener</type>
 		</attribute>
 	</tag>
+        <tag>
+            <tag-name>countdown</tag-name>
+            <description><![CDATA[A simple JavaScript API for producing an accurate, intuitive description of the timespan between two Date instances.]]></description>
+            <component>
+                <component-type>com.aripd.extensions.component.Countdown</component-type>
+                <renderer-type>com.aripd.extensions.component.CountdownRenderer</renderer-type>
+            </component>
+            <attribute>
+                <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
+                <name>id</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+            </attribute>
+            <attribute>
+                <description><![CDATA[Inline style of the container element.]]></description>
+                <name>style</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+            </attribute>
+            <attribute>
+                <description><![CDATA[Style class of the container element.]]></description>
+                <name>styleClass</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+            </attribute>
+            <attribute>
+                <description><![CDATA[The target date, allow date object, time number (milliseconds), valid date string.]]></description>
+                <name>value</name>
+                <required>true</required>
+                <type>java.lang.Object</type>
+            </attribute>
+            <attribute>
+                <description><![CDATA[Just a text template, you can customize it, e.g., "%s D / %s H / %s M / %s S".]]></description>
+                <name>text</name>
+                <required>false</required>
+                <type>java.lang.String</type>
+            </attribute>
+            <attribute>
+                <description><![CDATA[Set it `true` to update the date number per one tenth second.]]></description>
+                <name>fast</name>
+                <required>false</required>
+                <type>java.lang.Boolean</type>
+            </attribute>
+        </tag>
 	<tag>
 		<description>
 			<![CDATA[DynaForm allows to show a dynamic form described by model.]]>
