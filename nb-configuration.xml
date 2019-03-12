@@ -27,5 +27,9 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>
         <org-netbeans-modules-editor-indent.CodeStyle.usedProfile>project</org-netbeans-modules-editor-indent.CodeStyle.usedProfile>
         <netbeans.hint.license>default</netbeans.hint.license>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeElseOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeElseOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeWhileOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeWhileOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeCatchOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeCatchOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeFinallyOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeFinallyOnNewLine>
     </properties>
 </project-shared-configuration>

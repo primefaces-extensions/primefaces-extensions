@@ -437,6 +437,13 @@
 			<artifactId>poi-ooxml</artifactId>
 			<scope>provided</scope>
 		</dependency>
+        <!-- InputPhone dependencies -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>8.10.7</version>
+            <scope>provided</scope>
+        </dependency>
 	</dependencies>
 	<properties>
 		<sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>

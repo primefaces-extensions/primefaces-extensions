@@ -89,6 +89,14 @@ public class InputPhoneRenderer extends InputRenderer {
 
         encodeInput(context, inputPhone, clientId, valueToRender);
 
+        // Add ISO 2 value in hidden input to use in validator
+        writer.startElement("input", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("id", clientId + "_iso2", null);
+        writer.writeAttribute("name", clientId + "_iso2", null);
+        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
+        writer.endElement("input");
+
         writer.endElement("span");
     }
 

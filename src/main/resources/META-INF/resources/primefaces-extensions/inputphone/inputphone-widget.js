@@ -15,12 +15,13 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.input = document.querySelector(this.jqId + "_input");
-        this.iti = intlTelInput(this.input, cfg);
 
-        this.inputJq = $(this.jqId + "_input");
+        this.inputJq = $(this.jqId + '_input');
         this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         PrimeFaces.skinInput(this.inputJq);
+
+        this.input = this.inputJq[0];
+        this.iti = intlTelInput(this.input, cfg);
 
         this.bindEvents();
     },
@@ -31,6 +32,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.input.addEventListener('countrychange', function () {
             if ($this.hasBehavior('countrySelect')) {
                 var country = $this.iti.getSelectedCountryData();
+                $($this.jqId + '_iso2').val(country.iso2);
                 var ext = {
                     params : [ {
                         name : $this.id + '_name',
