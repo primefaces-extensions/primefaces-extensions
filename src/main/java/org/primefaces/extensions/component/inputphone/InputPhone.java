@@ -29,6 +29,7 @@ import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.model.inputphone.Country;
+import org.primefaces.extensions.validate.PhoneValidator;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
@@ -105,6 +106,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public InputPhone() {
         setRendererType(DEFAULT_RENDERER);
+        addValidator(new PhoneValidator());
     }
 
     @Override

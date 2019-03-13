@@ -21,39 +21,41 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import org.primefaces.extensions.component.inputphone.InputPhone;
+import org.primefaces.util.Constants;
 
 /**
  * Validator used with {@link InputPhone}.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  */
-@FacesValidator("org.primefaces.extensions.validate.PhoneValidator")
 public class PhoneValidator implements Validator {
+
+    // TODO get from message bundle
+    private static final String MESSAGE_INVALID_NUMBER = "Invalid phone number";
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object object) throws ValidatorException {
-        String country = "";
-        if (InputPhone.class.isInstance(component)) {
-            InputPhone inputPhone = (InputPhone) component;
-            country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + "_iso2");
-            if (country == null || "auto".equals(country)) {
-                country = "";
-            }
+        InputPhone inputPhone = (InputPhone) component;
+        String country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + "_iso2");
+        if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
+            country = Constants.EMPTY_STRING;
         }
         try {
             PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
             Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse((String) object, country);
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
-                throw new ValidatorException(new FacesMessage("Invalid phone number"));
+                throw new ValidatorException(getMessage());
             }
         }
         catch (NumberParseException e) {
-            throw new ValidatorException(new FacesMessage("Invalid phone number"));
+            throw new ValidatorException(getMessage());
         }
     }
 
+    protected FacesMessage getMessage() {
+        return new FacesMessage(FacesMessage.SEVERITY_ERROR, MESSAGE_INVALID_NUMBER, MESSAGE_INVALID_NUMBER);
+    }
 }
