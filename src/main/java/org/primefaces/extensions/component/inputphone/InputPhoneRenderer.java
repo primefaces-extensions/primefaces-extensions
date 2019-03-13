@@ -157,7 +157,7 @@ public class InputPhoneRenderer extends InputRenderer {
         if (StringUtils.isNotEmpty(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
-        if ("auto".equals(inputPhone.getInitialCountry())) {
+        if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {
             if (inputPhone.getGeoIpLookup() == null) {
                 throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }

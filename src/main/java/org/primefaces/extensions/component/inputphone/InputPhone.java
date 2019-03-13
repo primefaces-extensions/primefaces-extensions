@@ -55,6 +55,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
     public static final String EVENT_COUNTRY_SELECT = "countrySelect";
+    public static final String COUNTRY_AUTO = "auto";
 
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
                 "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", EVENT_COUNTRY_SELECT);
