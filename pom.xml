@@ -380,17 +380,28 @@
         </plugins>
     </reporting>
     <dependencies>
+        <!-- PrimeFaces -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+        </dependency>
+        <!-- InputPhone dependencies -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>8.10.7</version>
+        </dependency>
+        <!-- Component dependencies -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <scope>test</scope>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
-        <!-- Java API's -->
+
+        <!-- PROVIDED Java API's -->
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -407,21 +418,7 @@
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
         </dependency>
-        <!-- PrimeFaces -->
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-        </dependency>
-        <!-- Component dependencies -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- Exporter dependencies -->
+        <!-- PROVIDED Exporter dependencies -->
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
@@ -437,11 +434,16 @@
             <artifactId>poi-ooxml</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- InputPhone dependencies -->
+        <!-- TEST -->
         <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-            <version>8.10.7</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <properties>
