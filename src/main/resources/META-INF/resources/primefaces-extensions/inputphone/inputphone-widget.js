@@ -2,6 +2,7 @@
  * PrimeFaces Extensions InputPhone Widget.
  * 
  * @author Jasper de Vries jepsar@gmail.com
+ * @since 7.0
  */
 PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
