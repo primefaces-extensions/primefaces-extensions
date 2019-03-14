@@ -27,5 +27,23 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.CodeStyle.project.expand-tabs>
         <org-netbeans-modules-editor-indent.CodeStyle.usedProfile>project</org-netbeans-modules-editor-indent.CodeStyle.usedProfile>
         <netbeans.hint.license>default</netbeans.hint.license>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeElseOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeElseOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeWhileOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeWhileOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeCatchOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeCatchOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeFinallyOnNewLine>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.placeFinallyOnNewLine>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineBinaryOp>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineBinaryOp>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineMethodParams>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineMethodParams>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineDisjunctiveCatchTypes>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineDisjunctiveCatchTypes>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineFor>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineFor>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineImplements>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineImplements>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineAssignment>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineAssignment>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineAnnotationArgs>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineAnnotationArgs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineCallArgs>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineCallArgs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineArrayInit>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineArrayInit>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineTryResources>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineTryResources>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineLambdaParams>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineLambdaParams>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineParenthesized>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineParenthesized>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineThrows>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineThrows>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineTernaryOp>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.alignMultilineTernaryOp>
     </properties>
 </project-shared-configuration>

@@ -89,6 +89,13 @@ public class InputPhoneRenderer extends InputRenderer {
 
         encodeInput(context, inputPhone, clientId, valueToRender);
 
+        writer.startElement("input", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("id", clientId + "_iso2", null);
+        writer.writeAttribute("name", clientId + "_iso2", null);
+        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
+        writer.endElement("input");
+
         writer.endElement("span");
     }
 
@@ -149,7 +156,7 @@ public class InputPhoneRenderer extends InputRenderer {
         if (StringUtils.isNotEmpty(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
-        if ("auto".equals(inputPhone.getInitialCountry())) {
+        if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {
             if (inputPhone.getGeoIpLookup() == null) {
                 throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }
