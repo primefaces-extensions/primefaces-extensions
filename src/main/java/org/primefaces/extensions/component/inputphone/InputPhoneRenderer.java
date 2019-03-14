@@ -18,10 +18,12 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.json.JSONArray;
@@ -88,13 +90,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         encodeInput(context, inputPhone, clientId, valueToRender);
-
-        writer.startElement("input", null);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId + "_iso2", null);
-        writer.writeAttribute("name", clientId + "_iso2", null);
-        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
-        writer.endElement("input");
+        encodeHiddenInput(context, inputPhone, clientId);
 
         writer.endElement("span");
     }
@@ -132,6 +128,17 @@ public class InputPhoneRenderer extends InputRenderer {
         renderDomEvents(context, inputPhone, HTML.INPUT_TEXT_EVENTS);
         renderValidationMetadata(context, inputPhone);
 
+        writer.endElement("input");
+    }
+
+    protected void encodeHiddenInput(FacesContext context, InputPhone inputPhone, String clientId)
+                throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement("input", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("id", clientId + "_iso2", null);
+        writer.writeAttribute("name", clientId + "_iso2", null);
+        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
         writer.endElement("input");
     }
 

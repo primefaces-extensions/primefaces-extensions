@@ -15,21 +15,24 @@
  */
 package org.primefaces.extensions.validate;
 
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
+
 import org.primefaces.extensions.component.inputphone.InputPhone;
 import org.primefaces.util.Constants;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 /**
  * Validator used with {@link InputPhone}.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 7.0
  */
 public class PhoneValidator implements Validator {
 
@@ -38,19 +41,19 @@ public class PhoneValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object object) throws ValidatorException {
-        InputPhone inputPhone = (InputPhone) component;
+        final InputPhone inputPhone = (InputPhone) component;
         String country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + "_iso2");
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
         try {
-            PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-            Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse((String) object, country);
+            final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+            final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse((String) object, country);
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
                 throw new ValidatorException(getMessage());
             }
         }
-        catch (NumberParseException e) {
+        catch (final NumberParseException e) {
             throw new ValidatorException(getMessage());
         }
     }
