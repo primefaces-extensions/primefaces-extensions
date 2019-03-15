@@ -195,7 +195,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
     private void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
         final Collection<String> countries = toCollection(value);
-        if (!countries.isEmpty()) {
+        if (countries != null && !countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
     }
