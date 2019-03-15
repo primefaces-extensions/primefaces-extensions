@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2018 PrimeFaces Extensions
+ * Copyright 2011-2019 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.json.JSONArray;
@@ -88,6 +90,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         encodeInput(context, inputPhone, clientId, valueToRender);
+        encodeHiddenInput(context, inputPhone, clientId);
 
         writer.endElement("span");
     }
@@ -128,6 +131,17 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("input");
     }
 
+    protected void encodeHiddenInput(FacesContext context, InputPhone inputPhone, String clientId)
+                throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement("input", null);
+        writer.writeAttribute("type", "hidden", null);
+        writer.writeAttribute("id", clientId + "_iso2", null);
+        writer.writeAttribute("name", clientId + "_iso2", null);
+        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
+        writer.endElement("input");
+    }
+
     protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
         final String clientId = inputPhone.getClientId(context);
 
@@ -149,7 +163,7 @@ public class InputPhoneRenderer extends InputRenderer {
         if (StringUtils.isNotEmpty(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
-        if ("auto".equals(inputPhone.getInitialCountry())) {
+        if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {
             if (inputPhone.getGeoIpLookup() == null) {
                 throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }

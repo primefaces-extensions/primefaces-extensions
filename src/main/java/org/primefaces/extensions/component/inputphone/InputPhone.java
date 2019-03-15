@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2018 PrimeFaces Extensions
+ * Copyright 2011-2019 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.model.inputphone.Country;
+import org.primefaces.extensions.validate.PhoneValidator;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
@@ -55,6 +56,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
     public static final String EVENT_COUNTRY_SELECT = "countrySelect";
+    public static final String COUNTRY_AUTO = "auto";
 
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
                 "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", EVENT_COUNTRY_SELECT);
@@ -104,6 +106,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public InputPhone() {
         setRendererType(DEFAULT_RENDERER);
+        addValidator(new PhoneValidator());
     }
 
     @Override

@@ -2,6 +2,7 @@
  * PrimeFaces Extensions InputPhone Widget.
  * 
  * @author Jasper de Vries jepsar@gmail.com
+ * @since 7.0
  */
 PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
@@ -15,12 +16,14 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.input = document.querySelector(this.jqId + "_input");
-        this.iti = intlTelInput(this.input, cfg);
 
-        this.inputJq = $(this.jqId + "_input");
+        this.inputJq = $(this.jqId + '_input');
+        this.inputIso2Jq = $(this.jqId + '_iso2');
         this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         PrimeFaces.skinInput(this.inputJq);
+
+        this.input = this.inputJq[0];
+        this.iti = intlTelInput(this.input, cfg);
 
         this.bindEvents();
     },
@@ -29,8 +32,9 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 
         this.input.addEventListener('countrychange', function () {
+            var country = $this.iti.getSelectedCountryData();
+            $this.inputIso2Jq.val(country.iso2);
             if ($this.hasBehavior('countrySelect')) {
-                var country = $this.iti.getSelectedCountryData();
                 var ext = {
                     params : [ {
                         name : $this.id + '_name',
