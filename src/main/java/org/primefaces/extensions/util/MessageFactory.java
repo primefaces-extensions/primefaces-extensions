@@ -40,10 +40,8 @@ public class MessageFactory {
     public static FacesMessage getMessage(final String messageId,
                                           final FacesMessage.Severity severity,
                                           final Object... params) {
-        final FacesMessage message = org.primefaces.util.MessageFactory.getMessage(messageId, severity, params);
-        if (message.getSummary() == null) {
-            populateMessageFromExtensions(message, messageId, params);
-        }
+        final FacesMessage message = getMessage(getLocale(), messageId, params);
+        message.setSeverity(severity);
         return message;
     }
 
@@ -57,17 +55,11 @@ public class MessageFactory {
         return message;
     }
 
-    public static Object getLabel(FacesContext facesContext, UIComponent component) {
+    public static Object getLabel(final FacesContext facesContext, final UIComponent component) {
         return org.primefaces.util.MessageFactory.getLabel(facesContext, component);
     }
 
-    private static void populateMessageFromExtensions(FacesMessage message,
-                                                      final String messageId,
-                                                      final Object[] params) {
-        populateMessageFromExtensions(message, getLocale(), messageId, params);
-    }
-
-    private static void populateMessageFromExtensions(FacesMessage message,
+    private static void populateMessageFromExtensions(final FacesMessage message,
                                                       final Locale locale,
                                                       final String messageId,
                                                       final Object[] params) {
