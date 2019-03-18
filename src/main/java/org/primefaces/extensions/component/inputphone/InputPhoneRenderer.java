@@ -47,7 +47,7 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class InputPhoneRenderer extends InputRenderer {
 
-    private static final String MESSAGE_INVALID_KEY = "primefaces.extensions.inputphone.INVALID";
+    private static final String MESSAGE_INVALID_VALUE_KEY = "primefaces.extensions.inputphone.INVALID";
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -103,17 +103,17 @@ public class InputPhoneRenderer extends InputRenderer {
             final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
             final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(value, country);
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
-                throw new ConverterException(getMessage());
+                throw getInvalidValueConverterException();
             }
             return value;
         }
         catch (final NumberParseException e) {
-            throw new ConverterException(getMessage());
+            throw getInvalidValueConverterException();
         }
     }
 
-    protected FacesMessage getMessage() {
-        return MessageFactory.getMessage(MESSAGE_INVALID_KEY, FacesMessage.SEVERITY_ERROR);
+    protected ConverterException getInvalidValueConverterException() {
+        return new ConverterException(MessageFactory.getMessage(MESSAGE_INVALID_VALUE_KEY, FacesMessage.SEVERITY_ERROR));
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone, String valueToRender) throws IOException {
