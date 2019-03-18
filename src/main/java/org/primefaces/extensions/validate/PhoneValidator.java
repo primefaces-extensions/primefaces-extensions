@@ -15,18 +15,17 @@
  */
 package org.primefaces.extensions.validate;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-
 import org.primefaces.extensions.component.inputphone.InputPhone;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.Constants;
-
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 
 /**
  * Validator used with {@link InputPhone}.
@@ -36,8 +35,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
  */
 public class PhoneValidator implements Validator {
 
-    // TODO get from message bundle
-    private static final String MESSAGE_INVALID_NUMBER = "Invalid phone number";
+    private static final String MESSAGE_INVALID_KEY = "primefaces.extensions.inputphone.INVALID";
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object object) throws ValidatorException {
@@ -59,6 +57,6 @@ public class PhoneValidator implements Validator {
     }
 
     protected FacesMessage getMessage() {
-        return new FacesMessage(FacesMessage.SEVERITY_ERROR, MESSAGE_INVALID_NUMBER, MESSAGE_INVALID_NUMBER);
+        return MessageFactory.getMessage(MESSAGE_INVALID_KEY, FacesMessage.SEVERITY_ERROR);
     }
 }

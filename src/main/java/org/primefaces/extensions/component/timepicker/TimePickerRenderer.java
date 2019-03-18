@@ -19,19 +19,16 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-
-import org.primefaces.extensions.util.MessageUtils;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -288,9 +285,13 @@ public class TimePickerRenderer extends InputRenderer {
             return timeFormat.parse(value);
         }
         catch (final ParseException e) {
-            throw new ConverterException(MessageUtils.getMessage(timepicker.calculateLocale(), TimePicker.TIME_MESSAGE_KEY,
-                        value, timeFormat.format(new Date(System.currentTimeMillis())),
-                        MessageFactory.getLabel(fc, component)), e);
+            throw new ConverterException(
+                    MessageFactory.getMessage(timepicker.calculateLocale(),
+                                              TimePicker.TIME_MESSAGE_KEY,
+                                              value,
+                                              timeFormat.format(new Date(System.currentTimeMillis())),
+                                              MessageFactory.getLabel(fc, component)),
+                    e);
         }
         catch (final Exception e) {
             throw new ConverterException(e);
