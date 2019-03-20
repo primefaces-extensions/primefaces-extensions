@@ -16,19 +16,20 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.timeAgo = $(this.jqId +' time').timeago();
+        this.selector = this.jqId + ' time';
+        this.timeAgo = $(this.selector).timeago();
     },
 
     // @override
     refresh : function (cfg) {
-        this.timeAgo.dispose();
+        $(this.selector).timeago('dispose');
         this._super(cfg);
     },
 
     // @override
     destroy : function () {
         this._super();
-        this.timeAgo.dispose();
+        $(this.selector).timeago('dispose');
     }
 
 });
