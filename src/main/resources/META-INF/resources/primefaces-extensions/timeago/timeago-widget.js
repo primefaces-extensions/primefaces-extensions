@@ -16,7 +16,7 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.timeAgo = $(this.jqId).timeago();
+        this.timeAgo = $(this.jqId +' time').timeago();
     },
 
     // @override
