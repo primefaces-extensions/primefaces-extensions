@@ -83,7 +83,10 @@ public class TimeAgoRenderer extends CoreRenderer {
         final String i18nAbbr = timeAgo.getBundledLocaleAbbr(locale);
 
         if (i18nAbbr != null) {
-            ResourceUtils.addComponentResource(context, "timeago/i18n/jquery.timeago." + i18nAbbr + ".js");
+            ResourceUtils.addComponentResource(context,
+                                               "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
+                                               "primefaces-extensions",
+                                               "head");
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
