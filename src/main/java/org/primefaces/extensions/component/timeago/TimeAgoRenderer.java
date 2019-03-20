@@ -18,14 +18,11 @@ package org.primefaces.extensions.component.timeago;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ResourceUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -79,16 +76,6 @@ public class TimeAgoRenderer extends CoreRenderer {
 
     protected void encodeScript(FacesContext context, TimeAgo timeAgo) throws IOException {
         final String clientId = timeAgo.getClientId(context);
-        final Locale locale = MessageFactory.getLocale();
-        final String i18nAbbr = timeAgo.getBundledLocaleAbbr(locale);
-
-        if (i18nAbbr != null) {
-            ResourceUtils.addComponentResource(context,
-                                               "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
-                                               "primefaces-extensions",
-                                               "head");
-        }
-
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtTimeAgo", timeAgo.resolveWidgetVar(), clientId);
         wb.finish();

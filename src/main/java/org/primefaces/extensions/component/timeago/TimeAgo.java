@@ -21,8 +21,11 @@ import java.util.Locale;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+import javax.faces.context.FacesContext;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.ResourceUtils;
 
 /**
  * <code>TimeAgo</code> component.
@@ -116,6 +119,14 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     public TimeAgo() {
         setRendererType(DEFAULT_RENDERER);
+
+        final String i18nAbbr = getBundledLocaleAbbr(MessageFactory.getLocale());
+        if (i18nAbbr != null) {
+            ResourceUtils.addComponentResource(FacesContext.getCurrentInstance(),
+                                               "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
+                                               "primefaces-extensions",
+                                               "body");
+        }
     }
 
     @Override
@@ -160,7 +171,7 @@ public class TimeAgo extends UIComponentBase implements Widget {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
-    public String getBundledLocaleAbbr(final Locale locale) {
+    public final String getBundledLocaleAbbr(final Locale locale) {
         final String abbr = locale.getLanguage() + "-" + locale.getCountry().toLowerCase();
         if (BUNDLED_LOCALES.contains(abbr)) {
             return abbr;
