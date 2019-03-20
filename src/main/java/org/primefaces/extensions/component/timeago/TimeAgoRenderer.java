@@ -73,6 +73,7 @@ public class TimeAgoRenderer extends CoreRenderer {
 
         writer.startElement("time", null);
         writer.writeAttribute("datetime", valueToRender, null);
+        writer.writeText(valueToRender, null);
         writer.endElement("time");
     }
 
