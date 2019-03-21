@@ -18,10 +18,12 @@ package org.primefaces.extensions.component.timeago;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.ComponentUtils;
@@ -34,10 +36,9 @@ import org.primefaces.util.ResourceUtils;
  * @since 7.0.1
  */
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "core.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeago/jquery.timeago.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "timeago/timeago-widget.js")
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "timeago/timeago.js"),
 })
 public class TimeAgo extends UIComponentBase implements Widget {
 
@@ -48,65 +49,65 @@ public class TimeAgo extends UIComponentBase implements Widget {
     public static final String STYLE_CLASS = "ui-timeago ui-widget";
 
     private static final List<String> BUNDLED_LOCALES = Arrays.asList(
-            "af",
-            "am",
-            "ar",
-            "az",
-            "be",
-            "bg",
-            "bs",
-            "ca",
-            "cs",
-            "cy",
-            "da",
-            "de",
-            "dv",
-            "el",
-            "en",
-            "es",
-            "et",
-            "eu",
-            "fa",
-            "fi",
-            "fr",
-            "gl",
-            "he",
-            "hr",
-            "hu",
-            "hy",
-            "id",
-            "is",
-            "it",
-            "ja",
-            "jv",
-            "ko",
-            "ky",
-            "lt",
-            "lv",
-            "mk",
-            "nl",
-            "no",
-            "pl",
-            "pt-br",
-            "pt",
-            "ro",
-            "rs",
-            "ru",
-            "rw",
-            "si",
-            "sk",
-            "sl",
-            "sq",
-            "sr",
-            "sv",
-            "th",
-            "tr",
-            "uk",
-            "ur",
-            "uz",
-            "vi",
-            "zh-cn",
-            "zh-tw");
+                "af",
+                "am",
+                "ar",
+                "az",
+                "be",
+                "bg",
+                "bs",
+                "ca",
+                "cs",
+                "cy",
+                "da",
+                "de",
+                "dv",
+                "el",
+                "en",
+                "es",
+                "et",
+                "eu",
+                "fa",
+                "fi",
+                "fr",
+                "gl",
+                "he",
+                "hr",
+                "hu",
+                "hy",
+                "id",
+                "is",
+                "it",
+                "ja",
+                "jv",
+                "ko",
+                "ky",
+                "lt",
+                "lv",
+                "mk",
+                "nl",
+                "no",
+                "pl",
+                "pt-br",
+                "pt",
+                "ro",
+                "rs",
+                "ru",
+                "rw",
+                "si",
+                "sk",
+                "sl",
+                "sq",
+                "sr",
+                "sv",
+                "th",
+                "tr",
+                "uk",
+                "ur",
+                "uz",
+                "vi",
+                "zh-cn",
+                "zh-tw");
 
     // @formatter:off
     public enum PropertyKeys {
@@ -123,9 +124,9 @@ public class TimeAgo extends UIComponentBase implements Widget {
         final String i18nAbbr = getBundledLocaleAbbr(MessageFactory.getLocale());
         if (i18nAbbr != null) {
             ResourceUtils.addComponentResource(FacesContext.getCurrentInstance(),
-                                               "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
-                                               "primefaces-extensions",
-                                               "body");
+                        "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
+                        "primefaces-extensions",
+                        "body");
         }
     }
 

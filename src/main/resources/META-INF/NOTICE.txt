@@ -22,3 +22,4 @@ This product includes software developed by Artem Tabalin (https://github.com/ta
 This product includes software developed by Handsoncode sp. z o.o. (https://github.com/handsontable/handsontable)
 This product includes software developed by Xuebin Dong (@dabeng) (https://github.com/dabeng/OrgChart)
 This product includes software developed by Jack O'Connor (@jackocnr) (https://github.com/jackocnr/intl-tel-input)
+This product includes software developed by Ryan McGeary (@rmm5t) (https://github.com/rmm5t/jquery-timeago)

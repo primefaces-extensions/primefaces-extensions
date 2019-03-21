@@ -73,6 +73,7 @@
                                 <include>slideout/**</include>
                                 <include>social/**</include>
                                 <include>speedtest/**</include>
+                                <include>timeago/*.js</include>
                                 <include>timepicker/**</include>
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>

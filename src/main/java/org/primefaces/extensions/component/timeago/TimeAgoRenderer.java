@@ -19,15 +19,19 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 /**
+ * <code>TimeAgo</code> component renderer.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 7.0.1
  */
 public class TimeAgoRenderer extends CoreRenderer {
 
@@ -87,7 +91,7 @@ public class TimeAgoRenderer extends CoreRenderer {
     }
 
     protected String format(final Date value) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         return sdf.format(value);
     }
