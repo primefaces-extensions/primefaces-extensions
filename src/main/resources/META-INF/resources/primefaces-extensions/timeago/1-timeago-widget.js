@@ -17,7 +17,17 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.selector = this.jqId + ' time';
-        this.timeAgo = $(this.selector).timeago();
+
+        var $this = this;
+        if (typeof this.cfg.locale !== 'undefined') {
+            var languageJsURI = PrimeFaces.resources.getFacesResource('/timeago/i18n/jquery.timeago.' + this.cfg.locale + '.js',
+                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+            PrimeFacesExt.getScript(languageJsURI, $.proxy(function (data, textStatus) {
+                $this.timeAgo = $($this.selector).timeago();
+            }, this));
+        } else {
+            this.timeAgo = $(this.selector).timeago();
+        }
     },
 
     // @override
