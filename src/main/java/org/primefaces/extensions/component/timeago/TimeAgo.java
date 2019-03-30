@@ -18,16 +18,12 @@ package org.primefaces.extensions.component.timeago;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
-import javax.faces.context.FacesContext;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.ResourceUtils;
 
 /**
  * <code>TimeAgo</code> component.
@@ -38,6 +34,7 @@ import org.primefaces.util.ResourceUtils;
 @ResourceDependencies({
             @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "timeago/timeago.js"),
 })
 public class TimeAgo extends UIComponentBase implements Widget {
@@ -120,14 +117,6 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     public TimeAgo() {
         setRendererType(DEFAULT_RENDERER);
-
-        final String i18nAbbr = getBundledLocaleAbbr(MessageFactory.getLocale());
-        if (i18nAbbr != null) {
-            ResourceUtils.addComponentResource(FacesContext.getCurrentInstance(),
-                        "timeago/i18n/jquery.timeago." + i18nAbbr + ".js",
-                        "primefaces-extensions",
-                        "body");
-        }
     }
 
     @Override
@@ -172,10 +161,11 @@ public class TimeAgo extends UIComponentBase implements Widget {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
-    public final String getBundledLocaleAbbr(final Locale locale) {
-        final String abbr = locale.getLanguage() + "-" + locale.getCountry().toLowerCase();
-        if (BUNDLED_LOCALES.contains(abbr)) {
-            return abbr;
+    public final String getBundledLocale() {
+        final Locale locale = MessageFactory.getLocale();
+        final String bundledLocale = locale.getLanguage() + "-" + locale.getCountry().toLowerCase();
+        if (BUNDLED_LOCALES.contains(bundledLocale)) {
+            return bundledLocale;
         }
         if (BUNDLED_LOCALES.contains(locale.getLanguage())) {
             return locale.getLanguage();

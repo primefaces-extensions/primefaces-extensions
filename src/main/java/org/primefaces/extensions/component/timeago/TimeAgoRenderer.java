@@ -19,11 +19,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -79,9 +77,12 @@ public class TimeAgoRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(FacesContext context, TimeAgo timeAgo) throws IOException {
-        final String clientId = timeAgo.getClientId(context);
+        final String locale = timeAgo.getBundledLocale();
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTimeAgo", timeAgo.resolveWidgetVar(), clientId);
+        wb.init("ExtTimeAgo", timeAgo.resolveWidgetVar(), timeAgo.getClientId(context));
+        if (locale != null) {
+            wb.attr("locale", locale);
+        }
         wb.finish();
     }
 
