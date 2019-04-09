@@ -122,7 +122,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 var isChanged = false;
                 var cellType = 'normal';
                 for (var i = 0; i < change.length; i++) {
-                    if (change[i][2] == change[i][3])
+                    var oldValue = change[i][2];
+                    var newValue = change[i][3];
+                    if (oldValue === newValue)
                         continue;
                     var row = change[i][0];
                     var col = change[i][1];
