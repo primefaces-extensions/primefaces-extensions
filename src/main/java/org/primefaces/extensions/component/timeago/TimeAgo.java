@@ -15,9 +15,12 @@
  */
 package org.primefaces.extensions.component.timeago;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -45,6 +48,8 @@ public class TimeAgo extends UIComponentBase implements Widget {
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimeAgoRenderer";
 
     public static final String STYLE_CLASS = "ui-timeago ui-widget";
+
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     private static final List<String> BUNDLED_LOCALES = Arrays.asList(
                 "af",
@@ -115,7 +120,8 @@ public class TimeAgo extends UIComponentBase implements Widget {
         widgetVar,
         style,
         styleClass,
-        locale
+        locale,
+        titlePattern
     }
     // @formatter:on
 
@@ -168,6 +174,14 @@ public class TimeAgo extends UIComponentBase implements Widget {
         getStateHelper().put(PropertyKeys.locale, locale);
     }
 
+    public String getTitlePattern() {
+        return (String) getStateHelper().eval(PropertyKeys.titlePattern, null);
+    }
+
+    public void setTitlePattern(String titlePattern) {
+        getStateHelper().put(PropertyKeys.titlePattern, titlePattern);
+    }
+
     @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
@@ -190,6 +204,25 @@ public class TimeAgo extends UIComponentBase implements Widget {
             return locale.getLanguage();
         }
         return null;
+    }
+
+    public final String formattedForJs() {
+        return format(DATE_FORMAT, TimeZone.getTimeZone("UTC"));
+    }
+
+    public final String formattedForTitle() {
+        return format(getTitlePattern(), TimeZone.getDefault());
+    }
+
+    // TODO When PF bumps to Java 8, support more types
+    protected String format(final String pattern, final TimeZone timeZone) {
+        return format((Date) getValue(), pattern, timeZone);
+    }
+
+    protected String format(final Date value, final String pattern, final TimeZone timeZone) {
+        final SimpleDateFormat sdf = new SimpleDateFormat(pattern, calculateLocale());
+        sdf.setTimeZone(timeZone);
+        return sdf.format(value);
     }
 
 }
