@@ -5222,7 +5222,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. 
+				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance.
     In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
@@ -5697,7 +5697,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. 
+				<![CDATA[An el expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance.
     In case it's a static text, it must refer to a converter id.]]>
             </description>
             <name>converter</name>
@@ -6712,6 +6712,14 @@ See showcase for an example. Default null.]]>
             <name>style</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
         </attribute>
     </tag>
 

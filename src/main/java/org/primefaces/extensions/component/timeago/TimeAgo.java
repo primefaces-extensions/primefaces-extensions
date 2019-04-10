@@ -21,9 +21,10 @@ import java.util.Locale;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+import javax.faces.context.FacesContext;
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * <code>TimeAgo</code> component.
@@ -106,12 +107,15 @@ public class TimeAgo extends UIComponentBase implements Widget {
                 "zh-cn",
                 "zh-tw");
 
+    private Locale appropriateLocale;
+
     // @formatter:off
     public enum PropertyKeys {
         value,
         widgetVar,
         style,
-        styleClass
+        styleClass,
+        locale
     }
     // @formatter:on
 
@@ -156,13 +160,28 @@ public class TimeAgo extends UIComponentBase implements Widget {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
+
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
     @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
+    public Locale calculateLocale() {
+        if (appropriateLocale == null) {
+            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
+        }
+        return appropriateLocale;
+    }
+
     public final String getBundledLocale() {
-        final Locale locale = MessageFactory.getLocale();
+        final Locale locale = calculateLocale();
         final String bundledLocale = locale.getLanguage() + "-" + locale.getCountry().toLowerCase();
         if (BUNDLED_LOCALES.contains(bundledLocale)) {
             return bundledLocale;
