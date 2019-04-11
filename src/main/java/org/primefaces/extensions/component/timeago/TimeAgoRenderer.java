@@ -16,9 +16,6 @@
 package org.primefaces.extensions.component.timeago;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -33,8 +30,6 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class TimeAgoRenderer extends CoreRenderer {
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         final TimeAgo timeAgo = (TimeAgo) component;
@@ -42,11 +37,11 @@ public class TimeAgoRenderer extends CoreRenderer {
         if (value == null) {
             return;
         }
-        encodeMarkup(context, timeAgo, format(value));
+        encodeMarkup(context, timeAgo);
         encodeScript(context, timeAgo);
     }
 
-    protected void encodeMarkup(FacesContext context, TimeAgo timeAgo, String valueToRender) throws IOException {
+    protected void encodeMarkup(FacesContext context, TimeAgo timeAgo) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = timeAgo.getClientId(context);
 
@@ -61,18 +56,18 @@ public class TimeAgoRenderer extends CoreRenderer {
             writer.writeAttribute("style", timeAgo.getStyle(), "style");
         }
 
-        encodeTime(context, timeAgo, clientId, valueToRender);
+        encodeTime(context, timeAgo, clientId);
 
         writer.endElement("span");
     }
 
-    protected void encodeTime(FacesContext context, TimeAgo timeAgo, String clientId, String valueToRender)
-                throws IOException {
+    protected void encodeTime(FacesContext context, TimeAgo timeAgo, String clientId) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
+        final String formattedForJs = timeAgo.formattedForJs();
 
         writer.startElement("time", null);
-        writer.writeAttribute("datetime", valueToRender, null);
-        writer.writeText(valueToRender, null);
+        writer.writeAttribute("datetime", formattedForJs, null);
+        writer.writeText(timeAgo.getTitlePattern() == null ? formattedForJs : timeAgo.formattedForTitle(), null);
         writer.endElement("time");
     }
 
@@ -84,17 +79,6 @@ public class TimeAgoRenderer extends CoreRenderer {
             wb.attr("locale", locale);
         }
         wb.finish();
-    }
-
-    // TODO When PF bumps to Java 8, support more types
-    protected String format(final Object value) {
-        return format((Date) value);
-    }
-
-    protected String format(final Date value) {
-        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return sdf.format(value);
     }
 
 }
