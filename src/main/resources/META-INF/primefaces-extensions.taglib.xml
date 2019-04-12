@@ -6721,6 +6721,14 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description>
+				<![CDATA[Pattern defining how the date object should be formatted in the HTML title attribute.]]>
+            </description>
+            <name>titlePattern</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>
