@@ -12,12 +12,20 @@
     <description>
         <![CDATA[PrimeFaces Extensions Project for Maven.]]>
     </description>
+
     <scm>
         <connection>scm:git:git://github.com/primefaces-extensions/core.git</connection>
         <developerConnection>scm:git:ssh://github.com:primefaces-extensions/core.git</developerConnection>
         <url>https://github.com/primefaces-extensions/core</url>
         <tag>HEAD</tag>
     </scm>
+
+    <properties>
+        <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
+        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -223,6 +231,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -447,8 +463,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <properties>
-        <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
-        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>
-    </properties>
+
 </project>
