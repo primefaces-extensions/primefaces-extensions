@@ -175,43 +175,48 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 }
             },
             afterGetColHeader: function (col, TH) {
+                var header = $(TH);
+                
+                // remove all current events
+                header.off();
+                
                 // handle sorting
                 var sortable = $this.cfg.sortable[col];
                 if (sortable) {
-                    $(TH).find('.relative .ui-sortable-column-icon').remove();
+                    header.find('.relative .ui-sortable-column-icon').remove();
                     var sortCol = $this.sortByInput.val();
                     var sortOrder = $this.sortOrderInput.val();
                     var iconclass = 'ui-sortable-column-icon ui-icon ui-icon ui-icon-carat-2-n-s ';
                     if (sortCol == col) {
                         iconclass = iconclass
                             + (sortOrder == 'ascending' ? 'ui-icon-triangle-1-n' : 'ui-icon-triangle-1-s');
-                        $(TH).addClass('ui-state-active');
+                        header.addClass('ui-state-active');
                     } else {
-                        $(TH).removeClass('ui-state-active');
+                        header.removeClass('ui-state-active');
                     }
-                    $(TH).find('.relative').append("<span class='" + iconclass + "'></span>");
-                    $(TH).addClass('ui-sortable');
-                    $(TH).off('click').click(function (e) {
+                    header.find('.relative').append("<span class='" + iconclass + "'></span>");
+                    header.addClass('ui-sortable');
+                    header.off().click(function (e) {
                         $this.sortClick($this, e, col);
                     });
                 } else {
-                    $(TH).removeClass('ui-state-active');
+                    header.removeClass('ui-state-active');
                 }
 
                 // handle filtering
                 var f = $this.cfg.filters[col];
                 if (typeof (f) != "undefined" && f != 'false') {
-                    $(TH).find('.handson-filter').remove();
+                    header.find('.handson-filter').remove();
                     var v = $($this.jqId + '_filter_' + col).val();
                     var filterId = $this.id + '_f' + col;
                     if (f == 'true') {
-                        $(TH)
+                        header
                             .append(
                                 '<span class="handson-filter"><input type="text" id="'
                                 + filterId
                                 + '" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '" /></span>');
-                        $(TH).find('input').change(function () {
+                        header.find('input').change(function () {
                             $this.filterchange($this, col, this.value, false)
                         }).keydown(function (e) {
                             $this.filterKeyDown($this, e)
@@ -223,18 +228,18 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterFocusOut($this, this)
                         });
                     } else {
-                        $(TH)
+                        header
                             .append(
                                 '<span class="handson-filter"><select id="'
                                 + filterId
                                 + '" class="ui-column-filter ui-widget ui-state-default ui-corner-left" ></select></span>');
-                        var s = $(TH).find('select');
+                        var s = header.find('select');
                         for (var i = 0; i < f.length; i++) {
                             s.append('<option value="' + f[i].value + '"'
                                 + (f[i].value == v ? ' selected="selected"' : '') + '>' + f[i].label
                                 + '</option>');
                         }
-                        $(TH).find('select').change(function () {
+                        header.find('select').change(function () {
                             $this.filterchange($this, col, this.value, true)
                         }).keydown(function (e) {
                             $this.filterKeyDown($this, e)
@@ -242,8 +247,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterKeyUp($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
-                        }).focusout(function () {
-                            $this.filterFocusOut($this, this)
                         });
                     }
                 }
@@ -298,12 +301,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
         var focusId = $this.focusInput.val();
         if (focusId && focusId.length > 0) {
-            focusId = focusId.replace(":", "\\:");
-            // for some reason does not work when focused immediately,
-            // dom node hasn't attached
-            setTimeout(function () {
-                $('#' + focusId).focus()
-            }, 100);
+            $(PrimeFaces.escapeClientId(focusId)).focus();
         }
     },
     
@@ -380,6 +378,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
         // destroy editor to avoid posting request after resort
         sheet.ht.destroyEditor(true);
+        sheet.ht.deselectCell();
+        
         sheet.callBehavior('sort');
     },
 
@@ -399,6 +399,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         if (key === keyCode.ENTER) {
             // destroy editor to avoid posting request after resort
             sheet.ht.destroyEditor(true);
+            sheet.ht.deselectCell();
 
             $(e.target).change();
             sheet.filter();
@@ -418,18 +419,16 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // we need to prevent recursion with this hack
         sheet.focusing = true;
         sheet.ht.destroyEditor(true);
-        // for some reason does not work when focused immediately,
-        setTimeout(function () {
-            sheet.focusInput.val($(inp).attr('id'));
-            $(inp).focus();
-            sheet.focusing = false;
-
-            sheet.filter();
-        },100);
+        sheet.ht.deselectCell();
+        sheet.focusing = false;
     },
 
     // remove focused filter tracking when tabbing off
     filterFocusOut: function (sheet, inp) {
+        // if this call is the result of jQuery setFocus, exit
+        if (sheet.focusing)
+            return;
+        
         sheet.filter();
         sheet.focusInput.val(null);
     },
