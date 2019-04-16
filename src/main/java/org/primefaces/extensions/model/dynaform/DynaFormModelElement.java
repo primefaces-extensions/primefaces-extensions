@@ -18,7 +18,7 @@ package org.primefaces.extensions.model.dynaform;
 /**
  * Class representing a nested model inside of <code>DynaFormRow</code>.
  *
- * @author Sébastien Lepage / last modified by $Author$
+ * @author SÃ©bastien Lepage / last modified by $Author$
  * @version $Revision$
  * @since 4.0.0
  */
