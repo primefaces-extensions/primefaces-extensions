@@ -23,7 +23,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         this.selectionInput = $(this.jqId + '_selection');
         this.sortByInput = $(this.jqId + '_sortby');
         this.sortOrderInput = $(this.jqId + '_sortorder');
-        this.focusInput = $(this.jqId + '_focus');
         // need to track to avoid recursion
         this.focusing = false;
         
@@ -208,13 +207,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 if (typeof (f) != "undefined" && f != 'false') {
                     header.find('.handson-filter').remove();
                     var v = $($this.jqId + '_filter_' + col).val();
-                    var filterId = $this.id + '_f' + col;
                     if (f == 'true') {
                         header
                             .append(
-                                '<span class="handson-filter"><input type="text" id="'
-                                + filterId
-                                + '" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
+                                '<span class="handson-filter"><input type="text" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '" /></span>');
                         header.find('input').change(function () {
                             $this.filterchange($this, col, this.value, false)
@@ -230,16 +226,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     } else {
                         header
                             .append(
-                                '<span class="handson-filter"><select id="'
-                                + filterId
-                                + '" class="ui-column-filter ui-widget ui-state-default ui-corner-left" ></select></span>');
-                        var s = header.find('select');
+                                '<span class="handson-filter"><select class="ui-column-filter ui-widget ui-state-default ui-corner-left" ></select></span>');
+                        var selectInput = header.find('select');
                         for (var i = 0; i < f.length; i++) {
-                            s.append('<option value="' + f[i].value + '"'
+                            selectInput.append('<option value="' + f[i].value + '"'
                                 + (f[i].value == v ? ' selected="selected"' : '') + '>' + f[i].label
                                 + '</option>');
                         }
-                        header.find('select').change(function () {
+                        selectInput.change(function () {
                             $this.filterchange($this, col, this.value, true)
                         }).keydown(function (e) {
                             $this.filterKeyDown($this, e)
@@ -298,10 +292,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         if (selval && selval.length > 0) {
             var sel = JSON.parse(selval);
             $this.ht.selectCell(sel[0], sel[1], sel[2], sel[3], true);
-        }
-        var focusId = $this.focusInput.val();
-        if (focusId && focusId.length > 0) {
-            $(PrimeFaces.escapeClientId(focusId)).focus();
         }
     },
     
@@ -420,7 +410,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         sheet.focusing = true;
         sheet.ht.destroyEditor(true);
         sheet.ht.deselectCell();
-        sheet.focusing = false;
+        // for some reason does not work when focused immediately,
+        setTimeout(function () {
+            $(inp).focus();
+            sheet.focusing = false;
+        },100);
     },
 
     // remove focused filter tracking when tabbing off
@@ -430,7 +424,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             return;
         
         sheet.filter();
-        sheet.focusInput.val(null);
     },
     
     // clear currently stored input and deltas
