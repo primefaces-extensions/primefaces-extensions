@@ -6584,7 +6584,7 @@ Loads the utils script.]]>
         <attribute>
             <description>
                 <![CDATA[Set the initial country selection by specifying it's country code.
-If you leave initialCountry blank, it will default to the first country in the list. Default is blank.]]>
+If you leave initialCountry blank, it will default to the first country in the list. Default is "us".]]>
             </description>
             <name>initialCountry</name>
             <required>false</required>
