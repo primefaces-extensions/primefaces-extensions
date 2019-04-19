@@ -101,7 +101,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
         try {
             final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-            final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(value, country);
+            final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(value, country.toUpperCase());
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
                 throw getInvalidValueConverterException();
             }
@@ -122,7 +122,6 @@ public class InputPhoneRenderer extends InputRenderer {
 
         String styleClass = inputPhone.getStyleClass();
         styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + " " + styleClass;
-        styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);

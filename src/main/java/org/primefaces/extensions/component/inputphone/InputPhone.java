@@ -201,7 +201,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     }
 
     public String getInitialCountry() {
-        return (String) getStateHelper().eval(PropertyKeys.initialCountry, null);
+        return (String) getStateHelper().eval(PropertyKeys.initialCountry, "us");
     }
 
     public void setInitialCountry(String initialCountry) {
