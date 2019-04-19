@@ -218,6 +218,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
                             $this.filterKeyUp($this, e)
+                        }).mouseover(function (e) {
+                            $this.filterMouseOver($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         }).focusout(function () {
@@ -239,6 +241,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
                             $this.filterKeyUp($this, e)
+                        }).mouseover(function (e) {
+                            $this.filterMouseOver($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         });
@@ -396,6 +400,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             e.preventDefault();
         }
     },
+    
+    // to alleviate focus issues focus on mouse over
+    filterMouseOver: function (sheet, e) {
+        $(e.target).focus();
+    },
 
     // keep track of focused filter input. if previous filter altered,
     // fire filter event
@@ -414,7 +423,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         setTimeout(function () {
             $(inp).focus();
             sheet.focusing = false;
-        },100);
+        },150);
     },
 
     // remove focused filter tracking when tabbing off
