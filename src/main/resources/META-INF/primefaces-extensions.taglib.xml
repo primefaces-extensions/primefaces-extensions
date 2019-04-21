@@ -6166,7 +6166,8 @@
 
     <tag>
         <description>
-            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.]]>
+            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.
+     Client behavior events: countrySelect - fires when a country is selected (org.primefaces.event.SelectEvent).]]>
         </description>
         <tag-name>inputPhone</tag-name>
         <component>
