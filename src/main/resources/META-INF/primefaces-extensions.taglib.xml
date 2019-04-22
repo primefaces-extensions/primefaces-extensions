@@ -6166,7 +6166,8 @@
 
     <tag>
         <description>
-            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.]]>
+            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.
+     Client behavior events: countrySelect - fires when a country is selected (org.primefaces.event.SelectEvent).]]>
         </description>
         <tag-name>inputPhone</tag-name>
         <component>
@@ -6584,7 +6585,7 @@ Loads the utils script.]]>
         <attribute>
             <description>
                 <![CDATA[Set the initial country selection by specifying it's country code.
-If you leave initialCountry blank, it will default to the first country in the list. Default is blank.]]>
+If you leave initialCountry blank, it will default to the first country in the list. Default is "us".]]>
             </description>
             <name>initialCountry</name>
             <required>false</required>

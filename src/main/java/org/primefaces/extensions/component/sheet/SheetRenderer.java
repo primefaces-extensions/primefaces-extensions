@@ -31,6 +31,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
@@ -592,13 +594,34 @@ public class SheetRenderer extends CoreRenderer {
         final String clientId = sheet.getClientId();
 
         // sort event (manual since callBack prepends leading comma)
-        wb.append("sort").append(":").append("function(s, event)").append("{").append("PrimeFaces.ab({source: '")
-                    .append(clientId).append("',event: 'sort', process: '").append(clientId).append("', update: '")
-                    .append(clientId).append("'}, arguments[1]);}");
+        if (behaviors.containsKey("sort")) {
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
+                        sheet, "sort", sheet.getClientId(context), null);
+            final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("sort").get(0);
+            ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
+            wb.append("sort").append(":").append("function(s, event)").append("{")
+                        .append(behaviors.get("sort").get(0).getScript(behaviorContext)).append("}");
+        }
+        else {
+            // default sort event if none defined by user
+            wb.append("sort").append(":").append("function(s, event)").append("{").append("PrimeFaces.ab({source: '")
+                        .append(clientId).append("',event: 'sort', process: '").append(clientId).append("', update: '")
+                        .append(clientId).append("'});}");
+        }
 
         // filter
-        wb.callback("filter", "function(s, event)", "PrimeFaces.ab({source: '" + clientId
-                    + "', event: 'filter', process: '" + clientId + "', update: '" + clientId + "'}, arguments[1]);");
+        if (behaviors.containsKey("filter")) {
+            final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
+                        sheet, "filter", sheet.getClientId(context), null);
+            final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("filter").get(0);
+            ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
+            wb.callback("filter", "function(source, event)", behaviors.get("filter").get(0).getScript(behaviorContext));
+        }
+        else {
+            // default filter event if none defined by user
+            wb.callback("filter", "function(source, event)", "PrimeFaces.ab({s: '" + clientId
+                        + "', event: 'filter', process: '" + clientId + "', update: '" + clientId + "'});");
+        }
 
         if (behaviors.containsKey("change")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
