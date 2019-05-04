@@ -18,7 +18,7 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         var that = this;
         $(this.jqId + ' .ui-fab-main').click(function(){
-            that.toggleClass('ui-state-active');
+            that.jq.toggleClass('ui-state-active');
         });
     }
 

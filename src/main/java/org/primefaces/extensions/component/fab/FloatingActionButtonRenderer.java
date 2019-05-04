@@ -48,8 +48,6 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         encodeMainButton(context, writer, fab);
         encodeMenu(context, writer, fab);
         writer.endElement("span");
-
-        encodeScript(context, fab);
     }
 
     protected void encodeMainButton(FacesContext context, ResponseWriter writer, FloatingActionButton fab) throws IOException {
@@ -82,6 +80,12 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
     protected void encodeMenuItem(FacesContext context, ResponseWriter writer, FloatingActionButton fab, MenuItem menuItem) throws IOException {
         writer.startElement("li", fab);
         writer.writeAttribute("role", "menuitem", null);
+        writer.writeAttribute("class", "ui-button", null);
+        // Use style here allowing to set background color
+        if (menuItem.getStyle() != null) {
+            writer.writeAttribute("style", menuItem.getStyle(), null);
+            menuItem.setStyleClass(null);
+        }
         if (!menuItem.isDisabled()) {
             encodeMenuItem(context, fab, menuItem, fab.getTabindex());
         }
@@ -96,7 +100,6 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtFAB", fab.resolveWidgetVar(), fab.getClientId(context));
-        // TODO
         wb.finish();
     }
 

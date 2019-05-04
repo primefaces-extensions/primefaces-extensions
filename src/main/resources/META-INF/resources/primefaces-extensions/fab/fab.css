@@ -1,17 +1,7 @@
-/*
- * @author Jasper de Vries <jepsar@gmail.com>
- */
-
 .ui-fab {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
-}
-
-.ui-fab * {
-  transition-duration: 100ms;
-  transition-timing-function: ease-out;
-  transition-property: none;
 }
 
 .ui-fab-main.ui-button {
@@ -23,15 +13,20 @@
   height: 56px;
   border-radius: 56px;
   z-index: 2;
+  border: 0;
 }
 
 .ui-fab .ui-icon {
   position: absolute;
 }
 
+.ui-fab-main {
+    cursor: pointer;
+}
+
 .ui-fab-main .ui-icon {
-  top: 11px;
-  left: 11px;
+  top: 12px;
+  left: 12px;
   font-size: 32px;
 }
 
@@ -46,37 +41,36 @@
 }
 
 .ui-fab li {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
   flex: 0 0 auto;
   list-style-type: none;
   position: relative;
   height: 40px;
-  margin-bottom: -40px;
-  transition-property: margin;
+  margin: 0 9px -40px 9px;
+  border: 0;
+  transform: scale(0.5);
+  transform-origin: center;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+  transition-property: margin, transform;
 }
 .ui-fab.ui-state-active li {
   margin-bottom: 10px;
+  transform: scale(1);
 }
 
 .ui-fab li .ui-icon {
-  top: 10px;
-  left: 10px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
 }
 
 .ui-fab li a {
   outline: none;
-}
-
-.ui-fab li .ui-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  margin: 0 9px;
-  transform: scale(0.5);
-  transform-origin: center;
-  transition-property: transform;
-}
-.ui-fab.ui-state-active li .ui-button {
-  transform: scale(1);
+  color: inherit;
 }
 
 .ui-fab li .ui-menuitem-text {
@@ -88,6 +82,7 @@
   top: 6px;
   white-space: nowrap;
   display: none;
+  border-radius: 3px;
 }
 .ui-fab.ui-state-active li:hover .ui-menuitem-text {
   display: block;
