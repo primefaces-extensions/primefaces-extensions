@@ -6732,4 +6732,87 @@ See showcase for an example. Default null.]]>
         </attribute>
     </tag>
 
+    <tag>
+        <description>
+            <![CDATA[Floating Action Button holds menu items which pop out on click.]]>
+        </description>
+        <tag-name>fab</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.FloatingActionButton</component-type>
+            <renderer-type>org.primefaces.extensions.component.FloatingActionButtonRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[MenuModel instance to create menus programmatically.]]>
+            </description>
+            <name>model</name>
+            <required>false</required>
+            <type>org.primefaces.model.menu.MenuModel</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Position of the items in the tabbing order. Default is 0.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Icon for the main button. Default value is "pi pi-plus".]]>
+            </description>
+            <name>icon</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[Style of the main button element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
 </facelet-taglib>
