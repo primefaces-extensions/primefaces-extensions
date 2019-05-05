@@ -43,9 +43,9 @@
         return dataURI;
     }
 
-    LetterAvatar.transform = function () {
+    LetterAvatar.transform = function (id) {
 
-        Array.prototype.forEach.call(d.querySelectorAll('img[avatar]'), function (img, name) {
+        Array.prototype.forEach.call(d.querySelectorAll(id), function (img, name) {
             name = img.getAttribute('avatar');
             img.src = LetterAvatar(name, img.getAttribute('width'));
             img.removeAttribute('avatar');
@@ -75,10 +75,6 @@
     } else {
 
         window.LetterAvatar = LetterAvatar;
-
-        d.addEventListener('DOMContentLoaded', function (event) {
-            LetterAvatar.transform();
-        });
     }
 
 })(window, document);

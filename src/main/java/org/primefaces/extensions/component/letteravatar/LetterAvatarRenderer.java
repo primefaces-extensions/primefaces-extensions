@@ -21,7 +21,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
-import javax.faces.render.Renderer;
+
+import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link LetterAvatar} component.
@@ -30,7 +32,7 @@ import javax.faces.render.Renderer;
  * @since 7.0
  */
 @FacesRenderer(componentFamily = LetterAvatar.COMPONENT_FAMILY, rendererType = LetterAvatar.DEFAULT_RENDERER)
-public class LetterAvatarRenderer extends Renderer {
+public class LetterAvatarRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -41,6 +43,7 @@ public class LetterAvatarRenderer extends Renderer {
         final LetterAvatar letterAvatar = (LetterAvatar) component;
 
         encodeMarkup(context, letterAvatar);
+        encodeScript(context, letterAvatar);
     }
 
     public void encodeMarkup(FacesContext context, LetterAvatar letterAvatar) throws IOException {
@@ -73,6 +76,13 @@ public class LetterAvatarRenderer extends Renderer {
         writer.writeAttribute("avatar", avatar, null);
 
         writer.endElement("img");
+    }
+
+    private void encodeScript(final FacesContext context, final LetterAvatar letterAvatar) throws IOException {
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtLetterAvatar", letterAvatar.resolveWidgetVar(), letterAvatar.getClientId(context));
+        encodeClientBehaviors(context, letterAvatar);
+        wb.finish();
     }
 
 }
