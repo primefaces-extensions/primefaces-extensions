@@ -17,6 +17,7 @@ package org.primefaces.extensions.component.fab;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
 import org.primefaces.util.ComponentUtils;
@@ -31,7 +32,7 @@ import org.primefaces.util.ComponentUtils;
             @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
             @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "fab/fab-widget.js"),
+            @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.js"),
 })
 public class FloatingActionButton extends AbstractMenu implements Widget {
 
