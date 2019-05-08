@@ -19,6 +19,10 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+
+import org.primefaces.component.api.Widget;
+import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>LetterAvatar</code> component.
@@ -28,10 +32,14 @@ import javax.faces.component.UIComponentBase;
  */
 @FacesComponent(value = LetterAvatar.COMPONENT_TYPE)
 @ResourceDependencies({
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js"),
             @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.css"),
             @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.js")
 })
-public class LetterAvatar extends UIComponentBase {
+public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LetterAvatar";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -40,7 +48,7 @@ public class LetterAvatar extends UIComponentBase {
     public final static String COMPONENT_CLASS = "ui-letteravatar";
     public final static String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
 
-    protected static enum PropertyKeys {
+    protected enum PropertyKeys {
         // @formatter:off
         style,
         styleClass,
@@ -106,6 +114,11 @@ public class LetterAvatar extends UIComponentBase {
 
     public void setHeight(Integer height) {
         getStateHelper().put(PropertyKeys.height, height);
+    }
+
+    @Override
+    public String resolveWidgetVar() {
+        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

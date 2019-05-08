@@ -19,6 +19,11 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
         var that = this;
         $(this.jqId + ' .ui-fab-main').click(function(){
             that.jq.toggleClass('ui-state-active');
+            if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+            } else if (document.selection) {
+                document.selection.empty();
+            }
         });
     }
 

@@ -1,23 +1,27 @@
 .ui-fab {
-  position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1000000000;
+}
+.ui-fab.ui-state-active {
+    border: 0;
 }
 
 .ui-fab-main.ui-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 56px;
-  z-index: 2;
-  border: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 56px;
+    z-index: 2;
+    border: 0;
 }
 
 .ui-fab .ui-icon {
-  position: absolute;
+    position: absolute;
 }
 
 .ui-fab-main {
@@ -25,65 +29,69 @@
 }
 
 .ui-fab-main .ui-icon {
-  top: 12px;
-  left: 12px;
-  font-size: 32px;
+    font-size: 28px;
+    left: 0;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
 }
 
 .ui-fab ul {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  right: 0;
-  bottom: 56px;
-  display: flex;
-  flex-direction: column-reverse;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    bottom: 56px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .ui-fab li {
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  flex: 0 0 auto;
-  list-style-type: none;
-  position: relative;
-  height: 40px;
-  margin: 0 9px -40px 9px;
-  border: 0;
-  transform: scale(0.5);
-  transform-origin: center;
-  transition-duration: 100ms;
-  transition-timing-function: ease-out;
-  transition-property: margin, transform;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    flex: 0 0 auto;
+    list-style-type: none;
+    position: relative;
+    height: 40px;
+    margin: 0 9px -40px 9px;
+    border: 0;
+    transform: scale(0.5);
+    transform-origin: center;
+    transition-duration: 100ms;
+    transition-timing-function: ease-out;
+    transition-property: margin, transform;
 }
 .ui-fab.ui-state-active li {
-  margin-bottom: 10px;
-  transform: scale(1);
+    margin-bottom: 10px;
+    transform: scale(1);
 }
 
 .ui-fab li .ui-icon {
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
+    font-size: 18px;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
 }
 
-.ui-fab li a {
-  outline: none;
-  color: inherit;
+.ui-fab.ui-state-active li a {
+    outline: none;
+    color: inherit;
 }
 
 .ui-fab li .ui-menuitem-text {
-  background: #999;
-  color: #fff;
-  padding: 3px 10px;
-  position: absolute;
-  right: 56px;
-  top: 6px;
-  white-space: nowrap;
-  display: none;
-  border-radius: 3px;
+    background: #666;
+    color: #fff;
+    padding: 3px 10px;
+    position: absolute;
+    right: 50px;
+    top: 7px;
+    white-space: nowrap;
+    display: none;
+    border-radius: 3px;
 }
 .ui-fab.ui-state-active li:hover .ui-menuitem-text {
-  display: block;
+    display: block;
 }

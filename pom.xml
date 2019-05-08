@@ -71,6 +71,7 @@
                                 <include>blockui/**</include>
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
+                                <include>fab/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>github/**</include>
                                 <include>imageareaselect/**</include>
