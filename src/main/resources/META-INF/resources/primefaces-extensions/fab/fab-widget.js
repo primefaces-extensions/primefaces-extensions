@@ -16,15 +16,32 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        var that = this;
-        $(this.jqId + ' .ui-fab-main').click(function(){
-            that.jq.toggleClass('ui-state-active');
+        this.classActive = 'ui-state-active';
+        this.button = $(this.jqId + ' .ui-fab-main');
+        this.unselect = function () {
             if (window.getSelection) {
                 window.getSelection().removeAllRanges();
             } else if (document.selection) {
                 document.selection.empty();
             }
-        });
+        };
+        var that = this;
+        this.button.click(function(){ that.toggle(); });
+    },
+
+    toggle : function () {
+        this.jq.toggleClass(this.classActive);
+        this.unselect();
+    },
+
+    open : function () {
+        this.jq.addClass(this.classActive);
+        this.unselect();
+    },
+
+    close : function () {
+        this.jq.removeClass(this.classActive);
+        this.unselect();
     }
 
 });
