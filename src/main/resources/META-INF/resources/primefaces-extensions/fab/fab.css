@@ -22,6 +22,8 @@
 
 .ui-fab .ui-icon {
     position: absolute;
+    text-align: center;
+    left: 0;
 }
 
 .ui-fab-main {
@@ -30,7 +32,6 @@
 
 .ui-fab-main .ui-icon {
     font-size: 28px;
-    left: 0;
     width: 56px;
     height: 56px;
     line-height: 56px;
@@ -53,7 +54,6 @@
     flex: 0 0 auto;
     list-style-type: none;
     position: relative;
-    height: 40px;
     margin: 0 9px -40px 9px;
     border: 0;
     transform: scale(0.5);
@@ -69,10 +69,8 @@
 
 .ui-fab li .ui-icon {
     font-size: 18px;
-    left: 0;
     width: 40px;
     height: 40px;
-    text-align: center;
     line-height: 40px;
 }
 
