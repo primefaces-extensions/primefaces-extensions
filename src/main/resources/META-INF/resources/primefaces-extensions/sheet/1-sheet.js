@@ -441,6 +441,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         this.dataInput.val('');
     },
     
+    // clear all the filters
+    clearFilters: function () {
+        $("input[id^='" + this.id + "_filter_']").val("");
+        this.filterChanged = true;
+        this.filter();
+    },
+    
     // tell handstontable to repaint itself
     redraw: function () {
         if (this.ht) {
