@@ -17,7 +17,6 @@ package org.primefaces.extensions.component.fab;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
 import org.primefaces.util.ComponentUtils;
@@ -47,6 +46,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
         model,
         tabindex,
         icon,
+        iconActive,
         widgetVar,
         style,
         styleClass
@@ -87,6 +87,14 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
 
     public void setIcon(String icon) {
         getStateHelper().put(PropertyKeys.icon, icon);
+    }
+
+    public String getIconActive() {
+        return (String) getStateHelper().eval(PropertyKeys.iconActive, null);
+    }
+
+    public void setIconActive(String iconActive) {
+        getStateHelper().put(PropertyKeys.iconActive, iconActive);
     }
 
     public String getWidgetVar() {

@@ -53,15 +53,24 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
     protected void encodeMainButton(FacesContext context, ResponseWriter writer, FloatingActionButton fab) throws IOException {
         // Button, start
         writer.startElement("span", fab);
-        writer.writeAttribute("class", "ui-fab-main ui-button", "styleClass");
+        String classes = "ui-fab-main ui-button";
+        if (fab.getIconActive() != null) {
+            classes += " ui-fab-double";
+        }
+        writer.writeAttribute("class", classes, "styleClass");
         if (fab.getStyle() != null) {
             writer.writeAttribute("style", fab.getStyle(), "style");
         }
 
         // Icon
         writer.startElement("span", fab);
-        writer.writeAttribute("class", "ui-icon " + fab.getIcon(), "icon");
+        writer.writeAttribute("class", "ui-icon ui-icon-0 " + fab.getIcon(), "icon");
         writer.endElement("span");
+        if (fab.getIconActive() != null) {
+            writer.startElement("span", fab);
+            writer.writeAttribute("class", "ui-icon ui-icon-1 " + fab.getIconActive(), "icon");
+            writer.endElement("span");
+        }
 
         // Button, end
         writer.endElement("span");

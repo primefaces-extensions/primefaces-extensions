@@ -37,6 +37,30 @@
     line-height: 56px;
 }
 
+.ui-fab-main .ui-icon {
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+    transition-property: opacity, transform;
+}
+
+.ui-fab-double .ui-icon-0 {
+    opacity: 1;
+    transform: rotate(0deg)
+}
+.ui-state-active .ui-fab-double .ui-icon-0 {
+    opacity: 0;
+    transform: rotate(180deg)
+}
+
+.ui-fab-double .ui-icon-1 {
+    opacity: 0;
+    transform: rotate(-180deg)
+}
+.ui-state-active .ui-fab-double .ui-icon-1 {
+    opacity: 1;
+    transform: rotate(0deg)
+}
+
 .ui-fab ul {
     position: absolute;
     margin: 0;
