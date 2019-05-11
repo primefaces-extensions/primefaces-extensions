@@ -6791,6 +6791,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Active variant of the icon for the main button. Default value is null.]]>
+            </description>
+            <name>iconActive</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Name of the client side widget.]]>
             </description>
             <name>widgetVar</name>
