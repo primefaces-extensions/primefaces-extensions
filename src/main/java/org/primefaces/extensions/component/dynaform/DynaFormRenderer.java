@@ -49,38 +49,38 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class DynaFormRenderer extends CoreRenderer {
 
+    public static final String FACET_HEADER_REGULAR = "headerRegular";
+    public static final String FACET_FOOTER_REGULAR = "footerRegular";
+    public static final String FACET_HEADER_EXTENDED = "headerExtended";
+    public static final String FACET_FOOTER_EXTENDED = "footerExtended";
+    public static final String FACET_BUTTON_BAR = "buttonBar";
+    public static final String FACET_STATIC_TOP = "staticTop";
+    public static final String FACET_STATIC_BOTTOM = "staticBottom";
+
+    public static final String GRID_CLASS = "pe-dynaform-grid";
+    public static final String NESTED_GRID_CLASS = "pe-dynaform-nested-grid";
+    public static final String CELL_CLASS = "pe-dynaform-cell";
+    public static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
+    public static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
+    public static final String LABEL_CLASS = "pe-dynaform-label";
+    public static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
+    public static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
+    public static final String LABEL_CONTROL_TYPE_CLASS_FORMAT = "pe-dynaform-%s-label";
+
+    public static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
+    public static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
+    public static final String FACET_HEADER_CLASS = "pe-dynaform-headerfacet";
+    public static final String FACET_FOOTER_CLASS = "pe-dynaform-footerfacet";
+    public static final String FACET_STATIC_TOP_CLASS = "pe-dynaform-static-top";
+    public static final String FACET_STATIC_BOTTOM_CLASS = "pe-dynaform-static-bottom";
+    public static final String EXTENDED_ROW_CLASS = "pe-dynaform-extendedrow";
+
+    public static final String BUTTON_BAR_ROLE = "toolbar";
+    public static final String GRID_CELL_ROLE = "gridcell";
+
+    public static final String[] EMPTY_COLUMN_CLASSES = new String[]{Constants.EMPTY_STRING, Constants.EMPTY_STRING};
+
     private static final Logger LOGGER = Logger.getLogger(DynaFormRenderer.class.getName());
-
-    private static final String FACET_HEADER_REGULAR = "headerRegular";
-    private static final String FACET_FOOTER_REGULAR = "footerRegular";
-    private static final String FACET_HEADER_EXTENDED = "headerExtended";
-    private static final String FACET_FOOTER_EXTENDED = "footerExtended";
-    private static final String FACET_BUTTON_BAR = "buttonBar";
-    private static final String FACET_STATIC_TOP = "staticTop";
-    private static final String FACET_STATIC_BOTTOM = "staticBottom";
-
-    private static final String GRID_CLASS = "pe-dynaform-grid";
-    private static final String NESTED_GRID_CLASS = "pe-dynaform-nested-grid";
-    private static final String CELL_CLASS = "pe-dynaform-cell";
-    private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
-    private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
-    private static final String LABEL_CLASS = "pe-dynaform-label";
-    private static final String LABEL_INVALID_CLASS = "ui-state-error ui-corner-all";
-    private static final String LABEL_INDICATOR_CLASS = "pe-dynaform-label-rfi";
-    private static final String LABEL_CONTROL_TYPE_CLASS_FORMAT = "pe-dynaform-%s-label";
-
-    private static final String FACET_BUTTON_BAR_TOP_CLASS = "pe-dynaform-buttonbar-top";
-    private static final String FACET_BUTTON_BAR_BOTTOM_CLASS = "pe-dynaform-buttonbar-bottom";
-    private static final String FACET_HEADER_CLASS = "pe-dynaform-headerfacet";
-    private static final String FACET_FOOTER_CLASS = "pe-dynaform-footerfacet";
-    private static final String FACET_STATIC_TOP_CLASS = "pe-dynaform-static-top";
-    private static final String FACET_STATIC_BOTTOM_CLASS = "pe-dynaform-static-bottom";
-    private static final String EXTENDED_ROW_CLASS = "pe-dynaform-extendedrow";
-
-    private static final String BUTTON_BAR_ROLE = "toolbar";
-    private static final String GRID_CELL_ROLE = "gridcell";
-
-    private static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
 
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -244,69 +244,13 @@ public class DynaFormRenderer extends CoreRenderer {
                 }
 
                 if (element instanceof DynaFormLabel) {
-                    // render label
-                    final DynaFormLabel label = (DynaFormLabel) element;
-
-                    writer.writeAttribute("class", (styleClass
-                                + " " + LABEL_CLASS
-                                + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
-                                + " " + labelCommonClass).trim(), null);
-                    writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
-                    writer.startElement("label", null);
-                    if (!label.isTargetValid()) {
-                        writer.writeAttribute("class", LABEL_INVALID_CLASS, null);
-                    }
-
-                    writer.writeAttribute("for", label.getTargetClientId(), null);
-
-                    if (label.getValue() != null) {
-                        if (label.isEscape()) {
-                            writer.writeText(label.getValue(), "value");
-                        }
-                        else {
-                            writer.write(label.getValue());
-                        }
-                    }
-
-                    if (label.isTargetRequired()) {
-                        writer.startElement("span", null);
-                        writer.writeAttribute("class", LABEL_INDICATOR_CLASS, null);
-                        writer.write("*");
-                        writer.endElement("span");
-                    }
-
-                    writer.endElement("label");
+                    renderLabel(writer, labelCommonClass, (DynaFormLabel) element, styleClass);
                 }
                 else if (element instanceof DynaFormControl) {
-                    // render control
-                    final DynaFormControl control = (DynaFormControl) element;
-                    dynaForm.setData(control);
-
-                    // find control's cell by type
-                    final UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
-
-                    if (cell.getStyle() != null) {
-                        writer.writeAttribute("style", cell.getStyle(), null);
-                    }
-
-                    if (cell.getStyleClass() != null) {
-                        styleClass = styleClass + " " + cell.getStyleClass();
-                    }
-
-                    writer.writeAttribute("class", (styleClass + " " + controlCommonClass).trim(), null);
-                    writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
-                    cell.encodeAll(fc);
+                    renderControl(fc, dynaForm, writer, controlCommonClass, (DynaFormControl) element, styleClass);
                 }
                 else if (element instanceof DynaFormModelElement) {
-                    final DynaFormModelElement nestedModel = (DynaFormModelElement) element;
-
-                    // render nested model
-                    writer.writeAttribute("class", styleClass, null);
-                    writer.writeAttribute("role", GRID_CELL_ROLE, null);
-
-                    encodeMarkup(fc, dynaForm, nestedModel.getModel(), true);
+                    renderNestedModel(fc, dynaForm, writer, (DynaFormModelElement) element, styleClass);
                 }
 
                 writer.endElement("td");
@@ -316,6 +260,73 @@ public class DynaFormRenderer extends CoreRenderer {
         }
 
         dynaForm.resetData();
+    }
+
+    protected void renderNestedModel(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, DynaFormModelElement element, String styleClass)
+            throws IOException {
+        final DynaFormModelElement nestedModel = element;
+
+        writer.writeAttribute("class", styleClass, null);
+        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+        encodeMarkup(fc, dynaForm, nestedModel.getModel(), true);
+    }
+
+    protected void renderControl(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, String controlCommonClass, DynaFormControl element,
+                                 String styleClass) throws IOException {
+        final DynaFormControl control = element;
+        dynaForm.setData(control);
+
+        // find control's cell by type
+        final UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+
+        if (cell.getStyle() != null) {
+            writer.writeAttribute("style", cell.getStyle(), null);
+        }
+
+        if (cell.getStyleClass() != null) {
+            styleClass = styleClass + " " + cell.getStyleClass();
+        }
+
+        writer.writeAttribute("class", (styleClass + " " + controlCommonClass).trim(), null);
+        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+        cell.encodeAll(fc);
+    }
+
+    protected void renderLabel(ResponseWriter writer, String labelCommonClass, DynaFormLabel element, String styleClass) throws IOException {
+        final DynaFormLabel label = element;
+
+        writer.writeAttribute("class", (styleClass
+                + " " + LABEL_CLASS
+                + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
+                + " " + labelCommonClass).trim(), null);
+        writer.writeAttribute("role", GRID_CELL_ROLE, null);
+
+        writer.startElement("label", null);
+        if (!label.isTargetValid()) {
+            writer.writeAttribute("class", LABEL_INVALID_CLASS, null);
+        }
+
+        writer.writeAttribute("for", label.getTargetClientId(), null);
+
+        if (label.getValue() != null) {
+            if (label.isEscape()) {
+                writer.writeText(label.getValue(), "value");
+            }
+            else {
+                writer.write(label.getValue());
+            }
+        }
+
+        if (label.isTargetRequired()) {
+            writer.startElement("span", null);
+            writer.writeAttribute("class", LABEL_INDICATOR_CLASS, null);
+            writer.write("*");
+            writer.endElement("span");
+        }
+
+        writer.endElement("label");
     }
 
     protected void encodeStatic(final FacesContext fc, final DynaForm dynaForm, final String name, final int totalColspan, final String styleClass)
