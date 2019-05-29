@@ -407,7 +407,6 @@
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <version>8.10.7</version>
         </dependency>
         <!-- Component dependencies -->
         <dependency>
