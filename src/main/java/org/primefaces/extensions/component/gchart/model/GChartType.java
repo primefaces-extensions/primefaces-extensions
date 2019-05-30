@@ -25,7 +25,8 @@ public enum GChartType {
     ORGANIZATIONAL("OrgChart"),
     COLUMN("ColumnChart"),
     LINE("LineChart"),
-    SCATTER("ScatterChart");
+    SCATTER("ScatterChart"),
+    GANNT("GanttChart");
     // @formatter:on
 
     private String chartName;

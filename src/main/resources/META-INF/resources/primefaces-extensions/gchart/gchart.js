@@ -26,7 +26,7 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
         this.input = jQuery(this.jqId + "_hidden");
 
         google.charts.load('current', {
-            packages : [ 'corechart', 'geochart', 'orgchart' ],
+            packages : [ 'corechart', 'geochart', 'orgchart', 'gantt' ],
             language: this.language,
             // Note: you will need to get a mapsApiKey for your project.
             // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
