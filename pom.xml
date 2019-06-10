@@ -241,6 +241,23 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>5.0.0-M3</version>
+                <configuration>
+                    <skipProvidedScope>false</skipProvidedScope>
+                    <skipRuntimeScope>false</skipRuntimeScope>
+                    <failBuildOnCVSS>5</failBuildOnCVSS>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>
