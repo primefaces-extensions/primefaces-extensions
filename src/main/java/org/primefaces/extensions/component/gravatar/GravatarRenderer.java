@@ -90,8 +90,8 @@ public class GravatarRenderer extends CoreRenderer {
             params.add("s=" + size);
         }
 
-        if (!LangUtils.isValueBlank(notFound) && !notFound.equals("default")
-                    && Gravatar.NOT_FOUND_VALUES.contains(notFound)) {
+        if (!LangUtils.isValueBlank(notFound) && (!notFound.equals("default")
+                    && Gravatar.NOT_FOUND_VALUES.contains(notFound) || notFound.startsWith("http"))) {
             params.add("d=" + notFound);
         }
 
