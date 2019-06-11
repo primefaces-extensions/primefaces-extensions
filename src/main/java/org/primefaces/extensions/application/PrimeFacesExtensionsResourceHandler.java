@@ -33,6 +33,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
     private final ResourceHandler wrapped;
 
+    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
         super();
 
@@ -47,7 +48,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
     @Override
     public Resource createResource(final String resourceName, final String libraryName) {
         if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
-            Resource resource = super.createResource(resourceName, libraryName);
+            final Resource resource = super.createResource(resourceName, libraryName);
             return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
         }
 
@@ -57,7 +58,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
         if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
-            Resource resource = super.createResource(resourceName, libraryName, contentType);
+            final Resource resource = super.createResource(resourceName, libraryName, contentType);
             return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
         }
 

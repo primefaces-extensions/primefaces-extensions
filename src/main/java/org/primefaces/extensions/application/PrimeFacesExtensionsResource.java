@@ -30,6 +30,7 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
     private final Resource wrapped;
     private final String version;
 
+    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResource(final Resource resource) {
         super();
         wrapped = resource;

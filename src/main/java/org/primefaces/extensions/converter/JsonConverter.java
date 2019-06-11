@@ -47,8 +47,8 @@ public class JsonConverter implements Converter, Serializable {
 
     private static final long serialVersionUID = 20121214L;
 
-    private static final Map<String, Class<?>> PRIMITIVE_CLASSES = new HashMap<String, Class<?>>();
-    private static final Map<String, Class<?>> PRIMITIVE_ARRAY_CLASSES = new HashMap<String, Class<?>>();
+    private static final Map<String, Class<?>> PRIMITIVE_CLASSES = new HashMap<>();
+    private static final Map<String, Class<?>> PRIMITIVE_ARRAY_CLASSES = new HashMap<>();
 
     static {
         PRIMITIVE_CLASSES.put("boolean", boolean.class);
@@ -72,11 +72,12 @@ public class JsonConverter implements Converter, Serializable {
 
     private String type;
 
+    @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         java.lang.reflect.Type objType;
 
         if (getType() == null) {
-            ValueExpression expression = component.getValueExpression("value");
+            final ValueExpression expression = component.getValueExpression("value");
             objType = expression.getType(context.getELContext());
         }
         else {
@@ -86,6 +87,7 @@ public class JsonConverter implements Converter, Serializable {
         return GsonConverter.getGson().fromJson(value, objType);
     }
 
+    @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (getType() == null) {
             return GsonConverter.getGson().toJson(value);
@@ -114,8 +116,8 @@ public class JsonConverter implements Converter, Serializable {
             return clazz;
         }
 
-        int arrayBracketIdx = type.indexOf("[");
-        int leftBracketIdx = type.indexOf("<");
+        final int arrayBracketIdx = type.indexOf('[');
+        final int leftBracketIdx = type.indexOf('<');
         if (arrayBracketIdx >= 0 && (leftBracketIdx < 0 || arrayBracketIdx < leftBracketIdx)) {
             // array
             try {
@@ -123,7 +125,7 @@ public class JsonConverter implements Converter, Serializable {
 
                 return Array.newInstance(clazz, 0).getClass();
             }
-            catch (ClassNotFoundException e) {
+            catch (final ClassNotFoundException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Class " + type.substring(0, arrayBracketIdx) + " not found",
                             Constants.EMPTY_STRING));
@@ -134,13 +136,13 @@ public class JsonConverter implements Converter, Serializable {
             try {
                 return Class.forName(type);
             }
-            catch (ClassNotFoundException e) {
+            catch (final ClassNotFoundException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Class " + type + " not found",
                             Constants.EMPTY_STRING));
             }
         }
 
-        int rightBracketIdx = type.lastIndexOf(">");
+        final int rightBracketIdx = type.lastIndexOf(">");
         if (rightBracketIdx < 0) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
                         Constants.EMPTY_STRING));
@@ -150,23 +152,23 @@ public class JsonConverter implements Converter, Serializable {
         try {
             rawType = Class.forName(type.substring(0, leftBracketIdx));
         }
-        catch (ClassNotFoundException e) {
+        catch (final ClassNotFoundException e) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Class " + type.substring(0, leftBracketIdx) + " not found",
                         Constants.EMPTY_STRING));
         }
 
-        String strTypeArgs = type.substring(leftBracketIdx + 1, rightBracketIdx);
-        List<String> listTypeArgs = new ArrayList<String>();
+        final String strTypeArgs = type.substring(leftBracketIdx + 1, rightBracketIdx);
+        final List<String> listTypeArgs = new ArrayList<>();
         int startPos = 0;
         int seekPos = 0;
 
         while (true) {
-            int commaPos = strTypeArgs.indexOf(",", seekPos);
+            final int commaPos = strTypeArgs.indexOf(',', seekPos);
             if (commaPos >= 0) {
-                String term = strTypeArgs.substring(startPos, commaPos);
-                int countLeftBrackets = StringUtils.countMatches(term, "<");
-                int countRightBrackets = StringUtils.countMatches(term, ">");
+                final String term = strTypeArgs.substring(startPos, commaPos);
+                final int countLeftBrackets = StringUtils.countMatches(term, "<");
+                final int countRightBrackets = StringUtils.countMatches(term, ">");
                 if (countLeftBrackets == countRightBrackets) {
                     listTypeArgs.add(term.trim());
                     startPos = commaPos + 1;
@@ -186,8 +188,8 @@ public class JsonConverter implements Converter, Serializable {
                         Constants.EMPTY_STRING));
         }
 
-        int size = listTypeArgs.size();
-        java.lang.reflect.Type[] objectTypes = new java.lang.reflect.Type[size];
+        final int size = listTypeArgs.size();
+        final java.lang.reflect.Type[] objectTypes = new java.lang.reflect.Type[size];
         for (int i = 0; i < size; i++) {
             // recursive call for each type argument
             objectTypes[i] = getObjectType(listTypeArgs.get(i), true);

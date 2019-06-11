@@ -117,14 +117,14 @@ public class SocialRenderer extends CoreRenderer {
             }
             wb.append("{");
             addShareProperty(wb, "share", share);
-            if (share.equalsIgnoreCase("twitter")) {
+            if ("twitter".equalsIgnoreCase(share)) {
                 wb.attr("via", social.getTwitterUsername());
                 wb.attr("hashtags", social.getTwitterHashtags());
             }
-            if (share.equalsIgnoreCase("email")) {
+            if ("email".equalsIgnoreCase(share)) {
                 wb.attr("to", social.getEmailTo());
             }
-            if (share.equalsIgnoreCase("pinterest")) {
+            if ("pinterest".equalsIgnoreCase(share)) {
                 wb.attr("media", social.getPinterestMedia());
             }
             wb.append("}");

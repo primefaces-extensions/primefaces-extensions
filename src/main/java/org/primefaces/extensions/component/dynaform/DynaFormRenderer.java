@@ -78,7 +78,7 @@ public class DynaFormRenderer extends CoreRenderer {
     public static final String BUTTON_BAR_ROLE = "toolbar";
     public static final String GRID_CELL_ROLE = "gridcell";
 
-    public static final String[] EMPTY_COLUMN_CLASSES = new String[]{Constants.EMPTY_STRING, Constants.EMPTY_STRING};
+    protected static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
 
     private static final Logger LOGGER = Logger.getLogger(DynaFormRenderer.class.getName());
 
@@ -263,7 +263,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void renderNestedModel(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, DynaFormModelElement element, String styleClass)
-            throws IOException {
+                throws IOException {
         final DynaFormModelElement nestedModel = element;
 
         writer.writeAttribute("class", styleClass, null);
@@ -273,7 +273,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void renderControl(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, String controlCommonClass, DynaFormControl element,
-                                 String styleClass) throws IOException {
+                String styleClass) throws IOException {
         final DynaFormControl control = element;
         dynaForm.setData(control);
 
@@ -298,9 +298,9 @@ public class DynaFormRenderer extends CoreRenderer {
         final DynaFormLabel label = element;
 
         writer.writeAttribute("class", (styleClass
-                + " " + LABEL_CLASS
-                + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
-                + " " + labelCommonClass).trim(), null);
+                    + " " + LABEL_CLASS
+                    + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
+                    + " " + labelCommonClass).trim(), null);
         writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
         writer.startElement("label", null);
