@@ -103,7 +103,7 @@ public class GravatarRenderer extends CoreRenderer {
     }
 
     private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        final MessageDigest md = MessageDigest.getInstance("MD5");
+        final MessageDigest md = MessageDigest.getInstance("MD5"); // NOSONAR
         md.update(String.valueOf(gravatar.getValue()).getBytes("UTF-8"));
         final byte[] digest = md.digest();
         final StringBuffer sb = new StringBuffer();
