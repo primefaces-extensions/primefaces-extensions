@@ -142,7 +142,7 @@ public class JsonConverter implements Converter, Serializable {
             }
         }
 
-        final int rightBracketIdx = type.lastIndexOf(">");
+        final int rightBracketIdx = type.lastIndexOf('>');
         if (rightBracketIdx < 0) {
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, type + " is not a valid generic type.",
                         Constants.EMPTY_STRING));
