@@ -26,7 +26,7 @@ public enum GChartType {
     COLUMN("ColumnChart"),
     LINE("LineChart"),
     SCATTER("ScatterChart"),
-    GANNT("GanttChart");
+    GANTT("Gantt");
     // @formatter:on
 
     private String chartName;
