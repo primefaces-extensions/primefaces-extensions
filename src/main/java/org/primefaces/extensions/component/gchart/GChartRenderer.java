@@ -74,7 +74,9 @@ public class GChartRenderer extends CoreRenderer {
                     .attr("language", chart.getLanguage())
                     .attr("width", chart.getWidth())
                     .attr("height", chart.getHeight());
-
+        if (chart.getExtender() != null) {
+            wb.nativeAttr("extender", chart.getExtender());
+        }
         encodeClientBehaviors(context, chart);
 
         wb.finish();

@@ -39,6 +39,15 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
             });
         });
 
+        // user extension to configure gchart
+        var extender = this.cfg.extender;
+        if (extender) {
+            if (typeof extender === "function") {
+                extender.call(this);
+            } else {
+                PrimeFaces.error("Extender value is not a javascript function!");
+            }
+        }
     },
 
     draw : function() {
@@ -60,7 +69,7 @@ PrimeFaces.widget.ExtGChart = PrimeFaces.widget.BaseWidget.extend({
 
         if (this.cfg.behaviors && this.cfg.behaviors.select) {
             google.visualization.events.addListener(this.wrapper, 'select', function(e) {
-                console.log(that.wrapper.getChart().getSelection());
+                //console.log(that.wrapper.getChart().getSelection());
                 jQuery(that.jqId + "_hidden").val(JSON.stringify(that.wrapper.getChart().getSelection()));
                 that.cfg.behaviors.select.call(jQuery(that.jqId + "_hidden"));
             });
