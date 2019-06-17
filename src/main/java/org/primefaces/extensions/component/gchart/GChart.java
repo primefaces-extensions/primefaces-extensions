@@ -55,7 +55,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
 
     protected enum PropertyKeys {
-        widgetVar, width, height, title, apiKey, language;
+        widgetVar, width, height, title, apiKey, language, extender;
     }
 
     public GChart() {
@@ -123,6 +123,14 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public void setLanguage(final String language) {
         getStateHelper().put(PropertyKeys.language, language);
+    }
+
+    public String getExtender() {
+        return (String) getStateHelper().eval(PropertyKeys.extender, null);
+    }
+
+    public void setExtender(final String extender) {
+        getStateHelper().put(PropertyKeys.extender, extender);
     }
 
     @Override
