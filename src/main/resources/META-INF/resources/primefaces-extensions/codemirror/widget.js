@@ -49,6 +49,18 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
             // fire event
             $this.fireEvent('change');
         });
+
+        // Restore saved scroll position, if any
+        if (typeof this.scrollInfo === "object") {
+            this.instance.scrollTo(this.scrollInfo.left, this.scrollInfo.top);
+        }
+
+        // Save scroll position before AJAX update
+        this.addRefreshListener(function() {
+            if (this.instance) {
+                this.scrollInfo = this.instance.getScrollInfo();
+            }
+        });
     },
 
     complete : function() {

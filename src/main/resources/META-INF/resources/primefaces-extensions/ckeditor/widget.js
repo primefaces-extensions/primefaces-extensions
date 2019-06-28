@@ -296,7 +296,17 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.instance.on('blur', $.proxy(function() {
             this.instance.dirtyFired = false;
         }, this));
-        
+ 
+        // Restore scroll position after AJAX update
+        if (this.instance.document) {
+            if (this.scrollTop) {
+                this.instance.document.$.documentElement.scrollTop = this.scrollTop;
+            }
+            if (this.scrollLeft) {
+                this.instance.document.$.documentElement.scrollLeft = this.scrollLeft;
+            }
+        }
+
         // let the widget know we are done initializing
         this.initializing = false;
     },
@@ -365,7 +375,22 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 	 */
 	fireEvent : function(eventName) {
         this.callBehavior(eventName);
-	},
+    },
+    
+    /**
+     * Called after an AJAX update to refresh this widget.
+     * @param cfg The new configuration from the server.
+     */
+    refresh : function(cfg) {
+        if (this.instance) {
+            var docElement = this.instance.document.$;
+            if (docElement && docElement.documentElement) {
+                this.scrollTop = docElement.documentElement.scrollTop;
+                this.scrollLeft = docElement.documentElement.scrollLeft;    
+            }
+        }
+        this.init(cfg);
+    },
 
 	/**
 	 * Destroys the CKEditor instance.
