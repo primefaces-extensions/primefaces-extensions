@@ -214,9 +214,10 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         caseSensitiveSort,
 
         /**
-         * The original sortBy value expression saved off for reset
+         * The ID of the current column to be used for sorting. This is used only internally
+         * and not exposed to the consumer of the sheet component.
          */
-        origSortBy,
+        currentSortBy,
 
         /**
          * The original sort direction saved off for reset
@@ -338,6 +339,20 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
             return null;
         }
         return result.toString();
+    }
+
+    /**
+     * Please note: The return type needs to be {@link Object}. Otherwise,
+     * evaluating the {@code sortBy} attribute as a value expression forces
+     * it into a string, and strings are sorted differently than numbers.
+     * @return The ID of the column to sort by.
+     */
+    public Object getSortBy() {
+        return getStateHelper().get(PropertyKeys.sortBy.name());
+    }
+
+    public void setSortBy(Object sortBy) {
+        getStateHelper().put(PropertyKeys.sortBy.name(), sortBy);
     }
 
     public void setShowColumnHeaders(final Boolean value) {
@@ -710,7 +725,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     /**
      * Updates the height
      *
-     * @param row
+     * @param value
      */
     public void setHeight(final Integer value) {
         getStateHelper().put(PropertyKeys.height, value);
@@ -820,30 +835,11 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     }
 
     /**
-     * The current sortBy value expression in use.
-     *
-     * @return
+     * Saves the column by which the sheet is currently sorted (when the user clicks on a column).
+     * @param columnId ID of the column by which the sheet is currently sorted.
      */
-    public ValueExpression getSortByValueExpression() {
-        final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
-        return veSortBy;
-    }
-
-    /**
-     * Update the sort field
-     *
-     * @param sortBy
-     */
-    public void setSortByValueExpression(final ValueExpression sortBy) {
-        // when updating, make sure we store off the original so it may be
-        // restored
-        // ValueExpression orig = (ValueExpression)
-        // getStateHelper().get(PropertyKeys.origSortBy);
-        // if (orig == null) {
-        // getStateHelper().put(PropertyKeys.origSortBy,
-        // getSortByValueExpression());
-        // }
-        setValueExpression(PropertyKeys.sortBy.name(), sortBy);
+    public void saveSortByColumn(String columnId) {
+        getStateHelper().put(PropertyKeys.currentSortBy.name(), columnId);
     }
 
     /**
