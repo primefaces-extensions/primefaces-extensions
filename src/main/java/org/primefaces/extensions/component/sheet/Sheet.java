@@ -229,9 +229,8 @@ public class Sheet extends SheetBase {
      * Resets the sorting to the originally specified values (if any)
      */
     public void resetSort() {
-        final ValueExpression origSortBy = (ValueExpression) getStateHelper().get(PropertyKeys.origSortBy);
-        // Set sort by even if null to restore to initial sort order.
-        setSortByValueExpression(origSortBy);
+        // Set to null to restore initial sort order specified by sortBy
+        getStateHelper().put(PropertyKeys.currentSortBy.name(), null);
 
         final String origSortOrder = (String) getStateHelper().get(PropertyKeys.origSortOrder);
         if (origSortOrder != null) {
@@ -262,7 +261,8 @@ public class Sheet extends SheetBase {
     /**
      * Updates a submitted value.
      *
-     * @param row
+     * @param context
+     * @param rowKey
      * @param col
      * @param value
      */
@@ -273,7 +273,7 @@ public class Sheet extends SheetBase {
     /**
      * Retrieves the submitted value for the row and col.
      *
-     * @param row
+     * @param rowKey
      * @param col
      * @return
      */
@@ -295,7 +295,7 @@ public class Sheet extends SheetBase {
     /**
      * Retrieves the submitted value for the rowKey and col.
      *
-     * @param row
+     * @param rowKey
      * @param col
      * @return
      */
@@ -420,6 +420,31 @@ public class Sheet extends SheetBase {
      * @return
      */
     public int getSortColRenderIndex() {
+        // Was the column by which to sort changed by the user, ie. is there a saved ID?
+        String currentSortById = (String) getStateHelper().get(PropertyKeys.currentSortBy.name());
+        // Otherwise, did the user specify a valid column ID for the sortBy attribute?
+        if (StringUtils.isEmpty(currentSortById)) {
+            final Object sortBy = getStateHelper().eval(PropertyKeys.sortBy.name());
+            if (sortBy instanceof String) {
+                currentSortById = (String) sortBy;
+            }
+        }
+        if (StringUtils.isNotEmpty(currentSortById)) {
+            int colIdx = 0;
+            for (final SheetColumn column : getColumns()) {
+                if (!column.isRendered()) {
+                    continue;
+                }
+
+                if (currentSortById.equals(column.getId())) {
+                    return colIdx;
+                }
+                colIdx++;
+            }
+        }
+
+        // Otherwise, fall back to the previous behavior of searching for the column
+        // by its value expression
         final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         if (veSortBy == null) {
             return -1;
@@ -540,7 +565,18 @@ public class Sheet extends SheetBase {
             filteredList.addAll(values);
         }
 
-        final ValueExpression veSortBy = getValueExpression(PropertyKeys.sortBy.name());
+        // Sort by the saved column. When none was saved, sort by the "sortBy" attribute of the sheet.
+        final int sortByIdx = getSortColRenderIndex();
+        final SheetColumn currentSortByColumn = sortByIdx >= 0 ? getColumns().get(sortByIdx) : null;
+        final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression(
+            PropertyKeys.sortBy.name()) : null;
+        final ValueExpression veSortBy;
+        if (currentSortByVe != null) {
+            veSortBy = currentSortByVe;
+        }
+        else {
+            veSortBy = getValueExpression(PropertyKeys.sortBy.name());
+        }
         if (veSortBy != null) {
             Collections.sort(filteredList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null,
                         isCaseSensitiveSort(), Locale.ENGLISH, getNullSortOrder()));
@@ -611,7 +647,7 @@ public class Sheet extends SheetBase {
     /**
      * Gets the row key value as a String suitable for use in javascript rendering.
      *
-     * @param context
+     * @param key
      * @return
      */
     protected String getRowKeyValueAsString(final Object key) {

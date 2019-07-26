@@ -846,7 +846,7 @@ public class SheetRenderer extends CoreRenderer {
             int col = Integer.valueOf(sortBy);
             if (col >= 0) {
                 col = sheet.getMappedColumn(col);
-                sheet.setSortByValueExpression(sheet.getColumns().get(col).getValueExpression("sortBy"));
+                sheet.saveSortByColumn(sheet.getColumns().get(col).getId());
             }
         }
 

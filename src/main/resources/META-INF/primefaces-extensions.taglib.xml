@@ -5471,7 +5471,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[Property to be used for sorting.]]>
+				<![CDATA[How the sheet rows should be sorted initially. If it is an expression, it must evaluate to the property to be used for sorting - this will not work when columns are specified dynamically. Otherwise, it can also be the ID (without any naming containers prefixed, ie. no parent elements with colons) of a sheet column by which the sheet rows should be sorted. In this case, you also need to set the sortBy attribute on the sheet column.]]>
             </description>
             <name>sortBy</name>
             <required>false</required>
