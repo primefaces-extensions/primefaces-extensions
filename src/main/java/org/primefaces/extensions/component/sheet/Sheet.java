@@ -230,7 +230,7 @@ public class Sheet extends SheetBase {
      */
     public void resetSort() {
         // Set to null to restore initial sort order specified by sortBy
-        getStateHelper().put(PropertyKeys.currentSortBy, null);
+        getStateHelper().put(PropertyKeys.currentSortBy.name(), null);
 
         final String origSortOrder = (String) getStateHelper().get(PropertyKeys.origSortOrder);
         if (origSortOrder != null) {
