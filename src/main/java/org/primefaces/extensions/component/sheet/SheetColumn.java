@@ -59,6 +59,11 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         headerText,
 
         /**
+         * Defines whether column should trim the whitespace at the beginning and the end of the cell contents. Default Value: true
+         */
+        trimWhitespace,
+
+        /**
          * Password mask asterisk * by default
          */
         passwordHashSymbol,
@@ -406,6 +411,14 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
 
     public Boolean isWordWrap() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.wordWrap, Boolean.TRUE).toString());
+    }
+
+    public void setTrimWhitespace(final Boolean value) {
+        getStateHelper().put(PropertyKeys.trimWhitespace, value);
+    }
+
+    public Boolean isTrimWhitespace() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.trimWhitespace, Boolean.TRUE).toString());
     }
 
     /**

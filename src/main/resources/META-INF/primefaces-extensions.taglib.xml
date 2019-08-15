@@ -5922,6 +5922,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Defines whether column should trim the whitespace at the beginning and the end of the cell contents. Default Value: true]]>
+            </description>
+            <name>trimWhitespace</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
 				<![CDATA[A method expression referring to a method validationg the input.]]>
             </description>
             <name>validator</name>
