@@ -5669,7 +5669,6 @@
         <tag-name>sheetcolumn</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.SheetColumn</component-type>
-            <renderer-type>org.primefaces.extensions.component.SheetColumnRenderer</renderer-type>
         </component>
         <attribute>
             <description>
