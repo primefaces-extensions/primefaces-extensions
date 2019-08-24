@@ -27,7 +27,7 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
         };
         var obj = this;
         this.button.click(function(){ obj.toggle(); });
-        if (cfg.keepOpen === undefined) {
+        if (!cfg.keepOpen) {
             $(this.jqId + ' .ui-menuitem-link').click(function(){
                 obj.close();
             });
