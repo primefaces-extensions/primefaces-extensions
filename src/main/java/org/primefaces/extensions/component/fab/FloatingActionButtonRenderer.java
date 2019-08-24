@@ -109,6 +109,9 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtFAB", fab.resolveWidgetVar(), fab.getClientId(context));
+        if (fab.isKeepOpen()) {
+            wb.attr("keepOpen", fab.isKeepOpen());
+        }
         wb.finish();
     }
 
