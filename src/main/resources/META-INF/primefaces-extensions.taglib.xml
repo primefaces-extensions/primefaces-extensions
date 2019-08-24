@@ -6818,7 +6818,7 @@ See showcase for an example. Default null.]]>
             </description>
             <name>keepOpen</name>
             <required>false</required>
-            <type>boolean</type>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
