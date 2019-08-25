@@ -47,6 +47,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
         tabindex,
         icon,
         iconActive,
+        keepOpen,
         widgetVar,
         style,
         styleClass
@@ -95,6 +96,14 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
 
     public void setIconActive(String iconActive) {
         getStateHelper().put(PropertyKeys.iconActive, iconActive);
+    }
+
+    public boolean isKeepOpen() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.keepOpen, false);
+    }
+
+    public void setKeepOpen(boolean keepOpen) {
+        getStateHelper().put(PropertyKeys.keepOpen, keepOpen);
     }
 
     public String getWidgetVar() {
