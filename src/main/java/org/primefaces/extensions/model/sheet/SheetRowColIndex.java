@@ -36,18 +36,14 @@ public class SheetRowColIndex implements Serializable {
     /**
      * Constructs an instance of RowColIndex for the row and column specified.
      *
-     * @param row the row represented by this index
-     * @param col the column respresented by this index
+     * @param rowKey the row represented by this index
+     * @param col the column represented by this index
      */
     public SheetRowColIndex(final String rowKey, final Integer col) {
         this.rowKey = rowKey;
         colIndex = col;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(final Object other) {
         if (!(other instanceof SheetRowColIndex)) {

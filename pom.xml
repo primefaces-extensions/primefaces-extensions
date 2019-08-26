@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
-        <version>7.0.2-SNAPSHOT</version>
+        <version>7.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>primefaces-extensions</artifactId>
@@ -298,6 +298,8 @@
                             <quiet>true</quiet>
                             <detectLinks>false</detectLinks>
                             <detectOfflineLinks>false</detectOfflineLinks>
+                            <failOnError>false</failOnError>
+                            <failOnWarning>false</failOnWarning>
                             <links>
                                 <link>http://docs.oracle.com/javase/6/docs/api/</link>
                                 <link>http://www.slf4j.org/apidocs/</link>

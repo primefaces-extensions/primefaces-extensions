@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"C:\\dev\\primefaces\\pe-core\\target\\classes\\META-INF\\resources\\primefaces-extensions\\fab\\fab.js",
+"lineCount":2,
+"mappings":"AAMAA,UAAAC,OAAAC,OAAA,CAA2BF,UAAAC,OAAAE,WAAAC,OAAA,CAAoC,CAQ3DC,KAAOA,QAAS,CAACC,CAAD,CAAM,CAClB,IAAAC,OAAA,CAAYD,CAAZ,CACA,KAAAE,GAAA,CAAUF,CAAAE,GACV,KAAAF,IAAA,CAAWA,CACX,KAAAG,YAAA,CAAmB,iBACnB,KAAAC,OAAA,CAAcC,CAAA,CAAE,IAAAC,KAAF,CAAc,eAAd,CACd,KAAAC,SAAA,CAAgBC,QAAS,EAAG,CACpBC,MAAAC,aAAJ,CACID,MAAAC,aAAA,EAAAC,gBAAA,EADJ,CAEWC,QAAAC,UAFX,EAGID,QAAAC,UAAAC,MAAA,EAJoB,CAO5B,KAAIC,EAAM,IACV,KAAAX,OAAAY,MAAA,CAAkB,QAAQ,EAAE,CAAED,CAAAE,OAAA,EAAF,CAA5B,CACKjB,EAAAkB,SAAL,EACIb,CAAA,CAAE,IAAAC,KAAF,CAAc,oBAAd,CAAAU,MAAA,CAA0C,QAAQ,EAAE,CAChDD,CAAAI,MAAA,EADgD,CAApD,CAhBc,CARqC,CA8B3DF,OAASA,QAAS,EAAG,CACjB,IAAAG,GAAAC,YAAA,CAAoB,IAAAlB,YAApB,CACA;IAAAI,SAAA,EAFiB,CA9BsC,CAmC3De,KAAOA,QAAS,EAAG,CACf,IAAAF,GAAAG,SAAA,CAAiB,IAAApB,YAAjB,CACA,KAAAI,SAAA,EAFe,CAnCwC,CAwC3DY,MAAQA,QAAS,EAAG,CAChB,IAAAC,GAAAI,YAAA,CAAoB,IAAArB,YAApB,CACA,KAAAI,SAAA,EAFgB,CAxCuC,CAApC;",
+"sources":["fab.source.js"],
+"names":["PrimeFaces","widget","ExtFAB","BaseWidget","extend","init","cfg","_super","id","classActive","button","$","jqId","unselect","this.unselect","window","getSelection","removeAllRanges","document","selection","empty","obj","click","toggle","keepOpen","close","jq","toggleClass","open","addClass","removeClass"]
+}
