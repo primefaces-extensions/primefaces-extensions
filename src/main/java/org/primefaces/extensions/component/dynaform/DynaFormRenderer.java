@@ -36,6 +36,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.CompositeUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
@@ -167,7 +168,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 final String role,
                 final boolean extended, final boolean visible) throws IOException {
         final UIComponent facet = dynaForm.getFacet(name);
-        if (facet != null && facet.isRendered()) {
+        if (ComponentUtils.shouldRenderFacet(facet)) {
             final ResponseWriter writer = fc.getResponseWriter();
             writer.startElement("tr", null);
             if (extended) {

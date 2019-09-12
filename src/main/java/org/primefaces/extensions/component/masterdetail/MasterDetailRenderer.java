@@ -203,7 +203,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
     protected void encodeFacet(final FacesContext fc, final UIComponent component, final String name) throws IOException {
         final UIComponent facet = component.getFacet(name);
-        if (facet != null) {
+        if (ComponentUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(fc);
         }
     }
@@ -249,7 +249,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                     }
 
                     final UIComponent facet = mdl.getFacet(FACET_LABEL);
-                    if (facet != null) {
+                    if (ComponentUtils.shouldRenderFacet(facet)) {
                         // swap writers
                         final ResponseWriter writer = fc.getResponseWriter();
                         final FastStringWriter fsw = new FastStringWriter();

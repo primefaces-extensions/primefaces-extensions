@@ -38,6 +38,7 @@ import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -666,7 +667,7 @@ public class SheetRenderer extends CoreRenderer {
                 throws IOException {
         // footer
         final UIComponent footer = sheet.getFacet("footer");
-        if (footer != null) {
+        if (ComponentUtils.shouldRenderFacet(footer)) {
             responseWriter.startElement("div", null);
             responseWriter.writeAttribute("class", "ui-datatable-footer ui-widget-header ui-corner-bottom", null);
             footer.encodeAll(context);
@@ -686,7 +687,7 @@ public class SheetRenderer extends CoreRenderer {
                 throws IOException {
         // header
         final UIComponent header = sheet.getFacet("header");
-        if (header != null) {
+        if (ComponentUtils.shouldRenderFacet(header)) {
             responseWriter.startElement("div", null);
             responseWriter.writeAttribute("class", "ui-datatable-header ui-widget-header ui-corner-top", null);
             header.encodeAll(context);
