@@ -382,7 +382,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @param cfg The new configuration from the server.
      */
     refresh : function(cfg) {
-        if (this.instance) {
+        if (this.instance && this.instance.document) {
             var docElement = this.instance.document.$;
             if (docElement && docElement.documentElement) {
                 this.scrollTop = docElement.documentElement.scrollTop;
