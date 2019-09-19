@@ -1,0 +1,43 @@
+.ui-badge-top-left:before,
+.ui-badge-top-right:before,
+.ui-badge-bottom-right:before,
+.ui-badge-bottom-left:before
+{
+    content: attr(data-badge-content);
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    border-radius: 50%;
+    font-size: 0.65em;
+    background: var(--badge-color, red);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    color: #FFF;
+    position: absolute;
+    z-index: 100;
+    top: -7px;
+    left: -7px;
+}
+
+.ui-badge-top-left:before {
+    top: -7px;
+    left: -7px;
+}
+
+.ui-badge-top-right:before {
+    left: auto;
+    right: -7px;
+}
+
+.ui-badge-bottom-right:before {
+    left: auto;
+    top: auto;
+    right: -7px;
+    bottom: -7px;
+}
+
+.ui-badge-bottom-left:before {
+    top: auto;
+    bottom: -7px;
+}

@@ -69,6 +69,7 @@
                         <resourcesSet>
                             <includes>
                                 <include>blockui/**</include>
+                                <include>badge/**</include>                                
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>fab/**</include>
