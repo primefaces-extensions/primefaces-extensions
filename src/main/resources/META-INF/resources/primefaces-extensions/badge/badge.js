@@ -81,6 +81,21 @@ PrimeFaces.widget.ExtBadge = PrimeFaces.widget.BaseWidget.extend({
      */
     setPosition : function(position) {
         this.button.removeClass("ui-badge-" + this.cfg.position).addClass("ui-badge-" + position);
+        this.cfg.position = position;
+    },
+
+    /**
+     * Show the badge.
+     */
+    show : function() {
+        this.button.addClass("ui-badge-" + this.cfg.position);
+    },
+
+    /**
+     * Hide the badge.
+     */
+    hide : function() {
+        this.button.removeClass("ui-badge-" + this.cfg.position);
     }
 });
 
