@@ -79,6 +79,10 @@
         <component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.Legend</component-type>
+        <component-class>org.primefaces.extensions.component.legend.Legend</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.LetterAvatar</component-type>
         <component-class>org.primefaces.extensions.component.letteravatar.LetterAvatar</component-class>
     </component>
@@ -267,6 +271,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.LegendRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.legend.LegendRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

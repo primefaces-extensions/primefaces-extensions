@@ -1864,6 +1864,96 @@
     </tag>
     <tag>
         <description>
+            <![CDATA[Legend is a key value based legend.]]>
+        </description>
+        <tag-name>legend</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Legend</component-type>
+            <renderer-type>org.primefaces.extensions.component.LegendRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Inline style of the container element.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Values is a Map where key=text and value=HTML color.]]>
+            </description>
+            <name>values</name>
+            <required>false</required>
+            <type>java.util.Map</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The layout of the legend: 'vertical' or 'horizontal'. Default is 'vertical'.]]>
+            </description>
+            <name>layout</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The title text of the legend.]]>
+            </description>
+            <name>title</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The footer text of the legend.]]>
+            </description>
+            <name>footer</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
 			<![CDATA[Generate avatars with initials from names.]]>
         </description>
         <tag-name>letterAvatar</tag-name>

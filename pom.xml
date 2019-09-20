@@ -77,6 +77,7 @@
                                 <include>github/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
+                                <include>legend/**</include>
                                 <include>letteravatar/**</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
