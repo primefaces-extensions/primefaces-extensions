@@ -327,6 +327,16 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         td.className = td.className.concat(' ').concat(styleClass);
     },
 
+    //@Override
+    destroy: function() {
+        this._super();
+
+        // clean up HT memory
+        if (this.ht) {
+            this.ht.destroy();
+        }
+    },
+
     /**
      * Updates the row with the new data value
      * 
