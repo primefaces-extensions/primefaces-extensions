@@ -6,7 +6,7 @@ PrimeFacesExt = {
    /**
     * Checks if the FacesServlet is mapped with extension mapping. For example:
     * .jsf/.xhtml.
-    * 
+    *
     * @author Thomas Andraschko
     * @returns {boolean} If mapped with extension mapping.
     */
@@ -24,7 +24,7 @@ PrimeFacesExt = {
    /**
     * Gets the URL extensions of current included resources. For example: jsf or
     * xhtml. This should only be used if extensions mapping is used.
-    * 
+    *
     * @returns {string} The URL extension.
     */
    getResourceUrlExtension : function() {
@@ -39,7 +39,7 @@ PrimeFacesExt = {
 
    /**
     * For a URI parses out the name of the script like primefaces-extensions.js
-    * 
+    *
     * @param the
     *        URI of the script
     * @returns {string} The script name.
@@ -58,7 +58,7 @@ PrimeFacesExt = {
 
    /**
     * Gets the resource URI of any Javascript JS file served as a JSF resource.
-    * 
+    *
     * @author Thomas Andraschko
     * @returns {string} The resource URI.
     */
@@ -80,7 +80,7 @@ PrimeFacesExt = {
    /**
     * Configures component specific localized text by given widget name and
     * locale in configuration object.
-    * 
+    *
     * @author Oleg Varaksin
     * @param {string}
     *        widgetName The name of the widget. For example: 'TimePicker'.
@@ -103,8 +103,8 @@ PrimeFacesExt = {
       }
 
       return cfg;
-   }, 
-   
+   },
+
    getScript: function(url, callback) {
        $.ajax({
            type: "GET",
@@ -115,11 +115,11 @@ PrimeFacesExt = {
            async: true
        });
    },
-    
+
    /**
     * This function need to be invoked after PrimeFaces changeTheme. It's used
     * to sync canvas and svg components to the current theme.
-    * 
+    *
     * @author f.strazzullo
     */
    changeTheme : function(newValue) {
@@ -128,7 +128,7 @@ PrimeFacesExt = {
 
    /**
     * The name of the PrimeFaces Extensions resource library.
-    * 
+    *
     * @author Thomas Andraschko
     * @type {string}
     * @constant
@@ -156,11 +156,12 @@ PrimeFacesExt.locales = {};
 /**
  * @namespace Namespaces for components with localized text.
  */
+PrimeFacesExt.locales.TimeAgo = {};
 PrimeFacesExt.locales.TimePicker = {};
 
 /**
  * JavaScript behavior.
- * 
+ *
  * @author Thomas Andraschko
  * @constructor
  */
@@ -177,7 +178,7 @@ PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
 /**
  * Hack to allow the PrimeFacesExt changeTheme to automatically invoked on every
  * theme change
- * 
+ *
  * @author f.strazzullo
  */
 (function(window) {

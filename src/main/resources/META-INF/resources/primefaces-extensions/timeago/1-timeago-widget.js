@@ -12,34 +12,52 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *            cfg The widget configuration.
      */
-    init : function (cfg) {
+    init: function (cfg) {
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
         this.selector = this.jqId + ' time';
 
-        var $this = this;
         if (typeof this.cfg.locale !== 'undefined') {
-            var languageJsURI = PrimeFaces.resources.getFacesResource('/timeago/i18n/jquery.timeago.' + this.cfg.locale + '.js',
-                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
-            PrimeFacesExt.getScript(languageJsURI, $.proxy(function (data, textStatus) {
-                $this.timeAgo = $($this.selector).timeago();
-            }, this));
-        } else {
-            this.timeAgo = $(this.selector).timeago();
+            $.timeago.settings.strings = PrimeFacesExt.locales.TimeAgo[this.cfg.locale];
         }
+        this.timeAgo = $(this.selector).timeago();
     },
 
     // @override
-    refresh : function (cfg) {
+    refresh: function (cfg) {
         $(this.selector).timeago('dispose');
         this._super(cfg);
     },
 
     // @override
-    destroy : function () {
+    destroy: function () {
         this._super();
         $(this.selector).timeago('dispose');
     }
 
 });
+
+PrimeFacesExt.locales.TimeAgo['en'] = {
+    prefixAgo: null,
+    prefixFromNow: null,
+    suffixAgo: "ago",
+    suffixFromNow: "from now",
+    inPast: 'any moment now',
+    seconds: "less than a minute",
+    minute: "about a minute",
+    minutes: "%d minutes",
+    hour: "about an hour",
+    hours: "about %d hours",
+    day: "a day",
+    days: "%d days",
+    month: "about a month",
+    months: "%d months",
+    year: "about a year",
+    years: "%d years",
+    wordSeparator: " ",
+    numbers: []
+};
+
+PrimeFacesExt.locales.TimeAgo['en_US'] = PrimeFacesExt.locales.TimeAgo['en'];
+PrimeFacesExt.locales.TimeAgo['en_UK'] = PrimeFacesExt.locales.TimeAgo['en'];
