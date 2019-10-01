@@ -18,7 +18,8 @@ PrimeFaces.widget.ExtTimeAgo = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.selector = this.jqId + ' time';
 
-        if (typeof this.cfg.locale !== 'undefined') {
+        if (typeof this.cfg.locale !== 'undefined'
+                && typeof PrimeFacesExt.locales.TimeAgo[this.cfg.locale] !== 'undefined') {
             $.timeago.settings.strings = PrimeFacesExt.locales.TimeAgo[this.cfg.locale];
         }
         this.timeAgo = $(this.selector).timeago();
