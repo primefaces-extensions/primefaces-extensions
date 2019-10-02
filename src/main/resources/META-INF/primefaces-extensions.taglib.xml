@@ -4641,6 +4641,22 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
 				<![CDATA[Timeout in seconds to do the ajax ajax requests. Default is 10.]]>
             </description>
             <name>timeout</name>
