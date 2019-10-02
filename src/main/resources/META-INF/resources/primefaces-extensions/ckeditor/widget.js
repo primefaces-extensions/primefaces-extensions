@@ -16,7 +16,7 @@ CKEDITOR_GETURL = function(resource) {
             };
         }
     }
-	
+    
     //do not resolve
     if (resource.indexOf('?resolve=false') !== -1) {
         facesResource = resource.replace('?resolve=false', '');
@@ -89,12 +89,12 @@ CKEDITOR_GETURL = function(resource) {
  */
 PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
-	/**
-	 * Initializes the widget.
-	 *
-	 * @param {object} cfg The widget configuration.
-	 */
-	init : function(cfg) {
+    /**
+     * Initializes the widget.
+     *
+     * @param {object} cfg The widget configuration.
+     */
+    init : function(cfg) {
         this._super(cfg);
 
         this.instance = null;
@@ -165,70 +165,70 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         } else {
             this.renderDeferred();
         }
-	},
+    },
 
-	/**
+    /**
      * Initializes the CKEditor instance. This method will be called when the
      * resources for the CKEditor are loaded.
      * 
      * @private
      */
-	_render : function() {
-            if (!this.instance && this.initializing === false) {
-                this.initializing = true;
-                PrimeFaces.info('Rendering CKEditor: ' + this.id);
-                // overwrite save button
-                this.overwriteSaveButton();
+    _render : function() {
+        if (!this.instance && this.initializing === false) {
+            this.initializing = true;
+            PrimeFaces.info('Rendering CKEditor: ' + this.id);
+            // overwrite save button
+            this.overwriteSaveButton();
 
-                //remove old instances if required
-                var oldInstance = CKEDITOR.instances[this.id];
-                if (oldInstance) {
-                    try {
-                        this.destroyOnUpdate(oldInstance);
-                    } catch (err) {
-                        if (window.console && console.log) {
-                            console.log('CKEditor threw an error while destroying the old instance: ' + err);
-                        }
+            //remove old instances if required
+            var oldInstance = CKEDITOR.instances[this.id];
+            if (oldInstance) {
+                try {
+                    this.destroyOnUpdate(oldInstance);
+                } catch (err) {
+                    if (window.console && console.log) {
+                        console.log('CKEditor threw an error while destroying the old instance: ' + err);
                     }
                 }
-
-                //initialize ckeditor after all resources were loaded
-                this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
-                
-                if (CKEDITOR.instances[this.id]) {
-                    var thisConfig =  CKEDITOR.instances[this.id].config;
-                    // Issue #414 enable/disable ACF
-                    thisConfig.allowedContent = !this.cfg.advancedContentFilter;
-                    // Issue #415: set readOnly attribute to the config file
-                    thisConfig.readOnly = this.cfg.readOnly;
-                }
-                PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
             }
-	},
 
-	/**
-	 * Overwrites the save button.
-	 *
-	 * @private
-	 */
-	overwriteSaveButton : function() {
-		//overwrite save button
-		CKEDITOR.plugins.registered['save'] = {
-			init : function(editor) {
+            //initialize ckeditor after all resources were loaded
+            this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
+            
+            if (CKEDITOR.instances[this.id]) {
+                var thisConfig =  CKEDITOR.instances[this.id].config;
+                // Issue #414 enable/disable ACF
+                thisConfig.allowedContent = !this.cfg.advancedContentFilter;
+                // Issue #415: set readOnly attribute to the config file
+                thisConfig.readOnly = this.cfg.readOnly;
+            }
+            PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
+        }
+    },
 
-				//get widget
-				var widget = PF(editor.config.widgetVar);
-				var command = editor.addCommand('save', {
-					modes : { wysiwyg:1, source:1 },
-					exec : function(editor) {
-					    widget.callBehavior('save');
-					}
-				});
+    /**
+     * Overwrites the save button.
+     *
+     * @private
+     */
+    overwriteSaveButton : function() {
+        //overwrite save button
+        CKEDITOR.plugins.registered['save'] = {
+            init : function(editor) {
 
-				editor.ui.addButton('Save', {label : editor.lang.save.toolbar, command : 'save', title : editor.lang.save.toolbar });
-			}
-		};
-	},
+                //get widget
+                var widget = PF(editor.config.widgetVar);
+                var command = editor.addCommand('save', {
+                    modes : { wysiwyg:1, source:1 },
+                    exec : function(editor) {
+                        widget.callBehavior('save');
+                    }
+                });
+
+                editor.ui.addButton('Save', {label : editor.lang.save.toolbar, command : 'save', title : editor.lang.save.toolbar });
+            }
+        };
+    },
 
     /**
      * This method will be called when the CKEditor was initialized.
@@ -251,47 +251,26 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
 
         //changes to WYSIWYG mode
-    	this.instance.on('contentDom', $.proxy(function() {
-    		this.fireEvent('wysiwygMode');
-      	}, this));
+        this.instance.on('contentDom', $.proxy(function() {
+            this.bindEditorEvents(this.instance);
+            this.fireEvent('wysiwygMode');
+          }, this));
 
-    	//changes to source mode
-    	this.instance.on('mode', $.proxy(function(event) {
+        //changes to source mode
+        this.instance.on('mode', $.proxy(function(event) {
                 if (this.instance.mode != 'source') {
-                        return;
+                    return;
                 }
+                this.bindEditorEvents(this.instance);
                 this.fireEvent('sourceMode');
-            }, this));
+        }, this));
 
         //check dirty- and changed events
         this.isDirtyEventDefined = this.hasBehavior('dirty');
         this.isChangeEventDefined = this.hasBehavior('change');
 
-        var editable = this.instance.editable();
-        editable.attachListener(editable, 'cut', $.proxy(function(event) {
-                this.checkChange();
-                this.checkDirty();
-        }, this));
-        editable.attachListener(editable, 'paste', $.proxy(function(event) {
-                this.checkChange();
-                this.checkDirty();
-        }, this));
-        editable.attachListener(editable, 'keydown', $.proxy(function(event) {
-            // do not capture ctrl and meta keys
-            if (event.data.$.ctrlKey || event.data.$.metaKey) {
-                return;
-            }
-
-            // filter movement keys and related
-            var keyCode = event.data.$.keyCode;
-            if (keyCode == 8 || keyCode == 13 || keyCode == 32
-                            || (keyCode >= 46 && keyCode <= 90)
-                            || (keyCode >= 96 && keyCode <= 111)
-                            || (keyCode >= 186 && keyCode <= 222)) {
-                this.checkChange();
-                this.checkDirty();
-            }
-        }, this));
+        // The contentDom event is only fired when the mode is changed, but not initially
+        this.bindEditorEvents(this.instance);
 
         this.instance.on('blur', $.proxy(function() {
             this.instance.dirtyFired = false;
@@ -346,13 +325,13 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     checkDirty : function() {
-	if (this.isDirtyEventDefined) {
-		if (!this.instance.dirtyFired && this.instance.checkDirty()) { // checkDirty means isDirty
-			// fires the dirty event only once!
-			this.fireEvent('dirty');
-			this.instance.dirtyFired = true;
-		}
-	}
+        if (this.isDirtyEventDefined) {
+            if (!this.instance.dirtyFired && this.instance.checkDirty()) { // checkDirty means isDirty
+                // fires the dirty event only once!
+                this.fireEvent('dirty');
+                this.instance.dirtyFired = true;
+            }
+        }
     },
 
     /**
@@ -367,16 +346,16 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
     },
 
-	/**
-	 * This method fires an event if the behavior was defined.
-	 *
-	 * @param {string} eventName The name of the event.
-	 * @private
-	 */
-	fireEvent : function(eventName) {
+    /**
+     * This method fires an event if the behavior was defined.
+     *
+     * @param {string} eventName The name of the event.
+     * @private
+     */
+    fireEvent : function(eventName) {
         this.callBehavior(eventName);
     },
-    
+
     /**
      * Called after an AJAX update to refresh this widget.
      * @param cfg The new configuration from the server.
@@ -391,61 +370,95 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
         this.init(cfg);
     },
-
-	/**
-	 * Destroys the CKEditor instance.
-	 */
-	destroy : function() {
-            if (this.instance) {
-                try {
-                    this.instance.destroy(true);
-                } catch (err) {
-                    if (window.console && console.log) {
-                        console.log('CKEditor threw an error while destroying the old instance: ' + err);
-                    }
+    
+    /**
+     * Destroys the CKEditor instance.
+     */
+    destroy : function() {
+        if (this.instance) {
+            try {
+                this.instance.destroy(true);
+            } catch (err) {
+                if (window.console && console.log) {
+                    console.log('CKEditor threw an error while destroying the old instance: ' + err);
                 }
-	        this.instance = null;
-	    }
+            }
+            this.instance = null;
+        }
+        this.jq.show();
+    },
 
-	    this.jq.show();
-	},
+    /**
+     * Registers the event listeners for some of the CKEditor, namely cut, paste, keydown and scroll. They need to be
+     * registered every time the mode is changed.
+     * @param {CKEditor} editor The current CKEditor instance.
+     */
+    bindEditorEvents: function(editor) {
+        if (editor && editor.editable()) {
+            var editable = editor.editable();
+            editable.attachListener(editable, 'cut', $.proxy(function(event) {
+                this.checkChange();
+                this.checkDirty();
+            }, this));
+            editable.attachListener(editable, 'paste', $.proxy(function(event) {
+                this.checkChange();
+                this.checkDirty();
+            }, this));
+            editable.attachListener(editable, 'keyup', $.proxy(function(event) {
+                // do not capture ctrl and meta keys
+                if (event.data.$.ctrlKey || event.data.$.metaKey) {
+                    return;
+                }
 
-	/**
-	 * Checks if the editor is in dirty state.
-	 */
-	isDirty : function() {
-		if (!this.instance) {
-			return false;
-		}
+                // filter movement keys and related
+                var keyCode = event.data.$.keyCode;
+                if (keyCode == 8 || keyCode == 13 || keyCode == 32
+                                || (keyCode >= 46 && keyCode <= 90)
+                                || (keyCode >= 96 && keyCode <= 111)
+                                || (keyCode >= 186 && keyCode <= 222)) {
+                    this.checkChange();
+                    this.checkDirty();
+                }
+            }, this));
+        }
+    },
 
-		return this.instance.checkDirty();
-	},
+    /**
+     * Checks if the editor is in dirty state.
+     */
+    isDirty : function() {
+        if (!this.instance) {
+            return false;
+        }
 
-	/**
-	 * Sets readOnly to the CKEditor.
-	 */
-	setReadOnly : function(readOnly) {
-	    this.instance.setReadOnly(readOnly !== false);
-	},
+        return this.instance.checkDirty();
+    },
 
-	/**
-	 * Checks if the CKEditor is readOnly.
-	 */
-	isReadOnly : function() {
-	    return this.instance.readOnly;
-	},
+    /**
+     * Sets readOnly to the CKEditor.
+     */
+    setReadOnly : function(readOnly) {
+        this.instance.setReadOnly(readOnly !== false);
+    },
 
-	/**
-	 * Indicates that the editor instance has focus.
-	 */
-	hasFocus : function() {
-	    return this.instance.focusManager.hasFocus;
-	},
+    /**
+     * Checks if the CKEditor is readOnly.
+     */
+    isReadOnly : function() {
+        return this.instance.readOnly;
+    },
 
-	/**
-	 * Returns the CKEditor instance.
-	 */
-	getEditorInstance : function() {
-	    return this.instance;
-	}
+    /**
+     * Indicates that the editor instance has focus.
+     */
+    hasFocus : function() {
+        return this.instance.focusManager.hasFocus;
+    },
+
+    /**
+     * Returns the CKEditor instance.
+     */
+    getEditorInstance : function() {
+        return this.instance;
+    }
 });
