@@ -50,15 +50,16 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
             $this.fireEvent('change');
         });
 
-        // Restore saved scroll position, if any
+        // Restore saved scroll position after an AJAX update, if any
         if (typeof this.scrollInfo === "object") {
             this.instance.scrollTo(this.scrollInfo.left, this.scrollInfo.top);
         }
 
-        // Save scroll position before AJAX update
-        this.addRefreshListener(function() {
-            if (this.instance) {
-                this.scrollInfo = this.instance.getScrollInfo();
+        // Save scroll position so we can restore it after an AJAX update
+        // Remember to do this after restoring the scroll position.
+        this.instance.on("scroll", function(cMirror) {
+            if (cMirror) {
+                $this.scrollInfo = cMirror.getScrollInfo();
             }
         });
     },

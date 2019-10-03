@@ -99,6 +99,11 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
 
         this.instance = null;
         this.initializing = false;
+        this.editorState = this.editorState || {
+            scrollTop: 0,
+            scrollLeft: 0,
+            mode: 'wysiwyg'
+        };
 
         this.options = {};
         // add widget to ckeditor config, this is required for the save event
@@ -246,45 +251,39 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         //GitHub #501 blur immediately
         //CKEDITOR.focusManager._.blurDelay = 0;
 
+        // Restore scroll position and mode after an AJAX update, and bind events again
+        this.restoreMode();
+        this.restoreScrollPosition();
+        this.bindEditableEvents();
+
         //register blur and focus event
         this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
         this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
 
         //changes to WYSIWYG mode
         this.instance.on('contentDom', $.proxy(function() {
-            this.bindEditorEvents(this.instance);
+            this.bindEditableEvents();
             this.fireEvent('wysiwygMode');
           }, this));
 
         //changes to source mode
         this.instance.on('mode', $.proxy(function(event) {
-                if (this.instance.mode != 'source') {
-                    return;
-                }
-                this.bindEditorEvents(this.instance);
-                this.fireEvent('sourceMode');
+            this.saveMode();
+            this.saveScrollPosition();
+            if (this.instance.mode != 'source') {
+                return;
+            }
+            this.bindEditableEvents();
+            this.fireEvent('sourceMode');
         }, this));
 
         //check dirty- and changed events
         this.isDirtyEventDefined = this.hasBehavior('dirty');
         this.isChangeEventDefined = this.hasBehavior('change');
 
-        // The contentDom event is only fired when the mode is changed, but not initially
-        this.bindEditorEvents(this.instance);
-
         this.instance.on('blur', $.proxy(function() {
             this.instance.dirtyFired = false;
         }, this));
- 
-        // Restore scroll position after AJAX update
-        if (this.instance.document) {
-            if (this.scrollTop) {
-                this.instance.document.$.documentElement.scrollTop = this.scrollTop;
-            }
-            if (this.scrollLeft) {
-                this.instance.document.$.documentElement.scrollLeft = this.scrollLeft;
-            }
-        }
 
         // let the widget know we are done initializing
         this.initializing = false;
@@ -355,21 +354,6 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     fireEvent : function(eventName) {
         this.callBehavior(eventName);
     },
-
-    /**
-     * Called after an AJAX update to refresh this widget.
-     * @param cfg The new configuration from the server.
-     */
-    refresh : function(cfg) {
-        if (this.instance && this.instance.document) {
-            var docElement = this.instance.document.$;
-            if (docElement && docElement.documentElement) {
-                this.scrollTop = docElement.documentElement.scrollTop;
-                this.scrollLeft = docElement.documentElement.scrollLeft;    
-            }
-        }
-        this.init(cfg);
-    },
     
     /**
      * Destroys the CKEditor instance.
@@ -389,13 +373,91 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     /**
-     * Registers the event listeners for some of the CKEditor, namely cut, paste, keydown and scroll. They need to be
-     * registered every time the mode is changed.
-     * @param {CKEditor} editor The current CKEditor instance.
+     * Saves the current scroll position of the editor after a scroll event. Used to restore the position after an
+     * AJAX update.
+     * @private
      */
-    bindEditorEvents: function(editor) {
-        if (editor && editor.editable()) {
-            var editable = editor.editable();
+    saveScrollPosition: function() {
+        if (this.instance) {
+            if (this.instance.mode === 'source') {
+                // Source mode -> use scroll position of the textarea element
+                var editable = this.instance.editable();
+                if (editable && editable.$) {
+                    this.editorState.scrollTop = editable.$.scrollTop;
+                    this.editorState.scrollLeft = editable.$.scrollLeft;
+                }
+            }
+            else {
+                // WYSIWYG mode -> use scroll position of html element of the iframe
+                if (this.instance.document && this.instance.document.$ && this.instance.document.$.documentElement) {
+                    this.editorState.scrollTop = this.instance.document.$.documentElement.scrollTop;
+                    this.editorState.scrollLeft = this.instance.document.$.documentElement.scrollLeft;
+                }
+            }
+        }
+    },
+
+    /**
+     * Restores the saved scroll position of the editor after an AJAX update.
+     * @private
+     */
+    restoreScrollPosition: function() {
+        if (this.instance) {
+            if (this.instance.mode === 'source') {
+                // Source mode -> use scroll position of the textarea element
+                var editable = this.instance.editable();
+                if (editable && editable.$) {
+                    if (typeof this.editorState.scrollTop === "number") {
+                        editable.$.scrollTop = this.editorState.scrollTop;
+                    }
+                    if (typeof this.editorState.scrollLeft === "number") {
+                        editable.$.scrollLeft = this.editorState.scrollLeft;
+                    }
+                }
+            }
+            else {
+                // WYSIWYG mode -> use scroll position of html element of the iframe
+                if (this.instance.document && this.instance.document.$ && this.instance.document.$.documentElement) {
+                    if (typeof this.editorState.scrollTop === "number") {
+                        this.instance.document.$.documentElement.scrollTop = this.editorState.scrollTop;
+                    }
+                    if (typeof this.editorState.scrollLeft === "number") {
+                        this.instance.document.$.documentElement.scrollLeft = this.editorState.scrollLeft;
+                    }
+                }
+            }
+        }
+    },
+
+    /**
+     * Saves whether the editor is currently is source or WYSIWYG mode.
+     * @private
+     */
+    saveMode: function() {
+        if (this.instance) {
+            this.editorState.mode = this.instance.mode === "source" ? "source" : "wysiwyg";
+        }
+    },
+
+    /**
+     * Restores the editor mode after an AJAX update.
+     * @private
+     */
+    restoreMode: function() {
+        // Editor starts out in WYSIWYG mode, only switch if it was in source mode
+        if (this.instance && this.editorState.mode === 'source') {
+            this.instance.setMode('source');
+        }
+    },
+
+    /**
+     * Registers the event listeners for the CKEditor `editable` instance. The editable changes when the mode changes,
+     * so they need to be registered again.
+     * @private
+     */
+    bindEditableEvents: function() {
+        if (this.instance && this.instance.editable()) {
+            var editable = this.instance.editable();
             editable.attachListener(editable, 'cut', $.proxy(function(event) {
                 this.checkChange();
                 this.checkDirty();
@@ -420,6 +482,23 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                     this.checkDirty();
                 }
             }, this));
+
+            if (this.scrollListener) {
+                this.scrollListener.removeListener();
+                this.scrollListener = undefined;
+            }
+            if (this.instance.mode === 'source') {
+                this.scrollListener = editable.attachListener(editable, 'scroll', $.proxy(function(){
+                    this.saveScrollPosition();
+                }, this));
+            }
+            else {
+                if (editable.getDocument()) {
+                    this.scrollListener = editable.attachListener(editable.getDocument(), 'scroll', $.proxy(function(){
+                        this.saveScrollPosition();
+                    }, this));
+                }
+            }
         }
     },
 
