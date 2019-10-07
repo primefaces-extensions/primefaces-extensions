@@ -13,11 +13,17 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	init : function(cfg) {
 	    this.id = cfg.id;
 	    this.jqId = PrimeFaces.escapeClientId(cfg.id);
+	    this.container = $(this.jqId);
 	    this.jqEl = cfg.modeInline ? this.jqId + '_inline' : this.jqId + '_input';
 	    this.jq = $(this.jqEl);
 
 	    // configure localized text
 	    this.cfg = PrimeFacesExt.configureLocale('TimePicker', cfg);
+
+	    // GitHub #723: Fix for PrimeIcon themes
+	    if (PrimeFacesExt.isPrimeIconTheme()) {
+	        this.container.addClass('ui-prime-icons');
+	    }
 
 	    if (this.cfg.showPeriod) {
 	        this.amHours = {};

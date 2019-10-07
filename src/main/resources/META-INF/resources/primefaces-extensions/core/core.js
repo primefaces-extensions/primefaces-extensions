@@ -127,6 +127,42 @@ PrimeFacesExt = {
    },
 
    /**
+    * Gets the currently loaded PF Theme.
+    */
+   getTheme : function() {
+       var themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '/theme.css"]');
+       // portlet
+       if (themeLink.length === 0) {
+           themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=theme.css"]');
+       }
+
+       var themeURL = themeLink.attr('href'),
+           plainURL = themeURL.split('&')[0],
+           oldTheme = plainURL.split('ln=primefaces-')[1];
+
+       return oldTheme;
+   },
+
+   /**
+    * Does this theme use Prime Icons?
+    */
+   isPrimeIconTheme: function(theme) {
+       var theme = PrimeFacesExt.getTheme();
+       switch (theme) {
+        case "nova-light":
+        case "nova-dark":
+        case "nova-colored":
+        case "luna-blue":
+        case "luna-amber":
+        case "luna-green":
+        case "luna-pink":
+            return true;
+        default:
+            return false;
+       };
+   },
+
+   /**
     * The name of the PrimeFaces Extensions resource library.
     *
     * @author Thomas Andraschko
