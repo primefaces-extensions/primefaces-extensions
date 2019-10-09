@@ -10,3 +10,4 @@ target
 *.iws
 *.NavData
 *.navData
+*.DS_Store
