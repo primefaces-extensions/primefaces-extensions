@@ -75,7 +75,15 @@ public class TimePickerRenderer extends InputRenderer {
 
         writer.startElement("span", timepicker);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", TimePicker.CONTAINER_CLASS, null);
+
+        String containerClass = TimePicker.CONTAINER_CLASS;
+        if (timepicker.isSpinner()) {
+            containerClass += " ui-spinner";
+        }
+        if (timepicker.isShowOnButton()) {
+            containerClass += " ui-inputgroup";
+        }
+        writer.writeAttribute("class", containerClass, null);
 
         if (timepicker.isInline()) {
             // inline container
@@ -101,8 +109,11 @@ public class TimePickerRenderer extends InputRenderer {
         if (!timepicker.isInline()) {
             String styleClass = timepicker.getStyleClass();
             styleClass = styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass;
+            if (timepicker.isShowOnButton()) {
+                styleClass += " ui-inputtext";
+            }
             if (!timepicker.isValid()) {
-                styleClass = styleClass + " ui-state-error";
+                styleClass += " ui-state-error";
             }
 
             writer.writeAttribute("class", styleClass, null);
@@ -125,7 +136,7 @@ public class TimePickerRenderer extends InputRenderer {
             encodeSpinnerButton(fc, TimePicker.DOWN_BUTTON_CLASS, TimePicker.DOWN_ICON_CLASS, disabled);
         }
 
-        if (!"focus".equals(timepicker.getShowOn())) {
+        if (timepicker.isShowOnButton()) {
             writer.startElement("button", null);
             writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_CLASS, null);
             writer.writeAttribute("type", "button", null);
@@ -177,7 +188,7 @@ public class TimePickerRenderer extends InputRenderer {
             wb.nativeAttr("onMinuteShow", timepicker.getOnMinuteShow());
         }
 
-        if (!"focus".equals(timepicker.getShowOn())) {
+        if (timepicker.isShowOnButton()) {
             wb.attr("showOn", timepicker.getShowOn());
             wb.selectorAttr("button", "#" + clientId + " .pe-timepicker-trigger");
         }
