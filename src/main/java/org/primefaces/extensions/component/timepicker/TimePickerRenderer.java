@@ -96,6 +96,7 @@ public class TimePickerRenderer extends InputRenderer {
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", timepicker.isInline() ? "hidden" : "text", null);
+        writer.writeAttribute("size", timepicker.getSize(), null);
         writer.writeAttribute("autocomplete", "off", null);
 
         if (timepicker.isReadonlyInput()) {
@@ -109,6 +110,9 @@ public class TimePickerRenderer extends InputRenderer {
         if (!timepicker.isInline()) {
             String styleClass = timepicker.getStyleClass();
             styleClass = styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass;
+            if (timepicker.isSpinner()) {
+                styleClass += " ui-spinner-input";
+            }
             if (timepicker.isShowOnButton()) {
                 styleClass += " ui-inputtext";
             }

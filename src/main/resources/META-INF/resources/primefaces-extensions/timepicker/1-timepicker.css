@@ -1,27 +1,30 @@
-.pe-timepicker .ui-inputfield {
+.pe-timepicker, body .pe-timepicker.ui-spinner {
+    display: inline-flex;
+}
+
+body .pe-timepicker .ui-inputfield {
     text-align: left;
-    width: 4rem;
+    box-sizing: border-box;
 }
 
 .pe-timepicker-trigger .ui-icon-clock {
     left: 50%;
 }
 
-.pe-timepicker-trigger {
-    width: 1.9rem;
-    height: 1.8rem;
-}
-
-.pe-timepicker.ui-spinner.ui-inputgroup {
-    display: flex;
+body .ui-button-icon-only.pe-timepicker-trigger {
+    flex: 0 0 28px;
 }
 
 .pe-timepicker.ui-spinner.ui-inputgroup .ui-spinner-button {
-    right: 1.9rem;
+    right: 29px;
+}
+
+.ui-timepicker {
+    z-index: 999;
 }
 
 .ui-timepicker-table {
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid #a6a6a6;
     padding: 0.857em;
 }
@@ -31,7 +34,7 @@
 }
 
 body .ui-timepicker-table td a {
-    color: #333333;
+    color: #333;
     padding: 0.286em;
 }
 
