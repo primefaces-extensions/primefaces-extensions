@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
@@ -31,7 +30,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
@@ -59,10 +57,9 @@ import org.primefaces.util.LocaleUtils;
 public class TimePicker extends HtmlInputText implements Widget {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
-    public static final String INPUT_CLASS = "ui-inputfield pe-timepicker-input ui-state-default ui-corner-all";
-    public static final String UP_BUTTON_CLASS = "pe-timepicker-button pe-timepicker-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only";
-    public static final String DOWN_BUTTON_CLASS = "pe-timepicker-button pe-timepicker-down ui-corner-br ui-button ui-widget ui-state-default "
-                + "ui-button-text-only";
+    public static final String INPUT_CLASS = "ui-inputfield ui-state-default ui-corner-all";
+    public static final String UP_BUTTON_CLASS = "ui-spinner-button ui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default";
+    public static final String DOWN_BUTTON_CLASS = "ui-spinner-button ui-spinner-down ui-corner-br ui-button ui-widget ui-state-default";
     public static final String UP_ICON_CLASS = "ui-icon ui-icon-triangle-1-n";
     public static final String DOWN_ICON_CLASS = "ui-icon ui-icon-triangle-1-s";
     public static final String BUTTON_TRIGGER_CLASS = "pe-timepicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only";
@@ -110,7 +107,8 @@ public class TimePicker extends HtmlInputText implements Widget {
         minMinute,
         maxHour,
         maxMinute,
-        readonlyInput;
+        readonlyInput,
+        size;
         //@formatter:on
 
         private String toString;
@@ -345,6 +343,16 @@ public class TimePicker extends HtmlInputText implements Widget {
         getStateHelper().put(PropertyKeys.readonlyInput, _readonlyInput);
     }
 
+    @Override
+    public int getSize() {
+        return (Integer) getStateHelper().eval(PropertyKeys.size, 5);
+    }
+
+    @Override
+    public void setSize(final int size) {
+        getStateHelper().put(PropertyKeys.size, size);
+    }
+
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
             appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
@@ -358,6 +366,10 @@ public class TimePicker extends HtmlInputText implements Widget {
 
     public boolean isSpinner() {
         return getMode().equalsIgnoreCase("spinner");
+    }
+
+    public boolean isShowOnButton() {
+        return !"focus".equals(getShowOn());
     }
 
     @Override

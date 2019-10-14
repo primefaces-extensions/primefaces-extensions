@@ -1,63 +1,41 @@
-.pe-timepicker {
-    display: inline-block;
-    overflow: visible;
-    padding: 0;
-    position: relative;
-    vertical-align: middle;
+.pe-timepicker, body .pe-timepicker.ui-spinner {
+    display: inline-flex;
 }
 
-.pe-timepicker-input {
-    vertical-align: middle;
+body .pe-timepicker .ui-inputfield {
     text-align: left;
-    width: 60px;
-}
-
-.pe-timepicker-button {
-    cursor: default;
-    display: block;
-    font-size: 0.5em;
-    height: 44%;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    vertical-align: middle;
-    width: 16px;
-    z-index: 100;
-}
-
-.pe-timepicker .ui-icon {
-    left: 0;
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
-}
-
-.pe-timepicker-button.pe-timepicker-up {
-    top: 0;
-    border-bottom: none;
-}
-
-.pe-timepicker-button.pe-timepicker-down {
-    bottom: 0;
-}
-
-.pe-timepicker .ui-icon-triangle-1-s {
-    background-position: -65px -16px;
-}
-
-.pe-timepicker-trigger {
-    position: absolute;
-    margin: 1px 0 1px 1px;
-    height: 2em;
-    width: 2em;
-    vertical-align: middle;
+    box-sizing: border-box;
 }
 
 .pe-timepicker-trigger .ui-icon-clock {
     left: 50%;
+}
+
+body .ui-button-icon-only.pe-timepicker-trigger {
+    flex: 0 0 28px;
+}
+
+.pe-timepicker.ui-spinner.ui-inputgroup .ui-spinner-button {
+    right: 29px;
+}
+
+.ui-timepicker {
+    z-index: 999;
+}
+
+.ui-timepicker-table {
+    background-color: #fff;
+    border: 1px solid #a6a6a6;
+    padding: 0.857em;
+}
+
+.ui-timepicker-table td {
+    padding: 0.286em;
+}
+
+body .ui-timepicker-table td a {
+    color: #333;
+    padding: 0.286em;
 }
 
 body .ui-prime-icons .ui-icon {
@@ -71,11 +49,6 @@ body .ui-prime-icons .ui-icon {
     display: inline-block;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-indent: 0px !important;
-    text-align: center;
-    background: none;
-    display: inline-block;
-    font-size: 1.25em;
 }
 
 body .ui-prime-icons .ui-icon-clock:before {

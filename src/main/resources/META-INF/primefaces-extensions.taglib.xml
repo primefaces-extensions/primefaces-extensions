@@ -3630,6 +3630,14 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Number of characters used to determine the width of the input element. Default is 5.]]>
+            </description>
+            <name>size</name>
+            <required>false</required>
+            <type>int</type>
+        </attribute>
     </tag>
     <tag>
         <description>

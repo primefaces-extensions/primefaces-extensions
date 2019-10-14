@@ -142,20 +142,20 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
 
         this.removeScriptElement(this.id);
-        
+
         this.originalValue = this.jq.val();
 	},
-	
+
 	enableInput : function() {
 	    var _self = this;
-	    
+
 	    PrimeFaces.skinInput(this.jq);
-	    
+
 	    this.jq.on({
 	        keydown: function(e){
 	            var keyCode = $.ui.keyCode;
-	            
-	            switch(e.which) {            
+
+	            switch(e.which) {
 	                case keyCode.UP:
 	                    _self.spin(1);
 	                break;
@@ -178,7 +178,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	                    _self.spin(1);
 	                else
 	                    _self.spin(-1);
-	                
+
 	                clearInterval(_self.spinnerInterval);
 	                return false;
 	            }
@@ -189,7 +189,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	enableSpinner : function() {
 	    var _self = this;
 
-	    $(this.jqId).children('.pe-timepicker-button')
+	    $(this.jqId).children('.ui-spinner-button')
                 .removeClass('ui-state-disabled')
                 .off('mouseover mouseout mouseup mousedown')
                 .on({
@@ -198,19 +198,19 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                     },
                     mouseout: function(){
                         $(this).removeClass('ui-state-hover');
-                        
+
                         clearInterval(_self.spinnerInterval);
                     },
                     mouseup: function(){
                         $(this).removeClass('ui-state-active');
-                        
+
                         clearInterval(_self.spinnerInterval);
                     },
                     mousedown: function(e){
                         var el = $(this);
                         el.addClass('ui-state-active');
 
-                        var dir = el.hasClass('pe-timepicker-up') ? 1 : -1;
+                        var dir = el.hasClass('ui-spinner-up') ? 1 : -1;
                         _self.spin(dir);
 
                         _self.spinnerInterval = setInterval(function() {
@@ -223,7 +223,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	},
 
 	disableSpinner : function() {
-	    $(this.jqId).children('.pe-timepicker-button').
+	    $(this.jqId).children('.ui-spinner-button').
 	    removeClass('ui-state-hover ui-state-active').
 	    addClass('ui-state-disabled').
 	    off('mouseover mouseout mouseup mousedown');
@@ -532,7 +532,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 	        this.enableSpinner();
         }
 	},
-    
+
     reset : function(cfg) {
         this.jq.val(this.originalValue);
     }
