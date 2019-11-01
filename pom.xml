@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
-        <version>7.0.3-SNAPSHOT</version>
+        <version>7.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>primefaces-extensions</artifactId>
@@ -69,7 +69,7 @@
                         <resourcesSet>
                             <includes>
                                 <include>blockui/**</include>
-                                <include>badge/**</include>                                
+                                <include>badge/**</include>
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>fab/**</include>
