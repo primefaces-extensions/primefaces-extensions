@@ -20,7 +20,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIOutput;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Tooltip</code> component.
@@ -248,11 +247,6 @@ public class Tooltip extends UIOutput implements Widget {
 
     public void setFor(final String forValue) {
         getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     public String getStyleClass() {

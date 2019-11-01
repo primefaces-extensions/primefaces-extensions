@@ -32,7 +32,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CompleteEvent;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * Component class for the <code>CodeMirror</code> component.
@@ -398,11 +397,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
     }
 
     @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
-    @Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
         super.broadcast(event);
 
@@ -415,7 +409,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
                         new Object[] {event});
 
             if (suggestions == null) {
-                suggestions = new ArrayList<String>();
+                suggestions = new ArrayList<>();
             }
 
             facesContext.renderResponse();

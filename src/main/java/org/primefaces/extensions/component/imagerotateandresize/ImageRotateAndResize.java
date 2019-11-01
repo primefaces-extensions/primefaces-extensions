@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ResizeEvent;
 import org.primefaces.extensions.event.RotateEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -78,7 +77,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -110,10 +109,6 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
     public void setFor(final String forValue) {
         getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
-
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     @Override

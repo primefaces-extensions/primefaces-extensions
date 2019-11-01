@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.json.GsonConverter;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 import com.google.gson.JsonArray;
@@ -131,11 +130,6 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public void setExtender(final String extender) {
         getStateHelper().put(PropertyKeys.extender, extender);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     @Override

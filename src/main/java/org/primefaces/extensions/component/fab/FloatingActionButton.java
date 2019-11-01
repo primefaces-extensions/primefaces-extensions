@@ -17,9 +17,9 @@ package org.primefaces.extensions.component.fab;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>FloatingActionButton</code> component.
@@ -128,11 +128,6 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
 
     public void setStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

@@ -19,7 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import org.primefaces.json.JSONObject;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  * <code>orgchart</code> component.
@@ -40,9 +40,9 @@ public class OrgChartDropEvent extends AjaxBehaviorEvent {
     private String droppedZoneId;
 
     public OrgChartDropEvent(UIComponent component, Behavior behavior, String hierarchyStr,
-            String draggedNodeId, String droppedZoneId) {
+                String draggedNodeId, String droppedZoneId) {
         super(component, behavior);
-        this.hierarchy = new JSONObject(hierarchyStr);
+        hierarchy = new JSONObject(hierarchyStr);
         this.draggedNodeId = draggedNodeId;
         this.droppedZoneId = droppedZoneId;
     }

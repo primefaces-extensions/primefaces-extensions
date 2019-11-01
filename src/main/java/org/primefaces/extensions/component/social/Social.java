@@ -21,7 +21,6 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Social</code> component.
@@ -82,14 +81,6 @@ public class Social extends UIComponentBase implements ClientBehaviorHolder, Wid
      */
     public Social() {
         setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     /**

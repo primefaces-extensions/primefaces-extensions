@@ -35,7 +35,6 @@ import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>DynaForm</code> component.
@@ -81,7 +80,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
         @Override
         public String toString() {
-            return ((toString != null) ? toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -150,12 +149,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.columnClasses, null);
     }
 
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
     public UIDynaFormControl getControlCell(final String type) {
-        UIDynaFormControl cell = getControlCells().get(type);
+        final UIDynaFormControl cell = getControlCells().get(type);
 
         if (cell == null) {
             throw new FacesException("UIDynaFormControl to type " + type + " was not found");
@@ -167,10 +162,10 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     protected Map<String, UIDynaFormControl> getControlCells() {
         if (cells == null) {
-            cells = new HashMap<String, UIDynaFormControl>();
-            for (UIComponent child : getChildren()) {
+            cells = new HashMap<>();
+            for (final UIComponent child : getChildren()) {
                 if (child instanceof UIDynaFormControl) {
-                    UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
+                    final UIDynaFormControl dynaFormCell = (UIDynaFormControl) child;
                     cells.put(dynaFormCell.getType(), dynaFormCell);
                 }
             }
@@ -181,7 +176,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     @Override
     protected KeyData findData(final String key) {
-        Object value = getValue();
+        final Object value = getValue();
         if (value == null) {
             return null;
         }
@@ -190,8 +185,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             throw new FacesException("Value in DynaForm must be of type DynaFormModel");
         }
 
-        List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-        for (DynaFormControl dynaFormControl : dynaFormControls) {
+        final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+        for (final DynaFormControl dynaFormControl : dynaFormControls) {
             if (key.equals(dynaFormControl.getKey())) {
                 return dynaFormControl;
             }
@@ -202,14 +197,14 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     @Override
     protected void processChildren(final FacesContext context, final PhaseId phaseId) {
-        Object value = getValue();
+        final Object value = getValue();
         if (value != null) {
             if (!(value instanceof DynaFormModel)) {
                 throw new FacesException("Value in DynaForm must be of type DynaFormModel");
             }
 
-            List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-            for (DynaFormControl dynaFormControl : dynaFormControls) {
+            final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+            for (final DynaFormControl dynaFormControl : dynaFormControls) {
                 processDynaFormCells(context, phaseId, dynaFormControl);
             }
         }
@@ -219,7 +214,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     @Override
     protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
-        Object value = getValue();
+        final Object value = getValue();
         if (value == null) {
             return false;
         }
@@ -228,8 +223,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             throw new FacesException("Value in DynaForm must be of type DynaFormModel");
         }
 
-        List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-        for (DynaFormControl dynaFormControl : dynaFormControls) {
+        final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+        for (final DynaFormControl dynaFormControl : dynaFormControls) {
             if (visitDynaFormCells(context, callback, dynaFormControl)) {
                 return true;
             }
@@ -242,7 +237,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     @Override
     protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
-        Object value = getValue();
+        final Object value = getValue();
         if (value == null) {
             return false;
         }
@@ -251,20 +246,20 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             throw new FacesException("Value in DynaForm must be of type DynaFormModel");
         }
 
-        if (this.getChildCount() > 0) {
+        if (getChildCount() > 0) {
             // extract the dynaFormControl key from the clientId
-            // it's simliar to rowKey in UIData
+            // it's similar to rowKey in UIData
             String key = clientId.substring(getClientId().length() + 1);
             key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
-            List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-            for (DynaFormControl dynaFormControl : dynaFormControls) {
+            final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+            for (final DynaFormControl dynaFormControl : dynaFormControls) {
 
                 // determine associated DynaFormControl
                 if (dynaFormControl.getKey().equals(key)) {
 
                     // get UI control for DynaFormControl
-                    UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
+                    final UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
 
                     try {
                         // push the associated data before visiting the child components
@@ -288,7 +283,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
     }
 
     private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
-        for (UIComponent kid : getChildren()) {
+        for (final UIComponent kid : getChildren()) {
             if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()
                         || !((UIDynaFormControl) kid).getType().equals(dynaFormControl.getType())) {
                 continue;
@@ -299,7 +294,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
                 return;
             }
 
-            for (UIComponent grandkid : kid.getChildren()) {
+            for (final UIComponent grandkid : kid.getChildren()) {
                 if (!grandkid.isRendered()) {
                     continue;
                 }
@@ -322,7 +317,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
     private boolean visitDynaFormCells(final VisitContext context, final VisitCallback callback, final DynaFormControl dynaFormControl) {
         if (getChildCount() > 0) {
-            for (UIComponent child : getChildren()) {
+            for (final UIComponent child : getChildren()) {
                 if (child instanceof UIDynaFormControl
                             && ((UIDynaFormControl) child).getType().equals(dynaFormControl.getType())) {
                     setData(dynaFormControl);

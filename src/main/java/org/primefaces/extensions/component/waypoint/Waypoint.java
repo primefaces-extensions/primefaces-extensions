@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.WaypointEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -109,14 +108,6 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
     @Override
     public String getDefaultEventName() {
         return WaypointEvent.NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     /**

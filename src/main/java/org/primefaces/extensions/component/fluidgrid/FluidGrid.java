@@ -40,7 +40,6 @@ import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.event.LayoutCompleteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -240,11 +239,6 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                     context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
     public UIFluidGridItem getItem(final String type) {
         final UIFluidGridItem item = getItems().get(type);
 
@@ -258,7 +252,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 
     protected Map<String, UIFluidGridItem> getItems() {
         if (items == null) {
-            items = new HashMap<String, UIFluidGridItem>();
+            items = new HashMap<>();
             for (final UIComponent child : getChildren()) {
                 if (child instanceof UIFluidGridItem) {
                     final UIFluidGridItem fluidGridItem = (UIFluidGridItem) child;
@@ -357,7 +351,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
     @Override
     protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
 
-        Object value = getValue();
+        final Object value = getValue();
         if (value == null) {
             return false;
         }
@@ -366,14 +360,14 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             throw new FacesException("Value in FluidGrid must be of type Collection / List");
         }
 
-        if (this.getChildCount() > 0) {
+        if (getChildCount() > 0) {
             // extract the fluidGridItem key from the clientId
             // it's simliar to rowKey in UIData
             String key = clientId.substring(this.getClientId().length() + 1);
             key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
-            Collection<FluidGridItem> fluidGridItems = (Collection<FluidGridItem>) value;
-            for (FluidGridItem fluidGridItem : fluidGridItems) {
+            final Collection<FluidGridItem> fluidGridItems = (Collection<FluidGridItem>) value;
+            for (final FluidGridItem fluidGridItem : fluidGridItems) {
 
                 // determine associated FluidGridItem
                 if (fluidGridItem.getKey().equals(key)) {
@@ -381,14 +375,14 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                     // get UI control for FluidGridItem
                     UIFluidGridItem uiFluidGridItem = null;
                     if (getVar() == null) {
-                        for (UIComponent child : getChildren()) {
+                        for (final UIComponent child : getChildren()) {
                             if (child instanceof UIFluidGridItem && ((UIFluidGridItem) child).getType().equals(fluidGridItem.getType())) {
                                 uiFluidGridItem = (UIFluidGridItem) child;
                             }
                         }
                     }
                     else {
-                        uiFluidGridItem = (UIFluidGridItem) this.getChildren().get(0);
+                        uiFluidGridItem = (UIFluidGridItem) getChildren().get(0);
                     }
 
                     if (uiFluidGridItem == null) {

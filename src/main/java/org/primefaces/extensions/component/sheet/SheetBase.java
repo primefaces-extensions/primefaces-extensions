@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.model.SortOrder;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * Spreadsheet component wrappering the Handsontable jQuery UI component.
@@ -214,8 +213,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         caseSensitiveSort,
 
         /**
-         * The ID of the current column to be used for sorting. This is used only internally
-         * and not exposed to the consumer of the sheet component.
+         * The ID of the current column to be used for sorting. This is used only internally and not exposed to the consumer of the sheet component.
          */
         currentSortBy,
 
@@ -297,14 +295,6 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         return COMPONENT_FAMILY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
     public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
@@ -342,9 +332,9 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     }
 
     /**
-     * Please note: The return type needs to be {@link Object}. Otherwise,
-     * evaluating the {@code sortBy} attribute as a value expression forces
-     * it into a string, and strings are sorted differently than numbers.
+     * Please note: The return type needs to be {@link Object}. Otherwise, evaluating the {@code sortBy} attribute as a value expression forces it into a
+     * string, and strings are sorted differently than numbers.
+     *
      * @return The ID of the column to sort by.
      */
     public Object getSortBy() {
@@ -836,6 +826,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
 
     /**
      * Saves the column by which the sheet is currently sorted (when the user clicks on a column).
+     *
      * @param columnId ID of the column by which the sheet is currently sorted.
      */
     public void saveSortByColumn(String columnId) {

@@ -23,7 +23,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -378,11 +377,6 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         if (me != null) {
             me.invoke(facesContext.getELContext(), new Object[] {});
         }
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

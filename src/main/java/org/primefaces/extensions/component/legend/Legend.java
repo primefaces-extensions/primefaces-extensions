@@ -22,7 +22,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Legend</code> component.
@@ -83,14 +82,6 @@ public class Legend extends UIComponentBase implements Widget {
      */
     public Legend() {
         setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     /**

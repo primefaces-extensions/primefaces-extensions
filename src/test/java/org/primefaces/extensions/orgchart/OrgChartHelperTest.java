@@ -29,8 +29,8 @@ import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartHelper;
 import org.primefaces.extensions.component.orgchart.OrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartRenderer;
-import org.primefaces.json.JSONArray;
-import org.primefaces.json.JSONObject;
+import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  * <code>orgchart</code> component.

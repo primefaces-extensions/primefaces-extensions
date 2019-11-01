@@ -22,7 +22,6 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>LetterAvatar</code> component.
@@ -114,11 +113,6 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
 
     public void setHeight(Integer height) {
         getStateHelper().put(PropertyKeys.height, height);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

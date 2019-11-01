@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ClipboardErrorEvent;
 import org.primefaces.extensions.event.ClipboardSuccessEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -88,14 +87,6 @@ public class Clipboard extends UIComponentBase implements ClientBehaviorHolder, 
      */
     public Clipboard() {
         setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     /**

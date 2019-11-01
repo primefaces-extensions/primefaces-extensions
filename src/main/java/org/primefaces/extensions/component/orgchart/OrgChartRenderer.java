@@ -27,9 +27,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.json.JSONArray;
-import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 

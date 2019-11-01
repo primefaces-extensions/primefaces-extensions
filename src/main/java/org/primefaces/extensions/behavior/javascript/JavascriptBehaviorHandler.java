@@ -15,12 +15,8 @@
  */
 package org.primefaces.extensions.behavior.javascript;
 
-import javax.faces.application.Application;
-import javax.faces.component.UIComponent;
 import javax.faces.view.BehaviorHolderAttachedObjectHandler;
 import javax.faces.view.facelets.BehaviorConfig;
-import javax.faces.view.facelets.FaceletContext;
-import javax.faces.view.facelets.TagAttribute;
 import javax.faces.view.facelets.TagHandler;
 
 import org.primefaces.behavior.base.AbstractBehaviorHandler;
@@ -34,24 +30,13 @@ import org.primefaces.behavior.base.AbstractBehaviorHandler;
  */
 public class JavascriptBehaviorHandler extends AbstractBehaviorHandler<JavascriptBehavior> {
 
-    private final TagAttribute execute;
-    private final TagAttribute disabled;
-
     public JavascriptBehaviorHandler(final BehaviorConfig config) {
         super(config);
-
-        this.execute = this.getAttribute(JavascriptBehavior.PropertyKeys.execute.name());
-        this.disabled = this.getAttribute(JavascriptBehavior.PropertyKeys.disabled.name());
     }
 
     @Override
-    protected JavascriptBehavior createBehavior(final FaceletContext faceletContext, final String eventName, UIComponent component) {
-        final Application application = faceletContext.getFacesContext().getApplication();
-        final JavascriptBehavior behavior = (JavascriptBehavior) application.createBehavior(JavascriptBehavior.BEHAVIOR_ID);
-
-        setBehaviorAttribute(faceletContext, behavior, this.disabled, Boolean.class);
-        setBehaviorAttribute(faceletContext, behavior, this.execute, String.class);
-
-        return behavior;
+    public String getBehaviorId() {
+        return JavascriptBehavior.BEHAVIOR_ID;
     }
+
 }

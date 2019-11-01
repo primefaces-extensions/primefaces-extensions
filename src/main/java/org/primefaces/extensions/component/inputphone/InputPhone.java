@@ -18,18 +18,19 @@ package org.primefaces.extensions.component.inputphone;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
+
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.model.inputphone.Country;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
@@ -274,11 +275,6 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
 
     public void setGeoIpLookup(String geoIpLookup) {
         getStateHelper().put(PropertyKeys.geoIpLookup, geoIpLookup);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     public boolean isUtilsScriptRequired() {

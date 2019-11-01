@@ -29,7 +29,6 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.MessageFactory;
 
@@ -162,11 +161,6 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
     public void setStateThreeTitle(final String stateThreeTitle) {
         getStateHelper().put(TriStateManyCheckbox.PropertyKeys.stateThreeTitle, stateThreeTitle);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     @Override

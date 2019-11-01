@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.extensions.event.OrgChartDropEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -101,11 +100,6 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     @Override

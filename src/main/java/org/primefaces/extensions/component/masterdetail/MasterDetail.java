@@ -371,7 +371,7 @@ public class MasterDetail extends UIComponentBase {
                     menuItem.setParam(clientId + MasterDetail.CURRENT_LEVEL, -1);
                     menuItem.setParam(clientId + MasterDetail.SELECTED_LEVEL, level);
 
-                    model.addElement(menuItem);
+                    model.getElements().add(menuItem);
                 }
             }
         }

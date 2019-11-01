@@ -20,7 +20,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>Github</code> component.
@@ -71,14 +70,6 @@ public class Github extends UIComponentBase implements Widget {
      */
     public Github() {
         setRendererType(DEFAULT_RENDERER);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     /**

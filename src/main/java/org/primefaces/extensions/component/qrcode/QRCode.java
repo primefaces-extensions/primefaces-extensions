@@ -20,7 +20,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIOutput;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>QRCode</code> component.
@@ -87,11 +86,6 @@ public class QRCode extends UIOutput implements Widget {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     public String getWidgetVar() {

@@ -35,7 +35,6 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ButtonEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LocaleUtils;
 
@@ -106,14 +105,6 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
      * {@inheritDoc}
      */
     @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
@@ -132,14 +123,6 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
     @Override
     public String getDefaultEventName() {
         return OpenEvent.NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isRTL() {
-        return getDir().equalsIgnoreCase("rtl");
     }
 
     /**
@@ -275,6 +258,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
         getStateHelper().put(PropertyKeys.dir, _dir);
     }
 
+    @Override
     public String getDir() {
         return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
     }

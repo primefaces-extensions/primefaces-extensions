@@ -19,6 +19,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
 import org.primefaces.behavior.base.AbstractBehavior;
+import org.primefaces.behavior.base.BehaviorAttribute;
 
 /**
  * Client Behavior class for the <code>Javascript</code> behavior.
@@ -38,7 +39,7 @@ public class JavascriptBehavior extends AbstractBehavior {
     public final static String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.behavior.JavascriptBehaviorRenderer";
 
-    public enum PropertyKeys {
+    public enum PropertyKeys implements BehaviorAttribute {
 
         disabled(Boolean.class), execute(String.class);
 
@@ -48,6 +49,7 @@ public class JavascriptBehavior extends AbstractBehavior {
             this.expectedType = expectedType;
         }
 
+        @Override
         public Class<?> getExpectedType() {
             return expectedType;
         }
@@ -57,6 +59,11 @@ public class JavascriptBehavior extends AbstractBehavior {
     @Override
     public String getRendererType() {
         return DEFAULT_RENDERER;
+    }
+
+    @Override
+    protected BehaviorAttribute[] getAllAttributes() {
+        return PropertyKeys.values();
     }
 
     public final String getExecute() {
@@ -75,8 +82,4 @@ public class JavascriptBehavior extends AbstractBehavior {
         setLiteral(PropertyKeys.disabled, disabled);
     }
 
-    @Override
-    protected Enum<?>[] getAllProperties() {
-        return PropertyKeys.values();
-    }
 }

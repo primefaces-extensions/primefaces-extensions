@@ -20,7 +20,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * <code>BlockUI</code> component.
@@ -196,11 +195,6 @@ public class BlockUI extends UIComponentBase implements Widget {
 
     public boolean isFocusInput() {
         return (Boolean) getStateHelper().eval(PropertyKeys.focusInput, true);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
 }

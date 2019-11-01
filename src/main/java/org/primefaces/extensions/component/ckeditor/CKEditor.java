@@ -25,7 +25,6 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.html.HtmlInputTextarea;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 
 /**
  * Component class for the <code>CKEditor</code> component.
@@ -242,8 +241,4 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
         getStateHelper().put(PropertyKeys.advancedContentFilter, acf);
     }
 
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
 }

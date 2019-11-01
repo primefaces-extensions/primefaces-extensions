@@ -30,7 +30,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.ImageAreaSelectEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -283,11 +282,6 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
 
     public void setFor(final String forValue) {
         getStateHelper().put(PropertyKeys.forValue, forValue);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     @Override

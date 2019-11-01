@@ -19,7 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
 import javax.faces.event.AjaxBehaviorEvent;
 
-import org.primefaces.json.JSONObject;
+import org.primefaces.shaded.json.JSONObject;
 
 /**
  * <code>orgchart</code> component.
@@ -38,10 +38,10 @@ public class OrgChartClickEvent extends AjaxBehaviorEvent {
     private JSONObject hierarchy;
 
     public OrgChartClickEvent(UIComponent component, Behavior behavior, String id,
-            String hierarchyStr) {
+                String hierarchyStr) {
         super(component, behavior);
         this.id = id;
-        this.hierarchy = new JSONObject(hierarchyStr);
+        hierarchy = new JSONObject(hierarchyStr);
     }
 
     public String getId() {

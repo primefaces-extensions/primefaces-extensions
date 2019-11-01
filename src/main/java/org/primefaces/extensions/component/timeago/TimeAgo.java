@@ -21,12 +21,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -180,11 +181,6 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     public void setTitlePattern(String titlePattern) {
         getStateHelper().put(PropertyKeys.titlePattern, titlePattern);
-    }
-
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
     public Locale calculateLocale() {

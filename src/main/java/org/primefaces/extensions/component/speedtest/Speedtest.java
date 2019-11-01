@@ -31,7 +31,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SpeedTestEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -96,14 +95,6 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
      * {@inheritDoc}
      */
     @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
     }
@@ -129,7 +120,7 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         try {
             res = Double.valueOf(params.get(clientId + paramName));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FacesException("Speedtest: can not convert result value for '" + paramName + "'");
         }
         return res;

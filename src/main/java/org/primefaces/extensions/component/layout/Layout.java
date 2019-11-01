@@ -35,7 +35,6 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.extensions.event.ResizeEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
@@ -349,8 +348,4 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
-    @Override
-    public String resolveWidgetVar() {
-        return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
-    }
 }
