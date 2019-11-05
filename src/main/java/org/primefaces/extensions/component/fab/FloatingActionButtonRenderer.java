@@ -17,8 +17,11 @@ package org.primefaces.extensions.component.fab;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.primefaces.component.menu.AbstractMenu;
 import org.primefaces.component.menu.BaseMenuRenderer;
 import org.primefaces.model.menu.MenuElement;
@@ -32,6 +35,11 @@ import org.primefaces.util.WidgetBuilder;
  * @since 7.0.1
  */
 public class FloatingActionButtonRenderer extends BaseMenuRenderer {
+
+    @Override
+    public void decode(FacesContext context, UIComponent component) {
+        decodeBehaviors(context, component);
+    }
 
     @Override
     protected void encodeMarkup(FacesContext context, AbstractMenu menu) throws IOException {
@@ -78,7 +86,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
 
     protected void encodeMenu(FacesContext context, ResponseWriter writer, FloatingActionButton fab) throws IOException {
         writer.startElement("ul", fab);
-        for (MenuElement child : (List<MenuElement>) fab.getElements()) {
+        for (final MenuElement child : (List<MenuElement>) fab.getElements()) {
             if (child.isRendered() && child instanceof MenuItem) {
                 encodeMenuItem(context, writer, fab, (MenuItem) child);
             }
@@ -112,6 +120,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         if (fab.isKeepOpen()) {
             wb.attr("keepOpen", fab.isKeepOpen());
         }
+        encodeClientBehaviors(context, fab);
         wb.finish();
     }
 

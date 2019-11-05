@@ -15,11 +15,22 @@
  */
 package org.primefaces.extensions.component.fab;
 
+import java.util.Collection;
+import java.util.Map;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.BehaviorEvent;
 
+import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.OpenEvent;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.MapBuilder;
 
 /**
  * <code>FloatingActionButton</code> component.
@@ -33,13 +44,21 @@ import org.primefaces.component.menu.AbstractMenu;
             @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.css"),
             @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.js"),
 })
-public class FloatingActionButton extends AbstractMenu implements Widget {
+public class FloatingActionButton extends AbstractMenu implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FloatingActionButton";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FloatingActionButtonRenderer";
 
     public static final String STYLE_CLASS = "ui-fab ui-widget";
+
+    private static final String DEFAULT_EVENT = OpenEvent.NAME;
+
+    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
+                .put(OpenEvent.NAME, null)
+                .put(CloseEvent.NAME, null)
+                .build();
+    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
 
     // @formatter:off
     public enum PropertyKeys {
@@ -66,6 +85,45 @@ public class FloatingActionButton extends AbstractMenu implements Widget {
     @Override
     public org.primefaces.model.menu.MenuModel getModel() {
         return (org.primefaces.model.menu.MenuModel) getStateHelper().eval(PropertyKeys.model, null);
+    }
+
+    @Override
+    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
+        return BEHAVIOR_EVENT_MAPPING;
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public String getDefaultEventName() {
+        return DEFAULT_EVENT;
+    }
+
+    @Override
+    public void processDecodes(FacesContext context) {
+        if (ComponentUtils.isRequestSource(this, context)) {
+            decode(context);
+        }
+        else {
+            super.processDecodes(context);
+        }
+    }
+
+    @Override
+    public void processValidators(FacesContext context) {
+        if (!ComponentUtils.isRequestSource(this, context)) {
+            super.processValidators(context);
+        }
+    }
+
+    @Override
+    public void processUpdates(FacesContext context) {
+        if (!ComponentUtils.isRequestSource(this, context)) {
+            super.processUpdates(context);
+        }
     }
 
     public void setModel(org.primefaces.model.menu.MenuModel model) {

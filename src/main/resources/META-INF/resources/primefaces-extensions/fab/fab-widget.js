@@ -35,18 +35,27 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
     },
 
     toggle : function () {
-        this.jq.toggleClass(this.classActive);
-        this.unselect();
+        if (this.isOpen()) {
+            this.close();
+        } else {
+            this.open();
+        }
     },
 
     open : function () {
         this.jq.addClass(this.classActive);
         this.unselect();
+        this.callBehavior('open');
     },
 
     close : function () {
         this.jq.removeClass(this.classActive);
         this.unselect();
+        this.callBehavior('close');
+    },
+    
+    isOpen: function () {
+        return this.jq.hasClass(this.classActive);
     }
 
 });
