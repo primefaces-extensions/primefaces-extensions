@@ -16,17 +16,17 @@
 package org.primefaces.extensions.component.timeago;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.LocaleUtils;
 
@@ -51,67 +51,6 @@ public class TimeAgo extends UIComponentBase implements Widget {
     public static final String STYLE_CLASS = "ui-timeago ui-widget";
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-
-    private static final List<String> BUNDLED_LOCALES = Arrays.asList(
-                "af",
-                "am",
-                "ar",
-                "az",
-                "be",
-                "bg",
-                "bs",
-                "ca",
-                "cs",
-                "cy",
-                "da",
-                "de",
-                "dv",
-                "el",
-                "en",
-                "es",
-                "et",
-                "eu",
-                "fa",
-                "fi",
-                "fr",
-                "gl",
-                "he",
-                "hr",
-                "hu",
-                "hy",
-                "id",
-                "is",
-                "it",
-                "ja",
-                "jv",
-                "ko",
-                "ky",
-                "lt",
-                "lv",
-                "mk",
-                "nl",
-                "no",
-                "pl",
-                "pt-br",
-                "pt",
-                "ro",
-                "rs",
-                "ru",
-                "rw",
-                "si",
-                "sk",
-                "sl",
-                "sq",
-                "sr",
-                "sv",
-                "th",
-                "tr",
-                "uk",
-                "ur",
-                "uz",
-                "vi",
-                "zh-cn",
-                "zh-tw");
 
     private Locale appropriateLocale;
 
@@ -190,35 +129,41 @@ public class TimeAgo extends UIComponentBase implements Widget {
         return appropriateLocale;
     }
 
-    public final String getBundledLocale() {
-        final Locale locale = calculateLocale();
-        final String bundledLocale = locale.getLanguage() + "-" + locale.getCountry().toLowerCase();
-        if (BUNDLED_LOCALES.contains(bundledLocale)) {
-            return bundledLocale;
-        }
-        if (BUNDLED_LOCALES.contains(locale.getLanguage())) {
-            return locale.getLanguage();
-        }
-        return null;
-    }
-
     public final String formattedForJs() {
-        return format(DATE_FORMAT, TimeZone.getTimeZone("UTC"));
+        return format(DATE_FORMAT, ZoneId.of("UTC"));
     }
 
     public final String formattedForTitle() {
-        return format(getTitlePattern(), TimeZone.getDefault());
+        return format(getTitlePattern(), ZoneId.systemDefault());
     }
 
-    // TODO When PF bumps to Java 8, support more types
-    protected String format(final String pattern, final TimeZone timeZone) {
-        return format((Date) getValue(), pattern, timeZone);
+    protected String format(final String pattern, final ZoneId zone) {
+        Object value = getValue();
+        if (value instanceof Date) {
+            return format((Date) value, pattern, zone);
+        }
+        if (value instanceof ZonedDateTime) {
+            return format((ZonedDateTime) value, pattern, zone);
+        }
+        if (value instanceof LocalDateTime) {
+            return format((LocalDateTime) value, pattern, zone);
+        }
+        throw new IllegalArgumentException("Unsupported type");
     }
 
-    protected String format(final Date value, final String pattern, final TimeZone timeZone) {
+    protected String format(final Date value, final String pattern, final ZoneId zone) {
         final SimpleDateFormat sdf = new SimpleDateFormat(pattern, calculateLocale());
-        sdf.setTimeZone(timeZone);
+        sdf.setTimeZone(TimeZone.getTimeZone(zone));
         return sdf.format(value);
+    }
+
+    protected String format(final ZonedDateTime dateTime, final String pattern, final ZoneId zone) {
+        return dateTime.withZoneSameInstant(zone)
+                .format(DateTimeFormatter.ofPattern(pattern));
+    }
+
+    protected String format(final LocalDateTime dateTime, final String pattern, final ZoneId zone) {
+        return format(dateTime.atZone(ZoneId.systemDefault()), pattern, zone);
     }
 
 }

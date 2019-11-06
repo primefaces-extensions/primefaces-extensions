@@ -72,7 +72,7 @@ public class TimeAgoRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(FacesContext context, TimeAgo timeAgo) throws IOException {
-        final String locale = timeAgo.getBundledLocale();
+        final String locale = timeAgo.calculateLocale().getLanguage();
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtTimeAgo", timeAgo.resolveWidgetVar(), timeAgo.getClientId(context));
         if (locale != null) {
