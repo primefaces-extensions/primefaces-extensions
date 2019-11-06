@@ -6887,7 +6887,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Date object to render.]]>
+                <![CDATA[Date, ZonedDateTime or LocalDateTime object to render.]]>
             </description>
             <name>value</name>
             <required>true</required>
