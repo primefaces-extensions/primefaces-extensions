@@ -1,5 +1,5 @@
 /*
- * jQuery OrgChart Plugin
+ * jQuery OrgChart Plugin 2.1.9
  * https://github.com/dabeng/OrgChart
  *
  * Copyright 2016, dabeng
