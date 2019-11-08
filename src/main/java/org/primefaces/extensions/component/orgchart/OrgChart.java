@@ -50,6 +50,8 @@ import org.primefaces.util.Constants;
 })
 public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
+    public static final String STYLE_CLASS = "ui-orgchart ";
+
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.orgchart.OrgChartRenderer";
@@ -76,6 +78,8 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
         zoomoutLimit, //
         verticalDepth, //
         nodeTitle, //
+        style, //
+        styleClass, //
         extender;
 
         private String toString;
@@ -306,6 +310,22 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
     public void setNodeTitle(final String _nodeTitle) {
         getStateHelper().put(PropertyKeys.nodeTitle, _nodeTitle);
+    }
+
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(final String _style) {
+        getStateHelper().put(PropertyKeys.style, _style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String _styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
     }
 
     public String getExtender() {

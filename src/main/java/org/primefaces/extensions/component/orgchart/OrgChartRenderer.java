@@ -27,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
@@ -38,7 +39,7 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @author @jxmai / last modified by $Author$
  * @version $Revision$
- * @since 6.3
+ * @since 7.0
  */
 public class OrgChartRenderer extends CoreRenderer {
 
@@ -117,10 +118,15 @@ public class OrgChartRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = orgChart.getClientId();
         final String widgetVar = orgChart.resolveWidgetVar();
+        final String styleClass = OrgChart.STYLE_CLASS + StringUtils.defaultString(orgChart.getStyleClass());
 
         writer.startElement("div", orgChart);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
+        writer.writeAttribute("class", styleClass, "styleClass");
+        if (orgChart.getStyle() != null) {
+            writer.writeAttribute("style", orgChart.getStyle(), "style");
+        }
         writer.endElement("div");
     }
 

@@ -6223,6 +6223,22 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Inline style of the container element.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
 				<![CDATA[It sets one property of datasource as unique identifier of every orgchart node. Default is "id"]]>
             </description>
             <name>nodeId</name>
