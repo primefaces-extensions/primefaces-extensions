@@ -28,26 +28,27 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since 0.3
+ * @param <T> should either be java.util.Date or java.time.LocalTime
  */
-public class TimeSelectEvent extends AbstractAjaxBehaviorEvent {
+public class TimeSelectEvent<T> extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "timeSelect";
     private static final long serialVersionUID = 1L;
 
-    private Date time;
+    private T time;
 
-    public TimeSelectEvent(final UIComponent component, final Behavior behavior, final Date time) {
+    public TimeSelectEvent(final UIComponent component, final Behavior behavior, final T time) {
         super(component, behavior);
-        if (time != null) {
-            this.time = new Date(time.getTime()); // make copy to not have mutable
-                                                  // ref
+        this.time = time;
+        if (time != null && time instanceof Date) {
+            this.time = (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
         }
     }
 
-    public Date getTime() {
-        if (time != null) {
-            return new Date(time.getTime()); // make copy to not have mutable ref
+    public T getTime() {
+        if (time != null && time instanceof Date) {
+            return (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
         }
-        return null;
+        return time;
     }
 }

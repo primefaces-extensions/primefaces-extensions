@@ -18,7 +18,6 @@ package org.primefaces.extensions.component.timepicker;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -417,8 +416,7 @@ public class TimePicker extends HtmlInputText implements Widget {
         if (isValid()) {
             for (final Entry<String, AjaxBehaviorEvent> entry : customEvents.entrySet()) {
                 final AjaxBehaviorEvent behaviorEvent = entry.getValue();
-                final TimeSelectEvent timeSelectEvent = new TimeSelectEvent(this, behaviorEvent.getBehavior(),
-                            (Date) getValue());
+                final TimeSelectEvent timeSelectEvent = new TimeSelectEvent(this, behaviorEvent.getBehavior(), getValue());
 
                 if (behaviorEvent.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
                     timeSelectEvent.setPhaseId(PhaseId.PROCESS_VALIDATIONS);

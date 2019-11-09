@@ -18,12 +18,17 @@ package org.primefaces.extensions.component.timepicker;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.Constants;
@@ -65,6 +70,48 @@ public class TimePickerRenderer extends InputRenderer {
 
         encodeMarkup(fc, timepicker, value);
         encodeScript(fc, timepicker, value);
+    }
+
+    @Override
+    public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue)
+                throws ConverterException {
+        final String value = (String) submittedValue;
+        if (LangUtils.isValueBlank(value)) {
+            return null;
+        }
+
+        final TimePicker timepicker = (TimePicker) component;
+        final Converter converter = timepicker.getConverter();
+
+        // first ask the converter
+        if (converter != null) {
+            return converter.getAsObject(fc, timepicker, value);
+        }
+
+        // use built-in conversion
+        try {
+            final Class<?> type = resolveDateType(fc, timepicker);
+            if (type == LocalTime.class) {
+                final DateTimeFormatter formatter = getDateTimeFormatter(timepicker);
+                return LocalTime.parse(value, formatter);
+            }
+            else {
+                final SimpleDateFormat formatter = getSimpleDateFormat(timepicker);
+                return formatter.parse(value);
+            }
+        }
+        catch (final ParseException e) {
+            throw new ConverterException(
+                        MessageFactory.getMessage(timepicker.calculateLocale(),
+                                    TimePicker.TIME_MESSAGE_KEY,
+                                    value,
+                                    getDateTimeFormatter(timepicker).format(LocalDateTime.now()),
+                                    MessageFactory.getLabel(fc, component)),
+                        e);
+        }
+        catch (final Exception e) {
+            throw new ConverterException(e);
+        }
     }
 
     protected void encodeMarkup(final FacesContext fc, final TimePicker timepicker, final String value)
@@ -224,36 +271,6 @@ public class TimePickerRenderer extends InputRenderer {
         wb.finish();
     }
 
-    protected static String getValueAsString(final FacesContext fc, final TimePicker timepicker) {
-        final Object submittedValue = timepicker.getSubmittedValue();
-        if (submittedValue != null) {
-            return submittedValue.toString();
-        }
-
-        final Object value = timepicker.getValue();
-        if (value == null) {
-            return null;
-        }
-        else {
-            if (timepicker.getConverter() != null) {
-                // convert via registered converter
-                return timepicker.getConverter().getAsString(fc, timepicker, value);
-            }
-            else {
-                // use built-in converter
-                SimpleDateFormat timeFormat;
-                if (timepicker.isShowPeriod()) {
-                    timeFormat = new SimpleDateFormat(timepicker.getTimePattern12(), timepicker.calculateLocale());
-                }
-                else {
-                    timeFormat = new SimpleDateFormat(timepicker.getTimePattern24(), timepicker.calculateLocale());
-                }
-
-                return timeFormat.format(value);
-            }
-        }
-    }
-
     protected void encodeSpinnerButton(final FacesContext fc, String styleClass, final String iconClass,
                 final boolean disabled)
                 throws IOException {
@@ -273,45 +290,68 @@ public class TimePickerRenderer extends InputRenderer {
         writer.endElement("a");
     }
 
-    @Override
-    public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue)
-                throws ConverterException {
-        final String value = (String) submittedValue;
-        if (LangUtils.isValueBlank(value)) {
+    protected String getValueAsString(final FacesContext fc, final TimePicker timepicker) {
+        final Object submittedValue = timepicker.getSubmittedValue();
+        if (submittedValue != null) {
+            return submittedValue.toString();
+        }
+
+        final Object value = timepicker.getValue();
+        if (value == null) {
+            return null;
+        }
+        else {
+            if (timepicker.getConverter() != null) {
+                // convert via registered converter
+                return timepicker.getConverter().getAsString(fc, timepicker, value);
+            }
+            else {
+                // use built-in converter
+                if (value instanceof LocalTime) {
+                    final DateTimeFormatter formatter = getDateTimeFormatter(timepicker);
+                    return formatter.format((LocalTime) value);
+                }
+                else {
+                    final SimpleDateFormat formatter = getSimpleDateFormat(timepicker);
+                    return formatter.format(value);
+                }
+            }
+        }
+    }
+
+    protected String getPattern(final TimePicker timepicker) {
+        final String pattern;
+        if (timepicker.isShowPeriod()) {
+            pattern = timepicker.getTimePattern12();
+        }
+        else {
+            pattern = timepicker.getTimePattern24();
+        }
+        return pattern;
+    }
+
+    protected DateTimeFormatter getDateTimeFormatter(final TimePicker timepicker) {
+        return DateTimeFormatter.ofPattern(getPattern(timepicker), timepicker.calculateLocale());
+    }
+
+    protected SimpleDateFormat getSimpleDateFormat(final TimePicker timepicker) {
+        return new SimpleDateFormat(getPattern(timepicker), timepicker.calculateLocale());
+    }
+
+    protected Class<?> resolveDateType(FacesContext context, TimePicker timePicker) {
+        final ValueExpression ve = timePicker.getValueExpression("value");
+
+        if (ve == null) {
             return null;
         }
 
-        final TimePicker timepicker = (TimePicker) component;
-        final Converter converter = timepicker.getConverter();
+        Class<?> type = ve.getType(context.getELContext());
 
-        // first ask the converter
-        if (converter != null) {
-            return converter.getAsObject(fc, timepicker, value);
+        // If type could not be determined via value-expression try it this way. (Very unlikely, this happens in real world.)
+        if (type == null) {
+            type = LocalTime.class;
         }
 
-        // use built-in conversion
-        SimpleDateFormat timeFormat = null;
-        try {
-            if (timepicker.isShowPeriod()) {
-                timeFormat = new SimpleDateFormat(timepicker.getTimePattern12(), timepicker.calculateLocale());
-            }
-            else {
-                timeFormat = new SimpleDateFormat(timepicker.getTimePattern24(), timepicker.calculateLocale());
-            }
-
-            return timeFormat.parse(value);
-        }
-        catch (final ParseException e) {
-            throw new ConverterException(
-                    MessageFactory.getMessage(timepicker.calculateLocale(),
-                                              TimePicker.TIME_MESSAGE_KEY,
-                                              value,
-                                              timeFormat.format(new Date(System.currentTimeMillis())),
-                                              MessageFactory.getLabel(fc, component)),
-                    e);
-        }
-        catch (final Exception e) {
-            throw new ConverterException(e);
-        }
+        return type;
     }
 }
