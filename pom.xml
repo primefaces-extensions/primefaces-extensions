@@ -21,8 +21,6 @@
     </scm>
 
     <properties>
-        <sourceMap.outputDir>${project.basedir}/src/sourcemap/${project.version}/</sourceMap.outputDir>
-        <sourceMap.sourceMapRoot>https://raw.githubusercontent.com/primefaces-extensions/core/master/src/sourcemap/${project.version}/</sourceMap.sourceMapRoot>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -238,7 +236,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
