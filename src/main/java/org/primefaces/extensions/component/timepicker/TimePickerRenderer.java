@@ -320,14 +320,7 @@ public class TimePickerRenderer extends InputRenderer {
     }
 
     protected String getPattern(final TimePicker timepicker) {
-        final String pattern;
-        if (timepicker.isShowPeriod()) {
-            pattern = timepicker.getTimePattern12();
-        }
-        else {
-            pattern = timepicker.getTimePattern24();
-        }
-        return pattern;
+        return timepicker.isShowPeriod() ? timepicker.getTimePattern12() : timepicker.getTimePattern24();
     }
 
     protected DateTimeFormatter getDateTimeFormatter(final TimePicker timepicker) {
