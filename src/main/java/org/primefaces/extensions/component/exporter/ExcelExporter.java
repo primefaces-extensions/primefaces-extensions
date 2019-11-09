@@ -48,6 +48,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -1007,9 +1008,10 @@ public class ExcelExporter extends Exporter {
 
         final Font facetFont = wb.createFont();
         final Font cellFont = wb.createFont();
+        final DefaultIndexedColorMap colorMap = new DefaultIndexedColorMap();
 
         if (cellFontColor != null) {
-            final XSSFColor cellColor = new XSSFColor(cellFontColor);
+            final XSSFColor cellColor = new XSSFColor(cellFontColor, colorMap);
             ((XSSFFont) cellFont).setColor(cellColor);
         }
         if (cellFontSize != null) {
@@ -1036,7 +1038,7 @@ public class ExcelExporter extends Exporter {
         }
 
         if (facetBackground != null) {
-            final XSSFColor backgroundColor = new XSSFColor(facetBackground);
+            final XSSFColor backgroundColor = new XSSFColor(facetBackground, colorMap);
             ((XSSFCellStyle) facetStyle).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleLeftAlign).setFillForegroundColor(backgroundColor);
             ((XSSFCellStyle) facetStyleCenterAlign).setFillForegroundColor(backgroundColor);
@@ -1048,7 +1050,7 @@ public class ExcelExporter extends Exporter {
         }
 
         if (facetFontColor != null) {
-            final XSSFColor facetColor = new XSSFColor(facetFontColor);
+            final XSSFColor facetColor = new XSSFColor(facetFontColor, colorMap);
             ((XSSFFont) facetFont).setColor(facetColor);
 
         }
