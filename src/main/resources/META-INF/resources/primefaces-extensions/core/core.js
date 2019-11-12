@@ -112,7 +112,10 @@ PrimeFacesExt = {
            success: callback,
            dataType: "script",
            cache: true,
-           async: true
+           async: true,
+           scriptAttrs: {
+               nonce: PrimeFaces.csp.NONCE_VALUE
+           }
        });
    },
 
