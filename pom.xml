@@ -72,7 +72,6 @@
                                 <include>clipboard/**</include>
                                 <include>fab/**</include>
                                 <include>fluidgrid/**</include>
-                                <include>github/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
