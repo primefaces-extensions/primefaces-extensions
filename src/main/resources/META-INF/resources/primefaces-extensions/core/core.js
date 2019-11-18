@@ -139,6 +139,11 @@ PrimeFacesExt = {
            themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=theme.css"]');
        }
 
+       // GitHub #752
+       if (themeLink.length === 0) {
+           return "";
+       }
+
        var themeURL = themeLink.attr('href'),
            plainURL = themeURL.split('&')[0],
            oldTheme = plainURL.split('ln=primefaces-')[1];
