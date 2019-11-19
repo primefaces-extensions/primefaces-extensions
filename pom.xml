@@ -112,6 +112,7 @@
                         <resourcesSet>
                             <includes>
                                 <include>inputphone/intlTelInput.css</include>
+                                <include>inputphone/inputphone.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
