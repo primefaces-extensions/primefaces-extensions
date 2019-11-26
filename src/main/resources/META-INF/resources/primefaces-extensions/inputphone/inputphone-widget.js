@@ -16,12 +16,26 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
+        this.disabled = cfg.disabled;
 
+        // JQuery inputs
         this.inputJq = $(this.jqId + '_input');
         this.inputIso2Jq = $(this.jqId + '_iso2');
+
+        // pfs metadata
         this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+
+        // style disabled if necessary
+        if (this.disabled) {
+            this.inputJq.attr("disabled", "disabled");
+            this.inputJq.addClass("ui-state-disabled");
+            this.inputIso2Jq.attr("disabled", "disabled");
+        }
+
+        // visual effects
         PrimeFaces.skinInput(this.inputJq);
 
+        // component creation
         this.input = this.inputJq[0];
         this.iti = intlTelInput(this.input, cfg);
 
@@ -138,6 +152,26 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      */
     focus: function() {
         this.inputJq.focus();
+    },
+
+    /**
+     * Enable the input
+     */
+    enable: function () {
+        this.inputJq.removeAttr("disabled");
+        this.inputJq.removeClass("ui-state-disabled");
+        this.inputIso2Jq.removeAttr("disabled");
+        this.disabled = false;
+    },
+
+    /**
+     * Disable the input
+     */
+    disable: function () {
+        this.inputJq.attr("disabled", "disabled");
+        this.inputJq.addClass("ui-state-disabled");
+        this.inputIso2Jq.attr("disabled", "disabled");
+        this.disabled = true;
     },
 
     // @override
