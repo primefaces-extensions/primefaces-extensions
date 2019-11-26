@@ -133,6 +133,13 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         return 0;
     },
 
+    /**
+     * Focus the component by focusing on the correct input box.
+     */
+    focus: function() {
+        this.inputJq.focus();
+    },
+
     // @override
     refresh : function (cfg) {
         if (this.iti) {
