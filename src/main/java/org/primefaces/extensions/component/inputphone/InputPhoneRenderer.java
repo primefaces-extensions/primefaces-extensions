@@ -247,7 +247,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
     private Collection<String> toCollection(Object object) {
         if (String.class.isInstance(object)) {
-            final String string = ((String) object).replaceAll(" ", Constants.EMPTY_STRING).toLowerCase();
+            final String string = ((String) object).replaceAll(" ", ",").toLowerCase();
             return Arrays.asList(string.split(","));
         }
         return (Collection<String>) object;
