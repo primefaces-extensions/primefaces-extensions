@@ -18232,7 +18232,6 @@ exports.NetworkManager = NetworkManager;
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=pdf.js.map
 
 /* Copyright 2017 Mozilla Foundation
  *
@@ -28704,4 +28703,3 @@ exports.PDFPrintService = PDFPrintService;
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=viewer.js.map
