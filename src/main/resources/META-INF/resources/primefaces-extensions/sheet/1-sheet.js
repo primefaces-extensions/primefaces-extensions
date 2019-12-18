@@ -328,6 +328,16 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     //@Override
+    refresh: function(cfg) { 
+        this._super(cfg);
+
+        // clean up HT memory
+        if (this.ht) {
+            this.ht.destroy();
+        }
+    },
+
+    //@Override
     destroy: function() {
         this._super();
 
