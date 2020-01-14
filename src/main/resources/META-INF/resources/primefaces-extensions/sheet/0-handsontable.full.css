@@ -1096,7 +1096,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     display: table;
 }
 .pika-single:after { clear: both }
-.pika-single { *zoom: 1 }
+.pika-single { *transform: scale(1) }
 
 .pika-single.is-hidden {
     display: none;
