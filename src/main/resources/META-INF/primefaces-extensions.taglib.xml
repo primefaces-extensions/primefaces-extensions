@@ -1355,7 +1355,7 @@
             org.primefaces.extensions.component.exporter.ExporterTagHandler
         </handler-class>
         <attribute>
-            <description>Server side id of the DataTable/DataList whose data would be exported.</description>
+            <description>Server side id(s) of the DataTable/DataList whose data would be exported. Multiple components must be comma "," separated</description>
             <name>target</name>
             <required>true</required>
             <type>java.lang.String</type>
