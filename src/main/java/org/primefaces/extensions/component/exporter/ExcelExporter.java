@@ -134,6 +134,9 @@ public class ExcelExporter extends Exporter {
                 throw new FacesException(
                             "Unsupported datasource target:\"" + component.getClass().getName() + "\", exporter must target a PrimeFaces DataTable/DataList.");
             }
+            if (!component.isRendered()) {
+                continue;
+            }
 
             DataList list;
             DataTable table;
