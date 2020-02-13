@@ -123,7 +123,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
         if (this.cfg.toolbar) {
             if (!(this.cfg.toolbar instanceof Array)) {
-                this.options.toolbar = PrimeFaces.csp.eval(this.cfg.toolbar, PrimeFaces.csp.NONCE_VALUE);
+                this.options.toolbar = PrimeFaces.csp.evalResult(this.cfg.toolbar);
             } else {
                 this.options.toolbar = this.cfg.toolbar;
             }
