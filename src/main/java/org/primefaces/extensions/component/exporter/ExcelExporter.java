@@ -37,6 +37,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -123,7 +124,8 @@ public class ExcelExporter extends Exporter {
         }
 
         int maxColumns = 0;
-        final StringTokenizer st = new StringTokenizer(tableId, ",");
+        final String tokenString = StringUtils.normalizeSpace(tableId.replaceAll(",", StringUtils.SPACE));
+        final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
         while (st.hasMoreElements()) {
             final String tableName = (String) st.nextElement();
             final UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
@@ -141,7 +143,7 @@ public class ExcelExporter extends Exporter {
             DataList list;
             DataTable table;
 
-            if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(Constants.EMPTY_STRING + ",")) {
+            if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(",")) {
                 final Row titleRow = sheet.createRow(sheet.getLastRowNum());
                 final int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
                 final Cell cell = titleRow.createCell(cellIndex);

@@ -38,6 +38,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
@@ -101,7 +102,8 @@ public class PDFExporter extends Exporter {
                 preProcessor.invoke(context.getELContext(), new Object[] {document});
             }
 
-            final StringTokenizer st = new StringTokenizer(tableId, ",");
+            final String tokenString = StringUtils.normalizeSpace(tableId.replaceAll(",", StringUtils.SPACE));
+            final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
             while (st.hasMoreElements()) {
                 final String tableName = (String) st.nextElement();
                 final UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);
@@ -119,7 +121,7 @@ public class PDFExporter extends Exporter {
                 if (!document.isOpen()) {
                     document.open();
                 }
-                if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(Constants.EMPTY_STRING + ",")) {
+                if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(",")) {
 
                     final Font tableTitleFont = FontFactory.getFont(FontFactory.TIMES, encodingType, Font.DEFAULTSIZE, Font.BOLD);
                     final Paragraph title = new Paragraph(tableTitle, tableTitleFont);
