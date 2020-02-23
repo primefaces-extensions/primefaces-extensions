@@ -16,7 +16,6 @@
 package org.primefaces.extensions.renderer;
 
 import java.io.IOException;
-import java.util.stream.Stream;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.commandbutton.CommandButton;
@@ -30,8 +29,6 @@ import org.primefaces.component.commandbutton.CommandButtonRenderer;
  */
 public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
-    protected static final String[] CLASS_CONFIRM = {"ui-confirmdialog-yes", "ui-confirmdialog-no"};
-
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         CommandButton button = (CommandButton) component;
@@ -44,8 +41,10 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected boolean isConfirmation(final CommandButton button) {
-        return button.getStyleClass() != null
-               && Stream.of(CLASS_CONFIRM).anyMatch(s -> s.contains(button.getStyleClass()));
+        String styleClass = button.getStyleClass();
+        return styleClass != null
+               && (styleClass.contains("ui-confirmdialog-yes")
+                   || styleClass.contains("ui-confirmdialog-no"));
     }
 
     protected String toggle(final String widgetVar, final boolean enabled) {
