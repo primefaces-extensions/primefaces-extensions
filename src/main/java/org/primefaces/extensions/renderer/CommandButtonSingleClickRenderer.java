@@ -16,7 +16,6 @@
 package org.primefaces.extensions.renderer;
 
 import java.io.IOException;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
@@ -30,14 +29,13 @@ import org.primefaces.component.commandbutton.CommandButtonRenderer;
 public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        CommandButton button = (CommandButton) component;
+    protected void encodeMarkup(FacesContext context, CommandButton button) throws IOException {
         if (button.isRendered() && !button.isDisabled() && !isConfirmation(button)) {
             String widgetVar = button.resolveWidgetVar(context);
             button.setOnclick(prefix(button.getOnclick(), toggle(widgetVar, false)));
             button.setOncomplete(prefix(button.getOncomplete(), toggle(widgetVar, true)));
         }
-        super.encodeEnd(context, component);
+        super.encodeMarkup(context, button);
     }
 
     protected boolean isConfirmation(final CommandButton button) {
