@@ -21,7 +21,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
 
 /**
- * {@link CommandButton} renderer disabling the button while action is processed.
+ * {@link CommandButton} renderer disabling the button while action is processed for buttons that are using Ajax.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 8.0
@@ -30,12 +30,19 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     @Override
     protected void encodeMarkup(FacesContext context, CommandButton button) throws IOException {
-        if (button.isRendered() && !button.isDisabled() && !isConfirmation(button)) {
+        if (isToggleable(button)) {
             String widgetVar = button.resolveWidgetVar(context);
             button.setOnclick(prefix(button.getOnclick(), toggle(widgetVar, false)));
             button.setOncomplete(prefix(button.getOncomplete(), toggle(widgetVar, true)));
         }
         super.encodeMarkup(context, button);
+    }
+
+    protected boolean isToggleable(final CommandButton button) {
+        if (!button.isRendered() || button.isDisabled() || isConfirmation(button)) {
+            return false;
+        }
+        return button.isAjax();
     }
 
     protected boolean isConfirmation(final CommandButton button) {
