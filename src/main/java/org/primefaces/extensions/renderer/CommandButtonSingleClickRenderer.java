@@ -47,9 +47,7 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     protected boolean isConfirmation(final CommandButton button) {
         String styleClass = button.getStyleClass();
-        return styleClass != null
-               && (styleClass.contains("ui-confirmdialog-yes")
-                   || styleClass.contains("ui-confirmdialog-no"));
+        return styleClass != null && styleClass.contains("ui-confirmdialog");
     }
 
     protected String toggle(final String widgetVar, final boolean enabled) {
