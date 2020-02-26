@@ -30,19 +30,16 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     @Override
     protected void encodeMarkup(FacesContext context, CommandButton button) throws IOException {
-        if (isToggleable(button)) {
+        if (isEligible(button)) {
             String widgetVar = button.resolveWidgetVar(context);
-            button.setOnclick(prefix(button.getOnclick(), toggle(widgetVar, false)));
-            button.setOncomplete(prefix(button.getOncomplete(), toggle(widgetVar, true)));
+            button.setOnclick(prefix(button.getOnclick(), getToggleJS(widgetVar, false)));
+            button.setOncomplete(prefix(button.getOncomplete(), getToggleJS(widgetVar, true)));
         }
         super.encodeMarkup(context, button);
     }
 
-    protected boolean isToggleable(final CommandButton button) {
-        if (!button.isRendered() || button.isDisabled() || isConfirmation(button)) {
-            return false;
-        }
-        return button.isAjax();
+    protected boolean isEligible(final CommandButton button) {
+        return button.isRendered() && !button.isDisabled() && !isConfirmation(button) && button.isAjax();
     }
 
     protected boolean isConfirmation(final CommandButton button) {
@@ -50,8 +47,8 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
         return styleClass != null && styleClass.contains("ui-confirmdialog");
     }
 
-    protected String toggle(final String widgetVar, final boolean enabled) {
-        return String.format("PF('%s').%sable();", widgetVar, enabled ? "en" : "dis");
+    protected String getToggleJS(final String widgetVar, final boolean enabled) {
+        return String.format("var w=PF('%s');if(w){w.%sable();};", widgetVar, enabled ? "en" : "dis");
     }
 
     protected String prefix(final String base, final String prefix) {
