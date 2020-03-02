@@ -23,10 +23,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.LocaleUtils;
 
@@ -124,7 +126,8 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
         }
         return appropriateLocale;
     }
@@ -138,7 +141,7 @@ public class TimeAgo extends UIComponentBase implements Widget {
     }
 
     protected String format(final String pattern, final ZoneId zone) {
-        Object value = getValue();
+        final Object value = getValue();
         if (value instanceof Date) {
             return format((Date) value, pattern, zone);
         }
@@ -159,7 +162,7 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     protected String format(final ZonedDateTime dateTime, final String pattern, final ZoneId zone) {
         return dateTime.withZoneSameInstant(zone)
-                .format(DateTimeFormatter.ofPattern(pattern));
+                    .format(DateTimeFormatter.ofPattern(pattern));
     }
 
     protected String format(final LocalDateTime dateTime, final String pattern, final ZoneId zone) {

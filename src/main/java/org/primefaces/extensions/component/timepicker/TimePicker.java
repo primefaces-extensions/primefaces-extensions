@@ -355,7 +355,8 @@ public class TimePicker extends HtmlInputText implements Widget {
 
     public Locale calculateLocale() {
         if (appropriateLocale == null) {
-            appropriateLocale = LocaleUtils.resolveLocale(getLocale(), getClientId(FacesContext.getCurrentInstance()));
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
         }
         return appropriateLocale;
     }
