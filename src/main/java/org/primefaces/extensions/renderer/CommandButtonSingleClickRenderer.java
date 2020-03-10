@@ -16,10 +16,10 @@
 package org.primefaces.extensions.renderer;
 
 import java.io.IOException;
+import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
-import org.primefaces.util.Constants;
 
 /**
  * {@link CommandButton} renderer disabling the button while action is processed for buttons that are using Ajax.
@@ -29,15 +29,12 @@ import org.primefaces.util.Constants;
  */
 public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
-    private static final String ATTR_ON_CLICK = "CommandButtonSingleClickRenderer:onClick";
-    private static final String ATTR_ON_COMPLETE = "CommandButtonSingleClickRenderer:onComplete";
-
     @Override
     protected void encodeMarkup(FacesContext context, CommandButton button) throws IOException {
         if (isEligible(button)) {
             String widgetVar = button.resolveWidgetVar(context);
-            String onClick = originalAttributeValue(button, button.getOnclick(), ATTR_ON_CLICK);
-            String onComplete = originalAttributeValue(button, button.getOncomplete(), ATTR_ON_COMPLETE);
+            String onClick = getAttributeValue(context, button, "onclick");
+            String onComplete = getAttributeValue(context, button, "oncomplete");
             button.setOnclick(prefix(onClick, getToggleJS(widgetVar, false)));
             button.setOncomplete(prefix(onComplete, getToggleJS(widgetVar, true)));
         }
@@ -57,13 +54,17 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
         return String.format("var w=PF('%s');if(w){w.%sable();};", widgetVar, enabled ? "en" : "dis");
     }
 
-    protected String originalAttributeValue(final CommandButton button, final String current, final String key) {
-        String value = (String) button.getAttributes().get(key);
-        if (value != null) {
-            return value;
+    protected String getAttributeValue(final FacesContext context, final CommandButton button, final String attribute) {
+        String key = "CommandButtonSingleClickRenderer:" + attribute;
+        ValueExpression ve = (ValueExpression) button.getAttributes().get(key);
+        if (ve == null) {
+            ve = button.getValueExpression(attribute);
         }
-        button.getAttributes().put(key, current == null ? Constants.EMPTY_STRING : current);
-        return current;
+        if (ve != null) {
+            button.getAttributes().put(key, ve);
+            return (String) ve.getValue(context.getELContext());
+        }
+        return null;
     }
 
     protected String prefix(final String base, final String prefix) {
