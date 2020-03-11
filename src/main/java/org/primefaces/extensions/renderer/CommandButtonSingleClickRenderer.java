@@ -42,7 +42,11 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected boolean isEligible(final CommandButton button) {
-        return button.isAjax() && button.isRendered() && !button.isDisabled() && !isConfirmation(button);
+        return button.isAjax()
+               && button.isRendered()
+               && button.getActionExpression() != null
+               && !button.isDisabled()
+               && !isConfirmation(button);
     }
 
     protected boolean isConfirmation(final CommandButton button) {
@@ -55,16 +59,8 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected String getAttributeValue(final FacesContext context, final CommandButton button, final String attribute) {
-        String key = "CommandButtonSingleClickRenderer:" + attribute;
-        ValueExpression ve = (ValueExpression) button.getAttributes().get(key);
-        if (ve == null) {
-            ve = button.getValueExpression(attribute);
-        }
-        if (ve != null) {
-            button.getAttributes().put(key, ve);
-            return (String) ve.getValue(context.getELContext());
-        }
-        return null;
+        ValueExpression ve = button.getValueExpression(attribute);
+        return ve == null ? null : (String) ve.getValue(context.getELContext());
     }
 
     protected String prefix(final String base, final String prefix) {
