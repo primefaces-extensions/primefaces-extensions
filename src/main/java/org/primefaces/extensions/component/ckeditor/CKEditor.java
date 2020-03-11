@@ -80,7 +80,8 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
         customConfig,
         tabindex,
         escape,
-        advancedContentFilter;
+        advancedContentFilter,
+        disableNativeSpellChecker;
         //@formatter:on
 
         private String toString;
@@ -239,6 +240,14 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 
     public void setAdvancedContentFilter(final boolean acf) {
         getStateHelper().put(PropertyKeys.advancedContentFilter, acf);
+    }
+
+    public boolean isDisableNativeSpellChecker() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.disableNativeSpellChecker, true);
+    }
+
+    public void setDisableNativeSpellChecker(final boolean spellCheck) {
+        getStateHelper().put(PropertyKeys.disableNativeSpellChecker, spellCheck);
     }
 
 }

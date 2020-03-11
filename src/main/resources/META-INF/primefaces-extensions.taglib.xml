@@ -467,6 +467,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[By default, native browser spell check functionality is disabled in the editor. To enable it set this value to false. Default is true.]]>
+            </description>
+            <name>disableNativeSpellChecker</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
 				<![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>

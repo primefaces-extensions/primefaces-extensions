@@ -206,6 +206,8 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 thisConfig.allowedContent = !this.cfg.advancedContentFilter;
                 // Issue #415: set readOnly attribute to the config file
                 thisConfig.readOnly = this.cfg.readOnly;
+                // Issue: #763: whether to use browser spell check
+                thisConfig.disableNativeSpellChecker = this.cfg.disableNativeSpellChecker;
             }
             PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
         }
