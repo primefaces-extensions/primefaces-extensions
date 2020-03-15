@@ -417,11 +417,6 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
         </dependency>
-        <!-- InputPhone dependencies -->
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-        </dependency>
         <!-- Component dependencies -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -445,7 +440,12 @@
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
         </dependency>
-        <!-- PROVIDED Exporter dependencies -->
+        <!-- PROVIDED Exporter and InputPhone dependencies -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
