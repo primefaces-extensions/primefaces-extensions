@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -29,7 +28,6 @@ import javax.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.util.ComponentUtils;
@@ -38,9 +36,8 @@ import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
+import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
+import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 
 /**
  * Renderer for the {@link InputPhone} component.
@@ -49,8 +46,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
  * @since 7.0
  */
 public class InputPhoneRenderer extends InputRenderer {
-
-    private static final String MESSAGE_INVALID_VALUE_KEY = "primefaces.extensions.inputphone.INVALID";
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -102,21 +97,10 @@ public class InputPhoneRenderer extends InputRenderer {
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
-        try {
-            final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-            final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(value, country.toUpperCase());
-            if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
-                throw getInvalidValueConverterException();
-            }
-            return value;
+        if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
+            PhoneNumberUtilWrapper.validate(value, country.toUpperCase());
         }
-        catch (final NumberParseException e) {
-            throw getInvalidValueConverterException();
-        }
-    }
-
-    protected ConverterException getInvalidValueConverterException() {
-        return new ConverterException(MessageFactory.getMessage(MESSAGE_INVALID_VALUE_KEY, FacesMessage.SEVERITY_ERROR));
+        return value;
     }
 
     protected void encodeMarkup(FacesContext context, InputPhone inputPhone, String valueToRender) throws IOException {
