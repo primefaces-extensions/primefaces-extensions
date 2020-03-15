@@ -18,6 +18,7 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -46,6 +47,8 @@ import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
  * @since 7.0
  */
 public class InputPhoneRenderer extends InputRenderer {
+
+    private static final Logger LOGGER = Logger.getLogger(InputPhoneRenderer.class.getName());
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -99,6 +102,9 @@ public class InputPhoneRenderer extends InputRenderer {
         }
         if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
             PhoneNumberUtilWrapper.validate(value, country.toUpperCase());
+        }
+        else {
+            LOGGER.warning("Libphonenumber not available, unable to validate!");
         }
         return value;
     }
