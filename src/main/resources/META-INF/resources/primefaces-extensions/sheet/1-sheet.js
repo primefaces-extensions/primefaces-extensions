@@ -521,6 +521,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             var evt = e||window.event; // IE support
             var key = evt.charCode || evt.keyCode || 0;
             
+            // #766 do not block if just CTRL key
+            if (key === 17) {
+                return;
+            }
+            
             // check for cut and paste
             var isClipboard = false;
             var ctrlDown = evt.ctrlKey||evt.metaKey; // Mac support
