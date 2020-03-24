@@ -1,0 +1,52 @@
+PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
+
+    init: function (cfg) {
+        this.cfg = cfg;
+        this.id = this.cfg.id;
+        this.jqId = PrimeFaces.escapeClientId(this.id);
+//        this.jq = $(PrimeFaces.escapeClientId(this.cfg.target));
+
+        this.input = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-box"));
+        this.results = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-results"));
+        this.datasource = JSON.parse(this.cfg.value);
+
+        var $this = this;
+//        console.log($this);
+
+        function search() { // TODO how to move search function to search_alternative
+            $this.results.empty();
+            $this.results.append('<ul>');
+            if ($this.input.val()) { // when any input entered
+                $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: ['name']}), function (index, value) { // TODO how to implement search keys using a new attribute
+                    $this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
+                });
+            } else {// when there is no any input
+                $.each($this.datasource, function (index, value) {
+                    $this.results.append('<li><a href="' + value.fileName + '">' + value.name + '</a></li>'); // TODO how to get each row item format from renderChildren
+                });
+            }
+            $this.results.append('</ul>');
+        }
+
+        jQuery(document).ready(function () {
+            search();
+        });
+
+        // Run a search on input change
+        $this.input.on('input', search);
+        // Select input when escape pressed
+        document.onkeyup = (e) => { // TODO problem when using multiple implementation of fuzzysort component. So do we need to remove it?
+            if (e.keyCode === 27)
+                $this.input.select();
+        };
+        // Focus input when any key pressed
+        document.onkeydown = (e) => { // TODO problem when using multiple implementation of fuzzysort component. So do we need to remove it?
+            $this.input.focus();
+        };
+    },
+
+    search_alternative: function () {
+
+    }
+
+});
