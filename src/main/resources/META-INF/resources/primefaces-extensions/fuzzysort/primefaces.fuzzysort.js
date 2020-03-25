@@ -21,7 +21,7 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         });
 
         // Run a search on input change
-        $this.input.on('input', search);
+        $this.input.on('input', $this.search);
         // Select input when escape pressed
         document.onkeyup = (e) => { // TODO problem when using multiple implementation of fuzzysort component. So do we need to remove it?
             if (e.keyCode === 27)
