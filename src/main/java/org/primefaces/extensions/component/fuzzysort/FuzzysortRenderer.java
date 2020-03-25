@@ -47,13 +47,13 @@ public class FuzzysortRenderer extends CoreRenderer {
     private void encodeScript(FacesContext context, Fuzzysort fuzzysort) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
 
-        // TODO is it possible to make improvement here to have @FuzzyKey annotated class?
+        // TODO is it possible to make improvement here to have @FuzzysortKey annotated class?
         List list = (List) fuzzysort.getValue();
         Object o = list.get(0);
         Class<? extends Object> clazz = o.getClass();
         Field[] fields = clazz.getDeclaredFields();
         List<String> keys = Arrays.asList(fields).stream()
-                .filter(f -> f.getAnnotation(FuzzyKey.class) != null)
+                .filter(f -> f.getAnnotation(FuzzysortKey.class) != null)
                 .map(f -> f.getName())
                 .collect(Collectors.toList());
 
