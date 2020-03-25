@@ -13,23 +13,8 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 //        console.log($this);
 
-        function search() { // TODO how to move search function to search_alternative
-            $this.results.empty();
-            $this.results.append('<ul>');
-            if ($this.input.val()) { // when any input entered
-                $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: ['name']}), function (index, value) { // TODO how to implement search keys using a new attribute
-                    $this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
-                });
-            } else {// when there is no any input
-                $.each($this.datasource, function (index, value) {
-                    $this.results.append('<li><a href="' + value.fileName + '">' + value.name + '</a></li>'); // TODO how to get each row item format from renderChildren
-                });
-            }
-            $this.results.append('</ul>');
-        }
-
         jQuery(document).ready(function () {
-            search();
+            $this.search();
         });
 
         // Run a search on input change
@@ -45,8 +30,19 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         };
     },
 
-    search_alternative: function () {
-
+    search: function () {
+        this.results.empty();
+        this.results.append('<ul>');
+        if (this.input.val()) { // when any input entered
+            $.each(fuzzysort.go(this.input.val(), this.datasource, {keys: ['name']}), function (index, value) { // TODO how to implement search keys using a new attribute
+                this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
+            });
+        } else {// when there is no any input
+            $.each(this.datasource, function (index, value) {
+                this.results.append('<li><a href="' + value.fileName + '">' + value.name + '</a></li>'); // TODO how to get each row item format from renderChildren
+            });
+        }
+        this.results.append('</ul>');
     }
 
 });
