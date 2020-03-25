@@ -9,6 +9,9 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         this.input = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-box"));
         this.results = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-results"));
         this.datasource = JSON.parse(this.cfg.value);
+        
+        //Visual effects
+        PrimeFaces.skinInput(this.input);
 
         var $this = this;
 //        console.log($this);
