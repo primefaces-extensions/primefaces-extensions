@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -56,10 +57,15 @@ public class FuzzysortRenderer extends CoreRenderer {
                 .filter(f -> f.getAnnotation(FuzzysortKey.class) != null)
                 .map(f -> f.getName())
                 .collect(Collectors.toList());
+        if (keys.isEmpty()) {
+            throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + ". Please annotate at least one field in the class as @FuzzysortKey.");
+        }
 
-        String jsonKeys = new Gson().toJson(keys, new TypeToken<List<String>>() {}.getType());
+        String jsonKeys = new Gson().toJson(keys, new TypeToken<List<String>>() {
+                                    }.getType());
 
-        String jsonValue = new Gson().toJson(fuzzysort.getValue(), new TypeToken<List<Object>>() {}.getType());
+        String jsonValue = new Gson().toJson(fuzzysort.getValue(), new TypeToken<List<Object>>() {
+                                     }.getType());
 
         wb.init(Fuzzysort.class.getSimpleName(), fuzzysort.resolveWidgetVar(), fuzzysort.getClientId(context))
                 .attr("keys", jsonKeys)
