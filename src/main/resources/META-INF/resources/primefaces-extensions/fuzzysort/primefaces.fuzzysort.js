@@ -8,6 +8,7 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
 
         this.input = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-box"));
         this.results = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-results"));
+        this.keys = JSON.parse(this.cfg.keys);
         this.datasource = JSON.parse(this.cfg.value);
 
         //Visual effects
@@ -31,7 +32,7 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         $this.results.empty();
         $this.results.append('<ul>');
         if ($this.input.val()) { // when any input entered
-            $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: ['name']}), function (index, value) { // TODO how to implement search keys using a new attribute
+            $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: $this.keys}), function (index, value) {
                 $this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
             });
         } else { // when there is no any input

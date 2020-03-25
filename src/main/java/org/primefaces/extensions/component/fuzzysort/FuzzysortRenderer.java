@@ -18,7 +18,10 @@ package org.primefaces.extensions.component.fuzzysort;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -44,11 +47,23 @@ public class FuzzysortRenderer extends CoreRenderer {
     private void encodeScript(FacesContext context, Fuzzysort fuzzysort) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
 
-        String json = new Gson().toJson(fuzzysort.getValue(), new TypeToken<List<Object>>() {
-                                }.getType());
+        // TODO is it possible to make improvement here to have @FuzzyKey annotated class?
+        List list = (List) fuzzysort.getValue();
+        Object o = list.get(0);
+        Class<? extends Object> clazz = o.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        List<String> keys = Arrays.asList(fields).stream()
+                .filter(f -> f.getAnnotation(FuzzyKey.class) != null)
+                .map(f -> f.getName())
+                .collect(Collectors.toList());
+
+        String jsonKeys = new Gson().toJson(keys, new TypeToken<List<String>>() {}.getType());
+
+        String jsonValue = new Gson().toJson(fuzzysort.getValue(), new TypeToken<List<Object>>() {}.getType());
 
         wb.init(Fuzzysort.class.getSimpleName(), fuzzysort.resolveWidgetVar(), fuzzysort.getClientId(context))
-                .attr("value", json);
+                .attr("keys", jsonKeys)
+                .attr("value", jsonValue);
 
         wb.finish();
     }
