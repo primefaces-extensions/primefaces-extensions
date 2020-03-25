@@ -35,7 +35,7 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
                 $this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
             });
         } else { // when there is no any input
-            $.each(this.datasource, function (index, value) {
+            $.each($this.datasource, function (index, value) {
                 $this.results.append('<li><a href="' + value.fileName + '">' + value.name + '</a></li>'); // TODO how to get each row item format from renderChildren
             });
         }
