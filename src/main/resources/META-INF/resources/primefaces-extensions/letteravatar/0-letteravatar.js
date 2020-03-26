@@ -30,7 +30,8 @@
         canvas.height = size;
         context = canvas.getContext("2d");
 
-        context.fillStyle = colours[colourIndex - 1];
+//        context.fillStyle = colours[colourIndex - 1];
+        context.fillStyle = 'hsl(' + LetterAvatar.hue(String(name)) + ', 100%, 50%)';
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = Math.round(canvas.width / 2) + "px Arial";
         context.textAlign = "center";
@@ -44,7 +45,6 @@
     }
 
     LetterAvatar.transform = function (id) {
-
         Array.prototype.forEach.call(d.querySelectorAll(id), function (img, name) {
             name = img.getAttribute('avatar');
             img.src = LetterAvatar(name, img.getAttribute('width'));
@@ -53,6 +53,17 @@
         });
     };
 
+    LetterAvatar.hash = function (str) {
+        for (i = 0, result = 0; i < str.length; i++) {
+            result = ((result << 5) - result) + str.charCodeAt(i);
+            result |= 0;
+        }
+        return result;
+    };
+
+    LetterAvatar.hue = function (str) {
+        return Math.abs(LetterAvatar.hash(str) % 360);
+    };
 
     // AMD support
     if (typeof define === 'function' && define.amd) {
