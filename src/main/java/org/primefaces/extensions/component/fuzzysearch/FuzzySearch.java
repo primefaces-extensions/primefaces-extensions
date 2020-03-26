@@ -25,8 +25,7 @@ import javax.faces.component.FacesComponent;
     @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
     @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
     @ResourceDependency(library = "primefaces", name = "core.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/0-fuzzysearch.js"),
-    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/1-fuzzysearch-widget.js")
+    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/fuzzysearch.js")
 })
 public class FuzzySearch extends FuzzySearchBase {
 
