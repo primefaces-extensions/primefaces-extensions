@@ -1,10 +1,15 @@
 PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
 
+    /**
+     * Initializes the widget.
+     * 
+     * @param {object}
+     *        cfg The widget configuration.
+     */
     init: function (cfg) {
         this.cfg = cfg;
         this.id = this.cfg.id;
         this.jqId = PrimeFaces.escapeClientId(this.id);
-//        this.jq = $(PrimeFaces.escapeClientId(this.cfg.target));
 
         this.input = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-box"));
         this.results = $(PrimeFaces.escapeClientId(this.cfg.id + "_fuzzysort-search-results"));
@@ -17,30 +22,19 @@ PrimeFaces.widget.Fuzzysort = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 //        console.log($this);
 
-        jQuery(document).ready(function () {
-            $this.search();
-        });
-
         // Run a search on input change
-        $this.input.on('input', $this.search);
-    },
-
-    search: function () {
-        var $this = this;
-        console.log($this);
-
-        $this.results.empty();
-        $this.results.append('<ul>');
-        if ($this.input.val()) { // when any input entered
-            $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: $this.keys}), function (index, value) {
-                $this.results.append('<li><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></li>'); // TODO how to get each row item format from renderChildren
-            });
-        } else { // when there is no any input
-            $.each($this.datasource, function (index, value) {
-                $this.results.append('<li><a href="' + value.fileName + '">' + value.name + '</a></li>'); // TODO how to get each row item format from renderChildren
-            });
-        }
-        $this.results.append('</ul>');
+        $this.input.on('input', function () {
+            $this.results.empty();
+            if ($this.input.val()) { // when any input entered
+                $.each(fuzzysort.go($this.input.val(), $this.datasource, {keys: $this.keys}), function (index, value) {
+                    $this.results.append('<div><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></div>'); // TODO how to get each row item format from renderChildren
+                });
+            } else { // when there is no input
+                $.each($this.datasource, function (index, value) {
+                    $this.results.append('<div><a href="' + value.fileName + '">' + value.name + '</a></div>'); // TODO how to get each row item format from renderChildren
+                });
+            }
+        });
     }
 
 });
