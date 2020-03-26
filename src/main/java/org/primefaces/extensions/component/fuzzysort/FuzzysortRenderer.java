@@ -55,7 +55,7 @@ public class FuzzysortRenderer extends CoreRenderer {
         Field[] fields = clazz.getDeclaredFields();
         List<String> keys = Arrays.asList(fields).stream()
                 .filter(f -> f.getAnnotation(FuzzysortKey.class) != null)
-                .map(f -> f.getName())
+                .map(Field::getName)
                 .collect(Collectors.toList());
         if (keys.isEmpty()) {
             throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + ". Please annotate at least one field in the class as @FuzzysortKey.");
