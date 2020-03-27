@@ -16,7 +16,6 @@
 package org.primefaces.extensions.component.fuzzysort;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -58,14 +57,13 @@ public class FuzzysortRenderer extends CoreRenderer {
                 .map(Field::getName)
                 .collect(Collectors.toList());
         if (keys.isEmpty()) {
-            throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + ". Please annotate at least one field in the class as @FuzzysortKey.");
+            throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + "."
+                                     + " Please annotate at least one field in the class as @FuzzysortKey.");
         }
 
-        String jsonKeys = new Gson().toJson(keys, new TypeToken<List<String>>() {
-                                    }.getType());
-
-        String jsonValue = new Gson().toJson(fuzzysort.getValue(), new TypeToken<List<Object>>() {
-                                     }.getType());
+        Gson gson = new Gson();
+        String jsonKeys = gson.toJson(keys);
+        String jsonValue = gson.toJson(fuzzysort.getValue());
 
         wb.init(Fuzzysort.class.getSimpleName(), fuzzysort.resolveWidgetVar(), fuzzysort.getClientId(context))
                 .attr("keys", jsonKeys)
@@ -109,8 +107,7 @@ public class FuzzysortRenderer extends CoreRenderer {
                 writer.endElement("div");
             }
 
-            fuzzysort.setRowIndex(-1); 	//clear
-
+            fuzzysort.setRowIndex(-1);
         }
         else {
             for (UIComponent kid : fuzzysort.getChildren()) {
