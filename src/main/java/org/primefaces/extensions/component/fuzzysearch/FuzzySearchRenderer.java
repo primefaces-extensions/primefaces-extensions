@@ -88,7 +88,7 @@ public class FuzzySearchRenderer extends CoreRenderer {
         }
 
         writer.startElement("input", fuzzySearch);
-        writer.writeAttribute("id", clientId + "_fuzzysearch-search-box", null);
+        writer.writeAttribute("id", clientId + "_fuzzysearch-search-input", null);
         writer.writeAttribute("autocomplete", "off", null);
         writer.writeAttribute("placeholder", "Search", null);
         writer.endElement("input");
