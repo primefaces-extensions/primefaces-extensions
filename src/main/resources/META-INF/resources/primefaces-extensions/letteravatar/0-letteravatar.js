@@ -9,10 +9,11 @@
                 initials, canvas, context, dataURI;
 
 
+        initials = name.match(/\b(\w)/g).join('').toUpperCase();
         if (nameSplit.length == 1) {
-            initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?';
+            initials = nameSplit[0] ? initials.charAt(0) : '?';
         } else {
-            initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+            initials = initials.charAt(0) + initials.substr(initials.length - 1);
         }
 
         if (w.devicePixelRatio) {
