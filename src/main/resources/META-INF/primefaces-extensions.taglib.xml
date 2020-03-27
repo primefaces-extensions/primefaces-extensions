@@ -1358,11 +1358,11 @@
         </attribute>
     </tag>
     <tag>
-        <tag-name>fuzzysort</tag-name>
+        <tag-name>fuzzySearch</tag-name>
         <description><![CDATA["Fast SublimeText-like fuzzy search for JavaScript."]]></description>
         <component>
-            <component-type>org.primefaces.extensions.component.Fuzzysort</component-type>
-            <renderer-type>org.primefaces.extensions.component.FuzzysortRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.FuzzySearch</component-type>
+            <renderer-type>org.primefaces.extensions.component.FuzzySearchRenderer</renderer-type>
         </component>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>

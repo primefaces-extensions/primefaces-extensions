@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.fuzzysort;
+package org.primefaces.extensions.component.fuzzysearch;
 
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 
-public abstract class FuzzysortBase extends UIData implements Widget {
+public abstract class FuzzySearchBase extends UIData implements Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FuzzysortRenderer";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FuzzySearchRenderer";
 
     protected enum PropertyKeys {
+        // @formatter:off
         widgetVar,
         style,
         styleClass;
+        // @formatter:on
     }
 
-    public FuzzysortBase() {
+    public FuzzySearchBase() {
         super.setRendererType(DEFAULT_RENDERER);
     }
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.fuzzysort;
+package org.primefaces.extensions.component.fuzzysearch;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -29,8 +29,8 @@ import javax.faces.render.FacesRenderer;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
-@FacesRenderer(componentFamily = Fuzzysort.COMPONENT_FAMILY, rendererType = Fuzzysort.DEFAULT_RENDERER)
-public class FuzzysortRenderer extends CoreRenderer {
+@FacesRenderer(componentFamily = FuzzySearch.COMPONENT_FAMILY, rendererType = FuzzySearch.DEFAULT_RENDERER)
+public class FuzzySearchRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
@@ -38,81 +38,81 @@ public class FuzzysortRenderer extends CoreRenderer {
             throw new NullPointerException("No context defined!");
         }
 
-        Fuzzysort fuzzysort = (Fuzzysort) component;
+        FuzzySearch fuzzySearch = (FuzzySearch) component;
 
-        encodeMarkup(context, fuzzysort);
-        encodeScript(context, fuzzysort);
+        encodeMarkup(context, fuzzySearch);
+        encodeScript(context, fuzzySearch);
     }
 
-    private void encodeScript(FacesContext context, Fuzzysort fuzzysort) throws IOException {
+    private void encodeScript(FacesContext context, FuzzySearch fuzzySearch) throws IOException {
         WidgetBuilder wb = getWidgetBuilder(context);
 
-        // TODO is it possible to make improvement here to have @FuzzysortKey annotated class?
-        List list = (List) fuzzysort.getValue();
+        // TODO is it possible to make improvement here to have @FuzzySearchKey annotated class?
+        List list = (List) fuzzySearch.getValue();
         Object o = list.get(0);
         Class<? extends Object> clazz = o.getClass();
         Field[] fields = clazz.getDeclaredFields();
         List<String> keys = Arrays.asList(fields).stream()
-                .filter(f -> f.getAnnotation(FuzzysortKey.class) != null)
+                .filter(f -> f.getAnnotation(FuzzySearchKey.class) != null)
                 .map(Field::getName)
                 .collect(Collectors.toList());
         if (keys.isEmpty()) {
             throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + "."
-                                     + " Please annotate at least one field in the class as @FuzzysortKey.");
+                                     + " Please annotate at least one field in the class as @FuzzySearchKey.");
         }
 
         Gson gson = new Gson();
         String jsonKeys = gson.toJson(keys);
-        String jsonValue = gson.toJson(fuzzysort.getValue());
+        String jsonValue = gson.toJson(fuzzySearch.getValue());
 
-        wb.init(Fuzzysort.class.getSimpleName(), fuzzysort.resolveWidgetVar(), fuzzysort.getClientId(context))
+        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(), fuzzySearch.getClientId(context))
                 .attr("keys", jsonKeys)
                 .attr("value", jsonValue);
 
         wb.finish();
     }
 
-    protected void encodeMarkup(FacesContext context, Fuzzysort fuzzysort) throws IOException {
+    protected void encodeMarkup(FacesContext context, FuzzySearch fuzzySearch) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        String clientId = fuzzysort.getClientId(context);
-        String style = fuzzysort.getStyle();
-        String styleClass = fuzzysort.getStyleClass();
-        styleClass = (styleClass == null) ? Fuzzysort.CONTAINER_CLASS : Fuzzysort.CONTAINER_CLASS + " " + styleClass;
+        String clientId = fuzzySearch.getClientId(context);
+        String style = fuzzySearch.getStyle();
+        String styleClass = fuzzySearch.getStyleClass();
+        styleClass = (styleClass == null) ? FuzzySearch.CONTAINER_CLASS : FuzzySearch.CONTAINER_CLASS + " " + styleClass;
 
-        writer.startElement("div", fuzzysort);
+        writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("class", styleClass, "styleClass");
         if (style != null) {
             writer.writeAttribute("style", style, "style");
         }
 
-        writer.startElement("input", fuzzysort);
-        writer.writeAttribute("id", clientId + "_fuzzysort-search-box", null);
+        writer.startElement("input", fuzzySearch);
+        writer.writeAttribute("id", clientId + "_fuzzysearch-search-box", null);
         writer.writeAttribute("autocomplete", "off", null);
         writer.writeAttribute("placeholder", "Search", null);
         writer.endElement("input");
 
-        writer.startElement("div", fuzzysort);
-        writer.writeAttribute("id", clientId + "_fuzzysort-search-results", null);
+        writer.startElement("div", fuzzySearch);
+        writer.writeAttribute("id", clientId + "_fuzzysearch-search-results", null);
 
-        if (fuzzysort.getVar() != null) {
-            for (int i = 0; i < fuzzysort.getRowCount(); i++) {
-                fuzzysort.setRowIndex(i);
+        if (fuzzySearch.getVar() != null) {
+            for (int i = 0; i < fuzzySearch.getRowCount(); i++) {
+                fuzzySearch.setRowIndex(i);
 
-                writer.startElement("div", fuzzysort);
+                writer.startElement("div", fuzzySearch);
 
-                renderChildren(context, fuzzysort);
+                renderChildren(context, fuzzySearch);
 
                 writer.endElement("div");
             }
 
-            fuzzysort.setRowIndex(-1);
+            fuzzySearch.setRowIndex(-1);
         }
         else {
-            for (UIComponent kid : fuzzysort.getChildren()) {
+            for (UIComponent kid : fuzzySearch.getChildren()) {
                 if (kid.isRendered()) {
-                    writer.startElement("div", fuzzysort);
+                    writer.startElement("div", fuzzySearch);
 
                     renderChild(context, kid);
 

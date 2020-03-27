@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.component.fuzzysort;
+package org.primefaces.extensions.component.fuzzysearch;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 
-@FacesComponent(value = Fuzzysort.COMPONENT_TYPE)
+@FacesComponent(value = FuzzySearch.COMPONENT_TYPE)
 @ResourceDependencies({
     @ResourceDependency(library = "primefaces", name = "components.css"),
     @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
     @ResourceDependency(library = "primefaces", name = "core.js"),
-    @ResourceDependency(library = "primefaces", name = "components.js"),
-    @ResourceDependency(library = "fuzzysort", name = "fuzzysort.js"),
-    @ResourceDependency(library = "fuzzysort", name = "primefaces.fuzzysort.js")
+    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/0-fuzzysearch.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/1-fuzzysearch-widget.js")
 })
-public class Fuzzysort extends FuzzysortBase {
+public class FuzzySearch extends FuzzySearchBase {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Fuzzysort";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
 
-    public static final String CONTAINER_CLASS = "ui-fuzzysort";
-    public static final String ITEM_CLASS = "ui-fuzzysort-item";
+    public static final String CONTAINER_CLASS = "ui-fuzzysearch";
+    public static final String ITEM_CLASS = "ui-fuzzysearch-item";
 
 }
