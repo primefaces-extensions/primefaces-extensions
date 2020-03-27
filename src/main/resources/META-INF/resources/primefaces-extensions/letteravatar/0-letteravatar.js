@@ -5,32 +5,27 @@
         name = name || '';
         size = size || 60;
 
-        var colours = [
-            "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
-            "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
-        ],
-                nameSplit = String(name).toUpperCase().split(' '),
-                initials, charIndex, colourIndex, canvas, context, dataURI;
+        var nameSplit = String(name).toUpperCase().split(' '),
+                initials, canvas, context, dataURI;
 
 
+        initials = name.match(/\b(\w)/g).join('').toUpperCase();
         if (nameSplit.length == 1) {
-            initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?';
+            initials = nameSplit[0] ? initials.charAt(0) : '?';
         } else {
-            initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+            initials = initials.charAt(0) + initials.substr(initials.length - 1);
         }
 
         if (w.devicePixelRatio) {
             size = (size * w.devicePixelRatio);
         }
 
-        charIndex = (initials == '?' ? 72 : initials.charCodeAt(0)) - 64;
-        colourIndex = charIndex % colours.length;
         canvas = d.createElement('canvas');
         canvas.width = size;
         canvas.height = size;
         context = canvas.getContext("2d");
 
-        context.fillStyle = colours[colourIndex - 1];
+        context.fillStyle = 'hsl(' + LetterAvatar.hue(String(name)) + ', 100%, 50%)';
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.font = Math.round(canvas.width / 2) + "px Arial";
         context.textAlign = "center";
@@ -44,15 +39,26 @@
     }
 
     LetterAvatar.transform = function (id) {
-
         Array.prototype.forEach.call(d.querySelectorAll(id), function (img, name) {
             name = img.getAttribute('avatar');
             img.src = LetterAvatar(name, img.getAttribute('width'));
             img.removeAttribute('avatar');
             img.setAttribute('alt', name);
+            img.setAttribute('title', name);
         });
     };
 
+    LetterAvatar.hash = function (str) {
+        for (i = 0, result = 0; i < str.length; i++) {
+            result = ((result << 5) - result) + str.charCodeAt(i);
+            result |= 0;
+        }
+        return result;
+    };
+
+    LetterAvatar.hue = function (str) {
+        return Math.abs(LetterAvatar.hash(str) % 360);
+    };
 
     // AMD support
     if (typeof define === 'function' && define.amd) {
