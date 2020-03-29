@@ -9,10 +9,6 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     init: function (cfg) {
         this._super(cfg);
 
-//        this.id = this.cfg.id;
-//        this.jqId = PrimeFaces.escapeClientId(this.id);
-//        this.input = $(PrimeFaces.escapeClientId(this.id + "_fuzzysearch-search-input"));
-//        this.results = $(PrimeFaces.escapeClientId(this.id + "_fuzzysearch-search-results"));
         this.input = $(this.jqId + '_fuzzysearch-search-input');
         this.results = $(this.jqId + '_fuzzysearch-search-results');
         this.panel = this.jq.children();
@@ -23,9 +19,6 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.skinInput(this.input);
 
         this.bindKeyEvents();
-
-        var $this = this;
-//        console.log($this);
     },
 
     bindKeyEvents: function () {
@@ -37,21 +30,34 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     },
 
     search: function (query) {
-//        console.log(query);
-//        console.log(this.panel.get(1).innerHTML);
         var $this = this;
-        $this.results.empty();
-        if ($this.input.val()) { // when any input entered
-            $.each(fuzzysearch.go($this.input.val(), $this.datasource, {keys: $this.keys}), function (index, value) {
-                $this.results.append('<div><a href="' + value.obj.fileName + '">' + value.obj.name + '</a></div>'); // TODO how to get each row item format from renderChildren
+
+        var resultStyle = $this.jq.attr('data-result-style') || '';
+        var resultStyleClass = $this.jq.attr('data-result-style-class') || '';
+
+        var itemDisplayMarkup = '';
+        if (query) { // when any input entered
+            $.each(fuzzysearch.go(query, $this.datasource, {keys: $this.keys}), function (index, value) {
+                itemDisplayMarkup += '<div';
+                itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
+                itemDisplayMarkup += ' class="ui-fuzzysearch-item';
+                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
+                itemDisplayMarkup += value.obj.name;
+                itemDisplayMarkup += '</div>';
             });
         } else { // when there is no input
             $.each($this.datasource, function (index, value) {
-                $this.results.append('<div><a href="' + value.fileName + '">' + value.name + '</a></div>'); // TODO how to get each row item format from renderChildren
+                itemDisplayMarkup += '<div';
+                itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
+                itemDisplayMarkup += ' class="ui-fuzzysearch-item';
+                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
+                itemDisplayMarkup += value.name;
+                itemDisplayMarkup += '</div>';
             });
         }
+
+        $this.results.empty();
+        $this.results.append(itemDisplayMarkup);
     }
-
-
 
 });

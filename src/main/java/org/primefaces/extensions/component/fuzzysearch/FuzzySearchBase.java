@@ -28,7 +28,9 @@ public abstract class FuzzySearchBase extends UIData implements Widget {
         // @formatter:off
         widgetVar,
         style,
-        styleClass;
+        styleClass,
+        resultStyle,
+        resultStyleClass;
         // @formatter:on
     }
 
@@ -45,24 +47,40 @@ public abstract class FuzzySearchBase extends UIData implements Widget {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(String _widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    public void setWidgetVar(String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
     public String getStyle() {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String _style) {
-        getStateHelper().put(PropertyKeys.style, _style);
+    public void setStyle(String style) {
+        getStateHelper().put(PropertyKeys.style, style);
     }
 
     public String getStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String _styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    public void setStyleClass(String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public String getResultStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.resultStyle, null);
+    }
+
+    public void setResultStyle(String resultStyle) {
+        getStateHelper().put(PropertyKeys.resultStyle, resultStyle);
+    }
+
+    public String getResultStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.resultStyleClass, null);
+    }
+
+    public void setResultStyleClass(String resultStyleClass) {
+        getStateHelper().put(PropertyKeys.resultStyleClass, resultStyleClass);
     }
 
 }

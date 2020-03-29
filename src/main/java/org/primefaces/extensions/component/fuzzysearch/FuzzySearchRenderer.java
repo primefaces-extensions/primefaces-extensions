@@ -79,6 +79,9 @@ public class FuzzySearchRenderer extends CoreRenderer {
         String style = fuzzySearch.getStyle();
         String styleClass = fuzzySearch.getStyleClass();
         styleClass = (styleClass == null) ? FuzzySearch.CONTAINER_CLASS : FuzzySearch.CONTAINER_CLASS + " " + styleClass;
+        String resultStyle = fuzzySearch.getResultStyle();
+        String resultStyleClass = fuzzySearch.getResultStyleClass();
+        resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, null);
@@ -86,6 +89,8 @@ public class FuzzySearchRenderer extends CoreRenderer {
         if (style != null) {
             writer.writeAttribute("style", style, "style");
         }
+        writer.writeAttribute("data-result-style", fuzzySearch.getResultStyle(), null);
+        writer.writeAttribute("data-result-style-class", fuzzySearch.getResultStyleClass(), null);
 
         writer.startElement("input", fuzzySearch);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-input", null);
@@ -101,6 +106,10 @@ public class FuzzySearchRenderer extends CoreRenderer {
                 fuzzySearch.setRowIndex(i);
 
                 writer.startElement("div", fuzzySearch);
+                writer.writeAttribute("class", resultStyleClass, null);
+                if (resultStyle != null) {
+                    writer.writeAttribute("style", resultStyle, null);
+                }
 
                 renderChildren(context, fuzzySearch);
 
@@ -113,6 +122,10 @@ public class FuzzySearchRenderer extends CoreRenderer {
             for (UIComponent kid : fuzzySearch.getChildren()) {
                 if (kid.isRendered()) {
                     writer.startElement("div", fuzzySearch);
+                    writer.writeAttribute("class", resultStyleClass, null);
+                    if (resultStyle != null) {
+                        writer.writeAttribute("style", resultStyle, null);
+                    }
 
                     renderChild(context, kid);
 
