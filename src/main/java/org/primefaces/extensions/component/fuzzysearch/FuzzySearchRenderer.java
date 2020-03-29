@@ -74,6 +74,8 @@ public class FuzzySearchRenderer extends CoreRenderer {
             wb.callback("onSelect", "function(e)", fuzzySearch.getOnSelect());
         }
 
+        encodeClientBehaviors(context, fuzzySearch);
+
         wb.finish();
     }
 
