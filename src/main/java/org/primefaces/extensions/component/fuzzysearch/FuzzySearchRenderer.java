@@ -69,6 +69,11 @@ public class FuzzySearchRenderer extends CoreRenderer {
                 .attr("keys", jsonKeys)
                 .attr("value", jsonValue);
 
+        if (fuzzySearch.getOnSelect() != null) {
+            // Define a callback function when the item is selected
+            wb.callback("onSelect", "function(e)", fuzzySearch.getOnSelect());
+        }
+
         wb.finish();
     }
 

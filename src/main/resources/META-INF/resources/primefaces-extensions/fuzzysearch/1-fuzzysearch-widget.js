@@ -11,7 +11,6 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         this.input = $(this.jqId + '_fuzzysearch-search-input');
         this.results = $(this.jqId + '_fuzzysearch-search-results');
-        this.panel = this.jq.children();
         this.keys = JSON.parse(cfg.keys);
         this.datasource = JSON.parse(cfg.value);
 
@@ -19,6 +18,7 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.skinInput(this.input);
 
         this.bindKeyEvents();
+        this.bindDynamicEvents();
     },
 
     bindKeyEvents: function () {
@@ -26,6 +26,15 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         this.input.on('input', function (e) {
             $this.search($this.input.val());
+        });
+    },
+
+    bindDynamicEvents: function () {
+        var $this = this;
+
+        $this.results.on('click', function (e) {
+            var target = $(event.target);
+            console.log(target);
         });
     },
 

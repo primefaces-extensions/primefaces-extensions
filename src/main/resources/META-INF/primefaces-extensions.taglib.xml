@@ -1424,6 +1424,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+				<![CDATA[Javascript handler to execute when the item selected.]]>
+            </description>
+            <name>onSelect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <tag-name>exporter</tag-name>

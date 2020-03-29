@@ -30,7 +30,8 @@ public abstract class FuzzySearchBase extends UIData implements Widget {
         style,
         styleClass,
         resultStyle,
-        resultStyleClass;
+        resultStyleClass,
+        onSelect;
         // @formatter:on
     }
 
@@ -81,6 +82,14 @@ public abstract class FuzzySearchBase extends UIData implements Widget {
 
     public void setResultStyleClass(String resultStyleClass) {
         getStateHelper().put(PropertyKeys.resultStyleClass, resultStyleClass);
+    }
+
+    public String getOnSelect() {
+        return (String) getStateHelper().eval(PropertyKeys.onSelect, null);
+    }
+
+    public void setOnSelect(String onSelect) {
+        getStateHelper().put(PropertyKeys.onSelect, onSelect);
     }
 
 }
