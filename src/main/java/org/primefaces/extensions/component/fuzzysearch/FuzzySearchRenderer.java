@@ -33,6 +33,11 @@ import org.primefaces.util.WidgetBuilder;
 public class FuzzySearchRenderer extends CoreRenderer {
 
     @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        decodeBehaviors(context, component);
+    }
+
+    @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         if (context == null) {
             throw new NullPointerException("No context defined!");
