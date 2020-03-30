@@ -67,7 +67,9 @@ public class FuzzySearchRenderer extends CoreRenderer {
 
         wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(), fuzzySearch.getClientId(context))
                 .attr("keys", jsonKeys)
-                .attr("value", jsonValue);
+                .attr("value", jsonValue)
+                .attr("resultStyle", fuzzySearch.getResultStyle(), "")
+                .attr("resultStyleClass", fuzzySearch.getResultStyleClass(), "");
 
         if (fuzzySearch.getOnSelect() != null) {
             // Define a callback function when the item is selected
@@ -96,8 +98,6 @@ public class FuzzySearchRenderer extends CoreRenderer {
         if (style != null) {
             writer.writeAttribute("style", style, "style");
         }
-        writer.writeAttribute("data-result-style", fuzzySearch.getResultStyle(), null);
-        writer.writeAttribute("data-result-style-class", fuzzySearch.getResultStyleClass(), null);
 
         writer.startElement("input", fuzzySearch);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-input", null);

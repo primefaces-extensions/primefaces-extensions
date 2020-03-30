@@ -1,3 +1,6 @@
+/**
+ * PrimeFaces Fuzzy Search Widget
+ */
 PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
     /**
@@ -13,6 +16,9 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         this.results = $(this.jqId + '_fuzzysearch-search-results');
         this.keys = JSON.parse(cfg.keys);
         this.datasource = JSON.parse(cfg.value);
+        this.resultStyle = cfg.resultStyle;
+        this.resultStyleClass = cfg.resultStyleClass;
+        this.items = this.results.children();
 
         //Visual effects
         PrimeFaces.skinInput(this.input);
@@ -30,11 +36,13 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     },
 
     bindDynamicEvents: function () {
-        var $this = this;
-
-        $this.results.on('click', function (e) {
-            if ($this.cfg.onSelect) {
-                $this.cfg.onSelect.call(e);
+        this.items.on('click', function () {
+            var item = $(this);
+            //Call user onSelect callback
+            if (this.cfg.onSelect) {
+                var result = this.cfg.onSelect.call(this, event);
+                if (result === false)
+                    return false;
             }
         });
     },
@@ -42,8 +50,8 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     search: function (query) {
         var $this = this;
 
-        var resultStyle = $this.jq.attr('data-result-style') || '';
-        var resultStyleClass = $this.jq.attr('data-result-style-class') || '';
+        var resultStyle = this.cfg.resultStyle || '';
+        var resultStyleClass = this.cfg.resultStyleClass || '';
 
         var itemDisplayMarkup = '';
         if (query) { // when any input entered
@@ -68,6 +76,14 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         $this.results.empty();
         $this.results.append(itemDisplayMarkup);
+    },
+
+    disable: function () {
+        this.input.prop('disabled', true).addClass('ui-state-disabled');
+    },
+
+    enable: function () {
+        this.input.prop('disabled', false).removeClass('ui-state-disabled');
     }
 
 });

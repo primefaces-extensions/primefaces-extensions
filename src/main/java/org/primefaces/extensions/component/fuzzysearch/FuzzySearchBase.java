@@ -16,10 +16,11 @@
 package org.primefaces.extensions.component.fuzzysearch;
 
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 
-public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHolder, Widget {
+public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHolder, PrimeClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
