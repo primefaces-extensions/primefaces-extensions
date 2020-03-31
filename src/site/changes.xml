@@ -7,6 +7,16 @@
 		<title>PrimeFaces Extensions</title>
 	</properties>
 	<body>
+		<release version="8.0" date="2020-03-05" description="Primefaces 8.0">
+			<action dev="melloware" type="update">
+       Primefaces 8.0 includes new Floating Action Button, TimeAgo, Legend, Badge, and CommandButtonSingleClickRender components.
+			</action>
+		</release>
+		<release version="7.0" date="2019-03-19" description="Primefaces 7.0">
+			<action dev="melloware" type="update">
+       Primefaces 7.0 includes new LetterAvatar and InputPhone components.
+			</action>
+		</release>
 		<release version="6.2" date="2017-11-15" description="Primefaces 6.2">
 			<action dev="melloware" type="update">
        Primefaces 6.2 includes new Social Media and Speedtest components.

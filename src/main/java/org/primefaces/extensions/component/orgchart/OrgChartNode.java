@@ -26,9 +26,9 @@ import java.util.List;
  */
 public interface OrgChartNode {
 
-    public String getId();
+    String getId();
 
-    public void setId(String id);
+    void setId(String id);
 
     String getName();
 
@@ -46,16 +46,16 @@ public interface OrgChartNode {
 
     void setParent(OrgChartNode parent);
 
-    public void addChild(OrgChartNode child);
+    void addChild(OrgChartNode child);
 
-    public void clearChildren();
+    void clearChildren();
 
-    public void clearParent();
+    void clearParent();
 
-    public String getClassName();
+    String getClassName();
 
-    public void setClassName(String className);
+    void setClassName(String className);
 
-    public int getChildCount();
+    int getChildCount();
 
 }

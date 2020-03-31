@@ -834,7 +834,7 @@ public class SheetRenderer extends CoreRenderer {
         decodeSubmittedValues(context, sheet, jsonUpdates);
 
         // decode the selected range so we can puke it back
-        decodeSelection(context, sheet, jsonSelection);
+        decodeSelection(sheet, jsonSelection);
 
         // decode client behaviors
         decodeBehaviors(context, sheet);
@@ -845,7 +845,7 @@ public class SheetRenderer extends CoreRenderer {
         final String sortBy = params.get(clientId + "_sortby");
         final String sortOrder = params.get(clientId + "_sortorder");
         if (sortBy != null) {
-            int col = Integer.valueOf(sortBy);
+            int col = Integer.parseInt(sortBy);
             if (col >= 0) {
                 col = sheet.getMappedColumn(col);
                 sheet.saveSortByColumn(sheet.getColumns().get(col).getId());
@@ -920,7 +920,7 @@ public class SheetRenderer extends CoreRenderer {
         // decode event if we are the source
         final String behaviorSource = params.get("javax.faces.source");
         final String clientId = component.getClientId();
-        if (behaviorSource != null && clientId.equals(behaviorSource)) {
+        if (clientId.equals(behaviorSource)) {
             for (final ClientBehavior behavior : behaviorsForEvent) {
                 behavior.decode(context, component);
             }
@@ -930,11 +930,10 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes the user Selection JSON data
      *
-     * @param context
      * @param sheet
      * @param jsonSelection
      */
-    private void decodeSelection(final FacesContext context, final Sheet sheet, final String jsonSelection) {
+    private void decodeSelection(final Sheet sheet, final String jsonSelection) {
         if (LangUtils.isValueBlank(jsonSelection)) {
             return;
         }
