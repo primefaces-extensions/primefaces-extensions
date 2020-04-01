@@ -21,7 +21,6 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.event.BehaviorEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.util.MapBuilder;
 
 @FacesComponent(value = FuzzySearch.COMPONENT_TYPE)
@@ -43,7 +42,7 @@ public class FuzzySearch extends FuzzySearchBase {
     private static final String DEFAULT_EVENT = "select";
 
     private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>>builder()
-            .put(DEFAULT_EVENT, SelectEvent.class)
+            .put(DEFAULT_EVENT, null)
             .build();
 
     private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();

@@ -187,7 +187,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         if (resultStyle != null) {
             writer.writeAttribute("style", resultStyle, "resultStyle");
         }
-
         writer.writeAttribute("tabindex", fuzzySearch.getTabindex(), null);
         if (option.getDescription() != null) {
             writer.writeAttribute("title", option.getDescription(), null);
