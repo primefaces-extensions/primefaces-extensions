@@ -85,40 +85,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-results", null);
 
-        // TODO buradan aşağıdaya devam et
-//        if (fuzzySearch.getVar() != null) {
-//            for (int i = 0; i < fuzzySearch.getRowCount(); i++) {
-//                fuzzySearch.setRowIndex(i);
-//
-//                writer.startElement("div", fuzzySearch);
-//                writer.writeAttribute("class", resultStyleClass, null);
-//                if (resultStyle != null) {
-//                    writer.writeAttribute("style", resultStyle, null);
-//                }
-//
-//                renderChildren(context, fuzzySearch);
-//
-//                writer.endElement("div");
-//            }
-//
-//            fuzzySearch.setRowIndex(-1);
-//        }
-//        else {
-//            for (UIComponent kid : fuzzySearch.getChildren()) {
-//                if (kid.isRendered()) {
-//                    writer.startElement("div", fuzzySearch);
-//                    writer.writeAttribute("class", resultStyleClass, null);
-//                    if (resultStyle != null) {
-//                        writer.writeAttribute("style", resultStyle, null);
-//                    }
-//
-//                    renderChild(context, kid);
-//
-//                    writer.endElement("div");
-//                }
-//            }
-//        }
-//
         if (fuzzySearch.isListItemsAtTheBeginning()) {
             encodeSelectItems(context, fuzzySearch, selectItems);
         }
@@ -163,20 +129,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         ResponseWriter writer = context.getResponseWriter();
         String itemValueAsString = getOptionAsString(context, fuzzySearch, converter, option.getValue());
 
-//        String buttonStyle = HTML.BUTTON_TEXT_ONLY_BUTTON_FLAT_CLASS;
-//        if (size == 1) {
-//            buttonStyle = buttonStyle + " ui-corner-all";
-//        }
-//        else if (idx == 0) {
-//            buttonStyle = buttonStyle + " ui-corner-left";
-//        }
-//        else if (idx == (size - 1)) {
-//            buttonStyle = buttonStyle + " ui-corner-right";
-//        }
-//
-//        buttonStyle = selected ? buttonStyle + " ui-state-active" : buttonStyle;
-//        buttonStyle = disabled ? buttonStyle + " ui-state-disabled" : buttonStyle;
-//
         String resultStyle = fuzzySearch.getResultStyle();
         String resultStyleClass = fuzzySearch.getResultStyleClass();
         resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
@@ -191,6 +143,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         if (option.getDescription() != null) {
             writer.writeAttribute("title", option.getDescription(), null);
         }
+        writer.writeAttribute("data-item-value", itemValueAsString, null);
 
         //input
         writer.startElement("input", null);
@@ -236,8 +189,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
                 .attr("resultStyle", fuzzySearch.getResultStyle())
                 .attr("resultStyleClass", fuzzySearch.getResultStyleClass())
                 .attr("listItemsAtTheBeginning", fuzzySearch.isListItemsAtTheBeginning())
-                .attr("datasource", jsonDatasource)
-                .callback("select", "function()", fuzzySearch.getOnSelect());
+                .attr("datasource", jsonDatasource);
 
         encodeClientBehaviors(context, fuzzySearch);
 

@@ -20,7 +20,14 @@ import java.util.Map;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.BehaviorEvent;
+import javax.faces.event.FacesEvent;
+import javax.faces.render.Renderer;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 import org.primefaces.util.MapBuilder;
 
 @FacesComponent(value = FuzzySearch.COMPONENT_TYPE)
@@ -39,7 +46,7 @@ public class FuzzySearch extends FuzzySearchBase {
     public static final String STYLE_CLASS = "ui-fuzzysearch ui-widget ui-corner-all";
     public static final String ITEM_CLASS = "ui-fuzzysearch-item";
 
-    private static final String DEFAULT_EVENT = "select";
+    private static final String DEFAULT_EVENT = "itemSelect";
 
     private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>>builder()
             .put(DEFAULT_EVENT, null)
@@ -60,6 +67,34 @@ public class FuzzySearch extends FuzzySearchBase {
     @Override
     public String getDefaultEventName() {
         return DEFAULT_EVENT;
+    }
+
+    @Override
+    public void queueEvent(FacesEvent event) {
+        if (event instanceof AjaxBehaviorEvent) {
+            FacesContext context = getFacesContext();
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+            if (DEFAULT_EVENT.equals(eventName)) {
+                Renderer renderer = ComponentUtils.getUnwrappedRenderer(
+                        context,
+                        "javax.faces.SelectOne",
+                        "javax.faces.Radio");
+
+                Object item = renderer.getConvertedValue(context, this, getSubmittedValue());
+                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), item);
+                selectEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(selectEvent);
+            }
+            else {
+                super.queueEvent(event);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
     }
 
 }

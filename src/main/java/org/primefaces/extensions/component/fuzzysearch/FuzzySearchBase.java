@@ -31,7 +31,6 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         widgetVar,
         disabled,
         label,
-        onSelect,
         style,
         styleClass,
         tabindex,
@@ -73,14 +72,6 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
 
     public void setLabel(String label) {
         getStateHelper().put(PropertyKeys.label, label);
-    }
-
-    public String getOnSelect() {
-        return (String) getStateHelper().eval(PropertyKeys.onSelect, null);
-    }
-
-    public void setOnSelect(String onSelect) {
-        getStateHelper().put(PropertyKeys.onSelect, onSelect);
     }
 
     public String getStyle() {

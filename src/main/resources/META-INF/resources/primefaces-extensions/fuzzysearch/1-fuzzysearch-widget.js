@@ -44,20 +44,26 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     bindDynamicEvents: function () {
         var $this = this;
 
-        this.items.on('click', function (e) {
+        this.items.on('click', function (event) {
             var item = $(this);
+            var itemValue = item.attr('data-item-value');
             console.log(item);
+            console.log(itemValue);
 
-            if ($this.hasBehavior('select')) {
-                var ext = {
-                    params: [
-                        {name: this.id + '_itemSelect', value: item}
-                    ]
-                };
-
-                $this.callBehavior('select', ext);
-            }
+            $this.invokeItemSelectBehavior(event, itemValue);
         });
+    },
+
+    invokeItemSelectBehavior: function (event, itemValue) {
+        if (this.hasBehavior('itemSelect')) {
+            var ext = {
+                params: [
+                    {name: this.id + '_itemSelect', value: itemValue}
+                ]
+            };
+
+            this.callBehavior('select', ext);
+        }
     },
 
     search: function (query) {
