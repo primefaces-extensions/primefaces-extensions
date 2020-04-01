@@ -20,12 +20,8 @@ import java.util.Map;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.BehaviorEvent;
-import javax.faces.event.FacesEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.util.Constants;
 import org.primefaces.util.MapBuilder;
 
 @FacesComponent(value = FuzzySearch.COMPONENT_TYPE)
@@ -34,13 +30,14 @@ import org.primefaces.util.MapBuilder;
     @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
     @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
     @ResourceDependency(library = "primefaces", name = "core.js"),
+    @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/fuzzysearch.css"),
     @ResourceDependency(library = "primefaces-extensions", name = "fuzzysearch/fuzzysearch.js")
 })
 public class FuzzySearch extends FuzzySearchBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FuzzySearch";
 
-    public static final String CONTAINER_CLASS = "ui-fuzzysearch";
+    public static final String STYLE_CLASS = "ui-fuzzysearch ui-widget ui-corner-all";
     public static final String ITEM_CLASS = "ui-fuzzysearch-item";
 
     private static final String DEFAULT_EVENT = "select";
@@ -64,30 +61,6 @@ public class FuzzySearch extends FuzzySearchBase {
     @Override
     public String getDefaultEventName() {
         return DEFAULT_EVENT;
-    }
-
-    @Override
-    public void queueEvent(FacesEvent event) {
-        FacesContext context = getFacesContext();
-        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-
-        if (eventName != null && event instanceof AjaxBehaviorEvent) {
-            AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
-
-            if (eventName.equals("select")) {
-                String selectedItemValue = params.get(getClientId(context) + "_itemSelect");
-                SelectEvent selectEvent = new SelectEvent(this, ajaxBehaviorEvent.getBehavior(), selectedItemValue);
-                selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
-                super.queueEvent(selectEvent);
-            }
-            //e.g. blur, focus, change
-            super.queueEvent(event);
-        }
-        else {
-            //e.g. valueChange, autoCompleteEven
-            super.queueEvent(event);
-        }
     }
 
 }

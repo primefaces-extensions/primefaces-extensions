@@ -1,5 +1,5 @@
 /**
- * PrimeFaces Fuzzy Search Widget
+ * PrimeFaces FuzzySearch Widget
  */
 PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
@@ -12,13 +12,19 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     init: function (cfg) {
         this._super(cfg);
 
+        this.buttons = this.jq.children('div:not(.ui-state-disabled)').children();
+        this.inputs = this.jq.find(':radio:not(:disabled)');
+        console.log("buttons length is: " + this.buttons.length);
+        console.log("inputs length is: " + this.inputs.length);
+
         this.input = $(this.jqId + '_fuzzysearch-search-input');
         this.results = $(this.jqId + '_fuzzysearch-search-results');
-        this.keys = JSON.parse(cfg.keys);
-        this.datasource = JSON.parse(cfg.value);
-        this.resultStyle = cfg.resultStyle;
-        this.resultStyleClass = cfg.resultStyleClass;
+//        this.keys = JSON.parse(this.cfg.keys); // TODO not sure how to implement (https://github.com/farzher/fuzzysort)
+        this.datasource = JSON.parse(this.cfg.datasource);
+        this.resultStyle = this.cfg.resultStyle;
+        this.resultStyleClass = this.cfg.resultStyleClass;
         this.items = this.results.children();
+        this.listItemsAtTheBeginning = this.cfg.listItemsAtTheBeginning;
 
         //Visual effects
         PrimeFaces.skinInput(this.input);
@@ -39,15 +45,18 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 
         this.items.on('click', function (e) {
-            if ($this.hasBehavior('select')) {
-                var ext = {
-                    params: [
-                        {name: this.id + '_itemSelect', value: this.innerHTML}
-                    ]
-                };
+            var item = $(this);
+            console.log(item);
 
-                $this.callBehavior('select', ext);
-            }
+//            if ($this.hasBehavior('select')) {
+//                var ext = {
+//                    params: [
+//                        {name: this.id + '_itemSelect', value: 'Item Value'}
+//                    ]
+//                };
+//
+//                $this.callBehavior('select', ext);
+//            }
         });
     },
 
@@ -59,21 +68,21 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         var itemDisplayMarkup = '';
         if (query) { // when any input entered
-            $.each(fuzzysearch.go(query, $this.datasource, {keys: $this.keys}), function (index, value) {
+            $.each(fuzzysearch.go(query, $this.datasource, {keys: ['label']}), function (index, element) {
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
                 itemDisplayMarkup += ' class="ui-fuzzysearch-item';
                 itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
-                itemDisplayMarkup += value.obj.name;
+                itemDisplayMarkup += element.obj.label;
                 itemDisplayMarkup += '</div>';
             });
-        } else { // when there is no input
-            $.each($this.datasource, function (index, value) {
+        } else if (this.listItemsAtTheBeginning) { // when there is no input
+            $.each($this.datasource, function (index, element) {
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
                 itemDisplayMarkup += ' class="ui-fuzzysearch-item';
                 itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
-                itemDisplayMarkup += value.name;
+                itemDisplayMarkup += element.value.name;
                 itemDisplayMarkup += '</div>';
             });
         }

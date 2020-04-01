@@ -17,24 +17,32 @@ package org.primefaces.extensions.component.fuzzysearch;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
+import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.model.SelectItem;
 import javax.faces.render.FacesRenderer;
-import org.primefaces.renderkit.CoreRenderer;
+import javax.faces.render.Renderer;
+import org.primefaces.renderkit.SelectOneRenderer;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(componentFamily = FuzzySearch.COMPONENT_FAMILY, rendererType = FuzzySearch.DEFAULT_RENDERER)
-public class FuzzySearchRenderer extends CoreRenderer {
+public class FuzzySearchRenderer extends SelectOneRenderer {
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        decodeBehaviors(context, component);
+    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) throws ConverterException {
+        Renderer renderer = ComponentUtils.getUnwrappedRenderer(
+                context,
+                "javax.faces.SelectOne",
+                "javax.faces.Radio");
+        return renderer.getConvertedValue(context, component, submittedValue);
     }
 
     @Override
@@ -49,53 +57,17 @@ public class FuzzySearchRenderer extends CoreRenderer {
         encodeScript(context, fuzzySearch);
     }
 
-    private void encodeScript(FacesContext context, FuzzySearch fuzzySearch) throws IOException {
-        WidgetBuilder wb = getWidgetBuilder(context);
-
-        // TODO is it possible to make improvement here to have @FuzzySearchKey annotated class?
-        List list = (List) fuzzySearch.getValue();
-        Object o = list.get(0);
-        Class<? extends Object> clazz = o.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-        List<String> keys = Arrays.asList(fields).stream()
-                .filter(f -> f.getAnnotation(FuzzySearchKey.class) != null)
-                .map(Field::getName)
-                .collect(Collectors.toList());
-        if (keys.isEmpty()) {
-            throw new FacesException("No @FuzzyKey annotation was detected on your class " + clazz + "."
-                                     + " Please annotate at least one field in the class as @FuzzySearchKey.");
-        }
-
-        Gson gson = new Gson();
-        String jsonKeys = gson.toJson(keys);
-        String jsonValue = gson.toJson(fuzzySearch.getValue());
-
-        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(), fuzzySearch.getClientId(context))
-                .attr("keys", jsonKeys)
-                .attr("value", jsonValue)
-                .attr("resultStyle", fuzzySearch.getResultStyle(), "")
-                .attr("resultStyleClass", fuzzySearch.getResultStyleClass(), "");
-
-        if (fuzzySearch.getOnSelect() != null) {
-            // Define a callback function when the item is selected
-            wb.callback("onSelect", "function(e)", fuzzySearch.getOnSelect());
-        }
-
-        encodeClientBehaviors(context, fuzzySearch);
-
-        wb.finish();
-    }
-
     protected void encodeMarkup(FacesContext context, FuzzySearch fuzzySearch) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
         String clientId = fuzzySearch.getClientId(context);
+        List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
+        int selectItemsSize = selectItems.size();
         String style = fuzzySearch.getStyle();
         String styleClass = fuzzySearch.getStyleClass();
-        styleClass = (styleClass == null) ? FuzzySearch.CONTAINER_CLASS : FuzzySearch.CONTAINER_CLASS + " " + styleClass;
-        String resultStyle = fuzzySearch.getResultStyle();
-        String resultStyleClass = fuzzySearch.getResultStyleClass();
-        resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
+        styleClass = (styleClass == null) ? FuzzySearch.STYLE_CLASS : FuzzySearch.STYLE_CLASS + " " + styleClass;
+        styleClass = styleClass + " ui-buttonset-" + selectItemsSize;
+        styleClass = !fuzzySearch.isValid() ? styleClass + " ui-state-error" : styleClass;
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, null);
@@ -107,58 +79,175 @@ public class FuzzySearchRenderer extends CoreRenderer {
         writer.startElement("input", fuzzySearch);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-input", null);
         writer.writeAttribute("autocomplete", "off", null);
-        writer.writeAttribute("placeholder", "Search", null);
+        writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
         writer.endElement("input");
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId + "_fuzzysearch-search-results", null);
 
-        if (fuzzySearch.getVar() != null) {
-            for (int i = 0; i < fuzzySearch.getRowCount(); i++) {
-                fuzzySearch.setRowIndex(i);
+        // TODO buradan aşağıdaya devam et
+//        if (fuzzySearch.getVar() != null) {
+//            for (int i = 0; i < fuzzySearch.getRowCount(); i++) {
+//                fuzzySearch.setRowIndex(i);
+//
+//                writer.startElement("div", fuzzySearch);
+//                writer.writeAttribute("class", resultStyleClass, null);
+//                if (resultStyle != null) {
+//                    writer.writeAttribute("style", resultStyle, null);
+//                }
+//
+//                renderChildren(context, fuzzySearch);
+//
+//                writer.endElement("div");
+//            }
+//
+//            fuzzySearch.setRowIndex(-1);
+//        }
+//        else {
+//            for (UIComponent kid : fuzzySearch.getChildren()) {
+//                if (kid.isRendered()) {
+//                    writer.startElement("div", fuzzySearch);
+//                    writer.writeAttribute("class", resultStyleClass, null);
+//                    if (resultStyle != null) {
+//                        writer.writeAttribute("style", resultStyle, null);
+//                    }
+//
+//                    renderChild(context, kid);
+//
+//                    writer.endElement("div");
+//                }
+//            }
+//        }
+//
+        if (fuzzySearch.isListItemsAtTheBeginning()) {
+            encodeSelectItems(context, fuzzySearch, selectItems);
+        }
 
-                writer.startElement("div", fuzzySearch);
-                writer.writeAttribute("class", resultStyleClass, null);
-                if (resultStyle != null) {
-                    writer.writeAttribute("style", resultStyle, null);
-                }
+        writer.endElement("div");
 
-                renderChildren(context, fuzzySearch);
+        writer.endElement("div");
+    }
 
-                writer.endElement("div");
+    protected void encodeSelectItems(FacesContext context, FuzzySearch fuzzySearch, List<SelectItem> selectItems) throws IOException {
+        int selectItemsSize = selectItems.size();
+        Converter converter = fuzzySearch.getConverter();
+        String name = fuzzySearch.getClientId(context);
+        Object value = fuzzySearch.getSubmittedValue();
+        if (value == null) {
+            value = fuzzySearch.getValue();
+        }
+
+        Class type = value == null ? String.class : value.getClass();
+
+        for (int i = 0; i < selectItems.size(); i++) {
+            SelectItem selectItem = selectItems.get(i);
+            boolean disabled = selectItem.isDisabled() || fuzzySearch.isDisabled();
+            String id = name + UINamingContainer.getSeparatorChar(context) + i;
+
+            boolean selected;
+            if (value == null && selectItem.getValue() == null) {
+                selected = true;
+            }
+            else {
+                Object coercedItemValue = coerceToModelType(context, selectItem.getValue(), type);
+                selected = (coercedItemValue != null) && coercedItemValue.equals(value);
             }
 
-            fuzzySearch.setRowIndex(-1);
+            encodeOption(context, fuzzySearch, selectItem, id, name, converter, selected, disabled, i, selectItemsSize);
+        }
+    }
+
+    protected void encodeOption(FacesContext context, FuzzySearch fuzzySearch, SelectItem option, String id, String name, Converter converter,
+                                boolean selected, boolean disabled, int idx, int size) throws IOException {
+
+        ResponseWriter writer = context.getResponseWriter();
+        String itemValueAsString = getOptionAsString(context, fuzzySearch, converter, option.getValue());
+
+//        String buttonStyle = HTML.BUTTON_TEXT_ONLY_BUTTON_FLAT_CLASS;
+//        if (size == 1) {
+//            buttonStyle = buttonStyle + " ui-corner-all";
+//        }
+//        else if (idx == 0) {
+//            buttonStyle = buttonStyle + " ui-corner-left";
+//        }
+//        else if (idx == (size - 1)) {
+//            buttonStyle = buttonStyle + " ui-corner-right";
+//        }
+//
+//        buttonStyle = selected ? buttonStyle + " ui-state-active" : buttonStyle;
+//        buttonStyle = disabled ? buttonStyle + " ui-state-disabled" : buttonStyle;
+//
+        String resultStyle = fuzzySearch.getResultStyle();
+        String resultStyleClass = fuzzySearch.getResultStyleClass();
+        resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
+
+        //button
+        writer.startElement("div", null);
+        writer.writeAttribute("class", resultStyleClass, "resultStyleClass");
+        if (resultStyle != null) {
+            writer.writeAttribute("style", resultStyle, "resultStyle");
+        }
+
+        writer.writeAttribute("tabindex", fuzzySearch.getTabindex(), null);
+        if (option.getDescription() != null) {
+            writer.writeAttribute("title", option.getDescription(), null);
+        }
+
+        //input
+        writer.startElement("input", null);
+        writer.writeAttribute("id", id, null);
+        writer.writeAttribute("name", name, null);
+        writer.writeAttribute("type", "radio", null);
+        writer.writeAttribute("value", itemValueAsString, null);
+        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
+        writer.writeAttribute("tabindex", "-1", null);
+
+        if (selected) {
+            writer.writeAttribute("checked", "checked", null);
+        }
+
+        renderAccessibilityAttributes(context, fuzzySearch);
+        writer.endElement("input");
+
+        //item label
+        writer.startElement("span", null);
+        writer.writeAttribute("class", HTML.BUTTON_TEXT_CLASS, null);
+
+        if (option.isEscape()) {
+            writer.writeText(option.getLabel(), "itemLabel");
         }
         else {
-            for (UIComponent kid : fuzzySearch.getChildren()) {
-                if (kid.isRendered()) {
-                    writer.startElement("div", fuzzySearch);
-                    writer.writeAttribute("class", resultStyleClass, null);
-                    if (resultStyle != null) {
-                        writer.writeAttribute("style", resultStyle, null);
-                    }
-
-                    renderChild(context, kid);
-
-                    writer.endElement("div");
-                }
-            }
+            writer.write(option.getLabel());
         }
 
-        writer.endElement("div");
+        writer.endElement("span");
 
         writer.endElement("div");
     }
 
-    @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        //Do nothing
+    protected void encodeScript(FacesContext context, FuzzySearch fuzzySearch) throws IOException {
+        String clientId = fuzzySearch.getClientId(context);
+        WidgetBuilder wb = getWidgetBuilder(context);
+
+        List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
+        Gson gson = new Gson();
+        String jsonDatasource = gson.toJson(selectItems);
+
+        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(context), clientId)
+                .attr("resultStyle", fuzzySearch.getResultStyle())
+                .attr("resultStyleClass", fuzzySearch.getResultStyleClass())
+                .attr("listItemsAtTheBeginning", fuzzySearch.isListItemsAtTheBeginning())
+                .attr("datasource", jsonDatasource)
+                .callback("select", "function()", fuzzySearch.getOnSelect());
+
+        encodeClientBehaviors(context, fuzzySearch);
+
+        wb.finish();
     }
 
     @Override
-    public boolean getRendersChildren() {
-        return true;
+    protected String getSubmitParam(FacesContext context, UISelectOne selectOne) {
+        return selectOne.getClientId(context);
     }
 
 }

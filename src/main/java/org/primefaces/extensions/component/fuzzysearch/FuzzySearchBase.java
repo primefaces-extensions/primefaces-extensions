@@ -15,12 +15,12 @@
  */
 package org.primefaces.extensions.component.fuzzysearch;
 
+import javax.faces.component.UISelectOne;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
-import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 
-public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHolder, PrimeClientBehaviorHolder, Widget {
+public abstract class FuzzySearchBase extends UISelectOne implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
@@ -29,11 +29,16 @@ public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHo
     protected enum PropertyKeys {
         // @formatter:off
         widgetVar,
+        disabled,
+        label,
+        onSelect,
         style,
         styleClass,
+        tabindex,
         resultStyle,
         resultStyleClass,
-        onSelect;
+        placeholder,
+        listItemsAtTheBeginning;
         // @formatter:on
     }
 
@@ -54,6 +59,30 @@ public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHo
         getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
+    public boolean isDisabled() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.disabled, false);
+    }
+
+    public void setDisabled(boolean disabled) {
+        getStateHelper().put(PropertyKeys.disabled, disabled);
+    }
+
+    public String getLabel() {
+        return (String) getStateHelper().eval(PropertyKeys.label, null);
+    }
+
+    public void setLabel(String label) {
+        getStateHelper().put(PropertyKeys.label, label);
+    }
+
+    public String getOnSelect() {
+        return (String) getStateHelper().eval(PropertyKeys.onSelect, null);
+    }
+
+    public void setOnSelect(String onSelect) {
+        getStateHelper().put(PropertyKeys.onSelect, onSelect);
+    }
+
     public String getStyle() {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
@@ -68,6 +97,14 @@ public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHo
 
     public void setStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public String getTabindex() {
+        return (String) getStateHelper().eval(PropertyKeys.tabindex, null);
+    }
+
+    public void setTabindex(String tabindex) {
+        getStateHelper().put(PropertyKeys.tabindex, tabindex);
     }
 
     public String getResultStyle() {
@@ -86,12 +123,20 @@ public abstract class FuzzySearchBase extends UIData implements ClientBehaviorHo
         getStateHelper().put(PropertyKeys.resultStyleClass, resultStyleClass);
     }
 
-    public String getOnSelect() {
-        return (String) getStateHelper().eval(PropertyKeys.onSelect, null);
+    public String getPlaceholder() {
+        return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
     }
 
-    public void setOnSelect(String onSelect) {
-        getStateHelper().put(PropertyKeys.onSelect, onSelect);
+    public void setPlaceholder(String placeholder) {
+        getStateHelper().put(PropertyKeys.placeholder, placeholder);
+    }
+
+    public boolean isListItemsAtTheBeginning() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.listItemsAtTheBeginning, false);
+    }
+
+    public void setListItemsAtTheBeginning(boolean listItemsAtTheBeginning) {
+        getStateHelper().put(PropertyKeys.listItemsAtTheBeginning, listItemsAtTheBeginning);
     }
 
 }
