@@ -592,13 +592,15 @@ public class SheetRenderer extends CoreRenderer {
         // cell too
         final Map<String, List<ClientBehavior>> behaviors = sheet.getClientBehaviors();
 
+        final List<ClientBehaviorContext.Parameter> params = null;
+
         wb.append(",behaviors:{");
-        final String clientId = sheet.getClientId();
+        final String clientId = sheet.getClientId(context);
 
         // sort event (manual since callBack prepends leading comma)
         if (behaviors.containsKey("sort")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "sort", sheet.getClientId(context), null);
+                        sheet, "sort", clientId, params);
             final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("sort").get(0);
             ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
             wb.append("sort").append(":").append("function(s, event)").append("{")
@@ -614,7 +616,7 @@ public class SheetRenderer extends CoreRenderer {
         // filter
         if (behaviors.containsKey("filter")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "filter", sheet.getClientId(context), null);
+                        sheet, "filter", clientId, params);
             final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("filter").get(0);
             ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
             wb.callback("filter", "function(source, event)", behaviors.get("filter").get(0).getScript(behaviorContext));
@@ -627,27 +629,27 @@ public class SheetRenderer extends CoreRenderer {
 
         if (behaviors.containsKey("change")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "change", sheet.getClientId(context), null);
+                        sheet, "change", clientId, params);
             wb.callback("change", "function(source, event)", behaviors.get("change").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("cellSelect")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "cellSelect", sheet.getClientId(context), null);
+                        sheet, "cellSelect", clientId, params);
             wb.callback("cellSelect", "function(source, event)",
                         behaviors.get("cellSelect").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("columnSelect")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "columnSelect", sheet.getClientId(context), null);
+                        sheet, "columnSelect", clientId, params);
             wb.callback("columnSelect", "function(source, event)",
                         behaviors.get("columnSelect").get(0).getScript(behaviorContext));
         }
 
         if (behaviors.containsKey("rowSelect")) {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
-                        sheet, "rowSelect", sheet.getClientId(context), null);
+                        sheet, "rowSelect", clientId, params);
             wb.callback("rowSelect", "function(source, event)",
                         behaviors.get("rowSelect").get(0).getScript(behaviorContext));
         }
