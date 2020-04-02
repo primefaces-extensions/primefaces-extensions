@@ -12,14 +12,9 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     init: function (cfg) {
         this._super(cfg);
 
-        this.buttons = this.jq.children('div:not(.ui-state-disabled)').children();
-        this.inputs = this.jq.find(':radio:not(:disabled)');
-        console.log("buttons length is: " + this.buttons.length);
-        console.log("inputs length is: " + this.inputs.length);
-
         this.input = $(this.jqId + '_fuzzysearch-search-input');
         this.results = $(this.jqId + '_fuzzysearch-search-results');
-//        this.keys = JSON.parse(this.cfg.keys); // TODO not sure how to implement (https://github.com/farzher/fuzzysort)
+        this.keys = ['label']; //JSON.parse(this.cfg.keys); // TODO i am not sure how to implement it without using FuzzySearchKey
         this.datasource = JSON.parse(this.cfg.datasource);
         this.resultStyle = this.cfg.resultStyle;
         this.resultStyleClass = this.cfg.resultStyleClass;
@@ -47,8 +42,6 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
         this.items.on('click', function (event) {
             var item = $(this);
             var itemValue = item.attr('data-item-value');
-            console.log(item);
-            console.log(itemValue);
 
             $this.invokeItemSelectBehavior(event, itemValue);
         });
@@ -74,11 +67,12 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
         var itemDisplayMarkup = '';
         if (query) { // when any input entered
-            $.each(fuzzysearch.go(query, $this.datasource, {keys: ['label']}), function (index, element) {
+            $.each(fuzzysearch.go(query, $this.datasource, {keys: $this.keys}), function (index, element) {
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
                 itemDisplayMarkup += ' class="ui-fuzzysearch-item';
-                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
+                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '"';
+                itemDisplayMarkup += ' data-item-value="' + element.obj.label + '">';
                 itemDisplayMarkup += element.obj.label;
                 itemDisplayMarkup += '</div>';
             });
@@ -87,7 +81,8 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
                 itemDisplayMarkup += '<div';
                 itemDisplayMarkup += (resultStyle === '' ? '' : ' style="' + resultStyle + '"');
                 itemDisplayMarkup += ' class="ui-fuzzysearch-item';
-                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '">';
+                itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '"';
+                itemDisplayMarkup += ' data-item-value="' + element.value.name + '">';
                 itemDisplayMarkup += element.value.name;
                 itemDisplayMarkup += '</div>';
             });

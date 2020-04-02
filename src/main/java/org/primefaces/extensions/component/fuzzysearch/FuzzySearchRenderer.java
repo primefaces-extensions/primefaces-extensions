@@ -30,7 +30,6 @@ import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
 @FacesRenderer(componentFamily = FuzzySearch.COMPONENT_FAMILY, rendererType = FuzzySearch.DEFAULT_RENDERER)
@@ -144,35 +143,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
             writer.writeAttribute("title", option.getDescription(), null);
         }
         writer.writeAttribute("data-item-value", itemValueAsString, null);
-
-        //input
-        writer.startElement("input", null);
-        writer.writeAttribute("id", id, null);
-        writer.writeAttribute("name", name, null);
-        writer.writeAttribute("type", "radio", null);
-        writer.writeAttribute("value", itemValueAsString, null);
-        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
-        writer.writeAttribute("tabindex", "-1", null);
-
-        if (selected) {
-            writer.writeAttribute("checked", "checked", null);
-        }
-
-        renderAccessibilityAttributes(context, fuzzySearch);
-        writer.endElement("input");
-
-        //item label
-        writer.startElement("span", null);
-        writer.writeAttribute("class", HTML.BUTTON_TEXT_CLASS, null);
-
-        if (option.isEscape()) {
-            writer.writeText(option.getLabel(), "itemLabel");
-        }
-        else {
-            writer.write(option.getLabel());
-        }
-
-        writer.endElement("span");
+        writer.write(option.getLabel());
 
         writer.endElement("div");
     }
