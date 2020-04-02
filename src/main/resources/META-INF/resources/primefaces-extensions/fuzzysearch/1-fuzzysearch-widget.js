@@ -62,7 +62,7 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
                 ]
             };
 
-            this.callBehavior('select', ext);
+            this.callBehavior('itemSelect', ext);
         }
     },
 
