@@ -79,7 +79,7 @@ public class DynaFormRenderer extends CoreRenderer {
     public static final String BUTTON_BAR_ROLE = "toolbar";
     public static final String GRID_CELL_ROLE = "gridcell";
 
-    protected static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
+    private static final String[] EMPTY_COLUMN_CLASSES = new String[] {Constants.EMPTY_STRING, Constants.EMPTY_STRING};
 
     private static final Logger LOGGER = Logger.getLogger(DynaFormRenderer.class.getName());
 

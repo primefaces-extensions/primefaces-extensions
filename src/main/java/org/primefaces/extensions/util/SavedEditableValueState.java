@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.util;
 
+import java.util.Objects;
+
 import org.primefaces.component.api.SavedState;
 
 /**
@@ -54,5 +56,28 @@ public class SavedEditableValueState extends SavedState {
 
     public void setDisabled(Object disabled) {
         this.disabled = disabled;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Objects.hash(disabled, labelValue);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof SavedEditableValueState)) {
+            return false;
+        }
+        final SavedEditableValueState other = (SavedEditableValueState) obj;
+        return Objects.equals(disabled, other.disabled) && Objects.equals(labelValue, other.labelValue);
     }
 }
