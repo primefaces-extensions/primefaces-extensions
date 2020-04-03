@@ -31,12 +31,10 @@ import org.primefaces.component.api.Widget;
  */
 @FacesComponent(value = LetterAvatar.COMPONENT_TYPE)
 @ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.js")
+    @ResourceDependency(library = "primefaces", name = "components.css"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+    @ResourceDependency(library = "primefaces", name = "core.js")
 })
 public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
@@ -53,8 +51,7 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         styleClass,
         value,
         rounded,
-        width,
-        height;
+        size;
         // @formatter:on
     }
 
@@ -84,7 +81,7 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
     }
 
     public String getValue() {
-        return (String) getStateHelper().eval(PropertyKeys.value, "John Doe");
+        return (String) getStateHelper().eval(PropertyKeys.value, null);
     }
 
     public void setValue(String value) {
@@ -99,20 +96,12 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         getStateHelper().put(PropertyKeys.rounded, rounded);
     }
 
-    public Integer getWidth() {
-        return (Integer) getStateHelper().eval(PropertyKeys.width, 60);
+    public String getSize() {
+        return (String) getStateHelper().eval(PropertyKeys.size, "3rem");
     }
 
-    public void setWidth(Integer width) {
-        getStateHelper().put(PropertyKeys.width, width);
-    }
-
-    public Integer getHeight() {
-        return (Integer) getStateHelper().eval(PropertyKeys.height, 60);
-    }
-
-    public void setHeight(Integer height) {
-        getStateHelper().put(PropertyKeys.height, height);
+    public void setSize(String size) {
+        getStateHelper().put(PropertyKeys.size, size);
     }
 
 }
