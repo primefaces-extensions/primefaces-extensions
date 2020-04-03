@@ -51,8 +51,7 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         styleClass,
         value,
         rounded,
-        size,
-        color;
+        size;
         // @formatter:on
     }
 
@@ -103,14 +102,6 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
 
     public void setSize(String size) {
         getStateHelper().put(PropertyKeys.size, size);
-    }
-
-    public String getColor() {
-        return (String) getStateHelper().eval(PropertyKeys.color, "#fff");
-    }
-
-    public void setColor(String color) {
-        getStateHelper().put(PropertyKeys.color, color);
     }
 
 }
