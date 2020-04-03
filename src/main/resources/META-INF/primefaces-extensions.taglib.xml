@@ -977,6 +977,96 @@
     </tag>
     <tag>
         <description>
+            <![CDATA[CreditCard will take any card form and make it the best part of the checkout process.]]>
+        </description>
+        <tag-name>creditCard</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.CreditCard</component-type>
+            <renderer-type>org.primefaces.extensions.component.CreditCardRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Width of the  card image in pixels. Default is 350px.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether or not formatting is applied to the input fields. Default is true.]]>
+            </description>
+            <name>formatting</name>
+            <required>false</required>
+            <type>javax.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Localization of the Valid Date string on the card. Default 'valid\nthru']]>
+            </description>
+            <name>labelValidDate</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Localization of the Month Year string on the card. Default 'month/year']]>
+            </description>
+            <name>labelMonthYear</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Placeholder for the card number. Default '•••• •••• •••• ••••']]>
+            </description>
+            <name>placeholderNumber</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Placeholder for the name. Default 'Full Name']]>
+            </description>
+            <name>placeholderName</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Placeholder for the expiry. Default '••/••']]>
+            </description>
+            <name>placeholderExpiry</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Placeholder for the CVC. Default '•••']]>
+            </description>
+            <name>placeholderCvc</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
 			<![CDATA[DynaForm allows to show a dynamic form described by model.]]>
         </description>
         <tag-name>dynaForm</tag-name>
