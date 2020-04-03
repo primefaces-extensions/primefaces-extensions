@@ -16,6 +16,11 @@
 package org.primefaces.extensions.component.letteravatar;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,7 +28,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link LetterAvatar} component.
@@ -43,23 +47,43 @@ public class LetterAvatarRenderer extends CoreRenderer {
         final LetterAvatar letterAvatar = (LetterAvatar) component;
 
         encodeMarkup(context, letterAvatar);
-        encodeScript(context, letterAvatar);
     }
 
     public void encodeMarkup(FacesContext context, LetterAvatar letterAvatar) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        final Integer width = letterAvatar.getWidth();
-        final Integer height = letterAvatar.getHeight();
-        final String avatar = letterAvatar.getValue();
+        final String size = letterAvatar.getSize();
+        final String color = letterAvatar.getColor();
+        final String value = letterAvatar.getValue();
+
+        Pattern p = Pattern.compile("\\b[a-zA-Z]");
+        Matcher m = p.matcher(value);
+        StringBuilder sb = new StringBuilder();
+        while (m.find()) {
+            sb.append(m.group());
+        }
+        String initials = sb.toString();
+        // TODO In Java 9, use Matcher#results() to get a Stream<MatchResult>
+//        String initials = Pattern.compile("\\b[a-zA-Z]")
+//                .matcher(value)
+//                .results()
+//                .map(MatchResult::group)
+//                .collect(Collectors.joining(""));
+//              or .toArray(String[]::new);
+        initials = initials.length() == 1 ? initials : initials.charAt(0) + initials.substring(initials.length() - 1);
+
         final Boolean rounded = letterAvatar.isRounded();
 
         final String clientId = letterAvatar.getClientId(context);
-        final String style = letterAvatar.getStyle();
+
+        String backgroundColor = "hsl(" + hue(value) + ", 100%, 50%)";
+
+        String style = letterAvatar.getStyle();
+        style = style == null ? styleDiv(size, color, backgroundColor, rounded) : styleDiv(size, color, backgroundColor, rounded) + " " + style;
         String styleClass = letterAvatar.getStyleClass();
         styleClass = styleClass == null ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + " " + styleClass;
 
-        writer.startElement("img", letterAvatar);
+        writer.startElement("div", letterAvatar);
         writer.writeAttribute("id", clientId, null);
 
         if (rounded) {
@@ -71,18 +95,56 @@ public class LetterAvatarRenderer extends CoreRenderer {
             writer.writeAttribute("style", style, "style");
         }
 
-        writer.writeAttribute("width", width, null);
-        writer.writeAttribute("height", height, null);
-        writer.writeAttribute("avatar", avatar, null);
+        writer.writeAttribute("title", value, null);
 
-        writer.endElement("img");
+        writer.startElement("span", letterAvatar);
+        writer.writeAttribute("class", "ui-letteravatar-initials", null);
+        writer.writeAttribute("style", styleSpan(size), null);
+        writer.write(initials);
+        writer.endElement("span");
+
+        writer.endElement("div");
     }
 
-    private void encodeScript(final FacesContext context, final LetterAvatar letterAvatar) throws IOException {
-        final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtLetterAvatar", letterAvatar.resolveWidgetVar(), letterAvatar.getClientId(context));
-        encodeClientBehaviors(context, letterAvatar);
-        wb.finish();
+    private int hash(String str) {
+        int result = 0;
+        for (int i = 0; i < str.length(); i++) {
+            result = ((result << 5) - result) + str.charAt(i);
+            result |= 0;
+        }
+        return result;
+    }
+
+    private int hue(String str) {
+        return Math.abs(hash(str) % 360);
+    }
+
+    private String styleDiv(String size, String color, String backgroundColor, boolean rounded) {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("color", color);
+        map.put("background-color", backgroundColor);
+        if (rounded) {
+            map.put("border-radius", "50%");
+        }
+        map.put("height", size);
+        map.put("text-align", "center");
+        map.put("width", size);
+        return map.entrySet()
+                .stream()
+                .map(e -> e.getKey() + ":" + e.getValue())
+                .collect(Collectors.joining(";"));
+    }
+
+    private String styleSpan(String size) {
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
+        map.put("line-height", "1");
+        map.put("position", "relative");
+        map.put("top", "calc(" + size + " / 4)"); // 25% of parent
+        return map.entrySet()
+                .stream()
+                .map(e -> e.getKey() + ":" + e.getValue())
+                .collect(Collectors.joining(";"));
     }
 
 }
