@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 (function (w, d) {
 
     function LetterAvatar(name, size) {
@@ -89,3 +90,5 @@
     }
 
 })(window, document);
+=======
+>>>>>>> upstream/master

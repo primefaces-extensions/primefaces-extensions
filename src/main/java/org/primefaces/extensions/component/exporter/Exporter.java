@@ -238,7 +238,7 @@ public abstract class Exporter {
     }
 
     protected List<UIColumn> getColumnsToExport(final UIData table) {
-        final List<UIColumn> columns = new ArrayList<UIColumn>();
+        final List<UIColumn> columns = new ArrayList<>();
 
         for (final UIComponent child : table.getChildren()) {
             if (child instanceof UIColumn) {
@@ -322,7 +322,6 @@ public abstract class Exporter {
                 ((DynamicColumn) col).applyStatelessModel();
             }
             if (col.isRendered()
-                        && (col instanceof UIColumn || col instanceof DynamicColumn)
                         && (col.getFacet("header") != null || col.getHeaderText() != null)) {
                 return true;
             }

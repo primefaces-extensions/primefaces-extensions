@@ -458,10 +458,8 @@ public class Sheet extends SheetBase {
             }
 
             final ValueExpression veCol = column.getValueExpression(PropertyKeys.sortBy.name());
-            if (veCol != null) {
-                if (veCol.getExpressionString().equals(sortByExp)) {
-                    return colIdx;
-                }
+            if (veCol != null && veCol.getExpressionString().equals(sortByExp)) {
+                return colIdx;
             }
             colIdx++;
         }
@@ -569,7 +567,7 @@ public class Sheet extends SheetBase {
         final int sortByIdx = getSortColRenderIndex();
         final SheetColumn currentSortByColumn = sortByIdx >= 0 ? getColumns().get(sortByIdx) : null;
         final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression(
-            PropertyKeys.sortBy.name()) : null;
+                    PropertyKeys.sortBy.name()) : null;
         final ValueExpression veSortBy;
         if (currentSortByVe != null) {
             veSortBy = currentSortByVe;
@@ -750,11 +748,9 @@ public class Sheet extends SheetBase {
         final boolean newBadUpdates = !getInvalidUpdates().isEmpty();
         final String errorMessage = getErrorMessage();
 
-        if (hadBadUpdates || newBadUpdates) {
+        if ((hadBadUpdates || newBadUpdates) && context.getPartialViewContext().isPartialRequest()) {
             // update the bad data var if partial request
-            if (context.getPartialViewContext().isPartialRequest()) {
-                renderBadUpdateScript(context);
-            }
+            renderBadUpdateScript(context);
         }
 
         if (newBadUpdates && errorMessage != null) {
@@ -1017,11 +1013,7 @@ public class Sheet extends SheetBase {
      * @return
      */
     public int getRowCount() {
-        final List<Object> values = getSortedValues();
-        if (values == null) {
-            return 0;
-        }
-        return values.size();
+        return getSortedValues().size();
     }
 
     /**

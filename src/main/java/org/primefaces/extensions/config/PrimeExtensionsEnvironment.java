@@ -17,6 +17,7 @@ package org.primefaces.extensions.config;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+
 import org.primefaces.util.LangUtils;
 
 /**
@@ -26,9 +27,9 @@ public class PrimeExtensionsEnvironment {
 
     public static final String INSTANCE_KEY = PrimeExtensionsEnvironment.class.getName();
 
-    private boolean libphonenumberAvailable;
+    private final boolean libphonenumberAvailable;
 
-    public PrimeExtensionsEnvironment(FacesContext facesContext) {
+    public PrimeExtensionsEnvironment() {
         libphonenumberAvailable = LangUtils.tryToLoadClassForName("com.google.i18n.phonenumbers.Phonenumber") != null;
     }
 
@@ -39,7 +40,7 @@ public class PrimeExtensionsEnvironment {
 
         PrimeExtensionsEnvironment pfeEnv = getFromContext(context);
         if (pfeEnv == null) {
-            pfeEnv = new PrimeExtensionsEnvironment(context);
+            pfeEnv = new PrimeExtensionsEnvironment();
             setCurrentInstance(pfeEnv, context);
         }
 
