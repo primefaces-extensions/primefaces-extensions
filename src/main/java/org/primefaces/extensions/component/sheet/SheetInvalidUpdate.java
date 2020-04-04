@@ -31,7 +31,7 @@ public class SheetInvalidUpdate implements Serializable {
 
     private int invalidColIndex;
 
-    private SheetColumn invalidColumn;
+    private transient SheetColumn invalidColumn;
 
     private Object invalidValue;
 
@@ -66,7 +66,7 @@ public class SheetInvalidUpdate implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SheetInvalidUpdate other = (SheetInvalidUpdate) obj;
+        final SheetInvalidUpdate other = (SheetInvalidUpdate) obj;
         if (invalidColIndex != other.invalidColIndex) {
             return false;
         }

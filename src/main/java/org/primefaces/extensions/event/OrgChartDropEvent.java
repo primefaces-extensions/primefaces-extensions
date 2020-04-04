@@ -33,7 +33,7 @@ public class OrgChartDropEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "drop";
 
-    private JSONObject hierarchy;
+    private transient JSONObject hierarchy;
 
     private String draggedNodeId;
 

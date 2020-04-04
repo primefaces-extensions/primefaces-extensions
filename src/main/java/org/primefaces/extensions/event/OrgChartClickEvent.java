@@ -35,7 +35,7 @@ public class OrgChartClickEvent extends AjaxBehaviorEvent {
 
     private String id;
 
-    private JSONObject hierarchy;
+    private transient JSONObject hierarchy;
 
     public OrgChartClickEvent(UIComponent component, Behavior behavior, String id,
                 String hierarchyStr) {
