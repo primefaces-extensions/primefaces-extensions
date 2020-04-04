@@ -53,7 +53,6 @@ public class LetterAvatarRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
 
         final String size = letterAvatar.getSize();
-        final String color = letterAvatar.getColor();
         final String value = letterAvatar.getValue();
 
         Pattern p = Pattern.compile("\\b[a-zA-Z]");
@@ -76,7 +75,15 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
         final String clientId = letterAvatar.getClientId(context);
 
-        String backgroundColor = "hsl(" + hue(value) + ", 100%, 50%)";
+        String color = letterAvatar.getColor();
+        if (color == null) {
+            color = "#fff"; // keep it for mix-blend-mode
+        }
+
+        String backgroundColor = letterAvatar.getBackgroundColor();
+        if (backgroundColor == null) {
+            backgroundColor = "hsl(" + hue(value) + ", 100%, 50%)";
+        }
 
         String style = letterAvatar.getStyle();
         style = style == null ? styleDiv(size, color, backgroundColor, rounded) : styleDiv(size, color, backgroundColor, rounded) + " " + style;
@@ -141,6 +148,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         map.put("line-height", "1");
         map.put("position", "relative");
         map.put("top", "calc(" + size + " / 4)"); // 25% of parent
+        map.put("mix-blend-mode", "difference");
         return map.entrySet()
                 .stream()
                 .map(e -> e.getKey() + ":" + e.getValue())

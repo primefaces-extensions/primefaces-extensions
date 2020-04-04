@@ -52,7 +52,8 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         value,
         rounded,
         size,
-        color;
+        color,
+        backgroundColor;
         // @formatter:on
     }
 
@@ -106,11 +107,19 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
     }
 
     public String getColor() {
-        return (String) getStateHelper().eval(PropertyKeys.color, "#fff");
+        return (String) getStateHelper().eval(PropertyKeys.color, null);
     }
 
     public void setColor(String color) {
         getStateHelper().put(PropertyKeys.color, color);
+    }
+
+    public String getBackgroundColor() {
+        return (String) getStateHelper().eval(PropertyKeys.backgroundColor, null);
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        getStateHelper().put(PropertyKeys.backgroundColor, backgroundColor);
     }
 
 }

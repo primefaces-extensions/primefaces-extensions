@@ -2143,7 +2143,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[Generate avatars with initials from names.]]>
+			<![CDATA[Generate avatars with initials from names.]]>
         </description>
         <tag-name>letterAvatar</tag-name>
         <component>
@@ -2152,7 +2152,7 @@
         </component>
         <attribute>
             <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+				<![CDATA[Unique identifier of the component in a namingContainer.]]>
             </description>
             <name>id</name>
             <required>false</required>
@@ -2160,7 +2160,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+				<![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
             </description>
             <name>rendered</name>
             <required>false</required>
@@ -2168,7 +2168,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Inline style of the container element.]]>
+				<![CDATA[Inline style of the container element.]]>
             </description>
             <name>style</name>
             <required>false</required>
@@ -2176,7 +2176,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Style class of the container element.]]>
+				<![CDATA[Style class of the container element.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>
@@ -2184,7 +2184,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The name used to generate initials.]]>
+				<![CDATA[The name used to generate initials.]]>
             </description>
             <name>value</name>
             <required>true</required>
@@ -2192,7 +2192,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean specifying if the returned image should be a circle. Default: false]]>
+				<![CDATA[Boolean specifying if the returned image should be a circle. Default: false]]>
             </description>
             <name>rounded</name>
             <required>false</required>
@@ -2200,7 +2200,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Avatar size. Change this value anything, e.g., 100px, 10rem, etc. Default: 3rem]]>
+				<![CDATA[Avatar size. Change this value anything, e.g., 100px, 10rem, etc. Default: 3rem]]>
             </description>
             <name>size</name>
             <required>false</required>
@@ -2208,9 +2208,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Text color. Default: #fff]]>
+				<![CDATA[Avatar font color. When it is not set the color will be determined automatically.]]>
             </description>
             <name>color</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[Avatar background color. When it is not set the color will be determined automatically.]]>
+            </description>
+            <name>backgroundColor</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
