@@ -189,7 +189,7 @@
                 <version>3.1.0</version>
                 <configuration>
                     <consoleOutput>true</consoleOutput>
-                    <configLocation>./checkstyle.xml</configLocation>
+                    <configLocation>${project.basedir}/src/conf/checkstyle.xml</configLocation>
                 </configuration>
                 <executions>
                     <execution>
@@ -216,7 +216,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <header>${basedir}/src/license/header.txt</header>
+                    <header>${basedir}/src/conf/license.txt</header>
                     <includes>
                         <include>src/main/java/**/*.java</include>
                     </includes>
@@ -243,7 +243,7 @@
                     <skipRuntimeScope>false</skipRuntimeScope>
                     <failBuildOnCVSS>5</failBuildOnCVSS>
                     <suppressionFiles>
-                        <suppressionFile>${basedir}/owasp-suppressions.xml</suppressionFile>
+                        <suppressionFile>${project.basedir}/src/conf/owasp-suppressions.xml</suppressionFile>
                     </suppressionFiles>
                 </configuration>
                 <executions>
@@ -253,6 +253,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <configFile>${project.basedir}/src/conf/eclipse-pfe-formatter.xml</configFile>
+                    <directories>
+                        <directory>${project.build.sourceDirectory}</directory>
+                    </directories>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -366,7 +377,7 @@
                         <excludeRoot>${basedir}/target/generated-sources/cxf</excludeRoot>
                     </excludeRoots>
                     <rulesets>
-                        <ruleset>${basedir}/pmd-rulesets.xml</ruleset>
+                        <ruleset>${project.basedir}/src/conf/pmd-rulesets.xml</ruleset>
                     </rulesets>
                 </configuration>
                 <reportSets>
@@ -430,8 +441,8 @@
 
         <!-- PROVIDED Java API's -->
         <dependency>
-             <groupId>org.glassfish</groupId>
-             <artifactId>jakarta.faces</artifactId>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

@@ -43,10 +43,10 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     protected boolean isEligible(final CommandButton button) {
         return button.isAjax()
-               && button.isRendered()
-               && button.getActionExpression() != null
-               && !button.isDisabled()
-               && !isConfirmation(button);
+                    && button.isRendered()
+                    && button.getActionExpression() != null
+                    && !button.isDisabled()
+                    && !isConfirmation(button);
     }
 
     protected boolean isConfirmation(final CommandButton button) {

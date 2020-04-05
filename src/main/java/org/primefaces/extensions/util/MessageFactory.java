@@ -38,16 +38,16 @@ public class MessageFactory {
     }
 
     public static FacesMessage getMessage(final String messageId,
-                                          final FacesMessage.Severity severity,
-                                          final Object... params) {
+                final FacesMessage.Severity severity,
+                final Object... params) {
         final FacesMessage message = getMessage(getLocale(), messageId, params);
         message.setSeverity(severity);
         return message;
     }
 
     public static FacesMessage getMessage(final Locale locale,
-                                          final String messageId,
-                                          final Object... params) {
+                final String messageId,
+                final Object... params) {
         final FacesMessage message = org.primefaces.util.MessageFactory.getMessage(locale, messageId, params);
         if (message.getSummary() == null) {
             populateMessageFromExtensions(message, locale, messageId, params);
@@ -60,9 +60,9 @@ public class MessageFactory {
     }
 
     private static void populateMessageFromExtensions(final FacesMessage message,
-                                                      final Locale locale,
-                                                      final String messageId,
-                                                      final Object[] params) {
+                final Locale locale,
+                final String messageId,
+                final Object[] params) {
         final ResourceBundle extensionsBundle = getExtensionsBundle(locale);
         message.setSummary(getFormattedText(locale, extensionsBundle.getString(messageId), params));
         try {
@@ -94,8 +94,8 @@ public class MessageFactory {
 
     private static ResourceBundle getExtensionsBundle(final Locale locale) {
         return ResourceBundle.getBundle(PF_EXTENSIONS_BUNDLE_BASENAME,
-                                        locale,
-                                        Thread.currentThread().getContextClassLoader());
+                    locale,
+                    Thread.currentThread().getContextClassLoader());
 
     }
 
