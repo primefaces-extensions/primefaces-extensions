@@ -27,7 +27,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.LangUtils;
 
 /**
  * Renderer for the {@link LetterAvatar} component.
@@ -37,6 +39,8 @@ import org.primefaces.renderkit.CoreRenderer;
  */
 @FacesRenderer(componentFamily = LetterAvatar.COMPONENT_FAMILY, rendererType = LetterAvatar.DEFAULT_RENDERER)
 public class LetterAvatarRenderer extends CoreRenderer {
+
+    private static final Pattern VALUE_PATTTERN = Pattern.compile("\\b[a-zA-Z]");
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -51,40 +55,38 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
     public void encodeMarkup(FacesContext context, LetterAvatar letterAvatar) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-
-        final String size = letterAvatar.getSize();
-        final String color = letterAvatar.getColor();
+        final String clientId = letterAvatar.getClientId(context);
         final String value = letterAvatar.getValue();
 
-        Pattern p = Pattern.compile("\\b[a-zA-Z]");
-        Matcher m = p.matcher(value);
-        StringBuilder sb = new StringBuilder();
+        final Matcher m = VALUE_PATTTERN.matcher(value);
+        final StringBuilder sb = new StringBuilder();
         while (m.find()) {
             sb.append(m.group());
         }
         String initials = sb.toString();
-        // TODO In Java 9, use Matcher#results() to get a Stream<MatchResult>
-//        String initials = Pattern.compile("\\b[a-zA-Z]")
-//                .matcher(value)
-//                .results()
-//                .map(MatchResult::group)
-//                .collect(Collectors.joining(""));
-//              or .toArray(String[]::new);
         initials = initials.length() == 1 ? initials : initials.charAt(0) + initials.substring(initials.length() - 1);
 
         final Boolean rounded = letterAvatar.isRounded();
 
-        final String clientId = letterAvatar.getClientId(context);
+        String color = letterAvatar.getColor();
+        if (LangUtils.isValueBlank(color)) {
+            color = "#fff"; // keep it for mix-blend-mode
+        }
 
-        String backgroundColor = "hsl(" + hue(value) + ", 100%, 50%)";
+        String backgroundColor = letterAvatar.getBackgroundColor();
+        if (LangUtils.isValueBlank(backgroundColor)) {
+            backgroundColor = "hsl(" + hue(value) + ", 100%, 50%)";
+        }
 
+        final String size = letterAvatar.getSize();
         String style = letterAvatar.getStyle();
-        style = style == null ? styleDiv(size, color, backgroundColor, rounded) : styleDiv(size, color, backgroundColor, rounded) + " " + style;
+        style = style == null ? styleDiv(size, color, backgroundColor, rounded) : styleDiv(size, color, backgroundColor, rounded) + StringUtils.SPACE + style;
         String styleClass = letterAvatar.getStyleClass();
-        styleClass = styleClass == null ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + " " + styleClass;
+        styleClass = styleClass == null ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + StringUtils.SPACE + styleClass;
 
         writer.startElement("div", letterAvatar);
         writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("title", value, null);
 
         if (rounded) {
             styleClass = styleClass + " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
@@ -94,8 +96,6 @@ public class LetterAvatarRenderer extends CoreRenderer {
         if (style != null) {
             writer.writeAttribute("style", style, "style");
         }
-
-        writer.writeAttribute("title", value, null);
 
         writer.startElement("span", letterAvatar);
         writer.writeAttribute("class", "ui-letteravatar-initials", null);
@@ -109,7 +109,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
     private int hash(String str) {
         int result = 0;
         for (int i = 0; i < str.length(); i++) {
-            result = ((result << 5) - result) + str.charAt(i);
+            result = (result << 5) - result + str.charAt(i);
             result |= 0;
         }
         return result;
@@ -120,7 +120,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
     }
 
     private String styleDiv(String size, String color, String backgroundColor, boolean rounded) {
-        Map<String, String> map = new LinkedHashMap<>();
+        final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("color", color);
         map.put("background-color", backgroundColor);
         if (rounded) {
@@ -130,21 +130,22 @@ public class LetterAvatarRenderer extends CoreRenderer {
         map.put("text-align", "center");
         map.put("width", size);
         return map.entrySet()
-                .stream()
-                .map(e -> e.getKey() + ":" + e.getValue())
-                .collect(Collectors.joining(";"));
+                    .stream()
+                    .map(e -> e.getKey() + ":" + e.getValue())
+                    .collect(Collectors.joining(";"));
     }
 
     private String styleSpan(String size) {
-        Map<String, String> map = new LinkedHashMap<>();
+        final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
         map.put("line-height", "1");
         map.put("position", "relative");
         map.put("top", "calc(" + size + " / 4)"); // 25% of parent
+        map.put("mix-blend-mode", "difference");
         return map.entrySet()
-                .stream()
-                .map(e -> e.getKey() + ":" + e.getValue())
-                .collect(Collectors.joining(";"));
+                    .stream()
+                    .map(e -> e.getKey() + ":" + e.getValue())
+                    .collect(Collectors.joining(";"));
     }
 
 }

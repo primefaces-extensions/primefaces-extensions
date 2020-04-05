@@ -31,10 +31,10 @@ import org.primefaces.component.api.Widget;
  */
 @FacesComponent(value = LetterAvatar.COMPONENT_TYPE)
 @ResourceDependencies({
-    @ResourceDependency(library = "primefaces", name = "components.css"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-    @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-    @ResourceDependency(library = "primefaces", name = "core.js")
+            @ResourceDependency(library = "primefaces", name = "components.css"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
+            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
+            @ResourceDependency(library = "primefaces", name = "core.js")
 })
 public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
@@ -52,7 +52,8 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         value,
         rounded,
         size,
-        color;
+        color,
+        backgroundColor;
         // @formatter:on
     }
 
@@ -106,11 +107,19 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
     }
 
     public String getColor() {
-        return (String) getStateHelper().eval(PropertyKeys.color, "#fff");
+        return (String) getStateHelper().eval(PropertyKeys.color, null);
     }
 
     public void setColor(String color) {
         getStateHelper().put(PropertyKeys.color, color);
+    }
+
+    public String getBackgroundColor() {
+        return (String) getStateHelper().eval(PropertyKeys.backgroundColor, null);
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        getStateHelper().put(PropertyKeys.backgroundColor, backgroundColor);
     }
 
 }
