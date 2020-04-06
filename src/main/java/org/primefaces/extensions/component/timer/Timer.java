@@ -16,7 +16,6 @@
 package org.primefaces.extensions.component.timer;
 
 import javax.el.MethodExpression;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -30,16 +29,14 @@ import org.primefaces.util.Constants;
  *
  * @author f.strazzullo
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces", name = "moment/moment.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "timer/timer.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "moment/moment.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "timer/timer.css")
+@ResourceDependency(library = "primefaces-extensions", name = "timer/timer.js")
 public class Timer extends UIComponentBase implements Widget, AjaxSource {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Timer";

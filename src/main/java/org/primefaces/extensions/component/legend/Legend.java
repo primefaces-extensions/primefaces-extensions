@@ -17,7 +17,6 @@ package org.primefaces.extensions.component.legend;
 
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 
@@ -29,14 +28,12 @@ import org.primefaces.component.api.Widget;
  * @author Melloware mellowaredev@gmail.com
  * @since 7.1
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "legend/legend.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "legend/legend.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "legend/legend.css")
+@ResourceDependency(library = "primefaces-extensions", name = "legend/legend.js")
 public class Legend extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Legend";

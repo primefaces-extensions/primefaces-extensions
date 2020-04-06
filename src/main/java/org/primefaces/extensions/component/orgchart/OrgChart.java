@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIData;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -40,14 +39,12 @@ import org.primefaces.util.Constants;
  * @version $Revision$
  * @since 6.3
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js")
+@ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
 public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
     public static final String STYLE_CLASS = "ui-orgchart ";

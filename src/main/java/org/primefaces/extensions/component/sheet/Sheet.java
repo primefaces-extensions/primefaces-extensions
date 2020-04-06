@@ -31,7 +31,6 @@ import java.util.Set;
 import javax.el.ELContext;
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -58,12 +57,12 @@ import org.primefaces.util.LangUtils;
  * @author Mark Lassiter / Melloware
  * @since 6.2
  */
-@ResourceDependencies({@ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces", name = "components.js"),
-            @ResourceDependency(library = "primefaces-extensions", target = "head", name = "sheet/sheet.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "sheet/sheet.js")})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces", name = "components.js")
+@ResourceDependency(library = "primefaces-extensions", target = "head", name = "sheet/sheet.css")
+@ResourceDependency(library = "primefaces-extensions", name = "sheet/sheet.js")
 public class Sheet extends SheetBase {
 
     public static final String EVENT_CELL_SELECT = "cellSelect";

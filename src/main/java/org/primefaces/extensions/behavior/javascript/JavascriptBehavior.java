@@ -15,7 +15,6 @@
  */
 package org.primefaces.extensions.behavior.javascript;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 
 import org.primefaces.behavior.base.AbstractBehavior;
@@ -28,12 +27,10 @@ import org.primefaces.behavior.base.BehaviorAttribute;
  * @version $Revision$
  * @since 0.2
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class JavascriptBehavior extends AbstractBehavior {
 
     public final static String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";

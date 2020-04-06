@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UISelectMany;
 import javax.faces.component.html.HtmlSelectManyCheckbox;
@@ -39,13 +38,11 @@ import org.primefaces.util.MessageFactory;
  * @version $Revision$
  * @since 0.3
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widget {
 
     public static final String UI_ICON = "ui-icon ";

@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
@@ -43,13 +42,11 @@ import org.primefaces.extensions.model.dynaform.DynaFormModel;
  * @version $Revision$
  * @since 0.5
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class DynaForm extends AbstractDynamicData implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DynaForm";

@@ -18,7 +18,6 @@ package org.primefaces.extensions.component.fab;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
@@ -38,12 +37,10 @@ import org.primefaces.util.MapBuilder;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0.1
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.js"),
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "fab/fab.css")
+@ResourceDependency(library = "primefaces-extensions", name = "fab/fab.js")
 public class FloatingActionButton extends AbstractMenu implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FloatingActionButton";

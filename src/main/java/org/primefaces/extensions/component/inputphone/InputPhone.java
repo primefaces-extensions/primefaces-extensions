@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
@@ -40,14 +39,12 @@ import org.primefaces.util.LangUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.css")
+@ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.js")
 public class InputPhone extends HtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";

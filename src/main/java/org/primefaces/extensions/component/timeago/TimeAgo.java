@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
@@ -38,12 +37,10 @@ import org.primefaces.util.LocaleUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0.1
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "timeago/timeago.js"),
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "timeago/timeago.js")
 public class TimeAgo extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.TimeAgo";

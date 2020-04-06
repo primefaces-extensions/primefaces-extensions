@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIOutput;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -35,13 +34,11 @@ import org.primefaces.util.Constants;
 
 import com.google.gson.JsonArray;
 
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.css")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     public final static String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";

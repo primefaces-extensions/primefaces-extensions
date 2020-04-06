@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.FacesException;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
@@ -48,14 +47,12 @@ import org.primefaces.util.Constants;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 1.1.0
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.css")
+@ResourceDependency(library = "primefaces-extensions", name = "fluidgrid/fluidgrid.js")
 public class FluidGrid extends AbstractDynamicData implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FluidGrid";

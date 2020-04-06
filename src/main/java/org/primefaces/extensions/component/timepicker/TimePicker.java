@@ -23,7 +23,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
@@ -45,15 +44,13 @@ import org.primefaces.util.LocaleUtils;
  * @version $Revision$
  * @since 0.3
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css")
+@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
 public class TimePicker extends HtmlInputText implements Widget {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";

@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.el.MethodExpression;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
@@ -44,12 +43,10 @@ import org.primefaces.extensions.component.parameters.MethodParameter;
  * @version $Revision$
  * @since 0.2
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class RemoteCommand extends UICommand implements AjaxSource {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.RemoteCommand";
@@ -311,9 +308,9 @@ public class RemoteCommand extends UICommand implements AjaxSource {
 
     protected void findChildParameters() {
         if (allParameters == null || assignableParameters == null || methodParameters == null) {
-            allParameters = new ArrayList<AbstractParameter>();
-            assignableParameters = new ArrayList<AssignableParameter>();
-            methodParameters = new ArrayList<MethodParameter>();
+            allParameters = new ArrayList<>();
+            assignableParameters = new ArrayList<>();
+            methodParameters = new ArrayList<>();
 
             for (final UIComponent child : super.getChildren()) {
                 if (child instanceof AbstractParameter) {

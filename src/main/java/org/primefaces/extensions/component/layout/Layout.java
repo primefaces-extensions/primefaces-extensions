@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.el.ValueExpression;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
@@ -44,14 +43,12 @@ import org.primefaces.util.LangUtils;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.css")
+@ResourceDependency(library = "primefaces-extensions", name = "layout/layout.js")
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
     public static final String POSITION_SEPARATOR = "_";

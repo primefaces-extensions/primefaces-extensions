@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -44,14 +43,12 @@ import org.primefaces.util.LocaleUtils;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "components.css"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.js")
-})
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.css")
+@ResourceDependency(library = "primefaces-extensions", name = "calculator/calculator.js")
 public class Calculator extends UIComponentBase implements ClientBehaviorHolder, Widget, RTLAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Calculator";

@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.el.MethodExpression;
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.html.HtmlInputTextarea;
@@ -40,14 +39,12 @@ import org.primefaces.extensions.event.CompleteEvent;
  * @version $Revision$
  * @since 0.3
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js")
+@ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css")
 public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";

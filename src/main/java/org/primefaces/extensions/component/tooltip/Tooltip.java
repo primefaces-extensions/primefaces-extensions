@@ -15,7 +15,6 @@
  */
 package org.primefaces.extensions.component.tooltip;
 
-import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIOutput;
 
@@ -27,14 +26,12 @@ import org.primefaces.component.api.Widget;
  * @author Oleg Varaksin / last modified by Melloware
  * @since 0.2
  */
-@ResourceDependencies({
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
-            @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
-            @ResourceDependency(library = "primefaces", name = "core.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js"),
-            @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css"),
-            @ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
-})
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.css")
+@ResourceDependency(library = "primefaces-extensions", name = "tooltip/tooltip.js")
 public class Tooltip extends UIOutput implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Tooltip";
