@@ -78,7 +78,9 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
         tabindex,
         escape,
         advancedContentFilter,
-        disableNativeSpellChecker;
+        disableNativeSpellChecker,
+        enterMode,
+        shiftEnterMode;
         //@formatter:on
 
         private String toString;
@@ -245,6 +247,22 @@ public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder,
 
     public void setDisableNativeSpellChecker(final boolean spellCheck) {
         getStateHelper().put(PropertyKeys.disableNativeSpellChecker, spellCheck);
+    }
+
+    public String getEnterMode() {
+        return (String) getStateHelper().eval(PropertyKeys.enterMode, "CKEDITOR.ENTER_P");
+    }
+
+    public void setEnterMode(final String enterMode) {
+        getStateHelper().put(PropertyKeys.enterMode, enterMode);
+    }
+
+    public String getShiftEnterMode() {
+        return (String) getStateHelper().eval(PropertyKeys.shiftEnterMode, "CKEDITOR.ENTER_P");
+    }
+
+    public void setShiftEnterMode(final String shiftEnterMode) {
+        getStateHelper().put(PropertyKeys.shiftEnterMode, shiftEnterMode);
     }
 
 }

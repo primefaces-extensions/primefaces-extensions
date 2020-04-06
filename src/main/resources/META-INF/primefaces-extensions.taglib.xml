@@ -475,6 +475,22 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Sets the behavior of the Enter key. It also determines other behavior rules of the editor, like whether the <br> element is to be used as a paragraph separator when indenting text. Default is CKEDITOR.ENTER_P.]]>
+            </description>
+            <name>enterMode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+         <attribute>
+            <description>
+                <![CDATA[Sets the behavior of the Shift+Enter key. It also determines other behavior rules of the editor, like whether the <br> element is to be used as a paragraph separator when indenting text. Default is CKEDITOR.ENTER_P.]]>
+            </description>
+            <name>shiftEnterMode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>    
+        <attribute>
+            <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>

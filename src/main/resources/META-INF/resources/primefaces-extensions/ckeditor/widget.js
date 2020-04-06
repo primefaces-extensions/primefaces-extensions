@@ -208,6 +208,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 thisConfig.readOnly = this.cfg.readOnly;
                 // Issue: #763: whether to use browser spell check
                 thisConfig.disableNativeSpellChecker = this.cfg.disableNativeSpellChecker;
+                // Issue #779: enter/shift enter Mode
+                thisConfig.enterMode = PrimeFaces.csp.evalResult(this.cfg.enterMode);
+                thisConfig.shiftEnterMode = PrimeFaces.csp.evalResult(this.cfg.shiftEnterMode);
             }
             PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
         }

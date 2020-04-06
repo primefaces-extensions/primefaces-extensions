@@ -116,7 +116,9 @@ public class CKEditorRenderer extends InputRenderer {
         wb.attr("customConfig", ckEditor.getCustomConfig())
                     .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
                     .attr("disableNativeSpellChecker", ckEditor.isDisableNativeSpellChecker())
-                    .attr("tabindex", ckEditor.getTabindex());
+                    .attr("tabindex", ckEditor.getTabindex())
+                    .attr("enterMode", ckEditor.getEnterMode())
+                    .attr("shiftEnterMode", ckEditor.getShiftEnterMode());
 
         encodeClientBehaviors(context, ckEditor);
         wb.finish();
