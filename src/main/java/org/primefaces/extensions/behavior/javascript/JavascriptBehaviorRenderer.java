@@ -82,11 +82,11 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
         }
 
         ClientBehaviorRenderingMode renderingMode = null;
-        Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
+        final Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
 
         if (behaviorParameters != null && !behaviorParameters.isEmpty()) {
-            for (ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
-                if (behaviorParameter.getValue() != null && behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
+            for (final ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
+                if (behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
                     renderingMode = (ClientBehaviorRenderingMode) behaviorParameter.getValue();
                     break;
                 }

@@ -26,7 +26,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
@@ -105,13 +104,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
         //@formatter:on
 
         private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
 
         @Override
         public String toString() {
@@ -394,7 +386,7 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
     }
 
     @Override
-    public void broadcast(final FacesEvent event) throws AbortProcessingException {
+    public void broadcast(final FacesEvent event) {
         super.broadcast(event);
 
         final FacesContext facesContext = FacesContext.getCurrentInstance();

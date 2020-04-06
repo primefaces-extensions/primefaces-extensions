@@ -15,11 +15,12 @@
  */
 package org.primefaces.extensions.util;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.convert.ConverterException;
+
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
-import javax.faces.application.FacesMessage;
-import javax.faces.convert.ConverterException;
 
 /**
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
@@ -28,6 +29,10 @@ import javax.faces.convert.ConverterException;
 public class PhoneNumberUtilWrapper {
 
     private static final String MESSAGE_INVALID_VALUE_KEY = "primefaces.extensions.inputphone.INVALID";
+
+    private PhoneNumberUtilWrapper() {
+        // private constructor to prevent instantiation
+    }
 
     public static void validate(final String number, final String country) {
         try {

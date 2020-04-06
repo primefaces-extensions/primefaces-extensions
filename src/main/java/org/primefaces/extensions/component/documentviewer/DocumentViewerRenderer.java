@@ -16,7 +16,6 @@
 package org.primefaces.extensions.component.documentviewer;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +86,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
 
     private String generateHashString(final DocumentViewer documentViewer) {
         final List<String> params = new ArrayList<>(4);
-        params.add("locale=" + documentViewer.calculateLocale().toString().replaceAll("_", "-"));
+        params.add("locale=" + documentViewer.calculateLocale().toString().replace('_', '-'));
 
         // page: page number. Example: page=2
         if (documentViewer.getPage() != null) {
@@ -124,8 +123,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
                     handler.createResource("documentviewer/pdfviewer.html", "primefaces-extensions").getRequestPath());
     }
 
-    protected String getDocumentSource(final FacesContext context, final DocumentViewer documentViewer)
-                throws UnsupportedEncodingException {
+    protected String getDocumentSource(final FacesContext context, final DocumentViewer documentViewer) {
         final String name = documentViewer.getName();
 
         if (name != null) {
