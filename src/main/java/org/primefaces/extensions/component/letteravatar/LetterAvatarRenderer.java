@@ -44,10 +44,6 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        if (context == null) {
-            throw new NullPointerException("No context defined!");
-        }
-
         final LetterAvatar letterAvatar = (LetterAvatar) component;
 
         encodeMarkup(context, letterAvatar);
