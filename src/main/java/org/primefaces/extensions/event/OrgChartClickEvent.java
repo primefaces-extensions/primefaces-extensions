@@ -28,7 +28,6 @@ import org.primefaces.shaded.json.JSONObject;
  * @version $Revision$
  * @since 6.3
  */
-@SuppressWarnings("serial")
 public class OrgChartClickEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "click";
