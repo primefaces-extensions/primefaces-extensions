@@ -37,7 +37,7 @@ public class FluidGridItem implements KeyData, Serializable {
 
     public FluidGridItem() {
         // generate key
-        setKey(RandomStringUtils.randomAlphanumeric(8));
+        setKey(generateKey());
     }
 
     public FluidGridItem(final Object data) {
@@ -45,7 +45,7 @@ public class FluidGridItem implements KeyData, Serializable {
         type = DEFAULT_TYPE;
 
         // generate key
-        setKey(RandomStringUtils.randomAlphanumeric(8));
+        setKey(generateKey());
     }
 
     public FluidGridItem(final Object data, final String type) {
@@ -58,7 +58,7 @@ public class FluidGridItem implements KeyData, Serializable {
         }
 
         // generate key
-        setKey(RandomStringUtils.randomAlphanumeric(8));
+        setKey(generateKey());
     }
 
     @Override
@@ -127,5 +127,9 @@ public class FluidGridItem implements KeyData, Serializable {
         builder.append(type);
         builder.append("]");
         return builder.toString();
+    }
+
+    public String generateKey() {
+        return RandomStringUtils.randomAlphanumeric(8);
     }
 }
