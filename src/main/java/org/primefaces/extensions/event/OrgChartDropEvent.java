@@ -32,6 +32,7 @@ import org.primefaces.shaded.json.JSONObject;
 public class OrgChartDropEvent extends AjaxBehaviorEvent {
 
     public static final String NAME = "drop";
+    private static final long serialVersionUID = 1L;
 
     private transient JSONObject hierarchy;
 

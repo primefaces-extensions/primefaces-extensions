@@ -43,17 +43,18 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
 
     private static final long serialVersionUID = 20111121L;
 
+    @Override
     public void processEvent(ComponentSystemEvent event) {
-        UIComponent source = event.getComponent();
+        final UIComponent source = event.getComponent();
 
         // find master detail component
-        MasterDetail masterDetail = findMasterDetail(source);
+        final MasterDetail masterDetail = findMasterDetail(source);
         if (masterDetail == null) {
             throw new FacesException("MasterDetail was not found. SelectDetailLevel can be only used inside of MasterDetail.");
         }
 
         // find master detail level component
-        MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
+        final MasterDetailLevel masterDetailLevel = findMasterDetailLevel(source);
         if (masterDetailLevel == null) {
             throw new FacesException(
                         "MasterDetailLevel was not found. SelectDetailLevel can be only used inside of MasterDetailLevel.");
@@ -68,8 +69,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         addUIParameter(fc, source, masterDetailClientId + MasterDetail.CURRENT_LEVEL, masterDetailLevel.getLevel());
 
         // selected level
-        ValueExpression selectedLevelVE = (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_LEVEL_VALUE_EXPRESSION);
-        Object selectedLevel = selectedLevelVE != null ? selectedLevelVE.getValue(fc.getELContext()) : null;
+        final ValueExpression selectedLevelVE = (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_LEVEL_VALUE_EXPRESSION);
+        final Object selectedLevel = selectedLevelVE != null ? selectedLevelVE.getValue(fc.getELContext()) : null;
         if (selectedLevel != null) {
             addUIParameter(fc, source, masterDetailClientId + MasterDetail.SELECTED_LEVEL, selectedLevel);
         }
@@ -78,8 +79,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         }
 
         // selected step
-        ValueExpression selectedStepVE = (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION);
-        Object selectedStep = selectedStepVE != null ? selectedStepVE.getValue(fc.getELContext()) : null;
+        final ValueExpression selectedStepVE = (ValueExpression) source.getAttributes().get(MasterDetail.SELECTED_STEP_VALUE_EXPRESSION);
+        final Object selectedStep = selectedStepVE != null ? selectedStepVE.getValue(fc.getELContext()) : null;
         if (selectedStep != null) {
             addUIParameter(fc, source, masterDetailClientId + MasterDetail.SELECTED_STEP, selectedStep);
         }
@@ -88,8 +89,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         }
 
         // preserveInputs
-        ValueExpression preserveInputsVE = (ValueExpression) source.getAttributes().get(MasterDetail.PRESERVE_INPUTS_VALUE_EXPRESSION);
-        Object preserveInputs = preserveInputsVE != null ? preserveInputsVE.getValue(fc.getELContext()) : null;
+        final ValueExpression preserveInputsVE = (ValueExpression) source.getAttributes().get(MasterDetail.PRESERVE_INPUTS_VALUE_EXPRESSION);
+        final Object preserveInputs = preserveInputsVE != null ? preserveInputsVE.getValue(fc.getELContext()) : null;
         if (preserveInputs != null) {
             addUIParameter(fc, source, masterDetailClientId + MasterDetail.PRESERVE_INPUTS, preserveInputs);
         }
@@ -98,8 +99,8 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
         }
 
         // resetInputs
-        ValueExpression resetInputsVE = (ValueExpression) source.getAttributes().get(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION);
-        Object resetInputs = resetInputsVE != null ? resetInputsVE.getValue(fc.getELContext()) : null;
+        final ValueExpression resetInputsVE = (ValueExpression) source.getAttributes().get(MasterDetail.RESET_INPUTS_VALUE_EXPRESSION);
+        final Object resetInputs = resetInputsVE != null ? resetInputsVE.getValue(fc.getELContext()) : null;
         if (resetInputs != null) {
             addUIParameter(fc, source, masterDetailClientId + MasterDetail.RESET_INPUTS, resetInputs);
         }
@@ -107,18 +108,18 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
             removeUIParameter(source, masterDetailClientId + MasterDetail.RESET_INPUTS);
         }
 
-        ValueExpression contextValueVE = (ValueExpression) source.getAttributes().get(MasterDetail.CONTEXT_VALUE_VALUE_EXPRESSION);
+        final ValueExpression contextValueVE = (ValueExpression) source.getAttributes().get(MasterDetail.CONTEXT_VALUE_VALUE_EXPRESSION);
         if (contextValueVE == null) {
             return;
         }
 
         Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
         if (contextValues == null) {
-            contextValues = new HashMap<String, Object>();
+            contextValues = new HashMap<>();
         }
 
         // resolve context value and make it available in MasterDetail component
-        Object contextValue = contextValueVE.getValue(fc.getELContext());
+        final Object contextValue = contextValueVE.getValue(fc.getELContext());
         if (contextValue != null) {
             contextValues.put(MasterDetail.RESOLVED_CONTEXT_VALUE + source.getClientId(fc), contextValue);
         }
@@ -158,7 +159,7 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
     }
 
     private void addUIParameter(FacesContext fc, UIComponent source, String paramName, Object paramValue) {
-        for (UIComponent child : source.getChildren()) {
+        for (final UIComponent child : source.getChildren()) {
             if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
                 // update value
                 ((UIParameter) child).setValue(paramValue);
@@ -167,7 +168,7 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
             }
         }
 
-        UIParameter uiParameter = new UIParameter();
+        final UIParameter uiParameter = new UIParameter();
         uiParameter.setId(createUniqueId(fc, source));
         uiParameter.setName(paramName);
         uiParameter.setValue(paramValue);
@@ -176,12 +177,12 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
     }
 
     private void removeUIParameter(UIComponent source, String paramName) {
-        List<UIComponent> childs = source.getChildren();
+        final List<UIComponent> childs = source.getChildren();
         if (childs == null || childs.isEmpty()) {
             return;
         }
 
-        for (UIComponent child : childs) {
+        for (final UIComponent child : childs) {
             if (child instanceof UIParameter && paramName.equals(((UIParameter) child).getName())) {
                 childs.remove(child);
 
@@ -191,10 +192,10 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
     }
 
     private String createUniqueId(FacesContext fc, UIComponent source) {
-        UniqueIdVendor parentUniqueIdVendor = ComponentTraversalUtils.closestUniqueIdVendor(source);
+        final UniqueIdVendor parentUniqueIdVendor = ComponentTraversalUtils.closestUniqueIdVendor(source);
 
         if (parentUniqueIdVendor == null) {
-            UIViewRoot viewRoot = fc.getViewRoot();
+            final UIViewRoot viewRoot = fc.getViewRoot();
 
             if (viewRoot != null) {
                 return viewRoot.createUniqueId(fc, null);

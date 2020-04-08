@@ -36,9 +36,9 @@ public class ExporterFactoryProvider {
         ExporterFactory factory = (ExporterFactory) context.getExternalContext().getApplicationMap().get(KEY);
 
         if (factory == null) {
-            ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
+            final ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
             if (loader != null) {
-                Iterator<ExporterFactory> iterator = loader.iterator();
+                final Iterator<ExporterFactory> iterator = loader.iterator();
                 if (iterator.hasNext()) {
                     factory = iterator.next();
                 }
@@ -61,12 +61,13 @@ class DefaultExporterFactory implements ExporterFactory {
         PDF, XLSX
     }
 
+    @Override
     public Exporter getExporterForType(String type) {
 
         Exporter exporter = null;
 
         try {
-            ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
+            final ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
 
             switch (exporterType) {
 
@@ -85,7 +86,7 @@ class DefaultExporterFactory implements ExporterFactory {
 
             }
         }
-        catch (IllegalArgumentException e) {
+        catch (final IllegalArgumentException e) {
             throw new FacesException(e);
         }
 

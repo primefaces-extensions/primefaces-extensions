@@ -101,7 +101,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
         final List<AbstractParameter> parameters = command.getAllParameters();
         final String name = command.getName();
 
-        ExtAjaxRequestBuilder builder = ExtAjaxRequestBuilder.get(context);
+        final ExtAjaxRequestBuilder builder = ExtAjaxRequestBuilder.get(context);
         builder.init()
                     .source(clientId)
                     .form(command, command, form)

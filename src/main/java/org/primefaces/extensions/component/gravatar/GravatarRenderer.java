@@ -17,11 +17,13 @@ package org.primefaces.extensions.component.gravatar;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -52,7 +54,7 @@ public class GravatarRenderer extends CoreRenderer {
             url = generateURL(gravatar);
         }
         catch (final NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            throw new FacesException(e);
         }
 
         writer.writeAttribute("src", url, null);
@@ -95,7 +97,7 @@ public class GravatarRenderer extends CoreRenderer {
             params.add("d=" + notFound);
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             url += "?" + StringUtils.join(params, "&");
         }
 
@@ -104,9 +106,9 @@ public class GravatarRenderer extends CoreRenderer {
 
     private String generateMailHash(Gravatar gravatar) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         final MessageDigest md = MessageDigest.getInstance("MD5"); // NOSONAR
-        md.update(String.valueOf(gravatar.getValue()).getBytes("UTF-8"));
+        md.update(String.valueOf(gravatar.getValue()).getBytes(StandardCharsets.UTF_8));
         final byte[] digest = md.digest();
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder(1024);
         for (final byte b : digest) {
             sb.append(String.format("%02x", b & 0xff));
         }

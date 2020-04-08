@@ -985,7 +985,7 @@ public class SheetRenderer extends CoreRenderer {
                 final String rowKey = update.getString(4);
                 final int col = sheet.getMappedColumn(update.getInt(1));
                 final String newValue = String.valueOf(update.get(3));
-                sheet.setSubmittedValue(context, rowKey, col, newValue);
+                sheet.setSubmittedValue(rowKey, col, newValue);
             }
         }
         catch (final JSONException ex) {

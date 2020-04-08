@@ -30,6 +30,7 @@ import java.util.Set;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
@@ -265,7 +266,7 @@ public class Sheet extends SheetBase {
      * @param col
      * @param value
      */
-    public void setSubmittedValue(final FacesContext context, final String rowKey, final int col, final String value) {
+    public void setSubmittedValue(final String rowKey, final int col, final String value) {
         submittedValues.put(new SheetRowColIndex(rowKey, col), value);
     }
 
@@ -471,10 +472,9 @@ public class Sheet extends SheetBase {
      * the filter value. - endsWith: Checks if column value ends with the filter value. - contains: Checks if column value contains the filter value. - exact:
      * Checks if string representations of column value and filter value are same.
      *
-     * @param obj
      * @return
      */
-    protected boolean matchesFilter(final Object obj) {
+    protected boolean matchesFilter() {
         for (final SheetColumn col : getColumns()) {
             final String filterValue = col.getFilterValue();
             if (LangUtils.isValueBlank(filterValue)) {
@@ -553,7 +553,7 @@ public class Sheet extends SheetBase {
             // iterate and add those matching the filters
             for (final Object obj : values) {
                 requestMap.put(var, obj);
-                if (matchesFilter(obj)) {
+                if (matchesFilter()) {
                     filteredList.add(obj);
                 }
             }
@@ -632,11 +632,11 @@ public class Sheet extends SheetBase {
     protected Object getRowKeyValue(final FacesContext context) {
         final ValueExpression veRowKey = getValueExpression(PropertyKeys.rowKey.name());
         if (veRowKey == null) {
-            throw new RuntimeException("RowKey required on sheet!");
+            throw new FacesException("RowKey required on sheet!");
         }
         final Object value = veRowKey.getValue(context.getELContext());
         if (value == null) {
-            throw new RuntimeException("RowKey must resolve to non-null value for updates to work properly");
+            throw new FacesException("RowKey must resolve to non-null value for updates to work properly");
         }
         return value;
     }
@@ -821,7 +821,7 @@ public class Sheet extends SheetBase {
             return;
         }
 
-        final Object values[] = (Object[]) state;
+        final Object[] values = (Object[]) state;
         super.restoreState(context, values[0]);
         final Object restoredSubmittedValues = values[1];
         final Object restoredLocalValues = values[2];

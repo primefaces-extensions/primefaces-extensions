@@ -261,6 +261,12 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
         return items;
     }
 
+    protected void checkModelInstance(Object value) {
+        if (!(value instanceof Collection<?>)) {
+            throw new FacesException("Value in FluidGrid must be of type Collection / List");
+        }
+    }
+
     @Override
     protected KeyData findData(final String key) {
         final Object value = getValue();
@@ -268,9 +274,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             return null;
         }
 
-        if (!(value instanceof Collection<?>)) {
-            throw new FacesException("Value in FluidGrid must be of type Collection / List");
-        }
+        checkModelInstance(value);
 
         final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
         for (final FluidGridItem fluidGridItem : col) {
@@ -295,9 +299,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             // dynamic items
             final Object value = getValue();
             if (value != null) {
-                if (!(value instanceof Collection<?>)) {
-                    throw new FacesException("Value in FluidGrid must be of type Collection / List");
-                }
+                checkModelInstance(value);
 
                 final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
                 for (final FluidGridItem fluidGridItem : col) {
@@ -322,9 +324,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                 return false;
             }
 
-            if (!(value instanceof Collection<?>)) {
-                throw new FacesException("Value in FluidGrid must be of type Collection / List");
-            }
+            checkModelInstance(value);
 
             final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
             for (final FluidGridItem fluidGridItem : col) {
@@ -353,9 +353,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             return false;
         }
 
-        if (!(value instanceof Collection<?>)) {
-            throw new FacesException("Value in FluidGrid must be of type Collection / List");
-        }
+        checkModelInstance(value);
 
         if (getChildCount() > 0) {
             // extract the fluidGridItem key from the clientId

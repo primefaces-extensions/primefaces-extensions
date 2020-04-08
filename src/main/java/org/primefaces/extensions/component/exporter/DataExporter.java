@@ -109,13 +109,14 @@ public class DataExporter implements ActionListener, StateHolder {
         this.skipComponents = skipComponents;
     }
 
+    @Override
     public void processAction(ActionEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ELContext elContext = context.getELContext();
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final ELContext elContext = context.getELContext();
 
-        String tableId = (String) target.getValue(elContext);
-        String exportAs = (String) type.getValue(elContext);
-        String outputFileName = (String) fileName.getValue(elContext);
+        final String tableId = (String) target.getValue(elContext);
+        final String exportAs = (String) type.getValue(elContext);
+        final String outputFileName = (String) fileName.getValue(elContext);
 
         String tableTitleValue = Constants.EMPTY_STRING;
         if (tableTitle != null) {
@@ -190,8 +191,8 @@ public class DataExporter implements ActionListener, StateHolder {
         }
 
         try {
-            ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
-            Exporter exporter = factory.getExporterForType(exportAs);
+            final ExporterFactory factory = ExporterFactoryProvider.getExporterFactory(context);
+            final Exporter exporter = factory.getExporterForType(exportAs);
             exporter.setSkipComponents(skipComponentsValue);
             exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue,
                         cellFontColorValue, cellFontStyleValue, datasetPaddingValue, orientationValue);
@@ -199,20 +200,23 @@ public class DataExporter implements ActionListener, StateHolder {
                         subtable);
             context.responseComplete();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new FacesException(e);
         }
     }
 
+    @Override
     public boolean isTransient() {
         return false;
     }
 
+    @Override
     public void setTransient(boolean value) {
     }
 
+    @Override
     public void restoreState(FacesContext context, Object state) {
-        Object values[] = (Object[]) state;
+        final Object values[] = (Object[]) state;
 
         target = (ValueExpression) values[0];
         type = (ValueExpression) values[1];
@@ -237,8 +241,9 @@ public class DataExporter implements ActionListener, StateHolder {
         skipComponents = (ValueExpression) values[20];
     }
 
+    @Override
     public Object saveState(FacesContext context) {
-        Object values[] = new Object[21];
+        final Object values[] = new Object[21];
 
         values[0] = target;
         values[1] = type;
@@ -262,6 +267,6 @@ public class DataExporter implements ActionListener, StateHolder {
         values[19] = orientation;
         values[20] = skipComponents;
 
-        return ((Object[]) values);
+        return values;
     }
 }

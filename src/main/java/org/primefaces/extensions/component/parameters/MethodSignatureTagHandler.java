@@ -41,15 +41,16 @@ public class MethodSignatureTagHandler extends TagHandler {
     public MethodSignatureTagHandler(final TagConfig config) {
         super(config);
 
-        final TagAttribute parametersTag = this.getRequiredAttribute("parameters");
+        final TagAttribute parametersTag = getRequiredAttribute("parameters");
         try {
             parameterTypes = parseParameterTypes(parametersTag.getValue());
         }
-        catch (ClassNotFoundException e) {
+        catch (final ClassNotFoundException e) {
             throw new FacesException(e.getMessage(), e);
         }
     }
 
+    @Override
     public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
         // store all parameter types to parent component
         parent.getAttributes().put(PARAMETERS_TYPES_ATTRIBUTE_NAME, parameterTypes);

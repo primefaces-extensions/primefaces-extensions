@@ -36,7 +36,7 @@ public class DynaFormRow implements Serializable {
     private DynaFormModel dynaFormModel;
 
     // all elements (label and controls) in this row
-    private final List<AbstractDynaFormElement> elements = new ArrayList<AbstractDynaFormElement>();
+    private final List<AbstractDynaFormElement> elements = new ArrayList<>();
 
     /**
      * This constructor is required for serialization. Please do not remove.

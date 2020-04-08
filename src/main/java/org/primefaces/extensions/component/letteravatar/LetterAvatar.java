@@ -39,8 +39,8 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LetterAvatarRenderer";
 
-    public final static String COMPONENT_CLASS = "ui-letteravatar";
-    public final static String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
+    public static final String COMPONENT_CLASS = "ui-letteravatar";
+    public static final String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
 
     protected enum PropertyKeys {
         // @formatter:off
@@ -87,11 +87,11 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
         getStateHelper().put(PropertyKeys.value, value);
     }
 
-    public Boolean isRounded() {
+    public boolean isRounded() {
         return (Boolean) getStateHelper().eval(PropertyKeys.rounded, false);
     }
 
-    public void setRounded(Boolean rounded) {
+    public void setRounded(boolean rounded) {
         getStateHelper().put(PropertyKeys.rounded, rounded);
     }
 

@@ -171,6 +171,12 @@ public class DynaForm extends AbstractDynamicData implements Widget {
         return cells;
     }
 
+    protected void checkModelInstance(Object value) {
+        if (!(value instanceof DynaFormModel)) {
+            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
+        }
+    }
+
     @Override
     protected KeyData findData(final String key) {
         final Object value = getValue();
@@ -178,9 +184,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             return null;
         }
 
-        if (!(value instanceof DynaFormModel)) {
-            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-        }
+        checkModelInstance(value);
 
         final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
         for (final DynaFormControl dynaFormControl : dynaFormControls) {
@@ -196,9 +200,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
     protected void processChildren(final FacesContext context, final PhaseId phaseId) {
         final Object value = getValue();
         if (value != null) {
-            if (!(value instanceof DynaFormModel)) {
-                throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-            }
+            checkModelInstance(value);
 
             final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
             for (final DynaFormControl dynaFormControl : dynaFormControls) {
@@ -216,9 +218,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             return false;
         }
 
-        if (!(value instanceof DynaFormModel)) {
-            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-        }
+        checkModelInstance(value);
 
         final List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
         for (final DynaFormControl dynaFormControl : dynaFormControls) {
@@ -239,9 +239,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
             return false;
         }
 
-        if (!(value instanceof DynaFormModel)) {
-            throw new FacesException("Value in DynaForm must be of type DynaFormModel");
-        }
+        checkModelInstance(value);
 
         if (getChildCount() > 0) {
             // extract the dynaFormControl key from the clientId

@@ -15,13 +15,15 @@
  */
 package org.primefaces.extensions.util;
 
+import static org.primefaces.util.MessageFactory.getFormattedText;
+
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import static org.primefaces.util.MessageFactory.getFormattedText;
 
 /**
  * PrimeFaces Extensions message factory. Delegates as much as possible to {@link org.primefaces.util.MessageFactory}.
@@ -68,7 +70,7 @@ public class MessageFactory {
         try {
             message.setDetail(getFormattedText(locale, extensionsBundle.getString(messageId + DEFAULT_DETAIL_SUFFIX), params));
         }
-        catch (MissingResourceException e) {
+        catch (final MissingResourceException e) {
             // NoOp
         }
     }
@@ -77,7 +79,7 @@ public class MessageFactory {
     @Deprecated
     public static Locale getLocale() {
         Locale locale = null;
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        final FacesContext facesContext = FacesContext.getCurrentInstance();
 
         if (facesContext != null && facesContext.getViewRoot() != null) {
             locale = facesContext.getViewRoot().getLocale();

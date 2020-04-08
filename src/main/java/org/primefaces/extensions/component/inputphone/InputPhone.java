@@ -58,7 +58,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
                 "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", EVENT_COUNTRY_SELECT);
 
-    private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList("countrySelect");
+    private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
 
     // @formatter:off
     public enum PropertyKeys {
@@ -108,6 +108,11 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public String getDefaultEventName() {
+        return EVENT_COUNTRY_SELECT;
     }
 
     @Override

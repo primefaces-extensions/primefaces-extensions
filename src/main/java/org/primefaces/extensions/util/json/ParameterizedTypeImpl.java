@@ -37,14 +37,17 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
         this.owner = owner;
     }
 
+    @Override
     public Type getRawType() {
         return rawType;
     }
 
+    @Override
     public Type[] getActualTypeArguments() {
         return Arrays.copyOf(actualTypeArguments, actualTypeArguments.length);
     }
 
+    @Override
     public Type getOwnerType() {
         return owner;
     }
@@ -56,13 +59,13 @@ public final class ParameterizedTypeImpl implements ParameterizedType {
         }
 
         // Check that information is equivalent
-        ParameterizedType that = (ParameterizedType) o;
+        final ParameterizedType that = (ParameterizedType) o;
         if (this == that) {
             return true;
         }
 
-        Type thatOwner = that.getOwnerType();
-        Type thatRawType = that.getRawType();
+        final Type thatOwner = that.getOwnerType();
+        final Type thatRawType = that.getRawType();
 
         return (owner == null ? thatOwner == null : owner.equals(thatOwner))
                     && (rawType == null ? thatRawType == null : rawType.equals(thatRawType))

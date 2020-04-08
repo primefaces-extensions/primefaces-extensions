@@ -33,7 +33,7 @@ public class OrgChartHelper {
      * @return
      */
     public static List<OrgChartNode> getAllNodesTraverseFromRoot(final OrgChartNode root) {
-        final List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
+        final List<OrgChartNode> orgChartNodes = new ArrayList<>();
 
         treeTraversal(root, orgChartNodes);
 
@@ -47,7 +47,7 @@ public class OrgChartHelper {
     public static HashMap<String, OrgChartNode> parseOrgChartNodesIntoHashMap(
                 final List<OrgChartNode> orgChartNodes) {
 
-        final HashMap<String, OrgChartNode> hashMap = new HashMap<String, OrgChartNode>();
+        final HashMap<String, OrgChartNode> hashMap = new HashMap<>();
 
         if (orgChartNodes != null && !orgChartNodes.isEmpty()) {
 

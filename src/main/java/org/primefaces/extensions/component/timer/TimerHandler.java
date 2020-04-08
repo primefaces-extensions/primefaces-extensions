@@ -33,8 +33,9 @@ public class TimerHandler extends ComponentHandler {
         super(config);
     }
 
+    @Override
     protected MetaRuleset createMetaRuleset(Class type) {
-        MetaRuleset metaRuleset = super.createMetaRuleset(type);
+        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
         metaRuleset.addRule(LISTENER);
 

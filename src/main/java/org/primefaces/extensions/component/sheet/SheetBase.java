@@ -18,6 +18,7 @@ package org.primefaces.extensions.component.sheet;
 import java.util.ArrayList;
 
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.behavior.ClientBehaviorHolder;
@@ -797,11 +798,11 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     protected Object getRowKeyValue(final FacesContext context) {
         final ValueExpression veRowKey = getValueExpression(PropertyKeys.rowKey.name());
         if (veRowKey == null) {
-            throw new RuntimeException("RowKey required on sheet!");
+            throw new FacesException("RowKey required on sheet!");
         }
         final Object value = veRowKey.getValue(context.getELContext());
         if (value == null) {
-            throw new RuntimeException("RowKey must resolve to non-null value for updates to work properly");
+            throw new FacesException("RowKey must resolve to non-null value for updates to work properly");
         }
         return value;
     }
@@ -840,8 +841,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
      */
     public String getSortOrder() {
         // if we have a toggled sort in our state, use it
-        final String result = (String) getStateHelper().eval(PropertyKeys.sortOrder, SortOrder.ASCENDING.toString());
-        return result;
+        return (String) getStateHelper().eval(PropertyKeys.sortOrder, SortOrder.ASCENDING.toString());
     }
 
     /**

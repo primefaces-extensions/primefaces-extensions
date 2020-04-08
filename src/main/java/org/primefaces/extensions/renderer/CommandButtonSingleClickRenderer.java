@@ -16,8 +16,10 @@
 package org.primefaces.extensions.renderer;
 
 import java.io.IOException;
+
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
 
@@ -32,9 +34,9 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     @Override
     protected void encodeMarkup(FacesContext context, CommandButton button) throws IOException {
         if (isEligible(button)) {
-            String widgetVar = button.resolveWidgetVar(context);
-            String onClick = getAttributeValue(context, button, "onclick");
-            String onComplete = getAttributeValue(context, button, "oncomplete");
+            final String widgetVar = button.resolveWidgetVar(context);
+            final String onClick = getAttributeValue(context, button, "onclick");
+            final String onComplete = getAttributeValue(context, button, "oncomplete");
             button.setOnclick(prefix(onClick, getToggleJS(widgetVar, false)));
             button.setOncomplete(prefix(onComplete, getToggleJS(widgetVar, true)));
         }
@@ -50,7 +52,7 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected boolean isConfirmation(final CommandButton button) {
-        String styleClass = button.getStyleClass();
+        final String styleClass = button.getStyleClass();
         return styleClass != null && styleClass.contains("ui-confirmdialog");
     }
 
@@ -59,7 +61,7 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected String getAttributeValue(final FacesContext context, final CommandButton button, final String attribute) {
-        ValueExpression ve = button.getValueExpression(attribute);
+        final ValueExpression ve = button.getValueExpression(attribute);
         return ve == null ? null : (String) ve.getValue(context.getELContext());
     }
 

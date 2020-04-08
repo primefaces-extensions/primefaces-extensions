@@ -662,13 +662,13 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                     }
                 }
                 if (message != null) {
-                    final Sheet sheet = getSheet();
-                    if (sheet == null) {
+                    final Sheet current = getSheet();
+                    if (current == null) {
                         return;
                     }
                     context.addMessage(getClientId(context), message);
-                    sheet.getInvalidUpdates().add(
-                                new SheetInvalidUpdate(sheet.getRowKeyValue(context), sheet.getColumns().indexOf(this), this, value,
+                    current.getInvalidUpdates().add(
+                                new SheetInvalidUpdate(current.getRowKeyValue(context), current.getColumns().indexOf(this), this, value,
                                             message.getDetail()));
 
                 }
@@ -700,10 +700,10 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                             MESSAGE_REQUIRED);
             }
             context.addMessage(getClientId(context), message);
-            final Sheet sheet = getSheet();
-            if (sheet != null) {
-                sheet.getInvalidUpdates().add(
-                            new SheetInvalidUpdate(sheet.getRowKeyValue(context), sheet.getColumns().indexOf(this), this, newValue,
+            final Sheet current = getSheet();
+            if (current != null) {
+                current.getInvalidUpdates().add(
+                            new SheetInvalidUpdate(current.getRowKeyValue(context), current.getColumns().indexOf(this), this, newValue,
                                         message.getDetail()));
             }
             setValid(false);

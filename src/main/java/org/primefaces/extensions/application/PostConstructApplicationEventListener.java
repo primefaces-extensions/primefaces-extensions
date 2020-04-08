@@ -32,10 +32,12 @@ public class PostConstructApplicationEventListener implements SystemEventListene
 
     private static final Logger LOGGER = Logger.getLogger(PostConstructApplicationEventListener.class.getName());
 
+    @Override
     public boolean isListenerForSource(final Object source) {
         return true;
     }
 
+    @Override
     public void processEvent(final SystemEvent event) {
         LOGGER.log(Level.INFO, "Running on PrimeFaces Extensions {0}", this.getClass().getPackage().getImplementationVersion());
     }

@@ -190,7 +190,7 @@ public class OrgChartRenderer extends CoreRenderer {
         }
 
         if (!orgChartNode.getChildren().isEmpty()) {
-            final List<JSONObject> jsonChildren = new ArrayList<JSONObject>();
+            final List<JSONObject> jsonChildren = new ArrayList<>();
             for (int i = 0; i < orgChartNode.getChildren().size(); i++) {
                 jsonChildren.add(toJSON(orgChartNode.getChildren().get(i),
                             orgChartNode.getChildren().get(i).getChildren()));

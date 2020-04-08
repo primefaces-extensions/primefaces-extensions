@@ -63,7 +63,7 @@ public class GChartRenderer extends CoreRenderer {
 
         String apiKey = chart.getApiKey();
         if (LangUtils.isValueBlank(apiKey)) {
-            apiKey = getApiKey(context, chart);
+            apiKey = getApiKey(context);
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
@@ -82,7 +82,7 @@ public class GChartRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    protected String getApiKey(final FacesContext context, final GChart chart) {
+    protected String getApiKey(final FacesContext context) {
         String key = null;
         try {
             final String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);

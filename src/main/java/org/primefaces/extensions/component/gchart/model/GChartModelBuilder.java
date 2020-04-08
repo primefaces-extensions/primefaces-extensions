@@ -26,28 +26,28 @@ import org.primefaces.model.TreeNode;
 import org.primefaces.util.Constants;
 
 public class GChartModelBuilder {
-    private List<GChartModelRow> rows = new ArrayList<GChartModelRow>(0);
+    private final List<GChartModelRow> rows = new ArrayList<>(0);
     private GChartType gChartType;
-    private Map<String, Object> options = new HashMap<String, Object>(0);
-    private List<Object> columns = new ArrayList<Object>(0);
+    private final Map<String, Object> options = new HashMap<>(0);
+    private final List<Object> columns = new ArrayList<>(0);
 
     public GChartModelBuilder setChartType(GChartType chartType) {
         if (gChartType != null) {
             throw new IllegalStateException("GChart Type already set");
         }
-        this.gChartType = chartType;
+        gChartType = chartType;
 
         return this;
     }
 
     public GChartModelBuilder importTreeNode(TreeNode root) {
-        String label = String.valueOf(root.getData());
-        String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : Constants.EMPTY_STRING;
+        final String label = String.valueOf(root.getData());
+        final String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : Constants.EMPTY_STRING;
 
         this.addRow(label, parentLabel);
 
-        for (TreeNode node : root.getChildren()) {
-            this.importTreeNode(node);
+        for (final TreeNode node : root.getChildren()) {
+            importTreeNode(node);
         }
 
         return this;
@@ -64,17 +64,17 @@ public class GChartModelBuilder {
     }
 
     public GChartModelBuilder addRow(String label, Object... objects) {
-        this.rows.add(new DefaultGChartModelRow(label, Arrays.asList(objects)));
+        rows.add(new DefaultGChartModelRow(label, Arrays.asList(objects)));
         return this;
     }
 
     public GChartModelBuilder addRow(String label, Collection<Object> objects) {
-        this.rows.add(new DefaultGChartModelRow(label, objects));
+        rows.add(new DefaultGChartModelRow(label, objects));
         return this;
     }
 
     public GChartModelBuilder addOption(String name, Object value) {
-        this.options.put(name, value);
+        options.put(name, value);
         return this;
     }
 

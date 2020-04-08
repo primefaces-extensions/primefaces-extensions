@@ -30,12 +30,13 @@ import javax.faces.component.visit.VisitResult;
  */
 public class ExecutableVisitCallback implements VisitCallback {
 
-    private VisitTaskExecutor visitTaskExecutor;
+    private final VisitTaskExecutor visitTaskExecutor;
 
     public ExecutableVisitCallback(VisitTaskExecutor visitTaskExecutor) {
         this.visitTaskExecutor = visitTaskExecutor;
     }
 
+    @Override
     public VisitResult visit(VisitContext context, UIComponent target) {
         if (visitTaskExecutor.shouldExecute(target)) {
             return visitTaskExecutor.execute(target);

@@ -25,10 +25,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
+import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.util.ComponentUtils;
@@ -36,9 +37,6 @@ import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
-
-import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
-import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 
 /**
  * Renderer for the {@link InputPhone} component.
@@ -49,6 +47,7 @@ import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 public class InputPhoneRenderer extends InputRenderer {
 
     private static final Logger LOGGER = Logger.getLogger(InputPhoneRenderer.class.getName());
+    private static final String HIDDEN_ID = "_iso2";
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -83,7 +82,7 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) throws ConverterException {
+    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) {
         final String value = (String) submittedValue;
         if (LangUtils.isValueBlank(value)) {
             return null;
@@ -96,7 +95,7 @@ public class InputPhoneRenderer extends InputRenderer {
             return converter.getAsObject(context, inputPhone, value);
         }
 
-        String country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + "_iso2");
+        String country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + HIDDEN_ID);
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
@@ -171,8 +170,8 @@ public class InputPhoneRenderer extends InputRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("input", null);
         writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId + "_iso2", null);
-        writer.writeAttribute("name", clientId + "_iso2", null);
+        writer.writeAttribute("id", clientId + HIDDEN_ID, null);
+        writer.writeAttribute("name", clientId + HIDDEN_ID, null);
         writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
         writer.endElement("input");
     }
@@ -237,7 +236,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
     private Collection<String> toCollection(Object object) {
         if (String.class.isInstance(object)) {
-            final String string = ((String) object).replaceAll(" ", ",").toLowerCase();
+            final String string = ((String) object).replace(' ', ',').toLowerCase();
             return Arrays.asList(string.split(","));
         }
         return (Collection<String>) object;

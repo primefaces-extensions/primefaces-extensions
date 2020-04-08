@@ -34,10 +34,10 @@ public class LayoutPaneRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
-        LayoutPane layoutPane = (LayoutPane) component;
+        final ResponseWriter writer = fc.getResponseWriter();
+        final LayoutPane layoutPane = (LayoutPane) component;
 
-        String position = layoutPane.getPosition();
+        final String position = layoutPane.getPosition();
         String combinedPosition = position;
         UIComponent parent = layoutPane.getParent();
 
@@ -50,7 +50,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
         layoutPane.setCombinedPosition(combinedPosition);
 
         boolean hasSubPanes = false;
-        for (UIComponent subChild : layoutPane.getChildren()) {
+        for (final UIComponent subChild : layoutPane.getChildren()) {
             // check first level
             if (hasSubPanes) {
                 break;
@@ -64,7 +64,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
                 hasSubPanes = true;
             }
             else {
-                for (UIComponent subSubChild : subChild.getChildren()) {
+                for (final UIComponent subSubChild : subChild.getChildren()) {
                     // check second level
                     if (subSubChild instanceof LayoutPane) {
                         if (!subSubChild.isRendered()) {
@@ -79,7 +79,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
             }
         }
 
-        UIComponent header = layoutPane.getFacet("header");
+        final UIComponent header = layoutPane.getFacet("header");
 
         writer.startElement("div", null);
         writer.writeAttribute("id", layoutPane.getClientId(fc), "id");

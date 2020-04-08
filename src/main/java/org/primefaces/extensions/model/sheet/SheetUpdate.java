@@ -84,7 +84,7 @@ public class SheetUpdate implements Serializable {
         if (!(other instanceof SheetUpdate)) {
             return false;
         }
-        SheetUpdate castOther = (SheetUpdate) other;
+        final SheetUpdate castOther = (SheetUpdate) other;
         return new EqualsBuilder().append(rowKey, castOther.rowKey).append(colIndex, castOther.colIndex).isEquals();
     }
 

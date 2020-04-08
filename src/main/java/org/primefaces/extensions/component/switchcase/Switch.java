@@ -79,7 +79,7 @@ public class Switch extends UIComponentBase {
         DefaultCase caseToRender = null;
         DefaultCase defaultCase = null;
 
-        for (UIComponent child : getChildren()) {
+        for (final UIComponent child : getChildren()) {
             child.setRendered(false);
 
             if (child instanceof Case) {

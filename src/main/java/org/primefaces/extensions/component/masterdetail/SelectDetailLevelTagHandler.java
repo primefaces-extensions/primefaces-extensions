@@ -198,7 +198,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
             return mapBehaviors.values();
         }
 
-        final Collection<List<ClientBehavior>> behaviors = new ArrayList<List<ClientBehavior>>();
+        final Collection<List<ClientBehavior>> behaviors = new ArrayList<>();
 
         for (final Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
             if (ArrayUtils.contains(arrEvents, entry.getKey())) {

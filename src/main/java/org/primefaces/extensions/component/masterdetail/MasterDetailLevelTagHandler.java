@@ -33,6 +33,6 @@ public class MasterDetailLevelTagHandler extends ComponentHandler {
 
     public MasterDetailLevelTagHandler(final ComponentConfig config) {
         super(config);
-        this.level = getRequiredAttribute("level");
+        level = getRequiredAttribute("level");
     }
 }

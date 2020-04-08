@@ -29,7 +29,7 @@ public class DefaultGChartModelRow implements GChartModelRow {
     public DefaultGChartModelRow(String label, Collection<Object> values) {
         super();
         this.label = label;
-        this.values = new ArrayList<Object>(values);
+        this.values = new ArrayList<>(values);
     }
 
     @Override

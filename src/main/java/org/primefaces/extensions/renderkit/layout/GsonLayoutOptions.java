@@ -29,10 +29,10 @@ import com.google.gson.GsonBuilder;
 public class GsonLayoutOptions {
 
     private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
-    private Gson gson;
+    private final Gson gson;
 
     private GsonLayoutOptions() {
-        GsonBuilder gsonBilder = new GsonBuilder();
+        final GsonBuilder gsonBilder = new GsonBuilder();
         gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
         gson = gsonBilder.create();
     }

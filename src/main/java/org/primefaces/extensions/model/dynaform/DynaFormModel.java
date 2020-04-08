@@ -32,10 +32,10 @@ public class DynaFormModel implements Serializable {
     private static final long serialVersionUID = 20120514L;
 
     private final String uuid;
-    private final List<DynaFormRow> regularRows = new ArrayList<DynaFormRow>();
+    private final List<DynaFormRow> regularRows = new ArrayList<>();
     private List<DynaFormRow> extendedRows = null;
-    private final List<DynaFormLabel> labels = new ArrayList<DynaFormLabel>();
-    private final List<DynaFormControl> controls = new ArrayList<DynaFormControl>();
+    private final List<DynaFormLabel> labels = new ArrayList<>();
+    private final List<DynaFormControl> controls = new ArrayList<>();
 
     public DynaFormModel() {
         uuid = UUID.randomUUID().toString();
@@ -80,7 +80,7 @@ public class DynaFormModel implements Serializable {
      */
     public DynaFormRow createExtendedRow() {
         if (extendedRows == null) {
-            extendedRows = new ArrayList<DynaFormRow>();
+            extendedRows = new ArrayList<>();
         }
 
         final DynaFormRow dynaFormRow = new DynaFormRow(extendedRows.size() + 1, true, this);
@@ -146,8 +146,8 @@ public class DynaFormModel implements Serializable {
     }
 
     private void removeRow(final List<DynaFormRow> rows, final DynaFormRow rowToBeRemoved, final int idx) {
-        final List<DynaFormControl> controlsToBeRemoved = new ArrayList<DynaFormControl>();
-        final List<DynaFormLabel> labelsToBeRemoved = new ArrayList<DynaFormLabel>();
+        final List<DynaFormControl> controlsToBeRemoved = new ArrayList<>();
+        final List<DynaFormLabel> labelsToBeRemoved = new ArrayList<>();
         for (final AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
             if (element instanceof DynaFormControl) {
                 controlsToBeRemoved.add((DynaFormControl) element);

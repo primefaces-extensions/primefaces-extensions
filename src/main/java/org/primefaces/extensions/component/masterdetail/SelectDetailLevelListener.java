@@ -74,7 +74,7 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
         // get resolved context value
         Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
         if (contextValues == null) {
-            contextValues = new HashMap<String, Object>();
+            contextValues = new HashMap<>();
         }
 
         // get current context value

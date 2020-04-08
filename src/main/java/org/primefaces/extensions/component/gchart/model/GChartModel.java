@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public interface GChartModel extends Serializable {
+
     Collection<GChartModelRow> getRows();
 
     Collection<Object> getColumns();

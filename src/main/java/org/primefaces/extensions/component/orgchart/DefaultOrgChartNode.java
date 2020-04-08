@@ -37,7 +37,7 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     private Object nodeData;
 
-    private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
+    private List<OrgChartNode> children = new ArrayList<>();
 
     private int childCount;
 

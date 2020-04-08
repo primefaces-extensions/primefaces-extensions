@@ -30,10 +30,10 @@ import com.google.gson.GsonBuilder;
 public final class GsonConverter {
 
     private static final GsonConverter INSTANCE = new GsonConverter();
-    private Gson gson;
+    private final Gson gson;
 
     private GsonConverter() {
-        GsonBuilder gsonBilder = new GsonBuilder();
+        final GsonBuilder gsonBilder = new GsonBuilder();
 
         gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
         gsonBilder.serializeNulls();

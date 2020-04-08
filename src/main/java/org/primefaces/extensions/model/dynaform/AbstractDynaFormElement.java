@@ -82,7 +82,7 @@ public abstract class AbstractDynaFormElement implements Serializable {
             return false;
         }
 
-        AbstractDynaFormElement that = (AbstractDynaFormElement) o;
+        final AbstractDynaFormElement that = (AbstractDynaFormElement) o;
 
         return row == that.row && column == that.column && extended == that.extended;
     }

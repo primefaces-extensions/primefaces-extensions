@@ -32,7 +32,6 @@ import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PostValidateEvent;
@@ -359,7 +358,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
     }
 
     @Override
-    public void broadcast(final FacesEvent event) throws AbortProcessingException {
+    public void broadcast(final FacesEvent event) {
         if (!(event instanceof EventDataWrapper)) {
             super.broadcast(event);
 

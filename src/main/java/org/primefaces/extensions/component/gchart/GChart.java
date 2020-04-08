@@ -41,14 +41,14 @@ import com.google.gson.JsonArray;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
-    public final static String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";
+    public static final String API_KEY = "primefaces.GOOGLE_MAPS_API_KEY";
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.GChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.GChartRenderer";
 
-    private static final String DEFAULT_TYPE = "select";
-    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_TYPE));
+    private static final String DEFAULT_EVENT = "select";
+    private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_EVENT));
 
     protected enum PropertyKeys {
         widgetVar, width, height, title, apiKey, language, extender;
@@ -70,7 +70,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
     @Override
     public String getDefaultEventName() {
-        return DEFAULT_TYPE;
+        return DEFAULT_EVENT;
     }
 
     public String getWidgetVar() {
@@ -137,11 +137,11 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-            if (eventName.equals("select")) {
+            if (eventName.equals(DEFAULT_EVENT)) {
                 final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
                 final String clientId = this.getClientId(context);
 
-                final Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden").toString(),
+                final Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden"),
                             JsonArray.class);
 
                 final SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);

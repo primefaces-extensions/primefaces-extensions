@@ -37,8 +37,8 @@ public class RequestParameterBuilder {
     private static final Logger LOG = Logger.getLogger(RequestParameterBuilder.class.getName());
 
     private StringBuilder buffer;
-    private String originalUrl;
-    private JsonConverter jsonConverter;
+    private final String originalUrl;
+    private final JsonConverter jsonConverter;
     private String encoding;
     private boolean added;
 
@@ -78,8 +78,8 @@ public class RequestParameterBuilder {
      *            {@link JsonExposeAwareConverter} is used.
      */
     public RequestParameterBuilder(String url, JsonConverter jsonConverter) {
-        buffer = new StringBuilder((url != null) ? url : org.primefaces.util.Constants.EMPTY_STRING);
-        originalUrl = (url != null) ? url : org.primefaces.util.Constants.EMPTY_STRING;
+        buffer = new StringBuilder(url != null ? url : org.primefaces.util.Constants.EMPTY_STRING);
+        originalUrl = url != null ? url : org.primefaces.util.Constants.EMPTY_STRING;
 
         this.jsonConverter = jsonConverter == null ? new JsonExposeAwareConverter(false) : jsonConverter;
 
@@ -118,7 +118,7 @@ public class RequestParameterBuilder {
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
     public RequestParameterBuilder paramJson(String name, Object value, String type) throws UnsupportedEncodingException {
-        String encodedJsonValue = encodeJson(value, type);
+        final String encodedJsonValue = encodeJson(value, type);
 
         if (added || originalUrl.contains("?")) {
             buffer.append("&");
@@ -147,7 +147,7 @@ public class RequestParameterBuilder {
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
     public RequestParameterBuilder param(String name, Object value) throws UnsupportedEncodingException {
-        String encodedValue = encode(value);
+        final String encodedValue = encode(value);
 
         if (encodedValue == null) {
             return this;
@@ -230,7 +230,7 @@ public class RequestParameterBuilder {
      * @return String end result
      */
     public String build() {
-        String url = buffer.toString();
+        final String url = buffer.toString();
 
         if (url.length() > 2083) {
             LOG.warning("URL " + url + " is longer than 2083 chars (" + buffer.length()

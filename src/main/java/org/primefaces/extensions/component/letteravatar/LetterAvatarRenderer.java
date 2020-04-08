@@ -62,7 +62,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         String initials = sb.toString();
         initials = initials.length() == 1 ? initials : initials.charAt(0) + initials.substring(initials.length() - 1);
 
-        final Boolean rounded = letterAvatar.isRounded();
+        final boolean rounded = letterAvatar.isRounded();
 
         String color = letterAvatar.getColor();
         if (LangUtils.isValueBlank(color)) {

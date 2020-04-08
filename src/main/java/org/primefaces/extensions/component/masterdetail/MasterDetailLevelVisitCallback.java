@@ -34,8 +34,9 @@ import javax.faces.component.visit.VisitResult;
  */
 public class MasterDetailLevelVisitCallback implements VisitCallback {
 
-    private List<EditableValueHolder> editableValueHolders = new ArrayList<EditableValueHolder>();
+    private final List<EditableValueHolder> editableValueHolders = new ArrayList<>();
 
+    @Override
     public VisitResult visit(VisitContext context, UIComponent target) {
         if (target instanceof MasterDetailLevel) {
             return VisitResult.ACCEPT;

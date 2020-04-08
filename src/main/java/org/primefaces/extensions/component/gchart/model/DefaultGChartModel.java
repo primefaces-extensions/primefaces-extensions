@@ -29,10 +29,10 @@ class DefaultGChartModel implements GChartModel {
 
     private static final long serialVersionUID = -4757917806522708660L;
 
-    private List<GChartModelRow> rows;
-    private GChartType gChartType;
-    private Map<String, Object> options;
-    private List<Object> columns;
+    private final List<GChartModelRow> rows;
+    private final GChartType gChartType;
+    private final Map<String, Object> options;
+    private final List<Object> columns;
 
     public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
                 Map<String, Object> options, List<Object> columns) {
@@ -47,39 +47,44 @@ class DefaultGChartModel implements GChartModel {
         return gChartType;
     }
 
+    @Override
     public Map<String, Object> getOptions() {
         return options;
     }
 
+    @Override
     public Collection<Object> getColumns() {
         return columns;
     }
 
+    @Override
     public GChartType getChartType() {
         return gChartType;
     }
 
+    @Override
     public Collection<GChartModelRow> getRows() {
         return rows;
     }
 
+    @Override
     public String toJson() {
-        JsonObject root = new JsonObject();
+        final JsonObject root = new JsonObject();
 
-        root.addProperty("type", this.getChartType().getChartName());
-        root.add("options", GsonConverter.getGson().toJsonTree(this.getOptions()));
+        root.addProperty("type", getChartType().getChartName());
+        root.add("options", GsonConverter.getGson().toJsonTree(getOptions()));
         root.add("data", extractData());
 
         return GsonConverter.getGson().toJson(root);
     }
 
     protected JsonElement extractData() {
-        Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
+        final Collection<Collection<Object>> dataTable = new ArrayList<>(0);
 
-        dataTable.add(this.getColumns());
+        dataTable.add(getColumns());
 
-        for (GChartModelRow row : this.getRows()) {
-            Collection<Object> dataRow = new ArrayList<Object>(0);
+        for (final GChartModelRow row : getRows()) {
+            final Collection<Object> dataRow = new ArrayList<>(0);
             dataRow.add(row.getLabel());
             dataRow.addAll(row.getValues());
 

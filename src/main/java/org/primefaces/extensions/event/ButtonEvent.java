@@ -33,17 +33,17 @@ public class ButtonEvent extends AbstractAjaxBehaviorEvent {
     public static final String NAME = "button";
     private static final long serialVersionUID = 1L;
 
-    private final String name;
+    private final String buttonName;
     private final BigDecimal value;
 
-    public ButtonEvent(final UIComponent component, final Behavior behavior, final String name, final BigDecimal value) {
+    public ButtonEvent(final UIComponent component, final Behavior behavior, final String buttonName, final BigDecimal value) {
         super(component, behavior);
-        this.name = name;
+        this.buttonName = buttonName;
         this.value = value;
     }
 
     public final String getName() {
-        return name;
+        return buttonName;
     }
 
     public final BigDecimal getValue() {

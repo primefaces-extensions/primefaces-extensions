@@ -40,13 +40,13 @@ public class TimeSelectEvent<T> extends AbstractAjaxBehaviorEvent {
     public TimeSelectEvent(final UIComponent component, final Behavior behavior, final T time) {
         super(component, behavior);
         this.time = time;
-        if (time != null && time instanceof Date) {
+        if (time instanceof Date) {
             this.time = (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
         }
     }
 
     public T getTime() {
-        if (time != null && time instanceof Date) {
+        if (time instanceof Date) {
             return (T) new Date(((Date) time).getTime()); // make copy to not have mutable ref
         }
         return time;

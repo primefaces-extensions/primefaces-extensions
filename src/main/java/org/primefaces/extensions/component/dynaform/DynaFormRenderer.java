@@ -404,13 +404,9 @@ public class DynaFormRenderer extends CoreRenderer {
                                 : target.getClientId(fc);
                     label.setTargetClientId(targetClientId);
 
-                    final ContextCallback callback = new ContextCallback() {
-
-                        @Override
-                        public void invokeContextCallback(final FacesContext context, final UIComponent target) {
-                            label.setTargetValid(((EditableValueHolder) target).isValid());
-                            label.setTargetRequired(((EditableValueHolder) target).isRequired());
-                        }
+                    final ContextCallback callback = (context, target1) -> {
+                        label.setTargetValid(((EditableValueHolder) target1).isValid());
+                        label.setTargetRequired(((EditableValueHolder) target1).isRequired());
                     };
 
                     if (CompositeUtils.isComposite(target)) {
