@@ -24,6 +24,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.menu.AbstractMenu;
 import org.primefaces.component.menu.BaseMenuRenderer;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuItem;
 import org.primefaces.util.WidgetBuilder;
@@ -52,7 +53,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
 
         writer.startElement("span", fab);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         encodeMainButton(context, writer, fab);
         encodeMenu(context, writer, fab);
         writer.endElement("span");
@@ -65,18 +66,18 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         if (fab.getIconActive() != null) {
             classes += " ui-fab-double";
         }
-        writer.writeAttribute("class", classes, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, classes, "styleClass");
         if (fab.getStyle() != null) {
-            writer.writeAttribute("style", fab.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, fab.getStyle(), Attrs.STYLE);
         }
 
         // Icon
         writer.startElement("span", fab);
-        writer.writeAttribute("class", "ui-icon ui-icon-0 " + fab.getIcon(), "icon");
+        writer.writeAttribute(Attrs.CLASS, "ui-icon ui-icon-0 " + fab.getIcon(), "icon");
         writer.endElement("span");
         if (fab.getIconActive() != null) {
             writer.startElement("span", fab);
-            writer.writeAttribute("class", "ui-icon ui-icon-1 " + fab.getIconActive(), "icon");
+            writer.writeAttribute(Attrs.CLASS, "ui-icon ui-icon-1 " + fab.getIconActive(), "icon");
             writer.endElement("span");
         }
 
@@ -97,10 +98,10 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
     protected void encodeMenuItem(FacesContext context, ResponseWriter writer, FloatingActionButton fab, MenuItem menuItem) throws IOException {
         writer.startElement("li", fab);
         writer.writeAttribute("role", "menuitem", null);
-        writer.writeAttribute("class", "ui-button", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-button", null);
         // Use style here allowing to set background color
         if (menuItem.getStyle() != null) {
-            writer.writeAttribute("style", menuItem.getStyle(), null);
+            writer.writeAttribute(Attrs.STYLE, menuItem.getStyle(), null);
             menuItem.setStyleClass(null);
         }
         if (!menuItem.isDisabled()) {

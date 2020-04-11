@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
@@ -50,7 +51,7 @@ public class CreditCardRenderer extends CoreRenderer {
         writer.startElement("div", creditCard);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.endElement("div");
     }
 

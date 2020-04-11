@@ -4,4 +4,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: primefaces.extensions
 Bundle-Description: PrimeFaces Extensions
 Bundle-SymbolicName: org.primefaces.extensions
-Import-Package: javax.faces
+Import-Package: javax.faces,
+ org.primefaces,
+ org.apache.commons.lang3

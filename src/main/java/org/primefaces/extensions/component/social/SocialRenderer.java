@@ -23,6 +23,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.HTML;
@@ -67,9 +68,9 @@ public class SocialRenderer extends CoreRenderer {
         writer.startElement("div", social);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (social.getStyle() != null) {
-            writer.writeAttribute("style", social.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, social.getStyle(), Attrs.STYLE);
         }
         writer.endElement("div");
     }

@@ -28,6 +28,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.application.resource.DynamicContentType;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.DynamicContentSrcBuilder;
@@ -56,7 +57,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("iframe", documentViewer);
         writer.writeAttribute("id", documentViewer.getClientId(), null);
-        writer.writeAttribute("style", documentViewer.getStyle(), null);
+        writer.writeAttribute(Attrs.STYLE, documentViewer.getStyle(), null);
         writer.writeAttribute("title", title, null);
         writer.writeAttribute("width", documentViewer.getWidth() != null ? documentViewer.getWidth() : "100%", null);
         writer.writeAttribute("height", documentViewer.getHeight(), null);

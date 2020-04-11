@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -58,7 +59,7 @@ public class QRCodeRenderer extends CoreRenderer {
                     .attr("mSize", qrCode.getMSize())
                     .attr("mPosX", qrCode.getMPosX())
                     .attr("mPosY", qrCode.getMPosY())
-                    .attr("label", qrCode.getLabel())
+                    .attr(Attrs.LABEL, qrCode.getLabel())
                     .attr("fontname", qrCode.getFontName())
                     .attr("fontcolor", qrCode.getFontColor());
 

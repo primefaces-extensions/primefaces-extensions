@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -52,10 +53,10 @@ public class TimeAgoRenderer extends CoreRenderer {
 
         writer.startElement("span", timeAgo);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         if (timeAgo.getStyle() != null) {
-            writer.writeAttribute("style", timeAgo.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, timeAgo.getStyle(), Attrs.STYLE);
         }
 
         encodeTime(context, timeAgo, clientId);

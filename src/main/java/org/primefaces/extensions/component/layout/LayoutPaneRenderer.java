@@ -21,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 
 /**
@@ -84,29 +85,29 @@ public class LayoutPaneRenderer extends CoreRenderer {
         writer.startElement("div", null);
         writer.writeAttribute("id", layoutPane.getClientId(fc), "id");
         if (hasSubPanes) {
-            writer.writeAttribute("class", "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE_WITH_SUBPANES, null);
+            writer.writeAttribute(Attrs.CLASS, "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE_WITH_SUBPANES, null);
         }
         else {
             if (header != null) {
-                writer.writeAttribute("class", "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE, null);
+                writer.writeAttribute(Attrs.CLASS, "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE, null);
             }
             else {
                 if (layoutPane.getStyleClassContent() != null) {
-                    writer.writeAttribute("class",
+                    writer.writeAttribute(Attrs.CLASS,
                                 "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
                                             + Layout.STYLE_CLASS_PANE_CONTENT + " "
                                             + layoutPane.getStyleClassContent(),
                                 null);
                 }
                 else {
-                    writer.writeAttribute("class",
+                    writer.writeAttribute(Attrs.CLASS,
                                 "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
                                             + Layout.STYLE_CLASS_PANE_CONTENT,
                                 null);
                 }
 
                 if (layoutPane.getStyleContent() != null) {
-                    writer.writeAttribute("style", layoutPane.getStyleContent(), null);
+                    writer.writeAttribute(Attrs.STYLE, layoutPane.getStyleContent(), null);
                 }
             }
         }
@@ -117,14 +118,14 @@ public class LayoutPaneRenderer extends CoreRenderer {
         if (header != null) {
             writer.startElement("div", null);
             if (layoutPane.getStyleClassHeader() != null) {
-                writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
+                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
             }
             else {
-                writer.writeAttribute("class", Layout.STYLE_CLASS_PANE_HEADER, null);
+                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_PANE_HEADER, null);
             }
 
             if (layoutPane.getStyleHeader() != null) {
-                writer.writeAttribute("style", layoutPane.getStyleHeader(), null);
+                writer.writeAttribute(Attrs.STYLE, layoutPane.getStyleHeader(), null);
             }
 
             header.encodeAll(fc);
@@ -136,20 +137,20 @@ public class LayoutPaneRenderer extends CoreRenderer {
         if (header != null) {
             writer.startElement("div", null);
             if (layoutPane.getStyleClassContent() != null) {
-                writer.writeAttribute("class",
+                writer.writeAttribute(Attrs.CLASS,
                             Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT + " "
                                         + layoutPane.getStyleClassContent(),
                             null);
             }
             else {
-                writer.writeAttribute("class", Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT, null);
+                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT, null);
             }
 
             if (layoutPane.getStyleContent() != null) {
-                writer.writeAttribute("style", "border:none; " + layoutPane.getStyleContent(), null);
+                writer.writeAttribute(Attrs.STYLE, "border:none; " + layoutPane.getStyleContent(), null);
             }
             else {
-                writer.writeAttribute("style", "border:none", null);
+                writer.writeAttribute(Attrs.STYLE, "border:none", null);
             }
 
             renderChildren(fc, layoutPane);

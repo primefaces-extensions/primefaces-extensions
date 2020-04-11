@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -54,9 +55,9 @@ public class LegendRenderer extends CoreRenderer {
         writer.startElement("div", legend);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (legend.getStyle() != null) {
-            writer.writeAttribute("style", legend.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, legend.getStyle(), Attrs.STYLE);
         }
 
         // title
@@ -75,16 +76,16 @@ public class LegendRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         // scales
         writer.startElement("div", null);
-        writer.writeAttribute("class", Legend.SCALE_STYLE, null);
+        writer.writeAttribute(Attrs.CLASS, Legend.SCALE_STYLE, null);
         writer.startElement("ul", null);
-        writer.writeAttribute("class", Legend.LABELS_STYLE, null);
+        writer.writeAttribute(Attrs.CLASS, Legend.LABELS_STYLE, null);
 
         // Key=text, Value=Color
         final Map<String, String> values = legend.getValues();
         for (final Entry<String, String> item : values.entrySet()) {
             writer.startElement("li", null);
             writer.startElement("span", null);
-            writer.writeAttribute("style", "background:" + item.getValue(), null);
+            writer.writeAttribute(Attrs.STYLE, "background:" + item.getValue(), null);
             writer.endElement("span");
             writer.writeText(item.getKey(), null);
             writer.endElement("li");
@@ -98,7 +99,7 @@ public class LegendRenderer extends CoreRenderer {
         final UIComponent facet = legend.getFacet("title");
         final String title = legend.getTitle();
         writer.startElement("div", null);
-        writer.writeAttribute("class", Legend.TITLE_STYLE, null);
+        writer.writeAttribute(Attrs.CLASS, Legend.TITLE_STYLE, null);
         if (ComponentUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(context);
         }
@@ -116,7 +117,7 @@ public class LegendRenderer extends CoreRenderer {
         final UIComponent facet = legend.getFacet("footer");
         final String footer = legend.getFooter();
         writer.startElement("div", null);
-        writer.writeAttribute("class", Legend.FOOTER_STYLE, null);
+        writer.writeAttribute(Attrs.CLASS, Legend.FOOTER_STYLE, null);
         if (ComponentUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(context);
         }

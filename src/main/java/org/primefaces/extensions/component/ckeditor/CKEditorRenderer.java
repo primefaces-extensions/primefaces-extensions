@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -73,7 +74,7 @@ public class CKEditorRenderer extends InputRenderer {
         writer.writeAttribute("name", clientId, null);
 
         if (ckEditor.getTabindex() != null) {
-            writer.writeAttribute("tabindex", ckEditor.getTabindex(), null);
+            writer.writeAttribute(Attrs.TABINDEX, ckEditor.getTabindex(), null);
         }
 
         renderAccessibilityAttributes(context, ckEditor);
@@ -116,7 +117,7 @@ public class CKEditorRenderer extends InputRenderer {
         wb.attr("customConfig", ckEditor.getCustomConfig())
                     .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
                     .attr("disableNativeSpellChecker", ckEditor.isDisableNativeSpellChecker())
-                    .attr("tabindex", ckEditor.getTabindex())
+                    .attr(Attrs.TABINDEX, ckEditor.getTabindex())
                     .attr("enterMode", ckEditor.getEnterMode())
                     .attr("shiftEnterMode", ckEditor.getShiftEnterMode());
 

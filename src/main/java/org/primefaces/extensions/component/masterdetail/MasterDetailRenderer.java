@@ -31,6 +31,7 @@ import javax.faces.render.Renderer;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuItem;
@@ -50,7 +51,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
     private static final String FACET_HEADER = "header";
     private static final String FACET_FOOTER = "footer";
-    private static final String FACET_LABEL = "label";
+    private static final String FACET_LABEL = Attrs.LABEL;
 
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -137,9 +138,9 @@ public class MasterDetailRenderer extends CoreRenderer {
 
         writer.startElement("div", masterDetail);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (masterDetail.getStyle() != null) {
-            writer.writeAttribute("style", masterDetail.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, masterDetail.getStyle(), Attrs.STYLE);
         }
 
         if (masterDetail.isShowBreadcrumb()) {
@@ -162,7 +163,7 @@ public class MasterDetailRenderer extends CoreRenderer {
         // render container for MasterDetailLevel
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId + "_detaillevel", "id");
-        writer.writeAttribute("class", "pe-master-detail-level", null);
+        writer.writeAttribute(Attrs.CLASS, "pe-master-detail-level", null);
 
         // try to get context value if contextVar exists
         Object contextValue = null;

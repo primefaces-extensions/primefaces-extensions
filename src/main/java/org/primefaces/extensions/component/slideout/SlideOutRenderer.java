@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -81,10 +82,10 @@ public class SlideOutRenderer extends CoreRenderer {
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
 
         if (slideOut.getPanelStyleClass() != null) {
-            writer.writeAttribute("class", slideOut.getPanelStyleClass(), "styleClass");
+            writer.writeAttribute(Attrs.CLASS, slideOut.getPanelStyleClass(), "styleClass");
         }
         if (slideOut.getPanelStyle() != null) {
-            writer.writeAttribute("style", slideOut.getPanelStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, slideOut.getPanelStyle(), Attrs.STYLE);
         }
 
         // handle
@@ -110,9 +111,9 @@ public class SlideOutRenderer extends CoreRenderer {
         writer.startElement("a", null);
         writer.writeAttribute("id", getHandleId(context, slideOut), null);
         if (slideOut.getHandleStyle() != null) {
-            writer.writeAttribute("style", slideOut.getHandleStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, slideOut.getHandleStyle(), Attrs.STYLE);
         }
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         // icon
         encodeIcon(context, slideOut);
@@ -142,7 +143,7 @@ public class SlideOutRenderer extends CoreRenderer {
         // <i class="ui-icon fa fa-television"></i>
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("span", null);
-        writer.writeAttribute("class", icon, null);
+        writer.writeAttribute(Attrs.CLASS, icon, null);
         writer.endElement("span");
         writer.write(" ");
     }

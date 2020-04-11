@@ -35,6 +35,7 @@ import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectManyRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.EscapeUtils;
@@ -113,9 +114,9 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
         writer.startElement("table", checkbox);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (style != null) {
-            writer.writeAttribute("style", style, "style");
+            writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
         }
 
         encodeSelectItems(context, checkbox);
@@ -176,7 +177,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         writer.startElement("td", null);
 
         writer.startElement("div", null);
-        writer.writeAttribute("class", HTML.CHECKBOX_CLASS, null);
+        writer.writeAttribute(Attrs.CLASS, HTML.CHECKBOX_CLASS, null);
 
         encodeOptionInput(context, checkbox, id, name, disabled, itemValueAsString, valueInput);
         encodeOptionOutput(context, checkbox, valueInput, disabled);
@@ -194,7 +195,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         final ResponseWriter writer = context.getResponseWriter();
 
         writer.startElement("div", null);
-        writer.writeAttribute("class", HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
+        writer.writeAttribute(Attrs.CLASS, HTML.CHECKBOX_INPUT_WRAPPER_CLASS, null);
 
         writer.startElement("input", null);
         writer.writeAttribute("id", id, null);
@@ -285,10 +286,10 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 SelectItem option, boolean disabled) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        writer.startElement("label", null);
+        writer.startElement(Attrs.LABEL, null);
         writer.writeAttribute("for", containerClientId, null);
         if (disabled) {
-            writer.writeAttribute("class", "ui-state-disabled", null);
+            writer.writeAttribute(Attrs.CLASS, "ui-state-disabled", null);
         }
 
         if (option.isEscape()) {
@@ -298,7 +299,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
             writer.write(option.getLabel());
         }
 
-        writer.endElement("label");
+        writer.endElement(Attrs.LABEL);
     }
 
     @Override

@@ -27,6 +27,7 @@ import javax.faces.event.PhaseId;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -136,7 +137,7 @@ public class CodeMirrorRenderer extends InputRenderer {
                     .attr("workTime", codeMirror.getWorkTime())
                     .attr("workDelay", codeMirror.getWorkDelay())
                     .attr("pollInterval", codeMirror.getPollInterval())
-                    .attr("tabindex", codeMirror.getTabindex())
+                    .attr(Attrs.TABINDEX, codeMirror.getTabindex())
                     .attr("undoDepth", codeMirror.getUndoDepth());
 
         if (codeMirror.getExtraKeys() != null) {

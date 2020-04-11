@@ -33,6 +33,7 @@ import javax.faces.model.SelectItem;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.behavior.ajax.AjaxBehavior;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
@@ -104,9 +105,9 @@ public class SheetRenderer extends CoreRenderer {
             divclass = divclass + " ui-state-error";
         }
 
-        responseWriter.writeAttribute("class", divclass, "styleClass");
+        responseWriter.writeAttribute(Attrs.CLASS, divclass, "styleClass");
         if (width != null) {
-            responseWriter.writeAttribute("style", "width: " + width + "px;", null);
+            responseWriter.writeAttribute(Attrs.STYLE, "width: " + width + "px;", null);
         }
 
         encodeHiddenInputs(responseWriter, sheet, clientId);
@@ -117,7 +118,7 @@ public class SheetRenderer extends CoreRenderer {
         responseWriter.startElement("div", null);
         responseWriter.writeAttribute("id", clientId + "_tbl", "id");
         responseWriter.writeAttribute("name", clientId + "_tbl", "clientId");
-        responseWriter.writeAttribute("class", "handsontable-inner", "styleClass");
+        responseWriter.writeAttribute(Attrs.CLASS, "handsontable-inner", "styleClass");
 
         if (style == null) {
             style = Constants.EMPTY_STRING;
@@ -135,7 +136,7 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         if (style.length() > 0) {
-            responseWriter.writeAttribute("style", style, null);
+            responseWriter.writeAttribute(Attrs.STYLE, style, null);
         }
 
         responseWriter.endElement("div");
@@ -671,7 +672,7 @@ public class SheetRenderer extends CoreRenderer {
         final UIComponent footer = sheet.getFacet("footer");
         if (ComponentUtils.shouldRenderFacet(footer)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute("class", "ui-datatable-footer ui-widget-header ui-corner-bottom", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "ui-datatable-footer ui-widget-header ui-corner-bottom", null);
             footer.encodeAll(context);
             responseWriter.endElement("div");
         }
@@ -691,7 +692,7 @@ public class SheetRenderer extends CoreRenderer {
         final UIComponent header = sheet.getFacet("header");
         if (ComponentUtils.shouldRenderFacet(header)) {
             responseWriter.startElement("div", null);
-            responseWriter.writeAttribute("class", "ui-datatable-header ui-widget-header ui-corner-top", null);
+            responseWriter.writeAttribute(Attrs.CLASS, "ui-datatable-header ui-widget-header ui-corner-top", null);
             header.encodeAll(context);
             responseWriter.endElement("div");
         }

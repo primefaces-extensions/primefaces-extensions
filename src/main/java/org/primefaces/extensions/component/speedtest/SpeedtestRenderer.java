@@ -22,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentTraversalUtils;
 import org.primefaces.util.HTML;
@@ -64,32 +65,32 @@ public class SpeedtestRenderer extends CoreRenderer {
         writer.startElement("div", speedtest);
         writer.writeAttribute("id", clientId + "SpeedTest", "id");
         if (speedtest.getStyleClass() != null) {
-            writer.writeAttribute("class", speedtest.getStyleClass(), "styleClass");
+            writer.writeAttribute(Attrs.CLASS, speedtest.getStyleClass(), "styleClass");
         }
         if (speedtest.getStyle() != null) {
-            writer.writeAttribute("style", speedtest.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, speedtest.getStyle(), Attrs.STYLE);
         }
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.startElement("div", speedtest);
-        writer.writeAttribute("class", "ui-g", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-g", null);
         // Download Gauge
         writer.startElement("div", speedtest);
-        writer.writeAttribute("class", "ui-g-3", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute("id", clientId + "ggdown", "id");
         writer.endElement("div");
         // Upload Gauge
         writer.startElement("div", speedtest);
-        writer.writeAttribute("class", "ui-g-3", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute("id", clientId + "ggup", "id");
         writer.endElement("div");
         // Ping Gauge
         writer.startElement("div", speedtest);
-        writer.writeAttribute("class", "ui-g-3", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute("id", clientId + "ggping", "id");
         writer.endElement("div");
         // Jitter Gauge
         writer.startElement("div", speedtest);
-        writer.writeAttribute("class", "ui-g-3", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-g-3", null);
         writer.writeAttribute("id", clientId + "ggjitter", "id");
         writer.endElement("div");
         // Row End

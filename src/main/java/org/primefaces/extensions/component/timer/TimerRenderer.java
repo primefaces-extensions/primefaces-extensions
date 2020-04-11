@@ -26,6 +26,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 
 import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.AjaxRequestBuilder;
 import org.primefaces.util.ComponentTraversalUtils;
@@ -74,8 +75,8 @@ public class TimerRenderer extends CoreRenderer {
 
         writer.startElement("span", timer);
         writer.writeAttribute("id", timer.getClientId(), null);
-        writer.writeAttribute("class", Timer.STYLE_CLASS + " " + timer.getStyleClass(), "styleclass");
-        writer.writeAttribute("style", (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), "style");
+        writer.writeAttribute(Attrs.CLASS, Timer.STYLE_CLASS + " " + timer.getStyleClass(), "styleclass");
+        writer.writeAttribute(Attrs.STYLE, (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), Attrs.STYLE);
         writer.endElement("span");
     }
 

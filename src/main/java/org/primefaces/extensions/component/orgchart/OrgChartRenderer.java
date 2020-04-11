@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
@@ -123,9 +124,9 @@ public class OrgChartRenderer extends CoreRenderer {
         writer.startElement("div", orgChart);
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (orgChart.getStyle() != null) {
-            writer.writeAttribute("style", orgChart.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, orgChart.getStyle(), Attrs.STYLE);
         }
         writer.endElement("div");
     }

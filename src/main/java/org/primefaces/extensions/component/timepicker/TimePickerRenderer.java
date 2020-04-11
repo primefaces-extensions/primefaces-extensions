@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.Constants;
@@ -130,7 +131,7 @@ public class TimePickerRenderer extends InputRenderer {
         if (timepicker.isShowOnButton()) {
             containerClass += " ui-inputgroup";
         }
-        writer.writeAttribute("class", containerClass, null);
+        writer.writeAttribute(Attrs.CLASS, containerClass, null);
 
         if (timepicker.isInline()) {
             // inline container
@@ -169,10 +170,10 @@ public class TimePickerRenderer extends InputRenderer {
                 styleClass += " ui-state-error";
             }
 
-            writer.writeAttribute("class", styleClass, null);
+            writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
             if (timepicker.getStyle() != null) {
-                writer.writeAttribute("style", timepicker.getStyle(), null);
+                writer.writeAttribute(Attrs.STYLE, timepicker.getStyle(), null);
             }
         }
 
@@ -191,16 +192,16 @@ public class TimePickerRenderer extends InputRenderer {
 
         if (timepicker.isShowOnButton()) {
             writer.startElement("button", null);
-            writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_CLASS, null);
+            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_CLASS, null);
             writer.writeAttribute("type", "button", null);
             writer.writeAttribute("role", "button", null);
 
             writer.startElement("span", null);
-            writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
+            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
             writer.endElement("span");
 
             writer.startElement("span", null);
-            writer.writeAttribute("class", TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
+            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
             writer.write("ui-button");
             writer.endElement("span");
 
@@ -279,11 +280,11 @@ public class TimePickerRenderer extends InputRenderer {
 
         writer.startElement("a", null);
 
-        writer.writeAttribute("class", styleClass, null);
+        writer.writeAttribute(Attrs.CLASS, styleClass, null);
         writer.startElement("span", null);
-        writer.writeAttribute("class", "ui-button-text", null);
+        writer.writeAttribute(Attrs.CLASS, "ui-button-text", null);
         writer.startElement("span", null);
-        writer.writeAttribute("class", iconClass, null);
+        writer.writeAttribute(Attrs.CLASS, iconClass, null);
         writer.endElement("span");
         writer.endElement("span");
 

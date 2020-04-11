@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -53,11 +54,11 @@ public class LayoutRenderer extends CoreRenderer {
             writer.writeAttribute("id", layout.getClientId(fc), "id");
 
             if (layout.getStyle() != null) {
-                writer.writeAttribute("style", layout.getStyle(), "style");
+                writer.writeAttribute(Attrs.STYLE, layout.getStyle(), Attrs.STYLE);
             }
 
             if (layout.getStyleClass() != null) {
-                writer.writeAttribute("class", layout.getStyleClass(), "styleClass");
+                writer.writeAttribute(Attrs.CLASS, layout.getStyleClass(), "styleClass");
             }
         }
     }

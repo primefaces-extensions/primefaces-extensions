@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
 
@@ -47,7 +48,7 @@ public class GravatarRenderer extends CoreRenderer {
 
         writer.startElement("img", gravatar);
         writer.writeAttribute("id", gravatar.getClientId(), null);
-        writer.writeAttribute("style", gravatar.getStyle(), null);
+        writer.writeAttribute(Attrs.STYLE, gravatar.getStyle(), null);
 
         String url;
         try {

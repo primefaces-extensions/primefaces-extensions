@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
@@ -50,7 +51,7 @@ public class BlockUIRenderer extends CoreRenderer {
             final ResponseWriter writer = fc.getResponseWriter();
             writer.startElement("div", null);
             writer.writeAttribute("id", blockUI.getClientId(fc) + "_content", null);
-            writer.writeAttribute("style", "display: none;", null);
+            writer.writeAttribute(Attrs.STYLE, "display: none;", null);
             renderChildren(fc, component);
             writer.endElement("div");
         }

@@ -41,6 +41,7 @@ import javax.faces.render.Renderer;
 import org.primefaces.component.api.UITabPanel;
 import org.primefaces.extensions.event.EventDataWrapper;
 import org.primefaces.extensions.model.common.KeyData;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.SavedEditableValueState;
 import org.primefaces.util.ComponentTraversalUtils;
 
@@ -571,7 +572,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             state.setValid(input.isValid());
             state.setSubmittedValue(input.getSubmittedValue());
             state.setLocalValueSet(input.isLocalValueSet());
-            state.setLabelValue(((UIComponent) input).getAttributes().get("label"));
+            state.setLabelValue(((UIComponent) input).getAttributes().get(Attrs.LABEL));
 
             // currently we can't save/restore the disabled: See #571 #644
             // we also can't change it easily as the var is not not exposed at this time; it would need some refactoring
@@ -618,7 +619,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             input.setSubmittedValue(state.getSubmittedValue());
             input.setLocalValueSet(state.isLocalValueSet());
             if (state.getLabelValue() != null) {
-                ((UIComponent) input).getAttributes().put("label", state.getLabelValue());
+                ((UIComponent) input).getAttributes().put(Attrs.LABEL, state.getLabelValue());
             }
 
             // currently we can't save/restore the disabled: See #571 #644

@@ -25,6 +25,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -63,9 +64,9 @@ public class FluidGridRenderer extends CoreRenderer {
 
         writer.startElement("div", fluidGrid);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (fluidGrid.getStyle() != null) {
-            writer.writeAttribute("style", fluidGrid.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, fluidGrid.getStyle(), Attrs.STYLE);
         }
 
         writer.writeAttribute("role", LIST_ROLE, null);
@@ -159,14 +160,14 @@ public class FluidGridRenderer extends CoreRenderer {
         writer.startElement("div", null);
 
         if (uiItem.getStyleClass() != null) {
-            writer.writeAttribute("class", GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
+            writer.writeAttribute(Attrs.CLASS, GRID_ITEM_CLASS + " " + uiItem.getStyleClass(), null);
         }
         else {
-            writer.writeAttribute("class", GRID_ITEM_CLASS, null);
+            writer.writeAttribute(Attrs.CLASS, GRID_ITEM_CLASS, null);
         }
 
         if (fluidGrid.getvGutter() != 0) {
-            writer.writeAttribute("style", "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
+            writer.writeAttribute(Attrs.STYLE, "margin-bottom: " + fluidGrid.getvGutter() + "px", null);
         }
 
         writer.writeAttribute("role", LIST_ITEM_ROLE, null);

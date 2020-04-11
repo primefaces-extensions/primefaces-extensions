@@ -29,6 +29,7 @@ import javax.faces.convert.Converter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
@@ -117,10 +118,10 @@ public class InputPhoneRenderer extends InputRenderer {
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         if (inputPhone.getStyle() != null) {
-            writer.writeAttribute("style", inputPhone.getStyle(), "style");
+            writer.writeAttribute(Attrs.STYLE, inputPhone.getStyle(), Attrs.STYLE);
         }
 
         encodeInput(context, inputPhone, clientId, valueToRender);
@@ -152,10 +153,10 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.writeAttribute("value", valueToRender, null);
 
         if (!isValueBlank(inputStyle)) {
-            writer.writeAttribute("style", inputStyle, null);
+            writer.writeAttribute(Attrs.STYLE, inputStyle, null);
         }
 
-        writer.writeAttribute("class", styleClass, null);
+        writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
         renderAccessibilityAttributes(context, inputPhone);
         renderPassThruAttributes(context, inputPhone, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
