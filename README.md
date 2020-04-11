@@ -17,8 +17,6 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ##### Maven
 
-- Official release
-
 	```xml
 	<dependency>
 	    <groupId>org.primefaces.extensions</groupId>
