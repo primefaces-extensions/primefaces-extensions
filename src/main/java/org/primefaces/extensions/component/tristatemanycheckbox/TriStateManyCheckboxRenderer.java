@@ -16,12 +16,8 @@
 package org.primefaces.extensions.component.tristatemanycheckbox;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -31,7 +27,6 @@ import javax.faces.component.UISelectMany;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
@@ -52,8 +47,7 @@ import org.primefaces.util.WidgetBuilder;
 public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue)
-                throws ConverterException {
+    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) {
         // only convert the values of the maps
         if (submittedValue instanceof Map) {
             final Map<String, Object> mapSub = (Map<String, Object>) submittedValue;
@@ -169,7 +163,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
         final String itemValue = (String) option.getValue();
 
-        final int valueInput = getValueForInput(context, component, itemValue, values, converter);
+        final int valueInput = getValueForInput(component, itemValue, values);
         if (option.isNoSelectionOption() && values != null && Constants.EMPTY_STRING.equals(itemValue)) {
             return;
         }
@@ -186,7 +180,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         writer.endElement("td");
 
         writer.startElement("td", null);
-        encodeOptionLabel(context, checkbox, id, option, disabled);
+        encodeOptionLabel(context, id, option, disabled);
         writer.endElement("td");
     }
 
@@ -282,7 +276,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         wb.finish();
     }
 
-    protected void encodeOptionLabel(FacesContext context, TriStateManyCheckbox checkbox, String containerClientId,
+    protected void encodeOptionLabel(FacesContext context, String containerClientId,
                 SelectItem option, boolean disabled) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
@@ -310,8 +304,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     /*
      * return the value for the triState based on the value of the selectItems on the iteration
      */
-    protected int getValueForInput(FacesContext context, UIInput component, String itemValue, Map<String, Object> valueArray,
-                Converter converter) {
+    protected int getValueForInput(UIInput component, String itemValue, Map<String, Object> valueArray) {
         try {
             int retInt = 0;
             if (itemValue == null || valueArray == null) {
@@ -377,7 +370,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
             // need to reverse the order of element on the map to take the value as on decode.
             final Set<String> keys = ret.keySet();
-            final String[] tempArray = keys.toArray(new String[keys.size()]);
+            final String[] tempArray = keys.toArray(new String[0]);
 
             final int length = tempArray.length;
             for (int i = length - 1; i >= 0; i--) {

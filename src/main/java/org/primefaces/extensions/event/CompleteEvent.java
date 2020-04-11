@@ -44,7 +44,7 @@ public class CompleteEvent extends FacesEvent {
 
     @Override
     public void processListener(final FacesListener facesListener) {
-
+        /** NOOP */
     }
 
     public String getToken() {

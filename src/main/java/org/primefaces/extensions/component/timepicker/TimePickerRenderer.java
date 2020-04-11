@@ -46,6 +46,8 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class TimePickerRenderer extends InputRenderer {
 
+    private static final String BUTTON = "button";
+
     @Override
     public void decode(final FacesContext fc, final UIComponent component) {
         final TimePicker timepicker = (TimePicker) component;
@@ -74,8 +76,7 @@ public class TimePickerRenderer extends InputRenderer {
     }
 
     @Override
-    public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue)
-                throws ConverterException {
+    public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue) {
         final String value = (String) submittedValue;
         if (LangUtils.isValueBlank(value)) {
             return null;
@@ -191,10 +192,10 @@ public class TimePickerRenderer extends InputRenderer {
         }
 
         if (timepicker.isShowOnButton()) {
-            writer.startElement("button", null);
+            writer.startElement(BUTTON, null);
             writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_CLASS, null);
-            writer.writeAttribute("type", "button", null);
-            writer.writeAttribute("role", "button", null);
+            writer.writeAttribute("type", BUTTON, null);
+            writer.writeAttribute("role", BUTTON, null);
 
             writer.startElement("span", null);
             writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
@@ -205,7 +206,7 @@ public class TimePickerRenderer extends InputRenderer {
             writer.write("ui-button");
             writer.endElement("span");
 
-            writer.endElement("button");
+            writer.endElement(BUTTON);
         }
 
         writer.endElement("span");
@@ -244,7 +245,7 @@ public class TimePickerRenderer extends InputRenderer {
 
         if (timepicker.isShowOnButton()) {
             wb.attr("showOn", timepicker.getShowOn());
-            wb.selectorAttr("button", "#" + clientId + " .pe-timepicker-trigger");
+            wb.selectorAttr(BUTTON, "#" + clientId + " .pe-timepicker-trigger");
         }
 
         wb.attr("locale", timepicker.calculateLocale().toString());

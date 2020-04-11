@@ -7,4 +7,5 @@ Bundle-SymbolicName: org.primefaces.extensions
 Import-Package: javax.faces,
  org.primefaces,
  org.apache.commons.lang3,
- com.google.gson
+ com.google.gson,
+ javax.servlet

@@ -76,22 +76,9 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         forward,
         formatFunction,
         partialSubmitFilter,
-        form;
+        form
         //@formatter:on
 
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public Timer() {

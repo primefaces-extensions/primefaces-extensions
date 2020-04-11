@@ -57,6 +57,7 @@ public class DummyValueExpression extends ValueExpression {
 
     @Override
     public void setValue(final ELContext context, final Object value) {
+        /* NOOP */
     }
 
     @Override

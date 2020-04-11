@@ -17,7 +17,6 @@ package org.primefaces.extensions.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +32,6 @@ import org.primefaces.extensions.converter.JsonExposeAwareConverter;
  * @since 1.1.0
  */
 public class RequestParameterBuilder {
-
-    private static final Logger LOG = Logger.getLogger(RequestParameterBuilder.class.getName());
 
     private StringBuilder buffer;
     private final String originalUrl;

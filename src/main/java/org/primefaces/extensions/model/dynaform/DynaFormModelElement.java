@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.util.Objects;
+
 /**
  * Class representing a nested model inside of <code>DynaFormRow</code>.
  *
@@ -42,4 +44,23 @@ public class DynaFormModelElement extends AbstractDynaFormElement {
         return model;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DynaFormModelElement)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        DynaFormModelElement that = (DynaFormModelElement) o;
+        return Objects.equals(getModel(), that.getModel());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getModel());
+    }
 }

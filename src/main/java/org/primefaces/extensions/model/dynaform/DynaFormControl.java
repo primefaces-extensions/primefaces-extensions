@@ -38,7 +38,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 
     private String key;
     private Object data;
-    private String type;
+    private final String type;
     private int position;
 
     public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, int position,
@@ -113,10 +113,7 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
         }
 
         final DynaFormControl that = (DynaFormControl) o;
-        if (position != that.position) {
-            return false;
-        }
-        return true;
+        return position == that.position;
     }
 
     void generateKey() {

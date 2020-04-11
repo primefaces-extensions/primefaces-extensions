@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.util.Objects;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -30,7 +32,7 @@ public class DynaFormLabel extends AbstractDynaFormElement {
     private static final long serialVersionUID = 1L;
 
     private final String value;
-    private boolean escape = true;
+    private final boolean escape;
     private DynaFormControl forControl;
     private String targetClientId;
     private boolean targetRequired = false;
@@ -103,5 +105,30 @@ public class DynaFormLabel extends AbstractDynaFormElement {
                     .append("rowspan", getRowspan()).append("row", getRow())
                     .append("column", getColumn())
                     .append("extended", isExtended()).toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DynaFormLabel)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        DynaFormLabel that = (DynaFormLabel) o;
+        return isEscape() == that.isEscape() &&
+                    isTargetRequired() == that.isTargetRequired() &&
+                    isTargetValid() == that.isTargetValid() &&
+                    Objects.equals(getValue(), that.getValue()) &&
+                    Objects.equals(getTargetClientId(), that.getTargetClientId()) &&
+                    Objects.equals(getStyleClass(), that.getStyleClass());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getValue(), isEscape(), getTargetClientId(), isTargetRequired(), isTargetValid(), getStyleClass());
     }
 }

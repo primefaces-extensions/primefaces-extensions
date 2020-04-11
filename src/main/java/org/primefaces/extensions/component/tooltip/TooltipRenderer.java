@@ -156,7 +156,7 @@ public class TooltipRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext context, final UIComponent component) {
         // do nothing
     }
 

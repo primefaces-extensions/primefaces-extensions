@@ -126,9 +126,7 @@ public class JsonConverter implements Converter, Serializable {
                 return Array.newInstance(clazz, 0).getClass();
             }
             catch (final ClassNotFoundException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Class " + type.substring(0, arrayBracketIdx) + " not found",
-                            Constants.EMPTY_STRING));
+                throw notFoundException(type.substring(0, arrayBracketIdx));
             }
         }
 
@@ -137,8 +135,7 @@ public class JsonConverter implements Converter, Serializable {
                 return Class.forName(type);
             }
             catch (final ClassNotFoundException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Class " + type + " not found",
-                            Constants.EMPTY_STRING));
+                throw notFoundException(type);
             }
         }
 
@@ -153,9 +150,7 @@ public class JsonConverter implements Converter, Serializable {
             rawType = Class.forName(type.substring(0, leftBracketIdx));
         }
         catch (final ClassNotFoundException e) {
-            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "Class " + type.substring(0, leftBracketIdx) + " not found",
-                        Constants.EMPTY_STRING));
+            throw notFoundException(type.substring(0, leftBracketIdx));
         }
 
         final String strTypeArgs = type.substring(leftBracketIdx + 1, rightBracketIdx);
@@ -204,5 +199,10 @@ public class JsonConverter implements Converter, Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    private ConverterException notFoundException(String classType) {
+        return new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Class " + classType + " not found", Constants.EMPTY_STRING));
     }
 }
