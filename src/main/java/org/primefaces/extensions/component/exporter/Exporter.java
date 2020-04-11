@@ -16,19 +16,13 @@
 package org.primefaces.extensions.component.exporter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.el.MethodExpression;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIData;
 import javax.faces.component.ValueHolder;
-import javax.faces.component.html.HtmlCommandButton;
-import javax.faces.component.html.HtmlCommandLink;
-import javax.faces.component.html.HtmlGraphicImage;
-import javax.faces.component.html.HtmlOutputLink;
-import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.component.html.*;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
@@ -81,7 +75,7 @@ public abstract class Exporter {
     public abstract void customFormat(String facetBackground, String facetFontSize, String facetFontColor, String facetFontStyle, String fontName,
                 String cellFontSize, String cellFontColor, String cellFontStyle, String datasetPadding, String orientation) throws IOException;
 
-    protected String exportColumnByFunction(final FacesContext context, final UIColumn column) {
+    protected static String exportColumnByFunction(final FacesContext context, final UIColumn column) {
         final MethodExpression exportFunction = column.getExportFunction();
 
         if (exportFunction != null) {
@@ -206,7 +200,7 @@ public abstract class Exporter {
         }
     }
 
-    protected String exportFacetValue(final FacesContext context, final UIComponent component) {
+    protected static String exportFacetValue(final FacesContext context, final UIComponent component) {
         if (component instanceof ValueHolder) {
 
             if (component instanceof EditableValueHolder) {
@@ -237,20 +231,6 @@ public abstract class Exporter {
 
     }
 
-    protected List<UIColumn> getColumnsToExport(final UIData table) {
-        final List<UIColumn> columns = new ArrayList<>();
-
-        for (final UIComponent child : table.getChildren()) {
-            if (child instanceof UIColumn) {
-                final UIColumn column = (UIColumn) child;
-
-                columns.add(column);
-            }
-        }
-
-        return columns;
-    }
-
     protected String addColumnValues(final DataList dataList, final StringBuilder input) {
         for (final UIComponent component : dataList.getChildren()) {
             if (component instanceof Column) {
@@ -271,7 +251,7 @@ public abstract class Exporter {
                     final String value = exportValue(FacesContext.getCurrentInstance(), component);
 
                     if (value != null) {
-                        input.append(value + "\n \n");
+                        input.append(value).append("\n \n");
                     }
                 }
                 return input.toString();
@@ -280,7 +260,7 @@ public abstract class Exporter {
         return null;
     }
 
-    protected int getColumnsCount(final DataTable table) {
+    protected static int getColumnsCount(final DataTable table) {
         int count = 0;
 
         for (final UIColumn col : table.getColumns()) {
@@ -298,7 +278,7 @@ public abstract class Exporter {
         return count;
     }
 
-    protected int getColumnsCount(final SubTable table) {
+    protected static int getColumnsCount(final SubTable table) {
         int count = 0;
 
         for (final UIColumn col : table.getColumns()) {
@@ -316,7 +296,7 @@ public abstract class Exporter {
         return count;
     }
 
-    public boolean hasHeaderColumn(final DataTable table) {
+    public static boolean hasHeaderColumn(final DataTable table) {
         for (final UIColumn col : table.getColumns()) {
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
@@ -331,7 +311,7 @@ public abstract class Exporter {
         return false;
     }
 
-    public boolean hasHeaderColumn(final SubTable table) {
+    public static boolean hasHeaderColumn(final SubTable table) {
         for (final UIComponent child : table.getChildren()) {
             if (child.isRendered() && child instanceof UIColumn) {
                 final UIColumn column = (UIColumn) child;
@@ -346,7 +326,7 @@ public abstract class Exporter {
         return false;
     }
 
-    public boolean hasFooterColumn(final SubTable table) {
+    public static boolean hasFooterColumn(final SubTable table) {
         for (final UIComponent child : table.getChildren()) {
             if (child.isRendered() && child instanceof UIColumn) {
                 final UIColumn column = (UIColumn) child;

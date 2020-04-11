@@ -15,20 +15,11 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import java.io.IOException;
-
-import javax.el.ELException;
 import javax.el.MethodExpression;
 import javax.el.ValueExpression;
-import javax.faces.FacesException;
 import javax.faces.component.ActionSource;
 import javax.faces.component.UIComponent;
-import javax.faces.view.facelets.ComponentHandler;
-import javax.faces.view.facelets.FaceletContext;
-import javax.faces.view.facelets.FaceletException;
-import javax.faces.view.facelets.TagAttribute;
-import javax.faces.view.facelets.TagConfig;
-import javax.faces.view.facelets.TagHandler;
+import javax.faces.view.facelets.*;
 
 /**
  * <code>Exporter</code> component.
@@ -86,7 +77,7 @@ public class ExporterTagHandler extends TagHandler {
     }
 
     @Override
-    public void apply(final FaceletContext faceletContext, final UIComponent parent) throws IOException, FacesException, FaceletException, ELException {
+    public void apply(final FaceletContext faceletContext, final UIComponent parent) {
         if (ComponentHandler.isNew(parent)) {
             final ValueExpression targetVE = target.getValueExpression(faceletContext, Object.class);
             final ValueExpression typeVE = type.getValueExpression(faceletContext, Object.class);

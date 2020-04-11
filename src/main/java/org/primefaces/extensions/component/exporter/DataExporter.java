@@ -81,11 +81,28 @@ public class DataExporter implements ActionListener, StateHolder {
     public DataExporter() {
     }
 
-    public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression tableTitle, ValueExpression pageOnly,
-                ValueExpression selectionOnly, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor,
-                ValueExpression subTable, ValueExpression facetBackground, ValueExpression facetFontSize, ValueExpression facetFontColor,
-                ValueExpression facetFontStyle, ValueExpression fontName, ValueExpression cellFontSize, ValueExpression cellFontColor,
-                ValueExpression cellFontStyle, ValueExpression datasetPadding, ValueExpression orientation, ValueExpression skipComponents) {
+    public DataExporter(
+                final ValueExpression target,
+                final ValueExpression type,
+                final ValueExpression fileName,
+                final ValueExpression tableTitle,
+                final ValueExpression pageOnly,
+                final ValueExpression selectionOnly,
+                final ValueExpression encoding,
+                final MethodExpression preProcessor,
+                final MethodExpression postProcessor,
+                final ValueExpression subTable,
+                final ValueExpression facetBackground,
+                final ValueExpression facetFontSize,
+                final ValueExpression facetFontColor,
+                final ValueExpression facetFontStyle,
+                final ValueExpression fontName,
+                final ValueExpression cellFontSize,
+                final ValueExpression cellFontColor,
+                final ValueExpression cellFontStyle,
+                final ValueExpression datasetPadding,
+                final ValueExpression orientation,
+                final ValueExpression skipComponents) {
         this.target = target;
         this.type = type;
         this.fileName = fileName;
@@ -110,7 +127,7 @@ public class DataExporter implements ActionListener, StateHolder {
     }
 
     @Override
-    public void processAction(ActionEvent event) {
+    public void processAction(final ActionEvent event) {
         final FacesContext context = FacesContext.getCurrentInstance();
         final ELContext elContext = context.getELContext();
 
@@ -211,12 +228,13 @@ public class DataExporter implements ActionListener, StateHolder {
     }
 
     @Override
-    public void setTransient(boolean value) {
+    public void setTransient(final boolean value) {
+        /** NOOP */
     }
 
     @Override
-    public void restoreState(FacesContext context, Object state) {
-        final Object values[] = (Object[]) state;
+    public void restoreState(final FacesContext context, final Object state) {
+        final Object[] values = (Object[]) state;
 
         target = (ValueExpression) values[0];
         type = (ValueExpression) values[1];
@@ -242,8 +260,8 @@ public class DataExporter implements ActionListener, StateHolder {
     }
 
     @Override
-    public Object saveState(FacesContext context) {
-        final Object values[] = new Object[21];
+    public Object saveState(final FacesContext context) {
+        final Object[] values = new Object[21];
 
         values[0] = target;
         values[1] = type;

@@ -15,17 +15,13 @@
  */
 package org.primefaces.extensions.component.exporter;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
@@ -38,31 +34,24 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import com.lowagie.text.Font;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
 import org.primefaces.component.datalist.DataList;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.component.row.Row;
 import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.component.summaryrow.SummaryRow;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.util.Constants;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * <code>Exporter</code> component.
@@ -131,12 +120,12 @@ public class PDFExporter extends Exporter {
                     addEmptyLine(preface, 3);
                     document.add(preface);
                 }
-                PdfPTable pdf;
-                DataList list = null;
-                DataTable table = null;
+                final PdfPTable pdf;
+                final DataList list;
+                final DataTable table;
                 if (component instanceof DataList) {
                     list = (DataList) component;
-                    pdf = exportPDFTable(context, list, pageOnly, encodingType);
+                    pdf = exportPDFTable(list, pageOnly, encodingType);
                 }
                 else {
                     table = (DataTable) component;
@@ -172,7 +161,7 @@ public class PDFExporter extends Exporter {
             createCustomFonts(encoding);
         }
         final int columnsCount = getColumnsCount(table);
-        PdfPTable pdfTable = null;
+        final PdfPTable pdfTable;
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
@@ -202,13 +191,13 @@ public class PDFExporter extends Exporter {
                 }
 
                 if (pageOnly) {
-                    exportPageOnly(context, table, pdfTable);
+                    exportPageOnly(table, pdfTable);
                 }
                 else if (selectionOnly) {
                     exportSelectionOnly(context, table, pdfTable);
                 }
                 else {
-                    subTableExportAll(context, subtable, pdfTable);
+                    subTableExportAll(subtable, pdfTable);
                 }
 
                 if (hasFooterColumn(subtable)) {
@@ -228,7 +217,6 @@ public class PDFExporter extends Exporter {
                 tableFacet(context, pdfTable, table, subTableColumnsCount, "footer");
             }
 
-            return pdfTable;
         }
         else {
 
@@ -246,13 +234,13 @@ public class PDFExporter extends Exporter {
                 addColumnFacets(table, pdfTable, ColumnType.HEADER);
             }
             if (pageOnly) {
-                exportPageOnly(context, table, pdfTable);
+                exportPageOnly(table, pdfTable);
             }
             else if (selectionOnly) {
                 exportSelectionOnly(context, table, pdfTable);
             }
             else {
-                exportAll(context, table, pdfTable);
+                exportAll(table, pdfTable);
             }
 
             if (table.hasFooterColumn()) {
@@ -265,12 +253,12 @@ public class PDFExporter extends Exporter {
 
             table.setRowIndex(-1);
 
-            return pdfTable;
         }
+        return pdfTable;
 
     }
 
-    protected PdfPTable exportPDFTable(final FacesContext context, final DataList list, final boolean pageOnly, final String encoding) {
+    protected PdfPTable exportPDFTable(final DataList list, final boolean pageOnly, final String encoding) {
 
         if (!"-".equalsIgnoreCase(encoding)) {
             createCustomFonts(encoding);
@@ -293,7 +281,7 @@ public class PDFExporter extends Exporter {
         }
 
         final StringBuilder builder = new StringBuilder();
-        String output = null;
+        final String output;
 
         if (pageOnly) {
             output = exportPageOnly(first, list, rowsToExport, builder);
@@ -320,7 +308,7 @@ public class PDFExporter extends Exporter {
         return pdfTable;
     }
 
-    protected void exportPageOnly(final FacesContext context, final DataTable table, final PdfPTable pdfTable) {
+    protected void exportPageOnly(final DataTable table, final PdfPTable pdfTable) {
         final int first = table.getFirst();
         final int rowsToExport = first + table.getRows();
 
@@ -359,8 +347,8 @@ public class PDFExporter extends Exporter {
             }
             else if (Collection.class.isAssignableFrom(selection.getClass())) {
                 final Collection<?> collection = (Collection<?>) selection;
-                for (final Iterator<? extends Object> it = collection.iterator(); it.hasNext();) {
-                    requestMap.put(var, it.next());
+                for (final Object o : collection) {
+                    requestMap.put(var, o);
                     exportCells(table, pdfTable);
                 }
             }
@@ -371,7 +359,7 @@ public class PDFExporter extends Exporter {
         }
     }
 
-    protected void exportAll(final FacesContext context, final DataTable table, final PdfPTable pdfTable) {
+    protected void exportAll(final DataTable table, final PdfPTable pdfTable) {
         final int first = table.getFirst();
         final int rowCount = table.getRowCount();
         final boolean lazy = table.isLazy();
@@ -406,7 +394,7 @@ public class PDFExporter extends Exporter {
 
     }
 
-    protected void subTableExportAll(final FacesContext context, final SubTable table, final PdfPTable pdfTable) {
+    protected void subTableExportAll(final SubTable table, final PdfPTable pdfTable) {
         final int first = table.getFirst();
         final int rowCount = table.getRowCount();
 
@@ -435,14 +423,14 @@ public class PDFExporter extends Exporter {
         final Map<String, UIComponent> map = table.getFacets();
         final UIComponent component = map.get(facetType);
         if (component != null) {
-            String headerValue = null;
+            String headerValue;
             if (component instanceof HtmlCommandButton) {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             }
-            else if (component instanceof UIPanel || component instanceof OutputPanel) {
+            else if (component instanceof UIPanel) {
                 final StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (final UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
@@ -479,14 +467,14 @@ public class PDFExporter extends Exporter {
         final Map<String, UIComponent> map = table.getFacets();
         final UIComponent component = map.get(facetType);
         if (component != null) {
-            String headerValue = null;
+            String headerValue;
             if (component instanceof HtmlCommandButton) {
                 headerValue = exportValue(context, component);
             }
             else if (component instanceof HtmlCommandLink) {
                 headerValue = exportValue(context, component);
             }
-            else if (component instanceof UIPanel || component instanceof OutputPanel) {
+            else if (component instanceof UIPanel) {
                 final StringBuilder header = new StringBuilder(Constants.EMPTY_STRING);
                 for (final UIComponent child : component.getChildren()) {
                     headerValue = exportValue(context, child);
@@ -531,7 +519,7 @@ public class PDFExporter extends Exporter {
                     final Row row = (Row) component;
                     for (final UIComponent rowComponent : row.getChildren()) {
                         final UIColumn column = (UIColumn) rowComponent;
-                        String value = null;
+                        final String value;
                         if (column.isRendered() && column.isExportable()) {
                             if (facetType.equalsIgnoreCase("header")) {
                                 value = column.getHeaderText();
@@ -582,7 +570,7 @@ public class PDFExporter extends Exporter {
                     final Row row = (Row) component;
                     for (final UIComponent rowComponent : row.getChildren()) {
                         final UIColumn column = (UIColumn) rowComponent;
-                        String value = null;
+                        final String value;
                         if (facetType.equalsIgnoreCase("header")) {
                             value = column.getHeaderText();
                         }
@@ -687,12 +675,11 @@ public class PDFExporter extends Exporter {
                     pdfTable.addCell(new Paragraph(col.getSelectionMode(), cellFont));
                     continue;
                 }
-                addColumnValue(pdfTable, col.getChildren(), cellFont, "data", col);
+                addColumnValue(pdfTable, col.getChildren(), cellFont, col);
             }
 
         }
         pdfTable.completeRow();
-        final FacesContext context = null;
         if (table.getRowIndex() == 0) {
             for (final UIComponent component : table.getChildren()) {
                 if (component instanceof RowExpansion) {
@@ -719,7 +706,7 @@ public class PDFExporter extends Exporter {
                         final UIComponent child = rowExpansion.getChildren().get(i);
                         if (child instanceof DataTable) {
                             final DataTable childTable = (DataTable) child;
-                            final PdfPTable pdfTableChild = exportPDFTable(context, childTable, false, false, "-", false);
+                            final PdfPTable pdfTableChild = exportPDFTable(null, childTable, false, false, "-", false);
                             final PdfPCell cell = new PdfPCell();
                             cell.addElement(pdfTableChild);
                             cell.setColspan(pdfTable.getNumberOfColumns());
@@ -727,7 +714,7 @@ public class PDFExporter extends Exporter {
                         }
                         if (child instanceof DataList) {
                             final DataList list = (DataList) child;
-                            final PdfPTable pdfTableChild = exportPDFTable(context, list, false, "-");
+                            final PdfPTable pdfTableChild = exportPDFTable(list, false, "-");
                             pdfTableChild.getDefaultCell().setBorder(Rectangle.NO_BORDER);
                             final PdfPCell cell = new PdfPCell();
                             cell.addElement(pdfTableChild);
@@ -750,7 +737,7 @@ public class PDFExporter extends Exporter {
             }
 
             if (col.isRendered() && col.isExportable()) {
-                addColumnValue(pdfTable, col.getChildren(), cellFont, "data", col);
+                addColumnValue(pdfTable, col.getChildren(), cellFont, col);
             }
         }
     }
@@ -761,7 +748,7 @@ public class PDFExporter extends Exporter {
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
             }
-            PdfPCell cell = null;
+            final PdfPCell cell;
             if (col.isRendered() && col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
@@ -791,7 +778,7 @@ public class PDFExporter extends Exporter {
             if (col instanceof DynamicColumn) {
                 ((DynamicColumn) col).applyStatelessModel();
             }
-            PdfPCell cell = null;
+            final PdfPCell cell;
             if (col.isRendered() && col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
@@ -832,10 +819,10 @@ public class PDFExporter extends Exporter {
         pdfTable.addCell(cell);
     }
 
-    protected void addColumnValue(final PdfPTable pdfTable, final List<UIComponent> components, final Font font, final String columnType,
+    protected void addColumnValue(final PdfPTable pdfTable, final List<UIComponent> components, final Font font,
                 final UIColumn column) {
         final FacesContext context = FacesContext.getCurrentInstance();
-        PdfPCell cell = null;
+        PdfPCell cell;
 
         if (column.getExportFunction() != null) {
             cell = new PdfPCell(new Paragraph(exportColumnByFunction(context, column), font));
@@ -854,11 +841,6 @@ public class PDFExporter extends Exporter {
             cell = new PdfPCell(new Paragraph(builder.toString(), font));
             for (final UIComponent component : components) {
                 cell = addColumnAlignments(component, cell);
-            }
-            if (columnType.equalsIgnoreCase("header")) {
-                for (final UIComponent component : components) {
-                    cell = addFacetAlignments(component, cell);
-                }
             }
         }
 
@@ -904,8 +886,8 @@ public class PDFExporter extends Exporter {
                 final String fontName, final String cellFontSize,
                 final String cellFontColor, final String cellFontStyle, final String datasetPadding, final String orientation) {
 
-        this.facetFontSize = new Float(facetFontSize);
-        this.cellFontSize = new Float(cellFontSize);
+        this.facetFontSize = Float.parseFloat(facetFontSize);
+        this.cellFontSize = Float.parseFloat(cellFontSize);
         this.datasetPadding = Integer.parseInt(datasetPadding);
         this.orientation = orientation;
 
@@ -987,7 +969,7 @@ public class PDFExporter extends Exporter {
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
         externalContext.setResponseContentLength(baos.size());
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.emptyMap());
         final OutputStream out = externalContext.getResponseOutputStream();
         baos.writeTo(out);
         externalContext.responseFlushBuffer();

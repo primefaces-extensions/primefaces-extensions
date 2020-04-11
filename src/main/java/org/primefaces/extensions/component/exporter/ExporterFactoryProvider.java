@@ -31,17 +31,19 @@ public class ExporterFactoryProvider {
 
     private static final String KEY = ExporterFactoryProvider.class.getName();
 
-    public static ExporterFactory getExporterFactory(FacesContext context) {
+    private ExporterFactoryProvider() {
+        // hide constructor
+    }
+
+    public static ExporterFactory getExporterFactory(final FacesContext context) {
 
         ExporterFactory factory = (ExporterFactory) context.getExternalContext().getApplicationMap().get(KEY);
 
         if (factory == null) {
             final ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
-            if (loader != null) {
-                final Iterator<ExporterFactory> iterator = loader.iterator();
-                if (iterator.hasNext()) {
-                    factory = iterator.next();
-                }
+            final Iterator<ExporterFactory> iterator = loader.iterator();
+            if (iterator.hasNext()) {
+                factory = iterator.next();
             }
 
             if (factory == null) {
@@ -62,9 +64,9 @@ class DefaultExporterFactory implements ExporterFactory {
     }
 
     @Override
-    public Exporter getExporterForType(String type) {
+    public Exporter getExporterForType(final String type) {
 
-        Exporter exporter = null;
+        final Exporter exporter;
 
         try {
             final ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
