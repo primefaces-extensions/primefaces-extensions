@@ -216,6 +216,9 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
                     <header>${basedir}/src/conf/license.txt</header>
                     <includes>
                         <include>src/main/java/**/*.java</include>
@@ -328,7 +331,6 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>3.0.0-M4</version>
                 <configuration>
-                    <inherited>true</inherited>
                     <aggregate>false</aggregate>
                 </configuration>
                 <reportSets>
@@ -358,11 +360,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.8</version>
+                <version>3.13.0</version>
                 <configuration>
+                    <linkXref>true</linkXref>
                     <aggregate>true</aggregate>
                     <minimumTokens>100</minimumTokens>
-                    <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <targetJdk>${java.version.source}</targetJdk>
                     <skipEmptyReport>false</skipEmptyReport>
@@ -395,9 +397,9 @@
                 <configuration>
                     <effort>Max</effort>
                     <threshold>Default</threshold>
-                    <findbugsXmlOutput>true</findbugsXmlOutput>
+                    <xmlOutput>true</xmlOutput>
                     <!-- Optional directory to put findbugs xml report -->
-                    <findbugsXmlOutputDirectory>target/site</findbugsXmlOutputDirectory>
+                    <xmlOutputDirectory>target/site</xmlOutputDirectory>
                     <omitVisitors />
                 </configuration>
             </plugin>
