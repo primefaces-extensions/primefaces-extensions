@@ -25,6 +25,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.util.LocaleUtils;
+
 /**
  * PrimeFaces Extensions message factory. Delegates as much as possible to {@link org.primefaces.util.MessageFactory}.
  *
@@ -42,7 +44,7 @@ public class MessageFactory {
     public static FacesMessage getMessage(final String messageId,
                 final FacesMessage.Severity severity,
                 final Object... params) {
-        final FacesMessage message = getMessage(getLocale(), messageId, params);
+        final FacesMessage message = getMessage(LocaleUtils.getCurrentLocale(), messageId, params);
         message.setSeverity(severity);
         return message;
     }
@@ -73,25 +75,6 @@ public class MessageFactory {
         catch (final MissingResourceException e) {
             // NoOp
         }
-    }
-
-    // TODO If PF would change their method to public access we could use that
-    @Deprecated
-    public static Locale getLocale() {
-        Locale locale = null;
-        final FacesContext facesContext = FacesContext.getCurrentInstance();
-
-        if (facesContext != null && facesContext.getViewRoot() != null) {
-            locale = facesContext.getViewRoot().getLocale();
-
-            if (locale == null) {
-                locale = Locale.getDefault();
-            }
-        }
-        else {
-            locale = Locale.getDefault();
-        }
-        return locale;
     }
 
     private static ResourceBundle getExtensionsBundle(final Locale locale) {
