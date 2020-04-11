@@ -17,18 +17,18 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ##### Maven
 
-	```xml
-	<dependency>
-	    <groupId>org.primefaces.extensions</groupId>
-        <artifactId>primefaces-extensions</artifactId>
-	    <version>8.0</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.primefaces.extensions</groupId>
-        <artifactId>resources-ckeditor</artifactId>
-	    <version>8.0</version>
-	</dependency>
-	```
+```xml
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <version>8.0</version>
+</dependency>
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>resources-ckeditor</artifactId>
+    <version>8.0</version>
+</dependency>
+```
  ##### Namespaces
  
  The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
