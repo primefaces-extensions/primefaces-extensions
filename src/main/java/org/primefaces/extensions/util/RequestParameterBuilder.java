@@ -230,14 +230,7 @@ public class RequestParameterBuilder {
      * @return String end result
      */
     public String build() {
-        final String url = buffer.toString();
-
-        if (url.length() > 2083) {
-            LOG.warning("URL " + url + " is longer than 2083 chars (" + buffer.length()
-                        + "). It may not work properly in old IE versions.");
-        }
-
-        return url;
+        return buffer.toString();
     }
 
     /**
