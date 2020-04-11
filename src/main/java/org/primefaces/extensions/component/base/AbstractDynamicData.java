@@ -77,10 +77,6 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
         private final String toString;
 
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
         PropertyKeys() {
             toString = null;
         }
@@ -242,16 +238,16 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
     @Override
     public String getContainerClientId(final FacesContext context) {
-        final String clientId = this.getClientId(context);
+        final String id = this.getClientId(context);
 
-        final KeyData data = getData();
-        final String key = data != null ? data.getKey() : null;
+        final KeyData keyData = getData();
+        final String key = keyData != null ? keyData.getKey() : null;
 
         if (key == null) {
-            return clientId;
+            return id;
         }
         else {
-            final String containerClientId = idBuilder.append(clientId).append(UINamingContainer.getSeparatorChar(context))
+            final String containerClientId = idBuilder.append(id).append(UINamingContainer.getSeparatorChar(context))
                         .append(key).toString();
             idBuilder.setLength(0);
 
@@ -552,11 +548,11 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
         if (component instanceof EditableValueHolder) {
             final EditableValueHolder input = (EditableValueHolder) component;
             SavedEditableValueState state = null;
-            final String clientId = component.getClientId(context);
+            final String id = component.getClientId(context);
 
             if (saved == null) {
                 state = new SavedEditableValueState();
-                getStateHelper().put(PropertyKeys.saved, clientId, state);
+                getStateHelper().put(PropertyKeys.saved, id, state);
             }
 
             if (state == null) {
@@ -564,7 +560,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
                 if (state == null) {
                     state = new SavedEditableValueState();
-                    getStateHelper().put(PropertyKeys.saved, clientId, state);
+                    getStateHelper().put(PropertyKeys.saved, id, state);
                 }
             }
 
@@ -607,9 +603,9 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
 
         if (component instanceof EditableValueHolder) {
             final EditableValueHolder input = (EditableValueHolder) component;
-            final String clientId = component.getClientId(context);
+            final String id = component.getClientId(context);
 
-            SavedEditableValueState state = saved.get(clientId);
+            SavedEditableValueState state = saved.get(id);
             if (state == null) {
                 state = new SavedEditableValueState();
             }

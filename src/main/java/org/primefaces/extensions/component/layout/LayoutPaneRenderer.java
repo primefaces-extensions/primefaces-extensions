@@ -39,13 +39,17 @@ public class LayoutPaneRenderer extends CoreRenderer {
         final LayoutPane layoutPane = (LayoutPane) component;
 
         final String position = layoutPane.getPosition();
-        String combinedPosition = position;
+        String combinedPosition;
         UIComponent parent = layoutPane.getParent();
 
+        StringBuilder combinedPositionBuilder = position == null ? null : new StringBuilder(position);
         while (parent instanceof LayoutPane) {
-            combinedPosition = ((LayoutPane) parent).getPosition() + Layout.POSITION_SEPARATOR + combinedPosition;
+            assert combinedPositionBuilder != null;
+            combinedPositionBuilder.insert(0, ((LayoutPane) parent).getPosition() + Layout.POSITION_SEPARATOR);
             parent = parent.getParent();
         }
+        assert combinedPositionBuilder != null;
+        combinedPosition = combinedPositionBuilder.toString();
 
         // save combined position
         layoutPane.setCombinedPosition(combinedPosition);
@@ -170,7 +174,7 @@ public class LayoutPaneRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext fc, final UIComponent component) {
         // nothing to do
     }
 }

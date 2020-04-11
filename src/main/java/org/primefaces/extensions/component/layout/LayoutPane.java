@@ -20,7 +20,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.component.html.HtmlPanelGroup;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PreRenderComponentEvent;
@@ -332,7 +331,7 @@ public class LayoutPane extends UIComponentBase {
     }
 
     @Override
-    public void processEvent(final ComponentSystemEvent event) throws AbortProcessingException {
+    public void processEvent(final ComponentSystemEvent event) {
         super.processEvent(event);
 
         if (!(event instanceof PreRenderComponentEvent) || !getLayout().isBuildOptions()) {
@@ -352,17 +351,17 @@ public class LayoutPane extends UIComponentBase {
 
         final boolean isResizable = isResizable();
         if (!isResizable) {
-            options.addOption(PropertyKeys.resizable.toString(), isResizable);
+            options.addOption(PropertyKeys.resizable.toString(), false);
         }
 
         final boolean isSlidable = isSlidable();
         if (!isSlidable) {
-            options.addOption(PropertyKeys.slideable.toString(), isSlidable);
+            options.addOption(PropertyKeys.slideable.toString(), false);
         }
 
         final boolean isClosable = isClosable();
         if (!isClosable) {
-            options.addOption(PropertyKeys.closable.toString(), isClosable);
+            options.addOption(PropertyKeys.closable.toString(), false);
         }
 
         options.addOption(PropertyKeys.spacing_open.toString(), getSpacingOpen());
@@ -370,28 +369,28 @@ public class LayoutPane extends UIComponentBase {
 
         final boolean initClosed = isInitClosed();
         if (initClosed) {
-            options.addOption(PropertyKeys.initClosed.toString(), initClosed);
+            options.addOption(PropertyKeys.initClosed.toString(), true);
         }
 
         final boolean initHidden = isInitHidden();
         if (initHidden) {
-            options.addOption(PropertyKeys.initHidden.toString(), initHidden);
+            options.addOption(PropertyKeys.initHidden.toString(), true);
         }
 
         final boolean isResizeWhileDragging = isResizeWhileDragging();
         if (isResizeWhileDragging) {
-            options.addOption(PropertyKeys.resizeWhileDragging.toString(), isResizeWhileDragging);
+            options.addOption(PropertyKeys.resizeWhileDragging.toString(), true);
         }
 
         final boolean isMaskContents = isMaskContents();
         if (isMaskContents) {
-            options.addOption(PropertyKeys.maskContents.toString(), isMaskContents);
+            options.addOption(PropertyKeys.maskContents.toString(), true);
             options.addOption("contentIgnoreSelector", ".ui-layout-mask");
         }
 
         final boolean isMaskObjects = isMaskObjects();
         if (isMaskObjects) {
-            options.addOption(PropertyKeys.maskObjects.toString(), isMaskObjects);
+            options.addOption(PropertyKeys.maskObjects.toString(), true);
             if (!isMaskContents) {
                 options.addOption("contentIgnoreSelector", ".ui-layout-mask");
             }
@@ -468,26 +467,26 @@ public class LayoutPane extends UIComponentBase {
         // pe:layoutPane
         final String position = getPosition();
         final LayoutOptions thisLayoutOptions = getOptions();
-        LayoutOptions options;
+        LayoutOptions opts;
 
         if (parent instanceof LayoutPane) {
             final LayoutOptions parentLayoutOptions = ((LayoutPane) parent).getOptions();
-            options = parentLayoutOptions.getChildOptions();
-            if (options == null) {
-                options = new LayoutOptions();
-                parentLayoutOptions.setChildOptions(options);
+            opts = parentLayoutOptions.getChildOptions();
+            if (opts == null) {
+                opts = new LayoutOptions();
+                parentLayoutOptions.setChildOptions(opts);
             }
         }
         else if (parent instanceof Layout) {
-            options = (LayoutOptions) ((Layout) parent).getOptions();
-            if (options == null) {
+            opts = (LayoutOptions) ((Layout) parent).getOptions();
+            if (opts == null) {
                 final Layout layout = (Layout) parent;
-                options = new LayoutOptions();
-                layout.setOptions(options);
+                opts = new LayoutOptions();
+                layout.setOptions(opts);
 
                 // options for all panes
                 final LayoutOptions defaults = new LayoutOptions();
-                options.setPanesOptions(defaults);
+                opts.setPanesOptions(defaults);
                 final LayoutOptions tips = new LayoutOptions();
                 defaults.setTips(tips);
 
@@ -513,33 +512,17 @@ public class LayoutPane extends UIComponentBase {
 
                 final boolean maskPanesEarly = layout.isMaskPanesEarly();
                 if (maskPanesEarly) {
-                    options.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), maskPanesEarly);
+                    opts.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), true);
                 }
             }
         }
-        else if (parent instanceof UIForm) {
-            // layout pane can be within a h:form
-            setOptions(parent.getParent());
-
-            return;
-        }
-        else if (parent instanceof HtmlPanelGroup
+        else if ((parent instanceof UIForm) || (parent instanceof HtmlPanelGroup
                     && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((HtmlPanelGroup) parent).getStyleClass())
-                    && "block".equals(((HtmlPanelGroup) parent).getLayout())) {
-            // layout pane can be within h:panelGroup representing a HTML div
-            setOptions(parent.getParent());
-
-            return;
-        }
-        else if (parent instanceof OutputPanel
-                    && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass())) {
-            // layout pane can be within p:outputPanel representing a HTML div
-            setOptions(parent.getParent());
-
-            return;
-        }
-        else if (parent != null && parent.toString().contains(Layout.STYLE_CLASS_LAYOUT_CONTENT)) {
-            // plain div (UIInstructions) with class "ui-layout-content"
+                    && "block".equals(((HtmlPanelGroup) parent).getLayout()))
+                    || (parent instanceof OutputPanel
+                                && Layout.STYLE_CLASS_LAYOUT_CONTENT.equals(((OutputPanel) parent).getStyleClass()))
+                    ||
+                    (parent != null && parent.toString().contains(Layout.STYLE_CLASS_LAYOUT_CONTENT))) {
             setOptions(parent.getParent());
 
             return;

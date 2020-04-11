@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.component.head;
 
+import org.primefaces.extensions.util.Attrs;
+
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
@@ -59,9 +61,9 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
     private void encodeTitle(final ExtHead extHead, final ResponseWriter writer) throws IOException {
         if (extHead.getTitle() != null) {
-            writer.startElement("title", null);
-            writer.writeText(extHead.getTitle(), "title");
-            writer.endElement("title");
+            writer.startElement(Attrs.TITLE, null);
+            writer.writeText(extHead.getTitle(), Attrs.TITLE);
+            writer.endElement(Attrs.TITLE);
         }
     }
 

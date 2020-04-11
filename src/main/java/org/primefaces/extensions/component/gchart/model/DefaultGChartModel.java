@@ -31,8 +31,8 @@ class DefaultGChartModel implements GChartModel {
 
     private final List<GChartModelRow> rows;
     private final GChartType gChartType;
-    private final Map<String, Object> options;
-    private final List<Object> columns;
+    private final transient Map<String, Object> options;
+    private final transient List<Object> columns;
 
     public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
                 Map<String, Object> options, List<Object> columns) {
@@ -41,10 +41,6 @@ class DefaultGChartModel implements GChartModel {
         this.gChartType = gChartType;
         this.options = options;
         this.columns = columns;
-    }
-
-    public GChartType getgChartType() {
-        return gChartType;
     }
 
     @Override

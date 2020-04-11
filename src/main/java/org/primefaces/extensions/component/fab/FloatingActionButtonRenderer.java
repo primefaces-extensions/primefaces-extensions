@@ -54,12 +54,12 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         writer.startElement("span", fab);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        encodeMainButton(context, writer, fab);
+        encodeMainButton(writer, fab);
         encodeMenu(context, writer, fab);
         writer.endElement("span");
     }
 
-    protected void encodeMainButton(FacesContext context, ResponseWriter writer, FloatingActionButton fab) throws IOException {
+    protected void encodeMainButton(ResponseWriter writer, FloatingActionButton fab) throws IOException {
         // Button, start
         writer.startElement("span", fab);
         String classes = "ui-fab-main ui-button";
@@ -106,9 +106,6 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         }
         if (!menuItem.isDisabled()) {
             encodeMenuItem(context, fab, menuItem, fab.getTabindex());
-        }
-        else {
-            // NOOP
         }
         writer.endElement("li");
     }
