@@ -141,9 +141,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
+     * @param value    the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
@@ -156,9 +156,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
+     * @param value    the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
@@ -172,7 +172,7 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Javascript for the sheet.
      *
      * @param context the FacesContext
-     * @param sheet the Sheet
+     * @param sheet   the Sheet
      * @throws IOException if any IO error occurs
      */
     protected void encodeScript(final FacesContext context, final Sheet sheet)
@@ -446,7 +446,7 @@ public class SheetRenderer extends CoreRenderer {
 
         // add the row header as a native attribute
         if (!isCustomHeader) {
-            wb.nativeAttr("rowHeaders", sheet.isShowRowHeaders().toString());
+            wb.nativeAttr("rowHeaders", Boolean.toString(sheet.isShowRowHeaders()));
         }
         else {
             wb.nativeAttr("rowHeaders", jsRowHeaders.closeVar().toString());
@@ -824,7 +824,7 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes client behaviors (ajax events).
      *
-     * @param context the FacesContext
+     * @param context   the FacesContext
      * @param component the Component being decodes
      */
     @Override

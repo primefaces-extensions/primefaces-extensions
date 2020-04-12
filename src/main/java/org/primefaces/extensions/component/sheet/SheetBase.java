@@ -342,7 +342,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         return getStateHelper().get(PropertyKeys.sortBy.name());
     }
 
-    public void setSortBy(Object sortBy) {
+    public void setSortBy(final Object sortBy) {
         getStateHelper().put(PropertyKeys.sortBy.name(), sortBy);
     }
 
@@ -350,47 +350,47 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         getStateHelper().put(PropertyKeys.showColumnHeaders, value);
     }
 
-    public Boolean isShowColumnHeaders() {
+    public boolean isShowColumnHeaders() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showColumnHeaders, true).toString());
     }
 
-    public void setShowRowHeaders(final Boolean value) {
+    public void setShowRowHeaders(final boolean value) {
         getStateHelper().put(PropertyKeys.showRowHeaders, value);
     }
 
-    public Boolean isShowRowHeaders() {
+    public boolean isShowRowHeaders() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.showRowHeaders, true).toString());
     }
 
-    public void setResizableRows(final Boolean value) {
+    public void setResizableRows(final boolean value) {
         getStateHelper().put(PropertyKeys.resizableRows, value);
     }
 
-    public Boolean isResizableRows() {
+    public boolean isResizableRows() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableRows, false).toString());
     }
 
-    public void setResizableCols(final Boolean value) {
+    public void setResizableCols(final boolean value) {
         getStateHelper().put(PropertyKeys.resizableCols, value);
     }
 
-    public Boolean isResizableCols() {
+    public boolean isResizableCols() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.resizableCols, false).toString());
     }
 
-    public void setMovableRows(final Boolean value) {
+    public void setMovableRows(final boolean value) {
         getStateHelper().put(PropertyKeys.movableRows, value);
     }
 
-    public Boolean isMovableRows() {
+    public boolean isMovableRows() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableRows, false).toString());
     }
 
-    public void setMovableCols(final Boolean value) {
+    public void setMovableCols(final boolean value) {
         getStateHelper().put(PropertyKeys.movableCols, value);
     }
 
-    public Boolean isMovableCols() {
+    public boolean isMovableCols() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.movableCols, false).toString());
     }
 
@@ -406,11 +406,11 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         return (String) getStateHelper().eval(PropertyKeys.activeHeaderStyleClass, null);
     }
 
-    public void setReadOnly(final Boolean value) {
+    public void setReadOnly(final boolean value) {
         getStateHelper().put(PropertyKeys.readOnly, value);
     }
 
-    public Boolean isReadOnly() {
+    public boolean isReadOnly() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
@@ -490,11 +490,11 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         getStateHelper().put(PropertyKeys.extender, _extender);
     }
 
-    public void setCaseSensitiveSort(final Boolean value) {
+    public void setCaseSensitiveSort(final boolean value) {
         getStateHelper().put(PropertyKeys.caseSensitiveSort, value);
     }
 
-    public Boolean isCaseSensitiveSort() {
+    public boolean isCaseSensitiveSort() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.caseSensitiveSort, Boolean.FALSE).toString());
     }
 
@@ -830,7 +830,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
      *
      * @param columnId ID of the column by which the sheet is currently sorted.
      */
-    public void saveSortByColumn(String columnId) {
+    public void saveSortByColumn(final String columnId) {
         getStateHelper().put(PropertyKeys.currentSortBy.name(), columnId);
     }
 
