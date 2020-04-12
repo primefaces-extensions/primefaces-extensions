@@ -34,7 +34,7 @@ import org.primefaces.util.WidgetBuilder;
 public class TimeAgoRenderer extends CoreRenderer {
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final TimeAgo timeAgo = (TimeAgo) component;
         final Object value = timeAgo.getValue();
         if (value == null) {
@@ -44,7 +44,7 @@ public class TimeAgoRenderer extends CoreRenderer {
         encodeScript(context, timeAgo);
     }
 
-    protected void encodeMarkup(FacesContext context, TimeAgo timeAgo) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final TimeAgo timeAgo) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = timeAgo.getClientId(context);
 
@@ -59,12 +59,12 @@ public class TimeAgoRenderer extends CoreRenderer {
             writer.writeAttribute(Attrs.STYLE, timeAgo.getStyle(), Attrs.STYLE);
         }
 
-        encodeTime(context, timeAgo, clientId);
+        encodeTime(context, timeAgo);
 
         writer.endElement("span");
     }
 
-    protected void encodeTime(FacesContext context, TimeAgo timeAgo, String clientId) throws IOException {
+    protected void encodeTime(final FacesContext context, final TimeAgo timeAgo) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String formattedForJs = timeAgo.formattedForJs();
 
@@ -74,7 +74,7 @@ public class TimeAgoRenderer extends CoreRenderer {
         writer.endElement("time");
     }
 
-    protected void encodeScript(FacesContext context, TimeAgo timeAgo) throws IOException {
+    protected void encodeScript(final FacesContext context, final TimeAgo timeAgo) throws IOException {
         final String locale = timeAgo.calculateLocale().getLanguage();
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtTimeAgo", timeAgo.resolveWidgetVar(), timeAgo.getClientId(context));

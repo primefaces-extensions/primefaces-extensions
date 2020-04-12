@@ -34,15 +34,15 @@ import org.primefaces.renderkit.CoreRenderer;
 public class LayoutPaneRenderer extends CoreRenderer {
 
     @Override
-    public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
         final LayoutPane layoutPane = (LayoutPane) component;
 
         final String position = layoutPane.getPosition();
-        String combinedPosition;
+        final String combinedPosition;
         UIComponent parent = layoutPane.getParent();
 
-        StringBuilder combinedPositionBuilder = position == null ? null : new StringBuilder(position);
+        final StringBuilder combinedPositionBuilder = position == null ? null : new StringBuilder(position);
         while (parent instanceof LayoutPane) {
             assert combinedPositionBuilder != null;
             combinedPositionBuilder.insert(0, ((LayoutPane) parent).getPosition() + Layout.POSITION_SEPARATOR);
@@ -89,23 +89,23 @@ public class LayoutPaneRenderer extends CoreRenderer {
         writer.startElement("div", null);
         writer.writeAttribute("id", layoutPane.getClientId(fc), "id");
         if (hasSubPanes) {
-            writer.writeAttribute(Attrs.CLASS, "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE_WITH_SUBPANES, null);
+            writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS + position + " " + Layout.STYLE_CLASS_PANE_WITH_SUBPANES, null);
         }
         else {
             if (header != null) {
-                writer.writeAttribute(Attrs.CLASS, "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE, null);
+                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS + position + " " + Layout.STYLE_CLASS_PANE, null);
             }
             else {
                 if (layoutPane.getStyleClassContent() != null) {
                     writer.writeAttribute(Attrs.CLASS,
-                                "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
+                                Layout.STYLE_CLASS + position + " " + Layout.STYLE_CLASS_PANE + " "
                                             + Layout.STYLE_CLASS_PANE_CONTENT + " "
                                             + layoutPane.getStyleClassContent(),
                                 null);
                 }
                 else {
                     writer.writeAttribute(Attrs.CLASS,
-                                "ui-layout-" + position + " " + Layout.STYLE_CLASS_PANE + " "
+                                Layout.STYLE_CLASS + position + " " + Layout.STYLE_CLASS_PANE + " "
                                             + Layout.STYLE_CLASS_PANE_CONTENT,
                                 null);
                 }

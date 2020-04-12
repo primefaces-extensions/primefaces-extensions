@@ -15,11 +15,7 @@
  */
 package org.primefaces.extensions.component.masterdetail;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import javax.el.MethodExpression;
@@ -30,11 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.ClientBehavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.event.PreRenderComponentEvent;
-import javax.faces.view.facelets.ComponentHandler;
-import javax.faces.view.facelets.FaceletContext;
-import javax.faces.view.facelets.TagAttribute;
-import javax.faces.view.facelets.TagConfig;
-import javax.faces.view.facelets.TagHandler;
+import javax.faces.view.facelets.*;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.primefaces.component.api.AjaxSource;
@@ -68,7 +60,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
     }
 
     @Override
-    public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
+    public void apply(final FaceletContext ctx, final UIComponent parent) {
         if (!isAjaxifiedComponent(parent)) {
             throw new FacesException("SelectDetailLevel must be only placed inside an ajaxified component.");
         }
@@ -78,7 +70,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         // get value expression for contextValue attribute of this tag handler
-        ValueExpression contextValueVE = null;
+        final ValueExpression contextValueVE;
         if (contextValue != null) {
             contextValueVE = contextValue.getValueExpression(ctx, Object.class);
             if (contextValueVE != null) {
@@ -88,7 +80,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         // get value expression for level attribute of this tag handler
-        ValueExpression selectedLevelVE = null;
+        final ValueExpression selectedLevelVE;
         if (level != null) {
             selectedLevelVE = level.getValueExpression(ctx, int.class);
             if (selectedLevelVE != null) {
@@ -98,7 +90,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         // get value expression for step attribute of this tag handler
-        ValueExpression selectedStepVE = null;
+        final ValueExpression selectedStepVE;
         if (step != null) {
             selectedStepVE = step.getValueExpression(ctx, int.class);
             if (selectedStepVE != null) {
@@ -108,7 +100,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         // get value expression for preserveInputs attribute of this tag handler
-        ValueExpression preserveInputsVE = null;
+        final ValueExpression preserveInputsVE;
         if (preserveInputs != null) {
             preserveInputsVE = preserveInputs.getValueExpression(ctx, String.class);
             if (preserveInputsVE != null) {
@@ -118,7 +110,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         }
 
         // get value expression for resetInputs attribute of this tag handler
-        ValueExpression resetInputsVE = null;
+        final ValueExpression resetInputsVE;
         if (resetInputs != null) {
             resetInputsVE = resetInputs.getValueExpression(ctx, String.class);
             if (resetInputsVE != null) {
@@ -189,7 +181,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
                 final ClientBehaviorHolder clientBehaviorHolder) {
         final Map<String, List<ClientBehavior>> mapBehaviors = clientBehaviorHolder.getClientBehaviors();
         if (mapBehaviors == null || mapBehaviors.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
 
         final String events = event != null ? event.getValue(context) : null;

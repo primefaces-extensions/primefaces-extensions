@@ -302,7 +302,7 @@ public abstract class Exporter {
                 ((DynamicColumn) col).applyStatelessModel();
             }
             if (col.isRendered()
-                        && (col.getFacet("header") != null || col.getHeaderText() != null)) {
+                        && (col.getFacet(ColumnType.HEADER.facet()) != null || col.getHeaderText() != null)) {
                 return true;
             }
 
@@ -316,7 +316,7 @@ public abstract class Exporter {
             if (child.isRendered() && child instanceof UIColumn) {
                 final UIColumn column = (UIColumn) child;
 
-                if (column.getFacet("header") != null || column.getHeaderText() != null) {
+                if (column.getFacet(ColumnType.HEADER.facet()) != null || column.getHeaderText() != null) {
                     return true;
                 }
             }
@@ -331,7 +331,7 @@ public abstract class Exporter {
             if (child.isRendered() && child instanceof UIColumn) {
                 final UIColumn column = (UIColumn) child;
 
-                if (column.getFacet("footer") != null || column.getHeaderText() != null) {
+                if (column.getFacet(ColumnType.FOOTER.facet()) != null || column.getHeaderText() != null) {
                     return true;
                 }
             }

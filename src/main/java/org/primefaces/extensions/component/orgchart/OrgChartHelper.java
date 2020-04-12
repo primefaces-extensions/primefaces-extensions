@@ -28,10 +28,6 @@ import java.util.List;
  */
 public class OrgChartHelper {
 
-    /**
-     * @param root
-     * @return
-     */
     public static List<OrgChartNode> getAllNodesTraverseFromRoot(final OrgChartNode root) {
         final List<OrgChartNode> orgChartNodes = new ArrayList<>();
 
@@ -40,10 +36,6 @@ public class OrgChartHelper {
         return orgChartNodes;
     }
 
-    /**
-     * @param orgChartNodes
-     * @return
-     */
     public static HashMap<String, OrgChartNode> parseOrgChartNodesIntoHashMap(
                 final List<OrgChartNode> orgChartNodes) {
 
@@ -52,7 +44,7 @@ public class OrgChartHelper {
         if (orgChartNodes != null && !orgChartNodes.isEmpty()) {
 
             if (null == orgChartNodes.get(0).getId() || orgChartNodes.get(0).getId().isEmpty()) {
-
+                return hashMap;
             }
             else {
                 for (final OrgChartNode o : orgChartNodes) {
@@ -64,21 +56,13 @@ public class OrgChartHelper {
         return hashMap;
     }
 
-    /**
-     * @param orgChartNode
-     * @param orgChartNodes
-     */
     private static void treeTraversal(final OrgChartNode orgChartNode, final List<OrgChartNode> orgChartNodes) {
-        if (orgChartNode.getChildren().isEmpty()) {
-            orgChartNodes.add(orgChartNode);
-        }
-        else {
+        if (!orgChartNode.getChildren().isEmpty()) {
             for (final OrgChartNode o : orgChartNode.getChildren()) {
                 treeTraversal(o, orgChartNodes);
             }
-            // This line will be executed on backtrack
-            orgChartNodes.add(orgChartNode);
         }
+        orgChartNodes.add(orgChartNode);
     }
 
 }

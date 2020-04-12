@@ -70,15 +70,11 @@ public class SheetRenderer extends CoreRenderer {
         encodeMarkup(context, sheet, responseWriter);
 
         // encode javascript
-        encodeScript(context, sheet, responseWriter);
+        encodeScript(context, sheet);
     }
 
     /**
      * Encodes the HTML markup for the sheet.
-     *
-     * @param context
-     * @param sheet
-     * @throws IOException
      */
     protected void encodeMarkup(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
                 throws IOException {
@@ -111,7 +107,7 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         encodeHiddenInputs(responseWriter, sheet, clientId);
-        encodeFilterValues(context, responseWriter, sheet, clientId);
+        encodeFilterValues(responseWriter, sheet, clientId);
         encodeHeader(context, responseWriter, sheet);
 
         // handsontable div
@@ -135,9 +131,7 @@ public class SheetRenderer extends CoreRenderer {
             style = style + "height: 100%;";
         }
 
-        if (style.length() > 0) {
-            responseWriter.writeAttribute(Attrs.STYLE, style, null);
-        }
+        responseWriter.writeAttribute(Attrs.STYLE, style, null);
 
         responseWriter.endElement("div");
         encodeFooter(context, responseWriter, sheet);
@@ -147,10 +141,10 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
-     * @throws IOException
+     * @param value    the value
+     * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
                 throws IOException {
@@ -162,10 +156,10 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
-     * @throws IOException
+     * @param value    the value
+     * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
                 throws IOException {
@@ -177,18 +171,18 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes the Javascript for the sheet.
      *
-     * @param context
-     * @param sheet
-     * @throws IOException
+     * @param context the FacesContext
+     * @param sheet   the Sheet
+     * @throws IOException if any IO error occurs
      */
-    protected void encodeScript(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
+    protected void encodeScript(final FacesContext context, final Sheet sheet)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = sheet.getClientId(context);
         wb.init("ExtSheet", sheet.resolveWidgetVar(), clientId);
 
         // errors
-        encodeInvalidData(context, sheet, wb);
+        encodeInvalidData(sheet, wb);
         // data
         encodeData(context, sheet, wb);
 
@@ -197,9 +191,9 @@ public class SheetRenderer extends CoreRenderer {
         wb.nativeAttr("delta", "{}");
 
         // filters
-        encodeFilterVar(context, sheet, wb);
+        encodeFilterVar(sheet, wb);
         // sortable
-        encodeSortVar(context, sheet, wb);
+        encodeSortVar(sheet, wb);
         // behaviors
         encodeBehaviors(context, sheet, wb);
 
@@ -237,17 +231,17 @@ public class SheetRenderer extends CoreRenderer {
         }
         encodeOptionalAttr(wb, "emptyMessage", emptyMessage);
 
-        encodeColHeaders(context, sheet, wb);
-        encodeColOptions(context, sheet, wb);
+        encodeColHeaders(sheet, wb);
+        encodeColOptions(sheet, wb);
         wb.finish();
     }
 
     /**
      * Encodes the necessary JS to render invalid data.
      *
-     * @throws IOException
+     * @throws IOException if any IO error occurs
      */
-    protected void encodeInvalidData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeInvalidData(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
         wb.attr("errors", sheet.getInvalidDataValue());
     }
@@ -255,12 +249,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encode the column headers
      *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
+     * @throws IOException if any IO error occurs
      */
-    protected void encodeColHeaders(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeColHeaders(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
         for (final SheetColumn column : sheet.getColumns()) {
@@ -275,12 +266,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encode the column options
      *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
+     * @throws IOException if any IO error occurs
      */
-    protected void encodeColOptions(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeColOptions(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
         for (final SheetColumn column : sheet.getColumns()) {
@@ -313,7 +301,7 @@ public class SheetRenderer extends CoreRenderer {
             // validate can be a function, regex, or string
             final String validateFunction = column.getOnvalidate();
             if (validateFunction != null) {
-                boolean quoted = false;
+                final boolean quoted;
                 switch (validateFunction) {
                     case "autocomplete":
                     case "date":
@@ -401,16 +389,14 @@ public class SheetRenderer extends CoreRenderer {
         }
         else if (value instanceof Collection) {
             final Collection collection = (Collection) value;
-            for (final Iterator it = collection.iterator(); it.hasNext();) {
-                final Object item = it.next();
+            for (final Object item : collection) {
                 items.appendArrayValue(String.valueOf(item), true);
             }
         }
         else if (value instanceof Map) {
             final Map map = (Map) value;
 
-            for (final Iterator it = map.keySet().iterator(); it.hasNext();) {
-                final Object item = it.next();
+            for (final Object item : map.keySet()) {
                 items.appendArrayValue(String.valueOf(item), true);
             }
         }
@@ -420,11 +406,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encode the row data. Builds row data, style data and read only object.
-     *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
      */
     protected void encodeData(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
@@ -480,7 +461,7 @@ public class SheetRenderer extends CoreRenderer {
     protected JavascriptVarBuilder encodeRow(final FacesContext context, final String rowKey,
                 final JavascriptVarBuilder jsData, final JavascriptVarBuilder jsRowStyle,
                 final JavascriptVarBuilder jsStyle, final JavascriptVarBuilder jsReadOnly, final Sheet sheet,
-                final int rowIndex) throws IOException {
+                final int rowIndex) {
         // encode rowStyle (if any)
         final String rowStyleClass = sheet.getRowStyleClass();
         if (rowStyleClass == null) {
@@ -523,11 +504,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encode hidden input fields
-     *
-     * @param responseWriter
-     * @param sheet
-     * @param clientId
-     * @throws IOException
      */
     private void encodeHiddenInputs(final ResponseWriter responseWriter, final Sheet sheet, final String clientId)
                 throws IOException {
@@ -581,11 +557,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encode client behaviors to widget config
-     *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
      */
     private void encodeBehaviors(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
@@ -660,11 +631,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encode the sheet footer
-     *
-     * @param context
-     * @param responseWriter
-     * @param sheet
-     * @throws IOException
      */
     private void encodeFooter(final FacesContext context, final ResponseWriter responseWriter, final Sheet sheet)
                 throws IOException {
@@ -680,11 +646,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encode the Sheet header
-     *
-     * @param context
-     * @param responseWriter
-     * @param sheet
-     * @throws IOException
      */
     private void encodeHeader(final FacesContext context, final ResponseWriter responseWriter, final Sheet sheet)
                 throws IOException {
@@ -700,13 +661,8 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encodes the filter values.
-     *
-     * @param context
-     * @param responseWriter
-     * @param sheet
-     * @throws IOException
      */
-    protected void encodeFilterValues(final FacesContext context, final ResponseWriter responseWriter,
+    protected void encodeFilterValues(final ResponseWriter responseWriter,
                 final Sheet sheet, final String clientId) throws IOException {
         int renderCol = 0;
         for (final SheetColumn column : sheet.getColumns()) {
@@ -729,20 +685,13 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encodes a javascript filter var that informs the col header event of the column's filtering options. The var is an array in the form:
-     *
      * <pre>
      * ["false","true",["option 1", "option 2"]]
      * </pre>
-     *
      * False indicates no filtering for the column. True indicates simple input text filter. Array of values indicates a drop down filter with the listed
      * options.
-     *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
      */
-    protected void encodeFilterVar(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeFilterVar(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 
@@ -776,13 +725,8 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes a javascript sort var that informs the col header event of the column's sorting options. The var is an array of boolean indicating whether or not
      * the column is sortable.
-     *
-     * @param context
-     * @param sheet
-     * @param wb
-     * @throws IOException
      */
-    protected void encodeSortVar(final FacesContext context, final Sheet sheet, final WidgetBuilder wb)
+    protected void encodeSortVar(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, false);
 
@@ -808,9 +752,6 @@ public class SheetRenderer extends CoreRenderer {
      * <li>clientid_selection: the user's cell selections</li>
      * </ul>
      * These are JSON values and are parsed into our submitted values data on the Sheet component.
-     *
-     * @param context
-     * @parma component
      */
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
@@ -834,7 +775,7 @@ public class SheetRenderer extends CoreRenderer {
         final String jsonSelection = params.get(clientId + "_selection");
 
         // decode into submitted values on the Sheet
-        decodeSubmittedValues(context, sheet, jsonUpdates);
+        decodeSubmittedValues(sheet, jsonUpdates);
 
         // decode the selected range so we can puke it back
         decodeSelection(sheet, jsonSelection);
@@ -843,7 +784,7 @@ public class SheetRenderer extends CoreRenderer {
         decodeBehaviors(context, sheet);
 
         // decode filters
-        decodeFilters(context, sheet, params, clientId);
+        decodeFilters(sheet, params, clientId);
 
         final String sortBy = params.get(clientId + "_sortby");
         final String sortOrder = params.get(clientId + "_sortorder");
@@ -865,13 +806,8 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Decodes the filter values
-     *
-     * @param context
-     * @param sheet
-     * @param params
-     * @param clientId
      */
-    protected void decodeFilters(final FacesContext context, final Sheet sheet, final Map<String, String> params,
+    protected void decodeFilters(final Sheet sheet, final Map<String, String> params,
                 final String clientId) {
         int renderCol = 0;
         for (final SheetColumn column : sheet.getColumns()) {
@@ -891,7 +827,7 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes client behaviors (ajax events).
      *
-     * @param context the FacesContext
+     * @param context   the FacesContext
      * @param component the Component being decodes
      */
     @Override
@@ -932,9 +868,6 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Decodes the user Selection JSON data
-     *
-     * @param sheet
-     * @param jsonSelection
      */
     private void decodeSelection(final Sheet sheet, final String jsonSelection) {
         if (LangUtils.isValueBlank(jsonSelection)) {
@@ -957,12 +890,8 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Converts the JSON data received from the in the request params into our sumitted values map. The map is cleared first.
-     *
-     * @param jsonData the submitted JSON data
-     * @param sheet
-     * @param jsonData
      */
-    private void decodeSubmittedValues(final FacesContext context, final Sheet sheet, final String jsonData) {
+    private void decodeSubmittedValues(final Sheet sheet, final String jsonData) {
         if (LangUtils.isValueBlank(jsonData)) {
             return;
         }

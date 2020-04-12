@@ -107,7 +107,7 @@ public class ExcelExporter extends Exporter {
         }
 
         int maxColumns = 0;
-        final String tokenString = StringUtils.normalizeSpace(tableId.replaceAll(",", StringUtils.SPACE));
+        final String tokenString = StringUtils.normalizeSpace(tableId.replace(',', ' '));
         final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
         while (st.hasMoreElements()) {
             final String tableName = (String) st.nextElement();
@@ -127,7 +127,11 @@ public class ExcelExporter extends Exporter {
             final DataTable table;
 
             if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains(",")) {
-                final Row titleRow = sheet.createRow(sheet.getLastRowNum());
+                int lastRowNum = sheet.getLastRowNum();
+                if (lastRowNum < 0) {
+                    lastRowNum = 0;
+                }
+                final Row titleRow = sheet.createRow(lastRowNum);
                 final int cellIndex = titleRow.getLastCellNum() == -1 ? 0 : titleRow.getLastCellNum();
                 final Cell cell = titleRow.createCell(cellIndex);
                 cell.setCellValue(new XSSFRichTextString(tableTitle));
@@ -135,8 +139,7 @@ public class ExcelExporter extends Exporter {
                 titleFont.setBold(true);
                 titleStyle.setFont(titleFont);
                 cell.setCellStyle(titleStyle);
-                sheet.createRow(sheet.getLastRowNum() + 3);
-
+                sheet.createRow(lastRowNum + 3);
             }
             if (component instanceof DataList) {
                 list = (DataList) component;
@@ -157,11 +160,11 @@ public class ExcelExporter extends Exporter {
                 final int columnsCount = getColumnsCount(table);
 
                 if (table.getHeader() != null && !subTable) {
-                    tableFacet(context, sheet, table, columnsCount, "header");
+                    tableFacet(context, sheet, table, columnsCount, ColumnType.HEADER.facet());
 
                 }
                 if (!subTable) {
-                    tableColumnGroup(sheet, table, "header");
+                    tableColumnGroup(sheet, table, ColumnType.HEADER.facet());
                 }
 
                 addColumnFacets(table, sheet, ColumnType.HEADER);
@@ -180,7 +183,7 @@ public class ExcelExporter extends Exporter {
                     addColumnFacets(table, sheet, ColumnType.FOOTER);
                 }
                 if (!subTable) {
-                    tableColumnGroup(sheet, table, "footer");
+                    tableColumnGroup(sheet, table, ColumnType.FOOTER.facet());
                 }
                 table.setRowIndex(-1);
 
@@ -224,10 +227,10 @@ public class ExcelExporter extends Exporter {
             final int subTableColumnsCount = getColumnsCount(subtable);
 
             if (table.getHeader() != null) {
-                tableFacet(context, sheet, table, subTableColumnsCount, "header");
+                tableFacet(context, sheet, table, subTableColumnsCount, ColumnType.HEADER.facet());
             }
 
-            tableColumnGroup(sheet, table, "header");
+            tableColumnGroup(sheet, table, ColumnType.HEADER.facet());
 
             while (subTableCount > 0) {
 
@@ -235,7 +238,7 @@ public class ExcelExporter extends Exporter {
                 table.setRowIndex(i);
                 i++;
                 if (subtable.getHeader() != null) {
-                    tableFacet(context, sheet, subtable, subTableColumnsCount, "header");
+                    tableFacet(context, sheet, subtable, subTableColumnsCount, ColumnType.HEADER.facet());
                 }
 
                 if (hasHeaderColumn(subtable)) {
@@ -250,17 +253,17 @@ public class ExcelExporter extends Exporter {
                 }
 
                 if (subtable.getFooter() != null) {
-                    tableFacet(context, sheet, subtable, subTableColumnsCount, "footer");
+                    tableFacet(context, sheet, subtable, subTableColumnsCount, ColumnType.FOOTER.facet());
                 }
 
                 subtable.setRowIndex(-1);
                 subtable = table.getSubTable();
             }
 
-            tableColumnGroup(sheet, table, "footer");
+            tableColumnGroup(sheet, table, ColumnType.FOOTER.facet());
 
             if (table.hasFooterColumn()) {
-                tableFacet(context, sheet, table, subTableColumnsCount, "footer");
+                tableFacet(context, sheet, table, subTableColumnsCount, ColumnType.FOOTER.facet());
             }
         }
         else {
@@ -294,7 +297,7 @@ public class ExcelExporter extends Exporter {
     protected void exportAll(final SubTable table, final Sheet sheet) {
         final int rowCount = table.getRowCount();
 
-        tableColumnGroup(sheet, table, "header");
+        tableColumnGroup(sheet, table, ColumnType.HEADER.facet());
         if (hasHeaderColumn(table)) {
             addColumnFacets(table, sheet, ColumnType.HEADER);
         }
@@ -304,7 +307,7 @@ public class ExcelExporter extends Exporter {
         if (hasFooterColumn(table)) {
             addColumnFacets(table, sheet, ColumnType.FOOTER);
         }
-        tableColumnGroup(sheet, table, "footer");
+        tableColumnGroup(sheet, table, ColumnType.FOOTER.facet());
 
     }
 
@@ -466,7 +469,7 @@ public class ExcelExporter extends Exporter {
 
     protected void tableFacet(final FacesContext context, final Sheet sheet, final DataList list) {
         final Map<String, UIComponent> map = list.getFacets();
-        final UIComponent component = map.get("header");
+        final UIComponent component = map.get(ColumnType.HEADER.facet());
         if (component != null) {
             final String headerValue;
             if (component instanceof HtmlCommandButton) {
@@ -534,7 +537,7 @@ public class ExcelExporter extends Exporter {
                             continue;
                         }
 
-                        final String text = facetType.equalsIgnoreCase("header") ? column.getHeaderText() : column.getFooterText();
+                        final String text = facetType.equalsIgnoreCase(ColumnType.HEADER.facet()) ? column.getHeaderText() : column.getFooterText();
                         // by default column has 1 rowspan && colspan
                         final int rowSpan = column.getRowspan() - 1;
                         final int colSpan = column.getColspan() - 1;
@@ -597,7 +600,7 @@ public class ExcelExporter extends Exporter {
                     for (final UIComponent rowComponent : row.getChildren()) {
                         final UIColumn column = (UIColumn) rowComponent;
                         final String value;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -762,10 +765,10 @@ public class ExcelExporter extends Exporter {
                             final int columnsCount = getColumnsCount(childTable);
                             if (columnsCount > 0) { // In case none of the colums are exportable.
                                 if (childTable.getHeader() != null) {
-                                    tableFacet(null, sheet, childTable, columnsCount, "header");
+                                    tableFacet(null, sheet, childTable, columnsCount, ColumnType.HEADER.facet());
 
                                 }
-                                tableColumnGroup(sheet, childTable, "header");
+                                tableColumnGroup(sheet, childTable, ColumnType.HEADER.facet());
 
                                 addColumnFacets(childTable, sheet, ColumnType.HEADER);
 
@@ -774,7 +777,7 @@ public class ExcelExporter extends Exporter {
                                 if (childTable.hasFooterColumn()) {
                                     addColumnFacets(childTable, sheet, ColumnType.FOOTER);
                                 }
-                                tableColumnGroup(sheet, childTable, "footer");
+                                tableColumnGroup(sheet, childTable, ColumnType.FOOTER.facet());
                                 childTable.setRowIndex(-1);
                             }
                         }
@@ -1027,8 +1030,6 @@ public class ExcelExporter extends Exporter {
         facetStyleLeftAlign.setFont(facetFont);
         facetStyleCenterAlign.setFont(facetFont);
         facetStyleRightAlign.setFont(facetFont);
-        // facetStyle.setAlignment(CellStyle.ALIGN_CENTER);
-
     }
 
     protected static void writeExcelToResponse(final ExternalContext externalContext, final org.apache.poi.ss.usermodel.Workbook generatedExcel,

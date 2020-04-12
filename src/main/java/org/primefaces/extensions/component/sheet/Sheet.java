@@ -15,18 +15,8 @@
  */
 package org.primefaces.extensions.component.sheet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -166,14 +156,12 @@ public class Sheet extends SheetBase {
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context).equals(context.getExternalContext().getRequestParameterMap()
+        return getClientId(context).equals(context.getExternalContext().getRequestParameterMap()
                     .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     /**
      * The list of child columns.
-     *
-     * @return
      */
     public List<SheetColumn> getColumns() {
         if (columns == null) {
@@ -185,8 +173,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Grabs the UIColumn children for the parent specified.
-     *
-     * @param parent
      */
     private void getColumns(final UIComponent parent) {
         for (final UIComponent child : parent.getChildren()) {
@@ -198,8 +184,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Updates the list of child columns.
-     *
-     * @param columns
      */
     public void setColumns(final List<SheetColumn> columns) {
         this.columns = columns;
@@ -207,8 +191,6 @@ public class Sheet extends SheetBase {
 
     /**
      * The list of invalid updates
-     *
-     * @return List<SheetInvalidUpdate>
      */
     public List<SheetInvalidUpdate> getInvalidUpdates() {
         if (invalidUpdates == null) {
@@ -260,11 +242,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Updates a submitted value.
-     *
-     * @param context
-     * @param rowKey
-     * @param col
-     * @param value
      */
     public void setSubmittedValue(final String rowKey, final int col, final String value) {
         submittedValues.put(new SheetRowColIndex(rowKey, col), value);
@@ -272,10 +249,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Retrieves the submitted value for the row and col.
-     *
-     * @param rowKey
-     * @param col
-     * @return
      */
     public String getSubmittedValue(final String rowKey, final int col) {
         return submittedValues.get(new SheetRowColIndex(rowKey, col));
@@ -283,10 +256,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Updates a local value.
-     *
-     * @param rowKey
-     * @param col
-     * @param value
      */
     public void setLocalValue(final String rowKey, final int col, final Object value) {
         localValues.put(new SheetRowColIndex(rowKey, col), value);
@@ -294,10 +263,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Retrieves the submitted value for the rowKey and col.
-     *
-     * @param rowKey
-     * @param col
-     * @return
      */
     public Object getLocalValue(final String rowKey, final int col) {
         return localValues.get(new SheetRowColIndex(rowKey, col));
@@ -333,11 +298,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the object value of the row and col specified. If a local value exists, that is returned, otherwise the actual value is return.
-     *
-     * @param context
-     * @param rowKey
-     * @param col
-     * @return
      */
     public Object getValueForCell(final FacesContext context, final String rowKey, final int col) {
         // if we have a local value, use it
@@ -354,11 +314,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the render string for the value the given cell. Applys the available converters to convert the value.
-     *
-     * @param context
-     * @param rowKey
-     * @param col
-     * @return
      */
     public String getRenderValueForCell(final FacesContext context, final String rowKey, final int col) {
 
@@ -386,9 +341,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the row header text value as a string for use in javascript
-     *
-     * @param context
-     * @return
      */
     protected String getRowHeaderValueAsString(final FacesContext context) {
         final ValueExpression veRowHeader = getRowHeaderValueExpression();
@@ -403,8 +355,6 @@ public class Sheet extends SheetBase {
 
     /**
      * The sorted list of values.
-     *
-     * @return
      */
     public List<Object> getSortedValues() {
         List<Object> filtered = getFilteredValue();
@@ -416,8 +366,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the rendered col index of the column corresponding to the current sortBy. This is used to keep track of the current sort column in the page.
-     *
-     * @return
      */
     public int getSortColRenderIndex() {
         // Was the column by which to sort changed by the user, ie. is there a saved ID?
@@ -471,8 +419,6 @@ public class Sheet extends SheetBase {
      * column than the "contains" mode is used. Otherwise the following filterMatchMode values are possible: - startsWith: Checks if column value starts with
      * the filter value. - endsWith: Checks if column value ends with the filter value. - contains: Checks if column value contains the filter value. - exact:
      * Checks if string representations of column value and filter value are same.
-     *
-     * @return
      */
     protected boolean matchesFilter() {
         for (final SheetColumn col : getColumns()) {
@@ -575,7 +521,7 @@ public class Sheet extends SheetBase {
             veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         }
         if (veSortBy != null) {
-            Collections.sort(filteredList, new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null,
+            filteredList.sort(new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null,
                         isCaseSensitiveSort(), Locale.ENGLISH, getNullSortOrder()));
         }
 
@@ -643,9 +589,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the row key value as a String suitable for use in javascript rendering.
-     *
-     * @param key
-     * @return
      */
     protected String getRowKeyValueAsString(final Object key) {
         final String result = key.toString();
@@ -654,9 +597,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Gets the row key value as a string for the current row var.
-     *
-     * @param context
-     * @return
      */
     protected String getRowKeyValueAsString(final FacesContext context) {
         return getRowKeyValueAsString(getRowKeyValue(context));
@@ -664,8 +604,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Convert to PF SortOrder enum since we are leveraging PF sorting code.
-     *
-     * @return
      */
     protected SortOrder convertSortOrder() {
         final String sortOrder = getSortOrder();
@@ -673,8 +611,7 @@ public class Sheet extends SheetBase {
             return SortOrder.UNSORTED;
         }
         else {
-            final SortOrder result = SortOrder.valueOf(sortOrder.toUpperCase(Locale.ENGLISH));
-            return result;
+            return SortOrder.valueOf(sortOrder.toUpperCase(Locale.ENGLISH));
         }
     }
 
@@ -718,7 +655,7 @@ public class Sheet extends SheetBase {
                     if (message == null) {
                         message = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage());
                     }
-                    context.addMessage(this.getClientId(context), message);
+                    context.addMessage(getClientId(context), message);
 
                     final String messageText = message.getDetail();
                     getInvalidUpdates()
@@ -749,7 +686,7 @@ public class Sheet extends SheetBase {
 
         if ((hadBadUpdates || newBadUpdates) && context.getPartialViewContext().isPartialRequest()) {
             // update the bad data var if partial request
-            renderBadUpdateScript(context);
+            renderBadUpdateScript();
         }
 
         if (newBadUpdates && errorMessage != null) {
@@ -800,7 +737,7 @@ public class Sheet extends SheetBase {
      */
     @Override
     public Object saveState(final FacesContext context) {
-        final Object values[] = new Object[8];
+        final Object[] values = new Object[8];
         values[0] = super.saveState(context);
         values[1] = submittedValues;
         values[2] = localValues;
@@ -939,8 +876,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Returns true if any of the columns contain conditional styling.
-     *
-     * @return
      */
     public boolean isHasStyledCells() {
         for (final SheetColumn column : getColumns()) {
@@ -972,9 +907,6 @@ public class Sheet extends SheetBase {
 
     /**
      * Provides the render column index based on the real index
-     *
-     * @param realIdx
-     * @return
      */
     public int getRenderIndexFromRealIdx(final int realIdx) {
         if (columnMapping == null || realIdx == -1) {
@@ -1008,8 +940,6 @@ public class Sheet extends SheetBase {
 
     /**
      * The number of rows in the value list.
-     *
-     * @return
      */
     public int getRowCount() {
         return getSortedValues().size();
@@ -1050,15 +980,13 @@ public class Sheet extends SheetBase {
 
     /**
      * Generates the bad data var value for this sheet.
-     *
-     * @return
      */
     public String getInvalidDataValue() {
         final JavascriptVarBuilder vb = new JavascriptVarBuilder(null, true);
         for (final SheetInvalidUpdate sheetInvalidUpdate : getInvalidUpdates()) {
             final Object rowKey = sheetInvalidUpdate.getInvalidRowKey();
             final int col = getRenderIndexFromRealIdx(sheetInvalidUpdate.getInvalidColIndex());
-            final String rowKeyProperty = this.getRowKeyValueAsString(rowKey);
+            final String rowKeyProperty = getRowKeyValueAsString(rowKey);
             vb.appendProperty(rowKeyProperty + "_c" + col,
                         sheetInvalidUpdate.getInvalidMessage().replace("'", "&apos;"), true);
         }
@@ -1123,17 +1051,15 @@ public class Sheet extends SheetBase {
 
     /**
      * Adds eval scripts to update the bad data array in the sheet to render validation failures produced by the most recent ajax update attempt.
-     *
-     * @param context the FacesContext
      */
-    public void renderBadUpdateScript(final FacesContext context) {
+    public void renderBadUpdateScript() {
         final String widgetVar = resolveWidgetVar();
         final String invalidValue = getInvalidDataValue();
         StringBuilder sb = new StringBuilder("PF('" + widgetVar + "')");
         sb.append(".cfg.errors=");
         sb.append(invalidValue);
         sb.append(";");
-        sb.append("PF('" + widgetVar + "')");
+        sb.append("PF('").append(widgetVar).append("')");
         sb.append(".ht.render();");
         PrimeFaces.current().executeScript(sb.toString());
 

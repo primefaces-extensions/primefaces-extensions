@@ -23,7 +23,6 @@ import javax.faces.FacesException;
 import javax.faces.component.StateHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -56,7 +55,7 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
     }
 
     @Override
-    public void processAjaxBehavior(final AjaxBehaviorEvent event) throws AbortProcessingException {
+    public void processAjaxBehavior(final AjaxBehaviorEvent event) {
         process(event.getComponent());
     }
 
@@ -113,6 +112,7 @@ public class SelectDetailLevelListener implements AjaxBehaviorListener, ActionLi
 
     @Override
     public void setTransient(final boolean value) {
+        /** NOOP */
     }
 
     private MasterDetailLevel findMasterDetailLevel(final UIComponent component) {

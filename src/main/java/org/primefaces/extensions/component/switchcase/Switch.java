@@ -24,7 +24,6 @@ import javax.faces.component.UIComponentBase;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
@@ -40,22 +39,7 @@ public class Switch extends UIComponentBase {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
     protected enum PropertyKeys {
-
-        value;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        value
     }
 
     public Switch() {
@@ -109,31 +93,31 @@ public class Switch extends UIComponentBase {
     }
 
     @Override
-    public void processDecodes(FacesContext context) {
+    public void processDecodes(final FacesContext context) {
         evaluate();
         super.processDecodes(context);
     }
 
     @Override
-    public void processValidators(FacesContext context) {
+    public void processValidators(final FacesContext context) {
         evaluate();
         super.processValidators(context);
     }
 
     @Override
-    public void processUpdates(FacesContext context) {
+    public void processUpdates(final FacesContext context) {
         evaluate();
         super.processUpdates(context);
     }
 
     @Override
-    public void broadcast(FacesEvent event) throws AbortProcessingException {
+    public void broadcast(final FacesEvent event) {
         evaluate();
         super.broadcast(event);
     }
 
     @Override
-    public boolean visitTree(VisitContext context, VisitCallback callback) {
+    public boolean visitTree(final VisitContext context, final VisitCallback callback) {
         // mustn't evaluate cases during Restore View
         if (context.getFacesContext().getCurrentPhaseId() != PhaseId.RESTORE_VIEW) {
             evaluate();
@@ -142,7 +126,7 @@ public class Switch extends UIComponentBase {
     }
 
     @Override
-    public void encodeBegin(FacesContext context) throws IOException {
+    public void encodeBegin(final FacesContext context) throws IOException {
         evaluate();
         super.encodeBegin(context);
     }

@@ -91,7 +91,7 @@ public class PDFExporter extends Exporter {
                 preProcessor.invoke(context.getELContext(), new Object[] {document});
             }
 
-            final String tokenString = StringUtils.normalizeSpace(tableId.replaceAll(",", StringUtils.SPACE));
+            final String tokenString = StringUtils.normalizeSpace(tableId.replace(',', ' '));
             final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
             while (st.hasMoreElements()) {
                 final String tableName = (String) st.nextElement();
@@ -169,10 +169,10 @@ public class PDFExporter extends Exporter {
             pdfTable = new PdfPTable(subTableColumnsCount);
 
             if (table.getHeader() != null) {
-                tableFacet(context, pdfTable, table, subTableColumnsCount, "header");
+                tableFacet(context, pdfTable, table, subTableColumnsCount, ColumnType.HEADER.facet());
             }
 
-            tableColumnGroup(pdfTable, table, "header");
+            tableColumnGroup(pdfTable, table, ColumnType.HEADER.facet());
 
             int i = 0;
             while (subTableCount > 0) {
@@ -183,7 +183,7 @@ public class PDFExporter extends Exporter {
                 subtable = table.getSubTable();
 
                 if (subtable.getHeader() != null) {
-                    tableFacet(context, pdfTable, subtable, subTableColumnsCount, "header");
+                    tableFacet(context, pdfTable, subtable, subTableColumnsCount, ColumnType.HEADER.facet());
                 }
 
                 if (hasHeaderColumn(subtable)) {
@@ -205,16 +205,16 @@ public class PDFExporter extends Exporter {
                 }
 
                 if (subtable.getFooter() != null) {
-                    tableFacet(context, pdfTable, subtable, subTableColumnsCount, "footer");
+                    tableFacet(context, pdfTable, subtable, subTableColumnsCount, ColumnType.FOOTER.facet());
                 }
 
                 subtable.setRowIndex(-1);
             }
 
-            tableColumnGroup(pdfTable, table, "footer");
+            tableColumnGroup(pdfTable, table, ColumnType.FOOTER.facet());
 
             if (table.hasFooterColumn()) {
-                tableFacet(context, pdfTable, table, subTableColumnsCount, "footer");
+                tableFacet(context, pdfTable, table, subTableColumnsCount, ColumnType.FOOTER.facet());
             }
 
         }
@@ -227,7 +227,7 @@ public class PDFExporter extends Exporter {
             pdfTable = new PdfPTable(columnsCount);
 
             if (table.getHeader() != null) {
-                tableFacet(context, pdfTable, table, columnsCount, "header");
+                tableFacet(context, pdfTable, table, columnsCount, ColumnType.HEADER.facet());
             }
 
             if (hasHeaderColumn(table)) {
@@ -248,7 +248,7 @@ public class PDFExporter extends Exporter {
             }
             if (table.getFooter() != null) {
 
-                tableFacet(context, pdfTable, table, columnsCount, "footer");
+                tableFacet(context, pdfTable, table, columnsCount, ColumnType.FOOTER.facet());
             }
 
             table.setRowIndex(-1);
@@ -312,13 +312,13 @@ public class PDFExporter extends Exporter {
         final int first = table.getFirst();
         final int rowsToExport = first + table.getRows();
 
-        tableColumnGroup(pdfTable, table, "header");
+        tableColumnGroup(pdfTable, table, ColumnType.HEADER.facet());
 
         for (int rowIndex = first; rowIndex < rowsToExport; rowIndex++) {
             exportRow(table, pdfTable, rowIndex);
         }
 
-        tableColumnGroup(pdfTable, table, "footer");
+        tableColumnGroup(pdfTable, table, ColumnType.FOOTER.facet());
     }
 
     protected String exportPageOnly(final int first, final DataList list, final int rowsToExport, final StringBuilder input) {
@@ -383,11 +383,11 @@ public class PDFExporter extends Exporter {
             table.loadLazyData();
         }
         else {
-            tableColumnGroup(pdfTable, table, "header");
+            tableColumnGroup(pdfTable, table, ColumnType.HEADER.facet());
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 exportRow(table, pdfTable, rowIndex);
             }
-            tableColumnGroup(pdfTable, table, "footer");
+            tableColumnGroup(pdfTable, table, ColumnType.FOOTER.facet());
             // restore
             table.setFirst(first);
         }
@@ -398,13 +398,13 @@ public class PDFExporter extends Exporter {
         final int first = table.getFirst();
         final int rowCount = table.getRowCount();
 
-        tableColumnGroup(pdfTable, table, "header");
+        tableColumnGroup(pdfTable, table, ColumnType.HEADER.facet());
 
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             subTableExportRow(table, pdfTable, rowIndex);
         }
 
-        tableColumnGroup(pdfTable, table, "footer");
+        tableColumnGroup(pdfTable, table, ColumnType.FOOTER.facet());
         // restore
         table.setFirst(first);
     }
@@ -441,7 +441,6 @@ public class PDFExporter extends Exporter {
                     cell.setBackgroundColor(facetBackground);
                 }
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                // addColumnAlignments(component,cell);
                 cell.setColspan(columnCount);
                 pdfTable.addCell(cell);
                 pdfTable.completeRow();
@@ -455,7 +454,6 @@ public class PDFExporter extends Exporter {
                 cell.setBackgroundColor(facetBackground);
             }
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            // addColumnAlignments(component,cell);
             cell.setColspan(columnCount);
             pdfTable.addCell(cell);
             pdfTable.completeRow();
@@ -485,7 +483,6 @@ public class PDFExporter extends Exporter {
                     cell.setBackgroundColor(facetBackground);
                 }
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                // addColumnAlignments(component,cell);
                 cell.setColspan(columnCount);
                 pdfTable.addCell(cell);
                 pdfTable.completeRow();
@@ -499,7 +496,6 @@ public class PDFExporter extends Exporter {
                 cell.setBackgroundColor(facetBackground);
             }
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            // addColumnAlignments(component,cell);
             cell.setColspan(columnCount);
             pdfTable.addCell(cell);
             pdfTable.completeRow();
@@ -521,7 +517,7 @@ public class PDFExporter extends Exporter {
                         final UIColumn column = (UIColumn) rowComponent;
                         final String value;
                         if (column.isRendered() && column.isExportable()) {
-                            if (facetType.equalsIgnoreCase("header")) {
+                            if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                                 value = column.getHeaderText();
                             }
                             else {
@@ -543,8 +539,7 @@ public class PDFExporter extends Exporter {
                                 cell.setColspan(colSpan);
 
                             }
-                            // addColumnAlignments(component,cell);
-                            if (facetType.equalsIgnoreCase("header")) {
+                            if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                             }
                             pdfTable.addCell(cell);
@@ -571,7 +566,7 @@ public class PDFExporter extends Exporter {
                     for (final UIComponent rowComponent : row.getChildren()) {
                         final UIColumn column = (UIColumn) rowComponent;
                         final String value;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -594,7 +589,7 @@ public class PDFExporter extends Exporter {
 
                         }
                         // addColumnAlignments(component,cell);
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         }
                         pdfTable.addCell(cell);
@@ -750,7 +745,7 @@ public class PDFExporter extends Exporter {
             }
             final PdfPCell cell;
             if (col.isRendered() && col.isExportable()) {
-                if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
+                if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase(ColumnType.HEADER.facet())) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
@@ -758,7 +753,7 @@ public class PDFExporter extends Exporter {
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTable.addCell(cell);
                 }
-                else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
+                else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase(ColumnType.FOOTER.facet())) {
                     cell = new PdfPCell(new Paragraph(col.getFooterText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
@@ -780,7 +775,7 @@ public class PDFExporter extends Exporter {
             }
             final PdfPCell cell;
             if (col.isRendered() && col.isExportable()) {
-                if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
+                if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase(ColumnType.HEADER.facet())) {
                     cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
@@ -788,7 +783,7 @@ public class PDFExporter extends Exporter {
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     pdfTable.addCell(cell);
                 }
-                else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
+                else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase(ColumnType.FOOTER.facet())) {
                     cell = new PdfPCell(new Paragraph(col.getFooterText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
@@ -810,7 +805,7 @@ public class PDFExporter extends Exporter {
         if (facetBackground != null) {
             cell.setBackgroundColor(facetBackground);
         }
-        if (columnType.equalsIgnoreCase("header")) {
+        if (columnType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
             cell = addFacetAlignments(component, cell);
         }
         else {
@@ -962,7 +957,7 @@ public class PDFExporter extends Exporter {
     }
 
     protected void writePDFToResponse(final ExternalContext externalContext, final ByteArrayOutputStream baos, final String fileName)
-                throws IOException, DocumentException {
+                throws IOException {
         externalContext.setResponseContentType("application/pdf");
         externalContext.setResponseHeader("Expires", "0");
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");

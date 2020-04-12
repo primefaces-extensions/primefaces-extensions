@@ -52,6 +52,7 @@ import org.primefaces.util.LangUtils;
 public class Layout extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
     public static final String POSITION_SEPARATOR = "_";
+    public static final String STYLE_CLASS = "ui-layout-";
     public static final String STYLE_CLASS_PANE = "ui-layout-unit ui-widget-content ui-corner-all";
     public static final String STYLE_CLASS_PANE_WITH_SUBPANES = "ui-corner-all pe-layout-pane-withsubpanes";
     public static final String STYLE_CLASS_PANE_HEADER = "ui-layout-unit-header ui-widget-header ui-corner-top pe-layout-pane-header";
@@ -81,7 +82,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
      */
     public enum PropertyKeys {
 
-      // @formatter:off
+        // @formatter:off
       widgetVar,
       fullPage,
       options,
@@ -252,7 +253,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
             super.processUpdates(fc);
         }
 
-        final String state = fc.getExternalContext().getRequestParameterMap().get(this.getClientId(fc) + "_state");
+        final String state = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_state");
         if (!LangUtils.isValueBlank(state)) {
             final ValueExpression stateVE = getValueExpression(PropertyKeys.state.toString());
             if (stateVE != null) {
@@ -270,7 +271,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         if (isSelfRequest(context)) {
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final String clientId = this.getClientId(context);
+            final String clientId = getClientId(context);
 
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             final LayoutPane pane = getLayoutPane(this, params.get(clientId + "_pane"));
@@ -340,7 +341,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
+        return getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

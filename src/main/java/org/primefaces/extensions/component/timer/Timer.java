@@ -353,7 +353,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     }
 
     @Override
-    public void broadcast(final javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
+    public void broadcast(final javax.faces.event.FacesEvent event) {
         super.broadcast(event); // backward compatibility
 
         final FacesContext facesContext = getFacesContext();

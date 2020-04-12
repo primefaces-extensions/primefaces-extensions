@@ -15,7 +15,6 @@
  */
 package org.primefaces.extensions.component.parameters;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import javax.faces.FacesException;
@@ -51,7 +50,7 @@ public class MethodSignatureTagHandler extends TagHandler {
     }
 
     @Override
-    public void apply(final FaceletContext ctx, final UIComponent parent) throws IOException {
+    public void apply(final FaceletContext ctx, final UIComponent parent) {
         // store all parameter types to parent component
         parent.getAttributes().put(PARAMETERS_TYPES_ATTRIBUTE_NAME, parameterTypes);
     }
@@ -64,13 +63,13 @@ public class MethodSignatureTagHandler extends TagHandler {
     }
 
     private Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {
-        final String[] splittedParameters = parameters.split(",");
-        final Class<?>[] parameterTypes = new Class<?>[splittedParameters.length];
+        final String[] splitParameters = parameters.split(",");
+        final Class<?>[] types = new Class<?>[splitParameters.length];
 
-        for (int i = 0; i < splittedParameters.length; i++) {
-            parameterTypes[i] = Class.forName(splittedParameters[i].trim());
+        for (int i = 0; i < splitParameters.length; i++) {
+            types[i] = Class.forName(splitParameters[i].trim());
         }
 
-        return parameterTypes;
+        return types;
     }
 }

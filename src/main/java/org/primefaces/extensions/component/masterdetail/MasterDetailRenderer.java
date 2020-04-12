@@ -56,7 +56,7 @@ public class MasterDetailRenderer extends CoreRenderer {
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
         final MasterDetail masterDetail = (MasterDetail) component;
-        MasterDetailLevel mdl;
+        final MasterDetailLevel mdl;
 
         if (masterDetail.isSelectDetailRequest(fc)) {
             // component has been navigated via SelectDetailLevel
@@ -104,7 +104,7 @@ public class MasterDetailRenderer extends CoreRenderer {
 
         if (mdl == null) {
             throw new FacesException(
-                        "MasterDetailLevel [Level=" + String.valueOf(masterDetail.getLevel()) + "] must be nested inside a MasterDetail component!");
+                        "MasterDetailLevel [Level=" + masterDetail.getLevel() + "] must be nested inside a MasterDetail component!");
         }
 
         // render MasterDetailLevel
@@ -221,7 +221,6 @@ public class MasterDetailRenderer extends CoreRenderer {
                 final DefaultMenuItem menuItem = getMenuItemByLevel(breadcrumb, masterDetail, mdl);
                 if (menuItem == null) {
                     // note: don't throw exception because menuItem can be null when MasterDetail is within DataTable
-                    // throw new FacesException("MenuItem to master detail level " + mdl.getLevel() + " was not found");
                     return;
                 }
 
@@ -323,7 +322,7 @@ public class MasterDetailRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext fc, final UIComponent component) {
         // rendering happens on encodeEnd
     }
 

@@ -44,6 +44,8 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class OrgChartRenderer extends CoreRenderer {
 
+    private static final String JSON_CHILDREN = "children";
+
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final OrgChart orgChart = (OrgChart) component;
@@ -80,8 +82,6 @@ public class OrgChartRenderer extends CoreRenderer {
             final HashMap<String, OrgChartNode> hashMap = OrgChartHelper
                         .parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-            root = null;
-
             root = buildNodesFromJSON(hashMap, hierarchy, null);
 
             ve.setValue(context.getELContext(), root);
@@ -89,7 +89,7 @@ public class OrgChartRenderer extends CoreRenderer {
         }
     }
 
-    public OrgChartNode buildNodesFromJSON(final HashMap<String, OrgChartNode> orgChartNodes,
+    public OrgChartNode buildNodesFromJSON(final Map<String, OrgChartNode> orgChartNodes,
                 final JSONObject hierarchy, OrgChartNode parentNode) {
         final String id = (String) hierarchy.get("id");
         final OrgChartNode node = orgChartNodes.get(id);
@@ -98,8 +98,8 @@ public class OrgChartRenderer extends CoreRenderer {
             parentNode = node;
         }
 
-        if (hierarchy.has("children")) {
-            final JSONArray array = (JSONArray) hierarchy.get("children");
+        if (hierarchy.has(JSON_CHILDREN)) {
+            final JSONArray array = (JSONArray) hierarchy.get(JSON_CHILDREN);
 
             for (int i = 0; i < array.length(); i++) {
                 final JSONObject jsonObject = array.getJSONObject(i);
@@ -136,7 +136,7 @@ public class OrgChartRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = orgChart.getClientId(context);
 
-        OrgChartNode orgChartNode = null;
+        final OrgChartNode orgChartNode;
         if (orgChart.getValue() == null) {
             throw new FacesException("The value attribute must be OrgChartNode");
         }
@@ -196,7 +196,7 @@ public class OrgChartRenderer extends CoreRenderer {
                 jsonChildren.add(toJSON(orgChartNode.getChildren().get(i),
                             orgChartNode.getChildren().get(i).getChildren()));
             }
-            json.put("children", jsonChildren);
+            json.put(JSON_CHILDREN, jsonChildren);
         }
 
         return json;

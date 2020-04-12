@@ -25,7 +25,6 @@ import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.FacesEvent;
@@ -53,10 +52,10 @@ public class RemoteCommand extends UICommand implements AjaxSource {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.RemoteCommandRenderer";
 
-    private transient List<AbstractParameter> allParameters = null;
-    private transient List<AssignableParameter> assignableParameters = null;
-    private transient List<MethodParameter> methodParameters = null;
-    private transient Object[] convertedMethodParams = null;
+    private List<AbstractParameter> allParameters = null;
+    private List<AssignableParameter> assignableParameters = null;
+    private List<MethodParameter> methodParameters = null;
+    private Object[] convertedMethodParams = null;
 
     /**
      * Properties that are tracked by state saving.
@@ -85,22 +84,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         delay,
         timeout,
         partialSubmitFilter,
-        form;
+        form
         //@formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public RemoteCommand() {
@@ -282,7 +267,7 @@ public class RemoteCommand extends UICommand implements AjaxSource {
     }
 
     @Override
-    public void broadcast(final FacesEvent event) throws AbortProcessingException {
+    public void broadcast(final FacesEvent event) {
         for (final FacesListener listener : getFacesListeners(FacesListener.class)) {
             if (event.isAppropriateListener(listener)) {
                 event.processListener(listener);

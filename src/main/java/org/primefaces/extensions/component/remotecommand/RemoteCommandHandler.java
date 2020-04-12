@@ -19,16 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.el.MethodExpression;
-import javax.faces.view.facelets.ComponentConfig;
-import javax.faces.view.facelets.ComponentHandler;
-import javax.faces.view.facelets.CompositeFaceletHandler;
-import javax.faces.view.facelets.FaceletContext;
-import javax.faces.view.facelets.MetaRule;
-import javax.faces.view.facelets.MetaRuleset;
-import javax.faces.view.facelets.Metadata;
-import javax.faces.view.facelets.MetadataTarget;
-import javax.faces.view.facelets.TagAttribute;
-import javax.faces.view.facelets.TagAttributeException;
+import javax.faces.view.facelets.*;
 
 import org.primefaces.extensions.component.parameters.MethodParameter;
 import org.primefaces.extensions.component.parameters.MethodSignatureTagHandler;
@@ -94,7 +85,7 @@ public class RemoteCommandHandler extends ComponentHandler {
 
             // invoke setAction with MethodExpression
             try {
-                method.invoke(instance, new Object[] {expression});
+                method.invoke(instance, expression);
             }
             catch (final InvocationTargetException e) {
                 throw new TagAttributeException(attribute, e.getCause());

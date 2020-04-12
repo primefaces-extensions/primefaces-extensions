@@ -25,7 +25,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.PostRestoreStateEvent;
 
@@ -82,7 +81,7 @@ public class MasterDetail extends UIComponentBase {
 
         private String toString;
 
-        PropertyKeys(String toString) {
+        PropertyKeys(final String toString) {
             this.toString = toString;
         }
 
@@ -108,7 +107,7 @@ public class MasterDetail extends UIComponentBase {
         return (Integer) getStateHelper().eval(PropertyKeys.level, 1);
     }
 
-    public void setLevel(int level) {
+    public void setLevel(final int level) {
         getStateHelper().put(PropertyKeys.level, level);
     }
 
@@ -116,7 +115,7 @@ public class MasterDetail extends UIComponentBase {
         return getStateHelper().eval(PropertyKeys.contextValue, null);
     }
 
-    public void setContextValue(Object contextValue) {
+    public void setContextValue(final Object contextValue) {
         getStateHelper().put(PropertyKeys.contextValue, contextValue);
     }
 
@@ -124,7 +123,7 @@ public class MasterDetail extends UIComponentBase {
         return (MethodExpression) getStateHelper().eval(PropertyKeys.selectLevelListener, null);
     }
 
-    public void setSelectLevelListener(MethodExpression selectLevelListener) {
+    public void setSelectLevelListener(final MethodExpression selectLevelListener) {
         getStateHelper().put(PropertyKeys.selectLevelListener, selectLevelListener);
     }
 
@@ -132,7 +131,7 @@ public class MasterDetail extends UIComponentBase {
         return (Boolean) getStateHelper().eval(PropertyKeys.showBreadcrumb, true);
     }
 
-    public void setShowBreadcrumb(boolean showBreadcrumb) {
+    public void setShowBreadcrumb(final boolean showBreadcrumb) {
         getStateHelper().put(PropertyKeys.showBreadcrumb, showBreadcrumb);
     }
 
@@ -140,7 +139,7 @@ public class MasterDetail extends UIComponentBase {
         return (Boolean) getStateHelper().eval(PropertyKeys.showAllBreadcrumbItems, false);
     }
 
-    public void setShowAllBreadcrumbItems(boolean showAllBreadcrumbItems) {
+    public void setShowAllBreadcrumbItems(final boolean showAllBreadcrumbItems) {
         getStateHelper().put(PropertyKeys.showAllBreadcrumbItems, showAllBreadcrumbItems);
     }
 
@@ -148,7 +147,7 @@ public class MasterDetail extends UIComponentBase {
         return (Boolean) getStateHelper().eval(PropertyKeys.breadcrumbAboveHeader, true);
     }
 
-    public void setBreadcrumbAboveHeader(boolean breadcrumbAboveHeader) {
+    public void setBreadcrumbAboveHeader(final boolean breadcrumbAboveHeader) {
         getStateHelper().put(PropertyKeys.breadcrumbAboveHeader, breadcrumbAboveHeader);
     }
 
@@ -156,7 +155,7 @@ public class MasterDetail extends UIComponentBase {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         getStateHelper().put(PropertyKeys.style, style);
     }
 
@@ -164,12 +163,12 @@ public class MasterDetail extends UIComponentBase {
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
     @Override
-    public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
+    public void processEvent(final ComponentSystemEvent event) {
         super.processEvent(event);
 
         final FacesContext fc = FacesContext.getCurrentInstance();
@@ -193,7 +192,7 @@ public class MasterDetail extends UIComponentBase {
     }
 
     @Override
-    public void processDecodes(FacesContext fc) {
+    public void processDecodes(final FacesContext fc) {
         if (!isSelectDetailRequest(fc)) {
             super.processDecodes(fc);
         }
@@ -203,7 +202,7 @@ public class MasterDetail extends UIComponentBase {
     }
 
     @Override
-    public void processValidators(FacesContext fc) {
+    public void processValidators(final FacesContext fc) {
         if (!isSelectDetailRequest(fc)) {
             super.processValidators(fc);
         }
@@ -213,7 +212,7 @@ public class MasterDetail extends UIComponentBase {
     }
 
     @Override
-    public void processUpdates(FacesContext fc) {
+    public void processUpdates(final FacesContext fc) {
         if (!isSelectDetailRequest(fc)) {
             super.processUpdates(fc);
         }
@@ -222,7 +221,7 @@ public class MasterDetail extends UIComponentBase {
         }
     }
 
-    public MasterDetailLevel getDetailLevelToProcess(FacesContext fc) {
+    public MasterDetailLevel getDetailLevelToProcess(final FacesContext fc) {
         if (detailLevelToProcess == null) {
             initDataForLevels(fc);
         }
@@ -230,7 +229,7 @@ public class MasterDetail extends UIComponentBase {
         return detailLevelToProcess;
     }
 
-    public MasterDetailLevel getDetailLevelToGo(FacesContext fc) {
+    public MasterDetailLevel getDetailLevelToGo(final FacesContext fc) {
         if (detailLevelToGo != null) {
             return detailLevelToGo;
         }
@@ -249,7 +248,7 @@ public class MasterDetail extends UIComponentBase {
             throw new FacesException("MasterDetailLevel for selected level = " + selectedLevel + " not found.");
         }
 
-        int step;
+        final int step;
         if (strSelectedStep != null) {
             // selected step != null
             step = Integer.parseInt(strSelectedStep);
@@ -264,7 +263,7 @@ public class MasterDetail extends UIComponentBase {
         return detailLevelToGo;
     }
 
-    public MasterDetailLevel getDetailLevelByLevel(int level) {
+    public MasterDetailLevel getDetailLevelByLevel(final int level) {
         for (final UIComponent child : getChildren()) {
             if (child instanceof MasterDetailLevel) {
                 final MasterDetailLevel mdl = (MasterDetailLevel) child;
@@ -277,20 +276,20 @@ public class MasterDetail extends UIComponentBase {
         return null;
     }
 
-    public boolean isSelectDetailRequest(FacesContext fc) {
+    public boolean isSelectDetailRequest(final FacesContext fc) {
         return fc.getPartialViewContext().isAjaxRequest()
                     && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
     }
 
-    public String getPreserveInputs(FacesContext fc) {
+    public String getPreserveInputs(final FacesContext fc) {
         return fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + PRESERVE_INPUTS);
     }
 
-    public String getResetInputs(FacesContext fc) {
+    public String getResetInputs(final FacesContext fc) {
         return fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + RESET_INPUTS);
     }
 
-    public void updateModel(FacesContext fc, MasterDetailLevel mdlToGo) {
+    public void updateModel(final FacesContext fc, final MasterDetailLevel mdlToGo) {
         final int levelToGo = mdlToGo.getLevel();
         final ValueExpression levelVE = getValueExpression(PropertyKeys.level.toString());
         if (levelVE != null) {
@@ -323,9 +322,9 @@ public class MasterDetail extends UIComponentBase {
         }
     }
 
-    public Object getContextValueFromFlow(FacesContext fc, MasterDetailLevel mdl, boolean includeModel) {
+    public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl, final boolean includeModel) {
         // try to get context value from internal storage
-        final Object contextValue = mdl.getAttributes().get(this.getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
+        final Object contextValue = mdl.getAttributes().get(getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
         if (contextValue != null) {
             return contextValue;
         }
@@ -386,7 +385,7 @@ public class MasterDetail extends UIComponentBase {
         levelCount = -1;
     }
 
-    private void initDataForLevels(FacesContext fc) {
+    private void initDataForLevels(final FacesContext fc) {
         final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + CURRENT_LEVEL);
         if (strCurrentLevel == null) {
             throw new FacesException("Current level is missing in request.");
@@ -414,7 +413,7 @@ public class MasterDetail extends UIComponentBase {
         }
     }
 
-    private MasterDetailLevel getDetailLevelByStep(int step) {
+    private MasterDetailLevel getDetailLevelByStep(final int step) {
         int levelPositionToGo = getLevelPositionToProcess() + step;
         if (levelPositionToGo < 1) {
             levelPositionToGo = 1;

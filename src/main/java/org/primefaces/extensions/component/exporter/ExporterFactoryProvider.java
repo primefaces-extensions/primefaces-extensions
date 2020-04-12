@@ -72,20 +72,14 @@ class DefaultExporterFactory implements ExporterFactory {
             final ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
 
             switch (exporterType) {
-
                 case PDF:
                     exporter = new PDFExporter();
                     break;
-
                 case XLSX:
                     exporter = new ExcelExporter();
                     break;
-
-                default: {
-                    exporter = new PDFExporter();
-                    break;
-                }
-
+                default:
+                    throw new IllegalStateException("Exporter type not supported.");
             }
         }
         catch (final IllegalArgumentException e) {
