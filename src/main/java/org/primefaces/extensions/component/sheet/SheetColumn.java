@@ -293,23 +293,23 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         return getStateHelper().eval(PropertyKeys.colType, "text").toString();
     }
 
-    public Boolean isAutoCompleteAllowInvalid() {
+    public boolean isAutoCompleteAllowInvalid() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
     }
 
-    public void setAutoCompleteAllowInvalid(final Boolean value) {
+    public void setAutoCompleteAllowInvalid(final boolean value) {
         getStateHelper().put(PropertyKeys.autoCompleteAllowInvalid, value);
     }
 
-    public Boolean isAutoCompleteStrict() {
+    public boolean isAutoCompleteStrict() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
     }
 
-    public void setAutoCompleteStrict(final Boolean value) {
+    public void setAutoCompleteStrict(final boolean value) {
         getStateHelper().put(PropertyKeys.autoCompleteStrict, value);
     }
 
-    public Boolean isAutoCompleteTrimDropdown() {
+    public boolean isAutoCompleteTrimDropdown() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
     }
 
@@ -397,15 +397,15 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         return (String) getStateHelper().eval(PropertyKeys.onvalidate, null);
     }
 
-    public void setVisible(final Boolean value) {
+    public void setVisible(final boolean value) {
         getStateHelper().put(PropertyKeys.visible, value);
     }
 
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.visible, Boolean.TRUE).toString());
     }
 
-    public void setWordWrap(final Boolean value) {
+    public void setWordWrap(final boolean value) {
         getStateHelper().put(PropertyKeys.wordWrap, value);
     }
 
@@ -413,7 +413,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.wordWrap, Boolean.TRUE).toString());
     }
 
-    public void setTrimWhitespace(final Boolean value) {
+    public void setTrimWhitespace(final boolean value) {
         getStateHelper().put(PropertyKeys.trimWhitespace, value);
     }
 
@@ -639,7 +639,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                 // If the validator throws an exception, we're
                 // invalid, and we need to add a message
                 setValid(false);
-                FacesMessage message;
+                final FacesMessage message;
                 final String validatorMessageString = getValidatorMessage();
 
                 if (null != validatorMessageString) {
@@ -688,7 +688,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         // If our value is valid, enforce the required property if present
         if (isValid() && isRequired() && isEmpty(newValue)) {
             final String requiredMessageStr = getRequiredMessage();
-            FacesMessage message;
+            final FacesMessage message;
             if (null != requiredMessageStr) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             requiredMessageStr,

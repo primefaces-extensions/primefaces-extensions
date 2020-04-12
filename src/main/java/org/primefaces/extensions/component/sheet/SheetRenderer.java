@@ -141,9 +141,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb       the WidgetBuilder to append to
+     * @param wb the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value    the value
+     * @param value the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
@@ -156,9 +156,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb       the WidgetBuilder to append to
+     * @param wb the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value    the value
+     * @param value the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
@@ -172,7 +172,7 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Javascript for the sheet.
      *
      * @param context the FacesContext
-     * @param sheet   the Sheet
+     * @param sheet the Sheet
      * @throws IOException if any IO error occurs
      */
     protected void encodeScript(final FacesContext context, final Sheet sheet)
@@ -357,9 +357,9 @@ public class SheetRenderer extends CoreRenderer {
                     encodeSelectItems(column, options);
                     break;
                 case "autocomplete":
-                    options.appendProperty("strict", column.isAutoCompleteStrict().toString(), false);
-                    options.appendProperty("allowInvalid", column.isAutoCompleteAllowInvalid().toString(), false);
-                    options.appendProperty("trimDropdown", column.isAutoCompleteTrimDropdown().toString(), false);
+                    options.appendProperty("strict", Boolean.toString(column.isAutoCompleteStrict()), false);
+                    options.appendProperty("allowInvalid", Boolean.toString(column.isAutoCompleteAllowInvalid()), false);
+                    options.appendProperty("trimDropdown", Boolean.toString(column.isAutoCompleteTrimDropdown()), false);
                     final Integer visibleRows = column.getAutoCompleteVisibleRows();
                     if (visibleRows != null) {
                         options.appendProperty("visibleRows", visibleRows.toString(), false);
@@ -685,11 +685,8 @@ public class SheetRenderer extends CoreRenderer {
 
     /**
      * Encodes a javascript filter var that informs the col header event of the column's filtering options. The var is an array in the form:
-     * <pre>
-     * ["false","true",["option 1", "option 2"]]
-     * </pre>
-     * False indicates no filtering for the column. True indicates simple input text filter. Array of values indicates a drop down filter with the listed
-     * options.
+     * ["false","true",["option 1", "option 2"]] False indicates no filtering for the column. True indicates simple input text filter. Array of values indicates
+     * a drop down filter with the listed options.
      */
     protected void encodeFilterVar(final Sheet sheet, final WidgetBuilder wb)
                 throws IOException {
@@ -827,7 +824,7 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes client behaviors (ajax events).
      *
-     * @param context   the FacesContext
+     * @param context the FacesContext
      * @param component the Component being decodes
      */
     @Override
