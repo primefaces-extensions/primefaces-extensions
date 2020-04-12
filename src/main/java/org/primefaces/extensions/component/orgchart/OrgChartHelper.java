@@ -18,6 +18,7 @@ package org.primefaces.extensions.component.orgchart;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <code>orgchart</code> component.
@@ -28,6 +29,10 @@ import java.util.List;
  */
 public class OrgChartHelper {
 
+    private OrgChartHelper() {
+        // prevent instantiation
+    }
+
     public static List<OrgChartNode> getAllNodesTraverseFromRoot(final OrgChartNode root) {
         final List<OrgChartNode> orgChartNodes = new ArrayList<>();
 
@@ -36,7 +41,7 @@ public class OrgChartHelper {
         return orgChartNodes;
     }
 
-    public static HashMap<String, OrgChartNode> parseOrgChartNodesIntoHashMap(
+    public static Map<String, OrgChartNode> parseOrgChartNodesIntoHashMap(
                 final List<OrgChartNode> orgChartNodes) {
 
         final HashMap<String, OrgChartNode> hashMap = new HashMap<>();

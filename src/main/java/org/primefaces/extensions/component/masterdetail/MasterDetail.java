@@ -76,22 +76,16 @@ public class MasterDetail extends UIComponentBase {
      * @version $Revision$
      */
     protected enum PropertyKeys {
-
-        level, contextValue, selectLevelListener, showBreadcrumb, showAllBreadcrumbItems, breadcrumbAboveHeader, style, styleClass;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        // @formatter:off
+        level,
+        contextValue,
+        selectLevelListener,
+        showBreadcrumb,
+        showAllBreadcrumbItems,
+        breadcrumbAboveHeader,
+        style,
+        styleClass
+        // @formatter:on
     }
 
     public MasterDetail() {

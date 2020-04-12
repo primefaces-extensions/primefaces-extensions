@@ -146,14 +146,14 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 writer.startElement("tr", null);
             }
 
-            encodeOption(context, checkbox, values, converter, selectItem, idx);
+            encodeOption(context, checkbox, values, selectItem, idx);
             if (pageDirection) {
                 writer.endElement("tr");
             }
         }
     }
 
-    protected void encodeOption(final FacesContext context, final UIInput component, final Map<String, Object> values, final Converter converter,
+    protected void encodeOption(final FacesContext context, final UIInput component, final Map<String, Object> values,
                 final SelectItem option, final int idx) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;

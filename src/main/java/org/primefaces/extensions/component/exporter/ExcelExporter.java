@@ -215,7 +215,7 @@ public class ExcelExporter extends Exporter {
 
     }
 
-    protected void exportAll(final FacesContext context, final DataTable table, final Sheet sheet, final Boolean subTable) {
+    protected void exportAll(final FacesContext context, final DataTable table, final Sheet sheet, final boolean subTable) {
 
         final int first = table.getFirst();
         final int rowCount = table.getRowCount();

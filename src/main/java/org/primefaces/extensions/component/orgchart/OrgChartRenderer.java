@@ -17,7 +17,6 @@ package org.primefaces.extensions.component.orgchart;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +78,7 @@ public class OrgChartRenderer extends CoreRenderer {
                 o.clearChildren();
             }
 
-            final HashMap<String, OrgChartNode> hashMap = OrgChartHelper
+            final Map<String, OrgChartNode> hashMap = OrgChartHelper
                         .parseOrgChartNodesIntoHashMap(orgChartNodes);
 
             root = buildNodesFromJSON(hashMap, hierarchy, null);

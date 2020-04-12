@@ -224,7 +224,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setReadOnly(final Boolean value) {
+    public void setReadOnly(final boolean value) {
         getStateHelper().put(PropertyKeys.readOnly, value);
     }
 
@@ -233,7 +233,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @return true if read only, otherwise false
      */
-    public Boolean isReadOnly() {
+    public boolean isReadOnly() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
@@ -242,7 +242,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setReadonlyCell(final Boolean value) {
+    public void setReadonlyCell(final boolean value) {
         getStateHelper().put(PropertyKeys.readonlyCell, value);
     }
 
@@ -251,7 +251,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @return true if read only, otherwise false
      */
-    public Boolean isReadonlyCell() {
+    public boolean isReadonlyCell() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readonlyCell, Boolean.FALSE).toString());
     }
 

@@ -1,12 +1,9 @@
 /**
  * Copyright 2011-2018 PrimeFaces Extensions
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,8 +16,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +44,7 @@ public class OrgChartHelperTest {
         return root;
     }
 
-    public void setRoot(OrgChartNode root) {
+    public void setRoot(final OrgChartNode root) {
         this.root = root;
     }
 
@@ -118,7 +115,7 @@ public class OrgChartHelperTest {
         orgChartNodes.add(node2);
         orgChartNodes.add(node3);
 
-        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final Map<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
         assertEquals(node1, hashMap.get("id1"));
         assertEquals(node2, hashMap.get("id2"));
@@ -139,7 +136,7 @@ public class OrgChartHelperTest {
         orgChartNodes.add(orgChartNode);
         orgChartNodes.add(orgChartNode2);
 
-        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final Map<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", "id1");
@@ -169,7 +166,7 @@ public class OrgChartHelperTest {
         orgChartNodes.add(orgChartNode2);
         orgChartNodes.add(orgChartNode3);
 
-        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final Map<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", "id1");
@@ -203,7 +200,7 @@ public class OrgChartHelperTest {
         orgChartNodes.add(orgChartNode2);
         orgChartNodes.add(orgChartNode3);
 
-        final HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+        final Map<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", "id1");

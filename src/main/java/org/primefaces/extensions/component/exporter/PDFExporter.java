@@ -588,7 +588,6 @@ public class PDFExporter extends Exporter {
                             cell.setColspan(colSpan);
 
                         }
-                        // addColumnAlignments(component,cell);
                         if (facetType.equalsIgnoreCase(ColumnType.HEADER.facet())) {
                             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         }
