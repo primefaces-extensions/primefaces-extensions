@@ -1,12 +1,12 @@
 /**
  * PrimeFaces Extensions Sheet Widget.
- * 
- * @author Melloware 
- * @author Mark Lassiter 
+ *
+ * @author Melloware
+ * @author Mark Lassiter
  * @since 6.2
  */
 PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
-    
+
     // flag tracking whether or not an update ajax event needs fired
     // after a select cell
     updated: false,
@@ -25,7 +25,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         this.sortOrderInput = $(this.jqId + '_sortorder');
         // need to track to avoid recursion
         this.focusing = false;
-        
+
         // user extension to configure handsontable
         var extender = this.cfg.extender
         if (extender) {
@@ -35,11 +35,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 PrimeFaces.error("Extender value is not a javascript function!");
             }
         }
-        
+
         this.renderDeferred();
     },
-    
-    _render: function() {
+
+    _render: function () {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -135,11 +135,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 if (isChanged) {
                     $this.dataInput.val(JSON.stringify($this.cfg.delta));
                     $this.updated = true;
-                    
+
                     // GitHub #599
                     if (cellType === "checkbox" || cellType === "dropdown" || cellType === "autocomplete" || cellType === "date") {
-                       $this.updated = false;
-                       $this.callBehavior('change');
+                        $this.updated = false;
+                        $this.callBehavior('change');
                     }
                 }
             },
@@ -175,10 +175,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             },
             afterGetColHeader: function (col, TH) {
                 var header = $(TH);
-                
+
                 // remove all current events
                 header.off();
-                
+
                 // handle sorting
                 var sortable = $this.cfg.sortable[col];
                 if (sortable) {
@@ -250,10 +250,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 }
             }
         };
-        
+
         // make a copy of the configuration
         var configuration = $.extend(true, {}, $this.cfg);
-        
+
         // remove any properties we don't want in the options
         delete configuration["readOnlyCells"];
         delete configuration["rowKeys"];
@@ -266,10 +266,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         delete configuration["sortable"];
         delete configuration["styles"];
         delete configuration["rowStyles"];
-        
+
         // merge configuration into options
-        $.extend( options, configuration );
-        
+        $.extend(options, configuration);
+
         // create the handsontable
         $this.tableDiv.handsontable(options);
         $this.ht = $this.tableDiv.data('handsontable');
@@ -277,11 +277,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // prevent column clicks from selecting entire column, we use it for sort
         // We were seeing an issue with this change and how it affected the columnSelect ajax action
         // so we needed to NOT enabled this behavior if the given sheet has the ajax function defined.
-        // TODO may make this conditional on whether or not sorting is enabled
         if (!($this.hasBehavior('columnSelect'))) {
             $this.ht.addHook('beforeOnCellMouseDown', $this.handleHotBeforeOnCellMouseDown);
         }
-        
+
         // add before key down hook
         $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
 
@@ -298,7 +297,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             $this.ht.selectCell(sel[0], sel[1], sel[2], sel[3], true);
         }
     },
-    
+
     _defaultCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
         var styleClass = '';
         // append row style (if we have one)
@@ -328,17 +327,17 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
     },
 
     //@Override
-    refresh: function(cfg) { 
+    refresh: function (cfg) {
         // clean up HT memory
         if (this.ht) {
             this.ht.destroy();
         }
-        
+
         this._super(cfg);
     },
 
     //@Override
-    destroy: function() {
+    destroy: function () {
         this._super();
 
         // clean up HT memory
@@ -349,7 +348,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
 
     /**
      * Updates the row with the new data value
-     * 
+     *
      * @param rowIndex the row index
      * @param data the array of data values for the columns
      * @param styles the JSON cell style updates
@@ -360,7 +359,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         $.extend(this.cfg.styles, styles);
         //merge the new readonly cells in
         $.extend(this.cfg.readOnlyCells, readOnlyCells);
-        
+
         // update any data rows
         if (rowIndex <= this.cfg.rowKeys.length) {
             this.cfg.data[rowIndex] = data;
@@ -393,7 +392,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // destroy editor to avoid posting request after resort
         sheet.ht.destroyEditor(true);
         sheet.ht.deselectCell();
-        
+
         sheet.callBehavior('sort');
     },
 
@@ -420,7 +419,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             e.preventDefault();
         }
     },
-    
+
     // to alleviate focus issues focus on mouse over
     filterMouseOver: function (sheet, e) {
         $(e.target).focus();
@@ -443,7 +442,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         setTimeout(function () {
             $(inp).focus();
             sheet.focusing = false;
-        },150);
+        }, 150);
     },
 
     // remove focused filter tracking when tabbing off
@@ -451,30 +450,30 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // if this call is the result of jQuery setFocus, exit
         if (sheet.focusing)
             return;
-        
+
         sheet.filter();
     },
-    
+
     // clear currently stored input and deltas
     clearDataInput: function () {
         this.cfg.delta = {};
         this.dataInput.val('');
     },
-    
+
     // clear all the filters
     clearFilters: function () {
         $("input[id^='" + this.id + "_filter_']").val("");
         this.filterChanged = true;
         this.filter();
     },
-    
+
     // tell handstontable to repaint itself
     redraw: function () {
         if (this.ht) {
             this.ht.render();
         }
     },
-    
+
     // run filtering if it has changed
     filter: function () {
         if (this.filterChanged && this.hasBehavior('filter')) {
@@ -482,22 +481,22 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             this.callBehavior('filter');
         }
     },
-    
+
     // Remove the row from the sheet
     removeRow: function (index) {
         if (this.ht) {
-           this.ht.alter('remove_row', index);
+            this.ht.alter('remove_row', index);
         }
     },
-    
+
     focusFirstError: function () {
-       var errors = this.tableDiv.find('.ui-message-error');
-       if (errors.length > 0) {
-           var firstError = errors.first();
-           var col = firstError.index() - 1;
-           var row = firstError.parent().index();
-           this.ht.selectCell(row, col);
-       }
+        var errors = this.tableDiv.find('.ui-message-error');
+        if (errors.length > 0) {
+            var firstError = errors.first();
+            var col = firstError.index() - 1;
+            var row = firstError.parent().index();
+            this.ht.selectCell(row, col);
+        }
     },
 
     // method to prevent selection of cells on column header click
@@ -506,45 +505,45 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             event.stopImmediatePropagation();
         }
     },
-    
+
     handleHotBeforeKeyDown: function (e) {
         var selectedLast = this.getSelectedLast();
         if (!selectedLast) {
-           return;
+            return;
         }
         var row = selectedLast[0];
         var col = selectedLast[1];
         var celltype = this.getCellMeta(row, col).type;
-        
+
         // prevent Alpha chars in numeric sheet cells
         if (celltype === "numeric") {
-            var evt = e||window.event; // IE support
+            var evt = e || window.event; // IE support
             var key = evt.charCode || evt.keyCode || 0;
-            
+
             // #766 do not block if just CTRL key
             if (key === 17) {
                 return;
             }
-            
+
             // check for cut and paste
             var isClipboard = false;
-            var ctrlDown = evt.ctrlKey||evt.metaKey; // Mac support
+            var ctrlDown = evt.ctrlKey || evt.metaKey; // Mac support
 
             // Check for Alt+Gr (http://en.wikipedia.org/wiki/AltGr_key)
             if (ctrlDown && evt.altKey) isClipboard = false;
             // Check for ctrl+c, v and x
-            else if (ctrlDown && key==67) isClipboard = true; // c
-            else if (ctrlDown && key==86) isClipboard = true; // v
-            else if (ctrlDown && key==88) isClipboard = true; // x
-            
+            else if (ctrlDown && key == 67) isClipboard = true; // c
+            else if (ctrlDown && key == 86) isClipboard = true; // v
+            else if (ctrlDown && key == 88) isClipboard = true; // x
+
             // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
             // ONLY home, end, F5, F12, minus (-), period (.)
             // console.log('Key: ' + key + ' Shift: ' + e.shiftKey + ' Clipboard: ' + isClipboard);
             var isNumeric = ((key == 8) || (key == 9) || (key == 13)
-                    || (key == 46) || (key == 110) || (key == 116)
-                    || (key == 123) || (key == 188) || (key == 189)
-                    || (key == 190) || ((key >= 35) && (key <= 40))
-                    || ((key >= 48) && (key <= 57)) || ((key >= 96) && (key <= 105)));
+                || (key == 46) || (key == 110) || (key == 116)
+                || (key == 123) || (key == 188) || (key == 189)
+                || (key == 190) || ((key >= 35) && (key <= 40))
+                || ((key >= 48) && (key <= 57)) || ((key >= 96) && (key <= 105)));
 
             if ((!isNumeric && !isClipboard) || e.shiftKey) {
                 // prevent alpha characters
@@ -552,5 +551,5 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 e.preventDefault();
             }
         }
-    }    
+    }
 });
