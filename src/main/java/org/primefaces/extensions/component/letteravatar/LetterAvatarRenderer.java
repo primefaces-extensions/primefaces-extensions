@@ -138,9 +138,9 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
     protected static String toStyle(Map<String, String> map) {
         return map.entrySet()
-                .stream()
-                .map(e -> e.getKey() + ":" + e.getValue())
-                .collect(Collectors.joining(";"));
+                    .stream()
+                    .map(e -> e.getKey() + ":" + e.getValue())
+                    .collect(Collectors.joining(";"));
     }
 
 }
