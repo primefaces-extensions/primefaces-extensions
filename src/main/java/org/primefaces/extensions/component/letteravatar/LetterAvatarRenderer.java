@@ -21,12 +21,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
-
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -103,20 +101,19 @@ public class LetterAvatarRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    private int hash(String str) {
+    public static int hash(String str) {
         int result = 0;
         for (int i = 0; i < str.length(); i++) {
             result = (result << 5) - result + str.charAt(i);
-            result |= 0;
         }
         return result;
     }
 
-    private int hue(String str) {
+    public static int hue(String str) {
         return Math.abs(hash(str) % 360);
     }
 
-    private String styleDiv(String size, String color, String backgroundColor, boolean rounded) {
+    protected String styleDiv(String size, String color, String backgroundColor, boolean rounded) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("color", color);
         map.put("background-color", backgroundColor);
@@ -126,23 +123,24 @@ public class LetterAvatarRenderer extends CoreRenderer {
         map.put("height", size);
         map.put("text-align", "center");
         map.put("width", size);
-        return map.entrySet()
-                    .stream()
-                    .map(e -> e.getKey() + ":" + e.getValue())
-                    .collect(Collectors.joining(";"));
+        return toStyle(map);
     }
 
-    private String styleSpan(String size) {
+    protected String styleSpan(String size) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
         map.put("line-height", "1");
         map.put("position", "relative");
         map.put("top", "calc(" + size + " / 4)"); // 25% of parent
         map.put("mix-blend-mode", "difference");
+        return toStyle(map);
+    }
+
+    protected static String toStyle(Map<String, String> map) {
         return map.entrySet()
-                    .stream()
-                    .map(e -> e.getKey() + ":" + e.getValue())
-                    .collect(Collectors.joining(";"));
+                .stream()
+                .map(e -> e.getKey() + ":" + e.getValue())
+                .collect(Collectors.joining(";"));
     }
 
 }

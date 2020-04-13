@@ -12,3 +12,4 @@ target
 *.NavData
 *.navData
 *.DS_Store
+/nbproject/
