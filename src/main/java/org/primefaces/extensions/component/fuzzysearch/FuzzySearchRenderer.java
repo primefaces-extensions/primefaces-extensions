@@ -32,7 +32,7 @@ import com.google.gson.Gson;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.util.WidgetBuilder;
 
-@FacesRenderer(componentFamily = FuzzySearch.COMPONENT_FAMILY, rendererType = FuzzySearch.DEFAULT_RENDERER)
+@FacesRenderer(componentFamily = FuzzySearchBase.COMPONENT_FAMILY, rendererType = FuzzySearchBase.DEFAULT_RENDERER)
 public class FuzzySearchRenderer extends SelectOneRenderer {
 
     @Override
