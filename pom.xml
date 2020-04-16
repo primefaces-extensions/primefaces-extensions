@@ -73,6 +73,7 @@
                                 <include>creditcard/**</include>
                                 <include>fab/**</include>
                                 <include>fluidgrid/**</include>
+                                <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
