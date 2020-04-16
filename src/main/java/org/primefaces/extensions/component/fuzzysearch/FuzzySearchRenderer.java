@@ -18,17 +18,16 @@ package org.primefaces.extensions.component.fuzzysearch;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UINamingContainer;
 import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.model.SelectItem;
 import javax.faces.render.FacesRenderer;
 import org.primefaces.renderkit.SelectOneRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
@@ -36,8 +35,19 @@ import org.primefaces.util.WidgetBuilder;
 public class FuzzySearchRenderer extends SelectOneRenderer {
 
     @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) throws ConverterException {
-        return ComponentUtils.getConvertedValue(context, component, (String) submittedValue);
+    public void decode(FacesContext context, UIComponent component) {
+        FuzzySearch fuzzySearch = (FuzzySearch) component;
+        if (!shouldDecode(fuzzySearch)) {
+            return;
+        }
+
+        String clientId = getSubmitParam(context, fuzzySearch);
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+
+        String editorInput = params.get(clientId + "_change");
+        fuzzySearch.setSubmittedValue(editorInput);
+
+        decodeBehaviors(context, fuzzySearch);
     }
 
     @Override
