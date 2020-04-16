@@ -29,6 +29,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.render.FacesRenderer;
 
 import com.google.gson.Gson;
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -77,9 +78,9 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, "id");
-        writer.writeAttribute("class", styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         if (style != null) {
-            writer.writeAttribute("style", style, "style");
+            writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
         }
 
         writer.startElement("input", fuzzySearch);
@@ -145,7 +146,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.startElement("div", null);
         writer.writeAttribute("class", resultStyleClass, "resultStyleClass");
         if (resultStyle != null) {
-            writer.writeAttribute("style", resultStyle, "resultStyle");
+            writer.writeAttribute(Attrs.STYLE, resultStyle, "resultStyle");
         }
         writer.writeAttribute("tabindex", fuzzySearch.getTabindex(), null);
         if (option.getDescription() != null) {
