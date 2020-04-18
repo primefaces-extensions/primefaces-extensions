@@ -16,13 +16,9 @@
 package org.primefaces.extensions.component.badge;
 
 import java.io.IOException;
-
 import javax.faces.FacesException;
-import javax.faces.component.UICommand;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIOutcomeTarget;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -41,15 +37,14 @@ public class BadgeRenderer extends CoreRenderer {
         encodeScript(context, badge);
     }
 
-    private void encodeScript(FacesContext context, Badge badge) throws IOException {
-        String target = SearchExpressionFacade.resolveClientIds(context, badge, badge.getFor());
-        if (isValueBlank(target)) {
-            target = badge.getParent().getClientId(context);
-        }
+    protected void encodeScript(FacesContext context, Badge badge) throws IOException {
+        String target = isValueBlank(badge.getFor())
+                    ? badge.getParent().getClientId(context)
+                    : resolveTarget(context, badge);
 
         final UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, badge, target);
-        if (!(targetComponent instanceof UICommand || targetComponent instanceof UIOutcomeTarget)) {
-            throw new FacesException("Badge must use for=\"target\" or be nested inside an button!");
+        if (!targetComponent.isRendered()) {
+            return;
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
@@ -62,6 +57,14 @@ public class BadgeRenderer extends CoreRenderer {
         }
 
         wb.finish();
+    }
+
+    protected String resolveTarget(FacesContext context, Badge badge) {
+        String target = SearchExpressionFacade.resolveClientIds(context, badge, badge.getFor());
+        if (isValueBlank(target)) {
+            throw new FacesException("Badge for=\"target\" resolved to null");
+        }
+        return target;
     }
 
 }

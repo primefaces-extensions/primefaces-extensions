@@ -18,9 +18,11 @@ package org.primefaces.extensions.component.letteravatar;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -74,17 +76,19 @@ public class LetterAvatarRenderer extends CoreRenderer {
         }
 
         final String size = letterAvatar.getSize();
-        String style = letterAvatar.getStyle();
-        style = style == null ? styleDiv(size, color, backgroundColor, rounded) : styleDiv(size, color, backgroundColor, rounded) + StringUtils.SPACE + style;
-        String styleClass = letterAvatar.getStyleClass();
-        styleClass = styleClass == null ? LetterAvatar.COMPONENT_CLASS : LetterAvatar.COMPONENT_CLASS + StringUtils.SPACE + styleClass;
+        String style = joinNonNull(StringUtils.SPACE,
+                    letterAvatar.getStyle(),
+                    styleContainer(size, color, backgroundColor, rounded));
+        String styleClass = joinNonNull(StringUtils.SPACE,
+                    letterAvatar.getStyleClass(),
+                    LetterAvatar.COMPONENT_CLASS);
 
-        writer.startElement("div", letterAvatar);
+        writer.startElement("span", letterAvatar);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("title", value, null);
 
         if (rounded) {
-            styleClass = styleClass + " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
+            styleClass = styleClass + StringUtils.SPACE + LetterAvatar.COMPONENT_CLASS_ROUNDED;
         }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
@@ -94,11 +98,11 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
         writer.startElement("span", letterAvatar);
         writer.writeAttribute(Attrs.CLASS, "ui-letteravatar-initials", null);
-        writer.writeAttribute(Attrs.STYLE, styleSpan(size), null);
+        writer.writeAttribute(Attrs.STYLE, styleInitials(size), null);
         writer.write(initials);
         writer.endElement("span");
 
-        writer.endElement("div");
+        writer.endElement("span");
     }
 
     public static int hash(String str) {
@@ -113,7 +117,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return Math.abs(hash(str) % 360);
     }
 
-    protected String styleDiv(String size, String color, String backgroundColor, boolean rounded) {
+    protected String styleContainer(String size, String color, String backgroundColor, boolean rounded) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("color", color);
         map.put("background-color", backgroundColor);
@@ -121,19 +125,19 @@ public class LetterAvatarRenderer extends CoreRenderer {
             map.put("border-radius", "50%");
         }
         map.put("height", size);
-        map.put("text-align", "center");
         map.put("width", size);
         return toStyle(map);
     }
 
-    protected String styleSpan(String size) {
+    protected String styleInitials(String size) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
-        map.put("line-height", "1");
-        map.put("position", "relative");
         map.put("top", "calc(" + size + " / 4)"); // 25% of parent
-        map.put("mix-blend-mode", "difference");
         return toStyle(map);
+    }
+
+    protected static String joinNonNull(String delimiter, String... parts) {
+        return Stream.of(parts).filter(Objects::nonNull).collect(Collectors.joining(delimiter));
     }
 
     protected static String toStyle(Map<String, String> map) {
