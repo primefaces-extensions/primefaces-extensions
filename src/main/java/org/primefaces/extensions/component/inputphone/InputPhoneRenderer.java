@@ -33,11 +33,7 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
-import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.Constants;
-import org.primefaces.util.HTML;
-import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.*;
 
 /**
  * Renderer for the {@link InputPhone} component.
@@ -51,7 +47,7 @@ public class InputPhoneRenderer extends InputRenderer {
     private static final String HIDDEN_ID = "_iso2";
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(final FacesContext context, final UIComponent component) {
         final InputPhone inputPhone = (InputPhone) component;
 
         if (!shouldDecode(inputPhone)) {
@@ -69,7 +65,7 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     @Override
-    public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final InputPhone inputPhone = (InputPhone) component;
 
         final Object value = inputPhone.getValue();
@@ -83,7 +79,7 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     @Override
-    public Object getConvertedValue(FacesContext context, UIComponent component, Object submittedValue) {
+    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
         final String value = (String) submittedValue;
         if (LangUtils.isValueBlank(value)) {
             return null;
@@ -109,7 +105,7 @@ public class InputPhoneRenderer extends InputRenderer {
         return value;
     }
 
-    protected void encodeMarkup(FacesContext context, InputPhone inputPhone, String valueToRender) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = inputPhone.getClientId(context);
 
@@ -130,33 +126,23 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeInput(FacesContext context, InputPhone inputPhone, String clientId, String valueToRender)
+    protected void encodeInput(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
         final String inputId = clientId + "_input";
-
         final String inputStyle = inputPhone.getInputStyle();
-        final String inputStyleClass = inputPhone.getInputStyleClass();
-
-        String styleClass = InputText.STYLE_CLASS;
-        styleClass = inputPhone.isValid() ? styleClass : styleClass + " ui-state-error";
-        styleClass = !inputPhone.isDisabled() ? styleClass : styleClass + " ui-state-disabled";
-        if (!isValueBlank(inputStyleClass)) {
-            styleClass += " " + inputStyleClass;
-        }
 
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", inputPhone.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
+        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone), "styleClass");
 
         if (!isValueBlank(inputStyle)) {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);
         }
-
-        writer.writeAttribute(Attrs.CLASS, styleClass, null);
 
         renderAccessibilityAttributes(context, inputPhone);
         renderPassThruAttributes(context, inputPhone, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
@@ -166,7 +152,7 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("input");
     }
 
-    protected void encodeHiddenInput(FacesContext context, InputPhone inputPhone, String clientId)
+    protected void encodeHiddenInput(final FacesContext context, final InputPhone inputPhone, final String clientId)
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("input", null);
@@ -177,7 +163,7 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("input");
     }
 
-    protected void encodeScript(FacesContext context, InputPhone inputPhone) throws IOException {
+    protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
         final String clientId = inputPhone.getClientId(context);
 
         final WidgetBuilder wb = getWidgetBuilder(context);
@@ -228,14 +214,25 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.finish();
     }
 
-    private void encodeCountries(WidgetBuilder wb, String attribute, Object value) throws IOException {
+    protected String createStyleClass(final InputPhone inputText) {
+        String defaultClass = InputText.STYLE_CLASS;
+        defaultClass = inputText.isValid() ? defaultClass : defaultClass + " ui-state-error";
+        defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
+
+        String styleClass = inputText.getInputStyleClass();
+        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
+
+        return styleClass;
+    }
+
+    private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value) throws IOException {
         final Collection<String> countries = toCollection(value);
         if (countries != null && !countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
     }
 
-    private Collection<String> toCollection(Object object) {
+    private Collection<String> toCollection(final Object object) {
         if (String.class.isInstance(object)) {
             final String string = ((String) object).replace(' ', ',').toLowerCase();
             return Arrays.asList(string.split(","));

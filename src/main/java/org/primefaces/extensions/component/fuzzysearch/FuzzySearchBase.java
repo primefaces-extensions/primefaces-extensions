@@ -17,6 +17,7 @@ package org.primefaces.extensions.component.fuzzysearch;
 
 import javax.faces.component.UISelectOne;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 
@@ -39,7 +40,8 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         resultStyle,
         resultStyleClass,
         placeholder,
-        listItemsAtTheBeginning;
+        highlight,
+        listItemsAtTheBeginning
         // @formatter:on
     }
 
@@ -56,7 +58,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(String widgetVar) {
+    public void setWidgetVar(final String widgetVar) {
         getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
@@ -64,7 +66,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (Boolean) getStateHelper().eval(PropertyKeys.disabled, false);
     }
 
-    public void setDisabled(boolean disabled) {
+    public void setDisabled(final boolean disabled) {
         getStateHelper().put(PropertyKeys.disabled, disabled);
     }
 
@@ -72,7 +74,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.label, null);
     }
 
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         getStateHelper().put(PropertyKeys.label, label);
     }
 
@@ -80,7 +82,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.onchange, null);
     }
 
-    public void setOnchange(String onchange) {
+    public void setOnchange(final String onchange) {
         getStateHelper().put(PropertyKeys.onchange, onchange);
     }
 
@@ -88,7 +90,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         getStateHelper().put(PropertyKeys.style, style);
     }
 
@@ -96,7 +98,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
@@ -104,7 +106,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.tabindex, null);
     }
 
-    public void setTabindex(String tabindex) {
+    public void setTabindex(final String tabindex) {
         getStateHelper().put(PropertyKeys.tabindex, tabindex);
     }
 
@@ -112,15 +114,23 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (Boolean) getStateHelper().eval(PropertyKeys.unselectable, true);
     }
 
-    public void setUnselectable(boolean unselectable) {
+    public void setUnselectable(final boolean unselectable) {
         getStateHelper().put(PropertyKeys.unselectable, unselectable);
+    }
+
+    public boolean isHighlight() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.highlight, true);
+    }
+
+    public void setHighlight(final boolean highlight) {
+        getStateHelper().put(PropertyKeys.highlight, highlight);
     }
 
     public String getResultStyle() {
         return (String) getStateHelper().eval(PropertyKeys.resultStyle, null);
     }
 
-    public void setResultStyle(String resultStyle) {
+    public void setResultStyle(final String resultStyle) {
         getStateHelper().put(PropertyKeys.resultStyle, resultStyle);
     }
 
@@ -128,7 +138,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.resultStyleClass, null);
     }
 
-    public void setResultStyleClass(String resultStyleClass) {
+    public void setResultStyleClass(final String resultStyleClass) {
         getStateHelper().put(PropertyKeys.resultStyleClass, resultStyleClass);
     }
 
@@ -136,7 +146,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
     }
 
-    public void setPlaceholder(String placeholder) {
+    public void setPlaceholder(final String placeholder) {
         getStateHelper().put(PropertyKeys.placeholder, placeholder);
     }
 
@@ -144,7 +154,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
         return (Boolean) getStateHelper().eval(PropertyKeys.listItemsAtTheBeginning, false);
     }
 
-    public void setListItemsAtTheBeginning(boolean listItemsAtTheBeginning) {
+    public void setListItemsAtTheBeginning(final boolean listItemsAtTheBeginning) {
         getStateHelper().put(PropertyKeys.listItemsAtTheBeginning, listItemsAtTheBeginning);
     }
 

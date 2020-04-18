@@ -26,14 +26,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
-import javax.faces.render.FacesRenderer;
 
 import com.google.gson.Gson;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
-@FacesRenderer(componentFamily = FuzzySearchBase.COMPONENT_FAMILY, rendererType = FuzzySearchBase.DEFAULT_RENDERER)
 public class FuzzySearchRenderer extends SelectOneRenderer {
 
     @Override
@@ -46,18 +48,19 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final String clientId = getSubmitParam(context, fuzzySearch);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
-        final String editorInput = params.get(clientId + "_change");
-        fuzzySearch.setSubmittedValue(editorInput);
+        String submittedValue = params.get(clientId + "_change");
+        if (LangUtils.isValueBlank(submittedValue)) {
+            submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
+        }
+        if (submittedValue != null) {
+            fuzzySearch.setSubmittedValue(submittedValue);
+        }
 
         decodeBehaviors(context, fuzzySearch);
     }
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        if (context == null) {
-            throw new NullPointerException("No context defined!");
-        }
-
         final FuzzySearch fuzzySearch = (FuzzySearch) component;
 
         encodeMarkup(context, fuzzySearch);
@@ -84,9 +87,18 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         }
 
         writer.startElement("input", fuzzySearch);
-        writer.writeAttribute("id", clientId + "_fuzzysearch-search-input", null);
-        writer.writeAttribute("autocomplete", "off", null);
+        writer.writeAttribute("id", clientId + "_input", null);
+        writer.writeAttribute("name", clientId + "_input", null);
         writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
+        writer.writeAttribute("class", createStyleClass(fuzzySearch), "styleClass");
+        renderPassThruAttributes(context, fuzzySearch, HTML.TAB_INDEX);
+        renderDomEvents(context, fuzzySearch, HTML.BLUR_FOCUS_EVENTS);
+        renderAccessibilityAttributes(context, fuzzySearch);
+        renderValidationMetadata(context, fuzzySearch);
+        final String valueToRender = ComponentUtils.getValueToRender(context, fuzzySearch);
+        if (valueToRender != null) {
+            writer.writeAttribute("value", valueToRender, null);
+        }
         writer.endElement("input");
 
         writer.startElement("div", fuzzySearch);
@@ -178,11 +190,23 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
                     .attr("listItemsAtTheBeginning", fuzzySearch.isListItemsAtTheBeginning())
                     .attr("datasource", jsonDatasource)
                     .attr("unselectable", fuzzySearch.isUnselectable(), true)
+                    .attr("highlight", fuzzySearch.isHighlight(), true)
                     .callback("change", "function()", fuzzySearch.getOnchange());
 
         encodeClientBehaviors(context, fuzzySearch);
 
         wb.finish();
+    }
+
+    protected String createStyleClass(final FuzzySearch inputText) {
+        String defaultClass = InputText.STYLE_CLASS;
+        defaultClass = inputText.isValid() ? defaultClass : defaultClass + " ui-state-error";
+        defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
+
+        String styleClass = inputText.getStyleClass();
+        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
+
+        return styleClass;
     }
 
     @Override

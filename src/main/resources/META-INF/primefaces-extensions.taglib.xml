@@ -481,14 +481,14 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-         <attribute>
+        <attribute>
             <description>
                 <![CDATA[Sets the behavior of the Shift+Enter key. It also determines other behavior rules of the editor, like whether the <br> element is to be used as a paragraph separator when indenting text. Default is CKEDITOR.ENTER_P.]]>
             </description>
             <name>shiftEnterMode</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>    
+        </attribute>
         <attribute>
             <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
@@ -1577,7 +1577,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[Disables the component when set to true.]]>
+                <![CDATA[Disables the component when set to true.]]>
             </description>
             <name>disabled</name>
             <required>false</required>
@@ -1585,7 +1585,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[A localized user presentable name for this component.]]>
+                <![CDATA[A localized user presentable name for this component.]]>
             </description>
             <name>label</name>
             <required>false</required>
@@ -1609,7 +1609,7 @@
         </attribute>
         <attribute>
             <description>
-				<![CDATA[Style class of the main container element. Default value is null.]]>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
             </description>
             <name>styleClass</name>
             <required>false</required>
@@ -1628,6 +1628,14 @@
                 <![CDATA[]]>
             </description>
             <name>unselectable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Highlight the matched fuzzy text in the search results with bold HTML tags. Default is true.]]>
+            </description>
+            <name>highlight</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

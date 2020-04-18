@@ -23,10 +23,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.FacesRenderer;
+
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -38,7 +39,6 @@ import org.primefaces.util.LangUtils;
  * @author https://github.com/aripddev
  * @since 7.0
  */
-@FacesRenderer(componentFamily = LetterAvatar.COMPONENT_FAMILY, rendererType = LetterAvatar.DEFAULT_RENDERER)
 public class LetterAvatarRenderer extends CoreRenderer {
 
     private static final Pattern VALUE_PATTTERN = Pattern.compile("\\b[a-zA-Z]");
