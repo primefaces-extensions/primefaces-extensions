@@ -19,7 +19,6 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
-
 import org.primefaces.component.api.Widget;
 
 /**
@@ -33,6 +32,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "letteravatar/letteravatar.css")
 public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LetterAvatar";

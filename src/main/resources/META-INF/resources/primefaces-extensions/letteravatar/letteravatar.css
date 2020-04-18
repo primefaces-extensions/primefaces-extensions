@@ -1,0 +1,10 @@
+.ui-letteravatar {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+.ui-letteravatar .ui-letteravatar-initials {
+  position: relative;
+  line-height: 1;
+  mix-blend-mode: difference;
+}

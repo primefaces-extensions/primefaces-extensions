@@ -126,6 +126,18 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>letteravatar/letteravatar.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/letteravatar/letteravatar.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
                                 <include>codemirror/lib/codemirror.js</include>
                                 <include>codemirror/widget.js</include>
                             </includes>
