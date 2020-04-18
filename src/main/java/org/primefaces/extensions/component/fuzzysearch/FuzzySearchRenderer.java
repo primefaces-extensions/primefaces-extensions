@@ -33,7 +33,6 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 public class FuzzySearchRenderer extends SelectOneRenderer {
@@ -45,13 +44,10 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
             return;
         }
 
-        final String clientId = getSubmitParam(context, fuzzySearch);
+        final String clientId = fuzzySearch.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
 
-        String submittedValue = params.get(clientId + "_change");
-        if (LangUtils.isValueBlank(submittedValue)) {
-            submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
-        }
         if (submittedValue != null) {
             fuzzySearch.setSubmittedValue(submittedValue);
         }
