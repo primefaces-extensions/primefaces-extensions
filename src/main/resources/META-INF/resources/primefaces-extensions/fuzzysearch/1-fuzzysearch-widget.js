@@ -6,14 +6,14 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     init: function (cfg) {
         this._super(cfg);
 
-        this.keys = ['label']; //JSON.parse(this.cfg.keys); // TODO i am not sure how to implement it without using FuzzySearchKey
+        this.keys = ['label'];
         this.datasource = JSON.parse(this.cfg.datasource);
-        this.input = $(this.jqId + '_fuzzysearch-search-input');
+        this.input = $(this.jqId + '_input');
         this.results = $(this.jqId + '_fuzzysearch-search-results');
-//        this.buttons = this.jq.children('div:not(.ui-state-disabled)');
         this.buttons = this.results.children();
         this.inputs = this.jq.find(':radio:not(:disabled)');
-        this.cfg.unselectable = this.cfg.unselectable === false ? false : true;
+        this.cfg.unselectable = (this.cfg.unselectable === undefined) ? true : this.cfg.unselectable;
+        this.cfg.highlight = (this.cfg.highlight === undefined) ? true : this.cfg.highlight;
 
         //Visual effects
         PrimeFaces.skinInput(this.input);
@@ -37,51 +37,51 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
     bindEventsForButtons: function (buttons) {
         var $this = this;
 
-        buttons
-                .on('mouseover', function () {
-                    var button = $(this);
-                    button.addClass('ui-state-hover');
-                })
-                .on('mouseout', function () {
-                    $(this).removeClass('ui-state-hover');
-                })
-                .on('click', function () {
-                    var button = $(this),
-                            radio = button.children(':radio');
+        buttons.off()
+            .on('mouseover.fuzzySearch', function () {
+                var button = $(this);
+                button.addClass('ui-state-hover');
+            })
+            .on('mouseout.fuzzySearch', function () {
+                $(this).removeClass('ui-state-hover');
+            })
+            .on('click.fuzzySearch', function () {
+                var button = $(this),
+                    radio = button.children(':radio');
 
-                    if (button.hasClass('ui-state-active') || radio.prop('checked')) {
+                if (button.hasClass('ui-state-active') || radio.prop('checked')) {
+                    $this.unselect(button);
+                } else {
+                    $this.select(button);
+                }
+            });
+
+        /* For keyboard accessibility */
+        buttons
+            .on('focus.fuzzySearch', function () {
+                var button = $(this);
+                button.addClass('ui-state-focus');
+            })
+            .on('blur.fuzzySearch', function () {
+                var button = $(this);
+                button.removeClass('ui-state-focus');
+            })
+            .on('keydown.fuzzySearch', function (e) {
+                var keyCode = $.ui.keyCode,
+                    key = e.which;
+
+                if (key === keyCode.SPACE || key === keyCode.ENTER) {
+                    var button = $(this),
+                        radio = button.children(':radio');
+
+                    if (radio.prop('checked')) {
                         $this.unselect(button);
                     } else {
                         $this.select(button);
                     }
-                });
-
-        /* For keyboard accessibility */
-        buttons
-                .on('focus.fuzzySearch', function () {
-                    var button = $(this);
-                    button.addClass('ui-state-focus');
-                })
-                .on('blur.fuzzySearch', function () {
-                    var button = $(this);
-                    button.removeClass('ui-state-focus');
-                })
-                .on('keydown.fuzzySearch', function (e) {
-                    var keyCode = $.ui.keyCode,
-                            key = e.which;
-
-                    if (key === keyCode.SPACE || key === keyCode.ENTER) {
-                        var button = $(this),
-                                radio = button.children(':radio');
-
-                        if (radio.prop('checked')) {
-                            $this.unselect(button);
-                        } else {
-                            $this.select(button);
-                        }
-                        e.preventDefault();
-                    }
-                });
+                    e.preventDefault();
+                }
+            });
     },
 
     search: function (query) {
@@ -99,7 +99,11 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
                 itemDisplayMarkup += ' class="ui-fuzzysearch-item';
                 itemDisplayMarkup += (resultStyleClass === '' ? '' : ' ' + resultStyleClass) + '"';
                 itemDisplayMarkup += ' data-item-value="' + element.obj.label + '">';
-                itemDisplayMarkup += element.obj.label;
+                if ($this.cfg.highlight) {
+                    itemDisplayMarkup += fuzzysearch.highlight(element[0]);
+                } else {
+                    itemDisplayMarkup += element.obj.label;
+                }
                 itemDisplayMarkup += '</div>';
             });
         } else if (listItemsAtTheBeginning) { // when there is no input
@@ -154,7 +158,7 @@ PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
     disable: function () {
         this.buttons.removeClass('ui-state-hover ui-state-focus ui-state-active')
-                .addClass('ui-state-disabled').attr('disabled', 'disabled');
+            .addClass('ui-state-disabled').attr('disabled', 'disabled');
     },
 
     enable: function () {
