@@ -317,7 +317,7 @@
 		_instSettings: function(elem, options) {
 			var inline = elem[0].nodeName.toLowerCase() !== 'input';
 			var keyEntry = (!inline ? elem :
-			$('<input type="text" class="' + this._inlineEntryClass + '"/>'));
+			$('<input type="text" class="' + this._inlineEntryClass + '"></input>'));
 			return {_input: keyEntry, _inline: inline, memory: 0,
 				_mainDiv: (inline ? $('<div class="' + this._inlineClass + '"></div>') : this.mainDiv)};
 		},
@@ -356,15 +356,15 @@
 						inst.options.showOn === 'opbutton') {
 					// pop-up calculator when button clicked
 					var trigger = $(inst.options.buttonImageOnly ? 
-						$('<img/>').attr({src: inst.options.buttonImage,
+						$('<img></img>').attr({src: inst.options.buttonImage,
 							alt: inst.options.buttonStatus, title: inst.options.buttonStatus}) :
 						inst.options.useThemeRoller ? 
 							$('<button type="button" title="' + inst.options.buttonStatus + '" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"></button>').
-							html('<span class="ui-button-icon-left ui-icon ui-icon-calculator"/><span class="ui-button-text">ui-button</span>')
+							html('<span class="ui-button-icon-left ui-icon ui-icon-calculator"></span><span class="ui-button-text">ui-button</span>')
 						:
 						$('<button type="button" title="' + inst.options.buttonStatus + '"></button>').
 							html(inst.options.buttonImage === '' ? inst.options.buttonText :
-							$('<img/>').attr({src: inst.options.buttonImage}))
+							$('<img></img>').attr({src: inst.options.buttonImage}))
 							
 					);
 					elem[inst.options.isRTL ? 'before' : 'after'](trigger);

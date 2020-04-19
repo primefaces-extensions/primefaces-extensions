@@ -48,11 +48,11 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 			// remove previous container element to support ajax updates
 			$(document.body).children('#ui-tooltip-shared-' + this.jqId).remove();
 			// create a new one
-			var sharedDiv = $("<div id='ui-tooltip-shared-" + this.jqId + "'/>");
+			var sharedDiv = $("<div id='ui-tooltip-shared-" + this.jqId + "'></div>");
 			sharedDiv.appendTo(document.body);
 
 			this.cfg.position.container = sharedDiv;
-			$('<div/>').qtip(this.cfg);
+			$('<div></div>').qtip(this.cfg);
 		} else {
 			this.cfg.position.container = $(document.body);
 

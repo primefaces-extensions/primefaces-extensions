@@ -28,7 +28,7 @@ var abs = Math.abs,
  * @return A jQuery object representing the new element
  */
 function div() {
-    return $('<div/>');
+    return $('<div></div>');
 }
 
 /**

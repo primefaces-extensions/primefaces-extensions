@@ -1223,7 +1223,7 @@
           $appendTo.append($nodeDiv);
         }else {
           $nodeWrapper = $('<table>');
-          $appendTo.append($nodeWrapper.append($('<tr/>').append($('<td' + (hasChildren ? ' colspan="' + childrenData.length * 2 + '"' : '') + '></td>').append($nodeDiv))));
+          $appendTo.append($nodeWrapper.append($('<tr></tr>').append($('<td' + (hasChildren ? ' colspan="' + childrenData.length * 2 + '"' : '') + '></td>').append($nodeDiv))));
         }
       }
       // Construct the lower level(two "connectiong lines" rows and "inferior nodes" row)

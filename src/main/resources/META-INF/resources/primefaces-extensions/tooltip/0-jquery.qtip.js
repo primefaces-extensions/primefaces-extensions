@@ -152,7 +152,7 @@ PROTOTYPE.render = function(show) {
 	);
 
 	// Create tooltip element
-	this.tooltip = elements.tooltip = $('<div/>', {
+	this.tooltip = elements.tooltip = $('<div></div>', {
 		'id': this._id,
 		'class': [ NAMESPACE, CLASS_DEFAULT, options.style.classes, cache.posClass ].join(' '),
 		'width': options.style.width || '',
@@ -172,7 +172,7 @@ PROTOTYPE.render = function(show) {
 	.appendTo(posOptions.container)
 	.append(
 		// Create content element
-		elements.content = $('<div />', {
+		elements.content = $('<div></div>', {
 			'class': NAMESPACE + '-content',
 			'id': this._id + '-content',
 			'aria-atomic': TRUE
@@ -668,11 +668,11 @@ PROTOTYPE._createTitle = function()
 	if(elements.titlebar) { this._removeTitle(); }
 
 	// Create title bar and title elements
-	elements.titlebar = $('<div />', {
+	elements.titlebar = $('<div></div>', {
 		'class': NAMESPACE + '-titlebar ' + (this.options.style.widget ? createWidgetClass('header') : '')
 	})
 	.append(
-		elements.title = $('<div />', {
+		elements.title = $('<div></div>', {
 			'id': id,
 			'class': NAMESPACE + '-title',
 			'aria-atomic': TRUE
@@ -1236,13 +1236,13 @@ PROTOTYPE.enable = function() { return this.disable(FALSE); };
 		elements.button = button;
 	}
 	else {
-		elements.button = $('<a />', {
+		elements.button = $('<a></a>', {
 			'class': 'qtip-close ' + (this.options.style.widget ? '' : NAMESPACE+'-icon'),
 			'title': close,
 			'aria-label': close
 		})
 		.prepend(
-			$('<span />', {
+			$('<span></span>', {
 				'class': 'ui-icon ui-icon-close',
 				'html': '&times;'
 			})
@@ -2100,12 +2100,12 @@ $.extend(Tip.prototype, {
 		var context, tip;
 
 		// Create tip element and prepend to the tooltip
-		tip = this.element = qtip.elements.tip = $('<div />', { 'class': NAMESPACE+'-tip' }).prependTo(qtip.tooltip);
+		tip = this.element = qtip.elements.tip = $('<div></div>', { 'class': NAMESPACE+'-tip' }).prependTo(qtip.tooltip);
 
 		// Create tip drawing element(s)
 		if(HASCANVAS) {
 			// save() as soon as we create the canvas element so FF2 doesn't bork on our first restore()!
-			context = $('<canvas />').appendTo(this.element)[0].getContext('2d');
+			context = $('<canvas></canvas>').appendTo(this.element)[0].getContext('2d');
 
 			// Setup constant parameters
 			context.lineJoin = 'miter';
@@ -3079,7 +3079,7 @@ OVERLAY = function()
 	$.extend(self, {
 		init: function() {
 			// Create document overlay
-			elem = self.elem = $('<div />', {
+			elem = self.elem = $('<div></div>', {
 				id: 'qtip-overlay',
 				html: '<div></div>',
 				mousedown: function() { return FALSE; }

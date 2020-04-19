@@ -211,7 +211,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                         header
                             .append(
                                 '<span class="handson-filter"><input type="text" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
-                                + v + '" /></span>');
+                                + v + '"></input></span>');
                         header.find('input').change(function () {
                             $this.filterchange($this, col, this.value, false)
                         }).keydown(function (e) {

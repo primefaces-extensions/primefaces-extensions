@@ -173,7 +173,7 @@ var create_min_qrcode = function create_min_qrcode(text, level, min_ver, max_ver
 var draw_background_label = function draw_background_label(qr, context, settings) {
   var size = settings.size;
   var font = 'bold ' + settings.mSize * size + 'px ' + settings.fontname;
-  var ctx = JQ('<canvas/>')[0].getContext('2d');
+  var ctx = JQ('<canvas></canvas>')[0].getContext('2d');
   ctx.font = font;
   var w = ctx.measureText(settings.label).width;
   var sh = settings.mSize;
@@ -391,13 +391,13 @@ var draw_on_canvas = function draw_on_canvas(canvas, settings) {
 
 
 var create_canvas = function create_canvas(settings) {
-  var $canvas = JQ('<canvas/>').attr('width', settings.size).attr('height', settings.size);
+  var $canvas = JQ('<canvas></canvas>').attr('width', settings.size).attr('height', settings.size);
   return draw_on_canvas($canvas, settings);
 }; // Returns an `image` element representing the QR code for the given settings.
 
 
 var create_img = function create_img(settings) {
-  return JQ('<img/>').attr('src', create_canvas(settings)[0].toDataURL('image/png'));
+  return JQ('<img></img>').attr('src', create_canvas(settings)[0].toDataURL('image/png'));
 }; // Returns a `div` element representing the QR code for the given settings.
 
 
@@ -434,7 +434,7 @@ var create_div = function create_div(settings) {
     height: module_size,
     'background-color': settings.fill
   };
-  var $div = JQ('<div/>').data('qrcode', qr).css(container_css);
+  var $div = JQ('<div></div>').data('qrcode', qr).css(container_css);
 
   if (settings_bgColor) {
     $div.css('background-color', settings_bgColor);
@@ -443,7 +443,7 @@ var create_div = function create_div(settings) {
   for (row = 0; row < module_count; row += 1) {
     for (col = 0; col < module_count; col += 1) {
       if (qr.is_dark(row, col)) {
-        JQ('<div/>').css(dark_css).css({
+        JQ('<div></div>').css(dark_css).css({
           left: offset + col * module_size,
           top: offset + row * module_size
         }).appendTo($div);
@@ -1027,7 +1027,7 @@ var qrcode = function() {
           qrHtml += ' background-color: ';
           qrHtml += _this.isDark(r, c)? '#000000' : '#ffffff';
           qrHtml += ';';
-          qrHtml += '"/>';
+          qrHtml += '"></td>';
         }
 
         qrHtml += '</tr>';
@@ -1124,7 +1124,7 @@ var qrcode = function() {
         img += alt;
         img += '"';
       }
-      img += '/>';
+      img += '></img>';
 
       return img;
     };
