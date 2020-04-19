@@ -2232,7 +2232,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Boolean specifying if the returned image should be a circle. Default: false]]>
+                <![CDATA[Boolean specifying if the returned image should be a circle. Default: false.]]>
             </description>
             <name>rounded</name>
             <required>false</required>
@@ -2240,7 +2240,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Avatar size. Change this value anything, e.g., 100px, 10rem, etc. Default: 3rem]]>
+                <![CDATA[Avatar size. Change this value anything, e.g., 100px, 10rem, etc. Default: 3rem.]]>
             </description>
             <name>size</name>
             <required>false</required>
@@ -2248,9 +2248,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Text color. Default: #fff]]>
+                <![CDATA[Text color. Default: #fff.]]>
             </description>
             <name>color</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Background color.]]>
+            </description>
+            <name>backgroundColor</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
