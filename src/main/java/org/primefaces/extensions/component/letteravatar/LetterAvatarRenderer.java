@@ -23,14 +23,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
 /**
@@ -76,12 +75,8 @@ public class LetterAvatarRenderer extends CoreRenderer {
         }
 
         final String size = letterAvatar.getSize();
-        String style = joinNonNull(StringUtils.SPACE,
-                    letterAvatar.getStyle(),
-                    styleContainer(size, color, backgroundColor, rounded));
-        String styleClass = joinNonNull(StringUtils.SPACE,
-                    letterAvatar.getStyleClass(),
-                    LetterAvatar.COMPONENT_CLASS);
+        String style = joinStyle(letterAvatar.getStyle(), styleContainer(size, color, backgroundColor));
+        String styleClass = joinStyleClass(letterAvatar.getStyleClass(), LetterAvatar.COMPONENT_CLASS);
 
         writer.startElement("span", letterAvatar);
         writer.writeAttribute("id", clientId, null);
@@ -96,6 +91,8 @@ public class LetterAvatarRenderer extends CoreRenderer {
             writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
         }
 
+        renderChildren(context, letterAvatar);
+
         writer.startElement("span", letterAvatar);
         writer.writeAttribute(Attrs.CLASS, "ui-letteravatar-initials", null);
         writer.writeAttribute(Attrs.STYLE, styleInitials(size), null);
@@ -103,6 +100,16 @@ public class LetterAvatarRenderer extends CoreRenderer {
         writer.endElement("span");
 
         writer.endElement("span");
+    }
+
+    @Override
+    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+        // NOOP
+    }
+
+    @Override
+    public boolean getRendersChildren() {
+        return true;
     }
 
     public static int hash(String str) {
@@ -117,13 +124,10 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return Math.abs(hash(str) % 360);
     }
 
-    protected String styleContainer(String size, String color, String backgroundColor, boolean rounded) {
+    protected String styleContainer(String size, String color, String backgroundColor) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("color", color);
         map.put("background-color", backgroundColor);
-        if (rounded) {
-            map.put("border-radius", "50%");
-        }
         map.put("height", size);
         map.put("width", size);
         return toStyle(map);
@@ -138,6 +142,14 @@ public class LetterAvatarRenderer extends CoreRenderer {
 
     protected static String joinNonNull(String delimiter, String... parts) {
         return Stream.of(parts).filter(Objects::nonNull).collect(Collectors.joining(delimiter));
+    }
+
+    protected static String joinStyle(String... parts) {
+        return joinNonNull(Constants.EMPTY_STRING, parts);
+    }
+
+    protected static String joinStyleClass(String... parts) {
+        return joinNonNull(StringUtils.SPACE, parts);
     }
 
     protected static String toStyle(Map<String, String> map) {
