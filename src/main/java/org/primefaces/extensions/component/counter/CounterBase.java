@@ -17,9 +17,16 @@ package org.primefaces.extensions.component.counter;
 
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 
+/**
+ * <code>Counter</code> component.
+ *
+ * @author https://github.com/aripddev
+ * @since 8.0.1
+ */
 public abstract class CounterBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -28,38 +35,7 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
 
     protected enum PropertyKeys {
 
-        widgetVar,
-        style,
-        styleClass,
-        start,
-        end,
-        decimals,
-        duration,
-        useGrouping,
-        useEasing,
-        smartEasingThreshold,
-        smartEasingAmount,
-        separator,
-        decimal,
-        prefix,
-        suffix,
-        autoStart,
-        visible,
-        oncountercomplete;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        widgetVar, style, styleClass, start, end, decimals, duration, useGrouping, useEasing, smartEasingThreshold, smartEasingAmount, separator, decimal, prefix, suffix, autoStart, visible, oncountercomplete
     }
 
     public CounterBase() {

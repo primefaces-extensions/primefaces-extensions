@@ -1,14 +1,12 @@
 /**
  * PrimeFaces Extensions Counter Widget
- * 
  */
 PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
 
     /**
-     * Initializes the widget.
-     * 
-     * @param {object}
-     *        cfg The widget configuration.
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
      */
     init: function (cfg) {
 
@@ -33,38 +31,69 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
             suffix: cfg.suffix || ''
         };
 
-        this.counter = new Counter(this.id, this.end, this.options);
+        this.counter = new CountUp(this.id, this.end, this.options);
 
         if (this.autoStart) {
-            this.start();
+            this.startCounter();
         }
-
     },
 
-    start: function () {
+    /**
+     * Starts the counter.
+     */
+    startCounter: function () {
         var $this = this;
 
-        if (!$this.counter.error) {
-            if ($this.oncountercomplete) {
-                this.callBehavior('end');
-            } else {
-                this.callBehavior('start');
+        if (!this.counter.error) {
+            this.counter.start(() => $this.endCounter());
+
+            if (this.hasBehavior('end')) {
+                var options = {
+                    params: [{
+                        name: $this.id + '_value',
+                        value: $this.counter.startVal
+                    }]
+                };
+                this.callBehavior('start', options);
             }
         } else {
-            console.error($this.counter.error);
+            PrimeFaces.error($this.counter.error);
         }
     },
 
-    pauseResume: function () {
+    /**
+     * Ends the counter.
+     */
+    endCounter: function () {
         var $this = this;
 
-        $this.counter.pauseResume();
+        if (this.oncountercomplete) {
+            this.oncountercomplete();
+        }
+
+        if (this.hasBehavior('end')) {
+            var options = {
+                params: [{
+                    name: $this.id + '_value',
+                    value: $this.counter.endVal
+                }]
+            };
+            this.callBehavior('end', options);
+        }
     },
 
-    reset: function () {
-        var $this = this;
+    /**
+     * Pause and Resume toggle.
+     */
+    pauseResume: function () {
+        this.counter.pauseResume();
+    },
 
-        $this.counter.reset();
+    /**
+     * Reset the counter.
+     */
+    reset: function () {
+        this.counter.reset();
     }
 
 });

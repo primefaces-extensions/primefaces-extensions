@@ -17,16 +17,23 @@ package org.primefaces.extensions.component.counter;
 
 import java.util.Collection;
 import java.util.Map;
+
 import javax.faces.application.ResourceDependency;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.BehaviorEvent;
 import javax.faces.event.FacesEvent;
+
 import org.primefaces.event.SelectEvent;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.MapBuilder;
 
+/**
+ * <code>Counter</code> component.
+ *
+ * @author https://github.com/aripddev
+ * @since 8.0.1
+ */
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
@@ -41,10 +48,10 @@ public class Counter extends CounterBase {
 
     private static final String DEFAULT_EVENT = "end";
 
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>>builder()
-            .put("start", null)
-            .put(DEFAULT_EVENT, null)
-            .build();
+    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
+                .put("start", null)
+                .put(DEFAULT_EVENT, null)
+                .build();
 
     private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
 
@@ -64,22 +71,16 @@ public class Counter extends CounterBase {
     }
 
     @Override
-    public void queueEvent(FacesEvent event) {
+    public void queueEvent(final FacesEvent event) {
         if (event instanceof AjaxBehaviorEvent) {
-            FacesContext context = getFacesContext();
-            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final FacesContext context = getFacesContext();
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-            if ("start".equals(eventName)) {
-                Object item = ComponentUtils.getConvertedValue(context, this, params.get(getClientId(context) + "_start"));
-                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), item);
-                selectEvent.setPhaseId(event.getPhaseId());
-                super.queueEvent(selectEvent);
-            }
-            else if (DEFAULT_EVENT.equals(eventName)) {
-                Object item = ComponentUtils.getConvertedValue(context, this, params.get(getClientId(context) + "_end"));
-                SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), item);
+            if ("start".equals(eventName) || DEFAULT_EVENT.equals(eventName)) {
+                final Double value = Double.parseDouble(params.get(getClientId(context) + "_value"));
+                final SelectEvent<Double> selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(selectEvent);
             }
