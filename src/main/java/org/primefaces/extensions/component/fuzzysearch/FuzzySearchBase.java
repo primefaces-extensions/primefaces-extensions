@@ -21,6 +21,12 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 
+/**
+ * <code>FuzzySearch</code> component.
+ *
+ * @author https://github.com/aripddev
+ * @since 8.0.1
+ */
 public abstract class FuzzySearchBase extends UISelectOne implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

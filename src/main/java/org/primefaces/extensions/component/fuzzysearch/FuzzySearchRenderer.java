@@ -35,6 +35,12 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
+/**
+ * <code>FuzzySearch</code> component.
+ *
+ * @author https://github.com/aripddev
+ * @since 8.0.1
+ */
 public class FuzzySearchRenderer extends SelectOneRenderer {
 
     @Override
