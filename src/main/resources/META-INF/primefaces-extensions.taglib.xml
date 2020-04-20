@@ -993,6 +993,177 @@
     </tag>
     <tag>
         <description>
+            <![CDATA[Counter component animates a numerical value by counting to it.]]>
+        </description>
+        <tag-name>counter</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Counter</component-type>
+            <renderer-type>org.primefaces.extensions.component.CounterRenderer</renderer-type>
+            <handler-class>org.primefaces.extensions.component.counter.CounterHandler</handler-class>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Number to start at. Default is 0.]]>
+            </description>
+            <name>start</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The value you want to arrive at.]]>
+            </description>
+            <name>end</name>
+            <required>true</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Number of decimal places. Default is 0.]]>
+            </description>
+            <name>decimals</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Animation duration in seconds. Default is 2.]]>
+            </description>
+            <name>duration</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Example: 1,000 vs 1000. Default is true.]]>
+            </description>
+            <name>useGrouping</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Ease animation. Default is true.]]>
+            </description>
+            <name>useEasing</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Smooth easing for large numbers above this if useEasing. Default is 999.]]>
+            </description>
+            <name>smartEasingThreshold</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Amount to be eased for numbers above threshold. Default is 333.]]>
+            </description>
+            <name>smartEasingAmount</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Grouping separator. Default is ','.]]>
+            </description>
+            <name>separator</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Decimal seperator. Default is '.'.]]>
+            </description>
+            <name>decimal</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Text prepended to result.]]>
+            </description>
+            <name>prefix</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Text appended to result.]]>
+            </description>
+            <name>suffix</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[In autoStart mode, the counter will start immediately. Default is true.]]>
+            </description>
+            <name>autoStart</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Set to false to hide the counter. The listener will be fired anyway.]]>
+            </description>
+            <name>visible</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler executed the counter stops]]>
+            </description>
+            <name>oncountercomplete</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
             <![CDATA[CreditCard will take any card form and make it the best part of the checkout process.]]>
         </description>
         <tag-name>creditCard</tag-name>

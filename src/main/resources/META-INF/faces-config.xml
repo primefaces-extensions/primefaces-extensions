@@ -47,6 +47,10 @@
         <component-class>org.primefaces.extensions.component.codemirror.CodeMirror</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.Counter</component-type>
+        <component-class>org.primefaces.extensions.component.counter.Counter</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.CreditCard</component-type>
         <component-class>org.primefaces.extensions.component.creditcard.CreditCard</component-class>
     </component>
@@ -240,6 +244,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.CodeMirrorRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.codemirror.CodeMirrorRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.CounterRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.counter.CounterRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
