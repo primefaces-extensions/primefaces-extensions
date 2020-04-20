@@ -42,29 +42,29 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
     },
 
     start: function () {
-        var that = this;
+        var $this = this;
 
-        if (!that.counter.error) {
-            if (that.oncountercomplete) {
-                that.counter.start(that.oncountercomplete);
+        if (!$this.counter.error) {
+            if ($this.oncountercomplete) {
+                this.callBehavior('end');
             } else {
-                that.counter.start();
+                this.callBehavior('start');
             }
         } else {
-            console.error(that.counter.error);
+            console.error($this.counter.error);
         }
     },
 
     pauseResume: function () {
-        var that = this;
+        var $this = this;
 
-        that.counter.pauseResume();
+        $this.counter.pauseResume();
     },
 
     reset: function () {
-        var that = this;
+        var $this = this;
 
-        that.counter.reset();
+        $this.counter.reset();
     }
 
 });

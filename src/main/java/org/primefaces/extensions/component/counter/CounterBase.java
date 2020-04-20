@@ -16,9 +16,11 @@
 package org.primefaces.extensions.component.counter;
 
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 
-public abstract class CounterBase extends UIComponentBase implements Widget {
+public abstract class CounterBase extends UIComponentBase implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 

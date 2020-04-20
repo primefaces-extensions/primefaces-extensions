@@ -999,7 +999,6 @@
         <component>
             <component-type>org.primefaces.extensions.component.Counter</component-type>
             <renderer-type>org.primefaces.extensions.component.CounterRenderer</renderer-type>
-            <handler-class>org.primefaces.extensions.component.counter.CounterHandler</handler-class>
         </component>
         <attribute>
             <description>

@@ -19,14 +19,12 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.render.FacesRenderer;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
-@FacesRenderer(componentFamily = Counter.COMPONENT_FAMILY, rendererType = Counter.DEFAULT_RENDERER)
 public class CounterRenderer extends CoreRenderer {
 
     @Override
@@ -74,16 +72,6 @@ public class CounterRenderer extends CoreRenderer {
         writer.writeAttribute(Attrs.CLASS, Counter.STYLE_CLASS + " " + counter.getStyleClass(), "styleClass");
         writer.writeAttribute(Attrs.STYLE, (!counter.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + counter.getStyle(), Attrs.STYLE);
         writer.endElement("span");
-    }
-
-    @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
-        //Do nothing
-    }
-
-    @Override
-    public boolean getRendersChildren() {
-        return true;
     }
 
 }
