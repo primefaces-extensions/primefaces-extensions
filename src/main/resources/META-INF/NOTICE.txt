@@ -24,3 +24,5 @@ This product includes software developed by Xuebin Dong (@dabeng) (https://githu
 This product includes software developed by Jack O'Connor (@jackocnr) (https://github.com/jackocnr/intl-tel-input)
 This product includes software developed by Ryan McGeary (@rmm5t) (https://github.com/rmm5t/jquery-timeago)
 This product includes software developed by Jesse Pollak (https://github.com/jessepollak/card)
+This product includes software developed by farzher (https://github.com/farzher/fuzzysort)
+This product includes software developed by Inorganik (https://inorganik.github.io/countUp.js/)
