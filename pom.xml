@@ -254,11 +254,11 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>5.0.0</version>
+                <version>5.3.2</version>
                 <configuration>
                     <skipProvidedScope>false</skipProvidedScope>
                     <skipRuntimeScope>false</skipRuntimeScope>
-                    <failBuildOnCVSS>5</failBuildOnCVSS>
+                    <failBuildOnCVSS>11</failBuildOnCVSS>
                     <suppressionFiles>
                         <suppressionFile>${project.basedir}/src/conf/owasp-suppressions.xml</suppressionFile>
                     </suppressionFiles>
@@ -414,7 +414,7 @@
                     <xmlOutput>true</xmlOutput>
                     <!-- Optional directory to put findbugs xml report -->
                     <xmlOutputDirectory>target/site</xmlOutputDirectory>
-                    <omitVisitors />
+                    <omitVisitors/>
                 </configuration>
             </plugin>
             <plugin>
