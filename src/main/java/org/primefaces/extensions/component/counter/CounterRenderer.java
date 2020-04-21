@@ -66,8 +66,11 @@ public class CounterRenderer extends CoreRenderer {
                     .attr("suffix", counter.getSuffix())
                     .attr("autoStart", counter.isAutoStart());
 
-        if (!LangUtils.isValueBlank(counter.getOncountercomplete())) {
-            wb.callback("oncountercomplete", "function()", counter.getOncountercomplete());
+        if (!LangUtils.isValueBlank(counter.getOnstart())) {
+            wb.callback("onstart", "function()", counter.getOnstart());
+        }
+        if (!LangUtils.isValueBlank(counter.getOnend())) {
+            wb.callback("onend", "function()", counter.getOnend());
         }
 
         encodeClientBehaviors(context, counter);

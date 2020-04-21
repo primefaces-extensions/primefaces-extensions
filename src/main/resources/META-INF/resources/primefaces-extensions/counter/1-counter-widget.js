@@ -1,5 +1,7 @@
 /**
  * PrimeFaces Extensions Counter Widget
+ *
+ * @since 8.0.1
  */
 PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
 
@@ -16,7 +18,8 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
 
         this.end = cfg.end;
         this.autoStart = cfg.autoStart;
-        this.oncountercomplete = cfg.oncountercomplete;
+        this.onEnd = cfg.onend;
+        this.onStart = cfg.onstart;
         this.options = {
             startVal: cfg.start || 0,
             decimalPlaces: cfg.decimals || 0,
@@ -45,6 +48,10 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
 
         if (!this.counter.error) {
+            if (this.onStart) {
+                this.onStart();
+            }
+
             this.counter.start(() => $this.endCounter());
 
             if (this.hasBehavior('end')) {
@@ -67,8 +74,8 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
     endCounter: function () {
         var $this = this;
 
-        if (this.oncountercomplete) {
-            this.oncountercomplete();
+        if (this.onEnd) {
+            this.onEnd();
         }
 
         if (this.hasBehavior('end')) {

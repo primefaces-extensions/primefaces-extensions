@@ -34,8 +34,27 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CounterRenderer";
 
     protected enum PropertyKeys {
-
-        widgetVar, style, styleClass, start, end, decimals, duration, useGrouping, useEasing, smartEasingThreshold, smartEasingAmount, separator, decimal, prefix, suffix, autoStart, visible, oncountercomplete
+        //@formatter:off
+        widgetVar,
+        style,
+        styleClass,
+        start,
+        end,
+        decimals,
+        duration,
+        useGrouping,
+        useEasing,
+        smartEasingThreshold,
+        smartEasingAmount,
+        separator,
+        decimal,
+        prefix,
+        suffix,
+        autoStart,
+        visible,
+        onstart,
+        onend
+        //@formatter:off
     }
 
     public CounterBase() {
@@ -183,12 +202,20 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
         getStateHelper().put(PropertyKeys.visible, visible);
     }
 
-    public String getOncountercomplete() {
-        return (String) getStateHelper().eval(PropertyKeys.oncountercomplete, null);
+    public String getOnend() {
+        return (String) getStateHelper().eval(PropertyKeys.onend, null);
     }
 
-    public void setOncountercomplete(final String oncountercomplete) {
-        getStateHelper().put(PropertyKeys.oncountercomplete, oncountercomplete);
+    public void setOnend(final String onend) {
+        getStateHelper().put(PropertyKeys.onend, onend);
+    }
+
+    public String getOnstart() {
+        return (String) getStateHelper().eval(PropertyKeys.onstart, null);
+    }
+
+    public void setOnstart(final String onstart) {
+        getStateHelper().put(PropertyKeys.onstart, onstart);
     }
 
 }
