@@ -1,8 +1,15 @@
 /**
  * PrimeFaces FuzzySearch Widget
+ *
+ * @since 8.0.1
  */
 PrimeFaces.widget.FuzzySearch = PrimeFaces.widget.BaseWidget.extend({
 
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
+     */
     init: function (cfg) {
         this._super(cfg);
 
