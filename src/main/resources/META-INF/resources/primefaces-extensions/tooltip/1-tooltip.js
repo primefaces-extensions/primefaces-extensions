@@ -129,7 +129,7 @@ PrimeFaces.expressions.CssSelectorResolver = {
 
         if (splittedExpressions) {
             for (var i = 0; i < splittedExpressions.length; ++i) {
-                var expression = String.prototype.trim(splittedExpressions[i]);
+                var expression = (splittedExpressions[i]).trim();
                 if (expression.length > 0) {
 
                     // skip unresolvable keywords
