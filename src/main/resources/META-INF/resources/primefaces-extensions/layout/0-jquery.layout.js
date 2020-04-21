@@ -35,13 +35,13 @@
              * @param {Array.<string>} a_fn
              */
             , runPluginCallbacks = function (Instance, a_fn) {
-                if ($.isArray(a_fn))
+                if (Array.isArray(a_fn))
                     for (var i = 0, c = a_fn.length; i < c; i++) {
                         var fn = a_fn[i];
                         try {
                             if (isStr(fn)) // 'name' of a function
                                 fn = eval(fn);
-                            if ($.isFunction(fn))
+                            if (typeof fn === "function")
                                 g(fn)(Instance);
                         } catch (ex) {
                         }
@@ -1182,7 +1182,7 @@
                                     fn = eval(fn);
                             }
                             // execute the callback, if exists
-                            if ($.isFunction(fn)) {
+                            if (typeof fn === "function") {
                                 if (args.length)
                                     retVal = g(fn)(args[1]); // pass the argument parsed from 'list'
                                 else if (hasPane)
@@ -1192,7 +1192,7 @@
                                     retVal = g(fn)(Instance, s, o, lName);
                             }
                         } catch (ex) {
-                            _log(options.errors.callbackError.replace(/EVENT/, $.trim((pane || "") + " " + lng)), false);
+                            _log(options.errors.callbackError.replace(/EVENT/, ((pane || "") + " " + lng)).trim(), false);
                             if ($.type(ex) === "string" && string.length)
                                 _log("Exception:  " + ex, false);
                         }
@@ -1516,7 +1516,7 @@
                     if (type == "resizer" && $El.hasClass(root + _slide))
                         classes += (root + _slide + _hover) + (root + _pane + _slide + _hover);
 
-                    return $.trim(classes);
+                    return (classes).trim();
                 }
                 , addHover = function (evt, el) {
                     var $E = $(el || this);
@@ -1724,7 +1724,7 @@
                     ;
                     if ($.isPlainObject(cos))
                         cos = [cos]; // convert a hash to a 1-elem array
-                    else if (!cos || !$.isArray(cos))
+                    else if (!cos || !Array.isArray(cos))
                         return;
 
                     $.each(cos, function (idx, co) {
@@ -5514,7 +5514,7 @@ jQuery.cookie = function (name, value, options) {
                 , pair, data, i
             ;
             for (i = 0; pair = cs[i]; i++) {
-                data = $.trim(pair).split('='); // name=value => [ name, value ]
+                data = (pair).trim().split('='); // name=value => [ name, value ]
                 if (data[0] == name) // found the layout cookie
                     return decodeURIComponent(data[1]);
             }
@@ -5806,7 +5806,7 @@ jQuery.cookie = function (name, value, options) {
                 , pair, pane, key, val
                 , ps, pC, child, array, count, branch
             ;
-            if ($.isArray(keys))
+            if (Array.isArray(keys))
                 keys = keys.join(",");
             // convert keys to an array and change delimiters from '__' to '.'
             keys = keys.replace(/__/g, ".").split(',');
@@ -5860,7 +5860,7 @@ jQuery.cookie = function (name, value, options) {
 
             function stringify(h) {
                 var D = [], i = 0, k, v, t // k = key, v = value
-                    , a = $.isArray(h)
+                    , a = Array.isArray(h)
                 ;
                 for (k in h) {
                     v = h[k];
@@ -5941,7 +5941,7 @@ jQuery.cookie = function (name, value, options) {
             } else if (sm.enabled) {
                 // update the options from cookie or callback
                 // if options is a function, call it to get stateData
-                if ($.isFunction(sm.autoLoad)) {
+                if (typeof sm.autoLoad === "function") {
                     var d = {};
                     try {
                         d = sm.autoLoad(inst, inst.state, inst.options, inst.options.name || ''); // try to get data from fn
@@ -5958,7 +5958,7 @@ jQuery.cookie = function (name, value, options) {
             var sm = inst.options.stateManagement;
             if (sm.enabled && sm.autoSave) {
                 // if options is a function, call it to save the stateData
-                if ($.isFunction(sm.autoSave)) {
+                if (typeof sm.autoSave === "function") {
                     try {
                         sm.autoSave(inst, inst.state, inst.options, inst.options.name || ''); // try to get data from fn
                     } catch (e) {

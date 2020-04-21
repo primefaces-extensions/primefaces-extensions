@@ -514,7 +514,7 @@
 			// determine sizing offscreen
 			inst._mainDiv.css({position: 'absolute', display: 'block', top: '-1000px', width: 'auto'});
 			// callback before calculator opening		
-			if ($.isFunction(inst.options.onOpen)) {
+			if (typeof inst.options.onOpen === "function") {
 				inst.options.onOpen.apply((inst._input ? inst._input[0] : null),  // trigger custom callback
 					[(inst._inline ? inst.curValue : inst._input.val()), inst]);
 			}
@@ -707,7 +707,7 @@
 							inst.options.showAnim ? duration : null);
 				}
 			}
-			if ($.isFunction(inst.options.onClose)) {
+			if (typeof inst.options.onClose === "function") {
 				inst.options.onClose.apply((inst._input ? inst._input[0] : null),  // trigger custom callback
 					[(inst._inline ? inst.curValue : inst._input.val()), inst]);
 			}
@@ -940,7 +940,7 @@
 			@param inst {object} The instance settings.
 			@param label {string} The label from the button. */
 		_sendButton: function(inst, label) {
-			if ($.isFunction(inst.options.onButton)) {
+			if (typeof inst.options.onButton === "function") {
 				inst.options.onButton.apply((inst._input ? inst._input[0] : null),
 					[label, inst.dispValue, inst]);  // trigger custom callback
 			}
@@ -1296,7 +1296,7 @@
 				this._unaryOp(inst, this._equals, label);
 			}
 			
-			if ($.isFunction(inst.options.onUse)) {
+			if (typeof inst.options.onUse === "function") {
 				inst.options.onUse.apply((inst._input ? inst._input[0] : null),
 					[inst.dispValue, inst]);  // trigger custom callback
 				this._sendButton(inst, label);

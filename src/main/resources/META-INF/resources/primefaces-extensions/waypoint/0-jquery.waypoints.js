@@ -188,7 +188,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
             adjustment = waypoint.options.offset;
             oldOffset = waypoint.offset;
             elementOffset = $.isWindow(waypoint.element) ? 0 : waypoint.$element.offset()[axis.offsetProp];
-            if ($.isFunction(adjustment)) {
+            if (typeof adjustment === "function") {
               adjustment = adjustment.apply(waypoint.element);
             } else if (typeof adjustment === 'string') {
               adjustment = parseFloat(adjustment);
@@ -382,7 +382,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
       method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
       if (methods[method]) {
         return methods[method].apply(this, args);
-      } else if ($.isFunction(method)) {
+      } else if (typeof method === "function") {
         return methods.init.apply(this, arguments);
       } else if ($.isPlainObject(method)) {
         return methods.init.apply(this, [null, method]);

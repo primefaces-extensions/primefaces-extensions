@@ -7,7 +7,7 @@
         JSSOCIALS_DATA_KEY = JSSOCIALS;
 
     var getOrApply = function(value, context) {
-        if($.isFunction(value)) {
+        if(typeof value === "function") {
             return value.apply(context, $.makeArray(arguments).slice(2));
         }
         return value;
@@ -78,7 +78,7 @@
 
         _initDefaults: function() {
             this.url = window.location.href;
-            this.text = $.trim($("meta[name=description]").attr("content") || $(document).prop("title"));
+            this.text = ($("meta[name=description]").attr("content") || $(document).prop("title")).trim();
         },
 
         _initShares: function() {
@@ -106,7 +106,7 @@
         },
 
         _windowResizeHandler: function() {
-            if($.isFunction(this.showLabel) || $.isFunction(this.showCount)) {
+            if(typeof this.showLabel === "function" || typeof this.showCount === "function") {
                 window.clearTimeout(this._resizeTimer);
                 this._resizeTimer = setTimeout($.proxy(this.refresh, this), this.resizeTimeout);
             }
@@ -140,7 +140,7 @@
         _renderShare: function(share) {
             var $share;
 
-            if($.isFunction(share.renderer)) {
+            if(typeof share.renderer === "function") {
                 $share = $(share.renderer());
             } else {
                 $share = this._createShare(share);
@@ -181,7 +181,7 @@
             }
 
             $.each(this.on || {}, function(event, handler) {
-                if($.isFunction(handler)) {
+                if(typeof handler === "function") {
                     $result.on(event, $.proxy(handler, share));
                 }
             });
@@ -263,7 +263,7 @@
         },
 
         _getCountValue: function(response, share) {
-            var count = ($.isFunction(share.getCount) ? share.getCount(response) : response) || 0;
+            var count = (typeof share.getCount === "function" ? share.getCount(response) : response) || 0;
             return (typeof count === "string") ? count : this._formatNumber(count);
         },
 

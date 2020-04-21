@@ -800,7 +800,7 @@
         // start up loading status
         if (this.startLoading($topEdge)) {
           var opts = this.options;
-          var url = $.isFunction(opts.ajaxURL.parent) ? opts.ajaxURL.parent($node.data('nodeData')) : opts.ajaxURL.parent + $node[0].id;
+          var url = typeof opts.ajaxURL.parent === "function" ? opts.ajaxURL.parent($node.data('nodeData')) : opts.ajaxURL.parent + $node[0].id;
           this.loadNodes('parent', url, $topEdge);
         }
       }
@@ -823,7 +823,7 @@
       } else { // load the new children nodes of the specified node by ajax request
         if (this.startLoading($bottomEdge)) {
           var opts = this.options;
-          var url = $.isFunction(opts.ajaxURL.children) ? opts.ajaxURL.children($node.data('nodeData')) : opts.ajaxURL.children + $node[0].id;
+          var url = typeof opts.ajaxURL.children === "function" ? opts.ajaxURL.children($node.data('nodeData')) : opts.ajaxURL.children + $node[0].id;
           this.loadNodes('children', url, $bottomEdge);
         }
       }
@@ -866,8 +866,8 @@
         if (this.startLoading($hEdge)) {
           var nodeId = $node[0].id;
           var url = (this.getNodeState($node, 'parent').exist) ?
-            ($.isFunction(opts.ajaxURL.siblings) ? opts.ajaxURL.siblings($node.data('nodeData')) : opts.ajaxURL.siblings + nodeId) :
-            ($.isFunction(opts.ajaxURL.families) ? opts.ajaxURL.families($node.data('nodeData')) : opts.ajaxURL.families + nodeId);
+            (typeof opts.ajaxURL.siblings === "function" ? opts.ajaxURL.siblings($node.data('nodeData')) : opts.ajaxURL.siblings + nodeId) :
+            (typeof opts.ajaxURL.families === "function" ? opts.ajaxURL.families($node.data('nodeData')) : opts.ajaxURL.families + nodeId);
           this.loadNodes('siblings', url, $hEdge);
         }
       }
@@ -1315,7 +1315,7 @@
     },
     // build the sibling nodes of specific node
     buildSiblingNode: function ($nodeChart, data) {
-      var newSiblingCount = $.isArray(data) ? data.length : data.children.length;
+      var newSiblingCount = Array.isArray(data) ? data.length : data.children.length;
       var existingSibligCount = $nodeChart.parent().is('td') ? $nodeChart.closest('tr').children().length : 1;
       var siblingCount = existingSibligCount + newSiblingCount;
       var insertPostion = (siblingCount > 1) ? Math.floor(siblingCount/2 - 1) : 0;

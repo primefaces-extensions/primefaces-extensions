@@ -195,7 +195,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     }
                     header.find('.relative').append("<span class='" + iconclass + "'></span>");
                     header.addClass('ui-sortable');
-                    header.off().click(function (e) {
+                    header.off().on("click.sheetheader", function (e) {
                         $this.sortClick($this, e, col);
                     });
                 } else {
@@ -212,17 +212,17 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                             .append(
                                 '<span class="handson-filter"><input type="text" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" role="textbox" aria-disabled="false" aria-readonly="false" aria-multiline="false" value="'
                                 + v + '"></input></span>');
-                        header.find('input').change(function () {
+                        header.find('input').off().on('change.sheetfilter', function () {
                             $this.filterchange($this, col, this.value, false)
-                        }).keydown(function (e) {
+                        }).on('keydown.sheetfilter', function (e) {
                             $this.filterKeyDown($this, e)
-                        }).keyup(function (e) {
+                        }).on('keyup.sheetfilter', function (e) {
                             $this.filterKeyUp($this, e)
-                        }).mouseover(function (e) {
+                        }).on('mouseover.sheetfilter', function (e) {
                             $this.filterMouseOver($this, e)
-                        }).focusin(function () {
+                        }).on('focusin.sheetfilter', function () {
                             $this.filterFocusIn($this, this)
-                        }).focusout(function () {
+                        }).on('focusout.sheetfilter', function () {
                             $this.filterFocusOut($this, this)
                         });
                     } else {
@@ -235,15 +235,15 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                                 + (f[i].value == v ? ' selected="selected"' : '') + '>' + f[i].label
                                 + '</option>');
                         }
-                        selectInput.change(function () {
+                        selectInput.off().on('change.sheetfilter', function () {
                             $this.filterchange($this, col, this.value, true)
-                        }).keydown(function (e) {
+                        }).on('keydown.sheetfilter', function (e) {
                             $this.filterKeyDown($this, e)
-                        }).keyup(function (e) {
+                        }).on('keyup.sheetfilter', function (e) {
                             $this.filterKeyUp($this, e)
-                        }).mouseover(function (e) {
+                        }).on('mouseover.sheetfilter', function (e) {
                             $this.filterMouseOver($this, e)
-                        }).focusin(function () {
+                        }).on('focusin.sheetfilter', function () {
                             $this.filterFocusIn($this, this)
                         });
                     }
@@ -414,7 +414,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             sheet.ht.destroyEditor(true);
             sheet.ht.deselectCell();
 
-            $(e.target).change();
+            $(e.target).trigger('change');
             sheet.filter();
             e.preventDefault();
         }
