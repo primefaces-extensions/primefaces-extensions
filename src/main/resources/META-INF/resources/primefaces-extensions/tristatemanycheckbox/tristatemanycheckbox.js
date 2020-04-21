@@ -6,18 +6,18 @@
 PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend({
 
     /**
-     * Initializes the widget.
-     *
-     * @param {object} cfg The widget configuration.
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.widget.BaseWidget.cfg} cfg
      */
-    init:function (cfg) {
+    init: function (cfg) {
         this._super(cfg);
 
         this.outputs = this.jq.find('.ui-chkbox-box:not(.ui-state-disabled)');
         this.inputs = this.jq.find(':text:not(:disabled)');
         this.labels = this.jq.find('label:not(.ui-state-disabled)');
-        this.fixedMod = function(number,mod){
-            return ((number%mod)+mod)%mod;
+        this.fixedMod = function (number, mod) {
+            return ((number % mod) + mod) % mod;
         }
         var _self = this;
 
@@ -26,38 +26,66 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
         }).mouseout(function () {
             $(this).removeClass('ui-state-hover');
         }).click(function (event) {
-            _self.toggle($(this),1);
-            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+            _self.toggle($(this), 1);
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
         });
 
         this.labels.click(function (event) {
             var element = $(this), input = $(PrimeFaces.escapeClientId(element.attr('for'))), checkbox = input.parent().next();
             checkbox.click();
-            if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
         });
 
-        //adding accesibility
-        this.outputs.on('keydown', function(event) {
-            switch(event.keyCode){
+        //adding accessibility
+        this.outputs.on('keydown', function (event) {
+            switch (event.keyCode) {
                 case 38:
-                    _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    _self.toggle($(this), 1);
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
                     break;
                 case 40:
-                    _self.toggle($(this),-1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    _self.toggle($(this), -1);
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
                     break;
                 case 39:
-                    _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    _self.toggle($(this), 1);
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
                     break;
                 case 37:
-                    _self.toggle($(this),-1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    _self.toggle($(this), -1);
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
                     break;
                 case 32:
-                    _self.toggle($(this),1);
-                    if (event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; }
+                    _self.toggle($(this), 1);
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    } else {
+                        event.returnValue = false;
+                    }
                     break;
             }
         });
@@ -71,11 +99,11 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
         this.inputs.data(PrimeFaces.CLIENT_ID_DATA, this.id);
     },
 
-    toggle:function (checkbox,direction) {
+    toggle: function (checkbox, direction) {
         var inputField = checkbox.prev().find(':input');
         if (!checkbox.hasClass('ui-state-disabled')) {
             var oldValue = parseInt(inputField.val());
-            var newValue = this.fixedMod((oldValue + direction),3);
+            var newValue = this.fixedMod((oldValue + direction), 3);
             inputField.val(newValue);
 
             // remove / add def. icon and active classes
@@ -91,7 +119,7 @@ PrimeFaces.widget.ExtTriStateManyCheckbox = PrimeFaces.widget.BaseWidget.extend(
 
             // change title to the new one
             var iconTitles = checkbox.data('titlestates');
-            if(iconTitles!=null && iconTitles.length>0){
+            if (iconTitles != null && iconTitles.length > 0) {
                 checkbox.attr('title', iconTitles[newValue]);
             }
 
