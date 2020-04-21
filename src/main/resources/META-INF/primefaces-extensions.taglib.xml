@@ -12,7 +12,11 @@
         <function-class>org.primefaces.util.ComponentUtils</function-class>
         <function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
     </function>
-
+    <function>
+        <function-name>trim</function-name>
+        <function-class>org.apache.commons.lang3.StringUtils</function-class>
+        <function-signature>java.lang.String trimToEmpty(java.lang.String)</function-signature>
+    </function>
     <function>
         <function-name>escapeHtml4</function-name>
         <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
@@ -993,7 +997,7 @@
     </tag>
     <tag>
         <description>
-            <![CDATA[Counter component animates a numerical value by counting to it.]]>
+            <![CDATA[Counter component animates a numerical value by counting to it. Client behavior events: start - fires when the counter is started (org.primefaces.event.SelectEvent<Double>), end - fires when the counter is stopped (org.primefaces.event.SelectEvent<Double>).]]>
         </description>
         <tag-name>counter</tag-name>
         <component>
@@ -1154,9 +1158,17 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Javascript handler executed the counter stops]]>
+                <![CDATA[Javascript handler executed the counter starts.]]>
             </description>
-            <name>oncountercomplete</name>
+            <name>onstart</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler executed the counter stops.]]>
+            </description>
+            <name>onend</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
