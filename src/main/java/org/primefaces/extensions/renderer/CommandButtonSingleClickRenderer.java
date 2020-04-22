@@ -16,12 +16,11 @@
 package org.primefaces.extensions.renderer;
 
 import java.io.IOException;
-
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
-
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
+import org.primefaces.util.Constants;
 
 /**
  * {@link CommandButton} renderer disabling the button while action is processed for buttons that are using Ajax.
@@ -62,7 +61,16 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     protected String getAttributeValue(final FacesContext context, final CommandButton button, final String attribute) {
         final ValueExpression ve = button.getValueExpression(attribute);
-        return ve == null ? null : (String) ve.getValue(context.getELContext());
+        if (ve != null) {
+            return (String) ve.getValue(context.getELContext());
+        }
+        String key = attribute + "CommandButtonSingleClickRenderer";
+        String value = (String) button.getAttributes().get(key);
+        if (value == null) {
+            value = (String) button.getAttributes().get(attribute);
+            button.getAttributes().put(key, value == null ? Constants.EMPTY_STRING : value);
+        }
+        return value;
     }
 
     protected String prefix(final String base, final String prefix) {
