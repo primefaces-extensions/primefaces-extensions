@@ -6,6 +6,7 @@
 
 4. Execute to convert images to data URI:
 	npm install
+	npm install -g grunt-cli
 	grunt dataUri   https://github.com/ahomu/grunt-data-uri
 
 5. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
