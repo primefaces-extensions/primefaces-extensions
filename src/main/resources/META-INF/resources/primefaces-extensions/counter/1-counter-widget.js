@@ -52,7 +52,9 @@ PrimeFaces.widget.ExtCounter = PrimeFaces.widget.BaseWidget.extend({
                 this.onStart();
             }
 
-            this.counter.start(() => $this.endCounter());
+            this.counter.start(function () {
+                $this.endCounter()
+            });
 
             if (this.hasBehavior('end')) {
                 var options = {

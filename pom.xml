@@ -61,8 +61,8 @@
                 <configuration>
                     <useDataUri>true</useDataUri>
                     <imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
-                    <languageIn>ECMASCRIPT_2015</languageIn>
-                    <languageOut>ECMASCRIPT_2015</languageOut>
+                    <languageIn>ECMASCRIPT5</languageIn>
+                    <languageOut>ECMASCRIPT5</languageOut>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
@@ -107,6 +107,18 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/creditcard/creditcard.js</outputFile>
+                                    <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>creditcard/card.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/creditcard/creditcard.css</outputFile>
                                     <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
