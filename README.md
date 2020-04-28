@@ -21,12 +21,12 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
-    <version>8.0</version>
+    <version>8.0.1</version>
 </dependency>
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>resources-ckeditor</artifactId>
-    <version>8.0</version>
+    <version>8.0.1</version>
 </dependency>
 ```
  ##### Namespaces
