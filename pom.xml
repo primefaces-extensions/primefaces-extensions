@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>master-pom</artifactId>
-        <version>8.0.1</version>
+        <version>8.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>primefaces-extensions</artifactId>
@@ -61,8 +61,8 @@
                 <configuration>
                     <useDataUri>true</useDataUri>
                     <imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
-                    <languageIn>ECMASCRIPT5</languageIn>
-                    <languageOut>ECMASCRIPT5</languageOut>
+                    <languageIn>ECMASCRIPT_2015</languageIn>
+                    <languageOut>ECMASCRIPT_2015</languageOut>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
@@ -71,7 +71,6 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>counter/**</include>
-                                <include>creditcard/**</include>
                                 <include>fab/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
@@ -96,6 +95,19 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <subDirMode>true</subDirMode>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>creditcard/0-card.js</include>
+                                <include>creditcard/1-card-widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/creditcard/creditcard.js</outputFile>
+                                    <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
