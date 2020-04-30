@@ -331,6 +331,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // clean up HT memory
         if (this.ht) {
             this.ht.destroy();
+            this.ht = null;
         }
 
         this._super(cfg);
