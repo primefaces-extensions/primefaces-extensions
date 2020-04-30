@@ -7,19 +7,17 @@
 PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
 
     /**
-     * Initializes the widget.
-     *
-     * @param {object}
-     *        cfg The widget configuration.
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.BaseWidget<TCfg>} cfg
      */
     init: function (cfg) {
         this._super(cfg);
-        this.id = cfg.id;
         this.cfg = cfg;
         this.cfg.container = '.ui-credit-card';
 
-        var closestForm = this.jq.closest('form');
-        this.cfg.form = PrimeFaces.escapeClientId(closestForm.attr('id'))
+        this.form = this.jq.closest('form');
+        this.cfg.form = PrimeFaces.escapeClientId(this.form.attr('id'))
 
         this.card = new Card(this.cfg)
 
@@ -32,11 +30,12 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
      * after AJAX postback.
      */
     bindListeners: function () {
+        let $this = this;
         this.addRefreshListener(function () {
             $(document).ready(function () {
                 const blur = new Event('blur');
                 const change = new Event('change');
-                $('.ui-state-filled').each(function (index) {
+                $this.form.find('.ui-state-filled').each(function () {
                     this.dispatchEvent(blur);
                     this.dispatchEvent(change);
                 })
