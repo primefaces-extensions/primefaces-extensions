@@ -9,7 +9,7 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
     /**
      * @override
      * @inheritdoc
-     * @param {PrimeFaces.BaseWidget<TCfg>} cfg
+     * @param {PrimeFaces.BaseWidget} cfg
      */
     init: function (cfg) {
         this._super(cfg);
@@ -36,8 +36,10 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
                 const blur = new Event('blur');
                 const change = new Event('change');
                 $this.form.find('.ui-state-filled').each(function () {
-                    this.dispatchEvent(blur);
-                    this.dispatchEvent(change);
+                    if (this.name === "number" || this.name === "name" || this.name === "expiry" || this.name === "cvc") {
+                        this.dispatchEvent(blur);
+                        this.dispatchEvent(change);
+                    }
                 })
             });
         });
