@@ -15,12 +15,7 @@
  */
 package org.primefaces.extensions.component.timepicker;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import javax.faces.application.ResourceDependency;
@@ -105,22 +100,8 @@ public class TimePicker extends HtmlInputText implements Widget {
         maxHour,
         maxMinute,
         readonlyInput,
-        size;
+        size
         //@formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public TimePicker() {
@@ -414,7 +395,7 @@ public class TimePicker extends HtmlInputText implements Widget {
         if (isValid()) {
             for (final Entry<String, AjaxBehaviorEvent> entry : customEvents.entrySet()) {
                 final AjaxBehaviorEvent behaviorEvent = entry.getValue();
-                final TimeSelectEvent timeSelectEvent = new TimeSelectEvent(this, behaviorEvent.getBehavior(), getValue());
+                final TimeSelectEvent<Object> timeSelectEvent = new TimeSelectEvent<>(this, behaviorEvent.getBehavior(), getValue());
 
                 if (behaviorEvent.getPhaseId().equals(PhaseId.APPLY_REQUEST_VALUES)) {
                     timeSelectEvent.setPhaseId(PhaseId.PROCESS_VALIDATIONS);
@@ -437,7 +418,7 @@ public class TimePicker extends HtmlInputText implements Widget {
     }
 
     private boolean isSelfRequest(final FacesContext fc) {
-        return this.getClientId(fc).equals(
+        return getClientId(fc).equals(
                     fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 }

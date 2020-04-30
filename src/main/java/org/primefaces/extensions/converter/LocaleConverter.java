@@ -38,7 +38,7 @@ import org.primefaces.util.LangUtils;
  * @since 0.2
  */
 @FacesConverter(value = "org.primefaces.extensions.converter.LocaleConverter")
-public class LocaleConverter implements Converter, Serializable {
+public class LocaleConverter implements Converter<Object>, Serializable {
 
     private static final long serialVersionUID = 20121214L;
 
@@ -122,7 +122,7 @@ public class LocaleConverter implements Converter, Serializable {
         return separator;
     }
 
-    public void setSeparator(char separator) {
+    public void setSeparator(final char separator) {
         this.separator = separator;
     }
 }

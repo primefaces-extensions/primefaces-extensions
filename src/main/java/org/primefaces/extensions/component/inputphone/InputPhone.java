@@ -131,7 +131,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     }
 
     @Override
-    public void setLabelledBy(String labelledBy) {
+    public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
     }
 
@@ -139,7 +139,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
     }
 
-    public void setPlaceholder(String placeholder) {
+    public void setPlaceholder(final String placeholder) {
         getStateHelper().put(PropertyKeys.placeholder, placeholder);
     }
 
@@ -147,7 +147,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(String widgetVar) {
+    public void setWidgetVar(final String widgetVar) {
         getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
@@ -155,7 +155,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.type, "tel");
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         getStateHelper().put(PropertyKeys.type, type);
     }
 
@@ -163,7 +163,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (Boolean) getStateHelper().eval(PropertyKeys.allowDropdown, true);
     }
 
-    public void setAllowDropdown(boolean allowDropdown) {
+    public void setAllowDropdown(final boolean allowDropdown) {
         getStateHelper().put(PropertyKeys.allowDropdown, allowDropdown);
     }
 
@@ -171,7 +171,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (Boolean) getStateHelper().eval(PropertyKeys.autoHideDialCode, true);
     }
 
-    public void setAutoHideDialCode(boolean autoHideDialCode) {
+    public void setAutoHideDialCode(final boolean autoHideDialCode) {
         getStateHelper().put(PropertyKeys.autoHideDialCode, autoHideDialCode);
     }
 
@@ -183,7 +183,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return AutoPlaceholder.valueOf(getAutoPlaceholder());
     }
 
-    public void setAutoPlaceholder(String autoPlaceholder) {
+    public void setAutoPlaceholder(final String autoPlaceholder) {
         getStateHelper().put(PropertyKeys.autoPlaceholder, autoPlaceholder);
     }
 
@@ -191,7 +191,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return getStateHelper().eval(PropertyKeys.excludeCountries, Collections.emptyList());
     }
 
-    public void setExcludeCountries(Object excludeCountries) {
+    public void setExcludeCountries(final Object excludeCountries) {
         getStateHelper().put(PropertyKeys.excludeCountries, excludeCountries);
     }
 
@@ -199,7 +199,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (Boolean) getStateHelper().eval(PropertyKeys.formatOnDisplay, true);
     }
 
-    public void setFormatOnDisplay(boolean formatOnDisplay) {
+    public void setFormatOnDisplay(final boolean formatOnDisplay) {
         getStateHelper().put(PropertyKeys.formatOnDisplay, formatOnDisplay);
     }
 
@@ -207,7 +207,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.initialCountry, "us");
     }
 
-    public void setInitialCountry(String initialCountry) {
+    public void setInitialCountry(final String initialCountry) {
         getStateHelper().put(PropertyKeys.initialCountry, initialCountry);
     }
 
@@ -215,7 +215,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (Boolean) getStateHelper().eval(PropertyKeys.nationalMode, true);
     }
 
-    public void setNationalMode(boolean nationalMode) {
+    public void setNationalMode(final boolean nationalMode) {
         getStateHelper().put(PropertyKeys.nationalMode, nationalMode);
     }
 
@@ -223,7 +223,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return getStateHelper().eval(PropertyKeys.onlyCountries, Collections.emptyList());
     }
 
-    public void setOnlyCountries(Object onlyCountries) {
+    public void setOnlyCountries(final Object onlyCountries) {
         getStateHelper().put(PropertyKeys.onlyCountries, onlyCountries);
     }
 
@@ -235,7 +235,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return PlaceholderNumberType.valueOf(getPlaceholderNumberType());
     }
 
-    public void setPlaceholderNumberType(String placeholderNumberType) {
+    public void setPlaceholderNumberType(final String placeholderNumberType) {
         getStateHelper().put(PropertyKeys.placeholderNumberType, placeholderNumberType);
     }
 
@@ -243,7 +243,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return getStateHelper().eval(PropertyKeys.preferredCountries, Collections.emptyList());
     }
 
-    public void setPreferredCountries(Object preferredCountries) {
+    public void setPreferredCountries(final Object preferredCountries) {
         getStateHelper().put(PropertyKeys.preferredCountries, preferredCountries);
     }
 
@@ -251,7 +251,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (Boolean) getStateHelper().eval(PropertyKeys.separateDialCode, false);
     }
 
-    public void setSeparateDialCode(boolean separateDialCode) {
+    public void setSeparateDialCode(final boolean separateDialCode) {
         getStateHelper().put(PropertyKeys.separateDialCode, separateDialCode);
     }
 
@@ -259,7 +259,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.inputStyle, null);
     }
 
-    public void setInputStyle(String inputStyle) {
+    public void setInputStyle(final String inputStyle) {
         getStateHelper().put(PropertyKeys.inputStyle, inputStyle);
     }
 
@@ -267,7 +267,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.inputStyleClass, null);
     }
 
-    public void setInputStyleClass(String inputStyleClass) {
+    public void setInputStyleClass(final String inputStyleClass) {
         getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
     }
 
@@ -275,7 +275,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         return (String) getStateHelper().eval(PropertyKeys.geoIpLookup, null);
     }
 
-    public void setGeoIpLookup(String geoIpLookup) {
+    public void setGeoIpLookup(final String geoIpLookup) {
         getStateHelper().put(PropertyKeys.geoIpLookup, geoIpLookup);
     }
 
@@ -294,7 +294,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     }
 
     @Override
-    public void queueEvent(FacesEvent event) {
+    public void queueEvent(final FacesEvent event) {
         final FacesContext context = getFacesContext();
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
@@ -303,8 +303,8 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
             final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
 
             if (EVENT_COUNTRY_SELECT.equals(eventName)) {
-                final Object selectedCountry = getCountry(getClientId(context), params);
-                final SelectEvent selectEvent = new SelectEvent(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
+                final Country selectedCountry = getCountry(getClientId(context), params);
+                final SelectEvent<Country> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), selectedCountry);
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
             }
@@ -319,7 +319,7 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
         }
     }
 
-    protected Country getCountry(String clientId, Map<String, String> params) {
+    protected Country getCountry(final String clientId, final Map<String, String> params) {
         return new Country(params.get(clientId + "_name"),
                     params.get(clientId + "_iso2"),
                     params.get(clientId + "_dialCode"));

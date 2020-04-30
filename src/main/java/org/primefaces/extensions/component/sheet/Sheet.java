@@ -272,7 +272,7 @@ public class Sheet extends SheetBase {
      * Updates the row var for iterations over the list. The var value will be updated to the value for the specified rowKey.
      *
      * @param context the FacesContext against which to the row var is set. Passed for performance
-     * @param rowKey the rowKey string
+     * @param rowKey  the rowKey string
      */
     public void setRowVar(final FacesContext context, final String rowKey) {
 
@@ -330,7 +330,7 @@ public class Sheet extends SheetBase {
         }
 
         final SheetColumn column = getColumns().get(col);
-        final Converter converter = ComponentUtils.getConverter(context, column);
+        final Converter<Object> converter = ComponentUtils.getConverter(context, column);
         if (converter == null) {
             return value.toString();
         }
@@ -638,7 +638,7 @@ public class Sheet extends SheetBase {
 
             // attempt to convert new value from string to correct object type
             // based on column converter. Use PF util as helper
-            final Converter converter = ComponentUtils.getConverter(context, column);
+            final Converter<Object> converter = ComponentUtils.getConverter(context, column);
 
             // assume string value if converter not found
             Object newValueObj = newValue;
@@ -996,7 +996,7 @@ public class Sheet extends SheetBase {
     /**
      * Adds eval scripts to the ajax response to update the rows dirtied by the most recent successful update request.
      *
-     * @param context the FacesContext
+     * @param context   the FacesContext
      * @param dirtyRows the set of dirty rows
      */
     public void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {

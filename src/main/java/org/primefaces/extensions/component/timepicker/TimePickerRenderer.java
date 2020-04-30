@@ -83,7 +83,7 @@ public class TimePickerRenderer extends InputRenderer {
         }
 
         final TimePicker timepicker = (TimePicker) component;
-        final Converter converter = timepicker.getConverter();
+        final Converter<?> converter = timepicker.getConverter();
 
         // first ask the converter
         if (converter != null) {
@@ -333,7 +333,7 @@ public class TimePickerRenderer extends InputRenderer {
         return new SimpleDateFormat(getPattern(timepicker), timepicker.calculateLocale());
     }
 
-    protected Class<?> resolveDateType(FacesContext context, TimePicker timePicker) {
+    protected Class<?> resolveDateType(final FacesContext context, final TimePicker timePicker) {
         final ValueExpression ve = timePicker.getValueExpression("value");
 
         if (ve == null) {
