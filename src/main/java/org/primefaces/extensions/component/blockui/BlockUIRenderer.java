@@ -97,7 +97,7 @@ public class BlockUIRenderer extends CoreRenderer {
         }
 
         // get reg. expression
-        String eventRegEx;
+        final String eventRegEx;
         final String events = blockUI.getEvent();
 
         if (LangUtils.isValueBlank(events)) {
@@ -170,7 +170,7 @@ public class BlockUIRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext fc, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext fc, final UIComponent component) {
         // nothing to do
     }
 }

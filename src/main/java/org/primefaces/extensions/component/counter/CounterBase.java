@@ -194,11 +194,11 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
         getStateHelper().put(PropertyKeys.autoStart, autoStart);
     }
 
-    public Boolean isVisible() {
+    public boolean isVisible() {
         return (Boolean) getStateHelper().eval(PropertyKeys.visible, true);
     }
 
-    public void setVisible(final Boolean visible) {
+    public void setVisible(final boolean visible) {
         getStateHelper().put(PropertyKeys.visible, visible);
     }
 

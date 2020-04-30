@@ -68,7 +68,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     }
 
     private String generateSrc(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
-        String imageSrc;
+        final String imageSrc;
         try {
             imageSrc = URLEncoder.encode(getDocumentSource(context, documentViewer), "UTF-8");
         }
@@ -76,13 +76,10 @@ public class DocumentViewerRenderer extends CoreRenderer {
             throw new IOException(ex);
         }
 
-        final StringBuilder srcBuilder = new StringBuilder();
-        srcBuilder.append(getResourceURL(context));
-        srcBuilder.append("&file=");
-        srcBuilder.append(imageSrc);
-        srcBuilder.append(generateHashString(documentViewer));
-
-        return srcBuilder.toString();
+        return getResourceURL(context) +
+                    "&file=" +
+                    imageSrc +
+                    generateHashString(documentViewer);
     }
 
     private String generateHashString(final DocumentViewer documentViewer) {

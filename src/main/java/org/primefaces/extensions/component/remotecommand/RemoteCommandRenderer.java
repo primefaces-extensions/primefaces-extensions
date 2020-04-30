@@ -72,7 +72,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
                 final ValueExpression valueExpression = param.getAssignTo();
                 final String paramValue = params.get(clientId + "_" + param.getName());
 
-                final Converter converter = param.getConverter();
+                final Converter<?> converter = param.getConverter();
                 if (converter != null) {
                     final Object convertedValue = converter.getAsObject(context, param, paramValue);
                     valueExpression.setValue(elContext, convertedValue);

@@ -83,7 +83,7 @@ public class GChartRenderer extends CoreRenderer {
     }
 
     protected String getApiKey(final FacesContext context) {
-        String key = null;
+        String key;
         try {
             final String initParam = context.getExternalContext().getInitParameter(GChart.API_KEY);
             key = context.getApplication().evaluateExpressionGet(context, initParam, String.class);

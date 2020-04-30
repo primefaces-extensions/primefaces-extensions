@@ -130,7 +130,7 @@ public class CKEditorRenderer extends InputRenderer {
                 final Object submittedValue) {
         final CKEditor ckEditor = (CKEditor) component;
         final String value = (String) submittedValue;
-        final Converter converter = ComponentUtils.getConverter(context, component);
+        final Converter<?> converter = ComponentUtils.getConverter(context, component);
 
         if (converter != null) {
             return converter.getAsObject(context, ckEditor, value);

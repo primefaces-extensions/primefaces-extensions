@@ -174,7 +174,7 @@ public class CodeMirrorRenderer extends InputRenderer {
     public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
         final CodeMirror codeMirror = (CodeMirror) component;
         final String value = (String) submittedValue;
-        final Converter converter = ComponentUtils.getConverter(context, component);
+        final Converter<?> converter = ComponentUtils.getConverter(context, component);
 
         if (converter != null) {
             return converter.getAsObject(context, codeMirror, value);
@@ -188,9 +188,7 @@ public class CodeMirrorRenderer extends InputRenderer {
 
         writer.startElement("ul", codeMirror);
 
-        for (int i = 0; i < suggestions.size(); i++) {
-            final String suggestion = suggestions.get(i);
-
+        for (final String suggestion : suggestions) {
             writer.startElement("li", null);
 
             if (codeMirror.isEscapeSuggestions()) {

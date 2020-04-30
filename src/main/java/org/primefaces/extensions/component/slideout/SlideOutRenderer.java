@@ -57,7 +57,7 @@ public class SlideOutRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext context, final UIComponent component) {
         // Do nothing
     }
 

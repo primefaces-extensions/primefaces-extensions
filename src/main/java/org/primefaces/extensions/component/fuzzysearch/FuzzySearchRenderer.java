@@ -20,11 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.UINamingContainer;
 import javax.faces.component.UISelectOne;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 
 import com.google.gson.Gson;
@@ -52,7 +50,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
 
         final String clientId = fuzzySearch.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String submittedValue = context.getExternalContext().getRequestParameterMap().get(clientId + "_input");
+        final String submittedValue = params.get(clientId + "_input");
 
         if (submittedValue != null) {
             fuzzySearch.setSubmittedValue(submittedValue);
@@ -116,41 +114,16 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
     }
 
     protected void encodeSelectItems(final FacesContext context, final FuzzySearch fuzzySearch, final List<SelectItem> selectItems) throws IOException {
-        final int selectItemsSize = selectItems.size();
-        final Converter converter = fuzzySearch.getConverter();
-        final String name = fuzzySearch.getClientId(context);
-        Object value = fuzzySearch.getSubmittedValue();
-        if (value == null) {
-            value = fuzzySearch.getValue();
-        }
-
-        final Class type = value == null ? String.class : value.getClass();
-
-        for (int i = 0; i < selectItems.size(); i++) {
-            final SelectItem selectItem = selectItems.get(i);
-            final boolean disabled = selectItem.isDisabled() || fuzzySearch.isDisabled();
-            final String id = name + UINamingContainer.getSeparatorChar(context) + i;
-
-            final boolean selected;
-            if (value == null && selectItem.getValue() == null) {
-                selected = true;
-            }
-            else {
-                final Object coercedItemValue = coerceToModelType(context, selectItem.getValue(), type);
-                selected = (coercedItemValue != null) && coercedItemValue.equals(value);
-            }
-
-            encodeOption(context, fuzzySearch, selectItem, id, name, converter, selected, disabled, i, selectItemsSize);
+        for (final SelectItem selectItem : selectItems) {
+            encodeOption(context, fuzzySearch, selectItem);
         }
     }
 
     protected void encodeOption(
-                final FacesContext context, final FuzzySearch fuzzySearch, final SelectItem option, final String id, final String name,
-                final Converter converter,
-                final boolean selected, final boolean disabled, final int idx, final int size) throws IOException {
+                final FacesContext context, final FuzzySearch fuzzySearch, final SelectItem option) throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String itemValueAsString = getOptionAsString(context, fuzzySearch, converter, option.getValue());
+        final String itemValueAsString = getOptionAsString(context, fuzzySearch, fuzzySearch.getConverter(), option.getValue());
 
         final String resultStyle = fuzzySearch.getResultStyle();
         String resultStyleClass = fuzzySearch.getResultStyleClass();

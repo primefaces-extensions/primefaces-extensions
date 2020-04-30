@@ -93,14 +93,14 @@ public class SocialRenderer extends CoreRenderer {
 
         final boolean showCount = BooleanUtils.toBoolean(social.getShowCount());
         if (showCount) {
-            wb.attr("showCount", showCount);
+            wb.attr("showCount", true);
         }
         else {
             if (social.getShowCount().equalsIgnoreCase("inside")) {
                 wb.attr("showCount", social.getShowCount());
             }
             else {
-                wb.attr("showCount", showCount);
+                wb.attr("showCount", false);
             }
         }
 
@@ -117,7 +117,7 @@ public class SocialRenderer extends CoreRenderer {
                 wb.append(",");
             }
             wb.append("{");
-            addShareProperty(wb, "share", share);
+            addShareProperty(wb, share);
             if ("twitter".equalsIgnoreCase(share)) {
                 wb.attr("via", social.getTwitterUsername());
                 wb.attr("hashtags", social.getTwitterHashtags());
@@ -150,9 +150,9 @@ public class SocialRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    private void addShareProperty(final WidgetBuilder wb, final String property, final String value) throws IOException {
+    private void addShareProperty(final WidgetBuilder wb, final String value) throws IOException {
         if (value != null) {
-            wb.append(property);
+            wb.append("share");
             wb.append(":\"");
             wb.append(EscapeUtils.forJavaScriptAttribute(value));
             wb.append("\"");

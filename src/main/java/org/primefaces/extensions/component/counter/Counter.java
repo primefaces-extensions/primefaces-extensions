@@ -48,7 +48,7 @@ public class Counter extends CounterBase {
 
     private static final String DEFAULT_EVENT = "end";
 
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
+    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>>builder()
                 .put("start", null)
                 .put(DEFAULT_EVENT, null)
                 .build();
@@ -80,7 +80,7 @@ public class Counter extends CounterBase {
 
             if ("start".equals(eventName) || DEFAULT_EVENT.equals(eventName)) {
                 final Double value = Double.parseDouble(params.get(getClientId(context) + "_value"));
-                final SelectEvent<Double> selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
+                final SelectEvent<Double> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(selectEvent);
             }

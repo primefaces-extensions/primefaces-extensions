@@ -86,7 +86,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         final InputPhone inputPhone = (InputPhone) component;
-        final Converter converter = inputPhone.getConverter();
+        final Converter<?> converter = inputPhone.getConverter();
 
         if (converter != null) {
             return converter.getAsObject(context, inputPhone, value);
@@ -227,17 +227,19 @@ public class InputPhoneRenderer extends InputRenderer {
 
     private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value) throws IOException {
         final Collection<String> countries = toCollection(value);
-        if (countries != null && !countries.isEmpty()) {
+        if (!countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());
         }
     }
 
     private Collection<String> toCollection(final Object object) {
-        if (String.class.isInstance(object)) {
+        if (object instanceof String) {
             final String string = ((String) object).replace(' ', ',').toLowerCase();
             return Arrays.asList(string.split(","));
         }
-        return (Collection<String>) object;
+        else {
+            return (Collection<String>) object;
+        }
     }
 
 }

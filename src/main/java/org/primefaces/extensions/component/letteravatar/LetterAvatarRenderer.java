@@ -23,9 +23,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -49,7 +51,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         encodeMarkup(context, letterAvatar);
     }
 
-    public void encodeMarkup(FacesContext context, LetterAvatar letterAvatar) throws IOException {
+    public void encodeMarkup(final FacesContext context, final LetterAvatar letterAvatar) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = letterAvatar.getClientId(context);
         final String value = letterAvatar.getValue();
@@ -75,7 +77,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         }
 
         final String size = letterAvatar.getSize();
-        String style = joinStyle(letterAvatar.getStyle(), styleContainer(size, color, backgroundColor));
+        final String style = joinStyle(letterAvatar.getStyle(), styleContainer(size, color, backgroundColor));
         String styleClass = joinStyleClass(letterAvatar.getStyleClass(), LetterAvatar.COMPONENT_CLASS);
 
         writer.startElement("span", letterAvatar);
@@ -103,7 +105,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext context, final UIComponent component) {
         // NOOP
     }
 
@@ -112,7 +114,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return true;
     }
 
-    public static int hash(String str) {
+    public static int hash(final String str) {
         int result = 0;
         for (int i = 0; i < str.length(); i++) {
             result = (result << 5) - result + str.charAt(i);
@@ -120,11 +122,11 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return result;
     }
 
-    public static int hue(String str) {
+    public static int hue(final String str) {
         return Math.abs(hash(str) % 360);
     }
 
-    protected String styleContainer(String size, String color, String backgroundColor) {
+    protected String styleContainer(final String size, final String color, final String backgroundColor) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("color", color);
         map.put("background-color", backgroundColor);
@@ -133,26 +135,26 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return toStyle(map);
     }
 
-    protected String styleInitials(String size) {
+    protected String styleInitials(final String size) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
         map.put("top", "calc(" + size + " / 4)"); // 25% of parent
         return toStyle(map);
     }
 
-    protected static String joinNonNull(String delimiter, String... parts) {
+    protected static String joinNonNull(final String delimiter, final String... parts) {
         return Stream.of(parts).filter(Objects::nonNull).collect(Collectors.joining(delimiter));
     }
 
-    protected static String joinStyle(String... parts) {
+    protected static String joinStyle(final String... parts) {
         return joinNonNull(Constants.EMPTY_STRING, parts);
     }
 
-    protected static String joinStyleClass(String... parts) {
+    protected static String joinStyleClass(final String... parts) {
         return joinNonNull(StringUtils.SPACE, parts);
     }
 
-    protected static String toStyle(Map<String, String> map) {
+    protected static String toStyle(final Map<String, String> map) {
         return map.entrySet()
                     .stream()
                     .map(e -> e.getKey() + ":" + e.getValue())

@@ -55,7 +55,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
             final List<String> keyValues = new ArrayList<>(mapSub.keySet());
             final Map<String, Object> mapSubConv = new LinkedHashMap<>();
             final TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-            final Converter converter = checkbox.getConverter();
+            final Converter<?> converter = checkbox.getConverter();
             if (converter != null) {
                 for (final String keyVal : keyValues) {
                     final Object mapVal = converter.getAsObject(context, checkbox, (String) mapSub.get(keyVal));
@@ -122,7 +122,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     protected void encodeSelectItems(final FacesContext context, final TriStateManyCheckbox checkbox) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final List<SelectItem> selectItems = getSelectItems(context, checkbox);
-        final Converter converter = checkbox.getConverter();
+        final Converter<Object> converter = checkbox.getConverter();
         Map<String, Object> values = getValues(checkbox);
         final Map<String, Object> submittedMap = getSubmittedFromComp(checkbox);
         final String layout = checkbox.getLayout();
@@ -328,7 +328,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     @Override
-    protected Map<String, Object> getValues(final UIComponent component) {
+    protected Map getValues(final UIComponent component) {
         final UISelectMany selectMany = (UISelectMany) component;
         final Object value = selectMany.getValue();
 

@@ -29,12 +29,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.row.Row;
-import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
-import org.primefaces.extensions.model.dynaform.DynaFormControl;
-import org.primefaces.extensions.model.dynaform.DynaFormLabel;
-import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
-import org.primefaces.extensions.model.dynaform.DynaFormRow;
+import org.primefaces.extensions.model.dynaform.*;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -264,23 +259,23 @@ public class DynaFormRenderer extends CoreRenderer {
         dynaForm.resetData();
     }
 
-    protected void renderNestedModel(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, DynaFormModelElement element, String styleClass)
+    protected void renderNestedModel(
+                final FacesContext fc, final DynaForm dynaForm, final ResponseWriter writer, final DynaFormModelElement element, final String styleClass)
                 throws IOException {
-        final DynaFormModelElement nestedModel = element;
 
         writer.writeAttribute(Attrs.CLASS, styleClass, null);
         writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
-        encodeMarkup(fc, dynaForm, nestedModel.getModel(), true);
+        encodeMarkup(fc, dynaForm, element.getModel(), true);
     }
 
-    protected void renderControl(FacesContext fc, DynaForm dynaForm, ResponseWriter writer, String controlCommonClass, DynaFormControl element,
+    protected void renderControl(
+                final FacesContext fc, final DynaForm dynaForm, final ResponseWriter writer, final String controlCommonClass, final DynaFormControl element,
                 String styleClass) throws IOException {
-        final DynaFormControl control = element;
-        dynaForm.setData(control);
+        dynaForm.setData(element);
 
         // find control's cell by type
-        final UIDynaFormControl cell = dynaForm.getControlCell(control.getType());
+        final UIDynaFormControl cell = dynaForm.getControlCell(element.getType());
 
         if (cell.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, cell.getStyle(), null);
@@ -296,32 +291,32 @@ public class DynaFormRenderer extends CoreRenderer {
         cell.encodeAll(fc);
     }
 
-    protected void renderLabel(ResponseWriter writer, String labelCommonClass, DynaFormLabel element, String styleClass) throws IOException {
-        final DynaFormLabel label = element;
+    protected void renderLabel(final ResponseWriter writer, final String labelCommonClass,
+                final DynaFormLabel element, final String styleClass) throws IOException {
 
         writer.writeAttribute(Attrs.CLASS, (styleClass
                     + " " + LABEL_CLASS
-                    + " " + StringUtils.defaultIfBlank(label.getStyleClass(), Constants.EMPTY_STRING)
+                    + " " + StringUtils.defaultIfBlank(element.getStyleClass(), Constants.EMPTY_STRING)
                     + " " + labelCommonClass).trim(), null);
         writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
         writer.startElement(Attrs.LABEL, null);
-        if (!label.isTargetValid()) {
+        if (!element.isTargetValid()) {
             writer.writeAttribute(Attrs.CLASS, LABEL_INVALID_CLASS, null);
         }
 
-        writer.writeAttribute("for", label.getTargetClientId(), null);
+        writer.writeAttribute("for", element.getTargetClientId(), null);
 
-        if (label.getValue() != null) {
-            if (label.isEscape()) {
-                writer.writeText(label.getValue(), "value");
+        if (element.getValue() != null) {
+            if (element.isEscape()) {
+                writer.writeText(element.getValue(), "value");
             }
             else {
-                writer.write(label.getValue());
+                writer.write(element.getValue());
             }
         }
 
-        if (label.isTargetRequired()) {
+        if (element.isTargetRequired()) {
             writer.startElement("span", null);
             writer.writeAttribute(Attrs.CLASS, LABEL_INDICATOR_CLASS, null);
             writer.write("*");
@@ -454,7 +449,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) throws IOException {
+    public void encodeChildren(final FacesContext context, final UIComponent component) {
         // Rendering happens on encodeEnd
     }
 
