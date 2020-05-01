@@ -31,7 +31,7 @@
 
 		<head>
 			<![CDATA[<link rel="icon" href="favicon.ico"/>]]>
-			<![CDATA[<link rel="shortcut icon" href="favicon.ico"/>]]>
+			<![CDATA[<link href="favicon-16x16.png" rel="icon" type="image/png" sizes="16x16"/>]]>
 		</head>
 
 
