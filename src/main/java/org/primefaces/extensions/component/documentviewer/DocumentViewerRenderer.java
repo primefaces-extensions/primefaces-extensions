@@ -29,6 +29,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.DynamicContentSrcBuilder;
@@ -138,9 +139,15 @@ public class DocumentViewerRenderer extends CoreRenderer {
             }
         }
         else {
-            return DynamicContentSrcBuilder.build(context, documentViewer.getValue(), documentViewer,
+            final Object value = documentViewer.getValue();
+            String downloadName = documentViewer.getDownload();
+            if (value instanceof StreamedContent) {
+                final StreamedContent streamedContent = (StreamedContent) value;
+                downloadName = streamedContent.getName();
+            }
+            return DynamicContentSrcBuilder.build(context, value, documentViewer,
                         documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true) + "&download="
-                        + documentViewer.getDownload();
+                        + downloadName;
         }
     }
 }
