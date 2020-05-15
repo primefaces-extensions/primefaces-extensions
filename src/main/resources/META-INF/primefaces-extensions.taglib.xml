@@ -4863,7 +4863,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[If streamed content this will be the name of the download file. NOTE: Must end in .pdf for PDF.js to pick it up!]]>
+                <![CDATA[You should use a name in your StreamedContent but if you are using a URL value you can give the file a name. NOTE: Must end in .pdf for PDF.js to pick it up!]]>
             </description>
             <name>download</name>
             <required>false</required>
