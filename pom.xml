@@ -492,7 +492,12 @@
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
         </dependency>
-        <!-- PROVIDED Exporter and InputPhone dependencies -->
+        <!-- PROVIDED -->
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
