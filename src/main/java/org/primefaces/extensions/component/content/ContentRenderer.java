@@ -29,6 +29,7 @@ import javax.servlet.ServletContext;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
 import org.primefaces.extensions.util.CommonMarkWrapper;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.EscapeUtils;
 
 /**
  * Renderer for the {@link Content} component.
@@ -54,9 +55,7 @@ public class ContentRenderer extends CoreRenderer {
             value = evaluateEl(context, value);
         }
         if (content.isEscape()) {
-            value = value
-                        .replace("<", "&lt;")
-                        .replace(">", "&gt;");
+            value = EscapeUtils.forHtml(value);
         }
         if (content.isMarkdown()) {
             value = toHTML(context, value);
