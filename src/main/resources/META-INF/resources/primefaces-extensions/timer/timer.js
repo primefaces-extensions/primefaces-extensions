@@ -30,7 +30,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
      * @returns {number} the number of seconds in the current time
      */
     currentTimeInSecs: function () {
-        return new Date().getTime() / 1000;
+        return Math.floor(new Date().getTime() / 1000);
     },
 
     /**
