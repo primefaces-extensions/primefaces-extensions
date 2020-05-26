@@ -76,7 +76,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         forward,
         formatFunction,
         partialSubmitFilter,
-        form
+        form,
+        title
         //@formatter:on
 
     }
@@ -316,6 +317,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
 
     public void setStyleClass(final java.lang.String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public java.lang.String getTitle() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.title, Constants.EMPTY_STRING);
+    }
+
+    public void setTitle(final java.lang.String title) {
+        getStateHelper().put(PropertyKeys.title, title);
     }
 
     public boolean isVisible() {

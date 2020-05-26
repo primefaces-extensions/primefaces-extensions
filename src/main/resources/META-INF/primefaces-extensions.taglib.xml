@@ -1646,8 +1646,8 @@
         </attribute>
     </tag>
     <tag>
-        <tag-name>fuzzySearch</tag-name>
         <description><![CDATA["Fast SublimeText-like fuzzy search for JavaScript."]]></description>
+        <tag-name>fuzzySearch</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.FuzzySearch</component-type>
             <renderer-type>org.primefaces.extensions.component.FuzzySearchRenderer</renderer-type>
@@ -5071,6 +5071,14 @@
                 <![CDATA[Style class of the main container element. Default value is null.]]>
             </description>
             <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Advisory tooltip information.]]>
+            </description>
+            <name>title</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
