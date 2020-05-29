@@ -21,13 +21,7 @@ package org.primefaces.extensions.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.faces.convert.ConverterException;
 
@@ -235,7 +229,7 @@ public class JsonConverterTest {
         final String json = jsonConverter.getAsString(null, null, fooNonGeneric);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(fooNonGeneric.equals(obj));
+        assertEquals(fooNonGeneric, obj);
     }
 
     @Test
@@ -249,7 +243,7 @@ public class JsonConverterTest {
         final String json = jsonConverter.getAsString(null, null, fooGeneric);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(fooGeneric.equals(obj));
+        assertEquals(fooGeneric, obj);
     }
 
     @Test
@@ -271,6 +265,6 @@ public class JsonConverterTest {
         final String json = jsonConverter.getAsString(null, null, fooGenericOuter);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(fooGenericOuter.equals(obj));
+        assertEquals(fooGenericOuter, obj);
     }
 }
