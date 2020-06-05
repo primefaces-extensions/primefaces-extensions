@@ -1,8 +1,8 @@
 /**
  * @preserve
- * jquery.layout 1.7.4
- * $Date: 2020-06-01 $
- * $Rev: 1.0.7.5 $
+ * jquery.layout 1.8.1
+ * $Date: 2019-06-05 $
+ * $Rev: 1.8.1 $
  *
  * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -27,7 +27,6 @@
  *              @alexsielicki   Fixing issue with running under webpack with jQuery 3.3.1 and jQuery Migrate plugin
  *
  * 2019/03/25 - @rsprinkle      AMD Support - Return JQuery
- * 2020/06/01 - @melloware      jQuery 3.5.0 support
  */
 
 /* JavaDoc Info: http://code.google.com/closure/compiler/docs/js-for-compiler.html
@@ -54,7 +53,7 @@
     (function ($) {
 // alias Math methods - used a lot!
             var min = Math.min, max = Math.max, round = Math.floor, isStr = function (v) {
-                    return typeof v  === "string";
+                    return typeof(v) === "string";
                 }
 
                 /**
@@ -1188,7 +1187,7 @@
                         ;
                         if (hasPane && !$P) // a pane is specified, but does not exist!
                             return retVal;
-                        if (!hasPane && typeof pane === "boolean") {
+                        if (!hasPane && typeof(pane) === "boolean") {
                             skipBoundEvents = pane; // allow pane param to be skipped for Layout callback
                             pane = "";
                         }
@@ -1218,7 +1217,7 @@
                                 }
                             } catch (ex) {
                                 _log(options.errors.callbackError.replace(/EVENT/, String.prototype.trim((pane || "") + " " + lng)), false);
-                                if (typeof ex  === "string" && string.length)
+                                if (typeof(ex) === "string" && string.length)
                                     _log("Exception:  " + ex, false);
                             }
                         }
@@ -2611,7 +2610,7 @@
                                     , layoutEdge: pane
                                     , layoutRole: "resizer"
                                 })
-                                .css(_c.resizers.cssReq).css("zIndex", options.zIndexes.resizer_normal)
+                                .css(_c.resizers.cssReq).css("zIndex", new String(options.zIndexes.resizer_normal))
                                 .css(o.applyDemoStyles ? _c.resizers.cssDemo : {}) // add demo styles
                                 .addClass(rClass + " " + rClass + _pane)
                                 .on('hover',addHover, removeHover) // ALWAYS add hover-classes, even if resizing is not enabled - handle with CSS instead
@@ -5517,7 +5516,7 @@
                     , clear = false
                     , o = cookieOpts || {}
                     , x = o.expires || null
-                    , t = typeof x
+                    , t = typeof(x)
                 ;
                 if (t === "date")
                     date = x;
@@ -5781,7 +5780,7 @@
              */
             , readState: function (inst, opts) {
                 // backward compatility
-                if (typeof opts === 'string')
+                if (typeof(opts) === 'string')
                     opts = {keys: opts};
                 if (!opts)
                     opts = {};
@@ -6509,5 +6508,3 @@
 
     return jQuery;
 }));
-
-
