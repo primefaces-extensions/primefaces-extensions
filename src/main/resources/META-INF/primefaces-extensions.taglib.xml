@@ -3015,7 +3015,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in cookies on window unload and restored during layout build-up when user enters the same page. Default is false.]]>
+                <![CDATA[Indicates client-side state management. When set to true the current layout state will be stored in HTML5 LocalStorage on window unload and restored during layout build-up when user enters the same page. Default is false.]]>
             </description>
             <name>stateCookie</name>
             <required>false</required>
