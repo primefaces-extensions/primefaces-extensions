@@ -15,21 +15,23 @@
  */
 package org.primefaces.extensions.component.fab;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
-import javax.faces.event.BehaviorEvent;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
-import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.menu.AbstractMenu;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
 import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.MapBuilder;
+import org.primefaces.util.Constants;
 
 /**
  * <code>FloatingActionButton</code> component.
@@ -41,7 +43,7 @@ import org.primefaces.util.MapBuilder;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.css")
 @ResourceDependency(library = "primefaces-extensions", name = "fab/fab.js")
-public class FloatingActionButton extends AbstractMenu implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
+public class FloatingActionButton extends AbstractMenu implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.FloatingActionButton";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -49,13 +51,8 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
 
     public static final String STYLE_CLASS = "ui-fab ui-widget";
 
-    private static final String DEFAULT_EVENT = OpenEvent.NAME;
-
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put(OpenEvent.NAME, null)
-                .put(CloseEvent.NAME, null)
-                .build();
-    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
+    private static final Collection<String> EVENT_NAMES = Collections
+                .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
 
     // @formatter:off
     public enum PropertyKeys {
@@ -85,22 +82,17 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
     }
 
     @Override
-    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
-        return BEHAVIOR_EVENT_MAPPING;
-    }
-
-    @Override
     public Collection<String> getEventNames() {
         return EVENT_NAMES;
     }
 
     @Override
     public String getDefaultEventName() {
-        return DEFAULT_EVENT;
+        return OpenEvent.NAME;
     }
 
     @Override
-    public void processDecodes(FacesContext context) {
+    public void processDecodes(final FacesContext context) {
         if (ComponentUtils.isRequestSource(this, context)) {
             decode(context);
         }
@@ -110,20 +102,57 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
     }
 
     @Override
-    public void processValidators(FacesContext context) {
+    public void processValidators(final FacesContext context) {
         if (!ComponentUtils.isRequestSource(this, context)) {
             super.processValidators(context);
         }
     }
 
     @Override
-    public void processUpdates(FacesContext context) {
+    public void processUpdates(final FacesContext context) {
         if (!ComponentUtils.isRequestSource(this, context)) {
             super.processUpdates(context);
         }
     }
 
-    public void setModel(org.primefaces.model.menu.MenuModel model) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
+
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+
+            if (OpenEvent.NAME.equals(eventName)) {
+                final OpenEvent openEvent = new OpenEvent(this, behaviorEvent.getBehavior());
+                openEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(openEvent);
+
+                return;
+            }
+            else if (CloseEvent.NAME.equals(eventName)) {
+                final CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
+                closeEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(closeEvent);
+
+                return;
+            }
+        }
+
+        super.queueEvent(event);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return getClientId(context)
+                    .equals(context.getExternalContext().getRequestParameterMap().get(
+                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+    }
+
+    public void setModel(final org.primefaces.model.menu.MenuModel model) {
         getStateHelper().put(PropertyKeys.model, model);
     }
 
@@ -133,7 +162,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
     }
 
     @Override
-    public void setTabindex(String tabindex) {
+    public void setTabindex(final String tabindex) {
         getStateHelper().put(PropertyKeys.tabindex, tabindex);
     }
 
@@ -141,7 +170,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (String) getStateHelper().eval(PropertyKeys.icon, "pi pi-plus");
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(final String icon) {
         getStateHelper().put(PropertyKeys.icon, icon);
     }
 
@@ -149,7 +178,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (String) getStateHelper().eval(PropertyKeys.iconActive, null);
     }
 
-    public void setIconActive(String iconActive) {
+    public void setIconActive(final String iconActive) {
         getStateHelper().put(PropertyKeys.iconActive, iconActive);
     }
 
@@ -157,7 +186,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (Boolean) getStateHelper().eval(PropertyKeys.keepOpen, false);
     }
 
-    public void setKeepOpen(boolean keepOpen) {
+    public void setKeepOpen(final boolean keepOpen) {
         getStateHelper().put(PropertyKeys.keepOpen, keepOpen);
     }
 
@@ -165,7 +194,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(String widgetVar) {
+    public void setWidgetVar(final String widgetVar) {
         getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
@@ -173,7 +202,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         getStateHelper().put(PropertyKeys.style, style);
     }
 
@@ -181,7 +210,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
