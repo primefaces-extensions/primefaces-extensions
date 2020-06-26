@@ -9,7 +9,7 @@
 }
 
 .ui-fab-main.ui-button {
-    position: absolute;
+    display: block;
     right: 0;
     bottom: 0;
     margin: 0;
