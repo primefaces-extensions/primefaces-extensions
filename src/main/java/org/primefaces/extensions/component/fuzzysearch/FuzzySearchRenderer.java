@@ -29,6 +29,7 @@ import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
 import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -156,7 +157,11 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
-        final String jsonDatasource = new JSONArray(selectItems).toString();
+        final JSONArray ja = new JSONArray();
+        for (final SelectItem selectItem : selectItems) {
+            ja.put(new JSONObject(selectItem));
+        }
+        final String jsonDatasource = ja.toString();
 
         wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(context), clientId)
                     .attr("resultStyle", fuzzySearch.getResultStyle())
