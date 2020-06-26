@@ -25,10 +25,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
 
-import com.google.gson.Gson;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectOneRenderer;
+import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -156,8 +156,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
-        final Gson gson = new Gson();
-        final String jsonDatasource = gson.toJson(selectItems);
+        final String jsonDatasource = new JSONArray(selectItems).toString();
 
         wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(context), clientId)
                     .attr("resultStyle", fuzzySearch.getResultStyle())
