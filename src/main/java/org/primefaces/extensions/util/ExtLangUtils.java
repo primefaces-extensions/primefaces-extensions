@@ -17,7 +17,15 @@ package org.primefaces.extensions.util;
 
 import java.util.Objects;
 
+import org.primefaces.util.LangUtils;
+
 public class ExtLangUtils {
+
+    public static final int INDEX_NOT_FOUND = -1;
+
+    private ExtLangUtils() {
+        // prevent instantiation
+    }
 
     public static <T> boolean contains(final T[] array, final T value) {
         for (final T entry : array) {
@@ -102,6 +110,40 @@ public class ExtLangUtils {
 
     public static String normalizeSpace(final String s) {
         return s.replaceAll("\\s+", " ").trim();
+    }
+
+    public static int indexOf(final CharSequence seq, final CharSequence searchSeq, final int startPos) {
+        if (seq == null || searchSeq == null) {
+            return INDEX_NOT_FOUND;
+        }
+        return seq.toString().indexOf(searchSeq.toString(), startPos);
+    }
+
+    public static String replace(final String text, final String searchString, final String replacement) {
+        if (LangUtils.isValueEmpty(text) || LangUtils.isValueEmpty(searchString) || replacement == null) {
+            return text;
+        }
+        int max = INDEX_NOT_FOUND;
+        int start = 0;
+        int end = indexOf(text, searchString, start);
+        if (end == INDEX_NOT_FOUND) {
+            return text;
+        }
+        final int replLength = searchString.length();
+        int increase = replacement.length() - replLength;
+        increase = increase < 0 ? 0 : increase;
+        increase *= max < 0 ? 16 : max > 64 ? 64 : max;
+        final StringBuilder buf = new StringBuilder(text.length() + increase);
+        while (end != INDEX_NOT_FOUND) {
+            buf.append(text, start, end).append(replacement);
+            start = end + replLength;
+            if (--max == 0) {
+                break;
+            }
+            end = indexOf(text, searchString, start);
+        }
+        buf.append(text, start, text.length());
+        return buf.toString();
     }
 
     public static String unescapeXml(final String text) {
