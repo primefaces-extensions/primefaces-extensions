@@ -22,9 +22,6 @@ import java.util.Map;
 
 import org.primefaces.extensions.util.json.GsonConverter;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 class DefaultGChartModel implements GChartModel {
 
     private static final long serialVersionUID = -4757917806522708660L;
@@ -34,8 +31,8 @@ class DefaultGChartModel implements GChartModel {
     private final transient Map<String, Object> options;
     private final transient List<Object> columns;
 
-    public DefaultGChartModel(List<GChartModelRow> rows, GChartType gChartType,
-                Map<String, Object> options, List<Object> columns) {
+    public DefaultGChartModel(final List<GChartModelRow> rows, final GChartType gChartType,
+                final Map<String, Object> options, final List<Object> columns) {
         super();
         this.rows = rows;
         this.gChartType = gChartType;
@@ -65,7 +62,7 @@ class DefaultGChartModel implements GChartModel {
 
     @Override
     public String toJson() {
-        final JsonObject root = new JsonObject();
+        final com.google.gson.JsonObject root = new com.google.gson.JsonObject();
 
         root.addProperty("type", getChartType().getChartName());
         root.add("options", GsonConverter.getGson().toJsonTree(getOptions()));
@@ -74,7 +71,7 @@ class DefaultGChartModel implements GChartModel {
         return GsonConverter.getGson().toJson(root);
     }
 
-    protected JsonElement extractData() {
+    protected com.google.gson.JsonElement extractData() {
         final Collection<Collection<Object>> dataTable = new ArrayList<>(0);
 
         dataTable.add(getColumns());

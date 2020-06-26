@@ -17,9 +17,6 @@ package org.primefaces.extensions.renderkit.layout;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 /**
  * Singleton instance of Gson to convert layout options.
  *
@@ -29,15 +26,15 @@ import com.google.gson.GsonBuilder;
 public class GsonLayoutOptions {
 
     private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
-    private final Gson gson;
+    private final com.google.gson.Gson gson;
 
     private GsonLayoutOptions() {
-        final GsonBuilder gsonBilder = new GsonBuilder();
+        final com.google.gson.GsonBuilder gsonBilder = new com.google.gson.GsonBuilder();
         gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
         gson = gsonBilder.create();
     }
 
-    public static Gson getGson() {
+    public static com.google.gson.Gson getGson() {
         return INSTANCE.gson;
     }
 }

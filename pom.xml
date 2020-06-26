@@ -479,12 +479,6 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
         </dependency>
-        <!-- Component dependencies -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-
 
         <!-- PROVIDED Java API's -->
         <dependency>
@@ -499,12 +493,19 @@
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
         </dependency>
-        <!-- PROVIDED Exporter and InputPhone dependencies -->
+        <!-- GChart and Layout needs GSON-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- InputPhone -->
         <dependency>
             <groupId>com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
+        <!-- PROVIDED Exporter dependencies -->
         <dependency>
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>

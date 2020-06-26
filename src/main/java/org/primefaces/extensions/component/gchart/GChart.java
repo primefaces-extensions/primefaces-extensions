@@ -32,8 +32,6 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.util.Constants;
 
-import com.google.gson.JsonArray;
-
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
@@ -51,7 +49,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_EVENT));
 
     protected enum PropertyKeys {
-        widgetVar, width, height, title, apiKey, language, extender;
+        widgetVar, width, height, title, apiKey, language, extender
     }
 
     public GChart() {
@@ -82,19 +80,19 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     }
 
     public Integer getWidth() {
-        return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
+        return (Integer) getStateHelper().eval(PropertyKeys.width, null);
     }
 
     public void setWidth(final Integer width) {
-        this.getStateHelper().put(PropertyKeys.width, width);
+        getStateHelper().put(PropertyKeys.width, width);
     }
 
     public Integer getHeight() {
-        return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
+        return (Integer) getStateHelper().eval(PropertyKeys.height, null);
     }
 
     public void setHeight(final Integer width) {
-        this.getStateHelper().put(PropertyKeys.height, width);
+        getStateHelper().put(PropertyKeys.height, width);
     }
 
     public String getTitle() {
@@ -139,10 +137,10 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
 
             if (eventName.equals(DEFAULT_EVENT)) {
                 final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-                final String clientId = this.getClientId(context);
+                final String clientId = getClientId(context);
 
                 final Object value = GsonConverter.getGson().fromJson(params.get(clientId + "_hidden"),
-                            JsonArray.class);
+                            com.google.gson.JsonArray.class);
 
                 final SelectEvent selectEvent = new SelectEvent(this, behaviorEvent.getBehavior(), value);
                 selectEvent.setPhaseId(behaviorEvent.getPhaseId());
@@ -159,6 +157,6 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
         final String partialSource = context.getExternalContext().getRequestParameterMap()
                     .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
 
-        return this.getClientId(context).equals(partialSource);
+        return getClientId(context).equals(partialSource);
     }
 }
