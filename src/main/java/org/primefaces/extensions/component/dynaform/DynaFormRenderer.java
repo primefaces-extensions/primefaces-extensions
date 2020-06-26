@@ -26,11 +26,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.row.Row;
 import org.primefaces.extensions.model.dynaform.*;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.CompositeUtils;
@@ -296,7 +296,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
         writer.writeAttribute(Attrs.CLASS, (styleClass
                     + " " + LABEL_CLASS
-                    + " " + StringUtils.defaultIfBlank(element.getStyleClass(), Constants.EMPTY_STRING)
+                    + " " + ExtLangUtils.defaultString(element.getStyleClass())
                     + " " + labelCommonClass).trim(), null);
         writer.writeAttribute("role", GRID_CELL_ROLE, null);
 

@@ -29,7 +29,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.SelectManyRenderer;
@@ -105,7 +104,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         final String clientId = checkbox.getClientId(context);
         final String style = checkbox.getStyle();
         String styleClass = checkbox.getStyleClass();
-        styleClass = styleClass == null ? SelectManyCheckbox.STYLE_CLASS : SelectManyCheckbox.STYLE_CLASS + StringUtils.SPACE + styleClass;
+        styleClass = styleClass == null ? SelectManyCheckbox.STYLE_CLASS : SelectManyCheckbox.STYLE_CLASS + " " + styleClass;
 
         writer.startElement("table", checkbox);
         writer.writeAttribute("id", clientId, "id");
@@ -236,15 +235,15 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         String iconClass = "ui-chkbox-icon ui-icon ui-c";
         String activeTitle = Constants.EMPTY_STRING;
         if (valCheck == 0) {
-            iconClass = iconClass + StringUtils.SPACE + stateOneIconClass;
+            iconClass = iconClass + " " + stateOneIconClass;
             activeTitle = checkbox.getStateOneTitle();
         }
         else if (valCheck == 1) {
-            iconClass = iconClass + StringUtils.SPACE + stateTwoIconClass;
+            iconClass = iconClass + " " + stateTwoIconClass;
             activeTitle = checkbox.getStateTwoTitle();
         }
         else if (valCheck == 2) {
-            iconClass = iconClass + StringUtils.SPACE + stataThreeIconClass;
+            iconClass = iconClass + " " + stataThreeIconClass;
             activeTitle = checkbox.getStateThreeTitle();
         }
 
@@ -261,7 +260,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
         String tabIndexTag = " tabIndex=0 ";
         if (checkbox.getTabindex() != null) {
-            tabIndexTag = "tabIndex=" + checkbox.getTabindex() + StringUtils.SPACE;
+            tabIndexTag = "tabIndex=" + checkbox.getTabindex() + " ";
         }
 
         // preparation with singe quotes for .data('iconstates')

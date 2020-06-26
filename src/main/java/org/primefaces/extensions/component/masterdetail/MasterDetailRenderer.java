@@ -28,7 +28,6 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.Attrs;
@@ -39,6 +38,7 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.LangUtils;
+import org.primefaces.extensions.util.ExtLangUtils;
 
 /**
  * Renderer for the {@link MasterDetail} component.
@@ -76,16 +76,16 @@ public class MasterDetailRenderer extends CoreRenderer {
                 final String resetInputs = masterDetail.getResetInputs(fc);
                 final String[] piIds = preserveInputs != null ? preserveInputs.split("[\\s,]+") : null;
                 final String[] riIds = resetInputs != null ? resetInputs.split("[\\s,]+") : null;
-                final boolean preserveAll = ArrayUtils.contains(piIds, "@all");
-                final boolean resetAll = ArrayUtils.contains(riIds, "@all");
+                final boolean preserveAll = ExtLangUtils.contains(piIds, "@all");
+                final boolean resetAll = ExtLangUtils.contains(riIds, "@all");
 
                 final List<EditableValueHolder> editableValueHolders = visitCallback.getEditableValueHolders();
                 for (final EditableValueHolder editableValueHolder : editableValueHolders) {
                     final String clientId = ((UIComponent) editableValueHolder).getClientId(fc);
-                    if (resetAll || ArrayUtils.contains(riIds, clientId)) {
+                    if (resetAll || ExtLangUtils.contains(riIds, clientId)) {
                         editableValueHolder.resetValue();
                     }
-                    else if (preserveAll || ArrayUtils.contains(piIds, clientId)) {
+                    else if (preserveAll || ExtLangUtils.contains(piIds, clientId)) {
                         editableValueHolder.setValue(getConvertedSubmittedValue(fc, editableValueHolder));
                     }
                     else {

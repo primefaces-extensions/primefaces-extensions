@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
 import org.primefaces.extensions.util.Attrs;
@@ -181,7 +180,7 @@ public class InputPhoneRenderer extends InputRenderer {
         if (!inputPhone.isFormatOnDisplay()) {
             wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay());
         }
-        if (StringUtils.isNotEmpty(inputPhone.getInitialCountry())) {
+        if (!LangUtils.isValueBlank(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
         if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {

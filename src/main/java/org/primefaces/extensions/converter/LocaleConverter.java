@@ -16,6 +16,7 @@
 package org.primefaces.extensions.converter;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
@@ -24,9 +25,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.extensions.util.ExtLangUtils;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
@@ -106,7 +106,8 @@ public class LocaleConverter implements Converter<Object>, Serializable {
                 return new Locale(parts[0]);
 
             default:
-                return new Locale(parts[0], parts[1], StringUtils.join(ArrayUtils.subarray(parts, 2, parts.length), '_'));
+                String[] arr = ExtLangUtils.subarray(parts, 2, parts.length);
+                return new Locale(parts[0], parts[1], String.join("_", Arrays.asList(arr)));
         }
     }
 

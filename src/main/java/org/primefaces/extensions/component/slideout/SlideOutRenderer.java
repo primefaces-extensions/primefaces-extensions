@@ -21,8 +21,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -159,7 +159,7 @@ public class SlideOutRenderer extends CoreRenderer {
         wb.attr("tabLocation", slideOut.getLocation());
         wb.attr("tabHandle", handleId);
         wb.attr("speed", slideOut.getAnimateSpeed());
-        wb.attr("action", StringUtils.lowerCase(slideOut.getShowOn()));
+        wb.attr("action", ExtLangUtils.lowerCase(slideOut.getShowOn()));
         wb.attr("clickScreenToClose", slideOut.isClickScreenToClose());
         wb.attr("onLoadSlideOut", slideOut.isAutoOpen());
         wb.attr("positioning", slideOut.isSticky() ? "absolute" : "fixed");

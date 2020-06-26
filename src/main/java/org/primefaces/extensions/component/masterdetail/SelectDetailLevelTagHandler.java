@@ -28,8 +28,8 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.event.PreRenderComponentEvent;
 import javax.faces.view.facelets.*;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.util.ExtLangUtils;
 
 /**
  * {@link TagHandler} for the <code>SelectDetailLevel</code>.
@@ -193,7 +193,7 @@ public class SelectDetailLevelTagHandler extends TagHandler {
         final Collection<List<ClientBehavior>> behaviors = new ArrayList<>();
 
         for (final Entry<String, List<ClientBehavior>> entry : mapBehaviors.entrySet()) {
-            if (ArrayUtils.contains(arrEvents, entry.getKey())) {
+            if (ExtLangUtils.contains(arrEvents, entry.getKey())) {
                 behaviors.add(entry.getValue());
             }
         }

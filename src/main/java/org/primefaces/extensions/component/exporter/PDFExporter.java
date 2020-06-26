@@ -40,7 +40,6 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
@@ -51,6 +50,7 @@ import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.component.summaryrow.SummaryRow;
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -91,8 +91,8 @@ public class PDFExporter extends Exporter {
                 preProcessor.invoke(context.getELContext(), new Object[] {document});
             }
 
-            final String tokenString = StringUtils.normalizeSpace(tableId.replace(',', ' '));
-            final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
+            final String tokenString = ExtLangUtils.normalizeSpace(tableId.replace(',', ' '));
+            final StringTokenizer st = new StringTokenizer(tokenString, " ");
             while (st.hasMoreElements()) {
                 final String tableName = (String) st.nextElement();
                 final UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);

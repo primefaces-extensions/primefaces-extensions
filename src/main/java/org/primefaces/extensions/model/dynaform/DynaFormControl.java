@@ -15,8 +15,6 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
@@ -130,11 +128,6 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("key", key).append("data", data)
-                    .append("type", type).append("colspan", getColspan())
-                    .append("rowspan", getRowspan()).append("row", getRow())
-                    .append("column", getColumn())
-                    .append("extended", isExtended())
-                    .append("position", getPosition()).toString();
+        return "DynaFormControl{" + "key=" + key + ", data=" + data + ", type=" + type + ", position=" + position + '}';
     }
 }

@@ -29,8 +29,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.extensions.util.ExtLangUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.json.GsonConverter;
 import org.primefaces.extensions.util.json.ParameterizedTypeImpl;
 import org.primefaces.util.Constants;
@@ -162,8 +162,8 @@ public class JsonConverter implements Converter, Serializable {
             final int commaPos = strTypeArgs.indexOf(',', seekPos);
             if (commaPos >= 0) {
                 final String term = strTypeArgs.substring(startPos, commaPos);
-                final int countLeftBrackets = StringUtils.countMatches(term, "<");
-                final int countRightBrackets = StringUtils.countMatches(term, ">");
+                final int countLeftBrackets = ExtLangUtils.countMatches(term, '<');
+                final int countRightBrackets = ExtLangUtils.countMatches(term, '>');
                 if (countLeftBrackets == countRightBrackets) {
                     listTypeArgs.add(term.trim());
                     startPos = commaPos + 1;

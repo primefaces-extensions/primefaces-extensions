@@ -26,9 +26,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -53,7 +53,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     private void encodeMarkup(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
         // Section 508 frame title for assisted technology
         String title = documentViewer.getTitle() != null ? documentViewer.getTitle() : documentViewer.getName();
-        title = StringUtils.defaultString(title, "Document Viewer");
+        title = ExtLangUtils.defaultString(title, "Document Viewer");
 
         final ResponseWriter writer = context.getResponseWriter();
         writer.startElement("iframe", documentViewer);
@@ -109,7 +109,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
         }
 
         if (!params.isEmpty()) {
-            return "#" + StringUtils.join(params, "&");
+            return "#" + String.join("&", params.toArray(new String[params.size()]));
         }
         else {
             return Constants.EMPTY_STRING;

@@ -28,7 +28,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -85,7 +84,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         writer.writeAttribute("title", value, null);
 
         if (rounded) {
-            styleClass = styleClass + StringUtils.SPACE + LetterAvatar.COMPONENT_CLASS_ROUNDED;
+            styleClass = styleClass + " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
         }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
@@ -151,7 +150,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
     }
 
     protected static String joinStyleClass(final String... parts) {
-        return joinNonNull(StringUtils.SPACE, parts);
+        return joinNonNull(" ", parts);
     }
 
     protected static String toStyle(final Map<String, String> map) {

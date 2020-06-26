@@ -16,8 +16,8 @@
 package org.primefaces.extensions.model.fluidgrid;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
@@ -130,6 +130,6 @@ public class FluidGridItem implements KeyData, Serializable {
     }
 
     public String generateKey() {
-        return RandomStringUtils.randomAlphanumeric(8);
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
     }
 }

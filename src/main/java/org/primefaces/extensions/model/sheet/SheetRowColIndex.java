@@ -16,9 +16,7 @@
 package org.primefaces.extensions.model.sheet;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 /**
  * Spreadsheet component model for storing a row/column index.
@@ -45,22 +43,37 @@ public class SheetRowColIndex implements Serializable {
     }
 
     @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof SheetRowColIndex)) {
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.rowKey);
+        hash = 29 * hash + Objects.hashCode(this.colIndex);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        final SheetRowColIndex castOther = (SheetRowColIndex) other;
-        return new EqualsBuilder().append(rowKey, castOther.rowKey).append(colIndex, castOther.colIndex).isEquals();
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SheetRowColIndex other = (SheetRowColIndex) obj;
+        if (!Objects.equals(this.rowKey, other.rowKey)) {
+            return false;
+        }
+        if (!Objects.equals(this.colIndex, other.colIndex)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "RowColIndex [rowKey=" + rowKey + ", colIndex=" + colIndex + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(rowKey).append(colIndex).toHashCode();
+        return "SheetRowColIndex{" + "rowKey=" + rowKey + ", colIndex=" + colIndex + '}';
     }
 
     /**

@@ -17,9 +17,6 @@ package org.primefaces.extensions.model.dynaform;
 
 import java.util.Objects;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
  * Class representing a label inside of <code>DynaForm</code>.
  *
@@ -96,15 +93,9 @@ public class DynaFormLabel extends AbstractDynaFormElement {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                    .append("value", value)
-                    .append("escape", escape)
-                    .append("forControl",
-                                forControl != null ? forControl.getKey() : "null")
-                    .append("colspan", getColspan())
-                    .append("rowspan", getRowspan()).append("row", getRow())
-                    .append("column", getColumn())
-                    .append("extended", isExtended()).toString();
+        return "DynaFormLabel{" + "value=" + value + ", escape=" + escape + ", forControl=" + forControl
+                + ", targetClientId=" + targetClientId + ", targetRequired=" + targetRequired
+                + ", targetValid=" + targetValid + ", styleClass=" + styleClass + '}';
     }
 
     @Override

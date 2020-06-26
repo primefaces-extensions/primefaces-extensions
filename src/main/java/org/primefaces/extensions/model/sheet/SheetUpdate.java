@@ -16,10 +16,7 @@
 package org.primefaces.extensions.model.sheet;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.util.Objects;
 
 /**
  * Represents the data associated with the update of a single cell.
@@ -63,40 +60,44 @@ public class SheetUpdate implements Serializable {
         this.newValue = newValue;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        if (toString == null) {
-            toString = new ToStringBuilder(this).appendSuper(super.toString()).append("rowData", rowData)
-                        .append("oldValue", oldValue).append("newValue", newValue).append("rowIndex", rowKey)
-                        .append("colIndex", colIndex).toString();
-        }
-        return toString;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(final Object other) {
-        if (!(other instanceof SheetUpdate)) {
-            return false;
-        }
-        final SheetUpdate castOther = (SheetUpdate) other;
-        return new EqualsBuilder().append(rowKey, castOther.rowKey).append(colIndex, castOther.colIndex).isEquals();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         if (hashCode == 0) {
-            hashCode = new HashCodeBuilder().append(rowKey).append(colIndex).toHashCode();
+            hashCode = 7;
+            hashCode = 73 * hashCode + Objects.hashCode(this.rowKey);
+            hashCode = 73 * hashCode + this.colIndex;
         }
         return hashCode;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SheetUpdate other = (SheetUpdate) obj;
+        if (this.colIndex != other.colIndex) {
+            return false;
+        }
+        if (!Objects.equals(this.rowKey, other.rowKey)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        if (toString == null) {
+            toString = "SheetUpdate{" + "rowData=" + rowData + ", oldValue=" + oldValue
+                    + ", newValue=" + newValue + ", rowKey=" + rowKey + ", colIndex=" + colIndex + '}';
+        }
+        return toString;
     }
 
     /**

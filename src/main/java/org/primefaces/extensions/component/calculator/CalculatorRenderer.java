@@ -22,8 +22,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -61,8 +61,8 @@ public class CalculatorRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
         wb.attr("target", target);
-        wb.attr("showOn", StringUtils.lowerCase(calculator.getShowOn()));
-        wb.attr("layout", StringUtils.lowerCase(calculator.getLayout()));
+        wb.attr("showOn", ExtLangUtils.lowerCase(calculator.getShowOn()));
+        wb.attr("layout", ExtLangUtils.lowerCase(calculator.getLayout()));
         wb.attr("precision", calculator.getPrecision());
         wb.attr("locale", calculator.calculateLocale().toString());
         wb.attr("isRTL", ComponentUtils.isRTL(context, calculator));

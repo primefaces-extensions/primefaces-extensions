@@ -21,9 +21,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.EscapeUtils;
 import org.primefaces.util.HTML;
@@ -63,7 +62,7 @@ public class SocialRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = social.getClientId(context);
         final String widgetVar = social.resolveWidgetVar();
-        final String styleClass = social.getTheme() + " " + StringUtils.defaultString(social.getStyleClass());
+        final String styleClass = social.getTheme() + " " + ExtLangUtils.defaultString(social.getStyleClass());
 
         writer.startElement("div", social);
         writer.writeAttribute("id", clientId, "id");
@@ -91,7 +90,7 @@ public class SocialRenderer extends CoreRenderer {
             wb.attr("text", social.getText());
         }
 
-        final boolean showCount = BooleanUtils.toBoolean(social.getShowCount());
+        final boolean showCount = Boolean.valueOf(social.getShowCount());
         if (showCount) {
             wb.attr("showCount", true);
         }
@@ -105,32 +104,34 @@ public class SocialRenderer extends CoreRenderer {
         }
 
         // shares array
-        wb.append(",shares: [");
-        final String[] shares = StringUtils.split(social.getShares(), ',');
-        for (int i = 0; i < shares.length; i++) {
-            // { share: "pinterest", media: "http://mysite.com" },
-            final String share = StringUtils.lowerCase(shares[i]);
-            if (LangUtils.isValueBlank(share)) {
-                continue;
+        if (social.getShares() != null) {
+            wb.append(",shares: [");
+            final String[] shares = social.getShares().split(",");
+            for (int i = 0; i < shares.length; i++) {
+                // { share: "pinterest", media: "http://mysite.com" },
+                final String share = ExtLangUtils.lowerCase(shares[i]);
+                if (LangUtils.isValueBlank(share)) {
+                    continue;
+                }
+                if (i != 0) {
+                    wb.append(",");
+                }
+                wb.append("{");
+                addShareProperty(wb, share);
+                if ("twitter".equalsIgnoreCase(share)) {
+                    wb.attr("via", social.getTwitterUsername());
+                    wb.attr("hashtags", social.getTwitterHashtags());
+                }
+                if ("email".equalsIgnoreCase(share)) {
+                    wb.attr("to", social.getEmailTo());
+                }
+                if ("pinterest".equalsIgnoreCase(share)) {
+                    wb.attr("media", social.getPinterestMedia());
+                }
+                wb.append("}");
             }
-            if (i != 0) {
-                wb.append(",");
-            }
-            wb.append("{");
-            addShareProperty(wb, share);
-            if ("twitter".equalsIgnoreCase(share)) {
-                wb.attr("via", social.getTwitterUsername());
-                wb.attr("hashtags", social.getTwitterHashtags());
-            }
-            if ("email".equalsIgnoreCase(share)) {
-                wb.attr("to", social.getEmailTo());
-            }
-            if ("pinterest".equalsIgnoreCase(share)) {
-                wb.attr("media", social.getPinterestMedia());
-            }
-            wb.append("}");
+            wb.append("]");
         }
-        wb.append("]");
 
         // javascript
         wb.append(",on: {");

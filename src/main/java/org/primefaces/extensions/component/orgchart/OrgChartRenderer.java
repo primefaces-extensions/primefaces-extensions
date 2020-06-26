@@ -26,8 +26,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
@@ -118,7 +118,7 @@ public class OrgChartRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = orgChart.getClientId();
         final String widgetVar = orgChart.resolveWidgetVar();
-        final String styleClass = OrgChart.STYLE_CLASS + StringUtils.defaultString(orgChart.getStyleClass());
+        final String styleClass = OrgChart.STYLE_CLASS + ExtLangUtils.defaultString(orgChart.getStyleClass());
 
         writer.startElement("div", orgChart);
         writer.writeAttribute("id", clientId, "id");

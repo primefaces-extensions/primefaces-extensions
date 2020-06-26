@@ -30,11 +30,11 @@ import javax.faces.convert.ConverterException;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.PrimeFaces;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetRowColIndex;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.model.BeanPropertyComparator;
 import org.primefaces.model.SortOrder;
@@ -371,13 +371,13 @@ public class Sheet extends SheetBase {
         // Was the column by which to sort changed by the user, ie. is there a saved ID?
         String currentSortById = (String) getStateHelper().get(PropertyKeys.currentSortBy.name());
         // Otherwise, did the user specify a valid column ID for the sortBy attribute?
-        if (StringUtils.isEmpty(currentSortById)) {
+        if (LangUtils.isValueEmpty(currentSortById)) {
             final Object sortBy = getStateHelper().eval(PropertyKeys.sortBy.name());
             if (sortBy instanceof String) {
                 currentSortById = (String) sortBy;
             }
         }
-        if (StringUtils.isNotEmpty(currentSortById)) {
+        else {
             int colIdx = 0;
             for (final SheetColumn column : getColumns()) {
                 if (!column.isRendered()) {
@@ -592,7 +592,7 @@ public class Sheet extends SheetBase {
      */
     protected String getRowKeyValueAsString(final Object key) {
         final String result = key.toString();
-        return "r_" + StringUtils.deleteWhitespace(result);
+        return "r_" + ExtLangUtils.deleteWhitespace(result);
     }
 
     /**

@@ -33,7 +33,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -48,6 +47,7 @@ import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.rowexpansion.RowExpansion;
 import org.primefaces.component.subtable.SubTable;
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -107,8 +107,8 @@ public class ExcelExporter extends Exporter {
         }
 
         int maxColumns = 0;
-        final String tokenString = StringUtils.normalizeSpace(tableId.replace(',', ' '));
-        final StringTokenizer st = new StringTokenizer(tokenString, StringUtils.SPACE);
+        final String tokenString = ExtLangUtils.normalizeSpace(tableId.replace(',', ' '));
+        final StringTokenizer st = new StringTokenizer(tokenString, " ");
         while (st.hasMoreElements()) {
             final String tableName = (String) st.nextElement();
             final UIComponent component = SearchExpressionFacade.resolveComponent(context, event.getComponent(), tableName);

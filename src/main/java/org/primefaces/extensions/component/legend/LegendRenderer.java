@@ -23,8 +23,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
@@ -50,7 +50,7 @@ public class LegendRenderer extends CoreRenderer {
         final String clientId = legend.getClientId(context);
         final String widgetVar = legend.resolveWidgetVar();
         final String styleClass = legend.getLayout().equalsIgnoreCase("vertical") ? Legend.STYLE_CLASS_VERTICAL
-                    : Legend.STYLE_CLASS_HORIZONTAL + StringUtils.defaultString(legend.getStyleClass());
+                    : Legend.STYLE_CLASS_HORIZONTAL + ExtLangUtils.defaultString(legend.getStyleClass());
 
         writer.startElement("div", legend);
         writer.writeAttribute("id", clientId, "id");

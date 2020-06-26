@@ -27,7 +27,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
@@ -98,7 +97,7 @@ public class GravatarRenderer extends CoreRenderer {
         }
 
         if (!params.isEmpty()) {
-            url += "?" + StringUtils.join(params, "&");
+            url += "?" + String.join("&", params.toArray(new String[params.size()]));
         }
 
         return url;

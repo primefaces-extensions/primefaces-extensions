@@ -31,9 +31,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.model.SelectItem;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.behavior.ajax.AjaxBehavior;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
@@ -574,7 +574,7 @@ public class SheetRenderer extends CoreRenderer {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
                         sheet, "sort", clientId, params);
             final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("sort").get(0);
-            ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
+            ajaxBehavior.setUpdate(ExtLangUtils.defaultString(ajaxBehavior.getUpdate()) + " " + clientId);
             wb.append("sort").append(":").append("function(s, event)").append("{")
                         .append(behaviors.get("sort").get(0).getScript(behaviorContext)).append("}");
         }
@@ -590,7 +590,7 @@ public class SheetRenderer extends CoreRenderer {
             final ClientBehaviorContext behaviorContext = ClientBehaviorContext.createClientBehaviorContext(context,
                         sheet, "filter", clientId, params);
             final AjaxBehavior ajaxBehavior = (AjaxBehavior) behaviors.get("filter").get(0);
-            ajaxBehavior.setUpdate(StringUtils.defaultString(ajaxBehavior.getUpdate()) + StringUtils.SPACE + clientId);
+            ajaxBehavior.setUpdate(ExtLangUtils.defaultString(ajaxBehavior.getUpdate()) + " " + clientId);
             wb.callback("filter", "function(source, event)", behaviors.get("filter").get(0).getScript(behaviorContext));
         }
         else {

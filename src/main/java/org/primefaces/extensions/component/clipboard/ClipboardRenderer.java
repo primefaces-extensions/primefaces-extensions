@@ -20,8 +20,8 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -54,7 +54,7 @@ public class ClipboardRenderer extends CoreRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtClipboard", clipboard.resolveWidgetVar(), clipboard.getClientId(context));
-        wb.attr("action", StringUtils.lowerCase(clipboard.getAction()));
+        wb.attr("action", ExtLangUtils.lowerCase(clipboard.getAction()));
         wb.attr("trigger", trigger);
         wb.attr("target", target);
         wb.attr("text", clipboard.getText());
