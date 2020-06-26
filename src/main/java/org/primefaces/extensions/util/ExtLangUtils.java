@@ -15,11 +15,13 @@
  */
 package org.primefaces.extensions.util;
 
+import java.util.Objects;
+
 public class ExtLangUtils {
 
-    public static <T> boolean contains(T[] array, T value) {
-        for (T entry : array) {
-            if (entry == value || value != null && value.equals(entry)) {
+    public static <T> boolean contains(final T[] array, final T value) {
+        for (final T entry : array) {
+            if (Objects.equals(value, entry)) {
                 return true;
             }
         }
@@ -27,8 +29,7 @@ public class ExtLangUtils {
         return false;
     }
 
-
-    public static String lowerCase(String str) {
+    public static String lowerCase(final String str) {
         if (str == null) {
             return null;
         }
@@ -36,13 +37,13 @@ public class ExtLangUtils {
         return str.toLowerCase();
     }
 
-    public static int countMatches(String str, char c) {
+    public static int countMatches(final String str, final char c) {
         if (str == null || str.isEmpty()) {
             return 0;
         }
 
         int count = 0;
-        for (char current : str.toCharArray()) {
+        for (final char current : str.toCharArray()) {
             if (current == c) {
                 count++;
             }
@@ -50,21 +51,21 @@ public class ExtLangUtils {
         return count;
     }
 
-    public static String defaultString(String str) {
+    public static String defaultString(final String str) {
         return str == null ? "" : str;
     }
 
-    public static String defaultString(String str, String def) {
+    public static String defaultString(final String str, final String def) {
         return str == null ? def : str;
     }
 
-    public static String deleteWhitespace(String str) {
+    public static String deleteWhitespace(final String str) {
         if (str == null || str.isEmpty()) {
             return str;
         }
 
-        int sz = str.length();
-        char[] chs = new char[sz];
+        final int sz = str.length();
+        final char[] chs = new char[sz];
         int count = 0;
         for (int i = 0; i < sz; i++) {
             if (!Character.isWhitespace(str.charAt(i))) {
@@ -99,7 +100,46 @@ public class ExtLangUtils {
         return subarray;
     }
 
-    public static String normalizeSpace(String s) {
+    public static String normalizeSpace(final String s) {
         return s.replaceAll("\\s+", " ").trim();
+    }
+
+    public static String unescapeXml(final String text) {
+        final int n = text.length();
+        final StringBuilder result = new StringBuilder(n);
+        int i = 0;
+        while (i < n) {
+            final char charAt = text.charAt(i);
+            if (charAt != '&') {
+                result.append(charAt);
+                i++;
+            }
+            else {
+                if (text.startsWith("&amp;", i)) {
+                    result.append('&');
+                    i += 5;
+                }
+                else if (text.startsWith("&apos;", i)) {
+                    result.append('\'');
+                    i += 6;
+                }
+                else if (text.startsWith("&quot;", i)) {
+                    result.append('"');
+                    i += 6;
+                }
+                else if (text.startsWith("&lt;", i)) {
+                    result.append('<');
+                    i += 4;
+                }
+                else if (text.startsWith("&gt;", i)) {
+                    result.append('>');
+                    i += 4;
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+        return result.toString();
     }
 }

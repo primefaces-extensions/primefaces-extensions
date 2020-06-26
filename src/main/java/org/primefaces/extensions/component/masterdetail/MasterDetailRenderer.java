@@ -28,9 +28,9 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.render.Renderer;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.primefaces.component.breadcrumb.BreadCrumb;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuItem;
@@ -38,7 +38,6 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.LangUtils;
-import org.primefaces.extensions.util.ExtLangUtils;
 
 /**
  * Renderer for the {@link MasterDetail} component.
@@ -263,7 +262,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                         fc.setResponseWriter(writer);
 
                         // set menuitem label from facet
-                        menuItem.setValue(StringEscapeUtils.unescapeHtml4(fsw.toString()));
+                        menuItem.setValue(ExtLangUtils.unescapeXml(fsw.toString()));
                     }
                     else {
                         // set menuitem label from tag attribute
