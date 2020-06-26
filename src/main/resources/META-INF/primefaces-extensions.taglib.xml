@@ -13,44 +13,6 @@
         <function-signature>java.lang.String escapeSelector(java.lang.String)</function-signature>
     </function>
     <function>
-        <function-name>trim</function-name>
-        <function-class>org.apache.commons.lang3.StringUtils</function-class>
-        <function-signature>java.lang.String trimToEmpty(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <function-name>escapeHtml4</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String escapeHtml4(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <function-name>unescapeHtml4</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String unescapeHtml4(java.lang.String)</function-signature>
-    </function>
-
-    <function>
-        <function-name>escapeHtml3</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String escapeHtml3(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <function-name>unescapeHtml3</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String unescapeHtml3(java.lang.String)</function-signature>
-    </function>
-
-    <function>
-        <function-name>escapeXml</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String escapeXml(java.lang.String)</function-signature>
-    </function>
-    <function>
-        <function-name>unescapeXml</function-name>
-        <function-class>org.apache.commons.lang3.StringEscapeUtils</function-class>
-        <function-signature>java.lang.String unescapeXml(java.lang.String)</function-signature>
-    </function>
-
-    <function>
         <function-name>encodeURL</function-name>
         <function-class>org.primefaces.extensions.util.URLEncoderWrapper</function-class>
         <function-signature>java.lang.String encode(java.lang.String)</function-signature>
