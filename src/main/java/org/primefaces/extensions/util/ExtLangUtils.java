@@ -28,6 +28,10 @@ public class ExtLangUtils {
     }
 
     public static <T> boolean contains(final T[] array, final T value) {
+        if (array == null || value == null) {
+            return false;
+        }
+
         for (final T entry : array) {
             if (Objects.equals(value, entry)) {
                 return true;
