@@ -124,7 +124,7 @@ public class ExtLangUtils {
     }
 
     public static String replace(final String text, final String searchString, final String replacement) {
-        if (LangUtils.isValueEmpty(text) || LangUtils.isValueEmpty(searchString) || replacement == null) {
+        if (LangUtils.isValueEmpty(text) || searchString == null || replacement == null) {
             return text;
         }
         int max = INDEX_NOT_FOUND;
