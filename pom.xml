@@ -254,7 +254,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <consoleOutput>true</consoleOutput>
                     <configLocation>${project.basedir}/src/conf/checkstyle.xml</configLocation>
@@ -275,7 +275,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>8.29</version>
+                        <version>8.35</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -414,7 +414,7 @@
                     <aggregate>true</aggregate>
                     <minimumTokens>100</minimumTokens>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <targetJdk>${java.version.source}</targetJdk>
+                    <targetJdk>${maven.compiler.target}</targetJdk>
                     <skipEmptyReport>false</skipEmptyReport>
                     <ignoreLiterals>false</ignoreLiterals>
                     <excludes>
