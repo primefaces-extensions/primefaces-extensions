@@ -17,8 +17,6 @@ package org.primefaces.extensions.util;
 
 import java.util.Objects;
 
-import org.primefaces.util.LangUtils;
-
 public class ExtLangUtils {
 
     public static final int INDEX_NOT_FOUND = -1;
@@ -124,7 +122,7 @@ public class ExtLangUtils {
     }
 
     public static String replace(final String text, final String searchString, final String replacement) {
-        if (LangUtils.isValueEmpty(text) || searchString == null || replacement == null) {
+        if (text == null || searchString == null || replacement == null) {
             return text;
         }
         int max = INDEX_NOT_FOUND;
