@@ -52,6 +52,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces", name = "components.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", target = "head", name = "sheet/sheet.css")
 @ResourceDependency(library = "primefaces-extensions", name = "sheet/sheet.js")
 public class Sheet extends SheetBase {
@@ -471,7 +472,10 @@ public class Sheet extends SheetBase {
      * Sorts and filters the data
      */
     public List<Object> sortAndFilter() {
-        final List filteredList = getFilteredValue();
+        List filteredList = getFilteredValue();
+        if (filteredList == null) {
+            filteredList = new ArrayList();
+        }
         filteredList.clear();
         rowMap = new HashMap<>();
         rowNumbers = new HashMap<>();
