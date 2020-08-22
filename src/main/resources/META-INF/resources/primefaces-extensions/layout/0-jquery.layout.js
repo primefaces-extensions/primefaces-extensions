@@ -1,8 +1,8 @@
 /**
  * @preserve
- * jquery.layout 1.8.4
- * $Date: 2019-06-18 $
- * $Rev: 1.8.2 $
+ * jquery.layout 1.8.5
+ * $Date: 2020-08-22 $
+ * $Rev: 1.8.5 $
  *
  * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -791,6 +791,7 @@
                     , autoResize: true  // IF size is 'auto' or a percentage, then recalc 'pixel size' whenever the layout resizes
                     , autoReopen: true  // IF a pane was auto-closed due to noRoom, reopen it when there is room? False = leave it closed
                     , resizerDragOpacity: 1   // option for ui.draggable
+                    , draggableIframeFix: false //use the jquery ui 1.11.1 ifame fix for draggable elements
                     //, resizerCursor:   ""   // MUST be pane-specific - cursor when over resizer-bar
                     , maskContents: false  // true = add DIV-mask over-or-inside this pane so can 'drag' over IFRAMES
                     , maskObjects: false  // true = add IFRAME-mask over-or-inside this pane to cover objects/applets - content-mask will overlay this mask
@@ -912,12 +913,12 @@
                 // layout/global options - NOT pane-options
                 layout: ("name,instanceKey,stateManagement,effects,inset,zIndexes,errors,"
                     + "zIndex,scrollToBookmarkOnLoad,showErrorMessages,maskPanesEarly,"
-                    + "outset,resizeWithWindow,resizeWithWindowDelay,resizeWithWindowMaxDelay,"
+                    + "outset,resizeWithWindow,resizeWithWindowDelay,resizeWithWindowMaxDelay,iframeFix,"
                     + "onresizeall,onresizeall_start,onresizeall_end,onload,onload_start,onload_end,onunload,onunload_start,onunload_end").split(",")
 // borderPanes: [ ALL options that are NOT specified as 'layout' ]
                 // default.panes options that apply to the center-pane (most options apply _only_ to border-panes)
                 , center: ("paneClass,contentSelector,contentIgnoreSelector,findNestedContent,applyDemoStyles,triggerEventsOnLoad,"
-                    + "showOverflowOnHover,maskContents,maskObjects,liveContentResizing,"
+                    + "showOverflowOnHover,maskContents,maskObjects,liveContentResizing,iframeFix,"
                     + "containerSelector,children,initChildren,resizeChildren,destroyChildren,"
                     + "onresize,onresize_start,onresize_end,onsizecontent,onsizecontent_start,onsizecontent_end").split(",")
                 // options that MUST be specifically set 'per-pane' - CANNOT set in the panes (defaults) key
@@ -2786,7 +2787,7 @@
                                 , helper: "clone"
                                 , opacity: o.resizerDragOpacity
                                 , addClasses: false // avoid ui-state-disabled class when disabled
-                                //, iframeFix:  o.draggableIframeFix // TODO: consider using when bug is fixed
+                                , iframeFix:  o.draggableIframeFix
                                 , zIndex: z.resizer_drag
 
                                 , start: function (e, ui) {
