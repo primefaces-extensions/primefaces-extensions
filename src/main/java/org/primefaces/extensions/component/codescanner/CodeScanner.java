@@ -63,7 +63,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         height
     }
 
-    public enum Type {
+    public enum ReaderType {
         multi,
         bar,
         qr
@@ -93,11 +93,11 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
     }
 
     public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, Type.multi.name());
+        return (String) getStateHelper().eval(PropertyKeys.type, ReaderType.multi.name());
     }
 
-    public Type getTypeEnum() {
-        return Type.valueOf(getType());
+    public ReaderType getTypeEnum() {
+        return ReaderType.valueOf(getType());
     }
 
     public void setType(final String type) {
