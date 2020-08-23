@@ -26,3 +26,4 @@ This product includes software developed by Ryan McGeary (@rmm5t) (https://githu
 This product includes software developed by Jesse Pollak (https://github.com/jessepollak/card)
 This product includes software developed by farzher (https://github.com/farzher/fuzzysort)
 This product includes software developed by Inorganik (https://inorganik.github.io/countUp.js/)
+This product includes software developed by ZXing for JS (https://github.com/zxing-js/library)
