@@ -219,6 +219,19 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>codescanner/zxing.min.js</include>
+                                <include>codescanner/codescanner-widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/codescanner/codescanner.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
                                 <include>dynaform/dynaform.css</include>
                                 <include>masterdetail/masterdetail.css</include>
                                 <include>gchart/gchart.css</include>

@@ -17,15 +17,17 @@ package org.primefaces.extensions.component.codescanner;
 
 import java.util.Collection;
 import java.util.Map;
+import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.extensions.model.codescanner.CodeScanned;
-import org.primefaces.extensions.model.codescanner.CodeScanned.Format;
+import org.primefaces.extensions.model.codescanner.Code;
+import org.primefaces.extensions.model.codescanner.Code.Format;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
@@ -35,7 +37,12 @@ import org.primefaces.util.LangUtils;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 8.0.5
  */
-public class CodeScanner extends UIComponentBase implements Widget, MixedClientBehaviorHolder {
+@ResourceDependency(library = "primefaces", name = "components.css")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "codescanner/codescanner.js")
+public class CodeScanner extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeScanner";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -51,7 +58,15 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
         widgetVar,
         type,
         style,
-        styleClass
+        styleClass,
+        width,
+        height
+    }
+
+    public enum Type {
+        multi,
+        bar,
+        qr
     }
     // @formatter:on
 
@@ -64,6 +79,11 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
         return COMPONENT_FAMILY;
     }
 
+    @Override
+    public String getDefaultEventName() {
+        return EVENT_CODE_SCANNED;
+    }
+
     public String getWidgetVar() {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
@@ -73,7 +93,11 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
     }
 
     public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, "TODO");
+        return (String) getStateHelper().eval(PropertyKeys.type, Type.multi.name());
+    }
+
+    public Type getTypeEnum() {
+        return Type.valueOf(getType());
     }
 
     public void setType(final String type) {
@@ -96,6 +120,27 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
+    public Integer getWidth() {
+        return (Integer) getStateHelper().eval(PropertyKeys.width, null);
+    }
+
+    public void setWidth(Integer width) {
+        getStateHelper().put(PropertyKeys.width, width);
+    }
+
+    public Integer getHeight() {
+        return (Integer) getStateHelper().eval(PropertyKeys.height, null);
+    }
+
+    public void setHeight(Integer height) {
+        getStateHelper().put(PropertyKeys.height, height);
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
     @Override
     public Collection<String> getUnobstrusiveEventNames() {
         return EVENT_NAMES;
@@ -111,8 +156,8 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
             final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
 
             if (EVENT_CODE_SCANNED.equals(eventName)) {
-                final CodeScanned codeScanned = getCodeScanned(getClientId(context), params);
-                final SelectEvent<CodeScanned> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), codeScanned);
+                final Code code = getCode(getClientId(context), params);
+                final SelectEvent<Code> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), code);
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
             }
@@ -127,8 +172,8 @@ public class CodeScanner extends UIComponentBase implements Widget, MixedClientB
         }
     }
 
-    protected CodeScanned getCodeScanned(final String clientId, final Map<String, String> params) {
-        return new CodeScanned(params.get(clientId + "_value"),
+    protected Code getCode(final String clientId, final Map<String, String> params) {
+        return new Code(params.get(clientId + "_value"),
                     Format.values()[Integer.valueOf(params.get(clientId + "_format"))]);
     }
 

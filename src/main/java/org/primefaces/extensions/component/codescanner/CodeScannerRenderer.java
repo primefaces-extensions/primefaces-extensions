@@ -52,13 +52,27 @@ public class CodeScannerRenderer extends CoreRenderer {
         if (codeScanner.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, codeScanner.getStyle(), Attrs.STYLE);
         }
+        encodeVideo(context, codeScanner);
 
         writer.endElement("span");
+    }
+
+    protected void encodeVideo(final FacesContext context, final CodeScanner codeScanner) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.startElement("video", null);
+        if (codeScanner.getWidth() != null) {
+            writer.writeAttribute("width", codeScanner.getWidth(), null);
+        }
+        if (codeScanner.getHeight() != null) {
+            writer.writeAttribute("height", codeScanner.getHeight(), null);
+        }
+        writer.endElement("video");
     }
 
     protected void encodeScript(final FacesContext context, final CodeScanner codeScanner) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context));
+        wb.attr("type", codeScanner.getTypeEnum().name());
         wb.finish();
     }
 

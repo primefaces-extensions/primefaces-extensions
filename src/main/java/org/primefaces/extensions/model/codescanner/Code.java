@@ -23,18 +23,36 @@ import org.primefaces.extensions.component.codescanner.CodeScanner;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 8.0.5
  */
-public class CodeScanned {
+public class Code {
 
     // Based on https://github.com/zxing-js/library/blob/master/src/core/BarcodeFormat.ts
+    // @formatter:off
     public enum Format {
-        AZTEC, CODABAR, CODE_39, CODE_93, CODE_128, DATA_MATRIX, EAN_8, EAN_13, ITF, MAXICODE, PDF_417, QR_CODE, RSS_14, RSS_EXPANDED, UPC_A, UPC_E, UPC_EAN_EXTENSION
+        AZTEC,
+        CODABAR,
+        CODE_39,
+        CODE_93,
+        CODE_128,
+        DATA_MATRIX,
+        EAN_8,
+        EAN_13,
+        ITF,
+        MAXICODE,
+        PDF_417,
+        QR_CODE,
+        RSS_14,
+        RSS_EXPANDED,
+        UPC_A,
+        UPC_E,
+        UPC_EAN_EXTENSION
     }
+    // @formatter:on
 
     private final String value;
 
     private final Format format;
 
-    public CodeScanned(String value, Format format) {
+    public Code(String value, Format format) {
         this.value = value;
         this.format = format;
     }
