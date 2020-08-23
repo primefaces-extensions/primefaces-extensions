@@ -7517,7 +7517,7 @@ See showcase for an example. Default null.]]>
             <description>
                 <![CDATA[Flag indicating the scanner should start when rendered. Default is true.]]>
             </description>
-            <name>start</name>
+            <name>autoStart</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

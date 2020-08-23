@@ -25,7 +25,7 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
 
         this.video = $('video', this.jq)[0];
         this.codeReader = getReader(cfg.type);
-        if (cfg.start) {
+        if (cfg.autoStart) {
             this.start();
         }
     },
