@@ -40,12 +40,12 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
         }
 
         var $this = this;
-        this.video = null;
+        this.video = $('video', this.jq)[0];
         this.codeReader = getReader(cfg.type);
         this.codeReader.listVideoInputDevices()
                 .then((videoInputDevices) => {
                     var deviceId = videoInputDevices[0].deviceId;
-                    $this.codeReader.decodeFromVideoDeviceContinuously(deviceId, $this.video, (result, err) => {
+                    $this.codeReader.decodeFromVideoDevice(deviceId, $this.video, (result, err) => {
                         if (result) {
                             handleResult(result);
                         }

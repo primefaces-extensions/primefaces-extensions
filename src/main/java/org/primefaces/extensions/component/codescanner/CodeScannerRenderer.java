@@ -32,6 +32,11 @@ import org.primefaces.util.WidgetBuilder;
 public class CodeScannerRenderer extends CoreRenderer {
 
     @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        decodeBehaviors(context, component);
+    }
+
+    @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final CodeScanner codeScanner = (CodeScanner) component;
         encodeMarkup(context, codeScanner);
@@ -73,6 +78,9 @@ public class CodeScannerRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context));
         wb.attr("type", codeScanner.getTypeEnum().name());
+
+        encodeClientBehaviors(context, codeScanner);
+
         wb.finish();
     }
 
