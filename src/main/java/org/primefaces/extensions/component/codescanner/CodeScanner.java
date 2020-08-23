@@ -60,7 +60,8 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         style,
         styleClass,
         width,
-        height
+        height,
+        start
     }
 
     public enum ReaderType {
@@ -134,6 +135,14 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     public void setHeight(Integer height) {
         getStateHelper().put(PropertyKeys.height, height);
+    }
+
+    public boolean getStart() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.start, true);
+    }
+
+    public void setStart(boolean start) {
+        getStateHelper().put(PropertyKeys.start, start);
     }
 
     @Override
