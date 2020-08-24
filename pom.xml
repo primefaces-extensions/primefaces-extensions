@@ -226,7 +226,7 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/codescanner/codescanner.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>

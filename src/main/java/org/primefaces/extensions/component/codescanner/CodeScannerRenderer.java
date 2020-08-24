@@ -79,6 +79,12 @@ public class CodeScannerRenderer extends CoreRenderer {
         wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context));
         wb.attr("type", codeScanner.getTypeEnum().name());
         wb.attr("autoStart", codeScanner.getAutoStart());
+        if (codeScanner.getOnsuccess() != null) {
+            wb.attr("onsuccess", codeScanner.getOnsuccess());
+        }
+        if (codeScanner.getOnerror() != null) {
+            wb.attr("onerror", codeScanner.getOnerror());
+        }
 
         encodeClientBehaviors(context, codeScanner);
 
