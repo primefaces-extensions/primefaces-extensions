@@ -17,14 +17,12 @@ package org.primefaces.extensions.component.codescanner;
 
 import java.util.Collection;
 import java.util.Map;
-
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
@@ -63,7 +61,9 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         styleClass,
         width,
         height,
-        autoStart
+        autoStart,
+        onsuccess,
+        onerror
     }
 
     public enum ReaderType {
@@ -145,6 +145,22 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     public void setAutoStart(boolean autoStart) {
         getStateHelper().put(PropertyKeys.autoStart, autoStart);
+    }
+
+    public String getOnsuccess() {
+        return (String) getStateHelper().eval(PropertyKeys.onsuccess, null);
+    }
+
+    public void setOnsuccess(String onsuccess) {
+        getStateHelper().put(PropertyKeys.onsuccess, onsuccess);
+    }
+
+    public String getOnerror() {
+        return (String) getStateHelper().eval(PropertyKeys.onerror, null);
+    }
+
+    public void setOnerror(String onerror) {
+        getStateHelper().put(PropertyKeys.onerror, onerror);
     }
 
     @Override

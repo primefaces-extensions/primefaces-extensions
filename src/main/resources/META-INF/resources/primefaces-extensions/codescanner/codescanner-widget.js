@@ -32,35 +32,38 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
 
     start: function() {
         var $this = this;
-        function handleResult(result) {
-            if ($this.hasBehavior('codeScanned')) {
-                var ext = {
-                    params: [{
-                            name: $this.id + '_value',
-                            value: result.text
-                        }, {
-                            name: $this.id + '_format',
-                            value: result.format
-                        }]
-                };
-                $this.callBehavior('codeScanned', ext);
+        function handleDevices(devices) {
+            var deviceId = devices[0].deviceId;
+            $this.codeReader.decodeFromVideoDevice(deviceId, $this.video, handleResult);
+        }
+        function handleResult(result, err) {
+            if (result) {
+                if ($this.hasBehavior('codeScanned')) {
+                    var ext = {
+                        params: [{
+                                name: $this.id + '_value',
+                                value: result.text
+                            }, {
+                                name: $this.id + '_format',
+                                value: result.format
+                            }]
+                    };
+                    $this.callBehavior('codeScanned', ext);
+                }
+                if ($this.cfg.onsuccess) {
+                    $this.cfg.onsuccess.call(this, result);
+                }
+            }
+            if (err && !(err instanceof ZXing.NotFoundException)) {
+                if ($this.cfg.onerror) {
+                    $this.cfg.onerror.call(this, err);
+                }
             }
         }
-        this.codeReader.listVideoInputDevices()
-                .then((videoInputDevices) => {
-                    var deviceId = videoInputDevices[0].deviceId;
-                    $this.codeReader.decodeFromVideoDevice(deviceId, $this.video, (result, err) => {
-                        if (result) {
-                            handleResult(result);
-                        }
-                        if (err && !(err instanceof ZXing.NotFoundException)) {
-                            console.error(err);
-                        }
-                    })
-                })
-                .catch((err) => {
-                    console.error(err)
-                });
+        function handleError(err) {
+            console.error(err);
+        }
+        this.codeReader.listVideoInputDevices().then(handleDevices).catch(handleError);
     },
 
     stop: function() {
