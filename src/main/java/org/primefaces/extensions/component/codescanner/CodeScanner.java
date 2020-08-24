@@ -17,12 +17,14 @@ package org.primefaces.extensions.component.codescanner;
 
 import java.util.Collection;
 import java.util.Map;
+
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
+
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
@@ -183,7 +185,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     protected Code getCode(final String clientId, final Map<String, String> params) {
         return new Code(params.get(clientId + "_value"),
-                    Format.values()[Integer.valueOf(params.get(clientId + "_format"))]);
+                    Format.values()[Integer.parseInt(params.get(clientId + "_format"))]);
     }
 
 }
