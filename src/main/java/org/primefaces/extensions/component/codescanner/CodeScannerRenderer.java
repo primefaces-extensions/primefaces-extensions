@@ -76,14 +76,14 @@ public class CodeScannerRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final CodeScanner codeScanner) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context));
-        wb.attr("type", codeScanner.getTypeEnum().name());
-        wb.attr("autoStart", codeScanner.getAutoStart());
+        wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context))
+                    .attr("type", codeScanner.getTypeEnum().name())
+                    .attr("autoStart", codeScanner.getAutoStart());
         if (codeScanner.getOnsuccess() != null) {
-            wb.attr("onsuccess", codeScanner.getOnsuccess());
+            wb.callback("onsuccess", "function()", codeScanner.getOnsuccess());
         }
         if (codeScanner.getOnerror() != null) {
-            wb.attr("onerror", codeScanner.getOnerror());
+            wb.callback("onerror", "function()", codeScanner.getOnerror());
         }
 
         encodeClientBehaviors(context, codeScanner);

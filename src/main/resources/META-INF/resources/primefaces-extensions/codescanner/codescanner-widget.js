@@ -51,12 +51,12 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
                     $this.callBehavior('codeScanned', ext);
                 }
                 if ($this.cfg.onsuccess) {
-                    eval($this.cfg.onsuccess);
+                    $this.cfg.onsuccess.call(this, result);
                 }
             }
             if (err && !(err instanceof ZXing.NotFoundException)) {
                 if ($this.cfg.onerror) {
-                    eval($this.cfg.onerror);
+                    $this.cfg.onerror.call(this, err);
                 }
             }
         }
