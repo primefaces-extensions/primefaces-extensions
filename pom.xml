@@ -91,8 +91,8 @@
                 <configuration>
                     <useDataUri>true</useDataUri>
                     <imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
-                    <languageIn>ECMASCRIPT_2016</languageIn>
-                    <languageOut>ECMASCRIPT_2016</languageOut>
+                    <languageIn>ECMASCRIPT5</languageIn>
+                    <languageOut>ECMASCRIPT5</languageOut>
                     <resourcesSets>
                         <resourcesSet>
                             <includes>
