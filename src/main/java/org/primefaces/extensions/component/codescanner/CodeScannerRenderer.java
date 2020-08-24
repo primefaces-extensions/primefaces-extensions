@@ -78,6 +78,7 @@ public class CodeScannerRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context));
         wb.attr("type", codeScanner.getTypeEnum().name());
+        wb.attr("autoStart", codeScanner.getAutoStart());
 
         encodeClientBehaviors(context, codeScanner);
 

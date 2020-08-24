@@ -23,6 +23,15 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
             }
         }
 
+        this.video = $('video', this.jq)[0];
+        this.codeReader = getReader(cfg.type);
+        if (cfg.autoStart) {
+            this.start();
+        }
+    },
+
+    start: function() {
+        var $this = this;
         function handleResult(result) {
             if ($this.hasBehavior('codeScanned')) {
                 var ext = {
@@ -36,12 +45,7 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
                 };
                 $this.callBehavior('codeScanned', ext);
             }
-
         }
-
-        var $this = this;
-        this.video = $('video', this.jq)[0];
-        this.codeReader = getReader(cfg.type);
         this.codeReader.listVideoInputDevices()
                 .then((videoInputDevices) => {
                     var deviceId = videoInputDevices[0].deviceId;
@@ -57,6 +61,10 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
                 .catch((err) => {
                     console.error(err)
                 });
+    },
+
+    stop: function() {
+        this.codeReader.reset();
     },
 
     // @override

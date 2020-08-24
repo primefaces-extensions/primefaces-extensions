@@ -7513,6 +7513,14 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flag indicating the scanner should start when rendered. Default is true.]]>
+            </description>
+            <name>autoStart</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>
