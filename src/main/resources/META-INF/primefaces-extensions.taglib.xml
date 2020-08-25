@@ -7537,6 +7537,22 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flag indicating a video element should be rendered. Default is true.]]>
+            </description>
+            <name>video</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Id of the video input device to use. Default is null which selects the first video input device.]]>
+            </description>
+            <name>deviceId</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>

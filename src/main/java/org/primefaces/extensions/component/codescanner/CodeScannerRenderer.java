@@ -57,7 +57,10 @@ public class CodeScannerRenderer extends CoreRenderer {
         if (codeScanner.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, codeScanner.getStyle(), Attrs.STYLE);
         }
-        encodeVideo(context, codeScanner);
+
+        if (codeScanner.isVideo()) {
+            encodeVideo(context, codeScanner);
+        }
 
         writer.endElement("span");
     }
@@ -78,7 +81,10 @@ public class CodeScannerRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context))
                     .attr("type", codeScanner.getTypeEnum().name())
-                    .attr("autoStart", codeScanner.getAutoStart());
+                    .attr("autoStart", codeScanner.isAutoStart());
+        if (codeScanner.getDeviceId() != null) {
+            wb.attr("deviceId", codeScanner.getDeviceId());
+        }
         if (codeScanner.getOnsuccess() != null) {
             wb.callback("onsuccess", "function()", codeScanner.getOnsuccess());
         }
