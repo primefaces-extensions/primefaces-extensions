@@ -63,7 +63,9 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         height,
         autoStart,
         onsuccess,
-        onerror
+        onerror,
+        video,
+        deviceId
     }
 
     public enum ReaderType {
@@ -139,7 +141,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         getStateHelper().put(PropertyKeys.height, height);
     }
 
-    public boolean getAutoStart() {
+    public boolean isAutoStart() {
         return (Boolean) getStateHelper().eval(PropertyKeys.autoStart, true);
     }
 
@@ -161,6 +163,22 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     public void setOnerror(String onerror) {
         getStateHelper().put(PropertyKeys.onerror, onerror);
+    }
+
+    public boolean isVideo() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.video, true);
+    }
+
+    public void setVideo(boolean video) {
+        getStateHelper().put(PropertyKeys.video, video);
+    }
+
+    public String getDeviceId() {
+        return (String) getStateHelper().eval(PropertyKeys.deviceId, null);
+    }
+
+    public void setDeviceId(String deviceId) {
+        getStateHelper().put(PropertyKeys.deviceId, deviceId);
     }
 
     @Override
