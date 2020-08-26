@@ -39,7 +39,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 autoLoad: true, // load state when page loads?
                 storeLocation: "localStorage", //or sessionStorage, globalStorage, openDatabase, userdata, google gears, flash, cookie
                 cookie: {
-                    name: encodeURIComponent('pfext.layout.' + this.id)
+                    name: encodeURIComponent(PrimeFaces.createStorageKey(this.id, 'Layout'))
                 }
             };
         } else if (cfg.serverState) {
