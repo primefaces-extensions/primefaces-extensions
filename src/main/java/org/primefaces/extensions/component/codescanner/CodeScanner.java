@@ -35,7 +35,7 @@ import org.primefaces.util.LangUtils;
  * <code>CodeScanner</code> component.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
- * @since 8.0.5
+ * @since 9.0
  */
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")

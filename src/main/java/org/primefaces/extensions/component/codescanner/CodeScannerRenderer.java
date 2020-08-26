@@ -29,7 +29,7 @@ import org.primefaces.util.WidgetBuilder;
  * Renderer for the {@link CodeScanner} component.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
- * @since 8.0.5
+ * @since 9.0
  */
 public class CodeScannerRenderer extends CoreRenderer {
 
