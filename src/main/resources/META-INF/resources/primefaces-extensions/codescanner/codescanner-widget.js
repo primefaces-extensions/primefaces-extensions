@@ -50,6 +50,11 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
                     };
                     $this.callBehavior('codeScanned', ext);
                 }
+                if ($this.cfg.forInput) {
+                    var input = $(PrimeFaces.escapeClientId($this.cfg.forInput));
+                    input.val(result.text);
+                    input.change();
+                }
                 if ($this.cfg.onsuccess) {
                     $this.cfg.onsuccess.call(this, result);
                 }
