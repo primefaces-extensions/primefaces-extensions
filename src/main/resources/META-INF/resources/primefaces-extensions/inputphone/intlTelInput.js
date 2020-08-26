@@ -1,14 +1,13 @@
 /*
- * International Telephone Input v16.0.0
+ * International Telephone Input v17.0.0
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
 
 // wrap in UMD
 (function(factory) {
-    var intlTelInput = factory(window, document);
-    if (typeof module === "object" && module.exports) module.exports = intlTelInput; else window.intlTelInput = intlTelInput;
-})(function(window, document, undefined) {
+    if (typeof module === "object" && module.exports) module.exports = factory(); else window.intlTelInput = factory();
+})(function(undefined) {
     "use strict";
     return function() {
         // Array of country objects for the flag dropdown.
@@ -57,13 +56,14 @@
             if (staticProps) _defineProperties(Constructor, staticProps);
             return Constructor;
         }
-        window.intlTelInputGlobals = {
+        var intlTelInputGlobals = {
             getInstance: function getInstance(input) {
                 var id = input.getAttribute("data-intl-tel-input-id");
                 return window.intlTelInputGlobals.instances[id];
             },
             instances: {}
         };
+        if (typeof window === "object") window.intlTelInputGlobals = intlTelInputGlobals;
         // these vars persist through all instances of the plugin
         var id = 0;
         var defaults = {
@@ -106,11 +106,13 @@
         };
         // https://en.wikipedia.org/wiki/List_of_North_American_Numbering_Plan_area_codes#Non-geographic_area_codes
         var regionlessNanpNumbers = [ "800", "822", "833", "844", "855", "866", "877", "880", "881", "882", "883", "884", "885", "886", "887", "888", "889" ];
-        // keep track of if the window.load event has fired as impossible to check after the fact
-        window.addEventListener("load", function() {
-            // UPDATE: use a public static field so we can fudge it in the tests
-            window.intlTelInputGlobals.windowLoaded = true;
-        });
+        if (typeof window === "object") {
+            // keep track of if the window.load event has fired as impossible to check after the fact
+            window.addEventListener("load", function() {
+                // UPDATE: use a public static field so we can fudge it in the tests
+                window.intlTelInputGlobals.windowLoaded = true;
+            });
+        }
         // utility function to iterate over an object. can't use Object.entries or native forEach because
         // of IE11
         var forEachProp = function forEachProp(obj, callback) {
@@ -328,10 +330,13 @@
             }, {
                 key: "_generateMarkup",
                 value: function _generateMarkup() {
+                    // if autocomplete does not exist on the element and its form, then
                     // prevent autocomplete as there's no safe, cross-browser event we can react to, so it can
                     // easily put the plugin in an inconsistent state e.g. the wrong flag selected for the
                     // autocompleted number, which on submit could mean wrong number is saved (esp in nationalMode)
-                    this.telInput.setAttribute("autocomplete", "off");
+                    if (!this.telInput.hasAttribute("autocomplete") && !(this.telInput.form && this.telInput.form.hasAttribute("autocomplete"))) {
+                        this.telInput.setAttribute("autocomplete", "off");
+                    }
                     // containers (mostly for positioning)
                     var parentClass = "iti";
                     if (this.options.allowDropdown) parentClass += " iti--allow-dropdown";
@@ -352,7 +357,8 @@
                     this.selectedFlag = this._createEl("div", {
                         "class": "iti__selected-flag",
                         role: "combobox",
-                        "aria-owns": "country-listbox"
+                        "aria-owns": "iti-".concat(this.id, "__country-listbox"),
+                        "aria-expanded": "false"
                     }, this.flagsContainer);
                     this.selectedFlagInner = this._createEl("div", {
                         "class": "iti__flag"
@@ -371,12 +377,11 @@
                         // country dropdown: preferred countries, then divider, then all countries
                         this.countryList = this._createEl("ul", {
                             "class": "iti__country-list iti__hide",
-                            id: "country-listbox",
-                            "aria-expanded": "false",
+                            id: "iti-".concat(this.id, "__country-listbox"),
                             role: "listbox"
                         });
                         if (this.preferredCountries.length) {
-                            this._appendListItems(this.preferredCountries, "iti__preferred");
+                            this._appendListItems(this.preferredCountries, "iti__preferred", true);
                             this._createEl("li", {
                                 "class": "iti__divider",
                                 role: "separator",
@@ -412,15 +417,16 @@
                 }
             }, {
                 key: "_appendListItems",
-                value: function _appendListItems(countries, className) {
+                value: function _appendListItems(countries, className, preferred) {
                     // we create so many DOM elements, it is faster to build a temp string
                     // and then add everything to the DOM in one go at the end
                     var tmp = "";
                     // for each country
                     for (var i = 0; i < countries.length; i++) {
                         var c = countries[i];
+                        var idSuffix = preferred ? "-preferred" : "";
                         // open the list item
-                        tmp += "<li class='iti__country ".concat(className, "' tabIndex='-1' id='iti-item-").concat(c.iso2, "' role='option' data-dial-code='").concat(c.dialCode, "' data-country-code='").concat(c.iso2, "'>");
+                        tmp += "<li class='iti__country ".concat(className, "' tabIndex='-1' id='iti-").concat(this.id, "__item-").concat(c.iso2).concat(idSuffix, "' role='option' data-dial-code='").concat(c.dialCode, "' data-country-code='").concat(c.iso2, "'>");
                         // add the flag
                         tmp += "<div class='iti__flag-box'><div class='iti__flag iti__".concat(c.iso2, "'></div></div>");
                         // and the country name and dial code
@@ -519,7 +525,7 @@
                     // open dropdown list if currently focused
                     this._handleFlagsContainerKeydown = function(e) {
                         var isDropdownHidden = _this4.countryList.classList.contains("iti__hide");
-                        if (isDropdownHidden && [ "ArrowUp", "ArrowDown", " ", "Enter" ].indexOf(e.key) !== -1) {
+                        if (isDropdownHidden && [ "ArrowUp", "Up", "ArrowDown", "Down", " ", "Enter" ].indexOf(e.key) !== -1) {
                             // prevent form from being submitted if "ENTER" was pressed
                             e.preventDefault();
                             // prevent event from being handled again by document
@@ -644,7 +650,7 @@
                 key: "_showDropdown",
                 value: function _showDropdown() {
                     this.countryList.classList.remove("iti__hide");
-                    this.countryList.setAttribute("aria-expanded", "true");
+                    this.selectedFlag.setAttribute("aria-expanded", "true");
                     this._setDropdownPosition();
                     // update highlighting and scroll to active list item
                     if (this.activeItem) {
@@ -745,7 +751,7 @@
                         // and enter key from submitting a form etc
                         e.preventDefault();
                         // up and down to navigate
-                        if (e.key === "ArrowUp" || e.key === "ArrowDown") _this9._handleUpDownKey(e.key); else if (e.key === "Enter") _this9._handleEnterKey(); else if (e.key === "Escape") _this9._closeDropdown(); else if (/^[a-zA-ZÀ-ÿ ]$/.test(e.key)) {
+                        if (e.key === "ArrowUp" || e.key === "Up" || e.key === "ArrowDown" || e.key === "Down") _this9._handleUpDownKey(e.key); else if (e.key === "Enter") _this9._handleEnterKey(); else if (e.key === "Escape") _this9._closeDropdown(); else if (/^[a-zA-ZÀ-ÿа-яА-Я ]$/.test(e.key)) {
                             // jump to countries that start with the query string
                             if (queryTimer) clearTimeout(queryTimer);
                             query += e.key.toLowerCase();
@@ -761,11 +767,11 @@
             }, {
                 key: "_handleUpDownKey",
                 value: function _handleUpDownKey(key) {
-                    var next = key === "ArrowUp" ? this.highlightedItem.previousElementSibling : this.highlightedItem.nextElementSibling;
+                    var next = key === "ArrowUp" || key === "Up" ? this.highlightedItem.previousElementSibling : this.highlightedItem.nextElementSibling;
                     if (next) {
                         // skip the divider
                         if (next.classList.contains("iti__divider")) {
-                            next = key === "ArrowUp" ? next.previousElementSibling : next.nextElementSibling;
+                            next = key === "ArrowUp" || key === "Up" ? next.previousElementSibling : next.nextElementSibling;
                         }
                         this._highlightListItem(next, true);
                     }
@@ -780,7 +786,7 @@
                 value: function _searchForCountry(query) {
                     for (var i = 0; i < this.countries.length; i++) {
                         if (this._startsWith(this.countries[i].name, query)) {
-                            var listItem = this.countryList.querySelector("#iti-item-".concat(this.countries[i].iso2));
+                            var listItem = this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(this.countries[i].iso2));
                             // update highlighting and scroll
                             this._highlightListItem(listItem, false);
                             this._scrollTo(listItem, true);
@@ -930,11 +936,12 @@
                             prevItem.setAttribute("aria-selected", "false");
                         }
                         if (countryCode) {
-                            var nextItem = this.countryList.querySelector("#iti-item-".concat(countryCode));
+                            // check if there is a preferred item first, else fall back to standard
+                            var nextItem = this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(countryCode, "-preferred")) || this.countryList.querySelector("#iti-".concat(this.id, "__item-").concat(countryCode));
                             nextItem.setAttribute("aria-selected", "true");
                             nextItem.classList.add("iti__active");
                             this.activeItem = nextItem;
-                            this.countryList.setAttribute("aria-activedescendant", nextItem.getAttribute("id"));
+                            this.selectedFlag.setAttribute("aria-activedescendant", nextItem.getAttribute("id"));
                         }
                     }
                     // return if the flag has changed or not
@@ -951,7 +958,7 @@
                     var selectedFlagClone = this.selectedFlag.cloneNode(true);
                     containerClone.appendChild(selectedFlagClone);
                     var width = selectedFlagClone.offsetWidth;
-                    containerClone.remove();
+                    containerClone.parentNode.removeChild(containerClone);
                     return width;
                 }
             }, {
@@ -989,7 +996,7 @@
                 key: "_closeDropdown",
                 value: function _closeDropdown() {
                     this.countryList.classList.add("iti__hide");
-                    this.countryList.setAttribute("aria-expanded", "false");
+                    this.selectedFlag.setAttribute("aria-expanded", "false");
                     // update the arrow
                     this.dropdownArrow.classList.remove("iti__arrow--up");
                     // unbind key events
@@ -1271,7 +1278,7 @@
  *  STATIC METHODS
  ********************/
         // get the country data object
-        window.intlTelInputGlobals.getCountryData = function() {
+        intlTelInputGlobals.getCountryData = function() {
             return allCountries;
         };
         // inject a <script> element to load utils.js
@@ -1292,7 +1299,7 @@
             document.body.appendChild(script);
         };
         // load the utils script
-        window.intlTelInputGlobals.loadUtils = function(path) {
+        intlTelInputGlobals.loadUtils = function(path) {
             // 2 options:
             // 1) not already started loading (start)
             // 2) already started loading (do nothing - just wait for the onload callback to fire, which will
@@ -1311,9 +1318,9 @@
             return null;
         };
         // default options
-        window.intlTelInputGlobals.defaults = defaults;
+        intlTelInputGlobals.defaults = defaults;
         // version
-        window.intlTelInputGlobals.version = "16.0.0";
+        intlTelInputGlobals.version = "17.0.0";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
