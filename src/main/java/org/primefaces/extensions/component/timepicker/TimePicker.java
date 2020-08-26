@@ -15,21 +15,25 @@
  */
 package org.primefaces.extensions.component.timepicker;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
+import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -46,7 +50,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css")
 @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-public class TimePicker extends HtmlInputText implements Widget {
+public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
     public static final String INPUT_CLASS = "ui-inputfield ui-state-default ui-corner-all";
@@ -63,10 +67,11 @@ public class TimePicker extends HtmlInputText implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
 
-    static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(
-                Arrays.asList("blur", "change", "valueChange", "click", "dblclick", "focus", "keydown",
-                            "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover",
-                            "mouseup", BeforeShowEvent.NAME, TimeSelectEvent.NAME, CloseEvent.NAME));
+    static final Collection<String> EVENT_NAMES = LangUtils
+                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
+                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
+                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", BeforeShowEvent.NAME,
+                            TimeSelectEvent.NAME, CloseEvent.NAME);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;

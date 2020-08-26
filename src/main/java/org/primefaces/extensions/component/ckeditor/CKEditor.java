@@ -15,15 +15,14 @@
  */
 package org.primefaces.extensions.component.ckeditor;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.component.html.HtmlInputTextarea;
 
+import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.LangUtils;
 
 /**
  * Component class for the <code>CKEditor</code> component.
@@ -36,23 +35,22 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-public class CKEditor extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
+public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CKEditor";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String EVENT_SAVE = "save";
     public static final String EVENT_INITIALIZE = "initialize";
-    public static final String EVENT_BLUR = "blur";
-    public static final String EVENT_FOCUS = "focus";
     public static final String EVENT_WYSIWYG_MODE = "wysiwygMode";
     public static final String EVENT_SOURCE_MODE = "sourceMode";
     public static final String EVENT_DIRTY = "dirty";
-    public static final String EVENT_CHANGE = "change";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CKEditorRenderer";
 
-    private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList(EVENT_SAVE, EVENT_INITIALIZE, EVENT_BLUR, EVENT_FOCUS,
-                            EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE, EVENT_DIRTY, EVENT_CHANGE));
+    private static final Collection<String> EVENT_NAMES = LangUtils
+                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
+                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
+                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_SAVE, EVENT_INITIALIZE,
+                            EVENT_WYSIWYG_MODE, EVENT_SOURCE_MODE, EVENT_DIRTY);
 
     /**
      * Properties that are tracked by state saving.

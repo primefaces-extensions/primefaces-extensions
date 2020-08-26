@@ -20,11 +20,11 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
@@ -45,7 +45,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.css")
 @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.js")
-public class InputPhone extends HtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
+public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -55,8 +55,10 @@ public class InputPhone extends HtmlInputText implements Widget, InputHolder, Mi
     public static final String EVENT_COUNTRY_SELECT = "countrySelect";
     public static final String COUNTRY_AUTO = "auto";
 
-    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("blur", "change", "valueChange", "click", "dblclick",
-                "focus", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "select", EVENT_COUNTRY_SELECT);
+    private static final Collection<String> EVENT_NAMES = LangUtils
+                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
+                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
+                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_COUNTRY_SELECT);
 
     private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
 

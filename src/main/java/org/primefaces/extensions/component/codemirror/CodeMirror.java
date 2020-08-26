@@ -16,20 +16,19 @@
 package org.primefaces.extensions.component.codemirror;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.behavior.ClientBehaviorHolder;
-import javax.faces.component.html.HtmlInputTextarea;
 import javax.faces.context.FacesContext;
 import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.AbstractPrimeHtmlInputTextArea;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CompleteEvent;
+import org.primefaces.util.LangUtils;
 
 /**
  * Component class for the <code>CodeMirror</code> component.
@@ -44,19 +43,17 @@ import org.primefaces.extensions.event.CompleteEvent;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.js")
 @ResourceDependency(library = "primefaces-extensions", name = "codemirror/codemirror.css")
-public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolder, Widget {
+public class CodeMirror extends AbstractPrimeHtmlInputTextArea implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CodeMirror";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String EVENT_CHANGE = "change";
     public static final String EVENT_HIGHLIGHT_COMPLETE = "highlightComplete";
-    public static final String EVENT_BLUR = "blur";
-    public static final String EVENT_FOCUS = "focus";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CodeMirrorRenderer";
 
-    private static final Collection<String> EVENT_NAMES = Collections
-                .unmodifiableCollection(Arrays.asList(EVENT_CHANGE, EVENT_HIGHLIGHT_COMPLETE, EVENT_BLUR, EVENT_FOCUS,
-                            EVENT_CHANGE));
+    private static final Collection<String> EVENT_NAMES = LangUtils
+                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
+                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
+                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_HIGHLIGHT_COMPLETE);
 
     private List<String> suggestions = null;
 
