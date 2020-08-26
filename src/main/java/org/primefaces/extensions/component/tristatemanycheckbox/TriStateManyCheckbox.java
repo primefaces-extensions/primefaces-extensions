@@ -234,7 +234,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
             params[0] = MessageFactory.getLabel(context, this);
 
             // Enqueue an error message if an invalid value was specified
-            final FacesMessage message = MessageFactory.getMessage(UISelectMany.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+            final FacesMessage message = MessageFactory.getFacesMessage(UISelectMany.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
             context.addMessage(getClientId(context), message);
             setValid(false);
         }

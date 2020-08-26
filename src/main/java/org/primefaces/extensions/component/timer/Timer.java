@@ -77,7 +77,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         formatFunction,
         partialSubmitFilter,
         form,
-        title
+        title,
+        ignoreComponentNotFound
         //@formatter:on
 
     }
@@ -373,4 +374,12 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         }
     }
 
+    @Override
+    public boolean isIgnoreComponentNotFound() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.ignoreComponentNotFound, false);
+    }
+
+    public void setIgnoreComponentNotFound(final boolean ignoreComponentNotFound) {
+        getStateHelper().put(PropertyKeys.ignoreComponentNotFound, ignoreComponentNotFound);
+    }
 }

@@ -84,7 +84,8 @@ public class RemoteCommand extends UICommand implements AjaxSource {
         delay,
         timeout,
         partialSubmitFilter,
-        form
+        form,
+        ignoreComponentNotFound
         //@formatter:on
     }
 
@@ -365,5 +366,14 @@ public class RemoteCommand extends UICommand implements AjaxSource {
     @Override
     public boolean isAjaxified() {
         return true;
+    }
+
+    @Override
+    public boolean isIgnoreComponentNotFound() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.ignoreComponentNotFound, false);
+    }
+
+    public void setIgnoreComponentNotFound(final boolean ignoreComponentNotFound) {
+        getStateHelper().put(PropertyKeys.ignoreComponentNotFound, ignoreComponentNotFound);
     }
 }

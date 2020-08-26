@@ -52,7 +52,7 @@ public class MessageFactory {
     public static FacesMessage getMessage(final Locale locale,
                 final String messageId,
                 final Object... params) {
-        final FacesMessage message = org.primefaces.util.MessageFactory.getMessage(locale, messageId, params);
+        final FacesMessage message = org.primefaces.util.MessageFactory.getFacesMessage(locale, messageId, params);
         if (message.getSummary() == null) {
             populateMessageFromExtensions(message, locale, messageId, params);
         }
