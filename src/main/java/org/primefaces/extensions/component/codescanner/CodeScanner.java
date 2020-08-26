@@ -65,7 +65,18 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         onsuccess,
         onerror,
         video,
-        deviceId
+        deviceId,
+        forVal("for");
+
+        String toString;
+        PropertyKeys(String toString) {
+            this.toString = toString;
+        }
+        PropertyKeys() {
+        }
+        public String toString() {
+            return ((toString != null) ? toString : super.toString());
+        }
     }
 
     public enum ReaderType {
@@ -179,6 +190,14 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     public void setDeviceId(String deviceId) {
         getStateHelper().put(PropertyKeys.deviceId, deviceId);
+    }
+
+    public String getFor() {
+        return (String) getStateHelper().eval(PropertyKeys.forVal, null);
+    }
+
+    public void setFor(String _for) {
+        getStateHelper().put(PropertyKeys.forVal, _for);
     }
 
     @Override

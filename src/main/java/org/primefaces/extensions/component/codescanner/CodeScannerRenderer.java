@@ -19,6 +19,8 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import org.primefaces.component.api.InputHolder;
+import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -85,6 +87,12 @@ public class CodeScannerRenderer extends CoreRenderer {
         if (codeScanner.getDeviceId() != null) {
             wb.attr("deviceId", codeScanner.getDeviceId());
         }
+        if (codeScanner.getFor() != null) {
+            String forInputClientId = getForInputClientId(context, codeScanner);
+            if (forInputClientId != null) {
+                wb.attr("forInput", forInputClientId);
+            }
+        }
         if (codeScanner.getOnsuccess() != null) {
             wb.callback("onsuccess", "function()", codeScanner.getOnsuccess());
         }
@@ -95,6 +103,17 @@ public class CodeScannerRenderer extends CoreRenderer {
         encodeClientBehaviors(context, codeScanner);
 
         wb.finish();
+    }
+
+    protected String getForInputClientId(final FacesContext context, final CodeScanner codeScanner) {
+        UIComponent forComponent = SearchExpressionFacade.resolveComponent(context, codeScanner, codeScanner.getFor());
+        if (forComponent == null) {
+            return null;
+        }
+        if (forComponent instanceof InputHolder) {
+            return ((InputHolder) forComponent).getInputClientId();
+        }
+        return forComponent.getClientId(context);
     }
 
 }
