@@ -41,7 +41,6 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 ***
 Please refer to the [Getting Started Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Getting-Started) to see what you need to get started and any optional libraries.
 
-
 ### Demo
 ***
 Please refer to the Showcase submodule in order to see the full usage of the components. Simply do the following to run the Showcase:
@@ -55,13 +54,19 @@ Then open your web browser to http://localhost:8080/primeext-showcase/
 ***
 Please report all issues [here](https://github.com/primefaces-extensions/primefaces-extensions/issues).
 
-### Core License
+### Releasing
+- Run `mvn versions:set -DnewVersion=8.0.2` to update all modules versions
+- Commit and push the changes to GitHub
+- In GitHub create a new Release titled `8.0.2` to tag this release
+- Run `mvn clean deploy -Prelease` to push to Maven Central
+
+### Licenses
 ***
+#### Extensions
 Licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license.
 
 `SPDX-License-Identifier: Apache-2.0`
 
-### CKEditor License (IMPORTANT!!!)
-
+#### CKEditor (IMPORTANT!!!)
 Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.<br>
 For licensing see: [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license)
