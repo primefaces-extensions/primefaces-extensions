@@ -1,0 +1,43 @@
+.themeRoller {
+	position: absolute;
+	top: 25px;
+	right: 80px;
+	z-index: 99;
+}
+
+.themeRoller .themeText {
+	color: #808080 !important;
+	font-size: 11px !important;
+	vertical-align: middle !important;
+	padding: 0 4px 0 0 !important;
+}
+
+#themeSelectMenu_panel {
+    width: 160px;
+}
+
+#themeSelectMenu_panel .ui-selectonemenu-table {
+	border-collapse: separate !important;
+    border-spacing: 0;
+    margin: 3px 0;
+}
+
+#themeSelectMenu_panel .ui-selectonemenu-items {
+	white-space: nowrap !important;
+}
+
+#themeSelectMenu_panel .ui-selectonemenu-table td {
+    padding: 2px 4px 2px 6px;
+    cursor: pointer;
+    border: none !important;
+}
+
+#themeSelectMenu_panel .ui-selectonemenu-table td a {
+    padding: 3px 4px !important;
+    display: block;
+}
+
+#themeSelectMenu_panel .ui-selectonemenu-item img {
+    vertical-align: middle;
+    border: 1px solid gray;
+}

@@ -1,0 +1,17 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate />
+    </p:growl>
+
+    <pe:codeScanner width="600"
+                    height="400">
+        <p:ajax event="codeScanned" listener="#{codeScannerController.onCodeScanned}"/>
+    </pe:codeScanner>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

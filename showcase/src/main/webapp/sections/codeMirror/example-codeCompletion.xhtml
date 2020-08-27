@@ -1,0 +1,24 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+
+<p:growl id="growl" showDetail="true" />
+
+<pe:codeMirror id="codeMirror"
+    mode="#{codeMirrorController.mode}"
+    widgetVar="myCodeMirror"
+    theme="eclipse" value="#{codeMirrorController.content}" lineNumbers="true"
+    completeMethod="#{codeMirrorController.complete}"
+    extraKeys="{ 'Ctrl-Space': function(cm) { PF('myCodeMirror').complete(); }}" />
+
+<p:commandButton actionListener="#{codeMirrorController.changeMode}" update="codeMirror"
+                 value="Change mode with AJAX" style="margin-top:10px;"/>
+
+
+<!-- EXAMPLE-SOURCE-END -->
+
+</ui:composition>

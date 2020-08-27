@@ -1,0 +1,63 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <pe:fab id="btnFab" icon="fa fa-question" iconActive="fa fa-times" style="background: green;" widgetVar="fabWidget">
+        <pe:javascript event="open" execute="PF('overlayWidget').show('btnFab');"/>
+        <pe:javascript event="close" execute="PF('overlayWidget').hide();"/>
+    </pe:fab>
+
+    <pe:badge content="1" for="btnFab"/>
+
+    <p:overlayPanel id="overlayPanel" widgetVar="overlayWidget" appendTo="@(body)" showEffect="drop" hideEffect="slide">
+        <p:panelGrid styleClass="ui-noborder">
+            <p:row>
+                <p:column styleClass="ui-widget-header">
+                    <p:outputLabel for="txtMessage" value="Message"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:inputTextarea id="txtMessage" rows="5" cols="43" autoResize="false"/>
+                    <p:watermark for="txtMessage" value="Send us a message if you have something to say."/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column styleClass="ui-widget-header">
+                    <p:outputLabel for="txtEmail" value="Email address (optional)"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:inputText id="txtEmail" size="40"/>
+                    <p:watermark for="txtEmail" value="Email address (optional)"/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style="font-style: italic;">
+                    If you provide your email address above, then by submitting<br/>
+                    this form you agree that we may contact you by email<br/>
+                    to follow up on your feedback.<br/>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputPanel style="text-align:right;">
+                        <p:commandButton value="Send" type="button" onclick="PF('fabWidget').close();"/>
+                    </p:outputPanel>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:spacer height="50"/>
+
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </p:overlayPanel>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,62 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+<!-- This group is for coding -->
+<p:growl id="growl" showDetail="false"/>
+<h:panelGrid id="triStateGrid" columns="2" style="margin-bottom:10px" cellpadding="5">
+
+    <h:outputText value="With inline converter:"/>
+    <pe:triStateManyCheckbox id="TriBasicConverter"
+                             value="#{triSateManyCheckBoxController.selectedOptionsTriStateConvertedInline}"
+                             converter="triStateManyCheckboxConverter">
+        <f:selectItems value="#{triSateManyCheckBoxController.basicOptions}"/>
+    </pe:triStateManyCheckbox>
+    
+    <h:outputText value="With f:converter:"/>
+    <pe:triStateManyCheckbox id="TriBasicConverterInline"
+                             value="#{triSateManyCheckBoxController.selectedOptionsTriStateConverted}">
+        <f:converter converterId="triStateManyCheckboxConverter"/>
+        <f:selectItems value="#{triSateManyCheckBoxController.basicOptions}"/>
+    </pe:triStateManyCheckbox>    
+
+    <h:outputText value="With Validator, 0 is not allowed:"/>
+    <pe:triStateManyCheckbox id="TriAjax"
+                             value="#{triSateManyCheckBoxController.selectedOptionsTriStateAjax}"
+                             stateOneIcon="ui-icon-home"
+                             stateTwoIcon="ui-icon-heart"
+                             stateThreeIcon="ui-icon-star"
+                             validatorMessage="State 0 is not allowed">
+        <f:selectItem itemLabel="Tamara" itemValue="Tamara"/>
+        <f:selectItem itemLabel="Mauricio" itemValue="Mauricio"/>
+        <f:validateLongRange minimum="1"/>
+        <p:ajax update="growl" listener="#{triSateManyCheckBoxController.addMessage}"/>
+    </pe:triStateManyCheckbox>
+</h:panelGrid>
+
+<p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()"/>
+
+<p:dialog header="Selected Values" modal="false" showEffect="fade" hideEffect="fade" widgetVar="dlg" width="240">
+    <p:outputPanel id="display">
+         <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateConvertedInline.keySet().toArray()}"
+                    var="optionsB">
+            #{optionsB} #{triSateManyCheckBoxController.selectedOptionsTriStateConvertedInline.get(optionsB)}
+        </p:dataList>
+        
+        <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateConverted.keySet().toArray()}"
+                    var="optionsB">
+            #{optionsB} #{triSateManyCheckBoxController.selectedOptionsTriStateConverted.get(optionsB)}
+        </p:dataList>
+
+        <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateAjax.keySet().toArray()}"
+                    var="optionsA">
+            #{optionsA} state = #{triSateManyCheckBoxController.selectedOptionsTriStateAjax.get(optionsA)}
+        </p:dataList>
+    </p:outputPanel>
+</p:dialog>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

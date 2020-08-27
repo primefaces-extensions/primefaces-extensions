@@ -1,0 +1,22 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+
+<p:growl id="growl" showDetail="true" sticky="true" />
+<p:graphicImage id="myImage" value="/resources/images/testImage1.png" />
+<pe:imageAreaSelect id="areaSelect"
+                    for="myImage"
+                    autoHide="true"
+                    handles="false"
+                    movable="false"
+                    persistent="false"
+                    resizable="false">
+    <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
+</pe:imageAreaSelect>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

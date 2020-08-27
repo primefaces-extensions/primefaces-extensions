@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+
+        <h3 style="margin-top:0">
+            <strong>Session expired</strong>
+        </h3>
+
+        Message: #{pfExceptionHandler.message}
+        <br/>
+        Timestamp: #{pfExceptionHandler.formattedTimestamp}
+        <br/>
+        StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}"
+                                  escape="false"/>
+
+    </ui:define>
+</ui:composition>
+</html>

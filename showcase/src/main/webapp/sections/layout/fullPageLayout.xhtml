@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Layout"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            This example demonstrates a full page layout with nested panes, layout's AJAX events and client-side state management.
+            Three events are possible: <strong>open</strong>, <strong>close</strong>, <strong>resize</strong>.
+            The client-side state management is activated by setting <strong>stateCookie="true"</strong>.
+            <p/>
+            Furthermore, you can see client-side widget's methods for pane manipulation in action. These are
+            <strong>sizePane()</strong>, <strong>sizeContent()</strong> <strong>toggle()</strong>, <strong>close()</strong>
+            and <strong>open()</strong>. They expect pane position as parameter. Nested panes are separated by the <strong>_</strong> sign.
+            Example: sizePane("center_north", 300); <strong>Attention:</strong> "center" pane can not be manipulated,
+            so that e.g. toggle("center") or sizePane("west_center", 300) are invalid calls.
+            <p/>
+            In this example, the entire layout is defined by LayoutOptions which are bound to the "options" attribute of pe:layout.
+            LayoutOptions is optional, it also possible to create a layout by options defined as attributes of pe:layoutPane.
+            Note: LayoutOptions created as Java model takes precedence over layout options as tag attributes.
+            It is up to you if you would like to use all available options via LayoutOptions or a limited set of options in pe:layoutPane.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h:outputLink value="#{request.contextPath}/sections/layout/fullPage.jsf" target="_blank"
+                          style="font-weight: bold; text-decoration: none; border-bottom: 1px dotted;">
+                <h:outputText value="Show full page layout"/>
+            </h:outputLink>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/layout/example-fullPage.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/layout/FullLayoutController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/layout/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="layout"/>
+            <ui:param name="tagName2" value="layoutPane"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

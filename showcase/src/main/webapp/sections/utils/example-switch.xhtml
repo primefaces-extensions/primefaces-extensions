@@ -1,0 +1,46 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<p:growl id="growl" showDetail="true" />
+
+<p:selectOneMenu id="caseSelection" value="#{switchController.value}">
+	<f:selectItem itemLabel="Default case" itemValue="default" />
+	<f:selectItem itemLabel="Case 1" itemValue="case1" />
+    <f:selectItem itemLabel="null" itemValue="#{null}" />
+    <f:selectItem itemLabel="Case 2" itemValue="case2" />
+
+    <p:ajax update="swichWrapper" process="@this" />
+</p:selectOneMenu>
+
+<p:separator />
+
+<p:outputPanel id="swichWrapper">
+    <pe:switch id="switch" value="#{switchController.value}">
+            <pe:defaultCase>
+                    Case: Default
+            </pe:defaultCase>
+
+            <pe:case value="case1">
+                    Case: <p:commandButton id="case1button" actionListener="#{switchController.listener('case1')}" update=":mainForm:growl"
+                                    value="Call listener with 'case1'" />
+            </pe:case>
+
+            <pe:case value="case2">
+                    Case: <p:commandButton id="case2button" actionListener="#{switchController.listener('case2')}" update=":mainForm:growl"
+                                    value="Call listener with 'case2'"  />
+            </pe:case>
+
+            <pe:case value="#{null}">
+                    Case: Null
+            </pe:case>
+    </pe:switch>
+</p:outputPanel>
+
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

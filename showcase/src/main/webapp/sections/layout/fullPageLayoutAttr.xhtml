@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Layout"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            It is possible to create a layout by options defined as attributes in pe:layoutPane. This example demonstrates how to do it.
+            Default tooltips, when a pane gets resized, is open or closed, can be redefined by pe:layout via proper attributes.
+            Custom tooltips are demonstrated as well.
+            <p/>
+            Note: Layout pane has a limited set of options in comparison to "generic" approach when creating by model (LayoutOptions class).  
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h:outputLink value="#{request.contextPath}/sections/layout/fullPageAttr.jsf" target="_blank"
+                          style="font-weight: bold; text-decoration: none; border-bottom: 1px dotted;">
+                <h:outputText value="Show layout created by pane options"/>
+            </h:outputLink>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/layout/example-fullPageAttr.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/layout/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="layout"/>
+            <ui:param name="tagName2" value="layoutPane"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

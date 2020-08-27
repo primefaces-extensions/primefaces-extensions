@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <!-- EXAMPLE-SOURCE-START -->
+
+    <p:panelGrid id="pnlCreditCard" columns="4">
+        <f:facet name="header">
+            <pe:creditCard id="creditCard" labelMonthYear="MM/YY" placeholderExpiry="**/**" placeholderName="Optimus Prime"/>
+        </f:facet>
+        <p:inputText id="number" placeholder="Card number"/>
+        <p:inputText id="name" placeholder="Full name"/>
+        <p:inputText id="expiry" placeholder="MM/YY"/>
+        <p:inputText id="cvc" placeholder="CVC"/>
+    </p:panelGrid>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

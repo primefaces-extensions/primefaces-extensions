@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<p:messages id="messages">
+   <p:autoUpdate />
+</p:messages>
+
+	<!-- EXAMPLE-SOURCE-START -->
+	<pe:slideout id="slideoutContact" title="Contact" icon="fa fa-envelope" location="top" widgetVar="slideout"
+		handleStyleClass="contact-handle" panelStyleClass="contact-panel" offset="450px" bounceTimes="5"
+		bounceDistance="100px">
+		<p:panelGrid styleClass="ui-noborder">
+			<p:row>
+				<p:column styleClass="ui-widget-header">
+					<p:outputLabel for="txtMessage" value="Message"></p:outputLabel>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:inputTextarea id="txtMessage" rows="5" cols="43" autoResize="false" />
+					<p:watermark for="txtMessage" value="Send us a message if you have something to say." />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="ui-widget-header">
+					<p:outputLabel for="txtEmail" value="Email address (optional)"></p:outputLabel>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:inputText id="txtEmail" size="40" />
+					<p:watermark for="txtEmail" value="Email address (optional)" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column style="font-style: italic;">
+             If you provide your email address above, then by submitting<br />
+             this form you agree that we may contact you by email<br />
+             to follow up on your feedback.<br />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputPanel style="text-align:right;">
+						<p:commandButton value="Send" type="button" onclick="PF('slideout').close();" />
+					</p:outputPanel>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</pe:slideout>
+
+	<h:panelGroup layout="block" style="text-align:left;margin-bottom:10px;">
+		<p:commandButton value="Open" type="button" onclick="PF('slideout').open();" />
+		<p:commandButton value="Close" type="button" onclick="PF('slideout').close();" />
+		<p:commandButton value="Toggle" type="button" onclick="PF('slideout').toggle();" />
+		<p:commandButton value="Bounce" type="button" onclick="PF('slideout').bounce();" />
+	</h:panelGroup>
+	<!-- EXAMPLE-SOURCE-END -->
+	<ui:include src="/sections/slideout/basicUsageCSS.xhtml" />
+</ui:composition>

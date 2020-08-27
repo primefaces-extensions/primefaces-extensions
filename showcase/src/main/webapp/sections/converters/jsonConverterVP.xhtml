@@ -1,0 +1,176 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="metadata">
+        <f:metadata>    
+            <f:viewParam name="b" value="#{viewParamJsonController.b}"/>
+            <f:viewParam name="l" value="#{viewParamJsonController.l}"/>
+            <f:viewParam name="ints" value="#{viewParamJsonController.ints}">
+                <pe:convertJson type="int[]"/>
+            </f:viewParam>
+            <f:viewParam name="chars" value="#{viewParamJsonController.chars}">
+                <pe:convertJson type="char[]"/>
+            </f:viewParam>
+            <f:viewParam name="s" value="#{viewParamJsonController.s}">
+                <pe:convertJson type="java.lang.String"/>
+            </f:viewParam>
+            <f:viewParam name="i" value="#{viewParamJsonController.i}"/>
+            <f:viewParam name="d" value="#{viewParamJsonController.d}">
+                <pe:convertJson type="java.util.Date"/>
+            </f:viewParam>
+            <f:viewParam name="list" value="#{viewParamJsonController.list}">
+                <pe:convertJson type="#{typesJsonController.typeGenericList}"/>
+            </f:viewParam>
+            <f:viewParam name="map" value="#{viewParamJsonController.map}">
+                <pe:convertJson type="#{typesJsonController.typeGenericMap}"/>
+            </f:viewParam>
+            <f:viewParam name="fooNonGeneric" value="#{viewParamJsonController.fooNonGeneric}">
+                <pe:convertJson type="org.primefaces.extensions.showcase.model.jsonconverter.FooNonGeneric"/>
+            </f:viewParam>
+            <f:viewParam name="fooGenericSimple" value="#{viewParamJsonController.fooGenericSimple}">
+                <pe:convertJson type="#{typesJsonController.typeGenericSimple}"/>
+            </f:viewParam>
+            <f:viewParam name="fooGenericComplex" value="#{viewParamJsonController.fooGenericComplex}">
+                <pe:convertJson type="#{typesJsonController.typeGenericComplex}"/>
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="JsonConverter"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            JsonConverter can be used for setting a value from an URL request parameter into a bean.
+            This can be achieved with <strong>f:viewParam</strong> and attached <strong>pe:convertJson</strong>.
+            Any primitive type, array, non generic or generic type is supported.
+            Use <strong>RequestParameterBuilder</strong> from PrimeFaces Extensions to build any URL parameters in JSON representation
+            and <strong>pe:convertJson</strong> to convert values back from JSON before they are set into bean.
+            This feature allows to pre-initialize any UI forms with defaul values passed in URL on initial page load (GET request).
+            <p/>
+            Primitive, plain values don't need to be converted to / from JSON.
+            The attribute "type" in the <strong>pe:convertJson</strong> specifies data type of the value object.
+            Data type is sometimes required to convert a complex or generic value from the JSON representation.
+            All data types should be fully qualified. Examples:
+            <ul>
+                <li>"boolean"</li>
+                <li>"int"</li>
+                <li>"long[]"</li>
+                <li>"java.lang.String"</li>
+                <li>"java.util.Date"</li>
+                <li>"java.util.Collection&lt;java.lang.Integer&gt;"</li>
+                <li>"java.util.Map&lt;java.lang.String, com.prime.FooPair&lt;java.lang.Integer, java.util.Date&gt;&gt;"</li>
+                <li>"com.prime.FooNonGenericClass"</li>
+                <li>"com.prime.FooGenericClass&lt;java.lang.String, java.lang.Integer&gt;"</li>
+                <li>"com.prime.FooGenericClass&lt;int[], com.prime.FooGenericClass&lt;com.prime.FooNonGenericClass, java.lang.Boolean&gt;&gt;"</li>
+            </ul>
+            This example demonstrate using with primitive (like boolean and long), arrays (like int[] and char[]),
+            simple data types (like String and Integer), date (java.util.Date), parametrized collections and maps,
+            complex generic and non generic classes. Click on the button "Open Link" to see that values of URL parameters
+            are set into the bean on intial page load.
+            <p/>
+            <span style="color:red;">Attention:</span> URLs longer than 2083 characters may not work properly in old IE versions.
+            Modern Firefox, Opera, and Safari can handle at least 80000 characters in URL.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="2" columnClasses="formColumn" style="margin-bottom:15px;">
+    <h:outputText value="boolean" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.b}"/>
+
+    <h:outputText value="long" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.l}"/>
+
+    <h:outputText value="int[]" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.prettyInts}"/>
+
+    <h:outputText value="char[]" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.prettyChars}"/>
+
+    <h:outputText value="String" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.s}"/>
+
+    <h:outputText value="Integer" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.i}"/>
+
+    <h:outputText value="Date" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.d}"/>
+    
+    <h:outputText value="Generic List" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.list}"/>
+
+    <h:outputText value="Generic Map" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.map}"/>
+    
+    <h:outputText value="Non Generic" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.fooNonGeneric}"/>
+
+    <h:outputText value="Generic Simple" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.fooGenericSimple}"/>
+
+    <h:outputText value="Generic Complex" styleClass="bold"/>
+    <h:outputText value="#{viewParamJsonController.fooGenericComplex}"/>
+</h:panelGrid>
+            
+<p:inputText id="inputUrl" value="#{viewParamJsonController.generatedUrl}" style="width:100%"/>
+            
+<p:commandButton value="Open Link" type="button" style="margin-top:15px;"
+                 onclick="openLinkInPopup()"/>
+
+<h:outputScript id="jsonConverterJS" target="body">
+    function openLinkInPopup() {
+        var inputValue = $('#inputUrl').val();    
+        if (inputValue !== null) {
+            window.open(inputValue, 'Test JsonConverter with URL parameters',
+                'width=auto,height=auto,resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=yes');
+        }
+    }       
+</h:outputScript>
+            
+<h:outputStylesheet id="jsonConverterCSS">
+    table .formColumn {
+        padding-right: 10px;
+        text-align: right;
+        white-space: nowrap;
+        width: 1%;
+    }
+    
+    .bold {
+        font-weight: bold;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+        </h:panelGroup>
+        <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/converters/metadata.xhtml')}
+                
+${showcase:getFileContent('/sections/converters/jsonConverterVP.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/jsonconverter/TypesJsonController.java')}
+                
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/jsonconverter/ViewParamJsonController.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/jsonconverter/FooGeneric.java')}
+                
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/jsonconverter/FooNonGeneric.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/converters/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="convertJson"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

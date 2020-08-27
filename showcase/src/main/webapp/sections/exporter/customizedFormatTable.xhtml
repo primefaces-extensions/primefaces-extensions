@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Exporter"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Customized exporter enables customizing/skinning the header and cell content in terms of font and
+            backgroundColors. PDF Header can display the title by the use of the tableTitle attribute. And we can also
+            customize the exported table with pre and postProcessors. Incl. adding logos, disclaimers etc.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/exporter/example-customizedFormatTables.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/exporter/example-customizedFormatTables.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/exporter/GroupedTableController.java')}
+
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/exporter/SubTableController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/exporter/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="exporter"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

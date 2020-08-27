@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Document Viewer"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <h:graphicImage library="images" name="pdf.js.png" alt="Mozilla PDF.js"/>
+        	DocumentViewer is a JSF wrapper of <strong>Mozilla Foundation</strong> project <a href="https://mozilla.github.io/pdf.js/">PDF.js</a> a general-purpose, web standards-based platform for parsing and rendering PDFs.
+        	<p/> 
+            <strong>Features Include:</strong>
+            <ul>
+               <li>Localized language support</li> 
+               <li>Inline display of PDF documents without the need for a browser plugin or Flash</li>
+               <li><a href="https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#faq-support">Supported Browsers</a></li>
+            </ul>
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/documentviewer/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="documentViewer"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

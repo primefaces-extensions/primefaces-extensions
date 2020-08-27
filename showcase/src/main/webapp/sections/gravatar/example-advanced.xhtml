@@ -1,0 +1,37 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<p:outputPanel id="container" layout="block" style="width:100%;overflow:hidden;">
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <h:outputText value="Username" />
+        <p:inputText value="#{gravatarController.username}" size="40">
+            <p:ajax process="container" update="container"/>
+        </p:inputText>
+        <h:outputText id="output" value="Image size #{gravatarController.size}px" />
+        <h:inputHidden id="txt2" value="#{gravatarController.size}" />
+        <p:slider minValue="1" maxValue="2048" for="txt2" display="output" style="width: 200px" displayTemplate="Image size {value}px">
+            <p:ajax event="slideEnd" process="container" update="container" />
+        </p:slider>
+        <h:outputText value="'Not Found' Placeholder" />
+        <p:selectOneMenu value="#{gravatarController.notFound}">
+            <f:selectItem itemValue="default" itemLabel="Default"/>
+            <f:selectItem itemValue="mm" itemLabel="Mystery-Man"/>
+            <f:selectItem itemValue="identicon" itemLabel="Identicon"/>
+            <f:selectItem itemValue="monsterid" itemLabel="Monster"/>
+            <f:selectItem itemValue="wavatar" itemLabel="Face"/>
+            <f:selectItem itemValue="retro" itemLabel="Retro"/>
+            <f:selectItem itemValue="blank" itemLabel="Blank"/>
+            <p:ajax process="container" update="container"/>
+        </p:selectOneMenu>
+    </h:panelGrid>
+    <div style="text-align: center;overflow: auto">
+        <pe:gravatar value="#{gravatarController.username}" size="#{gravatarController.size}" notFound="#{gravatarController.notFound}"/>
+    </div>
+</p:outputPanel>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

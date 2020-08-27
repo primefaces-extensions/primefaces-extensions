@@ -1,0 +1,22 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<f:event listener="#{basicDocumentViewerController.onPrerender}" type="preRenderView" />
+<p:tabView>
+    <p:tab title="URL">
+        <pe:documentViewer height="500" url="/sections/documentviewer/book.pdf"/>
+    </p:tab>
+    <p:tab title="Resource">
+        <pe:documentViewer height="500" library="books" name="hood.pdf"/>
+    </p:tab>
+    <p:tab title="StreamedContent">
+        <pe:documentViewer height="500" value="#{basicDocumentViewerController.content}" download="#{basicDocumentViewerController.downloadFileName}"/>
+    </p:tab>
+</p:tabView>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

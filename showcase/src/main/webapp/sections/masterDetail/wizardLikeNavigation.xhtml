@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MasterDetail"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Wizard-like navigation with form fields. Header facet allows to render any content above navigation and footer facet allows to render any content below. 
+            Content of header / footer facet is shared between levels. This feature makes possible to show any custom title bar indicating current flow instead of built-in breadcrumbs.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/masterDetail/example-wizardLikeNavigation.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/masterDetail/example-wizardLikeNavigation.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/masterdetail/WizardMasterDetailController.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/masterdetail/User.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/masterDetail/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/threeTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="masterDetail"/>
+            <ui:param name="tagName2" value="masterDetailLevel"/>
+            <ui:param name="tagName3" value="selectDetailLevel"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

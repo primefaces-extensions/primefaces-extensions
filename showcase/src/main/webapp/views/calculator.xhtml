@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Calculator"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <h:graphicImage library="images" name="calculator.png" alt="Calculator"/>
+            Calculator is a highly configurable component that attaches a popup calculator to an input field.
+            <p/> 
+            <strong>Features include:</strong>
+            <ul>
+               <li>ThemeRoller styled</li> 
+               <li>Attach to any input field including PrimeFaces InputNumber</li>
+               <li>Scientific or Standard button layouts</li>
+               <li>Localized language support and RTL support</li>
+            </ul>
+            <p/>
+            A typically area of application is education, personal finance and double entry accounting.
+            <p/>
+            Based on <h:outputLink id="lnkCalculator" value="http://keith-wood.name/calculator.html">jQuery Calculator</h:outputLink> by Keith Wood.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/calculator/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="calculator"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,26 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<script>
+    window.sync = function(t){
+        PF('knob').setValue(t.current);
+    }
+</script>
+<pe:timer
+    visible="false"
+    ontimerstep="sync(intervalData)"
+    ontimercomplete="alert('BOOM')"
+    timeout="100"/>
+<p:knob
+    min="0"
+    max="100"
+    widgetVar="knob"
+    disabled="true"
+    value="0"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

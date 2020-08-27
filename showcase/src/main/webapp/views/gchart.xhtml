@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="GChart"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            GChart is a JSF wrapper of <a href="https://developers.google.com/chart" target="_blank">Google Charts</a> API.
+            It's the same chart library used by Google Analytics and other Google services. You can create cool and unique charts
+            like <strong>Organizational Chart</strong> and <strong>Geo Chart</strong>.
+            <br/><br/>
+            <strong>Important:</strong> due to the Google Charts <a href="https://developers.google.com/terms/" target="_blank">Terms of Service</a> it's not possible to download the library on a server, you have to grab the API
+            from the Google's servers. So to let the GChart component work the Client must be connected to the internet.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/gchart/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="gChart"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

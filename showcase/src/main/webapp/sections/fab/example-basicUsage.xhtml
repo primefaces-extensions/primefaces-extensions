@@ -1,0 +1,26 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <pe:fab id="fabMenu" icon="fa fa-link">
+        <p:ajax event="open" listener="#{fabController.openListener}" global="false"/>
+        <p:ajax event="close" listener="#{fabController.closeListener}" global="false"/>
+        <p:menuitem value="Home"
+                    icon="pi pi-home"
+                    url="http://primefaces-extensions.github.com/"/>
+        <p:menuitem value="GitHub"
+                    icon="fa fa-github"
+                    url="https://github.com/primefaces-extensions"/>
+        <p:menuitem value="Issues"
+                    icon="fa fa-bug"
+                    url="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues"
+                    style="background: red;"/>
+    </pe:fab>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

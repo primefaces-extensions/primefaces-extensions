@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MasterDetail"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Straightforward navigation level by level by using of SelectDetailLevel handler. 
+            Context values (any objects) are passed from level to level and available via context variables.
+            Level to go to can be set via "level" or "step" attribute (default is step=1 if nothing specified). 
+            Text for breadcrumb items is set by "levelLabel" attribute or "label" facet of MasterDetailLevel component.
+            <p/>
+            <strong>Attention:</strong> You have to reference the pe:masterDetail in the "update" attribute of command components
+            manually if you have any auto updatable components, such as p:growl or p:message with p:autoUpdate, on the page.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/masterDetail/example-basicNavigation.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/masterDetail/example-basicNavigation.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/masterdetail/SimpleMasterDetailController.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/masterdetail/Sport.java')}
+
+
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/masterdetail/Country.java')}
+
+
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/masterdetail/League.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/masterDetail/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/threeTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="masterDetail"/>
+            <ui:param name="tagName2" value="masterDetailLevel"/>
+            <ui:param name="tagName3" value="selectDetailLevel"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

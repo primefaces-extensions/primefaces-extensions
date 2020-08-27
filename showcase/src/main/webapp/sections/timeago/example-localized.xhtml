@@ -1,0 +1,40 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<script>
+  PrimeFacesExt.locales.TimeAgo['nl'] = {
+	prefixAgo: null,
+	prefixFromNow: "over",
+	suffixAgo: "geleden",
+	suffixFromNow: null,
+	seconds: "minder dan een minuut",
+	minute: "ongeveer een minuut",
+	minutes: "%d minuten",
+	hour: "ongeveer een uur",
+	hours: "ongeveer %d uur",
+	day: "een dag",
+	days: "%d dagen",
+	month: "ongeveer een maand",
+	months: "%d maanden",
+	year: "ongeveer een jaar",
+	years: "%d jaar",
+	wordSeparator: " ",
+	numbers: []
+  }
+</script>
+
+<p>
+    You've opened this page
+    <pe:timeAgo value="#{basicTimeAgoController.now}"
+                locale="nl" style="font-weight:bold"/>.
+</p>
+<p>
+    PrimeFaces Extensions was first released
+    <pe:timeAgo value="#{basicTimeAgoController.firstRelease}"
+                locale="nl" style="font-weight:bold"/>.
+</p>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

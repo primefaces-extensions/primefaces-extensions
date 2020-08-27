@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MasterDetail"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Complex master-detail views with CRUD operations and a server-side flow listener.
+            SelectLevelEvent passing into the flow listener and its return value allow to control the level to be navigated.
+            If save of the detail view (level 2) was e.g. successful, the next level to go should be the master view (level 1).
+            Otherwise, in case of some errors, user should stay on the detail view.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/masterDetail/example-complexNavigation.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/masterDetail/example-complexNavigation.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/masterdetail/ComplexMasterDetailController.java')}
+
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/masterdetail/SelectLevelListener.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/Person.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/masterDetail/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/threeTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="masterDetail"/>
+            <ui:param name="tagName2" value="masterDetailLevel"/>
+            <ui:param name="tagName3" value="selectDetailLevel"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

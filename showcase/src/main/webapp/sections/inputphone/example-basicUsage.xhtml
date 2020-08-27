@@ -1,0 +1,20 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
+        <p:autoUpdate />
+    </p:growl>
+
+    <pe:inputPhone id="txtPhone" 
+                   initialCountry="us"
+                   value="#{basicInputPhoneController.phoneNumber}"
+                   formatOnDisplay="true">
+        <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}"/>
+    </pe:inputPhone>
+    <p:commandButton value="Submit" update="txtPhone" actionListener="#{basicInputPhoneController.submit}" />  
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

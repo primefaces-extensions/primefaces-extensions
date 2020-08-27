@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition>
+    <f:facet name="header">
+        <h:outputText value="Documentation"/>
+    </f:facet>
+
+    <p:tabView id="docuTabView">
+        <p:tab title="pe:#{tagName1}">
+            <h:panelGroup layout="block" styleClass="ui-state-default docuCaption">
+                Attributes (move mouse over the names to see data types)
+            </h:panelGroup>            
+            <p:dataTable id="docuDataTable1" var="attribute" value="#{docuPreparer.getDocuAttributes(tagName1)}"
+                         emptyMessage="No attributes available for this component." styleClass="docuTable">
+                <p:column>
+                    <f:facet name="header">
+                        Name
+                    </f:facet>
+                    <h:outputText id="name" value="#{attribute.name}"/>
+                    <pe:tooltip for="name" value="#{attribute.type}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Description
+                    </f:facet>
+                    <h:outputText value="#{attribute.description}" escape="false"/>
+                </p:column>
+            </p:dataTable>
+            
+            <h:panelGroup layout="block" styleClass="ui-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName1).size() > 0}">
+                Events (move mouse over the names to see classes)
+            </h:panelGroup>            
+		    <p:dataTable id="docuEventsDataTable1" var="event" value="#{docuPreparer.getDocuEvents(tagName1)}"
+		                 emptyMessage="No events available for this component." styleClass="docuEventTable"
+		                 rendered="#{docuPreparer.getDocuEvents(tagName1).size() > 0}">
+		        <p:column>
+		            <f:facet name="header">
+		                Name
+		            </f:facet>
+		            <h:outputText id="name" value="#{event.name}"/>
+		            <pe:tooltip for="name" value="#{event.eventClass}"/>
+		        </p:column>
+		        <p:column>
+		            <f:facet name="header">
+		                Description
+		            </f:facet>
+		            <h:outputText value="#{event.description}" escape="false"/>
+		        </p:column>
+		    </p:dataTable>
+        </p:tab>
+        
+        <p:tab title="pe:#{tagName2}">
+            <h:panelGroup layout="block" styleClass="ui-state-default docuCaption">
+                Attributes (move mouse over the names to see data types)
+            </h:panelGroup>            
+            <p:dataTable id="docuDataTable2" var="attribute" value="#{docuPreparer.getDocuAttributes(tagName2)}"
+                         emptyMessage="No attributes available for this component." styleClass="docuTable">
+                <p:column>
+                    <f:facet name="header">
+                        Name
+                    </f:facet>
+                    <h:outputText id="name" value="#{attribute.name}"/>
+                    <pe:tooltip for="name" value="#{attribute.type}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Description
+                    </f:facet>
+                    <h:outputText value="#{attribute.description}" escape="false"/>
+                </p:column>
+            </p:dataTable>
+            
+            <h:panelGroup layout="block" styleClass="ui-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName2).size() > 0}">
+                Events (move mouse over the names to see classes)
+            </h:panelGroup>            
+		    <p:dataTable id="docuEventsDataTable2" var="event" value="#{docuPreparer.getDocuEvents(tagName2)}"
+		                 emptyMessage="No events available for this component." styleClass="docuEventTable"
+		                 rendered="#{docuPreparer.getDocuEvents(tagName2).size() > 0}">
+		        <p:column>
+		            <f:facet name="header">
+		                Name
+		            </f:facet>
+		            <h:outputText id="name" value="#{event.name}"/>
+		            <pe:tooltip for="name" value="#{event.eventClass}"/>
+		        </p:column>
+		        <p:column>
+		            <f:facet name="header">
+		                Description
+		            </f:facet>
+		            <h:outputText value="#{event.description}" escape="false"/>
+		        </p:column>
+		    </p:dataTable>
+        </p:tab>
+        
+        <p:tab title="pe:#{tagName3}">
+            <h:panelGroup layout="block" styleClass="ui-state-default docuCaption">
+                Attributes (move mouse over the names to see data types)
+            </h:panelGroup>            
+            <p:dataTable id="docuDataTable3" var="attribute" value="#{docuPreparer.getDocuAttributes(tagName3)}"
+                         emptyMessage="No attributes available for this component." styleClass="docuTable">
+                <p:column>
+                    <f:facet name="header">
+                        Name
+                    </f:facet>
+                    <h:outputText id="name" value="#{attribute.name}"/>
+                    <pe:tooltip for="name" value="#{attribute.type}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        Description
+                    </f:facet>
+                    <h:outputText value="#{attribute.description}" escape="false"/>
+                </p:column>
+            </p:dataTable>
+
+            <h:panelGroup layout="block" styleClass="ui-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName3).size() > 0}">
+                Events (move mouse over the names to see classes)
+            </h:panelGroup>
+		    <p:dataTable id="docuEventsDataTable3" var="event" value="#{docuPreparer.getDocuEvents(tagName3)}"
+		                 emptyMessage="No events available for this component." styleClass="docuEventTable"
+		                 rendered="#{docuPreparer.getDocuEvents(tagName3).size() > 0}">
+		        <p:column>
+		            <f:facet name="header">
+		                Name
+		            </f:facet>
+		            <h:outputText id="name" value="#{event.name}"/>
+		            <pe:tooltip for="name" value="#{event.eventClass}"/>
+		        </p:column>
+		        <p:column>
+		            <f:facet name="header">
+		                Description
+		            </f:facet>
+		            <h:outputText value="#{event.description}" escape="false"/>
+		        </p:column>
+		    </p:dataTable>
+        </p:tab>
+    </p:tabView>
+</ui:composition>
+</html>     

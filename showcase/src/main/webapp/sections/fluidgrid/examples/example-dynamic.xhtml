@@ -1,0 +1,28 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+	<p:growl id="growl" showDetail="true" showSummary="true">
+		<p:autoUpdate />
+	</p:growl>
+    
+<pe:fluidGrid value="#{fluidGridDynamicController.images}" var="image"
+              fitWidth="true" hasImages="true">
+    <p:ajax event="layoutComplete" update="@none"
+            listener="#{fluidGridDynamicController.fireLayoutComplete}"/>
+    
+    <pe:fluidGridItem>
+        <h:graphicImage library="images" name="fluidgrid/#{image.name}"/>
+    </pe:fluidGridItem>
+</pe:fluidGrid>
+            
+<h:outputStylesheet id="fluidGridCSS">    
+    img {
+    	margin-top: -4px;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

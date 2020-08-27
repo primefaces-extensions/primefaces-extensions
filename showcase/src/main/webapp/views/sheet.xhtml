@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Sheet"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <h:graphicImage library="images" name="sheet.png" alt="Sheet"/>
+            Sheet fills a need that the PrimeFaces Datatable with in-cell editing does not fill.  It can handle a large amount of data with editing single cells without submitting the entire sheet. Provides familiar spreadsheet navigation with TAB and SHIFT+TAB and familiar spreadsheet experience.
+            <p/>
+            <strong>Features include:</strong>
+            <ul>
+               <li>Fast In-Cell Editing and Validation</li>
+               <li>Copy/Paste</li> 
+               <li>Range Selection including Copy/Paste and Fill</li> 
+               <li>Sorting</li> 
+               <li>Filtering</li> 
+               <li>Fixed Columns and Rows</li> 
+               <li>Resizable Columns and Rows</li> 
+               <li>Movable Columns and Rows</li> 
+               <li>Ajax Updates and Validation</li> 
+            </ul>
+            Based on <h:outputLink id="lnkHandsonTable" value="https://handsontable.com/">Handsontable</h:outputLink> by Handsoncode.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/sheet/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="sheet"/>
+            <ui:param name="tagName2" value="sheetcolumn"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

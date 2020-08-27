@@ -48,10 +48,15 @@ Please refer to the [showcase](https://www.primefaces.org/showcase-ext/) in orde
 
 ### Issues
 ***
-Please report all issues [here](https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues).
+Please report all issues [here](https://github.com/primefaces-extensions/primefaces-extensions/issues).
 
-### License
+### Core License
 ***
 Licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license.
 
 `SPDX-License-Identifier: Apache-2.0`
+
+### CKEditor License (IMPORTANT!!!)
+
+Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.<br>
+For licensing see: [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license)

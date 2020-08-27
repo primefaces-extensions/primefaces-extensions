@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:growl id="growl" showDetail="true" showSummary="true">
+		<p:autoUpdate />
+	</p:growl>
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:sheet id="sheet" value="#{sheetDynamicController.sheetRows}" var="row" height="400" rowKey="#{row.id}"
+	showRowHeaders="true" sortBy="#{row.id}" sortOrder="ascending"  width="800"
+	widgetVar="sheetWidget" filteredValue="#{sheetDynamicController.filteredSheetRows}"
+	extender="sheetExtender">
+	
+	<f:facet name="header">
+		<h:outputText value="Dynamic Columns" />
+	</f:facet>
+
+	<pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.id}" colWidth="150"  />
+	<c:forEach items="#{sheetDynamicController.hoursOfDay}" var="hourOfDay" varStatus="status">
+        <pe:sheetcolumn styleClass="htRight #{row.cells[status.index].style}"
+                        headerText="#{hourOfDay}"
+                        value="#{row.cells[status.index].value}"
+                        readonlyCell="#{row.readOnly}"
+                        colType="numeric">
+                        <f:converter converterId="javax.faces.Integer" />
+        </pe:sheetcolumn>
+    </c:forEach>
+
+    <f:facet name="footer">
+        <h:outputText value="#{sheetDynamicController.filteredSheetRows.size()} Records" />
+    </f:facet>
+</pe:sheet>
+
+<style type="text/css">
+.cell-blue {color : blue}
+.cell-orange {color : darkorange}
+</style>
+<script type="text/javascript">
+function sheetExtender() {
+    // this = widget
+    // this.cfg = JSON configuration
+    this.cfg.trimWhitespace = true;
+};
+
+$(document).ready(function() {
+    var $hot = PF('sheetWidget').ht;
+    $hot.updateSettings({
+       contextMenu: {
+           callback: function (key, options) {
+             if (key === 'about') {
+               setTimeout(function () {
+                 // timeout is used to make sure the menu collapsed before alert is shown
+                 alert("PrimeFaces Extensions Rocks! This is a context menu with default and custom options mixed");
+               }, 100);
+             }
+           },
+           items: {
+             "row_above": {
+               disabled: function () {
+                 // if first row, disable this option
+                 return $hot.getSelected()[0] === 0;
+               }
+             },
+             "row_below": {},
+             "hsep1": "---------",
+             "remove_row": {
+               name: 'Remove this row, ok?',
+               disabled: function () {
+                 // if first row, disable this option
+                 return $hot.getSelected()[0] === 0
+               }
+             },
+             "hsep2": "---------",
+             "about": {name: 'About...'}
+           }
+       }
+    });
+});
+</script>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

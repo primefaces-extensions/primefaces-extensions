@@ -1,0 +1,31 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+   
+<p:messages id="messages">
+   <p:autoUpdate />
+</p:messages>
+
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="2">   
+        <h:outputText value="Calculator with defaults on h:inputText"/>   
+        <h:inputText id="hInputText" value="#{calculatorController.hInputText}">
+            <pe:calculator/>
+        </h:inputText> 
+ 
+        <h:outputText value="Calculator scientifc layout on a p:inputText"/>   
+        <p:inputText id="pInputText" value="#{calculatorController.pInputText}">
+            <pe:calculator layout="scientific"/>
+        </p:inputText> 
+ 
+        <h:outputText value="Calculator with button on a p:inputNumber" /> 
+        <p:inputNumber id="pInputNumber"  value="#{calculatorController.pInputNumber}" symbol=" $USD" symbolPosition="s" 
+                               decimalSeparator="." thousandSeparator="," decimalPlaces="2" /> 
+</h:panelGrid>
+
+<pe:calculator for="pInputNumber" showOn="both" precision="2"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

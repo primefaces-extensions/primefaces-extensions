@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->    
+<p:commandButton value="Block this page!" action="#{blockUIController.doSomething}" update="@none"
+                 onstart="PF('blockUIWidget').block()" oncomplete="PF('blockUIWidget').unblock()"/>
+
+<pe:blockUI widgetVar="blockUIWidget" cssOverlay="{opacity:0.5}">
+    <h:panelGrid columns="2">
+        <h:graphicImage library="images" name="ajax-loader1.gif"
+                        style="margin-right: 12px; vertical-align: middle;"/>
+        <h:outputText value="Please wait..." style="white-space: nowrap;"/>
+    </h:panelGrid>
+</pe:blockUI>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,51 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid id="grid" columns="3" style="margin-bottom:10px">
+    <h:outputLabel for="template" value="Template:" style="font-weight:bold"/>
+    <p:inputText id="template" value="#{dynamicColumnsTableController.columnTemplate}" size="50"/>
+    <p:commandButton id="btn" update="dynamicColumnsTable"
+                     actionListener="#{dynamicColumnsTableController.updateColumns}" value="Update"
+                     process="@parent"/>
+</h:panelGrid>
+
+<p:dataTable id="dynamicColumnsTable" var="message" value="#{dynamicColumnsTableController.messages}"
+             filteredValue="#{dynamicColumnsTableController.filteredMessages}">
+    <p:columns value="#{dynamicColumnsTableController.columns}" var="column" columnIndexVar="colIndex"
+                filterBy="#{message[column.property]}">
+        <f:facet name="header">
+            <h:outputText value="#{column.header}"/>
+        </f:facet>
+
+        <h:outputText value="#{message[column.property]}"/>
+    </p:columns>
+
+</p:dataTable>
+
+<p:spacer height="30"/>
+
+<p:panel header="Export PDF and Excel">
+    <p:commandLink id="pdf" ajax="false">
+        <p:graphicImage value="/resources/images/pdf.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="pdf" target="dynamicColumnsTable" fileName="dynamicColumnsTable"/>
+
+    </p:commandLink>
+
+    <p:spacer height="20"/>
+
+    <p:commandLink id="xls" ajax="false">
+        <p:graphicImage value="/resources/images/excel.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="xlsx" target="dynamicColumnsTable" fileName="dynamicColumnsTable"/>
+
+    </p:commandLink>
+</p:panel>
+
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/slideout/basicUsage.jsf"/>
+        <p:menuitem value="Multiple Tabs"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('multipleTabs')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/slideout/multipleTabs.jsf"/>
+        <p:menuitem value="Advanced Usage, events and callbacks"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('advancedUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/slideout/advancedUsage.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

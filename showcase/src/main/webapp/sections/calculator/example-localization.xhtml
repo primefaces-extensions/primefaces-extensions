@@ -1,0 +1,32 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+   
+<p:messages id="messages">
+   <p:autoUpdate />
+</p:messages>
+
+<!-- EXAMPLE-SOURCE-START -->
+	<h:panelGrid columns="6" id="pnlDetails">
+		<p:outputLabel value="Locale:" for="cboLocale" />
+		<p:selectOneMenu id="cboLocale" value="#{calculatorController.language}" style="width:200px" required="true">
+			<f:selectItems value="#{calculatorController.languages}" />
+			<p:ajax update="pInputText" process="@this"/>
+		</p:selectOneMenu>
+
+		<p:outputLabel value="RTL:" for="chkRtl" />
+		<p:selectBooleanCheckbox id="chkRtl" value="#{calculatorController.rtl}">
+			<p:ajax update="pInputText" process="@this"/>
+		</p:selectBooleanCheckbox>
+
+		<p:outputLabel value="Calc:" for="pInputText" />
+		<p:inputText id="pInputText" value="#{calculatorController.pInputText}">
+			<pe:calculator dir="#{calculatorController.rtl ? 'rtl' : 'ltr'}" locale="#{calculatorController.language}" showOn="both"/>
+		</p:inputText>
+	</h:panelGrid>
+	<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

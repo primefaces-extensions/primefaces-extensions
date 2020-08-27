@@ -1,0 +1,51 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+    
+    <h:outputText value="Render method: " />
+    <p:selectOneButton value="#{qrCodeController.renderMethod}">  
+        <f:selectItem itemLabel="canvas" itemValue="canvas" />  
+        <f:selectItem itemLabel="image" itemValue="img" />  
+        <f:selectItem itemLabel="div" itemValue="div" />  
+    </p:selectOneButton>
+    <h:outputText value="Render mode:" />
+    <p:selectOneButton value="#{qrCodeController.mode}">  
+        <f:selectItem itemLabel="normal" itemValue="0" />  
+        <f:selectItem itemLabel="label strip" itemValue="1" />  
+        <f:selectItem itemLabel="label box" itemValue="2" />  
+        <f:selectItem itemLabel="image strip" itemValue="3" />
+        <f:selectItem itemLabel="image box" itemValue="4" />
+    </p:selectOneButton>
+    <h:outputText value="Size:" />
+    <h:panelGrid columns="1">
+        <h:inputHidden id="txt2" value="#{qrCodeController.size}" />
+        <p:slider minValue="50" maxValue="500" for="txt2"  style="width:200px"/>
+    </h:panelGrid>
+    <h:outputText value="Fill color:" />
+    <p:colorPicker value="#{qrCodeController.fillColor}"/>
+    
+    <p:commandButton value="update" update="qrCodeElem"/>
+    
+</h:panelGrid>
+
+<p:separator/>
+
+<pe:qrCode id="qrCodeElem" 
+           renderMethod="#{qrCodeController.renderMethod}" 
+           renderMode="#{qrCodeController.mode}" 
+           text="#{qrCodeController.text}"
+           label="#{qrCodeController.label}"
+           size="#{qrCodeController.size}"                 
+           fillColor="#{qrCodeController.fillColor}"
+           fontName="Ubuntu"
+           fontColor="#01A9DB"
+           ecLevel="H"                   
+           radius="0.5"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

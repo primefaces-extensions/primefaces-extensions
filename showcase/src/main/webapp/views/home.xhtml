@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <h:panelGroup layout="block" class="title ui-widget-header ui-corner-all"
+                      style="padding: 8px; font-size: 16px !important; text-align: center;">
+            <h:outputText value="Welcome to PrimeFaces Extensions ShowCase"/>
+        </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="centerContent" style="font-size: 12px;">
+            <h:panelGrid columns="2">
+                <h:graphicImage library="images" name="components.png" alt="PrimeFaces Extensions"/>
+                <h:panelGroup layout="block" style="padding-left: 25px; line-height: 20px;">
+                    PrimeFaces Extensions is a lightweight open source component library for Java Server Faces 2.0.
+                    The project is built on top of PrimeFaces - a mature and robust component suite.
+                    PrimeFaces Extensions consists of extended components missing in other JSF 2 libraries or with improved components which already exist somewhere but don't work there smoothly.
+                    Besides that it provides useful ClientBehaviors, Converters, TagHandlers and more.
+                    They are shown on the left side. Corresponding use cases are shown at the top on the right and tag documentation along with client behavior events at the bottom on the right.
+                    <p/>
+                    This showcase was tested with current JSF implementations Mojarra and MyFaces.
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:panelGroup>
+		<h:panelGroup layout="block" styleClass="centerContent" style="font-size: 14px;">
+			<h:panelGrid columns="2">
+				<h:graphicImage library="images" name="medal.png" alt="Hall Of Fame" />
+				<p:panelGrid style="font-size: 14px;">
+					<f:facet name="header">
+						<p:row>
+							<p:column colspan="2">Hall Of Fame</p:column>
+						</p:row>
+					</f:facet>
+
+					<p:row>
+						<p:column colspan="2">The following components were once Extensions components that have graduated into the PrimeFaces core library:</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/misc/importEnum.xhtml">ImportEnum</p:link>
+						</p:column>
+						<p:column>ImportEnum allows in older EL versions (&lt; 3.0), to use enum constants or any other static fields/methods in an EL expression.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/misc/importConstants.xhtml">ImportConstants</p:link>
+						</p:column>
+						<p:column>ImportConstants allows in older EL versions (&lt; 3.0), to use constants or any other static fields/methods in an EL expression.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/input/inputNumber.xhtml">InputNumber</p:link>
+						</p:column>
+						<p:column>InputNumber formats input fields with numeric Strings. It supports currency symbols, minimum and maximum value, negative numbers, and a lot of round methods.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/input/keyFilter.xhtml">KeyFilter</p:link>
+						</p:column>
+						<p:column>KeyFilter can be used to filter keyboard input on specified input components.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/input/knob.xhtml">Knob</p:link>
+						</p:column>
+						<p:column>Knob's useful to insert numeric values in a range.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/misc/spotlight.xhtml">Spotlight</p:link>
+						</p:column>
+						<p:column>Spotlight highlights a certain component on page.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/data/timeline/basic.xhtml">Timeline</p:link>
+						</p:column>
+						<p:column>Timeline is an interactive visualization chart to visualize events in time.</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:link href="https://www.primefaces.org/showcase/ui/input/triStateCheckbox.xhtml">TriStateCheckbox</p:link>
+						</p:column>
+						<p:column>TriStateCheckbox add a new state to a checkbox value.</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:panelGrid>
+		</h:panelGroup>
+	</ui:define>
+    <ui:define name="useCases">
+        <h:outputText value="Please select any component to see use cases"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <h:outputText value="Please select any component to see documentation"/>
+    </ui:define>
+</ui:composition>
+</html>

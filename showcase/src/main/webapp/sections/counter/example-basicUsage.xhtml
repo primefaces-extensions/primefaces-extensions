@@ -1,0 +1,39 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="true" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="2" columnClasses="normal, bold">
+        <h:outputText value="Basic Usage"/>
+        <pe:counter end="9000" separator=""/>
+        <h:outputText value="Start Value"/>
+        <pe:counter end="9000" start="1000"/>
+        <h:outputText value="Count Down"/>
+        <pe:counter start="9000" end="1000"/>
+        <h:outputText value="Decimal Places"/>
+        <pe:counter end="9000" decimals="2"/>
+        <h:outputText value="Separator"/>
+        <pe:counter end="9000" separator="." decimals="2" decimal=","/>
+        <h:outputText value="Prefix Suffix"/>
+        <pe:counter end="9000" prefix="USD " suffix=" $" style="background-color:black;color:MediumSeaGreen;"/>
+        <h:outputText value="AJAX and Events"/>
+        <pe:counter start="0" end="9000" duration="5" onstart="console.log('STARTED')" onend="console.log('ENDED')" autoStart="true">
+            <p:ajax event="start" listener="#{counterController.startListener}"/>
+            <p:ajax event="end" listener="#{counterController.endListener}"/>
+        </pe:counter>
+    </h:panelGrid>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

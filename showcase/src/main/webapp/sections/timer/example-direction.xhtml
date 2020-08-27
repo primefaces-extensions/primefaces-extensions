@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="2">
+    <h:outputText value="Forward"/>
+    <h:outputText value="Backward"/>
+    <pe:timer
+        timeout="1000"
+        forward="true"/>
+    <pe:timer
+        timeout="1000"
+        forward="false"/>
+</h:panelGrid>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

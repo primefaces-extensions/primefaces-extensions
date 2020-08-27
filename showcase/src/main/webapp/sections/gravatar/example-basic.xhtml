@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h3>PrimeFaces Extensions Gravatar profile</h3>
+
+<p:panelGrid columns="3">
+    <h:outputText value="Avatar"/>
+    <h:outputText value="QRCode"/>
+    <h:outputText value="NotFound"/>
+    <pe:gravatar value="pfextensions@gmail.com"/>
+    <pe:gravatar value="pfextensions@gmail.com" qrCode="true"/>
+    <pe:gravatar value="iamadummygravataruser@gmail.com" notFound="https%3A%2F%2Fui-avatars.com%2Fapi%2F/Primefaces+Rocks"/>
+</p:panelGrid>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

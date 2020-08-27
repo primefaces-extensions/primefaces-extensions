@@ -1,0 +1,32 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<p:messages id="messages">
+   <p:autoUpdate />
+</p:messages>
+<p:outputPanel id="container" layout="block">
+    <h:panelGrid columns="4">
+        <h:outputText value="Mushrooms" />
+        <h:outputText value="Onions" />
+        <h:outputText value="Type" />
+        <h:panelGroup/>
+        <p:inputText converter="javax.faces.Integer" value="#{basicGChartController.mushrooms}" />
+        <p:inputText converter="javax.faces.Integer" value="#{basicGChartController.onions}" />
+        <h:selectOneMenu value="#{basicGChartController.chartType}">
+            <f:selectItems value="#{basicGChartController.types}"/>
+        </h:selectOneMenu>
+        <p:commandButton value="Generate" update="container" action="#{basicGChartController.generateModel}" />
+    </h:panelGrid>
+
+    <pe:gChart value="#{basicGChartController.chart}" title="How Much Pizza I Ate Last Night">
+        <p:ajax listener="#{basicGChartController.onSelect}"/>
+    </pe:gChart>
+</p:outputPanel>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

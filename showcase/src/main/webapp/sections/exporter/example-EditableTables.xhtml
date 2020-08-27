@@ -1,0 +1,188 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<p:dataTable id="cellEditingTable" var="message" value="#{messageTableController.messages}"
+             paginator="true" rows="5" paginatorPosition="bottom"
+             filteredValue="#{messageTableController.filteredMessages}"
+             editable="true" editMode="cell">
+    <f:facet name="header">
+        In-Cell Editing
+    </f:facet>
+
+    <p:column filterBy="#{message.subject}">
+        <f:facet name="header">
+            <h:outputText value="Subject"/>
+        </f:facet>
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{message.subject}"/>
+            </f:facet>
+            <f:facet name="input">
+                <p:inputText id="modelInput" value="#{message.subject}" style="width:96%"/>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+    <p:column filterBy="#{message.text}">
+        <f:facet name="header">
+            <h:outputText value="Text"/>
+        </f:facet>
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{message.text}"/>
+            </f:facet>
+            <f:facet name="input">
+                <p:inputText value="#{message.text}" style="width:96%"/>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+    <p:column filterBy="#{message.time}">
+        <f:facet name="header">
+            <h:outputText value="Time"/>
+        </f:facet>
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{message.time}"/>
+            </f:facet>
+            <f:facet name="input">
+                <p:inputText value="#{message.time}" style="width:96%"/>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+    <p:column filterBy="#{message.state}">
+        <f:facet name="header">
+            <h:outputText value="State"/>
+        </f:facet>
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{message.state}"/>
+            </f:facet>
+            <f:facet name="input">
+                <h:selectOneMenu value="#{message.state}" style="width:100%">
+                    <f:selectItems value="#{messageTableController.states}" var="state" itemLabel="#{state}"
+                                   itemValue="#{state}"/>
+                </h:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+</p:dataTable>
+
+    <p:spacer height="20"/>
+
+    <p:panel header="Export PDF and Excel">
+        <p:commandLink id="pdf" ajax="false">
+            <p:graphicImage value="/resources/images/pdf.png"/>
+            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+            <pe:exporter type="pdf" target="cellEditingTable" fileName="CellEditableTable"/>
+
+        </p:commandLink>
+
+        <p:spacer height="20"/>
+
+        <p:commandLink id="xls" ajax="false">
+            <p:graphicImage value="/resources/images/excel.png"/>
+            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+            <pe:exporter type="xlsx" target="cellEditingTable" fileName="CellEditableTable"/>
+
+        </p:commandLink>
+
+    </p:panel>
+
+    <p:spacer height="40"/>
+
+ <p:dataTable id="rowEditingTable" var="message" value="#{messageTableController.messages}"
+                 paginator="true" rows="5" paginatorPosition="bottom"
+                 filteredValue="#{messageTableController.filteredMessages}"
+                 editable="true" >
+        <f:facet name="header">
+            Row Editing
+        </f:facet>
+
+        <p:column filterBy="#{message.subject}">
+            <f:facet name="header">
+                <h:outputText value="Subject"/>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{message.subject}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText id="modelInput" value="#{message.subject}" style="width:96%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column filterBy="#{message.text}">
+            <f:facet name="header">
+                <h:outputText value="Text"/>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{message.text}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{message.text}" style="width:96%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column filterBy="#{message.time}">
+            <f:facet name="header">
+                <h:outputText value="Time"/>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{message.time}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{message.time}" style="width:96%"/>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column filterBy="#{message.state}">
+            <f:facet name="header">
+                <h:outputText value="State"/>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{message.state}"/>
+                </f:facet>
+                <f:facet name="input">
+                    <p:selectOneMenu value="#{message.state}" style="width:100%">
+                        <f:selectItems value="#{messageTableController.states}" var="state" itemLabel="#{state}"
+                                       itemValue="#{state}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column style="width:6%" exportable="false">
+            <p:rowEditor />
+        </p:column>
+    </p:dataTable>
+
+<p:spacer height="20"/>
+
+<p:panel header="Export PDF and Excel">
+    <p:commandLink id="pdf1" ajax="false">
+        <p:graphicImage value="/resources/images/pdf.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="pdf" target="rowEditingTable" fileName="RowEditableTable" cellFontColor="#80AAFF" facetBackground="#008000"
+                     facetFontColor="#FFFFFF" />
+
+    </p:commandLink>
+
+    <p:spacer height="20"/>
+
+    <p:commandLink id="xls1" ajax="false">
+        <p:graphicImage value="/resources/images/excel.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="xlsx" target="rowEditingTable" fileName="RowEditableTable"  />
+
+    </p:commandLink>
+
+</p:panel>
+
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

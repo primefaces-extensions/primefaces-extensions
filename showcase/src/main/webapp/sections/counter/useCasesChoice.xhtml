@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/counter/basicUsage.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Timer"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            There are various ways to format the value of the Timer.
+            <ul>
+                <li>
+                    <strong>Default:</strong> simply display the seconds remaining
+                </li>
+                <li>
+                    <strong>Percentage:</strong> display the reaming time as a percentage value
+                </li>
+                <li>
+                    <strong>Human:</strong> use the <a href="http://momentjs.com/docs/#/durations/humanize/" target="_blank">Moment.JS Humanize</a> function to print an human
+                    readable interval
+                </li>
+                <li>
+                    <strong>Custom:</strong> use a <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">Moment.JS format</a>. For example HH:mm:ss
+                </li>
+                <li>
+                    <strong>Function:</strong> you can simply pass any JavaScript function to format the timer value.
+                </li>
+            </ul>
+         </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/timer/example-format.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/timer/example-format.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/timer/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="timer"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

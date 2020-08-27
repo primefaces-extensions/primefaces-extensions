@@ -1,0 +1,18 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<p>
+    You've opened this page
+    <pe:timeAgo value="#{basicTimeAgoController.now}"
+                titlePattern="MMMMM dd yyyy hh:mm aaa" style="font-weight:bold" />.
+</p>
+<p>
+    PrimeFaces Extensions was first released
+    <pe:timeAgo value="#{basicTimeAgoController.firstRelease}"
+                titlePattern="MMMMM dd yyyy" style="font-weight:bold"/>.
+</p>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

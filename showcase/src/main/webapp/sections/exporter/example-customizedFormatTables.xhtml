@@ -1,0 +1,197 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<p:dataTable id="groupingTable" var="sale" value="#{groupedTableController.mobileList}">
+    <f:facet name="header">
+        <h:outputText value="Sales/Profits of Mobile Manufacturers"/>
+    </f:facet>
+
+    <p:columnGroup type="header">
+        <p:row>
+            <p:column rowspan="3" headerText="Manufacturer"/>
+            <p:column colspan="8" headerText="Sales"/>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="4" headerText="Sales Report"/>
+            <p:column colspan="4" headerText="Profit Report"/>
+        </p:row>
+
+        <p:row>
+            <p:column headerText="First Quarter"/>
+            <p:column headerText="Second Quarter"/>
+            <p:column headerText="Third Quarter"/>
+            <p:column headerText="Fourth Quarter"/>
+
+            <p:column headerText="First Quarter"/>
+            <p:column headerText="Second Quarter"/>
+            <p:column headerText="Third Quarter"/>
+            <p:column headerText="Fourth Quarter"/>
+        </p:row>
+    </p:columnGroup>
+
+    <p:column>
+        <h:outputText value="#{sale.manufacturer}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q1Sale}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q2Sale}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q3Sale}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q4Sale}"/>
+    </p:column>
+    
+    <p:column>
+        <h:outputText value="#{sale.q1Profit}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q2Profit}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q3Profit}"/>
+    </p:column>
+
+    <p:column>
+        <h:outputText value="#{sale.q4Profit}"/>
+    </p:column>
+    
+    <p:columnGroup type="footer">
+        <p:row>
+            <p:column colspan="1" style="text-align:right" footerText="Totals:"/>
+
+            <p:column footerText="#{groupedTableController.q1TotSales}$"/>
+            <p:column footerText="#{groupedTableController.q2TotSales}$"/>
+            <p:column footerText="#{groupedTableController.q3TotSales}$"/>
+            <p:column footerText="#{groupedTableController.q4TotSales}$"/>
+
+            <p:column footerText="#{groupedTableController.q1TotProfit}$"/>
+            <p:column footerText="#{groupedTableController.q2TotProfit}$"/>
+            <p:column footerText="#{groupedTableController.q3TotProfit}$"/>
+            <p:column footerText="#{groupedTableController.q4TotProfit}$"/>
+        </p:row>
+    </p:columnGroup>
+
+    <f:facet name="footer">
+        Use a bicycle instead of a car
+    </f:facet>
+
+</p:dataTable>
+    
+<p:spacer height="30"/>
+    
+<p:panel header="Export PDF and Excel">
+    <p:commandLink id="pdf" ajax="false">
+        <p:graphicImage value="/resources/images/pdf.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="pdf" target="groupingTable" fileName="GroupedTable" tableTitle="Sales/Profits Analysis" orientation="Landscape"
+                     facetBackground="#F88017" facetFontSize="10" facetFontColor="#0000ff" facetFontStyle="BOLD"
+                     cellFontColor="#00ff00" cellFontSize="8" cellFontStyle="NORMAL"/>
+    </p:commandLink>
+
+    <p:spacer height="20"/>
+
+    <p:commandLink id="xlsx" ajax="false">
+        <p:graphicImage value="/resources/images/excel.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="xlsx" target="groupingTable" fileName="GroupedTable" tableTitle="Sales/Profits Analysis"
+                     facetBackground="#F88017" facetFontSize="10" facetFontColor="#0000ff" facetFontStyle="BOLD"  fontName="Courier New"
+                     cellFontColor="#00ff00" cellFontSize="8" cellFontStyle="NORMAL"/>
+    </p:commandLink>
+
+</p:panel>
+
+<p:spacer height="30"/>
+
+<p:dataTable id="playersSubTable" var="player" value="#{subTableController.players}">
+    <f:facet name="header">
+        <h:outputText value="ICC Players Statistics"/>
+    </f:facet>
+
+    <p:columnGroup type="header">
+        <p:row>
+            <p:column rowspan="2" headerText="Player " />
+            <p:column colspan="3" headerText="Player Statistics"/>
+        </p:row>
+
+        <p:row>
+            <p:column headerText="Score"/>
+            <p:column headerText="Wickets"/>
+            <p:column headerText="Catches"/>
+        </p:row>
+    </p:columnGroup>
+
+    <p:subTable var="details" value="#{player.details}">
+        <f:facet name="header">
+            <h:outputText value="#{player.name}-#{player.number}-#{player.country}"/>
+        </f:facet>
+
+        <p:column>
+            <h:outputText value=" #{details.year}"/>
+        </p:column>
+
+        <p:column>
+            <h:outputText value=" #{details.runs}"/>
+        </p:column>
+
+        <p:column>
+            <h:outputText value="  #{details.wickets}"/>
+        </p:column>
+
+        <p:column>
+            <h:outputText value=" #{details.catches}"/>
+        </p:column>
+
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column footerText="Totals: " style="text-align:right"/>
+                <p:column footerText="#{player.totalRuns}"/>
+                <p:column footerText="#{player.totalWickets}"/>
+                <p:column footerText="#{player.totalCatches}"/>
+            </p:row>
+        </p:columnGroup>
+    </p:subTable>
+</p:dataTable>
+
+<p:spacer height="30"/>
+
+<p:panel header="Export PDF and Excel">
+    <p:commandLink id="pdfSubtable" ajax="false">
+        <p:graphicImage value="/resources/images/pdf.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="pdf" target="playersSubTable" fileName="PlayersStatistics"  orientation="Landscape"
+                     tableTitle="Players Statistics" subTable="true" facetBackground="#008000" facetFontSize="15"
+                     facetFontColor="#FFFFFF" facetFontStyle="BOLD" cellFontColor="#0000FF" cellFontSize="12"  datasetPadding="4"
+                     cellFontStyle="NORMAL"/>
+
+    </p:commandLink>
+
+    <p:spacer width="20"/>
+
+    <p:commandLink id="xls" ajax="false">
+        <p:graphicImage value="/resources/images/excel.png"/>
+        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+        <pe:exporter type="xlsx" target="playersSubTable" fileName="PlayersStatistics" subTable="true"
+                     facetBackground="#008000" facetFontSize="15"
+                     facetFontColor="#FFFFFF" facetFontStyle="BOLD" cellFontColor="#0000FF" cellFontSize="12"  cellFontStyle="NORMAL"
+                     fontName="Courier New" datasetPadding="4"/>
+
+    </p:commandLink>
+</p:panel>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

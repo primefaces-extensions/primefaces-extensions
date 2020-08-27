@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid id="details" columns="2" columnClasses="formColumn1,formColumn2">
+    <h:outputLabel value="First Name: "/>
+    <p:inputText title="Enter First Name"/>
+    <h:outputLabel value="Last Name: "/>
+    <p:inputText title="Enter Last Name"/>
+</h:panelGrid>
+
+<p:commandButton value="Submit and see that global tooltips are still here" process="details" update="details"
+                 title="Click to submit the form per ajax" style="margin-top: 10px;"/>
+
+<pe:tooltip global="true" myPosition="left center" atPosition="right center" header="Global"/>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

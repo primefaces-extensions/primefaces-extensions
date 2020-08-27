@@ -1,0 +1,70 @@
+<ui:composition
+		xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGroup id="dynaFormGroup">
+	<p:messages id="messages" showSummary="true"/>  
+	
+    <pe:dynaForm id="dynaForm" value="#{nestedDynaFormController.model}" var="data" >
+    	<pe:dynaFormControl type="input" for="txt">
+            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+        </pe:dynaFormControl>
+        
+        <pe:dynaFormControl type="date" for="cal" styleClass="calendar">
+            <p:calendar id="cal" value="#{data.value}" required="#{data.required}" showOn="button"/>
+        </pe:dynaFormControl>
+
+		<f:facet name="headerRegular">  
+           <div><h:outputText value="Search area" /></div>
+        </f:facet>
+        
+        <f:facet name="buttonBar">
+            <p:commandButton value="Submit" action="#{nestedDynaFormController.submitForm}"
+                             process="dynaForm" update=":mainForm:dynaFormGroup :mainForm:inputValues"
+                             oncomplete="handleComplete(xhr, status, args)"/>
+            <p:commandButton type="reset" value="Reset" style="margin-left: 5px;"/>
+        </f:facet>
+    </pe:dynaForm>
+</h:panelGroup>
+
+<p:dialog header="Input values" widgetVar="inputValuesWidget">
+    <p:dataList id="inputValues" value="#{nestedDynaFormController.bookProperties}" var="bookProperty"
+                style="margin:10px;">
+        <h:outputText value="#{bookProperty.name}: #{bookProperty.formattedValue}"
+                      style="margin-right: 10px;"/>
+    </p:dataList>
+</p:dialog>
+
+<h:outputScript id="dynaFormScript" target="body">
+/* <![CDATA[ */
+    function handleComplete(xhr, status, args) {
+        if(args && args.isValid) {
+            PF('inputValuesWidget').show();
+        } else {
+            PF('inputValuesWidget').hide();
+        }
+    }
+/* ]]> */
+</h:outputScript>
+
+<h:outputStylesheet id="dynaFormCSS">
+    .pe-dynaform-cell .ui-calendar input {  
+        width: 100px;  
+    }
+    .pe-dynaform-headerfacet div{  
+        border: 1px dotted #808080;  
+        padding: 10px;  
+        text-align: center;  
+    }    
+    .pe-dynaform-label {  
+        text-align: left;  
+        padding: 2px 20px 0 0;  
+    }
+</h:outputStylesheet>
+
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

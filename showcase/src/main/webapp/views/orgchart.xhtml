@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="OrgChart"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Orgchart is a simple and direct organization chart plugin. Anytime you want a tree-like chart, you can turn to OrgChart.
+            <p/>
+            Based on <h:outputLink id="lnkOrgchart" value="https://github.com/dabeng/OrgChart">orgchart</h:outputLink> by Xuebin Dong (@dabeng).
+        </h:panelGroup>
+        
+        <h:graphicImage library="images" name="orgchart.png" alt="Orgchart" width="600"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/orgchart/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="orgchart"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,70 @@
+<ui:composition
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGroup id="dynaFormGroup">
+    <p:messages id="messages" showSummary="true"/>
+
+    <pe:dynaForm id="dynaForm" value="#{containerDynaFormController.model}"
+                 var="data" varContainerId="ccId">
+        <pe:dynaFormControl for="txt">
+            <h:panelGroup style="white-space: nowrap;">
+                <p:inputText id="txt" value="#{data.value}"/>
+                <p:commandButton icon="fa fa-search" process="@this txt"
+                                 update=":mainForm:dialogList" oncomplete="PF('dialogListWdgt').show()"
+                                 title="Please choose an item"
+                                 style="border:none;">
+                    <f:setPropertyActionListener value="#{ccId}"
+                                                 target="#{containerDynaFormController.containerClientId}"/>
+                    <f:setPropertyActionListener value="#{data}"
+                                                 target="#{containerDynaFormController.selectedField}"/>
+                    <f:setPropertyActionListener value="#{data.value}"
+                                                 target="#{containerDynaFormController.selectedItem}"/>
+                </p:commandButton>
+            </h:panelGroup>
+        </pe:dynaFormControl>
+
+        <f:facet name="buttonBar">
+            <p:commandButton value="Submit" process="dynaForm"
+                             update=":mainForm:dynaFormGroup :mainForm:inputValues"
+                             oncomplete="PF('inputValuesWidget').show()"/>
+        </f:facet>
+    </pe:dynaForm>
+</h:panelGroup>
+    
+<p:dialog id="dialogList" widgetVar="dialogListWdgt">
+    <f:facet name="header">
+        Please select an item
+    </f:facet>
+
+    <h:selectOneListbox id="selectList" value="#{containerDynaFormController.selectedItem}"
+                        style="width:200px;">
+        <f:selectItems value="#{containerDynaFormController.list}"/>
+    </h:selectOneListbox>
+
+    <h:panelGroup layout="block" style="white-space:nowrap; margin-top:15px;">
+        <p:commandButton value="OK" icon="fa fa-save" style="margin-right:5px"
+                         process="@this selectList" action="#{containerDynaFormController.updateSelection}"
+                         global="false" oncomplete="PF('dialogListWdgt').hide()"/>
+        <p:commandButton value="Cancel" type="button" onclick="PF('dialogListWdgt').hide()"/>
+    </h:panelGroup>
+</p:dialog>    
+
+<p:dialog header="Input values" widgetVar="inputValuesWidget">
+    <p:dataList id="inputValues" value="#{containerDynaFormController.values}" var="value"
+                style="margin:10px;">
+        <h:outputText value="#{value}" style="margin-right: 15px;"/>
+    </p:dataList>
+</p:dialog>
+
+<h:outputStylesheet id="dynaFormCSS">
+    .pe-dynaform-cell input,
+    .pe-dynaform-cell[colspan="1"] input {
+        width: 150px;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

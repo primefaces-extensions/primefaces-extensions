@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Layout"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            To place any custom content between layout panes there are three alternative ways:
+            <p/>
+            <ul>
+                <li>
+                    Place a nested layout pane (pe:layoutPane) within a div element with the class "ui-layout-content".
+                    This approach is applied in this example.
+                </li>
+                <li>
+                    Add the option "containerSelector" to child options (see LayoutOptions class).
+                    The value of "containerSelector" points to a wrapper-div element which acts as a container for nested layout panes.
+                </li>
+                <li>
+                    Use the header facet (f:facet name="header") for any custom content. This is very handy. For instance,
+                    if you place messages there, they will be always visible because only pane's inner "content container" gets scrollbars.
+                    The header facet always stays fixed. This approach is demonstrated in this example.
+                </li>
+            </ul>
+            <strong>Note:</strong> Use the widget's method <strong>sizeContent(pane)</strong> to manually trigger a resize
+            from your own code when the custom content between layout panes gets updated and changes its size.
+            <strong>sizeContent(pane)</strong> resizes the "content container" inside the specified pane
+            (e.g. sizeContent('center_west')). Content is resized automatically when the pane is resized or opened,
+            so this method only needs to be called manually if something "changes the height" of a header or footer element in the pane.
+            <p/>
+            Please refer <a href="http://layout.jquery-dev.net/changelog.cfm" target="_blank">examples</a> on the plugin homepage to see how it works in detail.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h:outputLink value="#{request.contextPath}/sections/layout/customContentPage.jsf" target="_blank"
+                          style="font-weight: bold; text-decoration: none; border-bottom: 1px dotted;">
+                <h:outputText value="Show full page layout with custom content"/>
+            </h:outputLink>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/layout/example-customContent.xhtml')}
+                
+// Included page with nested child layout
+                
+${showcase:getFileContent('/sections/layout/example-customContentOne.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/layout/CustomContentLayoutController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/layout/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="layout"/>
+            <ui:param name="tagName2" value="layoutPane"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

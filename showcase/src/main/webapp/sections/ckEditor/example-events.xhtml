@@ -1,0 +1,32 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+
+<h:outputScript>
+    function showEvent(name) {
+        PF("eventGrowl").renderMessage({summary: "Event triggered", detail: name, severity: "info"});
+    }
+</h:outputScript>
+
+<p:growl id="growl" showDetail="true" widgetVar="eventGrowl" life="1200"/>
+
+<pe:ckEditor id="editor" value="#{editorController.content}">
+    <pe:javascript event="blur" execute="showEvent('blur')" />
+    <pe:javascript event="change" execute="showEvent('change')" />
+    <pe:javascript event="dirty" execute="showEvent('dirty')" />
+    <pe:javascript event="focus" execute="showEvent('focus')" />
+    <pe:javascript event="initialize" execute="showEvent('initialize')" />
+    <pe:javascript event="save" execute="showEvent('save')" />
+    <pe:javascript event="sourceMode" execute="showEvent('sourceMode')" />
+    <pe:javascript event="wysiwygMode" execute="showEvent('wysiwygMode')" />
+</pe:ckEditor>
+
+
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

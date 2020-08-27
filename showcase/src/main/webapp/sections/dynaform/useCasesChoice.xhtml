@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/basicUsage.jsf"/>
+        <p:menuitem value="Advanced features"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('advancedFeatures')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/advancedFeatures.jsf"/>
+        <p:menuitem value="Yet another forms"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('anotherForms')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/anotherForms.jsf"/>
+        <p:menuitem value="Utilization of container client Id"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('containerClientId')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/containerClientId.jsf"/>
+		<p:menuitem value="Utilization of nested model"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('nestedModel')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/nestedModel.jsf"/>
+        <p:menuitem value="Access controls with visit callback and remove rows"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('visitCallback')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/dynaform/visitCallback.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

@@ -1,0 +1,73 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+<p:messages id="messages"/>
+
+<h:panelGroup id="timePickerGroup" layout="block">
+    <p>
+    Inline mode
+    <pe:timePicker value="#{timePickerController.time1}" mode="inline" widgetVar="inlineTimeWidget"
+                   label="Inline time picker"/>
+    </p>
+
+    <p>
+    Popup mode
+    <pe:timePicker value="#{timePickerController.time2}" mode="popup" widgetVar="popupTimeWidget"
+                   label="Popup time picker"/>
+    </p>
+
+    <p>
+    Spinner mode
+    <pe:timePicker value="#{timePickerController.time3}" widgetVar="spinnerTimeWidget"
+                   label="Spinner time picker"/>
+    </p>
+
+    <p>
+    Customization
+    <pe:timePicker value="#{timePickerController.time4}" timeSeparator="-" startHours="8" endHours="20"
+                   startMinutes="10" endMinutes="40" intervalMinutes="10" showCloseButton="true"
+                   showDeselectButton="true" showNowButton="true" rows="3" showPeriod="true" size="8"
+                   widgetVar="customTimeWidget" label="Custom time picker" required="true" requiredMessage="Customization is required!"/>
+    </p>
+
+    <p>
+    Show popup by button
+    <pe:timePicker value="#{timePickerController.time5}" mode="popup" widgetVar="popupBtnTimeWidget"
+                   showOn="button" label="Popup time picker with button"/>
+    </p>
+
+    <p>
+    Spinner with button
+    <pe:timePicker value="#{timePickerController.time6}" mode="spinner" widgetVar="spinnerBtnTimeWidget"
+                   showOn="button" label="Spinner time picker with button"/>
+    </p>
+</h:panelGroup>
+
+<p:commandButton type="button" value="Disable time pickers" style="margin-top:10px;"
+                 onclick="PF('inlineTimeWidget').disable();PF('popupTimeWidget').disable();
+                     PF('spinnerTimeWidget').disable();PF('customTimeWidget').disable();
+                     PF('popupBtnTimeWidget').disable();PF('spinnerBtnTimeWidget').disable();"/>
+<p:commandButton type="button" value="Enable time pickers" style="margin-top:10px;"
+                 onclick="PF('inlineTimeWidget').enable();PF('popupTimeWidget').enable();
+                     PF('spinnerTimeWidget').enable();PF('customTimeWidget').enable();
+                     PF('popupBtnTimeWidget').enable();PF('spinnerBtnTimeWidget').enable();"/>
+<p:commandButton id="submitButton" value="Submit" actionListener="#{timePickerController.showTime}"
+                 process="@this timePickerGroup" update="messages timeDialog timePickerGroup"
+                 style="margin-top:10px;" icon="fa fa-save"/>
+
+<p:dialog id="timeDialog" header="Selected Values" visible="#{timePickerController.showTimeDialog}">
+    <h:panelGrid columns="1" style="margin: 10px;">
+        <h:outputText value="Inline: #{timePickerController.formattedTime1}"/>
+        <h:outputText value="Popup: #{timePickerController.formattedTime2}"/>
+        <h:outputText value="Spinner: #{timePickerController.formattedTime3}"/>
+        <h:outputText value="Custom: #{timePickerController.formattedTime4}"/>
+        <h:outputText value="Button: #{timePickerController.formattedTime5}"/>
+        <h:outputText value="Spinner and Button: #{timePickerController.formattedTime6}"/>
+    </h:panelGrid>
+</p:dialog>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

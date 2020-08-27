@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="JavascriptBehaviour"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+			The Javascript behaviour can be used to catch events with javascript without making an AJAX request.
+			In the example, the "page" event is caught with pe:javascript. This will also destroy the paging functionality of p:datatable because no ajax request will be done.
+			So it should not be used for every event and every component. Following javascript parameters will be available in executes statement:
+			<ul>
+				<li>source - client Id of the component which fires the event</li>
+				<li>event - The name of the catched event</li>
+				<li>params - The rendered params (f:param childrens of pe:javascript)</li>
+				<li>ext - The object created by corresponding widget</li>
+			</ul>
+			The 'ext' parameter can be used for example to get the parameters which are created by the parent widget.
+			For example the colResize event of p:dataTable:
+			<p/>
+&#160; 			var ext = {<br/>
+&#160;&#160;    	params: [<br/>
+&#160;&#160;&#160;    	{ name: id + '_columnId', value : columnHeader.attr('id') }, <br/>
+&#160;&#160;&#160;    	{ name: id + '_width', value : newWidth }, <br/>
+&#160;&#160;&#160;    	{ name: id + '_height', value : columnHeader.height() } <br/>
+&#160;				] <br/>
+&#160;		    };<br/>
+            <p/>
+            id is the client Id of the datatable.
+            <p/>
+			Notice: We can not provided a list with params, for this you should look at the PrimeFaces or PrimeFaces Extensions source.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/clientBehaviours/example-javascriptBehaviourAnother.xhtml"  />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/clientBehaviours/example-javascriptBehaviourAnother.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/clientBehaviours/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="javascript"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="4">
+        <h:outputText value="Copy"/>
+        <p:inputText id="txtCopy" value="#{clipboardController.copyInput}"/>
+        <p:commandButton id="btnCopy" value="Copy" icon="fa fa-copy"/>
+        <pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="txtCopy">
+            <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+            <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+        </pe:clipboard>
+
+        <h:outputText value="Cut"/>
+        <p:inputText id="txtCut" value="#{clipboardController.cutInput}"/>
+        <p:commandButton id="btnCut" value="Cut" icon="fa fa-cut"/>
+        <pe:clipboard id="clipCut" trigger="btnCut" action="cut" target="txtCut">
+            <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+            <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+        </pe:clipboard>
+    </h:panelGrid>
+
+    <h:panelGroup layout="block" style="text-align:left;margin:10px;">
+        <p:commandButton id="btnAjaxCopy" value="Ajax Copy" icon="fa fa-copy" onclick="return false;"/>
+        <pe:clipboard id="clipAjax" trigger="btnAjaxCopy" action="copy" text="#{clipboardController.lineBreaks}">
+            <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+            <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+        </pe:clipboard>
+
+        <p:button id="btnNonAjax" value="Non-Ajax Copy" icon="fa fa-copy" href="#"/>
+        <pe:clipboard id="clipNonAjax" trigger="btnNonAjax" action="copy" text="PrimeFaces Clipboard Rocks Without Ajax!"
+                      onsuccess="alert('Action: ' + this.action + ' Text:' + this.text);"
+                      onerror="alert('Action: ' + this.action + ' FAILED!');"/>
+    </h:panelGroup>
+
+    <h:panelGroup layout="block" style="text-align:left;margin:10px;">
+        <h:outputText id="lblRightClick">Right click me to view the menu options!</h:outputText>
+
+        <p:contextMenu>
+            <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0)" icon="fa fa-copy"/>
+        </p:contextMenu>
+
+        <pe:clipboard id="clipContextCopy" trigger="mnuCopy" action="copy" text="#{clipboardController.copyInput}">
+            <p:ajax event="success" listener="#{clipboardController.successListener}"/>
+            <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
+        </pe:clipboard>
+    </h:panelGroup>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

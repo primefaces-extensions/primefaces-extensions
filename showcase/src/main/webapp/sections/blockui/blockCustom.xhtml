@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="BlockUI"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            This example demonstrates a non-centered message defined by the <strong>css</strong> and <strong>centerX / centerY</strong> attributes.
+            Furthermore, you can use the <strong>cssOverlay</strong> attribute to style the overlay (half-transparent mask).
+            <p/>
+            The <strong>timeout</strong> attribute is helpful for auto-unblocking.
+            It defines time in millis to wait before auto-unblocking.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/blockui/example-blockCustom.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/blockui/example-blockCustom.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/blockui/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="blockUI"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,45 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+   
+<p:messages id="messages">
+   <p:autoUpdate />
+</p:messages>
+
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="2">   
+        <h:outputText value="Basic Usage"/>
+        <pe:letterAvatar value="PrimeFaces Extensions" />
+
+        <h:outputText value="Rounded Corners"/>
+        <pe:letterAvatar value="Optimus Prime" rounded="true" />
+
+        <h:outputText value="Name Only"/>
+        <pe:letterAvatar value="PrimeFaces" rounded="true" />
+
+        <h:outputText value="Long Name"/>
+        <pe:letterAvatar value="Johann Chrysostom Wolfgang Amadeus Mozart" rounded="true" />
+
+        <h:outputText value="Child Image"/>
+        <pe:letterAvatar value="Nature" rounded="true">
+            <h:graphicImage library="images" name="nature7.jpg" alt="Nature"/>
+        </pe:letterAvatar>
+
+        <h:outputText value="Badge"/>
+        <pe:letterAvatar value="Optimus Prime" rounded="true">
+            <pe:badge content="1"/>
+        </pe:letterAvatar>
+
+        <h:outputText value="Command link"/>
+        <p:commandLink>
+            <pe:letterAvatar value="PrimeFaces" rounded="true" />
+        </p:commandLink>
+
+        <h:outputText value="Custom Size and Colors"/>
+        <pe:letterAvatar value="PrimeFaces Extensions" size="5rem" backgroundColor="#000" color="#ccc" />
+</h:panelGrid>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

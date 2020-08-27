@@ -1,0 +1,52 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+<!-- This group is for coding -->
+<p:growl id="growl" showDetail="true"/>
+<h:panelGrid id="triStateGrid" columns="2" style="margin-bottom:10px" cellpadding="5">
+
+    <h:outputText value="Basic Usage:"/>
+    <pe:triStateManyCheckbox id="TriBasic"
+                             value="#{triSateManyCheckBoxController.selectedOptionsTriStateBasic}"
+                             layout="pageDirection"
+                             stateOneTitle="not matter"
+                             stateTwoTitle="love it"
+                             stateThreeTitle="dislikes">
+        <f:selectItems value="#{triSateManyCheckBoxController.basicOptions}"/>
+    </pe:triStateManyCheckbox>
+
+    <h:outputText value="Ajax Behavior with custom icons:"/>
+    <pe:triStateManyCheckbox id="TriAjax"
+                             value="#{triSateManyCheckBoxController.selectedOptionsTriStateAjax}"
+                             stateOneIcon="ui-icon-home"
+                             stateTwoIcon="ui-icon-heart"
+                             stateThreeIcon="ui-icon-star"
+                             tabindex="2">
+        <f:selectItem itemLabel="Tamara" itemValue="Tamara"/>
+        <f:selectItem itemLabel="Mauricio" itemValue="Mauricio"/>
+        <p:ajax event="change" update="growl" listener="#{triSateManyCheckBoxController.addMessage}"/>
+    </pe:triStateManyCheckbox>
+</h:panelGrid>
+
+<p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()"/>
+
+<p:dialog header="Selected Values" modal="false" showEffect="fade" hideEffect="fade" widgetVar="dlg" width="200">
+    <p:outputPanel id="display">
+        <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateBasic.keySet().toArray()}"
+                    var="optionsB">
+            #{optionsB} state = #{triSateManyCheckBoxController.selectedOptionsTriStateBasic.get(optionsB)}
+        </p:dataList>
+
+        <p:dataList value="#{triSateManyCheckBoxController.selectedOptionsTriStateAjax.keySet().toArray()}"
+                    var="optionsA">
+            #{optionsA} state = #{triSateManyCheckBoxController.selectedOptionsTriStateAjax.get(optionsA)}
+        </p:dataList>
+    </p:outputPanel>
+</p:dialog>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

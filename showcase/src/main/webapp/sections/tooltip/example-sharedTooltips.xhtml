@@ -1,0 +1,29 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<p:dataTable id="sharedTooltipTable" var="message" value="#{dataTableController.messages}"
+             paginator="true" rows="5" paginatorPosition="bottom"
+             filteredValue="#{dataTableController.filteredMessages}">
+    <f:facet name="header">
+        Please move mouse over filter input fields
+    </f:facet>
+    <p:column filterBy="#{message.subject}" headerText="Subject">
+        <h:outputText value="#{message.subject}"/>
+    </p:column>
+    <p:column filterBy="#{message.text}" headerText="Text">
+        <h:outputText value="#{message.text}"/>
+    </p:column>
+    <p:column filterBy="#{message.time}" headerText="Time">
+        <h:outputText value="#{message.time}"/>
+    </p:column>
+</p:dataTable>
+
+<pe:tooltip value="Type any value to filter datatable" for="@(#sharedTooltipTable th .ui-column-filter)"
+            shared="true" atPosition="top center" myPosition="bottom center" styleClass="qtip-default"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

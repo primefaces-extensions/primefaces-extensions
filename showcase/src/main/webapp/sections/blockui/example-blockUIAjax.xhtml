@@ -1,0 +1,65 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<p:messages id="messages"/>
+
+<h:panelGrid columns="2">
+    <h:panelGroup id="messageDetailGroup" layout="block" style="margin-right: 20px;">
+        <h:panelGrid id="messageDetail" columns="1" columnClasses="formColumn">
+            <h:outputText value="Subject *"/>
+            <h:inputText value="#{dataTableController.newSubject}" required="true" label="Subject"/>
+            <h:outputText value="Text *"/>
+            <h:inputText value="#{dataTableController.newText}" required="true" label="Text"/>
+        </h:panelGrid>
+
+        <p:commandButton id="addMsgButton" value="Add message" action="#{dataTableController.addMessage}"
+                         process="messageDetailGroup" update="messageDetail dataTable messages"
+                         style="margin-top: 20px;" icon="fa fa-plus"
+                         onstart="PF('blockUIWidget1').block()" oncomplete="PF('blockUIWidget1').unblock()"/>
+    </h:panelGroup>
+
+    <p:dataTable id="dataTable" var="message" value="#{dataTableController.messages}" paginator="true"
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rows="5" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+        <p:ajax event="page" listener="#{dataTableController.doSomething}" update=":mainForm:messages"
+                onstart="PF('blockUIWidget2').block()" oncomplete="PF('blockUIWidget2').unblock()"/>
+        <p:ajax event="sort" listener="#{dataTableController.doSomething}" update=":mainForm:messages"
+                onstart="PF('blockUIWidget2').block()" oncomplete="PF('blockUIWidget2').unblock()"/>
+        <p:column sortBy="#{message.subject}" headerText="Subject">
+            <h:outputText value="#{message.subject}"/>
+        </p:column>
+        <p:column sortBy="#{message.text}" headerText="Text">
+            <h:outputText value="#{message.text}"/>
+        </p:column>
+    </p:dataTable>
+</h:panelGrid>
+
+<pe:blockUI target="messageDetailGroup" widgetVar="blockUIWidget1">
+    <h:panelGrid columns="2">
+        <h:graphicImage library="images" name="ajax-loader1.gif"
+                        style="margin-right: 12px; vertical-align: middle;"/>
+        <h:outputText value="Adding message..." style="white-space: nowrap;"/>
+    </h:panelGrid>
+</pe:blockUI>
+
+<pe:blockUI target="dataTable" content="blockUIContent" widgetVar="blockUIWidget2"/>
+
+<h:panelGrid id="blockUIContent" columns="2" style="display:none;table-layout:auto;">
+    <h:graphicImage library="images" name="ajax-loader1.gif"
+                    style="margin-right: 12px; vertical-align: middle;"/>
+    <h:outputText value="Please wait, data is being processed..." style="white-space: nowrap;"/>
+</h:panelGrid>
+    
+<h:outputStylesheet id="blockUICSS">
+    #blockUIContent td {
+        border: none !important;
+        padding: 0 !important;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

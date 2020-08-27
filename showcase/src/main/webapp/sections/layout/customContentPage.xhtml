@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<f:view contentType="text/html" locale="en">
+    <pe:head title="PrimeFaces Extensions - Full Page Layout" shortcutIcon="#{request.contextPath}/favicon_16x16.png">
+        <f:facet name="first">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        </f:facet>
+    </pe:head>
+    <h:body>
+        <ui:include src="/sections/layout/example-customContent.xhtml" />
+    </h:body>
+</f:view>
+</html>

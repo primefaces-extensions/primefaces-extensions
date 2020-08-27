@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Layout"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Example of layout with iframe. You can use an iframe as layout pane without to worry about
+            resizing issues, etc. To use an iframe as layout pane, simple put the iframe as direct child of the layout pane.
+            <p/>
+            <strong>Note:</strong> If you use an iframe, it is recommended to set <strong>maskContents="true"</strong> to
+            overcome resizing issues with iframes. If you use objects like applets, Google maps, etc. inside layout panes, it is
+            recommended to set <strong>maskObjects="true"</strong>. Also consider the option <strong>maskPanesEarly="true"</strong>
+            on pe:layout if you are dealing with iframes or objects like applets, Google maps, etc. inside layout panes (see documentation).
+            Please also see the styles for the class <strong>.ui-layout-mask</strong> in this example. This is the style class
+            the iframe is masked with.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h:outputLink value="#{request.contextPath}/sections/layout/iframePage.jsf" target="_blank"
+                          style="font-weight: bold; text-decoration: none; border-bottom: 1px dotted;">
+                <h:outputText value="Show full page layout with iframe"/>
+            </h:outputLink>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/layout/example-iframe.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/layout/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="layout"/>
+            <ui:param name="tagName2" value="layoutPane"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

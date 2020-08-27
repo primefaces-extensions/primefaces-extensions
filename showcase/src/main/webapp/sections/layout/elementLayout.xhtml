@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Layout"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Element layout is defined via "fullPage" attribute. Setting "fullPage" to false causes an element layout.
+            An example below shows two element layouts with server-side state management. Try to resize, open or close panes and switch between layouts.
+            <p/>
+            The entire layout is described by options (class LayoutOptions) which are bound to the "options" attribute of pe:layout.
+            They are created like a Tree with parent-child relation. LayoutOptions is optional, it also possible to create a layout
+            by options defined as attributes of pe:layoutPane. Note: LayoutOptions created as Java model takes precedence over layout options
+            as tag attributes. It is up to you if you would like to use all available options via LayoutOptions or a limited set of options in pe:layoutPane.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/layout/example-elementLayout.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/layout/example-elementLayout.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/layout/ElementLayoutController.java')}
+            </ui:define>                    
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/layout/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="layout"/>
+            <ui:param name="tagName2" value="layoutPane"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

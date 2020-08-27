@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid id="details" columns="2" columnClasses="formColumn1,formColumn2">
+    <p:outputLabel for="firstName" value="First Name: "/>
+    <p:inputText id="firstName" required="true" title="#{component.valid ? '' : 'First Name can not be empty'}"/>
+    <p:outputLabel for="lastName" value="Last Name: "/>
+    <p:inputText id="lastName" required="true" title="#{component.valid ? '' : 'Last Name can not be empty'}"/>
+</h:panelGrid>
+
+<p:commandButton value="Submit" process="details" update="details tooltip" style="margin-top: 10px;"/>
+
+<pe:tooltip id="tooltip" global="true" for="@(.ui-state-error)" header="Error" styleClass="qtip qtip-red qtip-rounded qtip-shadow" myPosition="left center" atPosition="right center" />
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

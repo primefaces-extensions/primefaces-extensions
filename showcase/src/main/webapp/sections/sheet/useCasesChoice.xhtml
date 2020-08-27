@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/sheet/basicUsage.jsf"/>
+        <p:menuitem value="Ajax Events"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('ajaxEvents')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/sheet/ajaxEvents.jsf"/>
+        <p:menuitem value="Validation"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('validation')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/sheet/validation.jsf"/>
+        <p:menuitem value="Dynamic Columns"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('dynamicColumns')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/sheet/dynamicColumns.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Credit Card"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <h:graphicImage library="images" name="creditcard.png" alt="Credit Card"/>
+            Credit Card will take any credit card form and make it the best part of the checkout process (without you changing anything). Everything is created with pure CSS, HTML, and Javascript — no images required.
+            <p/> 
+            Based on <h:outputLink id="lnkCreditCard" value="https://github.com/jessepollak/card">Card</h:outputLink>.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/creditcard/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="creditCard"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

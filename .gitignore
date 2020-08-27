@@ -1,15 +1,40 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# IDE Files
+*.ctxt
 .idea
 .classpath
 .settings
 .project
 .checkstyle
 .tern-project
-target
 *.?ar
 *.iml
 *.ipr
 *.iws
 *.NavData
 *.navData
-*.DS_Store
 /nbproject/
+
+# OSX
+*.DS_Store
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Selenium Drivers
+*.exe
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+target/

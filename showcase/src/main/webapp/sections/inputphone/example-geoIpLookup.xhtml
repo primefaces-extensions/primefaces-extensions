@@ -1,0 +1,24 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+    <script>
+    //<![CDATA[
+      var myGeoIpLookup = function(success, failure) {
+        $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+          var countryCode = (resp && resp.country) ? resp.country : "";
+          success(countryCode);
+        });
+      }
+    //]]>
+    </script>
+    <pe:inputPhone id="txtPhone" 
+                   initialCountry="auto"
+                   geoIpLookup="myGeoIpLookup"
+                   value="#{basicInputPhoneController.phoneNumber}">
+    </pe:inputPhone>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

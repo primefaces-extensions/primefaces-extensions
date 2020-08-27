@@ -1,0 +1,133 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<pe:masterDetail id="masterDetail" level="#{wizardMasterDetailController.currentLevel}" showBreadcrumb="false">
+    <f:facet name="header">
+        <p:messages showDetail="true"/>
+        <h:panelGroup layout="block" style="margin-top: 10px;">
+            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
+                                  #{wizardMasterDetailController.currentLevel eq 1 ? 'ui-state-hover' : ''}">
+                <h:outputText value="Personal"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
+                                  #{wizardMasterDetailController.currentLevel eq 2 ? 'ui-state-hover' : ''}">
+                <h:outputText value="Address"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
+                                  #{wizardMasterDetailController.currentLevel eq 3 ? 'ui-state-hover' : ''}">
+                <h:outputText value="Contact"/>
+            </h:panelGroup>
+            <h:panelGroup styleClass="levelTitle ui-state-default ui-corner-all
+                                  #{wizardMasterDetailController.currentLevel eq 4 ? 'ui-state-hover' : ''}">
+                <h:outputText value="Confirmation"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </f:facet>
+
+    <pe:masterDetailLevel level="1">
+        <p:panel header="Personal Details">
+            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                <h:outputText value="Firstname: *"/>
+                <p:inputText required="true" label="Firstname"
+                             value="#{wizardMasterDetailController.user.firstname}"/>
+                <h:outputText value="Lastname: *"/>
+                <p:inputText required="true" label="Lastname"
+                             value="#{wizardMasterDetailController.user.lastname}"/>
+                <h:outputText value="Age: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.age}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:commandButton value="Next" process="masterDetail"
+                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+            <pe:selectDetailLevel step="1"/>
+        </p:commandButton>
+        <p:commandButton value="Go to Save" process="masterDetail"
+                         style="margin-top: 10px;" icon="ui-icon-arrowthickstop-1-e">
+            <pe:selectDetailLevel level="4"/>
+        </p:commandButton>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="2">
+        <p:panel header="Adress Details">
+            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                <h:outputText value="Street: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.street}"/>
+                <h:outputText value="Postal Code: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.postalCode}"/>
+                <h:outputText value="City: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.city}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+                         process="@this" immediate="true">
+            <pe:selectDetailLevel step="-1"/>
+        </p:commandButton>
+        <p:commandButton value="Next" process="masterDetail"
+                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+            <pe:selectDetailLevel step="1"/>
+        </p:commandButton>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="3">
+        <p:panel header="Contact Information">
+            <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+                <h:outputText value="Email: *"/>
+                <p:inputText required="true" label="Email"
+                             value="#{wizardMasterDetailController.user.email}"/>
+                <h:outputText value="Phone: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.phone}"/>
+                <h:outputText value="Additional Info: "/>
+                <p:inputText value="#{wizardMasterDetailController.user.info}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+                         process="@this" immediate="true">
+            <pe:selectDetailLevel step="-1"/>
+        </p:commandButton>
+        <p:commandButton value="Next" process="masterDetail"
+                         style="margin-top: 10px;" icon="ui-icon-arrowthick-1-e">
+            <pe:selectDetailLevel step="1"/>
+        </p:commandButton>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="4">
+        <p:panel header="Confirmation">
+            <h:panelGrid id="confirmation" columns="2" columnClasses="formColumn1,formColumn2">
+                <h:outputText value="Firstname: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.firstname}"/>
+                <h:outputText value="Lastname: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.lastname}"/>
+                <h:outputText value="Age: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.age}"/>
+                <h:outputText value="Street: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.street}"/>
+                <h:outputText value="Postal Code: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.postalCode}"/>
+                <h:outputText value="City: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.city}"/>
+                <h:outputText value="Email: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.email}"/>
+                <h:outputText value="Phone "/>
+                <h:outputText value="#{wizardMasterDetailController.user.phone}"/>
+                <h:outputText value="Info: "/>
+                <h:outputText value="#{wizardMasterDetailController.user.info}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:commandButton value="Back" style="margin-top: 10px;" icon="ui-icon-arrowthick-1-w"
+                         process="@this" immediate="true">
+            <pe:selectDetailLevel step="-1"/>
+        </p:commandButton>
+        <p:commandButton value="Submit" process="masterDetail"
+                         actionListener="#{wizardMasterDetailController.save}"
+                         style="margin-top: 10px;" icon="fa fa-save">
+            <pe:selectDetailLevel level="1"/>
+        </p:commandButton>
+    </pe:masterDetailLevel>
+</pe:masterDetail>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

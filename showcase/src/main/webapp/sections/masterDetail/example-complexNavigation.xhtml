@@ -1,0 +1,104 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<pe:masterDetail id="masterDetail" selectLevelListener="#{selectLevelListener.handleNavigation}"
+                 showAllBreadcrumbItems="true">
+    <f:facet name="header">
+        <p:messages showDetail="false" showSummary="true"/>
+    </f:facet>
+
+    <pe:masterDetailLevel level="1">
+        <f:facet name="label">
+            <h:outputFormat value="Overview {0}">
+                <f:param value="Persons"/>
+            </h:outputFormat>
+        </f:facet>
+
+        <p:dataTable id="persons" value="#{complexMasterDetailController.persons}" var="pers">
+            <p:column headerText="Name">
+                <p:commandLink value="#{pers.name}">
+                    <pe:selectDetailLevel contextValue="#{pers}"/>
+                </p:commandLink>
+            </p:column>
+            <p:column headerText="Tax Class">
+                <h:outputText value="#{pers.taxClass}"/>
+            </p:column>
+            <p:column headerText="Birth Date">
+                <h:outputText value="#{pers.birthDate}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </p:column>
+        </p:dataTable>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="2" contextVar="person" levelLabel="Person Detail">
+        <h:panelGrid id="personDetail" columns="2" columnClasses="formColumn1,formColumn2">
+            <h:outputText value="Name (string)"/>
+            <p:inputText value="#{person.name}" required="true" label="Name"/>
+            <h:outputText value="Tax Class (number)"/>
+            <p:inputText value="#{person.taxClass}" required="true" label="Tax Class">
+                <f:validateLength maximum="1"/>
+            </p:inputText>
+            <h:outputText value="Birth Date (date dd.MM.yyyy)"/>
+            <p:inputText value="#{person.birthDate}" required="true" label="Birth Date">
+                <f:convertDateTime pattern="dd.MM.yyyy"/>
+            </p:inputText>
+            <h:outputText value="Language skills"/>
+            <h:panelGrid columns="2" style="vertical-align: middle;">
+                <p:dataList value="#{person.languageSkills}" var="skill" itemType="circle">
+                    <h:outputText value="#{skill}"/>
+                </p:dataList>
+                <p:commandLink immediate="true" style="padding:5px 0 0 8px; vertical-align:middle;">
+                    <h:graphicImage library="images" name="flashlight_plus.png" style="border:none;"/>
+                    <pe:selectDetailLevel contextValue="#{person}" preserveInputs="@all"/>
+                    <pe:tooltip value="Add language skills"/>
+                </p:commandLink>
+            </h:panelGrid>
+        </h:panelGrid>
+
+        <p:commandButton value="Save with success" process="masterDetail"
+                         action="#{complexMasterDetailController.saveSuccess(person)}"
+                         style="margin-top:10px;" icon="fa fa-save">
+            <pe:selectDetailLevel level="1"/>
+        </p:commandButton>
+        <p:commandButton value="Save with failure" process="masterDetail"
+                         action="#{complexMasterDetailController.saveFailure(person)}"
+                         style="margin-top:10px;" icon="fa fa-save">
+            <pe:selectDetailLevel level="1"/>
+        </p:commandButton>
+        <p:commandButton type="button" value="Delete" onclick="PF('deletedDlg').show()" style="margin-top:10px;"/>
+
+        <p:dialog header="Delete confirmation" widgetVar="deletedDlg" resizable="false">
+            <h:panelGroup layout="block" style="padding:5px;">
+                <h:outputText value="Are you sure you want to delete this person?"/>
+            </h:panelGroup>
+            <p:commandButton id="deleteBtn" value="Delete"
+                             action="#{complexMasterDetailController.delete(person)}" process="@this"
+                             style="margin-top:10px;">
+                <pe:selectDetailLevel level="1"/>
+            </p:commandButton>
+            <p:commandButton value="Cancel" type="button" onclick="PF('deletedDlg').hide();"
+                             style="margin-top:10px;"/>
+        </p:dialog>
+    </pe:masterDetailLevel>
+
+    <pe:masterDetailLevel level="3" contextVar="person" levelLabel="Language skills">
+        <h:panelGrid columns="2" columnClasses="formColumn1,formColumn2">
+            <h:outputText value="Choose language skill"/>
+            <p:selectOneMenu id="languageSkills" value="#{complexMasterDetailController.languageSkillToAdd}"
+                             style="width:200px;">
+                <f:selectItems value="#{complexMasterDetailController.availableLanguageSkills}"/>
+                <p:ajax event="valueChange" process="masterDetail"
+                        listener="#{complexMasterDetailController.addLanguageSkill(person)}"/>
+                <pe:selectDetailLevel step="-1"/>
+            </p:selectOneMenu>
+        </h:panelGrid>
+    </pe:masterDetailLevel>
+</pe:masterDetail>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,128 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:form id="mainForm" prependId="false">    
+    <pe:layout id="fullPage" options="#{customContentLayoutController.layoutOptions}"
+               widgetVar="fpLayoutWidget">
+        <pe:layoutPane position="north">
+            North
+        </pe:layoutPane>
+        <pe:layoutPane position="center">
+            
+            <div style="padding:10px; margin-bottom:6px; border:1px solid red;"
+                 class="ui-widget-content ui-corner-all">
+                 This is a custom content between layout panes.
+                 <br/><br/>
+                 Any elements can be placed here.
+            </div>
+            
+            <div class="ui-layout-content">
+                <!-- ui:include -->
+                <ui:include src="#{customContentLayoutController.src}"/>
+            </div>
+        </pe:layoutPane>
+        <pe:layoutPane position="west" styleHeader="background:none; border:none; padding:0;">
+            <f:facet name="header">
+                <p:outputPanel id="msgPanel">
+                    <p:autoUpdate />
+                    <p:messages id="messages" showSummary="true" showDetail="false"/>
+                    
+                    <script type="text/javascript">
+                    /* <![CDATA[ */
+                        if (#{facesContext.partialViewContext.ajaxRequest}) {
+                            $(function() {
+                                PF('fpLayoutWidget').sizeContent('west');
+                            });
+                        }
+                    /* ]]> */
+                    </script>    
+                </p:outputPanel>
+            </f:facet>
+            
+            Click on the buttons to see that scrollbars in the west pane are well adjusted and messages preserve their place when scrolling.
+            
+            <h:panelGrid columns="2" style="margin:15px">
+                <p:commandButton value="Show messages" process="@this" style="margin-right:5px;"
+                                 action="#{customContentLayoutController.showMessages}"/>
+                <p:commandButton value="Hide messages" process="@this"
+                                 action="#{customContentLayoutController.hideMessages}"/>
+            </h:panelGrid>
+            
+            <p:dataTable id="dataTable" var="message" value="#{dataTableController.messages}" paginator="true"
+                         rows="30" rowsPerPageTemplate="20,30,40">
+                <p:column sortBy="#{message.subject}" headerText="Subject">
+                    <h:outputText value="#{message.subject}"/>
+                </p:column>
+                <p:column sortBy="#{message.text}" headerText="Text">
+                    <h:outputText value="#{message.text}"/>
+                </p:column>
+                <p:column sortBy="#{message.subject}" headerText="Subject">
+                    <h:outputText value="#{message.subject}"/>
+                </p:column>
+                <p:column sortBy="#{message.text}" headerText="Text">
+                    <h:outputText value="#{message.text}"/>
+                </p:column>
+                <p:column sortBy="#{message.subject}" headerText="Subject">
+                    <h:outputText value="#{message.subject}"/>
+                </p:column>
+                <p:column sortBy="#{message.text}" headerText="Text">
+                    <h:outputText value="#{message.text}"/>
+                </p:column>
+            </p:dataTable>            
+        </pe:layoutPane>
+        <pe:layoutPane position="south">
+            South
+        </pe:layoutPane>
+    </pe:layout>
+</h:form>
+
+<h:outputStylesheet library="css" name="global.css"/>
+
+<h:outputStylesheet id="layoutCSS">
+    body {
+        margin: 4px !important;
+    }
+    
+    body > form > .ui-layout-north {
+        background: none;
+        border: none;
+        color: #000000;
+        padding: 4px;
+        overflow: hidden;
+    }
+    
+    body > form > .ui-layout-south {
+        background: none;
+        border: none;
+        color: #000000;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+    
+    .ui-datatable thead th,
+    .ui-datatable tbody td,
+    .ui-datatable tfoot td {
+        white-space: nowrap;
+    }
+    
+    .ui-messages-info,
+    .ui-messages-warn,
+    .ui-messages-error,
+    .ui-messages-fatal {
+        margin: 0;
+    }
+    
+    #messages > div {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        -moz-border-radius-bottomleft: 0;
+        -moz-border-radius-bottomright: 0;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

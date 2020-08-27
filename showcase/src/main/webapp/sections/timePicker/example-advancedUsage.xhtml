@@ -1,0 +1,49 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:growl id="growl" showDetail="true" showSummary="true">
+		<p:autoUpdate />
+	</p:growl>  
+
+    <!-- EXAMPLE-SOURCE-START -->
+<script>
+PrimeFacesExt.locales.TimePicker['pt_BR'] = {
+	    hourText: 'Horas',
+	    minuteText: 'Minutos',
+	    amPmText: ['AM', 'PM'],
+	    closeButtonText: 'Fechar',
+	    nowButtonText: 'Agora',
+	    deselectButtonText: 'Limpar seleção'
+	};
+</script>
+
+<h:panelGrid id="timePickerGrid" columns="5" columnClasses="timePickerColumn1,timePickerColumn,timePickerColumn,timePickerColumn,timePickerColumn,timePickerColumn">
+    <h:outputText value="TimeSelect event"/>
+    <h:outputText value="BeforeShow / Close events"/>
+    <h:outputText value="Only hours"/>
+    <h:outputText value="Only minutes"/>
+    <h:outputText value="Restricted time"/>
+    
+    <pe:timePicker id="inlineTime" value="#{timePickerController.time1}" mode="inline" locale="#{timePickerController.locale}">
+        <p:ajax event="timeSelect" listener="#{timePickerController.timeSelectListener}" update="growl"/>
+    </pe:timePicker>    
+    <pe:timePicker id="spinnerTime" value="#{timePickerController.time2}" showPeriod="true" style="width: 100px;" locale="#{timePickerController.locale}">
+        <p:ajax event="beforeShow" listener="#{timePickerController.beforeShowListener}" update="growl"/>
+        <p:ajax event="close" listener="#{timePickerController.closeListener}" update="growl"/>
+    </pe:timePicker>    
+    <pe:timePicker value="#{timePickerController.time4}" showMinutes="false" locale="#{timePickerController.locale}"/>    
+    <pe:timePicker value="#{timePickerController.time4}" showHours="false" locale="#{timePickerController.locale}"/>    
+    <pe:timePicker value="#{timePickerController.time4}" mode="popup" locale="#{timePickerController.locale}"
+                   onHourShow="onHourShowCallback" onMinuteShow="onMinuteShowCallback"/>
+                   
+    <p:commandButton id="localeButton" value="Change Locale" actionListener="#{timePickerController.changeLocale}"
+                 process="@this" update="@parent" style="margin-top:10px;" icon="fa fa-save"/>
+</h:panelGrid>
+
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

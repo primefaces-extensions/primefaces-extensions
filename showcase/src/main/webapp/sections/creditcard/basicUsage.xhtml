@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Credit Card"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Credit Card will take any credit card form and make it the best part of the checkout process. Just map the input fields to fields you probably already have!
+            <p>
+                <span style="font-weight: bold; color: red">IMPORTANT:</span> Use must use prependId="false" on the h:form and your ID's of your text fields must be "number", "name", "cvc", "expiry".
+                See: <h:outputLink id="lnkStackOverflow" value="https://stackoverflow.com/a/15900273/502366">Stack Overflow</h:outputLink> as to why.
+            </p>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/creditcard/example-basicUsage.xhtml"/>
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+                ${showcase:getFileContent('/sections/creditcard/example-basicUsage.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/creditcard/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="creditCard"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

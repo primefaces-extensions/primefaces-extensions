@@ -1,0 +1,73 @@
+<ui:composition
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<pe:dynaForm id="dynaForm" value="#{clearDynaFormController.model}" var="condition">
+    <pe:dynaFormControl type="column">
+        <p:selectOneMenu id="tableColumn" value="#{condition.tableColumn}">
+            <f:selectItem itemValue="" itemLabel=""/>
+            <f:selectItem itemValue="model" itemLabel="model"/>
+            <f:selectItem itemValue="manufacturer" itemLabel="manufacturer"/>
+            <f:selectItem itemValue="year" itemLabel="year"/>
+            <f:attribute name="rcIndex" value="#{condition.index}"/>
+        </p:selectOneMenu>
+    </pe:dynaFormControl>
+    <pe:dynaFormControl type="offset">
+        <p:spinner id="inputOffset" value="#{condition.inputOffset}" min="0" max="99">
+            <p:keyFilter mask="num"/>
+            <f:attribute name="rcIndex" value="#{condition.index}"/>
+        </p:spinner>
+    </pe:dynaFormControl>
+    <pe:dynaFormControl type="operator">
+        <p:selectOneMenu id="valueOperator" value="#{condition.valueOperator}">
+            <f:selectItem itemValue="eq" itemLabel="equal"/>
+            <f:selectItem itemValue="not" itemLabel="not equal"/>
+            <f:selectItem itemValue="gt" itemLabel="greater"/>
+            <f:selectItem itemValue="lt" itemLabel="lesser"/>
+            <f:attribute name="rcIndex" value="#{condition.index}"/>
+        </p:selectOneMenu>
+    </pe:dynaFormControl>
+    <pe:dynaFormControl type="value">
+        <p:inputText id="inputValue" value="#{condition.inputValue}">
+            <f:attribute name="rcIndex" value="#{condition.index}"/>
+        </p:inputText>
+    </pe:dynaFormControl>
+    <pe:dynaFormControl type="clear" styleClass="clearLink">
+        <p:commandLink value="Clear inputs" process="@this"
+                       action="#{clearDynaFormController.clearInputs(condition.index)}"
+                       global="false"/>
+        <p:commandLink value="Remove" process="@this" update="dynaForm"
+                       action="#{clearDynaFormController.removeCondition(condition)}"
+                       global="false" style="margin-left:10px"/>
+    </pe:dynaFormControl>
+</pe:dynaForm>
+    
+<p:commandButton value="Submit form and show current values" process="dynaForm" update="conditions"
+                     style="margin:15px 5px 0 0" oncomplete="PF('condValuesDlg').show()"/>
+<p:commandButton value="Show current values without submit" process="@none" update="conditions"
+                 style="margin-top:15px;" oncomplete="PF('condValuesDlg').show()"/>
+    
+<p:dialog header="Condition Values" widgetVar="condValuesDlg">
+    <h:panelGroup id="conditions" layout="block" style="margin:10px;">
+        <h:outputText value="#{clearDynaFormController.conditions}" escape="false"/>
+    </h:panelGroup>
+</p:dialog>
+
+<h:outputStylesheet id="dynaFormCSS">
+    .pe-dynaform-cell {
+        vertical-align: top;
+    }
+    
+    .clearLink {
+        vertical-align: middle;
+    }
+    
+    .pe-dynaform-cell .ui-spinner input {
+        width: 60px;
+    }
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

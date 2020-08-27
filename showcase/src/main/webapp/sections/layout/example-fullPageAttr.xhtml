@@ -1,0 +1,53 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:form>
+    <pe:layout resizerTip="Resize Default" togglerTipClosed="Close Default" togglerTipOpen="Open Default" sliderTip="Slide Default">
+        <pe:layoutPane position="north" size="80" closable="false">
+            North
+        </pe:layoutPane>
+        <pe:layoutPane position="center">
+            <pe:layoutPane position="north" size="50%" resizerTip="Resize North" togglerTipClosed="Close North" togglerTipOpen="Open North" sliderTip="Slide North">
+                <f:facet name="header">
+                    <h:outputText value="Center-North"/>
+                </f:facet>
+            </pe:layoutPane>
+            <pe:layoutPane position="center" minHeight="60" resizerTip="Resize North" togglerTipClosed="Close North" togglerTipOpen="Open North" sliderTip="Slide North">
+                <f:facet name="header">
+                    <h:outputText value="Center-Center"/>
+                </f:facet>
+            </pe:layoutPane>
+        </pe:layoutPane>
+        <pe:layoutPane position="west" size="200">
+            <pe:layoutPane position="north" size="33%" resizerTip="Resize West" togglerTipClosed="Close West" togglerTipOpen="Open West" sliderTip="Slide West">
+                West-North
+            </pe:layoutPane>
+            <pe:layoutPane position="center" minHeight="60" resizerTip="Resize West" togglerTipClosed="Close West" togglerTipOpen="Open West" sliderTip="Slide West">
+                West-Center
+            </pe:layoutPane>
+            <pe:layoutPane position="south" size="33%" initClosed="true" resizerTip="Resize West" togglerTipClosed="Close West" togglerTipOpen="Open West" sliderTip="Slide West">
+                West-South
+            </pe:layoutPane>
+        </pe:layoutPane>
+        <pe:layoutPane position="east" size="200" resizeWhileDragging="true">
+            East
+        </pe:layoutPane>
+        <pe:layoutPane position="south" size="80">
+            South
+        </pe:layoutPane>
+    </pe:layout>
+</h:form>
+
+<h:outputStylesheet library="css" name="global.css"/>
+   
+<h:outputStylesheet id="layoutCSS">
+    body {
+        margin: 4px !important;
+    }
+</h:outputStylesheet>    
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,56 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGroup id="viewArea" layout="block">
+    <h:panelGrid columns="2" columnClasses="columnTop,columnTop">
+        <h:panelGroup layout="block" styleClass="blockable" style="margin-right: 40px;">
+            <p:tree id="fileSystem" value="#{fileSystemController.root}" var="node" dynamic="true"
+                    cache="false" selectionMode="single" selection="#{fileSystemController.selectedNode}">
+                <p:ajax event="expand" update=":mainForm:accessRightsGroup"
+                        listener="#{fileSystemController.onNodeExpand}"/>
+                <p:ajax event="select" update=":mainForm:accessRightsGroup"
+                        listener="#{fileSystemController.onNodeSelect}"/>
+                <p:ajax event="unselect" update=":mainForm:accessRightsGroup"
+                        listener="#{fileSystemController.onNodeUnselect}"/>
+                <p:treeNode>
+                    <h:outputText value="#{node}"/>
+                </p:treeNode>
+            </p:tree>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" id="accessRightsGroup" styleClass="blockable" style="width: 250px;">
+            <h:outputText value="Access rights for #{fileSystemController.selectedNode.data}"
+                          rendered="#{not empty fileSystemController.selectedNode}"/>
+            <h:outputText value="No tree node is selected" rendered="#{empty fileSystemController.selectedNode}"/>
+
+            <h:selectManyCheckbox id="accessRights" value="#{accessRightsController.selectedAccessRights}"
+                                  styleClass="checkBoxes" layout="pageDirection" style="margin-top: 10px;">
+                <f:selectItems value="#{accessRightsController.accessRights}"/>
+                <p:ajax process="@this"/>
+            </h:selectManyCheckbox>
+
+            <pe:blockUI source="accessRights" target="@(.blockable)" autoShow="true">
+                <h:panelGrid columns="2">
+                    <h:graphicImage library="images" name="ajax-loader1.gif"
+                                    style="margin-right: 12px; vertical-align: middle;"/>
+                    <h:outputText value="Checkbox clicked..." style="white-space: nowrap;"/>
+                </h:panelGrid>
+            </pe:blockUI>
+        </h:panelGroup>
+    </h:panelGrid>
+</h:panelGroup>
+
+<pe:blockUI source="fileSystem" target="viewArea" event="expand,select,unselect" autoShow="true">
+    <h:panelGrid columns="2">
+        <h:graphicImage library="images" name="ajax-loader1.gif"
+                        style="margin-right: 12px; vertical-align: middle;"/>
+        <h:outputText value="Tree event is running..." style="white-space: nowrap;"/>
+    </h:panelGrid>
+</pe:blockUI>    
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,109 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+
+<p:commandLink id="switch" value="Switch model" process="switch" update="dynaFormGroup"
+               action="#{anotherDynaFormController.switchModel}" style="font-weight:bold;"/>
+
+<h:panelGroup id="dynaFormGroup" layout="block" style="margin-top: 15px;">
+    <p:messages id="messages" showSummary="true"/>
+
+    <pe:dynaForm id="dynaForm" value="#{anotherDynaFormController.model}" var="data"
+                 openExtended="true" widgetVar="dynaFormWidget">
+        <pe:dynaFormControl styleClass="pe-dynaform-label">
+            <h:outputText value="#{data}"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="separator" styleClass="separator ui-state-disabled">
+            <h:panelGrid columns="2" style="width:100%;" columnClasses="separatorText">
+                <h:outputText value="#{data}"/>
+                <p:separator/>
+            </h:panelGrid>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="name" for="autocompl">
+            <p:autoComplete id="autocompl" value="#{data.value}" required="#{data.required}"
+                            dropdown="true" completeMethod="#{anotherDynaFormController.complete}"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="address" for="txt">
+            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="booleanchoice">
+            <p:selectBooleanCheckbox value="#{data.value}" required="#{data.required}"
+                                     style="vertical-align:middle;"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="radiochoice">
+            <p:selectOneRadio value="#{data.value}" required="#{data.required}">
+                <f:selectItems value="#{data.selectItems}"/>
+            </p:selectOneRadio>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="editor">
+            <p:editor value="#{data.value}" width="380" height="150"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="audioslider">
+            <h:inputHidden id="input" value="#{data.value}"/>
+            <h:panelGrid columns="2">
+                <p:slider for="input" display="output" style="width:150px;"/>
+                <h:outputText id="output" value="#{data.value}" style="margin-left: 5px;"/>
+            </h:panelGrid>
+        </pe:dynaFormControl>
+
+        <f:facet name="buttonBar">
+            <p:commandButton value="Submit" action="#{anotherDynaFormController.submitForm}"
+                             process="dynaForm" update=":mainForm:dynaFormGroup :mainForm:inputValues"
+                             oncomplete="handleComplete(xhr, status, args)"/>
+            <p:commandButton type="reset" value="Reset" style="margin-left: 5px;"/>
+            <p:commandButton type="button" value="Show / hide more fields"
+                             rendered="#{anotherDynaFormController.model.existExtendedGrid}"
+                             style="margin-left: 5px;" onclick="PF('dynaFormWidget').toggleExtended()"/>
+        </f:facet>
+    </pe:dynaForm>
+</h:panelGroup>
+
+<p:dialog header="Input values" widgetVar="inputValuesWidget">
+    <h:panelGroup id="inputValues" layout="block" style="margin:10px;">
+        <h:outputText value="#{anotherDynaFormController.formFields}" escape="false"/>
+    </h:panelGroup>
+</p:dialog>
+
+<h:outputScript id="dynaFormScript" target="body">
+/* <![CDATA[ */
+    function handleComplete(xhr, status, args) {
+        if(args && args.isValid) {
+            PF('inputValuesWidget').show();
+        } else {
+            PF('inputValuesWidget').hide();
+        }
+    }
+/* ]]> */
+</h:outputScript>
+
+<h:outputStylesheet id="dynaFormCSS">
+    .pe-dynaform-cell {
+        padding-bottom: 8px;
+    }
+
+    .pe-dynaform-label {
+        text-align: left;
+        padding: 2px 20px 0 0;
+    }
+
+    .pe-dynaform-cell.separator {
+        padding: 10px 0 10px 0;
+    }
+
+    .pe-dynaform-cell.separator .separatorText {
+        width: 15%;
+        padding-left: 0;
+    }
+
+    .ui-autocomplete .ui-autocomplete-dropdown {
+        right: -2px;
+    }
+</h:outputStylesheet>
+
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

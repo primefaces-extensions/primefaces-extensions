@@ -1,0 +1,19 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+    <!-- EXAMPLE-SOURCE-START -->
+
+<h:panelGroup id="demoMouse" layout="block"
+    style="height:200px; line-height:200px; width:550px; border:dotted 2px #7F0055; vertical-align:middle; text-align:center">
+    <div style="font-weight:bold;">
+        Hover over this box to see mouse tracking in action
+    </div>
+</h:panelGroup>
+
+<pe:tooltip for="demoMouse" value="I position myself at the current mouse position"
+            mouseTracking="true" myPosition="top left" adjustX="10" adjustY="10"/>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

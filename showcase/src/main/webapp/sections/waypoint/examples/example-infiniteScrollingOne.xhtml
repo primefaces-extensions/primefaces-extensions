@@ -1,0 +1,125 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+
+<h:panelGroup id="wrapper" layout="block">
+    <h1>Infinite scrolling with Waypoint</h1>
+    
+    <h:panelGroup id="container" layout="block">
+        <div class="article">
+            <h2>Lorem Ipsum Dolor</h2>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+               Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero
+               sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. 
+               Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, 
+               commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, 
+               eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar 
+               facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, 
+               eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan 
+               porttitor, facilisis luctus, metus xyx rtel supepr sey reror.</p>
+        </div>
+        <div class="article">
+            <h2>Sit Amet</h2>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+               Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero 
+               sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+               Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+               Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero 
+               sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+               Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero 
+               sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
+               Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+               Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero 
+               sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+        </div>
+        <div class="article">
+            <h2>Consectetuer Adipiscing Elit</h2>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+               Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed.
+               Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+               Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed.
+               Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+               Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed.
+               Test Consectetuer Adipiscing Elit, consectetuer elit, consectetuer adipiscing.</p>
+        </div>
+        <div class="article">
+            <h2>Aenean</h2>
+            <p>Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum
+               vulputate, nunc, cbuiewe dyxyxew Assdle upsula quite dsenda webald, Aksuid sind luidd svbnm
+               yxcdqw el ijghfdf dklioe otvet nam sendrt Klimprt, second third aplogi beret treidsd ne.
+               Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, 
+               commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum.</p>
+            <p>Aliquam tincidunt mauris eu risus. Donec consectetuer ligula vulputate sem tristique cursus.
+               Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate
+               sem tristique. Waypoint eu vulputate magna eros eu erat. Aliquam erat volutpat.
+               Aliquam tincidunt mauris eu risus. Donec consectetuer ligula vulputate sem tristique cursus.
+               Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate
+               sem tristique. Waypoint eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
+        </div>
+        <div class="article">
+            <h2>Vestibulum</h2>
+            <p>Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros
+               eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus,
+               metus sit amet est et sapien ullamcorper pharetra. Aliquam erat volutpat. Nam dui mi, tincidunt
+               quis, accumsan porttitor, facilisis luctus. Hello said dkrew qwq ncki juewewe, upsum el.</p>
+            <p>Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem
+               tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi tri ssev.
+               Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem
+               tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi tri elektron.
+               Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem
+               tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.</p>
+        </div>
+    </h:panelGroup>
+    
+    <h:panelGroup id="remoteContent" style="display:none;">
+        <ui:include src="#{infiniteScrollController.src}"/>
+    </h:panelGroup>        
+    
+    <p:remoteCommand id="rcom" name="loadRemoteContent" process="@this" update="remoteContent"
+                     actionListener="#{infiniteScrollController.toggleSrc}"
+                     oncomplete="handleLoadStop()"/>
+    
+    <p:dialog widgetVar="loadingDlg" resizable="false" showHeader="false">
+        <h:panelGrid columns="2">
+            <h:graphicImage library="images" name="ajax-loader1.gif"  
+                            style="margin-right: 12px; vertical-align: middle;"/>  
+            <h:outputText value="Content is loading..." style="white-space: nowrap;"/>
+        </h:panelGrid>
+    </p:dialog>
+
+    <h:panelGroup id="footer" layout="block">
+        <p:separator/>
+        Copyright, PrimeFaces Extensions, 2013.
+        
+        <pe:waypoint id="waypoint" widgetVar="waypointWidget"
+                     offset="function(){return $.waypoints('viewportHeight') - $(this).outerHeight()}">
+            <pe:javascript event="reached" execute="handleLoadStart(ext);"/>
+        </pe:waypoint>
+    </h:panelGroup>
+</h:panelGroup>
+
+<h:outputScript id="waypointScript" target="body">
+/* <![CDATA[ */
+    function handleLoadStart(ext) {
+        if (ext.direction == "down") {
+            PF('waypointWidget').disable();
+            PF('loadingDlg').show();
+            loadRemoteContent();
+        }
+    }
+    
+    function handleLoadStop() {
+        $('#container').append($('#remoteContent > div.article'));
+        PF('loadingDlg').hide();
+        PF('waypointWidget').enable();
+    }
+/* ]]> */
+</h:outputScript>
+    
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

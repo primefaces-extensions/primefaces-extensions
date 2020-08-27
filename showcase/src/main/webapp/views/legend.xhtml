@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Legend"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Legend creates a key for a map and is useful for displaying titles, descriptions, and keys for what is being mapped.
+            <p/> 
+            <strong>Features include:</strong>
+            <ul>
+               <li>Horizontal or Vertical display</li> 
+            </ul>
+            <p/>
+            A typically area of application is anywhere you need to show a key such as a map or PrimeFaces Timeline.
+            <p/>
+            Based on <h:outputLink id="lnkLegend" value="https://tilemill-project.github.io/tilemill/docs/guides/advanced-legends/">TileMill CSS Legend</h:outputLink>.
+            <p/>
+        </h:panelGroup>
+        <h:graphicImage library="images" name="legend.png" alt="Legend"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/legend/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="legend"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

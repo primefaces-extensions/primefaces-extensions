@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="DynaForm"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            This example demonstrates how to build dynamic forms with labels above fields and various elements like PrimeFaces separator.
+            Try to switch two forms by clicking on the "Switch model" link. Note, XHTML code with pe:dynaForm stays the same, only Java model gets changed.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/dynaform/example-anotherForms.xhtml"/>            
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/dynaform/example-anotherForms.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/dynaform/AnotherDynaFormController.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/model/dynaform/FormField.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/dynaform/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="dynaForm"/>
+            <ui:param name="tagName2" value="dynaFormControl"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

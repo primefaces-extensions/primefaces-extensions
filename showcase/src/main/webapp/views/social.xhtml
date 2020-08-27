@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Social"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Social is a simple social network sharing component. It's flexible and easily extensible. Configure visual appearance. Choose one of several themes provided. Add any yet unsupported social network if needed.
+            <p/>
+            <strong>Features include:</strong>
+            <ul>
+               <li>FontAwesome used for icons. <strong>Note:</strong> Must enable primefaces.FONT_AWESOME in web.xml</li>
+               <li>4 available themes. Choose the most appropriate for you design.</li> 
+            </ul>
+            Based on <h:outputLink id="lnkSocial" value="http://js-socials.com/">js-socials</h:outputLink> by Artem Tabalin.
+        </h:panelGroup>
+        
+        <h:graphicImage library="images" name="social-media.png" alt="Social Media" width="600"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/social/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="social"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

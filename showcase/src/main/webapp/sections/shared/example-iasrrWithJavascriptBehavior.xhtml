@@ -1,0 +1,59 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+
+<p:outputPanel id="example">
+    <p:commandLink update="example">
+        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage1.png" />
+        <p:graphicImage value="/resources/images/testImage1.png" width="150" height="100"/>
+    </p:commandLink>
+    <p:commandLink update="example">
+        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage2.png" />
+        <p:graphicImage value="/resources/images/testImage2.png" width="150" height="100"/>
+    </p:commandLink>
+    <p:commandLink update="example">
+        <f:setPropertyActionListener target="#{imageController.imageUrl}" value="/resources/images/testImage3.png" />
+        <p:graphicImage value="/resources/images/testImage3.png" width="150" height="100"/>
+    </p:commandLink>
+
+    <p:growl id="growl" showDetail="true" sticky="true" />
+
+    <div id="imageWrapper" style="width:600px; height:400px; margin:auto; overflow:scroll; position:relative;">
+        <p:graphicImage id="myImage" value="#{imageController.imageUrl}" />
+    </div>
+
+    <pe:imageAreaSelect id="areaSelect"
+        for="myImage"
+        widgetVar="areaSelectWidget"
+        autoHide="true"
+        handles="false"
+        movable="false"
+        persistent="false"
+        resizable="false"
+        parentSelector="#imageWrapper">
+        <p:ajax event="selectEnd" listener="#{imageController.selectEndListener}" update="growl"/>
+    </pe:imageAreaSelect>
+
+    <pe:imageRotateAndResize id="rotateAndResize" for="myImage" widgetVar="rotateAndResizeWidget">
+        <p:ajax event="rotate" listener="#{imageController.rotateListener}"
+                update="growl" oncomplete="PF('areaSelectWidget').reload();"/>
+        <pe:javascript event="resize" execute="PF('areaSelectWidget').reload();"/>
+    </pe:imageRotateAndResize>
+
+    <p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Rotate Left"
+        onclick="PF('rotateAndResizeWidget').rotateLeft(90);return false;"/>
+    <p:commandButton icon="ui-icon-arrowreturnthick-1-e" value="Rotate Right"
+        onclick="PF('rotateAndResizeWidget').rotateRight(90);return false;"/>
+    <p:commandButton icon="ui-icon-zoomin" value="Scale +"
+        onclick="PF('rotateAndResizeWidget').scale(1.05);return false;"/>
+    <p:commandButton icon="ui-icon-zoomout" value="Scale -"
+        onclick="PF('rotateAndResizeWidget').scale(0.95);return false;"/>
+</p:outputPanel>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

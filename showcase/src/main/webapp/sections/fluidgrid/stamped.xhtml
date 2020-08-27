@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">    
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="FluidGrid"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            FluidGrid allows to set up a nice tight grid with items that have variable heights and widths.
+            FluidGrid is a responsive grid. That means, the grid will reflow as the window size changes.
+            Items can have any content: text, images, links, input fields, etc.
+            They can be defined in a static or in a dynamic way as in data iteration components.
+            <p/>
+            This example demonstrates how to specifies elements which are stamped within the layout.
+            These are special layout elements which will not be laid out by FluidGrid. Rather, FluidGrid will layout
+            items below stamped elements. To specify stamped elements, use the <strong>stamp</strong> attribute
+            which can be any search expression supported by the PrimeFaces Search Expression Framework.
+            <p/>
+            Furtermore, some client-side widget's methods will be demonstrated too. Stamped elements can be
+            toggled by the widget's method <strong>unstamp()</strong> and <strong>stamp()</strong>.
+            The layout can be triggered automatically by the widget's method <strong>layout()</strong>.
+            <strong>Note:</strong> When the fluid grid is within a layout pane / unit, it re-layouts itself automatically
+            on resizing this layout pane / unit. In this case, set the attribute <strong>resizeBound</strong>
+            to <strong>false</strong> to deacivate the re-layouting when resizing the browser window.
+        </h:panelGroup>
+        
+        <h:panelGroup layout="block" styleClass="centerExample">
+<!-- EXAMPLE-SOURCE-START -->
+<pe:fluidGrid stamp="@(.pe-fluidgrid .stamp)" resizeBound="false" widgetVar="fluidGridWdgt">
+    <div class="stamp"></div>
+    
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header h3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w3"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header w2"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+    <pe:fluidGridItem styleClass="ui-widget-header"/>
+</pe:fluidGrid>
+            
+<p:commandButton value="Toggle stumped" type="button" style="margin-top:15px;"
+                 onclick="toggleStamped()"/>
+
+<h:outputScript id="fluidGridScript" target="body">
+/* <![CDATA[ */
+    isStamped = true;
+    
+    function toggleStamped() {
+        // stamp or unstamp element
+        if (isStamped) {
+            PF('fluidGridWdgt').unstamp($(".pe-fluidgrid .stamp").get());
+        } else {
+            PF('fluidGridWdgt').stamp($(".pe-fluidgrid .stamp").get());
+        }
+        
+        // trigger layout
+        PF('fluidGridWdgt').layout();
+        
+        isStamped = !isStamped;
+    }
+/* ]]> */
+</h:outputScript>
+            
+<h:outputStylesheet id="fluidGridCSS">
+    .pe-fluidgrid {
+        max-width: 1000px;
+        position: relative;
+    }
+    
+    .pe-fluidgrid .pe-fluidgrid-item {
+        width:  60px;
+        height: 60px;
+        background: #D26;
+        border: 1px solid orange;
+        border-radius: 5px;
+        opacity: 0.7;
+    }
+    
+    .pe-fluidgrid-item.w2 {width: 120px;}
+    .pe-fluidgrid-item.w3 {width: 180px;}    
+    .pe-fluidgrid-item.h2 {height: 100px;}
+    .pe-fluidgrid-item.h3 {height: 130px;}
+    
+    .pe-fluidgrid .stamp {
+        position: absolute;
+        right: 15%;
+        top: 10px;
+        width: 50%;
+        height: 70px;
+        background: orange;
+        border: 4px dotted black;
+    }
+</h:outputStylesheet>            
+<!-- EXAMPLE-SOURCE-END -->
+        </h:panelGroup>
+        
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/fluidgrid/stamped.xhtml')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/fluidgrid/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="fluidGrid"/>
+            <ui:param name="tagName2" value="fluidGridItem"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

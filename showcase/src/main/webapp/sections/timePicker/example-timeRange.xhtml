@@ -1,0 +1,19 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<h:panelGrid columns="5">
+    <h:outputText value="Start time"/>
+    <pe:timePicker value="#{timePickerController.time1}" mode="popup" onHourShow="tpStartOnHourShowCallback"
+                   onMinuteShow="tpStartOnMinuteShowCallback" widgetVar="startTimeWidget"/>
+    
+    <h:panelGroup layout="block" style="width:20px;"/>
+    
+    <h:outputText value="End time"/>
+    <pe:timePicker value="#{timePickerController.time2}" mode="popup" onHourShow="tpEndOnHourShowCallback"
+                   onMinuteShow="tpEndOnMinuteShowCallback" widgetVar="endTimeWidget"/>
+</h:panelGrid>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+
+    <application>
+        <el-resolver>
+            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
+        </el-resolver>
+        <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+    </application>
+    
+    <converter>
+        <converter-id>themeConverter</converter-id>
+        <converter-class>org.primefaces.extensions.showcase.converter.ThemeConverter</converter-class>
+    </converter>
+
+    <factory>
+        <exception-handler-factory>
+            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
+
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.CommandButtonRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.renderer.CommandButtonSingleClickRenderer</renderer-class>
+        </renderer>
+    </render-kit>
+
+</faces-config>

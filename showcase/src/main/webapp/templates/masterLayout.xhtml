@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      lang="en">
+<f:view contentType="text/html" locale="en">
+    <ui:insert name="metadata"/>
+    <pe:head title="PrimeFaces Extensions - ShowCase" shortcutIcon="#{request.contextPath}/favicon_16x16.png">
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta name="theme-color" content="DARKSLATEBLUE"/>
+            <meta name="description" content="PrimeFaces Extensions Showcase"/>
+        </f:facet>
+    </pe:head>
+    <h:body>
+        <pe:layout id="fpl" widgetVar="fullLayoutWidget" options="#{showcaseLayout.options}">
+            <pe:javascript event="resize" execute="#{resizeFunction}" disabled="#{empty resizeFunction}"/>
+            
+            <pe:layoutPane position="north" id="layoutNorth">
+                <h:form id="headerForm" prependId="false">
+                    <ui:insert name="header"/>
+                </h:form>
+            </pe:layoutPane>
+            <h:form id="mainForm" prependId="false">
+                <ui:insert name="center"/>
+                <pe:layoutPane position="south" id="layoutSouth">
+                    <ui:insert name="footer"/>
+                </pe:layoutPane>
+            </h:form>
+        </pe:layout>
+
+        <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+                                update="expDialog"
+                                onexception="PF('exceptionDialog').show();"/>
+
+        <p:dialog id="expDialog" header="#{pfExceptionHandler.type} occured!"
+                  widgetVar="exceptionDialog" height="500px">
+            Message: #{pfExceptionHandler.message}
+            <br/>
+            Timestamp: #{pfExceptionHandler.formattedTimestamp}
+            <br/>
+            StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}"
+                                      escape="false"/>
+
+            <p:button value="Reload the application!" style="margin:20px 5px 20px 5px"
+                      onclick="document.location.href = document.location.href;"/>
+        </p:dialog>
+        
+        <ui:insert name="dialogs"/>
+        <ui:insert name="resources-app"/>
+    </h:body>
+</f:view>
+</html>

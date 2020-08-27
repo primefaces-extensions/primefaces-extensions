@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+	<ui:define name="centerContent">
+		<f:facet name="header">
+			<h:outputText value="Speedtest" />
+		</f:facet>
+		<h:panelGroup layout="block" styleClass="centerContent">
+			<h:graphicImage library="images" name="speedtest.png" alt="SpeedTest" />
+            SpeedTest component allows you to test the network speed of your server.<p />
+			<p />
+			<strong>Features include:</strong>
+			<ul>
+				<li>Captures download, upload, ping, and jitter speed</li>
+				<li>Provides results in an Ajax callback</li>
+			</ul>
+			<p />For testing the download speed you will need an uncompressable payload file deployed on your server with a size of 1MB, 2MB, 5MB or 10MB. We recommend using a 5MB file to test the speed.
+            <p />
+			<b>This can be generated here:</b>
+			<p />
+			<div class="ui-g">
+				<div class="ui-g-6" style="padding: 0;">
+					<p:outputLabel value="Size in MB" for="SizeInMB" />
+				</div>
+				<div class="ui-g-6" style="padding: 0;">
+					<p:selectOneMenu id="SizeInMB" value="#{speedTestController.sizeInMB}">
+						<f:selectItem itemLabel="Select size" itemValue="" noSelectionOption="true" itemDisabled="true" />
+						<f:selectItem itemLabel="1MB" itemValue="1" />
+						<f:selectItem itemLabel="2MB" itemValue="2" />
+						<f:selectItem itemLabel="5MB" itemValue="5" />
+						<f:selectItem itemLabel="10MB" itemValue="10" />
+						<p:ajax listener="#{speedTestController.updateSizeInMB()}" update="@this" />
+					</p:selectOneMenu>
+				</div>
+			</div>
+			<p />
+			<div class="ui-g">
+				<div class="ui-g-12" style="padding: 0;">
+					<p:commandButton value="Generate speedtest dummy load file" ajax="false"
+						action="#{speedTestController.downloadPayloadFile()}" style="width:100%;">
+					</p:commandButton>
+				</div>
+			</div>
+		</h:panelGroup>
+	</ui:define>
+	<ui:define name="useCases">
+		<ui:include src="/sections/speedtest/useCasesChoice.xhtml" />
+	</ui:define>
+	<ui:define name="docuTable">
+		<ui:include src="/sections/shared/documentation.xhtml">
+			<ui:param name="tagName" value="speedtest" />
+		</ui:include>
+	</ui:define>
+</ui:composition>
+</html>

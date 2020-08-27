@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MasterDetail"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            MasterDetail component allows to group contents into levels (sections) and saves page space. 
+            Smart and flexible navigation between levels via built-in breadcrumbs or command components gives a neat and stylish interface for users.
+            <p/>
+            Each level in the flow is represented with a MasterDetailLevel component. 
+            Switching between levels occurs by means of SelectDetailLevel handler and is based on AJAX, that means each level is loaded dynamically by AJAX. 
+            SelectDetailLevel can be attached to any ajaxified PrimeFaces and non PrimeFaces component. 
+            Such typically components are CommandLink, CommandButton, MenuItem, RemoteCommand, HotKey and any other components with attached f:ajax / p:ajax.
+            <p/>
+            This approach gives a flexible and powerful capability to control partial validation and to call action / actionListener during navigation.
+            Area to be updated during navigation between levels is set automatically to the MasterDetail component - no needs to specify
+            it explicitly. But of course, processed and updated areas can be controlled more precise by "process" / "update" attributes.
+            Partial validation can be e.g. skipped by setting process="@none" or immediate="true". 
+            Partial validation in case of the navigation via breadcrumbs is always skipped automatically.
+            <p/>
+            Other features are a server-side listener invoking when a navigation attempt takes place, "header", "footer" facets and more.
+            <p/>
+            <strong>Attention:</strong> You have to reference the pe:masterDetail in the "update" attribute of command components
+            manually if you have any auto updatable components, such as p:growl or p:message with p:autoUpdate, on the page.
+            <p/>
+            <strong>Known limitation:</strong> MasterDetail component doesn't work inside of data iteration components
+            extending UIData, e.g. inside of DataTable. More precise: the navigation will not work when pe:masterDetail
+            is placed within a data iteration component.
+        </h:panelGroup>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/masterDetail/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/threeTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="masterDetail"/>
+            <ui:param name="tagName2" value="masterDetailLevel"/>
+            <ui:param name="tagName3" value="selectDetailLevel"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

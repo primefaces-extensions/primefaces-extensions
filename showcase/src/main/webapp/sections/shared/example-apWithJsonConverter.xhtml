@@ -1,0 +1,54 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+
+<p:growl id="growl" showDetail="true" />
+
+<pe:remoteCommand id="applyDataCommand" name="applyData" process="@this" update="subject date circle growl"
+    actionListener="#{remoteCommandController.parametersAssigned}">
+
+    <pe:assignableParam name="subject" assignTo="#{remoteCommandController.subject}"/>
+    <pe:assignableParam name="date" assignTo="#{remoteCommandController.date}">
+        <f:convertDateTime type="both" dateStyle="short" locale="en"/>
+    </pe:assignableParam>
+    <pe:assignableParam name="circle" assignTo="#{remoteCommandController.circle}">
+        <pe:convertJson />
+    </pe:assignableParam>
+</pe:remoteCommand>
+
+<script type="text/javascript">
+    circle = {
+        radius: 50,
+        backgroundColor: "#FF0000",
+        borderColor: "#DDDDDD",
+        scaleFactor: 1.2
+    };
+    circle2 = {
+        radius: 32,
+        backgroundColor: "#FF0320",
+        borderColor: "#DDFFFD",
+        scaleFactor: 1.6
+    };
+</script>
+
+<h:outputLabel for="subject" value="Subject: " />
+<h:outputText id="subject" value="#{remoteCommandController.subject}" />
+<br/>
+<h:outputLabel for="date" value="Date: " />
+<h:outputText id="date" value="#{remoteCommandController.date}" />
+<br/>
+<h:outputLabel for="circle" value="Circle: " />
+<h:outputText id="circle" value="#{remoteCommandController.circle.radius} - #{remoteCommandController.circle.backgroundColor} - #{remoteCommandController.circle.borderColor} - #{remoteCommandController.circle.scaleFactor}" />
+<br/><br/>
+
+<p:commandButton value="Apply Data" type="button" onclick="applyData('hello world', '5/14/07 12:55:42 PM', JSON.stringify(circle))" />
+<p:commandButton value="Apply Second Data" type="button" onclick="applyData('hello user', '7/11/01 11:55:42 PM', JSON.stringify(circle2))" />
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

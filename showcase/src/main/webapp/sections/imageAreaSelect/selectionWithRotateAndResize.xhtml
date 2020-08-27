@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="ImageAreaSelect"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            It's also possible to combine ImageAreaSelect and ImageRotateAndResize.
+            <p/>
+            With the imageRotateAndResize widget, the image will be completely redrawn and the ImageAreaSelect will stop working after a resize or rotate action.
+            We can simply fix this with call reload() of the ImageAreaSelect Javascript widget.
+            If you don't need a listener for the resize or rotate event on the server, you could use <b>pe:javascript</b> to reload the ImageAreaSelect widget.
+            In this example the resize event is also catched with <b>pe:javascript</b>.
+        </h:panelGroup>
+
+        <ui:include src="/sections/shared/iasrrWithJavascriptBehavior.xhtml"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/imageAreaSelect/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/threeTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="imageAreaSelect"/>
+            <ui:param name="tagName2" value="imageRotateAndResize"/>
+            <ui:param name="tagName3" value="javascript"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

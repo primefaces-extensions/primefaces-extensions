@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="JsonConverter"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            The following example shows how JsonConverter can be applied to RemoteCommand.
+            This can be achieved with <strong>pe:assignableParam</strong> and attached <strong>pe:convertJson</strong>.
+            JsonConverter only has one optional attribute "type". It specifies data type of the value object.
+            Any primitive type, array, non generic or generic type is supported.
+            Data type is sometimes required to convert a value to a JSON representation. All data types should be
+            fully qualified. Examples:
+            <ul>
+                <li>"boolean"</li>
+                <li>"int"</li>
+                <li>"long[]"</li>
+                <li>"java.lang.String"</li>
+                <li>"java.util.Date"</li>
+                <li>"java.util.Collection&lt;java.lang.Integer&gt;"</li>
+                <li>"java.util.Map&lt;java.lang.String, com.prime.FooPair&lt;java.lang.Integer, java.util.Date&gt;&gt;"</li>
+                <li>"com.prime.FooNonGenericClass"</li>
+                <li>"com.prime.FooGenericClass&lt;java.lang.String, java.lang.Integer&gt;"</li>
+                <li>"com.prime.FooGenericClass&lt;int[], com.prime.FooGenericClass&lt;com.prime.FooNonGenericClass, java.lang.Boolean&gt;&gt;"</li>
+            </ul>
+        </h:panelGroup>
+
+        <ui:include src="/sections/shared/apWithJsonConverter.xhtml"/>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/converters/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="convertJson"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

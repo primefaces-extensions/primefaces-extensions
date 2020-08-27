@@ -1,0 +1,65 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+<pe:fluidGrid hGutter="10" vGutter="10">
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 1</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2">Item 2</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h3">Item 3</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 4</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w3">Item 5</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 6</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 7</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 8</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h3">Item 9</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 10</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 11</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 12</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2">Item 13</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2">Item 14</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 15</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 16</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 17</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 18</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h3">Item 19</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 20</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 21</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 22</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h2">Item 23</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2 h2">Item 24</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 25</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 26</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header h3">Item 27</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 28</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w3">Item 29</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 30</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 31</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header w2">Item 32</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 33</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 34</pe:fluidGridItem>
+    <pe:fluidGridItem styleClass="ui-widget-header">Item 35</pe:fluidGridItem>
+</pe:fluidGrid>
+            
+<h:outputStylesheet id="fluidGridCSS">
+    .pe-fluidgrid {
+        max-width: 900px;
+    }
+    
+    .pe-fluidgrid .pe-fluidgrid-item {
+        width:  60px;
+        height: 60px;
+        border-radius: 5px;
+        padding-top: 0.5em;
+        text-align: center;
+    }
+    
+    .pe-fluidgrid-item.w2 {width: 130px;}
+    .pe-fluidgrid-item.w3 {width: 200px;}    
+    .pe-fluidgrid-item.h2 {height: 100px;}
+    .pe-fluidgrid-item.h3 {height: 130px;}
+</h:outputStylesheet>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

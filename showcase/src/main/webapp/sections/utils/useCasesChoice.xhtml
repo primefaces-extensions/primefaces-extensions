@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Common Functions"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('commonFunctions')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/utils/commonFunctions.jsf"/>
+        <p:menuitem value="escapeSelector"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('escapeSelector')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/utils/escapeSelector.jsf"/>   
+        <p:menuitem value="Switch"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('switch')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/utils/switch.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

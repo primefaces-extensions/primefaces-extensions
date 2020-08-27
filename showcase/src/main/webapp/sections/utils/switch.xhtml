@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="Switch"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+			Sometimes you need to display different outputs or components depending on a value. Usually you can achieve this by using the ui:fragment tag. 
+			With the pe:switch util tag you won't have to declare ui:fragment tags, with different checks like ui:fragment rendered="#{'#'}{!empty someController.value}", anymore. 
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/utils/example-switch.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/utils/example-switch.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+@ManagedBean
+@RequestScoped
+public class SwitchController {
+
+	private String value;
+	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(final String value) {
+		this.value = value;
+	}
+}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/utils/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="switch"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

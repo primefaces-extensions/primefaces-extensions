@@ -1,0 +1,25 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+<!-- EXAMPLE-SOURCE-START -->
+	<p:growl id="growl" showDetail="true" showSummary="true">
+		<p:autoUpdate />
+	</p:growl>  
+<pe:timer
+    widgetVar="timer"
+    timeout="10000"
+    forward="true"
+    listener="#{jsApiTimerController.listener}"
+    singleRun="false"/>
+<hr/>
+<p:commandButton value="Start" onclick="PF('timer').start()" type="button"/>
+<p:commandButton value="Pause" onclick="PF('timer').pause()" type="button"/>
+<p:commandButton value="Restart" onclick="PF('timer').restart()" type="button"/>
+<p:commandButton value="Stop" onclick="PF('timer').stop()" type="button"/>
+<p:commandButton value="Stop (Silent)" onclick="PF('timer').stop(true)" type="button"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

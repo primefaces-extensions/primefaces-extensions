@@ -1,0 +1,114 @@
+html {
+    overflow: auto !important;
+    visibility: hidden;
+}
+
+body {
+    font-family: Arial, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 12px;
+    padding: 0 !important;
+    margin: 0;
+}
+
+input,
+select,
+textarea,
+button,
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family: Arial, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 12px;
+}
+
+.ui-widget-header,
+.ui-widget-content,
+.ui-widget-header .ui-widget-header,
+.ui-widget-content .ui-widget-content {
+    font-family: Arial, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 12px !important;
+}
+
+.ui-chkbox .ui-chkbox-label {
+    margin: 3px;
+}
+
+.ui-selectmanycheckbox label {
+    margin-left: 1px;
+    margin-top: auto;
+}
+
+.ui-selectoneradio label {
+    margin-left: 1px;
+}
+
+.ui-datatable thead th,
+.ui-datatable tbody td,
+.ui-datatable tfoot td {
+    white-space: normal;
+}
+
+.ui-datatable .ui-sortable-column-icon {
+    margin: 0 -10px 0 0 !important; /* this has been -16px -10px 0px 0px */
+}
+
+table .formColumn1 {
+    padding-right: 10px;
+    text-align: right;
+    white-space: nowrap;
+    width: 1%;
+}
+
+table .formColumn2 input {
+    width: 200px;
+}
+
+table .formColumn input {
+    width: 250px;
+}
+
+.radioButtons,
+.radioButtons td {
+    white-space: nowrap;
+    border: none !important;
+}
+
+.radioLineDirection td:first-child {
+    padding-right: 15px;
+}
+
+.radioButtons input {
+    margin: 2px 0 2px 0;
+}
+
+.radioButtons input,
+.radioButtons label {
+    vertical-align: middle;
+}
+
+.radioButtons label {
+    margin-left: 4px;
+}
+
+.checkBoxes {
+    white-space: nowrap;
+}
+
+.checkBoxes input,
+.checkBoxes label {
+    vertical-align: middle;
+}
+
+table .columnTop {
+    vertical-align: top;
+}
+
+.ui-tree .ui-tree-node {
+    cursor: pointer;
+}
+
+.ui-tooltip {
+    max-width: 400px;
+}

@@ -1,0 +1,27 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+
+<p:growl id="growl" showDetail="true" />
+
+<p:commandButton oncomplete="PF('testDialog').show()" value="Open In Dialog" update="dialog" style="margin:8px;"></p:commandButton>
+<p:dialog id="dialog" widgetVar="testDialog" resizable="true" closable="true" closeOnEscape="true" height="500" width="630">
+    <pe:ckEditor id="dialogEditor"></pe:ckEditor>
+</p:dialog>
+    
+<pe:ckEditor id="editor" value="#{editorController.content}">
+    <p:ajax event="save" listener="#{editorController.saveListener}" update="growl"/>
+</pe:ckEditor>
+<br/>
+<br/>
+<pe:ckEditor id="secondEditor" value="#{editorController.secondContent}">
+    <p:ajax event="save" listener="#{editorController.secondSaveListener}" update="growl"/>
+</pe:ckEditor>
+
+<!-- EXAMPLE-SOURCE-END -->
+
+</ui:composition>

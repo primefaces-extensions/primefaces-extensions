@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic usage and three modes"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/timePicker/basicUsage.jsf"/>
+        <p:menuitem value="Advanced usage, events and callbacks"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('advancedUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/timePicker/advancedUsage.jsf"/>
+        <p:menuitem value="Time range"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('timeRange')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/timePicker/timeRange.jsf"/>
+        <p:menuitem value="Setting min. / max. time"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('minMaxTime')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="fa fa-play"
+                    url="#{request.contextPath}/sections/timePicker/minMaxTime.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>
