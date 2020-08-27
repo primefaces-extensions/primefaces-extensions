@@ -44,7 +44,12 @@ Please refer to the [Getting Started Guide](https://github.com/primefaces-extens
 
 ### Demo
 ***
-Please refer to the [showcase](https://www.primefaces.org/showcase-ext/) in order to see the full usage of the components. Sources of PrimeFaces Extensions showcase are available as a separate [project]( https://github.com/primefaces-extensions/showcase).
+Please refer to the Showcase submodule in order to see the full usage of the components. Simply do the following to run the Showcase:
+```
+cd showcase
+mvn clean jetty:run
+```
+Then open your web browser to http://localhost:8080/primeext-showcase/
 
 ### Issues
 ***
