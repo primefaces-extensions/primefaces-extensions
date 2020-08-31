@@ -23,12 +23,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-
 import com.lowagie.text.Document;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @Named
 @SessionScoped
@@ -57,7 +56,7 @@ public class BasicDocumentViewerController implements Serializable {
             content = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf");
         }
         catch (final Exception e) {
-            e.printStackTrace();
+
         }
     }
 
