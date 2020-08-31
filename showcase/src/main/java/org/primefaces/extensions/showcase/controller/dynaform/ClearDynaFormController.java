@@ -15,25 +15,19 @@
  */
 package org.primefaces.extensions.showcase.controller.dynaform;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-import javax.annotation.PostConstruct;
-import javax.faces.component.visit.VisitContext;
-import javax.faces.component.visit.VisitHint;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.annotation.*;
+import javax.faces.component.visit.*;
+import javax.faces.context.*;
+import javax.faces.view.*;
+import javax.inject.*;
 
-import org.primefaces.extensions.component.dynaform.DynaForm;
-import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.extensions.model.dynaform.DynaFormRow;
-import org.primefaces.extensions.showcase.model.dynaform.Condition;
-import org.primefaces.extensions.util.visitcallback.ExecutableVisitCallback;
-import org.primefaces.extensions.util.visitcallback.VisitTaskExecutor;
+import org.primefaces.extensions.component.dynaform.*;
+import org.primefaces.extensions.model.dynaform.*;
+import org.primefaces.extensions.showcase.model.dynaform.*;
+import org.primefaces.extensions.util.visitcallback.*;
 
 /**
  * ClearDynaFormController
@@ -45,7 +39,7 @@ import org.primefaces.extensions.util.visitcallback.VisitTaskExecutor;
 @ViewScoped
 public class ClearDynaFormController implements Serializable {
 
-    public static final Set<VisitHint> VISIT_HINTS = EnumSet.of(VisitHint.SKIP_UNRENDERED);
+    protected static final Set<VisitHint> VISIT_HINTS = EnumSet.of(VisitHint.SKIP_UNRENDERED);
     private static final long serialVersionUID = 20130504L;
 
     private DynaFormModel model;
@@ -54,7 +48,7 @@ public class ClearDynaFormController implements Serializable {
     @PostConstruct
     protected void initialize() {
         model = new DynaFormModel();
-        conditions = new ArrayList<Condition>();
+        conditions = new ArrayList<>();
 
         // 1. condition and row
         Condition condition = new Condition("model", 2, "eq", "mercedes", 0);
@@ -90,7 +84,7 @@ public class ClearDynaFormController implements Serializable {
         row.addControl(condition, "clear");
     }
 
-    public void clearInputs(final int index) {
+    public static void clearInputs(final int index) {
         final FacesContext fc = FacesContext.getCurrentInstance();
         final DynaForm dynaForm = (DynaForm) fc.getViewRoot().findComponent(":mainForm:dynaForm");
 

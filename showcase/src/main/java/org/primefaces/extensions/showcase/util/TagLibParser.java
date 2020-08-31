@@ -15,22 +15,15 @@
  */
 package org.primefaces.extensions.showcase.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.*;
+import javax.xml.parsers.*;
 
-import org.primefaces.extensions.showcase.model.system.DocuAttribute;
-import org.primefaces.extensions.showcase.model.system.DocuEvent;
-import org.primefaces.extensions.showcase.model.system.DocuTag;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.primefaces.extensions.showcase.model.system.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 /**
  * Parser of primefaces-extensions.taglib.xml.
@@ -44,6 +37,8 @@ public class TagLibParser {
 
     public static Map<String, DocuTag> getTags() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        docBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); // Compliant
+        docBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); // compliant
         docBuilderFactory.setIgnoringElementContentWhitespace(true);
         docBuilderFactory.setValidating(false);
         docBuilderFactory.setNamespaceAware(true);
@@ -64,7 +59,7 @@ public class TagLibParser {
             // ignore
         }
 
-        Map<String, DocuTag> tags = new HashMap<String, DocuTag>();
+        Map<String, DocuTag> tags = new HashMap<>();
         NodeList nodes = doc.getElementsByTagName("tag");
 
         for (int i = 0; i < nodes.getLength(); i++) {
