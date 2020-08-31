@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"C:\\dev\\primefaces\\pe-core\\target\\classes\\META-INF\\resources\\primefaces-extensions\\legend\\legend.js",
-"lineCount":1,
-"mappings":"AAMAA,UAAAC,OAAAC,UAAA,CAA8BF,UAAAC,OAAAE,WAAAC,OAAA,CAAoC,CAQ9DC,KAAOA,QAAQ,CAACC,CAAD,CAAM,CACjB,IAAAC,OAAA,CAAYD,CAAZ,CACA,KAAAE,GAAA,CAAUF,CAAAE,GACV,KAAAF,IAAA,CAAWA,CAHM,CARyC,CAqB9DG,KAAMA,QAAQ,CAACC,CAAD,CAAW,CACrB,IAAAC,GAAAF,KAAA,CAAaC,CAAb,CADqB,CArBqC,CAgC9DE,KAAMA,QAAQ,CAACF,CAAD,CAAW,CACrB,IAAAC,GAAAC,KAAA,CAAaF,CAAb,CADqB,CAhCqC,CAApC;",
-"sources":["legend.source.js"],
-"names":["PrimeFaces","widget","ExtLegend","BaseWidget","extend","init","cfg","_super","id","show","duration","jq","hide"]
-}
