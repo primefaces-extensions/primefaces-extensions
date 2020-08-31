@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id: UserSettings.java 294 2011-10-18 19:03:57Z Zoigln@googlemail.com $
  */
-
 package org.primefaces.extensions.showcase.controller;
 
 import java.util.Date;
@@ -37,45 +34,45 @@ import org.primefaces.extensions.showcase.model.Circle;
 @RequestScoped
 public class RemoteCommandController {
 
-	private String subject;
-	private Date date;
-	private Circle circle;
+    private String subject;
+    private Date date;
+    private Circle circle;
 
-	public void printMethodParams(final String subject, final Date date, final Circle circle) {
-		final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ActionListener called", "Subject: "
-				+ subject + ", Date: " + date + ", Circle - backgroundColor: " + circle.getBackgroundColor());
+    public void printMethodParams(final String subject, final Date date, final Circle circle) {
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ActionListener called", "Subject: "
+                    + subject + ", Date: " + date + ", Circle - backgroundColor: " + circle.getBackgroundColor());
 
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
-	public void parametersAssigned() {
-		final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ActionListener called",
-				"Parameters assigned");
+    public void parametersAssigned() {
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "ActionListener called",
+                    "Parameters assigned");
 
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setSubject(final String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(final String subject) {
+        this.subject = subject;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setDate(final Date date) {
-		this.date = date;
-	}
+    public void setDate(final Date date) {
+        this.date = date;
+    }
 
-	public Circle getCircle() {
-		return circle;
-	}
+    public Circle getCircle() {
+        return circle;
+    }
 
-	public void setCircle(final Circle circle) {
-		this.circle = circle;
-	}
+    public void setCircle(final Circle circle) {
+        this.circle = circle;
+    }
 }

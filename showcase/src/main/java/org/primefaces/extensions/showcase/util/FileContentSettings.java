@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.showcase.util;
 
@@ -30,12 +28,14 @@ public class FileContentSettings {
     private boolean showLineWithMarker = false;
 
     public String[] getStartMarkers() {
-        if (startMarkers == null) return new String[0];
+        if (startMarkers == null)
+            return new String[0];
         return startMarkers;
     }
 
     public String[] getEndMarkers() {
-        if (endMarkers == null) return new String[0];
+        if (endMarkers == null)
+            return new String[0];
         return endMarkers;
     }
 

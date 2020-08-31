@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ import java.io.Serializable;
  */
 public class Customer implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	public String customerName;
+    private static final long serialVersionUID = 1L;
+
+    public String customerName;
     public String country;
     public String contactNumber;
 
-    public Customer(String customerName, String country,String contactNumber) {
+    public Customer(String customerName, String country, String contactNumber) {
         this.customerName = customerName;
         this.country = country;
-        this.contactNumber=contactNumber;
+        this.contactNumber = contactNumber;
     }
 
     public String getCustomerName() {
@@ -65,9 +65,9 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerName='" + customerName + '\'' +
-                ", country='" + country + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                '}';
+                    "customerName='" + customerName + '\'' +
+                    ", country='" + country + '\'' +
+                    ", contactNumber='" + contactNumber + '\'' +
+                    '}';
     }
 }

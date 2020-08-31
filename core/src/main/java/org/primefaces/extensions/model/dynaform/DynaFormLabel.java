@@ -94,8 +94,8 @@ public class DynaFormLabel extends AbstractDynaFormElement {
     @Override
     public String toString() {
         return "DynaFormLabel{" + "value=" + value + ", escape=" + escape + ", forControl=" + forControl
-                + ", targetClientId=" + targetClientId + ", targetRequired=" + targetRequired
-                + ", targetValid=" + targetValid + ", styleClass=" + styleClass + '}';
+                    + ", targetClientId=" + targetClientId + ", targetRequired=" + targetRequired
+                    + ", targetValid=" + targetValid + ", styleClass=" + styleClass + '}';
     }
 
     @Override

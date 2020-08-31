@@ -20,8 +20,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 import javax.el.MethodExpression;
 import javax.faces.FacesException;
@@ -34,12 +34,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import com.lowagie.text.Font;
-import com.lowagie.text.Rectangle;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
 import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
 import org.primefaces.component.columngroup.ColumnGroup;
@@ -52,6 +46,13 @@ import org.primefaces.component.summaryrow.SummaryRow;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.util.Constants;
+
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * <code>Exporter</code> component.

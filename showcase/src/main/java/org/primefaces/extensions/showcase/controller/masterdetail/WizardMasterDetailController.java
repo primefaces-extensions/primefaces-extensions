@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
 import java.io.Serializable;
@@ -38,33 +35,33 @@ import org.primefaces.extensions.showcase.model.masterdetail.User;
 @ViewScoped
 public class WizardMasterDetailController implements Serializable {
 
-	private static final long serialVersionUID = 20120209L;
+    private static final long serialVersionUID = 20120209L;
 
-	private User user = new User();
-	private int currentLevel = 1;
+    private User user = new User();
+    private int currentLevel = 1;
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(final User user) {
-		this.user = user;
-	}
+    public void setUser(final User user) {
+        this.user = user;
+    }
 
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 
-	public void setCurrentLevel(final int currentLevel) {
-		this.currentLevel = currentLevel;
-	}
+    public void setCurrentLevel(final int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
 
-	public void save(final ActionEvent actionEvent) {
-		final FacesMessage msg = new FacesMessage("Saved successful", "Welcome :" + user.getFirstname());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void save(final ActionEvent actionEvent) {
+        final FacesMessage msg = new FacesMessage("Saved successful", "Welcome :" + user.getFirstname());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		// create new empty user
-		user = new User();
-		currentLevel = 1;
-	}
+        // create new empty user
+        user = new User();
+        currentLevel = 1;
+    }
 }

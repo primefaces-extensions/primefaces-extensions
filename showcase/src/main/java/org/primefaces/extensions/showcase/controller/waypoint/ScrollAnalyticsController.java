@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.waypoint;
 
 import java.io.Serializable;
@@ -40,23 +37,23 @@ import org.primefaces.extensions.event.WaypointEvent;
 @ViewScoped
 public class ScrollAnalyticsController implements Serializable {
 
-	private static final long serialVersionUID = 20120816L;
+    private static final long serialVersionUID = 20120816L;
 
-	public void adInView(final WaypointEvent e) {
-		final UIComponent container = e.getComponent().findComponent("container");
+    public void adInView(final WaypointEvent e) {
+        final UIComponent container = e.getComponent().findComponent("container");
 
-		container.invokeOnComponent(FacesContext.getCurrentInstance(), e.getWaypointId(), new ContextCallback() {
+        container.invokeOnComponent(FacesContext.getCurrentInstance(), e.getWaypointId(), new ContextCallback() {
 
-			@Override
-			public void invokeContextCallback(final FacesContext fc, final UIComponent component) {
-				final HtmlPanelGroup panelGroup = (HtmlPanelGroup) component;
-				final String analyticsId = panelGroup != null ? (String) panelGroup.getAttributes().get("analyticsid")
-						: "";
+            @Override
+            public void invokeContextCallback(final FacesContext fc, final UIComponent component) {
+                final HtmlPanelGroup panelGroup = (HtmlPanelGroup) component;
+                final String analyticsId = panelGroup != null ? (String) panelGroup.getAttributes().get("analyticsid")
+                            : "";
 
-				final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Ad with ID: " + analyticsId + " was read", null);
-				fc.addMessage(null, msg);
-			}
-		});
-	}
+                final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Ad with ID: " + analyticsId + " was read", null);
+                fc.addMessage(null, msg);
+            }
+        });
+    }
 }

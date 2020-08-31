@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.showcase.util;
 
@@ -22,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -35,13 +34,13 @@ public class FileContentMarkerUtil {
 
     private static final String LINE_SEPARATOR_WINDOWS = "\r\n";
 
-    private static final FileContentSettings javaFileSettings =
-                new FileContentSettings().setStartMarkers("@Named", "@RequestScoped", "@ViewScoped", "@SessionScoped",
-                            "@FacesConverter", " class ", " enum ").setShowLineWithMarker(true);
+    private static final FileContentSettings javaFileSettings = new FileContentSettings()
+                .setStartMarkers("@Named", "@RequestScoped", "@ViewScoped", "@SessionScoped",
+                            "@FacesConverter", " class ", " enum ")
+                .setShowLineWithMarker(true);
 
-    private static final FileContentSettings xhtmlFileSettings =
-                new FileContentSettings().setStartMarkers("EXAMPLE_SOURCE_START", "EXAMPLE-SOURCE-START")
-                            .setEndMarkers("EXAMPLE_SOURCE_END", "EXAMPLE-SOURCE-END").setShowLineWithMarker(false);
+    private static final FileContentSettings xhtmlFileSettings = new FileContentSettings().setStartMarkers("EXAMPLE_SOURCE_START", "EXAMPLE-SOURCE-START")
+                .setEndMarkers("EXAMPLE_SOURCE_END", "EXAMPLE-SOURCE-END").setShowLineWithMarker(false);
 
     public static String readFileContent(final String fileName, final InputStream is) {
         try {

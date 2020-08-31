@@ -15,13 +15,13 @@
  */
 package org.primefaces.extensions.component.head;
 
-import org.primefaces.extensions.util.Attrs;
-
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+
+import org.primefaces.extensions.util.Attrs;
 
 /**
  * Renderer for the {@link ExtHead} component which extends PF {@link org.primefaces.renderkit.HeadRenderer}.

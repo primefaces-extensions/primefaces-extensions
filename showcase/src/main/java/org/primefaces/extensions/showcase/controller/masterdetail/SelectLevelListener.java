@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
 import javax.enterprise.context.RequestScoped;
@@ -33,17 +30,18 @@ import org.primefaces.extensions.component.masterdetail.SelectLevelEvent;
 @RequestScoped
 public class SelectLevelListener {
 
-	private boolean errorOccured = false;
+    private boolean errorOccured = false;
 
-	public int handleNavigation(final SelectLevelEvent selectLevelEvent) {
-		if (errorOccured) {
-			return 2;
-		} else {
-			return selectLevelEvent.getNewLevel();
-		}
-	}
+    public int handleNavigation(final SelectLevelEvent selectLevelEvent) {
+        if (errorOccured) {
+            return 2;
+        }
+        else {
+            return selectLevelEvent.getNewLevel();
+        }
+    }
 
-	public void setErrorOccured(final boolean errorOccured) {
-		this.errorOccured = errorOccured;
-	}
+    public void setErrorOccured(final boolean errorOccured) {
+        this.errorOccured = errorOccured;
+    }
 }

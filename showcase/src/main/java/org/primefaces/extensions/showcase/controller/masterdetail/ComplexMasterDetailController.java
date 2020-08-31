@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.masterdetail;
 
 import java.io.Serializable;
@@ -43,103 +40,104 @@ import org.primefaces.extensions.showcase.model.Person;
 @ViewScoped
 public class ComplexMasterDetailController implements Serializable {
 
-	private static final long serialVersionUID = 20111120L;
+    private static final long serialVersionUID = 20111120L;
 
-	private List<Person> persons;
-	private List<SelectItem> availableLanguageSkills = null;
-	private final List<String> selectedLanguageSkills = new ArrayList<String>();
-	private String languageSkillToAdd;
+    private List<Person> persons;
+    private List<SelectItem> availableLanguageSkills = null;
+    private final List<String> selectedLanguageSkills = new ArrayList<String>();
+    private String languageSkillToAdd;
 
-	public ComplexMasterDetailController() {
-		if (persons == null) {
-			persons = new ArrayList<Person>();
+    public ComplexMasterDetailController() {
+        if (persons == null) {
+            persons = new ArrayList<Person>();
 
-			final Calendar calendar = Calendar.getInstance();
-			calendar.set(1972, 5, 25);
-			persons.add(new Person("1", "Max Mustermann", 1, calendar.getTime()));
-			calendar.set(1981, 12, 10);
-			persons.add(new Person("2", "Sara Schmidt", 2, calendar.getTime()));
-			calendar.set(1968, 2, 13);
-			persons.add(new Person("3", "Jasper Morgan", 3, calendar.getTime()));
-		}
-	}
+            final Calendar calendar = Calendar.getInstance();
+            calendar.set(1972, 5, 25);
+            persons.add(new Person("1", "Max Mustermann", 1, calendar.getTime()));
+            calendar.set(1981, 12, 10);
+            persons.add(new Person("2", "Sara Schmidt", 2, calendar.getTime()));
+            calendar.set(1968, 2, 13);
+            persons.add(new Person("3", "Jasper Morgan", 3, calendar.getTime()));
+        }
+    }
 
-	public List<Person> getPersons() {
-		return persons;
-	}
+    public List<Person> getPersons() {
+        return persons;
+    }
 
-	public List<SelectItem> getAvailableLanguageSkills() {
-		if (availableLanguageSkills == null) {
-			availableLanguageSkills = new ArrayList<SelectItem>();
-			availableLanguageSkills.add(new SelectItem("English", "English"));
-			availableLanguageSkills.add(new SelectItem("German", "German"));
-			availableLanguageSkills.add(new SelectItem("Russian", "Russian"));
-			availableLanguageSkills.add(new SelectItem("Turkish", "Turkish"));
-			availableLanguageSkills.add(new SelectItem("Dutch", "Dutch"));
-			availableLanguageSkills.add(new SelectItem("French", "French"));
-			availableLanguageSkills.add(new SelectItem("Italian", "Italian"));
-		}
+    public List<SelectItem> getAvailableLanguageSkills() {
+        if (availableLanguageSkills == null) {
+            availableLanguageSkills = new ArrayList<SelectItem>();
+            availableLanguageSkills.add(new SelectItem("English", "English"));
+            availableLanguageSkills.add(new SelectItem("German", "German"));
+            availableLanguageSkills.add(new SelectItem("Russian", "Russian"));
+            availableLanguageSkills.add(new SelectItem("Turkish", "Turkish"));
+            availableLanguageSkills.add(new SelectItem("Dutch", "Dutch"));
+            availableLanguageSkills.add(new SelectItem("French", "French"));
+            availableLanguageSkills.add(new SelectItem("Italian", "Italian"));
+        }
 
-		return availableLanguageSkills;
-	}
+        return availableLanguageSkills;
+    }
 
-	public List<String> getSelectedLanguageSkills() {
-		return selectedLanguageSkills;
-	}
+    public List<String> getSelectedLanguageSkills() {
+        return selectedLanguageSkills;
+    }
 
-	public void setLanguageSkillToAdd(final String languageSkillToAdd) {
-		this.languageSkillToAdd = languageSkillToAdd;
-	}
+    public void setLanguageSkillToAdd(final String languageSkillToAdd) {
+        this.languageSkillToAdd = languageSkillToAdd;
+    }
 
-	public String getLanguageSkillToAdd() {
-		return languageSkillToAdd;
-	}
+    public String getLanguageSkillToAdd() {
+        return languageSkillToAdd;
+    }
 
-	public String saveSuccess(final Person person) {
-		final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Person " + person.getName() + " has been saved", null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+    public String saveSuccess(final Person person) {
+        final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Person " + person.getName() + " has been saved", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
 
-		return null;
-	}
+        return null;
+    }
 
-	public String saveFailure(final Person person) {
-		final FacesContext fc = FacesContext.getCurrentInstance();
-		final ELContext elContext = fc.getELContext();
+    public String saveFailure(final Person person) {
+        final FacesContext fc = FacesContext.getCurrentInstance();
+        final ELContext elContext = fc.getELContext();
 
-		SelectLevelListener selectLevelListener;
-		try {
-			selectLevelListener = (SelectLevelListener) elContext.getELResolver().getValue(elContext, null,
-					"selectLevelListener");
-			selectLevelListener.setErrorOccured(true);
-		} catch (final RuntimeException e) {
-			throw new FacesException(e.getMessage(), e);
-		}
+        SelectLevelListener selectLevelListener;
+        try {
+            selectLevelListener = (SelectLevelListener) elContext.getELResolver().getValue(elContext, null,
+                        "selectLevelListener");
+            selectLevelListener.setErrorOccured(true);
+        }
+        catch (final RuntimeException e) {
+            throw new FacesException(e.getMessage(), e);
+        }
 
-		final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"Person " + person.getName() + " could not be saved", null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+        final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Person " + person.getName() + " could not be saved", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
 
-		return null;
-	}
+        return null;
+    }
 
-	public String delete(final Person person) {
-		for (final Person pers : persons) {
-			if (pers.getId().equals(person.getId())) {
-				persons.remove(pers);
+    public String delete(final Person person) {
+        for (final Person pers : persons) {
+            if (pers.getId().equals(person.getId())) {
+                persons.remove(pers);
 
-				break;
-			}
-		}
+                break;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public void addLanguageSkill(final Person person) {
-		if (languageSkillToAdd != null) {
-			person.addLanguageSkill(languageSkillToAdd);
-		}
+    public void addLanguageSkill(final Person person) {
+        if (languageSkillToAdd != null) {
+            person.addLanguageSkill(languageSkillToAdd);
+        }
 
-		languageSkillToAdd = null;
-	}
+        languageSkillToAdd = null;
+    }
 }

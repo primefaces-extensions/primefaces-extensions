@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.controller.jsonconverter;
 
 import java.io.Serializable;
@@ -31,23 +30,23 @@ import javax.inject.Named;
 @SessionScoped
 public class TypesJsonController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public String getTypeGenericList() {
-		return "java.util.Collection<java.lang.Integer>";
-	}
+    public String getTypeGenericList() {
+        return "java.util.Collection<java.lang.Integer>";
+    }
 
-	public String getTypeGenericMap() {
-		return "java.util.Map<java.lang.String, org.apache.commons.lang3.tuple.ImmutablePair<java.lang.Integer, java.util.Date>>";
-	}
+    public String getTypeGenericMap() {
+        return "java.util.Map<java.lang.String, org.apache.commons.lang3.tuple.ImmutablePair<java.lang.Integer, java.util.Date>>";
+    }
 
-	public String getTypeGenericSimple() {
-		return "org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric<java.lang.String, java.lang.Integer>";
-	}
+    public String getTypeGenericSimple() {
+        return "org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric<java.lang.String, java.lang.Integer>";
+    }
 
-	public String getTypeGenericComplex() {
-		return "org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric"
-				+ "<int[], org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric"
-				+ "<org.primefaces.extensions.showcase.model.jsonconverter.FooNonGeneric, java.lang.Boolean>>";
-	}
+    public String getTypeGenericComplex() {
+        return "org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric"
+                    + "<int[], org.primefaces.extensions.showcase.model.jsonconverter.FooGeneric"
+                    + "<org.primefaces.extensions.showcase.model.jsonconverter.FooNonGeneric, java.lang.Boolean>>";
+    }
 }

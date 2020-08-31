@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.model.fluidgrid;
 
 import java.io.Serializable;
@@ -21,27 +20,27 @@ import java.io.Serializable;
 /**
  * Image
  *
- * @author  Oleg Varaksin / last modified by $Author: $
+ * @author Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
  */
 public class Image implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private String name;
+    private static final long serialVersionUID = 1L;
 
-	public Image() {
-	}
+    private String name;
 
-	public Image(String name) {
-		this.name = name;
-	}
+    public Image() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Image(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

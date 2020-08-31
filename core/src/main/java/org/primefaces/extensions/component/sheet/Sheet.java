@@ -273,7 +273,7 @@ public class Sheet extends SheetBase {
      * Updates the row var for iterations over the list. The var value will be updated to the value for the specified rowKey.
      *
      * @param context the FacesContext against which to the row var is set. Passed for performance
-     * @param rowKey  the rowKey string
+     * @param rowKey the rowKey string
      */
     public void setRowVar(final FacesContext context, final String rowKey) {
 
@@ -1000,7 +1000,7 @@ public class Sheet extends SheetBase {
     /**
      * Adds eval scripts to the ajax response to update the rows dirtied by the most recent successful update request.
      *
-     * @param context   the FacesContext
+     * @param context the FacesContext
      * @param dirtyRows the set of dirty rows
      */
     public void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {

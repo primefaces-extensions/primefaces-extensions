@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.webapp;
 
 import java.io.Serializable;
@@ -30,40 +27,40 @@ import org.primefaces.extensions.showcase.model.system.Theme;
 /**
  * User settings.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-@Named 
+@Named
 @SessionScoped
 public class UserSettings implements Serializable {
 
-	private static final long serialVersionUID = 20111020L;
+    private static final long serialVersionUID = 20111020L;
 
-	private List<Theme> availableThemes;
-	private Theme currentTheme;
+    private List<Theme> availableThemes;
+    private Theme currentTheme;
 
-	public UserSettings() {
-		setCurrentThemeByName("omega");
-		availableThemes = AvailableThemes.getInstance().getThemes();
-	}
+    public UserSettings() {
+        setCurrentThemeByName("omega");
+        availableThemes = AvailableThemes.getInstance().getThemes();
+    }
 
-	public List<Theme> getAvailableThemes() {
-		return availableThemes;
-	}
+    public List<Theme> getAvailableThemes() {
+        return availableThemes;
+    }
 
-	public void setAvailableThemes(List<Theme> availableThemes) {
-		this.availableThemes = availableThemes;
-	}
+    public void setAvailableThemes(List<Theme> availableThemes) {
+        this.availableThemes = availableThemes;
+    }
 
-	public Theme getCurrentTheme() {
-		return currentTheme;
-	}
+    public Theme getCurrentTheme() {
+        return currentTheme;
+    }
 
-	public void setCurrentTheme(Theme currentTheme) {
-		this.currentTheme = currentTheme;
-	}
+    public void setCurrentTheme(Theme currentTheme) {
+        this.currentTheme = currentTheme;
+    }
 
-	public void setCurrentThemeByName(String theme) {
-		this.currentTheme = AvailableThemes.getInstance().getThemeForName(theme);
-	}
+    public void setCurrentThemeByName(String theme) {
+        this.currentTheme = AvailableThemes.getInstance().getThemeForName(theme);
+    }
 }

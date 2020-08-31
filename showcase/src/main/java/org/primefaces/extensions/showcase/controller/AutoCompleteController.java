@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller;
 
 import java.util.ArrayList;
@@ -34,23 +31,23 @@ import javax.inject.Named;
 @RequestScoped
 public class AutoCompleteController {
 
-	private String text;
+    private String text;
 
-	public List<String> complete(final String query) {
-		final List<String> results = new ArrayList<String>();
+    public List<String> complete(final String query) {
+        final List<String> results = new ArrayList<String>();
 
-		for (int i = 0; i < 10; i++) {
-			results.add(query + i);
-		}
+        for (int i = 0; i < 10; i++) {
+            results.add(query + i);
+        }
 
-		return results;
-	}
+        return results;
+    }
 
-	public final String getText() {
-		return text;
-	}
+    public final String getText() {
+        return text;
+    }
 
-	public final void setText(final String text) {
-		this.text = text;
-	}
+    public final void setText(final String text) {
+        this.text = text;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.webapp;
 
 import java.util.List;
@@ -41,40 +38,41 @@ import org.primefaces.extensions.showcase.util.TagLibParser;
 @Named
 public class DocuPreparer {
 
-	private Map<String, DocuTag> tags;
+    private Map<String, DocuTag> tags;
 
-	@PostConstruct
-	protected void initialize() {
-		try {
-			tags = TagLibParser.getTags();
-		} catch (final Exception e) {
-			throw new FacesException("Taglib parsing failed!", e);
-		}
-	}
+    @PostConstruct
+    protected void initialize() {
+        try {
+            tags = TagLibParser.getTags();
+        }
+        catch (final Exception e) {
+            throw new FacesException("Taglib parsing failed!", e);
+        }
+    }
 
-	public List<DocuAttribute> getDocuAttributes(final String tagName) {
-		if (tagName == null || tags == null) {
-			return null;
-		}
+    public List<DocuAttribute> getDocuAttributes(final String tagName) {
+        if (tagName == null || tags == null) {
+            return null;
+        }
 
-		final DocuTag docuTag = tags.get(tagName);
-		if (docuTag == null) {
-			return null;
-		}
+        final DocuTag docuTag = tags.get(tagName);
+        if (docuTag == null) {
+            return null;
+        }
 
-		return docuTag.getAttributes();
-	}
+        return docuTag.getAttributes();
+    }
 
-	public List<DocuEvent> getDocuEvents(final String tagName) {
-		if (tagName == null || tags == null) {
-			return null;
-		}
+    public List<DocuEvent> getDocuEvents(final String tagName) {
+        if (tagName == null || tags == null) {
+            return null;
+        }
 
-		final DocuTag docuTag = tags.get(tagName);
-		if (docuTag == null) {
-			return null;
-		}
+        final DocuTag docuTag = tags.get(tagName);
+        if (docuTag == null) {
+            return null;
+        }
 
-		return docuTag.getEvents();
-	}
+        return docuTag.getEvents();
+    }
 }

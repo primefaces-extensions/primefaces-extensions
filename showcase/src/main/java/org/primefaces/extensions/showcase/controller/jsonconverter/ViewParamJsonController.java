@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.controller.jsonconverter;
 
 import java.io.Serializable;
@@ -46,212 +45,213 @@ import org.primefaces.extensions.util.RequestParameterBuilder;
 @ViewScoped
 public class ViewParamJsonController implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Inject
-	private TypesJsonController typesJsonController;
+    @Inject
+    private TypesJsonController typesJsonController;
 
-	private boolean b;
-	private long l;
-	private int[] ints;
-	private char[] chars;
-	private String s;
-	private Integer i;
-	private Date d;
+    private boolean b;
+    private long l;
+    private int[] ints;
+    private char[] chars;
+    private String s;
+    private Integer i;
+    private Date d;
 
-	private Collection<Integer> list = new ArrayList<Integer>();
-	private Map<String, ImmutablePair<Integer, Date>> map = new HashMap<String, ImmutablePair<Integer, Date>>();
+    private Collection<Integer> list = new ArrayList<Integer>();
+    private Map<String, ImmutablePair<Integer, Date>> map = new HashMap<String, ImmutablePair<Integer, Date>>();
 
-	private FooNonGeneric fooNonGeneric = new FooNonGeneric();
-	private FooGeneric<String, Integer> fooGenericSimple = new FooGeneric<String, Integer>();
-	private FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex = new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
+    private FooNonGeneric fooNonGeneric = new FooNonGeneric();
+    private FooGeneric<String, Integer> fooGenericSimple = new FooGeneric<String, Integer>();
+    private FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex = new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
 
-	private String generatedUrl;
+    private String generatedUrl;
 
-	@PostConstruct
-	protected void initialize() {
-		// creates a builder instance by the current request URL
-		final RequestParameterBuilder rpBuilder = new RequestParameterBuilder(true);
+    @PostConstruct
+    protected void initialize() {
+        // creates a builder instance by the current request URL
+        final RequestParameterBuilder rpBuilder = new RequestParameterBuilder(true);
 
-		try {
-			rpBuilder.param("b", true);
-			rpBuilder.param("l", 5000L);
-			rpBuilder.paramJson("ints", new int[] { 1, 2, 3, 4, 5 });
-			rpBuilder.paramJson("chars", new char[] { 'x', 'y', 'z' });
-			rpBuilder.paramJson("s", "Hallo World");
-			rpBuilder.param("i", 99);
-			rpBuilder.paramJson("d", new Date());
+        try {
+            rpBuilder.param("b", true);
+            rpBuilder.param("l", 5000L);
+            rpBuilder.paramJson("ints", new int[] {1, 2, 3, 4, 5});
+            rpBuilder.paramJson("chars", new char[] {'x', 'y', 'z'});
+            rpBuilder.paramJson("s", "Hallo World");
+            rpBuilder.param("i", 99);
+            rpBuilder.paramJson("d", new Date());
 
-			final Collection<Integer> list = new ArrayList<Integer>();
-			list.add(11);
-			list.add(22);
-			list.add(33);
+            final Collection<Integer> list = new ArrayList<Integer>();
+            list.add(11);
+            list.add(22);
+            list.add(33);
 
-			rpBuilder.paramJson("list", list, typesJsonController.getTypeGenericList());
+            rpBuilder.paramJson("list", list, typesJsonController.getTypeGenericList());
 
-			final Map<String, ImmutablePair<Integer, Date>> map = new HashMap<String, ImmutablePair<Integer, Date>>();
-			GregorianCalendar calendar = new GregorianCalendar(2012, 1, 20);
-			map.put("cat", new ImmutablePair<Integer, Date>(1, calendar.getTime()));
-			calendar = new GregorianCalendar(2011, 6, 1);
-			map.put("dog", new ImmutablePair<Integer, Date>(2, calendar.getTime()));
-			calendar = new GregorianCalendar(1999, 10, 15);
-			map.put("unknow", new ImmutablePair<Integer, Date>(3, calendar.getTime()));
+            final Map<String, ImmutablePair<Integer, Date>> map = new HashMap<String, ImmutablePair<Integer, Date>>();
+            GregorianCalendar calendar = new GregorianCalendar(2012, 1, 20);
+            map.put("cat", new ImmutablePair<Integer, Date>(1, calendar.getTime()));
+            calendar = new GregorianCalendar(2011, 6, 1);
+            map.put("dog", new ImmutablePair<Integer, Date>(2, calendar.getTime()));
+            calendar = new GregorianCalendar(1999, 10, 15);
+            map.put("unknow", new ImmutablePair<Integer, Date>(3, calendar.getTime()));
 
-			rpBuilder.paramJson("map", map, typesJsonController.getTypeGenericMap());
+            rpBuilder.paramJson("map", map, typesJsonController.getTypeGenericMap());
 
-			final FooNonGeneric fooNonGeneric = new FooNonGeneric();
-			fooNonGeneric.setCount(1001);
-			fooNonGeneric.setStartDate(new Date());
-			fooNonGeneric.setEndDate(new Date(fooNonGeneric.getStartDate().getTime() + 360000));
-			fooNonGeneric.addMessage("Message string 1");
-			fooNonGeneric.addMessage("Message string 2");
+            final FooNonGeneric fooNonGeneric = new FooNonGeneric();
+            fooNonGeneric.setCount(1001);
+            fooNonGeneric.setStartDate(new Date());
+            fooNonGeneric.setEndDate(new Date(fooNonGeneric.getStartDate().getTime() + 360000));
+            fooNonGeneric.addMessage("Message string 1");
+            fooNonGeneric.addMessage("Message string 2");
 
-			rpBuilder.paramJson("fooNonGeneric", fooNonGeneric);
+            rpBuilder.paramJson("fooNonGeneric", fooNonGeneric);
 
-			final FooGeneric<String, Integer> fooGenericSimple = new FooGeneric<String, Integer>();
-			fooGenericSimple.setA("test");
-			fooGenericSimple.setB(25);
+            final FooGeneric<String, Integer> fooGenericSimple = new FooGeneric<String, Integer>();
+            fooGenericSimple.setA("test");
+            fooGenericSimple.setB(25);
 
-			rpBuilder.paramJson("fooGenericSimple", fooGenericSimple, typesJsonController.getTypeGenericSimple());
+            rpBuilder.paramJson("fooGenericSimple", fooGenericSimple, typesJsonController.getTypeGenericSimple());
 
-			final FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex = new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
-			final FooNonGeneric fooNonGeneric2 = new FooNonGeneric();
-			fooNonGeneric2.setCount(909);
-			fooNonGeneric2.setStartDate(new Date());
-			fooNonGeneric2.setEndDate(new Date(fooNonGeneric.getStartDate().getTime() + 7200000));
-			fooNonGeneric2.addMessage("Message string 11");
-			fooNonGeneric2.addMessage("Message string 22");
+            final FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex = new FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>>();
+            final FooNonGeneric fooNonGeneric2 = new FooNonGeneric();
+            fooNonGeneric2.setCount(909);
+            fooNonGeneric2.setStartDate(new Date());
+            fooNonGeneric2.setEndDate(new Date(fooNonGeneric.getStartDate().getTime() + 7200000));
+            fooNonGeneric2.addMessage("Message string 11");
+            fooNonGeneric2.addMessage("Message string 22");
 
-			final FooGeneric<FooNonGeneric, Boolean> fooGenericInnner = new FooGeneric<FooNonGeneric, Boolean>();
-			fooGenericInnner.setA(fooNonGeneric2);
-			fooGenericInnner.setB(false);
+            final FooGeneric<FooNonGeneric, Boolean> fooGenericInnner = new FooGeneric<FooNonGeneric, Boolean>();
+            fooGenericInnner.setA(fooNonGeneric2);
+            fooGenericInnner.setB(false);
 
-			final int[] ints = { 11, 22 };
-			fooGenericComplex.setA(ints);
-			fooGenericComplex.setB(fooGenericInnner);
+            final int[] ints = {11, 22};
+            fooGenericComplex.setA(ints);
+            fooGenericComplex.setB(fooGenericInnner);
 
-			rpBuilder.paramJson("fooGenericComplex", fooGenericComplex, typesJsonController.getTypeGenericComplex());
-		} catch (final UnsupportedEncodingException e) {
-			// handle exception ...
-		}
+            rpBuilder.paramJson("fooGenericComplex", fooGenericComplex, typesJsonController.getTypeGenericComplex());
+        }
+        catch (final UnsupportedEncodingException e) {
+            // handle exception ...
+        }
 
-		// build URL
-		generatedUrl = rpBuilder.build();
-	}
+        // build URL
+        generatedUrl = rpBuilder.build();
+    }
 
-	public String getGeneratedUrl() {
-		return generatedUrl;
-	}
+    public String getGeneratedUrl() {
+        return generatedUrl;
+    }
 
-	public boolean isB() {
-		return b;
-	}
+    public boolean isB() {
+        return b;
+    }
 
-	public void setB(final boolean b) {
-		this.b = b;
-	}
+    public void setB(final boolean b) {
+        this.b = b;
+    }
 
-	public long getL() {
-		return l;
-	}
+    public long getL() {
+        return l;
+    }
 
-	public void setL(final long l) {
-		this.l = l;
-	}
+    public void setL(final long l) {
+        this.l = l;
+    }
 
-	public int[] getInts() {
-		return ints;
-	}
+    public int[] getInts() {
+        return ints;
+    }
 
-	public String getPrettyInts() {
-		return Arrays.toString(ints);
-	}
+    public String getPrettyInts() {
+        return Arrays.toString(ints);
+    }
 
-	public void setInts(final int[] ints) {
-		this.ints = ints;
-	}
+    public void setInts(final int[] ints) {
+        this.ints = ints;
+    }
 
-	public char[] getChars() {
-		return chars;
-	}
+    public char[] getChars() {
+        return chars;
+    }
 
-	public String getPrettyChars() {
-		return Arrays.toString(chars);
-	}
+    public String getPrettyChars() {
+        return Arrays.toString(chars);
+    }
 
-	public void setChars(final char[] chars) {
-		this.chars = chars;
-	}
+    public void setChars(final char[] chars) {
+        this.chars = chars;
+    }
 
-	public String getS() {
-		return s;
-	}
+    public String getS() {
+        return s;
+    }
 
-	public void setS(final String s) {
-		this.s = s;
-	}
+    public void setS(final String s) {
+        this.s = s;
+    }
 
-	public Integer getI() {
-		return i;
-	}
+    public Integer getI() {
+        return i;
+    }
 
-	public void setI(final Integer i) {
-		this.i = i;
-	}
+    public void setI(final Integer i) {
+        this.i = i;
+    }
 
-	public Date getD() {
-		return d;
-	}
+    public Date getD() {
+        return d;
+    }
 
-	public void setD(final Date d) {
-		this.d = d;
-	}
+    public void setD(final Date d) {
+        this.d = d;
+    }
 
-	public Collection<Integer> getList() {
-		return list;
-	}
+    public Collection<Integer> getList() {
+        return list;
+    }
 
-	public void setList(final Collection<Integer> list) {
-		this.list = list;
-	}
+    public void setList(final Collection<Integer> list) {
+        this.list = list;
+    }
 
-	public Map<String, ImmutablePair<Integer, Date>> getMap() {
-		return map;
-	}
+    public Map<String, ImmutablePair<Integer, Date>> getMap() {
+        return map;
+    }
 
-	public void setMap(final Map<String, ImmutablePair<Integer, Date>> map) {
-		this.map = map;
-	}
+    public void setMap(final Map<String, ImmutablePair<Integer, Date>> map) {
+        this.map = map;
+    }
 
-	public FooNonGeneric getFooNonGeneric() {
-		return fooNonGeneric;
-	}
+    public FooNonGeneric getFooNonGeneric() {
+        return fooNonGeneric;
+    }
 
-	public void setFooNonGeneric(final FooNonGeneric fooNonGeneric) {
-		this.fooNonGeneric = fooNonGeneric;
-	}
+    public void setFooNonGeneric(final FooNonGeneric fooNonGeneric) {
+        this.fooNonGeneric = fooNonGeneric;
+    }
 
-	public FooGeneric<String, Integer> getFooGenericSimple() {
-		return fooGenericSimple;
-	}
+    public FooGeneric<String, Integer> getFooGenericSimple() {
+        return fooGenericSimple;
+    }
 
-	public void setFooGenericSimple(final FooGeneric<String, Integer> fooGenericSimple) {
-		this.fooGenericSimple = fooGenericSimple;
-	}
+    public void setFooGenericSimple(final FooGeneric<String, Integer> fooGenericSimple) {
+        this.fooGenericSimple = fooGenericSimple;
+    }
 
-	public FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> getFooGenericComplex() {
-		return fooGenericComplex;
-	}
+    public FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> getFooGenericComplex() {
+        return fooGenericComplex;
+    }
 
-	public void setFooGenericComplex(final FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex) {
-		this.fooGenericComplex = fooGenericComplex;
-	}
+    public void setFooGenericComplex(final FooGeneric<int[], FooGeneric<FooNonGeneric, Boolean>> fooGenericComplex) {
+        this.fooGenericComplex = fooGenericComplex;
+    }
 
-	public TypesJsonController getTypesJsonController() {
-		return typesJsonController;
-	}
+    public TypesJsonController getTypesJsonController() {
+        return typesJsonController;
+    }
 
-	public void setTypesJsonController(final TypesJsonController typesJsonController) {
-		this.typesJsonController = typesJsonController;
-	}
+    public void setTypesJsonController(final TypesJsonController typesJsonController) {
+        this.typesJsonController = typesJsonController;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.model.system;
 
 import java.util.ArrayList;
@@ -24,27 +21,27 @@ import java.util.List;
 /**
  * Corresponds to 'tag' tag in tag library.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class DocuTag {
 
-	private List<DocuAttribute> attributes = new ArrayList<DocuAttribute>();
-	private List<DocuEvent> events = new ArrayList<DocuEvent>();
+    private List<DocuAttribute> attributes = new ArrayList<DocuAttribute>();
+    private List<DocuEvent> events = new ArrayList<DocuEvent>();
 
-	public List<DocuAttribute> getAttributes() {
-		return attributes;
-	}
+    public List<DocuAttribute> getAttributes() {
+        return attributes;
+    }
 
-	public void addAttribute(final DocuAttribute attribute) {
-		attributes.add(attribute);
-	}
+    public void addAttribute(final DocuAttribute attribute) {
+        attributes.add(attribute);
+    }
 
-	public List<DocuEvent> getEvents() {
-		return events;
-	}
+    public List<DocuEvent> getEvents() {
+        return events;
+    }
 
-	public void addEvent(final DocuEvent event) {
-		events.add(event);
-	}
+    public void addEvent(final DocuEvent event) {
+        events.add(event);
+    }
 }

@@ -48,7 +48,7 @@ public class Counter extends CounterBase {
 
     private static final String DEFAULT_EVENT = "end";
 
-    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>>builder()
+    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
                 .put("start", null)
                 .put(DEFAULT_EVENT, null)
                 .build();

@@ -1,11 +1,11 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.model;
 
 import java.io.Serializable;
@@ -21,42 +20,42 @@ import java.io.Serializable;
 /**
  * Distance
  *
- * @author  Mauricio Fenoglio / last modified by $Author$
+ * @author Mauricio Fenoglio / last modified by $Author$
  * @version $Revision$
- * @since   0.3
+ * @since 0.3
  */
 public class Distance implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	Double meters;
-	Double centimeters;
+    private static final long serialVersionUID = 1L;
 
-	public Distance() {
-		this.meters = 0d;
-		this.centimeters = 0d;
-	}
+    Double meters;
+    Double centimeters;
 
-	public Double getCentimeters() {
-		return centimeters;
-	}
+    public Distance() {
+        this.meters = 0d;
+        this.centimeters = 0d;
+    }
 
-	public void setCentimeters(Double centimeters) {
-		this.centimeters = centimeters;
-		this.meters = centimeters == 0 ? 0d : centimeters / 100;
-	}
+    public Double getCentimeters() {
+        return centimeters;
+    }
 
-	public Double getMeters() {
-		return meters;
-	}
+    public void setCentimeters(Double centimeters) {
+        this.centimeters = centimeters;
+        this.meters = centimeters == 0 ? 0d : centimeters / 100;
+    }
 
-	public void setMeters(Double meters) {
-		this.meters = meters;
-		this.centimeters = meters * 100;
-	}
+    public Double getMeters() {
+        return meters;
+    }
 
-	@Override
-	public String toString() {
-		return "Distance{" + "meters=" + meters + ", centimeters=" + centimeters + '}';
-	}
+    public void setMeters(Double meters) {
+        this.meters = meters;
+        this.centimeters = meters * 100;
+    }
+
+    @Override
+    public String toString() {
+        return "Distance{" + "meters=" + meters + ", centimeters=" + centimeters + '}';
+    }
 }

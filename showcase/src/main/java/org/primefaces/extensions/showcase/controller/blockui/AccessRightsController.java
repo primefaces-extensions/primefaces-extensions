@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,64 +12,62 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.blockui;
-
-import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
 /**
  * AccessRightsController
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 @Named
 @ViewScoped
 public class AccessRightsController implements Serializable {
 
-	private static final long serialVersionUID = 20111229L;
+    private static final long serialVersionUID = 20111229L;
 
-	private List<SelectItem> accessRights = new ArrayList<SelectItem>();
-	private List<SelectItem> selectedAccessRights = new ArrayList<SelectItem>();
+    private List<SelectItem> accessRights = new ArrayList<SelectItem>();
+    private List<SelectItem> selectedAccessRights = new ArrayList<SelectItem>();
 
-	public AccessRightsController() {
-		accessRights.add(new SelectItem("View", "View"));
-		accessRights.add(new SelectItem("Read", "Read"));
-		accessRights.add(new SelectItem("Write", "Write"));
-		accessRights.add(new SelectItem("Execute", "Execute"));
-		accessRights.add(new SelectItem("Delete", "Delete"));
-		accessRights.add(new SelectItem("Full", "Full"));
-	}
+    public AccessRightsController() {
+        accessRights.add(new SelectItem("View", "View"));
+        accessRights.add(new SelectItem("Read", "Read"));
+        accessRights.add(new SelectItem("Write", "Write"));
+        accessRights.add(new SelectItem("Execute", "Execute"));
+        accessRights.add(new SelectItem("Delete", "Delete"));
+        accessRights.add(new SelectItem("Full", "Full"));
+    }
 
-	public List<SelectItem> getAccessRights() {
-		return accessRights;
-	}
+    public List<SelectItem> getAccessRights() {
+        return accessRights;
+    }
 
-	public void setAccessRights(List<SelectItem> accessRights) {
-		this.accessRights = accessRights;
-	}
+    public void setAccessRights(List<SelectItem> accessRights) {
+        this.accessRights = accessRights;
+    }
 
-	public List<SelectItem> getSelectedAccessRights() {
-		try {
-			// simulate a long running request
-			Thread.sleep(1200);
-		} catch (Exception e) {
-			// ignore
-		}
+    public List<SelectItem> getSelectedAccessRights() {
+        try {
+            // simulate a long running request
+            Thread.sleep(1200);
+        }
+        catch (Exception e) {
+            // ignore
+        }
 
-		return selectedAccessRights;
-	}
+        return selectedAccessRights;
+    }
 
-	public void setSelectedAccessRights(List<SelectItem> selectedAccessRights) {
-		this.selectedAccessRights = selectedAccessRights;
-	}
+    public void setSelectedAccessRights(List<SelectItem> selectedAccessRights) {
+        this.selectedAccessRights = selectedAccessRights;
+    }
 }

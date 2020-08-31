@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.showcase.controller;
 
@@ -37,57 +35,57 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
 @ViewScoped
 public class OrgchartController implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1648477595853984820L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1648477595853984820L;
 
-	private OrgChartNode orgChartNode;
+    private OrgChartNode orgChartNode;
 
-	private String direction = "t2b";
+    private String direction = "t2b";
 
-	public OrgchartController() {
-		super();
-		init();
-	}
+    public OrgchartController() {
+        super();
+        init();
+    }
 
-	public void init() {
-		orgChartNode = new DefaultOrgChartNode("id1", "Node1", "content1");
-		orgChartNode.addChild(new DefaultOrgChartNode("id2", "Node2", "Content2"));
-		orgChartNode.addChild(new DefaultOrgChartNode("id3", "Node3", "Content3"));
-		final OrgChartNode node = new DefaultOrgChartNode("id4", "Node4", "Content4");
-		orgChartNode.addChild(node);
-		node.addChild(new DefaultOrgChartNode("id5", "Node5", "Content5"));
-		node.addChild(new DefaultOrgChartNode("id6", "Node6", "Content6"));
-	}
+    public void init() {
+        orgChartNode = new DefaultOrgChartNode("id1", "Node1", "content1");
+        orgChartNode.addChild(new DefaultOrgChartNode("id2", "Node2", "Content2"));
+        orgChartNode.addChild(new DefaultOrgChartNode("id3", "Node3", "Content3"));
+        final OrgChartNode node = new DefaultOrgChartNode("id4", "Node4", "Content4");
+        orgChartNode.addChild(node);
+        node.addChild(new DefaultOrgChartNode("id5", "Node5", "Content5"));
+        node.addChild(new DefaultOrgChartNode("id6", "Node6", "Content6"));
+    }
 
-	public void onClick(final OrgChartClickEvent event) {
+    public void onClick(final OrgChartClickEvent event) {
 
-		System.out.println("clicked ID: " + event.getId());
-		System.out.println("hierachy: " + event.getHierarchy().toString());
-	}
+        System.out.println("clicked ID: " + event.getId());
+        System.out.println("hierachy: " + event.getHierarchy().toString());
+    }
 
-	public void onDropOver(final OrgChartDropEvent event) {
+    public void onDropOver(final OrgChartDropEvent event) {
 
-		System.out.println("hierachy: " + event.getHierarchy().toString());
-		System.out.println("dragged node id " + event.getDraggedNodeId());
-		System.out.println("dropped node id " + event.getDroppedZoneId());
-	}
+        System.out.println("hierachy: " + event.getHierarchy().toString());
+        System.out.println("dragged node id " + event.getDraggedNodeId());
+        System.out.println("dropped node id " + event.getDroppedZoneId());
+    }
 
-	public OrgChartNode getOrgChartNode() {
-		return orgChartNode;
-	}
+    public OrgChartNode getOrgChartNode() {
+        return orgChartNode;
+    }
 
-	public void setOrgChartNode(final OrgChartNode orgChartNode) {
-		this.orgChartNode = orgChartNode;
-	}
+    public void setOrgChartNode(final OrgChartNode orgChartNode) {
+        this.orgChartNode = orgChartNode;
+    }
 
-	public String getDirection() {
-		return direction;
-	}
+    public String getDirection() {
+        return direction;
+    }
 
-	public void setDirection(final String direction) {
-		this.direction = direction;
-	}
+    public void setDirection(final String direction) {
+        this.direction = direction;
+    }
 
 }

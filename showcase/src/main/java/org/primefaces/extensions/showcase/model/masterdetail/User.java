@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.model.masterdetail;
 
 import java.io.Serializable;
@@ -23,92 +20,92 @@ import java.io.Serializable;
 /**
  * User class.
  *
- * @author  ova / last modified by $Author$
+ * @author ova / last modified by $Author$
  * @version $Revision$
  */
 public class User implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
-	private String firstname;
-	private String lastname;
-	private Integer age;
-	private String street;
-	private String city;
-	private String postalCode;
-	private String info;
-	private String email;
-	private String phone;
+    private static final long serialVersionUID = 1L;
 
-	public String getFirstname() {
-		return firstname;
-	}
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private String street;
+    private String city;
+    private String postalCode;
+    private String info;
+    private String email;
+    private String phone;
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public String getLastname() {
+        return lastname;
+    }
 
-	public Integer getAge() {
-		return age;
-	}
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public Integer getAge() {
+        return age;
+    }
 
-	public String getStreet() {
-		return street;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getPostalCode() {
-		return postalCode;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	public String getInfo() {
-		return info;
-	}
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
+    public String getInfo() {
+        return info;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

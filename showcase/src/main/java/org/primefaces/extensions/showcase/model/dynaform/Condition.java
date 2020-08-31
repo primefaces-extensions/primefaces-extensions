@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.model.dynaform;
 
 import java.io.Serializable;
@@ -21,68 +20,68 @@ import java.io.Serializable;
 /**
  * Condition
  *
- * @author  Oleg Varaksin / last modified by $Author: $
+ * @author Oleg Varaksin / last modified by $Author: $
  * @version $Revision: 1.0 $
  */
 public class Condition implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	private String tableColumn;
-	private int inputOffset;
-	private String valueOperator;
-	private String inputValue;
-	private int index; // internal index in the list of all conditions
+    private static final long serialVersionUID = 1L;
+    private String tableColumn;
+    private int inputOffset;
+    private String valueOperator;
+    private String inputValue;
+    private int index; // internal index in the list of all conditions
 
-	public Condition() {
-	}
+    public Condition() {
+    }
 
-	public Condition(String tableColumn, int inputOffset, String valueOperator, String inputValue, int index) {
-		this.tableColumn = tableColumn;
-		this.inputOffset = inputOffset;
-		this.valueOperator = valueOperator;
-		this.inputValue = inputValue;
-		this.index = index;
-	}
+    public Condition(String tableColumn, int inputOffset, String valueOperator, String inputValue, int index) {
+        this.tableColumn = tableColumn;
+        this.inputOffset = inputOffset;
+        this.valueOperator = valueOperator;
+        this.inputValue = inputValue;
+        this.index = index;
+    }
 
-	public String getTableColumn() {
-		return tableColumn;
-	}
+    public String getTableColumn() {
+        return tableColumn;
+    }
 
-	public void setTableColumn(String tableColumn) {
-		this.tableColumn = tableColumn;
-	}
+    public void setTableColumn(String tableColumn) {
+        this.tableColumn = tableColumn;
+    }
 
-	public int getInputOffset() {
-		return inputOffset;
-	}
+    public int getInputOffset() {
+        return inputOffset;
+    }
 
-	public void setInputOffset(int inputOffset) {
-		this.inputOffset = inputOffset;
-	}
+    public void setInputOffset(int inputOffset) {
+        this.inputOffset = inputOffset;
+    }
 
-	public String getValueOperator() {
-		return valueOperator;
-	}
+    public String getValueOperator() {
+        return valueOperator;
+    }
 
-	public void setValueOperator(String valueOperator) {
-		this.valueOperator = valueOperator;
-	}
+    public void setValueOperator(String valueOperator) {
+        this.valueOperator = valueOperator;
+    }
 
-	public String getInputValue() {
-		return inputValue;
-	}
+    public String getInputValue() {
+        return inputValue;
+    }
 
-	public void setInputValue(String inputValue) {
-		this.inputValue = inputValue;
-	}
+    public void setInputValue(String inputValue) {
+        this.inputValue = inputValue;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -101,16 +100,13 @@ public class Condition implements Serializable {
         if (inputOffset != condition.inputOffset) {
             return false;
         }
-        if (inputValue != null ? !inputValue.equals(condition.inputValue) :
-                condition.inputValue != null) {
+        if (inputValue != null ? !inputValue.equals(condition.inputValue) : condition.inputValue != null) {
             return false;
         }
-        if (tableColumn != null ? !tableColumn.equals(condition.tableColumn) :
-                condition.tableColumn != null) {
+        if (tableColumn != null ? !tableColumn.equals(condition.tableColumn) : condition.tableColumn != null) {
             return false;
         }
-        if (valueOperator != null ? !valueOperator.equals(condition.valueOperator) :
-                condition.valueOperator != null) {
+        if (valueOperator != null ? !valueOperator.equals(condition.valueOperator) : condition.valueOperator != null) {
             return false;
         }
 
@@ -128,12 +124,12 @@ public class Condition implements Serializable {
     }
 
     @Override
-	public String toString() {
-		return "Condition {"
-		       + "tableColumn='" + tableColumn + '\''
-		       + ", inputOffset=" + inputOffset
-		       + ", valueOperator='" + valueOperator + '\''
-		       + ", inputValue='" + inputValue + '\''
-		       + '}';
-	}
+    public String toString() {
+        return "Condition {"
+                    + "tableColumn='" + tableColumn + '\''
+                    + ", inputOffset=" + inputOffset
+                    + ", valueOperator='" + valueOperator + '\''
+                    + ", inputValue='" + inputValue + '\''
+                    + '}';
+    }
 }

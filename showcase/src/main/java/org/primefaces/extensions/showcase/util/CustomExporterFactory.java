@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.util;
 
 import javax.faces.FacesException;
@@ -30,14 +27,13 @@ import org.primefaces.extensions.showcase.controller.ExporterController;
 /**
  * Accessor for objects stored in several scopes via faces context {@link javax.faces.context.FacesContext}.
  *
- * @author  Sudheer Jonna / last modified by $Author$
+ * @author Sudheer Jonna / last modified by $Author$
  * @version $Revision$
  */
 public class CustomExporterFactory implements ExporterFactory {
 
     static public enum ExporterType {
-        PDF,
-        XLSX
+        PDF, XLSX
     }
 
     public Exporter getExporterForType(String type) {
@@ -45,8 +41,9 @@ public class CustomExporterFactory implements ExporterFactory {
         Exporter exporter = null;
 
         FacesContext context = FacesContext.getCurrentInstance();
-        ExporterController bean = (ExporterController) context.getApplication().evaluateExpressionGet(context, "#{exporterController}", ExporterController.class);
-        Boolean   customExport=bean.getCustomExporter();
+        ExporterController bean = (ExporterController) context.getApplication().evaluateExpressionGet(context, "#{exporterController}",
+                    ExporterController.class);
+        Boolean customExport = bean.getCustomExporter();
 
         try {
             ExporterType exporterType = ExporterType.valueOf(type.toUpperCase());
@@ -54,16 +51,16 @@ public class CustomExporterFactory implements ExporterFactory {
             switch (exporterType) {
 
                 case PDF:
-                    if(customExport) {
-                    exporter = new PDFCustomExporter();
+                    if (customExport) {
+                        exporter = new PDFCustomExporter();
                     }
                     else {
-                    exporter = new PDFExporter();
+                        exporter = new PDFExporter();
                     }
                     break;
 
                 case XLSX:
-                    if(customExport) {
+                    if (customExport) {
                         exporter = new ExcelCustomExporter();
                     }
                     else {
@@ -71,9 +68,8 @@ public class CustomExporterFactory implements ExporterFactory {
                     }
                     break;
 
-
                 default: {
-                    if(customExport) {
+                    if (customExport) {
                         exporter = new PDFCustomExporter();
                     }
                     else {
@@ -83,7 +79,8 @@ public class CustomExporterFactory implements ExporterFactory {
                 }
 
             }
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FacesException(e);
         }
 

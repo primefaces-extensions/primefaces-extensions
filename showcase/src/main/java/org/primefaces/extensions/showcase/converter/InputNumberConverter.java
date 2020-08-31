@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.converter;
 
 import javax.faces.component.UIComponent;
@@ -26,28 +25,28 @@ import org.primefaces.extensions.showcase.model.Distance;
 /**
  * InputNumberConverter converter class.
  *
- * @author  Mauricio Fenoglio / last modified by $Author:$
+ * @author Mauricio Fenoglio / last modified by $Author:$
  * @version $Revision:$
  */
 @FacesConverter("inputNumberConverter")
 public class InputNumberConverter implements Converter {
 
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Double doubleValue = 0.0;
-		if (value != null && !value.isEmpty()) {
-			doubleValue = Double.valueOf(value);
-		}
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        Double doubleValue = 0.0;
+        if (value != null && !value.isEmpty()) {
+            doubleValue = Double.valueOf(value);
+        }
 
-		Distance res = new Distance();
-		res.setMeters(doubleValue);
+        Distance res = new Distance();
+        res.setMeters(doubleValue);
 
-		return res;
-	}
+        return res;
+    }
 
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		Distance distance = (Distance) value;
-		Double res = distance.getMeters();
+    public String getAsString(FacesContext context, UIComponent component, Object value) {
+        Distance distance = (Distance) value;
+        Double res = distance.getMeters();
 
-		return res.toString();
-	}
+        return res.toString();
+    }
 }

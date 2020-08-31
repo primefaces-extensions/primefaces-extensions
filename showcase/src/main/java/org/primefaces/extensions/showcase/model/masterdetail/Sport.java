@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.model.masterdetail;
 
 import java.io.Serializable;
@@ -24,26 +21,26 @@ import java.util.List;
 /**
  * Sport model class.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class Sport implements Serializable {
 
-	private static final long serialVersionUID = 20111120L;
+    private static final long serialVersionUID = 20111120L;
 
-	private String name;
-	private List<Country> countriesWithLeague;
+    private String name;
+    private List<Country> countriesWithLeague;
 
-	public Sport(String name, List<Country> countriesWithLeague) {
-		this.name = name;
-		this.countriesWithLeague = countriesWithLeague;
-	}
+    public Sport(String name, List<Country> countriesWithLeague) {
+        this.name = name;
+        this.countriesWithLeague = countriesWithLeague;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Country> getCountriesWithLeague() {
-		return countriesWithLeague;
-	}
+    public List<Country> getCountriesWithLeague() {
+        return countriesWithLeague;
+    }
 }

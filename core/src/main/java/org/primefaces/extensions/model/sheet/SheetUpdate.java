@@ -95,7 +95,7 @@ public class SheetUpdate implements Serializable {
     public String toString() {
         if (toString == null) {
             toString = "SheetUpdate{" + "rowData=" + rowData + ", oldValue=" + oldValue
-                    + ", newValue=" + newValue + ", rowKey=" + rowKey + ", colIndex=" + colIndex + '}';
+                        + ", newValue=" + newValue + ", rowKey=" + rowKey + ", colIndex=" + colIndex + '}';
         }
         return toString;
     }

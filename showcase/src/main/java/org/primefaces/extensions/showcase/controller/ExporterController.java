@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller;
 
 import java.io.Serializable;
@@ -34,19 +31,19 @@ import javax.inject.Named;
 @ApplicationScoped
 public class ExporterController implements Serializable {
 
-	private static final long serialVersionUID = 20120316L;
+    private static final long serialVersionUID = 20120316L;
 
-	private Boolean customExporter;
+    private Boolean customExporter;
 
-	public ExporterController() {
-		customExporter = false;
-	}
+    public ExporterController() {
+        customExporter = false;
+    }
 
-	public Boolean getCustomExporter() {
-		return customExporter;
-	}
+    public Boolean getCustomExporter() {
+        return customExporter;
+    }
 
-	public void setCustomExporter(final Boolean customExporter) {
-		this.customExporter = customExporter;
-	}
+    public void setCustomExporter(final Boolean customExporter) {
+        this.customExporter = customExporter;
+    }
 }

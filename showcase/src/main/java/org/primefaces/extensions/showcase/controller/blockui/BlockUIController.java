@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.controller.blockui;
 
 import java.io.Serializable;
@@ -33,14 +30,15 @@ import javax.inject.Named;
 @ViewScoped
 public class BlockUIController implements Serializable {
 
-	private static final long serialVersionUID = 20130903L;
+    private static final long serialVersionUID = 20130903L;
 
-	public void doSomething() {
-		try {
-			// simulate a long running request
-			Thread.sleep(1200);
-		} catch (final Exception e) {
-			// ignore
-		}
-	}
+    public void doSomething() {
+        try {
+            // simulate a long running request
+            Thread.sleep(1200);
+        }
+        catch (final Exception e) {
+            // ignore
+        }
+    }
 }

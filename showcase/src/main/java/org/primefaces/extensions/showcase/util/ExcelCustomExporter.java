@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ public class ExcelCustomExporter extends Exporter {
             DataTable table = null;
             int cols = 0;
             if (preProcessor != null) {
-                preProcessor.invoke(context.getELContext(), new Object[] { wb });
+                preProcessor.invoke(context.getELContext(), new Object[] {wb});
             }
             if (tableTitle != null && !tableTitle.isEmpty() && !tableId.contains("" + ",")) {
                 Row titleRow = sheet.createRow(sheet.getLastRowNum());
@@ -175,7 +175,7 @@ public class ExcelCustomExporter extends Exporter {
                 }
                 table.setRowIndex(-1);
                 if (postProcessor != null) {
-                    postProcessor.invoke(context.getELContext(), new Object[] { wb });
+                    postProcessor.invoke(context.getELContext(), new Object[] {wb});
                 }
                 cols = table.getColumnsCount();
 

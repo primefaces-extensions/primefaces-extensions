@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.primefaces.extensions.showcase.converter;
-
-import org.primefaces.extensions.showcase.model.system.AvailableThemes;
-import org.primefaces.extensions.showcase.model.system.Theme;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import org.primefaces.extensions.showcase.model.system.AvailableThemes;
+import org.primefaces.extensions.showcase.model.system.Theme;
+
 /**
  * ThemeConverter
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 @FacesConverter("org.primefaces.extensions.showcase.converter.ThemeConverter")
 public class ThemeConverter implements Converter {
 
-	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
-		return AvailableThemes.getInstance().getThemeForName(value);
-	}
+    public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
+        return AvailableThemes.getInstance().getThemeForName(value);
+    }
 
-	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
-		return ((Theme) value).getName();
-	}
+    public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
+        return ((Theme) value).getName();
+    }
 }

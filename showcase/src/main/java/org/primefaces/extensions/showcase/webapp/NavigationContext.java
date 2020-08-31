@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.webapp;
 
 import java.io.Serializable;
@@ -30,31 +27,32 @@ import javax.inject.Named;
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-@Named 
+@Named
 @SessionScoped
 public class NavigationContext implements Serializable {
 
-   private static final long serialVersionUID = 20111020L;
+    private static final long serialVersionUID = 20111020L;
 
-   public String getMenuitemStyleClass(final String page) {
-      final String viewId = getViewId();
-      if (viewId != null && viewId.equalsIgnoreCase(page)) {
-         return "ui-state-active";
-      }
+    public String getMenuitemStyleClass(final String page) {
+        final String viewId = getViewId();
+        if (viewId != null && viewId.equalsIgnoreCase(page)) {
+            return "ui-state-active";
+        }
 
-      return "";
-   }
+        return "";
+    }
 
-   public String getViewId() {
-      FacesContext fc = FacesContext.getCurrentInstance();
-      String viewId = fc.getViewRoot().getViewId();
-      String selectedComponent;
-      if (viewId != null) {
-         selectedComponent = viewId.substring(viewId.lastIndexOf("/") + 1, viewId.lastIndexOf("."));
-      } else {
-         selectedComponent = null;
-      }
+    public String getViewId() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        String viewId = fc.getViewRoot().getViewId();
+        String selectedComponent;
+        if (viewId != null) {
+            selectedComponent = viewId.substring(viewId.lastIndexOf("/") + 1, viewId.lastIndexOf("."));
+        }
+        else {
+            selectedComponent = null;
+        }
 
-      return selectedComponent;
-   }
+        return selectedComponent;
+    }
 }

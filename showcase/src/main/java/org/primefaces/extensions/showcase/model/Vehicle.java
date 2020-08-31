@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.io.Serializable;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Vehicle
@@ -30,8 +30,8 @@ import java.util.ArrayList;
  * @since 0.7.0
  */
 public class Vehicle implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1L;
 
     public int model;
     public String manufacturer;
@@ -109,23 +109,23 @@ public class Vehicle implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);    //To change body of overridden methods use File | Settings | File Templates.
+        return super.equals(obj); // To change body of overridden methods use File | Settings | File Templates.
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();    //To change body of overridden methods use File | Settings | File Templates.
+        return super.hashCode(); // To change body of overridden methods use File | Settings | File Templates.
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "model=" + model +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", color='" + color + '\'' +
-                ", speed=" + speed +
-                ", price=" + price +
-                ", year=" + year +
-                '}';
+                    "model=" + model +
+                    ", manufacturer='" + manufacturer + '\'' +
+                    ", color='" + color + '\'' +
+                    ", speed=" + speed +
+                    ", price=" + price +
+                    ", year=" + year +
+                    '}';
     }
 }

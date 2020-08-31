@@ -25,8 +25,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import org.primefaces.extensions.util.ExtLangUtils;
 
+import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 

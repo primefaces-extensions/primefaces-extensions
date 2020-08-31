@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 PrimeFaces Extensions
+ * Copyright 2011-2020 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.showcase.model.masterdetail;
 
 import java.io.Serializable;
@@ -23,26 +20,26 @@ import java.io.Serializable;
 /**
  * League model class.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class League implements Serializable {
 
-	private static final long serialVersionUID = 20111120L;
+    private static final long serialVersionUID = 20111120L;
 
-	private String name;
-	private int numberOfTeam;
+    private String name;
+    private int numberOfTeam;
 
-	public League(String name, int numberOfTeam) {
-		this.name = name;
-		this.numberOfTeam = numberOfTeam;
-	}
+    public League(String name, int numberOfTeam) {
+        this.name = name;
+        this.numberOfTeam = numberOfTeam;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getNumberOfTeam() {
-		return numberOfTeam;
-	}
+    public int getNumberOfTeam() {
+        return numberOfTeam;
+    }
 }
