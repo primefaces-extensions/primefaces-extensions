@@ -15,13 +15,10 @@
  */
 package org.primefaces.extensions.showcase.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.nio.charset.*;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.*;
 
 /**
  * FileContentMarkerUtil
@@ -34,22 +31,22 @@ public class FileContentMarkerUtil {
 
     private static final String LINE_SEPARATOR_WINDOWS = "\r\n";
 
-    private static final FileContentSettings javaFileSettings = new FileContentSettings()
+    private static final FileContentSettings JAVA_SETTINGS = new FileContentSettings()
                 .setStartMarkers("@Named", "@RequestScoped", "@ViewScoped", "@SessionScoped",
                             "@FacesConverter", " class ", " enum ")
                 .setShowLineWithMarker(true);
 
-    private static final FileContentSettings xhtmlFileSettings = new FileContentSettings().setStartMarkers("EXAMPLE_SOURCE_START", "EXAMPLE-SOURCE-START")
+    private static final FileContentSettings XHTML_SETTINGS = new FileContentSettings().setStartMarkers("EXAMPLE_SOURCE_START", "EXAMPLE-SOURCE-START")
                 .setEndMarkers("EXAMPLE_SOURCE_END", "EXAMPLE-SOURCE-END").setShowLineWithMarker(false);
 
     public static String readFileContent(final String fileName, final InputStream is) {
         try {
             if (StringUtils.endsWithIgnoreCase(fileName, ".java")) {
-                return readFileContent(is, javaFileSettings);
+                return readFileContent(is, JAVA_SETTINGS);
             }
 
             if (StringUtils.endsWithIgnoreCase(fileName, ".xhtml")) {
-                return readFileContent(is, xhtmlFileSettings);
+                return readFileContent(is, XHTML_SETTINGS);
             }
 
             // Show all files

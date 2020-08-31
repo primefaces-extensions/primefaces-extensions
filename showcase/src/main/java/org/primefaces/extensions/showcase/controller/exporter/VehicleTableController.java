@@ -15,19 +15,16 @@
  */
 package org.primefaces.extensions.showcase.controller.exporter;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.application.*;
+import javax.faces.context.*;
+import javax.faces.view.*;
+import javax.inject.*;
 
-import org.primefaces.event.ToggleEvent;
-import org.primefaces.extensions.showcase.model.Customer;
-import org.primefaces.extensions.showcase.model.Vehicle;
+import org.primefaces.event.*;
+import org.primefaces.extensions.showcase.model.*;
 
 /**
  * VehicleTableController
@@ -42,37 +39,37 @@ public class VehicleTableController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final static String[] manufacturers;
-    private final static String[] colors;
+    private final static String[] MANUFACTURERS;
+    private final static String[] COLORS;
 
     private final List<Vehicle> vehicles;
-    private List<Customer> customersDetails = new ArrayList<Customer>();
+    private List<Customer> customersDetails = new ArrayList<>();
 
-    private final List<Customer> customersDetailsList1 = new ArrayList<Customer>();
-    private final List<Customer> customersDetailsList2 = new ArrayList<Customer>();
+    private final List<Customer> customersDetailsList1 = new ArrayList<>();
+    private final List<Customer> customersDetailsList2 = new ArrayList<>();
 
     static {
-        manufacturers = new String[7];
-        manufacturers[0] = "Mercedes";
-        manufacturers[1] = "BMW";
-        manufacturers[2] = "Volvo";
-        manufacturers[3] = "Audi";
-        manufacturers[4] = "Volkswagen";
-        manufacturers[5] = "Ferrari";
-        manufacturers[6] = "Ford";
+        MANUFACTURERS = new String[7];
+        MANUFACTURERS[0] = "Mercedes";
+        MANUFACTURERS[1] = "BMW";
+        MANUFACTURERS[2] = "Volvo";
+        MANUFACTURERS[3] = "Audi";
+        MANUFACTURERS[4] = "Volkswagen";
+        MANUFACTURERS[5] = "Ferrari";
+        MANUFACTURERS[6] = "Ford";
 
-        colors = new String[7];
-        colors[0] = "Red";
-        colors[1] = "White";
-        colors[2] = "Yellow";
-        colors[3] = "Green";
-        colors[4] = "Blue";
-        colors[5] = "Orange";
-        colors[6] = "Black";
+        COLORS = new String[7];
+        COLORS[0] = "Red";
+        COLORS[1] = "White";
+        COLORS[2] = "Yellow";
+        COLORS[3] = "Green";
+        COLORS[4] = "Blue";
+        COLORS[5] = "Orange";
+        COLORS[6] = "Black";
     }
 
     public VehicleTableController() {
-        vehicles = new ArrayList<Vehicle>();
+        vehicles = new ArrayList<>();
 
         customersDetailsList1.add(new Customer("Thomas Andraschko", "Germany", populateRandomContactNumbers()));
         customersDetailsList1.add(new Customer("Oleg Varaksin", "Russia", populateRandomContactNumbers()));
@@ -94,7 +91,7 @@ public class VehicleTableController implements Serializable {
 
     private void populateRandomVehicles(final List<Vehicle> vehicles, final int size) {
         for (int i = 0; i < size; i++) {
-            customersDetails = new ArrayList<Customer>();
+            customersDetails = new ArrayList<>();
             if ((i + 1) % 2 == 0) {
                 customersDetails = customersDetailsList2;
             }
@@ -106,7 +103,7 @@ public class VehicleTableController implements Serializable {
         }
     }
 
-    private String populateRandomContactNumbers() {
+    private static String populateRandomContactNumbers() {
         final Random generator = new Random();
         String strippedNum;
         int num1 = 0;
@@ -125,31 +122,31 @@ public class VehicleTableController implements Serializable {
         return vehicles;
     }
 
-    private String getRandomManufacturer() {
-        return manufacturers[(int) (Math.random() * 6)];
+    private static String getRandomManufacturer() {
+        return MANUFACTURERS[(int) (Math.random() * 6)];
     }
 
     public List<Customer> getCustomersDetails() {
         return customersDetails;
     }
 
-    private int getRandomSpeed() {
+    private static int getRandomSpeed() {
         return (int) (Math.random() * 10 + 150);
     }
 
-    private int getRandomYear() {
+    private static int getRandomYear() {
         return (int) (Math.random() * 50 + 1960);
     }
 
-    private String getRandomColor() {
-        return colors[(int) (Math.random() * 6)];
+    private static String getRandomColor() {
+        return COLORS[(int) (Math.random() * 6)];
     }
 
-    private int getRandomPrice() {
+    private static int getRandomPrice() {
         return (int) (Math.random() * 10 + 10000);
     }
 
-    public void onRowToggle(final ToggleEvent event) {
+    public static void onRowToggle(final ToggleEvent event) {
         final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected Vehicle",
                     "Manufacturer:" + ((Vehicle) event.getData()).getManufacturer());
         FacesContext.getCurrentInstance().addMessage(null, msg);

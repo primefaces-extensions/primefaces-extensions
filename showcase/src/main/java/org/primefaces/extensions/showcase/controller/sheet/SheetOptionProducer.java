@@ -15,25 +15,22 @@
  */
 package org.primefaces.extensions.showcase.controller.sheet;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.model.SelectItem;
-import javax.inject.Named;
+import javax.annotation.*;
+import javax.enterprise.context.*;
+import javax.faces.model.*;
+import javax.inject.*;
 
-import org.primefaces.extensions.showcase.model.sheet.AssetType;
-import org.primefaces.extensions.showcase.model.sheet.PlatformArchType;
-import org.primefaces.extensions.showcase.model.sheet.PlatformType;
+import org.primefaces.extensions.showcase.model.sheet.*;
 
 @Named
 @ApplicationScoped
 public class SheetOptionProducer {
 
-    List<SelectItem> assetTypes;
-    List<SelectItem> platformTypes;
-    List<SelectItem> archTypes;
+    private List<SelectItem> assetTypes;
+    private List<SelectItem> platformTypes;
+    private List<SelectItem> archTypes;
 
     @PostConstruct
     private void init() {
@@ -42,8 +39,8 @@ public class SheetOptionProducer {
         archTypes = createEnumList(PlatformArchType.values());
     }
 
-    private <T extends Enum<?>> List<SelectItem> createEnumList(final T[] values) {
-        final List<SelectItem> result = new ArrayList<SelectItem>();
+    private static <T extends Enum<?>> List<SelectItem> createEnumList(final T[] values) {
+        final List<SelectItem> result = new ArrayList<>();
         result.add(new SelectItem("", "All"));
         for (final T value : values) {
             result.add(new SelectItem(value, value.name()));

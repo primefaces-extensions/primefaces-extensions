@@ -15,23 +15,19 @@
  */
 package org.primefaces.extensions.showcase.controller.dynaform;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.annotation.*;
+import javax.faces.application.*;
+import javax.faces.context.*;
+import javax.faces.model.*;
+import javax.faces.view.*;
+import javax.inject.*;
 
-import org.primefaces.PrimeFaces;
-import org.primefaces.extensions.model.dynaform.DynaFormControl;
-import org.primefaces.extensions.model.dynaform.DynaFormLabel;
-import org.primefaces.extensions.model.dynaform.DynaFormModel;
-import org.primefaces.extensions.model.dynaform.DynaFormRow;
-import org.primefaces.extensions.showcase.model.dynaform.BookProperty;
+import org.primefaces.*;
+import org.primefaces.extensions.model.dynaform.*;
+import org.primefaces.extensions.showcase.model.dynaform.*;
 
 /**
  * DynaFormController
@@ -44,10 +40,9 @@ import org.primefaces.extensions.showcase.model.dynaform.BookProperty;
 public class DynaFormController implements Serializable {
 
     private static final long serialVersionUID = 20120423L;
+    private static List<SelectItem> languages = new ArrayList<>();
 
     private DynaFormModel model;
-
-    private static List<SelectItem> LANGUAGES = new ArrayList<SelectItem>();
 
     @PostConstruct
     protected void initialize() {
@@ -114,7 +109,7 @@ public class DynaFormController implements Serializable {
             return null;
         }
 
-        final List<BookProperty> bookProperties = new ArrayList<BookProperty>();
+        final List<BookProperty> bookProperties = new ArrayList<>();
         for (final DynaFormControl dynaFormControl : model.getControls()) {
             bookProperties.add((BookProperty) dynaFormControl.getData());
         }
@@ -122,7 +117,7 @@ public class DynaFormController implements Serializable {
         return bookProperties;
     }
 
-    public String submitForm() {
+    public static String submitForm() {
         final FacesMessage.Severity sev = FacesContext.getCurrentInstance().getMaximumSeverity();
         final boolean hasErrors = sev != null && FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0;
 
@@ -131,14 +126,14 @@ public class DynaFormController implements Serializable {
         return null;
     }
 
-    public List<SelectItem> getLanguages() {
-        if (LANGUAGES.isEmpty()) {
-            LANGUAGES.add(new SelectItem("en", "English"));
-            LANGUAGES.add(new SelectItem("de", "German"));
-            LANGUAGES.add(new SelectItem("ru", "Russian"));
-            LANGUAGES.add(new SelectItem("tr", "Turkish"));
+    public static List<SelectItem> getLanguages() {
+        if (languages.isEmpty()) {
+            languages.add(new SelectItem("en", "English"));
+            languages.add(new SelectItem("de", "German"));
+            languages.add(new SelectItem("ru", "Russian"));
+            languages.add(new SelectItem("tr", "Turkish"));
         }
 
-        return LANGUAGES;
+        return languages;
     }
 }

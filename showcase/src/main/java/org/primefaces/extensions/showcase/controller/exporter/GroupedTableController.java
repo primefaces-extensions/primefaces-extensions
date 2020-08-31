@@ -15,19 +15,18 @@
  */
 package org.primefaces.extensions.showcase.controller.exporter;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.view.*;
+import javax.inject.*;
 
 /**
  * GroupedTableController
  *
  * @author Sudheer Jonna / last modified by $Author$
- * @since 0.7.0
  * @version $Revision: 1.0 $
+ * @since 0.7.0
  */
 @Named
 @ViewScoped
@@ -37,7 +36,7 @@ public class GroupedTableController implements Serializable {
     private final List<Mobile> mobileList;
 
     public GroupedTableController() {
-        mobileList = new ArrayList<Mobile>();
+        mobileList = new ArrayList<>();
         populateRandomSales();
     }
 
@@ -48,35 +47,35 @@ public class GroupedTableController implements Serializable {
         }
     }
 
-    private long getQ1Sales() {
+    private static long getQ1Sales() {
         return (long) (Math.random() * 10000);
     }
 
-    private long getQ1Profits() {
+    private static long getQ1Profits() {
         return (long) (Math.random() * 100);
     }
 
-    private long getQ2Sales() {
+    private static long getQ2Sales() {
         return (long) (Math.random() * 10000);
     }
 
-    private long getQ2Profits() {
+    private static long getQ2Profits() {
         return (long) (Math.random() * 100);
     }
 
-    private long getQ3Sales() {
+    private static long getQ3Sales() {
         return (long) (Math.random() * 10000);
     }
 
-    private long getQ3Profits() {
+    private static long getQ3Profits() {
         return (long) (Math.random() * 100);
     }
 
-    private long getQ4Sales() {
+    private static long getQ4Sales() {
         return (long) (Math.random() * 10000);
     }
 
-    private long getQ4Profits() {
+    private static long getQ4Profits() {
         return (long) (Math.random() * 100);
     }
 
@@ -163,16 +162,16 @@ public class GroupedTableController implements Serializable {
     public class Mobile implements Serializable {
 
         private static final long serialVersionUID = 1L;
-        public String manufacturer;
-        public long q1Sale;
-        public long q2Sale;
-        public long q3Sale;
-        public long q4Sale;
+        private String manufacturer;
+        private long q1Sale;
+        private long q2Sale;
+        private long q3Sale;
+        private long q4Sale;
 
-        public long q1Profit;
-        public long q2Profit;
-        public long q3Profit;
-        public long q4Profit;
+        private long q1Profit;
+        private long q2Profit;
+        private long q3Profit;
+        private long q4Profit;
 
         public Mobile(final String manufacturer, final long q1Sale, final long q2Sale, final long q3Sale,
                     final long q4Sale, final long q1Profit, final long q2Profit, final long q3Profit, final long q4Profit) {

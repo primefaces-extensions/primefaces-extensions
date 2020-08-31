@@ -15,12 +15,8 @@
  */
 package org.primefaces.extensions.showcase.model;
 
-import java.io.Serializable;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Vehicle
@@ -33,13 +29,13 @@ public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public int model;
-    public String manufacturer;
-    public String color;
-    public int speed;
-    public int price;
-    public int year;
-    public List<Customer> customers = new ArrayList<Customer>();
+    private int model;
+    private String manufacturer;
+    private String color;
+    private int speed;
+    private int price;
+    private int year;
+    private List<Customer> customers = new ArrayList<>();
 
     public Vehicle(int model, String manufacturer, String color, int speed, int price, int year, List<Customer> customers) {
         this.model = model;

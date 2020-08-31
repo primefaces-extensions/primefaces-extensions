@@ -103,7 +103,6 @@ public class BasicGChartController implements Serializable {
     }
 
     public List<GChartType> getTypes() {
-        return Arrays.asList(new GChartType[] {GChartType.AREA, GChartType.BAR, GChartType.COLUMN, GChartType.PIE,
-                    GChartType.LINE});
+        return Arrays.asList(new GChartType[] {GChartType.AREA, GChartType.BAR, GChartType.COLUMN, GChartType.PIE, GChartType.LINE});
     }
 }

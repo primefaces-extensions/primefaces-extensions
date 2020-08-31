@@ -28,8 +28,8 @@ public class Distance implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    Double meters;
-    Double centimeters;
+    private Double meters;
+    private Double centimeters;
 
     public Distance() {
         this.meters = 0d;

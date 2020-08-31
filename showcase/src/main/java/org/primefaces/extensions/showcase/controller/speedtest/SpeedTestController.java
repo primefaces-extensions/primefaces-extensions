@@ -15,17 +15,17 @@
  */
 package org.primefaces.extensions.showcase.controller.speedtest;
 
-import java.io.Serializable;
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
+import javax.faces.application.*;
+import javax.faces.context.*;
+import javax.faces.view.*;
+import javax.inject.*;
+import javax.servlet.http.*;
 
-import org.primefaces.extensions.component.speedtest.Speedtest;
-import org.primefaces.extensions.event.SpeedTestEvent;
+import org.primefaces.extensions.component.speedtest.*;
+import org.primefaces.extensions.event.*;
 
 /**
  * {@link Speedtest} Controller.
@@ -37,12 +37,12 @@ import org.primefaces.extensions.event.SpeedTestEvent;
 public class SpeedTestController implements Serializable {
 
     private static final long serialVersionUID = -5297177555931103300L;
-    private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final Integer OneMB = 1024 * 1024;
+    private static final String ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final Integer ONEMB = 1024 * 1024;
     // Size of Download-File (Default=5)
     private Integer sizeInMB = 5;
 
-    public void saveResults(final SpeedTestEvent speedTestEvent) {
+    public static void saveResults(final SpeedTestEvent speedTestEvent) {
         final String msg = "PingTimeMS       ='" + String.valueOf(speedTestEvent.getPingTimeMS()) + "', \n"
                     + "Jitter           ='" + String.valueOf(speedTestEvent.getJitterTimeMS()) + "', \n"
                     + "SpeedMbpsDownload='" + String.valueOf(speedTestEvent.getSpeedMbpsDownload()) + "', \n"
@@ -54,11 +54,11 @@ public class SpeedTestController implements Serializable {
     private String generatePayloadFile() {
         // Generate random test string
         final StringBuffer randomTestString = new StringBuffer();
-        final Integer size2Generate = OneMB * sizeInMB;
-        final Integer N = alphabet.length();
+        final Integer size2Generate = ONEMB * sizeInMB;
+        final Integer length = ALPHA.length();
         final Random r = new Random();
         for (int i = 0; i < size2Generate; i++) {
-            randomTestString.append(alphabet.charAt(r.nextInt(N)));
+            randomTestString.append(ALPHA.charAt(r.nextInt(length)));
         }
         return randomTestString.toString();
     }

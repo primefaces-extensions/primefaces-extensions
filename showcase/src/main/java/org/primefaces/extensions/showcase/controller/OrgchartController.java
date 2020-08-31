@@ -15,15 +15,13 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
-import java.io.Serializable;
+import java.io.*;
 
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.view.*;
+import javax.inject.*;
 
-import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
-import org.primefaces.extensions.component.orgchart.OrgChartNode;
-import org.primefaces.extensions.event.OrgChartClickEvent;
-import org.primefaces.extensions.event.OrgChartDropEvent;
+import org.primefaces.extensions.component.orgchart.*;
+import org.primefaces.extensions.event.*;
 
 /**
  * OrgchartController
@@ -35,9 +33,6 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
 @ViewScoped
 public class OrgchartController implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1648477595853984820L;
 
     private OrgChartNode orgChartNode;
@@ -59,13 +54,13 @@ public class OrgchartController implements Serializable {
         node.addChild(new DefaultOrgChartNode("id6", "Node6", "Content6"));
     }
 
-    public void onClick(final OrgChartClickEvent event) {
+    public static void onClick(final OrgChartClickEvent event) {
 
         System.out.println("clicked ID: " + event.getId());
         System.out.println("hierachy: " + event.getHierarchy().toString());
     }
 
-    public void onDropOver(final OrgChartDropEvent event) {
+    public static void onDropOver(final OrgChartDropEvent event) {
 
         System.out.println("hierachy: " + event.getHierarchy().toString());
         System.out.println("dragged node id " + event.getDraggedNodeId());

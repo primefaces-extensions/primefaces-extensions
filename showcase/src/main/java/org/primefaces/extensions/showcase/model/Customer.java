@@ -28,9 +28,9 @@ public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String customerName;
-    public String country;
-    public String contactNumber;
+    private String customerName;
+    private String country;
+    private String contactNumber;
 
     public Customer(String customerName, String country, String contactNumber) {
         this.customerName = customerName;

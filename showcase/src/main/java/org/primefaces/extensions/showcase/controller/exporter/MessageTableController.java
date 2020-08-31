@@ -15,17 +15,15 @@
  */
 package org.primefaces.extensions.showcase.controller.exporter;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import javax.faces.application.*;
+import javax.faces.context.*;
+import javax.faces.view.*;
+import javax.inject.*;
 
-import org.primefaces.component.api.UIColumn;
+import org.primefaces.component.api.*;
 
 /**
  * MessageTableController
@@ -38,25 +36,24 @@ import org.primefaces.component.api.UIColumn;
 public class MessageTableController implements Serializable {
 
     private static final long serialVersionUID = 20111020L;
-
+    private final static String[] STATES;
     private List<Message> messages;
     private List<Message> filteredMessages;
     private String newSubject = "my subject";
     private String newText = "my text";
-    private final static String[] states;
     private Date currentDate = new Date();
     private boolean checkValue;
 
     static {
-        states = new String[10];
+        STATES = new String[10];
         for (int i = 0; i < 10; i++) {
-            states[i] = "state" + i;
+            STATES[i] = "state" + i;
         }
     }
 
     public MessageTableController() {
         if (messages == null) {
-            messages = new ArrayList<Message>();
+            messages = new ArrayList<>();
 
             for (int i = 0; i < 10; i++) {
                 final Message message = new Message();
@@ -103,8 +100,8 @@ public class MessageTableController implements Serializable {
         this.newText = newText;
     }
 
-    public String[] getStates() {
-        return states;
+    public static String[] getStates() {
+        return STATES;
     }
 
     public Date getCurrentDate() {
@@ -141,7 +138,7 @@ public class MessageTableController implements Serializable {
         return null;
     }
 
-    public void doSomething() {
+    public static void doSomething() {
         try {
             // simulate a long running request
             Thread.sleep(1500);
@@ -151,7 +148,7 @@ public class MessageTableController implements Serializable {
         }
     }
 
-    public String exportColumn(final UIColumn column) {
+    public static String exportColumn(final UIColumn column) {
         return "PFE Rocks!";
     }
 

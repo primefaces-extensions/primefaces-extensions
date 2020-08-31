@@ -28,14 +28,16 @@ public class FileContentSettings {
     private boolean showLineWithMarker = false;
 
     public String[] getStartMarkers() {
-        if (startMarkers == null)
+        if (startMarkers == null) {
             return new String[0];
+        }
         return startMarkers;
     }
 
     public String[] getEndMarkers() {
-        if (endMarkers == null)
+        if (endMarkers == null) {
             return new String[0];
+        }
         return endMarkers;
     }
 

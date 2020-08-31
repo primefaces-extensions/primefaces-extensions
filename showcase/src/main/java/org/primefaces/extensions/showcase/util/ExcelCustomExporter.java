@@ -16,51 +16,33 @@
 package org.primefaces.extensions.showcase.util;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
-import java.util.Collections;
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
 
-import javax.el.MethodExpression;
-import javax.faces.FacesException;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIPanel;
-import javax.faces.component.html.HtmlCommandButton;
-import javax.faces.component.html.HtmlCommandLink;
-import javax.faces.component.html.HtmlOutputText;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.el.*;
+import javax.faces.*;
+import javax.faces.component.*;
+import javax.faces.component.html.*;
+import javax.faces.context.*;
+import javax.faces.event.*;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.PrintSetup;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRichTextString;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.primefaces.component.api.DynamicColumn;
+import org.apache.poi.ss.util.*;
+import org.apache.poi.xssf.usermodel.*;
+import org.primefaces.component.api.*;
 import org.primefaces.component.api.UIColumn;
-import org.primefaces.component.column.Column;
-import org.primefaces.component.columngroup.ColumnGroup;
-import org.primefaces.component.datalist.DataList;
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.component.rowexpansion.RowExpansion;
-import org.primefaces.component.subtable.SubTable;
-import org.primefaces.expression.SearchExpressionFacade;
-import org.primefaces.extensions.component.exporter.Exporter;
-import org.primefaces.util.Constants;
+import org.primefaces.component.column.*;
+import org.primefaces.component.columngroup.*;
+import org.primefaces.component.datalist.*;
+import org.primefaces.component.datatable.*;
+import org.primefaces.component.rowexpansion.*;
+import org.primefaces.component.subtable.*;
+import org.primefaces.expression.*;
+import org.primefaces.extensions.component.exporter.*;
+import org.primefaces.util.*;
 
 /**
  * <code>Exporter</code> component.
@@ -82,7 +64,7 @@ public class ExcelCustomExporter extends Exporter {
     private Color cellFontColor;
     private String cellFontStyle;
     private String datasetPadding;
-    XSSFWorkbook wb;
+    private XSSFWorkbook wb;
 
     @Override
     public void export(ActionEvent event, String tableId, FacesContext context, String filename, String tableTitle, boolean pageOnly, boolean selectionOnly,
@@ -145,7 +127,7 @@ public class ExcelCustomExporter extends Exporter {
             else {
 
                 table = (DataTable) component;
-                int columnsCount = getColumnsCount(table);
+                int columnsCount = Exporter.getColumnsCount(table);
 
                 if (table.getHeader() != null && !subTable) {
                     tableFacet(context, sheet, table, columnsCount, "header");
@@ -211,7 +193,7 @@ public class ExcelCustomExporter extends Exporter {
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
-            int subTableColumnsCount = getColumnsCount(subtable);
+            int subTableColumnsCount = Exporter.getColumnsCount(subtable);
 
             if (table.getHeader() != null) {
                 tableFacet(context, sheet, table, subTableColumnsCount, "header");
@@ -228,13 +210,13 @@ public class ExcelCustomExporter extends Exporter {
                     tableFacet(context, sheet, subtable, subTableColumnsCount, "header");
                 }
 
-                if (hasHeaderColumn(subtable)) {
+                if (Exporter.hasHeaderColumn(subtable)) {
                     addColumnFacets(subtable, sheet, ColumnType.HEADER);
                 }
 
                 exportAll(context, subtable, sheet);
 
-                if (hasFooterColumn(subtable)) {
+                if (Exporter.hasFooterColumn(subtable)) {
 
                     addColumnFacets(subtable, sheet, ColumnType.FOOTER);
                 }
@@ -300,13 +282,13 @@ public class ExcelCustomExporter extends Exporter {
         }
         else {
             tableColumnGroup(sheet, table, "header");
-            if (hasHeaderColumn(table)) {
+            if (Exporter.hasHeaderColumn(table)) {
                 addColumnFacets(table, sheet, ColumnType.HEADER);
             }
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
                 exportRow(table, sheet, rowIndex);
             }
-            if (hasFooterColumn(table)) {
+            if (Exporter.hasFooterColumn(table)) {
                 addColumnFacets(table, sheet, ColumnType.FOOTER);
             }
             tableColumnGroup(sheet, table, "footer");
@@ -408,7 +390,7 @@ public class ExcelCustomExporter extends Exporter {
                 headerValue = header;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -447,7 +429,7 @@ public class ExcelCustomExporter extends Exporter {
                 headerValue = header;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -478,7 +460,7 @@ public class ExcelCustomExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -764,7 +746,7 @@ public class ExcelCustomExporter extends Exporter {
                     }
                     if (rowExpansion.getChildren().get(0) instanceof DataTable) {
                         DataTable childTable = (DataTable) rowExpansion.getChildren().get(0);
-                        int columnsCount = getColumnsCount(childTable);
+                        int columnsCount = Exporter.getColumnsCount(childTable);
 
                         if (childTable.getHeader() != null) {
                             tableFacet(context, sheet, childTable, columnsCount, "header");
@@ -937,7 +919,7 @@ public class ExcelCustomExporter extends Exporter {
 
     }
 
-    protected CellStyle addColumnAlignments(UIComponent component, CellStyle style) {
+    protected static CellStyle addColumnAlignments(UIComponent component, CellStyle style) {
         if (component instanceof HtmlOutputText) {
             HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
@@ -1032,7 +1014,7 @@ public class ExcelCustomExporter extends Exporter {
 
     }
 
-    protected void writeExcelToResponse(ExternalContext externalContext, org.apache.poi.ss.usermodel.Workbook generatedExcel, String filename)
+    protected static void writeExcelToResponse(ExternalContext externalContext, org.apache.poi.ss.usermodel.Workbook generatedExcel, String filename)
                 throws IOException {
 
         externalContext.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
