@@ -1,7 +1,6 @@
 language: java
 dist: xenial
 sudo: false
-install: true
 addons:
   sonarcloud:
     organization: "pr1m3fac3sext3ns1ons"
@@ -10,6 +9,8 @@ addons:
 jdk:
   - openjdk8
   - openjdk11
+install:
+  - git clone https://github.com/primefaces/primefaces && cd primefaces && mvn install && cd ..
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 
