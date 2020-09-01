@@ -105,7 +105,16 @@ public class CKEditorRenderer extends InputRenderer {
                     .attr("readOnly", ckEditor.isReadonly())
                     .attr("interfaceColor", ckEditor.getInterfaceColor())
                     .attr("language", ckEditor.getLanguage())
-                    .attr("defaultLanguage", ckEditor.getDefaultLanguage());
+                    .attr("defaultLanguage", ckEditor.getDefaultLanguage())
+                    .attr("customConfig", ckEditor.getCustomConfig())
+                    .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
+                    .attr("disableNativeSpellChecker", ckEditor.isDisableNativeSpellChecker())
+                    .attr(Attrs.TABINDEX, ckEditor.getTabindex())
+                    .attr("font", ckEditor.getFont())
+                    .attr("fontSize", ckEditor.getFontSize())
+                    .attr("enterMode", ckEditor.getEnterMode())
+                    .attr("shiftEnterMode", ckEditor.getShiftEnterMode());
+
         if (ckEditor.getContentsCss() != null && ckEditor.getContentsCss().startsWith("[")) {
             // new :: Array of CSS-Files :: ['/path/css1.css','/path/css2.css']
             wb.nativeAttr("contentsCss", ckEditor.getContentsCss());
@@ -114,13 +123,6 @@ public class CKEditorRenderer extends InputRenderer {
             // default behaviour
             wb.attr("contentsCss", ckEditor.getContentsCss());
         }
-        wb.attr("customConfig", ckEditor.getCustomConfig())
-                    .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
-                    .attr("disableNativeSpellChecker", ckEditor.isDisableNativeSpellChecker())
-                    .attr(Attrs.TABINDEX, ckEditor.getTabindex())
-                    .attr("enterMode", ckEditor.getEnterMode())
-                    .attr("shiftEnterMode", ckEditor.getShiftEnterMode());
-
         encodeClientBehaviors(context, ckEditor);
         wb.finish();
     }

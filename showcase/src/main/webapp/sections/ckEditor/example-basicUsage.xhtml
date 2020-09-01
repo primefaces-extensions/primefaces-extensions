@@ -9,7 +9,7 @@
 
 <p:growl id="growl" showDetail="true" />
 
-<pe:ckEditor id="editor" value="#{editorController.content}" interfaceColor="#{editorController.color}" enterMode="CKEDITOR.ENTER_BR" >
+<pe:ckEditor id="editor" value="#{editorController.content}" interfaceColor="#{editorController.color}" enterMode="CKEDITOR.ENTER_BR" font='Courier New' fontSize='11px' >
     <p:ajax event="save" listener="#{editorController.saveListener}" update="growl"/>
 </pe:ckEditor>
 

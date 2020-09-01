@@ -457,6 +457,22 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Default font to set the editor to such as 'Arial'. Default is null.]]>
+            </description>
+            <name>font</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Default font size to set the editor to such as '12px'. Only used if Font is set.]]>
+            </description>
+            <name>fontSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
             </description>
             <name>tabindex</name>

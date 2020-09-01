@@ -78,7 +78,9 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
         advancedContentFilter,
         disableNativeSpellChecker,
         enterMode,
-        shiftEnterMode;
+        shiftEnterMode,
+        font,
+        fontSize;
         //@formatter:on
 
         private String toString;
@@ -263,4 +265,19 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
         getStateHelper().put(PropertyKeys.shiftEnterMode, shiftEnterMode);
     }
 
+    public String getFont() {
+        return (String) getStateHelper().eval(PropertyKeys.font, null);
+    }
+
+    public void setFont(final String font) {
+        getStateHelper().put(PropertyKeys.font, font);
+    }
+
+    public String getFontSize() {
+        return (String) getStateHelper().eval(PropertyKeys.fontSize, "12px");
+    }
+
+    public void setFontSize(final String fontSize) {
+        getStateHelper().put(PropertyKeys.fontSize, fontSize);
+    }
 }

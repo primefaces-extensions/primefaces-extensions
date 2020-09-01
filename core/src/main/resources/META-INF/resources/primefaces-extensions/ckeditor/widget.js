@@ -4,19 +4,19 @@
  * @param {string} resource The requested resource from CKEditor.
  * @returns {string} The faces resource URL.
  */
-CKEDITOR_GETURL = function(resource) {
+CKEDITOR_GETURL = function (resource) {
     var facesResource;
-    
+
     // GitHub #545 IE11 support
     if (PrimeFaces.env.isIE()) {
         if (!String.prototype.startsWith) {
-            String.prototype.startsWith = function(searchString, position) {
+            String.prototype.startsWith = function (searchString, position) {
                 position = position || 0;
                 return this.indexOf(searchString, position) === position;
             };
         }
     }
-    
+
     //do not resolve
     if (resource.indexOf('?resolve=false') !== -1) {
         facesResource = resource.replace('?resolve=false', '');
@@ -31,7 +31,7 @@ CKEDITOR_GETURL = function(resource) {
             if (appendedResource.length > 0) {
                 //remove append resource from url
                 facesResource = resource.substring(0, resource.length - appendedResource.length);
-                
+
                 // GitHub ##509 check for URL param
                 if (appendedResource.startsWith('&')) {
                     // example: replace &conversationContext=33
@@ -44,14 +44,14 @@ CKEDITOR_GETURL = function(resource) {
                     var extension = '.' + PrimeFacesExt.getResourceUrlExtension();
                     var extensionMappingPosition = facesResource.lastIndexOf(extension);
                     if (extensionMappingPosition === -1) {
-                       extensionMappingPosition = facesResource.lastIndexOf('.xhtml');
-                       if (extensionMappingPosition === -1) {
-                          extensionMappingPosition = facesResource.lastIndexOf('.jsf');
-                       }
+                        extensionMappingPosition = facesResource.lastIndexOf('.xhtml');
+                        if (extensionMappingPosition === -1) {
+                            extensionMappingPosition = facesResource.lastIndexOf('.jsf');
+                        }
                     }
-                    
+
                     if (extensionMappingPosition === -1) {
-                       console.error('Could not find .jsf or .xhtml extension!');
+                        console.error('Could not find .jsf or .xhtml extension!');
                     }
 
                     //extract resource
@@ -72,8 +72,7 @@ CKEDITOR_GETURL = function(resource) {
         } else {
             if (resource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER) === -1) {
                 facesResource = PrimeFaces.resources.getFacesResource('ckeditor/' + resource, PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
-            }
-            else {
+            } else {
                 facesResource = resource;
             }
         }
@@ -94,7 +93,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @param {object} cfg The widget configuration.
      */
-    init : function(cfg) {
+    init: function (cfg) {
         this._super(cfg);
 
         this.instance = null;
@@ -150,16 +149,16 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         // check if ckeditor is already included
         if (!$.fn.ckeditor) {
             var ckEditorScriptURI = PrimeFaces.resources.getFacesResource('/ckeditor/ckeditor.js',
-                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
             var jQueryAdapterScriptURI = PrimeFaces.resources.getFacesResource('/ckeditor/adapters/jquery.js',
-                    PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
+                PrimeFacesExt.RESOURCE_LIBRARY, PrimeFacesExt.VERSION);
 
             // load ckeditor
-            PrimeFacesExt.getScript(ckEditorScriptURI, $.proxy(function(data, textStatus) {
+            PrimeFacesExt.getScript(ckEditorScriptURI, $.proxy(function (data, textStatus) {
 
                 // load jquery adapter
-                PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function(data, textStatus) {
+                PrimeFacesExt.getScript(jQueryAdapterScriptURI, $.proxy(function (data, textStatus) {
 
                     this.renderDeferred();
 
@@ -175,10 +174,10 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Initializes the CKEditor instance. This method will be called when the
      * resources for the CKEditor are loaded.
-     * 
+     *
      * @private
      */
-    _render : function() {
+    _render: function () {
         if (!this.instance && this.initializing === false) {
             this.initializing = true;
             PrimeFaces.info('Rendering CKEditor: ' + this.id);
@@ -198,10 +197,12 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
             }
 
             //initialize ckeditor after all resources were loaded
-            this.jq.ckeditor($.proxy(function() { this.initialized(); }, this), this.options);
-            
+            this.jq.ckeditor($.proxy(function () {
+                this.initialized();
+            }, this), this.options);
+
             if (CKEDITOR.instances[this.id]) {
-                var thisConfig =  CKEDITOR.instances[this.id].config;
+                var thisConfig = CKEDITOR.instances[this.id].config;
                 // Issue #414 enable/disable ACF
                 thisConfig.allowedContent = !this.cfg.advancedContentFilter;
                 // Issue #415: set readOnly attribute to the config file
@@ -211,6 +212,11 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 // Issue #779: enter/shift enter Mode
                 thisConfig.enterMode = PrimeFaces.csp.evalResult(this.cfg.enterMode);
                 thisConfig.shiftEnterMode = PrimeFaces.csp.evalResult(this.cfg.shiftEnterMode);
+                // Issue #151: font and font size
+                if (this.cfg.font) {
+                    thisConfig.font_defaultLabel = this.cfg.font;
+                    thisConfig.fontSize_defaultLabel = this.cfg.fontSize;
+                }
             }
             PrimeFaces.info('Finished Rendering CKEditor: ' + this.id);
         }
@@ -221,21 +227,21 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    overwriteSaveButton : function() {
+    overwriteSaveButton: function () {
         //overwrite save button
         CKEDITOR.plugins.registered['save'] = {
-            init : function(editor) {
+            init: function (editor) {
 
                 //get widget
                 var widget = PF(editor.config.widgetVar);
                 var command = editor.addCommand('save', {
-                    modes : { wysiwyg:1, source:1 },
-                    exec : function(editor) {
+                    modes: {wysiwyg: 1, source: 1},
+                    exec: function (editor) {
                         widget.callBehavior('save');
                     }
                 });
 
-                editor.ui.addButton('Save', {label : editor.lang.save.toolbar, command : 'save', title : editor.lang.save.toolbar });
+                editor.ui.addButton('Save', {label: editor.lang.save.toolbar, command: 'save', title: editor.lang.save.toolbar});
             }
         };
     },
@@ -245,7 +251,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    initialized : function() {
+    initialized: function () {
         PrimeFaces.info("Initialized: " + this.id);
         //get instance
         this.instance = this.jq.ckeditorGet();
@@ -262,17 +268,21 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.bindEditableEvents();
 
         //register blur and focus event
-        this.instance.on('blur', $.proxy(function() { this.fireEvent('blur'); }, this));
-        this.instance.on('focus', $.proxy(function() { this.fireEvent('focus'); }, this));
+        this.instance.on('blur', $.proxy(function () {
+            this.fireEvent('blur');
+        }, this));
+        this.instance.on('focus', $.proxy(function () {
+            this.fireEvent('focus');
+        }, this));
 
         //changes to WYSIWYG mode
-        this.instance.on('contentDom', $.proxy(function() {
+        this.instance.on('contentDom', $.proxy(function () {
             this.bindEditableEvents();
             this.fireEvent('wysiwygMode');
-          }, this));
+        }, this));
 
         //changes to source mode
-        this.instance.on('mode', $.proxy(function(event) {
+        this.instance.on('mode', $.proxy(function (event) {
             this.saveMode();
             this.saveScrollPosition();
             if (this.instance.mode != 'source') {
@@ -286,7 +296,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.isDirtyEventDefined = this.hasBehavior('dirty');
         this.isChangeEventDefined = this.hasBehavior('change');
 
-        this.instance.on('blur', $.proxy(function() {
+        this.instance.on('blur', $.proxy(function () {
             this.instance.dirtyFired = false;
         }, this));
 
@@ -299,26 +309,26 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    destroyOnUpdate: function( instance ) {
-        if(instance) {
-            instance.fire( 'beforeDestroy' );
-    
-            if ( instance.filter ) {
+    destroyOnUpdate: function (instance) {
+        if (instance) {
+            instance.fire('beforeDestroy');
+
+            if (instance.filter) {
                 instance.filter.destroy();
                 delete instance.filter;
             }
-    
+
             delete instance.activeFilter;
-    
+
             instance.status = 'destroyed';
-    
-            instance.fire( 'destroy' );
-    
+
+            instance.fire('destroy');
+
             // Plug off all listeners to prevent any further events firing.
             instance.removeAllListeners();
-    
-            CKEDITOR.remove( instance );
-            CKEDITOR.fire( 'instanceDestroyed', null, instance );
+
+            CKEDITOR.remove(instance);
+            CKEDITOR.fire('instanceDestroyed', null, instance);
         }
     },
 
@@ -328,7 +338,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    checkDirty : function() {
+    checkDirty: function () {
         if (this.isDirtyEventDefined) {
             if (!this.instance.dirtyFired && this.instance.checkDirty()) { // checkDirty means isDirty
                 // fires the dirty event only once!
@@ -344,7 +354,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    checkChange : function() {
+    checkChange: function () {
         if (this.isChangeEventDefined) {
             this.fireEvent('change');
         }
@@ -356,14 +366,14 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @param {string} eventName The name of the event.
      * @private
      */
-    fireEvent : function(eventName) {
+    fireEvent: function (eventName) {
         this.callBehavior(eventName);
     },
-    
+
     /**
      * Destroys the CKEditor instance.
      */
-    destroy : function() {
+    destroy: function () {
         if (this.instance) {
             try {
                 this.instance.destroy(true);
@@ -382,7 +392,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * AJAX update.
      * @private
      */
-    saveScrollPosition: function() {
+    saveScrollPosition: function () {
         if (this.instance) {
             if (this.instance.mode === 'source') {
                 // Source mode -> use scroll position of the textarea element
@@ -391,8 +401,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                     this.editorState.scrollTop = editable.$.scrollTop;
                     this.editorState.scrollLeft = editable.$.scrollLeft;
                 }
-            }
-            else {
+            } else {
                 // WYSIWYG mode -> use scroll position of html element of the iframe
                 if (this.instance.document && this.instance.document.$ && this.instance.document.$.documentElement) {
                     this.editorState.scrollTop = this.instance.document.$.documentElement.scrollTop;
@@ -406,7 +415,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Restores the saved scroll position of the editor after an AJAX update.
      * @private
      */
-    restoreScrollPosition: function() {
+    restoreScrollPosition: function () {
         if (this.instance) {
             if (this.instance.mode === 'source') {
                 // Source mode -> use scroll position of the textarea element
@@ -419,8 +428,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                         editable.$.scrollLeft = this.editorState.scrollLeft;
                     }
                 }
-            }
-            else {
+            } else {
                 // WYSIWYG mode -> use scroll position of html element of the iframe
                 if (this.instance.document && this.instance.document.$ && this.instance.document.$.documentElement) {
                     if (typeof this.editorState.scrollTop === "number") {
@@ -438,7 +446,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Saves whether the editor is currently is source or WYSIWYG mode.
      * @private
      */
-    saveMode: function() {
+    saveMode: function () {
         if (this.instance) {
             this.editorState.mode = this.instance.mode === "source" ? "source" : "wysiwyg";
         }
@@ -448,7 +456,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Restores the editor mode after an AJAX update.
      * @private
      */
-    restoreMode: function() {
+    restoreMode: function () {
         // Editor starts out in WYSIWYG mode, only switch if it was in source mode
         if (this.instance && this.editorState.mode === 'source') {
             this.instance.setMode('source');
@@ -460,18 +468,18 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
      * so they need to be registered again.
      * @private
      */
-    bindEditableEvents: function() {
+    bindEditableEvents: function () {
         if (this.instance && this.instance.editable()) {
             var editable = this.instance.editable();
-            editable.attachListener(editable, 'cut', $.proxy(function(event) {
+            editable.attachListener(editable, 'cut', $.proxy(function (event) {
                 this.checkChange();
                 this.checkDirty();
             }, this));
-            editable.attachListener(editable, 'paste', $.proxy(function(event) {
+            editable.attachListener(editable, 'paste', $.proxy(function (event) {
                 this.checkChange();
                 this.checkDirty();
             }, this));
-            editable.attachListener(editable, 'keyup', $.proxy(function(event) {
+            editable.attachListener(editable, 'keyup', $.proxy(function (event) {
                 // do not capture ctrl and meta keys
                 if (event.data.$.ctrlKey || event.data.$.metaKey) {
                     return;
@@ -480,9 +488,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 // filter movement keys and related
                 var keyCode = event.data.$.keyCode;
                 if (keyCode == 8 || keyCode == 13 || keyCode == 32
-                                || (keyCode >= 46 && keyCode <= 90)
-                                || (keyCode >= 96 && keyCode <= 111)
-                                || (keyCode >= 186 && keyCode <= 222)) {
+                    || (keyCode >= 46 && keyCode <= 90)
+                    || (keyCode >= 96 && keyCode <= 111)
+                    || (keyCode >= 186 && keyCode <= 222)) {
                     this.checkChange();
                     this.checkDirty();
                 }
@@ -493,13 +501,12 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 this.scrollListener = undefined;
             }
             if (this.instance.mode === 'source') {
-                this.scrollListener = editable.attachListener(editable, 'scroll', $.proxy(function(){
+                this.scrollListener = editable.attachListener(editable, 'scroll', $.proxy(function () {
                     this.saveScrollPosition();
                 }, this));
-            }
-            else {
+            } else {
                 if (editable.getDocument()) {
-                    this.scrollListener = editable.attachListener(editable.getDocument(), 'scroll', $.proxy(function(){
+                    this.scrollListener = editable.attachListener(editable.getDocument(), 'scroll', $.proxy(function () {
                         this.saveScrollPosition();
                     }, this));
                 }
@@ -510,7 +517,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Checks if the editor is in dirty state.
      */
-    isDirty : function() {
+    isDirty: function () {
         if (!this.instance) {
             return false;
         }
@@ -521,28 +528,28 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Sets readOnly to the CKEditor.
      */
-    setReadOnly : function(readOnly) {
+    setReadOnly: function (readOnly) {
         this.instance.setReadOnly(readOnly !== false);
     },
 
     /**
      * Checks if the CKEditor is readOnly.
      */
-    isReadOnly : function() {
+    isReadOnly: function () {
         return this.instance.readOnly;
     },
 
     /**
      * Indicates that the editor instance has focus.
      */
-    hasFocus : function() {
+    hasFocus: function () {
         return this.instance.focusManager.hasFocus;
     },
 
     /**
      * Returns the CKEditor instance.
      */
-    getEditorInstance : function() {
+    getEditorInstance: function () {
         return this.instance;
     }
 });
