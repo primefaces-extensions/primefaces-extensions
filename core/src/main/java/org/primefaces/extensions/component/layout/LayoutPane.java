@@ -467,26 +467,26 @@ public class LayoutPane extends UIComponentBase {
         // pe:layoutPane
         final String position = getPosition();
         final LayoutOptions thisLayoutOptions = getOptions();
-        LayoutOptions opts;
+        LayoutOptions parentOpts;
 
         if (parent instanceof LayoutPane) {
             final LayoutOptions parentLayoutOptions = ((LayoutPane) parent).getOptions();
-            opts = parentLayoutOptions.getChildOptions();
-            if (opts == null) {
-                opts = new LayoutOptions();
-                parentLayoutOptions.setChildOptions(opts);
+            parentOpts = parentLayoutOptions.getChildOptions();
+            if (parentOpts == null) {
+                parentOpts = new LayoutOptions();
+                parentLayoutOptions.setChildOptions(parentOpts);
             }
         }
         else if (parent instanceof Layout) {
-            opts = (LayoutOptions) ((Layout) parent).getOptions();
-            if (opts == null) {
+            parentOpts = (LayoutOptions) ((Layout) parent).getOptions();
+            if (parentOpts == null) {
                 final Layout layout = (Layout) parent;
-                opts = new LayoutOptions();
-                layout.setOptions(opts);
+                parentOpts = new LayoutOptions();
+                layout.setOptions(parentOpts);
 
                 // options for all panes
                 final LayoutOptions defaults = new LayoutOptions();
-                opts.setPanesOptions(defaults);
+                parentOpts.setPanesOptions(defaults);
                 final LayoutOptions tips = new LayoutOptions();
                 defaults.setTips(tips);
 
@@ -512,7 +512,7 @@ public class LayoutPane extends UIComponentBase {
 
                 final boolean maskPanesEarly = layout.isMaskPanesEarly();
                 if (maskPanesEarly) {
-                    opts.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), true);
+                    parentOpts.addOption(Layout.PropertyKeys.maskPanesEarly.toString(), true);
                 }
             }
         }
@@ -533,19 +533,19 @@ public class LayoutPane extends UIComponentBase {
         }
 
         if (Layout.PANE_POSITION_CENTER.equals(position)) {
-            options.setCenterOptions(thisLayoutOptions);
+            parentOpts.setCenterOptions(thisLayoutOptions);
         }
         else if (Layout.PANE_POSITION_NORTH.equals(position)) {
-            options.setNorthOptions(thisLayoutOptions);
+            parentOpts.setNorthOptions(thisLayoutOptions);
         }
         else if (Layout.PANE_POSITION_SOUTH.equals(position)) {
-            options.setSouthOptions(thisLayoutOptions);
+            parentOpts.setSouthOptions(thisLayoutOptions);
         }
         else if (Layout.PANE_POSITION_WEST.equals(position)) {
-            options.setWestOptions(thisLayoutOptions);
+            parentOpts.setWestOptions(thisLayoutOptions);
         }
         else if (Layout.PANE_POSITION_EAST.equals(position)) {
-            options.setEastOptions(thisLayoutOptions);
+            parentOpts.setEastOptions(thisLayoutOptions);
         }
         else {
             throw new FacesException("Pane position " + position
