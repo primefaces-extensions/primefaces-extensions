@@ -22,6 +22,7 @@
     </scm>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
         <primefaces-extensions.new-components>renderers;inputphone;timeago;fab;badge;legend;creditcard;fuzzysearch;counter;codeScanner
@@ -30,10 +31,10 @@
         <primefaces-extensions.deprecated-components/>
 
         <myfaces.version>2.3.6</myfaces.version>
-        <owb.version>2.0.12</owb.version>
-        <jetty.version>9.4.20.v20190813</jetty.version>
+        <owb.version>2.0.16</owb.version>
+        <jetty.version>9.4.31.v20200723</jetty.version>
         <omnifaces.version>2.7.2</omnifaces.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hibernate-validator.version>6.1.1.Final</hibernate-validator.version>
     </properties>
 
     <build>
@@ -252,9 +253,9 @@
 
         <!-- Bean Validation -->
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.3.6.Final</version>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <!-- OpenWebBeans -->
