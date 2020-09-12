@@ -58,7 +58,7 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected String getToggleJS(final String widgetVar, final boolean enabled) {
-        return String.format("var w=PF('%s');if(w){w.%sable();};", widgetVar, enabled ? "en" : "dis");
+        return String.format("var w=PrimeFaces.widgets['%s'];if(w){w.%sable();};", widgetVar, enabled ? "en" : "dis");
     }
 
     protected String getAttributeValue(final FacesContext context, final CommandButton button, final String attribute) {
