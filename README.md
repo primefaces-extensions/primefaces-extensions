@@ -14,21 +14,43 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 [![PrimeFaces Extensions Logo](http://primefaces-extensions.github.io/reports/images/title.png)](https://www.primefaces.org/showcase-ext/)
 
-##### Maven
+### Maven
 
+##### Release
 ```xml
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
-    <version>8.0.4</version>
+    <version>${primefaces-extensions.version}</version>
 </dependency>
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>resources-ckeditor</artifactId>
-    <version>8.0.4</version>
+    <version>${primefaces-extensions.version}</version>
 </dependency>
 ```
- ##### Namespaces
+
+##### Snapshots
+```xml
+<repository>
+    <id>sonatype-snapshots</id>
+    <name>Sonatype Snapshot Repository</name>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <version>${primefaces-extensions.version}</version>
+</dependency>
+```
+
+ ### Namespaces
  
  The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
  
