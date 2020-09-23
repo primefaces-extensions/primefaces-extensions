@@ -70,7 +70,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         deviceId,
         forVal("for");
 
-        String toString;
+        private String toString;
         PropertyKeys(String toString) {
             this.toString = toString;
         }
