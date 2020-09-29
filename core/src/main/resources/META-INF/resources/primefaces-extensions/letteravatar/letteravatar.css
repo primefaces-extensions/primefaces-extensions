@@ -16,6 +16,5 @@
 }
 .ui-letteravatar .ui-letteravatar-initials {
   position: relative;
-  line-height: 1;
   mix-blend-mode: difference;
 }
