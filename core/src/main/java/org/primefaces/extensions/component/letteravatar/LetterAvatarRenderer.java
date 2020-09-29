@@ -113,16 +113,8 @@ public class LetterAvatarRenderer extends CoreRenderer {
         return true;
     }
 
-    public static int hash(final String str) {
-        int result = 0;
-        for (int i = 0; i < str.length(); i++) {
-            result = (result << 5) - result + str.charAt(i);
-        }
-        return result;
-    }
-
     public static int hue(final String str) {
-        return Math.abs(hash(str) % 360);
+        return Math.abs((str.hashCode() % 40) * 9);
     }
 
     protected String styleContainer(final String size, final String color, final String backgroundColor) {
@@ -137,7 +129,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
     protected String styleInitials(final String size) {
         final Map<String, String> map = new LinkedHashMap<>(8);
         map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
-        map.put("top", "calc(" + size + " / 4)"); // 25% of parent
+        map.put("line-height", size);
         return toStyle(map);
     }
 
