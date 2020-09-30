@@ -16,13 +16,8 @@
 package org.primefaces.extensions.component.letteravatar;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -30,7 +25,6 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.Constants;
 import org.primefaces.util.LangUtils;
 
 /**
@@ -76,21 +70,24 @@ public class LetterAvatarRenderer extends CoreRenderer {
         }
 
         final String size = letterAvatar.getSize();
-        final String style = joinStyle(letterAvatar.getStyle(), styleContainer(size, color, backgroundColor));
-        String styleClass = joinStyleClass(letterAvatar.getStyleClass(), LetterAvatar.COMPONENT_CLASS);
+        String style = styleContainer(size, color, backgroundColor);
+        if (!LangUtils.isValueBlank(letterAvatar.getStyle())) {
+            style += letterAvatar.getStyle();
+        }
+        String styleClass = LetterAvatar.COMPONENT_CLASS;
+        if (!LangUtils.isValueBlank(letterAvatar.getStyleClass())) {
+            styleClass += " " + letterAvatar.getStyleClass();
+        }
 
         writer.startElement("span", letterAvatar);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("title", value, null);
 
         if (rounded) {
-            styleClass = styleClass + " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
+            styleClass += " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
         }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-
-        if (style != null) {
-            writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
-        }
+        writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
 
         renderChildren(context, letterAvatar);
 
@@ -118,38 +115,16 @@ public class LetterAvatarRenderer extends CoreRenderer {
     }
 
     protected String styleContainer(final String size, final String color, final String backgroundColor) {
-        final Map<String, String> map = new LinkedHashMap<>(8);
-        map.put("color", color);
-        map.put("background-color", backgroundColor);
-        map.put("height", size);
-        map.put("width", size);
-        return toStyle(map);
+        return "color:" + color
+                    + ";background-color:" + backgroundColor
+                    + ";height:" + size
+                    + ";width:" + size
+                    + ";";
     }
 
     protected String styleInitials(final String size) {
-        final Map<String, String> map = new LinkedHashMap<>(8);
-        map.put("font-size", "calc(" + size + " / 2)"); // 50% of parent
-        map.put("line-height", size);
-        return toStyle(map);
+        return "font-size:calc(" + size + "/2)"
+                    + ";line-height:" + size
+                    + ";";
     }
-
-    protected static String joinNonNull(final String delimiter, final String... parts) {
-        return Stream.of(parts).filter(Objects::nonNull).collect(Collectors.joining(delimiter));
-    }
-
-    protected static String joinStyle(final String... parts) {
-        return joinNonNull(Constants.EMPTY_STRING, parts);
-    }
-
-    protected static String joinStyleClass(final String... parts) {
-        return joinNonNull(" ", parts);
-    }
-
-    protected static String toStyle(final Map<String, String> map) {
-        return map.entrySet()
-                    .stream()
-                    .map(e -> e.getKey() + ":" + e.getValue())
-                    .collect(Collectors.joining(";"));
-    }
-
 }
