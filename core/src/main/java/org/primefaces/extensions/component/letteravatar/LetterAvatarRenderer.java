@@ -70,13 +70,13 @@ public class LetterAvatarRenderer extends CoreRenderer {
         }
 
         final String size = letterAvatar.getSize();
-        final StringBuilder style = new StringBuilder(styleContainer(size, color, backgroundColor));
+        String style = styleContainer(size, color, backgroundColor);
         if (!LangUtils.isValueBlank(letterAvatar.getStyle())) {
-            style.append(letterAvatar.getStyle());
+            style += letterAvatar.getStyle();
         }
-        final StringBuilder styleClass = new StringBuilder(LetterAvatar.COMPONENT_CLASS);
+        String styleClass = LetterAvatar.COMPONENT_CLASS;
         if (!LangUtils.isValueBlank(letterAvatar.getStyleClass())) {
-            styleClass.append(" ").append(letterAvatar.getStyleClass());
+            styleClass += " " + letterAvatar.getStyleClass();
         }
 
         writer.startElement("span", letterAvatar);
@@ -84,7 +84,7 @@ public class LetterAvatarRenderer extends CoreRenderer {
         writer.writeAttribute("title", value, null);
 
         if (rounded) {
-            styleClass.append(" ").append(LetterAvatar.COMPONENT_CLASS_ROUNDED);
+            styleClass += " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
         }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
@@ -115,16 +115,16 @@ public class LetterAvatarRenderer extends CoreRenderer {
     }
 
     protected String styleContainer(final String size, final String color, final String backgroundColor) {
-        return new StringBuilder("color:").append(color)
-                    .append(";background-color:").append(backgroundColor)
-                    .append(";height:").append(size)
-                    .append(";width:").append(size)
-                    .append(';').toString();
+        return "color:" + color
+                    + ";background-color:" + backgroundColor
+                    + ";height:" + size
+                    + ";width:" + size
+                    + ";";
     }
 
     protected String styleInitials(final String size) {
-        return new StringBuilder("font-size:calc(").append(size).append("/2)")
-                    .append(";line-height:").append(size)
-                    .append(';').toString();
+        return "font-size:calc(" + size + "/2)"
+                    + ";line-height:" + size
+                    + ";";
     }
 }
