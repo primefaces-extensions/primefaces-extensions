@@ -36,6 +36,7 @@ public class ExtHead extends UIOutput {
      * @author Thomas Andraschko / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         title, shortcutIcon;

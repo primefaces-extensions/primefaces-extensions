@@ -36,6 +36,7 @@ public class JavascriptBehavior extends AbstractBehavior {
     public static final String BEHAVIOR_ID = "org.primefaces.extensions.behavior.JavascriptBehavior";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.behavior.JavascriptBehaviorRenderer";
 
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys implements BehaviorAttribute {
 
         disabled(Boolean.class), execute(String.class);

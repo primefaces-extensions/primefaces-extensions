@@ -60,6 +60,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
 
     private Locale appropriateLocale;
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off

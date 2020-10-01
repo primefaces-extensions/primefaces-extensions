@@ -55,6 +55,7 @@ public class FloatingActionButton extends AbstractMenu implements Widget, Client
                 .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
 
     // @formatter:off
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys {
         model,
         tabindex,

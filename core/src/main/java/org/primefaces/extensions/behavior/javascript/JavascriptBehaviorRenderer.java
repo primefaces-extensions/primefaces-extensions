@@ -59,7 +59,8 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
         // params
         boolean paramWritten = false;
 
-        for (final UIComponent child : component.getChildren()) {
+        for (int i = 0; i < component.getChildren().size(); i++) {
+            final UIComponent child = component.getChildren().get(i);
             if (child instanceof UIParameter) {
                 final UIParameter parameter = (UIParameter) child;
 
@@ -81,17 +82,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
             script.append("}");
         }
 
-        ClientBehaviorRenderingMode renderingMode = null;
-        final Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
-
-        if (behaviorParameters != null && !behaviorParameters.isEmpty()) {
-            for (final ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
-                if (behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
-                    renderingMode = (ClientBehaviorRenderingMode) behaviorParameter.getValue();
-                    break;
-                }
-            }
-        }
+        ClientBehaviorRenderingMode renderingMode = getClientBehaviorRenderingMode(behaviorContext);
 
         if (ClientBehaviorRenderingMode.UNOBSTRUSIVE.equals(renderingMode)) {
             script.append("},ext);");
@@ -101,5 +92,18 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
         }
 
         return script.toString();
+    }
+
+    protected ClientBehaviorRenderingMode getClientBehaviorRenderingMode(final ClientBehaviorContext behaviorContext) {
+        final Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
+        if (behaviorParameters == null || behaviorParameters.isEmpty()) {
+            return null;
+        }
+        for (final ClientBehaviorContext.Parameter behaviorParameter : behaviorParameters) {
+            if (behaviorParameter.getValue() instanceof ClientBehaviorRenderingMode) {
+                return (ClientBehaviorRenderingMode) behaviorParameter.getValue();
+            }
+        }
+        return null;
     }
 }

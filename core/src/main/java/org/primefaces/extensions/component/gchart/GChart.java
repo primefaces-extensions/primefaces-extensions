@@ -48,6 +48,7 @@ public class GChart extends UIOutput implements Widget, ClientBehaviorHolder {
     private static final String DEFAULT_EVENT = "select";
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(DEFAULT_EVENT));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         widgetVar, width, height, title, apiKey, language, extender
     }

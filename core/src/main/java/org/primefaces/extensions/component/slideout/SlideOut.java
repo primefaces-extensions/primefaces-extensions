@@ -55,6 +55,7 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
     private static final Collection<String> EVENT_NAMES = Collections
                 .unmodifiableCollection(Arrays.asList(OpenEvent.NAME, CloseEvent.NAME));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
       // @formatter:off

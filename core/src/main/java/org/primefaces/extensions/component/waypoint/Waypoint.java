@@ -52,6 +52,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
     private static final Collection<String> EVENT_NAMES = Collections
                 .unmodifiableCollection(Arrays.asList(WaypointEvent.NAME));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
       // @formatter:off
       widgetVar,

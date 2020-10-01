@@ -37,6 +37,7 @@ public class Gravatar extends UIOutput {
         NOT_FOUND_VALUES.add("blank");
     }
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         notFound, size, style, qrCode, secure;
     }

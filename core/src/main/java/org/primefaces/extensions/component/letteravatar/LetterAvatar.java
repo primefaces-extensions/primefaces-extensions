@@ -43,6 +43,7 @@ public class LetterAvatar extends UIComponentBase implements ClientBehaviorHolde
     public static final String COMPONENT_CLASS = "ui-letteravatar";
     public static final String COMPONENT_CLASS_ROUNDED = "ui-letteravatar-rounded";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         // @formatter:off
         style,

@@ -52,6 +52,7 @@ public class Clipboard extends UIComponentBase implements ClientBehaviorHolder, 
     private static final Collection<String> EVENT_NAMES = Collections
                 .unmodifiableCollection(Arrays.asList(ClipboardSuccessEvent.NAME, ClipboardErrorEvent.NAME));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off

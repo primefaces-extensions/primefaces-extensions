@@ -80,6 +80,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
      *
      * @author Oleg Varaksin / last modified by Melloware
      */
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys {
 
         // @formatter:off

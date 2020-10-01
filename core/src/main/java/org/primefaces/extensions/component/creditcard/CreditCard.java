@@ -40,6 +40,7 @@ public class CreditCard extends UIComponentBase implements Widget {
 
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CreditCardRenderer";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off

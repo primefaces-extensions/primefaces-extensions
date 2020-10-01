@@ -42,6 +42,7 @@ public class DocumentViewer extends UIGraphic {
 
     private Locale appropriateLocale;
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         //@formatter:off
         width,

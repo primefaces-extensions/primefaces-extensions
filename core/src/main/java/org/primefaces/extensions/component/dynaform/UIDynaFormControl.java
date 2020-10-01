@@ -36,6 +36,7 @@ public class UIDynaFormControl extends UIComponentBase {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         type, forVal("for"), style, styleClass;

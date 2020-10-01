@@ -61,6 +61,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         widgetVar, autoSubmit, openExtended, buttonBarPosition, // top, bottom, both
@@ -278,7 +279,8 @@ public class DynaForm extends AbstractDynamicData implements Widget {
     }
 
     private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
-        for (final UIComponent kid : getChildren()) {
+        for (int i = 0; i < getChildren().size(); i++) {
+            final UIComponent kid = getChildren().get(i);
             if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()
                         || !((UIDynaFormControl) kid).getType().equals(dynaFormControl.getType())) {
                 continue;
@@ -289,24 +291,29 @@ public class DynaForm extends AbstractDynamicData implements Widget {
                 return;
             }
 
-            for (final UIComponent grandkid : kid.getChildren()) {
-                if (!grandkid.isRendered()) {
-                    continue;
-                }
-
-                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
-                    grandkid.processDecodes(context);
-                }
-                else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
-                    grandkid.processValidators(context);
-                }
-                else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
-                    grandkid.processUpdates(context);
-                }
-                else {
-                    throw new IllegalArgumentException();
-                }
+            for (int j = 0; j < kid.getChildren().size(); j++) {
+                final UIComponent grandkid = kid.getChildren().get(j);
+                processGrandkid(context, phaseId, grandkid);
             }
+        }
+    }
+
+    private void processGrandkid(final FacesContext context, final PhaseId phaseId, final UIComponent grandkid) {
+        if (!grandkid.isRendered()) {
+            return;
+        }
+
+        if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+            grandkid.processDecodes(context);
+        }
+        else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+            grandkid.processValidators(context);
+        }
+        else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+            grandkid.processUpdates(context);
+        }
+        else {
+            throw new IllegalArgumentException();
         }
     }
 

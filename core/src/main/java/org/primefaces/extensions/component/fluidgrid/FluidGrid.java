@@ -69,6 +69,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
      *
      * @author Oleg Varaksin / last modified by Melloware
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
       // @formatter:off

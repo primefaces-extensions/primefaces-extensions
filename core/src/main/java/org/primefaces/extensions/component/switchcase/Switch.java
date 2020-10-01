@@ -38,6 +38,7 @@ public class Switch extends UIComponentBase {
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Switch";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         value
     }

@@ -54,6 +54,7 @@ public class TimeAgo extends UIComponentBase implements Widget {
     private Locale appropriateLocale;
 
     // @formatter:off
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys {
         value,
         widgetVar,

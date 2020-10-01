@@ -34,6 +34,7 @@ public abstract class AbstractParameter extends UIOutput {
      * @author Thomas Andraschko / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         name;
 

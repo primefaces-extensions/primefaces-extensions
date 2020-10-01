@@ -33,6 +33,7 @@ public class Case extends DefaultCase {
      * @author Michael Gmeiner / last modified by $Author: $
      * @version $Revision: $
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         value;

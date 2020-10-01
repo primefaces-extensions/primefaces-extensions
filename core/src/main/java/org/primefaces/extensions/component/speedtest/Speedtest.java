@@ -51,6 +51,7 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
     private static final String DEFAULT_RENDERER = COMPONENT_FAMILY + ".SpeedtestRenderer";
     private static final Collection<String> EVENT_NAMES = Collections.unmodifiableCollection(Arrays.asList(SpeedTestEvent.NAME));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         // @formatter:off
         widgetVar,

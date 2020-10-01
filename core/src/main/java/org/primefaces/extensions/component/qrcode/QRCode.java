@@ -37,6 +37,7 @@ public class QRCode extends UIOutput implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.QRCodeRenderer";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
       //@formatter:off
         widgetVar,
