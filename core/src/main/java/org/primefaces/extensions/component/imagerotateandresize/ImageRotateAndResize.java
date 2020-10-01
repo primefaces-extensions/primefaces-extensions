@@ -59,6 +59,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
      * @author Thomas Andraschko / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         widgetVar, forValue("for");

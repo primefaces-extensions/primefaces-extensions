@@ -33,6 +33,7 @@ public class UIFluidGridItem extends UIComponentBase {
      *
      * @author Oleg Varaksin / last modified by $Author$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
       // @formatter:off
       type,

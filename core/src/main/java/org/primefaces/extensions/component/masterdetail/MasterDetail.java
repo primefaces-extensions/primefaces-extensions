@@ -75,6 +75,7 @@ public class MasterDetail extends UIComponentBase {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         // @formatter:off
         level,

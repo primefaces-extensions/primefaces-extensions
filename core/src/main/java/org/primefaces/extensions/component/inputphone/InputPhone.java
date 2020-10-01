@@ -63,6 +63,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
 
     // @formatter:off
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys {
         placeholder,
         widgetVar,

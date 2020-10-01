@@ -56,6 +56,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections
                 .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME, OrgChartDropEvent.NAME));
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         nodeId, //
         widgetVar, //

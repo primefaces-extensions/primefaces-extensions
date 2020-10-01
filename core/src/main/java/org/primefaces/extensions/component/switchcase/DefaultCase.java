@@ -35,6 +35,7 @@ public class DefaultCase extends UINamingContainer {
      * @author Michael Gmeiner / last modified by $Author: $
      * @version $Revision: $
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         style, styleClass;

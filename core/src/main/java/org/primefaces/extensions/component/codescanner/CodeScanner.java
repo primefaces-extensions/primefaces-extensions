@@ -56,6 +56,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
     private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList(EVENT_CODE_SCANNED);
 
     // @formatter:off
+    @SuppressWarnings("java:S115")
     public enum PropertyKeys {
         widgetVar,
         type,

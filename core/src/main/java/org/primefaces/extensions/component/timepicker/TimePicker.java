@@ -76,6 +76,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         //@formatter:off

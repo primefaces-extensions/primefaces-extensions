@@ -41,6 +41,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     /**
      * Properties that are tracked by state saving.
      */
+    @SuppressWarnings("java:S115")
     enum PropertyKeys {
         /**
          * The local value of this {@link UIComponent}.

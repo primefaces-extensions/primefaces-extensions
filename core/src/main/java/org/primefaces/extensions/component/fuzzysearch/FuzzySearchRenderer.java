@@ -42,6 +42,8 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class FuzzySearchRenderer extends SelectOneRenderer {
 
+    private static final String INPUT = "_input";
+
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
         final FuzzySearch fuzzySearch = (FuzzySearch) component;
@@ -51,7 +53,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
 
         final String clientId = fuzzySearch.getClientId(context);
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String submittedValue = params.get(clientId + "_input");
+        final String submittedValue = params.get(clientId + INPUT);
 
         if (submittedValue != null) {
             fuzzySearch.setSubmittedValue(submittedValue);
@@ -88,8 +90,8 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         }
 
         writer.startElement("input", fuzzySearch);
-        writer.writeAttribute("id", clientId + "_input", null);
-        writer.writeAttribute("name", clientId + "_input", null);
+        writer.writeAttribute("id", clientId + INPUT, null);
+        writer.writeAttribute("name", clientId + INPUT, null);
         writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
         writer.writeAttribute("class", createStyleClass(fuzzySearch), "styleClass");
         renderPassThruAttributes(context, fuzzySearch, HTML.TAB_INDEX);

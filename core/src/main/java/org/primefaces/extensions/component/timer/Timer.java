@@ -45,6 +45,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     private static final int DEFAULT_TIMEOUT = 10;
     private static final int DEFAULT_INTERVAL_MS = 1000;
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         //@formatter:off

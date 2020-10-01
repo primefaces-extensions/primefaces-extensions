@@ -57,6 +57,7 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         //@formatter:off CHECKSTYLE:OFF

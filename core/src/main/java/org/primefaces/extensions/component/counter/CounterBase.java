@@ -33,6 +33,7 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
 
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CounterRenderer";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         //@formatter:off
         widgetVar,
