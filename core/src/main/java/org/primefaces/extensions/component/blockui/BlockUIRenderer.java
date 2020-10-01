@@ -105,31 +105,14 @@ public class BlockUIRenderer extends CoreRenderer {
             eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
         }
         else {
-            final String[] arrEvents = events.split("[\\s,]+");
-            final StringBuilder sb = new StringBuilder("/");
-
-            for (int i = 0; i < arrEvents.length; i++) {
-                sb.append(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-                sb.append("=");
-                sb.append(arrEvents[i]);
-
-                if (i + 1 < arrEvents.length) {
-                    sb.append("|");
-                }
-            }
-
-            sb.append("/");
-            eventRegEx = sb.toString();
+            eventRegEx = getEventRegEx(events);
         }
 
         // generate script
         final WidgetBuilder wb = getWidgetBuilder(fc);
         wb.init("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
         wb.attr("source", source);
-        if (target != null) {
-            wb.attr("target", target);
-        }
-
+        wb.attr("target", target, null);
         wb.attr("autoShow", blockUI.isAutoShow());
         wb.attr("focusInput", blockUI.isFocusInput());
         wb.attr("showOverlay", blockUI.isShowOverlay());
@@ -138,30 +121,36 @@ public class BlockUIRenderer extends CoreRenderer {
         wb.attr("fadeIn", blockUI.getFadeIn());
         wb.attr("fadeOut", blockUI.getFadeOut());
 
-        final String css = blockUI.getCss();
-        if (css != null) {
-            wb.nativeAttr("css", css);
-        }
+        wb.nativeAttr("css", blockUI.getCss());
+        wb.nativeAttr("overlayCSS", blockUI.getCssOverlay());
 
-        final String cssOverlay = blockUI.getCssOverlay();
-        if (cssOverlay != null) {
-            wb.nativeAttr("overlayCSS", cssOverlay);
-        }
+        wb.attr("timeout", blockUI.getTimeout(), 0);
 
-        final int timeout = blockUI.getTimeout();
-        if (timeout > 0) {
-            wb.attr("timeout", timeout);
-        }
-
-        if (jqContent != null) {
-            wb.selectorAttr("content", jqContent);
-        }
+        wb.selectorAttr("content", jqContent);
 
         wb.attr("contentExtern", isContentExtern);
         wb.attr("namingContSep", Character.toString(UINamingContainer.getSeparatorChar(fc)));
         wb.nativeAttr("regEx", eventRegEx);
 
         wb.finish();
+    }
+
+    protected String getEventRegEx(final String events) {
+        final String[] arrEvents = events.split("[\\s,]+");
+        final StringBuilder sb = new StringBuilder("/");
+
+        for (int i = 0; i < arrEvents.length; i++) {
+            sb.append(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            sb.append("=");
+            sb.append(arrEvents[i]);
+
+            if (i + 1 < arrEvents.length) {
+                sb.append("|");
+            }
+        }
+
+        sb.append("/");
+        return sb.toString();
     }
 
     @Override

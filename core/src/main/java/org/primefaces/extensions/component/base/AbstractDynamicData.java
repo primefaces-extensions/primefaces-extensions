@@ -65,6 +65,7 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off
