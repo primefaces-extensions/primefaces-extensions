@@ -84,12 +84,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         geoIpLookup
     }
 
+    @SuppressWarnings("java:S115")
     public enum AutoPlaceholder {
         polite,
         aggressive,
         off
     }
 
+    @SuppressWarnings("java:S115")
     public enum PlaceholderNumberType {
         fixed_line,
         mobile,

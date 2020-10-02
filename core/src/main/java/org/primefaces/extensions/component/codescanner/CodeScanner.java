@@ -82,6 +82,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         }
     }
 
+    @SuppressWarnings("java:S115")
     public enum ReaderType {
         multi,
         bar,
