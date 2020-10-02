@@ -56,7 +56,7 @@ public class SheetAjaxController extends SheetController {
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success",
                     String.format("Asset %s updated. Old Value = %s, New Value = %s", id, oldValue, newValue)));
-        
+
         sheet.commitUpdates();
     }
 
