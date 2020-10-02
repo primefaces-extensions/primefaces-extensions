@@ -15,16 +15,19 @@
  */
 package org.primefaces.extensions.showcase.controller.exporter;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.faces.application.*;
-import javax.faces.context.*;
-import javax.faces.view.*;
-import javax.inject.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-import org.primefaces.event.*;
-import org.primefaces.extensions.showcase.model.*;
+import org.apache.commons.lang3.RandomUtils;
+import org.primefaces.event.ToggleEvent;
+import org.primefaces.extensions.showcase.model.Customer;
+import org.primefaces.extensions.showcase.model.Vehicle;
 
 /**
  * VehicleTableController
@@ -104,14 +107,13 @@ public class VehicleTableController implements Serializable {
     }
 
     private static String populateRandomContactNumbers() {
-        final Random generator = new Random();
         String strippedNum;
         int num1 = 0;
         int num2 = 0;
         int num3 = 0;
-        num1 = generator.nextInt(600) + 100;
-        num2 = generator.nextInt(641) + 100;
-        num3 = generator.nextInt(8999) + 1000;
+        num1 = RandomUtils.nextInt(1, 600) + 100;
+        num2 = RandomUtils.nextInt(1, 641) + 100;
+        num3 = RandomUtils.nextInt(1, 8999) + 1000;
 
         strippedNum = Integer.toOctalString(num1);
         final String contactNumber = strippedNum + "-" + num2 + "-" + num3;

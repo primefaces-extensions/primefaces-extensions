@@ -24,6 +24,7 @@ import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.primefaces.extensions.component.sheet.Sheet;
 import org.primefaces.extensions.event.SheetEvent;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
@@ -46,22 +47,23 @@ public class SheetAjaxController extends SheetController {
     public void cellChangeEvent(final SheetEvent event) {
         final Sheet sheet = event.getSheet();
         final List<SheetUpdate> updates = sheet.getUpdates();
-        for (final SheetUpdate sheetUpdate : updates) {
-            final Long id = (Long) sheetUpdate.getRowKey();
-            final Object oldValue = sheetUpdate.getOldValue();
-            final Object newValue = sheetUpdate.getNewValue();
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success",
-                        String.format("Asset %s updated. Old Value = %s, New Value = %s", id, oldValue, newValue)));
-            break; // just show 1 update
-        }
+        // only show 1 update
+        SheetUpdate sheetUpdate = IterableUtils.first(updates);
+        final Long id = (Long) sheetUpdate.getRowKey();
+        final Object oldValue = sheetUpdate.getOldValue();
+        final Object newValue = sheetUpdate.getNewValue();
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Update Success",
+                    String.format("Asset %s updated. Old Value = %s, New Value = %s", id, oldValue, newValue)));
+        
         sheet.commitUpdates();
     }
 
     /**
      * Ajax callback from the Sheet component when a column is selected.
      */
-    public void columnSelectEvent(final SheetEvent event) {
+    public static void columnSelectEvent(final SheetEvent event) {
         final Sheet sheet = event.getSheet();
         final int column = sheet.getSelectedColumn() + 1;
         FacesContext.getCurrentInstance().addMessage(null,
@@ -71,14 +73,14 @@ public class SheetAjaxController extends SheetController {
     /**
      * Ajax callback from the Sheet component when a row is selected.
      */
-    public void rowSelectEvent(final SheetEvent event) {
+    public static void rowSelectEvent(final SheetEvent event) {
         final Sheet sheet = event.getSheet();
         final int row = sheet.getSelectedRow() + 1;
         FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Row Selected", String.format("Row %d selected.", row)));
     }
 
-    public void validateExactly5(final FacesContext context, final UIComponent comp, final Object value) {
+    public static void validateExactly5(final FacesContext context, final UIComponent comp, final Object value) {
         final Integer integer = (Integer) value;
         if (integer.intValue() != 5) {
             final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
