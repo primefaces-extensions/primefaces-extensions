@@ -18,10 +18,12 @@ package org.primefaces.extensions.component.inputphone;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
 import javax.faces.application.ResourceDependency;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
+
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;

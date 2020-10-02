@@ -17,6 +17,7 @@ package org.primefaces.extensions.component.blockui;
 
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+
 import org.primefaces.component.api.Widget;
 
 /**

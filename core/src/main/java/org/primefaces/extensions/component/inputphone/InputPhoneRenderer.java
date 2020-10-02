@@ -19,20 +19,22 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Logger;
-
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
-
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
-import org.primefaces.util.*;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link InputPhone} component.
@@ -55,7 +57,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
         decodeBehaviors(context, inputPhone);
 
-        final String inputId = inputPhone.getClientId(context) + "_input";
+        final String inputId = inputPhone.getClientId(context) + Constants.SEP_INPUT;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
@@ -109,11 +111,11 @@ public class InputPhoneRenderer extends InputRenderer {
         final String clientId = inputPhone.getClientId(context);
 
         String styleClass = inputPhone.getStyleClass();
-        styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + " " + styleClass;
+        styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + Constants.SPACE + styleClass;
 
-        writer.startElement("span", inputPhone);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
+        writer.startElement(Constants.ELEM_SPAN, inputPhone);
+        writer.writeAttribute(Constants.ATTR_ID, clientId, null);
+        writer.writeAttribute(Attrs.CLASS, styleClass, Constants.ATTR_STYLE_CLASS);
 
         if (inputPhone.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, inputPhone.getStyle(), Attrs.STYLE);
@@ -122,22 +124,22 @@ public class InputPhoneRenderer extends InputRenderer {
         encodeInput(context, inputPhone, clientId, valueToRender);
         encodeHiddenInput(context, inputPhone, clientId);
 
-        writer.endElement("span");
+        writer.endElement(Constants.ELEM_SPAN);
     }
 
     protected void encodeInput(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String inputId = clientId + "_input";
+        final String inputId = clientId + Constants.SEP_INPUT;
         final String inputStyle = inputPhone.getInputStyle();
 
-        writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, null);
-        writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", inputPhone.getType(), null);
-        writer.writeAttribute("value", valueToRender, null);
-        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone), "styleClass");
+        writer.startElement(Constants.ELEM_INPUT, null);
+        writer.writeAttribute(Constants.ATTR_ID, inputId, null);
+        writer.writeAttribute(Constants.ATTR_NAME, inputId, null);
+        writer.writeAttribute(Constants.ATTR_TYPE, inputPhone.getType(), null);
+        writer.writeAttribute(Constants.ATTR_VALUE, valueToRender, null);
+        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone), Constants.ATTR_STYLE_CLASS);
 
         if (!isValueBlank(inputStyle)) {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);
@@ -148,18 +150,18 @@ public class InputPhoneRenderer extends InputRenderer {
         renderDomEvents(context, inputPhone, HTML.INPUT_TEXT_EVENTS);
         renderValidationMetadata(context, inputPhone);
 
-        writer.endElement("input");
+        writer.endElement(Constants.ELEM_INPUT);
     }
 
     protected void encodeHiddenInput(final FacesContext context, final InputPhone inputPhone, final String clientId)
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("input", null);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId + HIDDEN_ID, null);
-        writer.writeAttribute("name", clientId + HIDDEN_ID, null);
-        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
-        writer.endElement("input");
+        writer.startElement(Constants.ELEM_INPUT, null);
+        writer.writeAttribute(Constants.ATTR_TYPE, Constants.TYPE_HIDDEN, null);
+        writer.writeAttribute(Constants.ATTR_ID, clientId + HIDDEN_ID, null);
+        writer.writeAttribute(Constants.ATTR_NAME, clientId + HIDDEN_ID, null);
+        writer.writeAttribute(Constants.ATTR_VALUE, inputPhone.getInitialCountry(), null);
+        writer.endElement(Constants.ELEM_INPUT);
     }
 
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
@@ -167,19 +169,11 @@ public class InputPhoneRenderer extends InputRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
-        if (!inputPhone.isAllowDropdown()) {
-            wb.attr("allowDropdown", inputPhone.isAllowDropdown());
-        }
-        if (!inputPhone.isAutoHideDialCode()) {
-            wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode());
-        }
-        if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
-            wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
-        }
+        wb.attr("allowDropdown", inputPhone.isAllowDropdown(), false);
+        wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode(), false);
+        wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder(), InputPhone.AutoPlaceholder.polite.name());
         encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
-        if (!inputPhone.isFormatOnDisplay()) {
-            wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay());
-        }
+        wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), false);
         if (!LangUtils.isValueBlank(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
@@ -189,17 +183,13 @@ public class InputPhoneRenderer extends InputRenderer {
             }
             wb.nativeAttr("geoIpLookup", inputPhone.getGeoIpLookup());
         }
-        if (!inputPhone.isNationalMode()) {
-            wb.attr("nationalMode", inputPhone.isNationalMode());
-        }
+        wb.attr("nationalMode", inputPhone.isNationalMode(), false);
         encodeCountries(wb, "onlyCountries", inputPhone.getOnlyCountries());
         if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
         encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
-        if (inputPhone.isSeparateDialCode()) {
-            wb.attr("separateDialCode", inputPhone.isSeparateDialCode());
-        }
+        wb.attr("separateDialCode", inputPhone.isSeparateDialCode(), true);
         if (inputPhone.isUtilsScriptRequired()) {
             wb.attr("utilsScript",
                         context.getApplication()
@@ -219,7 +209,7 @@ public class InputPhoneRenderer extends InputRenderer {
         defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
 
         String styleClass = inputText.getInputStyleClass();
-        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
+        styleClass = styleClass == null ? defaultClass : defaultClass + Constants.SPACE + styleClass;
 
         return styleClass;
     }
