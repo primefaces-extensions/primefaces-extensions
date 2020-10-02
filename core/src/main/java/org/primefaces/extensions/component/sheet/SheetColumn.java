@@ -16,7 +16,6 @@
 package org.primefaces.extensions.component.sheet;
 
 import java.util.Collection;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -41,6 +40,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     /**
      * Properties that are tracked by state saving.
      */
+    @SuppressWarnings("java:S115")
     enum PropertyKeys {
 
         /**

@@ -18,12 +18,10 @@ package org.primefaces.extensions.component.inputphone;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
 import javax.faces.application.ResourceDependency;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
-
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
@@ -84,12 +82,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         geoIpLookup
     }
 
+    @SuppressWarnings("java:S115")
     public enum AutoPlaceholder {
         polite,
         aggressive,
         off
     }
 
+    @SuppressWarnings("java:S115")
     public enum PlaceholderNumberType {
         fixed_line,
         mobile,

@@ -17,7 +17,6 @@ package org.primefaces.extensions.component.fuzzysearch;
 
 import javax.faces.component.UISelectOne;
 import javax.faces.component.behavior.ClientBehaviorHolder;
-
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
 
@@ -33,6 +32,7 @@ public abstract class FuzzySearchBase extends UISelectOne implements Widget, Cli
 
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.FuzzySearchRenderer";
 
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
         // @formatter:off
         widgetVar,

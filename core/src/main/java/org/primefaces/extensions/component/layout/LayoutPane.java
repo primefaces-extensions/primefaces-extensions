@@ -23,7 +23,6 @@ import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PreRenderComponentEvent;
-
 import org.primefaces.component.outputpanel.OutputPanel;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 
@@ -48,6 +47,7 @@ public class LayoutPane extends UIComponentBase {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off
