@@ -26,7 +26,6 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Steps to update:
- *
  * <pre>
  * - Delete all files in the src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/ directory
  * - extract new ckeditor files
@@ -51,12 +50,12 @@ public class ResourceModifier {
 
         final String resourcesDirectory = PROJECT_DIRECTORY + "/src/main/resources/META-INF/resources/primefaces-extensions/";
 
-        System.err.println("######## Modify skin styles...." + resourcesDirectory);
+        log("######## Modify skin styles...." + resourcesDirectory);
 
         final File skinsPath = new File(PROJECT_DIRECTORY + "/src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/skins/");
 
         for (final String skin : Objects.requireNonNull(skinsPath.list())) {
-            System.err.println("#### Modify skin '" + skin + "'");
+            log("#### Modify skin '" + skin + "'");
 
             final File skinDirectory = new File(resourcesDirectory + "ckeditor/skins/" + skin);
             final String relativeSkinPath = replace(
@@ -71,7 +70,7 @@ public class ResourceModifier {
                     continue;
                 }
 
-                System.err.println("## Modify file '" + resourceToModify.getName() + "'");
+                log("## Modify file '" + resourceToModify.getName() + "'");
 
                 String fileContent = FileUtils.readFileToString(resourceToModify, Charset.defaultCharset());
                 final List<File> allSkinResources = getResourcesList(skinDirectory);
@@ -93,7 +92,7 @@ public class ResourceModifier {
                                 "\\",
                                 "/");
 
-                    if (resourceName.startsWith("/")) {
+                    if (resourceName != null && resourceName.startsWith("/")) {
                         resourceName = resourceName.substring(1);
                     }
 
@@ -212,5 +211,9 @@ public class ResourceModifier {
 
     public static boolean isEmpty(final CharSequence cs) {
         return cs == null || cs.length() == 0;
+    }
+
+    public static void log(String message) {
+        // System.err.println(message);
     }
 }
