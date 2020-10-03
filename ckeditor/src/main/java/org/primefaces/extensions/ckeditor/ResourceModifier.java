@@ -43,6 +43,7 @@ public class ResourceModifier {
     private static final String PROJECT_DIRECTORY = System.getProperty("user.dir");
 
     private static final String SHORT_HASH = "K5I7";
+    private static final String URL_PFE = "url\\(\"#{resource['primefaces-extensions:";
 
     private static final int INDEX_NOT_FOUND = -1;
 
@@ -97,16 +98,16 @@ public class ResourceModifier {
                     }
 
                     fileContent = fileContent.replaceAll("url\\(" + resourceName + "\\)",
-                                "url\\(\"#{resource['primefaces-extensions:" + relativeResourcePath + "']}\"\\)");
+                                URL_PFE + relativeResourcePath + "']}\"\\)");
                 }
 
                 // icons.png
                 fileContent = fileContent.replaceAll("url\\(icons.png\\?t=" + SHORT_HASH,
-                            "url\\(\"#{resource['primefaces-extensions:" + relativeSkinPath + "/icons.png']}&t=" + SHORT_HASH + "\"");
+                            URL_PFE + relativeSkinPath + "/icons.png']}&t=" + SHORT_HASH + "\"");
 
                 // icons_hidpi.png
                 fileContent = fileContent.replaceAll("url\\(icons_hidpi.png\\?t=" + SHORT_HASH,
-                            "url\\(\"#{resource['primefaces-extensions:" + relativeSkinPath + "/icons_hidpi.png']}&t=" + SHORT_HASH + "\"");
+                            URL_PFE + relativeSkinPath + "/icons_hidpi.png']}&t=" + SHORT_HASH + "\"");
 
                 FileUtils.writeStringToFile(resourceToModify, fileContent, Charset.defaultCharset());
             }
