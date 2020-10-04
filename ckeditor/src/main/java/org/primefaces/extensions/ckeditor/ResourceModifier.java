@@ -26,6 +26,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Steps to update:
+ *
  * <pre>
  * - Delete all files in the src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/ directory
  * - extract new ckeditor files
