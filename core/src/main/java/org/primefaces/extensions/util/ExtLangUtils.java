@@ -92,7 +92,7 @@ public class ExtLangUtils {
 
     public static String[] subarray(final String[] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
-            return null;
+            return new String[0];
         }
         if (startIndexInclusive < 0) {
             startIndexInclusive = 0;
@@ -119,33 +119,6 @@ public class ExtLangUtils {
             return INDEX_NOT_FOUND;
         }
         return seq.toString().indexOf(searchSeq.toString(), startPos);
-    }
-
-    public static String replace(final String text, final String searchString, final String replacement) {
-        if (text == null || searchString == null || replacement == null) {
-            return text;
-        }
-        int max = INDEX_NOT_FOUND;
-        int start = 0;
-        int end = indexOf(text, searchString, start);
-        if (end == INDEX_NOT_FOUND) {
-            return text;
-        }
-        final int replLength = searchString.length();
-        int increase = replacement.length() - replLength;
-        increase = increase < 0 ? 0 : increase;
-        increase *= max < 0 ? 16 : max > 64 ? 64 : max;
-        final StringBuilder buf = new StringBuilder(text.length() + increase);
-        while (end != INDEX_NOT_FOUND) {
-            buf.append(text, start, end).append(replacement);
-            start = end + replLength;
-            if (--max == 0) {
-                break;
-            }
-            end = indexOf(text, searchString, start);
-        }
-        buf.append(text, start, text.length());
-        return buf.toString();
     }
 
     public static String unescapeXml(final String text) {
