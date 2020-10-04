@@ -29,10 +29,9 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
-import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
@@ -46,8 +45,6 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class TimePickerRenderer extends InputRenderer {
 
-    private static final String BUTTON = "button";
-
     @Override
     public void decode(final FacesContext fc, final UIComponent component) {
         final TimePicker timepicker = (TimePicker) component;
@@ -56,7 +53,7 @@ public class TimePickerRenderer extends InputRenderer {
             return;
         }
 
-        final String param = timepicker.getClientId(fc) + "_input";
+        final String param = timepicker.getClientId(fc) + Constants.SEP_INPUT;
         final String submittedValue = fc.getExternalContext().getRequestParameterMap().get(param);
 
         if (submittedValue != null) {
@@ -120,10 +117,10 @@ public class TimePickerRenderer extends InputRenderer {
                 throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = timepicker.getClientId(fc);
-        final String inputId = clientId + "_input";
+        final String inputId = clientId + Constants.SEP_INPUT;
 
-        writer.startElement("span", timepicker);
-        writer.writeAttribute("id", clientId, null);
+        writer.startElement(Constants.ELEM_SPAN, timepicker);
+        writer.writeAttribute(Constants.ATTR_ID, clientId, null);
 
         String containerClass = TimePicker.CONTAINER_CLASS;
         if (timepicker.isSpinner()) {
@@ -132,58 +129,40 @@ public class TimePickerRenderer extends InputRenderer {
         if (timepicker.isShowOnButton()) {
             containerClass += " ui-inputgroup";
         }
-        writer.writeAttribute(Attrs.CLASS, containerClass, null);
+        writer.writeAttribute(Constants.ATTR_CLASS, containerClass, null);
 
         if (timepicker.isInline()) {
             // inline container
-            writer.startElement("div", null);
-            writer.writeAttribute("id", clientId + "_inline", null);
-            writer.endElement("div");
+            writer.startElement(Constants.ELEM_DIV, null);
+            writer.writeAttribute(Constants.ATTR_ID, clientId + "_inline", null);
+            writer.endElement(Constants.ELEM_DIV);
         }
 
-        writer.startElement("input", null);
-        writer.writeAttribute("id", inputId, null);
-        writer.writeAttribute("name", inputId, null);
-        writer.writeAttribute("type", timepicker.isInline() ? "hidden" : "text", null);
+        writer.startElement(Constants.ELEM_INPUT, null);
+        writer.writeAttribute(Constants.ATTR_ID, inputId, null);
+        writer.writeAttribute(Constants.ATTR_NAME, inputId, null);
+        writer.writeAttribute(Constants.ATTR_TYPE, timepicker.isInline() ? Constants.TYPE_HIDDEN : Constants.TYPE_TEXT, null);
         if (timepicker.getSize() > 0) {
-            writer.writeAttribute("size", timepicker.getSize(), null);
+            writer.writeAttribute(Constants.ATTR_SIZE, timepicker.getSize(), null);
         }
-        writer.writeAttribute("autocomplete", "off", null);
+        writer.writeAttribute(Constants.ATTR_AUTOCOMPLETE, "off", null);
 
         if (timepicker.isReadonlyInput()) {
-            writer.writeAttribute("readonly", "readonly", null);
+            writer.writeAttribute(Constants.ATTR_READONLY, Constants.ATTR_READONLY, null);
         }
 
         if (!LangUtils.isValueBlank(value)) {
-            writer.writeAttribute("value", value, null);
+            writer.writeAttribute(Constants.ATTR_VALUE, value, null);
         }
 
-        if (!timepicker.isInline()) {
-            String styleClass = timepicker.getStyleClass();
-            styleClass = styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass;
-            if (timepicker.isSpinner()) {
-                styleClass += " ui-spinner-input";
-            }
-            if (timepicker.isShowOnButton()) {
-                styleClass += " ui-inputtext";
-            }
-            if (!timepicker.isValid()) {
-                styleClass += " ui-state-error";
-            }
-
-            writer.writeAttribute(Attrs.CLASS, styleClass, null);
-
-            if (timepicker.getStyle() != null) {
-                writer.writeAttribute(Attrs.STYLE, timepicker.getStyle(), null);
-            }
-        }
+        encodeInputStyleAndClass(timepicker, writer);
 
         renderAccessibilityAttributes(fc, timepicker);
         renderPassThruAttributes(fc, timepicker, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
         renderDomEvents(fc, timepicker, HTML.INPUT_TEXT_EVENTS);
         renderValidationMetadata(fc, timepicker);
 
-        writer.endElement("input");
+        writer.endElement(Constants.ELEM_INPUT);
 
         if (timepicker.isSpinner()) {
             final boolean disabled = timepicker.isDisabled() || timepicker.isReadonly();
@@ -192,24 +171,48 @@ public class TimePickerRenderer extends InputRenderer {
         }
 
         if (timepicker.isShowOnButton()) {
-            writer.startElement(BUTTON, null);
-            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_CLASS, null);
-            writer.writeAttribute("type", BUTTON, null);
-            writer.writeAttribute("role", BUTTON, null);
+            writer.startElement(Constants.ELEM_BUTTON, null);
+            writer.writeAttribute(Constants.ATTR_CLASS, TimePicker.BUTTON_TRIGGER_CLASS, null);
+            writer.writeAttribute(Constants.ATTR_TYPE, Constants.ELEM_BUTTON, null);
+            writer.writeAttribute(Constants.ATTR_ROLE, Constants.ELEM_BUTTON, null);
 
-            writer.startElement("span", null);
-            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
-            writer.endElement("span");
+            writer.startElement(Constants.ELEM_SPAN, null);
+            writer.writeAttribute(Constants.ATTR_CLASS, TimePicker.BUTTON_TRIGGER_ICON_CLASS, null);
+            writer.endElement(Constants.ELEM_SPAN);
 
-            writer.startElement("span", null);
-            writer.writeAttribute(Attrs.CLASS, TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
+            writer.startElement(Constants.ELEM_SPAN, null);
+            writer.writeAttribute(Constants.ATTR_CLASS, TimePicker.BUTTON_TRIGGER_TEXT_CLASS, null);
             writer.write("ui-button");
-            writer.endElement("span");
+            writer.endElement(Constants.ELEM_SPAN);
 
-            writer.endElement(BUTTON);
+            writer.endElement(Constants.ELEM_BUTTON);
         }
 
-        writer.endElement("span");
+        writer.endElement(Constants.ELEM_SPAN);
+    }
+
+    protected void encodeInputStyleAndClass(final TimePicker timepicker, final ResponseWriter writer)
+                throws IOException {
+        if (timepicker.isInline()) {
+            return;
+        }
+        String styleClass = timepicker.getStyleClass();
+        styleClass = styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + Constants.SPACE + styleClass;
+        if (timepicker.isSpinner()) {
+            styleClass += " ui-spinner-input";
+        }
+        if (timepicker.isShowOnButton()) {
+            styleClass += " ui-inputtext";
+        }
+        if (!timepicker.isValid()) {
+            styleClass += " ui-state-error";
+        }
+
+        writer.writeAttribute(Constants.ATTR_CLASS, styleClass, null);
+
+        if (timepicker.getStyle() != null) {
+            writer.writeAttribute(Constants.ATTR_STYLE, timepicker.getStyle(), null);
+        }
     }
 
     protected void encodeScript(final FacesContext fc, final TimePicker timepicker, final String value)
@@ -245,7 +248,7 @@ public class TimePickerRenderer extends InputRenderer {
 
         if (timepicker.isShowOnButton()) {
             wb.attr("showOn", timepicker.getShowOn());
-            wb.selectorAttr(BUTTON, "#" + clientId + " .pe-timepicker-trigger");
+            wb.selectorAttr(Constants.ELEM_BUTTON, "#" + clientId + " .pe-timepicker-trigger");
         }
 
         wb.attr("locale", timepicker.calculateLocale().toString());
@@ -281,11 +284,11 @@ public class TimePickerRenderer extends InputRenderer {
 
         writer.startElement("a", null);
 
-        writer.writeAttribute(Attrs.CLASS, styleClass, null);
+        writer.writeAttribute(Constants.ATTR_CLASS, styleClass, null);
         writer.startElement("span", null);
-        writer.writeAttribute(Attrs.CLASS, "ui-button-text", null);
+        writer.writeAttribute(Constants.ATTR_CLASS, "ui-button-text", null);
         writer.startElement("span", null);
-        writer.writeAttribute(Attrs.CLASS, iconClass, null);
+        writer.writeAttribute(Constants.ATTR_CLASS, iconClass, null);
         writer.endElement("span");
         writer.endElement("span");
 

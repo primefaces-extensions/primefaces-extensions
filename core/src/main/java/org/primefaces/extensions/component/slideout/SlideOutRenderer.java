@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
@@ -77,12 +78,12 @@ public class SlideOutRenderer extends CoreRenderer {
         final String clientId = slideOut.getClientId(context);
         final String widgetVar = slideOut.resolveWidgetVar();
 
-        writer.startElement("div", slideOut);
-        writer.writeAttribute("id", clientId, "id");
+        writer.startElement(Constants.ELEM_DIV, slideOut);
+        writer.writeAttribute(Constants.ATTR_ID, clientId, Constants.ATTR_ID);
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
 
         if (slideOut.getPanelStyleClass() != null) {
-            writer.writeAttribute(Attrs.CLASS, slideOut.getPanelStyleClass(), "styleClass");
+            writer.writeAttribute(Attrs.CLASS, slideOut.getPanelStyleClass(), Constants.ATTR_STYLE_CLASS);
         }
         if (slideOut.getPanelStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, slideOut.getPanelStyle(), Attrs.STYLE);
@@ -94,7 +95,7 @@ public class SlideOutRenderer extends CoreRenderer {
         // content of the panel
         renderChildren(context, slideOut);
 
-        writer.endElement("div");
+        writer.endElement(Constants.ELEM_DIV);
     }
 
     /**
@@ -105,25 +106,25 @@ public class SlideOutRenderer extends CoreRenderer {
 
         String styleClass = SlideOut.HANDLE_CLASS;
         if (slideOut.getHandleStyleClass() != null) {
-            styleClass = styleClass + " " + slideOut.getHandleStyleClass();
+            styleClass = styleClass + Constants.SPACE + slideOut.getHandleStyleClass();
         }
 
-        writer.startElement("a", null);
-        writer.writeAttribute("id", getHandleId(context, slideOut), null);
+        writer.startElement(Constants.ELEM_ANCHOR, null);
+        writer.writeAttribute(Constants.ATTR_ID, getHandleId(context, slideOut), null);
         if (slideOut.getHandleStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, slideOut.getHandleStyle(), Attrs.STYLE);
         }
-        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, Constants.ATTR_STYLE_CLASS);
 
         // icon
         encodeIcon(context, slideOut);
 
         // handle text
         if (slideOut.getTitle() != null) {
-            writer.writeText(slideOut.getTitle(), "title");
+            writer.writeText(slideOut.getTitle(), Constants.ATTR_TITLE);
         }
 
-        writer.endElement("a");
+        writer.endElement(Constants.ELEM_ANCHOR);
     }
 
     /**
@@ -142,10 +143,10 @@ public class SlideOutRenderer extends CoreRenderer {
 
         // <i class="ui-icon fa fa-television"></i>
         final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("span", null);
+        writer.startElement(Constants.ELEM_SPAN, null);
         writer.writeAttribute(Attrs.CLASS, icon, null);
-        writer.endElement("span");
-        writer.write(" ");
+        writer.endElement(Constants.ELEM_SPAN);
+        writer.write(Constants.SPACE);
     }
 
     /**
@@ -175,22 +176,22 @@ public class SlideOutRenderer extends CoreRenderer {
         }
 
         if (slideOut.getOnopen() != null) {
-            wb.callback("onOpen", "function()", slideOut.getOnopen());
+            wb.callback("onOpen", Constants.JS_FUNCTION_METHOD, slideOut.getOnopen());
         }
         if (slideOut.getOnclose() != null) {
-            wb.callback("onClose", "function()", slideOut.getOnclose());
+            wb.callback("onClose", Constants.JS_FUNCTION_METHOD, slideOut.getOnclose());
         }
         if (slideOut.getOnslide() != null) {
-            wb.callback("onSlide", "function()", slideOut.getOnslide());
+            wb.callback("onSlide", Constants.JS_FUNCTION_METHOD, slideOut.getOnslide());
         }
         if (slideOut.getOnbeforeopen() != null) {
-            wb.callback("onBeforeOpen", "function()", slideOut.getOnbeforeopen());
+            wb.callback("onBeforeOpen", Constants.JS_FUNCTION_METHOD, slideOut.getOnbeforeopen());
         }
         if (slideOut.getOnbeforeclose() != null) {
-            wb.callback("onBeforeClose", "function()", slideOut.getOnbeforeclose());
+            wb.callback("onBeforeClose", Constants.JS_FUNCTION_METHOD, slideOut.getOnbeforeclose());
         }
         if (slideOut.getOnbeforeslide() != null) {
-            wb.callback("onBeforeSlide", "function()", slideOut.getOnbeforeslide());
+            wb.callback("onBeforeSlide", Constants.JS_FUNCTION_METHOD, slideOut.getOnbeforeslide());
         }
 
         encodeClientBehaviors(context, slideOut);

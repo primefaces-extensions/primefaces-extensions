@@ -30,7 +30,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.OpenEvent;
-import org.primefaces.util.Constants;
+import org.primefaces.extensions.util.Constants;
 
 /**
  * <code>SlideOut</code> component.
@@ -38,10 +38,10 @@ import org.primefaces.util.Constants;
  * @author Melloware info@melloware.com
  * @since 6.1
  */
-@ResourceDependency(library = "primefaces", name = "components.css")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
-@ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_COMPONENTS_CSS)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_JQUERY)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_JQUERY_PLUGINS)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_CORE_JS)
 @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.css")
 @ResourceDependency(library = "primefaces-extensions", name = "slideout/slideout.js")
 public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, Widget {
@@ -174,7 +174,7 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            final String eventName = params.get(org.primefaces.util.Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
             if (OpenEvent.NAME.equals(eventName)) {
@@ -399,7 +399,7 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
     private boolean isSelfRequest(final FacesContext context) {
         return this.getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
-                                Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+                                org.primefaces.util.Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
 }

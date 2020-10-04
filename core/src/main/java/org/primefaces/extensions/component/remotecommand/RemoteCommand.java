@@ -299,18 +299,22 @@ public class RemoteCommand extends UICommand implements AjaxSource {
             assignableParameters = new ArrayList<>();
             methodParameters = new ArrayList<>();
 
-            for (final UIComponent child : super.getChildren()) {
-                if (child instanceof AbstractParameter) {
-                    allParameters.add((AbstractParameter) child);
+            for (int i = 0; i < getChildren().size(); i++) {
+                addChildParameters(getChildren().get(i));
+            }
+        }
+    }
 
-                    if (child instanceof AssignableParameter) {
-                        assignableParameters.add((AssignableParameter) child);
-                    }
-                    else {
-                        if (child instanceof MethodParameter) {
-                            methodParameters.add((MethodParameter) child);
-                        }
-                    }
+    protected void addChildParameters(final UIComponent child) {
+        if (child instanceof AbstractParameter) {
+            allParameters.add((AbstractParameter) child);
+
+            if (child instanceof AssignableParameter) {
+                assignableParameters.add((AssignableParameter) child);
+            }
+            else {
+                if (child instanceof MethodParameter) {
+                    methodParameters.add((MethodParameter) child);
                 }
             }
         }

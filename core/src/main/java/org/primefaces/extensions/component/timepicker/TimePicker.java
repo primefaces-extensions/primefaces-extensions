@@ -32,7 +32,7 @@ import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.TimeSelectEvent;
-import org.primefaces.util.Constants;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
@@ -43,13 +43,13 @@ import org.primefaces.util.LocaleUtils;
  * @version $Revision$
  * @since 0.3
  */
-@ResourceDependency(library = "primefaces", name = "components.css")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
-@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
-@ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
-@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css")
-@ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_COMPONENTS_CSS)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_JQUERY)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_JQUERY_PLUGINS)
+@ResourceDependency(library = Constants.LIBRARY_PF, name = Constants.RES_CORE_JS)
+@ResourceDependency(library = Constants.LIBRARY, name = Constants.RES_PFE_JS)
+@ResourceDependency(library = Constants.LIBRARY, name = "timepicker/timepicker.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "timepicker/timepicker.js")
 public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
@@ -67,11 +67,42 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
 
-    static final Collection<String> EVENT_NAMES = LangUtils
-                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
-                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
-                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", BeforeShowEvent.NAME,
-                            TimeSelectEvent.NAME, CloseEvent.NAME);
+    static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList(
+                Constants.EVENT_BLUR,
+                Constants.EVENT_CHANGE,
+                Constants.EVENT_CLICK,
+                Constants.EVENT_CONTEXTMENU,
+                Constants.EVENT_COPY,
+                Constants.EVENT_CUT,
+                Constants.EVENT_DBLCLICK,
+                Constants.EVENT_DRAG,
+                Constants.EVENT_DRAGEND,
+                Constants.EVENT_DRAGENTER,
+                Constants.EVENT_DRAGLEAVE,
+                Constants.EVENT_DRAGOVER,
+                Constants.EVENT_DRAGSTART,
+                Constants.EVENT_DROP,
+                Constants.EVENT_FOCUS,
+                Constants.EVENT_INPUT,
+                Constants.EVENT_INVALID,
+                Constants.EVENT_KEYDOWN,
+                Constants.EVENT_KEYPRESS,
+                Constants.EVENT_KEYUP,
+                Constants.EVENT_MOUSEDOWN,
+                Constants.EVENT_MOUSEMOVE,
+                Constants.EVENT_MOUSEOUT,
+                Constants.EVENT_MOUSEOVER,
+                Constants.EVENT_MOUSEUP,
+                Constants.EVENT_PASTE,
+                Constants.EVENT_RESET,
+                Constants.EVENT_SCROLL,
+                Constants.EVENT_SEARCH,
+                Constants.EVENT_SELECT,
+                Constants.EVENT_VALUE_CHANGE,
+                Constants.EVENT_WHEEL,
+                BeforeShowEvent.NAME,
+                TimeSelectEvent.NAME,
+                CloseEvent.NAME);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;
@@ -272,7 +303,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     }
 
     public String getShowOn() {
-        return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
+        return (String) getStateHelper().eval(PropertyKeys.showOn, Constants.EVENT_FOCUS);
     }
 
     public void setShowOn(final String showOn) {
@@ -354,7 +385,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     }
 
     public boolean isShowOnButton() {
-        return !"focus".equals(getShowOn());
+        return !Constants.EVENT_FOCUS.equals(getShowOn());
     }
 
     @Override
@@ -366,7 +397,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     public void queueEvent(final FacesEvent event) {
         final FacesContext fc = FacesContext.getCurrentInstance();
         final String eventName = fc.getExternalContext().getRequestParameterMap()
-                    .get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+                    .get(org.primefaces.util.Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
             if (TimeSelectEvent.NAME.equals(eventName)) {
@@ -425,6 +456,7 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
 
     private boolean isSelfRequest(final FacesContext fc) {
         return getClientId(fc).equals(
-                    fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
+                    fc.getExternalContext().getRequestParameterMap()
+                                .get(org.primefaces.util.Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 }
