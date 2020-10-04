@@ -29,24 +29,6 @@ public final class Constants {
     public static final String EXTENSION_CSS = ".css";
     public static final String EXTENSION_JS = ".js";
 
-    public static final String EMPTY_STRING = "";
-    public static final String SPACE = " ";
-
-    public static final String SEPARATOR = "_";
-    public static final String SEP_INPUT = "_input";
-
-    public static final String ELEM_DIV = "div";
-    public static final String ELEM_INPUT = "input";
-    public static final String ELEM_SPAN = "span";
-
-    public static final String ATTR_ID = "id";
-    public static final String ATTR_NAME = "name";
-    public static final String ATTR_STYLE_CLASS = "styleClass";
-    public static final String ATTR_TYPE = "type";
-    public static final String ATTR_VALUE = "value";
-
-    public static final String TYPE_HIDDEN = "hidden";
-
     /**
      * Avoid instantiation.
      */

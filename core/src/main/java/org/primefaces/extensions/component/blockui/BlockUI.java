@@ -46,7 +46,6 @@ public class BlockUI extends UIComponentBase implements Widget {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
-    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         widgetVar, css, cssOverlay, source, target, content, event, autoShow, timeout, centerX, centerY, fadeIn, fadeOut, showOverlay, focusInput;

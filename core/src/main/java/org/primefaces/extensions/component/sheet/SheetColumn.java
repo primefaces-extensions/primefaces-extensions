@@ -41,7 +41,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     /**
      * Properties that are tracked by state saving.
      */
-    @SuppressWarnings("java:S115")
     enum PropertyKeys {
 
         /**
