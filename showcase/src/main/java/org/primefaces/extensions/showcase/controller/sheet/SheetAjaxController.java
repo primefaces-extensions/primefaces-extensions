@@ -81,6 +81,9 @@ public class SheetAjaxController extends SheetController {
     }
 
     public static void validateExactly5(final FacesContext context, final UIComponent comp, final Object value) {
+        if (context == null || comp == null) {
+            return;
+        }
         final Integer integer = (Integer) value;
         if (integer.intValue() != 5) {
             final FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
