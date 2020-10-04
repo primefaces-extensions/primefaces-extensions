@@ -91,7 +91,9 @@ public class ExtLangUtils {
     }
 
     public static String[] subarray(final String[] array, int startIndexInclusive, int endIndexExclusive) {
-        Objects.requireNonNull(array);
+        if (array == null) {
+            return new String[0];
+        }
         if (startIndexInclusive < 0) {
             startIndexInclusive = 0;
         }
