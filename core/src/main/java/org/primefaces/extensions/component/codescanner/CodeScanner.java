@@ -71,17 +71,19 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         deviceId,
         forVal("for");
 
-        String toString;
+        private final String toString;
         PropertyKeys(String toString) {
             this.toString = toString;
         }
         PropertyKeys() {
+            toString = null;
         }
-        public String toString() {
+        @Override public String toString() {
             return ((toString != null) ? toString : super.toString());
         }
     }
 
+    @SuppressWarnings("java:S115")
     public enum ReaderType {
         multi,
         bar,
@@ -239,7 +241,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         }
     }
 
-    protected Code getCode(final String clientId, final Map<String, String> params) {
+    protected static Code getCode(final String clientId, final Map<String, String> params) {
         return new Code(params.get(clientId + "_value"),
                     Format.values()[Integer.parseInt(params.get(clientId + "_format"))]);
     }
