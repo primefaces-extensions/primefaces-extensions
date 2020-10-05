@@ -16,33 +16,41 @@
 package org.primefaces.extensions.showcase.util;
 
 import java.awt.Color;
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
-import javax.el.*;
-import javax.faces.*;
-import javax.faces.component.*;
-import javax.faces.component.html.*;
-import javax.faces.context.*;
-import javax.faces.event.*;
+import javax.el.MethodExpression;
+import javax.faces.FacesException;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIPanel;
+import javax.faces.component.html.HtmlCommandButton;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
-import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.util.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.*;
-import org.primefaces.component.api.*;
+import org.primefaces.component.api.DynamicColumn;
 import org.primefaces.component.api.UIColumn;
-import org.primefaces.component.column.*;
-import org.primefaces.component.columngroup.*;
-import org.primefaces.component.datalist.*;
-import org.primefaces.component.datatable.*;
-import org.primefaces.component.rowexpansion.*;
-import org.primefaces.component.subtable.*;
-import org.primefaces.expression.*;
-import org.primefaces.extensions.component.exporter.*;
-import org.primefaces.util.*;
+import org.primefaces.component.column.Column;
+import org.primefaces.component.columngroup.ColumnGroup;
+import org.primefaces.component.datalist.DataList;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.rowexpansion.RowExpansion;
+import org.primefaces.component.subtable.SubTable;
+import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.extensions.component.exporter.Exporter;
+import org.primefaces.util.Constants;
 
 /**
  * <code>Exporter</code> component.
@@ -263,70 +271,30 @@ public class ExcelCustomExporter extends Exporter {
     protected void exportAll(FacesContext context, SubTable table, Sheet sheet) {
         int first = table.getFirst();
         int rowCount = table.getRowCount();
-        int rows = table.getRows();
-        boolean lazy = false;
-
-        if (lazy) {
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                if (rowIndex % rows == 0) {
-                    table.setFirst(rowIndex);
-                    // table.loadLazyData();
-                }
-
-                exportRow(table, sheet, rowIndex);
-            }
-
-            // restore
-            table.setFirst(first);
-            // table.loadLazyData();
+        tableColumnGroup(sheet, table, "header");
+        if (Exporter.hasHeaderColumn(table)) {
+            addColumnFacets(table, sheet, ColumnType.HEADER);
         }
-        else {
-            tableColumnGroup(sheet, table, "header");
-            if (Exporter.hasHeaderColumn(table)) {
-                addColumnFacets(table, sheet, ColumnType.HEADER);
-            }
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                exportRow(table, sheet, rowIndex);
-            }
-            if (Exporter.hasFooterColumn(table)) {
-                addColumnFacets(table, sheet, ColumnType.FOOTER);
-            }
-            tableColumnGroup(sheet, table, "footer");
-            // restore
-            table.setFirst(first);
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            exportRow(table, sheet, rowIndex);
         }
-
+        if (Exporter.hasFooterColumn(table)) {
+            addColumnFacets(table, sheet, ColumnType.FOOTER);
+        }
+        tableColumnGroup(sheet, table, "footer");
+        // restore
+        table.setFirst(first);
     }
 
     protected void exportAll(FacesContext context, DataList list, Sheet sheet) {
         int first = list.getFirst();
         int rowCount = list.getRowCount();
-        int rows = list.getRows();
-        boolean lazy = false;
 
-        if (lazy) {
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                if (rowIndex % rows == 0) {
-                    list.setFirst(rowIndex);
-                    // table.loadLazyData();
-                }
-
-                exportRow(list, sheet, rowIndex);
-            }
-
-            // restore
-            list.setFirst(first);
-            // table.loadLazyData();
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            exportRow(list, sheet, rowIndex);
         }
-        else {
-
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                exportRow(list, sheet, rowIndex);
-            }
-            // restore
-            list.setFirst(first);
-        }
-
+        // restore
+        list.setFirst(first);
     }
 
     protected void exportPageOnly(FacesContext context, DataTable table, Sheet sheet) {
@@ -1022,7 +990,7 @@ public class ExcelCustomExporter extends Exporter {
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + filename + ".xlsx");
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
 
         OutputStream out = externalContext.getResponseOutputStream();
         generatedExcel.write(out);

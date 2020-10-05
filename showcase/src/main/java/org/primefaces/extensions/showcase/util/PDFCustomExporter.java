@@ -15,7 +15,7 @@
  */
 package org.primefaces.extensions.showcase.util;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -50,14 +50,9 @@ import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.component.exporter.Exporter;
 import org.primefaces.util.Constants;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
 import com.lowagie.text.Rectangle;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -66,8 +61,8 @@ import com.lowagie.text.pdf.PdfWriter;
  * <code>Exporter</code> component.
  *
  * @author Sudheer Jonna / last modified by $Author$
- * @since 0.7.0
  * @version $Revision: 1.0 $
+ * @since 0.7.0
  */
 public class PDFCustomExporter extends Exporter {
 
@@ -168,12 +163,12 @@ public class PDFCustomExporter extends Exporter {
             createCustomFonts(encoding);
         }
 
-        int columnsCount = getColumnsCount(table);
+        int columnsCount = Exporter.getColumnsCount(table);
         PdfPTable pdfTable = null;
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
-            int subTableColumnsCount = getColumnsCount(subtable);
+            int subTableColumnsCount = Exporter.getColumnsCount(subtable);
             pdfTable = new PdfPTable(subTableColumnsCount);
 
             if (table.getHeader() != null) {
@@ -193,7 +188,7 @@ public class PDFCustomExporter extends Exporter {
                     tableFacet(context, pdfTable, subtable, subTableColumnsCount, "header");
                 }
 
-                if (hasHeaderColumn(subtable)) {
+                if (Exporter.hasHeaderColumn(subtable)) {
                     addColumnFacets(subtable, pdfTable, ColumnType.HEADER);
                 }
 
@@ -207,7 +202,7 @@ public class PDFCustomExporter extends Exporter {
                     subTableExportAll(context, subtable, pdfTable);
                 }
 
-                if (hasFooterColumn(subtable)) {
+                if (Exporter.hasFooterColumn(subtable)) {
                     addColumnFacets(subtable, pdfTable, ColumnType.FOOTER);
                 }
 
@@ -237,7 +232,7 @@ public class PDFCustomExporter extends Exporter {
                 tableFacet(context, pdfTable, table, columnsCount + 1, "header");
             }
 
-            if (hasHeaderColumn(table)) {
+            if (Exporter.hasHeaderColumn(table)) {
                 addColumnFacets(table, pdfTable, ColumnType.HEADER);
             }
 
@@ -277,7 +272,7 @@ public class PDFCustomExporter extends Exporter {
         PdfPTable pdfTable = new PdfPTable(1);
         if (list.getHeader() != null) {
             String value = exportValue(FacesContext.getCurrentInstance(), list.getHeader());
-            PdfPCell cell = new PdfPCell(new Paragraph((value), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph((value), facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -302,7 +297,7 @@ public class PDFCustomExporter extends Exporter {
 
         if (list.getFooter() != null) {
             String value = exportValue(FacesContext.getCurrentInstance(), list.getFooter());
-            PdfPCell cell = new PdfPCell(new Paragraph((value), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph((value), facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -397,31 +392,17 @@ public class PDFCustomExporter extends Exporter {
     protected void subTableExportAll(FacesContext context, SubTable table, PdfPTable pdfTable) {
         int first = table.getFirst();
         int rowCount = table.getRowCount();
-        int rows = table.getRows();
-        boolean lazy = false;
 
-        if (lazy) {
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                if (rowIndex % rows == 0) {
-                    table.setFirst(rowIndex);
-                }
-            }
+        tableColumnGroup(pdfTable, table, "header");
 
-            // restore
-            table.setFirst(first);
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            subTableExportRow(table, pdfTable, rowIndex);
         }
-        else {
-            tableColumnGroup(pdfTable, table, "header");
 
-            for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-                subTableExportRow(table, pdfTable, rowIndex);
-            }
+        tableColumnGroup(pdfTable, table, "footer");
 
-            tableColumnGroup(pdfTable, table, "footer");
-
-            // restore
-            table.setFirst(first);
-        }
+        // restore
+        table.setFirst(first);
     }
 
     protected String exportAll(DataList list, int rowCount, StringBuilder input) {
@@ -452,7 +433,7 @@ public class PDFCustomExporter extends Exporter {
                     header = header + headerValue;
                 }
 
-                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                PdfPCell cell = new PdfPCell(new Paragraph((header), facetFont));
                 if (facetBackground != null) {
                     cell.setBackgroundColor(facetBackground);
                 }
@@ -467,10 +448,10 @@ public class PDFCustomExporter extends Exporter {
                 return;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
-            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -502,7 +483,7 @@ public class PDFCustomExporter extends Exporter {
                     header = header + headerValue;
                 }
 
-                PdfPCell cell = new PdfPCell(new Paragraph((header), this.facetFont));
+                PdfPCell cell = new PdfPCell(new Paragraph((header), facetFont));
                 if (facetBackground != null) {
                     cell.setBackgroundColor(facetBackground);
                 }
@@ -517,10 +498,10 @@ public class PDFCustomExporter extends Exporter {
                 return;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
-            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), this.facetFont));
+            PdfPCell cell = new PdfPCell(new Paragraph((headerValue), facetFont));
             if (facetBackground != null) {
                 cell.setBackgroundColor(facetBackground);
             }
@@ -557,7 +538,7 @@ public class PDFCustomExporter extends Exporter {
 
                         int rowSpan = column.getRowspan();
                         int colSpan = column.getColspan();
-                        PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
+                        PdfPCell cell = new PdfPCell(new Paragraph(value, facetFont));
                         if (facetBackground != null) {
                             cell.setBackgroundColor(facetBackground);
                         }
@@ -609,7 +590,7 @@ public class PDFCustomExporter extends Exporter {
 
                         int rowSpan = column.getRowspan();
                         int colSpan = column.getColspan();
-                        PdfPCell cell = new PdfPCell(new Paragraph(value, this.facetFont));
+                        PdfPCell cell = new PdfPCell(new Paragraph(value, facetFont));
                         if (facetBackground != null) {
                             cell.setBackgroundColor(facetBackground);
                         }
@@ -665,7 +646,7 @@ public class PDFCustomExporter extends Exporter {
 
                 int rowSpan = column.getRowspan();
                 int colSpan = column.getColspan();
-                PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), this.facetFont));
+                PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), facetFont));
                 if (facetBackground != null) {
                     cell.setBackgroundColor(facetBackground);
                 }
@@ -724,12 +705,12 @@ public class PDFCustomExporter extends Exporter {
 
             if (col.isExportable()) {
                 if (col.getSelectionMode() != null) {
-                    pdfTable.addCell(new Paragraph(col.getSelectionMode(), this.cellFont));
+                    pdfTable.addCell(new Paragraph(col.getSelectionMode(), cellFont));
 
                     continue;
                 }
 
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data");
+                addColumnValue(pdfTable, col.getChildren(), cellFont, "data");
             }
         }
 
@@ -794,7 +775,7 @@ public class PDFCustomExporter extends Exporter {
             }
 
             if (col.isExportable()) {
-                addColumnValue(pdfTable, col.getChildren(), this.cellFont, "data");
+                addColumnValue(pdfTable, col.getChildren(), cellFont, "data");
             }
         }
     }
@@ -812,7 +793,7 @@ public class PDFCustomExporter extends Exporter {
             PdfPCell cell = null;
             if (col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
-                    cell = new PdfPCell(new Paragraph(col.getHeaderText(), this.facetFont));
+                    cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
@@ -821,7 +802,7 @@ public class PDFCustomExporter extends Exporter {
                     pdfTable.addCell(cell);
                 }
                 else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
-                    cell = new PdfPCell(new Paragraph(col.getFooterText(), this.facetFont));
+                    cell = new PdfPCell(new Paragraph(col.getFooterText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
@@ -846,7 +827,7 @@ public class PDFCustomExporter extends Exporter {
                         pdfTable.addCell(cellIndex);
                     }
 
-                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont, columnType.name());
+                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), facetFont, columnType.name());
                 }
             }
         }
@@ -865,7 +846,7 @@ public class PDFCustomExporter extends Exporter {
             PdfPCell cell = null;
             if (col.isExportable()) {
                 if (col.getHeaderText() != null && columnType.name().equalsIgnoreCase("header")) {
-                    cell = new PdfPCell(new Paragraph(col.getHeaderText(), this.facetFont));
+                    cell = new PdfPCell(new Paragraph(col.getHeaderText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
@@ -874,7 +855,7 @@ public class PDFCustomExporter extends Exporter {
                     pdfTable.addCell(cell);
                 }
                 else if (col.getFooterText() != null && columnType.name().equalsIgnoreCase("footer")) {
-                    cell = new PdfPCell(new Paragraph(col.getFooterText(), this.facetFont));
+                    cell = new PdfPCell(new Paragraph(col.getFooterText(), facetFont));
                     if (facetBackground != null) {
                         cell.setBackgroundColor(facetBackground);
                     }
@@ -882,7 +863,7 @@ public class PDFCustomExporter extends Exporter {
                     pdfTable.addCell(cell);
                 }
                 else {
-                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), this.facetFont, columnType.name());
+                    addColumnValue(pdfTable, col.getFacet(columnType.facet()), facetFont, columnType.name());
                 }
             }
         }
@@ -927,7 +908,7 @@ public class PDFCustomExporter extends Exporter {
         pdfTable.addCell(cell);
     }
 
-    protected void addColumnAlignments(UIComponent component, PdfPCell cell) {
+    protected static void addColumnAlignments(UIComponent component, PdfPCell cell) {
         if (component instanceof HtmlOutputText) {
             HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
@@ -944,7 +925,7 @@ public class PDFCustomExporter extends Exporter {
         }
     }
 
-    protected void addColumnAlignments(List<UIComponent> components, PdfPCell cell) {
+    protected static void addColumnAlignments(List<UIComponent> components, PdfPCell cell) {
         for (UIComponent component : components) {
             if (component instanceof HtmlOutputText) {
                 HtmlOutputText output = (HtmlOutputText) component;
@@ -1014,30 +995,30 @@ public class PDFCustomExporter extends Exporter {
     }
 
     protected void createCustomFonts(String encoding) {
-        this.cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
-        this.facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
+        cellFont = FontFactory.getFont(FontFactory.TIMES, encoding);
+        facetFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
         if (facetFontColor != null) {
-            this.facetFont.setColor(facetFontColor);
+            facetFont.setColor(facetFontColor);
         }
 
         if (facetFontSize != null) {
-            this.facetFont.setSize(facetFontSize);
+            facetFont.setSize(facetFontSize);
         }
 
         if (facetFontStyle != null) {
-            this.facetFont.setStyle(facetFontStyle);
+            facetFont.setStyle(facetFontStyle);
         }
 
         if (cellFontColor != null) {
-            this.cellFont.setColor(cellFontColor);
+            cellFont.setColor(cellFontColor);
         }
 
         if (cellFontSize != null) {
-            this.cellFont.setSize(cellFontSize);
+            cellFont.setSize(cellFontSize);
         }
 
         if (cellFontStyle != null) {
-            this.cellFont.setStyle(cellFontStyle);
+            cellFont.setStyle(cellFontStyle);
         }
 
         if (fontName != null) {
@@ -1052,7 +1033,7 @@ public class PDFCustomExporter extends Exporter {
         }
     }
 
-    protected void writePDFToResponse(ExternalContext externalContext, ByteArrayOutputStream baos, String fileName)
+    protected static void writePDFToResponse(ExternalContext externalContext, ByteArrayOutputStream baos, String fileName)
                 throws IOException, DocumentException {
         externalContext.setResponseContentType("application/pdf");
         externalContext.setResponseHeader("Expires", "0");
@@ -1060,7 +1041,7 @@ public class PDFCustomExporter extends Exporter {
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
         externalContext.setResponseContentLength(baos.size());
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
         OutputStream out = externalContext.getResponseOutputStream();
         baos.writeTo(out);
         externalContext.responseFlushBuffer();
