@@ -8,7 +8,7 @@ jobs:
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
         matrix:
-            java: [8, 11]
+            java: [11]
 
     steps:
       - uses: actions/checkout@v2
