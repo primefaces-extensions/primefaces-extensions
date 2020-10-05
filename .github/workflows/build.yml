@@ -30,4 +30,4 @@ jobs:
       - name: build PrimeFaces
         run: cd primefaces && mvn install && cd ..
       - name: Build with Maven
-        run: mvn -B -V clean install -P${{ matrix.profile }}
+        run: mvn -B -V clean install
