@@ -50,9 +50,9 @@ import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.component.exporter.Exporter;
 import org.primefaces.util.Constants;
 
+import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.Rectangle;
-import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -1041,7 +1041,7 @@ public class PDFCustomExporter extends Exporter {
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + fileName + ".pdf");
         externalContext.setResponseContentLength(baos.size());
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
         OutputStream out = externalContext.getResponseOutputStream();
         baos.writeTo(out);
         externalContext.responseFlushBuffer();

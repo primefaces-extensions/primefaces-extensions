@@ -35,8 +35,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.*;
@@ -990,7 +990,7 @@ public class ExcelCustomExporter extends Exporter {
         externalContext.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         externalContext.setResponseHeader("Pragma", "public");
         externalContext.setResponseHeader("Content-disposition", "attachment;filename=" + filename + ".xlsx");
-        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object>emptyMap());
+        externalContext.addResponseCookie(Constants.DOWNLOAD_COOKIE, "true", Collections.<String, Object> emptyMap());
 
         OutputStream out = externalContext.getResponseOutputStream();
         generatedExcel.write(out);
