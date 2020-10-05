@@ -31,10 +31,10 @@
         <primefaces-extensions.deprecated-components/>
 
         <myfaces.version>2.3.6</myfaces.version>
-        <owb.version>2.0.16</owb.version>
+        <owb.version>2.0.18</owb.version>
         <jetty.version>9.4.31.v20200723</jetty.version>
-        <omnifaces.version>2.7.2</omnifaces.version>
-        <hibernate-validator.version>6.1.1.Final</hibernate-validator.version>
+        <omnifaces.version>2.7.5</omnifaces.version>
+        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
     </properties>
 
     <build>
@@ -71,7 +71,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.3.1</version>
                 <configuration>
                     <webappDirectory>${project.build.directory}/webapp</webappDirectory>
                     <warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
