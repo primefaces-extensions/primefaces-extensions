@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
+    name: Java ${{ matrix.java }}
     strategy:
         matrix:
             java: [11]
@@ -22,12 +22,12 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: checkout PrimeFaces
+      - name: Checkout PrimeFaces
         uses: actions/checkout@master
         with:
           repository: primefaces/primefaces
           path: primefaces
-      - name: build PrimeFaces
+      - name: Build PrimeFaces
         run: cd primefaces && mvn install && cd ..
       - name: Build with Maven
         run: mvn -B -V clean verify sonar:sonar -Dsonar.projectKey=org.primefaces.extensions:primefaces-extensions-parent -Dsonar.organization=pr1m3fac3sext3ns1ons -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN}}
