@@ -36,21 +36,7 @@ public abstract class AbstractParameter extends UIOutput {
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        name;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        name
     }
 
     public AbstractParameter() {

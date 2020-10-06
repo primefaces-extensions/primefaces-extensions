@@ -39,21 +39,7 @@ public class AssignableParameter extends AbstractParameter {
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
-        assignTo;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        assignTo
     }
 
     public AssignableParameter() {
@@ -62,7 +48,7 @@ public class AssignableParameter extends AbstractParameter {
 
     @Override
     public String getFamily() {
-        return COMPONENT_FAMILY;
+        return AbstractParameter.COMPONENT_FAMILY;
     }
 
     public ValueExpression getAssignTo() {

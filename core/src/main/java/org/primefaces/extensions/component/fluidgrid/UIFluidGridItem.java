@@ -35,24 +35,10 @@ public class UIFluidGridItem extends UIComponentBase {
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-      // @formatter:off
+        // @formatter:off
       type,
-      styleClass;
+      styleClass
       // @formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public UIFluidGridItem() {

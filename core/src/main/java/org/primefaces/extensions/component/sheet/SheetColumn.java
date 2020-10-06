@@ -41,6 +41,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     /**
      * Properties that are tracked by state saving.
      */
+    @SuppressWarnings("java:S115")
     enum PropertyKeys {
 
         /**
@@ -686,7 +687,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      */
     protected boolean validateRequired(final FacesContext context, final Object newValue) {
         // If our value is valid, enforce the required property if present
-        if (isValid() && isRequired() && isEmpty(newValue)) {
+        if (isValid() && isRequired() && UIInput.isEmpty(newValue)) {
             final String requiredMessageStr = getRequiredMessage();
             final FacesMessage message;
             if (null != requiredMessageStr) {

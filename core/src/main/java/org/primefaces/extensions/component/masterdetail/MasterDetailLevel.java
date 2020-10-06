@@ -35,23 +35,9 @@ public class MasterDetailLevel extends UIComponentBase {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-
-        level, contextVar, levelLabel, levelDisabled;
-
-        private String toString;
-
-        PropertyKeys(String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        level, contextVar, levelLabel, levelDisabled
     }
 
     public MasterDetailLevel() {

@@ -48,6 +48,7 @@ public class LayoutPane extends UIComponentBase {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
         // @formatter:off
@@ -81,18 +82,19 @@ public class LayoutPane extends UIComponentBase {
         maskObjects;
         // @formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 

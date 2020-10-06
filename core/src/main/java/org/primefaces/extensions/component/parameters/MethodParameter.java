@@ -40,23 +40,9 @@ public class MethodParameter extends AbstractParameter {
      * @author Thomas Andraschko / last modified by $Author$
      * @version $Revision$
      */
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-
-        type;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        type
     }
 
     public MethodParameter() {
@@ -65,7 +51,7 @@ public class MethodParameter extends AbstractParameter {
 
     @Override
     public String getFamily() {
-        return COMPONENT_FAMILY;
+        return AbstractParameter.COMPONENT_FAMILY;
     }
 
     public String getType() {
