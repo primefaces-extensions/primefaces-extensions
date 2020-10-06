@@ -58,7 +58,7 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
-      // @formatter:off
+        // @formatter:off
       widgetVar,
       panelStyle,
       panelStyleClass,
@@ -83,22 +83,8 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
       onslide, // handler called after opening or closing
       onbeforeopen, // handler called before opening, return false to cancel
       onbeforeclose, // handler called before closing, return false to cancel
-      onbeforeslide; // handler called before opening or closing, return false to cancel
+      onbeforeslide // handler called before opening or closing, return false to cancel
       // @formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     /**
@@ -397,7 +383,7 @@ public class SlideOut extends UIComponentBase implements ClientBehaviorHolder, W
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
+        return getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

@@ -68,22 +68,8 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
         stateThreeIcon,
         stateOneTitle,
         stateTwoTitle,
-        stateThreeTitle;
+        stateThreeTitle
         //@formatter:on CHECKSTYLE:ON
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public TriStateManyCheckbox() {

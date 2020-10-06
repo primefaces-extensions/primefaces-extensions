@@ -63,23 +63,15 @@ public class DynaForm extends AbstractDynamicData implements Widget {
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-
-        widgetVar, autoSubmit, openExtended, buttonBarPosition, // top, bottom, both
-        style, styleClass, columnClasses;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        //@formatter:off
+        widgetVar,
+        autoSubmit,
+        openExtended,
+        buttonBarPosition,
+        style,
+        styleClass,
+        columnClasses
+        //@formatter:on
     }
 
     public DynaForm() {
@@ -172,7 +164,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
         return cells;
     }
 
-    protected void checkModelInstance(Object value) {
+    protected static void checkModelInstance(Object value) {
         if (!(value instanceof DynaFormModel)) {
             throw new FacesException("Value in DynaForm must be of type DynaFormModel");
         }
@@ -298,7 +290,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
         }
     }
 
-    private void processGrandkid(final FacesContext context, final PhaseId phaseId, final UIComponent grandkid) {
+    private static void processGrandkid(final FacesContext context, final PhaseId phaseId, final UIComponent grandkid) {
         if (!grandkid.isRendered()) {
             return;
         }

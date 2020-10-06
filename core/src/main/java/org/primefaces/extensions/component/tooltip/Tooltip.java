@@ -71,18 +71,19 @@ public class Tooltip extends UIOutput implements Widget {
         forValue("for");
         //@formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 

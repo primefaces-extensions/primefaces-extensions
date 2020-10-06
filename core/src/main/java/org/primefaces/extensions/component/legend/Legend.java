@@ -57,22 +57,8 @@ public class Legend extends UIComponentBase implements Widget {
         title,
         footer,
         values,
-        layout;
+        layout
         // @formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     /**

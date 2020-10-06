@@ -201,8 +201,8 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
         return (String) getStateHelper().eval(PropertyKeys.forVal, null);
     }
 
-    public void setFor(String _for) {
-        getStateHelper().put(PropertyKeys.forVal, _for);
+    public void setFor(String aFor) {
+        getStateHelper().put(PropertyKeys.forVal, aFor);
     }
 
     @Override

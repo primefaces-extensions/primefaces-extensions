@@ -46,24 +46,27 @@ public class BlockUI extends UIComponentBase implements Widget {
      * @author Oleg Varaksin / last modified by $Author$
      * @version $Revision$
      */
+    // @formatter:off
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
+        widgetVar,
+        css,
+        cssOverlay,
+        source,
+        target,
+        content,
+        event,
+        autoShow,
+        timeout,
+        centerX,
+        centerY,
+        fadeIn,
+        fadeOut,
+        showOverlay,
+        focusInput
 
-        widgetVar, css, cssOverlay, source, target, content, event, autoShow, timeout, centerX, centerY, fadeIn, fadeOut, showOverlay, focusInput;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
+    // @formatter:on
 
     public BlockUI() {
         setRendererType(DEFAULT_RENDERER);

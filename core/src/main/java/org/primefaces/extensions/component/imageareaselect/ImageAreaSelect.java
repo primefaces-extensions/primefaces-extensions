@@ -88,18 +88,19 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
         keyboardSupport;
         //@formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -318,7 +319,7 @@ public class ImageAreaSelect extends UIComponentBase implements Widget, ClientBe
         }
     }
 
-    private boolean isRequestSource(final String clientId, final Map<String, String> params) {
+    private static boolean isRequestSource(final String clientId, final Map<String, String> params) {
         return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 }

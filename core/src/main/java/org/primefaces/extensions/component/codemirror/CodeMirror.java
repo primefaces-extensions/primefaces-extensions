@@ -98,15 +98,8 @@ public class CodeMirror extends AbstractPrimeHtmlInputTextArea implements Client
         global,
         async,
         escape,
-        escapeSuggestions;
+        escapeSuggestions
         //@formatter:on
-
-        private String toString;
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public CodeMirror() {

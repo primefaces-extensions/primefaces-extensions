@@ -84,12 +84,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         geoIpLookup
     }
 
+    @SuppressWarnings("java:S115")
     public enum AutoPlaceholder {
         polite,
         aggressive,
         off
     }
 
+    @SuppressWarnings("java:S115")
     public enum PlaceholderNumberType {
         fixed_line,
         mobile,
@@ -322,7 +324,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         }
     }
 
-    protected Country getCountry(final String clientId, final Map<String, String> params) {
+    protected static Country getCountry(final String clientId, final Map<String, String> params) {
         return new Country(params.get(clientId + "_name"),
                     params.get(clientId + "_iso2"),
                     params.get(clientId + "_dialCode"));

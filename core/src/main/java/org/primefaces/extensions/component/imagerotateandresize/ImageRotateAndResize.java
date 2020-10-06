@@ -64,18 +64,19 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
 
         widgetVar, forValue("for");
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -141,7 +142,7 @@ public class ImageRotateAndResize extends UIComponentBase implements Widget, Cli
         }
     }
 
-    private boolean isRequestSource(final String clientId, final Map<String, String> params) {
+    private static boolean isRequestSource(final String clientId, final Map<String, String> params) {
         return clientId.equals(params.get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 }

@@ -82,7 +82,6 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
      */
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
-
         // @formatter:off
       widgetVar,
       fullPage,
@@ -98,18 +97,19 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
       maskPanesEarly;
       // @formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -311,7 +311,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         super.queueEvent(event);
     }
 
-    public LayoutPane getLayoutPane(final UIComponent component, final String combinedPosition) {
+    public static LayoutPane getLayoutPane(final UIComponent component, final String combinedPosition) {
         for (final UIComponent child : component.getChildren()) {
             if (child instanceof LayoutPane) {
                 if (((LayoutPane) child).getCombinedPosition().equals(combinedPosition)) {

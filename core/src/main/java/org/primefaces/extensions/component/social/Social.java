@@ -56,22 +56,8 @@ public class Social extends UIComponentBase implements ClientBehaviorHolder, Wid
         styleClass,
         onclick,
         onmouseenter,
-        onmouseleave;
+        onmouseleave
         // @formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     /**

@@ -39,7 +39,7 @@ public class QRCode extends UIOutput implements Widget {
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-      //@formatter:off
+        //@formatter:off
         widgetVar,
         renderMethod,
         renderMode,
@@ -59,22 +59,8 @@ public class QRCode extends UIOutput implements Widget {
         mPosY,
         label,
         fontName,
-        fontColor;
+        fontColor
        //@formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public QRCode() {

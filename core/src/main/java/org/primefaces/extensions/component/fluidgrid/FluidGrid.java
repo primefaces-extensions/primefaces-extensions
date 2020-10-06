@@ -15,11 +15,7 @@
  */
 package org.primefaces.extensions.component.fluidgrid;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
@@ -71,8 +67,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-
-      // @formatter:off
+        // @formatter:off
       widgetVar,
       style,
       styleClass,
@@ -84,22 +79,8 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
       resizeBound,
       stamp,
       transitionDuration,
-      hasImages;
+      hasImages
       // @formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public FluidGrid() {
@@ -233,7 +214,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context).equals(
+        return getClientId(context).equals(
                     context.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
@@ -262,7 +243,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
         return items;
     }
 
-    protected void checkModelInstance(Object value) {
+    protected static void checkModelInstance(Object value) {
         if (!(value instanceof Collection<?>)) {
             throw new FacesException("Value in FluidGrid must be of type Collection / List");
         }
@@ -290,7 +271,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
     @Override
     protected void processChildren(final FacesContext context, final PhaseId phaseId) {
         if (context.getExternalContext().getRequestParameterMap()
-                    .containsKey(this.getClientId(context) + "_layoutComplete")) {
+                    .containsKey(getClientId(context) + "_layoutComplete")) {
             // don't decode, validate, update children if the processing was
             // triggered by the "layoutComplete" event
             return;
@@ -359,7 +340,7 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
         if (getChildCount() > 0) {
             // extract the fluidGridItem key from the clientId
             // it's simliar to rowKey in UIData
-            String key = clientId.substring(this.getClientId().length() + 1);
+            String key = clientId.substring(getClientId().length() + 1);
             key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
             final Collection<FluidGridItem> fluidGridItems = (Collection<FluidGridItem>) value;

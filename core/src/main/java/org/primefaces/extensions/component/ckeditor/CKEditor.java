@@ -81,22 +81,8 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
         enterMode,
         shiftEnterMode,
         font,
-        fontSize;
+        fontSize
         //@formatter:on
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public CKEditor() {

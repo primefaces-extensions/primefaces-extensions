@@ -65,21 +65,8 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         colorUpload,
         file,
         style,
-        styleClass;
+        styleClass
         // @formatter:on
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     /**
@@ -113,7 +100,7 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         return SpeedTestEvent.NAME;
     }
 
-    private Double convertParam(final String clientId, final String paramName, final Map<String, String> params) {
+    private static Double convertParam(final String clientId, final String paramName, final Map<String, String> params) {
         Double res = 0.0;
         try {
             res = Double.valueOf(params.get(clientId + paramName));
@@ -134,7 +121,7 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final String clientId = this.getClientId(fc);
+            final String clientId = getClientId(fc);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
             if (SpeedTestEvent.NAME.equals(eventName)) {
                 // Get parameters:
@@ -153,7 +140,7 @@ public class Speedtest extends UIComponentBase implements ClientBehaviorHolder, 
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
+        return getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

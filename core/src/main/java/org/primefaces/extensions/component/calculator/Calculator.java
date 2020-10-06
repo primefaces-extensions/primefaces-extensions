@@ -16,11 +16,7 @@
 package org.primefaces.extensions.component.calculator;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -77,18 +73,19 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
         forValue("for");
         // @formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -166,7 +163,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
         if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-            final String clientId = this.getClientId(fc);
+            final String clientId = getClientId(fc);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
             if (OpenEvent.NAME.equals(eventName)) {
@@ -295,7 +292,7 @@ public class Calculator extends UIComponentBase implements ClientBehaviorHolder,
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
+        return getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

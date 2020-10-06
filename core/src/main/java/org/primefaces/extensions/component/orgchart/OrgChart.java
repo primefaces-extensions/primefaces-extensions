@@ -78,21 +78,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
         nodeTitle, //
         style, //
         styleClass, //
-        extender;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        extender
     }
 
     public OrgChart() {
@@ -132,7 +118,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
             final Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            final String clientId = this.getClientId(fc);
+            final String clientId = getClientId(fc);
 
             if (OrgChartClickEvent.NAME.equals(eventName)) {
 
@@ -161,7 +147,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     }
 
     private boolean isSelfRequest(final FacesContext context) {
-        return this.getClientId(context)
+        return getClientId(context)
                     .equals(context.getExternalContext().getRequestParameterMap().get(
                                 Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

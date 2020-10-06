@@ -15,11 +15,7 @@
  */
 package org.primefaces.extensions.component.waypoint;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -54,7 +50,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-      // @formatter:off
+        // @formatter:off
       widgetVar,
       forValue("for"),
       forContext,
@@ -65,18 +61,19 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
       triggerOnce;
       // @formatter:on
 
-        private String toString;
+        private final String toString;
 
-        PropertyKeys(final String toString) {
+        PropertyKeys(String toString) {
             this.toString = toString;
         }
 
         PropertyKeys() {
+            toString = null;
         }
 
         @Override
         public String toString() {
-            return toString != null ? toString : super.toString();
+            return ((toString != null) ? toString : super.toString());
         }
     }
 
@@ -154,8 +151,8 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
             final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
 
             if (WaypointEvent.NAME.equals(eventName)) {
-                final String direction = params.get(this.getClientId(fc) + "_direction");
-                final String waypointId = params.get(this.getClientId(fc) + "_waypointId");
+                final String direction = params.get(getClientId(fc) + "_direction");
+                final String waypointId = params.get(getClientId(fc) + "_waypointId");
 
                 final WaypointEvent waypointEvent = new WaypointEvent(this, behaviorEvent.getBehavior(),
                             direction != null ? WaypointEvent.Direction.valueOf(direction.toUpperCase(
@@ -237,7 +234,7 @@ public class Waypoint extends UIComponentBase implements Widget, ClientBehaviorH
     }
 
     private boolean isSelfRequest(final FacesContext fc) {
-        return this.getClientId(fc)
+        return getClientId(fc)
                     .equals(fc.getExternalContext().getRequestParameterMap()
                                 .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }

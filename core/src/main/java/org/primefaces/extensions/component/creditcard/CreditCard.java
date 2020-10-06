@@ -52,15 +52,8 @@ public class CreditCard extends UIComponentBase implements Widget {
         placeholderNumber,
         placeholderName,
         placeholderExpiry,
-        placeholderCvc;
+        placeholderCvc
         // @formatter:on
-
-        private String toString;
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     /**
