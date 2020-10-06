@@ -1,5 +1,5 @@
 [![Maven](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions.svg)](https://repo1.maven.org/maven2/org/primefaces/extensions/primefaces-extensions/)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![License](http://img.shields.io/:license-apache-yellow.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Join the chat at https://gitter.im/primefaces-extensions/primefaces-extensions](https://badges.gitter.im/primefaces-extensions/primefaces-extensions.svg)](https://gitter.im/primefaces-extensions/primefaces-extensions?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Actions Status](https://github.com/primefaces-extensions/primefaces-extensions/workflows/Java%20CI/badge.svg)](https://github.com/primefaces-extensions/primefaces-extensions/actions)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=org.primefaces.extensions%3Aprimefaces-extensions-parent&metric=bugs)](https://sonarcloud.io/dashboard?id=org.primefaces.extensions%3Aprimefaces-extensions-parent)
