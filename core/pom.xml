@@ -239,7 +239,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.9</version>
+                <version>3.1.1</version>
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                     <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
