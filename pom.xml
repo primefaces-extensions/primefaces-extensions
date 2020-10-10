@@ -49,9 +49,10 @@
 
 	<properties>
 		<resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+		<maven.compiler.release>8</maven.compiler.release>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
 		<main.basedir>${project.basedir}</main.basedir>
 
 		<commons-collections.version>4.4</commons-collections.version>
@@ -272,6 +273,9 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>3.2.0</version>
+					<configuration>
+						<propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
