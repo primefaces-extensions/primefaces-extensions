@@ -1,13 +1,20 @@
+* {
+    font-family: Arial, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 12px;
+}
+
 html {
     overflow: auto !important;
     visibility: hidden;
 }
 
 body {
-    font-family: Arial, "Trebuchet MS", Verdana, sans-serif;
-    font-size: 12px;
     padding: 0 !important;
     margin: 0;
+}
+
+body .ui-icon {
+    font-size: 1em;
 }
 
 input,

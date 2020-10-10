@@ -40,7 +40,7 @@ public class UserSettings implements Serializable {
     private Theme currentTheme;
 
     public UserSettings() {
-        setCurrentThemeByName("omega");
+        setCurrentThemeByName("nova-light");
         availableThemes = AvailableThemes.getInstance().getThemes();
     }
 
@@ -61,6 +61,6 @@ public class UserSettings implements Serializable {
     }
 
     public void setCurrentThemeByName(String theme) {
-        this.currentTheme = AvailableThemes.getInstance().getThemeForName(theme);
+        currentTheme = AvailableThemes.getInstance().getThemeForName(theme);
     }
 }
