@@ -35,7 +35,6 @@ public class AvailableThemes {
     private AvailableThemes() {
         final List<String> themeNames = new ArrayList<String>();
 
-        themeNames.add("aristo");
         themeNames.add("luna-amber");
         themeNames.add("luna-blue");
         themeNames.add("luna-green");
