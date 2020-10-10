@@ -5,35 +5,35 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:pe="http://primefaces.org/ui/extensions">
     <!-- EXAMPLE-SOURCE-START -->
-<p:growl id="growl" showDetail="true" />
+    <p:growl id="growl" showDetail="true"/>
 
-<pe:remoteCommand id="applyDataCommand" name="applyData" process="@this" update="growl" actionListener="#{remoteCommandController.printMethodParams}">
-    <pe:methodSignature parameters="java.lang.String, java.util.Date, org.primefaces.extensions.showcase.model.Circle" />
-    <pe:methodParam name="subject"/>
-    <pe:methodParam name="date">
-        <f:convertDateTime type="both" dateStyle="short" locale="en"/>
-    </pe:methodParam>
-    <pe:methodParam name="circle">
-        <pe:convertJson />
-    </pe:methodParam>
-</pe:remoteCommand>
+    <pe:remoteCommand id="applyDataCommand" name="applyData" process="@this" update="growl" actionListener="#{remoteCommandController.printMethodParams}">
+        <pe:methodSignature parameters="java.lang.String, java.util.Date, org.primefaces.extensions.showcase.model.Circle"/>
+        <pe:methodParam name="subject"/>
+        <pe:methodParam name="date">
+            <f:convertDateTime type="both" pattern="MM/dd/yyyy HH:mm:ss"/>
+        </pe:methodParam>
+        <pe:methodParam name="circle">
+            <pe:convertJson/>
+        </pe:methodParam>
+    </pe:remoteCommand>
 
-<script type="text/javascript">
-    circle = {
-        radius: 50,
-        backgroundColor: "#FF0000",
-        borderColor: "#DDDDDD",
-        scaleFactor: 1.2
-    };
-    circle2 = {
-        radius: 32,
-        backgroundColor: "#FF0320",
-        borderColor: "#DDFFFD",
-        scaleFactor: 1.6
-    };
-</script>
+    <script type="text/javascript">
+        circle = {
+            radius: 50,
+            backgroundColor: "#FF0000",
+            borderColor: "#DDDDDD",
+            scaleFactor: 1.2
+        };
+        circle2 = {
+            radius: 32,
+            backgroundColor: "#FF0320",
+            borderColor: "#DDFFFD",
+            scaleFactor: 1.6
+        };
+    </script>
 
-<p:commandButton value="Apply Data" type="button" onclick="applyData('hello world', '5/14/07 12:55:42 PM', JSON.stringify(circle))" />
-<p:commandButton value="Apply Second Data" type="button" onclick="applyData('hello user', '7/11/01 11:55:42 PM', JSON.stringify(circle2))" />
+    <p:commandButton value="Apply Data" type="button" onclick="applyData('hello world', '05/14/2007 12:55:42', JSON.stringify(circle))"/>
+    <p:commandButton value="Apply Second Data" type="button" onclick="applyData('hello user', '07/11/2001 11:55:42', JSON.stringify(circle2))"/>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
