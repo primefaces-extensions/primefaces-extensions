@@ -21,8 +21,7 @@ import javax.faces.application.ResourceWrapper;
 /**
  * {@link ResourceWrapper} which appends the version of PrimeFaces Extensions to the URL.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
+ * @author Thomas Andraschko
  * @since 0.1
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
@@ -34,7 +33,7 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
     public PrimeFacesExtensionsResource(final Resource resource) {
         super();
         wrapped = resource;
-        version = "&v=" + this.getClass().getPackage().getImplementationVersion();
+        version = "&e=" + getClass().getPackage().getImplementationVersion();
     }
 
     @Override

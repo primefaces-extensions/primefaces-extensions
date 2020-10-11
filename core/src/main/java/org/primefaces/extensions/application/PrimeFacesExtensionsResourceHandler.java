@@ -15,19 +15,19 @@
  */
 package org.primefaces.extensions.application;
 
+import java.util.Locale;
+
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
-
-import org.primefaces.extensions.util.Constants;
 
 /**
  * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and appends the version of PrimeFaces Extensions in the
  * {@link PrimeFacesExtensionsResource}.
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
+ * @author Thomas Andraschko
  * @since 0.1
+ * @since 9.0 will append e=x.x to all libs starting with "primefaces"
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
@@ -36,7 +36,6 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
     @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
         super();
-
         wrapped = resourceHandler;
     }
 
@@ -47,21 +46,24 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
 
     @Override
     public Resource createResource(final String resourceName, final String libraryName) {
-        if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
-            final Resource resource = super.createResource(resourceName, libraryName);
-            return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
-        }
-
-        return super.createResource(resourceName, libraryName);
+        Resource resource = super.createResource(resourceName, libraryName);
+        return wrapResource(resource, libraryName);
     }
 
     @Override
     public Resource createResource(String resourceName, String libraryName, String contentType) {
-        if (Constants.LIBRARY.equalsIgnoreCase(libraryName)) {
-            final Resource resource = super.createResource(resourceName, libraryName, contentType);
-            return resource != null ? new PrimeFacesExtensionsResource(resource) : null;
-        }
+        Resource resource = super.createResource(resourceName, libraryName, contentType);
+        return wrapResource(resource, libraryName);
+    }
 
-        return super.createResource(resourceName, libraryName, contentType);
+    private static Resource wrapResource(Resource resource, String libraryName) {
+        // libs starting with "primefaces" will get "&e=9.0" extension version appended
+        if (resource != null && libraryName != null
+                    && (libraryName.toLowerCase(Locale.getDefault()).startsWith(org.primefaces.util.Constants.LIBRARY))) {
+            return new PrimeFacesExtensionsResource(resource);
+        }
+        else {
+            return resource;
+        }
     }
 }
