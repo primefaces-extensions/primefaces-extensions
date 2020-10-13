@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions"
       xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
-<ui:composition template="/templates/showcaseLayout.xhtml">    
+<ui:composition template="/templates/showcaseLayout.xhtml">
     <ui:define name="centerContent">
         <f:facet name="header">
             <h:outputText value="FluidGrid"/>
@@ -25,83 +25,83 @@
             The attribute <strong>type</strong> of <strong>pe:fluidGridItem</strong>
             should match the corresponding <strong>type</strong> property of <strong>FluidGridItem</strong>.
         </h:panelGroup>
-        
+
         <h:panelGroup layout="block" styleClass="centerExample">
-<!-- EXAMPLE-SOURCE-START -->
-	<p:growl id="growl" showDetail="true" showSummary="true">
-		<p:autoUpdate />
-	</p:growl>            
-            
-<pe:fluidGrid id="fluidGrid" value="#{fluidGridDynaFormController.items}" var="data"
-              resizeBound="false" hGutter="20" widgetVar="fluidGridWdgt">
-    <pe:fluidGridItem type="input">
-        <div class="dynaFormLabel">
-            <p:outputLabel for="txt" value="#{data.label}"/>
-        </div>
-        <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
-    </pe:fluidGridItem>
-    <pe:fluidGridItem type="select" styleClass="select">
-        <div class="dynaFormLabel">
-            <p:outputLabel for="menu" value="#{data.label}"/>
-        </div>
-        <p:selectOneMenu id="menu" value="#{data.value}" required="#{data.required}">
-            <f:selectItems value="#{data.selectItems}"/>
-        </p:selectOneMenu>
-    </pe:fluidGridItem>
-    <pe:fluidGridItem type="calendar" styleClass="calendar">
-        <div class="dynaFormLabel">
-            <p:outputLabel for="cal" value="#{data.label}"/>
-        </div>
-        <p:calendar id="cal" value="#{data.value}" required="#{data.required}" showOn="button"/>
-    </pe:fluidGridItem>
-</pe:fluidGrid>
-            
-<p:commandButton value="Submit" style="margin-top: 10px;"
-                 process="fluidGrid" update=":mainForm:fluidGrid :mainForm:inputValues"
-                 oncomplete="if(!args.validationFailed) {PF('inputValuesWidget').show();}"/>
+            <!-- EXAMPLE-SOURCE-START -->
+            <p:growl id="growl" showDetail="true" showSummary="true">
+                <p:autoUpdate/>
+            </p:growl>
 
-<p:dialog header="Input values" widgetVar="inputValuesWidget">
-    <p:dataList id="inputValues" value="#{fluidGridDynaFormController.items}" var="item"
-                style="margin:10px;">
-        <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
-    </p:dataList>
-</p:dialog>
-            
-<h:outputStylesheet id="fluidGridCSS">
-    .pe-fluidgrid-item {
-        width: 160px;
-        height: 60px;
-    }
-    
-    .pe-fluidgrid-item input {
-        width: 150px;
-    }
+            <pe:fluidGrid id="fluidGrid" value="#{fluidGridDynaFormController.items}" var="data"
+                          resizeBound="false" hGutter="20" widgetVar="fluidGridWdgt" style="width:600px">
+                <pe:fluidGridItem type="input">
+                    <div class="dynaFormLabel">
+                        <p:outputLabel for="txt" value="#{data.label}"/>
+                    </div>
+                    <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+                </pe:fluidGridItem>
+                <pe:fluidGridItem type="select" styleClass="select">
+                    <div class="dynaFormLabel">
+                        <p:outputLabel for="menu" value="#{data.label}"/>
+                    </div>
+                    <p:selectOneMenu id="menu" value="#{data.value}" required="#{data.required}">
+                        <f:selectItems value="#{data.selectItems}"/>
+                    </p:selectOneMenu>
+                </pe:fluidGridItem>
+                <pe:fluidGridItem type="calendar" styleClass="calendar">
+                    <div class="dynaFormLabel">
+                        <p:outputLabel for="cal" value="#{data.label}"/>
+                    </div>
+                    <p:calendar id="cal" value="#{data.value}" required="#{data.required}" showOn="button"/>
+                </pe:fluidGridItem>
+            </pe:fluidGrid>
 
-    .pe-fluidgrid-item.calendar input {
-        width: 120px;
-    }
+            <p:commandButton value="Submit" style="margin-top: 10px;"
+                             process="fluidGrid" update=":mainForm:fluidGrid :mainForm:inputValues"
+                             oncomplete="if(!args.validationFailed) {PF('inputValuesWidget').show();}"/>
 
-    .pe-fluidgrid-item.select .ui-selectonemenu {
-        width: 134px !important;
-    }
-    
-    .dynaFormLabel {
-        font-weight: bold;
-        margin-bottom: 7px;
-    }
-</h:outputStylesheet>
-<!-- EXAMPLE-SOURCE-END -->
+            <p:dialog header="Input values" widgetVar="inputValuesWidget">
+                <p:dataList id="inputValues" value="#{fluidGridDynaFormController.items}" var="item"
+                            style="margin:10px;">
+                    <h:outputText value="#{item.data.label} : #{item.data.value}" style="margin-right:15px;"/>
+                </p:dataList>
+            </p:dialog>
+
+            <h:outputStylesheet id="fluidGridCSS">
+                .pe-fluidgrid-item {
+                    width: 160px;
+                    height: 60px;
+                }
+
+                .pe-fluidgrid-item input {
+                    width: 150px;
+                }
+
+                .pe-fluidgrid-item.calendar input {
+                    width: 120px;
+                }
+
+                .pe-fluidgrid-item.select .ui-selectonemenu {
+                    width: 134px !important;
+                }
+
+                .dynaFormLabel {
+                    font-weight: bold;
+                    margin-bottom: 7px;
+                }
+            </h:outputStylesheet>
+            <!-- EXAMPLE-SOURCE-END -->
         </h:panelGroup>
-        
+
         <ui:decorate template="/templates/threeTabsDecoratorModel.xhtml">
             <ui:define name="contentTab1">
-${showcase:getFileContent('/sections/fluidgrid/dynaform.xhtml')}
+                ${showcase:getFileContent('/sections/fluidgrid/dynaform.xhtml')}
             </ui:define>
             <ui:define name="contentTab2">
-${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/fluidgrid/FluidGridDynaFormController.java')}
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/fluidgrid/FluidGridDynaFormController.java')}
             </ui:define>
             <ui:define name="contentTab3">
-${showcase:getFileContent('/org/primefaces/extensions/showcase/model/fluidgrid/DynamicField.java')}
+                ${showcase:getFileContent('/org/primefaces/extensions/showcase/model/fluidgrid/DynamicField.java')}
             </ui:define>
         </ui:decorate>
     </ui:define>

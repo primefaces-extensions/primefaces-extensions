@@ -17,6 +17,7 @@ body .ui-icon {
     font-size: 1em;
 }
 
+body .ui-inputfield,
 input,
 select,
 textarea,
@@ -30,6 +31,8 @@ button,
     font-size: 12px;
 }
 
+body .ui-widget:not(.pi),
+body .ui-widget .ui-widget:not(.pi),
 .ui-widget-header,
 .ui-widget-content,
 .ui-widget-header .ui-widget-header,
