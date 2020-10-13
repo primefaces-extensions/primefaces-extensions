@@ -39,12 +39,14 @@ public class CharacterEncodingFilter implements Filter {
      */
     protected boolean ignore = true;
 
-    @Override public void destroy() {
+    @Override
+    public void destroy() {
         encoding = null;
         filterConfig = null;
     }
 
-    @Override public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
                 throws IOException, ServletException {
         // Conditionally select and set the character encoding to be used
         if (ignore || (request.getCharacterEncoding() == null)) {
@@ -57,7 +59,8 @@ public class CharacterEncodingFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    @Override public void init(FilterConfig filterConfig) throws ServletException {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
         encoding = filterConfig.getInitParameter("encoding");
 
