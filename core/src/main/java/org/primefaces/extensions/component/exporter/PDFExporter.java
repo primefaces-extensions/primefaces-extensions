@@ -59,7 +59,9 @@ import com.lowagie.text.pdf.PdfWriter;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public class PDFExporter extends Exporter {
 
     private Font cellFont;
@@ -161,12 +163,12 @@ public class PDFExporter extends Exporter {
         if (!"-".equalsIgnoreCase(encoding)) {
             createCustomFonts(encoding);
         }
-        final int columnsCount = getColumnsCount(table);
+        final int columnsCount = Exporter.getColumnsCount(table);
         final PdfPTable pdfTable;
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
-            final int subTableColumnsCount = getColumnsCount(subtable);
+            final int subTableColumnsCount = Exporter.getColumnsCount(subtable);
             pdfTable = new PdfPTable(subTableColumnsCount);
 
             if (table.getHeader() != null) {
@@ -187,7 +189,7 @@ public class PDFExporter extends Exporter {
                     tableFacet(context, pdfTable, subtable, subTableColumnsCount, ColumnType.HEADER.facet());
                 }
 
-                if (hasHeaderColumn(subtable)) {
+                if (Exporter.hasHeaderColumn(subtable)) {
                     addColumnFacets(subtable, pdfTable, ColumnType.HEADER);
                 }
 
@@ -201,7 +203,7 @@ public class PDFExporter extends Exporter {
                     subTableExportAll(subtable, pdfTable);
                 }
 
-                if (hasFooterColumn(subtable)) {
+                if (Exporter.hasFooterColumn(subtable)) {
                     addColumnFacets(subtable, pdfTable, ColumnType.FOOTER);
                 }
 
@@ -231,7 +233,7 @@ public class PDFExporter extends Exporter {
                 tableFacet(context, pdfTable, table, columnsCount, ColumnType.HEADER.facet());
             }
 
-            if (hasHeaderColumn(table)) {
+            if (Exporter.hasHeaderColumn(table)) {
                 addColumnFacets(table, pdfTable, ColumnType.HEADER);
             }
             if (pageOnly) {
@@ -448,7 +450,7 @@ public class PDFExporter extends Exporter {
                 return;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
             final PdfPCell cell = new PdfPCell(new Paragraph(headerValue, facetFont));
             if (facetBackground != null) {
@@ -490,7 +492,7 @@ public class PDFExporter extends Exporter {
                 return;
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
             final PdfPCell cell = new PdfPCell(new Paragraph(headerValue, facetFont));
             if (facetBackground != null) {
@@ -820,7 +822,7 @@ public class PDFExporter extends Exporter {
         PdfPCell cell;
 
         if (column.getExportFunction() != null) {
-            cell = new PdfPCell(new Paragraph(exportColumnByFunction(context, column), font));
+            cell = new PdfPCell(new Paragraph(Exporter.exportColumnByFunction(context, column), font));
         }
         else {
             final StringBuilder builder = new StringBuilder();
@@ -844,7 +846,7 @@ public class PDFExporter extends Exporter {
         }
     }
 
-    protected PdfPCell addColumnAlignments(final UIComponent component, final PdfPCell cell) {
+    protected static PdfPCell addColumnAlignments(final UIComponent component, final PdfPCell cell) {
         if (component instanceof HtmlOutputText) {
             final HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
@@ -860,7 +862,7 @@ public class PDFExporter extends Exporter {
         return cell;
     }
 
-    protected PdfPCell addFacetAlignments(final UIComponent component, final PdfPCell cell) {
+    protected static PdfPCell addFacetAlignments(final UIComponent component, final PdfPCell cell) {
         if (component instanceof HtmlOutputText) {
             final HtmlOutputText output = (HtmlOutputText) component;
             if (output.getStyle() != null && output.getStyle().contains("left")) {
@@ -956,7 +958,7 @@ public class PDFExporter extends Exporter {
         }
     }
 
-    protected void writePDFToResponse(final ExternalContext externalContext, final ByteArrayOutputStream baos, final String fileName)
+    protected static void writePDFToResponse(final ExternalContext externalContext, final ByteArrayOutputStream baos, final String fileName)
                 throws IOException {
         externalContext.setResponseContentType("application/pdf");
         externalContext.setResponseHeader("Expires", "0");

@@ -33,7 +33,9 @@ import org.primefaces.util.Constants;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public class DataExporter implements ActionListener, StateHolder {
 
     private ValueExpression target;
@@ -213,7 +215,8 @@ public class DataExporter implements ActionListener, StateHolder {
             exporter.setSkipComponents(skipComponentsValue);
             exporter.customFormat(facetBackgroundValue, facetFontSizeValue, facetFontColorValue, facetFontStyleValue, fontNameValue, cellFontSizeValue,
                         cellFontColorValue, cellFontStyleValue, datasetPaddingValue, orientationValue);
-            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor, postProcessor,
+            exporter.export(event, tableId, context, outputFileName, tableTitleValue, isPageOnly, isSelectionOnly, encodingType, preProcessor,
+                        postProcessor,
                         subtable);
             context.responseComplete();
         }

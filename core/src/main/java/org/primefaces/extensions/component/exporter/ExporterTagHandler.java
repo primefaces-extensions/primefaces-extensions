@@ -26,7 +26,9 @@ import javax.faces.view.facelets.*;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public class ExporterTagHandler extends TagHandler {
 
     private final TagAttribute target;

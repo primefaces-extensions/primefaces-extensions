@@ -20,7 +20,9 @@ package org.primefaces.extensions.component.exporter;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public interface ExporterFactory {
 
     Exporter getExporterForType(String type);

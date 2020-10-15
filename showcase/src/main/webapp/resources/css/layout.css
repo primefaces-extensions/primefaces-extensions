@@ -181,55 +181,58 @@ div.source {
 .ui-icon-new-comp {
     background-image: url("#{resource['images/new.png']}") !important;
     margin-right: 3px;
+    font-size: 1.25em !important;
 }
 
 .ui-icon-updated-comp {
     background-image: url("#{resource['images/updated.png']}") !important;
     margin-right: 3px;
+    font-size: 1.25em !important;
 }
 
 .ui-icon-deprecated-comp {
     background-image: url("#{resource['images/deprecated.png']}") !important;
     margin-right: 3px;
+    font-size: 1.25em !important;
 }
 
 #logo-link {
-    background-image:url("#{resource['images/logo.png']}");
-    display:block;
-    height:55px;
-    overflow:hidden;
-    text-indent:100%;
-    white-space:nowrap;
-    width:250px;
+    background-image: url("#{resource['images/logo.png']}");
+    display: block;
+    height: 55px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 250px;
     background-size: 250px 55px;
 }
 
 #homepage-link {
-    background-image:url("#{resource['images/bookmark-home.png']}");
-    display:block;
-    height:24px;
-    overflow:hidden;
-    text-indent:100%;
-    white-space:nowrap;
-    width:28px;
+    background-image: url("#{resource['images/bookmark-home.png']}");
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 28px;
 }
 
 #github-link {
-    background-image:url("#{resource['images/bookmark-github.png']}");
-    display:block;
-    height:24px;
-    overflow:hidden;
-    text-indent:100%;
-    white-space:nowrap;
-    width:24px;
+    background-image: url("#{resource['images/bookmark-github.png']}");
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 24px;
 }
 
 #issues-link {
-    background-image:url("#{resource['images/bookmark-issues.png']}");
-    display:block;
-    height:24px;
-    overflow:hidden;
-    text-indent:100%;
-    white-space:nowrap;
-    width:24px;
+    background-image: url("#{resource['images/bookmark-issues.png']}");
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 24px;
 }

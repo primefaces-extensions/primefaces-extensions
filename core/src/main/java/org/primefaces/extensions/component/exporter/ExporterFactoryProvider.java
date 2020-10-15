@@ -26,7 +26,9 @@ import javax.faces.context.FacesContext;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public class ExporterFactoryProvider {
 
     private static final String KEY = ExporterFactoryProvider.class.getName();
@@ -35,6 +37,7 @@ public class ExporterFactoryProvider {
         // hide constructor
     }
 
+    @Deprecated
     public static ExporterFactory getExporterFactory(final FacesContext context) {
 
         ExporterFactory factory = (ExporterFactory) context.getExternalContext().getApplicationMap().get(KEY);
@@ -57,6 +60,7 @@ public class ExporterFactoryProvider {
     }
 }
 
+@Deprecated
 class DefaultExporterFactory implements ExporterFactory {
 
     public enum ExporterType {

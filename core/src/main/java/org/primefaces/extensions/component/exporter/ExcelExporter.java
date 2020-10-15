@@ -55,7 +55,9 @@ import org.primefaces.util.Constants;
  *
  * @author Sudheer Jonna / last modified by $Author$
  * @since 0.7.0
+ * @deprecated use core Primefaces DataExporter
  */
+@Deprecated
 public class ExcelExporter extends Exporter {
 
     private XSSFWorkbook wb;
@@ -157,7 +159,7 @@ public class ExcelExporter extends Exporter {
             else {
 
                 table = (DataTable) component;
-                final int columnsCount = getColumnsCount(table);
+                final int columnsCount = Exporter.getColumnsCount(table);
 
                 if (table.getHeader() != null && !subTable) {
                     tableFacet(context, sheet, table, columnsCount, ColumnType.HEADER.facet());
@@ -224,7 +226,7 @@ public class ExcelExporter extends Exporter {
         if (subTable) {
             int subTableCount = table.getRowCount();
             SubTable subtable = table.getSubTable();
-            final int subTableColumnsCount = getColumnsCount(subtable);
+            final int subTableColumnsCount = Exporter.getColumnsCount(subtable);
 
             if (table.getHeader() != null) {
                 tableFacet(context, sheet, table, subTableColumnsCount, ColumnType.HEADER.facet());
@@ -241,13 +243,13 @@ public class ExcelExporter extends Exporter {
                     tableFacet(context, sheet, subtable, subTableColumnsCount, ColumnType.HEADER.facet());
                 }
 
-                if (hasHeaderColumn(subtable)) {
+                if (Exporter.hasHeaderColumn(subtable)) {
                     addColumnFacets(subtable, sheet, ColumnType.HEADER);
                 }
 
                 exportAll(subtable, sheet);
 
-                if (hasFooterColumn(subtable)) {
+                if (Exporter.hasFooterColumn(subtable)) {
 
                     addColumnFacets(subtable, sheet, ColumnType.FOOTER);
                 }
@@ -298,13 +300,13 @@ public class ExcelExporter extends Exporter {
         final int rowCount = table.getRowCount();
 
         tableColumnGroup(sheet, table, ColumnType.HEADER.facet());
-        if (hasHeaderColumn(table)) {
+        if (Exporter.hasHeaderColumn(table)) {
             addColumnFacets(table, sheet, ColumnType.HEADER);
         }
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             exportRow(table, sheet, rowIndex);
         }
-        if (hasFooterColumn(table)) {
+        if (Exporter.hasFooterColumn(table)) {
             addColumnFacets(table, sheet, ColumnType.FOOTER);
         }
         tableColumnGroup(sheet, table, ColumnType.FOOTER.facet());
@@ -409,7 +411,7 @@ public class ExcelExporter extends Exporter {
                 headerValue = header.toString();
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             final int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -448,7 +450,7 @@ public class ExcelExporter extends Exporter {
                 headerValue = header.toString();
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             final int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -479,7 +481,7 @@ public class ExcelExporter extends Exporter {
                 headerValue = exportValue(context, component);
             }
             else {
-                headerValue = exportFacetValue(context, component);
+                headerValue = Exporter.exportFacetValue(context, component);
             }
 
             final int sheetRowIndex = sheet.getLastRowNum() + 1;
@@ -762,7 +764,7 @@ public class ExcelExporter extends Exporter {
                     for (int i = 0; i < rowExpansion.getChildren().size(); i++) {
                         if (rowExpansion.getChildren().get(i) instanceof DataTable) {
                             final DataTable childTable = (DataTable) rowExpansion.getChildren().get(i);
-                            final int columnsCount = getColumnsCount(childTable);
+                            final int columnsCount = Exporter.getColumnsCount(childTable);
                             if (columnsCount > 0) { // In case none of the colums are exportable.
                                 if (childTable.getHeader() != null) {
                                     tableFacet(null, sheet, childTable, columnsCount, ColumnType.HEADER.facet());
@@ -905,7 +907,7 @@ public class ExcelExporter extends Exporter {
         final FacesContext context = FacesContext.getCurrentInstance();
 
         if (column.getExportFunction() != null) {
-            cell.setCellValue(new XSSFRichTextString(exportColumnByFunction(context, column)));
+            cell.setCellValue(new XSSFRichTextString(Exporter.exportColumnByFunction(context, column)));
         }
         else {
             final StringBuilder builder = new StringBuilder();
