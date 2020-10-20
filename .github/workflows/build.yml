@@ -1,14 +1,14 @@
 name: Java CI
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Java ${{ matrix.java }}
     strategy:
-        matrix:
-            java: [11]
+      matrix:
+        java: [ 11 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -32,9 +32,9 @@ jobs:
       - name: Log github.ref
         run: echo "${{ github.ref }}"
       - name: Build with Maven
-        run: mvn -B -V clean install --batch-mode --show-version 
+        run: mvn -B -V clean install --batch-mode --show-version
       - name: SonarCloud
-        if: ${{ github.ref == 'refs/heads/master' }}
+        if: github.repository =='primefaces-extensions/primefaces-extensions' && github.ref == 'refs/heads/master' && matrix.java == 11
         run: mvn sonar:sonar -Dsonar.projectKey=org.primefaces.extensions:primefaces-extensions-parent -Dsonar.organization=pr1m3fac3sext3ns1ons -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
