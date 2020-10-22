@@ -544,6 +544,6 @@ PrimeFacesExt.locales.TimePicker['en_UK'] = PrimeFacesExt.locales.TimePicker['en
     $.fgtimepicker._adjustZIndex = function (input) {
         input = input.target || input;
         var inst = $.fgtimepicker._getInst(input);
-        inst.tpDiv.css('zIndex', ++PrimeFaces.zindex);
+        inst.tpDiv.css('zIndex', PrimeFaces.nextZindex());
     };
 })();
