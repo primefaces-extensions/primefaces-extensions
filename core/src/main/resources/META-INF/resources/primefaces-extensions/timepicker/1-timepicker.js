@@ -11,6 +11,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
      * @param {object} cfg The widget configuration.
      */
     init: function (cfg) {
+        this._super(cfg);
         this.id = cfg.id;
         this.jqId = PrimeFaces.escapeClientId(cfg.id);
         this.container = $(this.jqId);
@@ -130,9 +131,6 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 
         // pfs metadata
         $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
-
-        this.removeScriptElement(this.id);
-
         this.originalValue = this.jq.val();
     },
 
@@ -213,14 +211,18 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     disableSpinner: function () {
-        $(this.jqId).children('.ui-spinner-button').removeClass('ui-state-hover ui-state-active').addClass('ui-state-disabled').off('mouseover mouseout mouseup mousedown');
+        $(this.jqId).children('.ui-spinner-button')
+            .removeClass('ui-state-hover ui-state-active')
+            .addClass('ui-state-disabled')
+            .off();
     },
 
     spin: function (dir) {
         var time = this.jq.val();
         if (!time) {
             // if the value is empty, set 00:00 and process with spinning
-            this.jq.val('00:00');
+            time = '00' + this.cfg.timeSeparator + '00';
+            this.jq.val(time);
         }
 
         var newTime = null;
