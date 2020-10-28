@@ -699,7 +699,7 @@ public class PDFExporter extends Exporter {
             if (component instanceof RowExpansion) {
                 final RowExpansion rowExpansion = (RowExpansion) component;
                 if (rowExpansion.getChildren() != null) {
-                    for (int i = 0; i < rowExpansion.getChildren().size(); i++) {
+                    for (int i = 0; i < rowExpansion.getChildCount(); i++) {
                         final UIComponent child = rowExpansion.getChildren().get(i);
                         if (child instanceof DataTable) {
                             final DataTable childTable = (DataTable) child;

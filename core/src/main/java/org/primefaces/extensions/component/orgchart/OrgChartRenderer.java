@@ -61,7 +61,7 @@ public class OrgChartRenderer extends CoreRenderer {
         decodeBehaviors(context, component);
     }
 
-    private void decodeNodeStructure(final FacesContext context, final OrgChart orgChart) {
+    private static void decodeNodeStructure(final FacesContext context, final OrgChart orgChart) {
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
 
         final String hierarchyStr = params.get(orgChart.getClientId() + "_hierarchy");
@@ -88,7 +88,7 @@ public class OrgChartRenderer extends CoreRenderer {
         }
     }
 
-    public OrgChartNode buildNodesFromJSON(final Map<String, OrgChartNode> orgChartNodes,
+    public static OrgChartNode buildNodesFromJSON(final Map<String, OrgChartNode> orgChartNodes,
                 final JSONObject hierarchy, OrgChartNode parentNode) {
         final String id = (String) hierarchy.get("id");
         final OrgChartNode node = orgChartNodes.get(id);
@@ -114,7 +114,7 @@ public class OrgChartRenderer extends CoreRenderer {
 
     }
 
-    private void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
+    private static void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = orgChart.getClientId();
         final String widgetVar = orgChart.resolveWidgetVar();
@@ -175,7 +175,7 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    public JSONObject toJSON(final OrgChartNode orgChartNode, final List<OrgChartNode> children) {
+    public static JSONObject toJSON(final OrgChartNode orgChartNode, final List<OrgChartNode> children) {
 
         final JSONObject json = new JSONObject();
 
@@ -189,9 +189,9 @@ public class OrgChartRenderer extends CoreRenderer {
             json.put("className", orgChartNode.getClassName());
         }
 
-        if (!orgChartNode.getChildren().isEmpty()) {
+        if (orgChartNode.getChildCount() > 0) {
             final List<JSONObject> jsonChildren = new ArrayList<>();
-            for (int i = 0; i < orgChartNode.getChildren().size(); i++) {
+            for (int i = 0; i < orgChartNode.getChildCount(); i++) {
                 jsonChildren.add(toJSON(orgChartNode.getChildren().get(i),
                             orgChartNode.getChildren().get(i).getChildren()));
             }

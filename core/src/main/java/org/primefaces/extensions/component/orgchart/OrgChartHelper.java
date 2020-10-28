@@ -62,7 +62,7 @@ public class OrgChartHelper {
     }
 
     private static void treeTraversal(final OrgChartNode orgChartNode, final List<OrgChartNode> orgChartNodes) {
-        if (!orgChartNode.getChildren().isEmpty()) {
+        if (orgChartNode.getChildCount() > 0) {
             for (final OrgChartNode o : orgChartNode.getChildren()) {
                 treeTraversal(o, orgChartNodes);
             }

@@ -59,7 +59,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
         // params
         boolean paramWritten = false;
 
-        for (int i = 0; i < component.getChildren().size(); i++) {
+        for (int i = 0; i < component.getChildCount(); i++) {
             final UIComponent child = component.getChildren().get(i);
             if (child instanceof UIParameter) {
                 final UIParameter parameter = (UIParameter) child;
@@ -94,7 +94,7 @@ public class JavascriptBehaviorRenderer extends ClientBehaviorRenderer {
         return script.toString();
     }
 
-    protected ClientBehaviorRenderingMode getClientBehaviorRenderingMode(final ClientBehaviorContext behaviorContext) {
+    protected static ClientBehaviorRenderingMode getClientBehaviorRenderingMode(final ClientBehaviorContext behaviorContext) {
         final Collection<ClientBehaviorContext.Parameter> behaviorParameters = behaviorContext.getParameters();
         if (behaviorParameters == null || behaviorParameters.isEmpty()) {
             return null;

@@ -149,7 +149,7 @@ public class OrgChartHelperTest {
         jsonArray.put(jsonObject2);
         jsonObject.put("children", jsonArray);
 
-        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final OrgChartNode chartNode = OrgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
         assertEquals("id1", chartNode.getId());
         assertEquals(1, chartNode.getChildren().size());
@@ -182,7 +182,7 @@ public class OrgChartHelperTest {
         jsonArray.put(jsonObject3);
         jsonObject.put("children", jsonArray);
 
-        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final OrgChartNode chartNode = OrgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
         assertEquals("id1", chartNode.getId());
         assertEquals(2, chartNode.getChildren().size());
@@ -218,7 +218,7 @@ public class OrgChartHelperTest {
         jsonArray2.put(jsonObject3);
         jsonObject.put("children", jsonArray);
 
-        final OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+        final OrgChartNode chartNode = OrgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
         assertEquals("id1", chartNode.getId());
         assertEquals(1, chartNode.getChildren().size());

@@ -271,7 +271,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
     }
 
     private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
-        for (int i = 0; i < getChildren().size(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             final UIComponent kid = getChildren().get(i);
             if (!(kid instanceof UIDynaFormControl) || !kid.isRendered()
                         || !((UIDynaFormControl) kid).getType().equals(dynaFormControl.getType())) {
@@ -283,7 +283,7 @@ public class DynaForm extends AbstractDynamicData implements Widget {
                 return;
             }
 
-            for (int j = 0; j < kid.getChildren().size(); j++) {
+            for (int j = 0; j < kid.getChildCount(); j++) {
                 final UIComponent grandkid = kid.getChildren().get(j);
                 processGrandkid(context, phaseId, grandkid);
             }
