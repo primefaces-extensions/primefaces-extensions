@@ -157,7 +157,7 @@ public class TimePickerController implements Serializable {
     }
 
     public void changeLocale(final ActionEvent ae) {
-        if (StringUtils.equalsIgnoreCase(this.locale, "pt_BR")) {
+        if (StringUtils.equalsIgnoreCase(locale, "pt_BR")) {
             locale = "en_US";
         }
         else {

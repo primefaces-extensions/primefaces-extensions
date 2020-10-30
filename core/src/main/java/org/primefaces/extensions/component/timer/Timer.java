@@ -122,8 +122,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(final java.lang.String _widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    public void setWidgetVar(final java.lang.String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
     @Override
@@ -131,24 +131,24 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.update, null);
     }
 
-    public void setUpdate(final java.lang.String _update) {
-        getStateHelper().put(PropertyKeys.update, _update);
+    public void setUpdate(final java.lang.String update) {
+        getStateHelper().put(PropertyKeys.update, update);
     }
 
     public MethodExpression getListener() {
         return (MethodExpression) getStateHelper().eval(PropertyKeys.listener, null);
     }
 
-    public void setListener(final MethodExpression _listener) {
-        getStateHelper().put(PropertyKeys.listener, _listener);
+    public void setListener(final MethodExpression listener) {
+        getStateHelper().put(PropertyKeys.listener, listener);
     }
 
     public boolean isImmediate() {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.immediate, false);
     }
 
-    public void setImmediate(final boolean _immediate) {
-        getStateHelper().put(PropertyKeys.immediate, _immediate);
+    public void setImmediate(final boolean immediate) {
+        getStateHelper().put(PropertyKeys.immediate, immediate);
     }
 
     @Override
@@ -156,8 +156,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.onstart, null);
     }
 
-    public void setOnstart(final java.lang.String _onstart) {
-        getStateHelper().put(PropertyKeys.onstart, _onstart);
+    public void setOnstart(final java.lang.String onstart) {
+        getStateHelper().put(PropertyKeys.onstart, onstart);
     }
 
     @Override
@@ -165,16 +165,16 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.oncomplete, null);
     }
 
-    public void setOncomplete(final java.lang.String _oncomplete) {
-        getStateHelper().put(PropertyKeys.oncomplete, _oncomplete);
+    public void setOncomplete(final java.lang.String oncomplete) {
+        getStateHelper().put(PropertyKeys.oncomplete, oncomplete);
     }
 
     public java.lang.String getOntimercomplete() {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.ontimercomplete, null);
     }
 
-    public void setOntimercomplete(final java.lang.String _oncomplete) {
-        getStateHelper().put(PropertyKeys.ontimercomplete, _oncomplete);
+    public void setOntimercomplete(final java.lang.String oncomplete) {
+        getStateHelper().put(PropertyKeys.ontimercomplete, oncomplete);
     }
 
     public java.lang.String getOntimerstep() {
@@ -190,8 +190,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.process, null);
     }
 
-    public void setProcess(final java.lang.String _process) {
-        getStateHelper().put(PropertyKeys.process, _process);
+    public void setProcess(final java.lang.String process) {
+        getStateHelper().put(PropertyKeys.process, process);
     }
 
     @Override
@@ -199,8 +199,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.onerror, null);
     }
 
-    public void setOnerror(final java.lang.String _onerror) {
-        getStateHelper().put(PropertyKeys.onerror, _onerror);
+    public void setOnerror(final java.lang.String onerror) {
+        getStateHelper().put(PropertyKeys.onerror, onerror);
     }
 
     @Override
@@ -208,8 +208,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.onsuccess, null);
     }
 
-    public void setOnsuccess(final java.lang.String _onsuccess) {
-        getStateHelper().put(PropertyKeys.onsuccess, _onsuccess);
+    public void setOnsuccess(final java.lang.String onsuccess) {
+        getStateHelper().put(PropertyKeys.onsuccess, onsuccess);
     }
 
     @Override
@@ -217,8 +217,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.global, true);
     }
 
-    public void setGlobal(final boolean _global) {
-        getStateHelper().put(PropertyKeys.global, _global);
+    public void setGlobal(final boolean global) {
+        getStateHelper().put(PropertyKeys.global, global);
     }
 
     @Override
@@ -226,8 +226,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.delay, null);
     }
 
-    public void setDelay(final java.lang.String _delay) {
-        getStateHelper().put(PropertyKeys.delay, _delay);
+    public void setDelay(final java.lang.String delay) {
+        getStateHelper().put(PropertyKeys.delay, delay);
     }
 
     @Override
@@ -235,16 +235,16 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.async, false);
     }
 
-    public void setAsync(final boolean _async) {
-        getStateHelper().put(PropertyKeys.async, _async);
+    public void setAsync(final boolean async) {
+        getStateHelper().put(PropertyKeys.async, async);
     }
 
     public boolean isAutoStart() {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.autoStart, true);
     }
 
-    public void setAutoStart(final boolean _autoStart) {
-        getStateHelper().put(PropertyKeys.autoStart, _autoStart);
+    public void setAutoStart(final boolean autoStart) {
+        getStateHelper().put(PropertyKeys.autoStart, autoStart);
     }
 
     @Override
@@ -252,8 +252,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.partialSubmit, false);
     }
 
-    public void setPartialSubmit(final boolean _partialSubmit) {
-        getStateHelper().put(PropertyKeys.partialSubmit, _partialSubmit);
+    public void setPartialSubmit(final boolean partialSubmit) {
+        getStateHelper().put(PropertyKeys.partialSubmit, partialSubmit);
     }
 
     @Override
@@ -261,8 +261,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.resetValues, false);
     }
 
-    public void setResetValues(final boolean _resetValues) {
-        getStateHelper().put(PropertyKeys.resetValues, _resetValues);
+    public void setResetValues(final boolean resetValues) {
+        getStateHelper().put(PropertyKeys.resetValues, resetValues);
     }
 
     @Override
@@ -270,8 +270,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.ignoreAutoUpdate, false);
     }
 
-    public void setIgnoreAutoUpdate(final boolean _ignoreAutoUpdate) {
-        getStateHelper().put(PropertyKeys.ignoreAutoUpdate, _ignoreAutoUpdate);
+    public void setIgnoreAutoUpdate(final boolean ignoreAutoUpdate) {
+        getStateHelper().put(PropertyKeys.ignoreAutoUpdate, ignoreAutoUpdate);
     }
 
     @Override
@@ -333,16 +333,16 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.visible, true);
     }
 
-    public void setVisible(final boolean _visible) {
-        getStateHelper().put(PropertyKeys.visible, _visible);
+    public void setVisible(final boolean visible) {
+        getStateHelper().put(PropertyKeys.visible, visible);
     }
 
     public boolean isForward() {
         return (java.lang.Boolean) getStateHelper().eval(PropertyKeys.forward, false);
     }
 
-    public void setForward(final boolean _forward) {
-        getStateHelper().put(PropertyKeys.forward, _forward);
+    public void setForward(final boolean forward) {
+        getStateHelper().put(PropertyKeys.forward, forward);
     }
 
     @Override
@@ -350,8 +350,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.partialSubmitFilter, null);
     }
 
-    public void setPartialSubmitFilter(final java.lang.String _partialSubmitFilter) {
-        getStateHelper().put(PropertyKeys.partialSubmitFilter, _partialSubmitFilter);
+    public void setPartialSubmitFilter(final java.lang.String partialSubmitFilter) {
+        getStateHelper().put(PropertyKeys.partialSubmitFilter, partialSubmitFilter);
     }
 
     @Override
@@ -359,8 +359,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         return (java.lang.String) getStateHelper().eval(PropertyKeys.form, null);
     }
 
-    public void setForm(final java.lang.String _form) {
-        getStateHelper().put(PropertyKeys.form, _form);
+    public void setForm(final java.lang.String form) {
+        getStateHelper().put(PropertyKeys.form, form);
     }
 
     @Override

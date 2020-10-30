@@ -60,7 +60,7 @@ public class CodeMirrorController implements Serializable {
     }
 
     public List<String> complete(final CompleteEvent event) {
-        final ArrayList<String> suggestions = new ArrayList<String>();
+        final ArrayList<String> suggestions = new ArrayList<>();
 
         suggestions.add("context: " + event.getContext());
         suggestions.add("token: " + event.getToken());
@@ -69,7 +69,7 @@ public class CodeMirrorController implements Serializable {
     }
 
     public List<String> getThemes() {
-        final List<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
 
         results.add("3024-day");
         results.add("3024-night");
@@ -123,7 +123,7 @@ public class CodeMirrorController implements Serializable {
     }
 
     public List<String> getModes() {
-        final List<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
 
         results.add("apl");
         results.add("asn.1");
@@ -244,7 +244,7 @@ public class CodeMirrorController implements Serializable {
     }
 
     public List<String> getKeymaps() {
-        final List<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
 
         results.add("default");
         results.add("emacs");

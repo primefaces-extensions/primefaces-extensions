@@ -415,80 +415,80 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.readOnly, Boolean.FALSE).toString());
     }
 
-    public void setActiveHeaderStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.activeHeaderStyleClass, _value);
+    public void setActiveHeaderStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.activeHeaderStyleClass, value);
     }
 
     public String getCommentedCellStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.commentedCellStyleClass, null);
     }
 
-    public void setCommentedCellStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.commentedCellStyleClass, _value);
+    public void setCommentedCellStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.commentedCellStyleClass, value);
     }
 
     public String getCurrentColStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.currentColStyleClass, null);
     }
 
-    public void setCurrentColStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.currentColStyleClass, _value);
+    public void setCurrentColStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.currentColStyleClass, value);
     }
 
     public String getCurrentHeaderStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.currentHeaderStyleClass, null);
     }
 
-    public void setCurrentHeaderStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.currentHeaderStyleClass, _value);
+    public void setCurrentHeaderStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.currentHeaderStyleClass, value);
     }
 
     public String getCurrentRowStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.currentRowStyleClass, null);
     }
 
-    public void setCurrentRowStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.currentRowStyleClass, _value);
+    public void setCurrentRowStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.currentRowStyleClass, value);
     }
 
     public String getInvalidCellStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.invalidCellStyleClass, null);
     }
 
-    public void setInvalidCellStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.invalidCellStyleClass, _value);
+    public void setInvalidCellStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.invalidCellStyleClass, value);
     }
 
     public String getNoWordWrapStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.noWordWrapStyleClass, null);
     }
 
-    public void setNoWordWrapStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.noWordWrapStyleClass, _value);
+    public void setNoWordWrapStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.noWordWrapStyleClass, value);
     }
 
     public String getPlaceholderCellStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.placeholderCellStyleClass, null);
     }
 
-    public void setPlaceholderCellStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.placeholderCellStyleClass, _value);
+    public void setPlaceholderCellStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.placeholderCellStyleClass, value);
     }
 
     public String getReadOnlyCellStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.placeholderCellStyleClass, null);
     }
 
-    public void setReadOnlyCellStyleClass(final String _value) {
-        getStateHelper().put(PropertyKeys.readOnlyCellStyleClass, _value);
+    public void setReadOnlyCellStyleClass(final String value) {
+        getStateHelper().put(PropertyKeys.readOnlyCellStyleClass, value);
     }
 
     public String getExtender() {
         return (String) getStateHelper().eval(PropertyKeys.extender, null);
     }
 
-    public void setExtender(final String _extender) {
-        getStateHelper().put(PropertyKeys.extender, _extender);
+    public void setExtender(final String extender) {
+        getStateHelper().put(PropertyKeys.extender, extender);
     }
 
     public void setCaseSensitiveSort(final boolean value) {
@@ -743,10 +743,10 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
     /**
      * Sets the filtered list.
      *
-     * @param _filteredValue the List to store
+     * @param filteredValue the List to store
      */
-    public void setFilteredValue(final java.util.List _filteredValue) {
-        getStateHelper().put(PropertyKeys.filteredValue, _filteredValue);
+    public void setFilteredValue(final java.util.List filteredValue) {
+        getStateHelper().put(PropertyKeys.filteredValue, filteredValue);
     }
 
     /**

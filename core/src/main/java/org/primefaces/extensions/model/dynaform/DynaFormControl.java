@@ -15,6 +15,9 @@
  */
 package org.primefaces.extensions.model.dynaform;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import org.primefaces.extensions.model.common.KeyData;
 
 /**
@@ -35,11 +38,11 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
     private static final String KEY_SUFFIX_POSITION = "p";
 
     private String key;
-    private Object data;
+    private Serializable data;
     private final String type;
     private int position;
 
-    public DynaFormControl(Object data, String type, int colspan, int rowspan, int row, int column, int position,
+    public DynaFormControl(Serializable data, String type, int colspan, int rowspan, int row, int column, int position,
                 boolean extended) {
         super(colspan, rowspan, row, column, extended);
         this.position = position;
@@ -66,12 +69,12 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
     }
 
     @Override
-    public Object getData() {
+    public Serializable getData() {
         return data;
     }
 
     @Override
-    public void setData(Object data) {
+    public void setData(Serializable data) {
         this.data = data;
     }
 
@@ -87,33 +90,6 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
         this.position = position;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + position;
-
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        if (getClass() != o.getClass()) {
-            return false;
-        }
-
-        final DynaFormControl that = (DynaFormControl) o;
-        return position == that.position;
-    }
-
     void generateKey() {
         final StringBuilder sb = new StringBuilder();
         sb.append(KEY_PREFIX_ROW).append(getRow()).append(KEY_PREFIX_COLUMN).append(getColumn()).append(KEY_SUFFIX_POSITION).append(getPosition());
@@ -124,6 +100,26 @@ public class DynaFormControl extends AbstractDynaFormElement implements KeyData 
             sb.append(KEY_SUFFIX_REGULAR);
         }
         setKey(sb.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DynaFormControl)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        DynaFormControl that = (DynaFormControl) o;
+        return getPosition() == that.getPosition();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getPosition());
     }
 
     @Override

@@ -35,22 +35,7 @@ public class Case extends DefaultCase {
      */
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-
-        value;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
+        value
     }
 
     public Case() {

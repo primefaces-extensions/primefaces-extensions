@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.sheet;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Class used to represent an invalid row/cell.
@@ -27,13 +28,13 @@ public class SheetInvalidUpdate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Object invalidRowKey;
+    private transient Object invalidRowKey;
 
     private int invalidColIndex;
 
     private transient SheetColumn invalidColumn;
 
-    private Object invalidValue;
+    private transient Object invalidValue;
 
     private String invalidMessage;
 
@@ -47,38 +48,21 @@ public class SheetInvalidUpdate implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + invalidColIndex;
-        result = prime * result + (invalidRowKey == null ? 0 : invalidRowKey.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SheetInvalidUpdate)) {
+            return false;
+        }
+        SheetInvalidUpdate that = (SheetInvalidUpdate) o;
+        return getInvalidColIndex() == that.getInvalidColIndex() &&
+                    Objects.equals(getInvalidRowKey(), that.getInvalidRowKey());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SheetInvalidUpdate other = (SheetInvalidUpdate) obj;
-        if (invalidColIndex != other.invalidColIndex) {
-            return false;
-        }
-        if (invalidRowKey == null) {
-            if (other.invalidRowKey != null) {
-                return false;
-            }
-        }
-        else if (!invalidRowKey.equals(other.invalidRowKey)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(getInvalidRowKey(), getInvalidColIndex());
     }
 
     public Object getInvalidRowKey() {

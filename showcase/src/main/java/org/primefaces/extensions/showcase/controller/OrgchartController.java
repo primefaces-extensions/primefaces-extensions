@@ -15,13 +15,15 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
-import java.io.*;
+import java.io.Serializable;
 
-import javax.faces.view.*;
-import javax.inject.*;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-import org.primefaces.extensions.component.orgchart.*;
-import org.primefaces.extensions.event.*;
+import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
+import org.primefaces.extensions.component.orgchart.OrgChartNode;
+import org.primefaces.extensions.event.OrgChartClickEvent;
+import org.primefaces.extensions.event.OrgChartDropEvent;
 
 /**
  * OrgchartController
@@ -55,7 +57,6 @@ public class OrgchartController implements Serializable {
     }
 
     public static void onClick(final OrgChartClickEvent event) {
-
         System.out.println("clicked ID: " + event.getId());
         System.out.println("hierachy: " + event.getHierarchy().toString());
     }

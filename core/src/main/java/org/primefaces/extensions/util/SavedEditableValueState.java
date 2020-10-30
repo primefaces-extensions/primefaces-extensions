@@ -31,9 +31,9 @@ public class SavedEditableValueState extends SavedState {
 
     private static final long serialVersionUID = 20120425L;
 
-    private Object labelValue;
+    private transient Object labelValue;
 
-    private Object disabled;
+    private transient Object disabled;
 
     public void reset() {
         setSubmittedValue(null);

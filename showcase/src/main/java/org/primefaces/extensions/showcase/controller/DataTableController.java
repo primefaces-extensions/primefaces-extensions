@@ -43,7 +43,7 @@ public class DataTableController implements Serializable {
 
     public DataTableController() {
         if (messages == null) {
-            messages = new ArrayList<Message>();
+            messages = new ArrayList<>();
 
             for (int i = 0; i < 100; i++) {
                 final Message message = new Message();

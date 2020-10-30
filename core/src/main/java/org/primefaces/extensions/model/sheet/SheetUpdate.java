@@ -28,13 +28,13 @@ public class SheetUpdate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Object rowData;
+    private final transient Object rowData;
 
-    private final Object oldValue;
+    private final transient Object oldValue;
 
-    private final Object newValue;
+    private final transient Object newValue;
 
-    private final Object rowKey;
+    private final transient Object rowKey;
 
     private final int colIndex;
 
@@ -64,8 +64,8 @@ public class SheetUpdate implements Serializable {
     public int hashCode() {
         if (hashCode == 0) {
             hashCode = 7;
-            hashCode = 73 * hashCode + Objects.hashCode(this.rowKey);
-            hashCode = 73 * hashCode + this.colIndex;
+            hashCode = 73 * hashCode + Objects.hashCode(rowKey);
+            hashCode = 73 * hashCode + colIndex;
         }
         return hashCode;
     }
@@ -82,10 +82,10 @@ public class SheetUpdate implements Serializable {
             return false;
         }
         final SheetUpdate other = (SheetUpdate) obj;
-        if (this.colIndex != other.colIndex) {
+        if (colIndex != other.colIndex) {
             return false;
         }
-        if (!Objects.equals(this.rowKey, other.rowKey)) {
+        if (!Objects.equals(rowKey, other.rowKey)) {
             return false;
         }
         return true;

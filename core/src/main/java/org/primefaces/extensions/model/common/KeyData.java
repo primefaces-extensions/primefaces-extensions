@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.model.common;
 
+import java.io.Serializable;
+
 /**
  * Data wrapper interface with unique key.
  *
@@ -22,13 +24,13 @@ package org.primefaces.extensions.model.common;
  * @version $Revision$
  * @since 0.5
  */
-public interface KeyData {
+public interface KeyData extends Serializable {
 
     String getKey();
 
     void setKey(String key);
 
-    Object getData();
+    Serializable getData();
 
-    void setData(Object data);
+    void setData(Serializable data);
 }

@@ -156,168 +156,168 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
         return (String) getStateHelper().eval(PropertyKeys.nodeId, "id");
     }
 
-    public void setNodeId(final String _nodeId) {
-        getStateHelper().put(PropertyKeys.nodeId, _nodeId);
+    public void setNodeId(final String nodeId) {
+        getStateHelper().put(PropertyKeys.nodeId, nodeId);
     }
 
     public String getWidgetVar() {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
 
-    public void setWidgetVar(final String _widgetVar) {
-        getStateHelper().put(PropertyKeys.widgetVar, _widgetVar);
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
     public String getNodeContent() {
         return (String) getStateHelper().eval(PropertyKeys.nodeContent, "title");
     }
 
-    public void setNodeContent(final String _nodeContent) {
-        getStateHelper().put(PropertyKeys.nodeContent, _nodeContent);
+    public void setNodeContent(final String nodeContent) {
+        getStateHelper().put(PropertyKeys.nodeContent, nodeContent);
     }
 
     public String getDirection() {
         return (String) getStateHelper().eval(PropertyKeys.direction, "t2b");
     }
 
-    public void setDirection(final String _direction) {
-        getStateHelper().put(PropertyKeys.direction, _direction);
+    public void setDirection(final String direction) {
+        getStateHelper().put(PropertyKeys.direction, direction);
     }
 
     public Boolean getPan() {
         return (Boolean) getStateHelper().eval(PropertyKeys.pan, false);
     }
 
-    public void setPan(final Boolean _pan) {
-        getStateHelper().put(PropertyKeys.pan, _pan);
+    public void setPan(final Boolean pan) {
+        getStateHelper().put(PropertyKeys.pan, pan);
     }
 
     public Boolean getToggleSiblingsResp() {
         return (Boolean) getStateHelper().eval(PropertyKeys.toggleSiblingsResp, false);
     }
 
-    public void setToggleSiblingsResp(final Boolean _toggleSiblingsResp) {
-        getStateHelper().put(PropertyKeys.toggleSiblingsResp, _toggleSiblingsResp);
+    public void setToggleSiblingsResp(final Boolean toggleSiblingsResp) {
+        getStateHelper().put(PropertyKeys.toggleSiblingsResp, toggleSiblingsResp);
     }
 
     public Integer getDepth() {
         return (Integer) getStateHelper().eval(PropertyKeys.depth, 999);
     }
 
-    public void setDepth(final Integer _depth) {
-        getStateHelper().put(PropertyKeys.depth, _depth);
+    public void setDepth(final Integer depth) {
+        getStateHelper().put(PropertyKeys.depth, depth);
     }
 
     public Boolean getExportButton() {
         return (Boolean) getStateHelper().eval(PropertyKeys.exportButton, false);
     }
 
-    public void setExportButton(final Boolean _exportButton) {
-        getStateHelper().put(PropertyKeys.exportButton, _exportButton);
+    public void setExportButton(final Boolean exportButton) {
+        getStateHelper().put(PropertyKeys.exportButton, exportButton);
     }
 
     public String getExportFilename() {
         return (String) getStateHelper().eval(PropertyKeys.exportFilename, "OrgChart");
     }
 
-    public void setExportFilename(final String _exportFilename) {
-        getStateHelper().put(PropertyKeys.exportFilename, _exportFilename);
+    public void setExportFilename(final String exportFilename) {
+        getStateHelper().put(PropertyKeys.exportFilename, exportFilename);
     }
 
     public String getExportFileextension() {
         return (String) getStateHelper().eval(PropertyKeys.exportFileextension, "png");
     }
 
-    public void setExportFileextension(final String _exportFileextension) {
-        getStateHelper().put(PropertyKeys.exportFileextension, _exportFileextension);
+    public void setExportFileextension(final String exportFileextension) {
+        getStateHelper().put(PropertyKeys.exportFileextension, exportFileextension);
     }
 
     public String getParentNodeSymbol() {
         return (String) getStateHelper().eval(PropertyKeys.parentNodeSymbol, "fa-users");
     }
 
-    public void setParentNodeSymbol(final String _parentNodeSymbol) {
-        getStateHelper().put(PropertyKeys.parentNodeSymbol, _parentNodeSymbol);
+    public void setParentNodeSymbol(final String parentNodeSymbol) {
+        getStateHelper().put(PropertyKeys.parentNodeSymbol, parentNodeSymbol);
     }
 
     public Boolean getDraggable() {
         return (Boolean) getStateHelper().eval(PropertyKeys.draggable, false);
     }
 
-    public void setDraggable(final Boolean _draggable) {
-        getStateHelper().put(PropertyKeys.draggable, _draggable);
+    public void setDraggable(final Boolean draggable) {
+        getStateHelper().put(PropertyKeys.draggable, draggable);
     }
 
     public String getChartClass() {
         return (String) getStateHelper().eval(PropertyKeys.chartClass, "");
     }
 
-    public void setChartClass(final String _chartClass) {
-        getStateHelper().put(PropertyKeys.chartClass, _chartClass);
+    public void setChartClass(final String chartClass) {
+        getStateHelper().put(PropertyKeys.chartClass, chartClass);
     }
 
     public Boolean getZoom() {
         return (Boolean) getStateHelper().eval(PropertyKeys.zoom, false);
     }
 
-    public void setZoom(final Boolean _zoom) {
-        getStateHelper().put(PropertyKeys.zoom, _zoom);
+    public void setZoom(final Boolean zoom) {
+        getStateHelper().put(PropertyKeys.zoom, zoom);
     }
 
     public Number getZoominLimit() {
         return (Number) getStateHelper().eval(PropertyKeys.zoominLimit, 7);
     }
 
-    public void setZoominLimit(final Number _zoominLimit) {
-        getStateHelper().put(PropertyKeys.zoominLimit, _zoominLimit);
+    public void setZoominLimit(final Number zoominLimit) {
+        getStateHelper().put(PropertyKeys.zoominLimit, zoominLimit);
     }
 
     public Number getZoomoutLimit() {
         return (Number) getStateHelper().eval(PropertyKeys.zoomoutLimit, 0.5);
     }
 
-    public void setZoomoutLimit(final Number _zoomoutLimit) {
-        getStateHelper().put(PropertyKeys.zoomoutLimit, _zoomoutLimit);
+    public void setZoomoutLimit(final Number zoomoutLimit) {
+        getStateHelper().put(PropertyKeys.zoomoutLimit, zoomoutLimit);
     }
 
     public Integer getVerticalDepth() {
         return (Integer) getStateHelper().eval(PropertyKeys.verticalDepth, null);
     }
 
-    public void setVerticalDepth(final Integer _verticalDepth) {
-        getStateHelper().put(PropertyKeys.verticalDepth, _verticalDepth);
+    public void setVerticalDepth(final Integer verticalDepth) {
+        getStateHelper().put(PropertyKeys.verticalDepth, verticalDepth);
     }
 
     public String getNodeTitle() {
         return (String) getStateHelper().eval(PropertyKeys.nodeTitle, "name");
     }
 
-    public void setNodeTitle(final String _nodeTitle) {
-        getStateHelper().put(PropertyKeys.nodeTitle, _nodeTitle);
+    public void setNodeTitle(final String nodeTitle) {
+        getStateHelper().put(PropertyKeys.nodeTitle, nodeTitle);
     }
 
     public String getStyle() {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(final String _style) {
-        getStateHelper().put(PropertyKeys.style, _style);
+    public void setStyle(final String style) {
+        getStateHelper().put(PropertyKeys.style, style);
     }
 
     public String getStyleClass() {
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(final String _styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, _styleClass);
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
     public String getExtender() {
         return (String) getStateHelper().eval(PropertyKeys.extender, null);
     }
 
-    public void setExtender(final String _extender) {
-        getStateHelper().put(PropertyKeys.extender, _extender);
+    public void setExtender(final String extender) {
+        getStateHelper().put(PropertyKeys.extender, extender);
     }
 
 }

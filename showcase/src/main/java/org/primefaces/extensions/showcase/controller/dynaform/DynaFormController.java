@@ -15,19 +15,23 @@
  */
 package org.primefaces.extensions.showcase.controller.dynaform;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.*;
-import javax.faces.application.*;
-import javax.faces.context.*;
-import javax.faces.model.*;
-import javax.faces.view.*;
-import javax.inject.*;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
-import org.primefaces.*;
-import org.primefaces.extensions.model.dynaform.*;
-import org.primefaces.extensions.showcase.model.dynaform.*;
+import org.primefaces.PrimeFaces;
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormLabel;
+import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.model.dynaform.DynaFormRow;
+import org.primefaces.extensions.showcase.model.dynaform.BookProperty;
 
 /**
  * DynaFormController
@@ -117,7 +121,7 @@ public class DynaFormController implements Serializable {
         return bookProperties;
     }
 
-    public static String submitForm() {
+    public String submitForm() {
         final FacesMessage.Severity sev = FacesContext.getCurrentInstance().getMaximumSeverity();
         final boolean hasErrors = sev != null && FacesMessage.SEVERITY_ERROR.compareTo(sev) >= 0;
 
@@ -126,7 +130,7 @@ public class DynaFormController implements Serializable {
         return null;
     }
 
-    public static List<SelectItem> getLanguages() {
+    public List<SelectItem> getLanguages() {
         if (languages.isEmpty()) {
             languages.add(new SelectItem("en", "English"));
             languages.add(new SelectItem("de", "German"));

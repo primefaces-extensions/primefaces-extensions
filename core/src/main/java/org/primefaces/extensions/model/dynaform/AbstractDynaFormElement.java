@@ -16,6 +16,7 @@
 package org.primefaces.extensions.model.dynaform;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Abstract class representing a control (typically input element or label) inside of <code>DynaForm</code>.
@@ -40,7 +41,7 @@ public abstract class AbstractDynaFormElement implements Serializable {
     public AbstractDynaFormElement() {
     }
 
-    public AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
+    protected AbstractDynaFormElement(int colspan, int rowspan, int row, int column, boolean extended) {
         this.colspan = colspan;
         this.rowspan = rowspan;
         this.row = row;
@@ -77,22 +78,17 @@ public abstract class AbstractDynaFormElement implements Serializable {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AbstractDynaFormElement)) {
             return false;
         }
-
-        final AbstractDynaFormElement that = (AbstractDynaFormElement) o;
-
-        return row == that.row && column == that.column && extended == that.extended;
+        AbstractDynaFormElement that = (AbstractDynaFormElement) o;
+        return getRow() == that.getRow() &&
+                    getColumn() == that.getColumn() &&
+                    isExtended() == that.isExtended();
     }
 
     @Override
     public int hashCode() {
-        int result = row;
-        result = 31 * result + column;
-        result = 31 * result + (extended ? 1 : 0);
-
-        return result;
+        return Objects.hash(getRow(), getColumn(), isExtended());
     }
 }

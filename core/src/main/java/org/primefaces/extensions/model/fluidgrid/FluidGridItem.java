@@ -16,6 +16,7 @@
 package org.primefaces.extensions.model.fluidgrid;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.primefaces.extensions.model.common.KeyData;
@@ -32,7 +33,7 @@ public class FluidGridItem implements KeyData, Serializable {
     private static final long serialVersionUID = 1L;
 
     private String key;
-    private Object data;
+    private Serializable data;
     private String type;
 
     public FluidGridItem() {
@@ -40,15 +41,13 @@ public class FluidGridItem implements KeyData, Serializable {
         setKey(generateKey());
     }
 
-    public FluidGridItem(final Object data) {
+    public FluidGridItem(final Serializable data) {
+        this();
         this.data = data;
         type = DEFAULT_TYPE;
-
-        // generate key
-        setKey(generateKey());
     }
 
-    public FluidGridItem(final Object data, final String type) {
+    public FluidGridItem(final Serializable data, final String type) {
         this.data = data;
         if (type != null) {
             this.type = type;
@@ -72,12 +71,12 @@ public class FluidGridItem implements KeyData, Serializable {
     }
 
     @Override
-    public Object getData() {
+    public Serializable getData() {
         return data;
     }
 
     @Override
-    public void setData(final Object data) {
+    public void setData(final Serializable data) {
         this.data = data;
     }
 
@@ -85,35 +84,25 @@ public class FluidGridItem implements KeyData, Serializable {
         return type;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (key == null ? 0 : key.hashCode());
-        return result;
+    public static String generateKey() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (obj == null) {
+        if (!(o instanceof FluidGridItem)) {
             return false;
         }
-        if (!(obj instanceof FluidGridItem)) {
-            return false;
-        }
-        final FluidGridItem other = (FluidGridItem) obj;
-        if (key == null) {
-            if (other.key != null) {
-                return false;
-            }
-        }
-        else if (!key.equals(other.key)) {
-            return false;
-        }
-        return true;
+        FluidGridItem that = (FluidGridItem) o;
+        return Objects.equals(getKey(), that.getKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getKey());
     }
 
     @Override
@@ -129,7 +118,4 @@ public class FluidGridItem implements KeyData, Serializable {
         return builder.toString();
     }
 
-    public String generateKey() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
-    }
 }

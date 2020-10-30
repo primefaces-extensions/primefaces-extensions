@@ -59,7 +59,7 @@ public class MethodSignatureTagHandler extends TagHandler {
         if (parameterTypes != null) {
             return Arrays.copyOf(parameterTypes, parameterTypes.length);
         }
-        return null;
+        return new Class<?>[] {};
     }
 
     private Class<?>[] parseParameterTypes(final String parameters) throws ClassNotFoundException {

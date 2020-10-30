@@ -38,21 +38,9 @@ public class DefaultCase extends UINamingContainer {
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
 
-        style, styleClass;
+        style, //
+        styleClass
 
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
 
     public DefaultCase() {

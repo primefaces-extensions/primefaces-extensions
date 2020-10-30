@@ -56,7 +56,7 @@ public class DynaFormRow implements Serializable {
      * @param data data object
      * @return DynaFormControl added control
      */
-    public DynaFormControl addControl(final Object data) {
+    public DynaFormControl addControl(final Serializable data) {
         return addControl(data, DynaFormControl.DEFAULT_TYPE, 1, 1);
     }
 
@@ -67,7 +67,7 @@ public class DynaFormRow implements Serializable {
      * @param type type to match the type attribute in pe:dynaFormControl
      * @return DynaFormControl added control
      */
-    public DynaFormControl addControl(final Object data, final String type) {
+    public DynaFormControl addControl(final Serializable data, final String type) {
         return addControl(data, type, 1, 1);
     }
 
@@ -79,7 +79,7 @@ public class DynaFormRow implements Serializable {
      * @param rowspan rowspan
      * @return DynaFormControl added control
      */
-    public DynaFormControl addControl(final Object data, final int colspan, final int rowspan) {
+    public DynaFormControl addControl(final Serializable data, final int colspan, final int rowspan) {
         return addControl(data, DynaFormControl.DEFAULT_TYPE, colspan, rowspan);
     }
 
@@ -92,7 +92,7 @@ public class DynaFormRow implements Serializable {
      * @param rowspan rowspan
      * @return DynaFormControl added control
      */
-    public DynaFormControl addControl(final Object data, final String type, final int colspan, final int rowspan) {
+    public DynaFormControl addControl(final Serializable data, final String type, final int colspan, final int rowspan) {
         final DynaFormControl dynaFormControl = new DynaFormControl(data,
                     type,
                     colspan,

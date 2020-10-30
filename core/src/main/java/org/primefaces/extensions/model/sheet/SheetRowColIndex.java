@@ -43,32 +43,21 @@ public class SheetRowColIndex implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.rowKey);
-        hash = 29 * hash + Objects.hashCode(this.colIndex);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SheetRowColIndex)) {
+            return false;
+        }
+        SheetRowColIndex that = (SheetRowColIndex) o;
+        return Objects.equals(getRowKey(), that.getRowKey()) &&
+                    Objects.equals(getColIndex(), that.getColIndex());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SheetRowColIndex other = (SheetRowColIndex) obj;
-        if (!Objects.equals(this.rowKey, other.rowKey)) {
-            return false;
-        }
-        if (!Objects.equals(this.colIndex, other.colIndex)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(getRowKey(), getColIndex());
     }
 
     @Override

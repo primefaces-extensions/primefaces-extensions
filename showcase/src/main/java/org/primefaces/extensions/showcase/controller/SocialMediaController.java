@@ -42,7 +42,7 @@ public class SocialMediaController implements Serializable {
     private boolean showLabel = true;
 
     public List<SelectItem> getThemes() {
-        final List<SelectItem> results = new ArrayList<SelectItem>();
+        final List<SelectItem> results = new ArrayList<>();
         results.add(new SelectItem("classic", "classic"));
         results.add(new SelectItem("flat", "flat"));
         results.add(new SelectItem("minima", "minima"));
@@ -51,7 +51,7 @@ public class SocialMediaController implements Serializable {
     }
 
     public List<SelectItem> getCountOptions() {
-        final List<SelectItem> results = new ArrayList<SelectItem>();
+        final List<SelectItem> results = new ArrayList<>();
         results.add(new SelectItem("true", "display"));
         results.add(new SelectItem("false", "hide"));
         results.add(new SelectItem("inside", "inside"));

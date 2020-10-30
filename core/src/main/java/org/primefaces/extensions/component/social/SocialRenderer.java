@@ -58,7 +58,7 @@ public class SocialRenderer extends CoreRenderer {
     /**
      * Create the HTML markup for the DOM.
      */
-    private void encodeMarkup(final FacesContext context, final Social social) throws IOException {
+    private static void encodeMarkup(final FacesContext context, final Social social) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = social.getClientId(context);
         final String widgetVar = social.resolveWidgetVar();
@@ -90,7 +90,7 @@ public class SocialRenderer extends CoreRenderer {
             wb.attr("text", social.getText());
         }
 
-        final boolean showCount = Boolean.valueOf(social.getShowCount());
+        final boolean showCount = Boolean.parseBoolean(social.getShowCount());
         if (showCount) {
             wb.attr("showCount", true);
         }

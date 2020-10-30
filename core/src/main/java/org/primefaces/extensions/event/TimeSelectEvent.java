@@ -25,17 +25,17 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 /**
  * Event which is triggered by the {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
+ * @param <T> should either be java.util.Date or java.time.LocalTime
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  * @since 0.3
- * @param <T> should either be java.util.Date or java.time.LocalTime
  */
 public class TimeSelectEvent<T> extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "timeSelect";
     private static final long serialVersionUID = 1L;
 
-    private T time;
+    private transient T time;
 
     public TimeSelectEvent(final UIComponent component, final Behavior behavior, final T time) {
         super(component, behavior);
