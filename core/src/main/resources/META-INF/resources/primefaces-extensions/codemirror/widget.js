@@ -160,7 +160,7 @@ PrimeFaces.widget.ExtCodeMirror = PrimeFaces.widget.DeferredWidget.extend({
                         }).children();
 
                         parsedSuggestions.each(function() {
-                            $this.suggestions.push($(this).html());
+                            $this.suggestions.push($(this).text());
                         });
 
                         CodeMirror.showHint($this.instance, PrimeFaces.widget.ExtCodeMirror.getSuggestions);
