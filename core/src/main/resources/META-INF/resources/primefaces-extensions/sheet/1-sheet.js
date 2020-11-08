@@ -26,6 +26,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
 
+        // GitHub #723: Fix for PrimeIcon themes
+        if (PrimeFacesExt.isPrimeIconTheme()) {
+            this.sheetDiv.addClass('ui-prime-icons');
+        }
+
         // user extension to configure handsontable
         var extender = this.cfg.extender
         if (extender) {

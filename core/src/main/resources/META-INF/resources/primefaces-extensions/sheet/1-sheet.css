@@ -6,11 +6,11 @@
 }
 
 .handsontable td.ui-datatable-odd {
-	background: white;
+    background: white;
 }
 
 .handsontable th {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .handsontable td.area {
@@ -18,18 +18,18 @@
 }
 
 .ui-sheet-error {
-    display:  block;    
+    display: block;
 }
 
 .ui-sheet-error .ui-outputlabel-rfi {
-	padding-right: 4px;
+    padding-right: 4px;
 }
 
 .handsontable-inner {
     overflow: hidden;
 }
 
-.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer  {
+.ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer {
     text-align: center;
     padding: 4px;
     color: #777;
@@ -40,9 +40,9 @@
 }
 
 .ui-handsontable.ui-state-error {
-	border-width: 2px;
-	border-radius: 7px;
-	color: #222;
+    border-width: 2px;
+    border-radius: 7px;
+    color: #222;
 }
 
 .handsontable td.ui-message-error {
@@ -50,14 +50,14 @@
 }
 
 .handsontable th .ui-sortable-column-icon.ui-icon {
-	display: inline-block;
-	position: relative;
-	top: 3px;
-	margin-left: 2px;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    margin-left: 2px;
 }
 
 .handsontable th.ui-sortable {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .handson-filter input {
@@ -86,3 +86,27 @@ span.handson-filter {
     padding: 2px;
 }
 
+body .ui-prime-icons .ui-icon {
+    font-family: 'primeicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body .ui-prime-icons .ui-icon-carat-2-n-s:before {
+    content: "\e915";
+}
+
+body .ui-prime-icons .ui-icon-triangle-1-n:before {
+    content: "\e914";
+}
+
+body .ui-prime-icons .ui-icon-triangle-1-s:before {
+    content: "\e913";
+}
