@@ -37,6 +37,7 @@ import org.primefaces.extensions.model.sheet.SheetUpdate;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
 import org.primefaces.model.BeanPropertyComparator;
+import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
@@ -122,7 +123,7 @@ public class Sheet extends SheetBase {
 
     @Override
     public String getFamily() {
-        return COMPONENT_FAMILY;
+        return SheetBase.COMPONENT_FAMILY;
     }
 
     /**
@@ -525,8 +526,9 @@ public class Sheet extends SheetBase {
             veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         }
         if (veSortBy != null) {
-            filteredList.sort(new BeanPropertyComparator(veSortBy, var, convertSortOrder(), null,
-                        isCaseSensitiveSort(), Locale.ENGLISH, getNullSortOrder()));
+            SortMeta sortMeta = SortMeta.builder().caseSensitiveSort(isCaseSensitiveSort()).sortBy(veSortBy).order(convertSortOrder())
+                        .nullSortOrder(getNullSortOrder()).build();
+            filteredList.sort(new BeanPropertyComparator(var, sortMeta, Locale.ENGLISH));
         }
 
         // map filtered rows
