@@ -57,7 +57,7 @@ public class CreditCardRenderer extends CoreRenderer {
 
     protected void encodeScript(FacesContext context, CreditCard creditCard) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCreditCard", creditCard.resolveWidgetVar(), creditCard.getClientId(context));
+        wb.init("ExtCreditCard", creditCard);
         wb.attr("width", creditCard.getWidth(), 350);
         wb.attr("formatting", creditCard.isFormatting(), true);
 

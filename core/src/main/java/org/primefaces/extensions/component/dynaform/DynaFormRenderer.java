@@ -152,8 +152,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext fc, final DynaForm dynaForm, final DynaFormModel dynaFormModel) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        final String clientId = dynaForm.getClientId(fc);
-        wb.init("ExtDynaForm", dynaForm.resolveWidgetVar(), clientId);
+        wb.init("ExtDynaForm", dynaForm);
         wb.attr("uuid", dynaFormModel.getUuid());
         wb.attr("autoSubmit", dynaForm.isAutoSubmit());
         wb.attr("isPostback", fc.isPostback());

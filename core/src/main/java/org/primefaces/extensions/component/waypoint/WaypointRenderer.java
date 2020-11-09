@@ -50,7 +50,7 @@ public class WaypointRenderer extends CoreRenderer {
                     SearchExpressionUtils.SET_PARENT_FALLBACK);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtWaypoint", waypoint.resolveWidgetVar(), waypoint.getClientId(fc));
+        wb.init("ExtWaypoint", waypoint);
         wb.attr("target", target);
         wb.attr("continuous", waypoint.isContinuous());
         wb.attr("enabled", waypoint.isEnabled());

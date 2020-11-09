@@ -59,7 +59,7 @@ public class CalculatorRenderer extends CoreRenderer {
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCalculator", calculator.resolveWidgetVar(), calculator.getClientId(context));
+        wb.init("ExtCalculator", calculator);
         wb.attr("target", target);
         wb.attr("showOn", ExtLangUtils.lowerCase(calculator.getShowOn()));
         wb.attr("layout", ExtLangUtils.lowerCase(calculator.getLayout()));

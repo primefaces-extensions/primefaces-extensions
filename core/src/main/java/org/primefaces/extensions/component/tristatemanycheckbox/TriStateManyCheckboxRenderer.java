@@ -272,7 +272,7 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     protected void encodeScript(final FacesContext context, final TriStateManyCheckbox checkbox) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTriStateManyCheckbox", checkbox.resolveWidgetVar(), checkbox.getClientId());
+        wb.init("ExtTriStateManyCheckbox", checkbox);
         encodeClientBehaviors(context, checkbox);
         wb.finish();
     }

@@ -118,7 +118,7 @@ public class CodeMirrorRenderer extends InputRenderer {
 
     protected void encodeScript(final FacesContext context, final CodeMirror codeMirror) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCodeMirror", codeMirror.resolveWidgetVar(), codeMirror.getClientId());
+        wb.init("ExtCodeMirror", codeMirror);
         wb.attr("theme", codeMirror.getTheme())
                     .attr("mode", codeMirror.getMode())
                     .attr("indentUnit", codeMirror.getIndentUnit())

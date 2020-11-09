@@ -78,9 +78,7 @@ public class TimerRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final Timer timer) throws IOException {
-
         final String clientId = timer.getClientId(context);
-        final String widgetVar = timer.resolveWidgetVar();
 
         final UIForm form = ComponentTraversalUtils.closestForm(context, timer);
         if (form == null) {
@@ -109,7 +107,7 @@ public class TimerRenderer extends CoreRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.init("ExtTimer", widgetVar, clientId)
+        wb.init("ExtTimer", timer)
                     .attr("timeout", timer.getTimeout()).attr("interval", timer.getInterval())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
                     .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())

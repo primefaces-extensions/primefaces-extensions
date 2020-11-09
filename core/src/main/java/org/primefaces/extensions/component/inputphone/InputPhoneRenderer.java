@@ -163,10 +163,8 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
-        final String clientId = inputPhone.getClientId(context);
-
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtInputPhone", inputPhone.resolveWidgetVar(), clientId);
+        wb.init("ExtInputPhone", inputPhone);
         if (!inputPhone.isAllowDropdown()) {
             wb.attr("allowDropdown", inputPhone.isAllowDropdown());
         }

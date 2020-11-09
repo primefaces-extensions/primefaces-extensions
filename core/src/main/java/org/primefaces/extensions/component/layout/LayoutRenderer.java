@@ -89,10 +89,8 @@ public class LayoutRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
-        final String clientId = layout.getClientId(fc);
-
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtLayout", layout.resolveWidgetVar(), clientId);
+        wb.init("ExtLayout", layout);
         wb.attr("clientState", layout.isStateCookie());
         wb.attr("full", layout.isFullPage(), false);
 

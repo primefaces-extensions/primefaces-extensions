@@ -110,7 +110,7 @@ public class BlockUIRenderer extends CoreRenderer {
 
         // generate script
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtBlockUI", blockUI.resolveWidgetVar(), clientId);
+        wb.init("ExtBlockUI", blockUI);
         wb.attr("source", source);
         wb.attr("target", target, null);
         wb.attr("autoShow", blockUI.isAutoShow());

@@ -114,7 +114,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
     protected void encodeScript(FacesContext context, AbstractMenu menu) throws IOException {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtFAB", fab.resolveWidgetVar(), fab.getClientId(context));
+        wb.init("ExtFAB", fab);
         if (fab.isKeepOpen()) {
             wb.attr("keepOpen", fab.isKeepOpen());
         }

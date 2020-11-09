@@ -121,10 +121,8 @@ public class FluidGridRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
-        final String clientId = fluidGrid.getClientId(fc);
-
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtFluidGrid", fluidGrid.resolveWidgetVar(), clientId);
+        wb.init("ExtFluidGrid", fluidGrid);
         wb.append(",opts:{");
         wb.append("isFitWidth:" + fluidGrid.isFitWidth());
         wb.append(",isOriginLeft:" + fluidGrid.isOriginLeft());

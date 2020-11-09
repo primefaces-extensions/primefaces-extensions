@@ -79,8 +79,7 @@ public class SocialRenderer extends CoreRenderer {
      */
     private void encodeScript(final FacesContext context, final Social social) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        final String clientId = social.getClientId(context);
-        wb.init("ExtSocial", social.resolveWidgetVar(), clientId);
+        wb.init("ExtSocial", social);
         wb.attr("showLabel", social.isShowLabel());
         wb.attr("shareIn", social.getShareIn());
         if (!LangUtils.isValueBlank(social.getUrl())) {

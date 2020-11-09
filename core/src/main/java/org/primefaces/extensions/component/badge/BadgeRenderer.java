@@ -50,7 +50,7 @@ public class BadgeRenderer extends CoreRenderer {
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtBadge", badge.resolveWidgetVar(), badge.getClientId(context));
+        wb.init("ExtBadge", badge);
         wb.attr("target", target);
         wb.attr("color", badge.getColor());
         wb.attr("position", badge.getPosition());

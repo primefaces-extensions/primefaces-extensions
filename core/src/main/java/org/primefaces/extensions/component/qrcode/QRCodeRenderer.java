@@ -42,7 +42,7 @@ public class QRCodeRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final QRCode qrCode) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtQRCode", qrCode.resolveWidgetVar(), qrCode.getClientId());
+        wb.init("ExtQRCode", qrCode);
         wb.attr("render", qrCode.getRenderMethod())
                     .attr("mode", qrCode.getRenderMode())
                     .attr("minVersion", qrCode.getMinVersion())

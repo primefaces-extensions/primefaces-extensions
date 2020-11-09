@@ -83,7 +83,7 @@ public class CodeScannerRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final CodeScanner codeScanner) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtCodeScanner", codeScanner.resolveWidgetVar(), codeScanner.getClientId(context))
+        wb.init("ExtCodeScanner", codeScanner)
                     .attr("type", codeScanner.getTypeEnum().name())
                     .attr("autoStart", codeScanner.isAutoStart());
         if (codeScanner.getDeviceId() != null) {

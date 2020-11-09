@@ -132,7 +132,7 @@ public class LegendRenderer extends CoreRenderer {
 
     private void encodeScript(FacesContext context, Legend legend) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtLegend", legend.resolveWidgetVar(), legend.getClientId(context));
+        wb.init("ExtLegend", legend);
         wb.attr("layout", legend.getLayout());
         wb.finish();
     }

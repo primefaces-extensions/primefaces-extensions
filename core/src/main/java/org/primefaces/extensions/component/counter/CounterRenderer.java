@@ -51,7 +51,7 @@ public class CounterRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final Counter counter) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        wb.init("ExtCounter", counter.resolveWidgetVar(), counter.getClientId(context))
+        wb.init("ExtCounter", counter)
                     .attr("start", counter.getStart())
                     .attr("end", counter.getEnd())
                     .attr("decimals", counter.getDecimals())

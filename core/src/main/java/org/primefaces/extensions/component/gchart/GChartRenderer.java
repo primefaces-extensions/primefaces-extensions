@@ -57,17 +57,13 @@ public class GChartRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final GChart chart) throws IOException {
-
-        final String clientId = chart.getClientId();
-        final String widgetVar = chart.resolveWidgetVar();
-
         String apiKey = chart.getApiKey();
         if (LangUtils.isValueBlank(apiKey)) {
             apiKey = getApiKey(context);
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtGChart", widgetVar, clientId)
+        wb.init("ExtGChart", chart)
                     .attr("chart", ((GChartModel) chart.getValue()).toJson())
                     .attr("title", chart.getTitle())
                     .attr("apiKey", apiKey)

@@ -110,7 +110,7 @@ public class SpeedtestRenderer extends CoreRenderer {
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtSpeedtest", speedtest.resolveWidgetVar(), clientId);
+        wb.init("ExtSpeedtest", speedtest);
         wb.attr("idDown", clientId + "ggdown");
         wb.attr("idUp", clientId + "ggup");
         wb.attr("idPing", clientId + "ggping");

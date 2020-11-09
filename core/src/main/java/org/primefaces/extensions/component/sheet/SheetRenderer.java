@@ -178,8 +178,7 @@ public class SheetRenderer extends CoreRenderer {
     protected void encodeScript(final FacesContext context, final Sheet sheet)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        final String clientId = sheet.getClientId(context);
-        wb.init("ExtSheet", sheet.resolveWidgetVar(), clientId);
+        wb.init("ExtSheet", sheet);
 
         // errors
         encodeInvalidData(sheet, wb);

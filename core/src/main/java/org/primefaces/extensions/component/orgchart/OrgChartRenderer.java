@@ -133,7 +133,6 @@ public class OrgChartRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final OrgChart orgChart)
                 throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        final String clientId = orgChart.getClientId(context);
 
         final OrgChartNode orgChartNode;
         if (orgChart.getValue() == null) {
@@ -150,7 +149,7 @@ public class OrgChartRenderer extends CoreRenderer {
 
         final String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
 
-        wb.init("ExtOrgChart", orgChart.resolveWidgetVar(), clientId);
+        wb.init("ExtOrgChart", orgChart);
         wb.attr("nodeId", orgChart.getNodeId());
         wb.attr("nodeContent", orgChart.getNodeContent());
         wb.attr("direction", orgChart.getDirection());

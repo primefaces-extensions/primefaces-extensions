@@ -217,7 +217,7 @@ public class TimePickerRenderer extends InputRenderer {
         final String clientId = timepicker.getClientId(fc);
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
-        wb.init("ExtTimePicker", timepicker.resolveWidgetVar(), clientId);
+        wb.init("ExtTimePicker", timepicker);
         wb.attr("timeSeparator", timepicker.getTimeSeparator());
         wb.attr("myPosition", timepicker.getDialogPosition());
         wb.attr("atPosition", timepicker.getInputPosition());

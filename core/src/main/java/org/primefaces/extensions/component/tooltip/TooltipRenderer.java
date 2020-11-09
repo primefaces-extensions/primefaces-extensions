@@ -23,12 +23,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
-import org.primefaces.util.Constants;
-import org.primefaces.util.EscapeUtils;
-import org.primefaces.util.FastStringWriter;
-import org.primefaces.util.LangUtils;
-import org.primefaces.util.WidgetBuilder;
+import org.primefaces.util.*;
 
 /**
  * Renderer for the {@link Tooltip} component.
@@ -41,7 +36,6 @@ public class TooltipRenderer extends CoreRenderer {
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final Tooltip tooltip = (Tooltip) component;
-        final String clientId = tooltip.getClientId(context);
         final String header = tooltip.getHeader();
         final String styleClass = tooltip.getStyleClass();
         final boolean global = tooltip.isGlobal();
@@ -55,7 +49,7 @@ public class TooltipRenderer extends CoreRenderer {
         }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTooltip", tooltip.resolveWidgetVar(), clientId);
+        wb.init("ExtTooltip", tooltip);
         wb.attr("global", global);
         wb.attr("shared", shared);
         wb.attr("autoShow", autoShow);

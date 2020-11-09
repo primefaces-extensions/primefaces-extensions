@@ -43,7 +43,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
         final ImageAreaSelect imageAreaSelect = (ImageAreaSelect) component;
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtImageAreaSelect", imageAreaSelect.resolveWidgetVar(), imageAreaSelect.getClientId());
+        wb.init("ExtImageAreaSelect", imageAreaSelect);
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
                     .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                     .attr("autoHide", imageAreaSelect.isAutoHide())

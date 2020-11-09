@@ -155,7 +155,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final FuzzySearch fuzzySearch) throws IOException {
-        final String clientId = fuzzySearch.getClientId(context);
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
@@ -165,7 +164,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         }
         final String jsonDatasource = ja.toString();
 
-        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch.resolveWidgetVar(context), clientId)
+        wb.init(FuzzySearch.class.getSimpleName(), fuzzySearch)
                     .attr("resultStyle", fuzzySearch.getResultStyle())
                     .attr("resultStyleClass", fuzzySearch.getResultStyleClass())
                     .attr("listItemsAtTheBeginning", fuzzySearch.isListItemsAtTheBeginning())

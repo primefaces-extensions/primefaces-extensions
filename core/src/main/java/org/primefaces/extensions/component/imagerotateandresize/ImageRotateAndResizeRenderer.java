@@ -43,7 +43,7 @@ public class ImageRotateAndResizeRenderer extends CoreRenderer {
         final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
+        wb.init("ExtImageRotateAndResize", imageRotateAndResize);
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageRotateAndResize, imageRotateAndResize.getFor()));
 
         encodeClientBehaviors(context, imageRotateAndResize);
