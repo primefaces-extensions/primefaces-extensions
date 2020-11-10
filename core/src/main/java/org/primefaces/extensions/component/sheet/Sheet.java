@@ -174,14 +174,29 @@ public class Sheet extends SheetBase {
     }
 
     /**
+     * The list of rendered child columns.
+     */
+    public List<SheetColumn> getRenderedColumns() {
+        List<SheetColumn> allColumns = getColumns();
+        List<SheetColumn> renderedCols = new ArrayList<>(allColumns.size());
+        for (SheetColumn column : allColumns) {
+            if (column.isRendered()) {
+                renderedCols.add(column);
+            }
+        }
+        return renderedCols;
+    }
+
+    /**
      * Grabs the UIColumn children for the parent specified.
      */
-    private void getColumns(final UIComponent parent) {
+    private List<SheetColumn> getColumns(final UIComponent parent) {
         for (final UIComponent child : parent.getChildren()) {
             if (child instanceof SheetColumn) {
                 columns.add((SheetColumn) child);
             }
         }
+        return columns;
     }
 
     /**
@@ -488,8 +503,9 @@ public class Sheet extends SheetBase {
 
         remapRows();
 
+        List<SheetColumn> columns = getRenderedColumns();
         boolean filters = false;
-        for (final SheetColumn col : getColumns()) {
+        for (final SheetColumn col : columns) {
             if (!LangUtils.isValueBlank(col.getFilterValue())) {
                 filters = true;
                 break;
@@ -515,7 +531,7 @@ public class Sheet extends SheetBase {
 
         // Sort by the saved column. When none was saved, sort by the "sortBy" attribute of the sheet.
         final int sortByIdx = getSortColRenderIndex();
-        final SheetColumn currentSortByColumn = sortByIdx >= 0 ? getColumns().get(sortByIdx) : null;
+        final SheetColumn currentSortByColumn = sortByIdx >= 0 ? columns.get(sortByIdx) : null;
         final ValueExpression currentSortByVe = currentSortByColumn != null ? currentSortByColumn.getValueExpression(
                     PropertyKeys.sortBy.name()) : null;
         final ValueExpression veSortBy;
