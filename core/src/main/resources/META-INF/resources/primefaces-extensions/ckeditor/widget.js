@@ -22,7 +22,7 @@ CKEDITOR_GETURL = function (resource) {
         facesResource = resource.replace('?resolve=false', '');
     } else {
         //already wrapped?
-        var libraryVersion = 'v=' + PrimeFacesExt.VERSION;
+        var libraryVersion = 'e=' + PrimeFacesExt.VERSION;
         var libraryVersionIndex = resource.indexOf(libraryVersion);
         if (libraryVersionIndex !== -1) {
             //look for appended resource
