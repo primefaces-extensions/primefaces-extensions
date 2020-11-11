@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionListener;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.commandbutton.CommandButtonRenderer;
@@ -45,9 +46,10 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
     }
 
     protected boolean isEligible(final CommandButton button) {
+        final ActionListener[] listeners = button.getActionListeners();
         return button.isAjax()
                     && button.isRendered()
-                    && button.getActionExpression() != null
+                    && (button.getActionExpression() != null || (listeners != null && listeners.length > 0))
                     && !button.isDisabled()
                     && !isConfirmation(button);
     }
