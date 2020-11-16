@@ -63,7 +63,7 @@
         <open-pdf.version>1.3.23</open-pdf.version>
         <jakarta-faces.version>2.3.14</jakarta-faces.version>
         <poi.version>4.1.2</poi.version>
-        <libphonenumber.version>8.12.12</libphonenumber.version>
+        <libphonenumber.version>8.12.13</libphonenumber.version>
 
         <primefaces.core.version>9.0-SNAPSHOT</primefaces.core.version>
         <primefaces.optimizer.version>2.3.4</primefaces.optimizer.version>
