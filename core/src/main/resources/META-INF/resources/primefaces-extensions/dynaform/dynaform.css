@@ -1,7 +1,7 @@
 .pe-dynaform-grid {
     margin: 0;
     padding: 0;
-    border-collapse : collapse;
+    border-collapse: collapse;
     border-spacing: 0;
     width: auto;
 }
@@ -17,13 +17,6 @@
 .pe-dynaform-cell[colspan] > textarea,
 .pe-dynaform-cell[colspan] > select {
     width: 100%;
-}
-
-/* for IE8 because it thinks all td elements have a colspan */
-.pe-dynaform-cell[colspan="1"] > input,
-.pe-dynaform-cell[colspan="1"] > textarea,
-.pe-dynaform-cell[colspan="1"] > select {
-    width: auto;
 }
 
 .pe-dynaform-cell-last {
