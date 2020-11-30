@@ -20,8 +20,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          key: ${{ runner.os }}-v3-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-v3
       - name: Checkout PrimeFaces
         uses: actions/checkout@master
         with:
