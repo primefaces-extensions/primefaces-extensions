@@ -17,7 +17,7 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ### Maven
 
-##### Release
+##### Release (javax)
 ```xml
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
@@ -28,6 +28,16 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>resources-ckeditor</artifactId>
     <version>${primefaces-extensions.version}</version>
+</dependency>
+```
+
+##### Release (jakarta)
+```xml
+<dependency>
+    <groupId>org.primefaces.extensions</groupId>
+    <artifactId>primefaces-extensions</artifactId>
+    <version>${primefaces-extensions.version}</version>
+    <classifier>jakarta</classifier>
 </dependency>
 ```
 
