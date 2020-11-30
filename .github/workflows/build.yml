@@ -28,11 +28,11 @@ jobs:
           repository: primefaces/primefaces
           path: primefaces
       - name: Build PrimeFaces
-        run: cd primefaces && mvn install && cd ..
+        run: cd primefaces && mvn -U install && cd ..
       - name: Log github.ref
         run: echo "${{ github.ref }}"
       - name: Build with Maven
-        run: mvn -B -V clean install --batch-mode --show-version
+        run: mvn -B -V -U clean install --batch-mode --show-version
       - name: SonarCloud
         if: github.repository =='primefaces-extensions/primefaces-extensions' && github.ref == 'refs/heads/master' && matrix.java == 11
         run: mvn sonar:sonar -Dsonar.projectKey=org.primefaces.extensions:primefaces-extensions-parent -Dsonar.organization=pr1m3fac3sext3ns1ons -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN}}
