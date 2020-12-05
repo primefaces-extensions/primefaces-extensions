@@ -155,7 +155,7 @@ cards = [
     luhn: true
   }, {
     type: 'maestro',
-    pattern: /^(5018|5020|5038|5078|5[6-9]|6304|6703|6708|6759|676[1-3])/,
+    pattern: /^(50|5[6-9]|6007|6220|6304|6703|6708|6759|676[1-3])/,
     format: defaultFormat,
     length: [12, 13, 14, 15, 16, 17, 18, 19],
     cvcLength: [3],
@@ -673,7 +673,8 @@ Payment = (function() {
   };
 
   Payment.restrictNumeric = function(el) {
-    return QJ.on(el, 'keypress', restrictNumeric);
+    QJ.on(el, 'keypress', restrictNumeric);
+    return QJ.on(el, 'input', restrictNumeric);
   };
 
   Payment.cardExpiryVal = function(el) {
@@ -683,6 +684,7 @@ Payment = (function() {
   Payment.formatCardCVC = function(el) {
     Payment.restrictNumeric(el);
     QJ.on(el, 'keypress', restrictCVC);
+    QJ.on(el, 'input', restrictCVC);
     return el;
   };
 
@@ -698,6 +700,7 @@ Payment = (function() {
       QJ.on(el, 'keypress', formatForwardSlash);
       QJ.on(el, 'keypress', formatForwardExpiry);
       QJ.on(el, 'keydown', formatBackExpiry);
+      QJ.on(el, 'input', formatExpiry);
     }
     return el;
   };
@@ -705,7 +708,9 @@ Payment = (function() {
   Payment.formatCardExpiryMultiple = function(month, year) {
     QJ.on(month, 'keypress', restrictMonthExpiry);
     QJ.on(month, 'keypress', formatMonthExpiry);
-    return QJ.on(year, 'keypress', restrictYearExpiry);
+    QJ.on(month, 'input', formatMonthExpiry);
+    QJ.on(year, 'keypress', restrictYearExpiry);
+    return QJ.on(year, 'input', restrictYearExpiry);
   };
 
   Payment.formatCardNumber = function(el, maxLength) {
