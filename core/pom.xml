@@ -502,6 +502,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- PROVIDED Java API's -->
