@@ -13,12 +13,9 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
      */
     init: function (cfg) {
         this._super(cfg);
-        this.cfg = cfg;
         this.cfg.container = '.ui-credit-card';
-
         this.form = this.jq.closest('form');
         this.cfg.form = PrimeFaces.escapeClientId(this.form.attr('id'))
-
         this.card = new Card(this.cfg)
 
         this.bindListeners();

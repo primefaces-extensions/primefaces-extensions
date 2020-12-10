@@ -13,10 +13,10 @@
         <f:facet name="header">
             <pe:creditCard id="creditCard" labelMonthYear="MM/YY" placeholderExpiry="**/**" placeholderName="Optimus Prime"/>
         </f:facet>
-        <p:inputText id="number" placeholder="Card number"/>
+        <p:inputText id="number" placeholder="Card number" inputmode="numeric"/>
         <p:inputText id="name" placeholder="Full name"/>
-        <p:inputText id="expiry" placeholder="MM/YY"/>
-        <p:inputText id="cvc" placeholder="CVC"/>
+        <p:inputText id="expiry" placeholder="MM/YY" inputmode="numeric"/>
+        <p:inputText id="cvc" placeholder="CVC" inputmode="numeric"/>
     </p:panelGrid>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
