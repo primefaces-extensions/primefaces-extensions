@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
-import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
@@ -114,11 +113,14 @@ public class OrgChartRenderer extends CoreRenderer {
 
     }
 
-    private static void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
+    private void encodeMarkup(final FacesContext context, final OrgChart orgChart) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = orgChart.getClientId();
         final String widgetVar = orgChart.resolveWidgetVar();
-        final String styleClass = OrgChart.STYLE_CLASS + ExtLangUtils.defaultString(orgChart.getStyleClass());
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(OrgChart.STYLE_CLASS)
+                    .add(orgChart.getStyleClass())
+                    .build();
 
         writer.startElement("div", orgChart);
         writer.writeAttribute("id", clientId, "id");

@@ -74,18 +74,16 @@ public class LetterAvatarRenderer extends CoreRenderer {
         if (!LangUtils.isValueBlank(letterAvatar.getStyle())) {
             style += letterAvatar.getStyle();
         }
-        String styleClass = LetterAvatar.COMPONENT_CLASS;
-        if (!LangUtils.isValueBlank(letterAvatar.getStyleClass())) {
-            styleClass += " " + letterAvatar.getStyleClass();
-        }
+
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(LetterAvatar.COMPONENT_CLASS)
+                    .add(letterAvatar.getStyleClass())
+                    .add(rounded, LetterAvatar.COMPONENT_CLASS_ROUNDED)
+                    .build();
 
         writer.startElement("span", letterAvatar);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("title", value, null);
-
-        if (rounded) {
-            styleClass += " " + LetterAvatar.COMPONENT_CLASS_ROUNDED;
-        }
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.writeAttribute(Attrs.STYLE, style, Attrs.STYLE);
 

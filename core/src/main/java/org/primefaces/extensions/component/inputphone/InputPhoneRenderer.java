@@ -107,9 +107,10 @@ public class InputPhoneRenderer extends InputRenderer {
     protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = inputPhone.getClientId(context);
-
-        String styleClass = inputPhone.getStyleClass();
-        styleClass = styleClass == null ? InputPhone.STYLE_CLASS : InputPhone.STYLE_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(InputPhone.STYLE_CLASS)
+                    .add(inputPhone.getStyleClass())
+                    .build();
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);
@@ -137,7 +138,7 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", inputPhone.getType(), null);
         writer.writeAttribute("value", valueToRender, null);
-        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone), "styleClass");
+        writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPhone, InputText.STYLE_CLASS), "styleClass");
 
         if (!isValueBlank(inputStyle)) {
             writer.writeAttribute(Attrs.STYLE, inputStyle, null);
@@ -209,17 +210,6 @@ public class InputPhoneRenderer extends InputRenderer {
         encodeClientBehaviors(context, inputPhone);
 
         wb.finish();
-    }
-
-    protected String createStyleClass(final InputPhone inputText) {
-        String defaultClass = InputText.STYLE_CLASS;
-        defaultClass = inputText.isValid() ? defaultClass : defaultClass + " ui-state-error";
-        defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
-
-        String styleClass = inputText.getInputStyleClass();
-        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
-
-        return styleClass;
     }
 
     private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value) throws IOException {

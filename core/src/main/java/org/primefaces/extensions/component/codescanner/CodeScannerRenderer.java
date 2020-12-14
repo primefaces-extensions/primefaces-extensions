@@ -50,10 +50,10 @@ public class CodeScannerRenderer extends CoreRenderer {
     protected void encodeMarkup(final FacesContext context, final CodeScanner codeScanner) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = codeScanner.getClientId(context);
-
-        String styleClass = codeScanner.getStyleClass();
-        styleClass = styleClass == null ? CodeScanner.STYLE_CLASS : CodeScanner.STYLE_CLASS + " " + styleClass;
-
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(CodeScanner.STYLE_CLASS)
+                    .add(codeScanner.getStyleClass())
+                    .build();
         writer.startElement("span", codeScanner);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");

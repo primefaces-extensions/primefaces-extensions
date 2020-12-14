@@ -103,8 +103,10 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = checkbox.getClientId(context);
         final String style = checkbox.getStyle();
-        String styleClass = checkbox.getStyleClass();
-        styleClass = styleClass == null ? SelectManyCheckbox.STYLE_CLASS : SelectManyCheckbox.STYLE_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(SelectManyCheckbox.STYLE_CLASS)
+                    .add(checkbox.getStyleClass())
+                    .build();
 
         writer.startElement("table", checkbox);
         writer.writeAttribute("id", clientId, "id");
@@ -214,9 +216,11 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     protected void encodeOptionOutput(final FacesContext context, final TriStateManyCheckbox checkbox, final int valCheck,
                 final boolean disabled) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        String styleClass = HTML.CHECKBOX_BOX_CLASS;
-        styleClass = valCheck == 1 || valCheck == 2 ? styleClass + " ui-state-active" : styleClass;
-        styleClass = disabled ? styleClass + " ui-state-disabled" : styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(HTML.CHECKBOX_BOX_CLASS)
+                    .add(valCheck == 1 || valCheck == 2, "ui-state-active")
+                    .add(disabled, "ui-state-disabled")
+                    .build();
 
         // if stateIcon is defined use it insted of default icons.
         final String stateOneIconClass = checkbox.getStateOneIcon() != null ? TriStateManyCheckbox.UI_ICON + checkbox.getStateOneIcon()

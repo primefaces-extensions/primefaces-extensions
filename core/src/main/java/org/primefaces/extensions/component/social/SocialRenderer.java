@@ -58,11 +58,14 @@ public class SocialRenderer extends CoreRenderer {
     /**
      * Create the HTML markup for the DOM.
      */
-    private static void encodeMarkup(final FacesContext context, final Social social) throws IOException {
+    private void encodeMarkup(final FacesContext context, final Social social) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = social.getClientId(context);
         final String widgetVar = social.resolveWidgetVar();
-        final String styleClass = social.getTheme() + " " + ExtLangUtils.defaultString(social.getStyleClass());
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(social.getTheme())
+                    .add(social.getStyleClass())
+                    .build();
 
         writer.startElement("div", social);
         writer.writeAttribute("id", clientId, "id");

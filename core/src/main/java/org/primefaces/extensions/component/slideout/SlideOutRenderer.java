@@ -102,11 +102,10 @@ public class SlideOutRenderer extends CoreRenderer {
      */
     private void encodeHandle(final FacesContext context, final SlideOut slideOut) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-
-        String styleClass = SlideOut.HANDLE_CLASS;
-        if (slideOut.getHandleStyleClass() != null) {
-            styleClass = styleClass + " " + slideOut.getHandleStyleClass();
-        }
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(SlideOut.HANDLE_CLASS)
+                    .add(slideOut.getHandleStyleClass())
+                    .build();
 
         writer.startElement("a", null);
         writer.writeAttribute("id", getHandleId(context, slideOut), null);

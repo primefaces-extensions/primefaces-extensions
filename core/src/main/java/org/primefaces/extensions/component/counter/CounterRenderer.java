@@ -80,10 +80,14 @@ public class CounterRenderer extends CoreRenderer {
 
     private void encodeMarkup(final FacesContext context, final Counter counter) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(Counter.STYLE_CLASS)
+                    .add(counter.getStyleClass())
+                    .build();
 
         writer.startElement("span", counter);
         writer.writeAttribute("id", counter.getClientId(context), "id");
-        writer.writeAttribute(Attrs.CLASS, Counter.STYLE_CLASS + " " + counter.getStyleClass(), "styleClass");
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
         writer.writeAttribute(Attrs.STYLE, (!counter.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + counter.getStyle(), Attrs.STYLE);
         writer.endElement("span");
     }

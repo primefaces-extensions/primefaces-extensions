@@ -47,9 +47,10 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = fab.getClientId(context);
-
-        String styleClass = fab.getStyleClass();
-        styleClass = styleClass == null ? FloatingActionButton.STYLE_CLASS : FloatingActionButton.STYLE_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(FloatingActionButton.STYLE_CLASS)
+                    .add(fab.getStyleClass())
+                    .build();
 
         writer.startElement("span", fab);
         writer.writeAttribute("id", clientId, null);

@@ -47,9 +47,10 @@ public class TimeAgoRenderer extends CoreRenderer {
     protected void encodeMarkup(final FacesContext context, final TimeAgo timeAgo) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = timeAgo.getClientId(context);
-
-        String styleClass = timeAgo.getStyleClass();
-        styleClass = styleClass == null ? TimeAgo.STYLE_CLASS : TimeAgo.STYLE_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(TimeAgo.STYLE_CLASS)
+                    .add(timeAgo.getStyleClass())
+                    .build();
 
         writer.startElement("span", timeAgo);
         writer.writeAttribute("id", clientId, null);

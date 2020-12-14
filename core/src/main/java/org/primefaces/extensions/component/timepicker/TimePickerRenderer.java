@@ -159,17 +159,13 @@ public class TimePickerRenderer extends InputRenderer {
         }
 
         if (!timepicker.isInline()) {
-            String styleClass = timepicker.getStyleClass();
-            styleClass = styleClass == null ? TimePicker.INPUT_CLASS : TimePicker.INPUT_CLASS + " " + styleClass;
-            if (timepicker.isSpinner()) {
-                styleClass += " ui-spinner-input";
-            }
-            if (timepicker.isShowOnButton()) {
-                styleClass += " ui-inputtext";
-            }
-            if (!timepicker.isValid()) {
-                styleClass += " ui-state-error";
-            }
+            final String styleClass = getStyleClassBuilder(fc)
+                        .add(TimePicker.INPUT_CLASS)
+                        .add(timepicker.getStyleClass())
+                        .add(timepicker.isSpinner(), "ui-spinner-input")
+                        .add(timepicker.isShowOnButton(), "ui-inputtext")
+                        .add(!timepicker.isValid(), "ui-state-error")
+                        .build();
 
             writer.writeAttribute(Attrs.CLASS, styleClass, null);
 

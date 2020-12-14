@@ -77,10 +77,12 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final List<SelectItem> selectItems = getSelectItems(context, fuzzySearch);
         final int selectItemsSize = selectItems.size();
         final String style = fuzzySearch.getStyle();
-        String styleClass = fuzzySearch.getStyleClass();
-        styleClass = (styleClass == null) ? FuzzySearch.STYLE_CLASS : FuzzySearch.STYLE_CLASS + " " + styleClass;
-        styleClass = styleClass + " ui-buttonset-" + selectItemsSize;
-        styleClass = !fuzzySearch.isValid() ? styleClass + " ui-state-error" : styleClass;
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(FuzzySearch.STYLE_CLASS)
+                    .add(fuzzySearch.getStyleClass())
+                    .add("ui-buttonset-" + selectItemsSize)
+                    .add(!fuzzySearch.isValid(), "ui-state-error")
+                    .build();
 
         writer.startElement("div", fuzzySearch);
         writer.writeAttribute("id", clientId, "id");
@@ -93,7 +95,7 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         writer.writeAttribute("id", clientId + INPUT, null);
         writer.writeAttribute("name", clientId + INPUT, null);
         writer.writeAttribute("placeholder", fuzzySearch.getPlaceholder(), null);
-        writer.writeAttribute("class", createStyleClass(fuzzySearch), "styleClass");
+        writer.writeAttribute("class", createStyleClass(fuzzySearch, InputText.STYLE_CLASS), "styleClass");
         renderPassThruAttributes(context, fuzzySearch, HTML.TAB_INDEX);
         renderDomEvents(context, fuzzySearch, HTML.BLUR_FOCUS_EVENTS);
         renderAccessibilityAttributes(context, fuzzySearch);
@@ -129,8 +131,10 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         final String itemValueAsString = getOptionAsString(context, fuzzySearch, fuzzySearch.getConverter(), option.getValue());
 
         final String resultStyle = fuzzySearch.getResultStyle();
-        String resultStyleClass = fuzzySearch.getResultStyleClass();
-        resultStyleClass = (resultStyleClass == null) ? FuzzySearch.ITEM_CLASS : FuzzySearch.ITEM_CLASS + " " + resultStyleClass;
+        final String resultStyleClass = getStyleClassBuilder(context)
+                    .add(FuzzySearch.ITEM_CLASS)
+                    .add(fuzzySearch.getResultStyleClass())
+                    .build();
 
         // results
         writer.startElement("div", null);
@@ -176,17 +180,6 @@ public class FuzzySearchRenderer extends SelectOneRenderer {
         encodeClientBehaviors(context, fuzzySearch);
 
         wb.finish();
-    }
-
-    protected String createStyleClass(final FuzzySearch inputText) {
-        String defaultClass = InputText.STYLE_CLASS;
-        defaultClass = inputText.isValid() ? defaultClass : defaultClass + " ui-state-error";
-        defaultClass = !inputText.isDisabled() ? defaultClass : defaultClass + " ui-state-disabled";
-
-        String styleClass = inputText.getStyleClass();
-        styleClass = styleClass == null ? defaultClass : defaultClass + " " + styleClass;
-
-        return styleClass;
     }
 
     @Override

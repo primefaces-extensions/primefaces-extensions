@@ -59,8 +59,10 @@ public class FluidGridRenderer extends CoreRenderer {
     protected void encodeMarkup(final FacesContext fc, final FluidGrid fluidGrid) throws IOException {
         final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = fluidGrid.getClientId(fc);
-        String styleClass = fluidGrid.getStyleClass();
-        styleClass = styleClass == null ? GRID_CLASS : GRID_CLASS + " " + styleClass;
+        final String styleClass = getStyleClassBuilder(fc)
+                    .add(GRID_CLASS)
+                    .add(fluidGrid.getStyleClass())
+                    .build();
 
         writer.startElement("div", fluidGrid);
         writer.writeAttribute("id", clientId, "id");
