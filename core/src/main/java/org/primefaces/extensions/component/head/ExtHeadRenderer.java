@@ -18,6 +18,7 @@ package org.primefaces.extensions.component.head;
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -30,19 +31,18 @@ import org.primefaces.extensions.util.Attrs;
  * </p>
  *
  * <pre>
-   - first facet if defined
-   - Theme CSS
-   - JSF, PF, PF Extensions CSS resources
-   - middle facet if defined
-   - JSF, PF, PF Extensions JS resources
-   - title
-   - shortcut icon
-   - h:head content (encoded by super class at encodeChildren)
-   - last facet if defined
+ * - first facet if defined
+ * - Theme CSS
+ * - JSF, PF, PF Extensions CSS resources
+ * - middle facet if defined
+ * - JSF, PF, PF Extensions JS resources
+ * - title
+ * - shortcut icon
+ * - h:head content (encoded by super class at encodeChildren)
+ * - last facet if defined
  * </pre>
  *
- * @author Thomas Andraschko / last modified by $Author$
- * @version $Revision$
+ * @author Thomas Andraschko
  * @since 0.2
  */
 public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
@@ -54,7 +54,7 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
 
         // encode title and shortcut icon
         encodeTitle(extHead, writer);
-        encodeShortcutIcon(extHead, writer);
+        encodeShortcutIcon(context, extHead, writer);
 
         super.encodeEnd(context, component);
     }
@@ -67,11 +67,12 @@ public class ExtHeadRenderer extends org.primefaces.renderkit.HeadRenderer {
         }
     }
 
-    private void encodeShortcutIcon(final ExtHead extHead, final ResponseWriter writer) throws IOException {
+    private void encodeShortcutIcon(final FacesContext context, final ExtHead extHead, final ResponseWriter writer) throws IOException {
         if (extHead.getShortcutIcon() != null) {
+            ExternalContext externalContext = context.getExternalContext();
             writer.startElement("link", null);
             writer.writeAttribute("rel", "shortcut icon", null);
-            writer.writeAttribute("href", extHead.getShortcutIcon(), null);
+            writer.writeAttribute("href", externalContext.encodeResourceURL(extHead.getShortcutIcon()), null);
             writer.endElement("link");
         }
     }
