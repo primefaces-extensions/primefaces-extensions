@@ -542,7 +542,7 @@ public class Sheet extends SheetBase {
             veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         }
         if (veSortBy != null) {
-            SortMeta sortMeta = SortMeta.builder().caseSensitiveSort(isCaseSensitiveSort()).sortBy(veSortBy).order(convertSortOrder())
+            SortMeta sortMeta = SortMeta.builder().field("field").caseSensitiveSort(isCaseSensitiveSort()).sortBy(veSortBy).order(convertSortOrder())
                         .nullSortOrder(getNullSortOrder()).build();
             filteredList.sort(new BeanPropertyComparator(var, sortMeta, Locale.ENGLISH));
         }
