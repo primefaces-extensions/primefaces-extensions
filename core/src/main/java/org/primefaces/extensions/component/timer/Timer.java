@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.component.timer;
 
+import java.util.Locale;
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -23,6 +24,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.api.AjaxSource;
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * Timer component
@@ -44,6 +46,8 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     public static final String STYLE_CLASS = "ui-timer ui-widget ui-widget-header ui-corner-all";
     private static final int DEFAULT_TIMEOUT = 10;
     private static final int DEFAULT_INTERVAL_MS = 1000;
+
+    private Locale appropriateLocale;
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
@@ -92,6 +96,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public Locale calculateLocale() {
+        if (appropriateLocale == null) {
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
+        }
+        return appropriateLocale;
     }
 
     public boolean isSingleRun() {
@@ -346,11 +358,11 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         getStateHelper().put(PropertyKeys.forward, forward);
     }
 
-    public java.lang.String getLocale() {
-        return (java.lang.String) getStateHelper().eval(PropertyKeys.locale, "en");
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
     }
 
-    public void setLocale(final java.lang.String locale) {
+    public void setLocale(final Object locale) {
         getStateHelper().put(PropertyKeys.locale, locale);
     }
 
@@ -380,7 +392,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         final MethodExpression me = getListener();
 
         if (me != null) {
-            me.invoke(facesContext.getELContext(), new Object[] {});
+            me.invoke(facesContext.getELContext(), new Object[]{});
         }
     }
 

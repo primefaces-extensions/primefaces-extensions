@@ -5990,11 +5990,11 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Use this attribute to change locale. Default value is en. See https://momentjs.com/docs/#/i18n/]]>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
             </description>
             <name>locale</name>
             <required>false</required>
-            <type>java.lang.String</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>

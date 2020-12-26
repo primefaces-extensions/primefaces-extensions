@@ -11,13 +11,15 @@
         return "The End is near (" + value + ")";
     };
     moment.locale('de', { relativeTime : { mm : '%d minuten' } });
+    moment.locale('fr', { months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_') });
 </script>
-<h:panelGrid columns="6">
+<h:panelGrid columns="7">
     <h:outputText value="Default"/>
     <h:outputText value="Percentage"/>
     <h:outputText value="Human"/>
-    <h:outputText value="Locale (fr)"/>
+    <h:outputText value="Locale (de)"/>
     <h:outputText value="Custom"/>
+    <h:outputText value="Custom with locale (fr)"/>
     <h:outputText value="Function"/>
     <pe:timer
         timeout="1000"/>
@@ -34,6 +36,10 @@
     <pe:timer
         timeout="1000"
         format="HH:mm:ss"/>
+    <pe:timer
+        timeout="1000"
+        format="MMMM"
+        locale="fr-FR"/>
     <pe:timer
         timeout="1000"
         formatFunction="return formatMe(value);"/>

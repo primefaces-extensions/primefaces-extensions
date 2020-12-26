@@ -111,7 +111,7 @@ public class TimerRenderer extends CoreRenderer {
                     .attr("timeout", timer.getTimeout()).attr("interval", timer.getInterval())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
                     .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())
-                    .attr("locale", timer.getLocale())
+                    .attr("locale", timer.calculateLocale().toString())
                     .callback("listener", "function()", request);
 
         if (!LangUtils.isValueBlank(timer.getOntimerstep())) {

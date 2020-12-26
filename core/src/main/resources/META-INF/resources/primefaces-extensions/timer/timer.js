@@ -52,7 +52,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
             } else if ("human" === format) {
                 value = moment.duration(this.currentTimeout, 'seconds').locale(this.locale).humanize();
             } else {
-                value = moment.utc(moment.duration(this.currentTimeout, 'seconds').asMilliseconds()).format(format);
+                value = moment.utc(moment.duration(this.currentTimeout, 'seconds').locale(this.locale).asMilliseconds()).format(format);
             }
         }
 
