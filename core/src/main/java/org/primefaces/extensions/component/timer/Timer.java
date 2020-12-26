@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.timer;
 
 import java.util.Locale;
+
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
@@ -392,7 +393,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         final MethodExpression me = getListener();
 
         if (me != null) {
-            me.invoke(facesContext.getELContext(), new Object[]{});
+            me.invoke(facesContext.getELContext(), new Object[] {});
         }
     }
 
