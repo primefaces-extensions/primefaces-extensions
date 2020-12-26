@@ -5990,6 +5990,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[set to true to false the timer periodic. Default is true]]>
             </description>
             <name>singleRun</name>
