@@ -14,6 +14,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.cfg = cfg;
         this.forward = cfg.forward;
+        this.locale = cfg.locale;
         this.originalTimeout = cfg.timeout;
         this.currentTimeout = this.forward ? 0 : cfg.timeout;
 
@@ -49,7 +50,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
             if ("percentage" === format) {
                 value = ((this.currentTimeout * 100) / this.originalTimeout) + "%";
             } else if ("human" === format) {
-                value = moment.duration(this.currentTimeout, 'seconds').humanize();
+                value = moment.duration(this.currentTimeout, 'seconds').locale(this.locale).humanize();
             } else {
                 value = moment.utc(moment.duration(this.currentTimeout, 'seconds').asMilliseconds()).format(format);
             }

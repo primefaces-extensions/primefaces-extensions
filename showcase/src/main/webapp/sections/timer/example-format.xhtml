@@ -9,12 +9,14 @@
 <script>
     window.formatMe = function(value){
         return "The End is near (" + value + ")";
-    }
+    };
+    moment.locale('de', { relativeTime : { mm : '%d minuten' } });
 </script>
-<h:panelGrid columns="5">
+<h:panelGrid columns="6">
     <h:outputText value="Default"/>
     <h:outputText value="Percentage"/>
     <h:outputText value="Human"/>
+    <h:outputText value="Locale (fr)"/>
     <h:outputText value="Custom"/>
     <h:outputText value="Function"/>
     <pe:timer
@@ -25,6 +27,10 @@
     <pe:timer
         timeout="1000"
         format="human"/>
+    <pe:timer
+        timeout="1000"
+        format="human" 
+        locale="de"/>
     <pe:timer
         timeout="1000"
         format="HH:mm:ss"/>

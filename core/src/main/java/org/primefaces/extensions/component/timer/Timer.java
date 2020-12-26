@@ -75,6 +75,7 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
         ignoreAutoUpdate,
         visible,
         forward,
+        locale,
         formatFunction,
         partialSubmitFilter,
         form,
@@ -343,6 +344,14 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
 
     public void setForward(final boolean forward) {
         getStateHelper().put(PropertyKeys.forward, forward);
+    }
+
+    public java.lang.String getLocale() {
+        return (java.lang.String) getStateHelper().eval(PropertyKeys.locale, "en");
+    }
+
+    public void setLocale(final java.lang.String locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
     }
 
     @Override
