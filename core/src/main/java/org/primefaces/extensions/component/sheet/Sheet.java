@@ -36,7 +36,6 @@ import org.primefaces.extensions.model.sheet.SheetRowColIndex;
 import org.primefaces.extensions.model.sheet.SheetUpdate;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.JavascriptVarBuilder;
-import org.primefaces.model.BeanPropertyComparator;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 import org.primefaces.util.ComponentUtils;
