@@ -3,183 +3,187 @@
  */
 PrimeFacesExt = {
 
-   /**
-    * Checks if the FacesServlet is mapped with extension mapping. For example:
-    * .jsf/.xhtml.
-    *
-    * @author Thomas Andraschko
-    * @returns {boolean} If mapped with extension mapping.
-    */
-   isExtensionMapping : function() {
-      if (!PrimeFacesExt.IS_EXTENSION_MAPPING) {
-         var scriptURI = PrimeFacesExt.getResourceScriptURI();
-         var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
+    /**
+     * Checks if the FacesServlet is mapped with extension mapping. For example:
+     * .jsf/.xhtml.
+     *
+     * @author Thomas Andraschko
+     * @returns {boolean} If mapped with extension mapping.
+     */
+    isExtensionMapping: function () {
+        if (!PrimeFacesExt.IS_EXTENSION_MAPPING) {
+            var scriptURI = PrimeFacesExt.getResourceScriptURI();
+            var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
 
-         PrimeFacesExt.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(scriptName) + scriptName.length) === '.';
-      }
+            PrimeFacesExt.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(scriptName) + scriptName.length) === '.';
+        }
 
-      return PrimeFacesExt.IS_EXTENSION_MAPPING;
-   },
+        return PrimeFacesExt.IS_EXTENSION_MAPPING;
+    },
 
-   /**
-    * Gets the URL extensions of current included resources. For example: jsf or
-    * xhtml. This should only be used if extensions mapping is used.
-    *
-    * @returns {string} The URL extension.
-    */
-   getResourceUrlExtension : function() {
-      if (!PrimeFacesExt.RESOURCE_URL_EXTENSION) {
-         var scriptURI = PrimeFacesExt.getResourceScriptURI();
-         var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
-         PrimeFacesExt.RESOURCE_URL_EXTENSION = RegExp(scriptName + '.([^?]*)').exec(scriptURI)[1];
-      }
+    /**
+     * Gets the URL extensions of current included resources. For example: jsf or
+     * xhtml. This should only be used if extensions mapping is used.
+     *
+     * @returns {string} The URL extension.
+     */
+    getResourceUrlExtension: function () {
+        if (!PrimeFacesExt.RESOURCE_URL_EXTENSION) {
+            var scriptURI = PrimeFacesExt.getResourceScriptURI();
+            var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
+            PrimeFacesExt.RESOURCE_URL_EXTENSION = RegExp(scriptName + '.([^?]*)').exec(scriptURI)[1];
+        }
 
-      return PrimeFacesExt.RESOURCE_URL_EXTENSION;
-   },
+        return PrimeFacesExt.RESOURCE_URL_EXTENSION;
+    },
 
-   /**
-    * For a URI parses out the name of the script like primefaces-extensions.js
-    *
-    * @param the
-    *        URI of the script
-    * @returns {string} The script name.
-    */
-   getResourceScriptName : function(scriptURI) {
-      if (!PrimeFacesExt.SCRIPT_NAME) {
-         // find script...normal is '/core.js' and portlets are '=core.js'
-         var scriptRegex = new RegExp('\/?' + PrimeFaces.RESOURCE_IDENTIFIER + '(\/|=)(.*?)\.js');
+    /**
+     * For a URI parses out the name of the script like primefaces-extensions.js
+     *
+     * @param the
+     *        URI of the script
+     * @returns {string} The script name.
+     */
+    getResourceScriptName: function (scriptURI) {
+        if (!PrimeFacesExt.SCRIPT_NAME) {
+            // find script...normal is '/core.js' and portlets are '=core.js'
+            var scriptRegex = new RegExp('\/?' + PrimeFaces.RESOURCE_IDENTIFIER + '(\/|=)(.*?)\.js');
 
-         // find script to replace e.g. 'core.js'
-         PrimeFacesExt.SCRIPT_NAME = scriptRegex.exec(scriptURI)[2] + '.js';
-      }
+            // find script to replace e.g. 'core.js'
+            PrimeFacesExt.SCRIPT_NAME = scriptRegex.exec(scriptURI)[2] + '.js';
+        }
 
-      return PrimeFacesExt.SCRIPT_NAME;
-   },
+        return PrimeFacesExt.SCRIPT_NAME;
+    },
 
-   /**
-    * Gets the resource URI of any Javascript JS file served as a JSF resource.
-    *
-    * @author Thomas Andraschko
-    * @returns {string} The resource URI.
-    */
-   getResourceScriptURI : function() {
-      if (!PrimeFacesExt.SCRIPT_URI) {
-         // GitHub #601 maybe using OmniFaces CombinedResourceHandler
-         PrimeFacesExt.SCRIPT_URI =
-            $('script[src*="/' + PrimeFaces.RESOURCE_IDENTIFIER + '/"]').first().attr('src');
-
-         // portlet
-         if (!PrimeFacesExt.SCRIPT_URI) {
+    /**
+     * Gets the resource URI of any Javascript JS file served as a JSF resource.
+     *
+     * @author Thomas Andraschko
+     * @returns {string} The resource URI.
+     */
+    getResourceScriptURI: function () {
+        if (!PrimeFacesExt.SCRIPT_URI) {
+            // GitHub #601 maybe using OmniFaces CombinedResourceHandler
             PrimeFacesExt.SCRIPT_URI =
-               $('script[src*="' + PrimeFaces.RESOURCE_IDENTIFIER + '="]').first().attr('src');
-         }
-      }
-      return PrimeFacesExt.SCRIPT_URI;
-   },
+                $('script[src*="/' + PrimeFaces.RESOURCE_IDENTIFIER + '/"]').first().attr('src');
 
-   /**
-    * Configures component specific localized text by given widget name and
-    * locale in configuration object.
-    *
-    * @author Oleg Varaksin
-    * @param {string}
-    *        widgetName The name of the widget. For example: 'TimePicker'.
-    * @param {object}
-    *        cfg Configuration object as key, value pair. This object should
-    *        keep current locale in cfg.locale.
-    * @returns {object} cfg Configuration object with updated localized text (if
-    *          any text to given locale were found).
-    */
-   configureLocale : function(widgetName, cfg) {
-      if (PrimeFacesExt.locales && PrimeFacesExt.locales[widgetName] && cfg.locale) {
-         var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
-         if (localeSettings) {
-            for ( var setting in localeSettings) {
-               if (localeSettings.hasOwnProperty(setting)) {
-                  cfg[setting] = localeSettings[setting];
-               }
+            // portlet
+            if (!PrimeFacesExt.SCRIPT_URI) {
+                PrimeFacesExt.SCRIPT_URI =
+                    $('script[src*="' + PrimeFaces.RESOURCE_IDENTIFIER + '="]').first().attr('src');
             }
-         }
-      }
+        }
+        return PrimeFacesExt.SCRIPT_URI;
+    },
 
-      return cfg;
-   },
+    /**
+     * Configures component specific localized text by given widget name and
+     * locale in configuration object.
+     *
+     * @author Oleg Varaksin
+     * @param {string}
+     *        widgetName The name of the widget. For example: 'TimePicker'.
+     * @param {object}
+     *        cfg Configuration object as key, value pair. This object should
+     *        keep current locale in cfg.locale.
+     * @returns {object} cfg Configuration object with updated localized text (if
+     *          any text to given locale were found).
+     */
+    configureLocale: function (widgetName, cfg) {
+        if (PrimeFacesExt.locales && PrimeFacesExt.locales[widgetName] && cfg.locale) {
+            var localeSettings = PrimeFacesExt.locales[widgetName][cfg.locale];
+            if (localeSettings) {
+                for (var setting in localeSettings) {
+                    if (localeSettings.hasOwnProperty(setting)) {
+                        cfg[setting] = localeSettings[setting];
+                    }
+                }
+            }
+        }
 
-   getScript: function(url, callback) {
-       $.ajax({
-           type: "GET",
-           url: url,
-           success: callback,
-           dataType: "script",
-           cache: true,
-           async: true,
-           scriptAttrs: {
-               nonce: PrimeFaces.csp.NONCE_VALUE
-           }
-       });
-   },
+        return cfg;
+    },
 
-   /**
-    * This function need to be invoked after PrimeFaces changeTheme. It's used
-    * to sync canvas and svg components to the current theme.
-    *
-    * @author f.strazzullo
-    */
-   changeTheme : function(newValue) {
-      $(document).trigger("PrimeFacesExt.themeChanged", newValue);
-   },
+    getScript: function (url, callback) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: callback,
+            dataType: "script",
+            cache: true,
+            async: true,
+            scriptAttrs: {
+                nonce: PrimeFaces.csp.NONCE_VALUE
+            }
+        });
+    },
 
-   /**
-    * Gets the currently loaded PF Theme.
-    */
-   getTheme : function() {
-       var themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '/theme.css"]');
-       // portlet
-       if (themeLink.length === 0) {
-           themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=theme.css"]');
-       }
+    /**
+     * This function need to be invoked after PrimeFaces changeTheme. It's used
+     * to sync canvas and svg components to the current theme.
+     *
+     * @author f.strazzullo
+     */
+    changeTheme: function (newValue) {
+        $(document).trigger("PrimeFacesExt.themeChanged", newValue);
+    },
 
-       // GitHub #752
-       if (themeLink.length === 0) {
-           return "";
-       }
+    /**
+     * Gets the currently loaded PF Theme.
+     */
+    getTheme: function () {
+        var themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '/theme.css"]');
+        // portlet
+        if (themeLink.length === 0) {
+            themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=theme.css"]');
+        }
 
-       var themeURL = themeLink.attr('href'),
-           plainURL = themeURL.split('&')[0],
-           oldTheme = plainURL.split('ln=primefaces-')[1];
+        // GitHub #752
+        if (themeLink.length === 0) {
+            return "";
+        }
 
-       return oldTheme;
-   },
+        var themeURL = themeLink.attr('href'),
+            plainURL = themeURL.split('&')[0],
+            oldTheme = plainURL.split('ln=primefaces-')[1];
 
-   /**
-    * Does this theme use Prime Icons?
-    */
-   isPrimeIconTheme: function(theme) {
-       var theme = PrimeFacesExt.getTheme();
-       switch (theme) {
-        case "nova-light":
-        case "nova-dark":
-        case "nova-colored":
-        case "luna-blue":
-        case "luna-amber":
-        case "luna-green":
-        case "luna-pink":
-            return true;
-        default:
-            return false;
-       };
-   },
+        return oldTheme;
+    },
 
-   /**
-    * The name of the PrimeFaces Extensions resource library.
-    *
-    * @author Thomas Andraschko
-    * @type {string}
-    * @constant
-    */
-   RESOURCE_LIBRARY : 'primefaces-extensions',
+    /**
+     * Does this theme use Prime Icons?
+     */
+    isPrimeIconTheme: function (theme) {
+        var theme = PrimeFacesExt.getTheme();
+        switch (theme) {
+            case "nova-light":
+            case "nova-dark":
+            case "nova-colored":
+            case "luna-blue":
+            case "luna-amber":
+            case "luna-green":
+            case "luna-pink":
+            case "saga":
+            case "vela":
+            case "arya":
+                return true;
+            default:
+                return false;
+        }
+        ;
+    },
 
-   VERSION : '${project.version}'
+    /**
+     * The name of the PrimeFaces Extensions resource library.
+     *
+     * @author Thomas Andraschko
+     * @type {string}
+     * @constant
+     */
+    RESOURCE_LIBRARY: 'primefaces-extensions',
+
+    VERSION: '${project.version}'
 };
 
 /**
@@ -209,14 +213,14 @@ PrimeFacesExt.locales.TimePicker = {};
  * @author Thomas Andraschko
  * @constructor
  */
-PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
+PrimeFacesExt.behavior.Javascript = function (cfg, ext) {
 
-   var params = null;
-   if (ext) {
-      params = ext.params;
-   }
+    var params = null;
+    if (ext) {
+        params = ext.params;
+    }
 
-   return cfg.execute.call(this, cfg.source, cfg.event, params, ext);
+    return cfg.execute.call(this, cfg.source, cfg.event, params, ext);
 };
 
 /**
@@ -225,13 +229,13 @@ PrimeFacesExt.behavior.Javascript = function(cfg, ext) {
  *
  * @author f.strazzullo
  */
-(function(window) {
+(function (window) {
 
-   var originalChangeTheme = PrimeFaces.changeTheme;
+    var originalChangeTheme = PrimeFaces.changeTheme;
 
-   PrimeFaces.changeTheme = function(newValue) {
-      originalChangeTheme(newValue);
-      PrimeFacesExt.changeTheme(newValue);
-   }
+    PrimeFaces.changeTheme = function (newValue) {
+        originalChangeTheme(newValue);
+        PrimeFacesExt.changeTheme(newValue);
+    }
 
 })(window);
