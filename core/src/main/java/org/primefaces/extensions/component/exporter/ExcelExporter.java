@@ -983,17 +983,17 @@ public class ExcelExporter extends Exporter {
             cellFont.setFontHeightInPoints(cellFontSize);
         }
 
-        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setBold(true);
         }
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setItalic(true);
         }
 
-        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setBold(true);
         }
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setItalic(true);
         }
 

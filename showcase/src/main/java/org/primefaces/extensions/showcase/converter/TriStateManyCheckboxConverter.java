@@ -31,12 +31,13 @@ import org.primefaces.extensions.showcase.model.State;
 @FacesConverter("triStateManyCheckboxConverter")
 public class TriStateManyCheckboxConverter implements Converter {
 
+    @Override
     public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
         State res;
-        if (value.equals("0")) {
+        if ("0".equals(value)) {
             res = new State("One");
         }
-        else if (value.equals("1")) {
+        else if ("1".equals(value)) {
             res = new State("Two");
         }
         else {
@@ -46,6 +47,7 @@ public class TriStateManyCheckboxConverter implements Converter {
         return res;
     }
 
+    @Override
     public String getAsString(final FacesContext context, final UIComponent component, final Object valueO) {
         State value = (State) valueO;
         String res;

@@ -84,7 +84,7 @@ public class PDFExporter extends Exporter {
                 throws IOException {
         try {
             final Document document = new Document();
-            if (orientation.equalsIgnoreCase("Landscape")) {
+            if ("Landscape".equalsIgnoreCase(orientation)) {
                 document.setPageSize(PageSize.A4.rotate());
             }
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -900,23 +900,23 @@ public class PDFExporter extends Exporter {
         if (fontName != null) {
             this.fontName = fontName;
         }
-        if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
+        if ("NORMAL".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = Constants.EMPTY_STRING + Font.NORMAL;
         }
-        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = Constants.EMPTY_STRING + Font.BOLD;
         }
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = Constants.EMPTY_STRING + Font.ITALIC;
         }
 
-        if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
+        if ("NORMAL".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = Constants.EMPTY_STRING + Font.NORMAL;
         }
-        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = Constants.EMPTY_STRING + Font.BOLD;
         }
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = Constants.EMPTY_STRING + Font.ITALIC;
         }
 

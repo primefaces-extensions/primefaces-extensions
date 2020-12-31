@@ -66,10 +66,10 @@ public class CharacterEncodingFilter implements Filter {
         if (value == null) {
             ignore = true;
         }
-        else if (value.equalsIgnoreCase("true")) {
+        else if ("true".equalsIgnoreCase(value)) {
             ignore = true;
         }
-        else if (value.equalsIgnoreCase("yes")) {
+        else if ("yes".equalsIgnoreCase(value)) {
             ignore = true;
         }
         else {

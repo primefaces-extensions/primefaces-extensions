@@ -463,7 +463,7 @@ public class ExcelCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -553,7 +553,7 @@ public class ExcelCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -843,7 +843,7 @@ public class ExcelCustomExporter extends Exporter {
         Cell cell = row.createCell(cellIndex);
         String value = component == null ? "" : exportValue(FacesContext.getCurrentInstance(), component);
         cell.setCellValue(new XSSFRichTextString(value));
-        if (type.equalsIgnoreCase("facet")) {
+        if ("facet".equalsIgnoreCase(type)) {
             // addColumnAlignments(component,facetStyle);
             cell.setCellStyle(facetStyle);
         }
@@ -873,7 +873,7 @@ public class ExcelCustomExporter extends Exporter {
 
         cell.setCellValue(new XSSFRichTextString(builder.toString()));
 
-        if (type.equalsIgnoreCase("facet")) {
+        if ("facet".equalsIgnoreCase(type)) {
             // addColumnAlignments(components,facetStyle);
             cell.setCellStyle(facetStyle);
         }
@@ -940,17 +940,17 @@ public class ExcelCustomExporter extends Exporter {
             cellFont.setFontHeightInPoints(cellFontSize);
         }
 
-        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setBold(true);
         }
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(cellFontStyle)) {
             cellFont.setItalic(true);
         }
 
-        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setBold(true);
         }
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(facetFontStyle)) {
             facetFont.setItalic(true);
         }
 

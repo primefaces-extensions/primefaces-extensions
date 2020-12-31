@@ -62,7 +62,7 @@ public class EditorController implements Serializable {
     }
 
     public void changeColor() {
-        if (color.equals("#1433FC")) {
+        if ("#1433FC".equals(color)) {
             color = "#33fc14";
         }
         else {

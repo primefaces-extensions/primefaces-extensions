@@ -45,7 +45,7 @@ public class CodeMirrorController implements Serializable {
     private String keymap = "default";
 
     public void changeMode() {
-        if (mode.equals("css")) {
+        if ("css".equals(mode)) {
             mode = "javascript";
         }
         else {

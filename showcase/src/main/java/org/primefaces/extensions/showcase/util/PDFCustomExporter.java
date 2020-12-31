@@ -85,7 +85,7 @@ public class PDFCustomExporter extends Exporter {
                 MethodExpression postProcessor, boolean subTable) throws IOException {
         try {
             Document document = new Document();
-            if (orientation.equalsIgnoreCase("Landscape")) {
+            if ("Landscape".equalsIgnoreCase(orientation)) {
                 document.setPageSize(PageSize.A4.rotate());
             }
 
@@ -529,7 +529,7 @@ public class PDFCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -554,7 +554,7 @@ public class PDFCustomExporter extends Exporter {
                         }
 
                         // addColumnAlignments(component,cell);
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         }
 
@@ -581,7 +581,7 @@ public class PDFCustomExporter extends Exporter {
                     for (UIComponent rowComponent : row.getChildren()) {
                         UIColumn column = (UIColumn) rowComponent;
                         String value = null;
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             value = column.getHeaderText();
                         }
                         else {
@@ -606,7 +606,7 @@ public class PDFCustomExporter extends Exporter {
                         }
 
                         // addColumnAlignments(component,cell);
-                        if (facetType.equalsIgnoreCase("header")) {
+                        if ("header".equalsIgnoreCase(facetType)) {
                             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         }
 
@@ -878,7 +878,7 @@ public class PDFCustomExporter extends Exporter {
             cell.setBackgroundColor(facetBackground);
         }
 
-        if (columnType.equalsIgnoreCase("header")) {
+        if ("header".equalsIgnoreCase(columnType)) {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         }
 
@@ -901,7 +901,7 @@ public class PDFCustomExporter extends Exporter {
         PdfPCell cell = new PdfPCell(new Paragraph(builder.toString(), font));
 
         // addColumnAlignments(components, cell);
-        if (columnType.equalsIgnoreCase("header")) {
+        if ("header".equalsIgnoreCase(columnType)) {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         }
 
@@ -969,27 +969,27 @@ public class PDFCustomExporter extends Exporter {
             this.fontName = fontName;
         }
 
-        if (facetFontStyle.equalsIgnoreCase("NORMAL")) {
+        if ("NORMAL".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = "" + Font.NORMAL;
         }
 
-        if (facetFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = "" + Font.BOLD;
         }
 
-        if (facetFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(facetFontStyle)) {
             this.facetFontStyle = "" + Font.ITALIC;
         }
 
-        if (cellFontStyle.equalsIgnoreCase("NORMAL")) {
+        if ("NORMAL".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = "" + Font.NORMAL;
         }
 
-        if (cellFontStyle.equalsIgnoreCase("BOLD")) {
+        if ("BOLD".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = "" + Font.BOLD;
         }
 
-        if (cellFontStyle.equalsIgnoreCase("ITALIC")) {
+        if ("ITALIC".equalsIgnoreCase(cellFontStyle)) {
             this.cellFontStyle = "" + Font.ITALIC;
         }
     }
