@@ -4,8 +4,7 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.primefaces.extensions%3Aprimefaces-extensions-parent&metric=security_rating)](https://sonarcloud.io/dashboard?id=org.primefaces.extensions%3Aprimefaces-extensions-parent)
 [![Discord Chat](https://img.shields.io/discord/591914197219016707.svg?color=7289da&label=chat&logo=discord&style=flat-square)](https://discord.gg/gzKFYnpmCY)
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
-[![License](http://img.shields.io/:license-apache-yellow.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 PrimeFaces Extensions
@@ -113,9 +112,9 @@ Please report all issues [here](https://github.com/primefaces-extensions/primefa
 
 #### Extensions
 
-Licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license.
+Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
-`SPDX-License-Identifier: Apache-2.0`
+`SPDX-License-Identifier: MIT`
 
 #### CKEditor (IMPORTANT!!!)
 
