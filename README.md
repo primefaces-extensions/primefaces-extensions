@@ -26,9 +26,9 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
     <version>${primefaces-extensions.version}</version>
 </dependency>
 <dependency>
-<groupId>org.primefaces.extensions</groupId>
-<artifactId>resources-ckeditor</artifactId>
-<version>${primefaces-extensions.version}</version>
+   <groupId>org.primefaces.extensions</groupId>
+   <artifactId>resources-ckeditor</artifactId>
+   <version>${primefaces-extensions.version}</version>
 </dependency>
 ```
 
