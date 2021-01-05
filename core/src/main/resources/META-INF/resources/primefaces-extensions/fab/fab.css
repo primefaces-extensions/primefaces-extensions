@@ -117,3 +117,12 @@
 .ui-fab.ui-state-active li:hover .ui-menuitem-text {
     display: block;
 }
+
+.ui-overlay-badge.ui-fab-badge .ui-badge {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    top: auto;
+    z-index: 1000000001;
+    transform: translate(50%, -38px);
+}

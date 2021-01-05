@@ -18,6 +18,10 @@ PrimeFaces.widget.ExtFAB = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.classActive = 'ui-state-active';
         this.button = $(this.jqId + ' .ui-fab-main');
+        var parent = this.jq.parent();
+        if (parent.hasClass("ui-overlay-badge")) {
+          parent.addClass("ui-fab-badge");
+        }
         this.unselect = function () {
             if (window.getSelection) {
                 window.getSelection().removeAllRanges();
