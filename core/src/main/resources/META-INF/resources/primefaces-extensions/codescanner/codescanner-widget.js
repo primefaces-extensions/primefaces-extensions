@@ -3,7 +3,7 @@
  * PrimeFaces Extensions CodeScanner Widget.
  *
  * @author Jasper de Vries jepsar@gmail.com
- * @since 9.0
+ * @since 10.0
  */
 PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
 

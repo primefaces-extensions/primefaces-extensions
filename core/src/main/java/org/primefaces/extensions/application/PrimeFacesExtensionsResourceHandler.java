@@ -33,7 +33,7 @@ import javax.faces.application.ResourceHandlerWrapper;
  *
  * @author Thomas Andraschko
  * @since 0.1
- * @since 9.0 will append e=x.x to all libs starting with "primefaces"
+ * @since 10.0 will append e=x.x to all libs starting with "primefaces"
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
