@@ -110,15 +110,6 @@
             <timezone>America/New_York</timezone>
         </developer>
         <developer>
-            <id>jonna</id>
-            <name>Sudheer Jonna</name>
-            <email>sudheer.jonna@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+5.30</timezone>
-        </developer>
-        <developer>
             <id>Rapster</id>
             <name>Sébastien Lepage</name>
             <email>sebastien.lepage@outlook.com</email>
