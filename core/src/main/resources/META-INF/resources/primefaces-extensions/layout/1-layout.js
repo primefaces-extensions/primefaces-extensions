@@ -37,7 +37,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 enabled: true,
                 autoSave: true, // Save state when page exits?
                 autoLoad: true, // load state when page loads?
-                storeLocation: "localStorage", //or sessionStorage, globalStorage, openDatabase, userdata, google gears, flash, cookie
+                storeLocation: "sessionStorage", //or sessionStorage, globalStorage, openDatabase, userdata, google gears, flash, cookie
                 cookie: {
                     name: encodeURIComponent('Layout-' + this.id)
                 }
