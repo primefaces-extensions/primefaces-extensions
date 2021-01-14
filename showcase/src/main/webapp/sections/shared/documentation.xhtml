@@ -8,7 +8,7 @@
     <f:facet name="header">
         <h:outputText value="Documentation pe:#{tagName}"/>
     </f:facet>
-    
+
     <h:panelGroup layout="block" styleClass="ui-state-default docuCaption">
         Attributes (move mouse over the names to see data types)
     </h:panelGroup>
@@ -19,7 +19,7 @@
                 Name
             </f:facet>
             <h:outputText id="name" value="#{attribute.name}"/>
-            <pe:tooltip for="name" value="#{attribute.type}"/>
+            <pe:tooltip for="name" value="#{attribute.type}" styleClass="qtip-default"/>
         </p:column>
         <p:column>
             <f:facet name="header">
@@ -31,7 +31,7 @@
 
     <h:panelGroup layout="block" styleClass="ui-state-default docuEventCaption" rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}">
         Events (move mouse over the names to see classes)
-    </h:panelGroup>    
+    </h:panelGroup>
     <p:dataTable id="docuEventsDataTable" var="event" value="#{docuPreparer.getDocuEvents(tagName)}"
                  emptyMessage="No events available for this component." styleClass="docuEventTable"
                  rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}">
@@ -40,7 +40,7 @@
                 Name
             </f:facet>
             <h:outputText id="name" value="#{event.name}"/>
-            <pe:tooltip for="name" value="#{event.eventClass}"/>
+            <pe:tooltip for="name" value="#{event.eventClass}" styleClass="qtip-default"/>
         </p:column>
         <p:column>
             <f:facet name="header">

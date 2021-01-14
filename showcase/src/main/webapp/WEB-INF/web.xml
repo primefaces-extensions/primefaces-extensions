@@ -71,7 +71,7 @@
     <!-- Context parameters - Primefaces & Extensions -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>#{empty userSettings ? 'nova-light' : userSettings.currentTheme.name}</param-value>
+        <param-value>#{empty userSettings ? 'saga' : userSettings.currentTheme.name}</param-value>
     </context-param>
     <!-- enabled FontAwesome -->
     <context-param>
