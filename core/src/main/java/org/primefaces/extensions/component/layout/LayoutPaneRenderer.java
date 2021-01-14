@@ -126,13 +126,12 @@ public class LayoutPaneRenderer extends CoreRenderer {
 
         // encode header
         if (header != null) {
+            String headerStyleClass = getStyleClassBuilder(fc)
+                        .add(Layout.STYLE_CLASS_PANE_HEADER)
+                        .add(layoutPane.getStyleClassHeader())
+                        .build();
             writer.startElement("div", null);
-            if (layoutPane.getStyleClassHeader() != null) {
-                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_PANE_HEADER + " " + layoutPane.getStyleClassHeader(), null);
-            }
-            else {
-                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_PANE_HEADER, null);
-            }
+            writer.writeAttribute(Attrs.CLASS, headerStyleClass, null);
 
             if (layoutPane.getStyleHeader() != null) {
                 writer.writeAttribute(Attrs.STYLE, layoutPane.getStyleHeader(), null);
@@ -143,18 +142,16 @@ public class LayoutPaneRenderer extends CoreRenderer {
             writer.endElement("div");
         }
 
+        String contentStyleClass = getStyleClassBuilder(fc)
+                    .add(Layout.STYLE_CLASS_LAYOUT_CONTENT)
+                    .add(Layout.STYLE_CLASS_PANE_CONTENT)
+                    .add(layoutPane.getStyleClassContent())
+                    .build();
+
         // encode content
         if (header != null) {
             writer.startElement("div", null);
-            if (layoutPane.getStyleClassContent() != null) {
-                writer.writeAttribute(Attrs.CLASS,
-                            Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT + " "
-                                        + layoutPane.getStyleClassContent(),
-                            null);
-            }
-            else {
-                writer.writeAttribute(Attrs.CLASS, Layout.STYLE_CLASS_LAYOUT_CONTENT + " " + Layout.STYLE_CLASS_PANE_CONTENT, null);
-            }
+            writer.writeAttribute(Attrs.CLASS, contentStyleClass, null);
 
             if (layoutPane.getStyleContent() != null) {
                 writer.writeAttribute(Attrs.STYLE, "border:none; " + layoutPane.getStyleContent(), null);

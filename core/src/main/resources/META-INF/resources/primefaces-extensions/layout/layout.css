@@ -88,3 +88,19 @@
     padding: 6px;
     overflow: auto;
 }
+
+/** From Primefaces Themes */
+body .ui-layout-unit {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0
+}
+
+body .ui-layout-unit .ui-layout-unit-header {
+    padding: .571em 1em .571em 1em;
+    font-weight: 700
+}
+
+body .ui-layout-resizer {
+    background-color: #c8c8c8
+}
