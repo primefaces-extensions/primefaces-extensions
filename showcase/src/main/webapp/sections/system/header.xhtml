@@ -4,34 +4,39 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 <ui:composition>
-	<p:link id="logo-link" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
+    <p:panel>
+        <p:panelGrid columns="2" layout="flex">
+            <p:link id="logo-link" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
 
-	<h:panelGrid columns="4" style="float:right;padding:4px;">
-		<h:panelGrid columns="2" columnClasses="themeText,themeSelect">
-			<h:outputText value="Theme" />
-			<p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
-				 onchange="$('#headerForm').submit();" converter="themeConverter">
-				<f:selectItems var="t" value="#{userSettings.availableThemes}" itemLabel="#{t.name}" itemValue="#{t}" />
-				<p:column>
-                        #{theme.name}
-                </p:column>
-			</p:selectOneMenu>
-		</h:panelGrid>
+            <h:panelGrid columns="4" style="float:right;">
+                <h:panelGrid columns="2" columnClasses="themeText,themeSelect">
+                    <h:outputText value="Theme"/>
+                    <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
+                                     onchange="$('#headerForm').submit();" converter="themeConverter">
+                        <f:selectItems var="t" value="#{userSettings.availableThemes}" itemLabel="#{t.name}" itemValue="#{t}"/>
+                        <p:column>
+                            #{theme.name}
+                        </p:column>
+                    </p:selectOneMenu>
+                </h:panelGrid>
 
-		<p:link href="http://primefaces-extensions.github.com/" target="_blank" id="homepage-link" title="Homepage"/>
+                <p:link href="http://primefaces-extensions.github.com/" target="_blank" id="homepage-link" title="Homepage"/>
 
-		<p:link href="https://github.com/primefaces-extensions" target="_blank" id="github-link" title="GitHub"/>
+                <p:link href="https://github.com/primefaces-extensions" target="_blank" id="github-link" title="GitHub"/>
 
-		<p:link href="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues" target="_blank" id="issues-link" title="Issue Tracking"/>
-	</h:panelGrid>
+                <p:link href="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues" target="_blank" id="issues-link"
+                        title="Issue Tracking"/>
+            </h:panelGrid>
+        </p:panelGrid>
+    </p:panel>
 
-	<p:ajaxStatus styleClass="logo" style="left:80px; width:32px; height:32px; margin-top: 10px;">
-		<f:facet name="start">
-			<div class="fa-3x"><i class="fas fa-sync fa-spin ajax-loader" aria-hidden="true"/></div>
-		</f:facet>
-		<f:facet name="complete">
-			<h:outputText value="" />
-		</f:facet>
-	</p:ajaxStatus>
+    <p:ajaxStatus styleClass="logo" style="left:80px; width:32px; height:32px; margin-top: 10px;">
+        <f:facet name="start">
+            <div class="fa-3x"><i class="fas fa-sync fa-spin ajax-loader" aria-hidden="true"/></div>
+        </f:facet>
+        <f:facet name="complete">
+            <h:outputText value=""/>
+        </f:facet>
+    </p:ajaxStatus>
 </ui:composition>
 </html>

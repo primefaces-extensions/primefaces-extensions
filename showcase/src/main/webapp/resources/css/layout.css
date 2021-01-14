@@ -5,8 +5,6 @@ body {
 body > .ui-layout-north {
     background: none;
     border: none;
-    color: #000000;
-    padding: 4px;
     overflow: hidden;
 }
 
@@ -24,7 +22,7 @@ body > form > .ui-layout-south {
 #headerForm .logo {
     position: relative;
     float: left;
-    top: -3px;
+    top: -14px;
     height: 55px;
 }
 
@@ -103,9 +101,14 @@ body > form > .ui-layout-south {
     padding: 1em 0;
 }
 
+div.homePanel {
+    display: block;
+}
+
 div.centerContent {
     padding: 15px;
     font-size: 13px;
+    height: 100%;
 }
 
 div.centerExample {
