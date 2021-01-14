@@ -40,8 +40,9 @@ body > form > .ui-layout-south {
     padding: 0.10em;
 }
 
-#componentList .ui-menuitem-text {
+#componentList.ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-text {
     width: 60px;
+    float: left;
 }
 
 #componentList .ui-separator {
@@ -171,29 +172,75 @@ div.source {
     text-align: left;
 }
 
-.ui-icon-none {
-    width: 16px;
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-none {
+    width: 9px;
     height: 16px;
     margin-right: 3px;
+    float: left;
     background-image: none !important;
 }
 
-.ui-icon-new-comp {
-    background-image: url("#{resource['images/new.png']}") !important;
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-new-comp {
     margin-right: 3px;
-    font-size: 1.25em !important;
+    font-size: 0.75em;
+    float: left;
+    color: green;
 }
 
-.ui-icon-updated-comp {
-    background-image: url("#{resource['images/updated.png']}") !important;
-    margin-right: 3px;
-    font-size: 1.25em !important;
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-new-comp:before {
+    font-family: 'primeicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e911";
 }
 
-.ui-icon-deprecated-comp {
-    background-image: url("#{resource['images/deprecated.png']}") !important;
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-updated-comp {
     margin-right: 3px;
-    font-size: 1.25em !important;
+    font-size: 0.75em;
+    float: left;
+    color: darkorange;
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-updated-comp:before {
+    font-family: 'primeicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e911";
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-deprecated-comp {
+    margin-right: 3px;
+    font-size: 0.75em;
+    float: left;
+    color: #D61F27;
+}
+
+body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-deprecated-comp:before {
+    font-family: 'primeicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e911";
 }
 
 #logo-link {

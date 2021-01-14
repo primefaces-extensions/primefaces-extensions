@@ -154,9 +154,10 @@
                             icon="#{technicalInfo.getMenuitemIconStyleClass('waypoint')}"
                             onclick="Showcase.selectComponentLink(this)" ajax="false" url="#{request.contextPath}/views/waypoint.jsf"/>
             </p:menu>
-            <pe:tooltip value="New component in the current release" shared="true" for="@(.ui-icon-new-comp)"/>
-            <pe:tooltip value="Updated component / use case in the current release" shared="true" for="@(.ui-icon-updated-comp)"/>
-            <pe:tooltip value="Deprecated component - Retired or moved to PrimeFaces" shared="true" for="@(.ui-icon-deprecated-comp)"/>
+            <pe:tooltip value="New component in the current release" shared="true" for="@(.ui-icon-new-comp)" styleClass="qtip-default"/>
+            <pe:tooltip value="Updated component / use case in the current release" shared="true" for="@(.ui-icon-updated-comp)" styleClass="qtip-default"/>
+            <pe:tooltip value="Deprecated component - Retired or moved to PrimeFaces" shared="true" for="@(.ui-icon-deprecated-comp)"
+                        styleClass="qtip-default"/>
         </pe:layoutPane>
         <pe:layoutPane position="east" id="layoutEast">
             <pe:layoutPane position="center">
