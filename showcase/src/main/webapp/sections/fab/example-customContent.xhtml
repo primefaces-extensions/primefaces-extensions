@@ -5,12 +5,12 @@
         xmlns:pe="http://primefaces.org/ui/extensions">
 
     <!-- EXAMPLE-SOURCE-START -->
-    <pe:fab id="btnFab" icon="fa fa-question" iconActive="fa fa-times" style="background: green;" widgetVar="fabWidget">
-        <pe:javascript event="open" execute="PF('overlayWidget').show('btnFab');"/>
-        <pe:javascript event="close" execute="PF('overlayWidget').hide();"/>
-    </pe:fab>
-
-    <pe:badge content="1" for="btnFab"/>
+    <p:badge value="1" severity="danger">
+        <pe:fab id="btnFab" icon="fa fa-question" iconActive="fa fa-times" style="background: green;" widgetVar="fabWidget">
+            <pe:javascript event="open" execute="PF('overlayWidget').show('btnFab');"/>
+            <pe:javascript event="close" execute="PF('overlayWidget').hide();"/>
+        </pe:fab>
+    </p:badge>
 
     <p:overlayPanel id="overlayPanel" widgetVar="overlayWidget" appendTo="@(body)" showEffect="drop" hideEffect="slide">
         <p:panelGrid styleClass="ui-noborder">
