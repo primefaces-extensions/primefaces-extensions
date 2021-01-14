@@ -39,7 +39,7 @@ public class AvailableThemes {
     private final List<Theme> themes;
 
     private AvailableThemes() {
-        final List<String> themeNames = new ArrayList<String>();
+        final List<String> themeNames = new ArrayList<>();
 
         themeNames.add("arya");
         themeNames.add("luna-amber");
@@ -48,12 +48,11 @@ public class AvailableThemes {
         themeNames.add("luna-pink");
         themeNames.add("nova-dark");
         themeNames.add("nova-light");
-        themeNames.add("omega");
         themeNames.add("saga");
         themeNames.add("vela");
 
-        themesAsMap = new HashMap<String, Theme>();
-        themes = new ArrayList<Theme>();
+        themesAsMap = new HashMap<>();
+        themes = new ArrayList<>();
 
         for (final String themeName : themeNames) {
             final Theme theme = new Theme();
