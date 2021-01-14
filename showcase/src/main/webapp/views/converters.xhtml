@@ -8,14 +8,16 @@
             <h:outputText value="Converters"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-			PrimeFaces Extensions has built-in converters.
-		</h:panelGroup>
+            PrimeFaces Extensions has built-in converters.
+        </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">
         <ui:include src="/sections/converters/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
-
+        <f:facet name="header">
+            <h:outputText value="Documentation"/>
+        </f:facet>
     </ui:define>
 </ui:composition>
 </html>

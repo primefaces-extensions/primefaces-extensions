@@ -8,14 +8,16 @@
             <h:outputText value="Renderers"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-			Custom renderers are parts of PrimeFaces Extensions.
-		</h:panelGroup>
+            Custom renderers are parts of PrimeFaces Extensions.
+        </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">
         <ui:include src="/sections/renderers/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
-
+        <f:facet name="header">
+            <h:outputText value="Documentation"/>
+        </f:facet>
     </ui:define>
 </ui:composition>
 </html>
