@@ -41,7 +41,7 @@ public class URLEncoderWrapper {
     }
 
     /**
-     * Encodes the given string with the {@link URLEncoder#encode(String)} and UTF-8.
+     * Encodes the given string with the {@link URLEncoder#encode(String, String)} and UTF-8.
      *
      * @param string The value which should be encoded.
      * @return The encoded value.
