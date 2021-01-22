@@ -61,14 +61,6 @@ body > form > .ui-layout-south {
     width: 200%;
 }
 
-.docuTable {
-
-}
-
-.docuTable table,
-.docuEventTable table {
-}
-
 body .ui-datatable.docuTable .ui-datatable-data > tr > td {
     word-break: normal;
     padding: 0.3rem;
