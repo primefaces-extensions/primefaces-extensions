@@ -11,22 +11,22 @@
 </p:messages>
 
 <!-- EXAMPLE-SOURCE-START -->
-	<h:panelGrid columns="6" id="pnlDetails">
-		<p:outputLabel value="Locale:" for="cboLocale" />
-		<p:selectOneMenu id="cboLocale" value="#{calculatorController.language}" style="width:200px" required="true">
-			<f:selectItems value="#{calculatorController.languages}" />
-			<p:ajax update="pInputText" process="@this"/>
-		</p:selectOneMenu>
+    <h:panelGrid columns="6" id="pnlDetails">
+        <p:outputLabel value="Locale:" for="cboLocale" />
+        <p:selectOneMenu id="cboLocale" value="#{calculatorController.language}" style="width:200px" required="true">
+            <f:selectItems value="#{calculatorController.languages}" />
+            <p:ajax update="pInputText" process="@this"/>
+        </p:selectOneMenu>
 
-		<p:outputLabel value="RTL:" for="chkRtl" />
-		<p:selectBooleanCheckbox id="chkRtl" value="#{calculatorController.rtl}">
-			<p:ajax update="pInputText" process="@this"/>
-		</p:selectBooleanCheckbox>
+        <p:outputLabel value="RTL:" for="chkRtl" />
+        <p:selectBooleanCheckbox id="chkRtl" value="#{calculatorController.rtl}">
+            <p:ajax update="pInputText" process="@this"/>
+        </p:selectBooleanCheckbox>
 
-		<p:outputLabel value="Calc:" for="pInputText" />
-		<p:inputText id="pInputText" value="#{calculatorController.pInputText}">
-			<pe:calculator dir="#{calculatorController.rtl ? 'rtl' : 'ltr'}" locale="#{calculatorController.language}" showOn="both"/>
-		</p:inputText>
-	</h:panelGrid>
-	<!-- EXAMPLE-SOURCE-END -->
+        <p:outputLabel value="Calc:" for="pInputText" />
+        <p:inputText id="pInputText" value="#{calculatorController.pInputText}">
+            <pe:calculator dir="#{calculatorController.rtl ? 'rtl' : 'ltr'}" locale="#{calculatorController.language}" showOn="both"/>
+        </p:inputText>
+    </h:panelGrid>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

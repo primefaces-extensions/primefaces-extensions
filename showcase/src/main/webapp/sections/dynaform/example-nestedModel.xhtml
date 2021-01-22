@@ -1,5 +1,5 @@
 <ui:composition
-		xmlns="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -7,10 +7,10 @@
         xmlns:pe="http://primefaces.org/ui/extensions">
 <!-- EXAMPLE-SOURCE-START -->
 <h:panelGroup id="dynaFormGroup">
-	<p:messages id="messages" showSummary="true"/>  
-	
+    <p:messages id="messages" showSummary="true"/>  
+    
     <pe:dynaForm id="dynaForm" value="#{nestedDynaFormController.model}" var="data" >
-    	<pe:dynaFormControl type="input" for="txt">
+        <pe:dynaFormControl type="input" for="txt">
             <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
         </pe:dynaFormControl>
         
@@ -18,7 +18,7 @@
             <p:calendar id="cal" value="#{data.value}" required="#{data.required}" showOn="button"/>
         </pe:dynaFormControl>
 
-		<f:facet name="headerRegular">  
+        <f:facet name="headerRegular">  
            <div><h:outputText value="Search area" /></div>
         </f:facet>
         

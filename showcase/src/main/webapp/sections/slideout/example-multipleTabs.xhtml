@@ -1,63 +1,63 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
 
 <p:messages id="messages">
    <p:autoUpdate />
 </p:messages>
 
-	<!-- EXAMPLE-SOURCE-START -->
-	<pe:slideout id="soAuto" title="AutoOpen" icon="pi pi-folder-open" location="top" widgetVar="slideoutAuto"
-		handleStyleClass="auto-handle" panelStyleClass="auto-panel" showOn="click" offset="250px" autoOpen="true">
-		<p:panelGrid styleClass="ui-noborder">
-			<p:row>
-				<p:column styleClass="ui-widget-header">
-					<h:outputText value="Auto Open" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column>
-					<h:outputText value="Tab opens after DOM is done loading!" />
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</pe:slideout>
+    <!-- EXAMPLE-SOURCE-START -->
+    <pe:slideout id="soAuto" title="AutoOpen" icon="pi pi-folder-open" location="top" widgetVar="slideoutAuto"
+        handleStyleClass="auto-handle" panelStyleClass="auto-panel" showOn="click" offset="250px" autoOpen="true">
+        <p:panelGrid styleClass="ui-noborder">
+            <p:row>
+                <p:column styleClass="ui-widget-header">
+                    <h:outputText value="Auto Open" />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="Tab opens after DOM is done loading!" />
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </pe:slideout>
 
-	<pe:slideout id="soHover" title="Hover" icon="pi pi-arrow-right" location="top" widgetVar="slideoutHover"
-		handleStyleClass="hover-handle" panelStyleClass="hover-panel" showOn="hover" offset="350px">
-		<p:panelGrid styleClass="ui-noborder">
-			<p:row>
-				<p:column styleClass="ui-widget-header">
-					<h:outputText value="Hover" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column>
-					<h:outputText value="Hover over the tab with your mouse to open instead of a click!" />
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</pe:slideout>
+    <pe:slideout id="soHover" title="Hover" icon="pi pi-arrow-right" location="top" widgetVar="slideoutHover"
+        handleStyleClass="hover-handle" panelStyleClass="hover-panel" showOn="hover" offset="350px">
+        <p:panelGrid styleClass="ui-noborder">
+            <p:row>
+                <p:column styleClass="ui-widget-header">
+                    <h:outputText value="Hover" />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="Hover over the tab with your mouse to open instead of a click!" />
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </pe:slideout>
 
-	<pe:slideout id="soReverse" title="Reverse" icon="pi pi-backward" location="top" widgetVar="slideoutReverse"
-		handleStyleClass="reverse-handle" panelStyleClass="reverse-panel" showOn="click" offset="400px"
-		handleOffsetReverse="true">
-		<p:panelGrid styleClass="ui-noborder">
-			<p:row>
-				<p:column styleClass="ui-widget-header">
-					<h:outputText value="Reverse" />
-				</p:column>
-			</p:row>
-			<p:row>
-				<p:column>
-					<h:outputText value="Handle is on the other side of the tab!" />
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-	</pe:slideout>
+    <pe:slideout id="soReverse" title="Reverse" icon="pi pi-backward" location="top" widgetVar="slideoutReverse"
+        handleStyleClass="reverse-handle" panelStyleClass="reverse-panel" showOn="click" offset="400px"
+        handleOffsetReverse="true">
+        <p:panelGrid styleClass="ui-noborder">
+            <p:row>
+                <p:column styleClass="ui-widget-header">
+                    <h:outputText value="Reverse" />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="Handle is on the other side of the tab!" />
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </pe:slideout>
 
 
 
-	<!-- EXAMPLE-SOURCE-END -->
-	<ui:include src="/sections/slideout/multipleTabsCSS.xhtml" />
+    <!-- EXAMPLE-SOURCE-END -->
+    <ui:include src="/sections/slideout/multipleTabsCSS.xhtml" />
 </ui:composition>

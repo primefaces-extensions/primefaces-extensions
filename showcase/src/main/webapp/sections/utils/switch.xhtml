@@ -9,8 +9,8 @@
             <h:outputText value="Switch"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-			Sometimes you need to display different outputs or components depending on a value. Usually you can achieve this by using the ui:fragment tag. 
-			With the pe:switch util tag you won't have to declare ui:fragment tags, with different checks like ui:fragment rendered="#{'#'}{!empty someController.value}", anymore. 
+            Sometimes you need to display different outputs or components depending on a value. Usually you can achieve this by using the ui:fragment tag. 
+            With the pe:switch util tag you won't have to declare ui:fragment tags, with different checks like ui:fragment rendered="#{'#'}{!empty someController.value}", anymore. 
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
@@ -26,15 +26,15 @@ ${showcase:getFileContent('/sections/utils/example-switch.xhtml')}
 @RequestScoped
 public class SwitchController {
 
-	private String value;
-	
-	public String getValue() {
-		return value;
-	}
+    private String value;
+    
+    public String getValue() {
+        return value;
+    }
 
-	public void setValue(final String value) {
-		this.value = value;
-	}
+    public void setValue(final String value) {
+        this.value = value;
+    }
 }
             </ui:define>
         </ui:decorate>

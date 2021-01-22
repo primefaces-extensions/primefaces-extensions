@@ -1,42 +1,42 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:growl id="growl" showDetail="true" showSummary="true">
-		<p:autoUpdate />
-	</p:growl>
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
 
-	<!-- EXAMPLE-SOURCE-START -->
-	<h:panelGrid columns="3">
-		<p:outputLabel value="Callback: onOpen and onClose" />
-		<p:inputText id="txtOnOpenClose" value="867">
-			<pe:calculator id="calculator1" widgetVar="calc1" onopen="$('#lblOnOpenClose').text('Open Event: ' + value);"
-				onclose="$('#lblOnOpenClose').text('Close Event: ' + value);" showOn="both">
-				<p:ajax event="open" listener="#{calculatorController.openListener}" update="growl" />
-				<p:ajax event="close" listener="#{calculatorController.closeListener}" update="growl" />
-				<p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl" />
-			</pe:calculator>
-		</p:inputText>
-		<h:outputText id="lblOnOpenClose" value="Event Result" style="font-weight:bold" />
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="3">
+        <p:outputLabel value="Callback: onOpen and onClose" />
+        <p:inputText id="txtOnOpenClose" value="867">
+            <pe:calculator id="calculator1" widgetVar="calc1" onopen="$('#lblOnOpenClose').text('Open Event: ' + value);"
+                onclose="$('#lblOnOpenClose').text('Close Event: ' + value);" showOn="both">
+                <p:ajax event="open" listener="#{calculatorController.openListener}" update="growl" />
+                <p:ajax event="close" listener="#{calculatorController.closeListener}" update="growl" />
+                <p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl" />
+            </pe:calculator>
+        </p:inputText>
+        <h:outputText id="lblOnOpenClose" value="Event Result" style="font-weight:bold" />
 
-		<p:outputLabel value="Callback: onButton" />
-		<p:inputText widgetVar="txtOnButton" value="5309">
-			<pe:calculator id="calculator2" widgetVar="calc2" showOn="both"
-				onbutton="$('#lblOnButton').text('Button: ' + label + ' Current Value: ' + value)">
-				<p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl" />
-			</pe:calculator>
-		</p:inputText>
-		<h:outputText id="lblOnButton" value="Event Result" style="font-weight:bold" />
-	</h:panelGrid>
-	
-	<p/>
+        <p:outputLabel value="Callback: onButton" />
+        <p:inputText widgetVar="txtOnButton" value="5309">
+            <pe:calculator id="calculator2" widgetVar="calc2" showOn="both"
+                onbutton="$('#lblOnButton').text('Button: ' + label + ' Current Value: ' + value)">
+                <p:ajax event="button" listener="#{calculatorController.buttonListener}" update="growl" />
+            </pe:calculator>
+        </p:inputText>
+        <h:outputText id="lblOnButton" value="Event Result" style="font-weight:bold" />
+    </h:panelGrid>
+    
+    <p/>
 
-	<h:panelGroup layout="block" style="text-align:left;margin-bottom:10px;">
-		<p:commandButton value="Show" type="button" onclick="PF('calc1').show();" />
-		<p:commandButton value="Hide" type="button" onclick="PF('calc1').hide();" />
-		<p:commandButton value="Disable" type="button" onclick="PF('calc1').disable();PF('calc2').disable();" />
-		<p:commandButton value="Enable" type="button" onclick="PF('calc1').enable();PF('calc2').enable();" />
-		<p:commandButton value="Destroy" type="button" onclick="PF('calc1').destroy();PF('calc2').destroy();" />
-	</h:panelGroup>
-	<!-- EXAMPLE-SOURCE-END -->
+    <h:panelGroup layout="block" style="text-align:left;margin-bottom:10px;">
+        <p:commandButton value="Show" type="button" onclick="PF('calc1').show();" />
+        <p:commandButton value="Hide" type="button" onclick="PF('calc1').hide();" />
+        <p:commandButton value="Disable" type="button" onclick="PF('calc1').disable();PF('calc2').disable();" />
+        <p:commandButton value="Enable" type="button" onclick="PF('calc1').enable();PF('calc2').enable();" />
+        <p:commandButton value="Destroy" type="button" onclick="PF('calc1').destroy();PF('calc2').destroy();" />
+    </h:panelGroup>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

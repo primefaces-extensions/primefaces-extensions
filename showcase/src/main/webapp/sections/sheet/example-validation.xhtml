@@ -1,10 +1,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-	<p:growl id="growl" showDetail="true" showSummary="true">
-		<p:autoUpdate />
-	</p:growl>
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
 
 <!-- EXAMPLE-SOURCE-START -->
 <script type="text/javascript">
@@ -21,18 +21,18 @@ function validateEquals6(value, callback) {
 </script>
 
 <pe:sheet id="sheet" value="#{sheetAjaxController.assets}" var="row" height="400" rowKey="#{row.assetId}"
-	showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending"  width="800"
-	widgetVar="sheetWidget">
-	<p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}" />
+    showRowHeaders="true" sortBy="#{row.assetId}" sortOrder="ascending"  width="800"
+    widgetVar="sheetWidget">
+    <p:ajax event="change" listener="#{sheetAjaxController.cellChangeEvent}" />
 
-	<f:facet name="header">
-		<h:outputText value="Assets" />
-	</f:facet>
+    <f:facet name="header">
+        <h:outputText value="Assets" />
+    </f:facet>
 
-	<pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.assetId}" colWidth="150"  />
-	<pe:sheetcolumn headerText="Required" value="#{row.hostName}" colWidth="140" 
-	                required="true" requiredMessage="This field is required!" />
-	<pe:sheetcolumn id="colBigDecimal" headerText="BigDecimal(1-10)" value="#{row.purchasePrice}" colWidth="100" styleClass="htRight">
+    <pe:sheetcolumn headerText="Id (readOnly)" readOnly="true" value="#{row.assetId}" colWidth="150"  />
+    <pe:sheetcolumn headerText="Required" value="#{row.hostName}" colWidth="140" 
+                    required="true" requiredMessage="This field is required!" />
+    <pe:sheetcolumn id="colBigDecimal" headerText="BigDecimal(1-10)" value="#{row.purchasePrice}" colWidth="100" styleClass="htRight">
            <f:converter converterId="javax.faces.BigDecimal" />
            <f:validateDoubleRange minimum="1.7" maximum="10.5" for="sheet"/>
     </pe:sheetcolumn>

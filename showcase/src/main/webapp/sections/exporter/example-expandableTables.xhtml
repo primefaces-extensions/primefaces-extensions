@@ -7,99 +7,99 @@
         xmlns:pe="http://primefaces.org/ui/extensions">
         
 <!-- EXAMPLE-SOURCE-START -->
-	<p:growl id="growl" showDetail="true" showSummary="true">
-		<p:autoUpdate />
-	</p:growl>
-	<p:dataTable id="vehiclesTable" var="vehicle" value="#{vehicleTableController.vehicles}">
-		<p:ajax event="rowToggle" listener="#{vehicleTableController.onRowToggle}" />
-		<f:facet name="header">
+    <p:growl id="growl" showDetail="true" showSummary="true">
+        <p:autoUpdate />
+    </p:growl>
+    <p:dataTable id="vehiclesTable" var="vehicle" value="#{vehicleTableController.vehicles}">
+        <p:ajax event="rowToggle" listener="#{vehicleTableController.onRowToggle}" />
+        <f:facet name="header">
             Expand rows to see detailed information
          </f:facet>
 
-		<p:column exportable="false" width="5%">
-			<p:rowToggler />
-		</p:column>
+        <p:column exportable="false" width="5%">
+            <p:rowToggler />
+        </p:column>
 
-		<p:column>
-			<f:facet name="header">
+        <p:column>
+            <f:facet name="header">
             Manufacturer
          </f:facet>
-			<h:outputText value="#{vehicle.manufacturer}" />
-		</p:column>
+            <h:outputText value="#{vehicle.manufacturer}" />
+        </p:column>
 
-		<p:column>
-			<f:facet name="header">
+        <p:column>
+            <f:facet name="header">
             Color
          </f:facet>
-			<h:outputText value="#{vehicle.color}" />
-		</p:column>
+            <h:outputText value="#{vehicle.color}" />
+        </p:column>
 
-		<p:column>
-			<f:facet name="header">
+        <p:column>
+            <f:facet name="header">
             Price
          </f:facet>
-			<h:outputText value="#{vehicle.price}" />
-		</p:column>
+            <h:outputText value="#{vehicle.price}" />
+        </p:column>
 
-		<p:column>
-			<f:facet name="header">
+        <p:column>
+            <f:facet name="header">
             Speed
          </f:facet>
-			<h:outputText value="#{vehicle.speed}" />
-		</p:column>
+            <h:outputText value="#{vehicle.speed}" />
+        </p:column>
 
-		<p:column>
-			<f:facet name="header">
+        <p:column>
+            <f:facet name="header">
             Year
          </f:facet>
-			<h:outputText value="#{vehicle.year}" />
-		</p:column>
+            <h:outputText value="#{vehicle.year}" />
+        </p:column>
 
-		<p:rowExpansion>
-			<p:dataTable id="display" var="customer" value="#{vehicle.customers}" style="width:400px;">
+        <p:rowExpansion>
+            <p:dataTable id="display" var="customer" value="#{vehicle.customers}" style="width:400px;">
 
-				<f:facet name="header">
-					<h:outputText value="Customer Details"></h:outputText>
-				</f:facet>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Customer Name"></h:outputText>
-					</f:facet>
-					<h:outputText value="#{customer.customerName}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Country"></h:outputText>
-					</f:facet>
-					<h:outputText value="#{customer.country}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Contact Number"></h:outputText>
-					</f:facet>
-					<h:outputText value="#{customer.contactNumber}" />
-				</p:column>
-			</p:dataTable>
+                <f:facet name="header">
+                    <h:outputText value="Customer Details"></h:outputText>
+                </f:facet>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Customer Name"></h:outputText>
+                    </f:facet>
+                    <h:outputText value="#{customer.customerName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Country"></h:outputText>
+                    </f:facet>
+                    <h:outputText value="#{customer.country}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Contact Number"></h:outputText>
+                    </f:facet>
+                    <h:outputText value="#{customer.contactNumber}" />
+                </p:column>
+            </p:dataTable>
 
-		</p:rowExpansion>
-	</p:dataTable>
+        </p:rowExpansion>
+    </p:dataTable>
 
-	<p:spacer height="30" />
+    <p:spacer height="30" />
 
-	<p:panel header="Export PDF and Excel">
-		<p:commandLink id="pdf" ajax="false">
-			<p:graphicImage value="/resources/images/pdf.png" />
-			<f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
-			<pe:exporter type="pdf" target="vehiclesTable" fileName="vehiclesTable" facetBackground="#AAFFBB" datasetPadding="4" />
-		</p:commandLink>
+    <p:panel header="Export PDF and Excel">
+        <p:commandLink id="pdf" ajax="false">
+            <p:graphicImage value="/resources/images/pdf.png" />
+            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+            <pe:exporter type="pdf" target="vehiclesTable" fileName="vehiclesTable" facetBackground="#AAFFBB" datasetPadding="4" />
+        </p:commandLink>
 
-		<p:spacer width="20" />
+        <p:spacer width="20" />
 
-		<p:commandLink id="xls" ajax="false">
-			<p:graphicImage value="/resources/images/excel.png" />
-			<f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
-			<pe:exporter type="xlsx" target="vehiclesTable" fileName="vehiclesTable" facetBackground="#AAFFBB" datasetPadding="4" />
-		</p:commandLink>
-	</p:panel>
-	<!-- EXAMPLE-SOURCE-END -->
+        <p:commandLink id="xls" ajax="false">
+            <p:graphicImage value="/resources/images/excel.png" />
+            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />
+            <pe:exporter type="xlsx" target="vehiclesTable" fileName="vehiclesTable" facetBackground="#AAFFBB" datasetPadding="4" />
+        </p:commandLink>
+    </p:panel>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
