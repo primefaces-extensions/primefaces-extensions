@@ -48,6 +48,7 @@ public class BeanPropertyComparator implements Comparator<Object> {
         collator = Collator.getInstance(locale);
     }
 
+    @SuppressWarnings("java:S3776")
     @Override
     public int compare(Object obj1, Object obj2) {
         FacesContext context = FacesContext.getCurrentInstance();
