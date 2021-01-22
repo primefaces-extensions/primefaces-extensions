@@ -73,11 +73,6 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>#{empty userSettings ? 'saga' : userSettings.currentTheme.name}</param-value>
     </context-param>
-    <!-- enabled FontAwesome -->
-    <context-param>
-        <param-name>primefaces.FONT_AWESOME</param-name>
-        <param-value>true</param-value>
-    </context-param>
     <!-- enable script collecting and moves all script to end of body -->
     <context-param>
         <param-name>primefaces.MOVE_SCRIPTS_TO_BOTTOM</param-name>

@@ -63,12 +63,12 @@
 
         <p:commandButton value="Save with success" process="masterDetail"
                          action="#{complexMasterDetailController.saveSuccess(person)}"
-                         style="margin-top:10px;" icon="fa fa-save">
+                         style="margin-top:10px;" icon="pi pi-save">
             <pe:selectDetailLevel level="1"/>
         </p:commandButton>
         <p:commandButton value="Save with failure" process="masterDetail"
                          action="#{complexMasterDetailController.saveFailure(person)}"
-                         style="margin-top:10px;" icon="fa fa-save">
+                         style="margin-top:10px;" icon="pi pi-save">
             <pe:selectDetailLevel level="1"/>
         </p:commandButton>
         <p:commandButton type="button" value="Delete" onclick="PF('deletedDlg').show()" style="margin-top:10px;"/>

@@ -10,7 +10,7 @@
     <h:panelGrid columns="4">
         <h:outputText value="Copy"/>
         <p:inputText id="txtCopy" value="#{clipboardController.copyInput}"/>
-        <p:commandButton id="btnCopy" value="Copy" icon="fa fa-copy"/>
+        <p:commandButton id="btnCopy" value="Copy" icon="pi pi-copy"/>
         <pe:clipboard id="clipCopy" trigger="btnCopy" action="copy" target="txtCopy">
             <p:ajax event="success" listener="#{clipboardController.successListener}"/>
             <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
@@ -18,7 +18,7 @@
 
         <h:outputText value="Cut"/>
         <p:inputText id="txtCut" value="#{clipboardController.cutInput}"/>
-        <p:commandButton id="btnCut" value="Cut" icon="fa fa-cut"/>
+        <p:commandButton id="btnCut" value="Cut" icon="pi pi-cut"/>
         <pe:clipboard id="clipCut" trigger="btnCut" action="cut" target="txtCut">
             <p:ajax event="success" listener="#{clipboardController.successListener}"/>
             <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
@@ -26,13 +26,13 @@
     </h:panelGrid>
 
     <h:panelGroup layout="block" style="text-align:left;margin:10px;">
-        <p:commandButton id="btnAjaxCopy" value="Ajax Copy" icon="fa fa-copy" onclick="return false;"/>
+        <p:commandButton id="btnAjaxCopy" value="Ajax Copy" icon="pi pi-copy" onclick="return false;"/>
         <pe:clipboard id="clipAjax" trigger="btnAjaxCopy" action="copy" text="#{clipboardController.lineBreaks}">
             <p:ajax event="success" listener="#{clipboardController.successListener}"/>
             <p:ajax event="error" listener="#{clipboardController.errorListener}"/>
         </pe:clipboard>
 
-        <p:button id="btnNonAjax" value="Non-Ajax Copy" icon="fa fa-copy" href="#"/>
+        <p:button id="btnNonAjax" value="Non-Ajax Copy" icon="pi pi-copy" href="#"/>
         <pe:clipboard id="clipNonAjax" trigger="btnNonAjax" action="copy" text="PrimeFaces Clipboard Rocks Without Ajax!"
                       onsuccess="alert('Action: ' + this.action + ' Text:' + this.text);"
                       onerror="alert('Action: ' + this.action + ' FAILED!');"/>
@@ -42,7 +42,7 @@
         <h:outputText id="lblRightClick">Right click me to view the menu options!</h:outputText>
 
         <p:contextMenu>
-            <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0)" icon="fa fa-copy"/>
+            <p:menuitem id="mnuCopy" value="Copy" url="javascript:void(0)" icon="pi pi-copy"/>
         </p:contextMenu>
 
         <pe:clipboard id="clipContextCopy" trigger="mnuCopy" action="copy" text="#{clipboardController.copyInput}">

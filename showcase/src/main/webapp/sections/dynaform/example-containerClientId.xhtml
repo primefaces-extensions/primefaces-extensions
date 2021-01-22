@@ -13,7 +13,7 @@
         <pe:dynaFormControl for="txt">
             <h:panelGroup style="white-space: nowrap;">
                 <p:inputText id="txt" value="#{data.value}"/>
-                <p:commandButton icon="fa fa-search" process="@this txt"
+                <p:commandButton icon="pi pi-search" process="@this txt"
                                  update=":mainForm:dialogList" oncomplete="PF('dialogListWdgt').show()"
                                  title="Please choose an item"
                                  style="border:none;">
@@ -46,7 +46,7 @@
     </h:selectOneListbox>
 
     <h:panelGroup layout="block" style="white-space:nowrap; margin-top:15px;">
-        <p:commandButton value="OK" icon="fa fa-save" style="margin-right:5px"
+        <p:commandButton value="OK" icon="pi pi-save" style="margin-right:5px"
                          process="@this selectList" action="#{containerDynaFormController.updateSelection}"
                          global="false" oncomplete="PF('dialogListWdgt').hide()"/>
         <p:commandButton value="Cancel" type="button" onclick="PF('dialogListWdgt').hide()"/>

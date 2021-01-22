@@ -8,17 +8,17 @@
     </p:growl>
 
     <!-- EXAMPLE-SOURCE-START -->
-    <pe:fab id="fabMenu" icon="fa fa-link">
+    <pe:fab id="fabMenu" icon="pi pi-link">
         <p:ajax event="open" listener="#{fabController.openListener}" global="false"/>
         <p:ajax event="close" listener="#{fabController.closeListener}" global="false"/>
         <p:menuitem value="Home"
                     icon="pi pi-home"
                     url="http://primefaces-extensions.github.com/"/>
         <p:menuitem value="GitHub"
-                    icon="fa fa-github"
+                    icon="pi pi-github"
                     url="https://github.com/primefaces-extensions"/>
         <p:menuitem value="Issues"
-                    icon="fa fa-bug"
+                    icon="pi pi-android"
                     url="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues"
                     style="background: red;"/>
     </pe:fab>
