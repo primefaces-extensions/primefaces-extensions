@@ -22,7 +22,7 @@ body > form > .ui-layout-south {
 #headerForm .logo {
     position: relative;
     float: left;
-    top: -14px;
+    top: -10px;
     height: 55px;
 }
 
@@ -240,14 +240,14 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
 }
 
 #logo-link {
-    background-image: url("#{resource['images/logo.png']}");
+    background-image: url("#{resource['images/icon-prime.svg']}");
     display: block;
     height: 55px;
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
-    width: 250px;
-    background-size: 250px 55px;
+    width: 50px;
+    background-size: 50px 55px;
 }
 
 #homepage-link {
