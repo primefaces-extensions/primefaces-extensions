@@ -1,20 +1,19 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
         xmlns:pe="http://primefaces.org/ui/extensions">
 
-<!-- EXAMPLE-SOURCE-START -->
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true"/>
 
-<p:growl id="growl" showDetail="true" />
-
-<pe:ckEditor id="editor" value="#{editorController.content}" interfaceColor="#{editorController.color}" enterMode="CKEDITOR.ENTER_BR" font='Courier New' fontSize='11px' >
-    <p:ajax event="save" listener="#{editorController.saveListener}" update="growl"/>
-</pe:ckEditor>
-
-<p:commandButton actionListener="#{editorController.changeColor}" update="editor"
-                 value="Change color with AJAX" style="margin-top:10px;" skin="moono"/>
-
+    <pe:ckEditor id="editor"
+                 value="#{editorController.content}"
+                 enterMode="CKEDITOR.ENTER_BR"
+                 font='Courier New'
+                 fontSize='11px'
+                 skin="office2013">
+        <p:ajax event="save" listener="#{editorController.saveListener}" update="growl"/>
+    </pe:ckEditor>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
