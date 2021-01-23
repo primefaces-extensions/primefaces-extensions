@@ -1,10 +1,10 @@
 .iti__country-list {
     background-color: var(--surface-f, #fff);
-    border-color: var(--surface-d, #ccc);
+    border-color: var(--surface-d, #ced4da);
 }
 
 .iti__divider {
-    border-bottom-color: var(--surface-d, #ccc);
+    border-bottom-color: var(--surface-d, #ced4da);
 }
 
 .iti__country.iti__highlight {
