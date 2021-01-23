@@ -3,6 +3,10 @@
     overflow: hidden;
 }
 
+body .ui-layout-resizer {
+    background-color: var(--surface-b, #c8c8c8);
+}
+
 .ui-layout-resizer-west-dragging,
 .ui-layout-resizer-west-open-hover {
     background: url("#{resource['primefaces-extensions:layout/resizable-w.gif']}") repeat-y center;
@@ -101,6 +105,3 @@ body .ui-layout-unit .ui-layout-unit-header {
     font-weight: 700
 }
 
-body .ui-layout-resizer {
-    background-color: #c8c8c8
-}
