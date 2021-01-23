@@ -6,7 +6,11 @@
 <ui:composition>
     <p:panel>
         <p:panelGrid columns="2" layout="flex">
-            <p:link id="logo-link" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
+            <h:panelGrid columns="2" style="float:left;">
+                <p:link id="logo-link" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
+                <p:link id="logo-text" href="#{request.contextPath}/views/home.jsf" title="PrimeFaces Extensions" styleClass="logo"/>
+            </h:panelGrid>
+
 
             <h:panelGrid columns="4" style="float:right;">
                 <h:panelGrid columns="2" columnClasses="themeText,themeSelect">

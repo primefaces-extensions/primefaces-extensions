@@ -19,13 +19,6 @@ body > form > .ui-layout-south {
     white-space: nowrap;
 }
 
-#headerForm .logo {
-    position: relative;
-    float: left;
-    top: -10px;
-    height: 55px;
-}
-
 #componentList,
 #useCaseList {
     border-width: 0;
@@ -239,15 +232,32 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     content: "\e911";
 }
 
+#headerForm .logo {
+    position: relative;
+    float: left;
+    top: -12px;
+    height: 55px;
+}
+
 #logo-link {
     background-image: url("#{resource['images/icon-prime.svg']}");
     display: block;
-    height: 55px;
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
     width: 50px;
     background-size: 50px 55px;
+}
+
+#logo-text {
+    background-image: url("#{resource['images/logo-text.svg']}");
+    display: block;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 200px;
+    background-size: 200px 55px;
+    left: -20px;
 }
 
 #homepage-link {
