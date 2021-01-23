@@ -25,19 +25,27 @@ body .ui-timepicker {
 
 body .ui-timepicker-table {
     background-color: var(--surface-f, #fff);
-    border: 1px solid var(--surface-d, var(--surface-d, #a6a6a6));
+    border: 1px solid var(--surface-d, #ced4da);
     padding: 0.857em;
 }
 
 body .ui-timepicker-table td {
-    padding: 0.286em;
+    padding: 0.5rem;
 }
 
 body .ui-timepicker .ui-timepicker-table td a {
+    display: inline-block;
     color: var(--text-color, #333);
-    padding: 0.286em;
-    width: 2em;
+    padding: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
     text-align: center;
+    line-height: 2.5rem;
+}
+
+body .ui-timepicker .ui-timepicker-table td a:hover {
+    background-color: var(--surface-c, #f8f8f8);
 }
 
 body .ui-timepicker .ui-timepicker-table td a.ui-state-default.ui-state-active {
@@ -45,22 +53,16 @@ body .ui-timepicker .ui-timepicker-table td a.ui-state-default.ui-state-active {
     background-color: var(--primary-color, #3373a0);
 }
 
-body .ui-timepicker .ui-timepicker-table td a.ui-state-default {
-    color: var(--text-color, #000);
-    border: 1px solid var(--primary-color, #3373a0);
-    padding: 0.286em;
-}
-
 body .ui-timepicker .ui-timepicker-title {
-    border: 1px solid var(--surface-d, #a6a6a6);
     padding: 0 1em;
+    background-color: var(--surface-a, #fff);
 }
 
 body .ui-timepicker td.ui-timepicker-minutes {
     padding-left: 4px;
     padding-right: 4px;
     padding-bottom: 4px;
-    border-left: 1px solid var(--primary-color, #3373a0);
+    border-left: 1px solid var(--surface-d, #3373a0);
 }
 
 body .ui-prime-icons .ui-icon {
