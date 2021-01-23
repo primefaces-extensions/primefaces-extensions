@@ -24,8 +24,8 @@ body .ui-timepicker {
 }
 
 body .ui-timepicker-table {
-    background-color: #fff;
-    border: 1px solid #a6a6a6;
+    background-color: var(--surface-f, #fff);
+    border: 1px solid var(--surface-d, var(--surface-d, #a6a6a6));
     padding: 0.857em;
 }
 
@@ -34,25 +34,25 @@ body .ui-timepicker-table td {
 }
 
 body .ui-timepicker .ui-timepicker-table td a {
-    color: #333;
+    color: var(--text-color, #333);
     padding: 0.286em;
     width: 2em;
     text-align: center;
 }
 
 body .ui-timepicker .ui-timepicker-table td a.ui-state-default.ui-state-active {
-    color: #fff;
-    background-color: #3373a0;
+    color: var(--surface-f, #fff);
+    background-color: var(--primary-color, #3373a0);
 }
 
 body .ui-timepicker .ui-timepicker-table td a.ui-state-default {
-    border: 1px solid #3373a0;
+    color: var(--text-color, #000);
+    border: 1px solid var(--primary-color, #3373a0);
     padding: 0.286em;
-    color: #000;
 }
 
 body .ui-timepicker .ui-timepicker-title {
-    border: 1px solid #a6a6a6;
+    border: 1px solid var(--surface-d, #a6a6a6);
     padding: 0 1em;
 }
 
@@ -60,11 +60,11 @@ body .ui-timepicker td.ui-timepicker-minutes {
     padding-left: 4px;
     padding-right: 4px;
     padding-bottom: 4px;
-    border-left: 1px solid #3373a0;
+    border-left: 1px solid var(--primary-color, #3373a0);
 }
 
 body .ui-prime-icons .ui-icon {
-    font-family: 'primeicons';
+    font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
     font-weight: normal;
