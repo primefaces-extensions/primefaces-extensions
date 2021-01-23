@@ -8,6 +8,10 @@ body > .ui-layout-north {
     overflow: hidden;
 }
 
+body a {
+    color: var(--primary-color, rgb(0, 0, 238));
+}
+
 body > form > .ui-layout-south {
     background: none;
     border: none;
