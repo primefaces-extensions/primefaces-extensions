@@ -1,3 +1,15 @@
+.iti__country-list {
+    background-color: var(--surface-f, #fff);
+    border-color: var(--surface-d, #ccc);
+}
+
+.iti__divider {
+    border-bottom-color: var(--surface-d, #ccc);
+}
+
+.iti__country.iti__highlight {
+    background-color: var(--surface-c, rgba(0, 0, 0, 0.05));
+}
 
 .ui-inputgroup > .ui-inputphone:not(:first-child) .ui-inputtext {
     border-top-left-radius: 0;
