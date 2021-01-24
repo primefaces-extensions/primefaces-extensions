@@ -152,29 +152,6 @@ PrimeFacesExt = {
     },
 
     /**
-     * Does this theme use Prime Icons?
-     */
-    isPrimeIconTheme: function (theme) {
-        var theme = PrimeFacesExt.getTheme();
-        switch (theme) {
-            case "nova-light":
-            case "nova-dark":
-            case "nova-colored":
-            case "luna-blue":
-            case "luna-amber":
-            case "luna-green":
-            case "luna-pink":
-            case "saga":
-            case "vela":
-            case "arya":
-                return true;
-            default:
-                return false;
-        }
-        ;
-    },
-
-    /**
      * The name of the PrimeFaces Extensions resource library.
      *
      * @author Thomas Andraschko

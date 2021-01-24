@@ -21,11 +21,6 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         // configure localized text
         this.cfg = PrimeFacesExt.configureLocale('TimePicker', cfg);
 
-        // GitHub #723: Fix for PrimeIcon themes
-        if (PrimeFacesExt.isPrimeIconTheme()) {
-            this.container.addClass('ui-prime-icons');
-        }
-
         if (this.cfg.showPeriod) {
             this.amHours = {};
             this.pmHours = {};
@@ -146,7 +141,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', $this.panel, function () {
             $this.hide();
         });
-        
+
         PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
             $this.hide();
         });

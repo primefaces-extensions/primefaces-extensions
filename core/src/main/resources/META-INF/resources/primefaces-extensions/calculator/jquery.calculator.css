@@ -188,7 +188,7 @@ img.calculator-trigger {
     font-size: 70%;
 }
 
-body .ui-prime-icons .ui-icon {
+body .calculator-trigger .ui-icon {
     font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
@@ -202,6 +202,6 @@ body .ui-prime-icons .ui-icon {
 }
 
 /* Percentage Icon because PrimeIcons has no calculator! */
-body .ui-prime-icons .ui-icon-calculator:before {
+body .calculator-trigger .ui-icon-calculator:before {
     content: "\e9be";
 }

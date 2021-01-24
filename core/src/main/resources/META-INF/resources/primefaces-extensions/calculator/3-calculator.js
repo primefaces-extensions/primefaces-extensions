@@ -38,13 +38,6 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
             this._applyCalculator(input, cfg);
         }
 
-        // GitHub #723: Fix for PrimeIcon themes
-        if (PrimeFacesExt.isPrimeIconTheme()) {
-            var button = $('.ui-icon-calculator');
-            if (button.length) {
-                button.parent().addClass('ui-prime-icons');
-            }
-        }
     },
 
     /**

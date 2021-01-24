@@ -30,7 +30,7 @@ body .ui-timepicker-table {
 }
 
 body .ui-timepicker-table > tbody {
-  border: .5rem solid var(--surface-f, #fff);
+    border: .5rem solid var(--surface-f, #fff);
 }
 
 body .ui-timepicker-table td {
@@ -77,7 +77,8 @@ body .ui-timepicker td.ui-timepicker-minutes {
     color: var(--text-color, #333);
 }
 
-body .ui-prime-icons .ui-icon {
+body .ui-timepicker .ui-icon,
+body .pe-timepicker-trigger .ui-icon {
     font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
@@ -90,14 +91,14 @@ body .ui-prime-icons .ui-icon {
     -moz-osx-font-smoothing: grayscale;
 }
 
-body .ui-prime-icons .ui-icon-clock:before {
+body .pe-timepicker-trigger .ui-icon-clock:before {
     content: "\e940";
 }
 
-body .ui-prime-icons .ui-icon-triangle-1-n:before {
+body .ui-timepicker .ui-icon-triangle-1-n:before {
     content: "\e933";
 }
 
-body .ui-prime-icons .ui-icon-triangle-1-s:before {
+body .ui-timepicker .ui-icon-triangle-1-s:before {
     content: "\e930";
 }
