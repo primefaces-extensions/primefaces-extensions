@@ -386,13 +386,11 @@
 
             // position with the ui position utility, if loaded
             if ((!inst.inline) && (typeof $.ui.position == 'object')) {
-                inst.tpDiv.position({
+                inst.tpDiv.css({left: '0px', top: '0px'}).position({
                     of: inst.input,
                     my: $.fgtimepicker._get(inst, 'myPosition'),
                     at: $.fgtimepicker._get(inst, 'atPosition'),
-                    // offset: $( "#offset" ).val(),
-                    // using: using,
-                    collision: 'flip'
+                    collision: 'flipfit'
                 });
                 var offset = inst.tpDiv.offset();
                 $.fgtimepicker._pos = [offset.top, offset.left];
