@@ -82,7 +82,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
 
         // for internal use
-        var _self = this;
+        var $this = this;
 
         // extend configuration
         if (this.cfg.modeInline) {
@@ -90,24 +90,26 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
 
         this.cfg.beforeShow = function (input, inst) {
-            _self.onbeforeShow();
+            $this.onbeforeShow();
         };
 
         this.cfg.onClose = function (time, inst) {
-            _self.onclose();
+            $this.onclose();
         };
 
         this.cfg.onSelect = function (time, inst) {
-            if (_self.cfg.modeInline) {
-                $(_self.cfg.altField).val(time);
+            if ($this.cfg.modeInline) {
+                $($this.cfg.altField).val(time);
             } else {
-                _self.jq.val(time);
+                $this.jq.val(time);
             }
-            _self.ontimeSelect();
+            $this.ontimeSelect();
         };
 
         // create timepicker
         this.jq.fgtimepicker(this.cfg);
+
+        this.bindConstantEvents();
 
         if (this.cfg.disabled) {
             this.disable();
@@ -134,8 +136,24 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         this.originalValue = this.jq.val();
     },
 
+    /**
+     * Sets up the event listeners that only need to be set up once.
+     * @private
+     */
+    bindConstantEvents: function () {
+        var $this = this;
+
+        PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', $this.panel, function () {
+            $this.hide();
+        });
+        
+        PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
+            $this.hide();
+        });
+    },
+
     enableInput: function () {
-        var _self = this;
+        var $this = this;
 
         PrimeFaces.skinInput(this.jq);
 
@@ -145,11 +163,11 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
 
                 switch (e.which) {
                     case keyCode.UP:
-                        _self.spin(1);
+                        $this.spin(1);
                         break;
 
                     case keyCode.DOWN:
-                        _self.spin(-1);
+                        $this.spin(-1);
                         break;
 
                     default:
@@ -158,16 +176,16 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                 }
             },
             keyup: function (e) {
-                clearInterval(_self.spinnerInterval);
+                clearInterval($this.spinnerInterval);
             },
             mousewheel: function (event, delta) {
-                if (_self.jq.is(':focus')) {
+                if ($this.jq.is(':focus')) {
                     if (delta > 0)
-                        _self.spin(1);
+                        $this.spin(1);
                     else
-                        _self.spin(-1);
+                        $this.spin(-1);
 
-                    clearInterval(_self.spinnerInterval);
+                    clearInterval($this.spinnerInterval);
                     return false;
                 }
             }
@@ -175,7 +193,7 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
     },
 
     enableSpinner: function () {
-        var _self = this;
+        var $this = this;
 
         $(this.jqId).children('.ui-spinner-button')
             .removeClass('ui-state-disabled')
@@ -187,22 +205,22 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                 mouseout: function () {
                     $(this).removeClass('ui-state-hover');
 
-                    clearInterval(_self.spinnerInterval);
+                    clearInterval($this.spinnerInterval);
                 },
                 mouseup: function () {
                     $(this).removeClass('ui-state-active');
 
-                    clearInterval(_self.spinnerInterval);
+                    clearInterval($this.spinnerInterval);
                 },
                 mousedown: function (e) {
                     var el = $(this);
                     el.addClass('ui-state-active');
 
                     var dir = el.hasClass('ui-spinner-up') ? 1 : -1;
-                    _self.spin(dir);
+                    $this.spin(dir);
 
-                    _self.spinnerInterval = setInterval(function () {
-                        _self.spin(dir);
+                    $this.spinnerInterval = setInterval(function () {
+                        $this.spin(dir);
                     }, 200);
 
                     e.preventDefault();
@@ -520,6 +538,20 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.modeSpinner) {
             this.enableSpinner();
         }
+    },
+
+    /**
+     * Brings up the overlay panel with the available selectable options.
+     */
+    show: function () {
+        this.jq.fgtimepicker('show');
+    },
+
+    /**
+     * Hides the overlay panel with the available selectable options.
+     */
+    hide: function () {
+        this.jq.fgtimepicker('hide');
     },
 
     reset: function (cfg) {
