@@ -657,7 +657,7 @@
             if (showButtonPanel) {
                 var buttonPanel = '<tr><td colspan="3"><div class="ui-timepicker-buttonpane ui-widget-content">';
                 var btnClasses = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only';
-                var btnSpan = '<span class="ui-button-text">'
+                var btnSpan = '<span class="ui-button-text" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '">';
                 if (showNowButton) {
                     buttonPanel += '<button type="button" class="ui-timepicker-now ' + btnClasses + '" '
                         + ' data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g, "\\") + '" >'
