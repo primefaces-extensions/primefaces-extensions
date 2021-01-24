@@ -18,12 +18,12 @@ img.calculator-trigger {
     z-index: 10;
     margin: 0;
     padding: 0;
-    border: 1px solid #888;
+    border: 1px solid var(--surface-b, #888);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    color: #000;
-    background-color: #f4f4f4;
+    color: var(--text-color, #000);
+    background-color: var(--surface-e, #f4f4f4);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -36,11 +36,11 @@ img.calculator-trigger {
 
 .calculator-inline {
     position: relative;
-    border: 1px solid #888;
+    border: 1px solid var(--surface-b, #888);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    background-color: #f4f4f4;
+    background-color: var(--surface-e, #f4f4f4);
 }
 
 .calculator-inline .calculator-close {
@@ -73,8 +73,8 @@ img.calculator-trigger {
     margin: 2px;
     padding: 0 2px;
     text-align: right;
-    background-color: #fff;
-    border: 1px inset #000;
+    background-color: var(--surface-e, #fff);
+    border: 1px inset var(--text-color, #000);
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -138,7 +138,7 @@ img.calculator-trigger {
 }
 
 .calculator-row .calculator-base-active, .calculator-row .calculator-angle-active {
-    border: 2px inset #fff;
+    border: 2px inset var(--surface-e, #fff);
 }
 
 .calculator-digit, .calculator-oper {
@@ -146,7 +146,7 @@ img.calculator-trigger {
 }
 
 .calculator-mem-empty, .calculator-digit[disabled] {
-    color: #888;
+    color: var(--surface-b, #888);
 }
 
 .calculator-row .calculator-trig {
@@ -172,9 +172,9 @@ img.calculator-trigger {
     position: absolute;
     left: -1px;
     top: -1px;
-    color: #000;
-    background-color: #fff;
-    border: 1px solid #888;
+    color: var(--text-color, #000);
+    background-color: var(--surface-e, #fff);
+    border: 1px solid var(--surface-b, #888);
     font-size: 80%;
 }
 
@@ -189,7 +189,7 @@ img.calculator-trigger {
 }
 
 body .ui-prime-icons .ui-icon {
-    font-family: 'primeicons';
+    font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
     font-weight: normal;
