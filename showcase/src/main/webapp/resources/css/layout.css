@@ -198,7 +198,7 @@ body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-
     margin-right: 3px;
     font-size: 0.75em;
     float: left;
-    color: darkorange;
+    color: #aaa;
 }
 
 body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-updated-comp:before {
