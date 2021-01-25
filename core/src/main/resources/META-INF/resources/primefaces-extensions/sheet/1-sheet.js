@@ -26,11 +26,6 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
 
-        // GitHub #723: Fix for PrimeIcon themes
-        if (PrimeFacesExt.isPrimeIconTheme()) {
-            this.sheetDiv.addClass('ui-prime-icons');
-        }
-
         // user extension to configure handsontable
         var extender = this.cfg.extender
         if (extender) {
@@ -199,7 +194,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                         header.removeClass('ui-state-active');
                     }
                     header.find('.relative').append("<span class='" + iconclass + "'></span>");
-                    header.addClass('ui-sortable');
+                    header.addClass('ui-sortable ui-sortable-column');
                     header.off().on("click.sheetheader", function (e) {
                         $this.sortClick($this, e, col);
                     });
@@ -210,6 +205,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 // handle filtering
                 var f = $this.cfg.filters[col];
                 if (typeof (f) != "undefined" && f != 'false') {
+                    header.addClass('ui-filter-column');
                     header.find('.handson-filter').remove();
                     var v = $($this.jqId + '_filter_' + col).val();
                     if (f == 'true') {
@@ -288,6 +284,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
 
         // add before key down hook
         $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
+
+        // fix tbody
+        $('.htCore > tbody').addClass('ui-datatable-data ui-widget-content');
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length === 0) {

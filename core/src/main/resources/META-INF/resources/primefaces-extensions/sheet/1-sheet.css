@@ -1,16 +1,19 @@
 /* ------------------------------------ 
- * jsf-sheet extensions 
+ * Sheet Extensions
  */
 .ui-handsontable.ui-widget-content {
     border: none;
 }
 
-.handsontable td.ui-datatable-odd {
-    background: white;
+body .handsontable td {
+    background: var(--surface-e, white);
+    color: var(--text-color, #222);
 }
 
-.handsontable th {
+body .handsontable th, .handsontable tr > th {
     font-weight: bold;
+    background: var(--surface-b, white);
+    color: var(--text-color, #222);
 }
 
 .handsontable td.area {
@@ -32,7 +35,6 @@
 .ui-handsontable .ui-datatable-header, .ui-handsontable .ui-datatable-footer {
     text-align: center;
     padding: 4px;
-    color: #777;
 }
 
 .handsontable .wtBorder {
@@ -56,7 +58,7 @@
     margin-left: 2px;
 }
 
-.handsontable th.ui-sortable {
+.handsontable th.ui-sortable-column {
     cursor: pointer;
 }
 
@@ -72,8 +74,8 @@ span.handson-filter {
 }
 
 .handson-filter select {
-    background: white;
-    color: #222;
+    background: var(--surface-e, white);
+    color: var(--text-color, #222);
 }
 
 /* CSS3 only hack until I can figure out a better way */
@@ -86,8 +88,8 @@ span.handson-filter {
     padding: 2px;
 }
 
-body .ui-prime-icons .ui-icon {
-    font-family: 'primeicons';
+body .handsontable .ui-icon {
+    font-family: 'primeicons', sans-serif;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -99,14 +101,14 @@ body .ui-prime-icons .ui-icon {
     -moz-osx-font-smoothing: grayscale;
 }
 
-body .ui-prime-icons .ui-icon-carat-2-n-s:before {
+body .handsontable .ui-icon-carat-2-n-s:before {
     content: "\e915";
 }
 
-body .ui-prime-icons .ui-icon-triangle-1-n:before {
+body .handsontable .ui-icon-triangle-1-n:before {
     content: "\e914";
 }
 
-body .ui-prime-icons .ui-icon-triangle-1-s:before {
+body .handsontable .ui-icon-triangle-1-s:before {
     content: "\e913";
 }
