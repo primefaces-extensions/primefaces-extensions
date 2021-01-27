@@ -60,9 +60,15 @@ public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
                     && !isConfirmation(button);
     }
 
+    /**
+     * Check for ConfirmDialog or ConfirmPopup buttons.
+     *
+     * @param button the button to inspect
+     * @return true if confirmation button
+     */
     protected boolean isConfirmation(final CommandButton button) {
         final String styleClass = button.getStyleClass();
-        return styleClass != null && styleClass.contains("ui-confirmdialog");
+        return styleClass != null && styleClass.contains("ui-confirm");
     }
 
     protected String getToggleJS(final String widgetVar, final boolean enabled) {
