@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.renderkit.layout;
+package org.primefaces.extensions.component.layout;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -27,11 +27,7 @@ import java.util.Set;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 
 /**
  * Gson serializer for layout options.

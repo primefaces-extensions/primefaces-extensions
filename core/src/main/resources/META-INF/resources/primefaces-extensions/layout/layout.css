@@ -3,6 +3,10 @@
     overflow: hidden;
 }
 
+body .ui-layout-container .ui-layout-unit {
+    border: 1px solid var(--surface-d, #dee2e6);
+}
+
 body .ui-layout-resizer {
     background-color: var(--surface-b, #c8c8c8);
 }

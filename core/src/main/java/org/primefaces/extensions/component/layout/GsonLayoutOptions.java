@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.renderkit.layout;
+package org.primefaces.extensions.component.layout;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
 

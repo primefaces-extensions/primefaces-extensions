@@ -84,7 +84,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
             }
 
             if ($this.cfg.serverState) {
-                $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
+                $this.stateHiddenField.val(JSON.stringify($this.layout.readState()));
             }
         }).on("layoutpaneonclose", function () {
             var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
@@ -101,7 +101,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
             }
 
             if ($this.cfg.serverState) {
-                $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
+                $this.stateHiddenField.val(JSON.stringify($this.layout.readState()));
             }
         }).on("layoutpaneonresize", function () {
             var layoutPane = $(this).data("layoutPane");
@@ -127,7 +127,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
                 }
 
                 if ($this.cfg.serverState) {
-                    $this.stateHiddenField.val($this.layout.encodeJSON($this.layout.readState()));
+                    $this.stateHiddenField.val(JSON.stringify($this.layout.readState()));
                 }
             }
         });

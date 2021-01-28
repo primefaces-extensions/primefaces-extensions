@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.primefaces.extensions.renderkit.layout.GsonLayoutOptions;
+import org.primefaces.extensions.component.layout.GsonLayoutOptions;
 
 /**
  * Model class representing layout options.
