@@ -26,9 +26,8 @@
     </converter>
 
     <factory>
-        <exception-handler-factory>
-            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory
-        </exception-handler-factory>
+        <faces-context-factory>org.primefaces.extensions.application.Html5ContextFactory</faces-context-factory>
+        <exception-handler-factory>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory</exception-handler-factory>
     </factory>
 
     <render-kit>

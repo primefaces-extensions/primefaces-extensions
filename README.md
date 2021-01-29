@@ -50,7 +50,7 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 <repository>
     <id>sonatype-snapshots</id>
     <name>Sonatype Snapshot Repository</name>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     <releases>
         <enabled>false</enabled>
     </releases>
@@ -58,10 +58,11 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
         <enabled>true</enabled>
     </snapshots>
 </repository>
+
 <dependency>
-<groupId>org.primefaces.extensions</groupId>
-<artifactId>primefaces-extensions</artifactId>
-<version>${primefaces-extensions.version}</version>
+   <groupId>org.primefaces.extensions</groupId>
+   <artifactId>primefaces-extensions</artifactId>
+   <version>${primefaces-extensions.version}</version>
 </dependency>
 ```
 
