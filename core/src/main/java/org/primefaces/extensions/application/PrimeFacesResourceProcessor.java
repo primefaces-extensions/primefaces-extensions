@@ -54,6 +54,7 @@ import org.primefaces.context.PrimeRequestContext;
 public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
+    private static final String LIBRARY = "primefaces";
 
     @Override
     public PhaseId getPhaseId() {
@@ -86,13 +87,13 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
 
         if (theme != null && !"none".equals(theme)) {
-            encodeCSS(context, "primefaces-" + theme, "theme.css");
+            encodeCSS(context, LIBRARY + "-" + theme, "theme.css");
         }
 
         // Icons
-        encodeCSS(context, "primefaces", "primeicons/primeicons.css");
+        encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
         if (applicationContext.getConfig().isFontAwesomeEnabled()) {
-            encodeCSS(context, "primefaces", "fa/font-awesome.css");
+            encodeCSS(context, LIBRARY, "fa/font-awesome.css");
         }
 
         if (configuration.isClientSideValidationEnabled()) {
@@ -119,7 +120,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     private void encodeJS(FacesContext context, String name) {
         final UIOutput js = new UIOutput();
         js.setRendererType("javax.faces.resource.Script");
-        js.getAttributes().put("library", "primefaces");
+        js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
         context.getViewRoot().addComponentResource(context, js, "head");
     }
