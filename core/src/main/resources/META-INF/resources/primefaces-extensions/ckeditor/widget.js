@@ -21,9 +21,14 @@ CKEDITOR_GETURL = function (resource) {
     if (resource.indexOf('?resolve=false') !== -1) {
         facesResource = resource.replace('?resolve=false', '');
     } else {
-        //already wrapped?
+        //already wrapped? check extensions "e="
         var libraryVersion = 'e=' + PrimeFacesExt.VERSION;
         var libraryVersionIndex = resource.indexOf(libraryVersion);
+        if (libraryVersionIndex === -1) {
+            // Omnifaces https://github.com/primefaces-extensions/primefaces-extensions/issues/294
+            libraryVersion = 'v=' + PrimeFacesExt.VERSION;
+            libraryVersionIndex = resource.indexOf(libraryVersion);
+        }
         if (libraryVersionIndex !== -1) {
             //look for appended resource
             var appendedResource = resource.substring(libraryVersionIndex + (libraryVersion).length);
