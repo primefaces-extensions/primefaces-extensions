@@ -45,7 +45,7 @@
             <resource>
                 <directory>src/main/webapp</directory>
                 <includes>
-                    <include>**/web.xml</include>
+                    <include>**/*.xml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -57,7 +57,7 @@
                 <version>${jetty.version}</version>
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/primeext-showcase</contextPath>
+                        <contextPath>/showcase-ext</contextPath>
                         <overrideDescriptor>src/main/webapp/WEB-INF/web-overwrite.xml</overrideDescriptor>
                     </webAppConfig>
                     <webXml>${project.build.directory}/classes/WEB-INF/web.xml</webXml>
@@ -303,6 +303,7 @@
                 <jsf-impl>myfaces</jsf-impl>
                 <jsf-version>${myfaces.version}</jsf-version>
                 <jsf-listener>org.apache.myfaces.webapp.StartupServletContextListener</jsf-listener>
+                <head-renderer>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</head-renderer>
             </properties>
             <dependencies>
                 <dependency>
@@ -328,6 +329,7 @@
                 <jsf-impl>jakarta</jsf-impl>
                 <jsf-version>${jakarta-faces.version}</jsf-version>
                 <jsf-listener>com.sun.faces.config.ConfigureListener</jsf-listener>
+                <head-renderer>com.sun.faces.renderkit.html_basic.HeadRenderer</head-renderer>
             </properties>
             <dependencies>
                 <dependency>
