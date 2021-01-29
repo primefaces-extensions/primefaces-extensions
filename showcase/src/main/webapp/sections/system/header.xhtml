@@ -16,7 +16,8 @@
                 <h:panelGrid columns="2" columnClasses="themeText,themeSelect">
                     <h:outputText value="Theme"/>
                     <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
-                                     onchange="$('#headerForm').submit();" converter="themeConverter">
+                                     converter="themeConverter">
+                        <p:ajax process="@this" oncomplete="window.location.reload(false);"/>
                         <f:selectItems var="t" value="#{userSettings.availableThemes}" itemLabel="#{t.name}" itemValue="#{t}"/>
                         <p:column>
                             #{theme.name}

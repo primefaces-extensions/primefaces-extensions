@@ -39,8 +39,16 @@
         <renderer>
             <component-family>javax.faces.Output</component-family>
             <renderer-type>javax.faces.Head</renderer-type>
-            <renderer-class>com.sun.faces.renderkit.html_basic.HeadRenderer</renderer-class>
+            <renderer-class>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</renderer-class>
         </renderer>
     </render-kit>
+
+    <faces-config-extension>
+        <facelets-processing>
+            <file-extension>.xhtml</file-extension>
+            <process-as>xhtml</process-as>
+            <oam-compress-spaces>true</oam-compress-spaces>
+        </facelets-processing>
+    </faces-config-extension>
 
 </faces-config>

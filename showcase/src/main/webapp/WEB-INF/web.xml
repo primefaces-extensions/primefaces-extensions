@@ -15,7 +15,7 @@
     <!-- Context parameters - JSF -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Production</param-value>
+        <param-value>${jsf.stage}</param-value>
     </context-param>
     <context-param>
         <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
@@ -68,6 +68,44 @@
         <param-value>false</param-value>
     </context-param>
 
+    <!-- Context parameters - MyFaces -->
+    <context-param>
+        <param-name>org.apache.myfaces.CACHE_EL_EXPRESSIONS</param-name>
+        <param-value>alwaysRecompile</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.CHECK_ID_PRODUCTION_MODE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.EARLY_FLUSH_ENABLED</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>
+        <param-value>15</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.NUMBER_OF_SEQUENTIAL_VIEWS_IN_SESSION</param-name>
+        <param-value>3</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.SUPPORT_JSP_AND_FACES_EL</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.VIEW_UNIQUE_IDS_CACHE_ENABLED</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.apache.myfaces.COMPONENT_UNIQUE_IDS_CACHE_SIZE</param-name>
+        <param-value>500</param-value>
+    </context-param>
+
     <!-- Context parameters - Primefaces & Extensions -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
@@ -87,7 +125,7 @@
     <!-- Context parameters - OmniFaces -->
     <context-param>
         <param-name>org.omnifaces.COMBINED_RESOURCE_HANDLER_DISABLED</param-name>
-        <param-value>true</param-value>
+        <param-value>#{facesContext.application.projectStage eq 'Development'}</param-value>
     </context-param>
 
     <!-- Enable PostConstruct on JSF ManagedBeans on Jetty -->

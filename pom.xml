@@ -53,6 +53,7 @@
         <!--<maven.compiler.release>8</maven.compiler.release>-->
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
+        <jsf.stage>Development</jsf.stage>
 
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
@@ -533,6 +534,10 @@
                     <value>true</value>
                 </property>
             </activation>
+            <properties>
+                <jsf.stage>Production</jsf.stage>
+                <withoutCompress>false</withoutCompress>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -583,10 +588,6 @@
                     </plugin>
                 </plugins>
             </build>
-
-            <properties>
-                <withoutCompress>false</withoutCompress>
-            </properties>
         </profile>
         <profile>
             <id>compress</id>
