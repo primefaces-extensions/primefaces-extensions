@@ -82,10 +82,6 @@
         <param-value>true</param-value>
     </context-param>
     <context-param>
-        <param-name>org.apache.myfaces.PRETTY_HTML</param-name>
-        <param-value>false</param-value>
-    </context-param>
-    <context-param>
         <param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>
         <param-value>15</param-value>
     </context-param>

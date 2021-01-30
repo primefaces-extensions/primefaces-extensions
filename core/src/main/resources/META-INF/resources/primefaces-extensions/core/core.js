@@ -120,38 +120,6 @@ PrimeFacesExt = {
     },
 
     /**
-     * This function need to be invoked after PrimeFaces changeTheme. It's used
-     * to sync canvas and svg components to the current theme.
-     *
-     * @author f.strazzullo
-     */
-    changeTheme: function (newValue) {
-        $(document).trigger("PrimeFacesExt.themeChanged", newValue);
-    },
-
-    /**
-     * Gets the currently loaded PF Theme.
-     */
-    getTheme: function () {
-        var themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '/theme.css"]');
-        // portlet
-        if (themeLink.length === 0) {
-            themeLink = $('link[href*="' + PrimeFaces.RESOURCE_IDENTIFIER + '=theme.css"]');
-        }
-
-        // GitHub #752
-        if (themeLink.length === 0) {
-            return "";
-        }
-
-        var themeURL = themeLink.attr('href'),
-            plainURL = themeURL.split('&')[0],
-            oldTheme = plainURL.split('ln=primefaces-')[1];
-
-        return oldTheme;
-    },
-
-    /**
      * The name of the PrimeFaces Extensions resource library.
      *
      * @author Thomas Andraschko
@@ -199,20 +167,3 @@ PrimeFacesExt.behavior.Javascript = function (cfg, ext) {
 
     return cfg.execute.call(this, cfg.source, cfg.event, params, ext);
 };
-
-/**
- * Hack to allow the PrimeFacesExt changeTheme to automatically invoked on every
- * theme change
- *
- * @author f.strazzullo
- */
-(function (window) {
-
-    var originalChangeTheme = PrimeFaces.changeTheme;
-
-    PrimeFaces.changeTheme = function (newValue) {
-        originalChangeTheme(newValue);
-        PrimeFacesExt.changeTheme(newValue);
-    }
-
-})(window);

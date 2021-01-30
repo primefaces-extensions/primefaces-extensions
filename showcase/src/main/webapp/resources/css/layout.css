@@ -23,6 +23,11 @@ body > form > .ui-layout-south {
     white-space: nowrap;
 }
 
+body .ajax-loader {
+    font-size: 3rem;
+    color: var(--primary-color, orangered);
+}
+
 #componentList,
 #useCaseList {
     border-width: 0;

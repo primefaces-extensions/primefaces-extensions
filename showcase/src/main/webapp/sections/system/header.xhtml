@@ -12,7 +12,16 @@
             </h:panelGrid>
 
 
-            <h:panelGrid columns="4" style="float:right;">
+            <h:panelGrid columns="5" style="float:right;">
+                <p:ajaxStatus style="z-index:9999;">
+                    <f:facet name="start">
+                        <i class="pi pi-spin pi-spinner ajax-loader" aria-hidden="true"></i>
+                    </f:facet>
+                    <f:facet name="complete">
+                        <h:outputText value=""/>
+                    </f:facet>
+                </p:ajaxStatus>
+
                 <h:panelGrid columns="2" columnClasses="themeText,themeSelect">
                     <h:outputText value="Theme"/>
                     <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
@@ -31,17 +40,9 @@
 
                 <p:link href="https://github.com/primefaces-extensions/primefaces-extensions.github.com/issues" target="_blank" id="issues-link"
                         title="Issue Tracking"/>
+
             </h:panelGrid>
         </p:panelGrid>
     </p:panel>
-
-    <p:ajaxStatus styleClass="logo" style="left:80px; width:32px; height:32px; margin-top: 10px;">
-        <f:facet name="start">
-            <div class="fa-3x"><i class="fas fa-sync fa-spin ajax-loader" aria-hidden="true"/></div>
-        </f:facet>
-        <f:facet name="complete">
-            <h:outputText value=""/>
-        </f:facet>
-    </p:ajaxStatus>
 </ui:composition>
 </html>
