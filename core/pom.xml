@@ -36,7 +36,6 @@
                         <!-- Remove empty resource folders from JAR file. -->
                         <!-- These are folders whose resources are merged into one big CSS and JS file. -->
                         <exclude>**/META-INF/resources/**/core/**</exclude>
-                        <exclude>**/META-INF/resources/**/ckeditor/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/lib/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/theme/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/LICENSE</exclude>
@@ -101,6 +100,19 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/creditcard/creditcard.js</outputFile>
                                     <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>ckeditor/0-ckeditor-helper.js</include>
+                                <include>ckeditor/1-ckeditor-widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/ckeditor/ckeditor-widget.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -210,7 +222,6 @@
                         <resourcesSet>
                             <includes>
                                 <include>core/core.js</include>
-                                <include>ckeditor/widget.js</include>
                                 <include>dynaform/dynaform.js</include>
                                 <include>imagerotateandresize/imagerotateandresize.js</include>
                                 <include>tristatemanycheckbox/tristatemanycheckbox.js</include>

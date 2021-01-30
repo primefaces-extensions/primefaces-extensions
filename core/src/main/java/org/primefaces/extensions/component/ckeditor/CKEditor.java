@@ -41,6 +41,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
+@ResourceDependency(library = "primefaces-extensions", name = "ckeditor/ckeditor-widget.js")
 public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CKEditor";
