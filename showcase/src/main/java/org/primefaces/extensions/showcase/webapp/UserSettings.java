@@ -44,6 +44,7 @@ public class UserSettings implements Serializable {
 
     private List<Theme> availableThemes;
     private Theme currentTheme;
+    private String currentThemeName;
 
     public UserSettings() {
         setCurrentThemeByName("saga");
@@ -64,9 +65,18 @@ public class UserSettings implements Serializable {
 
     public void setCurrentTheme(Theme currentTheme) {
         this.currentTheme = currentTheme;
+        this.currentThemeName = currentTheme.getName();
+    }
+
+    public String getCurrentThemeName() {
+        return currentThemeName;
+    }
+
+    public void setCurrentThemeName(String currentThemeName) {
+        setCurrentThemeByName(currentThemeName);
     }
 
     public void setCurrentThemeByName(String theme) {
-        currentTheme = AvailableThemes.getInstance().getThemeForName(theme);
+        setCurrentTheme(AvailableThemes.getInstance().getThemeForName(theme));
     }
 }
