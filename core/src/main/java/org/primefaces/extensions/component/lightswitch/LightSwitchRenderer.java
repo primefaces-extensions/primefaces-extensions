@@ -36,8 +36,6 @@ import org.primefaces.renderkit.CoreRenderer;
  */
 public class LightSwitchRenderer extends CoreRenderer {
 
-    public static final String ATTR_THEME = "org.primefaces.extensions.component.lightswitch.THEME";
-
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         LightSwitch lightSwitch = (LightSwitch) component;
