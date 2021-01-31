@@ -44,7 +44,8 @@ import org.primefaces.util.LocaleUtils;
 
 /**
  * Creates a custom SystemEventListener for PostAddToViewEvent on UIViewRoot. This will run after all those @ResourceDependency annotations of PrimeFaces
- * components have been processed. This is thus an ideal moment to add the PrimeFaces.settings script as a component resource, as intended by PrimeFaces. <br/>
+ * components have been processed. This is thus an ideal moment to add the PrimeFaces.settings script as a component resource, as intended by PrimeFaces.
+ * <p>
  * Register it as below in faces-config.xml:
  * </p>
  * 
@@ -168,7 +169,7 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
 
     private void addJS(FacesContext context, String script) {
         final UIOutput js = new UIOutput();
-        js.setId("JS-" + UUID.randomUUID().toString());
+        js.setId("js-" + UUID.randomUUID().toString());
         js.setRendererType("javax.faces.resource.Script");
         final UIOutput content = new UIOutput();
         content.setValue(script);

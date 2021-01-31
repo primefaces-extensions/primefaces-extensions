@@ -113,7 +113,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private void encodeCSS(FacesContext context, String library, String name) {
         final UIOutput css = new UIOutput();
-        css.setId("CSS-" + UUID.randomUUID().toString());
+        css.setId("css-" + UUID.randomUUID().toString());
         css.setRendererType("javax.faces.resource.Stylesheet");
         css.getAttributes().put("library", library);
         css.getAttributes().put("name", name);
@@ -122,7 +122,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private void encodeJS(FacesContext context, String name) {
         final UIOutput js = new UIOutput();
-        js.setId("JS-" + UUID.randomUUID().toString());
+        js.setId("js-" + UUID.randomUUID().toString());
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
