@@ -55,6 +55,7 @@ public class LightSwitchRenderer extends CoreRenderer {
                     .attr("selected", lightSwitch.getSelected())
                     .attr("light", lightSwitch.getLight())
                     .attr("dark", lightSwitch.getDark())
+                    .attr("automatic", lightSwitch.isAutomatic())
                     .finish();
     }
 

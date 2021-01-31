@@ -48,7 +48,8 @@ public class LightSwitch extends UIComponentBase implements Widget {
         widgetVar,
         selected,
         light,
-        dark
+        dark,
+        automatic
     }
     // @formatter:on
 
@@ -97,6 +98,14 @@ public class LightSwitch extends UIComponentBase implements Widget {
 
     public void setDark(final String dark) {
         getStateHelper().put(PropertyKeys.dark, dark);
+    }
+
+    public boolean isAutomatic() {
+        return (boolean) getStateHelper().eval(PropertyKeys.automatic, true);
+    }
+
+    public void setAutomatic(final boolean automatic) {
+        getStateHelper().put(PropertyKeys.automatic, automatic);
     }
 
 }

@@ -17,25 +17,54 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.selected = cfg.selected;
-        this.light = cfg.light;
-        this.dark = cfg.dark;
-        this.automatic();
+        if (cfg.automatic) {
+            this.automatic();
+        }
     },
 
     /**
-     * Automatically set the theme based on the OS setting and sends the theme to the server side if it has changed.
+     * Automatically set the theme based on the OS setting.
      */
     automatic : function() {
-        var theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            ? this.dark : this.light;
-        PrimeFaces.changeTheme(theme);
-        if (theme != this.selected) {
+        this.changeTheme((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ? this.cfg.dark : this.cfg.light);
+    },
+
+    /**
+     * Change to the light theme.
+     */
+    light : function() {
+        this.changeTheme(this.cfg.light);
+    },
+
+    /**
+     * Change to the dark theme.
+     */
+    dark : function() {
+        this.changeTheme(this.cfg.dark);
+    },
+
+    /**
+     * Toggle between the light and dark theme.
+     */
+    toggle : function() {
+        this.changeTheme(this.selected === this.cfg.dark ? this.cfg.light : this.cfg.dark);
+    },
+
+    /**
+     * Change the theme to the one provided, if it is not the selected theme, and sends the theme to the server side.
+     * @param {string} theme to change to.
+     */
+    changeTheme : function(theme) {
+        if (theme !== this.selected) {
             var options = { params: [ {name: this.id + "_theme", value: theme} ] };
             options.source = this.id;
             options.process = this.id;
             options.update = this.id;
             options.formId = this.cfg.formId;
             PrimeFaces.ajax.Request.handle(options);
+            PrimeFaces.changeTheme(theme);
+            this.selected = theme;
         }
     },
 

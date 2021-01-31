@@ -18,7 +18,7 @@
         </f:facet>
     </pe:head>
     <h:body>
-        <pe:lightSwitch selected="#{userSettings.currentThemeName}"/>
+        <pe:lightSwitch selected="#{userSettings.currentThemeName}" widgetVar="lightSwitch"/>
         <pe:layout id="fpl" widgetVar="fullLayoutWidget" options="#{showcaseLayout.options}">
             <pe:javascript event="resize" execute="#{resizeFunction}" disabled="#{empty resizeFunction}"/>
 

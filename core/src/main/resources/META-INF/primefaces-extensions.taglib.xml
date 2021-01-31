@@ -8596,6 +8596,14 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flag indicating to switch to the theme based on the OS setting automatically. Default true.]]>
+            </description>
+            <name>automatic</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>
