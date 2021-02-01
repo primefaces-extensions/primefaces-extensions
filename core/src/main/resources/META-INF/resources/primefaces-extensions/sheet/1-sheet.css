@@ -16,6 +16,14 @@ body .handsontable th, .handsontable tr > th {
     color: var(--text-color, #222);
 }
 
+body .handsontable tbody th.ht__highlight,
+body .handsontable thead th.ht__highlight,
+body .handsontable tbody th.ht__active_highlight,
+body .handsontable thead th.ht__active_highlight {
+    color: var(--primary-color-text, #222);
+    background-color: var(--primary-color, #dcdcdc);
+}
+
 .handsontable td.area {
     background: #FC8;
 }
