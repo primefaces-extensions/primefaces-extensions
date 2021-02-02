@@ -218,7 +218,7 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
 
     @Override
     public Collection<String> getUnobstrusiveEventNames() {
-        return EVENT_NAMES;
+        return getEventNames();
     }
 
     @Override
@@ -236,14 +236,6 @@ public class CodeScanner extends UIComponentBase implements Widget, ClientBehavi
                 selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
                 super.queueEvent(selectEvent);
             }
-            else {
-                // e.g. blur, focus, change
-                super.queueEvent(event);
-            }
-        }
-        else {
-            // e.g. valueChange
-            super.queueEvent(event);
         }
     }
 

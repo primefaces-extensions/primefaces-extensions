@@ -58,12 +58,17 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
     changeTheme : function(theme) {
         if (theme !== this.selected) {
             var options = { params: [ {name: this.id + "_theme", value: theme} ] };
-            options.source = this.id;
-            options.process = this.id;
-            options.update = this.id;
-            options.formId = this.cfg.formId;
-            PrimeFaces.ajax.Request.handle(options);
-            PrimeFaces.changeTheme(theme);
+            if (this.hasBehavior('switch')) {
+              this.callBehavior('switch', options);
+              PrimeFaces.changeTheme(theme);
+            }
+            else {
+              options.source = this.id;
+              options.process = this.id;
+              options.update = this.id;
+              options.formId = this.cfg.formId;
+              PrimeFaces.ajax.Request.handle(options);
+            }
             this.selected = theme;
         }
     },
