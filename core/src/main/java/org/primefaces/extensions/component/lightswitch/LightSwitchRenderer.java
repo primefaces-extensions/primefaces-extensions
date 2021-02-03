@@ -21,15 +21,12 @@
  */
 package org.primefaces.extensions.component.lightswitch;
 
-import static org.primefaces.extensions.component.lightswitch.LightSwitch.EVENT_SWITCH;
-
 import java.io.IOException;
 import java.util.Map;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.PrimeFaces;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
@@ -53,14 +50,13 @@ public class LightSwitchRenderer extends CoreRenderer {
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
-        if (EVENT_SWITCH.equals(eventName)) {
+        if (LightSwitch.EVENT_SWITCH.equals(eventName)) {
             return;
         }
 
         String theme = params.get(lightSwitch.getClientId(context) + "_theme");
         if (theme != null) {
             lightSwitch.setSelectedByValueExpression(context, theme);
-            PrimeFaces.current().executeScript("PrimeFaces.changeTheme('" + theme + "');");
             return;
         }
 
@@ -73,7 +69,8 @@ public class LightSwitchRenderer extends CoreRenderer {
                     .attr("selected", lightSwitch.getSelected())
                     .attr("light", lightSwitch.getLight())
                     .attr("dark", lightSwitch.getDark())
-                    .attr("automatic", lightSwitch.isAutomatic());
+                    .attr("automatic", lightSwitch.isAutomatic())
+                    .attr("parent", lightSwitch.getParent().getClientId());
 
         encodeClientBehaviors(context, lightSwitch);
 

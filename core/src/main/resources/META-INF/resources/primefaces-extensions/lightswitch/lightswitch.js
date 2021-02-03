@@ -16,6 +16,7 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
+        this.formId = $(PrimeFaces.escapeClientId(this.cfg.parent)).closest('form').attr('id');
         this.selected = cfg.selected;
         if (cfg.automatic) {
             this.automatic();
@@ -57,18 +58,18 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
      */
     changeTheme : function(theme) {
         if (theme !== this.selected) {
-            var options = { params: [ {name: this.id + "_theme", value: theme} ] };
+            var options = { params: [ {name: this.id + '_theme', value: theme} ] };
             if (this.hasBehavior('switch')) {
               this.callBehavior('switch', options);
-              PrimeFaces.changeTheme(theme);
             }
             else {
               options.source = this.id;
               options.process = this.id;
               options.update = this.id;
-              options.formId = this.cfg.formId;
+              options.formId = this.formId;
               PrimeFaces.ajax.Request.handle(options);
-            }
+            }            
+            PrimeFaces.changeTheme(theme);
             this.selected = theme;
         }
     },
