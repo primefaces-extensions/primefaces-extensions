@@ -8533,7 +8533,8 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
-            <![CDATA[LightSwitch automatically switched to light or dark theme depending on the OS settings.]]>
+            <![CDATA[LightSwitch automatically switched to light or dark theme depending on the OS settings.
+     Client behavior events: switch - fires on switch (org.primefaces.event.SelectEvent).]]>
         </description>
         <tag-name>lightSwitch</tag-name>
         <component>
