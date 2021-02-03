@@ -21,10 +21,21 @@
  */
 package org.primefaces.extensions.component.lightswitch;
 
+import java.util.Collection;
+import java.util.Map;
+
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.MixedClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * <code>LightSwitch</code> component. Automatically switches to defined dark mode theme based on OS settings.
@@ -36,11 +47,14 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "lightswitch/lightswitch.js")
-public class LightSwitch extends UIComponentBase implements Widget {
+public class LightSwitch extends UIComponentBase implements Widget, ClientBehaviorHolder, MixedClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.LightSwitch";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String EVENT_SWITCH = "switch";
+
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.LightSwitchRenderer";
+    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList(EVENT_SWITCH);
 
     // @formatter:off
     @SuppressWarnings("java:S115")
@@ -68,6 +82,11 @@ public class LightSwitch extends UIComponentBase implements Widget {
         return COMPONENT_FAMILY;
     }
 
+    @Override
+    public String getDefaultEventName() {
+        return EVENT_SWITCH;
+    }
+
     public String getWidgetVar() {
         return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
     }
@@ -82,6 +101,10 @@ public class LightSwitch extends UIComponentBase implements Widget {
 
     public void setSelected(final String selected) {
         getStateHelper().put(PropertyKeys.selected, selected);
+    }
+
+    public void setSelectedByValueExpression(final FacesContext context, final String selected) {
+        this.getValueExpression(PropertyKeys.selected.name()).setValue(context.getELContext(), selected);
     }
 
     public String getLight() {
@@ -106,6 +129,35 @@ public class LightSwitch extends UIComponentBase implements Widget {
 
     public void setAutomatic(final boolean automatic) {
         getStateHelper().put(PropertyKeys.automatic, automatic);
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public Collection<String> getUnobstrusiveEventNames() {
+        return getEventNames();
+    }
+
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        final FacesContext context = getFacesContext();
+        final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+        if (eventName != null && event instanceof AjaxBehaviorEvent) {
+            final AjaxBehaviorEvent ajaxBehaviorEvent = (AjaxBehaviorEvent) event;
+
+            if (EVENT_SWITCH.equals(eventName)) {
+                final String theme = params.get(getClientId(context) + "_theme");
+                final SelectEvent<String> selectEvent = new SelectEvent<>(this, ajaxBehaviorEvent.getBehavior(), theme);
+                selectEvent.setPhaseId(ajaxBehaviorEvent.getPhaseId());
+                setSelectedByValueExpression(context, theme);
+                super.queueEvent(selectEvent);
+            }
+        }
     }
 
 }

@@ -18,7 +18,6 @@
         <link href="#{resource['images/favicon_16x16.png']}" rel="icon" type="image/png" sizes="16x16"/>
     </h:head>
     <h:body>
-        <pe:lightSwitch selected="#{userSettings.currentThemeName}" widgetVar="lightSwitch"/>
         <pe:layout id="fpl" widgetVar="fullLayoutWidget" options="#{showcaseLayout.options}">
             <pe:javascript event="resize" execute="#{resizeFunction}" disabled="#{empty resizeFunction}"/>
 
@@ -34,6 +33,12 @@
                 </pe:layoutPane>
             </h:form>
         </pe:layout>
+
+        <h:form>
+            <pe:lightSwitch id="lightSwitch" widgetVar="lightSwitch" selected="#{userSettings.currentThemeName}">
+                <p:ajax update="themeSelectMenu"/>
+            </pe:lightSwitch>
+        </h:form>
 
         <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
                                 update="expDialog"
