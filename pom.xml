@@ -19,19 +19,6 @@
         </license>
     </licenses>
 
-    <repositories>
-        <repository>
-            <id>primefaces</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/primefaces-extensions/primefaces-extensions/issues</url>

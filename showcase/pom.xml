@@ -25,7 +25,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch
+        </primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>sheet;inputphone</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components>exporter;social;badge;gravatar;letteravatar</primefaces-extensions.deprecated-components>
 
@@ -303,7 +304,6 @@
             </activation>
             <properties>
                 <jsf-impl>myfaces</jsf-impl>
-                <jsf-version>${apache-faces.version}</jsf-version>
                 <jsf-listener>org.apache.myfaces.webapp.StartupServletContextListener</jsf-listener>
                 <head-renderer>org.apache.myfaces.renderkit.html.HtmlHeadRenderer</head-renderer>
             </properties>
@@ -326,7 +326,6 @@
             <id>jakarta</id>
             <properties>
                 <jsf-impl>jakarta</jsf-impl>
-                <jsf-version>${jakarta-faces.version}</jsf-version>
                 <jsf-listener>com.sun.faces.config.ConfigureListener</jsf-listener>
                 <head-renderer>com.sun.faces.renderkit.html_basic.HeadRenderer</head-renderer>
             </properties>
