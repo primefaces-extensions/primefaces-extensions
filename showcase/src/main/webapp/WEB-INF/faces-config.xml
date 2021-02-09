@@ -4,6 +4,14 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
               version="2.2">
 
+    <name>showcase</name>
+
+    <ordering>
+        <after>
+            <name>omnifaces</name>
+        </after>
+    </ordering>
+
     <application>
         <el-resolver>
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
