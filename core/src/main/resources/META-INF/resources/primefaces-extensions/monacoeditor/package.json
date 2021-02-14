@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@types/jquery": "^3.5.5",
+    "monaco-editor": "^0.22.3"
+  }
+}

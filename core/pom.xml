@@ -22,6 +22,14 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <!-- Only for having @types during development -->
+                    <exclude>**/node_modules/**</exclude>
+                    <exclude>**/*.d.ts</exclude>
+                    <exclude>**/jsconfig.json</exclude>
+                    <exclude>**/package.json</exclude>
+                    <exclude>**/package-lock.json</exclude>
+                </excludes>
             </resource>
         </resources>
         <plugins>
@@ -44,6 +52,12 @@
                         <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
                         <exclude>**/META-INF/resources/**/tristatemanycheckbox/**</exclude>
                         <exclude>**/META-INF/resources/**/gchart/**</exclude>
+                        <exclude>**/META-INF/resources/**/monacoeditor/01-*.js</exclude>
+                        <!-- Only used for development, not required -->
+                        <exclude>**/META-INF/resources/**/node_modules/**</exclude>
+                        <exclude>**/META-INF/resources/**/*.d.ts</exclude>
+                        <exclude>**/META-INF/resources/**/jsconfig.json</exclude>
+                        <exclude>**/META-INF/resources/**/package*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -53,7 +67,7 @@
                 <configuration>
                     <useDataUri>true</useDataUri>
                     <imagesDir>${project.build.directory}/classes/META-INF/resources</imagesDir>
-                    <languageIn>ECMASCRIPT5</languageIn>
+                    <languageIn>ECMASCRIPT_2018</languageIn>
                     <languageOut>ECMASCRIPT5</languageOut>
                     <resourcesSets>
                         <resourcesSet>
@@ -232,6 +246,91 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/primefaces-extensions.js</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- MonacoEditorInline widget -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/01-monaco-helper.js</include>
+                                <include>monacoeditor/02-monaco-promise-queue.js</include>
+                                <include>monacoeditor/03-monaco-widget-base.js</include>
+                                <include>monacoeditor/04-monaco-widget-inline.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/widget-inline.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- MonacoEditorFramed widget -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/01-monaco-helper.js</include>
+                                <include>monacoeditor/02-monaco-promise-queue.js</include>
+                                <include>monacoeditor/03-monaco-widget-base.js</include>
+                                <include>monacoeditor/04-monaco-widget-framed.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/widget-framed.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- MonacoEditorFramed iframe controller -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/01-monaco-helper.js</include>
+                                <include>monacoeditor/04-monaco-iframe-controller.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/iframe-controller.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- MonacoEditor proxy worker -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/proxy-worker.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/worker.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <!-- Dummy to remove build files in resource directory -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/01-monaco-helper.js</include>
+                                <include>monacoeditor/02-monaco-promise-queue.js</include>
+                                <include>monacoeditor/03-monaco-widget-base.js</include>
+                                <include>monacoeditor/04-monaco-widget-inline.js</include>
+                                <include>monacoeditor/04-monaco-widget-framed.js</include>
+                                <include>monacoeditor/04-monaco-iframe-controller.js</include>
+                                <include>monacoeditor/proxy-worker.js</include>
+                                <include>monacoeditor/dummy.js</include>
+                                <include>monacoeditor/dummy.source.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/dummy.js</outputFile>
+                                    <withoutCompress>true</withoutCompress>
+                                    <removeIncluded>true</removeIncluded>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -514,6 +613,11 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>resources-monacoeditor</artifactId>
         </dependency>
 
         <!-- PROVIDED Java API's -->

@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "target": "es2015",
+        "moduleResolution": "node",
+        "skipLibCheck": false
+    },
+    "include": ["."]
+}

@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{monacoEditorController.initExtender}"/>
+    </f:metadata>
+
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MonacoEditor"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            The Monaco editor widget was built with extensibility in mind. The PrimeFaces widget is a JSF wrapper
+            component that lets you integrate the editor easily in a JSF page and provides several options for the
+            most common features. Sometimes, however, it may become necessary to customize the editor event further.
+            In that case, you can make use of the extensive
+            <a href="https://microsoft.github.io/monaco-editor/api/index.html" target="_blank">client-side JavaScript API provided by the Monaco editor</a>.
+            <br/><br/>
+            To do so, specify the <code>extender</code> option on the editor. This lets you set a custom JavaScript object with
+            several callback methods for the lifecycle of the Monaco editor. For example, you can modify the editor options
+            before the editor is created, or add TypeScript declaration files for improved IntelliSense. The example below loads
+            the declaration files for JQuery from the <code>DefinitelyTyped</code> GitHub repo and adds them to the editor. This
+            enables autocomplete and docs for JQuery function.
+            <br/><br/>
+            For the inline widget, you can just specify a JavaScript expression that evaluates to an extender object. For the
+            framed widget, you will need to specify an URL to a JavaScript file that creates the extender and writes it to
+            <code>window.MonacoEnvironment.Extender</code>. See the panel to the right for more info about the extender object.
+            Please note that for the framed widget, the extender is run in the iframe context and <strong>will not have
+            access to JQuery nor to PrimeFaces related functions.</strong> Finally, the extender you see in the example below
+            uses the <code>fetch</code> API, if you need to support old browsers, consider using <code>XMLHttpRequest</code> instead.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/monacoEditor/example-extender.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/threeTabsDecoratorJS.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/monacoEditor/example-extender.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/MonacoEditorController.java')}
+            </ui:define>
+            <ui:define name="contentTab3">
+${showcase:getFileContent('/resources/js/monacoExtenderBasic.js')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/monacoEditor/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="monacoEditor"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>

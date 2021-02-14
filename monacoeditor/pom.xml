@@ -1,0 +1,220 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.primefaces.extensions</groupId>
+        <artifactId>primefaces-extensions-parent</artifactId>
+        <version>10.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>resources-monacoeditor</artifactId>
+    <packaging>jar</packaging>
+    <name>PrimeFaces Extensions Resources MonacoEditor</name>
+    <description>
+        <![CDATA[Monaco Editor Resources for PrimeFaces Extensions Project for Maven.]]>
+    </description>
+
+    <properties>
+        <main.basedir>${project.parent.basedir}</main.basedir>
+        <node.arguments>--env production</node.arguments>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <profiles>
+        <!-- Don't run frontend-maven-plugin with m2e (Eclipse Maven integration) -->
+        <!-- This prevents Eclipse from slowing down. -->
+        <profile>
+            <id>m2e</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <properties>
+                <skip.node>true</skip.node>
+                <skip.npm>true</skip.npm>
+                <skip.webpack>true</skip.webpack>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Include generated Java and JavaScript files in the JAR package -->
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-sources/js</directory>
+                <targetPath>META-INF/resources/primefaces-extensions/monacoeditor</targetPath>
+            </resource>
+            <resource>
+                <directory>${project.build.directory}/generated-sources/closure</directory>
+                <targetPath>META-INF/resources/primefaces-extensions/monacoeditor</targetPath>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Make generated Java files available -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>include-generated-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/target/generated-sources/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Minify monaco editor sources -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <configuration>
+                    <workingDirectory>${project.basedir}/src/main/js</workingDirectory>
+                </configuration>
+                <executions>
+                    <!-- Install node -->
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <!-- Install dependencies -->
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                    <!-- Generate locales -->
+                    <execution>
+                        <id>generate locales</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run generate-locales</arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Generate extras -->
+                    <execution>
+                        <id>generate extras</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run generate-extras</arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Generate editor options -->
+                    <execution>
+                        <id>generate editor options</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run generate-editor-options</arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Run build -->
+                    <execution>
+                        <id>webpack build</id>
+                        <goals>
+                            <goal>webpack</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>${node.arguments}</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse -->
+                <!-- m2e settings only. It has no influence on the Maven -->
+                <!-- build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            com.github.eirslett
+                                        </groupId>
+                                        <artifactId>
+                                            frontend-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [1.11.1,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>install-node-and-npm</goal>
+                                            <goal>npm</goal>
+                                            <goal>webpack</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

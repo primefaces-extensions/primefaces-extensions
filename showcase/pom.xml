@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch;monacoEditor</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>sheet;inputphone</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components>exporter;social;badge;gravatar;letteravatar</primefaces-extensions.deprecated-components>
 
@@ -40,6 +40,17 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>pe-showcase.properties</include>
+                </includes>
+            </resource>
+            <!-- Do not apply filter to other properties files as they contain special characters.-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>pe-showcase.properties</exclude>
+                </excludes>
             </resource>
             <resource>
                 <directory>src/main/webapp</directory>

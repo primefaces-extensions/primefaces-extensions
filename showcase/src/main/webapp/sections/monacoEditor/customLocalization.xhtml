@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:showcase="http://primefaces.org/ui/extensions/showcase">
+<ui:composition template="/templates/showcaseLayout.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{monacoEditorController.initCustomLocalization}"/>
+    </f:metadata>
+
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MonacoEditor"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            Monaco editor comes with localized translation for most major languages. When that is not
+            sufficient, you can also provide your own translation. To do so, you need to specify the
+            <code>localeUrl</code> option on the widget. It must point to a JavaScript file that
+            adds writes the localized translation to the <code>window.MonacoEnvironment.Locale</code>
+            object. See for example the Japanese localization for how this file should look and what
+            needs to be translated:
+            <a href="#{resource['primefaces-extensions:monacoeditor/locale/ja.js']}" target="_blank">Japanese localization file</a>
+            <br/><br/>
+            Below you can see the editor in Hindi (try opening the context menu with a right click).
+            <strong>Note: For this demonstration, the translation was done via Google translate.</strong>
+            Do not use this translation in production, but it should illustrate how you can create your own localization.
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <ui:include src="/sections/monacoEditor/example-customLocalization.xhtml" />
+        </h:panelGroup>
+
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+            <ui:define name="contentTab1">
+${showcase:getFileContent('/sections/monacoEditor/example-customLocalization.xhtml')}
+            </ui:define>
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/MonacoEditorController.java')}
+            </ui:define>
+        </ui:decorate>
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/monacoEditor/useCasesChoice.xhtml"/>
+    </ui:define>
+    <ui:define name="docuTable">
+        <ui:include src="/sections/shared/documentation.xhtml">
+            <ui:param name="tagName" value="monacoEditor"/>
+        </ui:include>
+    </ui:define>
+</ui:composition>
+</html>
