@@ -6,6 +6,12 @@
 
     <description>PrimeFaces Extensions Showcase</description>
 
+    <!-- Load custom tag into JSF web application -->
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/showcase.taglib.xml</param-value>
+    </context-param>
+
     <!-- Context parameters - JSF -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
