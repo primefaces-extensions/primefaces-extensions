@@ -23,14 +23,7 @@ package org.primefaces.extensions.showcase.webapp;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +33,7 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.omnifaces.util.Faces;
 
 /**
  * TechnicalInfo.
@@ -57,11 +51,11 @@ public class TechnicalInfo {
     private String jsfImpl;
     private String server;
     private String buildTime;
-    private boolean mojarra = true;
+    private boolean mojarra = false;
 
-    private List<String> newComponents = new ArrayList<String>();
-    private List<String> updatedComponents = new ArrayList<String>();
-    private List<String> deprecatedComponents = new ArrayList<String>();
+    private List<String> newComponents = new ArrayList<>();
+    private List<String> updatedComponents = new ArrayList<>();
+    private List<String> deprecatedComponents = new ArrayList<>();
 
     @PostConstruct
     protected void initialize() {
@@ -73,7 +67,7 @@ public class TechnicalInfo {
             final int lastBrace = strAppProps.indexOf("}");
             strAppProps = strAppProps.substring(1, lastBrace);
 
-            final Map<String, String> appProperties = new HashMap<String, String>();
+            final Map<String, String> appProperties = new HashMap<>();
             final String[] appProps = strAppProps.split("[\\s,]+");
             for (final String appProp : appProps) {
                 final String[] keyValue = appProp.split("=");
@@ -82,9 +76,11 @@ public class TechnicalInfo {
                 }
             }
 
-            primeFaces = "PrimeFaces: " + appProperties.get("primefaces.core.version");
-            primeFacesExt = "PrimeFaces Extensions: " + appProperties.get("primefaces-extensions.core.version");
-            jsfImpl = "JSF: " + appProperties.get("jsf-impl") + " " + appProperties.get("jsf-version");
+            // PF version
+            primeFaces = "PrimeFaces: " + StringUtils.defaultIfEmpty(org.primefaces.util.Constants.class.getPackage().getImplementationVersion(), "???");
+            primeFacesExt = "PrimeFaces Extensions: " + StringUtils
+                        .defaultIfEmpty(org.primefaces.extensions.util.Constants.class.getPackage().getImplementationVersion(), "???");
+            jsfImpl = "JSF: " + Faces.getImplInfo();
             server = "Server: " + ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext())
                         .getServerInfo();
 
@@ -96,7 +92,7 @@ public class TechnicalInfo {
             }
 
             buildTime = "Build time: " + formatter.format(calendar.getTime());
-            mojarra = appProperties.get("jsf-impl").contains("mojarra");
+            mojarra = Faces.getImplInfo().contains("mojarra");
 
             // process new and updated components
             processComponentTypes(appProperties.get("primefaces-extensions.new-components"),
@@ -167,9 +163,9 @@ public class TechnicalInfo {
             }
         }
         catch (final Exception ex) {
-            newComponents = new ArrayList<String>();
-            updatedComponents = new ArrayList<String>();
-            deprecatedComponents = new ArrayList<String>();
+            newComponents = new ArrayList<>();
+            updatedComponents = new ArrayList<>();
+            deprecatedComponents = new ArrayList<>();
         }
     }
 }
