@@ -15,6 +15,7 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ### Maven
 
+***
 ##### Release (javax)
 
 ```xml
