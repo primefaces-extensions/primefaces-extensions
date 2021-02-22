@@ -26,6 +26,7 @@ package org.primefaces.extensions.component.monacoeditor;
  *
  * @since 10.0.0
  */
+@SuppressWarnings("java:S115")
 enum FramedPropertyKeys {
     /**
      * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.

@@ -23,9 +23,10 @@ package org.primefaces.extensions.component.monacoeditor;
 
 /**
  * Additional properties for the inline editor widget not covered by the base options.
- * 
+ *
  * @since 10.0.0
  */
+@SuppressWarnings("java:S115")
 enum InlinePropertyKeys {
     /**
      * Extender script to add custom functionality via JavaScript. Must be a JavaScript expression that evaluates to an extender instance.
