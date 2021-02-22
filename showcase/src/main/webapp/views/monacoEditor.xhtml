@@ -9,7 +9,8 @@
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
             The Monaco Editor is the code editor which powers <a href="https://github.com/Microsoft/vscode">VS Code</a>,
-            with the features better described <a href="https://code.visualstudio.com/docs/editor/editingevolved" target="_blank" rel="noopener noreferrer">here</a>.
+            with the features better described <a href="https://code.visualstudio.com/docs/editor/editingevolved" target="_blank"
+                                                  rel="noopener noreferrer">here</a>.
             <br/><br/>
             The editor provides a rich coding experience with IntelliSense and validation for a few select languages, namely
             JavaScript/TypeScript, CSS / LESS /SCSS, and JSON; including but not limited to syntax highlighting, code completion and
@@ -24,15 +25,18 @@
             <a href="https://github.com/Microsoft/monaco-editor" target="_blank" rel="noopener noreferrer">here</a>.
             <br/><br/>
             The Monaco Editor component has been developed with customizability in mind. You can specify and extender to configure
-            the editor via custom JavaScript in any way you like via the official <a href="https://microsoft.github.io/monaco-editor/api/index.html" target="_blank" rel="noopener noreferrer">
+            the editor via custom JavaScript in any way you like via the official <a href="https://microsoft.github.io/monaco-editor/api/index.html"
+                                                                                     target="_blank" rel="noopener noreferrer">
             client-side API.</a> This JSF component comes in two varieties:
             <ul>
-            <li>The <code>pe:monacoEditor</code> renders the editor inline in the page where you include it. This is usually more
-            efficient and the preferred way when you do not need different editors with a different global configuration.</li>
-            <li>The <code>pe:monacoEditorFramed</code> renders the editor in an iframe for improved encapsulation. Part of the
-            Monaco Editor configuration is window global, such as the loaded TypeScript declaration files for improved JavaScript
-            IntelliSense. If you wish to use multiple editors with a completely different setup, consider using the framed variant.</li>
-            </ul> 
+                <li>The <code>pe:monacoEditor</code> renders the editor inline in the page where you include it. This is usually more
+                    efficient and the preferred way when you do not need different editors with a different global configuration.
+                </li>
+                <li>The <code>pe:monacoEditorFramed</code> renders the editor in an iframe for improved encapsulation. Part of the
+                    Monaco Editor configuration is window global, such as the loaded TypeScript declaration files for improved JavaScript
+                    IntelliSense. If you wish to use multiple editors with a completely different setup, consider using the framed variant.
+                </li>
+            </ul>
             Both variants share almost the same API with a few minor differences regarding a few client-side widget methods and how
             you specifiy the extender. As the framed variant runs inside an iframe, all interactions with the editor is handled via
             <code>postMessage</code> and thus neccesarily asynchronous.
@@ -41,24 +45,29 @@
             editor can provide a fuller and more pleasing experience. However, there are a few things to keep in mind:
             <ul>
                 <li>
-                Microsoft's statement regarding IE support: <q>The Monaco Editor no longer supports IE 11. The last version that was tested on IE 11 is
-                0.18.1.</q>
+                    Microsoft's statement regarding IE support: <q>The Monaco Editor no longer supports IE 11. The last version that was tested on IE 11 is
+                    0.18.1.</q>
                 </li>
                 <li>
-                It is assumed that users are using a browser with support for the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener noreferrer">Promise API</a>.
-                Every browser other than IE, which is unsupported anyways, <a href="https://caniuse.com/promises" target="_blank" rel="noopener noreferrer">now supports Promises.</a>
-                When for some reason support for the Promise API should not be available, you can simply include an <a href="https://github.com/zloirock/core-js" target="_blank">appropriate polyfill</a>.
-                While untested, it may also be possible to support IE 11 this way.
+                    It is assumed that users are using a browser with support for the <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank"
+                        rel="noopener noreferrer">Promise API</a>.
+                    Every browser other than IE, which is unsupported anyways, <a href="https://caniuse.com/promises" target="_blank"
+                                                                                  rel="noopener noreferrer">now supports Promises.</a>
+                    When for some reason support for the Promise API should not be available, you can simply include an <a
+                        href="https://github.com/zloirock/core-js" target="_blank" rel="noopener noreferrer">appropriate polyfill</a>.
+                    While untested, it may also be possible to support IE 11 this way.
                 </li>
                 <li>Also, the Monaco editor is not supported in mobile browsers or mobile web frameworks. In practice this means there is not dedicated
-                user interface for small screens or special controls for entering code on mobile devices. A larger tablet with an external keyboard and
-                possibly a mouse should work just fine, but make sure you test your use-case scenario.</li>
+                    user interface for small screens or special controls for entering code on mobile devices. A larger tablet with an external keyboard and
+                    possibly a mouse should work just fine, but make sure you test your use-case scenario.
+                </li>
             </ul>
             <br/>
             <strong>Basic support including syntax highlighting is available for the following languages :</strong> <br/>
             <ul>
                 <ui:repeat var="language" value="#{monacoEditorController.languages}">
-                <li>#{language.toString()}</li>
+                    <li>#{language.toString()}</li>
                 </ui:repeat>
             </ul>
         </h:panelGroup>
