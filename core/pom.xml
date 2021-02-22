@@ -618,6 +618,7 @@
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>resources-monacoeditor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- PROVIDED Java API's -->

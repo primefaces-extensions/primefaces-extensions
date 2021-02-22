@@ -281,6 +281,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>resources-monacoeditor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
             <version>${omnifaces.version}</version>
