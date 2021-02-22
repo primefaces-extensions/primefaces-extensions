@@ -218,6 +218,15 @@
         <component-type>org.primefaces.extensions.component.LightSwitch</component-type>
         <component-class>org.primefaces.extensions.component.lightswitch.LightSwitch</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.MonacoEditorInline</component-type>
+        <component-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorInline</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.MonacoEditorFramed</component-type>
+        <component-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorFramed</component-class>
+    </component>
+
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.JsonConverter</converter-class>
@@ -422,6 +431,16 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LightSwitchRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.lightswitch.LightSwitchRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.MonacoEditorInlineRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorInlineRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.MonacoEditorFramedRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorFramedRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

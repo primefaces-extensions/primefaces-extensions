@@ -44,3 +44,7 @@ table .timePickerColumn {
 .bookingDetails2 input {
     width: 180px;
 }
+
+.monacoEditorBox {
+    border: 1px solid #ccc;
+}

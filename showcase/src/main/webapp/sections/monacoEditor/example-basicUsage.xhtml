@@ -1,0 +1,95 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<p:growl id="growl" showDetail="true" showSummary="true">
+     <p:autoUpdate />
+</p:growl>
+
+<p:selectOneButton id="type" value="#{monacoEditorController.type}">
+    <f:selectItem itemLabel="Inline" itemValue="inline" />
+    <f:selectItem itemLabel="Iframe" itemValue="framed" />
+    <p:ajax process="monacoEditorWrapper,basicOptionsWrapper" update="monacoEditorWrapper,basicOptionsWrapper" />
+</p:selectOneButton>
+
+<h:panelGroup id="basicOptionsWrapper"  layout="block">
+
+    <h:panelGrid id="basicOptions" rendered="#{monacoEditorController.type eq 'inline'}"
+        columns="6" style="margin-bottom:10px" cellpadding="5"
+    >
+        <p:outputLabel for="language" value="Code language: " />
+        <p:selectOneMenu id="language" value="#{monacoEditorController.language}" filter="true">
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.languages}" />
+            <p:ajax listener="#{monacoEditorController.onLanguageChange}" process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    
+        <p:outputLabel for="theme" value="Theme: " />
+        <p:selectOneMenu id="theme" value="#{monacoEditorController.theme}">
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.themes}" />
+            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    
+        <p:outputLabel for="locale" value="Locale: " />
+        <p:selectOneMenu id="locale" value="#{monacoEditorController.locale}" converter="omnifaces.SelectItemsConverter">
+            <f:selectItem itemLabel="(Default)" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.locales}" var="locale"
+                itemLabel="#{locale.displayName}" itemValue="#{locale}" />
+            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    </h:panelGrid>
+    
+    <h:panelGrid id="basicOptionsFramed" rendered="#{monacoEditorController.type eq 'framed'}"
+        columns="6" style="margin-bottom:10px" cellpadding="5"
+    >
+        <p:outputLabel for="languageFramed" value="Code language: " />
+        <p:selectOneMenu id="languageFramed" value="#{monacoEditorController.languageFramed}" filter="true">
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.languages}" />
+            <p:ajax listener="#{monacoEditorController.onLanguageChange}" process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    
+        <p:outputLabel for="themeFramed" value="Theme: " />
+        <p:selectOneMenu id="themeFramed" value="#{monacoEditorController.themeFramed}">
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.themes}" />
+            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    
+        <p:outputLabel for="localeFramed" value="Locale: " />
+        <p:selectOneMenu id="localeFramed" value="#{monacoEditorController.localeFramed}" converter="omnifaces.SelectItemsConverter">
+            <f:selectItem itemLabel="(Default)" itemValue="#{null}" noSelectionOption="true" />
+            <f:selectItems value="#{monacoEditorController.locales}" var="locale"
+                itemLabel="#{locale.displayName}" itemValue="#{locale}" />
+            <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+        </p:selectOneMenu>
+    </h:panelGrid>
+</h:panelGroup>
+
+<h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox">
+
+    <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditor"
+        rendered="#{monacoEditorController.type eq 'inline'}"
+        value="#{monacoEditorController.value}"  locale="#{monacoEditorController.locale}"
+        editorOptions="#{monacoEditorController.editorOptions}"
+        width="100%" height="400px" autoResize="true" />
+
+    <pe:monacoEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramed"
+        rendered="#{monacoEditorController.type eq 'framed'}"
+        value="#{monacoEditorController.valueFramed}" locale="#{monacoEditorController.localeFramed}"
+        editorOptions="#{monacoEditorController.editorOptionsFramed}"
+        width="100%" height="400px" autoResize="true" />
+
+</h:panelGroup>
+
+<p:commandButton id="btnSubmit" value="Submit" icon="pi pi-save" 
+process="monacoEditor" update="monacoEditor" actionListener="#{monacoEditorController.submitContent()}" />
+
+<!-- EXAMPLE-SOURCE-END< -->
+</ui:composition>

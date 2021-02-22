@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
@@ -37,7 +38,7 @@
         <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <!--<maven.compiler.release>8</maven.compiler.release>-->
+        <!--<maven.compiler.release>8</maven.compiler.release> -->
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>
@@ -62,6 +63,7 @@
     <modules>
         <module>core</module>
         <module>ckeditor</module>
+        <module>monacoeditor</module>
         <module>showcase</module>
     </modules>
 
@@ -214,7 +216,8 @@
                         <doclint>none</doclint>
                         <failOnError>false</failOnError>
                         <failOnWarnings>false</failOnWarnings>
-                        <!-- Silence error javax.interceptor.InterceptorBinding not found -->
+                        <!-- Silence error javax.interceptor.InterceptorBinding 
+                            not found -->
                         <additionalDependencies>
                             <additionalDependency>
                                 <groupId>javax.inject</groupId>
@@ -302,6 +305,7 @@
                     <configuration>
                         <consoleOutput>true</consoleOutput>
                         <configLocation>${main.basedir}/src/conf/checkstyle.xml</configLocation>
+                        <suppressionsLocation>${main.basedir}/src/conf/suppressions.xml</suppressionsLocation>
                     </configuration>
                     <executions>
                         <execution>
@@ -366,6 +370,23 @@
                         </execution>
                     </executions>
                 </plugin>
+
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>1.11.0</version>
+                    <configuration>
+                        <nodeVersion>v15.8.0</nodeVersion>
+                        <npmVersion>7.5.1</npmVersion>
+                        <installDirectory>${main.basedir}/target/node</installDirectory>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -377,6 +398,12 @@
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>${primefaces.core.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>resources-monacoeditor</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- Commons -->

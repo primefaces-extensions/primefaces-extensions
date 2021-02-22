@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "skipLibCheck": true,        
+        "outDir": "dist"
+    },
+    "include": [
+        "src"
+    ]
+}
