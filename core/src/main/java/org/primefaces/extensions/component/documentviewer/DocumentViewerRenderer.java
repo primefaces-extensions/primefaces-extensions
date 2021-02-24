@@ -32,7 +32,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.application.resource.DynamicContentType;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.model.StreamedContent;
@@ -40,6 +39,7 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
 import org.primefaces.util.DynamicContentSrcBuilder;
 import org.primefaces.util.LangUtils;
+import org.primefaces.util.Lazy;
 
 /**
  * Renderer for the {@link DocumentViewer} component.
@@ -151,9 +151,12 @@ public class DocumentViewerRenderer extends CoreRenderer {
                 final StreamedContent streamedContent = (StreamedContent) value;
                 downloadName = streamedContent.getName();
             }
-            return DynamicContentSrcBuilder.build(context, value, documentViewer,
-                        documentViewer.isCache(), DynamicContentType.STREAMED_CONTENT, true) + "&download="
-                        + downloadName;
+            return DynamicContentSrcBuilder.build(context,
+                        documentViewer,
+                        documentViewer.getValueExpression("value"),
+                        new Lazy<>(() -> value),
+                        documentViewer.isCache(),
+                        true) + "&download=" + downloadName;
         }
     }
 }

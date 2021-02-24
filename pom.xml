@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
@@ -54,7 +54,7 @@
         <poi.version>5.0.0</poi.version>
         <libphonenumber.version>8.12.18</libphonenumber.version>
 
-        <primefaces.core.version>10.0.0-RC1</primefaces.core.version>
+        <primefaces.core.version>10.0.0-SNAPSHOT</primefaces.core.version>
         <primefaces.optimizer.version>2.3.5</primefaces.optimizer.version>
 
         <withoutCompress>true</withoutCompress>
@@ -399,7 +399,7 @@
                 <artifactId>primefaces</artifactId>
                 <version>${primefaces.core.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>resources-monacoeditor</artifactId>

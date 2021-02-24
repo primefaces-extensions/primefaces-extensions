@@ -21,11 +21,14 @@
  */
 package org.primefaces.extensions.application;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
+import javax.faces.FacesException;
+import javax.faces.application.Resource;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
@@ -35,6 +38,7 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.util.LocaleUtils;
 
 /**
  * Creates a custom PhaseListener for RENDER_RESPONSE phase which will during beforePhase() dynamically add those PrimeFaces resources via
@@ -93,13 +97,21 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
 
         // Icons
-        encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
-        if (applicationContext.getConfig().isFontAwesomeEnabled()) {
+        if (configuration.isPrimeIconsEnabled()) {
+            encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
+        }
+
+        if (configuration.isFontAwesomeEnabled()) {
             encodeCSS(context, LIBRARY, "fa/font-awesome.css");
         }
 
         if (configuration.isClientSideValidationEnabled()) {
             encodeValidationResources(context, configuration.isBeanValidationEnabled());
+        }
+
+        if (configuration.isClientSideLocalizationEnabled()) {
+            Locale locale = LocaleUtils.getCurrentLocale(context);
+            encodeJS(context, "locales/locale-" + locale.getLanguage() + ".js");
         }
     }
 
@@ -112,6 +124,10 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     private void encodeCSS(FacesContext context, String library, String name) {
+        Resource resource = context.getApplication().getResourceHandler().createResource(name, library);
+        if (resource == null) {
+            throw new FacesException("Error loading CSS, cannot find \"" + name + "\" resource of \"" + library + "\" library");
+        }
         final UIOutput css = new UIOutput();
         css.setId("css-" + UUID.randomUUID().toString());
         css.setRendererType("javax.faces.resource.Stylesheet");
@@ -121,6 +137,10 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     private void encodeJS(FacesContext context, String name) {
+        Resource resource = context.getApplication().getResourceHandler().createResource(name, LIBRARY);
+        if (resource == null) {
+            throw new FacesException("Error loading JavaScript, cannot find \"" + name + "\" resource of \"" + LIBRARY + "\" library");
+        }
         final UIOutput js = new UIOutput();
         js.setId("js-" + UUID.randomUUID().toString());
         js.setRendererType("javax.faces.resource.Script");
