@@ -96,7 +96,7 @@ cd showcase
 mvn clean jetty:run
 ```
 
-Then open your web browser to http://localhost:8080/primeext-showcase/
+Then open your web browser to http://localhost:8080/showcase-ext/
 
 ### Issues
 
