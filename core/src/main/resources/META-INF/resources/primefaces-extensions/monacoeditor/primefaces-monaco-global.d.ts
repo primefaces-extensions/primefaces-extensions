@@ -264,7 +264,7 @@ declare namespace PrimeFaces {
          * If the Promise returns a new options object, these options are used to create the editor.
          *
          * See
-         * [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/api/interfaces/import("monaco-editor").editor.istandaloneeditorconstructionoptions.html)
+         * [IStandaloneEditorConstructionOptions](https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandaloneeditorconstructionoptions.html)
          * for all editor options.
          *
          * @param context The current context object. Note that you should not use it to retrieve the monaco editor
@@ -439,6 +439,11 @@ declare namespace PrimeFaces {
        * extender to be used.
        */
       extender: string;
+      /**
+       * Additional URL params that are added to the iframe URL. May be useful to pass additional parameters
+       * to the extender script.
+       */
+      iframeUrlParams: Record<string, string[]>;
     }
 
     /**

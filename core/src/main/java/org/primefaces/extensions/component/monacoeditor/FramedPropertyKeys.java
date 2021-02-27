@@ -31,6 +31,10 @@ enum FramedPropertyKeys {
     /**
      * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.
      */
-    extender, //
+    extender,
+    /**
+     * Additional URL params that are added to the iframe URL.
+     */
+    iframeUrlParams,
     ;
 }

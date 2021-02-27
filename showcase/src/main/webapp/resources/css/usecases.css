@@ -46,5 +46,28 @@ table .timePickerColumn {
 }
 
 .monacoEditorBox {
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
+    min-width: 0;
+}
+
+.monacoExtenderBox {
+    border: 2px solid #0078B2;
+    min-width: 0;
+}
+
+.monacoEditorError {
+    border: 2px solid #cc3333;
+    height: 500px;
+    overflow: auto;
+}
+
+.monacoEditorError pre {
+    word-break: break-all;
+    white-space: break-spaces;
+}
+
+.monacoEditorMessage.ui-message {
+	width: 100%;
+	padding: 1em;
+	margin: 1em;
 }

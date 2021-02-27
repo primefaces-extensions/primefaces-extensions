@@ -22,10 +22,12 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.shaded.json.JSONWriter;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -45,13 +47,18 @@ public class MonacoEditorFramedRenderer extends MonacoEditorBaseRenderer<MonacoE
     @Override
     protected void addWidgetProperties(WidgetBuilder wb, MonacoEditorFramed monacoEditor) throws IOException {
         wb.attr("extender", monacoEditor.getExtender(), null);
+        if (monacoEditor.getIframeUrlParams() instanceof Map<?, ?>) {
+            wb.nativeAttr("iframeUrlParams", JSONWriter.valueToString(monacoEditor.getIframeUrlParams()));
+        }
+        else if (monacoEditor.getIframeUrlParams() instanceof String) {
+            wb.nativeAttr("iframeUrlParams", (String) monacoEditor.getIframeUrlParams());
+        }
     }
 
     @Override
     protected final void encodeMonacoEditor(final FacesContext context, final MonacoEditorFramed monacoEditor) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = monacoEditor.getClientId();
-
         writer.startElement("iframe", null);
         writer.writeAttribute("id", clientId + "_editor", null);
         writer.writeAttribute("class", "ui-monaco-editor-ed", null);

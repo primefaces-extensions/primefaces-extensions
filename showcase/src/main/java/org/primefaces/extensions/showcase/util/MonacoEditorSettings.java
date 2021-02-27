@@ -25,11 +25,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import javax.faces.model.SelectItem;
+
+import org.primefaces.extensions.model.monacoeditor.ECursorStyle;
+import org.primefaces.extensions.model.monacoeditor.ELanguage;
+import org.primefaces.extensions.model.monacoeditor.ERenderWhitespace;
 import org.primefaces.extensions.model.monacoeditor.ETheme;
+import org.primefaces.extensions.model.monacoeditor.EditorOptions;
+import org.primefaces.extensions.model.monacoeditor.EditorRulerOption;
 import org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme;
 import org.primefaces.extensions.model.monacoeditor.EditorTokenThemeRule;
 
 public class MonacoEditorSettings {
+    /**
+     * @return The custom theme for the showcase illustrating how to add a custom theme to the Monaco editor.
+     */
     public static EditorStandaloneTheme createDemoCustomTheme() {
         return new EditorStandaloneTheme() //
                     .setBase(ETheme.VS) //
@@ -41,6 +51,9 @@ public class MonacoEditorSettings {
                     ));
     }
 
+    /**
+     * @return A list of all locales supported by the Monaco editor natively.
+     */
     public static List<Locale> getBuiltInLocales() {
         return Arrays.asList( //
                     new Locale("bg"),
@@ -59,5 +72,31 @@ public class MonacoEditorSettings {
                     new Locale("uk"),
                     new Locale("zh", "CN"),
                     new Locale("zh", "TW"));
+    }
+
+    public static EditorOptions createEditorOptionsExtender() {
+        EditorOptions opts = new EditorOptions();
+        opts.setLanguage(ELanguage.JAVASCRIPT);
+        opts.setFontSize(12);
+        opts.setTheme(ETheme.VS);
+        opts.setCursorStyle(ECursorStyle.BLOCK);
+        opts.setRulers(Arrays.asList( //
+                    new EditorRulerOption().setColumn(60).setColor("#ccc"), //
+                    new EditorRulerOption().setColumn(80).setColor("#c33") //
+        ));
+        opts.setRenderWhitespace(ERenderWhitespace.ALL);
+        return opts;
+    }
+
+    /**
+     * @return A list of all examples available in the extender showcase.
+     */
+    public static List<SelectItem> createEditorExamples() {
+        return Arrays.asList( //
+                    new SelectItem("options", "Adjust editor options"), //
+                    new SelectItem("localstorage", "Editor overrides (Storage service)"), //
+                    new SelectItem("jsonschema", "JSON Schema"), //
+                    new SelectItem("jquery", "Type declarations (JQuery)") //
+        );
     }
 }
