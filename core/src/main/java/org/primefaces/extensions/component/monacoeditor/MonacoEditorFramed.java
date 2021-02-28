@@ -62,16 +62,24 @@ public class MonacoEditorFramed extends MonacoEditorBase {
     }
 
     @Override
-    public final Collection<String> getEventNames() {
+    public Collection<String> getEventNames() {
         // no additional events for now
         return BASE_EVENT_NAMES;
     }
 
-    public final String getExtender() {
+    public String getExtender() {
         return (String) getStateHelper().eval(FramedPropertyKeys.extender, null);
     }
 
-    public final void setExtender(final String extender) {
+    public void setExtender(final String extender) {
         getStateHelper().put(FramedPropertyKeys.extender, extender);
+    }
+
+    public Object getIframeUrlParams() {
+        return getStateHelper().eval(FramedPropertyKeys.iframeUrlParams, null);
+    }
+
+    public void setIframeUrlParams(Object iframeUrlParams) {
+        getStateHelper().put(FramedPropertyKeys.iframeUrlParams, iframeUrlParams);
     }
 }

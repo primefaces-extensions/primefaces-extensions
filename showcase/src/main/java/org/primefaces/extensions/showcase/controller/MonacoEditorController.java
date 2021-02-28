@@ -37,8 +37,10 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.extensions.model.monacoeditor.ELanguage;
 import org.primefaces.extensions.model.monacoeditor.ETheme;
@@ -61,10 +63,18 @@ public class MonacoEditorController implements Serializable {
 
     private EditorOptions editorOptions;
     private EditorOptions editorOptionsFramed;
+    private EditorOptions editorOptionsExtender;
 
     private ResourceBundle examples;
 
     private List<String> languages;
+
+    private String extenderError;
+
+    private String extenderExample;
+    private List<SelectItem> extenderExamples;
+    private String extenderInfo;
+    private String extenderName;
 
     private List<String> themes;
 
@@ -77,6 +87,7 @@ public class MonacoEditorController implements Serializable {
 
     private String value;
     private String valueFramed;
+    private String valueExtender;
 
     @PostConstruct
     private void init() {
@@ -89,6 +100,10 @@ public class MonacoEditorController implements Serializable {
         this.editorOptionsFramed = new EditorOptions();
         this.editorOptionsFramed.setTheme(ETheme.VS);
         this.editorOptionsFramed.setFontSize(12);
+
+        this.extenderExamples = MonacoEditorSettings.createEditorExamples();
+
+        this.editorOptionsExtender = MonacoEditorSettings.createEditorOptionsExtender();
 
         this.type = "inline";
 
@@ -116,6 +131,48 @@ public class MonacoEditorController implements Serializable {
      */
     public EditorOptions getEditorOptionsFramed() {
         return editorOptionsFramed;
+    }
+
+    /**
+     * @return options to apply to the monaco editor for editing the custom extender.
+     */
+    public EditorOptions getEditorOptionsExtender() {
+        return editorOptionsExtender;
+    }
+
+    /**
+     * @return The error that was throw by the custom extender code in the extender showcase.
+     */
+    public String getExtenderError() {
+        return extenderError;
+    }
+
+    /**
+     * @return The currently selected example for the extender showcase.
+     */
+    public String getExtenderExample() {
+        return extenderExample;
+    }
+
+    /***
+     * @return All examples available in the extender showcase.
+     */
+    public List<SelectItem> getExtenderExamples() {
+        return extenderExamples;
+    }
+
+    /**
+     * @return HTML string with additional info about the loaded extender example.
+     */
+    public String getExtenderInfo() {
+        return extenderInfo;
+    }
+
+    /**
+     * @return Name of the loaded extender example.
+     */
+    public String getExtenderName() {
+        return extenderName;
     }
 
     /**
@@ -196,10 +253,24 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return Code for the Monaco extender that can be edited on the extender showcase page.
+     */
+    public String getValueExtender() {
+        return valueExtender;
+    }
+
+    /**
      * @return The code currently being edited by the framed editor.
      */
     public String getValueFramed() {
         return valueFramed;
+    }
+
+    /**
+     * @param extenderExample The currently selected example for the extender showcase.
+     */
+    public void setExtenderExample(String extenderExample) {
+        this.extenderExample = extenderExample;
     }
 
     /**
@@ -279,6 +350,13 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @param extender Code for the Monaco extender that can be edited on the extender showcase page.
+     */
+    public void setValueExtender(String valueExtender) {
+        this.valueExtender = valueExtender;
+    }
+
+    /**
      * @param value The code currently being edited by the framed editor.
      */
     public void setValueFramed(String valueFramed) {
@@ -293,6 +371,26 @@ public class MonacoEditorController implements Serializable {
         else {
             loadDefaultCodeFramed();
         }
+    }
+
+    /** Callback when the selected example was changed in the extender showcase. */
+    public void onExtenderExampleChange() {
+        loadExtenderExample(extenderExample);
+    }
+
+    /**
+     * Callback when the run button was pressed in the extender showcase. Resets the error message.
+     */
+    public void onMonacoExtenderRun() {
+        this.extenderError = null;
+    }
+
+    /**
+     * Remote command listener when an error occurred in the custom extender entered by the user in the extender showcase.
+     */
+    public void onMonacoExtenderError() {
+        final HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        this.extenderError = req.getParameter("monacoExtenderError");
     }
 
     /**
@@ -328,7 +426,21 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
-     * Loads the code with the given key from the properties file into the editor.
+     * Loads the code with the given key from the properties file into the extender editor.
+     *
+     * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
+     */
+    private void loadCodeExtender(String propertyKey) {
+        try {
+            valueExtender = propertyKey != null ? examples.getString(propertyKey) : "";
+        }
+        catch (MissingResourceException e) {
+            valueExtender = "";
+        }
+    }
+
+    /**
+     * Loads the code with the given key from the properties file into the framed editor.
      *
      * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
      */
@@ -338,6 +450,52 @@ public class MonacoEditorController implements Serializable {
         }
         catch (MissingResourceException e) {
             valueFramed = "";
+        }
+    }
+
+    /**
+     * Loads the info about the extender example with the given key from the properties file.
+     *
+     * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
+     */
+    private void loadExtenderInfo(String propertyKey) {
+        try {
+            extenderInfo = propertyKey != null ? examples.getString(propertyKey) : "";
+        }
+        catch (MissingResourceException e) {
+            extenderInfo = "";
+        }
+    }
+
+    /**
+     * Loads the name of the extender example with the given key from the properties file.
+     *
+     * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
+     */
+    private void loadExtenderName(String propertyKey) {
+        try {
+            extenderName = propertyKey != null ? examples.getString(propertyKey) : "";
+        }
+        catch (MissingResourceException e) {
+            extenderName = "";
+        }
+    }
+
+    /**
+     * Loads the given example for the extender showcase.
+     * 
+     * @param key Key of the extender example.
+     */
+    public void loadExtenderExample(String key) {
+        loadCode("custom_code.extender." + key + ".sample");
+        loadCodeExtender("custom_code.extender." + key + ".script");
+        loadExtenderName("custom_code.extender." + key + ".name");
+        loadExtenderInfo("custom_code.extender." + key + ".info");
+        try {
+            editorOptions.setLanguage(examples.getString("custom_code.extender." + key + ".language"));
+        }
+        catch (MissingResourceException e) {
+            editorOptions.setLanguage(ELanguage.TYPESCRIPT);
         }
     }
 
@@ -402,8 +560,7 @@ public class MonacoEditorController implements Serializable {
      */
     public void initExtender() {
         editorOptions.setLanguage(ELanguage.JAVASCRIPT);
-        editorOptionsFramed.setLanguage(ELanguage.JAVASCRIPT);
-        loadCode("custom_code.jsExtenderDemo");
-        loadCodeFramed("custom_code.jsExtenderDemo");
+        extenderExample = "jquery";
+        loadExtenderExample("jquery");
     }
 }

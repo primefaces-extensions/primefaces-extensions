@@ -49,6 +49,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
           getMonacoResource("iframe-controller.js")
         ],
         instanceId: this._instanceId,
+        ...this.cfg.iframeUrlParams,
       });
       this._getIframe().src = iframeUrl;
 

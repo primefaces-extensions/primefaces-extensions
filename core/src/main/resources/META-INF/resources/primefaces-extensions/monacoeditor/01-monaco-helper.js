@@ -245,7 +245,7 @@ window.monacoModule.helper = (function () {
       const result = extender.beforeCreate(context, options, wasLibLoaded);
       if (typeof result === "object" && result !== null) {
         return typeof result["then"] === "function"
-          ? (await result) || result
+          ? (await result) || options
           : result;
       }
     }
@@ -447,6 +447,7 @@ window.monacoModule.helper = (function () {
 
   const FramedEditorDefaults = assign({}, BaseEditorDefaults, {
     extender: "",
+    iframeUrlParams: {},
   });
 
   const InlineEditorDefaults = assign({}, BaseEditorDefaults, {
