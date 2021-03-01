@@ -5,7 +5,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
     <packaging>pom</packaging>
-    <version>10.0.0-SNAPSHOT</version>
+    <version>10.0.0-RC2</version>
     <name>PrimeFaces Extensions Parent</name>
     <description>
         <![CDATA[PrimeFaces Extensions Parent Project for Maven multi-module build.]]>
@@ -54,7 +54,7 @@
         <poi.version>5.0.0</poi.version>
         <libphonenumber.version>8.12.18</libphonenumber.version>
 
-        <primefaces.core.version>10.0.0-SNAPSHOT</primefaces.core.version>
+        <primefaces.core.version>10.0.0-RC2</primefaces.core.version>
         <primefaces.optimizer.version>2.3.5</primefaces.optimizer.version>
 
         <withoutCompress>true</withoutCompress>
