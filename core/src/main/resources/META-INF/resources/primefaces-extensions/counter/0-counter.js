@@ -1,5 +1,5 @@
 var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function (t) {
+    __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -16,7 +16,7 @@ var CountUp = /** @class */ (function () {
         this.target = target;
         this.endVal = endVal;
         this.options = options;
-        this.version = '2.0.4';
+        this.version = '2.0.7';
         this.defaults = {
             startVal: 0,
             decimalPlaces: 0,
@@ -46,33 +46,39 @@ var CountUp = /** @class */ (function () {
             if (_this.useEasing) {
                 if (_this.countDown) {
                     _this.frameVal = _this.startVal - _this.easingFn(progress, 0, _this.startVal - _this.endVal, _this.duration);
-                } else {
+                }
+                else {
                     _this.frameVal = _this.easingFn(progress, _this.startVal, _this.endVal - _this.startVal, _this.duration);
                 }
-            } else {
+            }
+            else {
                 if (_this.countDown) {
                     _this.frameVal = _this.startVal - ((_this.startVal - _this.endVal) * (progress / _this.duration));
-                } else {
+                }
+                else {
                     _this.frameVal = _this.startVal + (_this.endVal - _this.startVal) * (progress / _this.duration);
                 }
             }
             // don't go past endVal since progress can exceed duration in the last frame
             if (_this.countDown) {
                 _this.frameVal = (_this.frameVal < _this.endVal) ? _this.endVal : _this.frameVal;
-            } else {
+            }
+            else {
                 _this.frameVal = (_this.frameVal > _this.endVal) ? _this.endVal : _this.frameVal;
             }
             // decimal
-            _this.frameVal = Math.round(_this.frameVal * _this.decimalMult) / _this.decimalMult;
+            _this.frameVal = Number(_this.frameVal.toFixed(_this.options.decimalPlaces));
             // format and print value
             _this.printValue(_this.frameVal);
             // whether to continue
             if (progress < _this.duration) {
                 _this.rAF = requestAnimationFrame(_this.count);
-            } else if (_this.finalEndVal !== null) {
+            }
+            else if (_this.finalEndVal !== null) {
                 // smart easing
                 _this.update(_this.finalEndVal);
-            } else {
+            }
+            else {
                 if (_this.callback) {
                     _this.callback();
                 }
@@ -99,19 +105,15 @@ var CountUp = /** @class */ (function () {
             }
             // optional numeral substitution
             if (_this.options.numerals && _this.options.numerals.length) {
-                x1 = x1.replace(/[0-9]/g, function (w) {
-                    return _this.options.numerals[+w];
-                });
-                x2 = x2.replace(/[0-9]/g, function (w) {
-                    return _this.options.numerals[+w];
-                });
+                x1 = x1.replace(/[0-9]/g, function (w) { return _this.options.numerals[+w]; });
+                x2 = x2.replace(/[0-9]/g, function (w) { return _this.options.numerals[+w]; });
             }
             return neg + _this.options.prefix + x1 + x2 + _this.options.suffix;
         };
         this.easeOutExpo = function (t, b, c, d) {
             return c * (-Math.pow(2, -10 * t / d) + 1) * 1024 / 1023 + b;
         };
-        this.options = __assign({}, this.defaults, options);
+        this.options = __assign(__assign({}, this.defaults), options);
         this.formattingFn = (this.options.formattingFn) ?
             this.options.formattingFn : this.formatNumber;
         this.easingFn = (this.options.easingFn) ?
@@ -120,7 +122,6 @@ var CountUp = /** @class */ (function () {
         this.frameVal = this.startVal;
         this.endVal = this.validateValue(endVal);
         this.options.decimalPlaces = Math.max(0 || this.options.decimalPlaces);
-        this.decimalMult = Math.pow(10, this.options.decimalPlaces);
         this.resetDuration();
         this.options.separator = String(this.options.separator);
         this.useEasing = this.options.useEasing;
@@ -130,11 +131,11 @@ var CountUp = /** @class */ (function () {
         this.el = (typeof target === 'string') ? document.getElementById(target) : target;
         if (this.el) {
             this.printValue(this.startVal);
-        } else {
+        }
+        else {
             this.error = '[CountUp] target is null or undefined';
         }
     }
-
     // determines where easing starts and whether to count down or up
     CountUp.prototype.determineDirectionAndSmartEasing = function () {
         var end = (this.finalEndVal) ? this.finalEndVal : this.endVal;
@@ -145,13 +146,15 @@ var CountUp = /** @class */ (function () {
             var up = (this.countDown) ? 1 : -1;
             this.endVal = end + (up * this.options.smartEasingAmount);
             this.duration = this.duration / 2;
-        } else {
+        }
+        else {
             this.endVal = end;
             this.finalEndVal = null;
         }
         if (this.finalEndVal) {
             this.useEasing = false;
-        } else {
+        }
+        else {
             this.useEasing = this.options.useEasing;
         }
     };
@@ -165,7 +168,8 @@ var CountUp = /** @class */ (function () {
             this.determineDirectionAndSmartEasing();
             this.paused = false;
             this.rAF = requestAnimationFrame(this.count);
-        } else {
+        }
+        else {
             this.printValue(this.endVal);
         }
     };
@@ -173,7 +177,8 @@ var CountUp = /** @class */ (function () {
     CountUp.prototype.pauseResume = function () {
         if (!this.paused) {
             cancelAnimationFrame(this.rAF);
-        } else {
+        }
+        else {
             this.startTime = null;
             this.duration = this.remaining;
             this.startVal = this.frameVal;
@@ -203,6 +208,7 @@ var CountUp = /** @class */ (function () {
         if (!this.finalEndVal) {
             this.resetDuration();
         }
+        this.finalEndVal = null;
         this.determineDirectionAndSmartEasing();
         this.rAF = requestAnimationFrame(this.count);
     };
@@ -211,9 +217,11 @@ var CountUp = /** @class */ (function () {
         if (this.el.tagName === 'INPUT') {
             var input = this.el;
             input.value = result;
-        } else if (this.el.tagName === 'text' || this.el.tagName === 'tspan') {
+        }
+        else if (this.el.tagName === 'text' || this.el.tagName === 'tspan') {
             this.el.textContent = result;
-        } else {
+        }
+        else {
             this.el.innerHTML = result;
         }
     };
@@ -225,7 +233,8 @@ var CountUp = /** @class */ (function () {
         if (!this.ensureNumber(newValue)) {
             this.error = "[CountUp] invalid start or end value: " + value;
             return null;
-        } else {
+        }
+        else {
             return newValue;
         }
     };
@@ -236,3 +245,4 @@ var CountUp = /** @class */ (function () {
     };
     return CountUp;
 }());
+

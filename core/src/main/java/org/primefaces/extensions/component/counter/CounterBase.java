@@ -53,6 +53,7 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
         useEasing,
         smartEasingThreshold,
         smartEasingAmount,
+        locale,
         separator,
         decimal,
         prefix,
@@ -161,8 +162,16 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
         getStateHelper().put(PropertyKeys.smartEasingAmount, smartEasingAmount);
     }
 
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
+
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
     public String getSeparator() {
-        return (String) getStateHelper().eval(PropertyKeys.separator, ",");
+        return (String) getStateHelper().eval(PropertyKeys.separator, null);
     }
 
     public void setSeparator(final String separator) {
@@ -170,7 +179,7 @@ public abstract class CounterBase extends UIComponentBase implements Widget, Cli
     }
 
     public String getDecimal() {
-        return (String) getStateHelper().eval(PropertyKeys.decimal, ".");
+        return (String) getStateHelper().eval(PropertyKeys.decimal, null);
     }
 
     public void setDecimal(final String decimal) {

@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.counter;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
@@ -32,6 +33,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.util.Constants;
+import org.primefaces.util.LocaleUtils;
 import org.primefaces.util.MapBuilder;
 
 /**
@@ -60,6 +62,16 @@ public class Counter extends CounterBase {
                 .build();
 
     private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
+
+    private Locale appropriateLocale;
+
+    public Locale calculateLocale() {
+        if (appropriateLocale == null) {
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
+        }
+        return appropriateLocale;
+    }
 
     @Override
     public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {

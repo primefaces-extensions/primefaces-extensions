@@ -22,6 +22,8 @@
 package org.primefaces.extensions.component.counter;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -57,6 +59,18 @@ public class CounterRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final Counter counter) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
+        Locale locale = counter.calculateLocale();
+        DecimalFormat formatter = (DecimalFormat) DecimalFormat.getInstance(locale);
+
+        String groupingSeparator = counter.getSeparator();
+        String decimalSeparator = counter.getDecimal();
+        if (LangUtils.isValueBlank(groupingSeparator)) {
+            groupingSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getGroupingSeparator());
+        }
+        if (LangUtils.isValueBlank(decimalSeparator)) {
+            decimalSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getDecimalSeparator());
+        }
+
         wb.init("ExtCounter", counter)
                     .attr("start", counter.getStart())
                     .attr("end", counter.getEnd())
@@ -66,8 +80,8 @@ public class CounterRenderer extends CoreRenderer {
                     .attr("useEasing", counter.isUseEasing())
                     .attr("smartEasingThreshold", counter.getSmartEasingThreshold())
                     .attr("smartEasingAmount", counter.getSmartEasingAmount())
-                    .attr("separator", counter.getSeparator())
-                    .attr("decimal", counter.getDecimal())
+                    .attr("separator", groupingSeparator)
+                    .attr("decimal", decimalSeparator)
                     .attr("prefix", counter.getPrefix())
                     .attr("suffix", counter.getSuffix())
                     .attr("autoStart", counter.isAutoStart());
