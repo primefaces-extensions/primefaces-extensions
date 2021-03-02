@@ -52,7 +52,7 @@
         <jakarta-faces.version>2.3.14</jakarta-faces.version>
         <apache-faces.version>2.3.8</apache-faces.version>
         <poi.version>5.0.0</poi.version>
-        <libphonenumber.version>8.12.18</libphonenumber.version>
+        <libphonenumber.version>8.12.19</libphonenumber.version>
 
         <primefaces.core.version>10.0.0-RC2</primefaces.core.version>
         <primefaces.optimizer.version>2.3.5</primefaces.optimizer.version>
