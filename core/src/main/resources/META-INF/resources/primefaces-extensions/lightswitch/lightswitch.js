@@ -12,7 +12,7 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
      * @param {object}
      *        cfg The widget configuration.
      */
-    init : function(cfg) {
+    init: function (cfg) {
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
@@ -26,7 +26,7 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Automatically set the theme based on the OS setting.
      */
-    automatic : function() {
+    automatic: function () {
         this.changeTheme((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
             ? this.cfg.dark : this.cfg.light);
     },
@@ -34,21 +34,21 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Change to the light theme.
      */
-    light : function() {
+    light: function () {
         this.changeTheme(this.cfg.light);
     },
 
     /**
      * Change to the dark theme.
      */
-    dark : function() {
+    dark: function () {
         this.changeTheme(this.cfg.dark);
     },
 
     /**
      * Toggle between the light and dark theme.
      */
-    toggle : function() {
+    toggle: function () {
         this.changeTheme(this.selected === this.cfg.dark ? this.cfg.light : this.cfg.dark);
     },
 
@@ -56,25 +56,31 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
      * Change the theme to the one provided, if it is not the selected theme, and sends the theme to the server side.
      * @param {string} theme to change to.
      */
-    changeTheme : function(theme) {
+    changeTheme: function (theme) {
         if (theme !== this.selected) {
             this.selected = theme;
-            var options = { params: [ {name: this.id + '_theme', value: theme} ] };
+            var options = {params: [{name: this.id + '_theme', value: theme}]};
             if (this.hasBehavior('switch')) {
-              this.callBehavior('switch', options);
-              PrimeFaces.changeTheme(theme);
+                this.callBehavior('switch', options);
+
+                // if theme link can't be detected just reload the window
+                var themeLink = PrimeFaces.getThemeLink();
+                if (!themeLink || themeLink.length === 0) {
+                    window.location.reload();
+                } else {
+                    PrimeFaces.changeTheme(theme);
+                }
+            } else {
+                options.source = this.id;
+                options.process = this.id;
+                options.update = this.id;
+                options.formId = this.formId;
+                options.oncomplete = function () {
+                    PrimeFaces.changeTheme(theme);
+                }
+                PrimeFaces.ajax.Request.handle(options);
             }
-            else {
-              options.source = this.id;
-              options.process = this.id;
-              options.update = this.id;
-              options.formId = this.formId;
-              options.oncomplete = function(){
-                PrimeFaces.changeTheme(theme);
-              }
-              PrimeFaces.ajax.Request.handle(options);
-            }            
         }
-    },
+    }
 
 });
