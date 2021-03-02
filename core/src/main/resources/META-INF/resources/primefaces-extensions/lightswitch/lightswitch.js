@@ -63,8 +63,6 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
             var options = {params: [{name: this.id + '_theme', value: theme}]};
             if (this.hasBehavior('switch')) {
                 this.callBehavior('switch', options);
-
-                // if theme link can't be detected just reload the window
                 $this._execute(theme);
             } else {
                 options.source = this.id;
