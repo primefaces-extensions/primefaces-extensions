@@ -59,6 +59,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         if (this.cfg.contentsCss) {
             this.options.contentsCss = this.cfg.contentsCss;
         }
+        if (this.cfg.placeholder) {
+            this.options.editorplaceholder = this.cfg.placeholder;
+        }
         if (this.cfg.customConfig) {
             this.options.customConfig = this.cfg.customConfig + "?resolve=false";
         }

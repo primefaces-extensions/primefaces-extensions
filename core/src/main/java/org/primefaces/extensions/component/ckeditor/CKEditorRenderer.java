@@ -116,6 +116,7 @@ public class CKEditorRenderer extends InputRenderer {
                     .attr("advancedContentFilter", ckEditor.isAdvancedContentFilter())
                     .attr("disableNativeSpellChecker", ckEditor.isDisableNativeSpellChecker())
                     .attr(Attrs.TABINDEX, ckEditor.getTabindex())
+                    .attr("placeholder", ckEditor.getPlaceholder())
                     .attr("font", ckEditor.getFont())
                     .attr("fontSize", ckEditor.getFontSize())
                     .attr("enterMode", ckEditor.getEnterMode())

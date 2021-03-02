@@ -88,7 +88,8 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
         enterMode,
         shiftEnterMode,
         font,
-        fontSize
+        fontSize,
+        placeholder
         //@formatter:on
     }
 
@@ -273,5 +274,13 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
 
     public void setFontSize(final String fontSize) {
         getStateHelper().put(PropertyKeys.fontSize, fontSize);
+    }
+
+    public String getPlaceholder() {
+        return (String) getStateHelper().eval(PropertyKeys.placeholder, null);
+    }
+
+    public void setPlaceholder(String placeholder) {
+        getStateHelper().put(PropertyKeys.placeholder, placeholder);
     }
 }
