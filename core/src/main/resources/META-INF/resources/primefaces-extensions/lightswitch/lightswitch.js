@@ -63,33 +63,18 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
             var options = {params: [{name: this.id + '_theme', value: theme}]};
             if (this.hasBehavior('switch')) {
                 this.callBehavior('switch', options);
-                $this._execute(theme);
+                PrimeFacesExt.changeTheme(theme);
             } else {
                 options.source = this.id;
                 options.process = this.id;
                 options.update = this.id;
                 options.formId = this.formId;
                 options.oncomplete = function () {
-                    $this._execute(theme);
+                    PrimeFacesExt.changeTheme(theme);
                 }
                 PrimeFaces.ajax.Request.handle(options);
             }
         }
-    },
-
-    /**
-     * Change the theme but if using OmniFaces CombinedResourceHandler we need to reload the widow instead.
-     *
-     * @param {string} theme to change to.
-     * @private
-     */
-    _execute: function (theme) {
-        var themeLink = PrimeFaces.getThemeLink();
-        if (!themeLink || themeLink.length === 0) {
-            window.location.reload();
-        } else {
-            PrimeFaces.changeTheme(theme);
-        }
     }
-
+    
 });

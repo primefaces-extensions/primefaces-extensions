@@ -12,69 +12,13 @@ CKEditorExtension = {
      */
     isExtensionMapping: function () {
         if (!CKEditorExtension.IS_EXTENSION_MAPPING) {
-            var scriptURI = CKEditorExtension.getResourceScriptURI();
-            var scriptName = CKEditorExtension.getResourceScriptName(scriptURI);
+            var scriptURI = PrimeFacesExt.getResourceScriptURI();
+            var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
 
             CKEditorExtension.IS_EXTENSION_MAPPING = scriptURI.charAt(scriptURI.indexOf(scriptName) + scriptName.length) === '.';
         }
 
         return CKEditorExtension.IS_EXTENSION_MAPPING;
-    },
-
-    /**
-     * Gets the URL extensions of current included resources. For example: jsf or
-     * xhtml. This should only be used if extensions mapping is used.
-     *
-     * @returns {string} The URL extension.
-     */
-    getResourceUrlExtension: function () {
-        if (!CKEditorExtension.RESOURCE_URL_EXTENSION) {
-            var scriptURI = CKEditorExtension.getResourceScriptURI();
-            var scriptName = CKEditorExtension.getResourceScriptName(scriptURI);
-            CKEditorExtension.RESOURCE_URL_EXTENSION = RegExp(scriptName + '.([^?]*)').exec(scriptURI)[1];
-        }
-
-        return CKEditorExtension.RESOURCE_URL_EXTENSION;
-    },
-
-    /**
-     * For a URI parses out the name of the script like primefaces-extensions.js
-     *
-     * @param the
-     *        URI of the script
-     * @returns {string} The script name.
-     */
-    getResourceScriptName: function (scriptURI) {
-        if (!CKEditorExtension.SCRIPT_NAME) {
-            // find script...normal is '/core.js' and portlets are '=core.js'
-            var scriptRegex = new RegExp('\/?' + PrimeFaces.RESOURCE_IDENTIFIER + '(\/|=)(.*?)\.js');
-
-            // find script to replace e.g. 'core.js'
-            CKEditorExtension.SCRIPT_NAME = scriptRegex.exec(scriptURI)[2] + '.js';
-        }
-
-        return CKEditorExtension.SCRIPT_NAME;
-    },
-
-    /**
-     * Gets the resource URI of any Javascript JS file served as a JSF resource.
-     *
-     * @author Thomas Andraschko
-     * @returns {string} The resource URI.
-     */
-    getResourceScriptURI: function () {
-        if (!CKEditorExtension.SCRIPT_URI) {
-            // GitHub #601 maybe using OmniFaces CombinedResourceHandler
-            CKEditorExtension.SCRIPT_URI =
-                $('script[src*="/' + PrimeFaces.RESOURCE_IDENTIFIER + '/"]').first().attr('src');
-
-            // portlet
-            if (!CKEditorExtension.SCRIPT_URI) {
-                CKEditorExtension.SCRIPT_URI =
-                    $('script[src*="' + PrimeFaces.RESOURCE_IDENTIFIER + '="]').first().attr('src');
-            }
-        }
-        return CKEditorExtension.SCRIPT_URI;
     },
 
     getScript: function (url, callback) {
@@ -140,7 +84,7 @@ CKEDITOR_GETURL = function (resource) {
                 var resourceIdentiferPosition = facesResource.indexOf(PrimeFaces.RESOURCE_IDENTIFIER);
 
                 if (CKEditorExtension.isExtensionMapping()) {
-                    var extension = '.' + CKEditorExtension.getResourceUrlExtension();
+                    var extension = '.' + PrimeFacesExt.getResourceUrlExtension();
                     var extensionMappingPosition = facesResource.lastIndexOf(extension);
                     if (extensionMappingPosition === -1) {
                         extensionMappingPosition = facesResource.lastIndexOf('.xhtml');

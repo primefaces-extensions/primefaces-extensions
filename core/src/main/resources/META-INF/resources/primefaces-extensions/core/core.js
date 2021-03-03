@@ -4,6 +4,78 @@
 PrimeFacesExt = {
 
     /**
+     * Change the theme and if using OmniFaces CombinedResourceHandler we need to create the URL and insert it
+     * since it will not exist.
+     * @param theme the theme to switch to
+     */
+    changeTheme: function (theme) {
+        var themeLink = PrimeFaces.getThemeLink();
+        if (!themeLink || themeLink.length === 0) {
+            var ext = PrimeFacesExt.getResourceUrlExtension();
+            var href = PrimeFaces.settings.contextPath + '/javax.faces.resource/theme.css.' + ext + '?ln=primefaces-' + theme + '&' + PrimeFacesExt.VERSION;
+            $('head').append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+        } else {
+            PrimeFaces.changeTheme(theme);
+        }
+    },
+
+    /**
+     * Gets the URL extensions of current included resources. For example: jsf or
+     * xhtml. This should only be used if extensions mapping is used.
+     *
+     * @returns {string} The URL extension.
+     */
+    getResourceUrlExtension: function () {
+        if (!PrimeFacesExt.RESOURCE_URL_EXTENSION) {
+            var scriptURI = PrimeFacesExt.getResourceScriptURI();
+            var scriptName = PrimeFacesExt.getResourceScriptName(scriptURI);
+            PrimeFacesExt.RESOURCE_URL_EXTENSION = RegExp(scriptName + '.([^?]*)').exec(scriptURI)[1];
+        }
+
+        return PrimeFacesExt.RESOURCE_URL_EXTENSION;
+    },
+
+    /**
+     * For a URI parses out the name of the script like primefaces-extensions.js
+     *
+     * @param the
+     *        URI of the script
+     * @returns {string} The script name.
+     */
+    getResourceScriptName: function (scriptURI) {
+        if (!PrimeFacesExt.SCRIPT_NAME) {
+            // find script...normal is '/core.js' and portlets are '=core.js'
+            var scriptRegex = new RegExp('\/?' + PrimeFaces.RESOURCE_IDENTIFIER + '(\/|=)(.*?)\.js');
+
+            // find script to replace e.g. 'core.js'
+            PrimeFacesExt.SCRIPT_NAME = scriptRegex.exec(scriptURI)[2] + '.js';
+        }
+
+        return PrimeFacesExt.SCRIPT_NAME;
+    },
+
+    /**
+     * Gets the resource URI of any Javascript JS file served as a JSF resource.
+     *
+     * @author Thomas Andraschko
+     * @returns {string} The resource URI.
+     */
+    getResourceScriptURI: function () {
+        if (!PrimeFacesExt.SCRIPT_URI) {
+            // GitHub #601 maybe using OmniFaces CombinedResourceHandler
+            PrimeFacesExt.SCRIPT_URI =
+                $('script[src*="/' + PrimeFaces.RESOURCE_IDENTIFIER + '/"]').first().attr('src');
+
+            // portlet
+            if (!PrimeFacesExt.SCRIPT_URI) {
+                PrimeFacesExt.SCRIPT_URI =
+                    $('script[src*="' + PrimeFaces.RESOURCE_IDENTIFIER + '="]').first().attr('src');
+            }
+        }
+        return PrimeFacesExt.SCRIPT_URI;
+    },
+
+    /**
      * Configures component specific localized text by given widget name and
      * locale in configuration object.
      *
