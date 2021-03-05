@@ -168,10 +168,12 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
     }
 
     private void addJS(FacesContext context, String script) {
+        String id = UUID.randomUUID().toString();
         final UIOutput js = new UIOutput();
-        js.setId("js-" + UUID.randomUUID().toString());
+        js.setId("js-" + id + "1");
         js.setRendererType("javax.faces.resource.Script");
         final UIOutput content = new UIOutput();
+        content.setId("js-" + id + "2");
         content.setValue(script);
         js.getChildren().add(content);
         context.getViewRoot().addComponentResource(context, js);
