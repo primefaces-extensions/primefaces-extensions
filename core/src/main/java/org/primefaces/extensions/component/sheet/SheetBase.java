@@ -353,7 +353,7 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
         getStateHelper().put(PropertyKeys.sortBy.name(), sortBy);
     }
 
-    public void setShowColumnHeaders(final Boolean value) {
+    public void setShowColumnHeaders(final boolean value) {
         getStateHelper().put(PropertyKeys.showColumnHeaders, value);
     }
 
