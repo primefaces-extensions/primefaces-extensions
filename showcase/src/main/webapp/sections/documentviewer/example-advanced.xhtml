@@ -5,27 +5,27 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
         xmlns:pe="http://primefaces.org/ui/extensions">
-<!-- EXAMPLE-SOURCE-START -->
-<p:outputPanel layout="block" id="container">
-    <p:panelGrid columns="2">
-        <h:outputLabel value="Page"/>
-        <p:spinner min="1" max="69" value="#{advancedDocumentViewerController.page}">
-            <p:ajax update="container"/>
-        </p:spinner>
-        <h:outputLabel value="Locale"/>
-        <p:selectOneRadio value="#{advancedDocumentViewerController.locale}">
-            <f:selectItem itemValue="en" itemLabel="English"/>
-            <f:selectItem itemValue="de" itemLabel="German"/>
-            <f:selectItem itemValue="it" itemLabel="Italian"/>
-            <f:selectItem itemValue="pt_BR" itemLabel="Portuguese"/>
-            <p:ajax update="container"/>
-        </p:selectOneRadio>
-    </p:panelGrid>
-    <pe:documentViewer
-        height="500"
-        locale="#{advancedDocumentViewerController.locale}"
-        page="#{advancedDocumentViewerController.page}"
-        url="/sections/documentviewer/book.pdf"/>
-</p:outputPanel>
-<!-- EXAMPLE-SOURCE-END -->
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:outputPanel layout="block" id="container" deferred="true">
+        <p:panelGrid columns="2">
+            <h:outputLabel value="Page"/>
+            <p:spinner min="1" max="69" value="#{advancedDocumentViewerController.page}">
+                <p:ajax update="container"/>
+            </p:spinner>
+            <h:outputLabel value="Locale"/>
+            <p:selectOneRadio value="#{advancedDocumentViewerController.locale}">
+                <f:selectItem itemValue="en" itemLabel="English"/>
+                <f:selectItem itemValue="de" itemLabel="German"/>
+                <f:selectItem itemValue="it" itemLabel="Italian"/>
+                <f:selectItem itemValue="pt_BR" itemLabel="Portuguese"/>
+                <p:ajax update="container"/>
+            </p:selectOneRadio>
+        </p:panelGrid>
+        <pe:documentViewer
+                height="500"
+                locale="#{advancedDocumentViewerController.locale}"
+                page="#{advancedDocumentViewerController.page}"
+                url="/sections/documentviewer/book.pdf"/>
+    </p:outputPanel>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
