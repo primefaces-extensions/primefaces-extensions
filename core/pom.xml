@@ -646,22 +646,6 @@
             <artifactId>libphonenumber</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- PROVIDED Exporter dependencies -->
-        <dependency>
-            <groupId>com.github.librepdf</groupId>
-            <artifactId>openpdf</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>junit</groupId>
