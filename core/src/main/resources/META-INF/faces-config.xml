@@ -159,10 +159,6 @@
         <component-class>org.primefaces.extensions.component.slideout.SlideOut</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.Social</component-type>
-        <component-class>org.primefaces.extensions.component.social.Social</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.Case</component-type>
         <component-class>org.primefaces.extensions.component.switchcase.Case</component-class>
     </component>
@@ -391,11 +387,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.SlideOutRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.slideout.SlideOutRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.SocialRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.social.SocialRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
