@@ -82,7 +82,6 @@
                                 <include>imageareaselect/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
-                                <include>letteravatar/**</include>
                                 <include>qrcode/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
@@ -162,18 +161,6 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/inputphone/inputphone.css</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>letteravatar/letteravatar.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/letteravatar/letteravatar.css</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>

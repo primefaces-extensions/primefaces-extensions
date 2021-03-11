@@ -87,10 +87,6 @@
         <component-class>org.primefaces.extensions.component.legend.Legend</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.LetterAvatar</component-type>
-        <component-class>org.primefaces.extensions.component.letteravatar.LetterAvatar</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.RemoteCommand</component-type>
         <component-class>org.primefaces.extensions.component.remotecommand.RemoteCommand</component-class>
     </component>
@@ -294,11 +290,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LegendRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.legend.LegendRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.LetterAvatarRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.letteravatar.LetterAvatarRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
