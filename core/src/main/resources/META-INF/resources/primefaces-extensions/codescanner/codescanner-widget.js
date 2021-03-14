@@ -61,7 +61,7 @@ PrimeFaces.widget.ExtCodeScanner = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
         }
-        $this.codeReader.decodeFromVideoDevice($this.cfg.deviceId, $this.video, handleResult);
+        this.codeReader.decodeFromVideoDevice(this.cfg.deviceId, this.video, handleResult);
     },
 
     stop: function() {
