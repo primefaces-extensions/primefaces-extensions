@@ -8,12 +8,11 @@
             <h:outputText value="CodeScanner"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            <p>
-            Multi-format 1D/2D barcode image scanner. Allows you to scan bar and QR codes using a client side video input device.
-            </p> 
-            <p>
-            Based on <h:outputLink id="lnkScanner" value="https://github.com/zxing-js/library">ZXing JS</h:outputLink>.
-           </p>
+            <p><h:graphicImage library="images" name="zxing.png" alt="ZXing for JS"/></p>
+            <p>Multi-format 1D/2D barcode image scanner based on <h:outputLink id="lnkScanner" value="https://github.com/zxing-js/library">ZXing for JS</h:outputLink>.
+                Allows you to scan bar and QR codes using a client side video input device.</p>
+            <p><strong>Important:</strong> parts of the JavaScript of this component require <strong>https</strong>!
+                If this component is not working for you in this showcase on the primefaces.org server, try running it on localhost.</p>
         </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">

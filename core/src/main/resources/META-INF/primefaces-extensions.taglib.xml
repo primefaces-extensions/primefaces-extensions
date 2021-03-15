@@ -899,7 +899,7 @@
                 All methods of the extender are evaluated within the iframe page, so the editor widget instance is not
                 available. The <code>monacoContext</code> passed as the first argument to the extender methods is an object
                 with one essential method: <code>getMonaco()</code>. Use this method to get the current monaco editor instance
-                and interact with the editor. 
+                and interact with the editor.
                 ]]>
             </description>
             <name>extender</name>
@@ -8777,6 +8777,14 @@ See showcase for an example. Default null.]]>
                 <![CDATA[Id of the video input device to use. Default is null which selects the first video input device.]]>
             </description>
             <name>deviceId</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client id of the input this scanner will set the value to. Default is null.]]>
+            </description>
+            <name>for</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
