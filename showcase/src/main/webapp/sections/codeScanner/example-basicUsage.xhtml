@@ -9,8 +9,10 @@
         <p:autoUpdate />
     </p:growl>
 
-    <pe:codeScanner width="600"
-                    height="400">
+    <p><p:inputText id="input" style="width:530px"/></p>
+    <pe:codeScanner width="530"
+                    height="400"
+                    for="input">
         <p:ajax event="codeScanned" listener="#{codeScannerController.onCodeScanned}"/>
     </pe:codeScanner>
 <!-- EXAMPLE-SOURCE-END -->
