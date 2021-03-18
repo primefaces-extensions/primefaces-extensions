@@ -8,28 +8,25 @@
             <h:outputText value="LightSwitch"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            <p>
-            Automatically sets a light or dark theme based on the OS settings. Put it in your template like:
-            </p>
+            <p>Automatically sets a light or dark theme based on the OS settings. Put it in your template like:</p>
             <pre>
 &lt;pe:lightSwitch selected="\#{userBean.theme}"/&gt;
             </pre>
-            <p>
-            <code>userBean</code> should be a session scoped bean with a <code>String</code> type theme property
-            (with both getter and setter). Then set the theme in your <code>web.xml</code> like:
-            </p>
+            <p><code>userBean</code> should be a session scoped bean with a <code>String</code> type theme property
+            (with both getter and setter). Then set the theme in your <code>web.xml</code> like:</p>
             <pre>
 &lt;context-param&gt;
     &lt;param-name&gt;primefaces.THEME&lt;/param-name&gt;
     &lt;param-value&gt;\#{userBean.theme}&lt;/param-value&gt;
 &lt;/context-param&gt;
             </pre>
-            <p>
-            This showcase <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/showcase/src/main/webapp/templates/masterLayout.xhtml">uses the LightSwitch component</a>.
-            </p>
-            <p>
-            See also the <a href="https://primefaces.github.io/primefaces/10_0_0/#/core/themes">PrimeFaces themes documentation</a>.
-            </p>
+            <p>This showcase <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/showcase/src/main/webapp/templates/masterLayout.xhtml">uses the LightSwitch component</a>.</p>
+            <p>See also the <a href="https://primefaces.github.io/primefaces/10_0_0/#/core/themes">PrimeFaces themes documentation</a>.</p>
+
+            <h3><a href="https://showcase.omnifaces.org/resourcehandlers/CombinedResourceHandler">OmniFaces <code>CombinedResourceHandler</code></a></h3>
+            <p>With combined resources, we cannot find the theme link in the DOM tree. Therefor we need to add a node for the new theme.<br/>
+                <strong>Important:</strong> this node will be added as the last element in the body. If you added a custom style sheet with overrides,
+                make sure to use more specific rules. Equal rules will be overruled by the switched theme.</p>
         </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">
