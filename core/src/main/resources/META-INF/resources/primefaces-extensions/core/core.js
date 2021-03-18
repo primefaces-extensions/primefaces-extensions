@@ -4,16 +4,17 @@
 PrimeFacesExt = {
 
     /**
-     * Change the theme and if using OmniFaces CombinedResourceHandler we need to create the URL and insert it
-     * since it will not exist.
-     * @param theme the theme to switch to
+     * Change the theme and if using OmniFaces CombinedResourceHandler we need to create the DOM node
+     * and append it to the body since it will not exist. Appending to the body will make sure that the
+     * theme that's switched to will be loaded last and thereby override existing rules.
+     * @param {string} theme the theme to switch to.
      */
     changeTheme: function (theme) {
         var themeLink = PrimeFaces.getThemeLink();
         if (!themeLink || themeLink.length === 0) {
             var ext = PrimeFacesExt.getResourceUrlExtension();
             var href = PrimeFaces.settings.contextPath + '/javax.faces.resource/theme.css.' + ext + '?ln=primefaces-' + theme + '&' + PrimeFacesExt.VERSION;
-            $('head').append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+            $('body').append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
         } else {
             PrimeFaces.changeTheme(theme);
         }
@@ -38,8 +39,7 @@ PrimeFacesExt = {
     /**
      * For a URI parses out the name of the script like primefaces-extensions.js
      *
-     * @param the
-     *        URI of the script
+     * @param {string} the URI of the script.
      * @returns {string} The script name.
      */
     getResourceScriptName: function (scriptURI) {
