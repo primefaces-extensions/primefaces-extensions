@@ -372,7 +372,7 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>1.11.2</version>
+                    <version>1.11.3</version>
                     <configuration>
                         <nodeVersion>v15.8.0</nodeVersion>
                         <npmVersion>7.5.1</npmVersion>
