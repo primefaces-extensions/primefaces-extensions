@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="CombinedResourceHandler"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            To use the <a href="https://showcase.omnifaces.org/resourcehandlers/CombinedResourceHandler" target="_blank" rel="noopener noreferrer">OmniFaces
+            CombinedResourceHandler</a>
+            to optimize your website to only have 1 CSS and 1 JS file sent to the browser requires overriding some core PF code. However PrimeFaces hard codes
+            some resources in the HeadRenderer which leave it outside the scope of being combined like the theme.css, beanvalidation.js etc etc.
+            <p>BalusC has an excellent tutorial on how to make this work found <a
+                    href="https://github.com/omnifaces/omnifaces/wiki/Combine-hardcoded-PrimeFaces-resources-using-CombinedResourceHandler" target="_blank"
+                    rel="noopener noreferrer">here.</a></p>
+            <p>PrimeFaces Extensions now includes these classes so you don't have to write your own or keep it up to date with every PrimeFaces release.</p>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="centerExample">
+            <h2>faces-config.xml</h2>
+            <pre>
+&lt;application&gt;
+    &lt;system-event-listener&gt;
+        &lt;system-event-listener-class>org.primefaces.extensions.application.PrimeFacesScriptProcessor&lt;/system-event-listener-class&gt;
+        &lt;system-event-class>javax.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
+        &lt;source-class>javax.faces.component.UIViewRoot&lt;/source-class&gt;
+    &lt;/system-event-listener&gt;
+&lt;/application&gt;
+
+&lt;lifecycle&gt;
+    &lt;phase-listener>org.primefaces.extensions.application.PrimeFacesResourceProcessor&lt;/phase-listener&gt;
+&lt;/lifecycle&gt;
+            </pre>
+
+            <h2>Disable PrimeFaces HeadRenderer (Mojarra)</h2>
+            <pre>
+&lt;render-kit&gt;
+    &lt;renderer&gt;
+        &lt;component-family>javax.faces.Output&lt;/component-family&gt;
+        &lt;renderer-type>javax.faces.Head&lt;/renderer-type&gt;
+        &lt;renderer-class>com.sun.faces.renderkit.html_basic.HeadRenderer&lt;/renderer-class&gt;
+    &lt;/renderer&gt;
+&lt;/render-kit&gt;
+            </pre>
+
+            <h2>Disable PrimeFaces HeadRenderer (MyFaces)</h2>
+            <pre>
+&lt;render-kit&gt;
+    &lt;renderer&gt;
+        &lt;component-family>javax.faces.Output&lt;/component-family&gt;
+        &lt;renderer-type>javax.faces.Head&lt;/renderer-type&gt;
+        &lt;renderer-class>org.apache.myfaces.renderkit.html.HtmlHeadRenderer&lt;/renderer-class&gt;
+    &lt;/renderer&gt;
+&lt;/render-kit&gt;
+            </pre>
+        </h:panelGroup>
+
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/utils/useCasesChoice.xhtml"/>
+    </ui:define>
+</ui:composition>
+</html>

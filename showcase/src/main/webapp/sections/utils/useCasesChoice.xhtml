@@ -10,11 +10,15 @@
         <p:menuitem value="escapeSelector"
                     styleClass="#{navigationContext.getMenuitemStyleClass('escapeSelector')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
-                    url="#{request.contextPath}/sections/utils/escapeSelector.jsf"/>   
+                    url="#{request.contextPath}/sections/utils/escapeSelector.jsf"/>
         <p:menuitem value="Switch"
                     styleClass="#{navigationContext.getMenuitemStyleClass('switch')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/utils/switch.jsf"/>
+        <p:menuitem value="CombinedResourceHandler"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('combinedresourcehandler')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/utils/combinedResourceHandler.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

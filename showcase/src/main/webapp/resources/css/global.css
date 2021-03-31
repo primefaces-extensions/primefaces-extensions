@@ -16,6 +16,10 @@ body .ui-icon {
     font-size: 1em;
 }
 
+body h2 {
+    font-size: 2em;
+}
+
 body .ui-inputfield,
 input,
 select,
