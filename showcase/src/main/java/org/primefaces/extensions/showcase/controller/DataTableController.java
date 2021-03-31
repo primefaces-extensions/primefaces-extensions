@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +116,8 @@ public class DataTableController implements Serializable {
             Thread.sleep(1500);
         }
         catch (final Exception e) {
-            // ignore
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
     }
 
