@@ -27,7 +27,7 @@
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
         <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch;monacoEditor
         </primefaces-extensions.new-components>
-        <primefaces-extensions.updated-components>sheet;inputphone</primefaces-extensions.updated-components>
+        <primefaces-extensions.updated-components>sheet;inputphone;utils</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components></primefaces-extensions.deprecated-components>
 
         <owb.version>2.0.22</owb.version>
