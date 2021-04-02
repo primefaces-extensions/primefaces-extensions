@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.blockui;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +41,8 @@ public class AccessRightsController implements Serializable {
 
     private static final long serialVersionUID = 20111229L;
 
-    private List<SelectItem> accessRights = new ArrayList<SelectItem>();
-    private List<SelectItem> selectedAccessRights = new ArrayList<SelectItem>();
+    private List<SelectItem> accessRights = new ArrayList<>();
+    private List<SelectItem> selectedAccessRights = new ArrayList<>();
 
     public AccessRightsController() {
         accessRights.add(new SelectItem("View", "View"));
@@ -67,7 +67,8 @@ public class AccessRightsController implements Serializable {
             Thread.sleep(1200);
         }
         catch (Exception e) {
-            // ignore
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
 
         return selectedAccessRights;

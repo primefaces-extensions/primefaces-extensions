@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.blockui;
 
-import java.io.Serializable;
+import java.io.*;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -96,7 +96,8 @@ public class FileSystemController implements Serializable {
             Thread.sleep(1200);
         }
         catch (final Exception e) {
-            // ignore
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
     }
 }

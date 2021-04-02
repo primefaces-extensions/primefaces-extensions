@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.showcase.controller.waypoint;
 
-import java.io.Serializable;
+import java.io.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
@@ -57,7 +57,8 @@ public class InfiniteScrollController implements Serializable {
             Thread.sleep(1500);
         }
         catch (final Exception e) {
-            // ignore
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
 
         if (CONTENT_PATH_DUMMY.equals(src) || CONTENT_PATH_SECOND.equals(src)) {
