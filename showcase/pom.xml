@@ -25,9 +25,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>renderers;timeago;fab;creditcard;fuzzysearch;counter;codeScanner;lightSwitch;monacoEditor
-        </primefaces-extensions.new-components>
-        <primefaces-extensions.updated-components>sheet;inputphone;utils</primefaces-extensions.updated-components>
+        <primefaces-extensions.new-components>counter;codeScanner;lightSwitch;monacoEditor;utils</primefaces-extensions.new-components>
+        <primefaces-extensions.updated-components>sheet</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components></primefaces-extensions.deprecated-components>
 
         <owb.version>2.0.22</owb.version>

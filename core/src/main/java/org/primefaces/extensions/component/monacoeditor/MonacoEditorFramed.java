@@ -31,10 +31,11 @@ import javax.faces.event.BehaviorEvent;
  * Component for the Monaco code editor JavaScript library .This is the inline monaco editor that creates a new instance in a separate iframe to allow for
  * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
  * additional overhead.
- * 
+ *
  * @since 10.0.0
  * @see MonacoEditorInline
  */
+@SuppressWarnings("java:S110")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-framed.js")

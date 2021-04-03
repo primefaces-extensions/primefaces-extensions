@@ -59,13 +59,17 @@ import org.primefaces.extensions.showcase.util.MonacoEditorSettings;
 public class MonacoEditorController implements Serializable {
     private static final long serialVersionUID = 20210216L;
 
+    private static final String CUSTOM_CODE_EXTENDER = "custom_code.extender.";
+    private static final String INLINE = "inline";
+    private static final String MY_CUSTOM_THEME = "MyCustomTheme";
+
     private Map<String, EditorStandaloneTheme> customThemes;
 
     private EditorOptions editorOptions;
     private EditorOptions editorOptionsFramed;
     private EditorOptions editorOptionsExtender;
 
-    private ResourceBundle examples;
+    private transient ResourceBundle examples;
 
     private List<String> languages;
 
@@ -90,7 +94,7 @@ public class MonacoEditorController implements Serializable {
     private String valueExtender;
 
     @PostConstruct
-    private void init() {
+    protected void init() {
         this.examples = ResourceBundle.getBundle("monaco-examples");
 
         this.editorOptions = new EditorOptions();
@@ -105,7 +109,7 @@ public class MonacoEditorController implements Serializable {
 
         this.editorOptionsExtender = MonacoEditorSettings.createEditorOptionsExtender();
 
-        this.type = "inline";
+        this.type = INLINE;
 
         this.languages = Arrays.stream(ELanguage.values()).map(ELanguage::toString).sorted().collect(toList());
         this.themes = Arrays.stream(ETheme.values()).map(ETheme::toString).sorted().collect(toList());
@@ -336,7 +340,7 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
-     * @param locale The current UI language used in the framed Monaco code editor.
+     * @param localeFramed The current UI language used in the framed Monaco code editor.
      */
     public void setLocaleFramed(Locale localeFramed) {
         this.localeFramed = localeFramed;
@@ -350,14 +354,14 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
-     * @param extender Code for the Monaco extender that can be edited on the extender showcase page.
+     * @param valueExtender Code for the Monaco extender that can be edited on the extender showcase page.
      */
     public void setValueExtender(String valueExtender) {
         this.valueExtender = valueExtender;
     }
 
     /**
-     * @param value The code currently being edited by the framed editor.
+     * @param valueFramed The code currently being edited by the framed editor.
      */
     public void setValueFramed(String valueFramed) {
         this.valueFramed = valueFramed;
@@ -365,7 +369,7 @@ public class MonacoEditorController implements Serializable {
 
     /** Callback for when the code language was changed. Loads the code sample for that language. */
     public void onLanguageChange() {
-        if ("inline".equals(type)) {
+        if (INLINE.equals(type)) {
             loadDefaultCode();
         }
         else {
@@ -483,16 +487,16 @@ public class MonacoEditorController implements Serializable {
 
     /**
      * Loads the given example for the extender showcase.
-     * 
+     *
      * @param key Key of the extender example.
      */
     public void loadExtenderExample(String key) {
-        loadCode("custom_code.extender." + key + ".sample");
-        loadCodeExtender("custom_code.extender." + key + ".script");
-        loadExtenderName("custom_code.extender." + key + ".name");
-        loadExtenderInfo("custom_code.extender." + key + ".info");
+        loadCode(CUSTOM_CODE_EXTENDER + key + ".sample");
+        loadCodeExtender(CUSTOM_CODE_EXTENDER + key + ".script");
+        loadExtenderName(CUSTOM_CODE_EXTENDER + key + ".name");
+        loadExtenderInfo(CUSTOM_CODE_EXTENDER + key + ".info");
         try {
-            editorOptions.setLanguage(examples.getString("custom_code.extender." + key + ".language"));
+            editorOptions.setLanguage(examples.getString(CUSTOM_CODE_EXTENDER + key + ".language"));
         }
         catch (MissingResourceException e) {
             editorOptions.setLanguage(ELanguage.TYPESCRIPT);
@@ -503,7 +507,7 @@ public class MonacoEditorController implements Serializable {
      * Demo submit to show that the data can be transferred to the server. Shows a message with the current code.
      */
     public void submitContent() {
-        final String content = "inline".equals(type) ? value : valueFramed;
+        final String content = INLINE.equals(type) ? value : valueFramed;
         final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "MonacoEditor content: " + abbreviate(content, "...", 300));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
@@ -523,13 +527,13 @@ public class MonacoEditorController implements Serializable {
      * Set the initial values for the {@code customTheme} showcase.
      */
     public void initCustomTheme() {
-        customThemes = singletonMap("MyCustomTheme", MonacoEditorSettings.createDemoCustomTheme());
+        customThemes = singletonMap(MY_CUSTOM_THEME, MonacoEditorSettings.createDemoCustomTheme());
         editorOptions.setLanguage(ELanguage.HTML);
-        editorOptions.setTheme("MyCustomTheme");
+        editorOptions.setTheme(MY_CUSTOM_THEME);
         loadCode("custom_code.htmlCustomTheme");
 
         editorOptionsFramed.setLanguage(ELanguage.HTML);
-        editorOptionsFramed.setTheme("MyCustomTheme");
+        editorOptionsFramed.setTheme(MY_CUSTOM_THEME);
         loadCodeFramed("custom_code.htmlCustomTheme");
     }
 

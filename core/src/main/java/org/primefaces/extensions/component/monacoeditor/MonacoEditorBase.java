@@ -39,15 +39,19 @@ import org.primefaces.util.MapBuilder;
 
 /**
  * Base component for both the framed and inline monaco code editor widget.
- * 
+ *
  * @since 10.0.0
  */
+@SuppressWarnings("java:S110")
 public abstract class MonacoEditorBase extends HtmlInputTextarea implements ClientBehaviorHolder, PrimeClientBehaviorHolder, Widget {
+
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
+    static final String DEFAULT_EVENT = "change";
+
     static final Map<String, Class<? extends BehaviorEvent>> BASE_BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder() //
+                .put(DEFAULT_EVENT, null) //
                 .put("blur", null) //
-                .put("change", null) //
                 .put("focus", null) //
                 .put("initialized", null) //
                 .put("keydown", null) //
@@ -72,11 +76,9 @@ public abstract class MonacoEditorBase extends HtmlInputTextarea implements Clie
     static final String DEFAULT_TABINDEX = null;
     static final String DEFAULT_WIDTH = "200px";
 
-    private static final String DEFAULT_EVENT = "change";
-
     private Locale appropriateLocale;
 
-    public MonacoEditorBase(String rendererType) {
+    protected MonacoEditorBase(String rendererType) {
         setRendererType(rendererType);
     }
 
@@ -91,9 +93,6 @@ public abstract class MonacoEditorBase extends HtmlInputTextarea implements Clie
     public final String getBasename() {
         return (String) getStateHelper().eval(BasePropertyKeys.basename, DEFAULT_BASENAME);
     }
-
-    @Override
-    public abstract Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping();
 
     @SuppressWarnings("unchecked")
     public final Map<String, EditorStandaloneTheme> getCustomThemes() {
@@ -113,9 +112,6 @@ public abstract class MonacoEditorBase extends HtmlInputTextarea implements Clie
         final EditorOptions editorOptions = (EditorOptions) getStateHelper().eval(BasePropertyKeys.editorOptions, null);
         return editorOptions != null ? editorOptions : new EditorOptions();
     }
-
-    @Override
-    public abstract Collection<String> getEventNames();
 
     public final String getExtension() {
         return (String) getStateHelper().eval(BasePropertyKeys.extension, DEFAULT_EXTENSION);

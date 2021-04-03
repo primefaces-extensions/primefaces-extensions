@@ -1,18 +1,18 @@
 :root {
-    --arya0: #f321a6;
-    --arya1: #e21d9a;
-    --arya2: #d21a8f;
-    --arya3: #ff86d3;
+    --arya0: hsl(29, 36%, 53%);
+    --arya1: hsl(29, 36%, 57%);
+    --arya2: hsl(29, 36%, 61%);
+    --arya3: hsl(29, 36%, 33%);
 
-    --saga0: #f321a6;
-    --saga1: #e21d9a;
-    --saga2: #d21a8f;
-    --saga3: #ff86d3;
+    --saga0: hsl(29, 36%, 53%);
+    --saga1: hsl(29, 36%, 57%);
+    --saga2: hsl(29, 36%, 61%);
+    --saga3: hsl(29, 36%, 77%);
 
-    --vela0: #f321a6;
-    --vela1: #e21d9a;
-    --vela2: #d21a8f;
-    --vela3: #ff86d3;
+    --vela0: hsl(29, 36%, 53%);
+    --vela1: hsl(29, 36%, 57%);
+    --vela2: hsl(29, 36%, 61%);
+    --vela3: hsl(29, 36%, 33%);
 }
 
 * {

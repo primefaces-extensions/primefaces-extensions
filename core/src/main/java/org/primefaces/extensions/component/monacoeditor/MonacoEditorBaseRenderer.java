@@ -40,10 +40,13 @@ import org.primefaces.util.WidgetBuilder;
 
 /**
  * Base renderer for both the {@link MonacoEditorFramed framed} and {@link MonacoEditorInline inline} monaco editor.
- * 
+ *
  * @since 10.0.0
  */
 abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends InputRenderer {
+
+    private static final String INPUT_SUFFIX = "_input";
+
     private static final String CALLBACK_SIGNATURE = "function()";
 
     private static final List<String> PASSTHROUGH_ATTRS = Arrays.asList(//
@@ -87,7 +90,7 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         }
 
         // Decode value
-        final String clientId = monacoEditor.getClientId() + "_input";
+        final String clientId = monacoEditor.getClientId() + INPUT_SUFFIX;
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         if (params.containsKey(clientId)) {
             monacoEditor.setSubmittedValue(params.get(clientId));
@@ -112,8 +115,8 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
 
         writer.startElement("textarea", monacoEditor);
-        writer.writeAttribute("id", clientId + "_input", null);
-        writer.writeAttribute("name", clientId + "_input", null);
+        writer.writeAttribute("id", clientId + INPUT_SUFFIX, null);
+        writer.writeAttribute("name", clientId + INPUT_SUFFIX, null);
         writer.writeAttribute("autocomplete", "off", null);
         if (monacoEditor.isReadonly()) {
             writer.writeAttribute("readonly", "readonly", null);
