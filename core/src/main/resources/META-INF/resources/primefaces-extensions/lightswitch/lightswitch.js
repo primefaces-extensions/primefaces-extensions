@@ -24,11 +24,18 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
+     * Check whether the OS UI is set to dark.
+     * @return {boolean} true if the OS UI is set to dark.
+     */
+    isDarkOS: function () {
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    },
+
+    /**
      * Automatically set the theme based on the OS setting.
      */
     automatic: function () {
-        this.changeTheme((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            ? this.cfg.dark : this.cfg.light);
+        this.changeTheme(this.isDarkOS() ? this.cfg.dark : this.cfg.light);
     },
 
     /**
@@ -76,5 +83,5 @@ PrimeFaces.widget.ExtLightSwitch = PrimeFaces.widget.BaseWidget.extend({
             }
         }
     }
-    
+
 });
