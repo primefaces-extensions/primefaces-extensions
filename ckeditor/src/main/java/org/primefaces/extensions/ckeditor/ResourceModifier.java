@@ -21,8 +21,7 @@
  */
 package org.primefaces.extensions.ckeditor;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +31,12 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Steps to update:
- *
+ * 
  * <pre>
  * - Delete all files in the src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/ directory
  * - extract new ckeditor files
  * - remove samples dir
- * - Before executing ResourceModifier, modify the short hash (e.g t=K5I7) to match a new version of CKEditor
+ * - Before executing ResourceModifier, modify the short hash (e.g t=L0QC) to match a new version of CKEditor
  * - Execute ResourceModifier
  * - Try to run CKEditor and observe if any error occurs on both browser console and server console
  *    - The most common error is "Resources not found". If that's the case, please check if any new plugins's resources that
@@ -47,9 +46,9 @@ import org.apache.commons.io.FileUtils;
  */
 public class ResourceModifier {
 
-    private static final String PROJECT_DIRECTORY = System.getProperty("user.dir");
+    private static final String PROJECT_DIRECTORY = "C:\\dev\\primefaces\\primefaces-extensions\\ckeditor";
 
-    private static final String SHORT_HASH = "K5I7";
+    private static final String SHORT_HASH = "L0QC";
     private static final String URL_PFE = "url\\(\"#{resource['primefaces-extensions:";
 
     private static final int INDEX_NOT_FOUND = -1;
@@ -60,7 +59,8 @@ public class ResourceModifier {
 
         log("######## Modify skin styles...." + resourcesDirectory);
 
-        final File skinsPath = new File(PROJECT_DIRECTORY + "/src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/skins/");
+        final File skinsPath = new File(
+                    PROJECT_DIRECTORY + "/src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/skins/");
 
         for (final String skin : Objects.requireNonNull(skinsPath.list())) {
             log("#### Modify skin '" + skin + "'");
@@ -121,7 +121,8 @@ public class ResourceModifier {
 
             // modify smileys plugin to load the smileys via CKEditor.getUrl
             final File file = new File(PROJECT_DIRECTORY
-                        + "/src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/plugins/smiley/dialogs/smiley.js");
+                        +
+                        "/src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/plugins/smiley/dialogs/smiley.js");
             final String fileContent = FileUtils.readFileToString(file, Charset.defaultCharset()).replaceAll(
                         "CKEDITOR.tools.htmlEncode\\(e\\.smiley_path\\+h\\[a\\]\\)",
                         "CKEDITOR.tools.htmlEncode\\(CKEDITOR.getUrl\\(e\\.smiley_path\\+h\\[a\\]\\)\\)");
@@ -222,6 +223,6 @@ public class ResourceModifier {
     }
 
     public static void log(String message) {
-        // System.err.println(message);
+        System.err.println(message);
     }
 }
