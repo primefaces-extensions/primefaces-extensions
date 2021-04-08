@@ -21,7 +21,8 @@
  */
 package org.primefaces.extensions.ckeditor;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import org.apache.commons.io.FileUtils;
  * - Delete all files in the src/main/resources/META-INF/resources/primefaces-extensions/ckeditor/ directory
  * - extract new ckeditor files
  * - remove samples dir
+ * - Look for CRLF breaks the ckeditor.js such as tableselection.css that might break our parser
  * - Before executing ResourceModifier, modify the short hash (e.g t=L0QC) to match a new version of CKEditor
  * - Execute ResourceModifier
  * - Try to run CKEditor and observe if any error occurs on both browser console and server console
