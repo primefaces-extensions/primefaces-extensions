@@ -202,6 +202,7 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      */
     _onRefresh() {
       this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
+      PrimeFaces.removeDeferredRenders(this.id);
       this._onDestroy();
     }
 
@@ -210,6 +211,10 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      * resize observer, if enabled.
      */
     _onDestroy() {
+      if (this._renderArgs) {
+        this._renderArgs.reject("render_canceled_by_update");
+        this._renderArgs = undefined;
+      }
       this._rejectOnDone();
       const extender = this._extenderInstance;
       if (extender && typeof extender.beforeDestroy === "function") {
@@ -301,7 +306,7 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
         this.tryWithMonaco(monaco => monaco.setScrollTop(this._scrollTop), undefined);
       }
 
-      // Auto resize
+      // Auto resize when browser supports ResizeObserver
       if (this.cfg.autoResize) {
         if (typeof ResizeObserver === "function") {
           this._resizeObserver = new ResizeObserver(this._onResize.bind(this));

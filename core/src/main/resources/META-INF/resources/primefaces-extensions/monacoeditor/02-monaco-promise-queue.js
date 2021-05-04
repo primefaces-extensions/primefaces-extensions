@@ -15,9 +15,7 @@ window.monacoModule.PromiseQueue = (function () {
   class PromiseQueueImpl {
     constructor() {
       /** @type {QueueItem[]} */
-      this.queue = [];
-      /** @type {{resolve: PromiseCallback, reject: PromiseCallback}[]} */
-      this.onDone = [];
+      this._queue = [];
     }
 
     /**
@@ -47,8 +45,8 @@ window.monacoModule.PromiseQueue = (function () {
      * @param {PromiseCallback} reject
      */
     _addQueueItem(factory, resolve, reject) {
-      const wasEmpty = this.queue.length === 0;
-      this.queue.push({
+      const wasEmpty = this._queue.length === 0;
+      this._queue.push({
         factory: factory,
         resolve: resolve,
         reject: reject,
@@ -62,7 +60,7 @@ window.monacoModule.PromiseQueue = (function () {
       this._processQueue(this._peek());
     }
 
-    onPromiseDone() {
+    _onPromiseDone() {
       this._poll();
       this._processQueue(this._peek());
     }
@@ -76,11 +74,7 @@ window.monacoModule.PromiseQueue = (function () {
         promise
           .then(queueItem.resolve)
           .catch(queueItem.reject)
-          .then(() => this.onPromiseDone());
-      }
-      else {
-        this.onDone.forEach(({ resolve }) => resolve(undefined));
-        this.onDone = [];
+          .then(() => this._onPromiseDone());
       }
     }
 
@@ -88,28 +82,14 @@ window.monacoModule.PromiseQueue = (function () {
      * @return {QueueItem}
      */
     _poll() {
-      return this.queue.shift();
+      return this._queue.shift();
     }
 
     /**
      * @return {QueueItem}
      */
     _peek() {
-      return this.queue[0];
-    }
-
-    /**
-     * @return {Promise<void>}
-     */
-    _allDone() {
-      if (this.queue.length === 0) {
-        return Promise.resolve();
-      }
-      else {
-        return new Promise((resolve, reject) => {
-          this.onDone.push({ resolve, reject });
-        });
-      }
+      return this._queue[0];
     }
 
     /**
