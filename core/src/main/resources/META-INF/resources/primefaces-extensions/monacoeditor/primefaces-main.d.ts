@@ -10,6 +10,7 @@ declare namespace PrimeFaces {
   function info(message: string): void;
   function warn(message: string): void;
   function error(message: string): void;
+  function removeDeferredRenders(id: string): void;
   namespace resources {
     function getFacesResource(path: string, lib: string, version?: string): string;
     function getResourceUrlExtension(): string;

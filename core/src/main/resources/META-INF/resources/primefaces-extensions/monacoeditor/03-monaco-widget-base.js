@@ -172,7 +172,7 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
       const onDone = this._onDone;
       this._onDone = [];
       if (Array.isArray(onDone) && onDone.length > 0) {
-        const error = new Error("Monaco editor was reinitialized before whenReady could be resolved");
+        const error = new Error("Monaco editor was destroyed / refreshed before whenReady could be resolved");
         for (const item of onDone) {
           item.reject(error);
         }
@@ -198,7 +198,12 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
      * @param {unknown} error
      */
     _onInitError(error) {
-      console.error("[MonacoEditor] Failed to initialize monaco editor", error);
+      if (error === "render_canceled_by_update") {
+        error = new Error("Monaco editor was refreshed / destroyed before it could be rendered");
+      }
+      else {
+        console.error("[MonacoEditor] Failed to initialize monaco editor", error);
+      }
       for (const { reject } of this._onDone) {
         reject(error);
       }
