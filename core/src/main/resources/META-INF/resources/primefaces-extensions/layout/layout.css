@@ -3,8 +3,13 @@
     overflow: hidden;
 }
 
+body.ui-layout-container, body .ui-layout-container {
+    background-color: var(--surface-a, #fff);
+}
+
 body .ui-layout-container .ui-layout-unit {
     border: 1px solid var(--surface-d, #dee2e6);
+    background-color: var(--surface-a, #fff);
 }
 
 body .ui-layout-resizer {
@@ -101,11 +106,12 @@ body .ui-layout-resizer {
 body .ui-layout-unit {
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
-    border-radius: 0
+    border-radius: 0;
+    background-color: var(--surface-a, #fff);
 }
 
 body .ui-layout-unit .ui-layout-unit-header {
     padding: .571em 1em .571em 1em;
-    font-weight: 700
+    font-weight: 700;
 }
 
