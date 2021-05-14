@@ -383,4 +383,15 @@ public class RemoteCommand extends UICommand implements AjaxSource {
     public void setIgnoreComponentNotFound(final boolean ignoreComponentNotFound) {
         getStateHelper().put(PropertyKeys.ignoreComponentNotFound, ignoreComponentNotFound);
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        allParameters = null;
+        assignableParameters = null;
+        methodParameters = null;
+        convertedMethodParams = null;
+
+        return super.saveState(context);
+    }
 }

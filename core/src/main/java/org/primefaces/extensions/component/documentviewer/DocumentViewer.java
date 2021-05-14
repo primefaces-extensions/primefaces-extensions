@@ -176,8 +176,8 @@ public class DocumentViewer extends UIGraphic {
         return getStateHelper().eval(PropertyKeys.locale, null);
     }
 
-    public void setLocale(final Object _locale) {
-        getStateHelper().put(PropertyKeys.locale, _locale);
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
     }
 
     public void setZoom(final String zoom) {
@@ -186,5 +186,13 @@ public class DocumentViewer extends UIGraphic {
 
     public String getZoom() {
         return (String) getStateHelper().eval(PropertyKeys.zoom, null);
+    }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
     }
 }

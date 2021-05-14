@@ -485,4 +485,12 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
 
         return false;
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        items = null;
+
+        return super.saveState(context);
+    }
 }
