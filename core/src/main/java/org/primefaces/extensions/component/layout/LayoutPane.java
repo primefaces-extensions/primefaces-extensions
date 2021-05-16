@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.UIForm;
 import javax.faces.component.html.HtmlPanelGroup;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PreRenderComponentEvent;
@@ -569,5 +570,13 @@ public class LayoutPane extends UIComponentBase {
         }
 
         return (Layout) parent;
+    }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        options = null;
+
+        return super.saveState(context);
     }
 }

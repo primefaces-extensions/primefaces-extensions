@@ -213,4 +213,12 @@ public abstract class MonacoEditorBase extends HtmlInputTextarea implements Clie
     public final void setWidth(String width) {
         getStateHelper().put(BasePropertyKeys.width, width);
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
+    }
 }

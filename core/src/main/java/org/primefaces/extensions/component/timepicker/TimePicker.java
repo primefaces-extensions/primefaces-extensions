@@ -433,4 +433,13 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
         return getClientId(fc).equals(
                     fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+        customEvents.clear();
+
+        return super.saveState(context);
+    }
 }

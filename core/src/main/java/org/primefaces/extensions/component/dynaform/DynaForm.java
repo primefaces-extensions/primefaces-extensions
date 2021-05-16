@@ -334,4 +334,12 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 
         return false;
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        cells = null;
+
+        return super.saveState(context);
+    }
 }

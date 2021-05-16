@@ -454,4 +454,15 @@ public class MasterDetail extends UIComponentBase {
 
         return levelCount;
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        detailLevelToGo = null;
+        detailLevelToProcess = null;
+        levelCount = -1;
+        levelPositionToProcess = -1;
+
+        return super.saveState(context);
+    }
 }

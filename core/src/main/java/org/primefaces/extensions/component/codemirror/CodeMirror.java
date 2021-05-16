@@ -405,4 +405,12 @@ public class CodeMirror extends AbstractPrimeHtmlInputTextArea implements Client
     public List<String> getSuggestions() {
         return suggestions;
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        suggestions = null;
+
+        return super.saveState(context);
+    }
 }

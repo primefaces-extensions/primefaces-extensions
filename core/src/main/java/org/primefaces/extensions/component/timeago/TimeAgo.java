@@ -177,4 +177,11 @@ public class TimeAgo extends UIComponentBase implements Widget {
         return format(dateTime.atZone(ZoneId.systemDefault()), pattern, zone);
     }
 
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
+    }
 }

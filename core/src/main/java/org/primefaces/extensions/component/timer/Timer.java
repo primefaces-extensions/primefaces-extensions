@@ -411,4 +411,12 @@ public class Timer extends UIComponentBase implements Widget, AjaxSource {
     public void setIgnoreComponentNotFound(final boolean ignoreComponentNotFound) {
         getStateHelper().put(PropertyKeys.ignoreComponentNotFound, ignoreComponentNotFound);
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
+    }
 }

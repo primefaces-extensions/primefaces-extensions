@@ -642,4 +642,14 @@ public abstract class AbstractDynamicData extends UIComponentBase implements Nam
             }
         }
     }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        data = null;
+        clientId = null;
+        isNested = null;
+
+        return super.saveState(context);
+    }
 }
