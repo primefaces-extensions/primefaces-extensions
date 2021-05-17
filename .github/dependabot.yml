@@ -12,3 +12,7 @@ updates:
     directory: "/monacoeditor/src/main/js"
     schedule:
       interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/monacoeditor"
+    schedule:
+      interval: "daily"
