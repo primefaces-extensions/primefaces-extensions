@@ -22,6 +22,7 @@
 package org.primefaces.extensions.resourcehandler;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -34,7 +35,6 @@ import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.shaded.commons.io.IOUtils;
 import org.primefaces.util.Constants;
 
 /**
@@ -76,13 +76,23 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         final String accentColor = "var(--"
                     + library.replace(ThemeAccentColorResourceHandler.LIBRARY_PREFIX, Constants.EMPTY_STRING)
                     + "%d)";
-        String css = IOUtils.toString(wrapped.getInputStream(), charset);
+        String css = getContent();
         for (int i = 0; i < accentColors.size(); i++) {
             css = css.replace(accentColors.get(i), String.format(accentColor, i));
         }
         CACHE.put(library, css);
 
         return new ByteArrayInputStream(css.getBytes(charset));
+    }
+
+    protected String getContent() throws IOException {
+        final ByteArrayOutputStream result = new ByteArrayOutputStream();
+        final byte[] buffer = new byte[1024];
+        final InputStream inputStream = wrapped.getInputStream();
+        for (int length; (length = inputStream.read(buffer)) != -1;) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString(charset.name());
     }
 
     @Override
