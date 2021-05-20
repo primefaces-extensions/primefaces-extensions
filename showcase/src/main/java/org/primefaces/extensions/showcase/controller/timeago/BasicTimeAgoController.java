@@ -22,9 +22,9 @@
 package org.primefaces.extensions.showcase.controller.timeago;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -38,23 +38,15 @@ public class BasicTimeAgoController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Date now;
+    private final LocalDateTime created = LocalDateTime.now();
 
-    private final Date firstRelease;
+    private final LocalDateTime firstRelease = LocalDate.of(2012, Month.JANUARY, 23).atStartOfDay();
 
-    public BasicTimeAgoController() {
-        now = new Date();
-
-        final Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(2012, 0, 23);
-        firstRelease = calendar.getTime();
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public Date getNow() {
-        return now;
-    }
-
-    public Date getFirstRelease() {
+    public LocalDateTime getFirstRelease() {
         return firstRelease;
     }
 
