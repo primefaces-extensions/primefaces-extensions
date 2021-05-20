@@ -25,7 +25,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -53,12 +52,11 @@ public class ThemeAccentColorResource extends ResourceWrapper {
     }
 
     private final Resource wrapped;
-    private final Charset charset;
+    private final String charEncoding;
 
     public ThemeAccentColorResource(final Resource wrapped) {
         this.wrapped = wrapped;
-        this.charset = Charset.forName(
-                    FacesContext.getCurrentInstance().getExternalContext().getResponseCharacterEncoding());
+        this.charEncoding = FacesContext.getCurrentInstance().getExternalContext().getRequestCharacterEncoding();
     }
 
     @Override
@@ -70,7 +68,7 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         }
 
         if (CACHE.containsKey(library)) {
-            return new ByteArrayInputStream(CACHE.get(library).getBytes(charset));
+            return new ByteArrayInputStream(CACHE.get(library).getBytes(charEncoding));
         }
 
         final String accentColor = "var(--"
@@ -82,7 +80,7 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         }
         CACHE.put(library, css);
 
-        return new ByteArrayInputStream(css.getBytes(charset));
+        return new ByteArrayInputStream(css.getBytes(charEncoding));
     }
 
     protected String getContent() throws IOException {
@@ -92,7 +90,7 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         for (int length; (length = inputStream.read(buffer)) != -1;) {
             result.write(buffer, 0, length);
         }
-        return result.toString(charset.name());
+        return result.toString(charEncoding);
     }
 
     @Override
