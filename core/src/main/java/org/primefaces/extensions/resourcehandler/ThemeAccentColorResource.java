@@ -46,9 +46,10 @@ public class ThemeAccentColorResource extends ResourceWrapper {
     private static final Map<String, List<String>> ACCENT_COLORS = new HashMap<>();
 
     static {
-        ACCENT_COLORS.put("primefaces-arya", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb"));
-        ACCENT_COLORS.put("primefaces-saga", Arrays.asList("#2196F3", "#0d89ec", "#0b7ad1", "#a6d5fa"));
-        ACCENT_COLORS.put("primefaces-vela", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb"));
+        // colors ? 0: main, 1: hover, 2: active, 3: focus outline, 4: text
+        ACCENT_COLORS.put("primefaces-arya", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255, 255, 255, 0.87)"));
+        ACCENT_COLORS.put("primefaces-saga", Arrays.asList("#2196F3", "#0d89ec", "#0b7ad1", "#a6d5fa", "#495057"));
+        ACCENT_COLORS.put("primefaces-vela", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255, 255, 255, 0.87)"));
     }
 
     private final Resource wrapped;
