@@ -208,6 +208,10 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
                     clearInterval($this.spinnerInterval);
                 },
                 mousedown: function (e) {
+                    // GitHub #423 only respect left click
+                    if (e.which !== 1) {
+                        return;
+                    }
                     var el = $(this);
                     el.addClass('ui-state-active');
 
