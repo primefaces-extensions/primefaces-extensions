@@ -29,7 +29,7 @@
         <primefaces-extensions.updated-components>sheet</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components></primefaces-extensions.deprecated-components>
 
-        <owb.version>2.0.22</owb.version>
+        <owb.version>2.0.23</owb.version>
         <jetty.version>9.4.41.v20210516</jetty.version>
         <omnifaces.version>3.11</omnifaces.version>
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
