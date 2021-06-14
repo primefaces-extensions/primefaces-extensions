@@ -1157,7 +1157,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Sets the behavior of the Shift+Enter key. It also determines other behavior rules of the editor, like whether the <br> element is to be used as a paragraph separator when indenting text. Default is CKEDITOR.ENTER_P.]]>
+                <![CDATA[Sets the behavior of the Shift+Enter key. It also determines other behavior rules of the editor, like whether the <br> element is to be used as a paragraph separator when indenting text. Default is CKEDITOR.ENTER_BR.]]>
             </description>
             <name>shiftEnterMode</name>
             <required>false</required>

@@ -253,7 +253,7 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
     }
 
     public String getShiftEnterMode() {
-        return (String) getStateHelper().eval(PropertyKeys.shiftEnterMode, "CKEDITOR.ENTER_P");
+        return (String) getStateHelper().eval(PropertyKeys.shiftEnterMode, "CKEDITOR.ENTER_BR");
     }
 
     public void setShiftEnterMode(final String shiftEnterMode) {
