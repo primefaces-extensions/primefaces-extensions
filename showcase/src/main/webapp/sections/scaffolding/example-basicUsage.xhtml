@@ -1,0 +1,19 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:scaffolding ready="#{not empty scaffoldingController.data}" id="scaffolding"
+                loader="#{scaffoldingController.fetchData(2000)}">
+    <f:facet name="loading">
+        <p:skeleton width="3rem" height="3rem" shape="circle"/>
+    </f:facet>
+    <f:facet name="ready">
+        <p:avatar label="#{scaffoldingController.data}" size="large" shape="circle" />
+    </f:facet>
+</pe:scaffolding>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
