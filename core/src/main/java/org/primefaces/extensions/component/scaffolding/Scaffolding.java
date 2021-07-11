@@ -22,11 +22,11 @@
 package org.primefaces.extensions.component.scaffolding;
 
 import javax.el.MethodExpression;
+import javax.faces.application.ResourceDependency;
 import javax.faces.component.UICommand;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
-import javax.faces.event.FacesListener;
 
 /**
  * <code>Scaffolding</code> component.
@@ -34,6 +34,8 @@ import javax.faces.event.FacesListener;
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.3
  */
+@ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "core.js")
 public class Scaffolding extends UICommand {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Scaffolding";
@@ -113,12 +115,6 @@ public class Scaffolding extends UICommand {
 
     @Override
     public void broadcast(final FacesEvent event) {
-        for (final FacesListener listener : getFacesListeners(FacesListener.class)) {
-            if (event.isAppropriateListener(listener)) {
-                event.processListener(listener);
-            }
-        }
-
         if (event instanceof ActionEvent) {
             final FacesContext context = getFacesContext();
             final MethodExpression loader = getLoader();

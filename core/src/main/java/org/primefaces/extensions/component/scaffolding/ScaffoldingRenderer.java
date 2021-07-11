@@ -49,7 +49,7 @@ public class ScaffoldingRenderer extends CoreRenderer {
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         final String clientId = scaffolding.getClientId(context);
 
-        if (params.containsKey(clientId)) {
+        if (params.containsKey(clientId) && !scaffolding.isReady()) {
             final ActionEvent event = new ActionEvent(scaffolding);
             scaffolding.queueEvent(event);
         }
@@ -59,7 +59,9 @@ public class ScaffoldingRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final Scaffolding scaffolding = (Scaffolding) component;
         encodeMarkup(context, scaffolding);
-        if (scaffolding.getValueExpression("loader") != null && !context.getPartialViewContext().isAjaxRequest()) {
+        if (scaffolding.getValueExpression("loader") != null
+                    && !scaffolding.isReady()
+                    && !context.getPartialViewContext().isAjaxRequest()) {
             encodeScript(context, scaffolding);
         }
     }
