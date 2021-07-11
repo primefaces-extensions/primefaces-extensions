@@ -8933,6 +8933,22 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>javax.el.MethodExpression</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
+            </description>
+            <name>global</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When set to true, ajax requests are not queued. Default value: false.]]>
+            </description>
+            <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>

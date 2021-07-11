@@ -95,6 +95,8 @@ public class ScaffoldingRenderer extends CoreRenderer {
                     .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId(context))
                     .process(scaffolding, clientId)
                     .update(scaffolding, clientId)
+                    .async(scaffolding.isAsync())
+                    .global(scaffolding.isGlobal())
                     .build();
         writer.startElement("script", scaffolding);
         writer.writeAttribute("type", "text/javascript", null);

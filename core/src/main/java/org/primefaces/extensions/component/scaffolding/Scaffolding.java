@@ -48,7 +48,9 @@ public class Scaffolding extends UICommand {
         ready,
         loader,
         style,
-        styleClass
+        styleClass,
+        global,
+        async
     }
     // @formatter:on
 
@@ -91,6 +93,22 @@ public class Scaffolding extends UICommand {
 
     public void setStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public boolean isGlobal() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.global, true);
+    }
+
+    public void setGlobal(final boolean global) {
+        getStateHelper().put(PropertyKeys.global, global);
+    }
+
+    public boolean isAsync() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
+    }
+
+    public void setAsync(final boolean async) {
+        getStateHelper().put(PropertyKeys.async, async);
     }
 
     @Override
