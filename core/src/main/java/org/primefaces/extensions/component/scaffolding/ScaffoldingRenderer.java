@@ -104,7 +104,7 @@ public class ScaffoldingRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.writeAttribute("id", clientId, null);
 
-        writer.write("$(function(){");
+        writer.write("$(window).on('load',function(){");
         writer.write(request);
         writer.write("});");
 
