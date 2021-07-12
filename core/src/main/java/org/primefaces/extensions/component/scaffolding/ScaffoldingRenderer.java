@@ -47,9 +47,9 @@ public class ScaffoldingRenderer extends CoreRenderer {
         final Scaffolding scaffolding = (Scaffolding) component;
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String clientId = scaffolding.getClientId(context);
+        final String clientId = scaffolding.getClientId();
 
-        if (params.containsKey(clientId)) {
+        if (params.containsKey(clientId) && !scaffolding.isReady()) {
             final ActionEvent event = new ActionEvent(scaffolding);
             scaffolding.queueEvent(event);
         }
@@ -59,7 +59,9 @@ public class ScaffoldingRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final Scaffolding scaffolding = (Scaffolding) component;
         encodeMarkup(context, scaffolding);
-        if (scaffolding.getValueExpression("loader") != null && !context.getPartialViewContext().isAjaxRequest()) {
+        if (scaffolding.getValueExpression("loader") != null
+                    && !scaffolding.isReady()
+                    && !context.getPartialViewContext().isAjaxRequest()) {
             encodeScript(context, scaffolding);
         }
     }
@@ -87,12 +89,12 @@ public class ScaffoldingRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final Scaffolding scaffolding) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = scaffolding.getClientId(context);
+        final String clientId = scaffolding.getClientId();
         final String request = PrimeRequestContext.getCurrentInstance(context)
                     .getAjaxRequestBuilder()
                     .init()
                     .source(clientId)
-                    .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId(context))
+                    .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId())
                     .process(scaffolding, clientId)
                     .update(scaffolding, clientId)
                     .async(scaffolding.isAsync())
@@ -102,7 +104,7 @@ public class ScaffoldingRenderer extends CoreRenderer {
         writer.writeAttribute("type", "text/javascript", null);
         writer.writeAttribute("id", clientId, null);
 
-        writer.write("$(function(){");
+        writer.write("$(window).on('load',function(){");
         writer.write(request);
         writer.write("});");
 
