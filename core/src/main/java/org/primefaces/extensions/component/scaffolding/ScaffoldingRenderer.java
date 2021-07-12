@@ -47,7 +47,7 @@ public class ScaffoldingRenderer extends CoreRenderer {
         final Scaffolding scaffolding = (Scaffolding) component;
 
         final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-        final String clientId = scaffolding.getClientId(context);
+        final String clientId = scaffolding.getClientId();
 
         if (params.containsKey(clientId) && !scaffolding.isReady()) {
             final ActionEvent event = new ActionEvent(scaffolding);
@@ -89,12 +89,12 @@ public class ScaffoldingRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final Scaffolding scaffolding) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = scaffolding.getClientId(context);
+        final String clientId = scaffolding.getClientId();
         final String request = PrimeRequestContext.getCurrentInstance(context)
                     .getAjaxRequestBuilder()
                     .init()
                     .source(clientId)
-                    .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId(context))
+                    .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId())
                     .process(scaffolding, clientId)
                     .update(scaffolding, clientId)
                     .async(scaffolding.isAsync())
