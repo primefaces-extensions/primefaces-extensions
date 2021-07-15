@@ -12,7 +12,7 @@
   "author": "Andre Wachsmuth",
   "license": "MIT",
   "dependencies": {
-    "css-loader": "^5.2.7",
+    "css-loader": "^6.0.0",
     "insane": "^2.6.2",
     "monaco-editor": "^0.25.2",
     "style-loader": "^3.1.0",
