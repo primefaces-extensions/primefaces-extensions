@@ -22,7 +22,6 @@
 package org.primefaces.extensions.application;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.faces.application.ProjectStage;
 import javax.faces.component.UIOutput;
@@ -168,9 +167,7 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
     }
 
     private void addJS(FacesContext context, String script) {
-        String id = UUID.randomUUID().toString();
         final UIOutput js = new UIOutput();
-        js.setId("js-" + id + "1");
         js.setRendererType("javax.faces.resource.Script");
         final UIOutput content = new UIOutput();
         content.setValue(script);
