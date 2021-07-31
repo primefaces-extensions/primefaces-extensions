@@ -28,6 +28,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.Widget;
+
 /**
  * <code>Scaffolding</code> component.
  *
@@ -36,7 +38,8 @@ import javax.faces.event.FacesEvent;
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-public class Scaffolding extends UICommand {
+@ResourceDependency(library = "primefaces-extensions", name = "scaffolding/scaffolding.js")
+public class Scaffolding extends UICommand implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Scaffolding";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -47,12 +50,14 @@ public class Scaffolding extends UICommand {
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
+        widgetVar,
         ready,
         loader,
         style,
         styleClass,
         global,
-        async
+        async,
+        loadWhenVisible
     }
     // @formatter:on
 
@@ -63,6 +68,14 @@ public class Scaffolding extends UICommand {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    public String getWidgetVar() {
+        return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
+    }
+
+    public void setWidgetVar(final String widgetVar) {
+        getStateHelper().put(PropertyKeys.widgetVar, widgetVar);
     }
 
     public boolean isReady() {
@@ -111,6 +124,14 @@ public class Scaffolding extends UICommand {
 
     public void setAsync(final boolean async) {
         getStateHelper().put(PropertyKeys.async, async);
+    }
+
+    public boolean isLoadWhenVisible() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.loadWhenVisible, false);
+    }
+
+    public void setLoadWhenVisible(final boolean async) {
+        getStateHelper().put(PropertyKeys.loadWhenVisible, async);
     }
 
     @Override

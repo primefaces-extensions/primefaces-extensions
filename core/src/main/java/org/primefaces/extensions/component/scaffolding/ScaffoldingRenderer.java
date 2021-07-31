@@ -29,10 +29,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentTraversalUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Scaffolding} component.
@@ -88,27 +87,12 @@ public class ScaffoldingRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(final FacesContext context, final Scaffolding scaffolding) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = scaffolding.getClientId();
-        final String request = PrimeRequestContext.getCurrentInstance(context)
-                    .getAjaxRequestBuilder()
-                    .init()
-                    .source(clientId)
-                    .form(ComponentTraversalUtils.closestForm(context, scaffolding).getClientId())
-                    .process(scaffolding, clientId)
-                    .update(scaffolding, clientId)
-                    .async(scaffolding.isAsync())
-                    .global(scaffolding.isGlobal())
-                    .build();
-        writer.startElement("script", scaffolding);
-        writer.writeAttribute("type", "text/javascript", null);
-        writer.writeAttribute("id", clientId, null);
-
-        writer.write("$(window).on('load',function(){");
-        writer.write(request);
-        writer.write("});");
-
-        writer.endElement("script");
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtScaffolding", scaffolding)
+                    .attr("async", scaffolding.isAsync(), false)
+                    .attr("global", scaffolding.isGlobal(), true)
+                    .attr("loadWhenVisible", scaffolding.isLoadWhenVisible(), false)
+                    .finish();
     }
 
 }
