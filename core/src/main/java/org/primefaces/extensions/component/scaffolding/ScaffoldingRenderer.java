@@ -89,10 +89,15 @@ public class ScaffoldingRenderer extends CoreRenderer {
     protected void encodeScript(final FacesContext context, final Scaffolding scaffolding) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtScaffolding", scaffolding)
-                    .attr("async", scaffolding.isAsync(), false)
+                    .attr("async", scaffolding.isAsync(), true)
                     .attr("global", scaffolding.isGlobal(), true)
                     .attr("loadWhenVisible", scaffolding.isLoadWhenVisible(), false)
                     .finish();
+    }
+
+    @Override
+    public boolean getRendersChildren() {
+        return false;
     }
 
 }

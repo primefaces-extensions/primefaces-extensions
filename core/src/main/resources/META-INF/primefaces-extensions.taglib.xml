@@ -8951,7 +8951,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[When set to true, ajax requests are not queued. Default value: false.]]>
+                <![CDATA[When set to true, ajax requests are not queued. Default value: true.]]>
             </description>
             <name>async</name>
             <required>false</required>

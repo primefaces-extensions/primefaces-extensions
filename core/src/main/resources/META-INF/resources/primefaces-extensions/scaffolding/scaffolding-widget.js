@@ -16,7 +16,7 @@ PrimeFaces.widget.ExtScaffolding = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.async = cfg.async || false;
+        this.async = cfg.async || true;
         this.global = cfg.global || true;
         this.loadWhenVisible = cfg.loadWhenVisible || false;
         if (this.loadWhenVisible && !this.visible()) {

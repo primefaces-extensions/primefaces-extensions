@@ -23,7 +23,7 @@ package org.primefaces.extensions.component.scaffolding;
 
 import javax.el.MethodExpression;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UICommand;
+import javax.faces.component.UIComponentBase;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
@@ -40,7 +40,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "scaffolding/scaffolding.js")
-public class Scaffolding extends UICommand implements Widget {
+public class Scaffolding extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Scaffolding";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -120,7 +120,7 @@ public class Scaffolding extends UICommand implements Widget {
     }
 
     public boolean isAsync() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.async, false);
+        return (Boolean) getStateHelper().eval(PropertyKeys.async, true);
     }
 
     public void setAsync(final boolean async) {
