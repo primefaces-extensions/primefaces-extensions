@@ -15,16 +15,5 @@
         <p:avatar label="#{scaffoldingController.data}" size="large" shape="circle" />
     </f:facet>
 </pe:scaffolding>
-<div style="height:1300px;border-left:2px solid #666"/>
-<pe:scaffolding ready="#{not empty scaffoldingController.data2}" id="scaffolding2"
-                loader="#{scaffoldingController.fetchData2(2000)}"
-                loadWhenVisible="true">
-    <f:facet name="loading">
-        <p:skeleton width="3rem" height="3rem" shape="circle"/>
-    </f:facet>
-    <f:facet name="ready">
-        <p:avatar label="#{scaffoldingController.data2}" size="large" shape="circle" />
-    </f:facet>
-</pe:scaffolding>
 <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
