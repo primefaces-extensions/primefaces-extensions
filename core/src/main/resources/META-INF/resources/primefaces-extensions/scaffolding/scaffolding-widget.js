@@ -35,9 +35,9 @@ PrimeFaces.widget.ExtScaffolding = PrimeFaces.widget.BaseWidget.extend({
             source: this.id,
             process: this.id,
             update: this.id,
-            async: true.async,
+            async: this.async,
             ignoreAutoUpdate: true,
-            global: true.global,
+            global: this.global,
             params: [
                 {name: this.id + '_load', value: true}
             ]
