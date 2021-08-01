@@ -34,18 +34,29 @@ import javax.inject.Named;
 public class ScaffoldingController implements Serializable {
 
     private String data;
+    private String data2;
 
     public void fetchData(final long sleep) throws InterruptedException {
         Thread.sleep(sleep);
         data = "Hello!";
     }
 
+    public void fetchData2(final long sleep) throws InterruptedException {
+        Thread.sleep(sleep);
+        data2 = "Hello again!";
+    }
+
     public void resetData() {
         data = null;
+        data2 = null;
     }
 
     public String getData() {
         return data;
+    }
+
+    public String getData2() {
+        return data2;
     }
 
 }
