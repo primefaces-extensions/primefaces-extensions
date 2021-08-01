@@ -8919,6 +8919,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Flag indicating whether the data required to render the "ready" facet has been loaded.]]>
             </description>
             <name>ready</name>
@@ -8943,9 +8951,17 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[When set to true, ajax requests are not queued. Default value: false.]]>
+                <![CDATA[When set to true, ajax requests are not queued. Default value: true.]]>
             </description>
             <name>async</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When set to true and a loader is set, load when this component is scrolled into view. Default value: false.]]>
+            </description>
+            <name>loadWhenVisible</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
