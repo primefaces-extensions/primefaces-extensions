@@ -31,7 +31,7 @@ PrimeFaces.widget.ExtScaffolding = PrimeFaces.widget.BaseWidget.extend({
      * @private
      */
     loadData: function () {
-        PrimeFaces.ab({
+        PrimeFaces.ajax.Request.handle({
             source: this.id,
             process: this.id,
             update: this.id,
