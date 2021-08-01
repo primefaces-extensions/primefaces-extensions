@@ -62,14 +62,14 @@ PrimeFaces.widget.ExtScaffolding = PrimeFaces.widget.BaseWidget.extend({
      * Checks whether this panel is currently visible.
      * @return {boolean} `true` if this panel is currently visible, or `false` otherwise.
      */
-    visible: function() {
-        var win = $(window),
-        scrollTop = win.scrollTop(),
-        height = win.height(),
-        top = this.jq.offset().top,
-        bottom = top + this.jq.innerHeight();
-        return (top >= scrollTop && top <= (scrollTop + height))
-                || (bottom >= scrollTop && bottom <= (scrollTop + height));
+    visible: function () {
+        var rect = this.jq[0].getBoundingClientRect();
+        return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
     },
 
 });

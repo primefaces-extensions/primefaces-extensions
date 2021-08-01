@@ -37,6 +37,7 @@ import org.primefaces.component.api.Widget;
  * @since 10.0.3
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
+@ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "scaffolding/scaffolding.js")
 public class Scaffolding extends UICommand implements Widget {
@@ -45,7 +46,7 @@ public class Scaffolding extends UICommand implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ScaffoldingRenderer";
 
-    public static final String STYLE_CLASS = "ui-scaffolding";
+    public static final String STYLE_CLASS = "ui-scaffolding ui-widget";
 
     // @formatter:off
     @SuppressWarnings("java:S115")
