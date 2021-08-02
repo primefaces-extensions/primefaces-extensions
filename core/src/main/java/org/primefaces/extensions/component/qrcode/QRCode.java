@@ -41,6 +41,7 @@ public class QRCode extends UIOutput implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.QRCode";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String STYLE_CLASS = "ui-qrcode";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.QRCodeRenderer";
 
     @SuppressWarnings("java:S115")
@@ -65,7 +66,9 @@ public class QRCode extends UIOutput implements Widget {
         mPosY,
         label,
         fontName,
-        fontColor
+        fontColor,
+        style,
+        styleClass
        //@formatter:on
     }
 
@@ -236,6 +239,22 @@ public class QRCode extends UIOutput implements Widget {
 
     public void setMSize(final Double mSize) {
         getStateHelper().put(PropertyKeys.mSize, mSize);
+    }
+
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(final String style) {
+        getStateHelper().put(PropertyKeys.style, style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
 }

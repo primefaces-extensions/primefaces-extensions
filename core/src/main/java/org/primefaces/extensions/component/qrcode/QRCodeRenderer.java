@@ -21,7 +21,7 @@
  */
 package org.primefaces.extensions.component.qrcode;
 
-import java.io.IOException;
+import java.io.*;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -75,8 +75,16 @@ public class QRCodeRenderer extends CoreRenderer {
     private void encodeMarkup(final FacesContext context, final QRCode qrCode) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = qrCode.getClientId(context);
+        final String styleClass = getStyleClassBuilder(context)
+                    .add(QRCode.STYLE_CLASS)
+                    .add(qrCode.getStyleClass())
+                    .build();
         writer.startElement("span", null);
         writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
+        if (qrCode.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, qrCode.getStyle(), Attrs.STYLE);
+        }
         writer.endElement("span");
     }
 
