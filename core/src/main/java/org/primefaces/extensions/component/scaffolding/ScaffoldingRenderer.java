@@ -95,9 +95,4 @@ public class ScaffoldingRenderer extends CoreRenderer {
                     .finish();
     }
 
-    @Override
-    public boolean getRendersChildren() {
-        return false;
-    }
-
 }
