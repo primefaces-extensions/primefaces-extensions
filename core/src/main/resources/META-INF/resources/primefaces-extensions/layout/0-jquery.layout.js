@@ -2474,7 +2474,7 @@
                         // ELSE setAsOpen() - called later by initHandles()
 
                         // RESET visibility now - pane will appear IF display:block
-                        $P.css("visibility", "visible");
+                        // $P.css("visibility", "visible");
 
                         // check option for auto-handling of pop-ups & drop-downs
                         if (o.showOverflowOnHover)
