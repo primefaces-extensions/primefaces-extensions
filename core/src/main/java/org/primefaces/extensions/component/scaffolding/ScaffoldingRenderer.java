@@ -58,9 +58,7 @@ public class ScaffoldingRenderer extends CoreRenderer {
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final Scaffolding scaffolding = (Scaffolding) component;
         encodeMarkup(context, scaffolding);
-        if (scaffolding.getValueExpression("loader") != null
-                    && !scaffolding.isReady()
-                    && !context.getPartialViewContext().isAjaxRequest()) {
+        if (scaffolding.getValueExpression("loader") != null && !scaffolding.isReady()) {
             encodeScript(context, scaffolding);
         }
     }
