@@ -14,7 +14,7 @@
   "dependencies": {
     "css-loader": "^5.2.7",
     "insane": "^2.6.2",
-    "monaco-editor": "^0.26.1",
+    "monaco-editor": "^0.27.0",
     "style-loader": "^3.2.1",
     "url-loader": "^4.1.1"
   },
