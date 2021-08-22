@@ -32,14 +32,14 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
    */
   class InlineImpl extends ExtMonacoEditorBase {
     /**
-     * @param  {...any[]} args Arguments as passed by PrimeFaces.
+     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg Arguments as passed by PrimeFaces.
      */
-    constructor(...args) {
-      super(...args);
+    constructor(cfg) {
+      super(cfg);
     }
 
     /**
-     * @param {Partial<typeof InlineEditorDefaults>} cfg
+     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg
      */
     init(cfg) {
       super._init(cfg, InlineEditorDefaults);
@@ -202,7 +202,7 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      */
     _onRefresh() {
       this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
-      PrimeFaces.removeDeferredRenders(this.id);
+      PrimeFaces.removeDeferredRenders(String(this.id));
       this._onDestroy();
     }
 
@@ -244,6 +244,15 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
       const wasLibLoaded = await loadEditorLib(this.cfg, forceLibReload);
       this.getEditorContainer().empty();
       const options = await createEditorConstructionOptions(this, extender, this._editorValue, wasLibLoaded);
+      if (this.cfg.overflowWidgetsDomNode !== undefined && this.cfg.overflowWidgetsDomNode.length > 0) {
+        const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.overflowWidgetsDomNode);
+        if (target !== undefined && target.length > 0) {
+          options.overflowWidgetsDomNode = target.get(0);
+        }
+        else {
+          console.warn(`Target '${this.cfg.overflowWidgetsDomNode}' for option overflowWidgetsDomNode was not found in the DOM`);
+        }
+      }
       return { extender, options, wasLibLoaded };
     }
 
