@@ -1,5 +1,11 @@
+// This file contains the editor options from the official API docs
+// https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandaloneeditorconstructionoptions.html
+// 
+// This is used to create corresponding Java classes for configuring the monaco editor widget
+
 const {
     clean,
+    Deprecated,
     Doc,
     Array,
     Boolean,
@@ -43,7 +49,7 @@ clean(err => {
         loop: Boolean(),
 
         [Doc()]: "Controls if we seed search string in the Find Widget with editor selection.",
-        seedSearchStringFromSelection: Boolean(),
+        seedSearchStringFromSelection: Enum("ESeedSearchStringFromSelection", "always", "never", "selection"),
     }, "Configuration options for editor find widget");
 
     const EditorRulerOption = Class("EditorRulerOption", {
@@ -78,6 +84,25 @@ clean(err => {
         [Doc()]: "Is the hover sticky such that it can be clicked and its contents selected? Defaults to {@code true}.",
         sticky: Boolean(),
     }, "Configuration options for editor hover");
+
+    const EditorInlineHintOptions = Class("EditorInlineHintOptions", {
+        [Doc()]: "Enable the inline hints. Defaults to {@code true}.",
+        enabled: Boolean(),
+
+        [Doc()]: "Font family of inline hints. Defaults to editor font family.",
+        fontFamily: String(),
+
+        [Doc()]: "Font size of inline hints. Default to 90% of the editor font size.",
+        fontSize: Number()
+    }, "Control the behavior and rendering of the inline hints.");
+
+    const EditorInlineSuggestOptions = Class("EditorInlineSuggestOptions", {
+        [Doc()]: "Enable or disable the rendering of automatic inline completions.",
+        enabled: Boolean(),
+
+        [Doc()]: "Configures the mode. Use prefix to only show ghost text if the text to replace is a prefix of the suggestion text. Use {@link subword} to only show ghost text if the replace text is a sub word of the suggestion text. Use {@link subwordSmart} to only show ghost text if the replace text is a sub word of the suggestion text, but the sub word must start after the cursor position. Defaults to {@code prefix}.",
+        mode: Enum("EInlineSuggestMode", "prefix", "subword", "subwordSmart"),
+    }, "Control the behavior and rendering of the inline completions.");
 
     const EditorLightbulbOptions = Class("EditorLightbulbOptions", {
         [Doc()]: "Enable the lightbulb code action. Defaults to {@code true}.",
@@ -123,6 +148,10 @@ clean(err => {
         enabled: Boolean(),
     }, "Configuration options for parameter hints");
 
+    const EditorSmartSelectOptions = Class("EditorSmartSelectOptions", {
+        selectLeadingAndTrailingWhitespace: Boolean(),
+    }, "Smart select options.");
+
     const EditorScrollbarOptions = Class("EditorScrollbarOptions", {
         [Doc()]: "Always consume mouse wheel events (always call {@code preventDefault()} and {@code stopPropagation()} on the browser events). Defaults to {@code true}.",
         alwaysConsumeMouseWheel: Boolean(),
@@ -145,6 +174,9 @@ clean(err => {
         [Doc()]: "Height in pixels for the horizontal slider. Defaults to {@code horizontalScrollbarSize}.",
         horizontalSliderSize: Number(),
 
+        [Doc()]: "Scroll gutter clicks move by page vs jump to position. Defaults to {@code false}.",
+        scrollByPage: Boolean(),
+
         [Doc()]: "Cast horizontal and vertical shadows when the content is scrolled. Defaults to {@code true}.",
         useShadows: Boolean(),
 
@@ -161,11 +193,6 @@ clean(err => {
         verticalSliderSize: Number(),
     }, "Configuration options for editor scrollbars");
 
-    const SuggestOptionsStatusBar = Class("SuggestOptionsStatusBar", {
-        [Doc()]: "Controls the visibility of the status bar at the bottom of the suggest widget.",
-        visible: Boolean(),
-    }, "Controls the options of the status bar at the bottom of the suggest widget");
-
     const EditorSuggestOptions = Class("EditorSuggestOptions", {
         [Doc()]: "Enable graceful matching. Defaults to {@code true}.",
         filterGraceful: Boolean(),
@@ -178,6 +205,12 @@ clean(err => {
 
         [Doc()]: "Max suggestions to show in suggestions. Defaults to {@code 12}.",
         maxVisibleSuggestions: Boolean(),
+
+        [Doc()]: "Enable or disable the rendering of the suggestion preview.",
+        preview: Boolean(),
+
+        [Doc()]: "Configures the mode of the preview.",
+        previewMode: Enum("ESuggestPreviewMode", "prefix", "subword", "subwordSmart"),
 
         [Doc()]: "Enable using global storage for remembering suggestions.",
         shareSuggestSelections: Boolean(),
@@ -193,6 +226,9 @@ clean(err => {
 
         [Doc()]: "Show constructor-suggestions.",
         showConstructors: Boolean(),
+
+        [Doc()]: "Show deprecated-suggestions.",
+        showDeprecated: Boolean(),
 
         [Doc()]: "Show enumMember-suggestions.",
         showEnumMembers: Boolean(),
@@ -217,6 +253,9 @@ clean(err => {
 
         [Doc()]: "Enable or disable icons in suggestions. Defaults to {@code true}.",
         showIcons: Boolean(),
+
+        [Doc()]: "Show details inline with the label. Defaults to {@code true}.",
+        showInlineDetails: Boolean(),
 
         [Doc()]: "Show interface-suggestions.",
         showInterfaces: Boolean(),
@@ -245,6 +284,9 @@ clean(err => {
         [Doc()]: "Show snippet-suggestions.",
         showSnippets: Boolean(),
 
+        [Doc()]: "Enable or disable the suggest status bar.",
+        showStatusBar: Boolean(),
+
         [Doc()]: "Show struct-suggestions.",
         showStructs: Boolean(),
 
@@ -266,14 +308,8 @@ clean(err => {
         [Doc()]: "Show text-suggestions.",
         showWords: Boolean(),
 
-        [Doc()]: "Show a highlight when suggestion replaces or keep text after the cursor. Defaults to {@code false}.",
-        insertHighlight: Boolean(),
-
-        [Doc()]: "Prevent quick suggestions when a snippet is active. Defaults to true.",
+        [Doc()]: "Prevent quick suggestions when a snippet is active. Defaults to {@code true}.",
         snippetsPreventQuickSuggestions: Boolean(),
-
-        [Doc()]: "Status bar related settings.",
-        statusBar: SuggestOptionsStatusBar,
     }, "Configuration options for editor suggest widget");
 
     const EditorDimension = Class("EditorDimension", {
@@ -315,6 +351,12 @@ clean(err => {
         [Doc()]: "Configure the editor's hover.",
         hover: EditorHoverOptions,
 
+        [Doc()]: "Control the behavior and rendering of the inline hints.",
+        inlayHints: EditorInlineHintOptions,
+
+        [Doc()]: "Control the behavior and rendering of the inline completions.",
+        inlineSuggest: EditorInlineSuggestOptions,
+
         [Doc()]: "Control the behavior and rendering of the code action lightbulb.",
         lightbulb: EditorLightbulbOptions,
 
@@ -332,6 +374,9 @@ clean(err => {
 
         [Doc()]: "Control the behavior and rendering of the scrollbars.",
         scrollbar: EditorScrollbarOptions,
+
+        [Doc()]: "Smart select options.",
+        smartSelect: EditorSmartSelectOptions,
 
         [Doc()]: "Suggest options.",
         suggest: EditorSuggestOptions,
@@ -362,6 +407,9 @@ clean(err => {
 
         [Doc()]: "Options for auto closing brackets. Defaults to language defined behavior.",
         autoClosingBrackets: Enum("EAutoClosingBrackets", "always", "languageDefined", "beforeWhitespace", "never"),
+
+        [Doc()]: "Options for pressing backspace near quotes or bracket pairs.",
+        autoClosingDelete: Enum("EAutoClosingEditStrategy", "always", "auto", "never"),
 
         [Doc()]: "Options for auto closing quotes. Defaults to language defined behavior.",
         autoClosingQuotes: Enum("EAutoClosingQuotes", "always", "languageDefined", "beforeWhitespace", "never"),
@@ -485,9 +533,6 @@ clean(err => {
         [Doc()]: "Enable rendering of current line highlight. Defaults to {@code all}.",
         renderLineHighlight: Enum("ERenderLineHighlight", "none", "gutter", "line", "all"),
 
-        [Doc()]: "Control if the current line highlight should be rendered only the editor is focused. Defaults to {@code false}.",
-        renderLineHighlightOnlyWhenFocus: Boolean(),
-
         [Doc()]: "Should the editor render validation decorations. Defaults to {@code editable}.",
         renderValidationDecorations: Enum("ERenderValidationDecorations", "editable", "on", "off"),
 
@@ -518,6 +563,12 @@ clean(err => {
         [Doc()]: "Control the wrapping of the editor. When {@code wordWrap} = {@code off}, the lines will never wrap. When {@code wordWrap} = {@code on}, the lines will wrap at the viewport width. When {@code wordWrap} = {@code wordWrapColumn}, the lines will wrap at {@code wordWrapColumn}. When {@code wordWrap} = {@code bounded}, the lines will wrap at {@code min(viewport width, wordWrapColumn)}. Defaults to {@code off}.",
         wordWrap: Enum("EWordWrap", "off", "on", "wordWrapColumn", "bounded"),
 
+        [Doc()]: "Override the {@code wordWrap} setting.",
+        wordWrapOverride1: Enum("EWordWrapOverride1", "on", "off", "inherit"),
+
+        [Doc()]: "Override the {@code wordWrapOverride1} setting.",
+        wordWrapOverride2: Enum("EWordWrapOverride2", "on", "off", "inherit"),
+
         [Doc()]: "Control indentation of wrapped lines. Can be: {@code none}, {@code same}, {@code indent} or {@code deepIndent}. Defaults to {@code same} in vscode and to {@code none} in monaco-editor.",
         wrappingIndent: Enum("EWrappingIndent", "none", "same", "indent", "deepIndent"),
 
@@ -530,11 +581,11 @@ clean(err => {
         [Doc()]: "Accept suggestions on provider defined characters. Defaults to {@code true}.",
         acceptSuggestionOnCommitCharacter: Boolean(),
 
-        [Doc()]: "Options for auto closing brackets. Defaults to language defined behavior.",
-        autoClosingBrackets: Boolean(),
-
         [Doc()]: "Enable that the editor will install an interval to check if its container dom node size has changed. Enabling this might have a severe performance impact. Defaults to {@code false}.",
         automaticLayout: Boolean(),
+
+        [Doc()]: "If enabled, will automatically change to high contrast theme if the OS is using a high contrast theme. Defaults to {@code true}.",
+        autoDetectHighContrast: Boolean(),
 
         [Doc()]: "Show code lens Defaults to {@code true}.",
         codeLens: Boolean(),
@@ -581,6 +632,9 @@ clean(err => {
         [Doc()]: "Enable highlight for folded regions. Defaults to {@code true}.",
         foldingHighlight: Boolean(),
 
+        [Doc()]: "Auto fold imports folding regions. Defaults to {@code true}.",
+        foldingImportsByDefault: Boolean(),
+
         [Doc()]: "Enable font ligatures. Defaults to {@code false}",
         fontLigatures: Boolean(),
 
@@ -605,6 +659,9 @@ clean(err => {
         [Doc()]: "Special handling for large files to disable certain memory intensive features. Defaults to {@code true}.",
         largeFileOptimizations: Boolean(),
 
+        [Doc()]: "Enables linked editing. Defaults to {@code false}.",
+        linkedEditing: Boolean(),
+
         [Doc()]: "Enable detecting links and making them clickable. Defaults to {@code true}.",
         links: Boolean(),
 
@@ -626,7 +683,8 @@ clean(err => {
         [Doc()]: "Should the editor be read only. Defaults to {@code false}",
         readOnly: Boolean(),
 
-        [Doc()]: "Rename matching regions on type. Defaults to {@code false}.",
+        [Deprecated()]: "",
+        [Doc()]: "Deprecated, use {@link linkedEditing} instead.",
         renameOnType: Boolean(),
 
         [Doc()]: "Enable rendering of control characters. Defaults to {@code false}.",
@@ -637,6 +695,9 @@ clean(err => {
 
         [Doc()]: "Enable rendering of indent guides. Defaults to {@code true}.",
         renderIndentGuides: Boolean(),
+
+        [Doc()]: "Control if the current line highlight should be rendered only the editor is focused. Defaults to {@code false}.",
+        renderLineHighlightOnlyWhenFocus: Boolean(),
 
         [Doc()]: "Render the editor selection with rounded borders. Defaults to {@code true}.",
         roundedSelection: Boolean(),
@@ -674,23 +735,32 @@ clean(err => {
         [Doc()]: "Remove trailing auto inserted whitespace. Defaults to {@code true}.",
         trimAutoWhitespace: Boolean(),
 
-        [Doc()]: "Controls whether clicking on the empty content after a folded line will unfold the line. Defaults to {@code false}}.",
+        [Doc()]: "Controls whether clicking on the empty content after a folded line will unfold the line. Defaults to {@code false}.",
         unfoldOnClickAfterEndOfLine: Boolean(),
+
+        [Doc()]: "Control if the editor should use shadow DOM.",
+        useShadowDOM: Boolean(),
 
         [Doc()]: "Inserting and deleting whitespace follows tab stops.",
         useTabStops: Boolean(),
 
-        [Doc()]: "Controls whether completions should be computed based on words in the document. Defaults to {@code true} .",
+        [Doc()]: "Controls whether completions should be computed based on words in the document. Defaults to {@code true}.",
         wordBasedSuggestions: Boolean(),
+
+        [Doc()]: "Controls whether word based completions should be included from opened documents of the same language or any language.",
+        wordBasedSuggestionsOnlySameLanguage: Boolean(),
 
         [Doc()]: "Force word wrapping when the text appears to be of a minified/generated file. Defaults to {@code true}.",
         wordWrapMinified: Boolean(),
 
-        [Doc()]: "Controls the number of lines in the editor that can be read out by a screen reader",
+        [Doc()]: "Controls the number of lines in the editor that can be read out by a screen reader.",
         accessibilityPageSize: Number(),
 
         [Doc()]: "Timeout for running code actions on save.",
         codeActionsOnSaveTimeout: Number(),
+
+        [Doc()]: "Code lens font size. Default to 90% of the editor font size.",
+        codeLensFontSize: Number(),
 
         [Doc()]: "Controls the minimal number of visible leading and trailing lines surrounding the cursor. Defaults to {@code 0}.",
         cursorSurroundingLines: Number(),
@@ -698,7 +768,7 @@ clean(err => {
         [Doc()]: "Control the width of the cursor when cursorStyle is set to {@code line}",
         cursorWidth: Number(),
 
-        [Doc()]: "FastScrolling mulitplier speed when pressing {@code Alt} Defaults to {@code 5}.",
+        [Doc()]: "Fast scrolling multiplier speed when pressing {@code Alt} Defaults to {@code 5}.",
         fastScrollSensitivity: Number(),
 
         [Doc()]: "The font size",
@@ -763,6 +833,9 @@ clean(err => {
 
         [Doc()]: "The aria label for the editor's textarea (when it is focused).",
         ariaLabel: String(),
+
+        [Doc()]: "Code lens font family. Defaults to editor font family.",
+        codeLensFontFamily: String(),
 
         [Doc()]: "Class name to be added to the editor.",
         extraEditorClassName: String(),

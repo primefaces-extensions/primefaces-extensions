@@ -16,6 +16,15 @@ function Doc(data) {
   }
 }
 
+function Deprecated(data) {
+  if (data) {
+    return `@Deprecated${data}`;
+  }
+  else {
+    return `@Deprecated${++docId}`;
+  }
+}
+
 function escapeHtml(unsafe) {
   return unsafe
     .replace(/&/g, "&amp;")
@@ -30,7 +39,7 @@ function breakText(comment, maxLength, firstLineMaxLength) {
   const lines = [];
   let line = "";
   for (const word of words) {
-    if (line.length +  1 + word.length <= (lines.length === 0 ? firstLineMaxLength : maxLength)) {
+    if (line.length + 1 + word.length <= (lines.length === 0 ? firstLineMaxLength : maxLength)) {
       if (line.length > 0) {
         line += " ";
       }
@@ -47,13 +56,16 @@ function breakText(comment, maxLength, firstLineMaxLength) {
   return lines;
 }
 
-function createGetterDoc(docString) {
+function createGetterDoc(docString, currentDeprecation) {
   if (docString) {
-    return [
-      `    /**`,
-      `     * @return ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8).join("\n     * "))}`,
-      `     */`,
-    ].join("\n");
+    const lines = [];
+    lines.push(`    /**`);
+    if (currentDeprecation !== undefined) {
+      lines.push(`     * @deprecated ${escapeHtml(breakText(currentDeprecation, 120 - 7, 120 - 7 - 12).join("\n     * "))}`);
+    }
+    lines.push(`     * @return ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8).join("\n     * "))}`);
+    lines.push(`     */`);
+    return lines.join("\n");
   }
   else {
     return "";
@@ -86,14 +98,17 @@ function createTypeDoc(docString) {
   }
 }
 
-function createSetterDoc(name, docString) {
+function createSetterDoc(name, docString, currentDeprecation) {
   if (docString) {
-    return [
-      `    /**`,
-      `     * @param ${fieldName(name)} ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8 - fieldName(name).length).join("\n     * "))}`,
-      `     * @return This same instance, useful for chaining multiple setter methods in one call.`,
-      `     */`,
-    ].join("\n");
+    const lines = [];
+    lines.push(`    /**`);
+    if (currentDeprecation !== undefined) {
+      lines.push(`     * @deprecated ${escapeHtml(breakText(currentDeprecation, 120 - 7, 120 - 7 - 12).join("\n     * "))}`);
+    }
+    lines.push(`     * @param ${fieldName(name)} ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8 - fieldName(name).length).join("\n     * "))}`);
+    lines.push(`     * @return This same instance, useful for chaining multiple setter methods in one call.`);
+    lines.push(`     */`);
+    lines.join("\n");
   }
   else {
     return "";
@@ -171,7 +186,7 @@ function escapeString(name) {
  * @return {string}
  */
 function toJavaName(name) {
-  return name.split(/[^a-zA-Z0-9_]/).map((x,i) => i > 0 ? capitalize(x) : x).join("");
+  return name.split(/[^a-zA-Z0-9_]/).map((x, i) => i > 0 ? capitalize(x) : x).join("");
 }
 
 function createSimpleGetter(asField, name, type) {
@@ -245,21 +260,32 @@ function createClass(clazz, fields, classDoc) {
   const lines = [];
   lines.push(createHead(clazz, classDoc));
   let currentDoc = undefined;
+  let currentDeprecation = undefined;
   for (const name of Object.keys(fields)) {
     const type = fields[name];
     const isDoc = name.startsWith("@Doc") && typeof type === "string" ? true : false;
+    const isDeprecated = name.startsWith("@Deprecated") && typeof type === "string" ? true : false;
     if (isDoc) {
       currentDoc = String(type);
+    }
+    else if (isDeprecated) {
+      currentDeprecation = String(type);
     }
     else {
       lines.push("");
       if (currentDoc) {
-        lines.push(createGetterDoc(currentDoc));
+        lines.push(createGetterDoc(currentDoc, currentDeprecation));
+      }
+      if (currentDeprecation !== undefined) {
+        lines.push("@Deprecated");
       }
       lines.push(type.getter(name, type));
       lines.push("");
       if (currentDoc) {
-        lines.push(createSetterDoc(name, currentDoc));
+        lines.push(createSetterDoc(name, currentDoc, currentDeprecation));
+      }
+      if (currentDeprecation !== undefined) {
+        lines.push("@Deprecated");
       }
       lines.push(type.setter(clazz, name, type));
       if (type.methods) {
@@ -268,6 +294,7 @@ function createClass(clazz, fields, classDoc) {
           lines.push(method(clazz, name, type));
         }
       }
+      currentDeprecation = undefined;
       currentDoc = undefined;
     }
   }
@@ -279,7 +306,10 @@ function createClass(clazz, fields, classDoc) {
 function createEnum(clazz, typeDoc, ...data) {
   const lines = data.map(item => {
     item = global.Array.isArray(item) ? item[0] : item;
-    if (item.startsWith("@Doc")) {
+    if (item.startsWith("@Deprecated")) {
+      return "@Deprecated";
+    }
+    else if (item.startsWith("@Doc")) {
       return createEnumDoc(item.substring(4));
     }
     else {
@@ -406,7 +436,7 @@ function Enum(clazz, ...constants) {
     asField = constants[0];
     constants = constants.slice(1);
   }
-  
+
   const code = createEnum(clazz, typeDoc, ...constants);
   const file = path.join(javaDescriptorPath, clazz + ".java");
   fs.writeFile(file, code, { encoding: "latin1" }, function (err) {
@@ -488,5 +518,6 @@ exports.Number = T_Number;
 exports.Set = Set;
 exports.String = T_String;
 
+exports.Deprecated = Deprecated;
 exports.Doc = Doc;
 exports.clean = clean;
