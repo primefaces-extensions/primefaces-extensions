@@ -12,10 +12,10 @@
                 <pe:documentViewer height="500" url="/sections/documentviewer/book.pdf"/>
             </p:tab>
             <p:tab title="Resource">
-                <pe:documentViewer height="500" library="books" name="hood.pdf"/>
+                <pe:documentViewer height="500" library="books" name="hood.pdf" zoom="page-width"/>
             </p:tab>
             <p:tab title="StreamedContent">
-                <pe:documentViewer height="500" value="#{basicDocumentViewerController.content}" download="#{basicDocumentViewerController.downloadFileName}"/>
+                <pe:documentViewer height="500" value="#{basicDocumentViewerController.content}" download="#{basicDocumentViewerController.downloadFileName}" zoom="page-width"/>
             </p:tab>
         </p:tabView>
     </p:outputPanel>

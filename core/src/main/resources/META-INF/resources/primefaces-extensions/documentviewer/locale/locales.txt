@@ -4,17 +4,11 @@
 [af]
 @import url(af.locale.txt)
 
-[ak]
-@import url(ak.locale.txt)
-
 [an]
 @import url(an.locale.txt)
 
 [ar]
 @import url(ar.locale.txt)
-
-[as]
-@import url(as.locale.txt)
 
 [ast]
 @import url(ast.locale.txt)
@@ -28,14 +22,17 @@
 [bg]
 @import url(bg.locale.txt)
 
-[bn-BD]
-@import url(bn-BD.locale.txt)
+[bn]
+@import url(bn.locale.txt)
 
-[bn-IN]
-@import url(bn-IN.locale.txt)
+[bo]
+@import url(bo.locale.txt)
 
 [br]
 @import url(br.locale.txt)
+
+[brx]
+@import url(brx.locale.txt)
 
 [bs]
 @import url(bs.locale.txt)
@@ -43,11 +40,14 @@
 [ca]
 @import url(ca.locale.txt)
 
+[cak]
+@import url(cak.locale.txt)
+
+[ckb]
+@import url(ckb.locale.txt)
+
 [cs]
 @import url(cs.locale.txt)
-
-[csb]
-@import url(csb.locale.txt)
 
 [cy]
 @import url(cy.locale.txt)
@@ -58,11 +58,14 @@
 [de]
 @import url(de.locale.txt)
 
+[dsb]
+@import url(dsb.locale.txt)
+
 [el]
 @import url(el.locale.txt)
 
-[en]
-@import url(en-GB.locale.txt)
+[en-CA]
+@import url(en-CA.locale.txt)
 
 [en-GB]
 @import url(en-GB.locale.txt)
@@ -70,14 +73,11 @@
 [en-US]
 @import url(en-US.locale.txt)
 
-[en-ZA]
-@import url(en-ZA.locale.txt)
+[en]
+@import url(en.locale.txt)
 
 [eo]
 @import url(eo.locale.txt)
-
-[es]
-@import url(es-ES.locale.txt)
 
 [es-AR]
 @import url(es-AR.locale.txt)
@@ -121,6 +121,9 @@
 [gl]
 @import url(gl.locale.txt)
 
+[gn]
+@import url(gn.locale.txt)
+
 [gu-IN]
 @import url(gu-IN.locale.txt)
 
@@ -133,11 +136,20 @@
 [hr]
 @import url(hr.locale.txt)
 
+[hsb]
+@import url(hsb.locale.txt)
+
 [hu]
 @import url(hu.locale.txt)
 
 [hy-AM]
 @import url(hy-AM.locale.txt)
+
+[hye]
+@import url(hye.locale.txt)
+
+[ia]
+@import url(ia.locale.txt)
 
 [id]
 @import url(id.locale.txt)
@@ -154,6 +166,9 @@
 [ka]
 @import url(ka.locale.txt)
 
+[kab]
+@import url(kab.locale.txt)
+
 [kk]
 @import url(kk.locale.txt)
 
@@ -166,32 +181,26 @@
 [ko]
 @import url(ko.locale.txt)
 
-[ku]
-@import url(ku.locale.txt)
-
-[lg]
-@import url(lg.locale.txt)
-
 [lij]
 @import url(lij.locale.txt)
+
+[lo]
+@import url(lo.locale.txt)
 
 [lt]
 @import url(lt.locale.txt)
 
+[ltg]
+@import url(ltg.locale.txt)
+
 [lv]
 @import url(lv.locale.txt)
 
-[mai]
-@import url(mai.locale.txt)
+[meh]
+@import url(meh.locale.txt)
 
 [mk]
 @import url(mk.locale.txt)
-
-[ml]
-@import url(ml.locale.txt)
-
-[mn]
-@import url(mn.locale.txt)
 
 [mr]
 @import url(mr.locale.txt)
@@ -205,29 +214,23 @@
 [nb-NO]
 @import url(nb-NO.locale.txt)
 
+[ne-NP]
+@import url(ne-NP.locale.txt)
+
 [nl]
 @import url(nl.locale.txt)
 
 [nn-NO]
 @import url(nn-NO.locale.txt)
 
-[nso]
-@import url(nso.locale.txt)
-
 [oc]
 @import url(oc.locale.txt)
-
-[or]
-@import url(or.locale.txt)
 
 [pa-IN]
 @import url(pa-IN.locale.txt)
 
 [pl]
 @import url(pl.locale.txt)
-
-[pt]
-@import url(pt-PT.locale.txt)
 
 [pt-BR]
 @import url(pt-BR.locale.txt)
@@ -244,11 +247,11 @@
 [ru]
 @import url(ru.locale.txt)
 
-[rw]
-@import url(rw.locale.txt)
+[scn]
+@import url(scn.locale.txt)
 
-[sah]
-@import url(sah.locale.txt)
+[sco]
+@import url(sco.locale.txt)
 
 [si]
 @import url(si.locale.txt)
@@ -271,17 +274,17 @@
 [sv-SE]
 @import url(sv-SE.locale.txt)
 
-[sw]
-@import url(sw.locale.txt)
+[szl]
+@import url(szl.locale.txt)
 
 [ta]
 @import url(ta.locale.txt)
 
-[ta-LK]
-@import url(ta-LK.locale.txt)
-
 [te]
 @import url(te.locale.txt)
+
+[tg]
+@import url(tg.locale.txt)
 
 [th]
 @import url(th.locale.txt)
@@ -289,17 +292,20 @@
 [tl]
 @import url(tl.locale.txt)
 
-[tn]
-@import url(tn.locale.txt)
-
 [tr]
 @import url(tr.locale.txt)
+
+[trs]
+@import url(trs.locale.txt)
 
 [uk]
 @import url(uk.locale.txt)
 
 [ur]
 @import url(ur.locale.txt)
+
+[uz]
+@import url(uz.locale.txt)
 
 [vi]
 @import url(vi.locale.txt)
@@ -315,7 +321,4 @@
 
 [zh-TW]
 @import url(zh-TW.locale.txt)
-
-[zu]
-@import url(zu.locale.txt)
 
