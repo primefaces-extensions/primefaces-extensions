@@ -12,7 +12,7 @@
 package.json
 
 {
-  "name": "my-project-name",
+  "name": "pdf.js",
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "~0.4.5",
@@ -59,10 +59,11 @@ module.exports = function(grunt) {
 
 };
 
+5. Replace all mask-iage CSS styles that use variables to directly use the base64 encoded images as it doesn't work using the variables.
 
-5. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
+6. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
 
-6. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
+7. Edit pdf.viewer.js and replace in two places checks for Primefaces URL.
 
 In 1l10.js replace this..
              if (match) { // @import rule?
@@ -101,7 +102,7 @@ Remove this check...
       throw new Error('file origin does not match viewer\'s');
     }
 
-7. Fix the Locale
+8. Fix the Locale
 
 https://stackoverflow.com/questions/64915575/how-to-force-set-locale-in-pdf-js
 
@@ -115,12 +116,14 @@ async _initializeL10n() {
     document.getElementsByTagName("html")[0].dir = dir;
 }
   
-8. Compress and minify pdf.worker.js.
+9. Compress and minify pdf.worker.js.
 
-9. In the /web/locale directory of the distribution run this DOS script..
+10. In the /web/locale directory of the distribution run this DOS script..
 
 @echo off
 for /r %%a in (viewer.properties) do for %%b in ("%%~dpa\.") do ren "%%~a" "%%~nxb.locale.txt"
 pause
 
 This renames all viewer.properties correctly.  Then move the new XX.locale.txt files into the /locale folder of PFE.
+
+Also make sure there is an "en" file which you can just copy "en-US" and make it "en".
