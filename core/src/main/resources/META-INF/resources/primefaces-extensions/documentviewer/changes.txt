@@ -8,6 +8,57 @@
 	npm install
 	npm install -g grunt-cli
 	grunt dataUri   https://github.com/ahomu/grunt-data-uri
+	
+package.json
+
+{
+  "name": "my-project-name",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-data-uri": "^0.3.0"
+  }
+}
+
+GruntFile.js
+
+module.exports = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    dataUri: {
+      dist: {
+        // src file
+        src: ['viewer.css'],
+        // output dir
+        dest: 'viewer-data.css',
+        options: {
+          // specified files are only encoding
+          target: ['images/*.*'],
+          // adjust relative path?
+          fixDirLevel: true,
+          // img detecting base dir
+          // baseDir: './'
+      
+          // Do not inline any images larger
+          // than this size. 2048 is a size
+          // recommended by Google's mod_pagespeed.
+          maxBytes : 3048
+      
+        }
+      }
+  }
+  });
+
+  // Load the plugin that provides the "uglify" task.
+   grunt.loadNpmTasks('grunt-data-uri');
+
+};
+
 
 5. Compress the CSS from #4 and place right into the <style></style> of the viewer.html
 
@@ -50,11 +101,19 @@ Remove this check...
       throw new Error('file origin does not match viewer\'s');
     }
 
-7. Allow language changing by disabling debug check by moving this code outside debug block...
+7. Fix the Locale
 
-  if ('locale' in hashParams) {
-    PDFJS.locale = hashParams['locale'];
-  }
+https://stackoverflow.com/questions/64915575/how-to-force-set-locale-in-pdf-js
+
+async _initializeL10n() {
+    var hash = document.location.hash.substring(1);
+    var hashParams = (0, _ui_utils.parseQueryString)(hash);
+    this.l10n = this.externalServices.createL10n({
+        locale: ('locale' in hashParams) ? hashParams['locale'] : _app_options.AppOptions.get("locale")
+    });
+    const dir = await this.l10n.getDirection();
+    document.getElementsByTagName("html")[0].dir = dir;
+}
   
 8. Compress and minify pdf.worker.js.
 
