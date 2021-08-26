@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import javax.faces.application.ResourceWrapper;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
 
 /**
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
@@ -46,10 +48,12 @@ public class ThemeAccentColorResource extends ResourceWrapper {
     private static final Map<String, List<String>> ACCENT_COLORS = new HashMap<>();
 
     static {
+        // @formatter:off
         // colors ? 0: main, 1: hover, 2: active, 3: focus outline, 4: text
         ACCENT_COLORS.put("primefaces-arya", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255, 255, 255, 0.87)"));
         ACCENT_COLORS.put("primefaces-saga", Arrays.asList("#2196F3", "#0d89ec", "#0b7ad1", "#a6d5fa", "#495057"));
         ACCENT_COLORS.put("primefaces-vela", Arrays.asList("#90CAF9", "#6bb8f7", "#45a6f5", "#b1dafb", "rgba(255, 255, 255, 0.87)"));
+        // @formatter:on
     }
 
     private final Resource wrapped;
@@ -57,7 +61,11 @@ public class ThemeAccentColorResource extends ResourceWrapper {
 
     public ThemeAccentColorResource(final Resource wrapped) {
         this.wrapped = wrapped;
-        this.charEncoding = FacesContext.getCurrentInstance().getExternalContext().getRequestCharacterEncoding();
+        String encoding = FacesContext.getCurrentInstance().getExternalContext().getRequestCharacterEncoding();
+        if (LangUtils.isValueBlank(encoding)) {
+            encoding = StandardCharsets.UTF_8.name();
+        }
+        this.charEncoding = encoding;
     }
 
     @Override
@@ -88,7 +96,7 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
         final byte[] buffer = new byte[1024];
         final InputStream inputStream = wrapped.getInputStream();
-        for (int length; (length = inputStream.read(buffer)) != -1;) {
+        for (int length; (length = inputStream.read(buffer)) != -1; ) {
             result.write(buffer, 0, length);
         }
         return result.toString(charEncoding);
