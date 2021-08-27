@@ -656,6 +656,12 @@
             <artifactId>libphonenumber</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Sanitizing Converter -->
+        <dependency>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>junit</groupId>

@@ -473,6 +473,14 @@
                 <optional>true</optional>
             </dependency>
 
+            <!-- OWASP optional dependencies -->
+            <dependency>
+                <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+                <artifactId>owasp-java-html-sanitizer</artifactId>
+                <version>20200713.1</version>
+                <optional>true</optional>
+            </dependency>
+
             <!-- Test -->
             <dependency>
                 <groupId>junit</groupId>
