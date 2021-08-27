@@ -47,6 +47,28 @@
             <type>java.lang.Character</type>
         </attribute>
     </tag>
+    <tag>
+        <tag-name>sanitizer</tag-name>
+        <converter>
+            <converter-id>org.primefaces.extensions.converter.SanitizingConverter</converter-id>
+        </converter>
+        <attribute>
+            <description>
+                <![CDATA[Run input through OWASP HTML Decoder. Default is 'true'.]]>
+            </description>
+            <name>decodeHtml</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An instance of OWASP PolicyFactory which declares how to sanitize the input. Default is strict sanitization.]]>
+            </description>
+            <name>policy</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+    </tag>
 
     <!-- Behaviors -->
     <tag>

@@ -223,6 +223,10 @@
         <converter-id>org.primefaces.extensions.converter.LocaleConverter</converter-id>
         <converter-class>org.primefaces.extensions.converter.LocaleConverter</converter-class>
     </converter>
+    <converter>
+        <converter-id>org.primefaces.extensions.converter.SanitizingConverter</converter-id>
+        <converter-class>org.primefaces.extensions.converter.SanitizingConverter</converter-class>
+    </converter>
 
     <render-kit>
         <renderer>

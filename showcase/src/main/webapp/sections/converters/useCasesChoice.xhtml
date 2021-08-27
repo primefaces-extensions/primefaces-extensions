@@ -15,6 +15,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('localeConverter')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/converters/localeConverter.jsf"/>
+        <p:menuitem value="SanitizingConverter"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('sanitizingConverter')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/converters/sanitizingConverter.jsf"/>
     </p:menu>
 </ui:composition>
 </html>
