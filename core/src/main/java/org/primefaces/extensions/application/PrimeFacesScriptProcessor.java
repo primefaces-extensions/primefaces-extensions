@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.primefaces.clientwindow.PrimeClientWindow;
 import org.primefaces.clientwindow.PrimeClientWindowUtils;
 import org.primefaces.config.PrimeConfiguration;
+import org.primefaces.config.PrimeEnvironment;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.util.LocaleUtils;
@@ -64,14 +65,14 @@ import org.primefaces.util.LocaleUtils;
 public class PrimeFacesScriptProcessor implements SystemEventListener {
 
     @Override
-    public boolean isListenerForSource(Object source) {
+    public boolean isListenerForSource(final Object source) {
         return source instanceof UIViewRoot;
     }
 
     @Override
-    public void processEvent(SystemEvent event) throws AbortProcessingException {
-        FacesContext context = event.getFacesContext();
-        StringBuilder script = new StringBuilder(4000);
+    public void processEvent(final SystemEvent event) throws AbortProcessingException {
+        final FacesContext context = event.getFacesContext();
+        final StringBuilder script = new StringBuilder(4000);
 
         encodeSettingScripts(context, script);
         encodeInitScripts(context, script);
@@ -79,27 +80,32 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         addJS(context, script.toString());
     }
 
-    protected void encodeSettingScripts(FacesContext context, StringBuilder writer) {
-        PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
-        PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
-        PrimeConfiguration configuration = applicationContext.getConfig();
+    protected void encodeSettingScripts(final FacesContext context, final StringBuilder writer) {
+        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
+        final PrimeConfiguration configuration = applicationContext.getConfig();
 
-        ProjectStage projectStage = context.getApplication().getProjectStage();
+        final ProjectStage projectStage = context.getApplication().getProjectStage();
 
         writer.append("if(window.PrimeFaces){");
 
         writer.append("PrimeFaces.settings.locale='").append(LocaleUtils.getCurrentLocale(context)).append("';");
         writer.append("PrimeFaces.settings.viewId='").append(context.getViewRoot().getViewId()).append("';");
-        writer.append("PrimeFaces.settings.contextPath='").append(context.getExternalContext().getRequestContextPath()).append("';");
+        writer.append("PrimeFaces.settings.contextPath='").append(context.getExternalContext().getRequestContextPath())
+                    .append("';");
 
-        writer.append("PrimeFaces.settings.cookiesSecure=").append(requestContext.isSecure() && configuration.isCookiesSecure()).append(";");
+        writer.append("PrimeFaces.settings.cookiesSecure=")
+                    .append(requestContext.isSecure() && configuration.isCookiesSecure()).append(";");
         if (applicationContext.getConfig().getCookiesSameSite() != null) {
-            writer.append("PrimeFaces.settings.cookiesSameSite='").append(configuration.getCookiesSameSite()).append("';");
+            writer.append("PrimeFaces.settings.cookiesSameSite='").append(configuration.getCookiesSameSite())
+                        .append("';");
         }
 
         if (configuration.isClientSideValidationEnabled()) {
-            writer.append("PrimeFaces.settings.validateEmptyFields=").append(configuration.isValidateEmptyFields()).append(";");
-            writer.append("PrimeFaces.settings.considerEmptyStringNull=").append(configuration.isInterpretEmptyStringAsNull()).append(";");
+            writer.append("PrimeFaces.settings.validateEmptyFields=").append(configuration.isValidateEmptyFields())
+                        .append(";");
+            writer.append("PrimeFaces.settings.considerEmptyStringNull=")
+                        .append(configuration.isInterpretEmptyStringAsNull()).append(";");
         }
 
         if (configuration.isLegacyWidgetNamespace()) {
@@ -118,16 +124,17 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
             writer.append("PrimeFaces.settings.projectStage='").append(projectStage.toString()).append("';");
         }
 
-        if (applicationContext.getEnvironment().isAtLeastJsf22() && context.getExternalContext().getClientWindow() != null) {
+        if (applicationContext.getEnvironment().isAtLeastJsf22() &&
+                    context.getExternalContext().getClientWindow() != null) {
 
-            ClientWindow clientWindow = context.getExternalContext().getClientWindow();
+            final ClientWindow clientWindow = context.getExternalContext().getClientWindow();
             if (clientWindow instanceof PrimeClientWindow) {
 
                 boolean initialRedirect = false;
 
-                Object cookie = PrimeClientWindowUtils.getInitialRedirectCookie(context, clientWindow.getId());
+                final Object cookie = PrimeClientWindowUtils.getInitialRedirectCookie(context, clientWindow.getId());
                 if (cookie instanceof Cookie) {
-                    Cookie servletCookie = (Cookie) cookie;
+                    final Cookie servletCookie = (Cookie) cookie;
                     initialRedirect = true;
 
                     // expire/remove cookie
@@ -144,18 +151,19 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         writer.append("}");
     }
 
-    protected void encodeInitScripts(FacesContext context, StringBuilder writer) {
-        PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
-        List<String> scripts = requestContext.getInitScriptsToExecute();
+    protected void encodeInitScripts(final FacesContext context, final StringBuilder writer) {
+        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        final List<String> scripts = requestContext.getInitScriptsToExecute();
 
         if (!scripts.isEmpty()) {
-            boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig().isMoveScriptsToBottom();
+            final boolean moveScriptsToBottom = requestContext.getApplicationContext().getConfig()
+                        .isMoveScriptsToBottom();
 
             if (!moveScriptsToBottom) {
                 writer.append("$(function(){");
             }
 
-            for (String script : scripts) {
+            for (final String script : scripts) {
                 writer.append(script);
                 writer.append(';');
             }
@@ -166,9 +174,16 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
         }
     }
 
-    private void addJS(FacesContext context, String script) {
+    private void addJS(final FacesContext context, final String script) {
         final UIOutput js = new UIOutput();
         js.setRendererType("javax.faces.resource.Script");
+        // https://github.com/primefaces-extensions/primefaces-extensions/issues/486
+        // https://github.com/primefaces-extensions/primefaces-extensions/issues/517
+        // MyFaces needs ID set to prevent duplicate ID check in Dev mode, Mojarra does not
+        final PrimeEnvironment environment = PrimeApplicationContext.getCurrentInstance(context).getEnvironment();
+        if (!environment.isMojarra()) {
+            js.setId("primfaces-script-processor");
+        }
         final UIOutput content = new UIOutput();
         content.setValue(script);
         js.getChildren().add(content);
