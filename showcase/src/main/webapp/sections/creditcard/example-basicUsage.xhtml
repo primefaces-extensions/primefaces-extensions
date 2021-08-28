@@ -15,7 +15,12 @@
         </f:facet>
         <p:inputText id="number" placeholder="Card number" inputmode="numeric"/>
         <p:inputText id="name" placeholder="Full name"/>
-        <p:inputText id="expiry" placeholder="MM/YY" inputmode="numeric"/>
+        <p:outputPanel id="expiration">
+            <p:datePicker id="month" widgetVar="monthPicker" view="month" pattern="MM/yy" yearNavigator="true" yearRange="2000:2050"
+                          onchange="$('#expiry').val(PF('monthPicker').input.val()); $('#expiry')[0].dispatchEvent(new Event('change'));"/>
+            <!-- Hide Expiration field so we can use PF MonthPicker -->
+            <p:inputText id="expiry" placeholder="MM/YY" inputmode="numeric" style="display:none"/>
+        </p:outputPanel>
         <p:inputText id="cvc" placeholder="CVC" inputmode="numeric"/>
     </p:panelGrid>
     <!-- EXAMPLE-SOURCE-END -->
