@@ -38,7 +38,7 @@ import org.apache.commons.io.FileUtils;
  * - extract new ckeditor files
  * - remove samples dir
  * - Look for CRLF breaks the ckeditor.js such as tableselection.css that might break our parser
- * - Before executing ResourceModifier, modify the short hash (e.g t=L0QC) to match a new version of CKEditor
+ * - Before executing ResourceModifier, modify the short hash (e.g t=L7C8) to match a new version of CKEditor
  * - Execute ResourceModifier
  * - Try to run CKEditor and observe if any error occurs on both browser console and server console
  *    - The most common error is "Resources not found". If that's the case, please check if any new plugins's resources that
@@ -50,7 +50,7 @@ public class ResourceModifier {
 
     private static final String PROJECT_DIRECTORY = "C:\\dev\\primefaces\\primefaces-extensions\\ckeditor";
 
-    private static final String SHORT_HASH = "L0QC";
+    private static final String SHORT_HASH = "L7C8";
     private static final String URL_PFE = "url\\(\"#{resource['primefaces-extensions:";
 
     private static final int INDEX_NOT_FOUND = -1;
@@ -137,33 +137,33 @@ public class ResourceModifier {
 
         // modify copyFormatting plugin to load copyformatting.css via CKEditor.getUrl
         fileContent = fileContent.replaceAll(
-                    "this.path\\+\"styles/copyformatting.css\"",
+                    "this.path\\+(\\t|\\r?\\n)?\"styles/copyformatting.css\"",
                     "CKEDITOR.getUrl(this.path\\+\"styles/copyformatting.css\")");
 
         // modify scayt plugin to load scayt.css via CKEditor.getUrl
         fileContent = fileContent.replaceAll(
-                    "this.path\\+\"skins/\"\\+CKEDITOR.skin.name\\+\"/scayt.css\"",
+                    "this.path\\+(\\t|\\r?\\n)?\"skins/\"\\+(\\t|\\r?\\n)?CKEDITOR.skin.name\\+(\\t|\\r?\\n)?\"/scayt.css\"",
                     "CKEDITOR.getUrl(this.path\\+\"skins/\"\\+CKEDITOR.skin.name\\+\"/scayt.css\")");
 
         // modify wsc plugin to load wsc.css via CKEditor.getUrl
         fileContent = fileContent.replaceAll(
-                    "this.path\\+\"skins/\"\\+CKEDITOR.skin.name\\+\"/wsc.css\"",
+                    "this.path\\+(\\t|\\r?\\n)?\"skins/\"\\+(\\t|\\r?\\n)?CKEDITOR.skin.name\\+(\\t|\\r?\\n)?\"/wsc.css\"",
                     "CKEDITOR.getUrl(this.path\\+\"skins/\"\\+CKEDITOR.skin.name\\+\"/wsc.css\")");
 
         fileContent = fileContent.replaceAll(
-                    "this.path\\+\"styles/dialog.css\"",
+                    "this.path\\+(\\t|\\r?\\n)?\"styles/dialog.css\"",
                     "CKEDITOR.getUrl(this.path\\+\"styles/dialog.css\")");
 
         fileContent = fileContent.replaceAll(
-                    "this.path\\+\"styles/tableselection.css\"",
+                    "this.path\\+(\\t|\\r?\\n)?\"styles/tableselection.css\"",
                     "CKEDITOR.getUrl(this.path\\+\"styles/tableselection.css\")");
 
         // Math JAX plugin images
         fileContent = fileContent.replaceAll(
-                    "CKEDITOR.plugins.get\\(\"mathjax\"\\).path\\+\"images/loader.gif\"",
+                    "CKEDITOR.plugins.get\\(\"mathjax\"\\).path\\+(\\t|\\r?\\n)?\"images/loader.gif\"",
                     "CKEDITOR.getUrl(CKEDITOR.plugins.get\\(\"mathjax\"\\).path\\+\"images/loader.gif\")");
         fileContent = fileContent.replaceAll(
-                    "b.plugins.widget.path\\+\"images/handle.png",
+                    "b.plugins.widget.path\\+(\\t|\\r?\\n)?\"images/handle.png",
                     "CKEDITOR.getUrl(b.plugins.widget.path\\+\"images/handle.png\")\\+\"");
 
         // write file back out
@@ -224,7 +224,7 @@ public class ResourceModifier {
         return cs == null || cs.length() == 0;
     }
 
-    public static void log(String message) {
+    public static void log(final String message) {
         System.err.println(message);
     }
 }
