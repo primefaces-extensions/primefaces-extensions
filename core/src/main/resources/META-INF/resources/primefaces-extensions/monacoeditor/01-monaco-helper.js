@@ -224,33 +224,37 @@ window.monacoModule.helper = (function () {
    */
   async function createEditorConstructionOptions(context, extender, editorValue, wasLibLoaded) {
     const opts = context.getWidgetOptions();
-    const editorOptions = typeof opts.editorOptions === "object" ?
+    /** @type {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} */
+    const incomingEditorOptions = typeof opts.editorOptions === "object" ?
       opts.editorOptions :
       typeof opts.editorOptions === "string" ?
         JSON.parse(opts.editorOptions) :
         {};
 
-    const model = createModel(context, editorOptions, extender, editorValue);
-    const options = assign({
+    const model = createModel(context, incomingEditorOptions, extender, editorValue);
+    /** @type {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} */
+    const baseEditorOptions = {
+      domReadOnly: opts.readonly || opts.disabled,
       model: model,
-      readOnly: editorOptions.readonly || editorOptions.disabled,
-    }, editorOptions);
-    if (editorOptions.tabIndex) {
-      options.tabIndex = typeof editorOptions.tabIndex === "number"
-        ? editorOptions.tabIndex
-        : parseInt(String(editorOptions.tabIndex));
+      readOnly: opts.readonly || opts.disabled,
+    };
+    const editorOptions = assign(baseEditorOptions, incomingEditorOptions);
+    if (incomingEditorOptions.tabIndex) {
+      editorOptions.tabIndex = typeof incomingEditorOptions.tabIndex === "number"
+        ? incomingEditorOptions.tabIndex
+        : parseInt(String(incomingEditorOptions.tabIndex));
     }
 
     if (typeof extender.beforeCreate === "function") {
-      const result = extender.beforeCreate(context, options, wasLibLoaded);
+      const result = extender.beforeCreate(context, editorOptions, wasLibLoaded);
       if (typeof result === "object" && result !== null) {
         return typeof result["then"] === "function"
-          ? (await result) || options
+          ? (await result) || editorOptions
           : result;
       }
     }
 
-    return options;
+    return editorOptions;
   }
 
   /**
