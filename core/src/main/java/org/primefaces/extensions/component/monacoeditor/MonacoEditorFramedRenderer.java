@@ -45,7 +45,7 @@ public class MonacoEditorFramedRenderer extends MonacoEditorBaseRenderer<MonacoE
     }
 
     @Override
-    protected void addWidgetProperties(WidgetBuilder wb, MonacoEditorFramed monacoEditor) throws IOException {
+    protected void addWidgetProperties(FacesContext context, WidgetBuilder wb, MonacoEditorFramed monacoEditor) throws IOException {
         wb.attr("extender", monacoEditor.getExtender(), null);
         if (monacoEditor.getIframeUrlParams() instanceof Map<?, ?>) {
             wb.nativeAttr("iframeUrlParams", JSONWriter.valueToString(monacoEditor.getIframeUrlParams()));

@@ -1,21 +1,14 @@
-import * as monaco from "monaco-editor";
-
-// Can be removed when TypeScript DOM lib includes this in their declarations
-type ResizeObserverCallback<T extends Element = Element> = (entries: ResizeObserverEntry<T>[], observer: ResizeObserver<T>) => void;
-interface ResizeObserverEntry<T extends Element = Element> {
-  readonly target: T;
-  readonly contentRect: Readonly<DOMRect>;
-}
-
-interface MonacoLocale {
-  /** Map between the localization key and the localized string. */
-  data: Record<string, any>;
-  /** Language code such as `en` or `de`. */
-  language: string;
-}
+// @ts-check
 
 declare module "monaco-editor" {
-  interface Environment {
+  export interface MonacoLocale {
+    /** Map between the localization key and the localized string. */
+    data: Record<string, any>;
+    /** Language code such as `en` or `de`. */
+    language: string;
+  }
+
+  export interface Environment {
     /** Locale data to be used by the editor. */
     Locale?: MonacoLocale;
 
@@ -48,11 +41,6 @@ declare global {
    * __THIS IS UNSUPPORTED AND MAY BE CHANGED WITHOUT NOTICE. MAKE SURE YOU KNOW WHAT YOU ARE DOING AND USE AT YOUR OWN RISK.__
    */
   let monacoExtras: any;
-
-  class ResizeObserver<T extends Element = Element> {
-    constructor(callback: ResizeObserverCallback<T>);
-    observe(target: T): void;
-    unobserve(target: T): void;
-    disconnect(): void;
-  }
 }
+
+export {}

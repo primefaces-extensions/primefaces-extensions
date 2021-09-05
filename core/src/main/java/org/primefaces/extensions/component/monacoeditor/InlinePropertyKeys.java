@@ -31,6 +31,10 @@ enum InlinePropertyKeys {
     /**
      * Extender script to add custom functionality via JavaScript. Must be a JavaScript expression that evaluates to an extender instance.
      */
-    extender, //
-    ;
+    extender,
+
+    /**
+     * Search expression for a component. Places overflow widgets inside an external DOM node. Defaults to an internal DOM node.
+     */
+    overflowWidgetsDomNode;
 }

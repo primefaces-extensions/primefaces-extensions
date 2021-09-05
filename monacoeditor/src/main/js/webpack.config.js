@@ -31,16 +31,19 @@ module.exports = (env, argv) => {
       path: webpackOutputDir,
       filename: "[name].js",
     },
-    target: ['web', 'es5'],
+    target: ["web", "es5"],
     module: {
       rules: [
         {
           test: /\.css$/,
-          use: ["style-loader", "css-loader"],
+          use: [
+            "style-loader",
+            "css-loader",
+          ],
         },
         {
           test: /\.ttf$/,
-          use: ["url-loader"],
+          type: "asset/inline",
         }
       ]
     },
@@ -55,9 +58,6 @@ module.exports = (env, argv) => {
     ],
     optimization: {
       minimizer: [new TerserPlugin({ extractComments: false })],
-      splitChunks: {
-        minSize: 9999999999999999,
-      },
     }
   };
 };

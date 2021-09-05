@@ -455,6 +455,13 @@ declare namespace PrimeFaces {
        * Either `undefined` or JavaScript code that evaluates to the extender.
        */
       extender: () => ExtMonacoEditorBase.MonacoExtenderInline;
+      /**
+       * ID or PrimeFaces search expression for a DOM node. Places overflow
+       * widgets inside an external DOM node. Defaults to an internal DOM
+       * node. This is resolved to a DOM node and passed on to the monaco
+       * editor editor constructor option with the same name.
+       */
+      overflowWidgetsDomNode: string;
     }
 
     /**

@@ -4,19 +4,19 @@ window.monacoModule = window.monacoModule || {};
 
 window.monacoModule.ExtMonacoEditorBase = (function () {
   /**
-   * @template {PrimeFaces.widget.ExtMonacoEditorBaseCfgBase} T
+   * @template {PrimeFaces.widget.ExtMonacoEditorBaseCfg} T
    * @extends {PrimeFaces.widget.DeferredWidget<T>}
    */
   class BaseImpl extends PrimeFaces.widget.DeferredWidget {
     /**
-     * @param  {any[]} args Arguments as passed by PrimeFaces.
+     * @param  {PrimeFaces.PartialWidgetCfg<T>} cfg Arguments as passed by PrimeFaces.
      */
-    constructor(...args) {
-      super(...args);
+    constructor(cfg) {
+      super(cfg);
     }
 
     /**
-     * @param {Partial<T>} cfg
+     * @param {PrimeFaces.PartialWidgetCfg<T>} cfg
      * @param {Partial<T>} editorDefaults
      */
     _init(cfg, editorDefaults) {
@@ -67,7 +67,7 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
      * @return {string}
      */
     getWidgetId() {
-      return this.id;
+      return Array.isArray(this.id) ? this.id[0] || "" : this.id;
     }
 
     /**
@@ -140,7 +140,7 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
 
     /**
      * @param {string} eventName
-     * @param  {...any[]} params
+     * @param  {PrimeFaces.ajax.RequestParameter[]} params
      */
     _fireEvent(eventName, ...params) {
       const onName = "on" + eventName;
@@ -149,7 +149,7 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
         this.cfg[onName].apply(this, params || []);
       }
       this.callBehavior(eventName, {
-        params: params || {}
+        params: params || []
       });
     }
 

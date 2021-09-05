@@ -5,6 +5,33 @@ const mkdirp = require("mkdirp");
 
 const { javaDescriptorPackage, javaDescriptorPath } = require("../paths");
 
+const HeaderComment = `
+/*
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+// ============================================================
+// THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT EDIT DIRECTLY.
+// ============================================================`;
+
 let docId = 0;
 
 function Doc(data) {
@@ -13,6 +40,15 @@ function Doc(data) {
   }
   else {
     return `@Doc${++docId}`;
+  }
+}
+
+function Deprecated(data) {
+  if (data) {
+    return `@Deprecated${data}`;
+  }
+  else {
+    return `@Deprecated${++docId}`;
   }
 }
 
@@ -30,7 +66,7 @@ function breakText(comment, maxLength, firstLineMaxLength) {
   const lines = [];
   let line = "";
   for (const word of words) {
-    if (line.length +  1 + word.length <= (lines.length === 0 ? firstLineMaxLength : maxLength)) {
+    if (line.length + 1 + word.length <= (lines.length === 0 ? firstLineMaxLength : maxLength)) {
       if (line.length > 0) {
         line += " ";
       }
@@ -47,13 +83,16 @@ function breakText(comment, maxLength, firstLineMaxLength) {
   return lines;
 }
 
-function createGetterDoc(docString) {
+function createGetterDoc(docString, currentDeprecation) {
   if (docString) {
-    return [
-      `    /**`,
-      `     * @return ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8).join("\n     * "))}`,
-      `     */`,
-    ].join("\n");
+    const lines = [];
+    lines.push(`    /**`);
+    if (currentDeprecation !== undefined) {
+      lines.push(`     * @deprecated ${escapeHtml(breakText(currentDeprecation, 120 - 7, 120 - 7 - 12).join("\n     * "))}`);
+    }
+    lines.push(`     * @return ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8).join("\n     * "))}`);
+    lines.push(`     */`);
+    return lines.join("\n");
   }
   else {
     return "";
@@ -86,14 +125,17 @@ function createTypeDoc(docString) {
   }
 }
 
-function createSetterDoc(name, docString) {
+function createSetterDoc(name, docString, currentDeprecation) {
   if (docString) {
-    return [
-      `    /**`,
-      `     * @param ${fieldName(name)} ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8 - fieldName(name).length).join("\n     * "))}`,
-      `     * @return This same instance, useful for chaining multiple setter methods in one call.`,
-      `     */`,
-    ].join("\n");
+    const lines = [];
+    lines.push(`    /**`);
+    if (currentDeprecation !== undefined) {
+      lines.push(`     * @deprecated ${escapeHtml(breakText(currentDeprecation, 120 - 7, 120 - 7 - 12).join("\n     * "))}`);
+    }
+    lines.push(`     * @param ${fieldName(name)} ${escapeHtml(breakText(docString, 120 - 7, 120 - 7 - 8 - fieldName(name).length).join("\n     * "))}`);
+    lines.push(`     * @return This same instance, useful for chaining multiple setter methods in one call.`);
+    lines.push(`     */`);
+    lines.join("\n");
   }
   else {
     return "";
@@ -171,7 +213,7 @@ function escapeString(name) {
  * @return {string}
  */
 function toJavaName(name) {
-  return name.split(/[^a-zA-Z0-9_]/).map((x,i) => i > 0 ? capitalize(x) : x).join("");
+  return name.split(/[^a-zA-Z0-9_]/).map((x, i) => i > 0 ? capitalize(x) : x).join("");
 }
 
 function createSimpleGetter(asField, name, type) {
@@ -220,15 +262,38 @@ function createEnumSetter(asField, clazz, name, type) {
 
 function createHead(clazz, docString) {
   return [
-    `// THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT EDIT DIRECTLY.`,
+    HeaderComment,
+    ``,
     `package ${javaDescriptorPackage};`,
     ``,
     `import org.primefaces.shaded.json.*;`,
+    `import java.io.ObjectStreamException;`,
     `import java.io.Serializable;`,
     ``,
     `@SuppressWarnings("serial")`,
     createTypeDoc(docString),
     `public class ${clazz} extends JSONObject implements Serializable {`,
+    `    private Object writeReplace() throws ObjectStreamException {`,
+    `        return new Serialized${clazz}(this);`,
+    `    }`,
+    ``,
+    `    private static class Serialized${clazz} implements Serializable {`,
+    `        private String json;`,
+    ``,
+    `        public Serialized${clazz}(${clazz} ${lower(clazz)}) {`,
+    `            this.json = ${lower(clazz)}.toString();`,
+    `        }`,
+    ``,
+    `        private Object readResolve() throws ObjectStreamException {`,
+    `            final ${clazz} ${lower(clazz)} = new ${clazz}();`,
+    `            final JSONObject data = new JSONObject(json);`,
+    `            for (final String key : data.keySet()) {`,
+    `                final Object value = data.get(key);`,
+    `                ${lower(clazz)}.put(key, value);`,
+    `            }`,
+    `            return ${lower(clazz)};`,
+    `        }`,
+    `    }`,
   ].filter(x => x !== undefined).join("\n");
 }
 
@@ -245,21 +310,32 @@ function createClass(clazz, fields, classDoc) {
   const lines = [];
   lines.push(createHead(clazz, classDoc));
   let currentDoc = undefined;
+  let currentDeprecation = undefined;
   for (const name of Object.keys(fields)) {
     const type = fields[name];
     const isDoc = name.startsWith("@Doc") && typeof type === "string" ? true : false;
+    const isDeprecated = name.startsWith("@Deprecated") && typeof type === "string" ? true : false;
     if (isDoc) {
       currentDoc = String(type);
+    }
+    else if (isDeprecated) {
+      currentDeprecation = String(type);
     }
     else {
       lines.push("");
       if (currentDoc) {
-        lines.push(createGetterDoc(currentDoc));
+        lines.push(createGetterDoc(currentDoc, currentDeprecation));
+      }
+      if (currentDeprecation !== undefined) {
+        lines.push("    @Deprecated");
       }
       lines.push(type.getter(name, type));
       lines.push("");
       if (currentDoc) {
-        lines.push(createSetterDoc(name, currentDoc));
+        lines.push(createSetterDoc(name, currentDoc, currentDeprecation));
+      }
+      if (currentDeprecation !== undefined) {
+        lines.push("    @Deprecated");
       }
       lines.push(type.setter(clazz, name, type));
       if (type.methods) {
@@ -268,6 +344,7 @@ function createClass(clazz, fields, classDoc) {
           lines.push(method(clazz, name, type));
         }
       }
+      currentDeprecation = undefined;
       currentDoc = undefined;
     }
   }
@@ -279,15 +356,18 @@ function createClass(clazz, fields, classDoc) {
 function createEnum(clazz, typeDoc, ...data) {
   const lines = data.map(item => {
     item = global.Array.isArray(item) ? item[0] : item;
-    if (item.startsWith("@Doc")) {
+    if (item.startsWith("@Deprecated")) {
+      return "@Deprecated";
+    }
+    else if (item.startsWith("@Doc")) {
       return createEnumDoc(item.substring(4));
     }
     else {
       return `    ${enumCase(item)}("${item}"),\n`;
     }
   });
-  return `
-// THIS FILE WAS GENERATED AUTOMATICALLY. DO NOT EDIT DIRECTLY.
+  return `${HeaderComment}
+
 package ${javaDescriptorPackage};
 
 ${createTypeDoc(typeDoc?.substring(4))}
@@ -376,7 +456,10 @@ function Map(keyType, valueType, asField = false) {
         return [
           `    public ${clazz} add${stripPlural(capitalize(name))}(final ${type.generics[0].value} key, final ${type.generics[1].value} value) {`,
           `        ${type.value} x = ${getterName(name, type)}();`,
-          `        if (x == null) ${setterName(name)}(x = new JSONObject());`,
+          `        if (x == null) {`,
+          `            x = new JSONObject();`,
+          `            ${setterName(name)}(x);`,
+          `        }`,
           `        x.put(key, value);`,
           `        return this;`,
           `    }`,
@@ -384,7 +467,7 @@ function Map(keyType, valueType, asField = false) {
       },
       set(clazz, name, type) {
         return [
-          `    public ${clazz} set${capitalize(name)}(java.util.Map<${type.generics[0].value},${type.generics[1].value}> ${name}) {`,
+          `    public ${clazz} set${capitalize(name)}(java.util.Map<${type.generics[0].value}, ${type.generics[1].value}> ${name}) {`,
           `        return set${capitalize(name)}(new JSONObject(${name}));`,
           `    }`,
         ].join("\n");
@@ -406,7 +489,7 @@ function Enum(clazz, ...constants) {
     asField = constants[0];
     constants = constants.slice(1);
   }
-  
+
   const code = createEnum(clazz, typeDoc, ...constants);
   const file = path.join(javaDescriptorPath, clazz + ".java");
   fs.writeFile(file, code, { encoding: "latin1" }, function (err) {
@@ -488,5 +571,6 @@ exports.Number = T_Number;
 exports.Set = Set;
 exports.String = T_String;
 
+exports.Deprecated = Deprecated;
 exports.Doc = Doc;
 exports.clean = clean;

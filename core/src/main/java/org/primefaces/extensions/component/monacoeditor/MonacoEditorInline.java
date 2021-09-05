@@ -74,4 +74,12 @@ public class MonacoEditorInline extends MonacoEditorBase {
     public final void setExtender(final String extender) {
         getStateHelper().put(InlinePropertyKeys.extender, extender);
     }
+
+    public final String getOverflowWidgetsDomNode() {
+        return (String) getStateHelper().eval(InlinePropertyKeys.overflowWidgetsDomNode, null);
+    }
+
+    public final void setOverflowWidgetsDomNode(final String overflowWidgetsDomNode) {
+        getStateHelper().put(InlinePropertyKeys.overflowWidgetsDomNode, overflowWidgetsDomNode);
+    }
 }
