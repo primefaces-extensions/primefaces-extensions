@@ -244,6 +244,15 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
       const wasLibLoaded = await loadEditorLib(this.cfg, forceLibReload);
       this.getEditorContainer().empty();
       const options = await createEditorConstructionOptions(this, extender, this._editorValue, wasLibLoaded);
+      if (this.cfg.overflowWidgetsDomNode !== undefined && this.cfg.overflowWidgetsDomNode.length > 0) {
+        const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.overflowWidgetsDomNode);
+        if (target !== undefined && target.length > 0) {
+          options.overflowWidgetsDomNode = target.get(0);
+        }
+        else {
+          console.warn(`Target '${this.cfg.overflowWidgetsDomNode}' for option overflowWidgetsDomNode was not found in the DOM`);
+        }
+      }
       return { extender, options, wasLibLoaded };
     }
 

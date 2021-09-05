@@ -62,7 +62,7 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         this.componentClass = clazz;
     }
 
-    protected abstract void addWidgetProperties(WidgetBuilder wb, T monacoEditor) throws IOException;
+    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, T monacoEditor) throws IOException;
 
     protected void array(WidgetBuilder wb, String key, Iterable<String> values) throws IOException {
         final StringBuilder builder = new StringBuilder();
@@ -208,7 +208,7 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         wb.callback("onkeydown", CALLBACK_SIGNATURE, monacoEditor.getOnkeydown());
         wb.callback("onpaste", CALLBACK_SIGNATURE, monacoEditor.getOnpaste());
 
-        addWidgetProperties(wb, monacoEditor);
+        addWidgetProperties(context, wb, monacoEditor);
 
         encodeClientBehaviors(context, monacoEditor);
         wb.finish();

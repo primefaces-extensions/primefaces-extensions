@@ -449,13 +449,17 @@ window.monacoModule.helper = (function () {
     localeUrl: "",
   };
 
+
+  /** @type {PrimeFaces.widget.ExtMonacoEditorFramedCfgBase} */
   const FramedEditorDefaults = assign({}, BaseEditorDefaults, {
     extender: "",
     iframeUrlParams: {},
   });
 
+  /** @type {PrimeFaces.widget.ExtMonacoEditorInlineCfgBase} */
   const InlineEditorDefaults = assign({}, BaseEditorDefaults, {
     extender: () => ({}),
+    overflowWidgetsDomNode: "",
   });
 
   return {

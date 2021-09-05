@@ -611,6 +611,21 @@
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A PrimeFaces search expression of a component. Places overflow widgets inside an external
+                DOM node. Defaults to an internal DOM node when not given. May be useful when the editor is used
+                inside an element obscured by other component. You can, for example, append the overflow widget
+                to the body. Note 1: you probably also need to set <code>fixedOverflowWidgets</code> on the editor
+                options for this to work. Note 2: For now, you either need need to add the CSS class
+                <code>monaco-editor</code> to the container to style the overflow widgets properly, or add the
+                appropriate CSS yourself. Note 3: As of monaco-editor 0.27.0, this option has several issues
+                with event handling, use at your own risk. This will most likely be fixed in a later version
+                of monaco-editor.]]>
+            </description>
+            <name>overflowWidgetsDomNode</name>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>
