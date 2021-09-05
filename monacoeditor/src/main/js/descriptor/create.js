@@ -85,7 +85,7 @@ clean(err => {
         sticky: Boolean(),
     }, "Configuration options for editor hover");
 
-    const EditorInlineHintOptions = Class("EditorInlineHintOptions", {
+    const EditorInlayHintOptions = Class("EditorInlayHintOptions", {
         [Doc()]: "Enable the inline hints. Defaults to {@code true}.",
         enabled: Boolean(),
 
@@ -352,7 +352,7 @@ clean(err => {
         hover: EditorHoverOptions,
 
         [Doc()]: "Control the behavior and rendering of the inline hints.",
-        inlayHints: EditorInlineHintOptions,
+        inlayHints: EditorInlayHintOptions,
 
         [Doc()]: "Control the behavior and rendering of the inline completions.",
         inlineSuggest: EditorInlineSuggestOptions,

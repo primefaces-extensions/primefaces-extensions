@@ -32,14 +32,14 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
    */
   class InlineImpl extends ExtMonacoEditorBase {
     /**
-     * @param  {...any[]} args Arguments as passed by PrimeFaces.
+     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg Arguments as passed by PrimeFaces.
      */
-    constructor(...args) {
-      super(...args);
+    constructor(cfg) {
+      super(cfg);
     }
 
     /**
-     * @param {Partial<typeof InlineEditorDefaults>} cfg
+     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg
      */
     init(cfg) {
       super._init(cfg, InlineEditorDefaults);
@@ -202,7 +202,7 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      */
     _onRefresh() {
       this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
-      PrimeFaces.removeDeferredRenders(this.id);
+      PrimeFaces.removeDeferredRenders(String(this.id));
       this._onDestroy();
     }
 

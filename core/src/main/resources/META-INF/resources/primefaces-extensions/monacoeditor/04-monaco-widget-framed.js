@@ -20,14 +20,14 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
    */
   class FramedImpl extends ExtMonacoEditorBase {
     /**
-     * @param  {...any[]} args Arguments as passed by PrimeFaces.
+     * @param  {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoEditorFramedCfg>} cfg Arguments as passed by PrimeFaces.
      */
-    constructor(...args) {
-      super(...args);
+    constructor(cfg) {
+      super(cfg);
     }
 
     /**
-     * @param {Partial<typeof FramedEditorDefaults>} cfg
+     * @param {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoEditorFramedCfg>} cfg
      */
     init(cfg) {
       super._init(cfg, FramedEditorDefaults);
@@ -179,7 +179,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
         kind: "init",
         data: {
           facesResourceUri: getFacesResourceUri(),
-          id: this.id,
+          id: this.getWidgetId(),
           nonce: PrimeFaces.csp.NONCE_VALUE,
           options: this._createCloneableOptions(),
           resolvedLocaleUrl: this._resolvedLocaleUrl,

@@ -460,6 +460,47 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!-- Check monaco editor widget types -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <configuration>
+                    <workingDirectory>${project.basedir}/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor</workingDirectory>
+                </configuration>
+                <executions>
+                    <!-- Install node -->
+                    <execution>
+                        <id>pfe-install-node-and-npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                    <!-- Install dependencies -->
+                    <execution>
+                        <id>pfe-npm-install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                    <!-- Check typings -->
+                    <execution>
+                        <id>pfe-check-monaco-widget-typings</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>run check</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>

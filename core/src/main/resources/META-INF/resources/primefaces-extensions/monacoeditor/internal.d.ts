@@ -77,7 +77,7 @@ interface PromiseHook<T> {
 declare class ExtMonacoEditorBase<
   TCfg extends PrimeFaces.widget.ExtMonacoEditorBaseCfg
   > extends PrimeFaces.widget.ExtMonacoEditorBase<TCfg> {
-  _init(cfg: Partial<TCfg>, defaults: Partial<TCfg>): void;
+  _init(cfg: PrimeFaces.PartialWidgetCfg<TCfg>, defaults: Partial<TCfg>): void;
   _bindEvents(): void;
   _editorValue: string;
   _onDone: PromiseHook<this>[];
