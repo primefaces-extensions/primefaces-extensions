@@ -259,6 +259,33 @@
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
+                        <!-- PDF Viewer Compression -->
+                        <resourcesSet>
+                            <includes>
+                                <include>documentviewer/pdf.viewer.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/documentviewer/pdf.viewer.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>documentviewer/pdf.worker.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/documentviewer/pdf.worker.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                    <removeIncluded>false</removeIncluded>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
                         <!-- MonacoEditorInline widget -->
                         <resourcesSet>
                             <includes>
