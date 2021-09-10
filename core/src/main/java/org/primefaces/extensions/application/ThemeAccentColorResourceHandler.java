@@ -26,7 +26,8 @@ import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
 /**
- * This resource handler replaces the accent color of the Arya, Saga and Vela themes with variables. Variables are named themeX, theme is the lower case theme name, X is the index number of the color.
+ * This resource handler replaces the accent color of the Arya, Saga and Vela themes with variables. Variables are named themeX, theme is the lower case theme
+ * name, X is the index number of the color.
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.1
