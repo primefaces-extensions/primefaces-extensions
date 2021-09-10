@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.resourcehandler;
+package org.primefaces.extensions.application;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -96,7 +96,7 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
         final byte[] buffer = new byte[1024];
         final InputStream inputStream = wrapped.getInputStream();
-        for (int length; (length = inputStream.read(buffer)) != -1;) {
+        for (int length; (length = inputStream.read(buffer)) != -1; ) {
             result.write(buffer, 0, length);
         }
         return result.toString(charEncoding);

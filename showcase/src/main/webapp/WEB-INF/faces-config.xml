@@ -16,7 +16,7 @@
         <el-resolver>
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
         </el-resolver>
-        <resource-handler>org.primefaces.extensions.resourcehandler.ThemeAccentColorResourceHandler</resource-handler>
+        <resource-handler>org.primefaces.extensions.application.ThemeAccentColorResourceHandler</resource-handler>
         <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
         <system-event-listener>
             <system-event-listener-class>org.primefaces.extensions.application.PrimeFacesScriptProcessor</system-event-listener-class>

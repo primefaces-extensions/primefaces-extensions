@@ -19,13 +19,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.resourcehandler;
+package org.primefaces.extensions.application;
 
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
 /**
+ * This resource handler replaces the accent color of the Arya, Saga and Vela themes with variables. Variables are named themeX, theme is the lower case theme name, X is the index number of the color.
+ *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.1
  */
@@ -36,7 +38,7 @@ public class ThemeAccentColorResourceHandler extends ResourceHandlerWrapper {
 
     private final ResourceHandler wrapped;
 
-    public ThemeAccentColorResourceHandler(ResourceHandler wrapped) {
+    public ThemeAccentColorResourceHandler(final ResourceHandler wrapped) {
         this.wrapped = wrapped;
     }
 
@@ -47,7 +49,7 @@ public class ThemeAccentColorResourceHandler extends ResourceHandlerWrapper {
     }
 
     @Override
-    public Resource createResource(String resourceName, String libraryName) {
+    public Resource createResource(final String resourceName, final String libraryName) {
         if (isPrimeFacesTheme(resourceName, libraryName)) {
             return new ThemeAccentColorResource(super.createResource(resourceName, libraryName));
         }
