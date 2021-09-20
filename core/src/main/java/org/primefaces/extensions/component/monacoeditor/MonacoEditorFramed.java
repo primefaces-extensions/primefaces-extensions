@@ -32,12 +32,13 @@ import javax.faces.event.BehaviorEvent;
  * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
  * additional overhead.
  *
- * @since 10.0.0
  * @see MonacoEditorInline
+ * @since 10.0.0
  */
 @SuppressWarnings("java:S110")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-framed.js")
 public class MonacoEditorFramed extends MonacoEditorBase {
 
@@ -80,7 +81,7 @@ public class MonacoEditorFramed extends MonacoEditorBase {
         return getStateHelper().eval(FramedPropertyKeys.iframeUrlParams, null);
     }
 
-    public void setIframeUrlParams(Object iframeUrlParams) {
+    public void setIframeUrlParams(final Object iframeUrlParams) {
         getStateHelper().put(FramedPropertyKeys.iframeUrlParams, iframeUrlParams);
     }
 }

@@ -31,12 +31,13 @@ import javax.faces.event.BehaviorEvent;
  * Component for the Monaco code editor JavaScript library. This is the inline monaco editor that creates a new instance in a textarea element on the same page.
  * There is also framed version available that creates an editor in an iframe for better scoping.
  *
- * @since 10.0.0
  * @see MonacoEditorFramed
+ * @since 10.0.0
  */
 @SuppressWarnings("java:S110")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
+@ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-inline.js")
 public class MonacoEditorInline extends MonacoEditorBase {
 
