@@ -1,9 +1,10 @@
+// @ts-check
+
 const gitPullOrClone = require('git-pull-or-clone');
 const fs = require("fs");
 const path = require("path");
 const recursive = require("recursive-readdir");
 const mkdirp = require("mkdirp");
-const replaceInFile = require("replace-in-file");
 const ncp = require("ncp").ncp;
 const rimraf = require("rimraf");
 
@@ -45,6 +46,22 @@ function sourceFileExists(key) {
 }
 
 /**
+ * @param {string} file 
+ * @param {[RegExp, string][]} replacements 
+ */
+function replaceInFile(file, ...replacements) {
+    let content = fs.readFileSync(file, {encoding: "utf-8"});
+    let replaced = false;
+    for (const replacement of replacements) {
+        replaced = replaced || replacement[0].test(content);
+        content = content.replace(replacement[0], replacement[1]);
+    }
+    if (replaced) {
+        fs.writeFileSync(file, content, {encoding: "utf-8"});
+    }
+}
+
+/**
  * The call to the `localize` function only include the i18 key, but translations
  * in the microsoft/vscode-loc repository are first grouped by source file name,
  * then i18n key. So we modify the each call to `localize` so that it includes
@@ -77,17 +94,16 @@ function injectSourcePath(callback) {
                     if (file.endsWith(".js")) {
                         const vsPath = path.relative(monacoModEsmDir, path.dirname(file)).replace(/\\/g, "/");
                         const transPath = vsPath + "/" + path.basename(file, ".js");
-                        replaceInFile({
-                            files: file,
-                            from: [
+                        replaceInFile(file,
+                            [
                                 /localize\(/g,
-                                /localize\.apply\(\s*([^,]+)\s*,\s*\[/g,
-                            ],
-                            to: [
                                 `localize('${transPath}', `,
+                            ],
+                            [
+                                /localize\.apply\(\s*([^,]+)\s*,\s*\[/g,
                                 `localize.apply($1, ['${transPath}', `,
                             ],
-                        });
+                        );
                     }
                 });
                 callback();
@@ -113,7 +129,7 @@ function createLocale(lang, langPath, callback) {
         }
         files.forEach(file => {
             if (file.endsWith(".i18n.json")) {
-                const data = fs.readFileSync(file, { encoding: "UTF-8" });
+                const data = fs.readFileSync(file, { encoding: "utf-8" });
                 let json;
                 try {
                     json = JSON.parse(data);
@@ -198,7 +214,7 @@ function main() {
                             if (err) throw err;
                             mkdirp.sync(generatedSourceLocaleDir)
                             const mappedLang = lang;
-                            fs.writeFile(path.join(generatedSourceLocaleDir, mappedLang + ".js"), createScript(mappedLang, locale), { encoding: "UTF-8" }, err => {
+                            fs.writeFile(path.join(generatedSourceLocaleDir, mappedLang + ".js"), createScript(mappedLang, locale), { encoding: "utf-8" }, err => {
                                 if (err) throw err;
                                 console.log("generated locale " + mappedLang + ".js");
                             });
