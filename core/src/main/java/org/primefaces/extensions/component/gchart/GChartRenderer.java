@@ -51,11 +51,7 @@ public class GChartRenderer extends CoreRenderer {
     protected void encodeMarkup(final FacesContext context, final GChart chart) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
 
-        writer.startElement("input", chart);
-        writer.writeAttribute("id", chart.getClientId() + "_hidden", null);
-        writer.writeAttribute("name", chart.getClientId() + "_hidden", null);
-        writer.writeAttribute("type", "hidden", null);
-        writer.endElement("input");
+        renderHiddenInput(context, chart.getClientId() + "_hidden", null, false);
 
         writer.startElement("div", chart);
         writer.writeAttribute("id", chart.getClientId(), null);

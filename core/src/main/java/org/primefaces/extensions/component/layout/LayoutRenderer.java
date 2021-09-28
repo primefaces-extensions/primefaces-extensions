@@ -78,12 +78,7 @@ public class LayoutRenderer extends CoreRenderer {
             if (!layout.isStateCookie()) {
                 // render hidden field for server-side state saving
                 final String clientId = layout.getClientId(fc);
-                writer.startElement("input", null);
-                writer.writeAttribute("type", "hidden", null);
-                writer.writeAttribute("id", clientId + "_state", null);
-                writer.writeAttribute("name", clientId + "_state", null);
-                writer.writeAttribute("autocomplete", "off", null);
-                writer.endElement("input");
+                renderHiddenInput(fc, clientId + "_state", null, false);
             }
 
             writer.endElement("div");

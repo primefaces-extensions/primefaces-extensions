@@ -168,13 +168,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
     protected void encodeHiddenInput(final FacesContext context, final InputPhone inputPhone, final String clientId)
                 throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
-        writer.startElement("input", null);
-        writer.writeAttribute("type", "hidden", null);
-        writer.writeAttribute("id", clientId + HIDDEN_ID, null);
-        writer.writeAttribute("name", clientId + HIDDEN_ID, null);
-        writer.writeAttribute("value", inputPhone.getInitialCountry(), null);
-        writer.endElement("input");
+        renderHiddenInput(context, clientId + HIDDEN_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
     }
 
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {

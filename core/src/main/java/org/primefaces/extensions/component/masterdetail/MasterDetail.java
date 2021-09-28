@@ -282,7 +282,7 @@ public class MasterDetail extends UIComponentBase {
     public boolean isSelectDetailRequest(final FacesContext fc) {
         return fc.getPartialViewContext().isAjaxRequest()
                     && fc.getExternalContext().getRequestParameterMap()
-                    .containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
+                                .containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
     }
 
     public String getPreserveInputs(final FacesContext fc) {

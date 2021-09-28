@@ -144,9 +144,7 @@ public class MasterDetailRenderer extends CoreRenderer {
         }
         final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = masterDetail.getClientId(fc);
-        final String styleClass = masterDetail.getStyleClass() == null ?
-                    "pe-master-detail" :
-                    "pe-master-detail " + masterDetail.getStyleClass();
+        final String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
 
         writer.startElement("div", masterDetail);
         writer.writeAttribute("id", clientId, "id");

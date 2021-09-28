@@ -48,8 +48,7 @@ public class GChartModelBuilder {
 
     public GChartModelBuilder importTreeNode(final TreeNode root) {
         final String label = String.valueOf(root.getData());
-        final String parentLabel =
-                    root.getParent() != null ? String.valueOf(root.getParent().getData()) : Constants.EMPTY_STRING;
+        final String parentLabel = root.getParent() != null ? String.valueOf(root.getParent().getData()) : Constants.EMPTY_STRING;
 
         this.addRow(label, parentLabel);
 

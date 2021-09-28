@@ -47,6 +47,7 @@ import org.primefaces.util.LocaleUtils;
  * <p>
  * Register it as below in faces-config.xml:
  * </p>
+ * 
  * <pre>
  *   &lt;lifecycle&gt;
  *      &lt;phase-listener&gt;org.primefaces.extensions.application.PrimeFacesResourceProcessor&lt;/phase-listener&gt;

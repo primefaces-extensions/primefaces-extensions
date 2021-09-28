@@ -112,7 +112,7 @@ public class SheetRenderer extends CoreRenderer {
             responseWriter.writeAttribute(Attrs.STYLE, "width: " + width + "px;", null);
         }
 
-        encodeHiddenInputs(responseWriter, sheet, clientId);
+        encodeHiddenInputs(context, sheet, clientId);
         encodeFilterValues(responseWriter, sheet, clientId);
         encodeHeader(context, responseWriter, sheet);
 
@@ -147,9 +147,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb       the WidgetBuilder to append to
+     * @param wb the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value    the value
+     * @param value the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
@@ -162,9 +162,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb       the WidgetBuilder to append to
+     * @param wb the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value    the value
+     * @param value the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
@@ -178,7 +178,7 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Javascript for the sheet.
      *
      * @param context the FacesContext
-     * @param sheet   the Sheet
+     * @param sheet the Sheet
      * @throws IOException if any IO error occurs
      */
     protected void encodeScript(final FacesContext context, final Sheet sheet)
@@ -512,54 +512,13 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encode hidden input fields
      */
-    private void encodeHiddenInputs(final ResponseWriter responseWriter, final Sheet sheet, final String clientId)
+    private void encodeHiddenInputs(final FacesContext fc, final Sheet sheet, final String clientId)
                 throws IOException {
-        responseWriter.startElement("input", null);
-        responseWriter.writeAttribute("id", clientId + "_input", "id");
-        responseWriter.writeAttribute("name", clientId + "_input", "name");
-        responseWriter.writeAttribute("type", "hidden", null);
-        responseWriter.writeAttribute("value", "", null);
-        responseWriter.endElement("input");
-
-        responseWriter.startElement("input", null);
-        responseWriter.writeAttribute("id", clientId + "_focus", "id");
-        responseWriter.writeAttribute("name", clientId + "_focus", "name");
-        responseWriter.writeAttribute("type", "hidden", null);
-        if (sheet.getFocusId() == null) {
-            responseWriter.writeAttribute("value", "", null);
-        }
-        else {
-            responseWriter.writeAttribute("value", sheet.getFocusId(), null);
-        }
-        responseWriter.endElement("input");
-
-        responseWriter.startElement("input", null);
-        responseWriter.writeAttribute("id", clientId + "_selection", "id");
-        responseWriter.writeAttribute("name", clientId + "_selection", "name");
-        responseWriter.writeAttribute("type", "hidden", null);
-        if (sheet.getSelection() == null) {
-            responseWriter.writeAttribute("value", "", null);
-        }
-        else {
-            responseWriter.writeAttribute("value", sheet.getSelection(), null);
-        }
-        responseWriter.endElement("input");
-
-        // sort col and order if specified and supported
-        final int sortCol = sheet.getSortColRenderIndex();
-        responseWriter.startElement("input", null);
-        responseWriter.writeAttribute("id", clientId + "_sortby", "id");
-        responseWriter.writeAttribute("name", clientId + "_sortby", "name");
-        responseWriter.writeAttribute("type", "hidden", null);
-        responseWriter.writeAttribute("value", sortCol, null);
-        responseWriter.endElement("input");
-
-        responseWriter.startElement("input", null);
-        responseWriter.writeAttribute("id", clientId + "_sortorder", "id");
-        responseWriter.writeAttribute("name", clientId + "_sortorder", "name");
-        responseWriter.writeAttribute("type", "hidden", null);
-        responseWriter.writeAttribute("value", sheet.getSortOrder().toLowerCase(), null);
-        responseWriter.endElement("input");
+        renderHiddenInput(fc, clientId + "_input", null, false);
+        renderHiddenInput(fc, clientId + "_focus", sheet.getFocusId(), false);
+        renderHiddenInput(fc, clientId + "_selection", sheet.getSelection(), false);
+        renderHiddenInput(fc, clientId + "_sortby", Integer.toString(sheet.getSortColRenderIndex()), false);
+        renderHiddenInput(fc, clientId + "_sortorder", sheet.getSortOrder().toLowerCase(), false);
     }
 
     /**
@@ -831,7 +790,7 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes client behaviors (ajax events).
      *
-     * @param context   the FacesContext
+     * @param context the FacesContext
      * @param component the Component being decodes
      */
     @Override
