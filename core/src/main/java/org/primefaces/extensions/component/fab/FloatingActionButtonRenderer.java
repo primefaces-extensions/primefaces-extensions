@@ -22,7 +22,6 @@
 package org.primefaces.extensions.component.fab;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -105,7 +104,8 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         writer.endElement("ul");
     }
 
-    protected void encodeMenuItem(final FacesContext context, final ResponseWriter writer, final FloatingActionButton fab,
+    protected void encodeMenuItem(final FacesContext context, final ResponseWriter writer,
+                final FloatingActionButton fab,
                 final MenuItem menuItem) throws IOException {
         writer.startElement("li", fab);
         writer.writeAttribute("role", "menuitem", null);
