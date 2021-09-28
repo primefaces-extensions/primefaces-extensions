@@ -40,16 +40,18 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 7.0.1
+ * @deprecated replaced with PrimeFaces Speed Dial
  */
+@Deprecated
 public class FloatingActionButtonRenderer extends BaseMenuRenderer {
 
     @Override
-    public void decode(FacesContext context, UIComponent component) {
+    public void decode(final FacesContext context, final UIComponent component) {
         decodeBehaviors(context, component);
     }
 
     @Override
-    protected void encodeMarkup(FacesContext context, AbstractMenu menu) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final AbstractMenu menu) throws IOException {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = fab.getClientId(context);
@@ -66,7 +68,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeMainButton(ResponseWriter writer, FloatingActionButton fab) throws IOException {
+    protected void encodeMainButton(final ResponseWriter writer, final FloatingActionButton fab) throws IOException {
         // Button, start
         writer.startElement("span", fab);
         String classes = "ui-fab-main ui-button";
@@ -92,9 +94,10 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeMenu(FacesContext context, ResponseWriter writer, FloatingActionButton fab) throws IOException {
+    protected void encodeMenu(final FacesContext context, final ResponseWriter writer, final FloatingActionButton fab)
+                throws IOException {
         writer.startElement("ul", fab);
-        for (final MenuElement child : (List<MenuElement>) fab.getElements()) {
+        for (final MenuElement child : fab.getElements()) {
             if (child.isRendered() && child instanceof MenuItem) {
                 encodeMenuItem(context, writer, fab, (MenuItem) child);
             }
@@ -102,7 +105,8 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
         writer.endElement("ul");
     }
 
-    protected void encodeMenuItem(FacesContext context, ResponseWriter writer, FloatingActionButton fab, MenuItem menuItem) throws IOException {
+    protected void encodeMenuItem(final FacesContext context, final ResponseWriter writer, final FloatingActionButton fab,
+                final MenuItem menuItem) throws IOException {
         writer.startElement("li", fab);
         writer.writeAttribute("role", "menuitem", null);
         writer.writeAttribute(Attrs.CLASS, "ui-button", null);
@@ -118,7 +122,7 @@ public class FloatingActionButtonRenderer extends BaseMenuRenderer {
     }
 
     @Override
-    protected void encodeScript(FacesContext context, AbstractMenu menu) throws IOException {
+    protected void encodeScript(final FacesContext context, final AbstractMenu menu) throws IOException {
         final FloatingActionButton fab = (FloatingActionButton) menu;
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtFAB", fab);

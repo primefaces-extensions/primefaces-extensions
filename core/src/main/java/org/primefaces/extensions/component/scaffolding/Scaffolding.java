@@ -35,11 +35,13 @@ import org.primefaces.component.api.Widget;
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.3
+ * @deprecated replaced with PrimeFaces OutputPanel deferred mode
  */
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "scaffolding/scaffolding.js")
+@Deprecated
 public class Scaffolding extends UIComponentBase implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Scaffolding";
@@ -83,7 +85,7 @@ public class Scaffolding extends UIComponentBase implements Widget {
         return (Boolean) getStateHelper().eval(PropertyKeys.ready, false);
     }
 
-    public void setReady(boolean ready) {
+    public void setReady(final boolean ready) {
         getStateHelper().put(PropertyKeys.ready, ready);
     }
 
@@ -91,7 +93,7 @@ public class Scaffolding extends UIComponentBase implements Widget {
         return (MethodExpression) getStateHelper().eval(PropertyKeys.loader, null);
     }
 
-    public void setLoader(MethodExpression loader) {
+    public void setLoader(final MethodExpression loader) {
         getStateHelper().put(PropertyKeys.loader, loader);
     }
 
@@ -99,7 +101,7 @@ public class Scaffolding extends UIComponentBase implements Widget {
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         getStateHelper().put(PropertyKeys.style, style);
     }
 
@@ -107,7 +109,7 @@ public class Scaffolding extends UIComponentBase implements Widget {
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 

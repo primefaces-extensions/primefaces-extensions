@@ -38,7 +38,9 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 10.0.3
+ * @deprecated replaced with PrimeFaces OutputPanel deferred mode
  */
+@Deprecated
 public class ScaffoldingRenderer extends CoreRenderer {
 
     @Override
