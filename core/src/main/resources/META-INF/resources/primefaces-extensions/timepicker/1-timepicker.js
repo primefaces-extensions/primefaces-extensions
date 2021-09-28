@@ -515,6 +515,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         return this.jq.fgtimepicker('getMinute');
     },
 
+    /**
+     * Disables this input so that the user cannot enter a value anymore.
+     */
     disable: function () {
         this.jq.fgtimepicker('disable');
 
@@ -527,6 +530,9 @@ PrimeFaces.widget.ExtTimePicker = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
+    /**
+     * Enables this input so that the user can enter a value.
+     */
     enable: function () {
         this.jq.fgtimepicker('enable');
 

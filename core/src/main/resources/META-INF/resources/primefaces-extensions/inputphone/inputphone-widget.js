@@ -1,6 +1,6 @@
 /**
  * PrimeFaces Extensions InputPhone Widget.
- * 
+ *
  * @author Jasper de Vries jepsar@gmail.com
  * @since 7.0
  */
@@ -8,11 +8,11 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
-     * 
+     *
      * @param {object}
      *            cfg The widget configuration.
      */
-    init : function (cfg) {
+    init: function (cfg) {
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
@@ -42,7 +42,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.bindEvents();
     },
 
-    bindEvents : function () {
+    bindEvents: function () {
         var $this = this;
 
         this.input.addEventListener('countrychange', function () {
@@ -50,16 +50,16 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
             $this.inputIso2Jq.val(country.iso2);
             if ($this.hasBehavior('countrySelect')) {
                 var ext = {
-                    params : [ {
-                        name : $this.id + '_name',
-                        value : country.name
+                    params: [{
+                        name: $this.id + '_name',
+                        value: country.name
                     }, {
-                        name : $this.id + '_iso2',
-                        value : country.iso2
+                        name: $this.id + '_iso2',
+                        value: country.iso2
                     }, {
-                        name : $this.id + '_dialCode',
-                        value : country.dialCode
-                    } ]
+                        name: $this.id + '_dialCode',
+                        value: country.dialCode
+                    }]
                 };
                 $this.callBehavior('countrySelect', ext);
             }
@@ -69,7 +69,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Get the current number in the given format.
      */
-    getNumber : function () {
+    getNumber: function () {
         if (this.iti) {
             return this.iti.getNumber();
         }
@@ -80,11 +80,11 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Insert a number, and update the selected flag accordingly. Note that if
      * formatOnDisplay is enabled, this will attempt to format the number
      * according to the nationalMode option.
-     * 
+     *
      * @param number
      *            The value to set
      */
-    setNumber : function (number) {
+    setNumber: function (number) {
         if (this.iti) {
             this.iti.setNumber(number);
         }
@@ -93,7 +93,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Get the country data for the currently selected flag.
      */
-    getCountry : function () {
+    getCountry: function () {
         if (this.iti) {
             return this.iti.getSelectedCountryData();
         }
@@ -103,11 +103,11 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Change the country selection (e.g. when the user is entering their
      * address).
-     * 
+     *
      * @param country
      *            The country code
      */
-    setCountry : function (country) {
+    setCountry: function (country) {
         if (this.iti) {
             this.iti.setCountry(country);
         }
@@ -115,11 +115,11 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Change the placeholderNumberType option.
-     * 
+     *
      * @param type
      *            the new type like "FIXED_LINE"
      */
-    setPlaceholderNumberType : function (type) {
+    setPlaceholderNumberType: function (type) {
         if (this.iti) {
             this.iti.setPlaceholderNumberType(type);
         }
@@ -127,10 +127,10 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Validate the current number
-     * 
+     *
      * @return true if valid, false if not
      */
-    isValidNumber : function () {
+    isValidNumber: function () {
         if (this.iti) {
             return this.iti.isValidNumber();
         }
@@ -140,7 +140,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Get more information about a validation error. Can look up the error code
      * in utils.js.
      */
-    getValidationError : function () {
+    getValidationError: function () {
         if (this.iti) {
             return this.iti.getValidationError();
         }
@@ -150,7 +150,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     /**
      * Focus the component by focusing on the correct input box.
      */
-    focus: function() {
+    focus: function () {
         this.inputJq.focus();
     },
 
@@ -158,9 +158,8 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Enable the input
      */
     enable: function () {
-        this.inputJq.removeAttr("disabled");
-        this.inputJq.removeClass("ui-state-disabled");
-        this.inputIso2Jq.removeAttr("disabled");
+        PrimeFaces.utils.enableInputWidget(this.inputJq);
+        PrimeFaces.utils.enableInputWidget(this.inputIso2Jq);
         this.disabled = false;
     },
 
@@ -168,14 +167,13 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
      * Disable the input
      */
     disable: function () {
-        this.inputJq.attr("disabled", "disabled");
-        this.inputJq.addClass("ui-state-disabled");
-        this.inputIso2Jq.attr("disabled", "disabled");
+        PrimeFaces.utils.disableInputWidget(this.inputJq);
+        PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
         this.disabled = true;
     },
 
     // @override
-    refresh : function (cfg) {
+    refresh: function (cfg) {
         if (this.iti) {
             this.iti.destroy();
         }
@@ -183,7 +181,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     },
 
     // @override
-    destroy : function () {
+    destroy: function () {
         this._super();
         if (this.iti) {
             this.iti.destroy();
