@@ -168,30 +168,6 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
-                                <include>printer/printer.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/printer/printer.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>printer/printer.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/printer/printer.css</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
                                 <include>codemirror/lib/codemirror.js</include>
                                 <include>codemirror/widget.js</include>
                             </includes>
