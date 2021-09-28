@@ -100,17 +100,17 @@ public class DocumentViewerRenderer extends CoreRenderer {
 
         // zoom level. Example: zoom=200 (accepted formats: '[zoom],[left],[top]',
         // 'page-width', 'page-height', 'page-fit', 'auto')
-        if (!LangUtils.isValueBlank(documentViewer.getZoom())) {
+        if (LangUtils.isNotBlank(documentViewer.getZoom())) {
             params.add("zoom=" + documentViewer.getZoom());
         }
 
         // nameddest: go to a named destination
-        if (!LangUtils.isValueBlank(documentViewer.getNameddest())) {
+        if (LangUtils.isNotBlank(documentViewer.getNameddest())) {
             params.add("nameddest=" + documentViewer.getNameddest());
         }
 
         // pagemode: either "thumbs" or "bookmarks". Example: pagemode=thumbs
-        if (!LangUtils.isValueBlank(documentViewer.getPagemode())) {
+        if (LangUtils.isNotBlank(documentViewer.getPagemode())) {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 

@@ -106,7 +106,7 @@ public class BlockUIRenderer extends CoreRenderer {
         final String eventRegEx;
         final String events = blockUI.getEvent();
 
-        if (LangUtils.isValueBlank(events)) {
+        if (LangUtils.isBlank(events)) {
             // no events means all events of the given source are accepted
             eventRegEx = "/" + Constants.RequestParams.PARTIAL_SOURCE_PARAM + "=" + source + "(.)*$/";
         }

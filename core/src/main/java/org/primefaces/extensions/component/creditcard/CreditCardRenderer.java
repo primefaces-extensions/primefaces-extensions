@@ -48,7 +48,7 @@ public class CreditCardRenderer extends CoreRenderer {
         encodeScript(context, creditCard);
     }
 
-    protected void encodeMarkup(FacesContext context, CreditCard creditCard) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final CreditCard creditCard) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = creditCard.getClientId(context);
         final String widgetVar = creditCard.resolveWidgetVar();
@@ -61,7 +61,7 @@ public class CreditCardRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    protected void encodeScript(FacesContext context, CreditCard creditCard) throws IOException {
+    protected void encodeScript(final FacesContext context, final CreditCard creditCard) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtCreditCard", creditCard);
         wb.attr("width", creditCard.getWidth(), 350);
@@ -72,13 +72,13 @@ public class CreditCardRenderer extends CoreRenderer {
 
         final StringBuilder placeholder = new StringBuilder(1024);
         placeholder.append("{name:'").append(creditCard.getPlaceholderName()).append("'");
-        if (!LangUtils.isValueBlank(creditCard.getPlaceholderNumber())) {
+        if (!LangUtils.isBlank(creditCard.getPlaceholderNumber())) {
             placeholder.append(",number:'").append(creditCard.getPlaceholderNumber()).append("'");
         }
-        if (!LangUtils.isValueBlank(creditCard.getPlaceholderExpiry())) {
+        if (!LangUtils.isBlank(creditCard.getPlaceholderExpiry())) {
             placeholder.append(",expiry:'").append(creditCard.getPlaceholderExpiry()).append("'");
         }
-        if (!LangUtils.isValueBlank(creditCard.getPlaceholderCvc())) {
+        if (!LangUtils.isBlank(creditCard.getPlaceholderCvc())) {
             placeholder.append(",cvc:'").append(creditCard.getPlaceholderCvc()).append("'");
         }
         placeholder.append("}");

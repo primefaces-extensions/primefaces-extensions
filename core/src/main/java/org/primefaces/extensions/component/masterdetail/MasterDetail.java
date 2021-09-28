@@ -186,7 +186,7 @@ public class MasterDetail extends UIComponentBase {
         final MasterDetailLevel mdl = getDetailLevelToProcess(fc);
         final Object contextValue = getContextValueFromFlow(fc, mdl, true);
         final String contextVar = mdl.getContextVar();
-        if (!LangUtils.isValueBlank(contextVar) && contextValue != null) {
+        if (LangUtils.isNotBlank(contextVar) && contextValue != null) {
             final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
             requestMap.put(contextVar, contextValue);
         }
@@ -235,8 +235,10 @@ public class MasterDetail extends UIComponentBase {
             return detailLevelToGo;
         }
 
-        final String strSelectedLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + SELECTED_LEVEL);
-        final String strSelectedStep = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + SELECTED_STEP);
+        final String strSelectedLevel = fc.getExternalContext().getRequestParameterMap()
+                    .get(getClientId(fc) + SELECTED_LEVEL);
+        final String strSelectedStep = fc.getExternalContext().getRequestParameterMap()
+                    .get(getClientId(fc) + SELECTED_STEP);
 
         // selected level != null
         if (strSelectedLevel != null) {
@@ -279,7 +281,8 @@ public class MasterDetail extends UIComponentBase {
 
     public boolean isSelectDetailRequest(final FacesContext fc) {
         return fc.getPartialViewContext().isAjaxRequest()
-                    && fc.getExternalContext().getRequestParameterMap().containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
+                    && fc.getExternalContext().getRequestParameterMap()
+                    .containsKey(getClientId(fc) + SELECT_DETAIL_REQUEST);
     }
 
     public String getPreserveInputs(final FacesContext fc) {
@@ -300,7 +303,8 @@ public class MasterDetail extends UIComponentBase {
         }
 
         // get component caused this ajax request
-        final String source = fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
+        final String source = fc.getExternalContext().getRequestParameterMap()
+                    .get(Constants.RequestParams.PARTIAL_SOURCE_PARAM);
         final MasterDetailLevel mdl = getDetailLevelToProcess(fc);
 
         // get resolved context value
@@ -323,7 +327,8 @@ public class MasterDetail extends UIComponentBase {
         }
     }
 
-    public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl, final boolean includeModel) {
+    public Object getContextValueFromFlow(final FacesContext fc, final MasterDetailLevel mdl,
+                final boolean includeModel) {
         // try to get context value from internal storage
         final Object contextValue = mdl.getAttributes().get(getClientId(fc) + MasterDetail.CURRENT_CONTEXT_VALUE);
         if (contextValue != null) {
@@ -387,7 +392,8 @@ public class MasterDetail extends UIComponentBase {
     }
 
     private void initDataForLevels(final FacesContext fc) {
-        final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + CURRENT_LEVEL);
+        final String strCurrentLevel = fc.getExternalContext().getRequestParameterMap()
+                    .get(getClientId(fc) + CURRENT_LEVEL);
         if (strCurrentLevel == null) {
             throw new FacesException("Current level is missing in request.");
         }
@@ -456,7 +462,7 @@ public class MasterDetail extends UIComponentBase {
     }
 
     @Override
-    public Object saveState(FacesContext context) {
+    public Object saveState(final FacesContext context) {
         // reset component for MyFaces view pooling
         detailLevelToGo = null;
         detailLevelToProcess = null;

@@ -21,8 +21,18 @@
  */
 package org.primefaces.extensions.component.sheet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -182,9 +192,9 @@ public class Sheet extends SheetBase {
      * The list of rendered child columns.
      */
     public List<SheetColumn> getRenderedColumns() {
-        List<SheetColumn> allColumns = getColumns();
-        List<SheetColumn> renderedCols = new ArrayList<>(allColumns.size());
-        for (SheetColumn column : allColumns) {
+        final List<SheetColumn> allColumns = getColumns();
+        final List<SheetColumn> renderedCols = new ArrayList<>(allColumns.size());
+        for (final SheetColumn column : allColumns) {
             if (column.isRendered()) {
                 renderedCols.add(column);
             }
@@ -294,7 +304,7 @@ public class Sheet extends SheetBase {
      * Updates the row var for iterations over the list. The var value will be updated to the value for the specified rowKey.
      *
      * @param context the FacesContext against which to the row var is set. Passed for performance
-     * @param rowKey the rowKey string
+     * @param rowKey  the rowKey string
      */
     public void setRowVar(final FacesContext context, final String rowKey) {
 
@@ -393,7 +403,7 @@ public class Sheet extends SheetBase {
         // Was the column by which to sort changed by the user, ie. is there a saved ID?
         String currentSortById = (String) getStateHelper().get(PropertyKeys.currentSortBy.name());
         // Otherwise, did the user specify a valid column ID for the sortBy attribute?
-        if (LangUtils.isValueEmpty(currentSortById)) {
+        if (LangUtils.isEmpty(currentSortById)) {
             final Object sortBy = getStateHelper().eval(PropertyKeys.sortBy.name());
             if (sortBy instanceof String) {
                 currentSortById = (String) sortBy;
@@ -445,7 +455,7 @@ public class Sheet extends SheetBase {
     protected boolean matchesFilter() {
         for (final SheetColumn col : getColumns()) {
             final String filterValue = col.getFilterValue();
-            if (LangUtils.isValueBlank(filterValue)) {
+            if (LangUtils.isBlank(filterValue)) {
                 continue;
             }
 
@@ -456,7 +466,7 @@ public class Sheet extends SheetBase {
             }
 
             String filterMatchMode = col.getFilterMatchMode();
-            if (LangUtils.isValueBlank(filterMatchMode)) {
+            if (LangUtils.isBlank(filterMatchMode)) {
                 filterMatchMode = "contains";
             }
 
@@ -508,10 +518,10 @@ public class Sheet extends SheetBase {
 
         remapRows();
 
-        List<SheetColumn> columns = getRenderedColumns();
+        final List<SheetColumn> columns = getRenderedColumns();
         boolean filters = false;
         for (final SheetColumn col : columns) {
-            if (!LangUtils.isValueBlank(col.getFilterValue())) {
+            if (LangUtils.isNotBlank(col.getFilterValue())) {
                 filters = true;
                 break;
             }
@@ -547,7 +557,8 @@ public class Sheet extends SheetBase {
             veSortBy = getValueExpression(PropertyKeys.sortBy.name());
         }
         if (veSortBy != null) {
-            SortMeta sortMeta = SortMeta.builder().field("field").caseSensitiveSort(isCaseSensitiveSort()).sortBy(veSortBy).order(convertSortOrder())
+            final SortMeta sortMeta = SortMeta.builder().field("field").caseSensitiveSort(isCaseSensitiveSort())
+                        .sortBy(veSortBy).order(convertSortOrder())
                         .nullSortOrder(getNullSortOrder()).build();
             filteredList.sort(new BeanPropertyComparator(var, sortMeta, Locale.ENGLISH));
         }
@@ -686,7 +697,8 @@ public class Sheet extends SheetBase {
 
                     final String messageText = message.getDetail();
                     getInvalidUpdates()
-                                .add(new SheetInvalidUpdate(getRowKeyValue(context), col, column, newValue, messageText));
+                                .add(new SheetInvalidUpdate(getRowKeyValue(context), col, column, newValue,
+                                            messageText));
                     continue;
                 }
             }
@@ -1023,7 +1035,7 @@ public class Sheet extends SheetBase {
     /**
      * Adds eval scripts to the ajax response to update the rows dirtied by the most recent successful update request.
      *
-     * @param context the FacesContext
+     * @param context   the FacesContext
      * @param dirtyRows the set of dirty rows
      */
     public void renderRowUpdateScript(final FacesContext context, final Set<String> dirtyRows) {

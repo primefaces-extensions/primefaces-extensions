@@ -105,7 +105,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
 
         private final String toString;
 
-        PropertyKeys(String toString) {
+        PropertyKeys(final String toString) {
             this.toString = toString;
         }
 
@@ -261,7 +261,7 @@ public class Layout extends UIComponentBase implements Widget, ClientBehaviorHol
         }
 
         final String state = fc.getExternalContext().getRequestParameterMap().get(getClientId(fc) + "_state");
-        if (!LangUtils.isValueBlank(state)) {
+        if (LangUtils.isNotBlank(state)) {
             final ValueExpression stateVE = getValueExpression(PropertyKeys.state.toString());
             if (stateVE != null) {
                 // save "state"

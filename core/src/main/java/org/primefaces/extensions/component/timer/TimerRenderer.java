@@ -34,7 +34,11 @@ import javax.faces.event.PhaseId;
 import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.*;
+import org.primefaces.util.AjaxRequestBuilder;
+import org.primefaces.util.ComponentTraversalUtils;
+import org.primefaces.util.Constants;
+import org.primefaces.util.LangUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link Timer}
@@ -79,7 +83,8 @@ public class TimerRenderer extends CoreRenderer {
         writer.writeAttribute("id", timer.getClientId(), null);
         writer.writeAttribute("title", timer.getTitle(), null);
         writer.writeAttribute(Attrs.CLASS, Timer.STYLE_CLASS + " " + timer.getStyleClass(), "styleclass");
-        writer.writeAttribute(Attrs.STYLE, (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), Attrs.STYLE);
+        writer.writeAttribute(Attrs.STYLE,
+                    (!timer.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + timer.getStyle(), Attrs.STYLE);
         writer.endElement("span");
     }
 
@@ -120,15 +125,15 @@ public class TimerRenderer extends CoreRenderer {
                     .attr("locale", timer.calculateLocale().toString())
                     .callback("listener", "function()", request);
 
-        if (!LangUtils.isValueBlank(timer.getOntimerstep())) {
+        if (LangUtils.isNotBlank(timer.getOntimerstep())) {
             wb.callback("ontimerstep", "function(intervalData)", timer.getOntimerstep());
         }
 
-        if (!LangUtils.isValueBlank(timer.getFormatFunction())) {
+        if (LangUtils.isNotBlank(timer.getFormatFunction())) {
             wb.callback("formatFunction", "function(value)", timer.getFormatFunction());
         }
 
-        if (!LangUtils.isValueBlank(timer.getOntimercomplete())) {
+        if (LangUtils.isNotBlank(timer.getOntimercomplete())) {
             wb.callback("ontimercomplete", "function()", timer.getOntimercomplete());
         }
 

@@ -63,8 +63,8 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
      * @param value the value to sanitize
      * @return sanitized string
      */
-    public String sanitize(String value) {
-        if (LangUtils.isValueBlank(value)) {
+    public String sanitize(final String value) {
+        if (LangUtils.isBlank(value)) {
             return value;
         }
         String result = getPolicy().sanitize(value);
@@ -75,12 +75,12 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
     }
 
     @Override
-    public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
+    public Object getAsObject(final FacesContext fc, final UIComponent uic, final String value) {
         return value == null ? null : sanitize(value);
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Object o) {
+    public String getAsString(final FacesContext fc, final UIComponent uic, final Object o) {
         return o == null ? Constants.EMPTY_STRING : sanitize(o.toString());
     }
 
@@ -91,7 +91,7 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
         return policy;
     }
 
-    public void setPolicy(org.owasp.html.PolicyFactory policy) {
+    public void setPolicy(final org.owasp.html.PolicyFactory policy) {
         this.policy = policy;
     }
 
@@ -99,7 +99,7 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
         return decodeHtml;
     }
 
-    public void setDecodeHtml(boolean decodeHtml) {
+    public void setDecodeHtml(final boolean decodeHtml) {
         this.decodeHtml = decodeHtml;
     }
 

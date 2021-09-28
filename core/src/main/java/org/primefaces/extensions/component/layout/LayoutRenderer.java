@@ -109,7 +109,7 @@ public class LayoutRenderer extends CoreRenderer {
             wb.attr("serverState", true);
 
             final String state = layout.getState();
-            if (!LangUtils.isValueBlank(state)) {
+            if (LangUtils.isNotBlank(state)) {
                 wb.attr("state", state);
             }
             else {
@@ -127,7 +127,7 @@ public class LayoutRenderer extends CoreRenderer {
         }
         else if (layoutOptions instanceof String) {
             // already serialized as JSON string
-            wb.append(",options:" + layoutOptions.toString());
+            wb.append(",options:" + layoutOptions);
         }
         else {
             wb.append(",options:{}");

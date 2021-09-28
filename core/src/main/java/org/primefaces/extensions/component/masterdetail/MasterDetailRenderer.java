@@ -109,7 +109,8 @@ public class MasterDetailRenderer extends CoreRenderer {
 
         if (mdl == null) {
             throw new FacesException(
-                        "MasterDetailLevel [Level=" + masterDetail.getLevel() + "] must be nested inside a MasterDetail component!");
+                        "MasterDetailLevel [Level=" + masterDetail.getLevel() +
+                                    "] must be nested inside a MasterDetail component!");
         }
 
         // render MasterDetailLevel
@@ -119,11 +120,14 @@ public class MasterDetailRenderer extends CoreRenderer {
         masterDetail.resetCalculatedValues();
     }
 
-    protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdlToProcess,
+    protected MasterDetailLevel getDetailLevelToEncode(final FacesContext fc, final MasterDetail masterDetail,
+                final MasterDetailLevel mdlToProcess,
                 final MasterDetailLevel mdlToGo) {
         if (masterDetail.getSelectLevelListener() != null) {
-            final SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(), mdlToGo.getLevel());
-            final int levelToEncode = (Integer) masterDetail.getSelectLevelListener().invoke(fc.getELContext(), new Object[] {selectLevelEvent});
+            final SelectLevelEvent selectLevelEvent = new SelectLevelEvent(masterDetail, mdlToProcess.getLevel(),
+                        mdlToGo.getLevel());
+            final int levelToEncode = (Integer) masterDetail.getSelectLevelListener()
+                        .invoke(fc.getELContext(), new Object[] {selectLevelEvent});
             if (levelToEncode != mdlToGo.getLevel()) {
                 // new MasterDetailLevel to go
                 return masterDetail.getDetailLevelByLevel(levelToEncode);
@@ -133,13 +137,16 @@ public class MasterDetailRenderer extends CoreRenderer {
         return mdlToGo;
     }
 
-    protected void encodeMarkup(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl) throws IOException {
+    protected void encodeMarkup(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl)
+                throws IOException {
         if (mdl == null) {
             throw new FacesException("MasterDetailLevel must be nested inside a MasterDetail component!");
         }
         final ResponseWriter writer = fc.getResponseWriter();
         final String clientId = masterDetail.getClientId(fc);
-        final String styleClass = masterDetail.getStyleClass() == null ? "pe-master-detail" : "pe-master-detail " + masterDetail.getStyleClass();
+        final String styleClass = masterDetail.getStyleClass() == null ?
+                    "pe-master-detail" :
+                    "pe-master-detail " + masterDetail.getStyleClass();
 
         writer.startElement("div", masterDetail);
         writer.writeAttribute("id", clientId, "id");
@@ -173,7 +180,7 @@ public class MasterDetailRenderer extends CoreRenderer {
         // try to get context value if contextVar exists
         Object contextValue = null;
         final String contextVar = mdl.getContextVar();
-        if (!LangUtils.isValueBlank(contextVar)) {
+        if (LangUtils.isNotBlank(contextVar)) {
             contextValue = masterDetail.getContextValueFromFlow(fc, mdl, true);
         }
 
@@ -196,7 +203,8 @@ public class MasterDetailRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    protected void renderBreadcrumb(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl) throws IOException {
+    protected void renderBreadcrumb(final FacesContext fc, final MasterDetail masterDetail, final MasterDetailLevel mdl)
+                throws IOException {
         // get breadcrumb and its current model
         final BreadCrumb breadcrumb = masterDetail.getBreadcrumb();
 
@@ -207,7 +215,8 @@ public class MasterDetailRenderer extends CoreRenderer {
         breadcrumb.encodeAll(fc);
     }
 
-    protected void encodeFacet(final FacesContext fc, final UIComponent component, final String name) throws IOException {
+    protected void encodeFacet(final FacesContext fc, final UIComponent component, final String name)
+                throws IOException {
         final UIComponent facet = component.getFacet(name);
         if (ComponentUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(fc);
@@ -244,9 +253,10 @@ public class MasterDetailRenderer extends CoreRenderer {
                 else {
                     menuItem.setRendered(true);
 
-                    final Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl, mdl.getLevel() == mdlToRender.getLevel());
+                    final Object contextValue = masterDetail.getContextValueFromFlow(fc, mdl,
+                                mdl.getLevel() == mdlToRender.getLevel());
                     final String contextVar = mdl.getContextVar();
-                    final boolean putContext = !LangUtils.isValueBlank(contextVar) && contextValue != null;
+                    final boolean putContext = LangUtils.isNotBlank(contextVar) && contextValue != null;
 
                     if (putContext) {
                         final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
@@ -288,7 +298,8 @@ public class MasterDetailRenderer extends CoreRenderer {
 
                     if (!menuItem.isDisabled()) {
                         // set current level parameter
-                        updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL, levelToRender);
+                        updateUIParameter(menuItem, masterDetail.getClientId(fc) + MasterDetail.CURRENT_LEVEL,
+                                    levelToRender);
                     }
                 }
 
@@ -299,7 +310,8 @@ public class MasterDetailRenderer extends CoreRenderer {
         }
     }
 
-    protected DefaultMenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail masterDetail, final MasterDetailLevel mdl) {
+    protected DefaultMenuItem getMenuItemByLevel(final BreadCrumb breadcrumb, final MasterDetail masterDetail,
+                final MasterDetailLevel mdl) {
         final String menuItemId = masterDetail.getId() + "_bcItem_" + mdl.getLevel();
         for (final MenuElement child : breadcrumb.getModel().getElements()) {
             if (menuItemId.equals(child.getId())) {

@@ -84,7 +84,7 @@ public class TimePickerRenderer extends InputRenderer {
     @Override
     public Object getConvertedValue(final FacesContext fc, final UIComponent component, final Object submittedValue) {
         final String value = (String) submittedValue;
-        if (LangUtils.isValueBlank(value)) {
+        if (LangUtils.isBlank(value)) {
             return null;
         }
 
@@ -160,7 +160,7 @@ public class TimePickerRenderer extends InputRenderer {
             writer.writeAttribute("readonly", "readonly", null);
         }
 
-        if (!LangUtils.isValueBlank(value)) {
+        if (LangUtils.isNotBlank(value)) {
             writer.writeAttribute("value", value, null);
         }
 
@@ -253,7 +253,7 @@ public class TimePickerRenderer extends InputRenderer {
         wb.attr("locale", timepicker.calculateLocale().toString());
         wb.attr("disabled", timepicker.isDisabled() || timepicker.isReadonly());
 
-        if (LangUtils.isValueBlank(value)) {
+        if (LangUtils.isBlank(value)) {
             wb.attr("defaultTime", Constants.EMPTY_STRING);
         }
         else if (timepicker.isInline()) {

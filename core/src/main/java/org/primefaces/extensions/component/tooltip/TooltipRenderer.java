@@ -29,7 +29,12 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.*;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
+import org.primefaces.util.EscapeUtils;
+import org.primefaces.util.FastStringWriter;
+import org.primefaces.util.LangUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link Tooltip} component.
@@ -86,12 +91,12 @@ public class TooltipRenderer extends CoreRenderer {
             }
         }
 
-        final boolean hasText = !global && !LangUtils.isValueBlank(text);
+        final boolean hasText = !global && LangUtils.isNotBlank(text);
         if (hasText) {
             wb.append("text: \"" + EscapeUtils.forJavaScript(text) + "\"");
         }
 
-        if (!LangUtils.isValueBlank(header)) {
+        if (LangUtils.isNotBlank(header)) {
             String headerValue = Constants.EMPTY_STRING;
             if (hasText) {
                 headerValue = ",";
@@ -102,7 +107,7 @@ public class TooltipRenderer extends CoreRenderer {
         wb.append("}");
 
         // style (if no class is set it will default to ThemeRoller widget=true)
-        final boolean isStyled = !LangUtils.isValueBlank(styleClass);
+        final boolean isStyled = LangUtils.isNotBlank(styleClass);
         wb.append(",style: {");
         wb.append("widget:" + !isStyled);
         if (isStyled) {

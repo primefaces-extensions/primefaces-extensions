@@ -38,7 +38,11 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
-import org.primefaces.util.*;
+import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
+import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for the {@link InputPhone} component.
@@ -84,9 +88,10 @@ public class InputPhoneRenderer extends InputRenderer {
     }
 
     @Override
-    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+    public Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object submittedValue) {
         final String value = (String) submittedValue;
-        if (LangUtils.isValueBlank(value)) {
+        if (LangUtils.isBlank(value)) {
             return null;
         }
 
@@ -97,7 +102,8 @@ public class InputPhoneRenderer extends InputRenderer {
             return converter.getAsObject(context, inputPhone, value);
         }
 
-        String country = context.getExternalContext().getRequestParameterMap().get(inputPhone.getClientId() + HIDDEN_ID);
+        String country = context.getExternalContext().getRequestParameterMap()
+                    .get(inputPhone.getClientId() + HIDDEN_ID);
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
@@ -110,7 +116,8 @@ public class InputPhoneRenderer extends InputRenderer {
         return value;
     }
 
-    protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender) throws IOException {
+    protected void encodeMarkup(final FacesContext context, final InputPhone inputPhone, final String valueToRender)
+                throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = inputPhone.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
@@ -132,7 +139,8 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("span");
     }
 
-    protected void encodeInput(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
+    protected void encodeInput(final FacesContext context, final InputPhone inputPhone, final String clientId,
+                final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
@@ -185,7 +193,7 @@ public class InputPhoneRenderer extends InputRenderer {
         if (!inputPhone.isFormatOnDisplay()) {
             wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay());
         }
-        if (!LangUtils.isValueBlank(inputPhone.getInitialCountry())) {
+        if (LangUtils.isNotBlank(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
         }
         if (InputPhone.COUNTRY_AUTO.equals(inputPhone.getInitialCountry())) {
@@ -218,7 +226,8 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.finish();
     }
 
-    private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value) throws IOException {
+    private void encodeCountries(final WidgetBuilder wb, final String attribute, final Object value)
+                throws IOException {
         final Collection<String> countries = toCollection(value);
         if (!countries.isEmpty()) {
             wb.nativeAttr(attribute, new JSONArray(countries).toString());

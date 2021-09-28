@@ -64,7 +64,7 @@ public class GChartRenderer extends CoreRenderer {
 
     protected void encodeScript(final FacesContext context, final GChart chart) throws IOException {
         String apiKey = chart.getApiKey();
-        if (LangUtils.isValueBlank(apiKey)) {
+        if (LangUtils.isBlank(apiKey)) {
             apiKey = getApiKey(context);
         }
 

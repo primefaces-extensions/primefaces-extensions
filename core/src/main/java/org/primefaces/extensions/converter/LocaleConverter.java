@@ -51,7 +51,7 @@ public class LocaleConverter implements Converter<Object>, Serializable {
 
     @Override
     public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
-        if (LangUtils.isValueBlank(value)) {
+        if (LangUtils.isBlank(value)) {
             return fc.getApplication().getDefaultLocale();
         }
 
@@ -111,13 +111,13 @@ public class LocaleConverter implements Converter<Object>, Serializable {
                 return new Locale(parts[0]);
 
             default:
-                String[] arr = ExtLangUtils.subarray(parts, 2, parts.length);
+                final String[] arr = ExtLangUtils.subarray(parts, 2, parts.length);
                 return new Locale(parts[0], parts[1], String.join("_", arr));
         }
     }
 
     public static String getLocaleString(final Locale locale, final char seperator) {
-        if (LangUtils.isValueBlank(locale.getCountry())) {
+        if (LangUtils.isBlank(locale.getCountry())) {
             return locale.getLanguage();
         }
 

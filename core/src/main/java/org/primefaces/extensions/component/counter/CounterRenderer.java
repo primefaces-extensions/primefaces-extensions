@@ -59,15 +59,15 @@ public class CounterRenderer extends CoreRenderer {
     private void encodeScript(final FacesContext context, final Counter counter) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
-        Locale locale = counter.calculateLocale();
-        DecimalFormat formatter = (DecimalFormat) DecimalFormat.getInstance(locale);
+        final Locale locale = counter.calculateLocale();
+        final DecimalFormat formatter = (DecimalFormat) DecimalFormat.getInstance(locale);
 
         String groupingSeparator = counter.getSeparator();
         String decimalSeparator = counter.getDecimal();
-        if (LangUtils.isValueBlank(groupingSeparator)) {
+        if (LangUtils.isBlank(groupingSeparator)) {
             groupingSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getGroupingSeparator());
         }
-        if (LangUtils.isValueBlank(decimalSeparator)) {
+        if (LangUtils.isBlank(decimalSeparator)) {
             decimalSeparator = String.valueOf(formatter.getDecimalFormatSymbols().getDecimalSeparator());
         }
 
@@ -86,10 +86,10 @@ public class CounterRenderer extends CoreRenderer {
                     .attr("suffix", counter.getSuffix())
                     .attr("autoStart", counter.isAutoStart());
 
-        if (!LangUtils.isValueBlank(counter.getOnstart())) {
+        if (!LangUtils.isBlank(counter.getOnstart())) {
             wb.callback("onstart", "function()", counter.getOnstart());
         }
-        if (!LangUtils.isValueBlank(counter.getOnend())) {
+        if (!LangUtils.isBlank(counter.getOnend())) {
             wb.callback("onend", "function()", counter.getOnend());
         }
 
@@ -108,7 +108,9 @@ public class CounterRenderer extends CoreRenderer {
         writer.startElement("span", counter);
         writer.writeAttribute("id", counter.getClientId(context), "id");
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-        writer.writeAttribute(Attrs.STYLE, (!counter.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + counter.getStyle(), Attrs.STYLE);
+        writer.writeAttribute(Attrs.STYLE,
+                    (!counter.isVisible() ? "display:none;" : Constants.EMPTY_STRING) + counter.getStyle(),
+                    Attrs.STYLE);
         writer.endElement("span");
     }
 

@@ -147,9 +147,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional attribute to the widget builder specified.
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
+     * @param value    the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalAttr(final WidgetBuilder wb, final String attrName, final String value)
@@ -162,9 +162,9 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Encodes an optional native attribute (unquoted).
      *
-     * @param wb the WidgetBuilder to append to
+     * @param wb       the WidgetBuilder to append to
      * @param attrName the attribute name
-     * @param value the value
+     * @param value    the value
      * @throws IOException if any IO error occurs
      */
     protected void encodeOptionalNativeAttr(final WidgetBuilder wb, final String attrName, final Object value)
@@ -178,7 +178,7 @@ public class SheetRenderer extends CoreRenderer {
      * Encodes the Javascript for the sheet.
      *
      * @param context the FacesContext
-     * @param sheet the Sheet
+     * @param sheet   the Sheet
      * @throws IOException if any IO error occurs
      */
     protected void encodeScript(final FacesContext context, final Sheet sheet)
@@ -231,7 +231,7 @@ public class SheetRenderer extends CoreRenderer {
         encodeOptionalNativeAttr(wb, "extender", sheet.getExtender());
 
         String emptyMessage = sheet.getEmptyMessage();
-        if (LangUtils.isValueBlank(emptyMessage)) {
+        if (LangUtils.isBlank(emptyMessage)) {
             emptyMessage = "No Records Found";
         }
         encodeOptionalAttr(wb, "emptyMessage", emptyMessage);
@@ -363,8 +363,10 @@ public class SheetRenderer extends CoreRenderer {
                     break;
                 case "autocomplete":
                     options.appendProperty("strict", Boolean.toString(column.isAutoCompleteStrict()), false);
-                    options.appendProperty("allowInvalid", Boolean.toString(column.isAutoCompleteAllowInvalid()), false);
-                    options.appendProperty("trimDropdown", Boolean.toString(column.isAutoCompleteTrimDropdown()), false);
+                    options.appendProperty("allowInvalid", Boolean.toString(column.isAutoCompleteAllowInvalid()),
+                                false);
+                    options.appendProperty("trimDropdown", Boolean.toString(column.isAutoCompleteTrimDropdown()),
+                                false);
                     final Integer visibleRows = column.getAutoCompleteVisibleRows();
                     if (visibleRows != null) {
                         options.appendProperty("visibleRows", visibleRows.toString(), false);
@@ -829,7 +831,7 @@ public class SheetRenderer extends CoreRenderer {
     /**
      * Decodes client behaviors (ajax events).
      *
-     * @param context the FacesContext
+     * @param context   the FacesContext
      * @param component the Component being decodes
      */
     @Override
@@ -872,7 +874,7 @@ public class SheetRenderer extends CoreRenderer {
      * Decodes the user Selection JSON data
      */
     private void decodeSelection(final Sheet sheet, final String jsonSelection) {
-        if (LangUtils.isValueBlank(jsonSelection)) {
+        if (LangUtils.isBlank(jsonSelection)) {
             return;
         }
 
@@ -894,7 +896,7 @@ public class SheetRenderer extends CoreRenderer {
      * Converts the JSON data received from the in the request params into our sumitted values map. The map is cleared first.
      */
     private void decodeSubmittedValues(final Sheet sheet, final String jsonData) {
-        if (LangUtils.isValueBlank(jsonData)) {
+        if (LangUtils.isBlank(jsonData)) {
             return;
         }
 

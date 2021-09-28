@@ -47,7 +47,6 @@ import org.primefaces.util.LocaleUtils;
  * <p>
  * Register it as below in faces-config.xml:
  * </p>
- * 
  * <pre>
  *   &lt;lifecycle&gt;
  *      &lt;phase-listener&gt;org.primefaces.extensions.application.PrimeFacesResourceProcessor&lt;/phase-listener&gt;
@@ -68,24 +67,24 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
     }
 
     @Override
-    public void afterPhase(PhaseEvent event) {
+    public void afterPhase(final PhaseEvent event) {
         // NOOP.
     }
 
     @Override
-    public void beforePhase(PhaseEvent event) {
-        FacesContext context = event.getFacesContext();
-        PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
-        PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
-        PrimeConfiguration configuration = applicationContext.getConfig();
+    public void beforePhase(final PhaseEvent event) {
+        final FacesContext context = event.getFacesContext();
+        final PrimeRequestContext requestContext = PrimeRequestContext.getCurrentInstance(context);
+        final PrimeApplicationContext applicationContext = requestContext.getApplicationContext();
+        final PrimeConfiguration configuration = applicationContext.getConfig();
 
-        String theme;
-        String themeParamValue = configuration.getTheme();
+        final String theme;
+        final String themeParamValue = configuration.getTheme();
 
         if (themeParamValue != null) {
-            ELContext elContext = context.getELContext();
-            ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-            ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+            final ELContext elContext = context.getELContext();
+            final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
+            final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
             theme = (String) ve.getValue(elContext);
         }
         else {
@@ -101,21 +100,17 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
             encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
         }
 
-        if (configuration.isFontAwesomeEnabled()) {
-            encodeCSS(context, LIBRARY, "fa/font-awesome.css");
-        }
-
         if (configuration.isClientSideValidationEnabled()) {
             encodeValidationResources(context, configuration.isBeanValidationEnabled());
         }
 
         if (configuration.isClientSideLocalizationEnabled()) {
-            Locale locale = LocaleUtils.getCurrentLocale(context);
+            final Locale locale = LocaleUtils.getCurrentLocale(context);
             encodeJS(context, "locales/locale-" + locale.getLanguage() + ".js");
         }
     }
 
-    protected void encodeValidationResources(FacesContext context, boolean beanValidationEnabled) {
+    protected void encodeValidationResources(final FacesContext context, final boolean beanValidationEnabled) {
         encodeJS(context, "validation/validation.js");
 
         if (beanValidationEnabled) {
@@ -123,26 +118,28 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
     }
 
-    private void encodeCSS(FacesContext context, String library, String name) {
-        Resource resource = context.getApplication().getResourceHandler().createResource(name, library);
+    private void encodeCSS(final FacesContext context, final String library, final String name) {
+        final Resource resource = context.getApplication().getResourceHandler().createResource(name, library);
         if (resource == null) {
-            throw new FacesException("Error loading CSS, cannot find \"" + name + "\" resource of \"" + library + "\" library");
+            throw new FacesException(
+                        "Error loading CSS, cannot find \"" + name + "\" resource of \"" + library + "\" library");
         }
         final UIOutput css = new UIOutput();
-        css.setId("css-" + UUID.randomUUID().toString());
+        css.setId("css-" + UUID.randomUUID());
         css.setRendererType("javax.faces.resource.Stylesheet");
         css.getAttributes().put("library", library);
         css.getAttributes().put("name", name);
         context.getViewRoot().addComponentResource(context, css, "head");
     }
 
-    private void encodeJS(FacesContext context, String name) {
-        Resource resource = context.getApplication().getResourceHandler().createResource(name, LIBRARY);
+    private void encodeJS(final FacesContext context, final String name) {
+        final Resource resource = context.getApplication().getResourceHandler().createResource(name, LIBRARY);
         if (resource == null) {
-            throw new FacesException("Error loading JavaScript, cannot find \"" + name + "\" resource of \"" + LIBRARY + "\" library");
+            throw new FacesException("Error loading JavaScript, cannot find \"" + name + "\" resource of \"" + LIBRARY +
+                        "\" library");
         }
         final UIOutput js = new UIOutput();
-        js.setId("js-" + UUID.randomUUID().toString());
+        js.setId("js-" + UUID.randomUUID());
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
