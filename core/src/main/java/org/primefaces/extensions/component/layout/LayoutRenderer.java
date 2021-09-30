@@ -31,6 +31,7 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.FastStringWriter;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -49,11 +50,19 @@ public class LayoutRenderer extends CoreRenderer {
 
     @Override
     public void encodeBegin(final FacesContext fc, final UIComponent component) throws IOException {
-        final ResponseWriter writer = fc.getResponseWriter();
+        ResponseWriter writer = fc.getResponseWriter();
         final Layout layout = (Layout) component;
 
         final boolean buildOptions = layout.getOptions() == null;
         layout.setBuildOptions(buildOptions);
+
+        if (buildOptions) {
+            final FastStringWriter fsw = new FastStringWriter();
+            layout.setOriginalWriter(writer);
+            layout.setFastStringWriter(fsw);
+            fc.setResponseWriter(writer.cloneWithWriter(fsw));
+            writer = fc.getResponseWriter();
+        }
 
         if (layout.isElementLayout()) {
             writer.startElement("div", layout);
@@ -84,8 +93,18 @@ public class LayoutRenderer extends CoreRenderer {
             writer.endElement("div");
         }
 
-        encodeScript(fc, layout);
-        layout.removeOptions();
+        if (layout.isBuildOptions()) {
+            fc.setResponseWriter(layout.getOriginalWriter());
+            encodeScript(fc, layout);
+            fc.getResponseWriter().write(layout.getFastStringWriter().toString());
+            layout.removeOptions();
+            layout.setOriginalWriter(null);
+            layout.setFastStringWriter(null);
+        }
+        else {
+            encodeScript(fc, layout);
+        }
+
         layout.setBuildOptions(false);
     }
 
