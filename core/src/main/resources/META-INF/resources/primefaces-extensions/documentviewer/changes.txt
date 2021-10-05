@@ -108,13 +108,27 @@ https://stackoverflow.com/questions/64915575/how-to-force-set-locale-in-pdf-js
 
 async _initializeL10n() {
     var hash = document.location.hash.substring(1);
-    var hashParams = (0, _ui_utils.parseQueryString)(hash);
+    var hashParams = (0, _ui_utils.parseQueryString)(document.location.hash.substring(1));
     this.l10n = this.externalServices.createL10n({
         locale: ('locale' in hashParams) ? hashParams['locale'] : _app_options.AppOptions.get("locale")
     });
     const dir = await this.l10n.getDirection();
     document.getElementsByTagName("html")[0].dir = dir;
 }
+
+https://stackoverflow.com/questions/29407188/how-to-localize-pdf-js-toolbar
+
+defaultOptions.locale = {
+    value: typeof navigator !== "undefined" ? navigator.language : "en-US",
+    kind: OptionKind.VIEWER
+  };
+  
+to
+
+  defaultOptions.locale = {
+    value:  new URLSearchParams(document.location.hash.substring(1)).get("locale"),
+    kind: OptionKind.VIEWER
+  };
   
 9. Compress and minify pdf.worker.js.
 
