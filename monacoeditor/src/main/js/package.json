@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "insane": "^2.6.2",
-    "monaco-editor": "^0.28.0"
+    "monaco-editor": "^0.29.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.6",
