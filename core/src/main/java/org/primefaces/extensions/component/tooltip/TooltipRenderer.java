@@ -59,22 +59,7 @@ public class TooltipRenderer extends CoreRenderer {
             target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
         }
 
-        final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtTooltip", tooltip);
-        wb.attr("global", global);
-        wb.attr("shared", shared);
-        wb.attr("autoShow", autoShow);
-        if (target == null) {
-            wb.nativeAttr("forTarget", null);
-        }
-        else {
-            wb.attr("forTarget", target);
-        }
-
         final ResponseWriter writer = context.getResponseWriter();
-
-        // content
-        wb.append(",content: {");
         String text = null;
         if (tooltip.getChildCount() > 0) {
             final FastStringWriter fsw = new FastStringWriter();
@@ -90,6 +75,21 @@ public class TooltipRenderer extends CoreRenderer {
                 text = valueToRender;
             }
         }
+
+        final WidgetBuilder wb = getWidgetBuilder(context);
+        wb.init("ExtTooltip", tooltip);
+        wb.attr("global", global);
+        wb.attr("shared", shared);
+        wb.attr("autoShow", autoShow);
+        if (target == null) {
+            wb.nativeAttr("forTarget", null);
+        }
+        else {
+            wb.attr("forTarget", target);
+        }
+
+        // content
+        wb.append(",content: {");
 
         final boolean hasText = !global && LangUtils.isNotBlank(text);
         if (hasText) {
