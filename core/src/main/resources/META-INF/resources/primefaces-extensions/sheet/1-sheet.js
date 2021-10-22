@@ -56,6 +56,8 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 col: 1
             },
             textCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                var doc = new DOMParser().parseFromString(value, "text/html");
+                value = doc.documentElement.textContent || value;
                 Handsontable.renderers.HtmlRenderer.apply(this, arguments);
                 $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },

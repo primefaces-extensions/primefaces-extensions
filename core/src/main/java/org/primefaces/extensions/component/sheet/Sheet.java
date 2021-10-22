@@ -341,7 +341,13 @@ public class Sheet extends SheetBase {
 
         setRowVar(context, rowKey);
         final SheetColumn column = getColumns().get(col);
-        return column.getValueExpression("value").getValue(context.getELContext());
+        final ValueExpression ve = column.getValueExpression("value");
+        if (ve != null) {
+            return ve.getValue(context.getELContext());
+        }
+        else {
+            return column.getValue();
+        }
     }
 
     /**

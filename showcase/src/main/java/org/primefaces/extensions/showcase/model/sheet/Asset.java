@@ -39,6 +39,8 @@ public class Asset implements Serializable {
 
     private String description;
 
+    private String icon;
+
     private BigDecimal purchasePrice;
 
     private PlatformType platform;
@@ -111,6 +113,14 @@ public class Asset implements Serializable {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(final String icon) {
+        this.icon = icon;
     }
 
     public BigDecimal getPurchasePrice() {
@@ -327,14 +337,11 @@ public class Asset implements Serializable {
             return false;
         }
         if (hostName == null) {
-            if (other.hostName != null) {
-                return false;
-            }
+            return other.hostName == null;
         }
-        else if (!hostName.equals(other.hostName)) {
-            return false;
+        else {
+            return hostName.equals(other.hostName);
         }
-        return true;
     }
 
     public Integer getTotal() {

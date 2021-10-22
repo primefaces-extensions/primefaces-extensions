@@ -83,7 +83,7 @@ public class SheetController implements Serializable {
         }
         sheet.commitUpdates();
         FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Update Success", Integer.toString(rowUpdates) + " rows updated"));
+                    new FacesMessage("Update Success", rowUpdates + " rows updated"));
     }
 
     private void addAssets(final int count, final PlatformType platform, final PlatformArchType arch,
@@ -96,6 +96,7 @@ public class SheetController implements Serializable {
             asset.setPlatformArch(arch);
             asset.setHostName(type.toString().toLowerCase() + i + ".example.lan");
             asset.setAssetType(type);
+            asset.setIcon("&lt;i class='fas fa-clock' /&gt;");
             asset.setPurchaseDate(new Date());
             asset.setPurchaseTime(new Date());
             asset.setValue1(RandomUtils.nextInt(1, 1000));
