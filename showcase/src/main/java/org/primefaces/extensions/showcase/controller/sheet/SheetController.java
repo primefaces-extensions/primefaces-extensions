@@ -96,7 +96,7 @@ public class SheetController implements Serializable {
             asset.setPlatformArch(arch);
             asset.setHostName(type.toString().toLowerCase() + i + ".example.lan");
             asset.setAssetType(type);
-            asset.setIcon("&lt;i class='fas fa-clock' /&gt;");
+            asset.setIcon("<i class='fas fa-info-circle' style='color:cornflowerblue' />");
             asset.setPurchaseDate(new Date());
             asset.setPurchaseTime(new Date());
             asset.setValue1(RandomUtils.nextInt(1, 1000));

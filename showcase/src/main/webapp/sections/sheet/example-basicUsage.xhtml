@@ -33,8 +33,9 @@
                         filterBy="#{row.assetId}"/>
         <pe:sheetcolumn headerText="Icon"
                         readOnly="true"
+                        styleClass="p-text-center"
                         value="#{row.icon}"
-                        colWidth="150"/>
+                        colWidth="80"/>
         <pe:sheetcolumn headerText="Type" value="#{row.assetType}" colWidth="100"
                         sortBy="#{row.assetType}" filterBy="#{row.assetType}"
                         filterOptions="#{sheetOptionProducer.assetTypes}"
