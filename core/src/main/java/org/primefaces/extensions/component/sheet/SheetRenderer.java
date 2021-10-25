@@ -838,21 +838,26 @@ public class SheetRenderer extends CoreRenderer {
         }
 
         try {
-            // data comes in: [ [row, col, oldValue, newValue] ... ]
-            final JSONArray array = new JSONArray(jsonSelection);
-            sheet.setSelectedRow(array.getInt(0));
-            sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
-            sheet.setSelectedLastRow(array.getInt(2));
-            sheet.setSelectedLastColumn(array.getInt(3));
+            // data comes in array of arrays
+            final JSONArray arrays = new JSONArray(jsonSelection);
+            for (int i = 0; i < arrays.length(); i++) {
+                final JSONArray array = arrays.getJSONArray(i);
+                // data comes in: [ [fromrow, fromcol, torow, tocol] ... ]
+                sheet.setSelectedRow(array.getInt(0));
+                sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
+                sheet.setSelectedLastRow(array.getInt(2));
+                sheet.setSelectedLastColumn(array.getInt(3));
+            }
             sheet.setSelection(jsonSelection);
         }
         catch (final JSONException e) {
-            throw new FacesException("Failed parsing Ajax JSON message for cell selection event:" + e.getMessage(), e);
+            throw new FacesException("Failed parsing Ajax JSON message for cell selection event:" + e.getMessage(),
+                        e);
         }
     }
 
     /**
-     * Converts the JSON data received from the in the request params into our sumitted values map. The map is cleared first.
+     * Converts the JSON data received from the in the request params into our submitted values map. The map is cleared first.
      */
     private void decodeSubmittedValues(final Sheet sheet, final String jsonData) {
         if (LangUtils.isBlank(jsonData)) {
@@ -882,7 +887,8 @@ public class SheetRenderer extends CoreRenderer {
             }
         }
         catch (final JSONException ex) {
-            throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + ex.getMessage(), ex);
+            throw new FacesException("Failed parsing Ajax JSON message for cell change event:" + ex.getMessage(),
+                        ex);
         }
     }
 
