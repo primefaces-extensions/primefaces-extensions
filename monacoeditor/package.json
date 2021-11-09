@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "terser-webpack-plugin": "^5.2.4"
+    "terser-webpack-plugin": "^5.2.5"
   }
 }
