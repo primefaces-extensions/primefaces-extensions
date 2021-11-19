@@ -6,20 +6,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
-PrimeFaces Extensions
-==========================
+# PrimeFaces Extensions
 
 This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) for more information.
 
 [![PrimeFaces Extensions Logo](http://primefaces-extensions.github.io/reports/images/title.png)](https://www.primefaces.org/showcase-ext/)
 
-### Maven
+## Maven
 
-***
-##### Release (javax)
+### Release (javax)
 
 ```xml
-
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
@@ -37,10 +34,9 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 </dependency>
 ```
 
-##### Release (jakarta)
+### Release (jakarta)
 
 ```xml
-
 <dependency>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions</artifactId>
@@ -49,10 +45,9 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 </dependency>
 ```
 
-##### Snapshots
+### Snapshots
 
 ```xml
-
 <repository>
     <id>sonatype-snapshots</id>
     <name>Sonatype Snapshot Repository</name>
@@ -72,57 +67,54 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 </dependency>
 ```
 
-### Namespaces
+## Namespaces
 
 The PrimeFaces Extensions namespace is necessary to add PrimeFaces Extensions components to your pages.
 
- ```xml
- xmlns:pe="http://primefaces.org/ui/extensions"
- ```
+```xml
+xmlns:pe="http://primefaces.org/ui/extensions"
+```
 
-### Getting Started
+## Getting Started
 
-***
 Please refer to the [Getting Started Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Getting-Started) to see what you need
 to get started and any optional libraries.
 
-### Demo
+## Migration Guide
 
-***
+Please refer to the [Migration Guide](https://github.com/primefaces-extensions/primefaces-extensions.github.com/wiki/Migration-Guide).
+
+## Demo
+
 Please refer to the Showcase submodule in order to see the full usage of the components. Simply do the following to run the Showcase:
 
-```
+```sh
 cd showcase
 mvn clean jetty:run
 ```
 
 Then open your web browser to http://localhost:8080/showcase-ext/
 
-### Issues
+## Issues
 
-***
 Please report all issues [here](https://github.com/primefaces-extensions/primefaces-extensions/issues).
 
-### Releasing
-
-***
+## Releasing
 
 - Run `mvn versions:set -DgenerateBackupPoms=false -DnewVersion=8.0.2` to update all modules versions
 - Commit and push the changes to GitHub
 - In GitHub create a new Release titled `8.0.2` to tag this release
 - Run `mvn clean deploy -Prelease` to push to Maven Central
 
-### Licenses
+## Licenses
 
-***
-
-#### Extensions
+### Extensions
 
 Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
 `SPDX-License-Identifier: MIT`
 
-#### CKEditor (IMPORTANT!!!)
+### CKEditor
 
 Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.<br>
 For licensing see: [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license)
