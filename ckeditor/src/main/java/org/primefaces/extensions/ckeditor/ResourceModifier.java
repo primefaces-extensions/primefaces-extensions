@@ -50,7 +50,7 @@ public class ResourceModifier {
 
     private static final String PROJECT_DIRECTORY = "C:\\dev\\primefaces\\primefaces-extensions\\ckeditor";
 
-    private static final String SHORT_HASH = "L7C8";
+    private static final String SHORT_HASH = "LAI9";
     private static final String URL_PFE = "url\\(\"#{resource['primefaces-extensions:";
 
     private static final int INDEX_NOT_FOUND = -1;
