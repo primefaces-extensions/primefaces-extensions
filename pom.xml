@@ -52,7 +52,7 @@
         <apache-faces.version>2.3.9</apache-faces.version>
         <libphonenumber.version>8.12.38</libphonenumber.version>
 
-        <primefaces.core.version>11.0.0-RC2</primefaces.core.version>
+        <primefaces.core.version>11.0.0-SNAPSHOT</primefaces.core.version>
         <primefaces.optimizer.version>2.3.6</primefaces.optimizer.version>
 
         <withoutCompress>true</withoutCompress>
