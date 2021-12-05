@@ -47,6 +47,9 @@
                         <exclude>**/META-INF/resources/**/codemirror/lib/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/theme/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/LICENSE</exclude>
+                        <exclude>**/META-INF/resources/**/keynote/lib/**</exclude>
+                        <exclude>**/META-INF/resources/**/keynote/theme/**</exclude>
+                        <exclude>**/META-INF/resources/**/keynote/LICENSE</exclude>
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>
                         <exclude>**/META-INF/resources/**/imagerotateandresize/**</exclude>
@@ -188,6 +191,32 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/codemirror/codemirror.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>keynote/lib/reveal.js</include>
+                                <include>keynote/widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/keynote/keynote.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>keynote/lib/**/*.css</include>
+                                <include>keynote/theme/*.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/keynote/keynote.css</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
