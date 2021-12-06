@@ -8,13 +8,21 @@
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/keynote/basicUsage.jsf"/>
         <p:menuitem value="Speaker View"
-                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('speakerView')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/keynote/speakerView.jsf"/>
         <p:menuitem value="Auto Slide"
-                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('autoSlide')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/keynote/autoSlide.jsf"/>
+        <p:menuitem value="Theming"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('theming')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/theming.jsf"/>
+        <p:menuitem value="Custom Theming"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('customTheming')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/customTheming.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

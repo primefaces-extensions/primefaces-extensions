@@ -23,7 +23,10 @@ package org.primefaces.extensions.component.keynote;
 
 import java.io.IOException;
 
+import javax.faces.FacesException;
+import javax.faces.application.Resource;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
@@ -39,6 +42,20 @@ public class KeynoteRenderer extends CoreRenderer {
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
         decodeBehaviors(context, component);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+        final Keynote keynote = (Keynote) component;
+
+        // encodeCSS(context, "primefaces-extensions", "keynote/theme/" + keynote.getTheme() + ".css");
+        // encodeCSS(context, "primefaces", "primeicons/primeicons.css");
+        if (keynote.getTheme() != null) {
+            encodeCSS(context, keynote.getLibrary(), keynote.getTheme());
+        }
     }
 
     /**
@@ -124,6 +141,23 @@ public class KeynoteRenderer extends CoreRenderer {
         encodeClientBehaviors(context, keynote);
 
         wb.finish();
+    }
+
+    private void encodeCSS(FacesContext context, String library, String theme) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        ExternalContext externalContext = context.getExternalContext();
+
+        Resource cssResource = context.getApplication().getResourceHandler().createResource(theme + ".css", library);
+        if (cssResource == null) {
+            throw new FacesException("Error loading CSS, cannot find \"" + theme + "\" resource of \"" + library + "\" library");
+        }
+        else {
+            writer.startElement("link", null);
+            writer.writeAttribute("type", "text/css", null);
+            writer.writeAttribute("rel", "stylesheet", null);
+            writer.writeAttribute("href", externalContext.encodeResourceURL(cssResource.getRequestPath()), null);
+            writer.endElement("link");
+        }
     }
 
 }

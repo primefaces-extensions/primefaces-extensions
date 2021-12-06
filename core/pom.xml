@@ -211,7 +211,6 @@
                         <resourcesSet>
                             <includes>
                                 <include>keynote/lib/**/*.css</include>
-                                <include>keynote/theme/*.css</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

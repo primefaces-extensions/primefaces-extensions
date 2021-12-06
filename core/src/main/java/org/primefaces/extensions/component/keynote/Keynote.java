@@ -64,6 +64,7 @@ public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Wi
         transitionSpeed,
         backgroundTransition,
         theme,
+        library,
         style,
         styleClass
         //@formatter:on
@@ -223,11 +224,19 @@ public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Wi
     }
 
     public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, "white");
+        return (String) getStateHelper().eval(PropertyKeys.theme, null);
     }
 
     public void setTheme(final String theme) {
         getStateHelper().put(PropertyKeys.theme, theme);
+    }
+
+    public String getLibrary() {
+        return (String) getStateHelper().eval(PropertyKeys.library, null);
+    }
+
+    public void setLibrary(final String _library) {
+        getStateHelper().put(PropertyKeys.library, _library);
     }
 
     public String getWidgetVar() {
