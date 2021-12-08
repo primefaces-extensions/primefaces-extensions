@@ -48,6 +48,7 @@
                         <exclude>**/META-INF/resources/**/codemirror/theme/**</exclude>
                         <exclude>**/META-INF/resources/**/codemirror/LICENSE</exclude>
                         <exclude>**/META-INF/resources/**/keynote/lib/**</exclude>
+                        <exclude>**/META-INF/resources/**/keynote/plugin/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/theme/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/LICENSE</exclude>
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
@@ -198,6 +199,7 @@
                         <resourcesSet>
                             <includes>
                                 <include>keynote/lib/reveal.js</include>
+                                <include>keynote/plugin/markdown/markdown.js</include>
                                 <include>keynote/widget.js</include>
                             </includes>
                             <aggregations>

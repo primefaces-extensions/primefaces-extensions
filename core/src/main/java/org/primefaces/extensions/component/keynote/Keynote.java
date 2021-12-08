@@ -21,11 +21,25 @@
  */
 package org.primefaces.extensions.component.keynote;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.faces.FacesException;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.ContextCallback;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.component.visit.VisitCallback;
+import javax.faces.component.visit.VisitContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.model.common.KeyData;
+import org.primefaces.extensions.model.keynote.KeynoteItem;
 
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
@@ -33,14 +47,13 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "keynote/keynote.js")
 @ResourceDependency(library = "primefaces-extensions", name = "keynote/keynote.css")
-public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Widget {
+public class Keynote extends AbstractDynamicData implements ClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Keynote";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteRenderer";
 
-    public static final String CONTAINER_CLASS = "ui-keynote reveal";
-    public static final String SLIDES_CLASS = "slides";
+    private Map<String, UIKeynoteItem> items;
 
     protected enum PropertyKeys {
         //@formatter:off
@@ -59,6 +72,7 @@ public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Wi
         navigationMode,
         progress,
         showNotes,
+        slideNumber,
         touch,
         transition,
         transitionSpeed,
@@ -191,6 +205,14 @@ public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Wi
         getStateHelper().put(PropertyKeys.showNotes, showNotes);
     }
 
+    public String getSlideNumber() {
+        return (String) getStateHelper().eval(PropertyKeys.slideNumber, "false");
+    }
+
+    public void setSlideNumber(final String slideNumber) {
+        getStateHelper().put(PropertyKeys.slideNumber, slideNumber);
+    }
+
     public Boolean isTouch() {
         return (Boolean) getStateHelper().eval(PropertyKeys.touch, true);
     }
@@ -261,6 +283,261 @@ public class Keynote extends UIComponentBase implements ClientBehaviorHolder, Wi
 
     public void setStyleClass(String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
+    public UIKeynoteItem getItem(final String type) {
+        final UIKeynoteItem item = getItems().get(type);
+
+        if (item == null) {
+            throw new FacesException("UIKeynoteItem to type " + type + " was not found");
+        }
+        else {
+            return item;
+        }
+    }
+
+    protected Map<String, UIKeynoteItem> getItems() {
+        if (items == null) {
+            items = new HashMap<>();
+            for (final UIComponent child : getChildren()) {
+                if (child instanceof UIKeynoteItem) {
+                    final UIKeynoteItem keynoteItem = (UIKeynoteItem) child;
+                    items.put(keynoteItem.getType(), keynoteItem);
+                }
+            }
+        }
+
+        return items;
+    }
+
+    protected static void checkModelInstance(Object value) {
+        if (!(value instanceof Collection<?>)) {
+            throw new FacesException("Value in Keynote must be of type Collection / List");
+        }
+    }
+
+    @Override
+    protected KeyData findData(final String key) {
+        final Object value = getValue();
+        if (value == null) {
+            return null;
+        }
+
+        checkModelInstance(value);
+
+        final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
+        for (final KeynoteItem keynoteItem : col) {
+            if (key.equals(keynoteItem.getKey())) {
+                return keynoteItem;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    protected void processChildren(final FacesContext context, final PhaseId phaseId) {
+        if (getVar() != null) {
+            // dynamic items
+            final Object value = getValue();
+            if (value != null) {
+                checkModelInstance(value);
+
+                final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
+                for (final KeynoteItem keynoteItem : col) {
+                    processKeynoteDynamicItems(context, phaseId, keynoteItem);
+                }
+            }
+
+            resetData();
+        }
+        else {
+            // static items
+            processKeynoteStaticItems(context, phaseId);
+        }
+    }
+
+    @Override
+    protected boolean visitChildren(final VisitContext context, final VisitCallback callback) {
+        if (getVar() != null) {
+            // dynamic items
+            final Object value = getValue();
+            if (value == null) {
+                return false;
+            }
+
+            checkModelInstance(value);
+
+            final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
+            for (final KeynoteItem keynoteItem : col) {
+                if (visitKeynoteDynamicItems(context, callback, keynoteItem)) {
+                    return true;
+                }
+            }
+
+            resetData();
+        }
+        else {
+            // static items
+            if (visitKeynoteStaticItems(context, callback)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
+
+        final Object value = getValue();
+        if (value == null) {
+            return false;
+        }
+
+        checkModelInstance(value);
+
+        if (getChildCount() > 0) {
+            // extract the keynoteItem key from the clientId
+            // it's simliar to rowKey in UIData
+            String key = clientId.substring(getClientId().length() + 1);
+            key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
+
+            final Collection<KeynoteItem> keynoteItems = (Collection<KeynoteItem>) value;
+            for (final KeynoteItem keynoteItem : keynoteItems) {
+
+                // determine associated KeynoteItem
+                if (keynoteItem.getKey().equals(key)) {
+
+                    // get UI control for KeynoteItem
+                    UIKeynoteItem uiKeynoteItem = null;
+                    if (getVar() == null) {
+                        for (final UIComponent child : getChildren()) {
+                            if (child instanceof UIKeynoteItem && ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
+                                uiKeynoteItem = (UIKeynoteItem) child;
+                            }
+                        }
+                    }
+                    else {
+                        uiKeynoteItem = (UIKeynoteItem) getChildren().get(0);
+                    }
+
+                    if (uiKeynoteItem == null) {
+                        continue;
+                    }
+
+                    try {
+                        // push the associated data before visiting the child components
+                        setData(keynoteItem);
+
+                        // visit childs
+                        if (uiKeynoteItem.invokeOnComponent(context, clientId, callback)) {
+                            return true;
+                        }
+                    }
+                    finally {
+                        resetData();
+                    }
+
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void processKeynoteDynamicItems(final FacesContext context, final PhaseId phaseId,
+                final KeynoteItem keynoteItem) {
+        for (final UIComponent kid : getChildren()) {
+            if (!(kid instanceof UIKeynoteItem) || !kid.isRendered()
+                        || !((UIKeynoteItem) kid).getType().equals(keynoteItem.getType())) {
+                continue;
+            }
+
+            for (final UIComponent grandkid : kid.getChildren()) {
+                if (!grandkid.isRendered()) {
+                    continue;
+                }
+
+                setData(keynoteItem);
+                if (getData() == null) {
+                    return;
+                }
+
+                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+                    grandkid.processDecodes(context);
+                }
+                else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+                    grandkid.processValidators(context);
+                }
+                else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+                    grandkid.processUpdates(context);
+                }
+                else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
+
+    private void processKeynoteStaticItems(final FacesContext context, final PhaseId phaseId) {
+        for (final UIComponent kid : getChildren()) {
+            if (!(kid instanceof UIKeynoteItem) || !kid.isRendered()) {
+                continue;
+            }
+
+            for (final UIComponent grandkid : kid.getChildren()) {
+                if (!grandkid.isRendered()) {
+                    continue;
+                }
+
+                if (phaseId == PhaseId.APPLY_REQUEST_VALUES) {
+                    grandkid.processDecodes(context);
+                }
+                else if (phaseId == PhaseId.PROCESS_VALIDATIONS) {
+                    grandkid.processValidators(context);
+                }
+                else if (phaseId == PhaseId.UPDATE_MODEL_VALUES) {
+                    grandkid.processUpdates(context);
+                }
+                else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
+
+    private boolean visitKeynoteDynamicItems(final VisitContext context, final VisitCallback callback,
+                final KeynoteItem keynoteItem) {
+        if (getChildCount() > 0) {
+            for (final UIComponent child : getChildren()) {
+                if (child instanceof UIKeynoteItem
+                            && ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
+                    setData(keynoteItem);
+                    if (getData() == null) {
+                        return false;
+                    }
+
+                    if (child.visitTree(context, callback)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean visitKeynoteStaticItems(final VisitContext context, final VisitCallback callback) {
+        if (getChildCount() > 0) {
+            for (final UIComponent child : getChildren()) {
+                if (child instanceof UIKeynoteItem && child.visitTree(context, callback)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

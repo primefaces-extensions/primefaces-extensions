@@ -10,17 +10,18 @@
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
             <p>An HTML presentation component that enables to create fully-featured and beautiful presentations.</p>
-            <p>Presentations can be configured to step through slides automatically.</p>
-            <p>To enable this you will need to specify an interval for slide changes using the autoSlide config option. The interval is provided in milliseconds.</p>
+            <p>It's possible and often times more convenient to write presentation content using Markdown. To create a Markdown slide, add the <code>markdown="true"</code> attribute to your <code>pe:keynoteItem</code> element and wrap the contents in it.</p>
+            <p>Slides can be separated by <code>pe:keynoteItem</code> or regexp. They are separated by three dashes by default in markdown mode.</p>
+            <p>Note that markdown codes are sensitive to indentation (avoid mixing tabs and spaces) and line breaks (avoid consecutive breaks).</p>
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/keynote/example-autoSlide.xhtml"/>
+            <ui:include src="/sections/keynote/examples/example-markdown.xhtml"/>
         </h:panelGroup>
 
         <ui:decorate template="/templates/oneTabDecorator.xhtml">
             <ui:define name="contentTab1">
-${showcase:getFileContent('/sections/keynote/example-autoSlide.xhtml')}
+${showcase:getFileContent('/sections/keynote/examples/example-markdown.xhtml')}
             </ui:define>
         </ui:decorate>
     </ui:define>

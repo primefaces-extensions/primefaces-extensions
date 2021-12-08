@@ -16,6 +16,7 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
             navigationMode: cfg.navigationMode || "default",
             progress: cfg.progress || true,
             showNotes: cfg.showNotes || false,
+            slideNumber: cfg.slideNumber || "false",
             touch: cfg.touch || true,
             transition: cfg.transition || "slide",
             transitionSpeed: cfg.transitionSpeed || "default",
@@ -25,8 +26,12 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
             height: cfg.height || 700,
             margin: cfg.margin || 0.04,
             minScale: cfg.minScale || 0.2,
-            maxScale: cfg.maxScale || 2.0
+            maxScale: cfg.maxScale || 2.0,
+            
+            plugins: [ RevealMarkdown ]
         };
+        
+        if (this.options.slideNumber === "false") this.options.slideNumber = false;
 
         let deck = new Reveal(document.querySelector(this.jqId), this.options);
         deck.initialize();

@@ -191,6 +191,10 @@
         <component-class>org.primefaces.extensions.component.keynote.Keynote</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.UIKeynoteItem</component-type>
+        <component-class>org.primefaces.extensions.component.keynote.UIKeynoteItem</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.TimeAgo</component-type>
         <component-class>org.primefaces.extensions.component.timeago.TimeAgo</component-class>
     </component>

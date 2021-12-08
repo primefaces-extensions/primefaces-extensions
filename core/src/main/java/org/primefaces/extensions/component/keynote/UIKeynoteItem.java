@@ -1,0 +1,90 @@
+/*
+ * Copyright (c) 2011-2021 PrimeFaces Extensions
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+package org.primefaces.extensions.component.keynote;
+
+import javax.faces.component.UIComponentBase;
+
+import org.primefaces.extensions.model.keynote.KeynoteItem;
+
+public class UIKeynoteItem extends UIComponentBase {
+
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+
+    protected enum PropertyKeys {
+        // @formatter:off
+        markdown,
+        separator,
+        separatorVertical,
+        type,
+        styleClass
+        // @formatter:on
+    }
+
+    public UIKeynoteItem() {
+        setRendererType(null);
+    }
+
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    public Boolean isMarkdown() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.markdown, false);
+    }
+
+    public void setMarkdown(final Boolean markdown) {
+        getStateHelper().put(PropertyKeys.markdown, markdown);
+    }
+
+    public String getSeparator() {
+        return (String) getStateHelper().eval(PropertyKeys.separator, "^---$");
+    }
+
+    public void setSeparator(final String separator) {
+        getStateHelper().put(PropertyKeys.separator, separator);
+    }
+
+    public String getSeparatorVertical() {
+        return (String) getStateHelper().eval(PropertyKeys.separatorVertical, null);
+    }
+
+    public void setSeparatorVertical(final String separatorVertical) {
+        getStateHelper().put(PropertyKeys.separatorVertical, separatorVertical);
+    }
+
+    public String getType() {
+        return (String) getStateHelper().eval(PropertyKeys.type, KeynoteItem.DEFAULT_TYPE);
+    }
+
+    public void setType(final String type) {
+        getStateHelper().put(PropertyKeys.type, type);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+}

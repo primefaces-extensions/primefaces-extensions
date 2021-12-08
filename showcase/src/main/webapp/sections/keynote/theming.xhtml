@@ -14,12 +14,12 @@
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/keynote/example-theming.xhtml"/>
+            <ui:include src="/sections/keynote/examples/example-theming.xhtml"/>
         </h:panelGroup>
 
         <ui:decorate template="/templates/oneTabDecorator.xhtml">
             <ui:define name="contentTab1">
-${showcase:getFileContent('/sections/keynote/example-theming.xhtml')}
+${showcase:getFileContent('/sections/keynote/examples/example-theming.xhtml')}
             </ui:define>
         </ui:decorate>
     </ui:define>

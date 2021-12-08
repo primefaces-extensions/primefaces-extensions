@@ -10,19 +10,19 @@
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
             <p>An HTML presentation component that enables to create fully-featured and beautiful presentations.</p>
-            <p>Keynote component comes with a few different themes included black, white, league, beige, sky, night, serif, simple, solarized, blood, moon.</p>
+            <p>It is possible to render keynotes in a dynamic way as in data iteration components.</p>
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/keynote/examples/example-customTheming.xhtml"/>
+            <ui:include src="/sections/keynote/examples/example-dynamic.xhtml"/>
         </h:panelGroup>
 
-        <ui:decorate template="/templates/threeTabsDecoratorCSS.xhtml">
+        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
             <ui:define name="contentTab1">
-${showcase:getFileContent('/sections/keynote/examples/example-customTheming.xhtml')}
+${showcase:getFileContent('/sections/keynote/examples/example-dynamic.xhtml')}
             </ui:define>
-            <ui:define name="contentTab3">
-${showcase:getFileContent('/resources/keynote/custom.css')}
+            <ui:define name="contentTab2">
+${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/keynote/KeynoteDynamicController.java')}
             </ui:define>
         </ui:decorate>
     </ui:define>
@@ -30,8 +30,9 @@ ${showcase:getFileContent('/resources/keynote/custom.css')}
         <ui:include src="/sections/keynote/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
-        <ui:include src="/sections/shared/documentation.xhtml">
-            <ui:param name="tagName" value="keynote"/>
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="keynote"/>
+            <ui:param name="tagName2" value="keynoteItem"/>
         </ui:include>
     </ui:define>
 </ui:composition>

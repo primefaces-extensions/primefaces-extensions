@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.keynote;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.faces.FacesException;
 import javax.faces.application.Resource;
@@ -30,11 +31,16 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
 public class KeynoteRenderer extends CoreRenderer {
+
+    public static final String CONTAINER_CLASS = "ui-keynote reveal";
+    public static final String SLIDES_CLASS = "slides";
+    public static final String ITEM_CLASS = "ui-keynote-item";
 
     /**
      * {@inheritDoc}
@@ -53,7 +59,7 @@ public class KeynoteRenderer extends CoreRenderer {
 
         // encodeCSS(context, "primefaces-extensions", "keynote/theme/" + keynote.getTheme() + ".css");
         // encodeCSS(context, "primefaces", "primeicons/primeicons.css");
-        if (keynote.getTheme() != null) {
+        if (keynote.getTheme() != null && !"none".equals(keynote.getTheme())) {
             encodeCSS(context, keynote.getLibrary(), keynote.getTheme());
         }
     }
@@ -70,43 +76,72 @@ public class KeynoteRenderer extends CoreRenderer {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void encodeChildren(final FacesContext context, final UIComponent component) {
-        // Do nothing
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
-
-    /**
      * Create the HTML markup for the DOM.
      */
     private void encodeMarkup(final FacesContext context, final Keynote keynote) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = keynote.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
-                    .add(Keynote.CONTAINER_CLASS)
+                    .add(CONTAINER_CLASS)
                     .add(keynote.getStyleClass())
                     .build();
 
         writer.startElement("div", keynote);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
-
         if (keynote.getStyle() != null) {
             writer.writeAttribute(Attrs.STYLE, keynote.getStyle(), Attrs.STYLE);
         }
 
         writer.startElement("div", null);
-        writer.writeAttribute(Attrs.CLASS, Keynote.SLIDES_CLASS, "class");
-        renderChildren(context, keynote);
+        writer.writeAttribute(Attrs.CLASS, SLIDES_CLASS, "class");
+
+        if (keynote.getVar() != null) {
+            // dynamic items
+            final Object value = keynote.getValue();
+            if (value != null) {
+                if (!(value instanceof Collection<?>)) {
+                    throw new FacesException("Value in Keynote must be of type Collection / List");
+                }
+
+                for (final UIComponent kid : keynote.getChildren()) {
+                    if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
+                        // first render children like stamped elements, etc.
+                        renderChild(context, kid);
+                    }
+                }
+
+                final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
+                for (final KeynoteItem keynoteItem : col) {
+                    // find ui item by type
+                    final UIKeynoteItem uiItem = keynote.getItem(keynoteItem.getType());
+
+                    if (uiItem.isRendered()) {
+                        // set data in request scope
+                        keynote.setData(keynoteItem);
+
+                        // render item
+                        renderItem(context, writer, keynote, uiItem);
+                    }
+                }
+            }
+        }
+        else {
+            // static items
+            for (final UIComponent kid : keynote.getChildren()) {
+                if (kid.isRendered()) {
+                    if (kid instanceof UIKeynoteItem) {
+                        // render item
+                        renderItem(context, writer, keynote, (UIKeynoteItem) kid);
+                    }
+                    else {
+                        // render a child like stamped element, etc.
+                        renderChild(context, kid);
+                    }
+                }
+            }
+        }
+
         writer.endElement("div");
 
         writer.endElement("div");
@@ -132,6 +167,7 @@ public class KeynoteRenderer extends CoreRenderer {
                     .attr("navigationMode", keynote.getNavigationMode())
                     .attr("progress", keynote.isProgress())
                     .attr("showNotes", keynote.isShowNotes())
+                    .attr("slideNumber", keynote.getSlideNumber())
                     .attr("touch", keynote.isTouch())
                     .attr("transition", keynote.getTransition())
                     .attr("transitionSpeed", keynote.getTransitionSpeed())
@@ -158,6 +194,56 @@ public class KeynoteRenderer extends CoreRenderer {
             writer.writeAttribute("href", externalContext.encodeResourceURL(cssResource.getRequestPath()), null);
             writer.endElement("link");
         }
+    }
+
+    protected void renderItem(final FacesContext context, final ResponseWriter writer, final Keynote keynote,
+                final UIKeynoteItem uiItem)
+                throws IOException {
+
+        writer.startElement("section", null);
+
+        if (uiItem.isMarkdown()) {
+            writer.writeAttribute("data-markdown", "", null);
+            writer.writeAttribute("data-separator", uiItem.getSeparator(), null);
+            writer.writeAttribute("data-separator-vertical", uiItem.getSeparatorVertical(), null);
+        }
+
+        if (uiItem.getStyleClass() != null) {
+            writer.writeAttribute(Attrs.CLASS, ITEM_CLASS + " " + uiItem.getStyleClass(), null);
+        }
+        else {
+            writer.writeAttribute(Attrs.CLASS, ITEM_CLASS, null);
+        }
+
+        if (uiItem.isMarkdown()) {
+            writer.startElement("textarea", null);
+            writer.writeAttribute("data-template", "", null);
+        }
+
+        // encode content of pe:keynoteItem
+        uiItem.encodeAll(context);
+
+        if (uiItem.isMarkdown()) {
+            writer.endElement("textarea");
+        }
+
+        writer.endElement("section");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void encodeChildren(final FacesContext context, final UIComponent component) {
+        // Do nothing
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean getRendersChildren() {
+        return true;
     }
 
 }
