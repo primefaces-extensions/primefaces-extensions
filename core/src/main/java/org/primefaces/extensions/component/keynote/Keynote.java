@@ -34,12 +34,19 @@ import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.BehaviorEvent;
+import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
+import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
+import org.primefaces.util.Constants;
+import org.primefaces.util.MapBuilder;
 
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
@@ -47,11 +54,19 @@ import org.primefaces.extensions.model.keynote.KeynoteItem;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "keynote/keynote.js")
 @ResourceDependency(library = "primefaces-extensions", name = "keynote/keynote.css")
-public class Keynote extends AbstractDynamicData implements ClientBehaviorHolder, Widget {
+public class Keynote extends AbstractDynamicData implements Widget, ClientBehaviorHolder, PrimeClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.Keynote";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteRenderer";
+
+    private static final String DEFAULT_EVENT = "end";
+
+    private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
+                .put(DEFAULT_EVENT, null)
+                .build();
+
+    private static final Collection<String> EVENT_NAMES = BEHAVIOR_EVENT_MAPPING.keySet();
 
     private Map<String, UIKeynoteItem> items;
 
@@ -86,6 +101,21 @@ public class Keynote extends AbstractDynamicData implements ClientBehaviorHolder
 
     public Keynote() {
         setRendererType(DEFAULT_RENDERER);
+    }
+
+    @Override
+    public Map<String, Class<? extends BehaviorEvent>> getBehaviorEventMapping() {
+        return BEHAVIOR_EVENT_MAPPING;
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public String getDefaultEventName() {
+        return DEFAULT_EVENT;
     }
 
     @Override
@@ -538,6 +568,29 @@ public class Keynote extends AbstractDynamicData implements ClientBehaviorHolder
         }
 
         return false;
+    }
+
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        if (event instanceof AjaxBehaviorEvent) {
+            final FacesContext context = getFacesContext();
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+            if (DEFAULT_EVENT.equals(eventName)) {
+                final Boolean value = Boolean.parseBoolean(params.get(getClientId(context) + "_value"));
+                final SelectEvent<Boolean> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
+                selectEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(selectEvent);
+            }
+            else {
+                super.queueEvent(event);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
     }
 
 }

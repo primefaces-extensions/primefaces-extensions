@@ -10,16 +10,15 @@
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
             <p>An HTML presentation component that enables to create fully-featured and beautiful presentations.</p>
-            <p>It is possible to render keynotes in a dynamic way as in data iteration components.</p>
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/keynote/examples/example-dynamic.xhtml"/>
+            <ui:include src="/sections/keynote/examples/example-event.xhtml"/>
         </h:panelGroup>
 
         <ui:decorate template="/templates/twoTabsDecorator.xhtml">
             <ui:define name="contentTab1">
-${showcase:getFileContent('/sections/keynote/examples/example-dynamic.xhtml')}
+${showcase:getFileContent('/sections/keynote/examples/example-event.xhtml')}
             </ui:define>
             <ui:define name="contentTab2">
 ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/keynote/KeynoteController.java')}

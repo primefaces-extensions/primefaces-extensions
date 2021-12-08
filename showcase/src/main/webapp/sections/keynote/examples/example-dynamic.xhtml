@@ -5,7 +5,7 @@
     xmlns:pe="http://primefaces.org/ui/extensions">
 
 <!-- EXAMPLE-SOURCE-START -->
-<pe:keynote loop="true" autoSlide="3000" slideNumber="c/t" value="#{keynoteDynamicController.items}" var="item" style="width: 40vw; height: 40vh;">
+<pe:keynote loop="true" autoSlide="3000" slideNumber="c/t" value="#{keynoteController.items}" var="item" style="width: 40vw; height: 40vh;">
     <pe:keynoteItem>
         <h2>#{item.headline}</h2>
         <p>#{item.content}</p>

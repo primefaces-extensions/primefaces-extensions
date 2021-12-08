@@ -27,6 +27,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('dynamic')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/keynote/dynamic.jsf"/>
+        <p:menuitem value="Event"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('event')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/event.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

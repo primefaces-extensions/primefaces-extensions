@@ -27,16 +27,48 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
             margin: cfg.margin || 0.04,
             minScale: cfg.minScale || 0.2,
             maxScale: cfg.maxScale || 2.0,
-            
-            plugins: [ RevealMarkdown ]
+
+            plugins: [RevealMarkdown]
         };
+
+        if (this.options.slideNumber === "false") {
+            this.options.slideNumber = false;
+        }
         
-        if (this.options.slideNumber === "false") this.options.slideNumber = false;
+        this.keynote = new Reveal(document.querySelector(this.jqId), this.options);
+        this.startKeynote();
+    },
 
-        let deck = new Reveal(document.querySelector(this.jqId), this.options);
-        deck.initialize();
+    /**
+     * Starts the keynote.
+     */
+    startKeynote: function () {
+        var $this = this;
 
+        $this.keynote.initialize().then(() => {
+            $this.keynote.on('slidetransitionend', event => {
+                if ($this.keynote.isLastSlide()) {
+                    this.endKeynote();
+                }
+            });
+        });
+    },
+
+    /**
+     * Ends the keynote.
+     */
+    endKeynote: function () {
+        var $this = this;
+
+        if (this.hasBehavior('end')) {
+            var options = {
+                params: [{
+                    name: $this.id + '_value',
+                    value: $this.keynote.isLastSlide()
+                }]
+            };
+            this.callBehavior('end', options);
+        }
     }
-
 
 });

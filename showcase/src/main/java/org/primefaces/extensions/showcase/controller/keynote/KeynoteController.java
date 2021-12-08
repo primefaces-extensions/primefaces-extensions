@@ -26,17 +26,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 
 @Named
 @ViewScoped
-public class KeynoteDynamicController implements Serializable {
+public class KeynoteController implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private List<KeynoteItem> items;
+
+    private boolean disabled = true;
 
     @PostConstruct
     protected void initialize() {
@@ -49,8 +54,19 @@ public class KeynoteDynamicController implements Serializable {
         }
     }
 
+    public void endListener(final SelectEvent<Boolean> event) {
+        disabled = false;
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "End fired",
+                    "Value: " + event.getObject());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
     public List<KeynoteItem> getItems() {
         return items;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
     }
 
     public class KeynoteItemContent implements Serializable {
