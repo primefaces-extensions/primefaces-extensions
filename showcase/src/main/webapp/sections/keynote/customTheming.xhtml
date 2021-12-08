@@ -30,8 +30,9 @@ ${showcase:getFileContent('/resources/keynote/custom.css')}
         <ui:include src="/sections/keynote/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
-        <ui:include src="/sections/shared/documentation.xhtml">
-            <ui:param name="tagName" value="keynote"/>
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName1" value="keynote"/>
+            <ui:param name="tagName2" value="keynoteItem"/>
         </ui:include>
     </ui:define>
 </ui:composition>

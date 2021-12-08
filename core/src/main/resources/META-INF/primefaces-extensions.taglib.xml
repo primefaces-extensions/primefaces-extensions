@@ -8808,6 +8808,78 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Slide background color.]]>
+            </description>
+            <name>backgroundColor</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background image.]]>
+            </description>
+            <name>backgroundImage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background size. Default value is cover.]]>
+            </description>
+            <name>backgroundSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background position. Default value is center.]]>
+            </description>
+            <name>backgroundPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background repeat. Default value is no-repeat.]]>
+            </description>
+            <name>backgroundRepeat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background opacity. 0 is transparent and 1 is fully opaque. Default value is 1.]]>
+            </description>
+            <name>backgroundOpacity</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A single video source, or a comma separated list of video sources.]]>
+            </description>
+            <name>backgroundVideo</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if the video should play repeatedly. Default value is false.]]>
+            </description>
+            <name>backgroundVideoLoop</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if the audio should be muted. Default value is false.]]>
+            </description>
+            <name>backgroundVideoMuted</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Enables to write presentation content using Markdown. Default value is false.]]>
             </description>
             <name>markdown</name>

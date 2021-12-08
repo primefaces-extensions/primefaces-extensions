@@ -208,6 +208,34 @@ public class KeynoteRenderer extends CoreRenderer {
             writer.writeAttribute("data-separator-vertical", uiItem.getSeparatorVertical(), null);
         }
 
+        if (uiItem.getBackgroundColor() != null) {
+            writer.writeAttribute("data-background-color", uiItem.getBackgroundColor(), null);
+        }
+        if (uiItem.getBackgroundImage() != null) {
+            writer.writeAttribute("data-background-image", uiItem.getBackgroundImage(), null);
+        }
+        if (uiItem.getBackgroundSize() != null) {
+            writer.writeAttribute("data-background-size", uiItem.getBackgroundSize(), null);
+        }
+        if (uiItem.getBackgroundPosition() != null) {
+            writer.writeAttribute("data-background-position", uiItem.getBackgroundPosition(), null);
+        }
+        if (uiItem.getBackgroundRepeat() != null) {
+            writer.writeAttribute("data-background-repeat", uiItem.getBackgroundRepeat(), null);
+        }
+        if (uiItem.getBackgroundOpacity() != null) {
+            writer.writeAttribute("data-background-opacity", uiItem.getBackgroundOpacity(), null);
+        }
+        if (uiItem.getBackgroundVideo() != null) {
+            writer.writeAttribute("data-background-video", uiItem.getBackgroundVideo(), null);
+        }
+        if (uiItem.isBackgroundVideoLoop()) {
+            writer.writeAttribute("data-background-video-loop", "", null);
+        }
+        if (uiItem.isBackgroundVideoMuted()) {
+            writer.writeAttribute("data-background-video-muted", "", null);
+        }
+
         if (uiItem.getStyleClass() != null) {
             writer.writeAttribute(Attrs.CLASS, ITEM_CLASS + " " + uiItem.getStyleClass(), null);
         }
