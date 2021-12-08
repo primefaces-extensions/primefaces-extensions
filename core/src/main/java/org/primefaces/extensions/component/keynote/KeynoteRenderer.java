@@ -41,6 +41,7 @@ public class KeynoteRenderer extends CoreRenderer {
     public static final String CONTAINER_CLASS = "ui-keynote reveal";
     public static final String SLIDES_CLASS = "slides";
     public static final String ITEM_CLASS = "ui-keynote-item";
+    public static final String SPEAKER_NOTE_CLASS = "notes";
 
     /**
      * {@inheritDoc}
@@ -253,6 +254,14 @@ public class KeynoteRenderer extends CoreRenderer {
 
         if (uiItem.isMarkdown()) {
             writer.endElement("textarea");
+        }
+
+        if (keynote.isShowNotes()) {
+            writer.startElement("aside", null);
+            writer.writeAttribute(Attrs.CLASS, SPEAKER_NOTE_CLASS, null);
+            String note = uiItem.getNote() == null ? "" : uiItem.getNote();
+            writer.writeText(note, null);
+            writer.endElement("aside");
         }
 
         writer.endElement("section");

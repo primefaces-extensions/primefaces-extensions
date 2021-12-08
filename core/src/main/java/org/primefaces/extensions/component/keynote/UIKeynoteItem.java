@@ -41,6 +41,7 @@ public class UIKeynoteItem extends UIComponentBase {
         backgroundVideoLoop,
         backgroundVideoMuted,
         markdown,
+        note,
         separator,
         separatorVertical,
         type,
@@ -135,6 +136,14 @@ public class UIKeynoteItem extends UIComponentBase {
 
     public void setMarkdown(final Boolean markdown) {
         getStateHelper().put(PropertyKeys.markdown, markdown);
+    }
+
+    public String getNote() {
+        return (String) getStateHelper().eval(PropertyKeys.note, null);
+    }
+
+    public void setNote(final String note) {
+        getStateHelper().put(PropertyKeys.note, note);
     }
 
     public String getSeparator() {

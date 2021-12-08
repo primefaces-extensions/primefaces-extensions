@@ -8888,6 +8888,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Speaker note.]]>
+            </description>
+            <name>note</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Horizontal separator.]]>
             </description>
             <name>separator</name>
