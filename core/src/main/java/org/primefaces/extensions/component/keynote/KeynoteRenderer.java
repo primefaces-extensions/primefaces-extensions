@@ -34,6 +34,7 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
 
 public class KeynoteRenderer extends CoreRenderer {
@@ -58,9 +59,9 @@ public class KeynoteRenderer extends CoreRenderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         final Keynote keynote = (Keynote) component;
 
-        // encodeCSS(context, "primefaces-extensions", "keynote/theme/" + keynote.getTheme() + ".css");
-        // encodeCSS(context, "primefaces", "primeicons/primeicons.css");
-        if (keynote.getTheme() != null && !"none".equals(keynote.getTheme())) {
+        // encodeCSS(context, "primefaces-extensions", "keynote/theme/" + keynote.getTheme() + ".css"); // TODO will be removed after completion of theming
+        // encodeCSS(context, "primefaces", "primeicons/primeicons.css"); // TODO will be removed after completion of theming
+        if (!"none".equals(keynote.getTheme())) {
             encodeCSS(context, keynote.getLibrary(), keynote.getTheme());
         }
     }
@@ -101,7 +102,7 @@ public class KeynoteRenderer extends CoreRenderer {
             // dynamic items
             final Object value = keynote.getValue();
             if (value != null) {
-                if (!(value instanceof Collection<?>)) {
+                if (!(value instanceof Collection)) {
                     throw new FacesException("Value in Keynote must be of type Collection / List");
                 }
 
@@ -155,25 +156,25 @@ public class KeynoteRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         wb.init("ExtKeynote", keynote)
-                    .attr("width", keynote.getWidth())
-                    .attr("height", keynote.getHeight())
-                    .attr("margin", keynote.getMargin())
-                    .attr("minScale", keynote.getMinScale())
-                    .attr("maxScale", keynote.getMaxScale())
-                    .attr("autoSlide", keynote.getAutoSlide())
-                    .attr("center", keynote.isCenter())
-                    .attr("controls", keynote.isControls())
-                    .attr("disableLayout", keynote.isDisableLayout())
-                    .attr("embedded", keynote.isEmbedded())
-                    .attr("loop", keynote.isLoop())
-                    .attr("navigationMode", keynote.getNavigationMode())
-                    .attr("progress", keynote.isProgress())
-                    .attr("showNotes", keynote.isShowNotes())
-                    .attr("slideNumber", keynote.getSlideNumber())
-                    .attr("touch", keynote.isTouch())
-                    .attr("transition", keynote.getTransition())
-                    .attr("transitionSpeed", keynote.getTransitionSpeed())
-                    .attr("backgroundTransition", keynote.getBackgroundTransition())
+                    .attr("width", keynote.getWidth(), 960)
+                    .attr("height", keynote.getHeight(), 700)
+                    .attr("margin", keynote.getMargin(), 0.04)
+                    .attr("minScale", keynote.getMinScale(), 0.2)
+                    .attr("maxScale", keynote.getMaxScale(), 2.0)
+                    .attr("autoSlide", keynote.getAutoSlide(), 0)
+                    .attr("center", keynote.isCenter(), true)
+                    .attr("controls", keynote.isControls(), true)
+                    .attr("disableLayout", keynote.isDisableLayout(), false)
+                    .attr("embedded", keynote.isEmbedded(), false)
+                    .attr("loop", keynote.isLoop(), false)
+                    .attr("navigationMode", keynote.getNavigationMode(), "default")
+                    .attr("progress", keynote.isProgress(), true)
+                    .attr("showNotes", keynote.isShowNotes(), false)
+                    .attr("slideNumber", keynote.getSlideNumber(), "false")
+                    .attr("touch", keynote.isTouch(), true)
+                    .attr("transition", keynote.getTransition(), "slide")
+                    .attr("transitionSpeed", keynote.getTransitionSpeed(), "default")
+                    .attr("backgroundTransition", keynote.getBackgroundTransition(), "fade")
                     .attr("theme", keynote.getTheme());
 
         encodeClientBehaviors(context, keynote);
@@ -260,7 +261,7 @@ public class KeynoteRenderer extends CoreRenderer {
         if (keynote.isShowNotes()) {
             writer.startElement("aside", null);
             writer.writeAttribute(Attrs.CLASS, SPEAKER_NOTE_CLASS, null);
-            String note = uiItem.getNote() == null ? "" : uiItem.getNote();
+            String note = uiItem.getNote() == null ? Constants.EMPTY_STRING : uiItem.getNote();
             writer.writeText(note, null);
             writer.endElement("aside");
         }
