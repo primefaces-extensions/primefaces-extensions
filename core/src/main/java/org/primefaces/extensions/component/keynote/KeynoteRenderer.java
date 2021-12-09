@@ -34,7 +34,6 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 public class KeynoteRenderer extends CoreRenderer {
@@ -176,14 +175,6 @@ public class KeynoteRenderer extends CoreRenderer {
                     .attr("transitionSpeed", keynote.getTransitionSpeed())
                     .attr("backgroundTransition", keynote.getBackgroundTransition())
                     .attr("theme", keynote.getTheme());
-
-        if (!LangUtils.isBlank(keynote.getOnslidechanged())) {
-            wb.callback("onslidechanged", "function()", keynote.getOnslidechanged());
-        }
-
-        if (!LangUtils.isBlank(keynote.getOnslidetransitionend())) {
-            wb.callback("onslidetransitionend", "function()", keynote.getOnslidetransitionend());
-        }
 
         encodeClientBehaviors(context, keynote);
 

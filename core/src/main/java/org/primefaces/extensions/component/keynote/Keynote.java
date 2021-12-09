@@ -95,8 +95,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         backgroundTransition,
         theme,
         library,
-        onslidechanged,
-        onslidetransitionend,
         style,
         styleClass
         //@formatter:on
@@ -292,22 +290,6 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
 
     public void setLibrary(final String _library) {
         getStateHelper().put(PropertyKeys.library, _library);
-    }
-
-    public String getOnslidechanged() {
-        return (String) getStateHelper().eval(PropertyKeys.onslidechanged, null);
-    }
-
-    public void setOnslidechanged(final String onslidechanged) {
-        getStateHelper().put(PropertyKeys.onslidechanged, onslidechanged);
-    }
-
-    public String getOnslidetransitionend() {
-        return (String) getStateHelper().eval(PropertyKeys.onslidetransitionend, null);
-    }
-
-    public void setOnslidetransitionend(final String onslidetransitionend) {
-        getStateHelper().put(PropertyKeys.onslidetransitionend, onslidetransitionend);
     }
 
     public String getWidgetVar() {

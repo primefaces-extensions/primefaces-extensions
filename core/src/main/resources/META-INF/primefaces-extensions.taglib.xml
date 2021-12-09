@@ -8534,7 +8534,9 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
-            <![CDATA[Keynote is an HTML presentation component that enables to create fully-featured and beautiful presentations.]]>
+            <![CDATA[Keynote is an HTML presentation component that enables to create fully-featured and beautiful presentations.
+     Client behavior events: slidechanged - fires each time the slide changes (org.primefaces.event.KeynoteEvent), 
+                             slidetransitionend - fires instantly as soon as the slide changes (org.primefaces.event.KeynoteEvent).]]>
         </description>
         <tag-name>keynote</tag-name>
         <component>
@@ -8770,22 +8772,6 @@ See showcase for an example. Default null.]]>
                 <![CDATA[Style of the main container element. Default value is null.]]>
             </description>
             <name>style</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler executed the keynote slide changed.]]>
-            </description>
-            <name>onslidechanged</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Javascript handler executed the keynote slide transition ends.]]>
-            </description>
-            <name>onslidetransitionend</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
