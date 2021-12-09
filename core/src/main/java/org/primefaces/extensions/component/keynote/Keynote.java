@@ -41,8 +41,8 @@ import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.component.base.AbstractDynamicData;
+import org.primefaces.extensions.event.KeynoteEvent;
 import org.primefaces.extensions.model.common.KeyData;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.util.Constants;
@@ -60,9 +60,10 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteRenderer";
 
-    private static final String DEFAULT_EVENT = "end";
+    private static final String DEFAULT_EVENT = "slidechanged";
 
     private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
+                .put("slidetransitionend", null)
                 .put(DEFAULT_EVENT, null)
                 .build();
 
@@ -94,6 +95,8 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         backgroundTransition,
         theme,
         library,
+        onslidechanged,
+        onslidetransitionend,
         style,
         styleClass
         //@formatter:on
@@ -289,6 +292,22 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
 
     public void setLibrary(final String _library) {
         getStateHelper().put(PropertyKeys.library, _library);
+    }
+
+    public String getOnslidechanged() {
+        return (String) getStateHelper().eval(PropertyKeys.onslidechanged, null);
+    }
+
+    public void setOnslidechanged(final String onslidechanged) {
+        getStateHelper().put(PropertyKeys.onslidechanged, onslidechanged);
+    }
+
+    public String getOnslidetransitionend() {
+        return (String) getStateHelper().eval(PropertyKeys.onslidetransitionend, null);
+    }
+
+    public void setOnslidetransitionend(final String onslidetransitionend) {
+        getStateHelper().put(PropertyKeys.onslidetransitionend, onslidetransitionend);
     }
 
     public String getWidgetVar() {
@@ -578,11 +597,19 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-            if (DEFAULT_EVENT.equals(eventName)) {
-                final Boolean value = Boolean.parseBoolean(params.get(getClientId(context) + "_value"));
-                final SelectEvent<Boolean> selectEvent = new SelectEvent<>(this, behaviorEvent.getBehavior(), value);
-                selectEvent.setPhaseId(event.getPhaseId());
-                super.queueEvent(selectEvent);
+            if ("slidetransitionend".equals(eventName)) {
+                final Boolean slidetransitionend = Boolean.parseBoolean(params.get(getClientId(context) + "_slidetransitionend"));
+                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slidetransitionend, lastSlide);
+                keynoteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(keynoteEvent);
+            }
+            else if (DEFAULT_EVENT.equals(eventName)) {
+                final Boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
+                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged, lastSlide);
+                keynoteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(keynoteEvent);
             }
             else {
                 super.queueEvent(event);

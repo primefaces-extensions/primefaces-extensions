@@ -23,6 +23,7 @@ package org.primefaces.extensions.showcase.controller.keynote;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.event.KeynoteEvent;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 
 @Named
@@ -54,10 +55,19 @@ public class KeynoteController implements Serializable {
         }
     }
 
-    public void endListener(final SelectEvent<Boolean> event) {
-        disabled = false;
-        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "End fired",
-                    "Value: " + event.getObject());
+    public void onSlideChanged(final KeynoteEvent event) {
+        disabled = !event.isLastSlide();
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Trigger: " + new Date(),
+                    "Slide changed: " + event.isCompleted() + ", last slide: " + event.isLastSlide());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onSlideTransitionEnd(final KeynoteEvent event) {
+        disabled = !event.isLastSlide();
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Trigger: " + new Date(),
+                    "Slide transition end: " + event.isCompleted() + ", last slide: " + event.isLastSlide());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

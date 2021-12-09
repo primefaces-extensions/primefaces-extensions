@@ -8773,6 +8773,22 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler executed the keynote slide changed.]]>
+            </description>
+            <name>onslidechanged</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler executed the keynote slide transition ends.]]>
+            </description>
+            <name>onslidetransitionend</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
     <tag>
         <description>

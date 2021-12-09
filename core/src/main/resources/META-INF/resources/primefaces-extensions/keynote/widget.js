@@ -34,40 +34,51 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
         if (this.options.slideNumber === "false") {
             this.options.slideNumber = false;
         }
-        
+
         this.keynote = new Reveal(document.querySelector(this.jqId), this.options);
-        this.startKeynote();
+
+        this.bindEvents();
+
+        this.keynote.initialize();
     },
 
-    /**
-     * Starts the keynote.
-     */
-    startKeynote: function () {
+    bindEvents: function () {
         var $this = this;
 
-        $this.keynote.initialize().then(() => {
-            $this.keynote.on('slidetransitionend', event => {
-                if ($this.keynote.isLastSlide()) {
-                    this.endKeynote();
-                }
-            });
+        this.keynote.on('slidechanged', event => {
+            $this.slideChanged(event);
+        });
+
+        this.keynote.on('slidetransitionend', event => {
+            $this.slideTransitionEnd(event);
         });
     },
 
-    /**
-     * Ends the keynote.
-     */
-    endKeynote: function () {
+    slideChanged: function (event) {
         var $this = this;
 
-        if (this.hasBehavior('end')) {
+        if (this.hasBehavior('slidechanged')) {
             var options = {
-                params: [{
-                    name: $this.id + '_value',
-                    value: $this.keynote.isLastSlide()
-                }]
+                params: [
+                    {name: $this.id + '_slideChanged', value: true},
+                    {name: $this.id + '_lastSlide', value: $this.keynote.isLastSlide()}
+                ]
             };
-            this.callBehavior('end', options);
+            this.callBehavior('slidechanged', options);
+        }
+    },
+
+    slideTransitionEnd: function (event) {
+        var $this = this;
+
+        if (this.hasBehavior('slidetransitionend')) {
+            var options = {
+                params: [
+                    {name: $this.id + '_slidetransitionend', value: true},
+                    {name: $this.id + '_lastSlide', value: $this.keynote.isLastSlide()}
+                ]
+            };
+            this.callBehavior('slidetransitionend', options);
         }
     }
 
