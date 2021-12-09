@@ -60,10 +60,10 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteRenderer";
 
-    private static final String DEFAULT_EVENT = "slidechanged";
+    private static final String DEFAULT_EVENT = "slideChanged";
 
     private static final Map<String, Class<? extends BehaviorEvent>> BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder()
-                .put("slidetransitionend", null)
+                .put("slideTransitionEnd", null)
                 .put(DEFAULT_EVENT, null)
                 .build();
 
@@ -277,7 +277,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     }
 
     public String getTheme() {
-        return (String) getStateHelper().eval(PropertyKeys.theme, null);
+        return (String) getStateHelper().eval(PropertyKeys.theme, "none");
     }
 
     public void setTheme(final String theme) {
@@ -579,10 +579,10 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
             final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
-            if ("slidetransitionend".equals(eventName)) {
-                final Boolean slidetransitionend = Boolean.parseBoolean(params.get(getClientId(context) + "_slidetransitionend"));
+            if ("slideTransitionEnd".equals(eventName)) {
+                final Boolean slideTransitionEnd = Boolean.parseBoolean(params.get(getClientId(context) + "_slideTransitionEnd"));
                 final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
-                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slidetransitionend, lastSlide);
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideTransitionEnd, lastSlide);
                 keynoteEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(keynoteEvent);
             }

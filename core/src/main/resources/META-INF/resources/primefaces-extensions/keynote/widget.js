@@ -57,28 +57,28 @@ PrimeFaces.widget.ExtKeynote = PrimeFaces.widget.BaseWidget.extend({
     slideChanged: function (event) {
         var $this = this;
 
-        if (this.hasBehavior('slidechanged')) {
+        if (this.hasBehavior('slideChanged')) {
             var options = {
                 params: [
                     {name: $this.id + '_slideChanged', value: true},
                     {name: $this.id + '_lastSlide', value: $this.keynote.isLastSlide()}
                 ]
             };
-            this.callBehavior('slidechanged', options);
+            this.callBehavior('slideChanged', options);
         }
     },
 
     slideTransitionEnd: function (event) {
         var $this = this;
 
-        if (this.hasBehavior('slidetransitionend')) {
+        if (this.hasBehavior('slideTransitionEnd')) {
             var options = {
                 params: [
-                    {name: $this.id + '_slidetransitionend', value: true},
+                    {name: $this.id + '_slideTransitionEnd', value: true},
                     {name: $this.id + '_lastSlide', value: $this.keynote.isLastSlide()}
                 ]
             };
-            this.callBehavior('slidetransitionend', options);
+            this.callBehavior('slideTransitionEnd', options);
         }
     }
 

@@ -11,8 +11,8 @@
 
 <!-- EXAMPLE-SOURCE-START -->
 <pe:keynote style="width: 40vw; height: 40vh;">
-    <p:ajax event="slidechanged" listener="#{keynoteController.onSlideChanged}" update="btnSubmit messages"/>
-    <p:ajax event="slidetransitionend" listener="#{keynoteController.onSlideTransitionEnd}" update="btnSubmit messages"/>
+    <p:ajax event="slideChanged" listener="#{keynoteController.onSlideChanged}" update="btnSubmit messages"/>
+    <p:ajax event="slideTransitionEnd" listener="#{keynoteController.onSlideTransitionEnd}" update="btnSubmit messages"/>
     <pe:keynoteItem>
         <h2>Slide 1</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

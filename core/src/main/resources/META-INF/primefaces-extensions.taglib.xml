@@ -8535,8 +8535,8 @@ See showcase for an example. Default null.]]>
     <tag>
         <description>
             <![CDATA[Keynote is an HTML presentation component that enables to create fully-featured and beautiful presentations.
-     Client behavior events: slidechanged - fires each time the slide changes (org.primefaces.event.KeynoteEvent), 
-                             slidetransitionend - fires instantly as soon as the slide changes (org.primefaces.event.KeynoteEvent).]]>
+     Client behavior events: slideChanged - fires each time the slide changes (org.primefaces.event.KeynoteEvent), 
+                             slideTransitionEnd - fires instantly as soon as the slide changes (org.primefaces.event.KeynoteEvent).]]>
         </description>
         <tag-name>keynote</tag-name>
         <component>
@@ -8745,7 +8745,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The theme to style the presentation with. Valid values are: black, white, league, beige, sky, night, serif, simple, solarized, blood, moon. Default value is white.]]>
+                <![CDATA[The theme to style the presentation with. Valid values are: black, white, league, beige, sky, night, serif, simple, solarized, blood, moon. Default value is none.]]>
             </description>
             <name>theme</name>
             <required>false</required>

@@ -175,7 +175,7 @@ public class KeynoteRenderer extends CoreRenderer {
                     .attr("transition", keynote.getTransition(), "slide")
                     .attr("transitionSpeed", keynote.getTransitionSpeed(), "default")
                     .attr("backgroundTransition", keynote.getBackgroundTransition(), "fade")
-                    .attr("theme", keynote.getTheme());
+                    .attr("theme", keynote.getTheme(), "none");
 
         encodeClientBehaviors(context, keynote);
 
