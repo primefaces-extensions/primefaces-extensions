@@ -27,3 +27,4 @@ This product includes software developed by Jesse Pollak (https://github.com/jes
 This product includes software developed by farzher (https://github.com/farzher/fuzzysort)
 This product includes software developed by Inorganik (https://inorganik.github.io/countUp.js/)
 This product includes software developed by ZXing for JS (https://github.com/zxing-js/library)
+This product includes software developed by Hakim El Hattab, http://hakim.se, and reveal.js contributors (https://github.com/hakimel/reveal.js)
