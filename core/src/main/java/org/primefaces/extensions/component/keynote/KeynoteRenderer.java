@@ -23,14 +23,13 @@ package org.primefaces.extensions.component.keynote;
 
 import java.io.IOException;
 import java.util.Collection;
-
+import java.util.List;
 import javax.faces.FacesException;
 import javax.faces.application.Resource;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -84,9 +83,9 @@ public class KeynoteRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = keynote.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
-                    .add(CONTAINER_CLASS)
-                    .add(keynote.getStyleClass())
-                    .build();
+                .add(CONTAINER_CLASS)
+                .add(keynote.getStyleClass())
+                .build();
 
         writer.startElement("div", keynote);
         writer.writeAttribute("id", clientId, null);
@@ -106,7 +105,16 @@ public class KeynoteRenderer extends CoreRenderer {
                     throw new FacesException("Value in Keynote must be of type Collection / List");
                 }
 
-                for (final UIComponent kid : keynote.getChildren()) {
+                // TODO will be removed
+//                for (final UIComponent kid : keynote.getChildren()) {
+//                    if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
+//                        // first render children like stamped elements, etc.
+//                        renderChild(context, kid);
+//                    }
+//                }
+                List<UIComponent> children = keynote.getChildren();
+                for (int i = 0; i < children.size(); i++) {
+                    final UIComponent kid = children.get(i);
                     if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
                         // first render children like stamped elements, etc.
                         renderChild(context, kid);
@@ -127,16 +135,28 @@ public class KeynoteRenderer extends CoreRenderer {
                     }
                 }
             }
-        }
-        else {
+        } else {
             // static items
-            for (final UIComponent kid : keynote.getChildren()) {
+            // TODO will be removed
+//            for (final UIComponent kid : keynote.getChildren()) {
+//                if (kid.isRendered()) {
+//                    if (kid instanceof UIKeynoteItem) {
+//                        // render item
+//                        renderItem(context, writer, keynote, (UIKeynoteItem) kid);
+//                    } else {
+//                        // render a child like stamped element, etc.
+//                        renderChild(context, kid);
+//                    }
+//                }
+//            }
+            List<UIComponent> children = keynote.getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                final UIComponent kid = children.get(i);
                 if (kid.isRendered()) {
                     if (kid instanceof UIKeynoteItem) {
                         // render item
                         renderItem(context, writer, keynote, (UIKeynoteItem) kid);
-                    }
-                    else {
+                    } else {
                         // render a child like stamped element, etc.
                         renderChild(context, kid);
                     }
@@ -156,26 +176,26 @@ public class KeynoteRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
 
         wb.init("ExtKeynote", keynote)
-                    .attr("width", keynote.getWidth(), 960)
-                    .attr("height", keynote.getHeight(), 700)
-                    .attr("margin", keynote.getMargin(), 0.04)
-                    .attr("minScale", keynote.getMinScale(), 0.2)
-                    .attr("maxScale", keynote.getMaxScale(), 2.0)
-                    .attr("autoSlide", keynote.getAutoSlide(), 0)
-                    .attr("center", keynote.isCenter(), true)
-                    .attr("controls", keynote.isControls(), true)
-                    .attr("disableLayout", keynote.isDisableLayout(), false)
-                    .attr("embedded", keynote.isEmbedded(), false)
-                    .attr("loop", keynote.isLoop(), false)
-                    .attr("navigationMode", keynote.getNavigationMode(), "default")
-                    .attr("progress", keynote.isProgress(), true)
-                    .attr("showNotes", keynote.isShowNotes(), false)
-                    .attr("slideNumber", keynote.getSlideNumber(), "false")
-                    .attr("touch", keynote.isTouch(), true)
-                    .attr("transition", keynote.getTransition(), "slide")
-                    .attr("transitionSpeed", keynote.getTransitionSpeed(), "default")
-                    .attr("backgroundTransition", keynote.getBackgroundTransition(), "fade")
-                    .attr("theme", keynote.getTheme(), "none");
+                .attr("width", keynote.getWidth(), 960)
+                .attr("height", keynote.getHeight(), 700)
+                .attr("margin", keynote.getMargin(), 0.04)
+                .attr("minScale", keynote.getMinScale(), 0.2)
+                .attr("maxScale", keynote.getMaxScale(), 2.0)
+                .attr("autoSlide", keynote.getAutoSlide(), 0)
+                .attr("center", keynote.isCenter(), true)
+                .attr("controls", keynote.isControls(), true)
+                .attr("disableLayout", keynote.isDisableLayout(), false)
+                .attr("embedded", keynote.isEmbedded(), false)
+                .attr("loop", keynote.isLoop(), false)
+                .attr("navigationMode", keynote.getNavigationMode(), "default")
+                .attr("progress", keynote.isProgress(), true)
+                .attr("showNotes", keynote.isShowNotes(), false)
+                .attr("slideNumber", keynote.getSlideNumber(), "false")
+                .attr("touch", keynote.isTouch(), true)
+                .attr("transition", keynote.getTransition(), "slide")
+                .attr("transitionSpeed", keynote.getTransitionSpeed(), "default")
+                .attr("backgroundTransition", keynote.getBackgroundTransition(), "fade")
+                .attr("theme", keynote.getTheme(), "none");
 
         encodeClientBehaviors(context, keynote);
 
@@ -189,8 +209,7 @@ public class KeynoteRenderer extends CoreRenderer {
         Resource cssResource = context.getApplication().getResourceHandler().createResource(theme + ".css", library);
         if (cssResource == null) {
             throw new FacesException("Error loading CSS, cannot find \"" + theme + "\" resource of \"" + library + "\" library");
-        }
-        else {
+        } else {
             writer.startElement("link", null);
             writer.writeAttribute("type", "text/css", null);
             writer.writeAttribute("rel", "stylesheet", null);
@@ -200,8 +219,8 @@ public class KeynoteRenderer extends CoreRenderer {
     }
 
     protected void renderItem(final FacesContext context, final ResponseWriter writer, final Keynote keynote,
-                final UIKeynoteItem uiItem)
-                throws IOException {
+            final UIKeynoteItem uiItem)
+            throws IOException {
 
         writer.startElement("section", null);
 
@@ -241,8 +260,7 @@ public class KeynoteRenderer extends CoreRenderer {
 
         if (uiItem.getStyleClass() != null) {
             writer.writeAttribute(Attrs.CLASS, ITEM_CLASS + " " + uiItem.getStyleClass(), null);
-        }
-        else {
+        } else {
             writer.writeAttribute(Attrs.CLASS, ITEM_CLASS, null);
         }
 
