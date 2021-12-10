@@ -48,10 +48,8 @@ public class KeynoteController implements Serializable {
     protected void initialize() {
         items = new ArrayList<KeynoteItem>();
 
-        for (int j = 0; j < 3; j++) {
-            for (int i = 1; i <= 10; i++) {
-                items.add(new KeynoteItem(new KeynoteItemContent("Section " + i, "Lorem ipsum content " + i)));
-            }
+        for (int i = 1; i <= 10; i++) {
+            items.add(new KeynoteItem(new KeynoteItemContent("Section " + i, "Lorem ipsum content " + i)));
         }
     }
 

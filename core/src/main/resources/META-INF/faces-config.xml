@@ -399,6 +399,11 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.keynote.KeynoteItemRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.TimeAgoRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.timeago.TimeAgoRenderer</renderer-class>
         </renderer>

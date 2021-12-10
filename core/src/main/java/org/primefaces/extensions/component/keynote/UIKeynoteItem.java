@@ -27,7 +27,9 @@ import org.primefaces.extensions.model.keynote.KeynoteItem;
 
 public class UIKeynoteItem extends UIComponentBase {
 
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.UIKeynoteItem";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteItemRenderer";
 
     protected enum PropertyKeys {
         // @formatter:off

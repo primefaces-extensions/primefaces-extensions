@@ -35,15 +35,12 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.extensions.model.keynote.KeynoteItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
 
 public class KeynoteRenderer extends CoreRenderer {
 
     public static final String CONTAINER_CLASS = "ui-keynote reveal";
     public static final String SLIDES_CLASS = "slides";
-    public static final String ITEM_CLASS = "ui-keynote-item";
-    public static final String SPEAKER_NOTE_CLASS = "notes";
 
     /**
      * {@inheritDoc}
@@ -125,7 +122,7 @@ public class KeynoteRenderer extends CoreRenderer {
                         keynote.setData(keynoteItem);
 
                         // render item
-                        renderItem(context, writer, keynote, uiItem);
+                        renderChild(context, uiItem);
                     }
                 }
             }
@@ -136,14 +133,7 @@ public class KeynoteRenderer extends CoreRenderer {
             for (int i = 0; i < children.size(); i++) {
                 final UIComponent kid = children.get(i);
                 if (kid.isRendered()) {
-                    if (kid instanceof UIKeynoteItem) {
-                        // render item
-                        renderItem(context, writer, keynote, (UIKeynoteItem) kid);
-                    }
-                    else {
-                        // render a child like stamped element, etc.
-                        renderChild(context, kid);
-                    }
+                    renderChild(context, kid);
                 }
             }
         }
@@ -201,76 +191,6 @@ public class KeynoteRenderer extends CoreRenderer {
             writer.writeAttribute("href", externalContext.encodeResourceURL(cssResource.getRequestPath()), null);
             writer.endElement("link");
         }
-    }
-
-    protected void renderItem(final FacesContext context, final ResponseWriter writer, final Keynote keynote,
-                final UIKeynoteItem uiItem)
-                throws IOException {
-
-        writer.startElement("section", null);
-
-        if (uiItem.isMarkdown()) {
-            writer.writeAttribute("data-markdown", "", null);
-            writer.writeAttribute("data-separator", uiItem.getSeparator(), null);
-            writer.writeAttribute("data-separator-vertical", uiItem.getSeparatorVertical(), null);
-        }
-
-        if (uiItem.getBackgroundColor() != null) {
-            writer.writeAttribute("data-background-color", uiItem.getBackgroundColor(), null);
-        }
-        if (uiItem.getBackgroundImage() != null) {
-            writer.writeAttribute("data-background-image", uiItem.getBackgroundImage(), null);
-        }
-        if (uiItem.getBackgroundSize() != null) {
-            writer.writeAttribute("data-background-size", uiItem.getBackgroundSize(), null);
-        }
-        if (uiItem.getBackgroundPosition() != null) {
-            writer.writeAttribute("data-background-position", uiItem.getBackgroundPosition(), null);
-        }
-        if (uiItem.getBackgroundRepeat() != null) {
-            writer.writeAttribute("data-background-repeat", uiItem.getBackgroundRepeat(), null);
-        }
-        if (uiItem.getBackgroundOpacity() != null) {
-            writer.writeAttribute("data-background-opacity", uiItem.getBackgroundOpacity(), null);
-        }
-        if (uiItem.getBackgroundVideo() != null) {
-            writer.writeAttribute("data-background-video", uiItem.getBackgroundVideo(), null);
-        }
-        if (uiItem.isBackgroundVideoLoop()) {
-            writer.writeAttribute("data-background-video-loop", "", null);
-        }
-        if (uiItem.isBackgroundVideoMuted()) {
-            writer.writeAttribute("data-background-video-muted", "", null);
-        }
-
-        if (uiItem.getStyleClass() != null) {
-            writer.writeAttribute(Attrs.CLASS, ITEM_CLASS + " " + uiItem.getStyleClass(), null);
-        }
-        else {
-            writer.writeAttribute(Attrs.CLASS, ITEM_CLASS, null);
-        }
-
-        if (uiItem.isMarkdown()) {
-            writer.startElement("textarea", null);
-            writer.writeAttribute("data-template", "", null);
-        }
-
-        // encode content of pe:keynoteItem
-        uiItem.encodeAll(context);
-
-        if (uiItem.isMarkdown()) {
-            writer.endElement("textarea");
-        }
-
-        if (keynote.isShowNotes()) {
-            writer.startElement("aside", null);
-            writer.writeAttribute(Attrs.CLASS, SPEAKER_NOTE_CLASS, null);
-            String note = uiItem.getNote() == null ? Constants.EMPTY_STRING : uiItem.getNote();
-            writer.writeText(note, null);
-            writer.endElement("aside");
-        }
-
-        writer.endElement("section");
     }
 
     /**

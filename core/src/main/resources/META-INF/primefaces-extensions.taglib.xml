@@ -8783,6 +8783,7 @@ See showcase for an example. Default null.]]>
         <tag-name>keynoteItem</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.UIKeynoteItem</component-type>
+            <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
         </component>
         <attribute>
             <description>
