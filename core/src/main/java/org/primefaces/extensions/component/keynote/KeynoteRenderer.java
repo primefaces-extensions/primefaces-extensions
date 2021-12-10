@@ -60,8 +60,6 @@ public class KeynoteRenderer extends CoreRenderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         final Keynote keynote = (Keynote) component;
 
-        // encodeCSS(context, "primefaces-extensions", "keynote/theme/" + keynote.getTheme() + ".css"); // TODO will be removed after completion of theming
-        // encodeCSS(context, "primefaces", "primeicons/primeicons.css"); // TODO will be removed after completion of theming
         if (!"none".equals(keynote.getTheme())) {
             encodeCSS(context, keynote.getLibrary(), keynote.getTheme());
         }
@@ -107,13 +105,6 @@ public class KeynoteRenderer extends CoreRenderer {
                     throw new FacesException("Value in Keynote must be of type Collection / List");
                 }
 
-                // TODO will be removed
-                // for (final UIComponent kid : keynote.getChildren()) {
-                // if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
-                // // first render children like stamped elements, etc.
-                // renderChild(context, kid);
-                // }
-                // }
                 List<UIComponent> children = keynote.getChildren();
                 for (int i = 0; i < children.size(); i++) {
                     final UIComponent kid = children.get(i);
@@ -124,19 +115,6 @@ public class KeynoteRenderer extends CoreRenderer {
                 }
 
                 final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
-                // TODO will be removed
-                // for (final KeynoteItem keynoteItem : col) {
-                // // find ui item by type
-                // final UIKeynoteItem uiItem = keynote.getItem(keynoteItem.getType());
-                //
-                // if (uiItem.isRendered()) {
-                // // set data in request scope
-                // keynote.setData(keynoteItem);
-                //
-                // // render item
-                // renderItem(context, writer, keynote, uiItem);
-                // }
-                // }
                 for (int i = 0; i < col.size(); i++) {
                     final KeynoteItem keynoteItem = (KeynoteItem) col.toArray()[i];
                     // find ui item by type
@@ -154,18 +132,6 @@ public class KeynoteRenderer extends CoreRenderer {
         }
         else {
             // static items
-            // TODO will be removed
-            // for (final UIComponent kid : keynote.getChildren()) {
-            // if (kid.isRendered()) {
-            // if (kid instanceof UIKeynoteItem) {
-            // // render item
-            // renderItem(context, writer, keynote, (UIKeynoteItem) kid);
-            // } else {
-            // // render a child like stamped element, etc.
-            // renderChild(context, kid);
-            // }
-            // }
-            // }
             List<UIComponent> children = keynote.getChildren();
             for (int i = 0; i < children.size(); i++) {
                 final UIComponent kid = children.get(i);

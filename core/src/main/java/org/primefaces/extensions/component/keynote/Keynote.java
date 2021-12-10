@@ -316,6 +316,37 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
+    @Override
+    public void queueEvent(final FacesEvent event) {
+        if (event instanceof AjaxBehaviorEvent) {
+            final FacesContext context = getFacesContext();
+            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+
+            if ("slideTransitionEnd".equals(eventName)) {
+                final Boolean slideTransitionEnd = Boolean.parseBoolean(params.get(getClientId(context) + "_slideTransitionEnd"));
+                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideTransitionEnd, lastSlide);
+                keynoteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(keynoteEvent);
+            }
+            else if (DEFAULT_EVENT.equals(eventName)) {
+                final Boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
+                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged, lastSlide);
+                keynoteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(keynoteEvent);
+            }
+            else {
+                super.queueEvent(event);
+            }
+        }
+        else {
+            super.queueEvent(event);
+        }
+    }
+
     public UIKeynoteItem getItem(final String type) {
         final UIKeynoteItem item = getItems().get(type);
 
@@ -572,34 +603,11 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     }
 
     @Override
-    public void queueEvent(final FacesEvent event) {
-        if (event instanceof AjaxBehaviorEvent) {
-            final FacesContext context = getFacesContext();
-            final AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
-            final Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-            final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+    public Object saveState(final FacesContext context) {
+        // reset component for MyFaces view pooling
+        items = null;
 
-            if ("slideTransitionEnd".equals(eventName)) {
-                final Boolean slideTransitionEnd = Boolean.parseBoolean(params.get(getClientId(context) + "_slideTransitionEnd"));
-                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
-                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideTransitionEnd, lastSlide);
-                keynoteEvent.setPhaseId(event.getPhaseId());
-                super.queueEvent(keynoteEvent);
-            }
-            else if (DEFAULT_EVENT.equals(eventName)) {
-                final Boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
-                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
-                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged, lastSlide);
-                keynoteEvent.setPhaseId(event.getPhaseId());
-                super.queueEvent(keynoteEvent);
-            }
-            else {
-                super.queueEvent(event);
-            }
-        }
-        else {
-            super.queueEvent(event);
-        }
+        return super.saveState(context);
     }
 
 }
