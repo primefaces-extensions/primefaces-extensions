@@ -10,7 +10,7 @@
 </p:messages>
 
 <!-- EXAMPLE-SOURCE-START -->
-<pe:keynote style="width: 40vw; height: 40vh;">
+<pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;">
     <p:ajax event="slideChanged" listener="#{keynoteController.onSlideChanged}" update="btnSubmit messages"/>
     <p:ajax event="slideTransitionEnd" listener="#{keynoteController.onSlideTransitionEnd}" update="btnSubmit messages"/>
     <pe:keynoteItem>
