@@ -5,7 +5,7 @@
     xmlns:pe="http://primefaces.org/ui/extensions">
 
 <!-- EXAMPLE-SOURCE-START -->
-<pe:keynote style="width: 40vw; height: 40vh;">
+<pe:keynote slideNumber="c/t" style="width: 40vw; height: 40vh;">
     <pe:keynoteItem>
         <h2>Slide 1</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -18,8 +18,14 @@
             <h2>Vertical Slide 2</h2>
         </pe:keynoteItem>
     </pe:keynoteItem>
-    <pe:keynoteItem>
+    <pe:keynoteItem visibility="uncounted">
         <h2>Slide 3</h2>
+    </pe:keynoteItem>
+    <pe:keynoteItem visibility="hidden">
+        <h2>Slide 4</h2>
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <h2>Slide 5</h2>
     </pe:keynoteItem>
 </pe:keynote>
 <!-- EXAMPLE-SOURCE-END -->

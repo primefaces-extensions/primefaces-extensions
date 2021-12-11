@@ -8915,6 +8915,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Style class of the container element for this item. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Type corresponding to KeynoteItem. Default value is "default".]]>
             </description>
             <name>type</name>
@@ -8923,9 +8931,9 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Style class of the container element for this item. Default value is null.]]>
+                <![CDATA[Attribute to hide or mark slides as uncounted. Valid values are hidden and uncounted. Default value is null.]]>
             </description>
-            <name>styleClass</name>
+            <name>visibility</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

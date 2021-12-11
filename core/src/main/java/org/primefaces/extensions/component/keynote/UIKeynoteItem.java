@@ -46,8 +46,9 @@ public class UIKeynoteItem extends UIComponentBase {
         note,
         separator,
         separatorVertical,
+        styleClass,
         type,
-        styleClass
+        visibility,
         // @formatter:on
     }
 
@@ -164,6 +165,14 @@ public class UIKeynoteItem extends UIComponentBase {
         getStateHelper().put(PropertyKeys.separatorVertical, separatorVertical);
     }
 
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
+
     public String getType() {
         return (String) getStateHelper().eval(PropertyKeys.type, KeynoteItem.DEFAULT_TYPE);
     }
@@ -172,11 +181,11 @@ public class UIKeynoteItem extends UIComponentBase {
         getStateHelper().put(PropertyKeys.type, type);
     }
 
-    public String getStyleClass() {
-        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    public String getVisibility() {
+        return (String) getStateHelper().eval(PropertyKeys.visibility, null);
     }
 
-    public void setStyleClass(final String styleClass) {
-        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    public void setVisibility(final String visibility) {
+        getStateHelper().put(PropertyKeys.visibility, visibility);
     }
 }

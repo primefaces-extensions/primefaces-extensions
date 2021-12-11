@@ -75,6 +75,9 @@ public class KeynoteItemRenderer extends CoreRenderer {
         if (uiKeynoteItem.isBackgroundVideoMuted()) {
             writer.writeAttribute("data-background-video-muted", "", null);
         }
+        if (uiKeynoteItem.getVisibility() != null) {
+            writer.writeAttribute("data-visibility", uiKeynoteItem.getVisibility(), null);
+        }
 
         if (uiKeynoteItem.getStyleClass() != null) {
             writer.writeAttribute(Attrs.CLASS, ITEM_CLASS + " " + uiKeynoteItem.getStyleClass(), null);
