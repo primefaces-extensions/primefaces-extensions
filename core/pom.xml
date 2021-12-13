@@ -49,7 +49,6 @@
                         <exclude>**/META-INF/resources/**/codemirror/LICENSE</exclude>
                         <exclude>**/META-INF/resources/**/keynote/lib/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/plugin/**</exclude>
-                        <exclude>**/META-INF/resources/**/keynote/theme/**</exclude>
                         <exclude>**/META-INF/resources/**/keynote/LICENSE</exclude>
                         <exclude>**/META-INF/resources/**/dynaform/**</exclude>
                         <exclude>**/META-INF/resources/**/masterdetail/**</exclude>

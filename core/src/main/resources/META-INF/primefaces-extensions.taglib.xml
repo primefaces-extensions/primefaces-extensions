@@ -8753,7 +8753,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Library name of the document]]>
+                <![CDATA[Library name where custom themes of the presentation are located.]]>
             </description>
             <name>library</name>
             <required>false</required>

@@ -285,11 +285,11 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
     }
 
     public String getLibrary() {
-        return (String) getStateHelper().eval(PropertyKeys.library, null);
+        return (String) getStateHelper().eval(PropertyKeys.library, org.primefaces.extensions.util.Constants.LIBRARY);
     }
 
-    public void setLibrary(final String _library) {
-        getStateHelper().put(PropertyKeys.library, _library);
+    public void setLibrary(final String library) {
+        getStateHelper().put(PropertyKeys.library, library);
     }
 
     public String getWidgetVar() {

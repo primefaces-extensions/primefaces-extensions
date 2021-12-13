@@ -111,7 +111,7 @@ public class KeynoteRenderer extends CoreRenderer {
                     }
                 }
 
-                final Collection<KeynoteItem> col = (Collection<KeynoteItem>) value;
+                final Collection<KeynoteItem> col = (Collection) value;
                 for (int i = 0; i < col.size(); i++) {
                     final KeynoteItem keynoteItem = (KeynoteItem) col.toArray()[i];
                     // find ui item by type
@@ -180,7 +180,9 @@ public class KeynoteRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         ExternalContext externalContext = context.getExternalContext();
 
-        Resource cssResource = context.getApplication().getResourceHandler().createResource(theme + ".css", library);
+        Resource cssResource = context.getApplication()
+                    .getResourceHandler()
+                    .createResource("keynote/theme/" + theme + ".css", library);
         if (cssResource == null) {
             throw new FacesException("Error loading CSS, cannot find \"" + theme + "\" resource of \"" + library + "\" library");
         }
