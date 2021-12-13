@@ -65,6 +65,7 @@ interface Helper {
   }>;
   resolveLocaleUrl: (options: Partial<PrimeFaces.widget.ExtMonacoEditorBaseCfgBase>) => string;
   BaseEditorDefaults: PrimeFaces.widget.ExtMonacoEditorBaseCfgBase;
+  DefaultThemeData: import("monaco-editor").editor.IStandaloneThemeData;
   FramedEditorDefaults: PrimeFaces.widget.ExtMonacoEditorFramedCfgBase;
   InlineEditorDefaults: PrimeFaces.widget.ExtMonacoEditorInlineCfgBase;
 }

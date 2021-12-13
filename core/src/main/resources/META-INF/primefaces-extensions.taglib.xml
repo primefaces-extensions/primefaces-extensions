@@ -488,7 +488,7 @@
         <attribute>
             <description>
                 <![CDATA[Locale for the user interface. Can be either a <code>java.util.Locale</code> object or a string with the locale code.
-                Built-in languages are "bg", "de", "en", "es", "fr", "hu", "it", "ja", "ko", "ps", "pt_BR", "ru", "tr", "uk", "zh_CN", and "zh_TW".
+                Built-in languages are "cs", "de", "en", "es", "fr", "it", "ja", "ko", "pl", "pt_BR", "ru", "tr", "zh_CN", and "zh_TW".
                 To use a custom language or translation, you can specify a language file with custom translations via the option
                 <code>localeUrl</code>.]]>
             </description>
@@ -888,7 +888,7 @@
         <attribute>
             <description>
                 <![CDATA[Locale for the user interface. Can be either a <code>java.util.Locale</code> object or a string with the locale code.
-                Built-in languages are "bg", "de", "en", "es", "fr", "hu", "it", "ja", "ko", "ps", "pt_BR", "ru", "tr", "uk", "zh_CN", and "zh_TW".
+                Built-in languages are "cs", "de", "en", "es", "fr", "it", "ja", "ko", "pl", "pt_BR", "ru", "tr", "zh_CN", and "zh_TW".
                 To use a custom language or translation, you can specify a language file with custom translations via the option
                 <code>localeUrl</code>.]]>
             </description>

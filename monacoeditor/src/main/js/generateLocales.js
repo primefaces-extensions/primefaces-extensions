@@ -96,7 +96,7 @@ function injectSourcePath(callback) {
                         const transPath = vsPath + "/" + path.basename(file, ".js");
                         replaceInFile(file,
                             [
-                                /localize\(/g,
+                                /(?<!function\s+)localize\(/g,
                                 `localize('${transPath}', `,
                             ],
                             [

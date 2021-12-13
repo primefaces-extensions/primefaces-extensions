@@ -60,6 +60,19 @@ clean(err => {
         column: Number(),
     }, "How to render vertical lines at the specified columns");
 
+    const EditorGuidesOptions = Class("EditorGuidesOptions", {
+        [Doc()]: "Enable rendering of bracket pair guides. Defaults to {@code false}.",
+        bracketPairs: Boolean(),
+        [Doc()]: "Enable rendering of vertical bracket pair guides. Defaults to {@code true}.",
+        bracketPairsHorizontal: Boolean(),
+        [Doc()]: "Enable highlighting of the active bracket pair. Defaults to {@code true}.",
+        highlightActiveBracketPair: Boolean(),
+        [Doc()]: "Enable highlighting of the active indent guide. Defaults to {@code true}.",
+        highlightActiveIndentation: Boolean(),
+        [Doc()]: "Enable rendering of indent guides. Defaults to {@code true}.",
+        indentation: Boolean(),
+    }, "Controls the behavior of editor guides.");
+
     const EditorGotoLocationOptions = Class("EditorGotoLocationOptions", {
         alternativeDeclarationCommand: String(),
         alternativeDefinitionCommand: String(),
@@ -75,6 +88,9 @@ clean(err => {
     }, "Configuration options for go to location");
 
     const EditorHoverOptions = Class("EditorHoverOptions", {
+        [Doc()]: "Should the hover be shown above the line if possible? Defaults to {@code false}.",
+        above: Boolean(),
+
         [Doc()]: "Delay for showing the hover. Defaults to 300.",
         delay: Number(),
 
@@ -193,6 +209,15 @@ clean(err => {
         verticalSliderSize: Number(),
     }, "Configuration options for editor scrollbars");
 
+    const EditorUnicodeHighlightOptions = Class("EditorUnicodeHighlightOptions", {
+        [Doc()]: "A map of allowed characters ({@code true}: allowed).",
+        allowedCharacters: Map(String(), Boolean()),
+        ambiguousCharacters: Boolean(),
+        includeComments: Boolean(),
+        invisibleCharacters: Boolean(),
+        nonBasicASCII: Boolean(),
+    }, "Defines how Unicode characters should be highlighted.");
+
     const EditorSuggestOptions = Class("EditorSuggestOptions", {
         [Doc()]: "Enable graceful matching. Defaults to {@code true}.",
         filterGraceful: Boolean(),
@@ -202,9 +227,6 @@ clean(err => {
 
         [Doc()]: "Favours words that appear close to the cursor.",
         localityBonus: Boolean(),
-
-        [Doc()]: "Max suggestions to show in suggestions. Defaults to {@code 12}.",
-        maxVisibleSuggestions: Boolean(),
 
         [Doc()]: "Enable or disable the rendering of the suggestion preview.",
         preview: Boolean(),
@@ -346,6 +368,9 @@ clean(err => {
         [Doc()]: "Control the behavior of the find widget.",
         find: EditorFindOptions,
 
+        [Doc()]: "Controls the behavior of editor guides.",
+        guides: EditorGuidesOptions,
+
         gotoLocation: EditorGotoLocationOptions,
 
         [Doc()]: "Configure the editor's hover.",
@@ -380,6 +405,9 @@ clean(err => {
 
         [Doc()]: "Suggest options.",
         suggest: EditorSuggestOptions,
+
+        [Doc()]: "Defines how Unicode characters should be highlighted.",
+        unicodeHighlight: EditorUnicodeHighlightOptions,
 
         [Doc()]: "Options for typing over closing quotes or brackets.",
         autoClosingOvertype: Enum(
@@ -454,6 +482,7 @@ clean(err => {
             "dart",
             "dockerfile",
             "ecl",
+            "flow9",
             "fsharp",
             "go",
             "graphql",
@@ -480,10 +509,12 @@ clean(err => {
             "perl",
             "pgsql",
             "php",
+            "pla",
             "plaintext",
             "postiats",
             "powerquery",
             "powershell",
+            "proto",
             "pug",
             "python",
             "r",
@@ -650,9 +681,6 @@ clean(err => {
         [Doc()]: "Should the cursor be hidden in the overview ruler. Defaults to {@code false}",
         hideCursorInOverviewRuler: Boolean(),
 
-        [Doc()]: "Enable highlighting of the active indent guide. Defaults to {@code true}.",
-        highlightActiveIndentGuide: Boolean(),
-
         [Doc()]: "Insert spaces when pressing {@code Tab}. This setting is overridden based on the file contents when {@code detectIndentation} is on. Defaults to {@code true}.",
         insertSpaces: Boolean(),
 
@@ -687,14 +715,11 @@ clean(err => {
         [Doc()]: "Deprecated, use {@link linkedEditing} instead.",
         renameOnType: Boolean(),
 
-        [Doc()]: "Enable rendering of control characters. Defaults to {@code false}.",
+        [Doc()]: "Enable rendering of control characters. Defaults to {@code true}.",
         renderControlCharacters: Boolean(),
 
         [Doc()]: "Render last line number when the file ends with a newline. Defaults to {@code true}.",
         renderFinalNewline: Boolean(),
-
-        [Doc()]: "Enable rendering of indent guides. Defaults to {@code true}.",
-        renderIndentGuides: Boolean(),
 
         [Doc()]: "Control if the current line highlight should be rendered only the editor is focused. Defaults to {@code false}.",
         renderLineHighlightOnlyWhenFocus: Boolean(),
@@ -869,18 +894,18 @@ clean(err => {
     }, "Defines how to style a certain token in the Monaco code editor.");
 
     const EditorStandaloneTheme = Class("EditorStandaloneTheme", {
-        [Doc()]: "Base theme from which to extend when {@inherit} is set to {@code true}.",
+        [Doc()]: "Base theme from which to extend when {@inherit} is set to {@code true}. This is required, when not set it defaults to {@code vs}.",
         base: ETheme,
 
-        [Doc()]: "Map between the color ID and the CSS color to use.",
+        [Doc()]: "Map between the color ID and the CSS color to use. This is required, when not set, it defaults to an empty map.",
         colors: Map(String(), String()),
 
         encodedTokensColors: Array(String()),
 
-        [Doc()]: "Whether this theme should inherit from the given base theme.",
+        [Doc()]: "Whether this theme should inherit from the given base theme. This is required, when not set it defaults to {@code false}.",
         inherit: Boolean(),
 
-        [Doc()]: "Styling options for individual token types, such as how to style variables, certain keywords, and parentheses.",
+        [Doc()]: "Styling options for individual token types, such as how to style variables, certain keywords, and parentheses. This is required, when not set it defaults to an empty array.",
         rules: Array(EditorTokenThemeRule),
     }, "Data that defines a custom theme for the Monaco code editor");
 })

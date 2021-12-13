@@ -56,20 +56,18 @@ public class MonacoEditorSettings {
      */
     public static List<Locale> getBuiltInLocales() {
         return Arrays.asList( //
-                    new Locale("bg"),
+                    new Locale("cs"),
                     new Locale("de"),
                     new Locale("en"),
                     new Locale("es"),
                     new Locale("fr"),
-                    new Locale("hu"),
                     new Locale("it"),
                     new Locale("ja"),
                     new Locale("ko"),
-                    new Locale("ps"),
+                    new Locale("pl"),
                     new Locale("pt", "BR"),
                     new Locale("ru"),
                     new Locale("tr"),
-                    new Locale("uk"),
                     new Locale("zh", "CN"),
                     new Locale("zh", "TW"));
     }
