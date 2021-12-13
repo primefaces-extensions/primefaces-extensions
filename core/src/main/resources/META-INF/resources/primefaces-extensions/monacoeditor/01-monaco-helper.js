@@ -7,12 +7,12 @@ window.monacoModule.helper = (function () {
   /** Map between the language label and the worker that should be used. */
   const workerMap = {
     css: "css.worker.js",
-    handlebars: "html.worker.js", 
+    handlebars: "html.worker.js",
     html: "html.worker.js",
     javascript: "ts.worker.js",
     json: "json.worker.js",
     less: "css.worker.js",
-    razor: "html.worker.js", 
+    razor: "html.worker.js",
     scss: "css.worker.js",
     typescript: "ts.worker.js",
   }
@@ -152,7 +152,7 @@ window.monacoModule.helper = (function () {
         return {
           forceLibReload: MonacoEnvironment.Locale.language !== options.locale,
           localeUrl: ""
-        };  
+        };
       }
     }
     else {
@@ -449,6 +449,14 @@ window.monacoModule.helper = (function () {
     localeUrl: "",
   };
 
+  /** @type {import("monaco-editor").editor.IStandaloneThemeData} */
+  const DefaultThemeData = {
+    base: "vs",
+    colors: {},
+    inherit: true,
+    rules: [],
+  };
+
 
   /** @type {PrimeFaces.widget.ExtMonacoEditorFramedCfgBase} */
   const FramedEditorDefaults = assign({}, BaseEditorDefaults, {
@@ -481,6 +489,7 @@ window.monacoModule.helper = (function () {
     loadLanguage,
     resolveLocaleUrl,
     BaseEditorDefaults,
+    DefaultThemeData,
     FramedEditorDefaults,
     InlineEditorDefaults,
   };

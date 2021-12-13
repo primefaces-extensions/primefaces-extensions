@@ -7,6 +7,7 @@ window.MonacoEnvironment.IframeContext = (function () {
   const {
     assign,
     createEditorConstructionOptions,
+    DefaultThemeData,
     FramedEditorDefaults,
     getScriptName,
     globalEval,
@@ -226,7 +227,7 @@ window.MonacoEnvironment.IframeContext = (function () {
 
       // Register all custom themes that we were given. 
       for (const themeName of Object.keys(this.cfg.customThemes || {})) {
-        const themeData = this.cfg.customThemes[themeName];
+        const themeData = assign({}, DefaultThemeData, this.cfg.customThemes[themeName]);
         if (themeData !== undefined) {
           monaco.editor.defineTheme(themeName, themeData);
         }

@@ -5,7 +5,9 @@ window.monacoModule = window.monacoModule || {};
 PrimeFaces.widget.ExtMonacoEditorInline = (function () {
 
   const {
+    assign,
     createEditorConstructionOptions,
+    DefaultThemeData,
     getMonacoResource,
     getScriptName,
     InlineEditorDefaults,
@@ -301,7 +303,7 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
 
       // Register all custom themes that we were given. 
       for (const themeName of Object.keys(this.cfg.customThemes || {})) {
-        const themeData = this.cfg.customThemes[themeName];
+        const themeData = assign({}, DefaultThemeData, this.cfg.customThemes[themeName]);
         if (themeData !== undefined) {
           monaco.editor.defineTheme(themeName, themeData);
         }
