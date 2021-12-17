@@ -56,7 +56,7 @@ import dev.morphia.query.experimental.filters.RegexFilter;
  */
 public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Serializable {
 
-    protected Datastore ds;
+    protected transient Datastore ds;
     protected Class<T> entityClass;
     protected String rowKeyField;
 
@@ -69,7 +69,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      */
     private final Map<String, BiConsumer<Query<T>, FilterMeta>> overrides = new HashMap<>();
     // consumer to be executed before the query is built, useful to modify the original query
-    private Consumer<Query<T>> prependConsumer;
+    private transient Consumer<Query<T>> prependConsumer;
 
     /**
      * For serialization only
