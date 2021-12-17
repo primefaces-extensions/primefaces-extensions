@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/basicUsage.jsf"/>
+        <p:menuitem value="Speaker View"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('speakerView')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/speakerView.jsf"/>
+        <p:menuitem value="Theming"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('theming')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/theming.jsf"/>
+        <p:menuitem value="Markdown"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('markdown')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/markdown.jsf"/>
+        <p:menuitem value="Dynamic"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('dynamic')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/dynamic.jsf"/>
+        <p:menuitem value="Event"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('event')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/keynote/event.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

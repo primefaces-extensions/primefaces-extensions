@@ -1,0 +1,50 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;">
+    <pe:keynoteItem markdown="true">
+## Slide 1
+A paragraph with some text and a [link](https://www.primefaces.org/showcase-ext/views/home.jsf).
+---
+## Slide 2
+* item1
+* item2
+---
+## Slide 3
+    </pe:keynoteItem>
+    <pe:keynoteItem markdown="true">
+## Slide 4
+A
+
+ ---
+
+B
+
+ ---
+
+C
+    </pe:keynoteItem>
+    <pe:keynoteItem markdown="true" separator="^\n---\n$" separatorVertical="^\n--\n$">
+## Slide 5
+Section 5.1
+
+--
+
+## Slide 5
+Section 5.2
+
+---
+
+## Slide 6
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <h2>Slide 7</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </pe:keynoteItem>
+</pe:keynote>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

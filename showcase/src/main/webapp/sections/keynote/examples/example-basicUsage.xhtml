@@ -1,0 +1,32 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:keynote slideNumber="c/t" width="480" height="350" style="width: 50vw; height: 50vh;">
+    <pe:keynoteItem>
+        <h2>Slide 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <pe:keynoteItem>
+            <h2>Vertical Slide 1</h2>
+        </pe:keynoteItem>
+        <pe:keynoteItem>
+            <h2>Vertical Slide 2</h2>
+        </pe:keynoteItem>
+    </pe:keynoteItem>
+    <pe:keynoteItem visibility="uncounted">
+        <h2>Slide 3</h2>
+    </pe:keynoteItem>
+    <pe:keynoteItem visibility="hidden">
+        <h2>Slide 4</h2>
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <h2>Slide 5</h2>
+    </pe:keynoteItem>
+</pe:keynote>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

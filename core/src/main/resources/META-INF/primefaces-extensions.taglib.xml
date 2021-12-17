@@ -8534,6 +8534,413 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
+            <![CDATA[Keynote is an HTML presentation component that enables to create fully-featured and beautiful presentations.
+     Client behavior events: slideChanged - fires each time the slide changes (org.primefaces.event.KeynoteEvent), 
+                             slideTransitionEnd - fires instantly as soon as the slide changes (org.primefaces.event.KeynoteEvent).]]>
+        </description>
+        <tag-name>keynote</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Keynote</component-type>
+            <renderer-type>org.primefaces.extensions.component.KeynoteRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Collection of items (KeynoteItem) representing model of this component.]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the request-scoped variable for the underlaying object for each iteration.]]>
+            </description>
+            <name>var</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Width of presentation in CSS pixels.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Height of presentation in CSS pixels.]]>
+            </description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Factor of the display size that should remain empty around the content. Default is 0.04.]]>
+            </description>
+            <name>margin</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Bounds for smallest possible scale to apply to content. Default is 0.2.]]>
+            </description>
+            <name>minScale</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Bounds for largest possible scale to apply to content. Default is 2.0.]]>
+            </description>
+            <name>maxScale</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Controls automatic progression to the next slide in milliseconds. Default value is 0.]]>
+            </description>
+            <name>autoSlide</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Vertical centering of slides. Default value is true.]]>
+            </description>
+            <name>center</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Display presentation control arrows. Default value is true.]]>
+            </description>
+            <name>controls</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Disables the default slide layout (scaling and centering) so that you can use custom CSS layout. Default value is false.]]>
+            </description>
+            <name>disableLayout</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if the presentation is running in an embedded mode, i.e. contained within a limited portion of the screen. Default value is false.]]>
+            </description>
+            <name>embedded</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Loop the presentation. Default value is false.]]>
+            </description>
+            <name>loop</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Changes the behavior of our navigation directions. Values are default/linear/grid. Default value is default.]]>
+            </description>
+            <name>navigationMode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Display a presentation progress bar. Default value is true.]]>
+            </description>
+            <name>progress</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if speaker notes should be visible to all viewers. Default value is false.]]>
+            </description>
+            <name>showNotes</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Display the page number of the current slide. "h.v": Horizontal . vertical slide number, "h/v": Horizontal / vertical slide number, "c": Flattened slide number, "c/t": Flattened slide number / total slides, "false": Hide slide number. Default value is false.]]>
+            </description>
+            <name>slideNumber</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enables touch navigation on devices with touch input. Default value is true.]]>
+            </description>
+            <name>touch</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Transition style. Valid values are none/fade/slide/convex/concave/zoom. Default value is slide.]]>
+            </description>
+            <name>transition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Transition speed. Valid values are default/fast/slow. Default value is default.]]>
+            </description>
+            <name>transitionSpeed</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Transition style for full page slide backgrounds. Valid values are none/fade/slide/convex/concave/zoom. Default value is fade.]]>
+            </description>
+            <name>backgroundTransition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The theme to style the presentation with. Valid values are: black, white, league, beige, sky, night, serif, simple, solarized, blood, moon. Default value is none.]]>
+            </description>
+            <name>theme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Library name where custom themes of the presentation are located.]]>
+            </description>
+            <name>library</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the main container element. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style of the main container element. Default value is null.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[Specifies an item for a certain typed element within Keynote.]]>
+        </description>
+        <tag-name>keynoteItem</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.UIKeynoteItem</component-type>
+            <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIOutput</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background color.]]>
+            </description>
+            <name>backgroundColor</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background image.]]>
+            </description>
+            <name>backgroundImage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background size. Default value is cover.]]>
+            </description>
+            <name>backgroundSize</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background position. Default value is center.]]>
+            </description>
+            <name>backgroundPosition</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background repeat. Default value is no-repeat.]]>
+            </description>
+            <name>backgroundRepeat</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Slide background opacity. 0 is transparent and 1 is fully opaque. Default value is 1.]]>
+            </description>
+            <name>backgroundOpacity</name>
+            <required>false</required>
+            <type>java.lang.Double</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A single video source, or a comma separated list of video sources.]]>
+            </description>
+            <name>backgroundVideo</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if the video should play repeatedly. Default value is false.]]>
+            </description>
+            <name>backgroundVideoLoop</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Flags if the audio should be muted. Default value is false.]]>
+            </description>
+            <name>backgroundVideoMuted</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Enables to write presentation content using Markdown. Default value is false.]]>
+            </description>
+            <name>markdown</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Speaker note.]]>
+            </description>
+            <name>note</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Horizontal separator.]]>
+            </description>
+            <name>separator</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Vertical separator.]]>
+            </description>
+            <name>separatorVertical</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Style class of the container element for this item. Default value is null.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Type corresponding to KeynoteItem. Default value is "default".]]>
+            </description>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Attribute to hide or mark slides as uncounted. Valid values are hidden and uncounted. Default value is null.]]>
+            </description>
+            <name>visibility</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    
+    <tag>
+        <description>
             <![CDATA[TimeAgo renders automatically updating fuzzy timestamps.]]>
         </description>
         <tag-name>timeAgo</tag-name>

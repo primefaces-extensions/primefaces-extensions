@@ -1,0 +1,35 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<p:messages id="messages" showSummary="true" showDetail="true">
+    <p:autoUpdate/>
+</p:messages>
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:keynote width="480" height="350" style="width: 50vw; height: 50vh;">
+    <p:ajax event="slideChanged" listener="#{keynoteController.onSlideChanged}" update="btnSubmit messages"/>
+    <p:ajax event="slideTransitionEnd" listener="#{keynoteController.onSlideTransitionEnd}" update="btnSubmit messages"/>
+    <pe:keynoteItem>
+        <h2>Slide 1</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <pe:keynoteItem>
+            <h2>Vertical Slide 1</h2>
+        </pe:keynoteItem>
+        <pe:keynoteItem>
+            <h2>Vertical Slide 2</h2>
+        </pe:keynoteItem>
+    </pe:keynoteItem>
+    <pe:keynoteItem>
+        <h2>Slide 3</h2>
+    </pe:keynoteItem>
+</pe:keynote>
+
+<p:commandButton id="btnSubmit" value="Submit" disabled="#{keynoteController.disabled}" styleClass="p-mt-3"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

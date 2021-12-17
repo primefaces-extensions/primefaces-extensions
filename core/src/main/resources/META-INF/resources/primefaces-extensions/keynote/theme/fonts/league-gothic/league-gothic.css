@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'League Gothic';
+    src: url("\#{resource['primefaces-extensions:keynote/theme/fonts/league-gothic/league-gothic.eot']}");
+    src: url("\#{resource['primefaces-extensions:keynote/theme/fonts/league-gothic/league-gothic.eot?#iefix']}") format('embedded-opentype'),
+         url("\#{resource['primefaces-extensions:keynote/theme/fonts/league-gothic/league-gothic.woff']}") format('woff'),
+         url("\#{resource['primefaces-extensions:keynote/theme/fonts/league-gothic/league-gothic.ttf']}") format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}

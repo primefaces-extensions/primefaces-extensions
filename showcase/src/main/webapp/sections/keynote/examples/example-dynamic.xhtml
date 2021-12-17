@@ -1,0 +1,15 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+<pe:keynote loop="true" autoSlide="3000" slideNumber="c/t" value="#{keynoteController.items}" var="item" width="480" height="350" style="width: 50vw; height: 50vh;">
+    <pe:keynoteItem>
+        <h2>#{item.headline}</h2>
+        <p>#{item.content}</p>
+    </pe:keynoteItem>
+</pe:keynote>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

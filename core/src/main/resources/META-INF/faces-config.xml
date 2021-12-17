@@ -187,6 +187,14 @@
         <component-class>org.primefaces.extensions.component.inputphone.InputPhone</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.Keynote</component-type>
+        <component-class>org.primefaces.extensions.component.keynote.Keynote</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.UIKeynoteItem</component-type>
+        <component-class>org.primefaces.extensions.component.keynote.UIKeynoteItem</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.TimeAgo</component-type>
         <component-class>org.primefaces.extensions.component.timeago.TimeAgo</component-class>
     </component>
@@ -383,6 +391,16 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.InputPhoneRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.inputphone.InputPhoneRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.KeynoteRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.keynote.KeynoteRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.KeynoteItemRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.keynote.KeynoteItemRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
