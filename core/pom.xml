@@ -735,6 +735,12 @@
             <artifactId>owasp-java-html-sanitizer</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Mongo Lazy Datatable -->
+        <dependency>
+            <groupId>dev.morphia.morphia</groupId>
+            <artifactId>morphia-core</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>junit</groupId>
