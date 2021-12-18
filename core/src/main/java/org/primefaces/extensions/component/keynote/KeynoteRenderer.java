@@ -54,7 +54,7 @@ public class KeynoteRenderer extends CoreRenderer {
      * {@inheritDoc}
      */
     @Override
-    public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
+    public void encodeBegin(final FacesContext context, final UIComponent component) throws IOException {
         final Keynote keynote = (Keynote) component;
 
         if (!"none".equals(keynote.getTheme())) {
@@ -102,7 +102,7 @@ public class KeynoteRenderer extends CoreRenderer {
                     throw new FacesException("Value in Keynote must be of type Collection / List");
                 }
 
-                List<UIComponent> children = keynote.getChildren();
+                final List<UIComponent> children = keynote.getChildren();
                 for (int i = 0; i < children.size(); i++) {
                     final UIComponent kid = children.get(i);
                     if (kid.isRendered() && !(kid instanceof UIKeynoteItem)) {
@@ -129,7 +129,7 @@ public class KeynoteRenderer extends CoreRenderer {
         }
         else {
             // static items
-            List<UIComponent> children = keynote.getChildren();
+            final List<UIComponent> children = keynote.getChildren();
             for (int i = 0; i < children.size(); i++) {
                 final UIComponent kid = children.get(i);
                 if (kid.isRendered()) {
@@ -176,15 +176,16 @@ public class KeynoteRenderer extends CoreRenderer {
         wb.finish();
     }
 
-    private void encodeCSS(FacesContext context, String library, String theme) throws IOException {
+    private void encodeCSS(final FacesContext context, final String library, final String theme) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        ExternalContext externalContext = context.getExternalContext();
+        final ExternalContext externalContext = context.getExternalContext();
 
-        Resource cssResource = context.getApplication()
+        final Resource cssResource = context.getApplication()
                     .getResourceHandler()
                     .createResource("keynote/theme/" + theme + ".css", library);
         if (cssResource == null) {
-            throw new FacesException("Error loading CSS, cannot find \"" + theme + "\" resource of \"" + library + "\" library");
+            throw new FacesException(
+                        "Error loading CSS, cannot find \"" + theme + "\" resource of \"" + library + "\" library");
         }
         else {
             writer.startElement("link", null);

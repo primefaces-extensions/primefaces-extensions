@@ -71,8 +71,9 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
 
     private Map<String, UIKeynoteItem> items;
 
+    // @formatter:off
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        //@formatter:off
         widgetVar,
         width,
         height,
@@ -97,8 +98,8 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         library,
         style,
         styleClass
-        //@formatter:on
     }
+    //@formatter:on
 
     public Keynote() {
         setRendererType(DEFAULT_RENDERER);
@@ -304,7 +305,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         return (String) getStateHelper().eval(PropertyKeys.style, null);
     }
 
-    public void setStyle(String style) {
+    public void setStyle(final String style) {
         getStateHelper().put(PropertyKeys.style, style);
     }
 
@@ -312,7 +313,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
     }
 
-    public void setStyleClass(String styleClass) {
+    public void setStyleClass(final String styleClass) {
         getStateHelper().put(PropertyKeys.styleClass, styleClass);
     }
 
@@ -325,16 +326,19 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
             final String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
 
             if ("slideTransitionEnd".equals(eventName)) {
-                final Boolean slideTransitionEnd = Boolean.parseBoolean(params.get(getClientId(context) + "_slideTransitionEnd"));
-                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
-                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideTransitionEnd, lastSlide);
+                final boolean slideTransitionEnd = Boolean.parseBoolean(
+                            params.get(getClientId(context) + "_slideTransitionEnd"));
+                final boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(),
+                            slideTransitionEnd, lastSlide);
                 keynoteEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(keynoteEvent);
             }
             else if (DEFAULT_EVENT.equals(eventName)) {
-                final Boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
-                final Boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
-                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged, lastSlide);
+                final boolean slideChanged = Boolean.parseBoolean(params.get(getClientId(context) + "_slideChanged"));
+                final boolean lastSlide = Boolean.parseBoolean(params.get(getClientId(context) + "_lastSlide"));
+                final KeynoteEvent keynoteEvent = new KeynoteEvent(this, behaviorEvent.getBehavior(), slideChanged,
+                            lastSlide);
                 keynoteEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(keynoteEvent);
             }
@@ -372,7 +376,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         return items;
     }
 
-    protected static void checkModelInstance(Object value) {
+    protected static void checkModelInstance(final Object value) {
         if (!(value instanceof Collection<?>)) {
             throw new FacesException("Value in Keynote must be of type Collection / List");
         }
@@ -441,16 +445,15 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
         }
         else {
             // static items
-            if (visitKeynoteStaticItems(context, callback)) {
-                return true;
-            }
+            return visitKeynoteStaticItems(context, callback);
         }
 
         return false;
     }
 
     @Override
-    protected boolean invokeOnChildren(final FacesContext context, final String clientId, final ContextCallback callback) {
+    protected boolean invokeOnChildren(final FacesContext context, final String clientId,
+                final ContextCallback callback) {
 
         final Object value = getValue();
         if (value == null) {
@@ -461,7 +464,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
 
         if (getChildCount() > 0) {
             // extract the keynoteItem key from the clientId
-            // it's simliar to rowKey in UIData
+            // it's similar to rowKey in UIData
             String key = clientId.substring(getClientId().length() + 1);
             key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
@@ -475,7 +478,8 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
                     UIKeynoteItem uiKeynoteItem = null;
                     if (getVar() == null) {
                         for (final UIComponent child : getChildren()) {
-                            if (child instanceof UIKeynoteItem && ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
+                            if (child instanceof UIKeynoteItem &&
+                                        ((UIKeynoteItem) child).getType().equals(keynoteItem.getType())) {
                                 uiKeynoteItem = (UIKeynoteItem) child;
                             }
                         }
@@ -492,7 +496,7 @@ public class Keynote extends AbstractDynamicData implements Widget, ClientBehavi
                         // push the associated data before visiting the child components
                         setData(keynoteItem);
 
-                        // visit childs
+                        // visit children
                         if (uiKeynoteItem.invokeOnComponent(context, clientId, callback)) {
                             return true;
                         }

@@ -46,7 +46,7 @@ public class KeynoteController implements Serializable {
 
     @PostConstruct
     protected void initialize() {
-        items = new ArrayList<KeynoteItem>();
+        items = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
             items.add(new KeynoteItem(new KeynoteItemContent("Section " + i, "Lorem ipsum content " + i)));
@@ -82,7 +82,7 @@ public class KeynoteController implements Serializable {
         private String headline;
         private String content;
 
-        public KeynoteItemContent(String headline, String content) {
+        public KeynoteItemContent(final String headline, final String content) {
             this.headline = headline;
             this.content = content;
         }
@@ -91,7 +91,7 @@ public class KeynoteController implements Serializable {
             return headline;
         }
 
-        public void setHeadline(String headline) {
+        public void setHeadline(final String headline) {
             this.headline = headline;
         }
 
@@ -99,7 +99,7 @@ public class KeynoteController implements Serializable {
             return content;
         }
 
-        public void setContent(String content) {
+        public void setContent(final String content) {
             this.content = content;
         }
 

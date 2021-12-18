@@ -29,10 +29,10 @@ public class UIKeynoteItem extends UIComponentBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.UIKeynoteItem";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.KeynoteItemRenderer";
 
+    // @formatter:off
+    @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        // @formatter:off
         backgroundColor,
         backgroundImage,
         backgroundSize,
@@ -49,8 +49,8 @@ public class UIKeynoteItem extends UIComponentBase {
         styleClass,
         type,
         visibility,
-        // @formatter:on
     }
+    // @formatter:on
 
     public UIKeynoteItem() {
         setRendererType(null);
