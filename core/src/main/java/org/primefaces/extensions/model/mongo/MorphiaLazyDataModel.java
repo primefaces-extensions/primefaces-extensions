@@ -285,7 +285,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 break;
                             case NOT_IN:
                                 
-                                if (metadata.getFilterValue().getClass() == Object[].class) {
+                                if (metadata.getFilterValue() instanceof Object[]) {
                                     final Object[] parts = (Object[]) metadata.getFilterValue();
                                     q.filter(Filters.nin(field, Arrays.asList(parts)));
                                 }
