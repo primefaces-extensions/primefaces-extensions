@@ -254,7 +254,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 
                             case BETWEEN:
                                 if (metadata.getFilterValue().getClass() == ArrayList.class) {
-                                    final List dates = (ArrayList) metadata.getFilterValue();
+                                    final List<?> dates = (List) metadata.getFilterValue();
                                     if (dates.size() > 1){ //does this ever have less than 2 items?
                                         q.filter(Filters.gt(field, dates.get(0)),Filters.lt(field,dates.get(1)));
                                     }
