@@ -262,7 +262,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 }
                                 break;
                             case NOT_CONTAINS:
-                                 q.filter(Filters.regex(field).pattern(val + "").caseInsensitive().not());
+                                 q.filter(Filters.regex(field).pattern(val + Constants.EMPTY_STRING).caseInsensitive().not());
 
                                 break;
                                 
