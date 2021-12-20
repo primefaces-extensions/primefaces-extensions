@@ -42,6 +42,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 import org.primefaces.util.Constants;
 import org.primefaces.util.Lazy;
+import org.primefaces.util.SerializableSupplier;
 
 import dev.morphia.Datastore;
 import dev.morphia.query.FindOptions;
@@ -57,8 +58,8 @@ import dev.morphia.query.experimental.filters.RegexFilter;
  */
 public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Serializable {
 
-    protected transient Datastore ds;
     protected Class<T> entityClass;
+    protected SerializableSupplier<Datastore> ds;
     protected String rowKeyField;
 
     // usually will be getId() but can be a user specified method as well when using the 2nd constructor
@@ -88,7 +89,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * @param entityClass The entity class
      * @param rowKeyField The name of the rowKey property (e.g. "id")
      */
-    public MorphiaLazyDataModel(final Datastore ds, final Class<T> entityClass, final String rowKeyField) {
+    public MorphiaLazyDataModel(final SerializableSupplier<Datastore> ds, final Class<T> entityClass,
+                final String rowKeyField) {
         this();
         this.ds = ds;
         this.entityClass = entityClass;
@@ -101,7 +103,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * @param ds the {@link Datastore}
      * @param entityClass The entity class
      */
-    public MorphiaLazyDataModel(final Datastore ds, final Class<T> entityClass) {
+    public MorphiaLazyDataModel(final SerializableSupplier<Datastore> ds, final Class<T> entityClass) {
         this(ds, entityClass, "id");
     }
 
@@ -199,7 +201,6 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 else {
                                     q.filter(Filters.eq(field, val));
                                 }
-
                                 break;
                             case LESS_THAN:
                                 final Object castedValueLt = castedValue(field, val);
@@ -209,7 +210,6 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 else {
                                     q.filter(Filters.lt(field, val));
                                 }
-
                                 break;
                             case LESS_THAN_EQUALS:
                                 final Object castedValueLte = castedValue(field, val);
@@ -239,33 +239,27 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                     q.filter(Filters.gte(field, val));
                                 }
                                 break;
-
                             case EQUALS:
                                 q.filter(Filters.eq(field, val));
                                 break;
-
                             case IN:
                                 if (metadata.getFilterValue().getClass() == Object[].class) {
                                     final Object[] parts = (Object[]) metadata.getFilterValue();
                                     q.filter(Filters.in(field, Arrays.asList(parts)));
                                 }
-
                                 break;
-
                             case BETWEEN:
                                 if (metadata.getFilterValue() instanceof List) {
                                     final List<?> dates = (List) metadata.getFilterValue();
                                     if (dates.size() > 1) { // does this ever have less than 2 items?
                                         q.filter(Filters.gte(field, dates.get(0)), Filters.lte(field, dates.get(1)));
                                     }
-
                                 }
                                 break;
                             case NOT_CONTAINS:
-                                q.filter(Filters.regex(field).pattern(val + Constants.EMPTY_STRING).caseInsensitive().not());
-
+                                q.filter(Filters.regex(field).pattern(val + Constants.EMPTY_STRING).caseInsensitive()
+                                            .not());
                                 break;
-
                             case NOT_EQUALS:
                                 final Object castedValueNe = castedValue(field, val);
                                 if (castedValueNe != null) {
@@ -274,32 +268,24 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 else {
                                     q.filter(Filters.eq(field, val).not());
                                 }
-
                                 break;
                             case NOT_STARTS_WITH:
-
                                 final RegexFilter regStartsWithNot = Filters.regex(field);
                                 regStartsWithNot.pattern("^" + val).caseInsensitive();
                                 q.filter(regStartsWithNot.not());
-
                                 break;
                             case NOT_IN:
-
                                 if (metadata.getFilterValue() instanceof Object[]) {
                                     final Object[] parts = (Object[]) metadata.getFilterValue();
                                     q.filter(Filters.nin(field, Arrays.asList(parts)));
                                 }
-
                                 break;
                             case NOT_ENDS_WITH:
-
                                 final RegexFilter regEndsWithNot = Filters.regex(field);
                                 regEndsWithNot.pattern(val + "$").caseInsensitive();
                                 q.filter(regEndsWithNot.not());
-
                                 break;
                             case GLOBAL:
-
                                 if (globalFilterConsumer != null) {
                                     globalFilterConsumer.accept(q, metadata);
                                 }
@@ -388,7 +374,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     }
 
     private Query<T> buildQuery() {
-        final Query<T> q = ds.find(entityClass).disableValidation();
+        final Query<T> q = ds.get().find(entityClass).disableValidation();
         if (prependConsumer != null) {
             prependConsumer.accept(q);
         }
