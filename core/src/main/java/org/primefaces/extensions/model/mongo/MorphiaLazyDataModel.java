@@ -40,6 +40,7 @@ import javax.faces.FacesException;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
+import org.primefaces.util.Constants;
 import org.primefaces.util.Lazy;
 
 import dev.morphia.Datastore;
@@ -48,7 +49,6 @@ import dev.morphia.query.Query;
 import dev.morphia.query.Sort;
 import dev.morphia.query.experimental.filters.Filters;
 import dev.morphia.query.experimental.filters.RegexFilter;
-import java.util.ArrayList;
 
 /**
  * Basic {@link LazyDataModel} implementation for MongoDB using Morphia.
@@ -71,7 +71,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     private final Map<String, BiConsumer<Query<T>, FilterMeta>> overrides = new HashMap<>();
     // consumer to be executed before the query is built, useful to modify the original query
     private transient Consumer<Query<T>> prependConsumer;
-    //global filter consumer (to be implemented by the user)
+    // global filter consumer (to be implemented by the user)
     private transient BiConsumer<Query<T>, FilterMeta> globalFilterConsumer;
 
     /**
@@ -195,7 +195,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 final Object castedValueEx = castedValue(field, val);
                                 if (castedValueEx != null) {
                                     q.filter(Filters.eq(field, castedValueEx));
-                                }  
+                                }
                                 else {
                                     q.filter(Filters.eq(field, val));
                                 }
@@ -251,21 +251,21 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 }
 
                                 break;
-                                
+
                             case BETWEEN:
                                 if (metadata.getFilterValue() instanceof List) {
                                     final List<?> dates = (List) metadata.getFilterValue();
-                                    if (dates.size() > 1){ //does this ever have less than 2 items?
-                                        q.filter(Filters.gt(field, dates.get(0)),Filters.lt(field,dates.get(1)));
+                                    if (dates.size() > 1) { // does this ever have less than 2 items?
+                                        q.filter(Filters.gte(field, dates.get(0)), Filters.lte(field, dates.get(1)));
                                     }
-                                  
+
                                 }
                                 break;
                             case NOT_CONTAINS:
-                                 q.filter(Filters.regex(field).pattern(val + Constants.EMPTY_STRING).caseInsensitive().not());
+                                q.filter(Filters.regex(field).pattern(val + Constants.EMPTY_STRING).caseInsensitive().not());
 
                                 break;
-                                
+
                             case NOT_EQUALS:
                                 final Object castedValueNe = castedValue(field, val);
                                 if (castedValueNe != null) {
@@ -277,14 +277,14 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
                                 break;
                             case NOT_STARTS_WITH:
-                                
+
                                 final RegexFilter regStartsWithNot = Filters.regex(field);
                                 regStartsWithNot.pattern("^" + val).caseInsensitive();
                                 q.filter(regStartsWithNot.not());
 
                                 break;
                             case NOT_IN:
-                                
+
                                 if (metadata.getFilterValue() instanceof Object[]) {
                                     final Object[] parts = (Object[]) metadata.getFilterValue();
                                     q.filter(Filters.nin(field, Arrays.asList(parts)));
@@ -292,20 +292,18 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
                                 break;
                             case NOT_ENDS_WITH:
-                                
+
                                 final RegexFilter regEndsWithNot = Filters.regex(field);
                                 regEndsWithNot.pattern(val + "$").caseInsensitive();
                                 q.filter(regEndsWithNot.not());
 
                                 break;
                             case GLOBAL:
-                                
-                                if (globalFilterConsumer != null){
-                                    globalFilterConsumer.accept(q,metadata );
+
+                                if (globalFilterConsumer != null) {
+                                    globalFilterConsumer.accept(q, metadata);
                                 }
                                 break;
-                              
-
 
                             default:
                                 throw new UnsupportedOperationException(
@@ -322,7 +320,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
         this.prependConsumer = consumer;
         return this;
     }
-     public MorphiaLazyDataModel<T> globalFilter(final BiConsumer<Query<T>, FilterMeta> consumer) {
+
+    public MorphiaLazyDataModel<T> globalFilter(final BiConsumer<Query<T>, FilterMeta> consumer) {
         this.globalFilterConsumer = consumer;
         return this;
     }
