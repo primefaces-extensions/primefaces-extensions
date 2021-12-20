@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<ui:composition template="/templates/showcaseLayout.xhtml">
+    <ui:define name="centerContent">
+        <f:facet name="header">
+            <h:outputText value="MorphiaLazyDataModel"/>
+        </f:facet>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <p>
+                PrimeFaces Extensions provides a OOTB implementation for MongoDB using Morphia, which supports basic features..
+            </p>
+
+            <h2>pom.xml</h2>
+            <pre>
+&lt;dependency&gt;
+    &lt;groupId&gt;dev.morphia.morphia&lt;/groupId&gt;
+    &lt;artifactId&gt;morphia-core&lt;/artifactId&gt;
+    &lt;version&gt;2.2.3&lt;/version&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+            </pre>
+
+            <h2>Bean (defaults using ID field)</h2>
+            <pre>
+new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore);
+            </pre>
+
+            <h2>Bean (using field name of class "getUuid()" for rowKey)</h2>
+            <pre>
+new MorphiaLazyDataModel&lt;&gt;(MyEntity.class, () -&gt; datastore, "uuid");
+            </pre>
+
+            <h2>Global Filter and customization</h2>
+            <pre>
+
+//lets implement a global filter here for the string fields
+dataModel.globalFilter((query, filterMeta) -&gt; {
+    Object val = filterMeta.getFilterValue();
+    query.filter(
+            Filters.or(
+                    Filters.regex("brand").pattern(val + "").caseInsensitive(),
+                    Filters.regex("previousOwners").pattern(val + "").caseInsensitive(),
+                    Filters.regex("color.name").pattern(val + "").caseInsensitive()
+            )
+    );
+});
+
+//override the default match mode query for the "sold" field to allow filtering with strings
+dataModel.overrideFieldQuery("sold", (query, filterMeta) -&gt; {
+    if (filterMeta.getFilterValue().toString().startsWith("y")) {
+        query.filter(Filters.eq("sold", true));
+    } else if (filterMeta.getFilterValue().toString().startsWith("n")) {
+        query.filter(Filters.eq("sold", false));
+    }
+});
+            </pre>
+        </h:panelGroup>
+
+    </ui:define>
+    <ui:define name="useCases">
+        <ui:include src="/sections/utils/useCasesChoice.xhtml"/>
+    </ui:define>
+</ui:composition>
+</html>

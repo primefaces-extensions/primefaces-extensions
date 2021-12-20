@@ -89,7 +89,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * @param entityClass The entity class
      * @param rowKeyField The name of the rowKey property (e.g. "id")
      */
-    public MorphiaLazyDataModel(final SerializableSupplier<Datastore> ds, final Class<T> entityClass,
+    public MorphiaLazyDataModel(final Class<T> entityClass, final SerializableSupplier<Datastore> ds,
                 final String rowKeyField) {
         this();
         this.ds = ds;
@@ -103,8 +103,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * @param ds the {@link Datastore}
      * @param entityClass The entity class
      */
-    public MorphiaLazyDataModel(final SerializableSupplier<Datastore> ds, final Class<T> entityClass) {
-        this(ds, entityClass, "id");
+    public MorphiaLazyDataModel(final Class<T> entityClass, final SerializableSupplier<Datastore> ds) {
+        this(entityClass, ds, "id");
     }
 
     @Override
