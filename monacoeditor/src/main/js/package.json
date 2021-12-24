@@ -16,7 +16,7 @@
     "monaco-editor": "^0.31.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.10",
+    "@types/jquery": "^3.5.11",
     "css-loader": "^6.2.0",
     "git-pull-or-clone": "^2.0.1",
     "mkdirp": "^1.0.4",
