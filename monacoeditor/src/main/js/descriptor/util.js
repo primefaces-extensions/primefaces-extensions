@@ -7,7 +7,7 @@ const { javaDescriptorPackage, javaDescriptorPath } = require("../paths");
 
 const HeaderComment = `
 /*
- * Copyright (c) 2011-2021 PrimeFaces Extensions
+ * Copyright (c) 2011-2022 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
