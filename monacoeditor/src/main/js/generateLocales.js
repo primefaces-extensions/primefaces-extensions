@@ -19,7 +19,7 @@ const {
 } = require("./paths");
 
 const langDirPrefix = "vscode-language-pack-";
-const vsCodeRepository = "git://github.com/Microsoft/vscode-loc.git";
+const vsCodeRepository = "https://github.com/Microsoft/vscode-loc";
 
 const fileExistsCache = new Map();
 
