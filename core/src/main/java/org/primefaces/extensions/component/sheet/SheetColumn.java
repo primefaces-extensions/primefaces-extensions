@@ -474,7 +474,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return
      */
     public String getFilterValue() {
-        return (String) getStateHelper().get(PropertyKeys.filterValue);
+        return (String) getStateHelper().eval(PropertyKeys.filterValue);
     }
 
     /**
@@ -492,7 +492,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return
      */
     public String getFilterMatchMode() {
-        return (String) getStateHelper().get(PropertyKeys.filterMatchMode);
+        return (String) getStateHelper().eval(PropertyKeys.filterMatchMode);
     }
 
     /**
