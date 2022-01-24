@@ -22,19 +22,19 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 /**
- * Additional properties for the inline editor widget not covered by the base options.
+ * Additional properties for the diff inline editor widget not covered by the base options.
  *
- * @since 10.0.0
+ * @since 11.1.0
  */
 @SuppressWarnings("java:S115")
-enum FramedPropertyKeys {
+enum DiffEditorInlinePropertyKeys {
     /**
-     * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.
+     * Extender script to add custom functionality via JavaScript. Must be a JavaScript expression that evaluates to an extender instance.
      */
     extender,
+
     /**
-     * Additional URL params that are added to the iframe URL.
+     * Search expression for a component. Places overflow widgets inside an external DOM node. Defaults to an internal DOM node.
      */
-    iframeUrlParams,
-    ;
+    overflowWidgetsDomNode;
 }

@@ -4,7 +4,10 @@ window.monacoModule = window.monacoModule || {};
 
 window.monacoModule.helper = (function () {
 
-  /** Map between the language label and the worker that should be used. */
+  /**
+   * Map between the language label and the worker that should be used.
+   * @type {Record<string, string>}
+   */
   const workerMap = {
     css: "css.worker.js",
     handlebars: "html.worker.js",
@@ -23,32 +26,73 @@ window.monacoModule.helper = (function () {
    */
   const assign = typeof Object.assign === "function"
     ? Object.assign
-    : (object, ...moreObjects) => {
+    :
+    /**
+     * @param {object} object 
+     * @param  {...any[]} moreObjects 
+     * @returns {any} 
+     */
+    (object, ...moreObjects) => {
+      /** @type {Record<string, unknown>} */
       const result = {};
       for (const obj of [object, ...moreObjects]) {
         for (const key of Object.keys(obj)) {
-          result[key] = obj[key];
+          result[key] = (/** @type {Record<string, unknown>}*/(obj))[key];
         }
       }
       return result;
     }
 
   /**
-   * @param {moduleId} label 
-   * @param {string} label 
-   * @return {string}
+   * The `??` operator.
+   * @template T
+   * @template S
+   * @param {T | undefined | null} lhs 
+   * @param {S} rhs 
+   * @returns {T | S}
    */
-  function getScriptName(moduleId, label) {
-    return workerMap[label] || "editor.worker.js";
+  function defaultIfNullish(lhs, rhs) {
+    return lhs !== undefined && lhs !== null ? lhs : rhs;
   }
 
+  /**
+   * @param {unknown} x 
+   * @returns {x is null | undefined}
+   */
+  function isNullOrUndefined(x) {
+    return x === null || x === undefined;
+  }
+
+  /**
+   * @template T
+   * @param {T | null | undefined} x 
+   * @returns {x is T}
+   */
+  function isNotNullOrUndefined(x) {
+    return x !== null && x !== undefined;
+  }
+  /**
+   * @param {string} moduleId 
+   * @param {string} label 
+   * @returns {string}
+   */
+  function getScriptName(moduleId, label) {
+    return defaultIfNullish(workerMap[label], "editor.worker.js");
+  }
+
+  /**
+   * Checks whether a string ends with a certain suffix.
+   * @param {string} string 
+   * @param {string} suffix 
+   * @returns {boolean}
+   */
   function endsWith(string, suffix) {
     var this_len = string.length;
     return string.substring(this_len - suffix.length, this_len) === suffix;
   }
 
   /**
-   * @return {string} Base URL to the Faces resource servlet.
+   * @returns {string} Base URL to the Faces resource servlet.
    */
   function getFacesResourceUri() {
     const res = PrimeFaces.resources.getFacesResource("", "", "0");
@@ -58,7 +102,7 @@ window.monacoModule.helper = (function () {
 
   /**
    * @param {string} url URL from which to load the script.
-   * @return {Promise<void>} The loaded JavaScript.
+   * @returns {Promise<void>} The loaded JavaScript.
    */
   async function getScript(url) {
     const script = await jQuery.ajax({
@@ -78,10 +122,17 @@ window.monacoModule.helper = (function () {
    * - a JavaScript expression that evaluates to an extender object
    * - a path to a resource (eg. `extender.js.xhtml?ln=mylib`) that evaluates to an extender object
    *
-   * @param {Partial<PrimeFaces.widget.ExtMonacoEditorBaseCfgBase>} options The extender string as specified on the component.
-   * @return {Partial<PrimeFaces.widget.ExtMonacoEditorBase.ExtenderBase>}
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @template {PrimeFaces.widget.ExtMonacoEditor.SyncMonacoBaseEditorContext<TEditor, TEditorOpts>} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderBaseEditor<TEditor, TEditorOpts, TContext>} TExtender
+   * @param {TEditor | undefined} editor
+   * @param {Partial<PrimeFaces.widget.ExtMonacoBaseEditorCfgBase<TEditorOpts>>} options The extender string as
+   * specified on the component.
+   * @param {TContext | undefined} context
+   * @returns {Partial<TExtender>}
    */
-  function loadExtender(options) {
+  function loadExtender(editor, options, context) {
     const extenderString = options.extender;
 
     // No extender given
@@ -91,7 +142,7 @@ window.monacoModule.helper = (function () {
 
     // Extender was evaluated already
     if (typeof extenderString === "object") {
-      return extenderString;
+      return /** @type {Partial<TExtender>} */(extenderString);
     }
 
     // Try creating an extender from the factory
@@ -114,8 +165,8 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @param {Partial<PrimeFaces.widget.ExtMonacoEditorBaseCfgBase>} options
-   * @return {string}
+   * @param {Partial<PrimeFaces.widget.ExtMonacoBaseEditorCfgBase<import("monaco-editor").editor.IEditorOptions>>} options
+   * @returns {string}
    */
   function resolveLocaleUrl(options) {
     // Load language file, if requested.
@@ -131,13 +182,17 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @param {Partial<PrimeFaces.widget.ExtMonacoEditorBaseCfgBase>} options
-   * @return {Promise<{forceLibReload: boolean, localeUrl: string}>}
+   * @param {Partial<PrimeFaces.widget.ExtMonacoBaseEditorCfgBase<import("monaco-editor").editor.IEditorOptions>>} options
+   * @returns {Promise<{forceLibReload: boolean, localeUrl: string}>}
    */
   async function loadLanguage(options) {
     // Load language file, if requested.
     const localeUrl = resolveLocaleUrl(options);
-    if (localeUrl && MonacoEnvironment.Locale.language !== options.locale) {
+    const language = typeof MonacoEnvironment === "object" && typeof MonacoEnvironment.Locale === "object"
+      ? MonacoEnvironment.Locale.language
+      : undefined;
+
+    if (localeUrl && language !== options.locale) {
       try {
         await getScript(localeUrl);
         return {
@@ -150,14 +205,14 @@ window.monacoModule.helper = (function () {
         options.locale = "en";
         options.localeUrl = undefined;
         return {
-          forceLibReload: MonacoEnvironment.Locale.language !== options.locale,
+          forceLibReload: language !== options.locale,
           localeUrl: ""
         };
       }
     }
     else {
       return {
-        forceLibReload: MonacoEnvironment.Locale.language !== options.locale,
+        forceLibReload: language !== options.locale,
         localeUrl: ""
       };
     }
@@ -166,7 +221,7 @@ window.monacoModule.helper = (function () {
   /**
    * @param {string} resource
    * @param {Record<string, number | string | string[]>} queryParams
-   * @return {string}
+   * @returns {string}
    */
   function getMonacoResource(resource, queryParams = {}) {
     // WARNING: Do not use the variable name "url", this will be replaced via maven during the build process!!!
@@ -187,13 +242,15 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @param {Partial<PrimeFaces.widget.ExtMonacoEditorBaseCfgBase>} options
-   * @param {boolean} forceLibReload If true, loads the monaco editor again, even if it is loaded already. This is necessary in case the language changes.
-   * @return {Promise<boolean>} Whether the monaco library was (re)loaded.
+   * @param {Partial<PrimeFaces.widget.ExtMonacoBaseEditorCfgBase<import("monaco-editor").editor.IEditorOptions>>} options
+   * @param {boolean} forceLibReload If true, loads the monaco editor again, even if it is loaded already. This is
+   * necessary in case the language changes.
+   * @returns {Promise<boolean>} Whether the monaco library was (re)loaded.
    */
   async function loadEditorLib(options, forceLibReload) {
     if (!("monaco" in window) || forceLibReload) {
       if (!options.locale) {
+        MonacoEnvironment = typeof MonacoEnvironment === "object" ? MonacoEnvironment : {};
         MonacoEnvironment.Locale = {
           language: "",
           data: {},
@@ -209,6 +266,18 @@ window.monacoModule.helper = (function () {
   }
 
   /**
+   * Finds the default dir name for the Monaco text model for a widget component by using the ID of the component.
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @param {PrimeFaces.widget.ExtMonacoEditor.AsyncMonacoBaseEditorContext<TEditor, TEditorOpts>} context 
+   * @returns {string}
+   */
+  function deriveDirForComponent(context) {
+    const id = context.getWidgetId();
+    return String(id).replace(/[^a-zA-Z0-9_-]/g, "/");
+  }
+
+  /**
    * Evaluate the `beforeCreate` callback of the extender. It is passed the current options and may
    *
    * - not return anything, in which case the passed options are used (which may have been modified inplace)
@@ -216,11 +285,102 @@ window.monacoModule.helper = (function () {
    * - return a promise, in which case the editor is initialized only once that promise resolves. The promise
    *   may resolve to a new options object to be used.
    *
-   * @param {PrimeFaces.widget.ExtMonacoEditorBase.SyncMonacoContext} context
-   * @param {PrimeFaces.widget.ExtMonacoEditorBase.ExtenderBase} extender
+   * @template {PrimeFaces.widget.ExtMonacoEditor.SyncMonacoDiffEditorContext} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderDiffEditor<TContext>} TExtender
+   * @param {TContext} context
+   * @param {TExtender} extender
+   * @param {string} originalValue
+   * @param {string} modifiedValue
+   * @param {boolean} wasLibLoaded
+   * @returns {Promise<EditorInitData<import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions, DiffEditorCustomInitData>>}
+   */
+  async function createDiffEditorInitData(context, extender, originalValue, modifiedValue, wasLibLoaded) {
+    const opts = context.getWidgetOptions();
+
+    /** @type {import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions} */
+    const incomingEditorOptions = typeof opts.editorOptions === "object" ?
+      opts.editorOptions :
+      typeof opts.editorOptions === "string" ?
+        JSON.parse(opts.editorOptions) :
+        {};
+
+    const originalModel = createModel(context, incomingEditorOptions, extender, originalValue, {
+      basename: opts.originalBasename,
+      directory: opts.originalDirectory,
+      extension: opts.originalExtension,
+      language: opts.originalLanguage || opts.language,
+      scheme: opts.originalScheme,
+      createDefaultDir: context => deriveDirForComponent(context) + "/original",
+      createExtenderModel: (context, extender, options) => typeof extender.createOriginalModel === "function"
+        ? extender.createOriginalModel(context, options)
+        : undefined,
+    });
+
+    const modifiedModel = createModel(context, incomingEditorOptions, extender, modifiedValue, {
+      basename: opts.basename,
+      directory: opts.directory,
+      extension: opts.extension,
+      language: opts.language,
+      scheme: opts.scheme,
+      createDefaultDir: context => deriveDirForComponent(context) + "/modified",
+      createExtenderModel: (context, extender, options) => typeof extender.createModel === "function"
+        ? extender.createModel(context, options)
+        : undefined
+    });
+
+
+    // XHTML attribute takes precedence over the editor options
+    const originalDisabled = opts.originalDisabled !== undefined
+      ? opts.originalDisabled
+      : !defaultIfNullish(incomingEditorOptions.originalEditable, false);
+    const originalReadonly = defaultIfNullish(opts.originalReadonly, false);
+
+    /** @type {import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions} */
+    const baseEditorOptions = {
+      domReadOnly: opts.readonly || opts.disabled,
+      readOnly: opts.readonly || opts.disabled,
+      originalEditable: !originalDisabled && !originalReadonly,
+    };
+
+    let editorOptions = assign(baseEditorOptions, incomingEditorOptions);
+    if (incomingEditorOptions.tabIndex) {
+      editorOptions.tabIndex = typeof incomingEditorOptions.tabIndex === "number"
+        ? incomingEditorOptions.tabIndex
+        : parseInt(String(incomingEditorOptions.tabIndex));
+    }
+
+    // Allow extender to modify / update the options
+    if (typeof extender.beforeCreate === "function") {
+      const result = extender.beforeCreate(context, editorOptions, wasLibLoaded);
+      if (typeof result === "object" && result !== null) {
+        editorOptions = "then" in result ? defaultIfNullish(await result, editorOptions) : result;
+      }
+    }
+
+    return {
+      custom: {
+        modifiedModel,
+        originalModel,
+      },
+      options: editorOptions,
+    };
+  }
+
+  /**
+   * Evaluate the `beforeCreate` callback of the extender. It is passed the current options and may
+   *
+   * - not return anything, in which case the passed options are used (which may have been modified inplace)
+   * - return an options object, in which case these options are used
+   * - return a promise, in which case the editor is initialized only once that promise resolves. The promise
+   *   may resolve to a new options object to be used.
+   *
+   * @template {PrimeFaces.widget.ExtMonacoEditor.SyncMonacoCodeEditorContext} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderCodeEditor<TContext>} TExtender
+   * @param {TContext} context
+   * @param {TExtender} extender
    * @param {string} editorValue
    * @param {boolean} wasLibLoaded
-   * @return {Promise<import("monaco-editor").editor.IEditorConstructionOptions>}
+   * @returns {Promise<import("monaco-editor").editor.IStandaloneEditorConstructionOptions>}
    */
   async function createEditorConstructionOptions(context, extender, editorValue, wasLibLoaded) {
     const opts = context.getWidgetOptions();
@@ -231,12 +391,22 @@ window.monacoModule.helper = (function () {
         JSON.parse(opts.editorOptions) :
         {};
 
-    const model = createModel(context, incomingEditorOptions, extender, editorValue);
+    const model = createModel(context, incomingEditorOptions, extender, editorValue, {
+      basename: opts.basename,
+      directory: opts.directory,
+      extension: opts.extension,
+      language: opts.language,
+      scheme: opts.scheme,
+      createDefaultDir: context => deriveDirForComponent(context),
+      createExtenderModel: (context, extender, options) => typeof extender.createModel === "function"
+        ? extender.createModel(context, options)
+        : undefined,
+    });
     /** @type {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} */
     const baseEditorOptions = {
-      domReadOnly: opts.readonly || opts.disabled,
+      domReadOnly: defaultIfNullish(opts.readonly, false) || defaultIfNullish(opts.disabled, false),
       model: model,
-      readOnly: opts.readonly || opts.disabled,
+      readOnly: defaultIfNullish(opts.readonly, false) || defaultIfNullish(opts.disabled, false),
     };
     const editorOptions = assign(baseEditorOptions, incomingEditorOptions);
     if (incomingEditorOptions.tabIndex) {
@@ -248,9 +418,7 @@ window.monacoModule.helper = (function () {
     if (typeof extender.beforeCreate === "function") {
       const result = extender.beforeCreate(context, editorOptions, wasLibLoaded);
       if (typeof result === "object" && result !== null) {
-        return typeof result["then"] === "function"
-          ? (await result) || editorOptions
-          : result;
+        return "then" in result ? defaultIfNullish(await result, editorOptions) : result;
       }
     }
 
@@ -258,17 +426,19 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @param {PrimeFaces.widget.ExtMonacoEditorBase.SyncMonacoContext} context
-   * @param {import("monaco-editor").editor.IEditorConstructionOptions} editorOptions
-   * @param {PrimeFaces.widget.ExtMonacoEditorBase.ExtenderBase} extender
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @template {PrimeFaces.widget.ExtMonacoEditor.SyncMonacoBaseEditorContext<TEditor, TEditorOpts>} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderBaseEditor<TEditor, TEditorOpts, TContext>} TExtender
+   * @param {TContext} context
+   * @param {TEditorOpts} editorOptions
+   * @param {TExtender} extender
    * @param {string} value
+   * @param {ModelConfig<TEditor, TEditorOpts, TContext, TExtender>} modelConfig
    * @returns {import("monaco-editor").editor.ITextModel}
    */
-  function createModel(context, editorOptions, extender, value = "") {
-    const options = context.getWidgetOptions();
-    const id = context.getWidgetId();
-
-    const language = options.language || "plaintext";
+  function createModel(context, editorOptions, extender, value, modelConfig) {
+    const language = modelConfig.language || "plaintext";
     // Scheme, path, basename and extension
     /** @type {string} */
     let scheme;
@@ -279,28 +449,30 @@ window.monacoModule.helper = (function () {
     /** @type {string} */
     let extension;
 
-    if (options.directory) {
-      dir = options.directory;
+    if (modelConfig.directory) {
+      dir = modelConfig.directory;
     }
     else {
-      dir = String(id).replace(/[^a-zA-Z0-9_-]/g, "/");
+      dir = modelConfig.createDefaultDir(context, extender);
     }
-    if (basename) {
-      basename = options.basename;
+    if (modelConfig.basename) {
+      basename = modelConfig.basename;
     }
     else {
       basename = "file";
     }
-    if (options.extension) {
-      extension = options.extension;
+    if (modelConfig.extension) {
+      extension = modelConfig.extension;
     }
     else {
       const langInfo = monaco.languages.getLanguages().filter(lang => lang.id === language)[0];
-      extension = langInfo && langInfo.extensions.length > 0 ? langInfo.extensions[0] : "";
+      extension = langInfo !== undefined && langInfo.extensions !== undefined && langInfo.extensions.length > 0
+        ? langInfo.extensions[0]
+        : "";
     }
 
-    if (options.scheme) {
-      scheme = options.scheme;
+    if (modelConfig.scheme) {
+      scheme = modelConfig.scheme;
     }
     else {
       scheme = "inmemory";
@@ -310,6 +482,8 @@ window.monacoModule.helper = (function () {
     if (dir.length > 0 && dir[dir.length - 1] !== "/") {
       dir = dir + "/";
     }
+    // Replace multiple consecutive slashes with a single slash
+    dir = dir.replace(/\/\/+/g, "/");
     if (extension.length > 0 && extension[0] !== ".") {
       extension = "." + extension;
     }
@@ -323,12 +497,12 @@ window.monacoModule.helper = (function () {
     });
 
     // Allow extender to fetch model
-    if (typeof extender.createModel === "function") {
-      const modelFromExtender = extender.createModel(context, { editorOptions, language, uri, value });
-      if (typeof modelFromExtender === "object" && modelFromExtender !== null) {
-        return modelFromExtender;
-      }
+
+    const modelFromExtender = modelConfig.createExtenderModel(context, extender, { editorOptions, language, uri, value });
+    if (typeof modelFromExtender === "object" && modelFromExtender !== null) {
+      return modelFromExtender;
     }
+
     // Get or create model, and set previous value
     let model = monaco.editor.getModel(uri);
     if (!model) {
@@ -339,33 +513,20 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @param {unknown} x 
-   * @return {x is null | undefined}
-   */
-  function isNullOrUndefined(x) {
-    return x === null || x === undefined;
-  }
-
-  /**
-   * @template T
-   * @param {T | null | undefined} x 
-   * @return {x is T}
-   */
-  function isNotNullOrUndefined(x) {
-    return x !== null && x !== undefined;
-  }
-
-  /**
+   * @template {import("monaco-editor").editor.IEditor} TEditor
    * @template TRet
    * @template {any[]} TArgs
-   * @param {import("monaco-editor").editor.IStandaloneCodeEditor} editor
-   * @param {((editor: import("monaco-editor").editor.IStandaloneCodeEditor, ...args: TArgs) => TRet) | string} script
+   * @param {TEditor} editor
+   * @param {((editor: TEditor, ...args: TArgs) => TRet) | string} script
    * @param {TArgs} args
    * @param {(script: string) => void} evalFn 
-   * @return {Promise<PrimeFaces.UnwrapPromise<TRet>>}
+   * @returns {Promise<Awaited<TRet>>}
    */
   async function invokeMonacoScript(editor, script, args, evalFn) {
-    const wrappedScript = `try {MonacoEnvironment._INVOKE.return = (${script}).apply(window,MonacoEnvironment._INVOKE.args)}catch(e){MonacoEnvironment._INVOKE.error=e}`;
+    // Make sure we always call the editor asynchronously
+    await Promise.resolve(undefined);
+    MonacoEnvironment = typeof MonacoEnvironment === "object" ? MonacoEnvironment : {};
+    const wrappedScript = `try{MonacoEnvironment._INVOKE.return=(${script}).apply(window,MonacoEnvironment._INVOKE.args)}catch(e){MonacoEnvironment._INVOKE.error=e}`;
     try {
       MonacoEnvironment._INVOKE = {
         args: [editor, ...args],
@@ -405,13 +566,16 @@ window.monacoModule.helper = (function () {
   }
 
   /**
-   * @template {keyof import("monaco-editor").editor.IStandaloneCodeEditor} K
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
    * @param {K} method
-   * @param {import("monaco-editor").editor.IStandaloneCodeEditor} editor
-   * @param {Parameters<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
-   * @return {Promise<PrimeFaces.UnwrapPromise<ReturnType<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
+   * @param {TEditor} editor
+   * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
+   * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
    */
   async function invokeMonaco(editor, method, args) {
+    // Make sure we always call the editor asynchronously
+    await Promise.resolve(undefined);
     if (editor) {
       const fn = editor[method];
       if (typeof fn === "function") {
@@ -428,8 +592,83 @@ window.monacoModule.helper = (function () {
   }
 
   /**
+   * Register all given custom themes with the editor.
+   * @param {Record<string, import("monaco-editor").editor.IStandaloneThemeData> | undefined} customThemes
+   */
+  function defineCustomThemes(customThemes) {
+    /** @type {Record<string, import("monaco-editor").editor.IStandaloneThemeData>} */
+    const customThemesData = customThemes !== undefined ? customThemes : {};
+    for (const themeName of Object.keys(customThemesData || {})) {
+      const themeData = assign({}, DefaultThemeData, customThemesData[themeName]);
+      if (themeData !== undefined) {
+        monaco.editor.defineTheme(themeName, themeData);
+      }
+    }
+  }
+
+  /**
+   * @param {unknown} value 
+   * @returns {value is MonacoMessage}
+   */
+  function isMonacoMessage(value) {
+    if (value === null || value === undefined) {
+      return false;
+    }
+    if (typeof value !== "object") {
+      return false;
+    }
+    const message = /** @type {Record<string, unknown>} */(value);
+    if (typeof message.instanceId !== "number") {
+      return false;
+    }
+    if (typeof message.payload !== "object" || message.payload === null) {
+      return false;
+    }
+    const payload = /** @type {Record<string, unknown>} */(message.payload);
+    if (typeof payload.kind !== "string") {
+      return false;
+    }
+    if (!("data" in payload)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Splits the given string at the first occurrence of the given separator. Returns the substring before and after
+   * the separator.
+   * @param {string} str String to split.
+   * @param {string} separator Separator at which to split.
+   * @return {[string, string | undefined]} The string before the separator and the string after the separator. When
+   * the string does not contain the separator, the first element is the entire string and the second element is
+   * `undefined`.
+   */
+  function splitFirst(str, separator) {
+    const index = str.indexOf(separator);
+    return index !== -1 ? [str.slice(0, index), str.slice(index + 1)] : [str, undefined];
+  }
+
+  /**
+   * @param {string} str 
+   * @return {Record<string, string | undefined>}
+   */
+  function parseSimpleQuery(str) {
+    str = str.trim().replace(/^[?#&]/, '');
+    if (str.length === 0) {
+      return {};
+    }
+    /** @type {Record<string, string | undefined>} */
+    const ret = {};
+    for (const param of str.split('&')) {
+      const [key, val] = splitFirst(param.replace(/\+/g, ' '), "=");
+      ret[key] = val !== undefined ? decodeURIComponent(val) : val;
+    };
+    return ret;
+  }
+
+  /**
    * Default options for the monaco editor widget configuration.
-   * @type {PrimeFaces.widget.ExtMonacoEditorBaseCfgBase}
+   * @type {PrimeFaces.widget.ExtMonacoBaseEditorCfgBase<import("monaco-editor").editor.IEditorOptions>}
    */
   const BaseEditorDefaults = {
     availableEvents: [],
@@ -457,14 +696,37 @@ window.monacoModule.helper = (function () {
     rules: [],
   };
 
+  /** @type {PrimeFaces.widget.ExtMonacoDiffEditorCfgBase} */
+  const DiffEditorDefaults = {
+    originalDisabled: true,
+    originalReadonly: false,
+    originalRequired: false,
+    originalLanguage: "",
+    originalBasename: "",
+    originalDirectory: "",
+    originalExtension: "",
+    originalScheme: "inmemory",
+  };
 
-  /** @type {PrimeFaces.widget.ExtMonacoEditorFramedCfgBase} */
+  /** @type {PrimeFaces.widget.ExtMonacoDiffEditorFramedCfgBase} */
+  const FramedDiffEditorDefaults = assign({}, BaseEditorDefaults, DiffEditorDefaults, {
+    extender: "",
+    iframeUrlParams: {},
+  });
+
+  /** @type {PrimeFaces.widget.ExtMonacoCodeEditorFramedCfgBase} */
   const FramedEditorDefaults = assign({}, BaseEditorDefaults, {
     extender: "",
     iframeUrlParams: {},
   });
 
-  /** @type {PrimeFaces.widget.ExtMonacoEditorInlineCfgBase} */
+  /** @type {PrimeFaces.widget.ExtMonacoDiffEditorInlineCfgBase} */
+  const InlineDiffEditorDefaults = assign({}, BaseEditorDefaults, DiffEditorDefaults, {
+    extender: () => ({}),
+    overflowWidgetsDomNode: "",
+  });
+
+  /** @type {PrimeFaces.widget.ExtMonacoCodeEditorInlineCfgBase} */
   const InlineEditorDefaults = assign({}, BaseEditorDefaults, {
     extender: () => ({}),
     overflowWidgetsDomNode: "",
@@ -472,8 +734,10 @@ window.monacoModule.helper = (function () {
 
   return {
     assign,
+    createDiffEditorInitData,
     createEditorConstructionOptions,
     createModel,
+    defineCustomThemes,
     endsWith,
     getFacesResourceUri,
     getMonacoResource,
@@ -482,15 +746,19 @@ window.monacoModule.helper = (function () {
     globalEval,
     invokeMonaco,
     invokeMonacoScript,
+    isMonacoMessage,
     isNotNullOrUndefined,
     isNullOrUndefined,
+    parseSimpleQuery,
     loadEditorLib,
     loadExtender,
     loadLanguage,
     resolveLocaleUrl,
     BaseEditorDefaults,
     DefaultThemeData,
+    FramedDiffEditorDefaults,
     FramedEditorDefaults,
+    InlineDiffEditorDefaults,
     InlineEditorDefaults,
   };
 })();

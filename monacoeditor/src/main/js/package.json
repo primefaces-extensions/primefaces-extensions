@@ -3,22 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-locales": "node generateLocales.js",
-    "generate-extras": "node generateExtras.js",
-    "generate-editor-options": "node descriptor/create.js"
+    "verify": "tsc --project jsconfig.json --noEmit",
+    "generate-locales": "node src/scripts/generateLocales.js",
+    "generate-extras": "node src/scripts/generateExtras.js",
+    "generate-editor-options": "node src/scripts/generateEditorOptions.js"
   },
   "author": "Andre Wachsmuth",
   "license": "MIT",
   "dependencies": {
+    "cross-spawn": "^7.0.3",
     "insane": "^2.6.2",
     "monaco-editor": "^0.31.1"
   },
   "devDependencies": {
+    "@types/cross-spawn": "^6.0.2",
     "@types/jquery": "^3.5.13",
     "css-loader": "^6.2.0",
-    "git-pull-or-clone": "^2.0.1",
     "mkdirp": "^1.0.4",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.2.2",

@@ -28,7 +28,7 @@ import javax.faces.application.ResourceDependency;
 import javax.faces.event.BehaviorEvent;
 
 /**
- * Component for the Monaco code editor JavaScript library .This is the inline monaco editor that creates a new instance in a separate iframe to allow for
+ * Component for the Monaco code editor JavaScript library .This is the framed Monaco editor that creates a new instance in a separate iframe to allow for
  * better scoping, i.e. loading types etc. without affecting other editors. There is also an inline widget when this scoping is not required as iframes create
  * additional overhead.
  *
@@ -40,15 +40,16 @@ import javax.faces.event.BehaviorEvent;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-framed.js")
+@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/monacoeditor.css")
 public class MonacoEditorFramed extends MonacoEditorBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorFramed";
 
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.MonacoEditorFramedRenderer";
 
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-framed ";
+    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-framed ";
 
-    public static final String WIDGET_NAME = "ExtMonacoEditorFramed";
+    public static final String WIDGET_NAME = "ExtMonacoCodeEditorFramed";
 
     /**
      * Default no-arg constructor for this widget invoked by the framework.
@@ -70,18 +71,18 @@ public class MonacoEditorFramed extends MonacoEditorBase {
     }
 
     public String getExtender() {
-        return (String) getStateHelper().eval(FramedPropertyKeys.extender, null);
+        return (String) getStateHelper().eval(CodeEditorFramedPropertyKeys.extender, null);
     }
 
     public void setExtender(final String extender) {
-        getStateHelper().put(FramedPropertyKeys.extender, extender);
+        getStateHelper().put(CodeEditorFramedPropertyKeys.extender, extender);
     }
 
     public Object getIframeUrlParams() {
-        return getStateHelper().eval(FramedPropertyKeys.iframeUrlParams, null);
+        return getStateHelper().eval(CodeEditorFramedPropertyKeys.iframeUrlParams, null);
     }
 
     public void setIframeUrlParams(final Object iframeUrlParams) {
-        getStateHelper().put(FramedPropertyKeys.iframeUrlParams, iframeUrlParams);
+        getStateHelper().put(CodeEditorFramedPropertyKeys.iframeUrlParams, iframeUrlParams);
     }
 }

@@ -219,6 +219,14 @@
         <component-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorFramed</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.MonacoDiffEditorInline</component-type>
+        <component-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorInline</component-class>
+    </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.MonacoDiffEditorFramed</component-type>
+        <component-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramed</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.Scaffolding</component-type>
         <component-class>org.primefaces.extensions.component.scaffolding.Scaffolding</component-class>
     </component>
@@ -431,6 +439,16 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.MonacoEditorFramedRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoEditorFramedRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorInlineRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorInlineRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramedRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

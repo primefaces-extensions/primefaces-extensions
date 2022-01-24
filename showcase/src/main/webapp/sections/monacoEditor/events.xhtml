@@ -6,7 +6,7 @@
 <ui:composition template="/templates/showcaseLayout.xhtml">
 
     <f:metadata>
-        <f:viewAction action="#{monacoEditorController.initCustomLocalization}"/>
+        <f:viewAction action="#{monacoEditorController.initEvents('code')}"/>
     </f:metadata>
 
     <ui:define name="centerContent">
@@ -19,7 +19,7 @@
             listener to the event, or the <code>on[eventname]</code> attributes to attach a client-side
             callback. In case you require more fine-tuned control or wish to listen to an event not supported
             by this widget, consider using
-            <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html" target="_blank" rel="noopener noreferrer">Monaco editor's client-side API</a>
+            <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html" target="_blank" rel="noopener noreferrer">Monaco editor's client-side API</a>
             directly; possibly in combination with a <code>&lt;p:remoteCommand&gt;</code> or
             <code>&lt;pe:remoteCommand&gt;</code> if you need to invoke a client-side listener.
             <br /><br />
@@ -38,7 +38,7 @@
            </ul>
             Note that if you value performance, you should avoid adding server-side listeners for frequently occurring events
             such as <code>mousemove</code> etc. In this example, we display a growl message via
-            <a href="https://primefaces.github.io/primefaces/jsdocs/classes/src_primefaces.primefaces.widget.growl.html#add" target="_blank" rel="noopener noreferrer">PrimeFace's client-side JavaScript API</a>
+            <a href="https://primefaces.github.io/primefaces/jsdocs/classes/src_PrimeFaces.PrimeFaces.widget.Growl.html#add" target="_blank" rel="noopener noreferrer">PrimeFace's client-side JavaScript API</a>
             in the <code>onstart</code> callback of the AJAX behavior and <code>return false</code> to cancel
             the AJAX request to the server; but you could call a server-side method here if you wanted.
         </h:panelGroup>

@@ -1,7 +1,9 @@
 // Create a Monaco extender with the given settings.
-// settings.declarations: A list of TypeScript declaration files that will be added to the editor
-// settings.language    : The code language for which to set up the extender.
-// settings.tscheck     : if true, enable type checking for JavaScript files.
+// settings.declarations        : A list of TypeScript declaration files that will be added to the editor
+// settings.language            : The code language for which to set up the extender.
+// settings.tscheck             : if true, enable type checking for JavaScript files.
+// settings.moreDeclarationUrls : Additional declaration files (URL for download).
+// settings.moreDeclarationNames: Additional declaration files (URI for model).
 function createExtender(settings) {
   return {
     beforeCreate: function beforeCreate(widget, options, wasLibLoaded) {
@@ -10,7 +12,20 @@ function createExtender(settings) {
       if (!wasLibLoaded) {
         return;
       }
-      
+
+      // Add more .d.ts files
+      if (settings.moreDeclarationUrls && settings.moreDeclarationNames) {
+        settings.declarations = settings.declarations || [];
+        var moreUrls = Array.isArray(settings.moreDeclarationUrls) ? settings.moreDeclarationUrls : [settings.moreDeclarationUrls];
+        var moreNames = Array.isArray(settings.moreDeclarationNames) ? settings.moreDeclarationNames : [settings.moreDeclarationNames];
+        var a = document.createElement("a");
+        for (var i = 0; i < moreUrls.length; i++) {
+          a.href = moreUrls[i];
+          a.href = a.href; // IE hack
+          settings.declarations.push([a.href, moreNames[i]]);
+        }
+      } 
+
       // Enable JavaScript type checking
       if (settings.tsCheck && settings.language === "javascript") {
         monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign(
@@ -76,40 +91,51 @@ function createExtenderMonaco(params) {
   return createExtender(Object.assign({}, {
     declarations: [
       [
-        "https://unpkg.com/monaco-editor@0.22.3/esm/vs/editor/editor.api.d.ts",
+        "https://unpkg.com/monaco-editor@latest/esm/vs/editor/editor.api.d.ts",
         "file:///node_modules/@types/monaco-editor/index.d.ts"
       ],
       [
-        "https://raw.githubusercontent.com/primefaces-extensions/primefaces-extensions/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-global.d.ts",
-        "file:///src/primefaces-monaco-global.d.ts"
+        "https://unpkg.com/primefaces@latest/PrimeFaces.d.ts",
+        "file:///node_modules/primefaces/PrimeFaces.d.ts"
       ],
       [
-        "https://raw.githubusercontent.com/primefaces-extensions/primefaces-extensions/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-module.d.ts",
-        "file:///src/primefaces-monaco-module.d.ts"
+        "https://unpkg.com/primefaces@latest/PrimeFaces-module.d.ts",
+        "file:///node_modules/primefaces/PrimeFaces-module.d.ts"
       ]
-    ]
-  }, params));
+  ]}, params));
 }
 
 // Parses the URL parameters of the current URL
+// Convert to an array when there are multiple parameters
 function parseUrlParams() {
   var search = window.location.search;
   search = search.charAt(0) === "?" ? search.substring(1) : search;
   return search.split("&")
     .map(function(pair){ return pair.split("=").map(decodeURIComponent) })
-    .reduce( function(obj, pair) { obj[pair[0]] = pair[1]; return obj }, {});
+    .reduce( function(obj, pair) {
+      if (pair[0] in obj) {
+        if (!Array.isArray(obj[pair[0]])) { 
+          obj[pair[0]] = [obj[pair[0]]];
+        }
+        obj[pair[0]].push(pair[1]);
+      }
+      else {
+        obj[pair[0]] = pair[1];
+      }
+      return obj;
+    }, {});
 }
 
-// This is set when the extender is used in the framed editor
-// Then we must create the extender and set it on the MonacoEnvironemnt
+// This is required when the extender is used in the framed editor
+// Then we must create the extender and set it on the window.MonacoEnvironment variable
 if (window.MonacoEnvironment) {
   var params = parseUrlParams();
   switch (params.extender) {
   case "jquery":
-    window.MonacoEnvironment.Extender = createExtenderJQuery(params);
+    window.MonacoEnvironment.Extender = {codeEditor: createExtenderJQuery(params)};
     break;
   case "monaco":
-    window.MonacoEnvironment.Extender = createExtenderMonaco(params);
+    window.MonacoEnvironment.Extender = {codeEditor: createExtenderMonaco(params)};
     break;
   }
 }

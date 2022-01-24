@@ -9,26 +9,27 @@ window.monacoModule.PromiseQueue = (function () {
   /**
    * A simple queue to which promise factories can be added. It makes sure the promises
    * are created / started in the order as they were added.
-   * @template T
-   * @implements IPromiseQueue<T>
+   * @implements IPromiseQueue
    */
   class PromiseQueueImpl {
     constructor() {
       /** @type {QueueItem[]} */
       this._queue = [];
     }
-
+    
     /**
+     * @template T
      * @param {PromiseFactory<T>} promiseFactory
-     * @return {Promise<T>}
+     * @returns {Promise<T>}
      */
     add(promiseFactory) {
       return this.addAll(promiseFactory)[0];
     }
-
+    
     /**
+     * @template T
      * @param {PromiseFactory<T>[]} promiseFactory
-     * @return {Promise<T>[]}
+     * @returns {Promise<T>[]}
      */
     addAll(...promiseFactory) {
       return promiseFactory
@@ -66,7 +67,7 @@ window.monacoModule.PromiseQueue = (function () {
     }
 
     /**
-     * @param {QueueItem} queueItem
+     * @param {QueueItem | undefined} queueItem
      */
     _processQueue(queueItem) {
       if (queueItem) {
@@ -79,14 +80,14 @@ window.monacoModule.PromiseQueue = (function () {
     }
 
     /**
-     * @return {QueueItem}
+     * @returns {QueueItem | undefined}
      */
     _poll() {
       return this._queue.shift();
     }
 
     /**
-     * @return {QueueItem}
+     * @returns {QueueItem | undefined}
      */
     _peek() {
       return this._queue[0];
@@ -94,7 +95,7 @@ window.monacoModule.PromiseQueue = (function () {
 
     /**
      * @param {PromiseFactory<unknown>} promiseFactory
-     * @return {Promise<unknown>}
+     * @returns {Promise<unknown>}
      */
     static _makePromise(promiseFactory) {
       try {

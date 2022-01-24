@@ -3,6 +3,8 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+const globalScope = typeof globalThis === "object" ? globalThis : typeof window === "object" ? window : typeof self === "object" ? self : global; 
+
 function _format(message, args) {
     var result;
     if (args.length === 0) {
@@ -19,7 +21,7 @@ function _format(message, args) {
 
 export function localize(path, data, defaultMessage) {
     var key = typeof data=== "object" ? data.key : data;
-    var data = ((global.MonacoEnvironment||{}).Locale||{}).data||{};
+    var data = ((globalScope.MonacoEnvironment||{}).Locale||{}).data||{};
     var message = (data[path]||{})[key];
     if (!message) {
         message = defaultMessage;

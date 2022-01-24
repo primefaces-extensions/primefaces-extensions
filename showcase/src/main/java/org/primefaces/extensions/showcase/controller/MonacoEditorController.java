@@ -42,10 +42,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
 import org.primefaces.extensions.model.monacoeditor.ELanguage;
 import org.primefaces.extensions.model.monacoeditor.ETheme;
 import org.primefaces.extensions.model.monacoeditor.EditorOptions;
 import org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme;
+import org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel;
 import org.primefaces.extensions.showcase.util.MonacoEditorSettings;
 
 /**
@@ -59,8 +61,10 @@ import org.primefaces.extensions.showcase.util.MonacoEditorSettings;
 public class MonacoEditorController implements Serializable {
     private static final long serialVersionUID = 20210216L;
 
-    private static final String CUSTOM_CODE_EXTENDER = "custom_code.extender.";
+    private static final String CUSTOM_CODE_EXTENDER_CODE = "custom_code.extender.code.";
+    private static final String CUSTOM_CODE_EXTENDER_DIFF = "custom_code.extender.diff.";
     private static final String INLINE = "inline";
+    private static final String CODE = "code";
     private static final String MY_CUSTOM_THEME = "MyCustomTheme";
 
     private Map<String, EditorStandaloneTheme> customThemes;
@@ -68,6 +72,14 @@ public class MonacoEditorController implements Serializable {
     private EditorOptions editorOptions;
     private EditorOptions editorOptionsFramed;
     private EditorOptions editorOptionsExtender;
+
+    private DiffEditorOptions editorOptionsDiff;
+    private DiffEditorOptions editorOptionsFramedDiff;
+    private DiffEditorOptions editorOptionsExtenderDiff;
+
+    private ELanguage editorLangDiff;
+    private ELanguage editorLangFramedDiff;
+    private ELanguage editorLangExtenderDiff;
 
     private transient ResourceBundle examples;
 
@@ -77,12 +89,14 @@ public class MonacoEditorController implements Serializable {
 
     private String extenderExample;
     private List<SelectItem> extenderExamples;
+    private List<SelectItem> extenderExamplesDiff;
     private String extenderInfo;
     private String extenderName;
 
     private List<String> themes;
 
     private String type;
+    private String mode;
 
     private Locale locale;
     private Locale localeFramed;
@@ -93,6 +107,27 @@ public class MonacoEditorController implements Serializable {
     private String valueFramed;
     private String valueExtender;
 
+    private MonacoDiffEditorModel valueDiff;
+    private MonacoDiffEditorModel valueFramedDiff;
+
+    private boolean required = false;
+    private boolean requiredFramed = false;
+
+    private boolean disabled = false;
+    private boolean disabledFramed = false;
+
+    private boolean readOnly = false;
+    private boolean readOnlyFramed = false;
+
+    private boolean originalRequired = false;
+    private boolean originalRequiredFramed = false;
+
+    private boolean originalDisabled = true;
+    private boolean originalDisabledFramed = true;
+
+    private boolean originalReadOnly = false;
+    private boolean originalReadOnlyFramed = false;
+
     @PostConstruct
     protected void init() {
         this.examples = ResourceBundle.getBundle("monaco-examples");
@@ -101,13 +136,27 @@ public class MonacoEditorController implements Serializable {
         this.editorOptions.setTheme(ETheme.VS);
         this.editorOptions.setFontSize(12);
 
+        this.editorOptionsDiff = new DiffEditorOptions();
+        this.editorOptionsDiff.setTheme(ETheme.VS);
+        this.editorOptionsDiff.setFontSize(12);
+        this.editorOptionsDiff.setRenderSideBySide(true);
+
         this.editorOptionsFramed = new EditorOptions();
         this.editorOptionsFramed.setTheme(ETheme.VS);
         this.editorOptionsFramed.setFontSize(12);
 
+        this.editorOptionsFramedDiff = new DiffEditorOptions();
+        this.editorOptionsFramedDiff.setTheme(ETheme.VS);
+        this.editorOptionsFramedDiff.setFontSize(12);
+        this.editorOptionsFramedDiff.setRenderSideBySide(true);
+
         this.extenderExamples = MonacoEditorSettings.createEditorExamples();
+        this.extenderExamplesDiff = MonacoEditorSettings.createEditorExamplesDiff();
 
         this.editorOptionsExtender = MonacoEditorSettings.createEditorOptionsExtender();
+        this.editorOptionsExtenderDiff = MonacoEditorSettings.createEditorOptionsExtenderDiff();
+        this.editorOptionsExtenderDiff.setRenderSideBySide(true);
+        this.editorLangExtenderDiff = ELanguage.JAVASCRIPT;
 
         this.type = INLINE;
 
@@ -131,6 +180,13 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return Options to apply to the Monaco diff editor.
+     */
+    public DiffEditorOptions getEditorOptionsDiff() {
+        return editorOptionsDiff;
+    }
+
+    /**
      * @return Options to apply to the framed Monaco code editor.
      */
     public EditorOptions getEditorOptionsFramed() {
@@ -138,10 +194,24 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return Options to apply to the framed Monaco code editor.
+     */
+    public DiffEditorOptions getEditorOptionsFramedDiff() {
+        return editorOptionsFramedDiff;
+    }
+
+    /**
      * @return options to apply to the monaco editor for editing the custom extender.
      */
     public EditorOptions getEditorOptionsExtender() {
         return editorOptionsExtender;
+    }
+
+    /**
+     * @return options to apply to the monaco editor for editing the custom extender.
+     */
+    public DiffEditorOptions getEditorOptionsExtenderDiff() {
+        return editorOptionsExtenderDiff;
     }
 
     /**
@@ -165,6 +235,13 @@ public class MonacoEditorController implements Serializable {
         return extenderExamples;
     }
 
+    /***
+     * @return All examples available in the extender showcase.
+     */
+    public List<SelectItem> getExtenderExamplesDiff() {
+        return extenderExamplesDiff;
+    }
+
     /**
      * @return HTML string with additional info about the loaded extender example.
      */
@@ -183,14 +260,36 @@ public class MonacoEditorController implements Serializable {
      * @return The currently selected code language for the Monaco editor.
      */
     public String getLanguage() {
-        return editorOptions.getLanguage();
+        if (CODE.equals(mode)) {
+            return editorOptions.getLanguage();
+        }
+        else {
+            return editorLangDiff.toString();
+        }
+    }
+
+    /**
+     * @return The currently selected code language for the Monaco editor for the extender example.
+     */
+    public String getLanguageExtender() {
+        if (CODE.equals(mode)) {
+            return editorOptionsExtender.getLanguage();
+        }
+        else {
+            return editorLangExtenderDiff.toString();
+        }
     }
 
     /**
      * @return The currently selected code language for the framed Monaco editor.
      */
     public String getLanguageFramed() {
-        return editorOptionsFramed.getLanguage();
+        if (CODE.equals(mode)) {
+            return editorOptionsFramed.getLanguage();
+        }
+        else {
+            return editorLangFramedDiff.toString();
+        }
     }
 
     /**
@@ -204,14 +303,24 @@ public class MonacoEditorController implements Serializable {
      * @return The current color theme of the editor.
      */
     public String getTheme() {
-        return editorOptions.getTheme();
+        if (CODE.equals(mode)) {
+            return editorOptions.getTheme();
+        }
+        else {
+            return editorOptionsDiff.getTheme();
+        }
     }
 
     /**
      * @return The current color theme of the framed editor.
      */
     public String getThemeFramed() {
-        return editorOptionsFramed.getTheme();
+        if (CODE.equals(mode)) {
+            return editorOptionsFramed.getTheme();
+        }
+        else {
+            return editorOptionsFramedDiff.getTheme();
+        }
     }
 
     /**
@@ -257,6 +366,13 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return The code currently being edited by the editor.
+     */
+    public MonacoDiffEditorModel getValueDiff() {
+        return valueDiff;
+    }
+
+    /**
      * @return Code for the Monaco extender that can be edited on the extender showcase page.
      */
     public String getValueExtender() {
@@ -271,6 +387,13 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return The code currently being edited by the framed editor.
+     */
+    public MonacoDiffEditorModel getValueFramedDiff() {
+        return valueFramedDiff;
+    }
+
+    /**
      * @param extenderExample The currently selected example for the extender showcase.
      */
     public void setExtenderExample(String extenderExample) {
@@ -278,14 +401,216 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @return Whether the original editor (left side of the diff editor) is disabled.
+     */
+    public boolean isOriginalDisabled() {
+        return originalDisabled;
+    }
+
+    /**
+     * @param originalEditable Whether the original editor (left side of the diff editor) is disabled.
+     */
+    public void setOriginalDisabled(boolean originalDisabled) {
+        this.originalDisabled = originalDisabled;
+    }
+
+    /**
+     * @return Whether the original editor (left side of the diff editor) is disabled.
+     */
+    public boolean isOriginalDisabledFramed() {
+        return originalDisabledFramed;
+    }
+
+    /**
+     * @param originalEditableFramed Whether the original editor (left side of the diff editor) is disabled.
+     */
+    public void setOriginalDisabledFramed(boolean originalDisabledFramed) {
+        this.originalDisabledFramed = originalDisabledFramed;
+    }
+
+    /**
+     * @return Whether the original editor (left side of the diff editor) is read-only.
+     */
+    public boolean isOriginalReadOnly() {
+        return originalReadOnly;
+    }
+
+    /**
+     * @param originalReadonly Whether the original editor (left side of the diff editor) is read-only.
+     */
+    public void setOriginalReadOnly(boolean originalReadOnly) {
+        this.originalReadOnly = originalReadOnly;
+    }
+
+    /**
+     * @return Whether the original framed editor (left side of the diff editor) is read-only.
+     */
+    public boolean isOriginalReadOnlyFramed() {
+        return originalReadOnlyFramed;
+    }
+
+    /**
+     * @param originalReadOnly Whether the original framed editor (left side of the diff editor) is read-only.
+     */
+    public void setOriginalReadOnlyFramed(boolean originalReadOnlyFramed) {
+        this.originalReadOnlyFramed = originalReadOnlyFramed;
+    }
+
+    /**
+     * @return Whether the editor is disabled and does not accept submitted values.
+     */
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    /**
+     * @param disabled Whether the editor is disabled and does not accept submitted values.
+     */
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    /**
+     * @return Whether the framed editor is disabled and does not accept submitted values.
+     */
+    public boolean isDisabledFramed() {
+        return disabledFramed;
+    }
+
+    /**
+     * @param disabled Whether the framed editor is disabled and does not accept submitted values.
+     */
+    public void setDisabledFramed(boolean disabledFramed) {
+        this.disabledFramed = disabledFramed;
+    }
+
+    /**
+     * @return Whether the modified editor (right side of the diff editor) is read-only.
+     */
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    /**
+     * @param readOnly Whether the modified editor (right side of the diff editor) is read-only.
+     */
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    /**
+     * @return Whether the modified editor (right side of the diff editor) is read-only.
+     */
+    public boolean isReadOnlyFramed() {
+        return readOnlyFramed;
+    }
+
+    /**
+     * @param readOnly Whether the modified editor (right side of the diff editor) is read-only.
+     */
+    public void setReadOnlyFramed(boolean readOnlyFramed) {
+        this.readOnlyFramed = readOnlyFramed;
+    }
+
+    /**
+     * @return Whether the editor is required to have a value.
+     */
+    public boolean isRequired() {
+        return required;
+    }
+
+    /**
+     * @param required Whether the editor is required to have a value.
+     */
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    /**
+     * @return Whether the framed editor is required to have a value.
+     */
+    public boolean isRequiredFramed() {
+        return requiredFramed;
+    }
+
+    /**
+     * @param requiredFramed Whether the framed editor is required to have a value.
+     */
+    public void setRequiredFramed(boolean requiredFramed) {
+        this.requiredFramed = requiredFramed;
+    }
+
+    /**
+     * @return Whether the original editor is required to have a value.
+     */
+    public boolean isOriginalRequired() {
+        return originalRequired;
+    }
+
+    /**
+     * @param originalRequired Whether the original editor is required to have a value.
+     */
+    public void setOriginalRequired(boolean originalRequired) {
+        this.originalRequired = originalRequired;
+    }
+
+    /**
+     * @return Whether the original framed editor is required to have a value.
+     */
+    public boolean isOriginalRequiredFramed() {
+        return originalRequiredFramed;
+    }
+
+    /**
+     * @param originalRequiredFramed Whether the original framed editor is required to have a value.
+     */
+    public void setOriginalRequiredFramed(boolean originalRequiredFramed) {
+        this.originalRequiredFramed = originalRequiredFramed;
+    }
+
+    /**
+     * @return Whether to render the diff side-by-side in two editors or inline in one editor.
+     */
+    public boolean isRenderSideBySide() {
+        if (INLINE.equals(type)) {
+            return editorOptionsDiff.isRenderSideBySide();
+        }
+        else {
+            return editorOptionsFramedDiff.isRenderSideBySide();
+        }
+    }
+
+    /**
+     * @param renderSideBySide Whether to render the diff side-by-side in two editors or inline in one editor.
+     */
+    public void setRenderSideBySide(boolean renderSideBySide) {
+        if (INLINE.equals(type)) {
+            editorOptionsDiff.setRenderSideBySide(renderSideBySide);
+        }
+        else {
+            editorOptionsFramedDiff.setRenderSideBySide(renderSideBySide);
+        }
+    }
+
+    /**
      * @param language The currently selected code language for the monaco editor.
      */
     public void setLanguage(String language) {
-        if (isEmpty(language)) {
-            editorOptions.setLanguage(ELanguage.JAVASCRIPT);
+        if (CODE.equals(mode)) {
+            if (isEmpty(language)) {
+                editorOptions.setLanguage(ELanguage.JAVASCRIPT);
+            }
+            else {
+                editorOptions.setLanguage(language);
+            }
         }
         else {
-            editorOptions.setLanguage(language);
+            if (isEmpty(language)) {
+                editorLangDiff = ELanguage.JAVASCRIPT;
+            }
+            else {
+                editorLangDiff = ELanguage.parseString(language);
+            }
         }
     }
 
@@ -293,11 +618,21 @@ public class MonacoEditorController implements Serializable {
      * @param language The currently selected code language for the framed Monaco editor.
      */
     public void setLanguageFramed(String language) {
-        if (isEmpty(language)) {
-            editorOptionsFramed.setLanguage(ELanguage.JAVASCRIPT);
+        if (CODE.equals(mode)) {
+            if (isEmpty(language)) {
+                editorOptionsFramed.setLanguage(ELanguage.JAVASCRIPT);
+            }
+            else {
+                editorOptionsFramed.setLanguage(language);
+            }
         }
         else {
-            editorOptionsFramed.setLanguage(language);
+            if (isEmpty(language)) {
+                editorLangFramedDiff = ELanguage.JAVASCRIPT;
+            }
+            else {
+                editorLangFramedDiff = ELanguage.parseString(language);
+            }
         }
     }
 
@@ -305,11 +640,21 @@ public class MonacoEditorController implements Serializable {
      * @param theme The current color theme of the editor.
      */
     public void setTheme(String theme) {
-        if (isEmpty(theme)) {
-            editorOptions.setTheme(ETheme.VS);
+        if (CODE.equals(mode)) {
+            if (isEmpty(theme)) {
+                editorOptions.setTheme(ETheme.VS);
+            }
+            else {
+                editorOptions.setTheme(theme);
+            }
         }
         else {
-            editorOptions.setTheme(theme);
+            if (isEmpty(theme)) {
+                editorOptionsDiff.setTheme(ETheme.VS);
+            }
+            else {
+                editorOptionsDiff.setTheme(theme);
+            }
         }
     }
 
@@ -317,11 +662,21 @@ public class MonacoEditorController implements Serializable {
      * @param theme The current color theme of the framed editor.
      */
     public void setThemeFramed(String theme) {
-        if (isEmpty(theme)) {
-            editorOptionsFramed.setTheme(ETheme.VS);
+        if (CODE.equals(mode)) {
+            if (isEmpty(theme)) {
+                editorOptionsFramed.setTheme(ETheme.VS);
+            }
+            else {
+                editorOptionsFramed.setTheme(theme);
+            }
         }
         else {
-            editorOptionsFramed.setTheme(theme);
+            if (isEmpty(theme)) {
+                editorOptionsFramedDiff.setTheme(ETheme.VS);
+            }
+            else {
+                editorOptionsFramedDiff.setTheme(theme);
+            }
         }
     }
 
@@ -330,6 +685,13 @@ public class MonacoEditorController implements Serializable {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+     * @param type Whether to show the code or diff version of the Monaco code editor.
+     */
+    public void setTypeMode(String mode) {
+        this.mode = mode;
     }
 
     /**
@@ -354,6 +716,13 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
+     * @param value The code currently being edited by the editor.
+     */
+    public void setValueDiff(MonacoDiffEditorModel valueDiff) {
+        this.valueDiff = valueDiff;
+    }
+
+    /**
      * @param valueExtender Code for the Monaco extender that can be edited on the extender showcase page.
      */
     public void setValueExtender(String valueExtender) {
@@ -365,6 +734,13 @@ public class MonacoEditorController implements Serializable {
      */
     public void setValueFramed(String valueFramed) {
         this.valueFramed = valueFramed;
+    }
+
+    /**
+     * @param valueFramed The code currently being edited by the framed editor.
+     */
+    public void setValueFramedDiff(MonacoDiffEditorModel valueFramedDiff) {
+        this.valueFramedDiff = valueFramedDiff;
     }
 
     /** Callback for when the code language was changed. Loads the code sample for that language. */
@@ -401,7 +777,7 @@ public class MonacoEditorController implements Serializable {
      * Loads the default code sample for the current language, if available.
      */
     private void loadDefaultCode() {
-        String language = editorOptions.getLanguage();
+        String language = CODE.equals(mode) ? editorOptions.getLanguage() : editorLangDiff.toString();
         String propertyKey = "sample_code." + language;
         loadCode(propertyKey);
     }
@@ -410,22 +786,34 @@ public class MonacoEditorController implements Serializable {
      * Loads the default code sample for the current language, if available.
      */
     private void loadDefaultCodeFramed() {
-        String language = editorOptionsFramed.getLanguage();
+        String language = CODE.equals(mode) ? editorOptionsFramed.getLanguage() : editorLangFramedDiff.toString();
         String propertyKey = "sample_code." + language;
         loadCodeFramed(propertyKey);
     }
 
     /**
-     * Loads the code with the given key from the properties file into the editor.
+     * Loads the code with the given key from the properties file into the code editor.
      *
      * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
      */
     private void loadCode(String propertyKey) {
-        try {
-            value = propertyKey != null ? examples.getString(propertyKey) : "";
+        if (CODE.equals(mode)) {
+            try {
+                value = propertyKey != null ? examples.getString(propertyKey) : "";
+            }
+            catch (MissingResourceException e) {
+                value = "";
+            }
         }
-        catch (MissingResourceException e) {
-            value = "";
+        else {
+            try {
+                final String original = propertyKey != null ? examples.getString(propertyKey) : "";
+                final String modified = MonacoEditorSettings.deriveModifiedContent(original);
+                valueDiff = new MonacoDiffEditorModel(original, modified);
+            }
+            catch (MissingResourceException e) {
+                valueDiff = MonacoDiffEditorModel.empty();
+            }
         }
     }
 
@@ -449,11 +837,23 @@ public class MonacoEditorController implements Serializable {
      * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
      */
     private void loadCodeFramed(String propertyKey) {
-        try {
-            valueFramed = propertyKey != null ? examples.getString(propertyKey) : "";
+        if (CODE.equals(mode)) {
+            try {
+                valueFramed = propertyKey != null ? examples.getString(propertyKey) : "";
+            }
+            catch (MissingResourceException e) {
+                valueFramed = "";
+            }
         }
-        catch (MissingResourceException e) {
-            valueFramed = "";
+        else {
+            try {
+                final String original = propertyKey != null ? examples.getString(propertyKey) : "";
+                final String modified = MonacoEditorSettings.deriveModifiedContent(original);
+                valueFramedDiff = new MonacoDiffEditorModel(original, modified);
+            }
+            catch (MissingResourceException e) {
+                valueFramedDiff = MonacoDiffEditorModel.empty();
+            }
         }
     }
 
@@ -491,15 +891,26 @@ public class MonacoEditorController implements Serializable {
      * @param key Key of the extender example.
      */
     public void loadExtenderExample(String key) {
-        loadCode(CUSTOM_CODE_EXTENDER + key + ".sample");
-        loadCodeExtender(CUSTOM_CODE_EXTENDER + key + ".script");
-        loadExtenderName(CUSTOM_CODE_EXTENDER + key + ".name");
-        loadExtenderInfo(CUSTOM_CODE_EXTENDER + key + ".info");
-        try {
-            editorOptions.setLanguage(examples.getString(CUSTOM_CODE_EXTENDER + key + ".language"));
+        loadCode(getExtenderExampleKey(key, "sample"));
+        loadCodeExtender(getExtenderExampleKey(key, "script"));
+        loadExtenderName(getExtenderExampleKey(key, "name"));
+        loadExtenderInfo(getExtenderExampleKey(key, "info"));
+        final String language = examples.getString(getExtenderExampleKey(key, "language"));
+        if (CODE.equals(mode)) {
+            try {
+                editorOptions.setLanguage(language);
+            }
+            catch (MissingResourceException e) {
+                editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+            }
         }
-        catch (MissingResourceException e) {
-            editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+        else {
+            try {
+                editorLangDiff = ELanguage.parseString(language);
+            }
+            catch (MissingResourceException e) {
+                editorLangDiff = ELanguage.TYPESCRIPT;
+            }
         }
     }
 
@@ -507,64 +918,131 @@ public class MonacoEditorController implements Serializable {
      * Demo submit to show that the data can be transferred to the server. Shows a message with the current code.
      */
     public void submitContent() {
-        final String content = INLINE.equals(type) ? value : valueFramed;
-        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "MonacoEditor content: " + abbreviate(content, "...", 300));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        if (CODE.equals(mode)) {
+            final String content = INLINE.equals(type) ? value : valueFramed;
+            final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "MonacoEditor content: " + abbreviate(content, "...", 300));
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        else {
+            final MonacoDiffEditorModel value = INLINE.equals(type) ? valueDiff : valueFramedDiff;
+            final String left = abbreviate(value.getOriginalValue(), "...", 150);
+            final String right = abbreviate(value.getModifiedValue(), "...", 150);
+            final FacesMessage msg1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "MonacoEditor content original: " + left);
+            final FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "MonacoEditor content modified: " + right);
+            FacesContext.getCurrentInstance().addMessage(null, msg1);
+            FacesContext.getCurrentInstance().addMessage(null, msg2);
+        }
     }
 
     /**
      * Set the initial values for the {@code basicUsage} showcase.
+     * 
+     * @param mode Whether to use the code of diff editor.
      */
-    public void initBasicUsage() {
-        editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+    public void initBasicUsage(String mode) {
+        this.mode = mode;
+        if (CODE.equals(mode)) {
+            editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+            editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
+        }
+        else {
+            editorLangDiff = ELanguage.TYPESCRIPT;
+            editorLangFramedDiff = ELanguage.TYPESCRIPT;
+        }
         loadDefaultCode();
-
-        editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
         loadDefaultCodeFramed();
     }
 
     /**
      * Set the initial values for the {@code customTheme} showcase.
+     * 
+     * @param mode Whether to use the code of diff editor.
      */
-    public void initCustomTheme() {
+    public void initCustomTheme(String mode) {
+        this.mode = mode;
         customThemes = singletonMap(MY_CUSTOM_THEME, MonacoEditorSettings.createDemoCustomTheme());
-        editorOptions.setLanguage(ELanguage.HTML);
-        editorOptions.setTheme(MY_CUSTOM_THEME);
+        if (CODE.equals(mode)) {
+            editorOptions.setLanguage(ELanguage.HTML);
+            editorOptions.setTheme(MY_CUSTOM_THEME);
+            editorOptionsFramed.setLanguage(ELanguage.HTML);
+            editorOptionsFramed.setTheme(MY_CUSTOM_THEME);
+        }
+        else {
+            editorLangDiff = ELanguage.HTML;
+            editorOptionsDiff.setTheme(MY_CUSTOM_THEME);
+            editorLangFramedDiff = ELanguage.HTML;
+            editorOptionsFramedDiff.setTheme(MY_CUSTOM_THEME);
+        }
         loadCode("custom_code.htmlCustomTheme");
-
-        editorOptionsFramed.setLanguage(ELanguage.HTML);
-        editorOptionsFramed.setTheme(MY_CUSTOM_THEME);
         loadCodeFramed("custom_code.htmlCustomTheme");
     }
 
     /**
      * Set the initial values for the {@code customLocalization} showcase.
+     * 
+     * @param mode Whether to use the code of diff editor.
      */
-    public void initCustomLocalization() {
-        editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+    public void initCustomLocalization(String mode) {
+        this.mode = mode;
+        if (CODE.equals(mode)) {
+            editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+            editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
+        }
+        else {
+            editorLangDiff = ELanguage.TYPESCRIPT;
+            editorLangFramedDiff = ELanguage.TYPESCRIPT;
+        }
         loadDefaultCode();
-
-        editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
         loadDefaultCodeFramed();
     }
 
     /**
      * Set the initial values for the {@code events} showcase.
+     * 
+     * @param mode Whether to use the code of diff editor.
      */
-    public void initEvents() {
-        editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+    public void initEvents(String mode) {
+        this.mode = mode;
+        if (CODE.equals(mode)) {
+            editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+            editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
+        }
+        else {
+            editorLangDiff = ELanguage.TYPESCRIPT;
+            editorLangFramedDiff = ELanguage.TYPESCRIPT;
+        }
         loadDefaultCode();
-
-        editorOptionsFramed.setLanguage(ELanguage.TYPESCRIPT);
         loadDefaultCodeFramed();
     }
 
     /**
      * Set the initial values for the {@code extender} showcase.
+     * 
+     * @param mode Whether to use the code of diff editor.
      */
-    public void initExtender() {
-        editorOptions.setLanguage(ELanguage.JAVASCRIPT);
+    public void initExtender(String mode) {
+        this.mode = mode;
+        if (CODE.equals(mode)) {
+            editorOptions.setLanguage(ELanguage.JAVASCRIPT);
+        }
+        else {
+            editorLangExtenderDiff = ELanguage.JAVASCRIPT;
+        }
         extenderExample = "jquery";
         loadExtenderExample("jquery");
+    }
+
+    /**
+     * @param exampleName Name of the example.
+     * @param subType Type of the data to get, e.g. {@code name} or {@code description}.
+     * @return The key for the given extender example property.
+     */
+    private String getExtenderExampleKey(String exampleName, String subType) {
+        if (CODE.equals(mode)) {
+            return CUSTOM_CODE_EXTENDER_CODE + exampleName + "." + subType;
+        }
+        else {
+            return CUSTOM_CODE_EXTENDER_DIFF + exampleName + "." + subType;
+        }
     }
 }

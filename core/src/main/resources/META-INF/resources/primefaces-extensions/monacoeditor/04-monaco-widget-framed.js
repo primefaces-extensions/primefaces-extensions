@@ -2,42 +2,63 @@
 
 window.monacoModule = window.monacoModule || {};
 
-PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
+(function () {
 
   const {
+    FramedDiffEditorDefaults,
     FramedEditorDefaults,
     getFacesResourceUri,
     getMonacoResource,
+    isMonacoMessage,
     resolveLocaleUrl,
   } = window.monacoModule.helper;
   const ExtMonacoEditorBase = window.monacoModule.ExtMonacoEditorBase;
 
   let InstanceId = 0;
+
   let MessageId = 0;
 
   /**
-   * @extends {ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorFramedCfg>}
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @template {PrimeFaces.widget.ExtMonacoEditor.AsyncMonacoBaseEditorContext<TEditor, TEditorOpts>} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderBaseEditor<TEditor, TEditorOpts, TContext>} TExtender
+   * @template {PrimeFaces.widget.ExtMonacoBaseEditorFramedCfg<TEditorOpts> & PrimeFaces.widget.ExtMonacoFramedEditorCfgBase<TEditorOpts>} TCfg
+   * @extends {ExtMonacoEditorBase<TEditor, TEditorOpts, TCfg>}
    */
-  class FramedImpl extends ExtMonacoEditorBase {
+  class FramedBaseImpl extends ExtMonacoEditorBase {
     /**
-     * @param  {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoEditorFramedCfg>} cfg Arguments as passed by PrimeFaces.
+     * @param  {PrimeFaces.PartialWidgetCfg<TCfg>} cfg Arguments as passed by PrimeFaces.
      */
     constructor(cfg) {
       super(cfg);
+
+      /** @type {number | undefined} */
+      this._instanceId;
+
+      /** @type {Map<number, {resolve: (value: any) => void, reject: (error: string) => void}> | undefined} */
+      this._responseMap;
+
+      /** @type {string | undefined} */
+      this._resolvedLocaleUrl;
+
+      /** @type {((event: MessageEvent) => void) | undefined} */
+      this._messageListener;
     }
 
     /**
-     * @param {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoEditorFramedCfg>} cfg
+     * @param {TCfg} cfg
      */
     init(cfg) {
-      super._init(cfg, FramedEditorDefaults);
+      super._init(cfg, this._getConfigDefaults());
 
       this.addRefreshListener(() => this._onRefresh());
       this.addDestroyListener(() => this._onDestroy());
 
       this._instanceId = ++InstanceId;
-      /** @type {Map<number, {resolve: (value: any) => void, reject: (error: string) => void}>} */
+
       this._responseMap = new Map();
+
       this._resolvedLocaleUrl = resolveLocaleUrl(this.cfg);
 
       // Initialize iframe
@@ -49,8 +70,10 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
           getMonacoResource("iframe-controller.js")
         ],
         instanceId: this._instanceId,
+        editorType: this._getEditorType(),
         ...this.cfg.iframeUrlParams,
       });
+
       this._getIframe().src = iframeUrl;
 
       // Communicate with iframe
@@ -64,11 +87,11 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     // === PUBLIC API, see monaco-editor.d.ts
 
     /**
-     * @return {Promise<void>}
+     * @returns {Promise<void>}
      */
     async layout() {
       if (this.isReady()) {
-        return this.invokeMonaco("layout");
+        return this._invokeLayout();
       }
       else {
         return undefined;
@@ -76,30 +99,24 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     }
 
     /**
-     * @template {keyof import("monaco-editor").editor.IStandaloneCodeEditor} K
+     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
-     * @param {Parameters<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<ReturnType<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
      */
     async invokeMonaco(method, ...args) {
       if (!this.isReady()) {
         throw new Error(`Cannot invoke monaco as the editor is not ready yey. Use isReady / whenReady to check.`);
       }
-      return this._postPromise({
-        kind: "invokeMonaco",
-        data: {
-          method,
-          args,
-        },
-      });
+      return this._invokeMonaco(method, ...args);
     }
 
     /**
      * @template TRetVal
      * @template {any[]} TArgs
-     * @param {((editor: import("monaco-editor").editor.IStandaloneCodeEditor, ...args: TArgs) => TRetVal) | string} script
+     * @param {((editor: TEditor, ...args: TArgs) => TRetVal) | string} script
      * @param {TArgs} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<TRetVal>>}
+     * @returns {Promise<Awaited<TRetVal>>}
      */
     async invokeMonacoScript(script, ...args) {
       if (!this.isReady()) {
@@ -108,31 +125,32 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
       return this._postPromise({
         kind: "invokeMonacoScript",
         data: {
-          script: script.toString(),
           args,
+          messageId: this._createMessageId(),
+          script: script.toString(),
         },
       });
     }
 
     /**
-     * @return {Promise<string>}
+     * @returns {Promise<string>}
      */
     async getValue() {
       if (this.isReady()) {
-        return this.invokeMonaco("getValue");
+        return this._invokeGetValue();
       }
       else {
-        return this._editorValue;
+        return this._editorValue || "";
       }
     }
 
     /**
      * @param {string} value
-     * @return {Promise<void>}
+     * @returns {Promise<void>}
      */
     async setValue(value) {
       if (this.isReady()) {
-        return this.invokeMonaco("setValue", value);
+        return this._invokeSetValue(value);
       }
       else {
         this._editorValue = value;
@@ -140,7 +158,93 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
       }
     }
 
-    // === INTERNAL
+    // === PROTECTED
+
+    /**
+     * @abstract
+     * @protected
+     * @returns {string}
+     */
+    _getEditorType() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @returns {Partial<TCfg>}
+     */
+    _getConfigDefaults() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @returns {Promise<void>}
+     */
+    _invokeLayout() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @returns {Promise<string>}
+     */
+    _invokeGetValue() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @protected
+     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
+     * @param {K} method
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
+     */
+    _invokeMonaco(method, ...args) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @param {string} value
+     * @returns {Promise<void>}
+     */
+    _invokeSetValue(value) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @param {InitBaseMessageData} initMessageData
+     * @param {Partial<PrimeFaces.PartialWidgetCfg<TCfg>>} cloneableCfg
+     */
+    _postInit(initMessageData, cloneableCfg) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @protected
+     * @param {MonacoMessage} message
+     */
+    _handleMessage(message) {
+      console.warn("[MonacoEditor] Unhandled message:", message);
+    }
+
+    /**
+     * @protected
+     * @returns {number}
+     */
+    _createMessageId() {
+      const messageId = ++MessageId;
+      return messageId;
+    }
+
+    // === PRIVATE
 
     _bindEvents() {
       this._postMessage({
@@ -149,10 +253,31 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
       });
     }
 
+    _render() {
+      const cloneableCfg = this._createCloneableCfg();
+      this._postInit({
+        facesResourceUri: getFacesResourceUri(),
+        id: this.getWidgetId(),
+        nonce: PrimeFaces.csp.NONCE_VALUE,
+        resolvedLocaleUrl: this._resolvedLocaleUrl || "",
+        resourceUrlExtension: PrimeFaces.resources.getResourceUrlExtension(),
+        scrollTop: this._scrollTop || 0,
+        supportedEvents: this._listSupportedEvents(),
+        value: this._editorValue || "",
+        version: PrimeFacesExt.VERSION,
+      }, cloneableCfg);
+    }
+
+    /**
+     * @private
+     */
     _onRefresh() {
       this._onDestroy();
     }
 
+    /**
+     * @private
+     */
     _onDestroy() {
       this._rejectOnDone();
       this._postMessage({
@@ -166,46 +291,37 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     }
 
     /**
-     * @return {HTMLIFrameElement}
+     * @private
+     * @returns {HTMLIFrameElement}
      */
     _getIframe() {
       const iframe = this.getEditorContainer().get(0);
-      // @ts-ignore
+      if (!iframe) {
+        throw new Error("[MonacoEditor] Editor container does not exist");
+      }
+      if (!(iframe instanceof HTMLIFrameElement)) {
+        throw new Error("[MonacoEditor] Expected editor container to be an iframe, but got: " + iframe.outerHTML);
+      }
       return iframe;
-    }
-
-    _render() {
-      this._postMessage({
-        kind: "init",
-        data: {
-          facesResourceUri: getFacesResourceUri(),
-          id: this.getWidgetId(),
-          nonce: PrimeFaces.csp.NONCE_VALUE,
-          options: this._createCloneableOptions(),
-          resolvedLocaleUrl: this._resolvedLocaleUrl,
-          resourceUrlExtension: PrimeFaces.resources.getResourceUrlExtension(),
-          scrollTop: this._scrollTop,
-          supportedEvents: this._listSupportedEvents(),
-          value: this._editorValue,
-          version: PrimeFacesExt.VERSION,
-        },
-      });
     }
 
     /**
      * A subset of the widget configuration that can be sent to the iframe.
-     * @returns {Partial<PrimeFaces.widget.ExtMonacoEditorFramedCfgBase>}
+     * @private
+     * @returns {Partial<PrimeFaces.PartialWidgetCfg<TCfg>>}
      */
-    _createCloneableOptions() {
-      /** @type {Partial<PrimeFaces.widget.ExtMonacoEditorFramedCfgBase>} */
-      const options = {};
-      for (const key of Object.keys(this.cfg)) {
-        const value = this.cfg[key];
+    _createCloneableCfg() {
+      /** @type {Record<string, unknown>} */
+      const clone = {};
+      /** @type {Record<string, unknown>} */
+      const original = this.cfg;
+      for (const key of Object.keys(original)) {
+        const value = original[key];
         if (key !== "behaviors" && typeof value !== "function") {
-          options[key] = value;
+          clone[key] = value;
         }
       }
-      return options;
+      return /** @type {Partial<PrimeFaces.PartialWidgetCfg<TCfg>>} */(clone);
     }
 
     // === MESSAGING
@@ -213,75 +329,89 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     /**
      * Post a message to the monaco editor iframe via `postMessage`, and get a
      * promise that resolves with the response.
-     * @param {MonacoMessage} message
-     * @return {Promise<any>}
+     * @protected
+     * @param {MonacoMessagePayload & {data: {messageId: number}}} message
+     * @returns {Promise<any>}
      */
-    _postPromise(message) {
-      const messageId = this._postMessage(message);
+    async _postPromise(message) {
+      const error = this._postMessage(message);
+      if (error !== undefined) {
+        return Promise.reject(new Error(error));
+      }
       return new Promise((resolve, reject) => {
-        this._responseMap.set(messageId, { resolve, reject });
+        this._responseMap = this._responseMap || new Map();
+        this._responseMap.set(message.data.messageId, { resolve, reject });
       });
     }
 
     /**
      * Post a message to the monaco editor iframe via `postMessage`.
-     * @param {MonacoMessage} message
+     * @protected
+     * @param {MonacoMessagePayload} payload
+     * @returns {string | undefined} Error message when message could not be posted.
      */
-    _postMessage(message) {
+    _postMessage(payload) {
+      if (this._instanceId === undefined) {
+        // Cannot happen normally since init is called immediately upon construction
+        throw new Error("IllegalState: Framed widget has no instance ID");
+      }
       const iframe = this._getIframe();
-      if (iframe && iframe.contentWindow) {
-        const messageId = ++MessageId;
-        iframe.contentWindow.postMessage({
-          instanceId: this._instanceId,
-          messageId,
-          ...message,
-        }, window.location.href);
-        return messageId;
+      if (!iframe || !iframe.contentWindow) {
+        return "Cannot not post message, iframe not yet loaded";
       }
-      else {
-        return -1;
-      }
+      /** @type {MonacoMessage} */
+      const message = {
+        instanceId: this._instanceId,
+        payload,
+      };
+      iframe.contentWindow.postMessage(message, window.location.href);
+      return undefined;
     }
 
     /**
      * Callback when the iframe sends a message via `postMessage`
+     * @private
      * @param {MessageEvent} event
      */
     _onMessage(event) {
-      if (typeof event.data === "object" && typeof event.data.kind === "string") {
-        /** @type {MonacoMessage} */
+      if (isMonacoMessage(event.data)) {
         const message = event.data;
+        if (this._instanceId === undefined) {
+          throw new Error("IllegalState: Framed widget has no instance ID");
+        }
         if (this._instanceId >= 0 && message.instanceId >= 0 && this._instanceId !== message.instanceId) {
           // this is normal when there are multiple editors all sending messages
           return;
         }
-        switch (message.kind) {
+        switch (message.payload.kind) {
           case "load":
             this._onMessageLoad();
             break;
           case "response":
-            this._onMessageResponse(message.messageId, message.data);
+            this._onMessageResponse(message.payload.data.messageId, message.payload.data);
             break;
           case "valueChange":
-            this._onMessageValueChange(message.data);
+            this._onMessageValueChange(message.payload.data);
             break;
           case "scrollChange":
-            this._onMessageScrollChange(message.data);
+            this._onMessageScrollChange(message.payload.data);
             break;
           case "domEvent":
-            this._onMessageDomEvent(message.data);
+            this._onMessageDomEvent(message.payload.data);
             break;
           case "afterInit":
-            this._onMessageAfterInit(message.data);
+            this._onMessageAfterInit(message.payload.data);
             break;
           default:
-            console.warn("[MonacoEditor] Unhandled message", event.data);
+            this._handleMessage(message);
+            break;
         }
       }
     }
 
     /**
      * Called when the iframe document is ready.
+     * @private
      */
     _onMessageLoad() {
       this.renderDeferred();
@@ -289,12 +419,15 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
 
     /**
      * Called when the iframe sends a response to a message.
+     * @private
      * @param {number} messageId
      * @param {ResponseMessageData} data
      */
     _onMessageResponse(messageId, data) {
-      if (this._responseMap.has(messageId)) {
-        const { resolve, reject } = this._responseMap.get(messageId);
+      this._responseMap = this._responseMap || new Map();
+      const entry = this._responseMap.get(messageId);
+      if (entry !== undefined) {
+        const { resolve, reject } = entry;
         this._responseMap.delete(messageId);
         if (data.success === true) {
           resolve(data.value);
@@ -307,6 +440,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
 
     /**
      * Called when the value of the monaco editor in the iframe has changed.
+     * @private
      * @param {ValueChangeMessageData} data
      */
     _onMessageValueChange(data) {
@@ -316,6 +450,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
 
     /**
      * Called when the scroll position of the monaco editor in the iframe has changed.
+     * @private
      * @param {ScrollChangeMessageData} data
      */
     _onMessageScrollChange(data) {
@@ -325,6 +460,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     /**
      * Called when a DOM even such as `blur` or `keyup` was triggered on the
      * monaco editor in the iframe.
+     * @private
      * @param {DomEventMessageData} data
      */
     _onMessageDomEvent(data) {
@@ -335,6 +471,7 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     /**
      * Called after the monaco editor in the iframe was initialized, and also
      * in case an error occurred.
+     * @private
      * @param {AfterInitMessageData} data
      */
     _onMessageAfterInit(data) {
@@ -347,5 +484,288 @@ PrimeFaces.widget.ExtMonacoEditorFramed = (function () {
     }
   }
 
-  return FramedImpl;
+  /**
+   * @extends {FramedBaseImpl<import("monaco-editor").editor.IStandaloneCodeEditor, import("monaco-editor").editor.IStandaloneEditorConstructionOptions, PrimeFaces.widget.ExtMonacoEditor.IframeCodeEditorContext, PrimeFaces.widget.ExtMonacoEditor.ExtenderCodeEditorFramed, PrimeFaces.widget.ExtMonacoCodeEditorFramedCfg>}
+   */
+  class FramedEditorImpl extends FramedBaseImpl {
+    /**
+     * @param  {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoCodeEditorFramedCfg>} cfg Arguments as passed by PrimeFaces.
+     */
+    constructor(cfg) {
+      super(cfg);
+    }
+
+    // === PUBLIC API, see monaco-editor.d.ts
+
+    // === PROTECTED
+
+    /**
+     * @protected
+     * @returns {string}
+     */
+    _getEditorType() {
+      return "codeEditor";
+    }
+
+    /**
+     * @protected
+     * @returns {Partial<PrimeFaces.widget.ExtMonacoCodeEditorFramedCfg>}
+     */
+    _getConfigDefaults() {
+      return FramedEditorDefaults;
+    }
+
+    /**
+     * @protected
+     * @param {InitBaseMessageData} initMessageData
+     * @param {Partial<PrimeFaces.widget.ExtMonacoCodeEditorFramedCfg>} cloneableCfg
+     */
+    _postInit(initMessageData, cloneableCfg) {
+      this._postMessage({
+        kind: "init",
+        data: {
+          ...initMessageData,
+          options: cloneableCfg,
+        },
+      });
+    }
+
+    /**
+     * @protected
+     * @returns {Promise<string>}
+     */
+    async _invokeGetValue() {
+      return this.invokeMonaco("getValue");
+    }
+
+    /**
+     * @protected
+     * @returns {Promise<void>}
+     */
+    async _invokeLayout() {
+      return this.invokeMonaco("layout")
+    }
+
+    /**
+     * @protected
+     * @template {PrimeFaces.MatchingKeys<import("monaco-editor").editor.IStandaloneCodeEditor, (...args: never[]) => unknown>} K
+     * @param {K} method
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
+     */
+    async _invokeMonaco(method, ...args) {
+      return this._postPromise({
+        kind: "invokeMonaco",
+        data: {
+          args,
+          messageId: this._createMessageId(),
+          method,
+        },
+      });
+    }
+
+    /**
+     * @protected
+     * @param {string} value
+     * @returns {Promise<void>}
+     */
+    async _invokeSetValue(value) {
+      return this.invokeMonaco("setValue", value);
+    }
+  }
+
+  /**
+   * @extends {FramedBaseImpl<import("monaco-editor").editor.IStandaloneDiffEditor, import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions, PrimeFaces.widget.ExtMonacoEditor.IframeDiffEditorContext, PrimeFaces.widget.ExtMonacoEditor.ExtenderDiffEditorFramed, PrimeFaces.widget.ExtMonacoDiffEditorFramedCfg>}
+   */
+  class FramedDiffEditorImpl extends FramedBaseImpl {
+    /**
+     * @param  {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoDiffEditorFramedCfg>} cfg Arguments as passed by PrimeFaces.
+     */
+    constructor(cfg) {
+      super(cfg);
+
+      /** @type {string | undefined} */
+      this._originalEditorValue;
+
+      /** @type {JQuery | undefined} */
+      this._originalInput;
+
+      /** @type {number | undefined} */
+      this._originalScrollTop;
+    }
+
+    /**
+     * @param {PrimeFaces.widget.ExtMonacoDiffEditorFramedCfg} cfg 
+     */
+    init(cfg) {
+      super.init(cfg);
+
+      // Textarea with the value for the original editor
+      this._originalInput = this.jq.find(".ui-helper-hidden-accessible textarea").eq(1);
+
+      // Default to the given value for the original editor
+      this._originalEditorValue = String(this._originalInput.val() || "");
+    }
+
+    // === PUBLIC API, see monaco-editor.d.ts
+
+    /**
+     * @returns {JQuery}
+     */
+    getOriginalInput() {
+      return this._originalInput || $();
+    }
+
+    /**
+     * @returns {Promise<string>}
+     */
+    async getOriginalValue() {
+      if (this.isReady()) {
+        return this.invokeMonacoScript(editor => editor.getOriginalEditor().getValue());
+      }
+      else {
+        return this._originalEditorValue || "";
+      }
+    }
+
+    /**
+     * @param {string} value 
+     * @returns {Promise<void>}
+     */
+    async setOriginalValue(value) {
+      if (this.isReady()) {
+        return this.invokeMonacoScript((editor, val) => editor.getOriginalEditor().setValue(val), value);
+      }
+      else {
+        this._originalEditorValue = value;
+        return undefined;
+      }
+    }
+
+    // === PROTECTED
+
+    /**
+     * @protected
+     * @returns {string}
+     */
+    _getEditorType() {
+      return "diffEditor";
+    }
+
+    /**
+     * @protected
+     * @returns {Partial<PrimeFaces.widget.ExtMonacoDiffEditorFramedCfg>}
+     */
+    _getConfigDefaults() {
+      return FramedDiffEditorDefaults;
+    }
+
+    /**
+     * @protected
+     * @param {InitBaseMessageData} initMessageData
+     * @param {Partial<PrimeFaces.widget.ExtMonacoDiffEditorFramedCfg>} cloneableCfg
+     */
+    _postInit(initMessageData, cloneableCfg) {
+      this._postMessage({
+        kind: "initDiff",
+        data: {
+          ...initMessageData,
+          options: cloneableCfg,
+          originalScrollTop: this._originalScrollTop || 0,
+          originalValue: this._originalEditorValue || "",
+        },
+      });
+    }
+
+    /**
+     * @protected
+     * @returns {Promise<string>}
+     */
+    async _invokeGetValue() {
+      return this.invokeMonacoScript(editor => editor.getModifiedEditor().getValue());
+    }
+
+    /**
+     * @protected
+     * @returns {Promise<void>}
+     */
+    async _invokeLayout() {
+      return this.invokeMonaco("layout")
+    }
+
+    /**
+     * @protected
+     * @template {PrimeFaces.MatchingKeys<import("monaco-editor").editor.IStandaloneDiffEditor, (...args: never[]) => unknown>} K
+     * @param {K} method
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<import("monaco-editor").editor.IStandaloneDiffEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<import("monaco-editor").editor.IStandaloneDiffEditor[K]>>>}
+     */
+    async _invokeMonaco(method, ...args) {
+      return this._postPromise({
+        kind: "invokeMonacoDiff",
+        data: {
+          args,
+          messageId: this._createMessageId(),
+          method,
+        },
+      });
+    }
+
+    /**
+     * @protected
+     * @param {string} value
+     * @returns {Promise<void>}
+     */
+    async _invokeSetValue(value) {
+      return this.invokeMonacoScript((editor, val) => editor.getModifiedEditor().setValue(val), value);
+    }
+
+    // === MESSAGING
+
+    /**
+     * @protected
+     * @param {MonacoMessage} message
+     */
+    _handleMessage(message) {
+      switch (message.payload.kind) {
+        case "originalScrollChange":
+          this._onMessageOriginalScrollChange(message.payload.data);
+          break;
+        case "originalValueChange":
+          this._onMessageOriginalValueChange(message.payload.data);
+          break;
+        default:
+          console.warn("[MonacoEditor] Unhandled message:", message);
+          break;
+      }
+    }
+
+    /**
+     * Called when the scroll position of the original Monaco editor in the iframe has changed.
+     * @private
+     * @param {ScrollChangeMessageData} data
+     */
+    _onMessageOriginalScrollChange(data) {
+      this._originalScrollTop = data.scrollTop;
+    }
+
+    /**
+     * Called when the value of the original Monaco editor in the iframe has changed.
+     * @private
+     * @param {ValueChangeMessageData} data
+     */
+    _onMessageOriginalValueChange(data) {
+      this.getOriginalInput().val(data.value || "");
+      this._fireEvent("originalChange", data.changes);
+    }
+  }
+
+  PrimeFaces.widget.ExtMonacoBaseEditorFramed = FramedBaseImpl;
+  PrimeFaces.widget.ExtMonacoCodeEditorFramed = FramedEditorImpl;
+  PrimeFaces.widget.ExtMonacoDiffEditorFramed = FramedDiffEditorImpl;
+
+  // TODO remove in one of the next major releases
+  // @ts-expect-error legacy, will be removed soon
+  PrimeFaces.widget.ExtMonacoEditorFramed
+    = FramedEditorImpl;
 })();

@@ -1,12 +1,14 @@
-const nls = require.resolve("./nls-replace.js");
 
-const LimitChunkCountPlugin = require("webpack/lib/optimize/LimitChunkCountPlugin");
-const NormalModuleWebpackReplacementPlugin = require("webpack/lib/NormalModuleReplacementPlugin");
-const TerserPlugin = require("terser-webpack-plugin");
+import { createRequire } from "node:module";
+import TerserPlugin from "terser-webpack-plugin";
 
-const { webpackOutputDir } = require("./paths");
+import LimitChunkCountPlugin from "webpack/lib/optimize/LimitChunkCountPlugin.js";
+import NormalModuleWebpackReplacementPlugin from "webpack/lib/NormalModuleReplacementPlugin.js";
 
-module.exports = (env, argv) => {
+import { webpackOutputDir } from "./src/util/paths.js";
+
+export default function(env, argv) {
+  const nls = createRequire(import.meta.url).resolve("./nls-replace.js");
   env = env || {};
   env.production = env.production === false || env.production === "false" ? false : true;
   if (env.production) {

@@ -22,26 +22,19 @@
 package org.primefaces.extensions.component.monacoeditor;
 
 /**
- * Base properties for both the framed and the inline Monaco editor widget.
+ * Additional properties for the framed editor widget not covered by the base options.
  *
  * @since 10.0.0
  */
 @SuppressWarnings("java:S115")
-enum BasePropertyKeys {
-    autoResize, //
-    basename, //
-    customThemes, //
-    directory, //
-    editorOptions, //
-    extension, //
-    height, //
-    language, //
-    oninitialized, //
-    onpaste, //
-    scheme, //
-    locale, //
-    localeUrl, //
-    widgetVar, //
-    width, //
+enum CodeEditorFramedPropertyKeys {
+    /**
+     * Extender script to add custom functionality via JavaScript. Must be a URL to an extender script that is loaded into the iframe.
+     */
+    extender,
+    /**
+     * Additional URL params that are added to the iframe URL.
+     */
+    iframeUrlParams,
     ;
 }

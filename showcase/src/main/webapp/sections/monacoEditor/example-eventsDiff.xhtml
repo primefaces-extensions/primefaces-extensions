@@ -1,0 +1,108 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<script>
+// Quick fix: make growl appear and hide immediately with delay
+// It only shows up a short amount of time due to frequent events
+(function(){
+    if (!$.fn._monacoEditorUseCaseEventsPatch) {
+        var origFadeIn = $.fn.fadeIn;
+        var origFadeTo = $.fn.fadeTo;
+        $.fn._monacoEditorUseCaseEventsPatch = true;
+        $.fn.fadeIn = function(){ arguments.length === 0 ? this.show() : origFadeIn.apply(this, arguments)};
+        $.fn.fadeTo = function(a,b,c,d){ origFadeTo.call(this, 0, b, c, d)};
+    }
+})();
+</script>
+
+<!-- EXAMPLE-SOURCE-START -->
+<p:growl id="growl" showDetail="true" showSummary="true" life="1000" widgetVar="growl" />
+
+<p:selectOneButton id="type" value="#{monacoEditorController.type}">
+    <f:selectItem itemLabel="Inline" itemValue="inline" />
+    <f:selectItem itemLabel="Iframe" itemValue="framed" />
+    <p:ajax process="monacoEditorWrapper" update="monacoEditorWrapper" />
+</p:selectOneButton>
+
+<h:panelGroup id="monacoEditorWrapper" layout="block" styleClass="monacoEditorBox">
+    <pe:monacoDiffEditor id="monacoEditor" widgetVar="monacoEditor"
+        rendered="#{monacoEditorController.type eq 'inline'}"
+        value="#{monacoEditorController.valueDiff}"
+        originalDisabled="false"
+        editorOptions="#{monacoEditorController.editorOptionsDiff}"
+        language="#{monacoEditorController.language}"
+        width="100%" height="400px"
+        autoResize="true"
+        onblur="console.log('blur')" onchange="console.log('change')"
+        onfocus="console.log('focus')" oninitialized="console.log('initialized')" 
+        onkeydown="console.log('keydown')" onkeyup="console.log('keyup')"
+       	onmousedown="console.log('mousedown')" onmousemove="console.log('mousemove')"
+       	onmouseup="console.log('mouseup')" onpaste="console.log('paste')"
+    >
+        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
+        <p:ajax event="blur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="change" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="focus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="keydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="keyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mousemove" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mouseup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="paste" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
+        <p:ajax event="originalBlur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalChange" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalFocus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalKeydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalKeyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMousemove" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMouseup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalPaste" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+    </pe:monacoDiffEditor>
+
+    <pe:monacoDiffEditorFramed id="monacoEditorFramed" widgetVar="monacoEditorFramed"
+        rendered="#{monacoEditorController.type eq 'framed'}"
+        value="#{monacoEditorController.valueFramedDiff}"
+        originalDisabled="false"
+        editorOptions="#{monacoEditorController.editorOptionsFramedDiff}"
+        language="#{monacoEditorController.languageFramed}"
+        width="100%" height="400px"
+        autoResize="true"
+        onblur="console.log('blur')" onchange="console.log('change')"
+        onfocus="console.log('focus')" oninitialized="console.log('initialized')" 
+        onkeydown="console.log('keydown')" onkeyup="console.log('keyup')"
+        onmousedown="console.log('mousedown')" onmousemove="console.log('mousemove')"
+        onmouseup="console.log('mouseup')" onpaste="console.log('paste')"
+    >
+        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
+        <p:ajax event="blur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="change" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="focus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="keydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="keyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mousemove" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="mouseup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="paste" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
+        <p:ajax event="originalBlur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalChange" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalFocus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalKeydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalKeyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMousemove" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalMouseup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+        <p:ajax event="originalPaste" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+    </pe:monacoDiffEditorFramed>
+</h:panelGroup>
+<!-- EXAMPLE-SOURCE-END< -->
+</ui:composition>

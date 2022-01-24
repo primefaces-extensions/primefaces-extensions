@@ -6,7 +6,7 @@
 <ui:composition template="/templates/showcaseLayout.xhtml">
 
     <f:metadata>
-        <f:viewAction action="#{monacoEditorController.initExtender}"/>
+        <f:viewAction action="#{monacoEditorController.initExtender('code')}"/>
     </f:metadata>
 
     <ui:define name="centerContent">
@@ -39,8 +39,8 @@
             <br/><br/>
             Finally, you can also check out the
             <a href="https://microsoft.github.io/monaco-editor/playground.html" target="_blank"
-               rel="noopener noreferrer">Monaco editor playground</a> which contain
-            many more exapmles of how you can use the client-side API to customize the editor.
+               rel="noopener noreferrer">Monaco editor playground</a> which contains
+            many more examples of how you can use the client-side API to customize the editor.
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">

@@ -1,0 +1,4 @@
+.ui-monaco-editor.ui-state-disabled {
+    /* user needs to scroll even when disabled */
+    pointer-events: all;
+}
