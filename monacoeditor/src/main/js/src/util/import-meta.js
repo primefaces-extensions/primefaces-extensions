@@ -1,12 +1,13 @@
 // @ts-check
 
 import { dirname } from "node:path"
+import { fileURLToPath } from 'node:url';
 
 /**
  * @param {ImportMeta} meta 
  * @return {string}
  */
 export function getDirname(meta) {
-    const url = new URL(meta.url);
-    return dirname(url.pathname);
+    const filePath = fileURLToPath(meta.url);
+    return dirname(filePath);
 }
