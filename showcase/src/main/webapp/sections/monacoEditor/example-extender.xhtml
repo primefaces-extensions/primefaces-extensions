@@ -50,8 +50,8 @@
           window.onerror = prevOnError;
           document.head.removeChild(script);
       }
-      if (typeof window.MonacoEnvironment.Extender !== "object" &amp;&amp; !window.MonacoEnvironment.ExtenderError) {
-        window.MonacoEnvironment.ExtenderError = new Error("No Monaco extender was set, make sure to create an extender and assign it to window.MonacoEnvironment.Extender");
+      if ((typeof window.MonacoEnvironment.Extender !== "object" || typeof window.MonacoEnvironment.Extender.codeEditor !== "object") &amp;&amp; !window.MonacoEnvironment.ExtenderError) {
+        window.MonacoEnvironment.ExtenderError = new Error("No Monaco extender was set, make sure to create an extender and assign it to window.MonacoEnvironment.Extender = {codeEditor: THE_EXTENDER}");
       }
       if (window.MonacoEnvironment.ExtenderError) {
         console.error("Could not load Monaco editor extender:", window.MonacoEnvironment.ExtenderError);
@@ -59,6 +59,38 @@
         handleMonacoExtenderError([
           {name: "monacoExtenderError", value: error}
         ]);
+      }
+      // Wrap all extender functions in a try-catch block so we can show
+      // errors to the user in the showcase UI.
+      var ed = window.MonacoEnvironment.Extender.codeEditor;
+      for (key in ed) {
+        if (Object.prototype.hasOwnProperty.call(ed, key)) {
+          var value = ed[key];
+          if (typeof value === "function") {
+            ed[key] = (function(fn) {
+              return function() {
+                try {
+                  var res = fn.apply(this, arguments);
+                  if (typeof res === "object" &amp;&amp; "then" in res &amp;&amp; "catch" in res) {
+                    res.catch(function(error) {
+                      handleMonacoExtenderError([
+                        {name: "monacoExtenderError", value: typeof error === "object" &amp;&amp; error !== null ? error.stack || error.message || String(error) : String(error)}
+                      ]);
+                      throw error;
+                    });
+                  }
+                  return res;
+                }
+                catch (error) {
+                  handleMonacoExtenderError([
+                    {name: "monacoExtenderError", value: typeof error === "object" &amp;&amp; error !== null ? error.stack || error.message || String(error) : String(error)}
+                  ]);
+                  throw error;
+                }
+              };
+            })(value);
+          }
+        }
       }
     })();
   </script>
@@ -95,7 +127,7 @@
       <pe:monacoEditorFramed id="monacoExtender" widgetVar="monacoExtender"
           value="#{monacoEditorController.valueExtender}" scheme="file"
           extender="#{resource['js/monacoExtender.js']}"
-          iframeUrlParams="{extender: 'monaco', language: 'javascript', tsCheck: true}"
+          iframeUrlParams="{extender: 'monaco', language: 'javascript', tsCheck: true, moreDeclarationUrls: ['#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-global.d.ts'])}', '#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-module.d.ts'])}'], moreDeclarationNames: ['file:///src/primefaces-monaco-global.d.ts', 'file:///src/primefaces-monaco-module.d.ts']}"
           editorOptions="#{monacoEditorController.editorOptionsExtender}"
           width="100%" height="500px" autoResize="true"/>
   </h:panelGroup>
@@ -105,7 +137,7 @@
       <pe:monacoEditor id="monacoEditor" widgetVar="monacoEditor"
           rendered="#{empty monacoEditorController.extenderError}"
           value="#{monacoEditorController.value}"
-          extender="window.MonacoEnvironment.Extender||{}"
+          extender="(window.MonacoEnvironment.Extender||{}).codeEditor||{}"
           editorOptions="#{monacoEditorController.editorOptions}"
           width="100%" height="500px" autoResize="true" />
       <h:panelGroup layout="block" 

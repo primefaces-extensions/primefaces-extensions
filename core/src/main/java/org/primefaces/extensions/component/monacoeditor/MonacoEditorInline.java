@@ -39,15 +39,16 @@ import javax.faces.event.BehaviorEvent;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/widget-inline.js")
+@ResourceDependency(library = "primefaces-extensions", name = "monacoeditor/monacoeditor.css")
 public class MonacoEditorInline extends MonacoEditorBase {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.MonacoEditorInline";
 
     public static final String RENDERER_TYPE = "org.primefaces.extensions.component.MonacoEditorInlineRenderer";
 
-    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-inline";
+    public static final String STYLE_CLASS = "ui-monaco-editor ui-monaco-editor-code ui-monaco-editor-inline ";
 
-    public static final String WIDGET_NAME = "ExtMonacoEditorInline";
+    public static final String WIDGET_NAME = "ExtMonacoCodeEditorInline";
 
     /**
      * Default no-arg constructor for this widget invoked by the framework.
@@ -69,18 +70,18 @@ public class MonacoEditorInline extends MonacoEditorBase {
     }
 
     public final String getExtender() {
-        return (String) getStateHelper().eval(InlinePropertyKeys.extender, null);
+        return (String) getStateHelper().eval(CodeEditorInlinePropertyKeys.extender, null);
     }
 
     public final void setExtender(final String extender) {
-        getStateHelper().put(InlinePropertyKeys.extender, extender);
+        getStateHelper().put(CodeEditorInlinePropertyKeys.extender, extender);
     }
 
     public final String getOverflowWidgetsDomNode() {
-        return (String) getStateHelper().eval(InlinePropertyKeys.overflowWidgetsDomNode, null);
+        return (String) getStateHelper().eval(CodeEditorInlinePropertyKeys.overflowWidgetsDomNode, null);
     }
 
     public final void setOverflowWidgetsDomNode(final String overflowWidgetsDomNode) {
-        getStateHelper().put(InlinePropertyKeys.overflowWidgetsDomNode, overflowWidgetsDomNode);
+        getStateHelper().put(CodeEditorInlinePropertyKeys.overflowWidgetsDomNode, overflowWidgetsDomNode);
     }
 }

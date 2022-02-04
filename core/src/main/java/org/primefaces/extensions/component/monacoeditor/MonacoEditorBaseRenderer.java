@@ -31,10 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
-import org.primefaces.context.PrimeRequestContext;
-import org.primefaces.renderkit.InputRenderer;
-import org.primefaces.shaded.json.JSONWriter;
-import org.primefaces.shaded.owasp.encoder.Encode;
+import org.primefaces.extensions.model.monacoeditor.EditorOptions;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -43,11 +40,8 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 10.0.0
  */
-abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends InputRenderer {
-
+abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase> extends MonacoEditorCommonRenderer<TEditor, EditorOptions> {
     private static final String INPUT_SUFFIX = "_input";
-
-    private static final String CALLBACK_SIGNATURE = "function()";
 
     private static final List<String> PASSTHROUGH_ATTRS = Arrays.asList(//
                 "alt", "accesskey", "autocomplete", //
@@ -56,36 +50,19 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
                 "size", "title" //
     );
 
-    private final Class<T> componentClass;
-
-    protected MonacoEditorBaseRenderer(Class<T> clazz) {
-        this.componentClass = clazz;
+    protected MonacoEditorBaseRenderer(Class<TEditor> clazz) {
+        super(clazz);
     }
 
-    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, T monacoEditor) throws IOException;
-
-    protected void array(WidgetBuilder wb, String key, Iterable<String> values) throws IOException {
-        final StringBuilder builder = new StringBuilder();
-        builder.append('[');
-        for (final String item : values) {
-            builder.append('"');
-            builder.append(Encode.forJavaScript(item));
-            builder.append('"');
-            builder.append(',');
-        }
-        if (builder.length() > 1) {
-            builder.setLength(builder.length() - 1);
-        }
-        builder.append(']');
-        wb.nativeAttr(key, builder.toString());
-    }
+    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException;
 
     @Override
-    public void decode(final FacesContext context, final UIComponent component) {
-        final T monacoEditor = componentClass.cast(component);
+    public final void decode(final FacesContext context, final UIComponent component) {
+        final TEditor monacoEditor = componentClass.cast(component);
 
-        // Do not allow modifications if component is not editable.
-        if (monacoEditor.isDisabled() || monacoEditor.isReadonly()) {
+        // Do not allow modifications if component is not allowed to submit values.
+        // Read-only is fine, we should still accept the submitted value when read-only
+        if (monacoEditor.isDisabled()) {
             return;
         }
 
@@ -101,20 +78,14 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
     }
 
     @Override
-    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final T monacoEditor = componentClass.cast(component);
-        encodeMarkup(context, monacoEditor);
-        encodeScript(context, monacoEditor);
-    }
-
-    protected void encodeHiddenInput(final FacesContext context, final T monacoEditor) throws IOException {
+    protected final void encodeHiddenInput(final FacesContext context, final TEditor monacoEditor) throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = monacoEditor.getClientId();
 
         writer.startElement("div", null);
         writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
 
-        writer.startElement("textarea", monacoEditor);
+        writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId + INPUT_SUFFIX, null);
         writer.writeAttribute("name", clientId + INPUT_SUFFIX, null);
         writer.writeAttribute("autocomplete", "off", null);
@@ -124,7 +95,6 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         if (monacoEditor.isDisabled()) {
             writer.writeAttribute("disabled", "disabled", null);
         }
-
         renderPassThruAttributes(context, monacoEditor, PASSTHROUGH_ATTRS);
 
         final String valueToRender = ComponentUtils.getValueToRender(context, monacoEditor);
@@ -136,87 +106,9 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         writer.endElement("div");
     }
 
-    protected void encodeMarkup(final FacesContext context, final T monacoEditor) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = monacoEditor.getClientId();
-
-        String style = monacoEditor.getStyle() != null ? monacoEditor.getStyle() : "";
-        style = style.concat(";");
-        if (monacoEditor.getWidth() != null && !monacoEditor.getWidth().isEmpty()) {
-            style = style.concat("width:" + monacoEditor.getWidth() + ";");
-        }
-        if (monacoEditor.getHeight() != null && !monacoEditor.getHeight().isEmpty()) {
-            style = style.concat("height:" + monacoEditor.getHeight() + ";");
-        }
-        final StringBuilder styleClass = new StringBuilder();
-        styleClass.append(getMainStyleClass() + " ui-hidden-container ");
-        if (monacoEditor.isDisabled() || monacoEditor.isReadonly()) {
-            styleClass.append("ui-state-disabled ");
-        }
-        if (monacoEditor.getStyleClass() != null) {
-            styleClass.append(monacoEditor.getStyleClass());
-        }
-
-        writer.startElement("div", null);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("data-widget-var", monacoEditor.resolveWidgetVar(), null);
-        writer.writeAttribute("class", styleClass.toString(), null);
-        writer.writeAttribute("style", style, null);
-
-        encodeHiddenInput(context, monacoEditor);
-        encodeMonacoEditor(context, monacoEditor);
-
-        writer.endElement("div");
-    }
-
-    protected abstract void encodeMonacoEditor(final FacesContext context, final T monacoEditor) throws IOException;
-
-    protected void encodeScript(final FacesContext context, final T monacoEditor) throws IOException {
-        final WidgetBuilder wb = PrimeRequestContext.getCurrentInstance(context).getWidgetBuilder();
-
-        wb.init(getWidgetName(), monacoEditor);
-
-        array(wb, "availableEvents", monacoEditor.getEventNames());
-
-        if (monacoEditor.getCustomThemes() != null && !monacoEditor.getCustomThemes().isEmpty()) {
-            wb.nativeAttr("customThemes", JSONWriter.valueToString(monacoEditor.getCustomThemes()));
-        }
-
-        wb.attr("autoResize", monacoEditor.isAutoResize(), MonacoEditorBase.DEFAULT_AUTO_RESIZE);
-        wb.attr("basename", monacoEditor.getBasename(), MonacoEditorBase.DEFAULT_BASENAME);
-        wb.attr("directory", monacoEditor.getDirectory(), MonacoEditorBase.DEFAULT_DIRECTORY);
-        wb.attr("disabled", monacoEditor.isDisabled(), MonacoEditorBase.DEFAULT_DISABLED);
-        wb.attr("editorOptions", monacoEditor.getEditorOptions().toString());
-        wb.attr("extension", monacoEditor.getExtension(), MonacoEditorBase.DEFAULT_EXTENSION);
-        wb.attr("language", monacoEditor.getEditorOptions().getLanguage(), MonacoEditorBase.DEFAULT_LANGUAGE);
-        wb.attr("locale", monacoEditor.calculateLocale().toString());
-        wb.attr("localeUrl", monacoEditor.getLocaleUrl());
-        wb.attr("readonly", monacoEditor.isReadonly(), MonacoEditorBase.DEFAULT_READONLY);
-        wb.attr("scheme", monacoEditor.getScheme(), MonacoEditorBase.DEFAULT_SCHEME);
-        wb.attr("tabIndex", monacoEditor.getTabindex(), MonacoEditorBase.DEFAULT_TABINDEX);
-        wb.attr("height", monacoEditor.getHeight(), MonacoEditorBase.DEFAULT_HEIGHT);
-        wb.attr("width", monacoEditor.getWidth(), MonacoEditorBase.DEFAULT_WIDTH);
-
-        wb.callback("onblur", CALLBACK_SIGNATURE, monacoEditor.getOnblur());
-        wb.callback("onchange", CALLBACK_SIGNATURE, monacoEditor.getOnchange());
-        wb.callback("onfocus", CALLBACK_SIGNATURE, monacoEditor.getOnfocus());
-        wb.callback("oninitialized", CALLBACK_SIGNATURE, monacoEditor.getOninitialized());
-        wb.callback("onkeyup", CALLBACK_SIGNATURE, monacoEditor.getOnkeyup());
-        wb.callback("onmousedown", CALLBACK_SIGNATURE, monacoEditor.getOnmousedown());
-        wb.callback("onmousemove", CALLBACK_SIGNATURE, monacoEditor.getOnmousemove());
-        wb.callback("onmouseup", CALLBACK_SIGNATURE, monacoEditor.getOnmouseup());
-        wb.callback("onkeydown", CALLBACK_SIGNATURE, monacoEditor.getOnkeydown());
-        wb.callback("onpaste", CALLBACK_SIGNATURE, monacoEditor.getOnpaste());
-
-        addWidgetProperties(context, wb, monacoEditor);
-
-        encodeClientBehaviors(context, monacoEditor);
-        wb.finish();
-    }
-
     @Override
-    public Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
-        final T monacoEditor = componentClass.cast(component);
+    public final Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+        final TEditor monacoEditor = componentClass.cast(component);
         final String value = (String) submittedValue;
         final Converter<?> converter = ComponentUtils.getConverter(context, monacoEditor);
 
@@ -227,7 +119,18 @@ abstract class MonacoEditorBaseRenderer<T extends MonacoEditorBase> extends Inpu
         return value;
     }
 
-    protected abstract String getMainStyleClass();
+    @Override
+    protected final void addBaseWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException {
+        addWidgetProperties(context, wb, monacoEditor);
+    }
 
-    protected abstract String getWidgetName();
+    @Override
+    protected boolean isEntireEditorDisabled(TEditor monacoEditor) {
+        return monacoEditor.isDisabled();
+    }
+
+    @Override
+    protected String getLanguage(TEditor monacoEditor) {
+        return monacoEditor.getEditorOptions().getLanguage();
+    }
 }

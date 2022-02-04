@@ -238,15 +238,15 @@
         <description>
             <![CDATA[A JSF component that wraps the JavaScript libary <a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a>.
             This component renders the editor directly into the host page without an iframe. Available client behavior events: <ul>
-            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onDidBlurEditorWidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
             <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
             <li>paste - fired when the text was pasted into the editor (javax.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
@@ -314,7 +314,9 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the editor is readonly.]]>
+                <![CDATA[Defines if the editor is readonly. This option makes the UI not editable, but still accepts
+                values that are submitted (e.g. when the editor value was changed via JavaScript). Use
+                <code>disabled</code> if submitted values should not be accepted.]]>
             </description>
             <name>readonly</name>
             <required>false</required>
@@ -322,7 +324,8 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the editor is disabled.]]>
+                <![CDATA[Defines if the editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation).]]>
             </description>
             <name>disabled</name>
             <required>false</required>
@@ -525,7 +528,7 @@
                 object is used instead. If it returns a thenable/Promise, the monaco editor is created only once the
                 Promise resolves (successfully). If the Promise resolves with an options object, that options  object is
                 used to create the editor. See
-                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html">IEditorConstructionOptions</a>
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html">IStandaloneEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(editorWidget). Called after the editor was created.</li>
                 <li>beforeDestroy(editorWidget). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
@@ -615,9 +618,9 @@
             <description>
                 <![CDATA[A PrimeFaces search expression of a component. Places overflow widgets inside an external
                 DOM node. Defaults to an internal DOM node when not given. May be useful when the editor is used
-                inside an element obscured by other component. You can, for example, append the overflow widget
+                inside an element obscured by other components. You can, for example, append the overflow widget
                 to the body. Note 1: you probably also need to set <code>fixedOverflowWidgets</code> on the editor
-                options for this to work. Note 2: For now, you either need need to add the CSS class
+                options for this to work. Note 2: For now, you either need to add the CSS class
                 <code>monaco-editor</code> to the container to style the overflow widgets properly, or add the
                 appropriate CSS yourself. Note 3: As of monaco-editor 0.27.0, this option has several issues
                 with event handling, use at your own risk. This will most likely be fixed in a later version
@@ -636,15 +639,15 @@
             in the iframe -- the method parameters are sent via <code>postMessage</code>. Note, however, that this does not work for methods
             that takes a non-data object as a parameter or return such an object (i.e. an object that cannot be structurally cloned). Available
             client behavior events: <ul>
-            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
-            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
-            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>blur - fired when the editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
             <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
-            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
-            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
-            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
-            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
-            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandalonecodeeditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
             <li>paste - fired when the text was pasted into the editor (javax.faces.event.AjaxBehaviorEvent),</li>,
             </ul>]]>
         </description>
@@ -712,7 +715,9 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the editor is readonly.]]>
+                <![CDATA[Defines if the editor is readonly. This option makes the UI not editable, but still accepts
+                values that are submitted (e.g. when the editor value was changed via JavaScript). Use
+                <code>disabled</code> if submitted values should not be accepted.]]>
             </description>
             <name>readonly</name>
             <required>false</required>
@@ -720,7 +725,8 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Defines if the editor is disabled.]]>
+                <![CDATA[Defines if the editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation).]]>
             </description>
             <name>disabled</name>
             <required>false</required>
@@ -926,7 +932,7 @@
                 object is used instead. If it returns a thenable/Promise, the monaco editor is created only once the
                 Promise resolves (successfully). If the Promise resolves with an options object, that options  object is
                 used to create the editor. See
-                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html">IEditorConstructionOptions</a>
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html">IStandaloneEditorConstructionOptions</a>
                 for all editor options.</li>
                 <li>afterCreate(monacoContext). Called after the editor was created.</li>
                 <li>beforeDestroy(monacoContext). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
@@ -1016,6 +1022,1159 @@
             <name>editorOptions</name>
             <required>false</required>
             <type>org.primefaces.extensions.model.monacoeditor.EditorOptions</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If <code>true</code>, resizes the editor automatically when the iframe element changes its size.
+                Please note that this makes uses of the <a href="https://wicg.github.io/ResizeObserver/">new ResizeObserver API</a>
+                and <a href="https://caniuse.com/#feat=resizeobserver">works only in newer browers.</a> This widget checks whether
+                ResizeObserver API is available, and when it is not, no resizing is performed. To support resizing for older browsers,
+                search for a ResizeObserver polyfill. If you know when the size of the editor conainer could have changed, you can resize
+                the editor manually via <code>PF("editorWidgetVar").layout()</code>]]>
+            </description>
+            <name>autoResize</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[A JSF component that wraps the JavaScript libary <a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a>.
+            This component renders the diff editor directly into the host page without an iframe. Available client behavior events: <ul>
+            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>originalBlur - fired when the original editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>originalChange - fired if the content of the original editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>originalFocus - fired when the original editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>originalKeydown - fired when a key was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>originalKeyup - fired when a key was released on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>originalMousemove - fired when the mouse was moved over the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>originalMouseup - fired when a mouse button was released down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>originalPaste - fired when the text was pasted into the original editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the modified editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content of the modified editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the modified editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the modified editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            </ul>]]>
+        </description>
+        <tag-name>monacoDiffEditor</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MonacoDiffEditorInline</component-type>
+            <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorInlineRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS style(s) to be applied when this component is rendered.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Space-separated list of CSS style class(es) to be applied when this element is rendered.
+                This value is passed through as the "class" attribute to the generated markup.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Value of the component. Must be a org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the modified editor is readonly. This option makes the UI not editable, but still
+                accepts values that are submitted (e.g. when the editor value was changed via JavaScript). Use
+                <code>disabled</code> if submitted values should not be accepted.]]>
+            </description>
+            <name>readonly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the original editor is readonly. This option makes the UI not editable, but
+                still accepts values that are submitted (e.g. when the editor value was changed via JavaScript).
+                Use <code>originalDisabled</code> if submitted values should not be accepted. Defaults to
+                <code>false</code>.]]>
+            </description>
+            <name>originalReadonly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the modified editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation).]]>
+            </description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the original editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation). Defaults to <code>true</code>.]]>
+            </description>
+            <name>originalDisabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL
+                expression, it's resolved to a converter instance. In case it's a static text, it must refer to a
+                converter id.]]>
+            </description>
+            <name>converter</name>
+            <required>false</required>
+            <type>javax.faces.convert.Converter</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Marks component as required.]]>
+            </description>
+            <name>required</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether the original editor must have a value.]]>
+            </description>
+            <name>originalRequired</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when required field validation fails.]]>
+            </description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when conversion fails.]]>
+            </description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when validation fails.]]>
+            </description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A method expression referring to a method validating the input.]]>
+            </description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor was rendered.]]>
+            </description>
+            <name>oninitialized</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor area receives focus.]]>
+            </description>
+            <name>onfocus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor area loses focus.]]>
+            </description>
+            <name>onblur</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor content changes.]]>
+            </description>
+            <name>onchange</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when text was pasted into the editor.]]>
+            </description>
+            <name>onpaste</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousedown event was triggered on the editor area.]]>
+            </description>
+            <name>onmousedown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousemove event was triggered on the editor area.]]>
+            </description>
+            <name>onmousemove</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mouseup event was triggered on the editor area.]]>
+            </description>
+            <name>onmouseup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keyup event was triggered on the editor area.]]>
+            </description>
+            <name>onkeyup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keydown event was triggered on the editor area.]]>
+            </description>
+            <name>onkeydown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keypress (onDidType) event was triggered on the editor area.]]>
+            </description>
+            <name>onkeypress</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor area receives focus.]]>
+            </description>
+            <name>onoriginalfocus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor area loses focus.]]>
+            </description>
+            <name>onoriginalblur</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor content changes.]]>
+            </description>
+            <name>onoriginalchange</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when text was pasted into the original editor.]]>
+            </description>
+            <name>onoriginalpaste</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousedown event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmousedown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousemove event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmousemove</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mouseup event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmouseup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keyup event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeyup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keydown event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeydown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keypress (onDidType) event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeypress</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The code language for the modified editor, such as <code>typescript</code> or <code>css</css>.
+                This is also the language for the original editor when <code>originalLanguage</code> is not specified. 
+                Defaults to <code>plaintext</code> when not specified. Can be either a string or one of the constants
+                defined in <code>org.primefaces.extensions.model.monacoeditor.ELanguage</code>.]]>
+            </description>
+            <name>language</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The code language for the original editor, such as <code>typescript</code> or <code>css</css>.
+                Defaults to <code>language</code> when not specified. Can be either a string or one of the constants
+                defined in <code>org.primefaces.extensions.model.monacoeditor.ELanguage</code>.]]>
+            </description>
+            <name>originalLanguage</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allows you to register custom themes with the editor via Java. This must be a
+                <code>Map&lt;String, org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme&gt;</code>.
+                It maps between the name of the theme and the styling data for that theme. You can then specify the
+                theme name for the <code>theme</code> option in the <code>editorOptions</code>.]]>
+            </description>
+            <name>customThemes</name>
+            <required>false</required>
+            <type>java.lang.Map</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Locale for the user interface. Can be either a <code>java.util.Locale</code> object or a string with the locale code.
+                Built-in languages are "cs", "de", "en", "es", "fr", "it", "ja", "ko", "pl", "pt_BR", "ru", "tr", "zh_CN", and "zh_TW".
+                To use a custom language or translation, you can specify a language file with custom translations via the option
+                <code>localeUrl</code>.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[For custom language files. If given, this is used instead of the built-in language files. This URL must
+                point to a JavaScript file that, when executed, adds the localization to
+                <code>window.MonacoEnvironment.Locale["LOCALE_CODE"]</code>, where <code>LOCALE_CODE</code> is the value you set
+                for <code>locale</code>. See the language file the widget downloads (when locale is not set to English) for an
+                example and all available messages that need to be translated.]]>
+            </description>
+            <name>localeUrl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                <p>An extender object to further customize the monaco editor via JavaScript. This can be either:</p>
+                <ul>
+                  <li>unset, in which case no further customization is performed</li>
+                  <li>or a JavaScript expression that evaluates to an extender object</li>
+                </ul>
+                The extender object may have one or more of the following optional properties:
+                <ul>
+                <li>beforeCreate(editorWidget, options). Called before the monaco editor is created. It is passed
+                the current options object that would be used to initialize the monaco editor. If this callback
+                does not return a value, the options are used as they were passed to the callback. The callback is
+                allowed to modify the passed options object. If the callback returns an options object, that options
+                object is used instead. If it returns a thenable/Promise, the monaco editor is created only once the
+                Promise resolves (successfully). If the Promise resolves with an options object, that options  object is
+                used to create the editor. See
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneDiffEditorConstructionOptions.html">IStandaloneDiffEditorConstructionOptions</a>
+                for all editor options.</li>
+                <li>afterCreate(editorWidget). Called after the editor was created.</li>
+                <li>beforeDestroy(editorWidget). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
+                <li>afterDestroy(editorWidget). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>editorWidget.getMonaco()</code> now returns undefined.</li>
+                <li>createModel(editorWidget, options). Called when a for the modified editor model needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>createOriginalModel(editorWidget, options). Called when a model for the original editor needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                <li>createEditorOverrideServices(editorWidget, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createWorker(editorWidget, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>editorWidget.getMonaco()</code> returns undefined as the monaco editor was not created yet.</li>
+                </ul>
+                ]]>
+            </description>
+            <name>extender</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the scheme (protocol) for that URI. Defaults to <code>inmemory</code>.]]>
+            </description>
+            <name>scheme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the directory (path) for that URI, with parts separated by slashes. If not given, it is taken from the client ID of this component.]]>
+            </description>
+            <name>directory</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the basename for that URI, without the extension. If not given, default to 'file'.]]>
+            </description>
+            <name>basename</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the extension for that URI, with or without the period. If not given, it is inferred from the (code) language.]]>
+            </description>
+            <name>extension</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the scheme (protocol) for that URI of the original editor. Defaults to <code>inmemory</code>.]]>
+            </description>
+            <name>originalScheme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the directory (path) for that URI of the original editor, with parts separated by slashes. If not given, it is taken from the client ID of this component.]]>
+            </description>
+            <name>originalDirectory</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the basename for that URI of the original editor, without the extension. If not given, default to 'file'.]]>
+            </description>
+            <name>originalBasename</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the extension for that URI of the original editor, with or without the period. If not given, it is inferred from the (code) language.]]>
+            </description>
+            <name>originalExtension</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Width of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Set this to the empty string in case you want to size the editor via CSS.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Height of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Set this to the empty string in case you want to size the editor via CSS.]]>
+            </description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Options for the Monaco code editor. This is a simple wrapper around the JavaScript API, see
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html">IEditorConstructionOptions</a>
+                The code language can be set via the <code>EditorOptions#setLanguage</code> option.]]>
+            </description>
+            <name>editorOptions</name>
+            <required>false</required>
+            <type>org.primefaces.extensions.model.monacoeditor.DiffEditorOptions</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[If <code>true</code>, resizes the editor automatically when the iframe element changes its size.
+                Please note that this makes uses of the <a href="https://wicg.github.io/ResizeObserver/">new ResizeObserver API</a>
+                and <a href="https://caniuse.com/#feat=resizeobserver">works only in newer browers.</a> This widget checks whether
+                ResizeObserver API is available, and when it is not, no resizing is performed. To support resizing for older browsers,
+                search for a ResizeObserver polyfill. If you know when the size of the editor conainer could have changed, you can resize
+                the editor manually via <code>PF("editorWidgetVar").layout()</code>]]>
+            </description>
+            <name>autoResize</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A PrimeFaces search expression of a component. Places overflow widgets inside an external
+                DOM node. Defaults to an internal DOM node when not given. May be useful when the editor is used
+                inside an element obscured by other components. You can, for example, append the overflow widget
+                to the body. Note 1: you probably also need to set <code>fixedOverflowWidgets</code> on the editor
+                options for this to work. Note 2: For now, you either need to add the CSS class
+                <code>monaco-editor</code> to the container to style the overflow widgets properly, or add the
+                appropriate CSS yourself. Note 3: As of monaco-editor 0.27.0, this option has several issues
+                with event handling, use at your own risk. This will most likely be fixed in a later version
+                of monaco-editor.]]>
+            </description>
+            <name>overflowWidgetsDomNode</name>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[A JSF component that wraps the JavaScript libary <a href="https://microsoft.github.io/monaco-editor/">Monaco Editor</a>.
+            This component renders the diff editor inside an iframe for improved encapsulation, as the Monaco editor library and its settings are
+            window global. This also mean that you cannot get access to the monaco editor instance from the PrimeFaces widget. However, the
+            widget offers a method <code>invokeMonaco(methodName, ...params)</code> that lets you call a method on the monaco editor instance
+            in the iframe -- the method parameters are sent via <code>postMessage</code>. Note, however, that this does not work for methods
+            that takes a non-data object as a parameter or return such an object (i.e. an object that cannot be structurally cloned). Available
+            client behavior events: <ul>
+            <li>initialized - fired when the editor has become ready (javax.faces.event.AjaxBehaviorEvent). That is, after required resources have been downloaded and the editor was fully created and can now be interacted with by the user.</li>
+            <li>originalBlur - fired when the original editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>originalChange - fired if the content of the original editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>originalFocus - fired when the original editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>originalKeydown - fired when a key was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>originalKeyup - fired when a key was released on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>originalMousedown - fired when a mouse button was pressed down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>originalMousemove - fired when the mouse was moved over the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>originalMouseup - fired when a mouse button was released down on the original editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>originalPaste - fired when the text was pasted into the original editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            <li>blur - fired when the modified editor loses focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidblureditorwidget">IStandaloneCodeEditor#onDidBlurEditorWidget</a>.</li>
+            <li>change - fired if the content of the modified editor has been changed (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidchangemodelcontent">IStandaloneCodeEditor#onDidChangeModelContent</a>.</li>
+            <li>focus - fired when the modified editor gets focus (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#ondidfocuseditorwidget">IStandaloneCodeEditor#onDidFocusEditorWidget</a>.</li>,
+            <li>keydown - fired when a key was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeydown">IStandaloneCodeEditor#onKeyDown</a>.</li>,
+            <li>keyup - fired when a key was released on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onkeyup">IStandaloneCodeEditor#onKeyUp</a>.</li>,
+            <li>mousedown - fired when a mouse button was pressed down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousedown">IStandaloneCodeEditor#onMouseDown</a>.</li>,
+            <li>mousemove - fired when the mouse was moved over the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmousemove">IStandaloneCodeEditor#onMouseMove</a>.</li>,
+            <li>mouseup - fired when a mouse button was released down on the modified editor (javax.faces.event.AjaxBehaviorEvent). Corresponds to <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneCodeEditor.html#onmouseup">IStandaloneCodeEditor#onMouseUp</a>.</li>,
+            <li>paste - fired when the text was pasted into the modified editor (javax.faces.event.AjaxBehaviorEvent),</li>,
+            </ul>]]>
+        </description>
+        <tag-name>monacoDiffEditorFramed</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.MonacoDiffEditorFramed</component-type>
+            <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[CSS style(s) to be applied when this component is rendered.]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Space-separated list of CSS style class(es) to be applied when this element is rendered.
+                This value is passed through as the "class" attribute to the generated markup.]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Value of the component. Must be a org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel]]>
+            </description>
+            <name>value</name>
+            <required>false</required>
+            <type>org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the modified editor is readonly. This option makes the UI not editable, but still
+                accepts values that are submitted (e.g. when the editor value was changed via JavaScript). Use
+                <code>disabled</code> if submitted values should not be accepted.]]>
+            </description>
+            <name>readonly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the original editor is readonly. This option makes the UI not editable, but
+                still accepts values that are submitted (e.g. when the editor value was changed via JavaScript).
+                Use <code>originalDisabled</code> if submitted values should not be accepted. Defaults to
+                <code>false</code>.]]>
+            </description>
+            <name>originalReadonly</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the modified editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation).]]>
+            </description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Defines if the original editor is disabled. This option does not accept a value to be submitted and
+                ensures the model values stays the same (server validation). Defaults to <code>true</code>.]]>
+            </description>
+            <name>originalDisabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The tab index to assign to the editor. If not given, no tab index will be assigned.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The tab index to assign to the original editor. If not given, no tab index will be assigned.]]>
+            </description>
+            <name>originalTabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL
+                expression, it's resolved to a converter instance. In case it's a static text, it must refer to a
+                converter id.]]>
+            </description>
+            <name>converter</name>
+            <required>false</required>
+            <type>javax.faces.convert.Converter</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Marks component as required.]]>
+            </description>
+            <name>required</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Whether the original editor must have a value.]]>
+            </description>
+            <name>originalRequired</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when required field validation fails.]]>
+            </description>
+            <name>requiredMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when conversion fails.]]>
+            </description>
+            <name>converterMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Message to display when validation fails.]]>
+            </description>
+            <name>validatorMessage</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[A method expression referring to a method validating the input.]]>
+            </description>
+            <name>validator</name>
+            <required>false</required>
+            <type>javax.faces.validator.Validator</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor area receives focus.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onfocus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor area loses focus.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onblur</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor content changes.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onchange</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the editor was rendered.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>oninitialized</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when text was pasted into the editor.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onpaste</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousedown event was triggered on the editor area.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onmousedown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousemove event was triggered on the editor area.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onmousemove</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mouseup event was triggered on the editor area.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onmouseup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keyup event was triggered on the editor area.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onkeyup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keydown event was triggered on the editor area.
+                Please not that the callback is run in the context of the main window, not in the iframe context.]]>
+            </description>
+            <name>onkeydown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor area receives focus.]]>
+            </description>
+            <name>onoriginalfocus</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor area loses focus.]]>
+            </description>
+            <name>onoriginalblur</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when the original editor content changes.]]>
+            </description>
+            <name>onoriginalchange</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when text was pasted into the original editor.]]>
+            </description>
+            <name>onoriginalpaste</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousedown event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmousedown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mousemove event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmousemove</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a mouseup event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalmouseup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keyup event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeyup</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keydown event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeydown</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Client side callback when a keypress (onDidType) event was triggered on the original editor area.]]>
+            </description>
+            <name>onoriginalkeypress</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The code language for the modified editor, such as <code>typescript</code> or <code>css</css>.
+                This is also the language for the original editor when <code>originalLanguage</code> is not specified. 
+                Defaults to <code>plaintext</code> when not specified. Can be either a string or one of the constants
+                defined in <code>org.primefaces.extensions.model.monacoeditor.ELanguage</code>.]]>
+            </description>
+            <name>language</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The code language for the original editor, such as <code>typescript</code> or <code>css</css>.
+                Defaults to <code>language</code> when not specified. Can be either a string or one of the constants
+                defined in <code>org.primefaces.extensions.model.monacoeditor.ELanguage</code>.]]>
+            </description>
+            <name>originalLanguage</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Allows you to register custom themes with the editor via Java. This must be a
+                <code>Map&lt;String, org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme&gt;</code>.
+                It maps between the name of the theme and the styling data for that theme. You can then specify the
+                theme name for the <code>theme</code> option in the <code>editorOptions</code>.]]>
+            </description>
+            <name>customThemes</name>
+            <required>false</required>
+            <type>java.lang.Map</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Locale for the user interface. Can be either a <code>java.util.Locale</code> object or a string with the locale code.
+                Built-in languages are "cs", "de", "en", "es", "fr", "it", "ja", "ko", "pl", "pt_BR", "ru", "tr", "zh_CN", and "zh_TW".
+                To use a custom language or translation, you can specify a language file with custom translations via the option
+                <code>localeUrl</code>.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[For custom language files. If given, this is used instead of the built-in language files. This URL must
+                point to a JavaScript file that, when executed, adds the localization to
+                <code>window.MonacoEnvironment.Locale["LOCALE_CODE"]</code>, where <code>LOCALE_CODE</code> is the value you set
+                for <code>locale</code>. See the language file the widget downloads (when language is not set to English) for an
+                example and all available messages that need to be translated.]]>
+            </description>
+            <name>localeUrl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                <p>
+                An extender object to further customize the monaco editor via JavaScript. This must be a URL to a
+                JavaScript file with the extender. The JavaScript file is loaded inside the iframe context and must
+                (synchronously, i.e. upon its execution) set <code>window.MonacoEnvironment.Extender</code> to the
+                extender object that is to be used.
+                </p>
+                The extender object may have one or more of the following optional properties:
+                <ul>
+                <li>beforeCreate(monacoContext, options). Called before the monaco editor is created. It is passed
+                the current options object that would be used to initialize the monaco editor. If this callback
+                does not return a value, the options are used as they were passed to the callback. The callback is
+                allowed to modify the passed options object. If the callback returns an options object, that options
+                object is used instead. If it returns a thenable/Promise, the monaco editor is created only once the
+                Promise resolves (successfully). If the Promise resolves with an options object, that options  object is
+                used to create the editor. See
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneDiffEditorConstructionOptions.html">IStandaloneDiffEditorConstructionOptions</a>
+                for all editor options.</li>
+                <li>afterCreate(monacoContext). Called after the editor was created.</li>
+                <li>beforeDestroy(monacoContext). Called before the editor is destroyed, eg. when updating a component via AJAX.</li>
+                <li>afterDestroy(monacoContext). Called after the editor is destroyed, eg. when updating a component via AJAX. Note that <code>monacoContext.getMonaco()</code> now returns undefined.</li>
+                <li>createEditorOverrideServices(monacoContext, options). Called when the monaco editor is created. May return an object with services that should be overriden. See <a href="https://github.com/Microsoft/monaco-editor/issues/935#issuecomment-402174095">here on github</a> for details on the available services. The options are the editor constructor options that will be used to create the editor, they are readonly and must not be changed.</li>
+                <li>createModel(monacoContext, options). Called when a model for the modified needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>createOriginalModel(monacoContext, options). Called when a model for the original editor needs to retrieved or created. The options contains <code>value</code> (current value that should be set on the model by the extender), <code>url</code> (default URL that was determined for the model), <code>language</code> (requested code language), and <code>editorOptions</code> (monaco editor constructor options). Should return the model. When it returns nothing, the default mechanism for creating a model is used. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                <li>createWorker(monacoContext, moduleId, label). Called when a worker for additional language support needs to be created. By default, monaco editor ships with the workers for JSON, CSS, HTML, and TYPESCRIPT. The label is the name of the language, eg. <code>css</code> or <code>javascript</code>. Must return the worker to be used for the given language. Note that <code>monacoContext.getMonaco()</code> returns undefined as the Monaco editor was not created yet.</li>
+                </ul>
+                All methods of the extender are evaluated within the iframe page, so the editor widget instance is not
+                available. The <code>monacoContext</code> passed as the first argument to the extender methods is an object
+                with one essential method: <code>getMonaco()</code>. Use this method to get the current monaco editor instance
+                and interact with the editor.
+                ]]>
+            </description>
+            <name>extender</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                    Additional URL parameters that are added to the iframe URL where the framed Monaco editor is loaded.
+                    This may be useful, for example, when you wish to pass additional arguments to the extender script.
+                    Must be either a <code>java.lang.Map&lt;String, String | List&lt;String&gt;&gt;</code> (i.e. a map
+                    where keys are strings and values are strings or lists of strings); or a <code>java.lang.String</code>
+                    with a JavaScript expression that evaluates to an object representing such a map.
+                ]]>
+            </description>
+            <name>iframeUrlParams</name>
+            <required>false</required>
+            <type>java.util.Map</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the scheme (protocol) for that URI. Defaults to <code>inmemory</code>.]]>
+            </description>
+            <name>scheme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the directory (path) for that URI, with parts separated by slashes. If not given, it is taken from the client ID of this component.]]>
+            </description>
+            <name>directory</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the basename for that URI, without the extension. If not given, default to 'file'.]]>
+            </description>
+            <name>basename</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the extension for that URI, with or without the period. If not given, it is inferred from the (code) language.]]>
+            </description>
+            <name>extension</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the scheme (protocol) for that URI of the original editor. Defaults to <code>inmemory</code>.]]>
+            </description>
+            <name>originalScheme</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the directory (path) for that URI of the original editor, with parts separated by slashes. If not given, it is taken from the client ID of this component.]]>
+            </description>
+            <name>originalDirectory</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the basename for that URI of the original editor, without the extension. If not given, default to 'file'.]]>
+            </description>
+            <name>originalBasename</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The monaco editor requires a unique URI for an opened model (i.e. the code currently being edited). This is the extension for that URI of the original editor, with or without the period. If not given, it is inferred from the (code) language.]]>
+            </description>
+            <name>originalExtension</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Width of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Set this to the empty string in case you want to size the editor via CSS.]]>
+            </description>
+            <name>width</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Height of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Set this to the empty string in case you want to size the editor via CSS.]]>
+            </description>
+            <name>height</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Options for the Monaco code editor. This is a simple wrapper around the JavaScript API, see
+                <a href="https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html">IEditorConstructionOptions</a>
+                The code language can be set via the <code>EditorOptions#setLanguage</code> option.]]>
+            </description>
+            <name>editorOptions</name>
+            <required>false</required>
+            <type>org.primefaces.extensions.model.monacoeditor.DiffEditorOptions</type>
         </attribute>
         <attribute>
             <description>
@@ -1239,14 +2398,6 @@
             <name>inputmode</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[An EL expression or a literal text that defines a converter for the component. When it's an EL expression, it's resolved to a converter instance. In case it's a static text, it must refer to a converter id.]]>
-            </description>
-            <name>converter</name>
-            <required>false</required>
-            <type>javax.faces.convert.Converter</type>
         </attribute>
         <attribute>
             <description>

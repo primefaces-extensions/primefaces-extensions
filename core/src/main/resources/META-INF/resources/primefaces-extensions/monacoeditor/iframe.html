@@ -7,42 +7,44 @@
     <meta name="description" content="Iframe with the monaco editor for improved encapsulation">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
-        // The bootstrap script that is loaded in the iframe for monaco editor.
-        // It loads the JavaScript files passed in the iframe URL.
-        window.MonacoEnvironment = window.MonacoEnvironment || {};
-        window.MonacoEnvironment.Locale = window.MonacoEnvironment.Locale || {
-            language: "",
-            data: {},
-        };
+        (function() {
+            // The bootstrap script that is loaded in the iframe for monaco editor.
+            // It loads the JavaScript files passed in the iframe URL.
+            window.MonacoEnvironment = window.MonacoEnvironment || {};
+            window.MonacoEnvironment.Locale = window.MonacoEnvironment.Locale || {
+                language: "",
+                data: {},
+            };
 
-        var search = window.location.search;
-        if (search.charAt(0) === "?") {
-            search = search.substr(1);
-        }
-        var parts = search.split("&");
-        var bootstrapUrls = [];
-        for (var i = 0; i < parts.length; ++i) {
-            var part = parts[i];
-            var kvPair = part.split("=");
-            if (kvPair[0] === "bootstrap") {
-                bootstrapUrls.push(decodeURIComponent(kvPair[1]));
+            var search = window.location.search;
+            if (search.charAt(0) === "?") {
+                search = search.substr(1);
             }
-            else if (kvPair[0] === "instanceId") {
-                window.MonacoEnvironment.InstanceId = parseInt(kvPair[1]);   
-            }
-        }
-        if (bootstrapUrls.length > 0) {
-            for (var i = 0; i < bootstrapUrls.length; ++i) {
-                if (bootstrapUrls[i]) {
-                    var script = document.createElement("script");
-                    script.src = bootstrapUrls[i];
-                    document.head.appendChild(script);
+            var parts = search.split("&");
+            var bootstrapUrls = [];
+            for (var i = 0; i < parts.length; ++i) {
+                var part = parts[i];
+                var kvPair = part.split("=");
+                if (kvPair[0] === "bootstrap") {
+                    bootstrapUrls.push(decodeURIComponent(kvPair[1]));
+                }
+                else if (kvPair[0] === "instanceId") {
+                    window.MonacoEnvironment.InstanceId = parseInt(kvPair[1]);   
                 }
             }
-        }
-        else {
-            console.error("[MonacoEditor] No bootstrap scripts were found");
-        }
+            if (bootstrapUrls.length > 0) {
+                for (var i = 0; i < bootstrapUrls.length; ++i) {
+                    if (bootstrapUrls[i]) {
+                        var script = document.createElement("script");
+                        script.src = bootstrapUrls[i];
+                        document.head.appendChild(script);
+                    }
+                }
+            }
+            else {
+                console.error("[MonacoEditor] No bootstrap scripts were found");
+            }
+        })();
     </script>
 </head>
 

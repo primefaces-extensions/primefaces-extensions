@@ -13,7 +13,10 @@ declare module "monaco-editor" {
     Locale?: MonacoLocale;
 
     /** Used to define an extender object */
-    Extender?: PrimeFaces.widget.ExtMonacoEditorBase.MonacoExtenderInline;
+    Extender?: {
+      codeEditor?: PrimeFaces.widget.ExtMonacoEditor.ExtenderCodeEditorFramed,
+      diffEditor?: PrimeFaces.widget.ExtMonacoEditor.ExtenderDiffEditorFramed,
+    };
 
     /** Used by the monaco editor in the iframe. */
     InstanceId?: number;
@@ -24,8 +27,6 @@ declare module "monaco-editor" {
       error: any;
       return: any;
     };
-    /** Used by the monaco editor in the iframe. */
-    IframeContext?: PrimeFaces.widget.ExtMonacoEditorBase.SyncMonacoContext;
   }
 }
 
@@ -43,4 +44,4 @@ declare global {
   let monacoExtras: any;
 }
 
-export {}
+export { }

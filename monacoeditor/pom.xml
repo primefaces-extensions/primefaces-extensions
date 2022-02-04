@@ -73,6 +73,18 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/js/node_modules</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
@@ -111,7 +123,7 @@
                 <executions>
                     <!-- Install node -->
                     <execution>
-                        <id>install node and npm</id>
+                        <id>install-node-and-npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
@@ -119,7 +131,7 @@
                     </execution>
                     <!-- Install dependencies -->
                     <execution>
-                        <id>npm install</id>
+                        <id>npm-install</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -129,9 +141,20 @@
                             <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </execution>
+                    <!-- Verify code -->
+                    <execution>
+                        <id>verify-code</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <arguments>run verify</arguments>
+                        </configuration>
+                    </execution>
                     <!-- Generate locales -->
                     <execution>
-                        <id>generate locales</id>
+                        <id>generate-locales</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
@@ -142,7 +165,7 @@
                     </execution>
                     <!-- Generate extras -->
                     <execution>
-                        <id>generate extras</id>
+                        <id>generate-extras</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>

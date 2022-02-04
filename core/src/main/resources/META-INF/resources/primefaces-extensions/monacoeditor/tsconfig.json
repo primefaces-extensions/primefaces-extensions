@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
-        "checkJs": true,
         "target": "es2015",
         "moduleResolution": "node",
-        "skipLibCheck": true,
-        "skipDefaultLibCheck": true,
+        "types": ["jquery", "primefaces"],
         "noEmit": true,
-        "types": ["jquery", "primefaces"]
+        "skipLibCheck": false,
+        "skipDefaultLibCheck": true,
+        "checkJs": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "useUnknownInCatchVariables": true,
+        "strictPropertyInitialization": true
     },
     "include": ["."]
 }

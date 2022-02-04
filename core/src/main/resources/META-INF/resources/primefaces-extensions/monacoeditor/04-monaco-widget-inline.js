@@ -2,14 +2,15 @@
 
 window.monacoModule = window.monacoModule || {};
 
-PrimeFaces.widget.ExtMonacoEditorInline = (function () {
+(function () {
 
   const {
-    assign,
+    createDiffEditorInitData,
     createEditorConstructionOptions,
-    DefaultThemeData,
+    defineCustomThemes,
     getMonacoResource,
     getScriptName,
+    InlineDiffEditorDefaults,
     InlineEditorDefaults,
     invokeMonaco,
     invokeMonacoScript,
@@ -26,27 +27,51 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
   window.MonacoEnvironment = window.MonacoEnvironment || {};
 
   // Queue for loading the editor.js only once
-  /** @type {IPromiseQueue<{extender: any, options: import("monaco-editor").editor.IEditorConstructionOptions, wasLibLoaded: boolean}>} */
   const GenericPromiseQueue = new PromiseQueue();
 
   /**
-   * @extends {ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>}
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @template {PrimeFaces.widget.ExtMonacoEditor.SyncMonacoBaseEditorContext<TEditor, TEditorOpts>} TContext
+   * @template {PrimeFaces.widget.ExtMonacoEditor.ExtenderBaseEditor<TEditor, TEditorOpts, TContext>} TExtender
+   * @template {PrimeFaces.widget.ExtMonacoBaseEditorInlineCfg<TEditorOpts> & PrimeFaces.widget.ExtMonacoInlineEditorCfgBase<TEditorOpts>} TCfg
+   * @template TCustomInitData
+   * @extends {ExtMonacoEditorBase<TEditor, TEditorOpts, TCfg>}
    */
-  class InlineImpl extends ExtMonacoEditorBase {
+  class InlineBaseImpl extends ExtMonacoEditorBase {
     /**
-     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg Arguments as passed by PrimeFaces.
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
      */
     constructor(cfg) {
       super(cfg);
+
+      /** @type {TEditor | undefined} */
+      this._editor;
+
+      /** @type {Partial<TExtender> | undefined} */
+      this._extenderInstance;
+
+      /** @type {ResizeObserver | undefined} */
+      this._resizeObserver;
+
+      /** @type {{ args: RenderArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>; resolve: (args: RenderedArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>) => void; reject: (error: unknown) => void; } | undefined} */
+      this._renderArgs;
+
+      /** @type {string | undefined} */
+      this._resolvedLocaleUrl;
+
+      /** @type {TEditorOpts | undefined} */
+      this._editorOptions;
     }
 
     /**
-     * @param {PrimeFaces.PartialWidgetCfg<ExtMonacoEditorBase<PrimeFaces.widget.ExtMonacoEditorInlineCfg>>} cfg
+     * @param {TCfg} cfg
      */
     init(cfg) {
-      super._init(cfg, InlineEditorDefaults);
+      super._init(cfg, this._getConfigDefaults());
 
       // Set monaco environment
+      MonacoEnvironment = typeof MonacoEnvironment === "object" ? MonacoEnvironment : {};
       if (!("getWorker" in MonacoEnvironment)) {
         MonacoEnvironment.getWorker = this._createWorkerFactory();
       }
@@ -57,10 +82,8 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
         };
       }
 
-      /** @type {PrimeFaces.widget.ExtMonacoEditorBase.MonacoExtenderInline | undefined} */
       this._extenderInstance = undefined;
 
-      /** @type {{args: RenderArgs, resolve: (args: RenderedArgs) => void, reject: (error: unknown) => void} | undefined} */
       this._renderArgs = undefined;
 
       this.addRefreshListener(() => this._onRefresh());
@@ -77,33 +100,79 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
     // === PUBLIC API, see primefaces-monaco.d.ts for docs
 
     /**
-     * @return {Promise<void>}
+     * @returns {TContext}
      */
-    async layout() {
-      if (this.isReady()) {
-        this._editor.layout();
-      }
+    getContext() {
+      throw new Error("Must override abstract method");
     }
 
     /**
-     * @return {import("monaco-editor").editor.IStandaloneCodeEditor | undefined}
-     */
-    getMonaco() {
-      return this._editor;
-    }
-
-    /**
-     * @return {PrimeFaces.widget.ExtMonacoEditorBase.MonacoExtenderInline | undefined}
+     * @returns {Partial<TExtender> | undefined}
      */
     getExtender() {
       return this._extenderInstance;
     }
 
     /**
+     * @returns {TEditor | undefined}
+     */
+    getMonaco() {
+      return this._editor;
+    }
+
+    /**
+     * @returns {Readonly<TEditorOpts> | undefined}
+     */
+    getMonacoOptions() {
+      return this._editorOptions;
+    }
+
+    /**
+     * @returns {Promise<string>}
+     */
+    async getValue() {
+      return this.getValueNow();
+    }
+
+    /**
+     * @returns {string}
+     */
+    getValueNow() {
+      if (this._isReady()) {
+        return this._getStandaloneEditor(this._editor).getValue();
+      }
+      else {
+        return this._editorValue || "";
+      }
+    }
+
+    /**
+     * @param {string} value
+     */
+    setValueNow(value) {
+      if (this._isReady()) {
+        this._getStandaloneEditor(this._editor).setValue(value);
+      }
+      else {
+        this._editorValue = value;
+      }
+    }
+
+    /**
+     * @param {string} value
+     * @returns {Promise<void>}
+     */
+    async setValue(value) {
+      // defer setting the value so it's always set asynchronously
+      await Promise.resolve();
+      this.setValueNow(value);
+    }
+
+    /**
      * @template TReturn
-     * @param {(editor: import("monaco-editor").editor.IStandaloneCodeEditor) => TReturn} handler
+     * @param {(editor: TEditor) => TReturn} handler
      * @param {TReturn} defaultReturnValue
-     * @return {TReturn}
+     * @returns {TReturn}
      */
     withMonaco(handler, defaultReturnValue) {
       if (this._editor) {
@@ -116,70 +185,38 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
 
     /**
      * @template TReturn
-     * @param {(editor: import("monaco-editor").editor.IStandaloneCodeEditor) => TReturn} handler
+     * @param {(editor: TEditor) => TReturn} handler
      * @param {TReturn} defaultReturnValue
-     * @return {TReturn}
+     * @returns {TReturn}
      */
     tryWithMonaco(handler, defaultReturnValue) {
       try {
         return this.withMonaco(handler, defaultReturnValue);
       }
       catch (e) {
-        console.error("[MonacoEditor] Handler failed to process monaco editor", e);
+        console.error("[MonacoEditor] Handler failed to process Monaco editor", e);
         return defaultReturnValue;
       }
     }
 
     /**
-     * @return {Promise<string>}
+     * @returns {Promise<void>}
      */
-    async getValue() {
-      return this.getValueNow();
-    }
-
-    /**
-     * @return {string}
-     */
-    getValueNow() {
-      if (this.isReady()) {
-        return this._editor.getValue();
-      }
-      else {
-        return this._editorValue;
+    async layout() {
+      if (this._isReady()) {
+        this._editor.layout();
       }
     }
 
     /**
-     * @param {string} value
-     */
-    setValueNow(value) {
-      if (this.isReady()) {
-        this._editor.setValue(value);
-      }
-      else {
-        this._editorValue = value;
-      }
-    }
-
-    /**
-     * @param {string} value
-     * @return {Promise<void>}
-     */
-    async setValue(value) {
-      // defer setting the value so it's always set asynchronously
-      await Promise.resolve();
-      this.setValueNow(value);
-    }
-
-    /**
-     * @template {keyof import("monaco-editor").editor.IStandaloneCodeEditor} K
+     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
-     * @param {Parameters<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<ReturnType<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
      */
     invokeMonaco(method, ...args) {
-      if (!this.isReady()) {
-        throw new Error(`Cannot invoke monaco as the editor is not ready yet. Use isReady / whenReady to check.`);
+      if (!this._isReady()) {
+        throw new Error(`IllegalState: Cannot invoke Monaco as the editor is not ready yet. Use isReady / whenReady to check.`);
       }
       return invokeMonaco(this._editor, method, args);
     }
@@ -187,48 +224,152 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
     /**
      * @template TRetVal
      * @template {any[]} TArgs
-     * @param {((editor: import("monaco-editor").editor.IStandaloneCodeEditor, ...args: TArgs) => TRetVal) | string} script
+     * @param {((editor: TEditor, ...args: TArgs) => TRetVal) | string} script
      * @param {TArgs} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<TRetVal>>}
+     * @returns {Promise<Awaited<TRetVal>>}
      */
     invokeMonacoScript(script, ...args) {
+      if (!this._isReady()) {
+        throw new Error(`IllegalState: Cannot invoke Monaco as the editor is not ready yet. Use isReady / whenReady to check.`);
+      }
       return invokeMonacoScript(this._editor, script, args, s => PrimeFaces.csp.eval(s));
     }
+
+    // === PROTECTED
+
+    /**
+     * @abstract
+     * @protected
+     * @param {TEditor} editor
+     * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
+     */
+    _getStandaloneEditor(editor) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @returns {Partial<TCfg>}
+     */
+    _getConfigDefaults() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @param {HTMLElement} domElement
+     * @param {EditorInitData<TEditorOpts, TCustomInitData>} data
+     * @param {import("monaco-editor").editor.IEditorOverrideServices | undefined} override
+     * @returns {TEditor}
+     */
+    _createEditor(domElement, data, override) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @param {Partial<TExtender>} extender
+     * @param {boolean} wasLibLoaded
+     * @returns {Promise<EditorInitData<TEditorOpts, TCustomInitData>>}
+     */
+    _createInitData(extender, wasLibLoaded) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     * @param {TEditorOpts} options
+     * @param {HTMLElement} target 
+     */
+    _setOverflowWidgetsDomNode(options, target) {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     */
+    _storeScrollPosition() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * @abstract
+     * @protected
+     */
+    _restoreScrollPosition() {
+      throw new Error("Must override abstract method");
+    }
+
+    /**
+     * Adds all event listeners to the Monaco editor that are required for forwarding them as AJAX behavior events.
+     * @override
+     */
+    _bindEvents() {
+      const editor = this._editor;
+
+      if (editor !== undefined) {
+        // Change event.
+        // Set the value of the editor on the hidden textarea.
+        this._getStandaloneEditor(editor).onDidChangeModelContent(event => {
+          this.tryWithMonaco(monaco => {
+            const model = this._getStandaloneEditor(monaco).getModel();
+            const value = model !== null ? model.getValue() : "";
+            this.getInput().val(value);
+          }, undefined);
+          this._fireEvent("change", event);
+        });
+
+        // Focus / blur
+        this._getStandaloneEditor(editor).onDidFocusEditorWidget(() => this._fireEvent("focus"));
+        this._getStandaloneEditor(editor).onDidBlurEditorWidget(() => this._fireEvent("blur"));
+
+        // Paste
+        this._getStandaloneEditor(editor).onDidPaste(pasteEvent => this._fireEvent("paste", pasteEvent));
+
+        // Mouse / Key
+        // These are potentially computationally intensive, so register
+        // only when there are server-side or client-side listeners
+        if (this._supportsEvent("mousedown")) {
+          this._getStandaloneEditor(editor).onMouseDown(mouseEvent => this._fireEvent("mousedown", mouseEvent));
+        }
+
+        if (this._supportsEvent("mousemove")) {
+          this._getStandaloneEditor(editor).onMouseMove(mouseEvent => this._fireEvent("mousemove", mouseEvent));
+        }
+
+        if (this._supportsEvent("mouseup")) {
+          this._getStandaloneEditor(editor).onMouseUp(mouseEvent => this._fireEvent("mouseup", mouseEvent));
+        }
+
+        if (this._supportsEvent("keydown")) {
+          this._getStandaloneEditor(editor).onKeyDown(keyboardEvent => this._fireEvent("keydown", keyboardEvent));
+        }
+
+        if (this._supportsEvent("keyup")) {
+          this._getStandaloneEditor(editor).onKeyUp(keyboardEvent => this._fireEvent("keyup", keyboardEvent));
+        }
+      }
+    }
+
 
     // === PRIVATE
 
     /**
-     * Callback invoked when the widgets was refreshed after an AJAX call. Saves the current
-     * scroll position so that it can be restored later, then destroys the widgets, so
-     * that it can be created again. 
+     * @returns {this is {_editor: TEditor}}
      */
-    _onRefresh() {
-      this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
-      PrimeFaces.removeDeferredRenders(String(this.id));
-      this._onDestroy();
-    }
-
-    /**
-     * Callback when the widget was destroyed. Invokes the extender, if available and disconnects the
-     * resize observer, if enabled.
-     */
-    _onDestroy() {
-      if (this._renderArgs) {
-        this._renderArgs.reject("render_canceled_by_update");
-        this._renderArgs = undefined;
+    _isReady() {
+      const ready = super.isReady();
+      if (ready && this._editor === undefined) {
+        // can only happen due to programming error
+        // we mark it as ready once the editor was created
+        throw new Error("IllegalState: Editor marked as ready, but editor instance not set ");
       }
-      this._rejectOnDone();
-      const extender = this._extenderInstance;
-      if (extender && typeof extender.beforeDestroy === "function") {
-        extender.beforeDestroy(this);
-      }
-      if (this._resizeObserver !== undefined) {
-        this._resizeObserver.disconnect();
-      }
-      this.tryWithMonaco(monaco => monaco.dispose(), undefined);
-      if (extender && typeof extender.afterDestroy === "function") {
-        extender.afterDestroy(this);
-      }
+      return ready;
     }
 
     /**
@@ -236,33 +377,35 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      * The monaco editor script must be loaded after the localization file or localization will not
      * work. This is why we cannot add the monaco editor script as a `@ResourceDependency` on the JSF
      * component.
-     * @return {Promise<{extender: any, options: import("monaco-editor").editor.IEditorConstructionOptions, wasLibLoaded: boolean}>}
+     * @private
+     * @returns {Promise<RenderArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>>}
      */
     async _setup() {
-      const extender = loadExtender(this.cfg);
-      this._extenderInstance = extender;
+      const extender = this._extenderInstance = loadExtender(this._editor, this.cfg, this.getContext());
       const { forceLibReload, localeUrl: localeUrl } = await loadLanguage(this.cfg);
       this._resolvedLocaleUrl = localeUrl;
       const wasLibLoaded = await loadEditorLib(this.cfg, forceLibReload);
       this.getEditorContainer().empty();
-      const options = await createEditorConstructionOptions(this, extender, this._editorValue, wasLibLoaded);
+      const { custom, options } = await this._createInitData(extender, wasLibLoaded);
+      this._editorOptions = options;
       if (this.cfg.overflowWidgetsDomNode !== undefined && this.cfg.overflowWidgetsDomNode.length > 0) {
         const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.overflowWidgetsDomNode);
         if (target !== undefined && target.length > 0) {
-          options.overflowWidgetsDomNode = target.get(0);
+          this._setOverflowWidgetsDomNode(options, target.get(0));
         }
         else {
           console.warn(`Target '${this.cfg.overflowWidgetsDomNode}' for option overflowWidgetsDomNode was not found in the DOM`);
         }
       }
-      return { extender, options, wasLibLoaded };
+      return { custom, extender, options, wasLibLoaded };
     }
 
     /**
      * Utility method that promisifies the `renderDeferred` method of the parent deferred widget so it can
      * be used in a promise-based style.
-     * @param {RenderArgs} args Options to be passed on to the render method
-     * @return {Promise<RenderedArgs>} A promise that resolves when the render method was called.
+     * @private
+     * @param {RenderArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>} args Options to be passed on to the render method
+     * @returns {Promise<RenderedArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>>} A promise that resolves when the render method was called.
      */
     _renderDeferredAsync(args) {
       if (this.jq.closest(".ui-hidden-container").length === 0) {
@@ -280,6 +423,9 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
      * be used in a promise-based style.
      */
     _render() {
+      if (this._renderArgs === undefined) {
+        throw new Error("IllegalState: _render called, but _renderArgs were not set yet");
+      }
       const { args, reject, resolve } = this._renderArgs;
       try {
         const editor = this._doRender(args);
@@ -292,30 +438,24 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
 
     /**
      * Creates a new monaco editor with the configured options and sets up all event handlers.
-     * @param {{extender: PrimeFaces.widget.ExtMonacoEditorBase.MonacoExtenderInline, options: import("monaco-editor").editor.IEditorConstructionOptions, wasLibLoaded: boolean}} args Options to be passed on to the render method
-     * @return {import("monaco-editor").editor.IStandaloneCodeEditor} The newly created monaco code editor.
+     * @param {RenderArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>} args Options to be passed on to the render method
+     * @returns {TEditor} The newly created monaco code editor.
      */
     _doRender(args) {
-      const { extender, options, wasLibLoaded } = args;
+      const { custom, extender, options, wasLibLoaded } = args;
 
-      /** @type {import("monaco-editor").editor.IEditorOverrideServices | undefined} */
-      const override = extender && typeof extender.createEditorOverrideServices === "function" ? extender.createEditorOverrideServices(this, options) : undefined;
+      const override = extender && typeof extender.createEditorOverrideServices === "function"
+        ? extender.createEditorOverrideServices(this.getContext(), options)
+        : undefined;
 
       // Register all custom themes that we were given. 
-      for (const themeName of Object.keys(this.cfg.customThemes || {})) {
-        const themeData = assign({}, DefaultThemeData, this.cfg.customThemes[themeName]);
-        if (themeData !== undefined) {
-          monaco.editor.defineTheme(themeName, themeData);
-        }
-      }
+      defineCustomThemes(this.cfg.customThemes);
 
       // Create a new editor instance.
-      this._editor = monaco.editor.create(this.getEditorContainer().get(0), options, override);
+      this._editor = this._createEditor(this.getEditorContainer().get(0), { custom, options }, override);
 
       // Restore scroll position (when ajax updating the editor)
-      if (typeof this._scrollTop === "number" && this._scrollTop > 0) {
-        this.tryWithMonaco(monaco => monaco.setScrollTop(this._scrollTop), undefined);
-      }
+      this._restoreScrollPosition();
 
       // Auto resize when browser supports ResizeObserver
       if (this.cfg.autoResize) {
@@ -330,76 +470,86 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
 
       // After create callback
       if (typeof extender === "object" && typeof extender.afterCreate === "function") {
-        extender.afterCreate(this, wasLibLoaded);
+        extender.afterCreate(this.getContext(), wasLibLoaded);
       }
 
       return this._editor;
     }
 
     /**
-     * Adds all event listeners to the Monaco editor that are required for forwarding them as AJAX
-     * behavior events.
-     */
-    _bindEvents() {
-      if (this._editor) {
-        // Change event.
-        // Set the value of the editor on the hidden textarea.
-        this._editor.onDidChangeModelContent(event => {
-          this.tryWithMonaco(monaco => this.getInput().val(monaco.getModel().getValue()), undefined);
-          this._fireEvent("change", event);
-        });
-
-        // Focus / blur
-        this._editor.onDidFocusEditorWidget(() => this._fireEvent("focus"));
-        this._editor.onDidBlurEditorWidget(() => this._fireEvent("blur"));
-
-        // Paste
-        this._editor.onDidPaste(pasteEvent => this._fireEvent("paste", pasteEvent));
-
-        // Mouse / Key
-        // These are potentially computationally intensive, so register
-        // only when there are server-side or client-side listeners
-        if (this._supportsEvent("mousedown")) {
-          this._editor.onMouseDown(mouseEvent => this._fireEvent("mousedown", mouseEvent));
-        }
-
-        if (this._supportsEvent("mousemove")) {
-          this._editor.onMouseMove(mouseEvent => this._fireEvent("mousemove", mouseEvent));
-        }
-
-        if (this._supportsEvent("mouseup")) {
-          this._editor.onMouseUp(mouseEvent => this._fireEvent("mouseup", mouseEvent));
-        }
-
-        if (this._supportsEvent("keydown")) {
-          this._editor.onKeyDown(keyboardEvent => this._fireEvent("keydown", keyboardEvent));
-        }
-
-        if (this._supportsEvent("keyup")) {
-          this._editor.onKeyUp(keyboardEvent => this._fireEvent("keyup", keyboardEvent));
-        }
-      }
-    }
-
-    /**
      * Internal callback invoked when the editor was resized. Performs a new layout on the monaco editor
      * so that it can adapt to the new container size.
+     * @private
      */
     _onResize() {
       this.tryWithMonaco(monaco => (window.requestAnimationFrame || setTimeout)(() => monaco.layout()), undefined);
     }
 
     /**
+     * Callback invoked when the widgets was refreshed after an AJAX call. Saves the current
+     * scroll position so that it can be restored later, then destroys the widgets, so
+     * that it can be created again. 
+     * @private
+     */
+    _onRefresh() {
+      this._storeScrollPosition();
+      PrimeFaces.removeDeferredRenders(String(this.id));
+      this._onDestroy();
+    }
+
+    /**
+     * Callback when the widget was destroyed. Invokes the extender, if available and disconnects the
+     * resize observer, if enabled.
+     * @private
+     */
+    _onDestroy() {
+      if (this._renderArgs) {
+        this._renderArgs.reject("render_canceled_by_update");
+        this._renderArgs = undefined;
+      }
+      this._rejectOnDone();
+      const extender = this._extenderInstance;
+      if (extender && typeof extender.beforeDestroy === "function") {
+        try {
+          extender.beforeDestroy(this.getContext());
+        }
+        catch (e) {
+          console.error("[MonacoEditor] Error in extender.beforeDestroy callback", e);
+        }
+      }
+      if (this._resizeObserver !== undefined) {
+        try {
+          this._resizeObserver.disconnect();
+        }
+        catch (e) {
+          console.error("[MonacoEditor] Could not disconnect resize observer", e);
+        }
+      }
+      this.tryWithMonaco(monaco => monaco.dispose(), undefined);
+      if (extender && typeof extender.afterDestroy === "function") {
+        try {
+          extender.afterDestroy(this.getContext());
+        }
+        catch (e) {
+          console.error("[MonacoEditor] Error in extender.afterDestroy callback", e);
+        }
+      }
+      this._editor = undefined;
+      this._editorOptions = undefined;
+    }
+
+    /**
      * Create a web worker for the language services. This uses a proxied worker that imports the actual worker script.
      * The proxy imports the translated strings for the current locale to support localization even in the web workers
      *
-     * @return {PrimeFaces.widget.ExtMonacoEditorBase.WorkerFactory} The factory that creates the workers for JSON, CSS and other languages.
+     * @private
+     * @returns {PrimeFaces.widget.ExtMonacoEditor.WorkerFactory} The factory that creates the workers for JSON, CSS and other languages.
      */
     _createWorkerFactory() {
       return (moduleId, label) => {
         const extender = this._extenderInstance;
         if (typeof extender === "object" && typeof extender.createWorker === "function") {
-          return extender.createWorker(this, moduleId, label);
+          return extender.createWorker(this.getContext(), moduleId, label);
         }
         else {
           const workerUrl = getMonacoResource(getScriptName(moduleId, label));
@@ -410,5 +560,332 @@ PrimeFaces.widget.ExtMonacoEditorInline = (function () {
     }
   }
 
-  return InlineImpl;
+  /**
+   * @extends {InlineBaseImpl<import("monaco-editor").editor.IStandaloneCodeEditor, import("monaco-editor").editor.IStandaloneEditorConstructionOptions, PrimeFaces.widget.ExtMonacoCodeEditorInline, PrimeFaces.widget.ExtMonacoEditor.ExtenderCodeEditorInline, PrimeFaces.widget.ExtMonacoCodeEditorInlineCfg, undefined>}
+   */
+  class InlineEditorImpl extends InlineBaseImpl {
+    /**
+     * @param {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoCodeEditorInlineCfg>} cfg Arguments as passed by PrimeFaces.
+     */
+    constructor(cfg) {
+      super(cfg);
+
+      /** @type {number | undefined} */
+      this._scrollTop;
+    }
+
+    /**
+     * @returns {PrimeFaces.widget.ExtMonacoCodeEditorInline}
+     */
+    getContext() {
+      return this;
+    }
+
+    // === PROTECTED
+
+    /**
+     * @protected
+     * @param {import("monaco-editor").editor.IStandaloneCodeEditor} editor 
+     * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
+     */
+    _getStandaloneEditor(editor) {
+      return editor;
+    }
+
+    /**
+     * @protected
+     * @returns {Partial<PrimeFaces.widget.ExtMonacoCodeEditorInlineCfg>}
+     */
+    _getConfigDefaults() {
+      return InlineEditorDefaults;
+    }
+
+    /**
+     * @protected
+     * @param {HTMLElement} domElement
+     * @param {EditorInitData<import("monaco-editor").editor.IStandaloneEditorConstructionOptions, undefined>} data
+     * @param {import("monaco-editor").editor.IEditorOverrideServices | undefined} override
+     * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
+     */
+    _createEditor(domElement, data, override) {
+      return monaco.editor.create(domElement, data.options, override);
+    }
+
+    /**
+     * @protected
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ExtenderCodeEditorInline} extender
+     * @param {boolean} wasLibLoaded
+     * @returns {Promise<EditorInitData<import("monaco-editor").editor.IStandaloneEditorConstructionOptions, undefined>>}
+     */
+    async _createInitData(extender, wasLibLoaded) {
+      return {
+        custom: undefined,
+        options: await createEditorConstructionOptions(this.getContext(), extender, this._editorValue || "", wasLibLoaded),
+      };
+    }
+
+    /**
+     * @protected
+     * @param {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} options
+     * @param {HTMLElement} target 
+     */
+    _setOverflowWidgetsDomNode(options, target) {
+      options.overflowWidgetsDomNode = target;
+    }
+
+    /**
+     * @protected
+     */
+    _storeScrollPosition() {
+      this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
+    }
+
+    /**
+     * @protected
+     */
+    _restoreScrollPosition() {
+      const scrollTop = this._scrollTop;
+      if (typeof scrollTop === "number" && scrollTop > 0) {
+        this.tryWithMonaco(monaco => monaco.setScrollTop(scrollTop), undefined);
+      }
+    }
+  }
+
+  /**
+   * @extends {InlineBaseImpl<import("monaco-editor").editor.IStandaloneDiffEditor, import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions, PrimeFaces.widget.ExtMonacoDiffEditorInline, PrimeFaces.widget.ExtMonacoEditor.ExtenderDiffEditorInline, PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg, DiffEditorCustomInitData>}
+   */
+  class InlineDiffEditorImpl extends InlineBaseImpl {
+    /**
+     * @param {PrimeFaces.PartialWidgetCfg<PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg>} cfg Arguments as passed by PrimeFaces.
+     */
+    constructor(cfg) {
+      super(cfg);
+
+      /** @type {{original: number, modified: number} | undefined} */
+      this._scrollTop;
+
+      /** @type {string | undefined} */
+      this._originalEditorValue;
+
+      /** @type {JQuery | undefined} */
+      this._originalInput;
+    }
+
+    /**
+     * @param {PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg} cfg 
+     */
+    init(cfg) {
+      super.init(cfg);
+
+      // Textarea with the value for the original editor
+      this._originalInput = this.jq.find(".ui-helper-hidden-accessible textarea").eq(1);
+
+      // Default to the given value for the original editor
+      this._originalEditorValue = String(this._originalInput.val() || "");
+    }
+
+    // === PUBLIC API, see primefaces-monaco.d.ts for docs
+
+    /**
+     * @returns {PrimeFaces.widget.ExtMonacoDiffEditorInline}
+     */
+    getContext() {
+      return this;
+    }
+
+    /**
+     * @returns {JQuery}
+     */
+    getOriginalInput() {
+      if (this._originalInput === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
+      return this._originalInput;
+    }
+
+    /**
+     * @returns {Promise<string>}
+     */
+    async getOriginalValue() {
+      return this.getOriginalValueNow();
+    }
+
+    /**
+     * @returns {string}
+     */
+    getOriginalValueNow() {
+      if (this._isReady()) {
+        return this._editor.getOriginalEditor().getValue();
+      }
+      else {
+        return this._originalEditorValue || "";
+      }
+    }
+
+    /**
+     * @param {string} value
+     */
+    setOriginalValueNow(value) {
+      if (this._isReady()) {
+        this._editor.getOriginalEditor().setValue(value);
+      }
+      else {
+        this._originalEditorValue = value;
+      }
+    }
+
+    /**
+     * @param {string} value
+     * @returns {Promise<void>}
+     */
+    async setOriginalValue(value) {
+      // defer setting the value so it's always set asynchronously
+      await Promise.resolve();
+      this.setOriginalValueNow(value);
+    }
+
+    // === PROTECTED
+
+    /**
+     * @protected
+     * @param {import("monaco-editor").editor.IStandaloneDiffEditor} editor 
+     * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
+     */
+    _getStandaloneEditor(editor) {
+      return editor.getModifiedEditor();
+    }
+
+    /**
+     * @protected
+     * @returns {Partial<PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg>}
+     */
+    _getConfigDefaults() {
+      return InlineDiffEditorDefaults;
+    }
+
+    /**
+     * @protected
+     * @param {HTMLElement} domElement
+     * @param {EditorInitData<import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions, DiffEditorCustomInitData>} data
+     * @param {import("monaco-editor").editor.IEditorOverrideServices | undefined} override
+     * @returns {import("monaco-editor").editor.IStandaloneDiffEditor}
+     */
+    _createEditor(domElement, data, override) {
+      const editor = monaco.editor.createDiffEditor(domElement, data.options, override);
+      editor.setModel({
+        modified: data.custom.modifiedModel,
+        original: data.custom.originalModel,
+      });
+      return editor;
+    }
+
+    /**
+     * @protected
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ExtenderDiffEditorInline} extender
+     * @param {boolean} wasLibLoaded
+     * @returns {Promise<EditorInitData<import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions, DiffEditorCustomInitData>>}
+     */
+    async _createInitData(extender, wasLibLoaded) {
+      return createDiffEditorInitData(this.getContext(), extender, this._originalEditorValue || "", this._editorValue || "", wasLibLoaded);
+    }
+
+    /**
+     * @protected
+     * @param {import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions} options
+     * @param {HTMLElement} target 
+     */
+    _setOverflowWidgetsDomNode(options, target) {
+      options.overflowWidgetsDomNode = target;
+    }
+
+    /**
+     * @protected
+     */
+    _storeScrollPosition() {
+      this._scrollTop = this.tryWithMonaco(monaco => ({
+        modified: monaco.getModifiedEditor().getScrollTop(),
+        original: monaco.getOriginalEditor().getScrollTop(),
+      }), { modified: 0, original: 0 });
+    }
+
+    /**
+     * @protected
+     */
+    _restoreScrollPosition() {
+      if (typeof this._scrollTop === "object" && (this._scrollTop.modified > 0 || this._scrollTop.original > 0)) {
+        this.tryWithMonaco(monaco => {
+          if (typeof this._scrollTop === "object" && this._scrollTop.modified > 0) {
+            monaco.getModifiedEditor().setScrollTop(this._scrollTop.modified);
+          }
+          if (typeof this._scrollTop === "object" && this._scrollTop.original > 0) {
+            monaco.getOriginalEditor().setScrollTop(this._scrollTop.original);
+          }
+        }, undefined);
+      }
+    }
+
+    /**
+     * Adds all event listeners to the Monaco editor that are required for forwarding them as AJAX behavior events.
+     * @override
+     */
+    _bindEvents() {
+      // Bind events on modified editor
+      super._bindEvents();
+
+      const editor = this._editor;
+
+      // Bind events on original editor
+      if (editor !== undefined) {
+        // Change event.
+        // Set the value of the editor on the hidden textarea.
+        editor.getOriginalEditor().onDidChangeModelContent(event => {
+          this.tryWithMonaco(monaco => {
+            const model = monaco.getOriginalEditor().getModel();
+            const value = model !== null ? model.getValue() : "";
+            this.getOriginalInput().val(value);
+          }, undefined);
+          this._fireEvent("originalChange", event);
+        });
+
+        // Focus / blur
+        editor.getOriginalEditor().onDidFocusEditorWidget(() => this._fireEvent("originalFocus"));
+        editor.getOriginalEditor().onDidBlurEditorWidget(() => this._fireEvent("originalBlur"));
+
+        // Paste
+        editor.getOriginalEditor().onDidPaste(pasteEvent => this._fireEvent("originalPaste", pasteEvent));
+
+        // Mouse / Key
+        // These are potentially computationally intensive, so register
+        // only when there are server-side or client-side listeners
+        if (this._supportsEvent("originalMousedown")) {
+          editor.getOriginalEditor().onMouseDown(mouseEvent => this._fireEvent("originalMousedown", mouseEvent));
+        }
+
+        if (this._supportsEvent("originalMousemove")) {
+          editor.getOriginalEditor().onMouseMove(mouseEvent => this._fireEvent("originalMousemove", mouseEvent));
+        }
+
+        if (this._supportsEvent("originalMouseup")) {
+          editor.getOriginalEditor().onMouseUp(mouseEvent => this._fireEvent("originalMouseup", mouseEvent));
+        }
+
+        if (this._supportsEvent("originalKeydown")) {
+          editor.getOriginalEditor().onKeyDown(keyboardEvent => this._fireEvent("originalKeydown", keyboardEvent));
+        }
+
+        if (this._supportsEvent("originalKeyup")) {
+          editor.getOriginalEditor().onKeyUp(keyboardEvent => this._fireEvent("originalKeyup", keyboardEvent));
+        }
+      }
+    }
+  }
+
+  PrimeFaces.widget.ExtMonacoBaseEditorInline = InlineBaseImpl;
+  PrimeFaces.widget.ExtMonacoCodeEditorInline = InlineEditorImpl;
+  PrimeFaces.widget.ExtMonacoDiffEditorInline = InlineDiffEditorImpl;
+
+  // TODO remove in one of the next major releases
+  // @ts-expect-error legacy, will be removed soon
+  PrimeFaces.widget.ExtMonacoEditorInline
+    = InlineEditorImpl;
 })();

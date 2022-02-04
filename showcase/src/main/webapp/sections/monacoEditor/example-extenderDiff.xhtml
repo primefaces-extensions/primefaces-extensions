@@ -1,0 +1,154 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:of="http://omnifaces.org/functions"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+<p:remoteCommand id="handleMonacoExtenderError" name="handleMonacoExtenderError"
+  process="@this,monacoEditorWrapper" partialSubmit="true"
+  actionListener="#{monacoEditorController.onMonacoExtenderError}" 
+  update="monacoEditorWrapper" />
+
+<h:panelGroup id="customExtenderInline">
+  <script>
+  </script>
+  <script>
+    (function(){
+      // Force the widget to reload the monaco library so people can test their extenders
+      delete window.monaco;
+
+      window.MonacoEnvironment = window.MonacoEnvironment || {};
+      delete window.MonacoEnvironment.Extender;
+      delete window.MonacoEnvironment.ExtenderError;
+      function onMonacoExtenderDemoError(message, source, lineno, colno, error) {
+        if (!window.MonacoEnvironment.ExtenderError) {
+          window.MonacoEnvironment.ExtenderError = error || message;
+        }
+      }
+      var content = "#{empty monacoEditorController.valueExtender ? "" : of:escapeJS(monacoEditorController.valueExtender)}";
+      if (!content) {
+        return;
+      }
+      var script = document.createElement("script");
+      if (PrimeFaces.csp.NONCE_VALUE) {
+        script.nonce = PrimeFaces.csp.NONCE_VALUE;
+      }
+      script.text = content;
+      script.onerror = onMonacoExtenderDemoError;
+      var prevOnError = window.onerror;
+      try {
+        window.onerror = onMonacoExtenderDemoError;
+        document.head.appendChild(script);
+      }
+      catch (err) {
+        onMonacoExtenderDemoError(err);
+      }
+      finally {
+          window.onerror = prevOnError;
+          document.head.removeChild(script);
+      }
+      if ((typeof window.MonacoEnvironment.Extender !== "object" || typeof window.MonacoEnvironment.Extender.diffEditor !== "object") &amp;&amp; !window.MonacoEnvironment.ExtenderError) {
+        window.MonacoEnvironment.ExtenderError = new Error("No Monaco extender was set, make sure to create an extender and assign it to window.MonacoEnvironment.Extender = {diffEditor: THE_EXTENDER}");
+      }
+      if (window.MonacoEnvironment.ExtenderError) {
+        console.error("Could not load Monaco diff editor extender:", window.MonacoEnvironment.ExtenderError);
+        var error = window.MonacoEnvironment.ExtenderError.stack  || window.MonacoEnvironment.ExtenderError.message || String(window.MonacoEnvironment.ExtenderError);
+        handleMonacoExtenderError([
+          {name: "monacoExtenderError", value: error}
+        ]);
+      }
+      // Wrap all extender functions in a try-catch block so we can show
+      // errors to the user in the showcase UI.
+      var ed = window.MonacoEnvironment.Extender.diffEditor;
+      for (key in ed) {
+        if (Object.prototype.hasOwnProperty.call(ed, key)) {
+          var value = ed[key];
+          if (typeof value === "function") {
+            ed[key] = (function(fn) {
+              return function() {
+                try {
+                  var res = fn.apply(this, arguments);
+                  if (typeof res === "object" &amp;&amp; "then" in res &amp;&amp; "catch" in res) {
+                    res.catch(function(error) {
+                      handleMonacoExtenderError([
+                        {name: "monacoExtenderError", value: typeof error === "object" &amp;&amp; error !== null ? error.stack || error.message || String(error) : String(error)}
+                      ]);
+                      throw error;
+                    });
+                  }
+                  return res;
+                }
+                catch (error) {
+                  handleMonacoExtenderError([
+                    {name: "monacoExtenderError", value: typeof error === "object" &amp;&amp; error !== null ? error.stack || error.message || String(error) : String(error)}
+                  ]);
+                  throw error;
+                }
+              };
+            })(value);
+          }
+        }
+      }
+    })();
+  </script>
+</h:panelGroup>
+
+<!-- EXAMPLE-SOURCE-START -->
+
+<p:staticMessage id="extenderInfo" severity="info" styleClass="monacoEditorMessage" escape="false"
+  summary="#{monacoEditorController.extenderName}" detail="#{monacoEditorController.extenderInfo}" />
+
+<h:panelGrid columns="3">
+  <!-- Apply the selected extender -->
+  <p:commandLink id="applyExtender" partialSubmit="true" styleClass="ui-button ui-button-text-icon-right"
+    actionListener="#{monacoEditorController.onMonacoExtenderRun}"
+    process="@this,monacoExtender,monacoEditorWrapper" update="customExtenderInline,monacoEditorWrapper">
+    <span class="ui-button-icon-right ui-icon ui-c pi pi-play" style="color:white"></span>
+    <span class="ui-button-text ui-c" style="color:white">Run</span>
+  </p:commandLink>
+
+  <!-- Select extender example -->
+  <p:outputLabel for="extenderExample" value="Extender example: " />
+  <p:selectOneMenu id="extenderExample" value="#{monacoEditorController.extenderExample}">
+      <f:selectItems value="#{monacoEditorController.extenderExamplesDiff}" />
+      <p:ajax 
+        process="extenderInfo,monacoExtender,monacoEditorWrapper"
+        listener="#{monacoEditorController.onExtenderExampleChange}"
+        update="customExtenderInline,extenderInfo,monacoExtender,monacoEditorWrapper" />
+  </p:selectOneMenu>
+</h:panelGrid>
+
+<div style="display:flex">
+  <!-- Monaco editor for editing the extender -->
+  <h:panelGroup id="monacoExtenderWrapper" layout="block" style="flex:1" styleClass="monacoExtenderBox">
+      <pe:monacoEditorFramed id="monacoExtender" widgetVar="monacoExtender"
+          value="#{monacoEditorController.valueExtender}" scheme="file"
+          extender="#{resource['js/monacoExtender.js']}"
+          iframeUrlParams="{extender: 'monaco', language: 'javascript', tsCheck: true, moreDeclarationUrls: ['#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-global.d.ts'])}', '#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-module.d.ts'])}'], moreDeclarationNames: ['file:///src/primefaces-monaco-global.d.ts', 'file:///src/primefaces-monaco-module.d.ts']}"
+          language="#{monacoEditorController.languageExtender}"
+          editorOptions="#{monacoEditorController.editorOptionsExtender}"
+          width="100%" height="500px" autoResize="true"/>
+  </h:panelGroup>
+
+  <!-- Actual editor with the extender applied -->
+  <h:panelGroup id="monacoEditorWrapper" layout="block" style="flex:1" styleClass="monacoEditorBox">
+      <pe:monacoDiffEditor id="monacoEditor" widgetVar="monacoEditor"
+          rendered="#{empty monacoEditorController.extenderError}"
+          value="#{monacoEditorController.valueDiff}"
+          extender="(window.MonacoEnvironment.Extender||{}).diffEditor||{}"
+          language="#{monacoEditorController.language}"
+          editorOptions="#{monacoEditorController.editorOptionsDiff}"
+          width="100%" height="500px" autoResize="true" />
+      <h:panelGroup layout="block" 
+        rendered="#{not empty monacoEditorController.extenderError}" styleClass="monacoEditorError">
+        <strong>Could not load custom Monaco editor extender, error was:</strong>
+        <pre>#{monacoEditorController.extenderError}</pre>
+      </h:panelGroup>
+  </h:panelGroup>
+</div>
+
+<!-- EXAMPLE-SOURCE-END< -->
+</ui:composition>

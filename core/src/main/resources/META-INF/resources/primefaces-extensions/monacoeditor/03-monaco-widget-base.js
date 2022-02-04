@@ -2,43 +2,52 @@
 
 window.monacoModule = window.monacoModule || {};
 
-window.monacoModule.ExtMonacoEditorBase = (function () {
+(function () {
   /**
-   * @template {PrimeFaces.widget.ExtMonacoEditorBaseCfg} T
-   * @extends {PrimeFaces.widget.DeferredWidget<T>}
+   * @template {import("monaco-editor").editor.IEditor} TEditor
+   * @template {import("monaco-editor").editor.IEditorOptions} TEditorOpts
+   * @template {PrimeFaces.widget.ExtMonacoBaseEditorCfg<TEditorOpts>} TCfg
+   * @extends {PrimeFaces.widget.DeferredWidget<TCfg>}
    */
   class BaseImpl extends PrimeFaces.widget.DeferredWidget {
     /**
-     * @param  {PrimeFaces.PartialWidgetCfg<T>} cfg Arguments as passed by PrimeFaces.
+     * @param  {PrimeFaces.PartialWidgetCfg<TCfg>} cfg Arguments as passed by PrimeFaces.
      */
     constructor(cfg) {
       super(cfg);
+
+      /** @type {PromiseHook<this>[] | undefined} */
+      this._onDone;
+
+      /** @type {JQuery | undefined} */
+      this._input;
+
+      /** @type {JQuery | undefined} */
+      this._editorContainer;
+
+      /** @type {string | undefined} */
+      this._editorValue;
     }
 
     /**
-     * @param {PrimeFaces.PartialWidgetCfg<T>} cfg
-     * @param {Partial<T>} editorDefaults
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     * @param {Partial<TCfg>} editorDefaults
      */
     _init(cfg, editorDefaults) {
       super.init(cfg);
 
       // Set defaults.
-      /** @type {T} */
       this.cfg = jQuery.extend({}, editorDefaults, this.cfg);
 
-      /** @type {PromiseHook<this>[]} */
       this._onDone = [];
       this.jq.data("initialized", false);
-      this._scrollTop = this._scrollTop || 0;
 
       // Get elements
-      /** @type {JQuery} */
-      this._input = this.jq.find(".ui-helper-hidden-accessible textarea");
-      /** @type {JQuery} */
+      this._input = this.jq.find(".ui-helper-hidden-accessible textarea").first();
+
       this._editorContainer = this.jq.children(".ui-monaco-editor-ed");
 
       // Default to the given value
-      /** @type {string} */
       this._editorValue = String(this.getInput().val() || "");
 
       // English is the default.
@@ -53,18 +62,24 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
      * @returns {JQuery}
      */
     getInput() {
+      if (this._input === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
       return this._input;
     }
 
     /**
-     * @return {PrimeFaces.widget.ExtMonacoEditorBaseCfgBase}
+     * @returns {PrimeFaces.PartialWidgetCfg<TCfg>}
      */
     getWidgetOptions() {
+      if (this.cfg === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
       return this.cfg;
     }
 
     /**
-     * @return {string}
+     * @returns {string}
      */
     getWidgetId() {
       return Array.isArray(this.id) ? this.id[0] || "" : this.id;
@@ -74,18 +89,21 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
      * @returns {JQuery}
      */
     getEditorContainer() {
+      if (this._editorContainer === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
       return this._editorContainer;
     }
 
     /**
-     * @return {boolean}
+     * @returns {boolean}
      */
     isReady() {
       return this.jq.data("initialized");
     }
 
     /**
-     * @return {Promise<this>}
+     * @returns {Promise<this>}
      */
     whenReady() {
       if (this.isReady()) {
@@ -93,41 +111,42 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
       }
       else {
         return new Promise((resolve, reject) => {
+          this._onDone = this._onDone || [];
           this._onDone.push({ resolve, reject });
         });
       }
     }
 
     /**
-     * @return {Promise<string>}
+     * @returns {Promise<string>}
      */
     getValue() { throw new Error("Must override abstract method."); }
 
     /**
      * @param {string} value
-     * @return {Promise<void>}
+     * @returns {Promise<void>}
      */
     setValue(value) { throw new Error("Must override abstract method."); }
 
     /**
-     * @template {keyof import("monaco-editor").editor.IStandaloneCodeEditor} K
+     * @template {PrimeFaces.MatchingKeys<TEditor, (...args: never[]) => unknown>} K
      * @param {K} method
-     * @param {Parameters<import("monaco-editor").editor.IStandaloneCodeEditor[K]>} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<ReturnType<import("monaco-editor").editor.IStandaloneCodeEditor[K]>>>}
+     * @param {PrimeFaces.widget.ExtMonacoEditor.ParametersIfFn<TEditor[K]>} args
+     * @returns {Promise<Awaited<PrimeFaces.widget.ExtMonacoEditor.ReturnTypeIfFn<TEditor[K]>>>}
      */
     invokeMonaco(method, ...args) { throw new Error("Must override abstract method."); }
 
     /**
      * @template TRetVal
      * @template {any[]} TArgs
-     * @param {((editor: import("monaco-editor").editor.IStandaloneCodeEditor, ...args: TArgs) => TRetVal) | string} script
+     * @param {((editor: TEditor, ...args: TArgs) => TRetVal) | string} script
      * @param {TArgs} args
-     * @return {Promise<PrimeFaces.UnwrapPromise<TRetVal>>}
+     * @returns {Promise<Awaited<TRetVal>>}
      */
     invokeMonacoScript(script, ...args) { throw new Error("Must override abstract method."); }
 
     /**
-     * @return {Promise<void>}
+     * @returns {Promise<void>}
      */
     layout() { throw new Error("Must override abstract method."); }
 
@@ -143,10 +162,16 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
      * @param  {PrimeFaces.ajax.RequestParameter[]} params
      */
     _fireEvent(eventName, ...params) {
-      const onName = "on" + eventName;
+      if (this.cfg === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
+      const onName = `on${eventName.toLowerCase()}`;
       this.jq.trigger("monacoEditor:" + eventName, params);
-      if (typeof this.cfg[onName] === "function") {
-        this.cfg[onName].apply(this, params || []);
+      /** @type {Record<string, unknown>} */
+      const cfg = this.cfg;
+      const callback = cfg[onName];
+      if (typeof callback === "function") {
+        callback.apply(this, params || []);
       }
       this.callBehavior(eventName, {
         params: params || []
@@ -154,18 +179,31 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
     }
 
     /**
-     * @return {string[]}
+     * @returns {string[]}
      */
     _listSupportedEvents() {
+      if (this.cfg === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
+      if (this.cfg.availableEvents === undefined) {
+        return [];
+      }
       return this.cfg.availableEvents.filter(event => this._supportsEvent(event));
     }
 
     /**
      * @param {string} eventName 
-     * @return {boolean}
+     * @returns {boolean}
      */
     _supportsEvent(eventName) {
-      return this.hasBehavior(eventName) || this.cfg[`on${eventName}`];
+      if (this.cfg === undefined) {
+        throw new Error("IllegalState: Widget was not initialized yet.");
+      }
+      const onName = `on${eventName.toLowerCase()}`;
+      /** @type {Record<string, unknown>} */
+      const cfg = this.cfg;
+      const callback = cfg[onName];
+      return this.hasBehavior(eventName) || typeof callback === "function";
     }
 
     _rejectOnDone() {
@@ -181,12 +219,13 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
 
     /**
      * Should be called once the editor was created.
+     * @returns {Promise<void>}
      */
     async _onInitSuccess() {
+      await this.setValue(this._editorValue || "");
       this._fireEvent("initialized");
       this.jq.data("initialized", true);
-      await this.setValue(this._editorValue);
-      for (const { resolve } of this._onDone) {
+      for (const { resolve } of this._onDone || []) {
         resolve(this);
       }
       this._bindEvents();
@@ -204,12 +243,15 @@ window.monacoModule.ExtMonacoEditorBase = (function () {
       else {
         console.error("[MonacoEditor] Failed to initialize monaco editor", error);
       }
-      for (const { reject } of this._onDone) {
+      for (const { reject } of this._onDone || []) {
         reject(error);
       }
       this._onDone = [];
     }
   }
+
+  window.monacoModule.ExtMonacoEditorBase = BaseImpl;
+  PrimeFaces.widget.ExtMonacoBaseEditor = BaseImpl;
 
   return BaseImpl;
 })();

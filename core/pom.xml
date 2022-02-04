@@ -25,14 +25,27 @@
                 <excludes>
                     <!-- Only for having @types during development -->
                     <exclude>**/node_modules/**</exclude>
-                    <exclude>**/*.d.ts</exclude>
+                    <exclude>**/patches/**</exclude>
                     <exclude>**/jsconfig.json</exclude>
+                    <exclude>**/tsconfig.json</exclude>
                     <exclude>**/package.json</exclude>
                     <exclude>**/package-lock.json</exclude>
                 </excludes>
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <excludeDefaultDirectories>false</excludeDefaultDirectories>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/node_modules</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -58,8 +71,8 @@
                         <exclude>**/META-INF/resources/**/monacoeditor/01-*.js</exclude>
                         <!-- Only used for development, not required -->
                         <exclude>**/META-INF/resources/**/node_modules/**</exclude>
-                        <exclude>**/META-INF/resources/**/*.d.ts</exclude>
                         <exclude>**/META-INF/resources/**/jsconfig.json</exclude>
+                        <exclude>**/META-INF/resources/**/tsconfig.json</exclude>
                         <exclude>**/META-INF/resources/**/package*</exclude>
                     </excludes>
                 </configuration>
@@ -376,6 +389,19 @@
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
+                        <!-- MonacoEditor style -->
+                        <resourcesSet>
+                            <includes>
+                                <include>monacoeditor/monacoeditor.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/monacoeditor/monacoeditor.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
                     </resourcesSets>
                 </configuration>
             </plugin>
@@ -506,7 +532,7 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                     </execution>
                     <!-- Install dependencies -->
                     <execution>
@@ -514,7 +540,7 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <configuration>
                             <arguments>install</arguments>
                             <testFailureIgnore>true</testFailureIgnore>
@@ -526,9 +552,9 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <configuration>
-                            <arguments>run check</arguments>
+                            <arguments>run verify</arguments>
                         </configuration>
                     </execution>
                 </executions>

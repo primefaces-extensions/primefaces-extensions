@@ -6,7 +6,7 @@
 <ui:composition template="/templates/showcaseLayout.xhtml">
 
     <f:metadata>
-        <f:viewAction action="#{monacoEditorController.initCustomLocalization}"/>
+        <f:viewAction action="#{monacoEditorController.initCustomLocalization('code')}"/>
     </f:metadata>
 
     <ui:define name="centerContent">
@@ -25,6 +25,7 @@
             Below you can see the editor in Hindi (try opening the context menu with a right click).
             <strong>Note: For this demonstration, the translation was done via Google translate.</strong>
             Do not use this translation in production, but it should illustrate how you can create your own localization.
+            This sample translation file might also be missing new keys added in later versions of Monaco editor.
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">

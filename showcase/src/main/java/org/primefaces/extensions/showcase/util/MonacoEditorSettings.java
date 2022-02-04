@@ -24,9 +24,15 @@ package org.primefaces.extensions.showcase.util;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
 import org.primefaces.extensions.model.monacoeditor.ECursorStyle;
 import org.primefaces.extensions.model.monacoeditor.ELanguage;
 import org.primefaces.extensions.model.monacoeditor.ERenderWhitespace;
@@ -56,20 +62,9 @@ public class MonacoEditorSettings {
      */
     public static List<Locale> getBuiltInLocales() {
         return Arrays.asList( //
-                    new Locale("cs"),
-                    new Locale("de"),
-                    new Locale("en"),
-                    new Locale("es"),
-                    new Locale("fr"),
-                    new Locale("it"),
-                    new Locale("ja"),
+                    new Locale("cs"), new Locale("de"), new Locale("en"), new Locale("es"), new Locale("fr"), new Locale("it"), new Locale("ja"),
                     new Locale("ko"),
-                    new Locale("pl"),
-                    new Locale("pt", "BR"),
-                    new Locale("ru"),
-                    new Locale("tr"),
-                    new Locale("zh", "CN"),
-                    new Locale("zh", "TW"));
+                    new Locale("pl"), new Locale("pt", "BR"), new Locale("ru"), new Locale("tr"), new Locale("zh", "CN"), new Locale("zh", "TW"));
     }
 
     public static EditorOptions createEditorOptionsExtender() {
@@ -86,8 +81,21 @@ public class MonacoEditorSettings {
         return opts;
     }
 
+    public static DiffEditorOptions createEditorOptionsExtenderDiff() {
+        DiffEditorOptions opts = new DiffEditorOptions();
+        opts.setFontSize(12);
+        opts.setTheme(ETheme.VS);
+        opts.setCursorStyle(ECursorStyle.BLOCK);
+        opts.setRulers(Arrays.asList( //
+                    new EditorRulerOption().setColumn(60).setColor("#ccc"), //
+                    new EditorRulerOption().setColumn(80).setColor("#c33") //
+        ));
+        opts.setRenderWhitespace(ERenderWhitespace.ALL);
+        return opts;
+    }
+
     /**
-     * @return A list of all examples available in the extender showcase.
+     * @return A list of all examples available in the extender showcase for the code editor.
      */
     public static List<SelectItem> createEditorExamples() {
         return Arrays.asList( //
@@ -96,5 +104,58 @@ public class MonacoEditorSettings {
                     new SelectItem("jsonschema", "JSON Schema"), //
                     new SelectItem("jquery", "Type declarations (JQuery)") //
         );
+    }
+
+    /**
+     * @return A list of all examples for available in the extender showcase for the diff editor.
+     */
+    public static List<SelectItem> createEditorExamplesDiff() {
+        return Arrays.asList( //
+                    new SelectItem("options", "Adjust editor options"), //
+                    new SelectItem("localstorage", "Editor overrides (Storage service)"), //
+                    new SelectItem("jsonschema", "JSON Schema"), //
+                    new SelectItem("jquery", "Type declarations (JQuery)") //
+        );
+    }
+
+    /**
+     * Applies random modifications to the original, for showcasing the diff editor.
+     * 
+     * @param original Original string.
+     * @return A modified string with random modifications.
+     */
+    public static String deriveModifiedContent(String original) {
+        if (original == null || original.isEmpty()) {
+            return original;
+        }
+        original = replaceRandomOccurence(original, 20, Pattern.compile("[0-9]"), //
+                    () -> String.valueOf((char) RandomUtils.nextInt(48, 58)) //
+        );
+        original = replaceRandomOccurence(original, 20, Pattern.compile(" "), //
+                    () -> StringUtils.repeat(" ", RandomUtils.nextInt(2, 5)) //
+        );
+        return original;
+    }
+
+    private static String replaceRandomOccurence(String value, int count, Pattern search, Supplier<String> replacement) {
+        for (int i = 1; i <= count; i += 1) {
+            final int pos = (int) Math.floor(Math.random() * value.length());
+            final Matcher matcher = search.matcher(value);
+            boolean matches = matcher.find(pos);
+            if (!matches) {
+                matches = matcher.find(0);
+            }
+            if (!matches) {
+                // No more matches left to replace
+                break;
+            }
+            final int start = matcher.start();
+            final int end = matcher.end();
+            final String repl = replacement.get();
+            value = end >= value.length() //
+                        ? value.substring(0, start) + String.valueOf(repl) //
+                        : value.substring(0, start) + String.valueOf(repl) + value.substring(end);
+        }
+        return value;
     }
 }

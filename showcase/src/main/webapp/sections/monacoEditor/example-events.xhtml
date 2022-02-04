@@ -42,10 +42,11 @@
        	onmousedown="console.log('mousedown')" onmousemove="console.log('mousemove')"
        	onmouseup="console.log('mouseup')" onpaste="console.log('paste')"
     >
+        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
         <p:ajax event="blur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="change" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="focus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
-        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="keydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="keyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="mousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
@@ -66,10 +67,11 @@
         onmousedown="console.log('mousedown')" onmousemove="console.log('mousemove')"
         onmouseup="console.log('mouseup')" onpaste="console.log('paste')"
     >
+        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
+
         <p:ajax event="blur" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="change" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="focus" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
-        <p:ajax event="initialized" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="keydown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="keyup" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />
         <p:ajax event="mousedown" onstart="PF('growl').add({severity:'info',summary:'AJAX event',detail:cfg.event});return false;" />

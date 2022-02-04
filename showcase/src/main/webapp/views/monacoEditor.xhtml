@@ -27,7 +27,7 @@
             The Monaco Editor component has been developed with customizability in mind. You can specify and extender to configure
             the editor via custom JavaScript in any way you like via the official <a href="https://microsoft.github.io/monaco-editor/api/index.html"
                                                                                      target="_blank" rel="noopener noreferrer">
-            client-side API.</a> This JSF component comes in two varieties:
+            client-side API.</a> This JSF component comes in four varieties:
             <ul>
                 <li>The <code>pe:monacoEditor</code> renders the editor inline in the page where you include it. This is usually more
                     efficient and the preferred way when you do not need different editors with a different global configuration.
@@ -36,10 +36,23 @@
                     Monaco Editor configuration is window global, such as the loaded TypeScript declaration files for improved JavaScript
                     IntelliSense. If you wish to use multiple editors with a completely different setup, consider using the framed variant.
                 </li>
+                <li>The <code>pe:monacoDiffEditor</code> renders a diff editor for comparing two files inline in the page where you include it.
+                    This is usually more efficient and the preferred way when you do not need different editors with a different global configuration.
+                </li>
+                <li>The <code>pe:monacoDiffEditorFramed</code> renders a diff editor for comparing two files in an iframe for improved encapsulation.
+                    Part of the Monaco Editor configuration is window global, such as the loaded TypeScript declaration files for improved JavaScript
+                    IntelliSense. If you wish to use multiple editors with a completely different setup, consider using the framed variant.
+                </li>
             </ul>
-            Both variants share almost the same API with a few minor differences regarding a few client-side widget methods and how
-            you specifiy the extender. As the framed variant runs inside an iframe, all interactions with the editor is handled via
-            <code>postMessage</code> and thus neccesarily asynchronous.
+            All variants share almost the same API with a few minor differences regarding a few client-side widget methods and how
+            you specifiy the extender. The diff editor has some additional properties for the the settings of the original (left) editor
+            against which the value is compared. As the framed variant runs inside an iframe, all interactions with the editor is handled
+            via <code>postMessage</code> and thus neccesarily asynchronous. The API makes heavy use of Promises.
+            <br/><br/>
+            While PrimeFaces extensions does not have TypeScript declarations in general yet, the client side API of this component
+            is fully typed and checked against the PrimeFaces type: 
+            <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-global.d.ts" target="_blank" rel="noopener noreferrer">primefaces-monaco-global.d.ts</a>, 
+            <a href="https://github.com/primefaces-extensions/primefaces-extensions/blob/master/core/src/main/resources/META-INF/resources/primefaces-extensions/monacoeditor/primefaces-monaco-module.d.ts" target="_blank" rel="noopener noreferrer">primefaces-monaco-module.d.ts</a>
             <br/><br/>
             Note that this is a code editor, not at all unlike CodeMirror. Especially for the languages with IntelliSense support (see above) this
             editor can provide a fuller and more pleasing experience. However, there are a few things to keep in mind:
@@ -52,8 +65,8 @@
                     It is assumed that users are using a browser with support for the <a
                         href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank"
                         rel="noopener noreferrer">Promise API</a>.
-                    Every browser other than IE, which is unsupported anyways, <a href="https://caniuse.com/promises" target="_blank"
-                                                                                  rel="noopener noreferrer">now supports Promises.</a>
+                    Every browser other than IE, which is unsupported anyways,
+                    <a href="https://caniuse.com/promises" target="_blank" rel="noopener noreferrer">now supports Promises.</a>
                     When for some reason support for the Promise API should not be available, you can simply include an <a
                         href="https://github.com/zloirock/core-js" target="_blank" rel="noopener noreferrer">appropriate polyfill</a>.
                     While untested, it may also be possible to support IE 11 this way.
@@ -63,8 +76,8 @@
                     possibly a mouse should work just fine, but make sure you test your use-case scenario.
                 </li>
             </ul>
-            <br/>
-            <strong>Basic support including syntax highlighting is available for the following languages :</strong> <br/>
+            <strong>Basic support including syntax highlighting is available for the following languages:</strong> <br/>
+            (but also check the official docs, more languages may have been added in the mean time)
             <ul>
                 <ui:repeat var="language" value="#{monacoEditorController.languages}">
                     <li>#{language.toString()}</li>
