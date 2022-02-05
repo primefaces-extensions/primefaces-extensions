@@ -148,10 +148,10 @@ public class MonacoEditorSettings {
             return original;
         }
         original = replaceRandomOccurence(original, 20, Pattern.compile("[0-9]"), //
-            () -> String.valueOf((char) RandomUtils.nextInt(48, 58)) //
+                    () -> String.valueOf((char) RandomUtils.nextInt(48, 58)) //
         );
         original = replaceRandomOccurence(original, 20, Pattern.compile(" "), //
-            () -> StringUtils.repeat(" ", RandomUtils.nextInt(2, 5)) //
+                    () -> StringUtils.repeat(" ", RandomUtils.nextInt(2, 5)) //
         );
         return original;
     }
