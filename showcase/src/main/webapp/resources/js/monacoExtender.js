@@ -31,7 +31,7 @@ function createExtender(settings) {
         monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign(
           {},
           monaco.languages.typescript.javascriptDefaults.getCompilerOptions(),
-          { checkJs: true }
+          { checkJs: true, strict: true }
         ));
         monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions(Object.assign(
           {},
