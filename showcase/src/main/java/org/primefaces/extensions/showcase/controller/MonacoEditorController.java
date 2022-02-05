@@ -197,7 +197,7 @@ public class MonacoEditorController implements Serializable {
     public EditorOptions getEditorOptionsFramed() {
         return editorOptionsFramed;
     }
-    
+
     /**
      * @return Options to apply to the Monaco editor for editing the custom CSS for the extender showcase.
      */
@@ -404,14 +404,14 @@ public class MonacoEditorController implements Serializable {
     public MonacoDiffEditorModel getValueFramedDiff() {
         return valueFramedDiff;
     }
-    
+
     /**
      * @return The custom CSS for the extender showcase.
      */
     public String getValueCss() {
         return valueCss;
     }
-    
+
     /**
      * @param valueCss The custom CSS for the extender showcase.
      */
@@ -910,7 +910,7 @@ public class MonacoEditorController implements Serializable {
             valueCss = "";
         }
     }
-    
+
     /**
      * Loads the code language for the extender example with the given key from the properties file.
      *
