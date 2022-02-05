@@ -13,7 +13,14 @@
   update="monacoEditorWrapper" />
 
 <h:panelGroup id="customExtenderInline">
+  <style>#{monacoEditorController.valueCss}</style>
   <script>
+    (function() {
+      var example = "#{empty monacoEditorController.extenderExample ? "" : of:escapeJS(monacoEditorController.extenderExample)}";
+      var url = new URL(location.href);
+      url.searchParams.set("example", example);
+      history.replaceState(example, "Extender: " + example, url.toString());
+    })();
   </script>
   <script>
     // Force the widget to reload the monaco library so people can test their extenders
@@ -120,11 +127,11 @@
 <p:staticMessage id="extenderInfo" severity="info" styleClass="monacoEditorMessage" escape="false"
   summary="#{monacoEditorController.extenderName}" detail="#{monacoEditorController.extenderInfo}" />
 
-<h:panelGrid columns="3">
+<h:panelGrid columns="4">
   <!-- Apply the selected extender -->
   <p:commandLink id="applyExtender" partialSubmit="true" styleClass="ui-button ui-button-text-icon-right"
     actionListener="#{monacoEditorController.onMonacoExtenderRun}"
-    process="@this,monacoExtender,monacoEditorWrapper" update="customExtenderInline,monacoEditorWrapper">
+    process="@this,extenderTabs:monacoExtender,extenderTabs:monacoCss,monacoEditorWrapper" update="customExtenderInline,monacoEditorWrapper">
     <span class="ui-button-icon-right ui-icon ui-c pi pi-play" style="color:white"></span>
     <span class="ui-button-text ui-c" style="color:white">Run</span>
   </p:commandLink>
@@ -134,23 +141,42 @@
   <p:selectOneMenu id="extenderExample" value="#{monacoEditorController.extenderExample}">
       <f:selectItems value="#{monacoEditorController.extenderExamplesDiff}" />
       <p:ajax 
-        process="extenderInfo,monacoExtender,monacoEditorWrapper"
+        process="extenderInfo,extenderTabs:monacoExtender,extenderTabs:monacoCss,monacoEditorWrapper"
         listener="#{monacoEditorController.onExtenderExampleChange}"
-        update="customExtenderInline,extenderInfo,monacoExtender,monacoEditorWrapper" />
+        update="customExtenderInline,extenderInfo,extenderLink,extenderTabs:monacoExtender,extenderTabs:monacoCss,monacoEditorWrapper" />
   </p:selectOneMenu>
+
+  <p:link id="extenderLink" href="?example=#{monacoEditorController.extenderExample}" 
+    target="_blank"
+    value="Link to this extender example"/>
 </h:panelGrid>
 
 <div style="display:flex">
   <!-- Monaco editor for editing the extender -->
-  <h:panelGroup id="monacoExtenderWrapper" layout="block" style="flex:1" styleClass="monacoExtenderBox">
-      <pe:monacoEditorFramed id="monacoExtender" widgetVar="monacoExtender"
-          value="#{monacoEditorController.valueExtender}" scheme="file"
-          extender="#{resource['js/monacoExtender.js']}"
-          iframeUrlParams="{extender: 'monaco', language: 'javascript', tsCheck: true, moreDeclarationUrls: ['#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-global.d.ts'])}', '#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-module.d.ts'])}'], moreDeclarationNames: ['file:///src/primefaces-monaco-global.d.ts', 'file:///src/primefaces-monaco-module.d.ts']}"
-          language="#{monacoEditorController.languageExtender}"
-          editorOptions="#{monacoEditorController.editorOptionsExtender}"
-          width="100%" height="500px" autoResize="true"/>
-  </h:panelGroup>
+  <p:tabView id="extenderTabs" style="flex:1">
+      <p:tab id="extenderCode" title="Extender">
+          <h:panelGroup id="monacoExtenderWrapper" layout="block" styleClass="monacoExtenderBox">
+              <pe:monacoEditorFramed id="monacoExtender" widgetVar="monacoExtender"
+                  value="#{monacoEditorController.valueExtender}" scheme="file"
+                  extender="#{resource['js/monacoExtender.js']}"
+                  iframeUrlParams="{extender: 'monaco', language: 'javascript', tsCheck: true, moreDeclarationUrls: ['#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-global.d.ts'])}', '#{of:escapeJS(resource['primefaces-extensions:monacoeditor/primefaces-monaco-module.d.ts'])}'], moreDeclarationNames: ['file:///src/primefaces-monaco-global.d.ts', 'file:///src/primefaces-monaco-module.d.ts']}"
+                  language="#{monacoEditorController.languageExtender}"
+                  editorOptions="#{monacoEditorController.editorOptionsExtender}"
+                  width="100%" height="500px" autoResize="true"/>
+          </h:panelGroup>
+      </p:tab>
+      <p:tab id="customCss" title="Custom CSS">
+          <h:panelGroup id="monacoCssWrapper" layout="block" styleClass="monacoExtenderBox">
+              <pe:monacoEditorFramed id="monacoCss" widgetVar="monacoCss"
+                  value="#{monacoEditorController.valueCss}" scheme="file"
+                  extender="#{resource['js/monacoExtender.js']}"
+                  iframeUrlParams="{extender: 'default'}"
+                  language="css"
+                  editorOptions="#{monacoEditorController.editorOptionsCss}"
+                  width="100%" height="500px" autoResize="true"/>
+          </h:panelGroup>
+      </p:tab>
+  </p:tabView>
 
   <!-- Actual editor with the extender applied -->
   <!-- window.createShowcaseExtender wraps the createExtender function -->

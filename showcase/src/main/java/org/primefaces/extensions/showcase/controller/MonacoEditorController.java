@@ -42,6 +42,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
 import org.primefaces.extensions.model.monacoeditor.ELanguage;
 import org.primefaces.extensions.model.monacoeditor.ETheme;
@@ -72,6 +73,7 @@ public class MonacoEditorController implements Serializable {
     private EditorOptions editorOptions;
     private EditorOptions editorOptionsFramed;
     private EditorOptions editorOptionsExtender;
+    private EditorOptions editorOptionsCss;
 
     private DiffEditorOptions editorOptionsDiff;
     private DiffEditorOptions editorOptionsFramedDiff;
@@ -106,6 +108,7 @@ public class MonacoEditorController implements Serializable {
     private String value;
     private String valueFramed;
     private String valueExtender;
+    private String valueCss;
 
     private MonacoDiffEditorModel valueDiff;
     private MonacoDiffEditorModel valueFramedDiff;
@@ -158,6 +161,8 @@ public class MonacoEditorController implements Serializable {
         this.editorOptionsExtenderDiff.setRenderSideBySide(true);
         this.editorLangExtenderDiff = ELanguage.JAVASCRIPT;
 
+        this.editorOptionsCss = MonacoEditorSettings.createEditorOptionsCss();
+
         this.type = INLINE;
 
         this.languages = Arrays.stream(ELanguage.values()).map(ELanguage::toString).sorted().collect(toList());
@@ -192,6 +197,13 @@ public class MonacoEditorController implements Serializable {
     public EditorOptions getEditorOptionsFramed() {
         return editorOptionsFramed;
     }
+    
+    /**
+     * @return Options to apply to the Monaco editor for editing the custom CSS for the extender showcase.
+     */
+    public EditorOptions getEditorOptionsCss() {
+        return editorOptionsCss;
+    }
 
     /**
      * @return Options to apply to the framed Monaco code editor.
@@ -201,14 +213,14 @@ public class MonacoEditorController implements Serializable {
     }
 
     /**
-     * @return options to apply to the monaco editor for editing the custom extender.
+     * @return Options to apply to the Monaco editor for editing the custom extender.
      */
     public EditorOptions getEditorOptionsExtender() {
         return editorOptionsExtender;
     }
 
     /**
-     * @return options to apply to the monaco editor for editing the custom extender.
+     * @return Options to apply to the Monaco editor for editing the custom extender.
      */
     public DiffEditorOptions getEditorOptionsExtenderDiff() {
         return editorOptionsExtenderDiff;
@@ -391,6 +403,20 @@ public class MonacoEditorController implements Serializable {
      */
     public MonacoDiffEditorModel getValueFramedDiff() {
         return valueFramedDiff;
+    }
+    
+    /**
+     * @return The custom CSS for the extender showcase.
+     */
+    public String getValueCss() {
+        return valueCss;
+    }
+    
+    /**
+     * @param valueCss The custom CSS for the extender showcase.
+     */
+    public void setValueCss(String valueCss) {
+        this.valueCss = valueCss;
     }
 
     /**
@@ -860,28 +886,78 @@ public class MonacoEditorController implements Serializable {
     /**
      * Loads the info about the extender example with the given key from the properties file.
      *
-     * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
+     * @param propertyKey Key at which the info is stored in {@code monaco-examples.properties}
      */
     private void loadExtenderInfo(String propertyKey) {
         try {
             extenderInfo = propertyKey != null ? examples.getString(propertyKey) : "";
         }
         catch (MissingResourceException e) {
-            extenderInfo = "";
+            extenderInfo = "No info available for this extender. Check the ?example=... URL parameter.";
+        }
+    }
+
+    /**
+     * Loads the CSS for the extender example with the given key from the properties file.
+     *
+     * @param propertyKey Key at which the CSS is stored in {@code monaco-examples.properties}
+     */
+    private void loadExtenderCss(String propertyKey) {
+        try {
+            valueCss = propertyKey != null ? examples.getString(propertyKey) : "";
+        }
+        catch (MissingResourceException e) {
+            valueCss = "";
+        }
+    }
+    
+    /**
+     * Loads the code language for the extender example with the given key from the properties file.
+     *
+     * @param propertyKey Key at which the code language is stored in {@code monaco-examples.properties}
+     */
+    private void loadExtenderLanguage(String propertyKey) {
+        try {
+            String language = propertyKey != null ? examples.getString(propertyKey) : "";
+            language = StringUtils.defaultIfBlank(language, "plaintext");
+            if (CODE.equals(mode)) {
+                try {
+                    editorOptions.setLanguage(language);
+                }
+                catch (MissingResourceException e) {
+                    editorOptions.setLanguage(ELanguage.TYPESCRIPT);
+                }
+            }
+            else {
+                try {
+                    editorLangDiff = ELanguage.parseString(language);
+                }
+                catch (MissingResourceException e) {
+                    editorLangDiff = ELanguage.TYPESCRIPT;
+                }
+            }
+        }
+        catch (MissingResourceException e) {
+            if (CODE.equals(mode)) {
+                editorOptions.setLanguage(ELanguage.PLAINTEXT);
+            }
+            else {
+                editorLangDiff = ELanguage.PLAINTEXT;
+            }
         }
     }
 
     /**
      * Loads the name of the extender example with the given key from the properties file.
      *
-     * @param propertyKey Key at which the code is stored in {@code monaco-examples.properties}
+     * @param propertyKey Key at which the name is stored in {@code monaco-examples.properties}
      */
     private void loadExtenderName(String propertyKey) {
         try {
             extenderName = propertyKey != null ? examples.getString(propertyKey) : "";
         }
         catch (MissingResourceException e) {
-            extenderName = "";
+            extenderName = "Unknown extender";
         }
     }
 
@@ -895,23 +971,8 @@ public class MonacoEditorController implements Serializable {
         loadCodeExtender(getExtenderExampleKey(key, "script"));
         loadExtenderName(getExtenderExampleKey(key, "name"));
         loadExtenderInfo(getExtenderExampleKey(key, "info"));
-        final String language = examples.getString(getExtenderExampleKey(key, "language"));
-        if (CODE.equals(mode)) {
-            try {
-                editorOptions.setLanguage(language);
-            }
-            catch (MissingResourceException e) {
-                editorOptions.setLanguage(ELanguage.TYPESCRIPT);
-            }
-        }
-        else {
-            try {
-                editorLangDiff = ELanguage.parseString(language);
-            }
-            catch (MissingResourceException e) {
-                editorLangDiff = ELanguage.TYPESCRIPT;
-            }
-        }
+        loadExtenderCss(getExtenderExampleKey(key, "css"));
+        loadExtenderLanguage(getExtenderExampleKey(key, "language"));
     }
 
     /**
@@ -1028,8 +1089,14 @@ public class MonacoEditorController implements Serializable {
         else {
             editorLangExtenderDiff = ELanguage.JAVASCRIPT;
         }
-        extenderExample = "jquery";
-        loadExtenderExample("jquery");
+        String requested = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("example");
+        if (CODE.equals(mode)) {
+            extenderExample = StringUtils.defaultIfBlank(requested, "jquery");
+        }
+        else {
+            extenderExample = StringUtils.defaultIfBlank(requested, "diffnavi");
+        }
+        loadExtenderExample(extenderExample);
     }
 
     /**
