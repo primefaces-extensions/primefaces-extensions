@@ -494,6 +494,7 @@ async function main() {
             "dockerfile",
             "ecl",
             "flow9",
+            "freemarker2",
             "fsharp",
             "freemarker2",
             "freemarker2.tag-angle.interpolation-bracket",
