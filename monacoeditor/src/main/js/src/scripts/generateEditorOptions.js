@@ -494,6 +494,7 @@ async function main() {
             "dockerfile",
             "ecl",
             "flow9",
+            "freemarker2",
             "fsharp",
             "go",
             "graphql",
