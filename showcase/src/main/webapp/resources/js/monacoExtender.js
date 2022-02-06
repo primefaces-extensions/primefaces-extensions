@@ -31,7 +31,7 @@ function createExtender(settings) {
         monaco.languages.typescript.javascriptDefaults.setCompilerOptions(Object.assign(
           {},
           monaco.languages.typescript.javascriptDefaults.getCompilerOptions(),
-          { checkJs: true }
+          { checkJs: true, strict: true }
         ));
         monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions(Object.assign(
           {},
@@ -41,33 +41,33 @@ function createExtender(settings) {
       }
 
       // Load all requested TypeScript declaration files from the network
-      var promiseDeclarationsSingle = settings.declarations.map(function (file) {
-        var path = Array.isArray(file) ? file[0] : file
-        var name = Array.isArray(file) ? file[1] : file;
-        return fetch(path)
-          .then(function (response) { return response.text() })
-          .then(function (text) { return { text: text, file: name } });
-      });
-      
-      // Loop over all fetched declaration files and add them to the editor
-      var promiseDeclarationsAll = Promise.all(promiseDeclarationsSingle)
-        .then(function (declarations) {
-          return declarations.forEach(function (declaration) {
-            if (settings.language === "javascript") {
-              monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.text, declaration.file);
-            }
-            if (settings.language === "typescript") {
-              monaco.languages.typescript.typescriptDefaults.addExtraLib(declaration.text, declaration.file);
-            }
+      if (settings.declarations) {
+        var promiseDeclarationsSingle = settings.declarations.map(function (file) {
+          var path = Array.isArray(file) ? file[0] : file
+          var name = Array.isArray(file) ? file[1] : file;
+          return fetch(path)
+            .then(function (response) { return response.text() })
+            .then(function (text) { return { text: text, file: name } });
+        });
+        // Loop over all fetched declaration files and add them to the editor
+        var promiseDeclarationsAll = Promise.all(promiseDeclarationsSingle)
+          .then(function (declarations) {
+            return declarations.forEach(function (declaration) {
+              if (settings.language === "javascript") {
+                monaco.languages.typescript.javascriptDefaults.addExtraLib(declaration.text, declaration.file);
+              }
+              if (settings.language === "typescript") {
+                monaco.languages.typescript.typescriptDefaults.addExtraLib(declaration.text, declaration.file);
+              }
+            });
           });
-        });
-
-      return Promise.all([
-          promiseDeclarationsAll
-        ])
-        .then(function () {
-          return options;
-        });
+        return Promise.all([
+            promiseDeclarationsAll
+          ])
+          .then(function () {
+            return options;
+          });
+      }
     }
   };
 }
@@ -136,6 +136,9 @@ if (window.MonacoEnvironment) {
     break;
   case "monaco":
     window.MonacoEnvironment.Extender = {codeEditor: createExtenderMonaco(params)};
+    break;
+  case "default":
+    window.MonacoEnvironment.Extender = {codeEditor: createExtender(params)};
     break;
   }
 }

@@ -454,6 +454,7 @@ window.monacoModule.helper = (function () {
     }
     else {
       dir = modelConfig.createDefaultDir(context, extender);
+      dir = dir + "/" + language.replace(/[^a-zA-Z0-9_-]/g, "/");
     }
     if (modelConfig.basename) {
       basename = modelConfig.basename;

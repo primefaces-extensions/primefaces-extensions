@@ -54,7 +54,9 @@
             })
         </script>
 
-        <ui:decorate template="/templates/threeTabsDecoratorJS.xhtml">
+        <ui:decorate template="/templates/threeTabsDecoratorCustom.xhtml">
+            <ui:param name="customTitle" value="js/monacoExtender.js" />
+            <ui:param name="customCode" value="language-javascript" />
             <ui:define name="contentTab1">
                 ${showcase:getFileContent('/sections/monacoEditor/example-extenderDiff.xhtml')}
             </ui:define>

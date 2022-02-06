@@ -73,6 +73,24 @@ public class MonacoEditorSettings {
         opts.setFontSize(12);
         opts.setTheme(ETheme.VS);
         opts.setCursorStyle(ECursorStyle.BLOCK);
+        opts.setTabSize(2);
+        opts.setUseTabStops(false);
+        opts.setRulers(Arrays.asList( //
+                    new EditorRulerOption().setColumn(60).setColor("#ccc"), //
+                    new EditorRulerOption().setColumn(80).setColor("#c33") //
+        ));
+        opts.setRenderWhitespace(ERenderWhitespace.ALL);
+        return opts;
+    }
+
+    public static EditorOptions createEditorOptionsCss() {
+        EditorOptions opts = new EditorOptions();
+        opts.setLanguage(ELanguage.CSS);
+        opts.setFontSize(12);
+        opts.setTheme(ETheme.VS);
+        opts.setCursorStyle(ECursorStyle.BLOCK);
+        opts.setTabSize(2);
+        opts.setUseTabStops(false);
         opts.setRulers(Arrays.asList( //
                     new EditorRulerOption().setColumn(60).setColor("#ccc"), //
                     new EditorRulerOption().setColumn(80).setColor("#c33") //
@@ -112,6 +130,7 @@ public class MonacoEditorSettings {
     public static List<SelectItem> createEditorExamplesDiff() {
         return Arrays.asList( //
                     new SelectItem("options", "Adjust editor options"), //
+                    new SelectItem("diffnavi", "Diff navigator"), //
                     new SelectItem("localstorage", "Editor overrides (Storage service)"), //
                     new SelectItem("jsonschema", "JSON Schema"), //
                     new SelectItem("jquery", "Type declarations (JQuery)") //
