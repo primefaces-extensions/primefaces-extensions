@@ -839,14 +839,16 @@ public class SheetRenderer extends CoreRenderer {
 
         try {
             // data comes in array of arrays
-            final JSONArray arrays = new JSONArray(jsonSelection);
-            for (int i = 0; i < arrays.length(); i++) {
-                final JSONArray array = arrays.getJSONArray(i);
-                // data comes in: [ [fromrow, fromcol, torow, tocol] ... ]
-                sheet.setSelectedRow(array.getInt(0));
-                sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
-                sheet.setSelectedLastRow(array.getInt(2));
-                sheet.setSelectedLastColumn(array.getInt(3));
+            final JSONArray array = new JSONArray(jsonSelection);
+            if (array.get(0) instanceof JSONArray) {
+                // data comes in array of arrays
+                for (int i = 0; i < array.length(); i++) {
+                    updateSheetSelection(sheet, array.getJSONArray(i));
+                }
+            }
+            else {
+                // data comes in: [ [row, col, oldValue, newValue] ... ] after column/row selection
+                updateSheetSelection(sheet, array);
             }
             sheet.setSelection(jsonSelection);
         }
@@ -854,6 +856,14 @@ public class SheetRenderer extends CoreRenderer {
             throw new FacesException("Failed parsing Ajax JSON message for cell selection event:" + e.getMessage(),
                         e);
         }
+    }
+
+    private void updateSheetSelection(final Sheet sheet, final JSONArray array) throws JSONException {
+        // data comes in: [ [row, col, oldValue, newValue] ... ]
+        sheet.setSelectedRow(array.getInt(0));
+        sheet.setSelectedColumn(sheet.getMappedColumn(array.getInt(1)));
+        sheet.setSelectedLastRow(array.getInt(2));
+        sheet.setSelectedLastColumn(array.getInt(3));
     }
 
     /**
