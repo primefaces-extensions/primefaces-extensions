@@ -31,7 +31,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
-import org.primefaces.extensions.model.monacoeditor.EditorOptions;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -40,7 +39,8 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 10.0.0
  */
-abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase> extends MonacoEditorCommonRenderer<TEditor, EditorOptions> {
+abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase>
+                                       extends MonacoEditorCommonRenderer<TEditor, org.primefaces.extensions.model.monacoeditor.EditorOptions> {
     private static final String INPUT_SUFFIX = "_input";
 
     private static final List<String> PASSTHROUGH_ATTRS = Arrays.asList(//
@@ -50,11 +50,12 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase> extend
                 "size", "title" //
     );
 
-    protected MonacoEditorBaseRenderer(Class<TEditor> clazz) {
+    protected MonacoEditorBaseRenderer(final Class<TEditor> clazz) {
         super(clazz);
     }
 
-    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException;
+    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor)
+                throws IOException;
 
     @Override
     public final void decode(final FacesContext context, final UIComponent component) {
@@ -107,7 +108,8 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase> extend
     }
 
     @Override
-    public final Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+    public final Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object submittedValue) {
         final TEditor monacoEditor = componentClass.cast(component);
         final String value = (String) submittedValue;
         final Converter<?> converter = ComponentUtils.getConverter(context, monacoEditor);
@@ -120,17 +122,18 @@ abstract class MonacoEditorBaseRenderer<TEditor extends MonacoEditorBase> extend
     }
 
     @Override
-    protected final void addBaseWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException {
+    protected final void addBaseWidgetProperties(final FacesContext context, final WidgetBuilder wb, final TEditor monacoEditor)
+                throws IOException {
         addWidgetProperties(context, wb, monacoEditor);
     }
 
     @Override
-    protected boolean isEntireEditorDisabled(TEditor monacoEditor) {
+    protected boolean isEntireEditorDisabled(final TEditor monacoEditor) {
         return monacoEditor.isDisabled();
     }
 
     @Override
-    protected String getLanguage(TEditor monacoEditor) {
+    protected String getLanguage(final TEditor monacoEditor) {
         return monacoEditor.getEditorOptions().getLanguage();
     }
 }

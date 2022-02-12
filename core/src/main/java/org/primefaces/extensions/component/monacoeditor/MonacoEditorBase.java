@@ -26,7 +26,6 @@ import java.util.Map;
 
 import javax.faces.event.BehaviorEvent;
 
-import org.primefaces.extensions.model.monacoeditor.EditorOptions;
 import org.primefaces.util.MapBuilder;
 
 /**
@@ -35,7 +34,8 @@ import org.primefaces.util.MapBuilder;
  * @since 10.0.0
  */
 @SuppressWarnings("java:S110")
-public abstract class MonacoEditorBase extends MonacoEditorCommon<EditorOptions> {
+public abstract class MonacoEditorBase
+                                       extends MonacoEditorCommon<org.primefaces.extensions.model.monacoeditor.EditorOptions> {
     static final String DEFAULT_EVENT = "change";
 
     static final Map<String, Class<? extends BehaviorEvent>> BASE_BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder() //
@@ -53,8 +53,8 @@ public abstract class MonacoEditorBase extends MonacoEditorCommon<EditorOptions>
 
     static final Collection<String> BASE_EVENT_NAMES = BASE_BEHAVIOR_EVENT_MAPPING.keySet();
 
-    protected MonacoEditorBase(String rendererType) {
-        super(rendererType, EditorOptions.class);
+    protected MonacoEditorBase(final String rendererType) {
+        super(rendererType, org.primefaces.extensions.model.monacoeditor.EditorOptions.class);
     }
 
     @Override

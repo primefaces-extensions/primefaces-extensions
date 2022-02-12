@@ -34,8 +34,6 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
-import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
-import org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -43,7 +41,9 @@ import org.primefaces.util.WidgetBuilder;
  *
  * @since 11.1.0
  */
-abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase> extends MonacoEditorCommonRenderer<TEditor, DiffEditorOptions> {
+abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase>
+                                           extends
+                                           MonacoEditorCommonRenderer<TEditor, org.primefaces.extensions.model.monacoeditor.DiffEditorOptions> {
     private static final String INPUT_SUFFIX = "_input";
     private static final String INPUT_ORIGINAL_SUFFIX = "_input_original";
 
@@ -54,7 +54,7 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
                 "size", "title" //
     );
 
-    protected MonacoDiffEditorBaseRenderer(Class<TEditor> clazz) {
+    protected MonacoDiffEditorBaseRenderer(final Class<TEditor> clazz) {
         super(clazz);
     }
 
@@ -103,7 +103,9 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
         renderPassThruAttributes(context, monacoEditor, PASSTHROUGH_ATTRS);
 
-        final MonacoDiffEditorModel valueToRender = (MonacoDiffEditorModel) getValueToRender(context, monacoEditor);
+        final org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel valueToRender;
+        valueToRender = (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) getValueToRender(
+                    context, monacoEditor);
 
         writer.startElement("textarea", null);
         writer.writeAttribute("id", clientId + INPUT_SUFFIX, null);
@@ -139,12 +141,15 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
     }
 
     @Override
-    public final Object getConvertedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+    public final Object getConvertedValue(final FacesContext context, final UIComponent component,
+                final Object submittedValue) {
         return convertedSubmittedValue(context, component, submittedValue);
     }
 
     @Override
-    protected final void addBaseWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException {
+    protected final void addBaseWidgetProperties(final FacesContext context, final WidgetBuilder wb,
+                final TEditor monacoEditor)
+                throws IOException {
         wb.attr("originalDisabled", monacoEditor.isOriginalDisabled(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_DISABLED);
         wb.attr("originalReadonly", monacoEditor.isOriginalReadonly(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_READONLY);
         wb.attr("originalLanguage", monacoEditor.getOriginalLanguage(), MonacoDiffEditorBase.DEFAULT_ORIGINAL_LANGUAGE);
@@ -168,22 +173,24 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         addWidgetProperties(context, wb, monacoEditor);
     }
 
-    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor) throws IOException;
+    protected abstract void addWidgetProperties(FacesContext context, WidgetBuilder wb, TEditor monacoEditor)
+                throws IOException;
 
     @Override
-    protected String getLanguage(TEditor monacoEditor) {
+    protected String getLanguage(final TEditor monacoEditor) {
         return monacoEditor.getLanguage();
     }
 
     @Override
-    protected boolean isEntireEditorDisabled(TEditor monacoEditor) {
+    protected boolean isEntireEditorDisabled(final TEditor monacoEditor) {
         return monacoEditor.isDisabled() && monacoEditor.isOriginalDisabled();
     }
 
-    private static Object getValueToRender(FacesContext context, MonacoDiffEditorBase component) {
+    private static Object getValueToRender(final FacesContext context, final MonacoDiffEditorBase component) {
         final Object submittedValue = component.getSubmittedValue();
         final PrimeConfiguration config = PrimeApplicationContext.getCurrentInstance(context).getConfig();
-        if (config.isInterpretEmptyStringAsNull() && submittedValue == null && !component.isLocalValueSet() && context.isValidationFailed()
+        if (config.isInterpretEmptyStringAsNull() && submittedValue == null && !component.isLocalValueSet() &&
+                    context.isValidationFailed()
                     && !component.isValid()) {
             return null;
         }
@@ -192,25 +199,30 @@ abstract class MonacoDiffEditorBaseRenderer<TEditor extends MonacoDiffEditorBase
         }
         else {
             final Object value = component.getValue();
-            return value instanceof MonacoDiffEditorModel ? (MonacoDiffEditorModel) value : MonacoDiffEditorModel.empty();
+            return value instanceof org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel
+                        ? (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) value
+                        : org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel.empty();
         }
     }
 
-    public final static MonacoDiffEditorModel convertedSubmittedValue(final FacesContext context, final UIComponent component, final Object submittedValue) {
+    public final static org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel convertedSubmittedValue(
+                final FacesContext context, final UIComponent component, final Object submittedValue) {
         if (submittedValue == null) {
-            return MonacoDiffEditorModel.empty();
+            return org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel.empty();
         }
-        if (submittedValue instanceof MonacoDiffEditorModel) {
-            return (MonacoDiffEditorModel) submittedValue;
+        if (submittedValue instanceof org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) {
+            return (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) submittedValue;
         }
         final MonacoDiffEditorBase editor = (MonacoDiffEditorBase) component;
-        final MonacoDiffEditorModel currentModel = editor.getValue() != null //
-                    ? (MonacoDiffEditorModel) editor.getValue() //
-                    : MonacoDiffEditorModel.empty();
+        final org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel currentModel = editor.getValue() != null
+                    //
+                    ? (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) editor.getValue()
+                    //
+                    : org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel.empty();
         @SuppressWarnings("unchecked")
         final Entry<String, String> value = (Map.Entry<String, String>) submittedValue;
         final String originalValue = value.getKey() != null ? value.getKey() : currentModel.getOriginalValue();
         final String modifiedValue = value.getValue() != null ? value.getValue() : currentModel.getModifiedValue();
-        return new MonacoDiffEditorModel(originalValue, modifiedValue);
+        return new org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel(originalValue, modifiedValue);
     }
 }

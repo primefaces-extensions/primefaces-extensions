@@ -28,8 +28,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.BehaviorEvent;
 
-import org.primefaces.extensions.model.monacoeditor.DiffEditorOptions;
-import org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel;
 import org.primefaces.util.MapBuilder;
 import org.primefaces.util.MessageFactory;
 
@@ -39,7 +37,8 @@ import org.primefaces.util.MessageFactory;
  * @since 10.0.0
  */
 @SuppressWarnings("java:S110")
-public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditorOptions> {
+public abstract class MonacoDiffEditorBase
+                                           extends MonacoEditorCommon<org.primefaces.extensions.model.monacoeditor.DiffEditorOptions> {
     static final String DEFAULT_EVENT = "change";
 
     static final Map<String, Class<? extends BehaviorEvent>> BASE_BEHAVIOR_EVENT_MAPPING = MapBuilder.<String, Class<? extends BehaviorEvent>> builder() //
@@ -76,8 +75,8 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
     static final String DEFAULT_ORIGINAL_SCHEME = "inmemory";
     static final String DEFAULT_ORIGINAL_LANGUAGE = null;
 
-    protected MonacoDiffEditorBase(String rendererType) {
-        super(rendererType, DiffEditorOptions.class);
+    protected MonacoDiffEditorBase(final String rendererType) {
+        super(rendererType, org.primefaces.extensions.model.monacoeditor.DiffEditorOptions.class);
     }
 
     public final boolean isOriginalDisabled() {
@@ -114,7 +113,7 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
     }
 
     // We allow both a string and an instance of ELanguage
-    public void setLanguage(Object language) {
+    public void setLanguage(final Object language) {
         getStateHelper().put(DiffEditorPropertyKeys.language, language != null ? language.toString() : null);
     }
 
@@ -123,8 +122,9 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
     }
 
     // We allow both a string and an instance of ELanguage
-    public void setOriginalLanguage(Object originalLanguage) {
-        getStateHelper().put(DiffEditorPropertyKeys.originalLanguage, originalLanguage != null ? originalLanguage.toString() : null);
+    public void setOriginalLanguage(final Object originalLanguage) {
+        getStateHelper().put(DiffEditorPropertyKeys.originalLanguage,
+                    originalLanguage != null ? originalLanguage.toString() : null);
     }
 
     public String getOnoriginalblur() {
@@ -203,7 +203,7 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
         return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalDirectory, DEFAULT_ORIGINAL_DIRECTORY);
     }
 
-    public final void setOriginalDirectory(String originalDirectory) {
+    public final void setOriginalDirectory(final String originalDirectory) {
         getStateHelper().put(DiffEditorPropertyKeys.originalDirectory, originalDirectory);
     }
 
@@ -211,7 +211,7 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
         return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalExtension, DEFAULT_ORIGINAL_EXTENSION);
     }
 
-    public final void setOriginalExtension(String originalExtension) {
+    public final void setOriginalExtension(final String originalExtension) {
         getStateHelper().put(DiffEditorPropertyKeys.originalExtension, originalExtension);
     }
 
@@ -219,7 +219,7 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
         return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalBasename, DEFAULT_ORIGINAL_BASENAME);
     }
 
-    public final void setOriginalBasename(String basename) {
+    public final void setOriginalBasename(final String basename) {
         getStateHelper().put(DiffEditorPropertyKeys.originalBasename, basename);
     }
 
@@ -227,23 +227,25 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
         return (String) getStateHelper().eval(DiffEditorPropertyKeys.originalScheme, DEFAULT_ORIGINAL_SCHEME);
     }
 
-    public final void setOriginalScheme(String originalScheme) {
+    public final void setOriginalScheme(final String originalScheme) {
         getStateHelper().put(DiffEditorPropertyKeys.originalScheme, originalScheme);
     }
 
     @Override
-    protected void validateValue(FacesContext context, Object newValue) {
-        final MonacoDiffEditorModel model = (MonacoDiffEditorModel) newValue;
+    protected void validateValue(final FacesContext context, final Object newValue) {
+        final org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel model;
+        model = (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) newValue;
         // If our value is valid, enforce the required property if present for the modified editor
         if (isValid() && isRequired() && (model == null || isEmpty(model.getModifiedValue()))) {
-            String requiredMessageStr = getRequiredMessage();
-            FacesMessage message;
+            final String requiredMessageStr = getRequiredMessage();
+            final FacesMessage message;
             if (null != requiredMessageStr) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
             }
             else {
                 final Object label = MessageFactory.getLabel(context, this);
-                message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, label.toString());
+                message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
+                            label.toString());
             }
             context.addMessage(getClientId(context), message);
             setValid(false);
@@ -251,14 +253,15 @@ public abstract class MonacoDiffEditorBase extends MonacoEditorCommon<DiffEditor
 
         // If our value is valid, enforce the required property if present for the original edtor
         if (isValid() && isOriginalRequired() && (model == null || isEmpty(model.getOriginalValue()))) {
-            String requiredMessageStr = getRequiredMessage();
-            FacesMessage message;
+            final String requiredMessageStr = getRequiredMessage();
+            final FacesMessage message;
             if (null != requiredMessageStr) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
             }
             else {
                 final Object label = MessageFactory.getLabel(context, this);
-                message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, label.toString());
+                message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
+                            label.toString());
             }
             context.addMessage(getClientId(context), message);
             setValid(false);
