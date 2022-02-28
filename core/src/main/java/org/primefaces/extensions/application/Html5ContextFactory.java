@@ -31,7 +31,6 @@ import javax.faces.lifecycle.Lifecycle;
  * <p>
  * Register it as below in faces-config.xml:
  * </p>
- * 
  * <pre>
  *    &lt;faces-config&gt;
  *        &lt;factory&gt;
