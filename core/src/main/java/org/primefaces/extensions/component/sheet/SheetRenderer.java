@@ -47,6 +47,7 @@ import org.primefaces.shaded.json.JSONException;
 import org.primefaces.shaded.json.JSONObject;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -84,6 +85,7 @@ public class SheetRenderer extends CoreRenderer {
      */
     protected void encodeMarkup(final FacesContext context, final Sheet sheet, final ResponseWriter responseWriter)
                 throws IOException {
+
         /*
          * <div id="..." name="..." class="" style="">
          */
@@ -112,6 +114,7 @@ public class SheetRenderer extends CoreRenderer {
             responseWriter.writeAttribute(Attrs.STYLE, "width: " + width + "px;", null);
         }
 
+        encodeKeyboardTrap(context, sheet);
         encodeHiddenInputs(context, sheet, clientId);
         encodeFilterValues(responseWriter, sheet, clientId);
         encodeHeader(context, responseWriter, sheet);
@@ -520,6 +523,33 @@ public class SheetRenderer extends CoreRenderer {
         renderHiddenInput(fc, clientId + "_selection", sheet.getSelection(), false);
         renderHiddenInput(fc, clientId + "_sortby", Integer.toString(sheet.getSortColRenderIndex()), false);
         renderHiddenInput(fc, clientId + "_sortorder", sheet.getSortOrder().toLowerCase(), false);
+    }
+
+    /**
+     * Hidden accessible keyboard trap for getting focus.
+     *
+     * @param context the Faces context
+     * @param sheet the Sheet widget
+     * @throws IOException if any IO error occurs
+     * @see <a href="https://github.com/primefaces-extensions/primefaces-extensions/issues/741">GitHub 741</a>
+     */
+    protected void encodeKeyboardTrap(final FacesContext context, final Sheet sheet)
+                throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String id = sheet.getClientId(context) + "_keyboard";
+        final String widgetVar = sheet.resolveWidgetVar(context);
+        writer.startElement("div", null);
+        writer.writeAttribute("class", "ui-helper-hidden-accessible", null);
+        writer.startElement("input", null);
+        writer.writeAttribute("id", id, null);
+        writer.writeAttribute("name", id, null);
+        writer.writeAttribute("type", "text", null);
+        writer.writeAttribute("autocomplete", "off", null);
+        writer.writeAttribute(HTML.ARIA_HIDDEN, "true", null);
+        writer.writeAttribute("tabindex", sheet.getTabindex(), null);
+        writer.writeAttribute("onfocus", String.format("PF('%s').focus();", widgetVar), null);
+        writer.endElement("input");
+        writer.endElement("div");
     }
 
     /**

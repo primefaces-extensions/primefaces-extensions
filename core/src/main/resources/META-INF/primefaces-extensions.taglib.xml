@@ -8450,6 +8450,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Position of the element in the tabbing order.]]>
+            </description>
+            <name>tabindex</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
             </description>
             <name>extender</name>

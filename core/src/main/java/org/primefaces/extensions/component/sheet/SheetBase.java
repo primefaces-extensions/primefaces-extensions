@@ -290,6 +290,10 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
          */
         allowTabOffSheet,
         /**
+         * Keyboard focus tab index.
+         */
+        tabindex,
+        /**
          * Name of javascript function to extend the options of the underlying Handsontable plugin.
          */
         extender
@@ -499,6 +503,14 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
 
     public boolean isAllowTabOffSheet() {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.allowTabOffSheet, false).toString());
+    }
+
+    public String getTabindex() {
+        return (String) getStateHelper().eval(PropertyKeys.tabindex, "0");
+    }
+
+    public void setTabindex(final String tabindex) {
+        getStateHelper().put(PropertyKeys.tabindex, tabindex);
     }
 
     public String getExtender() {
