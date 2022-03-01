@@ -20,6 +20,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         this.sheetDiv = $(this.jqId);
         this.tableDiv = $(this.jqId + '_tbl');
         this.dataInput = $(this.jqId + '_input');
+        this.keyboardTrap = $(this.jqId + '_keyboard');
         this.selectionInput = $(this.jqId + '_selection');
         this.sortByInput = $(this.jqId + '_sortby');
         this.sortOrderInput = $(this.jqId + '_sortorder');
@@ -174,6 +175,22 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                     $this.updated = false;
                     $this.callBehavior('change');
                 }
+            },
+            afterListen: function () {
+                // turn off the keyboard trap while sheet has keyboard control
+                var tabIndex = $this.keyboardTrap.attr("tabindex");
+                if (tabIndex) {
+                    $this.keyboardTrap.attr("tabindex", "-1").data("tabindex", tabIndex);
+                }
+            },
+            afterUnlisten: function () {
+                // turn on the keyboard trap once sheet no longer has keyboard control
+                setTimeout(function () {
+                    var tabIndex = $this.keyboardTrap.data("tabindex");
+                    if (tabIndex) {
+                        $this.keyboardTrap.attr("tabindex", tabIndex).data("tabindex", "");
+                    }
+                }, 250)
             },
             afterGetColHeader: function (col, TH) {
                 var header = $(TH);
@@ -482,6 +499,13 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         }
     },
 
+    // #741 focus the handsontable https://stackoverflow.com/questions/11007947/how-to-onload-set-focus-to-jquery-handsontable
+    focus: function () {
+        if (this.ht) {
+            this.ht.selectCell(0, 0);
+        }
+    },
+
     // run filtering if it has changed
     filter: function () {
         if (this.filterChanged && this.hasBehavior('filter')) {
@@ -538,7 +562,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 this.deselectCell();
 
                 //add all elements we want to include in our selection
-                var focusableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+                var focusableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]):not([hidden]):not([aria-hidden="true"]), [tabindex]:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])';
                 if (document.activeElement && document.activeElement.form) {
                     var focusable = Array.prototype.filter.call(document.activeElement.form.querySelectorAll(focusableElements),
                         function (element) {
