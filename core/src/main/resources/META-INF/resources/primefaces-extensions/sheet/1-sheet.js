@@ -527,18 +527,29 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             var evt = e || window.event; // IE support
             var key = evt.charCode || evt.keyCode || 0;
 
-            // #766 do not block if just CTRL key
-            if (key === 17) {
+            // #766 do not block if just CTRL or SHIFT key
+            if (key === 16 || key === 17) {
                 return;
+            }
+
+            // allow navigation
+            var shiftDown = e.shiftKey;
+            var ctrlDown = evt.ctrlKey || evt.metaKey; // Mac support
+            if (shiftDown || ctrlDown) {
+                // navigation keys
+                if (key == 9 || (key >= 35 && key <= 40)) {
+                    return;
+                }
             }
 
             // check for cut and paste
             var isClipboard = false;
-            var ctrlDown = evt.ctrlKey || evt.metaKey; // Mac support
+
 
             // Check for Alt+Gr (http://en.wikipedia.org/wiki/AltGr_key)
             if (ctrlDown && evt.altKey) isClipboard = false;
             // Check for ctrl+c, v and x
+            else if (ctrlDown && key == 65) isClipboard = true; // a (select all)
             else if (ctrlDown && key == 67) isClipboard = true; // c
             else if (ctrlDown && key == 86) isClipboard = true; // v
             else if (ctrlDown && key == 88) isClipboard = true; // x
@@ -552,7 +563,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 || (key == 190) || ((key >= 35) && (key <= 40))
                 || ((key >= 48) && (key <= 57)) || ((key >= 96) && (key <= 105)));
 
-            if ((!isNumeric && !isClipboard) || e.shiftKey) {
+            if ((!isNumeric && !isClipboard) || shiftDown) {
                 // prevent alpha characters
                 e.stopImmediatePropagation();
                 e.preventDefault();
