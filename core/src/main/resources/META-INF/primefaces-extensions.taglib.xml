@@ -8442,6 +8442,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Allowing focusing the next component if the sheet is currently on the first or last cell.]]>
+            </description>
+            <name>allowTabOffSheet</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Name of javascript function to extend the options of the underlying Handsontable plugin.]]>
             </description>
             <name>extender</name>
@@ -10089,7 +10097,7 @@ See showcase for an example. Default null.]]>
             <type>java.lang.String</type>
         </attribute>
     </tag>
-    
+
     <tag>
         <description>
             <![CDATA[TimeAgo renders automatically updating fuzzy timestamps.]]>

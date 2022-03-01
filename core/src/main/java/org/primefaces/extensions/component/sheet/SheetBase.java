@@ -286,6 +286,10 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
          */
         readOnlyCellStyleClass,
         /**
+         * Allowing tabbing off the sheet when on the first or last cell to focus the next component.
+         */
+        allowTabOffSheet,
+        /**
          * Name of javascript function to extend the options of the underlying Handsontable plugin.
          */
         extender
@@ -487,6 +491,14 @@ abstract class SheetBase extends UIInput implements ClientBehaviorHolder, Widget
 
     public void setReadOnlyCellStyleClass(final String value) {
         getStateHelper().put(PropertyKeys.readOnlyCellStyleClass, value);
+    }
+
+    public void setAllowTabOffSheet(final boolean value) {
+        getStateHelper().put(PropertyKeys.allowTabOffSheet, value);
+    }
+
+    public boolean isAllowTabOffSheet() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.allowTabOffSheet, false).toString());
     }
 
     public String getExtender() {
