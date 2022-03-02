@@ -147,7 +147,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
                 }
             },
             afterSelectionEnd: function (r, c, r2, c2) {
-                var selected = $this.ht.getSelected() || [];
+                var selected = this.getSelected() || [];
                 $this.selectionInput.val(JSON.stringify(selected));
                 if ($this.updated) {
                     $this.updated = false;
