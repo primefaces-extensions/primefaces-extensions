@@ -6,9 +6,9 @@
 <!-- EXAMPLE-SOURCE-START -->
 <p><p:toggleSwitch onchange="PF('lightSwitch').toggle()"/></p>
 
-<p><p:button value="Dark" onclick="PF('lightSwitch').dark()"/></p>
+<p><p:button value="Dark" onclick="PF('lightSwitch').dark();return false"/></p>
 
-<p><p:button value="Light" onclick="PF('lightSwitch').light()"/></p>
+<p><p:button value="Light" onclick="PF('lightSwitch').light();return false"/></p>
 
 <p><p:button value="Is dark OS?" onclick="alert(PF('lightSwitch').isDarkOS())"/></p>
 <!-- EXAMPLE-SOURCE-END -->
