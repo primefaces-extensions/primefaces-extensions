@@ -51,7 +51,7 @@
         <gson.version>2.9.0</gson.version>
         <jakarta-faces.version>2.3.17</jakarta-faces.version>
         <libphonenumber.version>8.12.44</libphonenumber.version>
-        <morphia.version>2.2.3</morphia.version>
+        <morphia.version>2.2.4</morphia.version>
 
         <primefaces.core.version>11.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.3.8</primefaces.optimizer.version>
