@@ -65,6 +65,9 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
         if (this.cfg.customConfig) {
             this.options.customConfig = this.cfg.customConfig + "?resolve=false";
         }
+	if (this.cfg.fileBrowserUploadUrl) {
+            this.options.filebrowserUploadUrl = this.cfg.fileBrowserUploadUrl;
+        }
 
         // check if ckeditor is already included
         if (!$.fn.ckeditor) {
@@ -132,6 +135,7 @@ PrimeFaces.widget.ExtCKEditor = PrimeFaces.widget.DeferredWidget.extend({
                 // Issue #779: enter/shift enter Mode
                 thisConfig.enterMode = PrimeFaces.csp.evalResult(this.cfg.enterMode);
                 thisConfig.shiftEnterMode = PrimeFaces.csp.evalResult(this.cfg.shiftEnterMode);
+		thisConfig.filebrowserUploadUrl = this.cfg.fileBrowserUploadUrl;
                 // Issue #151: font and font size
                 if (this.cfg.font) {
                     thisConfig.font_defaultLabel = this.cfg.font;
