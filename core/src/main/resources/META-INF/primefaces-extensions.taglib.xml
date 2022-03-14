@@ -2697,7 +2697,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[The fileBrowserUploadUrl  attribute specifies fileUpload POST Url.]]>
+                <![CDATA[Specifies the file upload POST URL.]]>
             </description>
             <name>fileBrowserUploadUrl</name>
             <required>false</required>
