@@ -89,7 +89,8 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
         shiftEnterMode,
         font,
         fontSize,
-        placeholder
+        placeholder,
+        fileBrowserUploadUrl
         //@formatter:on
     }
 
@@ -282,5 +283,13 @@ public class CKEditor extends AbstractPrimeHtmlInputTextArea implements ClientBe
 
     public void setPlaceholder(String placeholder) {
         getStateHelper().put(PropertyKeys.placeholder, placeholder);
+    }
+
+    public String getFileBrowserUploadUrl() {
+        return (String) getStateHelper().eval(PropertyKeys.fileBrowserUploadUrl, null);
+    }
+
+    public void setFileBrowserUploadUrl(String fileBrowserUploadUrl) {
+        getStateHelper().put(PropertyKeys.fileBrowserUploadUrl, fileBrowserUploadUrl);
     }
 }

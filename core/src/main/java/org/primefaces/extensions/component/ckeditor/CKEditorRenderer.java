@@ -120,7 +120,8 @@ public class CKEditorRenderer extends InputRenderer {
                     .attr("font", ckEditor.getFont())
                     .attr("fontSize", ckEditor.getFontSize())
                     .attr("enterMode", ckEditor.getEnterMode())
-                    .attr("shiftEnterMode", ckEditor.getShiftEnterMode());
+                    .attr("shiftEnterMode", ckEditor.getShiftEnterMode())
+                    .attr("fileBrowserUploadUrl", ckEditor.getFileBrowserUploadUrl());
 
         if (ckEditor.getContentsCss() != null && ckEditor.getContentsCss().startsWith("[")) {
             // new :: Array of CSS-Files :: ['/path/css1.css','/path/css2.css']

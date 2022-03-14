@@ -2695,6 +2695,15 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The fileBrowserUploadUrl  attribute specifies fileUpload POST Url.]]>
+            </description>
+            <name>fileBrowserUploadUrl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        
     </tag>
     <tag>
         <description>
