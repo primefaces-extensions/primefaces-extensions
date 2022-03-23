@@ -108,7 +108,7 @@ public class InputPhoneRenderer extends InputRenderer {
             country = Constants.EMPTY_STRING;
         }
         if (PrimeExtensionsEnvironment.getCurrentInstance(context).isLibphonenumberAvailable()) {
-            PhoneNumberUtilWrapper.validate(value, country.toUpperCase());
+            PhoneNumberUtilWrapper.validate(value, country.toUpperCase(), inputPhone.getValidatorMessage());
         }
         else {
             LOGGER.warning("Libphonenumber not available, unable to validate!");
