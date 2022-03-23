@@ -24,6 +24,8 @@ package org.primefaces.extensions.util;
 import javax.faces.application.FacesMessage;
 import javax.faces.convert.ConverterException;
 
+import org.primefaces.util.LangUtils;
+
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -40,21 +42,28 @@ public class PhoneNumberUtilWrapper {
         // private constructor to prevent instantiation
     }
 
-    public static void validate(final String number, final String country) {
+    public static void validate(final String number, final String country, final String validatorMessage) {
         try {
             final PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
             final Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(number, country);
             if (!phoneNumberUtil.isValidNumber(phoneNumber)) {
-                throw getInvalidValueConverterException();
+                throw getInvalidValueConverterException(validatorMessage);
             }
         }
         catch (final NumberParseException e) {
-            throw getInvalidValueConverterException();
+            throw getInvalidValueConverterException(validatorMessage);
         }
     }
 
-    private static ConverterException getInvalidValueConverterException() {
-        return new ConverterException(MessageFactory.getMessage(MESSAGE_INVALID_VALUE_KEY, FacesMessage.SEVERITY_ERROR));
+    private static ConverterException getInvalidValueConverterException(final String validatorMessage) {
+        return new ConverterException(getInvalidValueFacesMessage(validatorMessage));
+    }
+
+    private static FacesMessage getInvalidValueFacesMessage(final String validatorMessage) {
+        if (LangUtils.isEmpty(validatorMessage)) {
+            return MessageFactory.getMessage(MESSAGE_INVALID_VALUE_KEY, FacesMessage.SEVERITY_ERROR);
+        }
+        return new FacesMessage(FacesMessage.SEVERITY_ERROR, validatorMessage, null);
     }
 
 }
