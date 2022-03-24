@@ -1,0 +1,21 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <!-- EXAMPLE-SOURCE-START -->
+
+    <p:growl id="growl" showDetail="true" sticky="true"/>
+
+    <p:graphicImage id="tibet"
+                    alt="Tibet"
+                    height="200"
+                    width="200"
+                    value="/resources/images/imagezoom/tibet-small.jpg"
+                    pt:data-zoom-src="/showcase-ext/resources/images/imagezoom/tibet-hd.jpg"/>
+
+    <pe:imageZoom for="tibet"/>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

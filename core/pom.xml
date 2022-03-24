@@ -96,6 +96,7 @@
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
+                                <include>imagezoom/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>

@@ -1,0 +1,4 @@
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+    z-index: 9999;
+}
