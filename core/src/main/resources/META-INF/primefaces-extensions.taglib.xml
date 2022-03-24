@@ -2703,7 +2703,7 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
-        
+
     </tag>
     <tag>
         <description>
@@ -4541,6 +4541,96 @@
             </description>
             <name>for</name>
             <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            <![CDATA[Widget for zooming an image.]]>
+        </description>
+        <tag-name>imageZoom</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.ImageZoom</component-type>
+            <renderer-type>org.primefaces.extensions.component.ImageZoomRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a naming container.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[An EL expression referring to a server side UIComponent instance in a backing bean.]]>
+            </description>
+            <name>binding</name>
+            <required>false</required>
+            <type>javax.faces.component.UIComponent</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the client side widget.]]>
+            </description>
+            <name>widgetVar</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The target image.]]>
+            </description>
+            <name>for</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The space outside the zoomed image. Default is 0]]>
+            </description>
+            <name>margin</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The number of pixels to scroll to close the zoom. Default is 40]]>
+            </description>
+            <name>scrollOffset</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[The background color of the overlay. Default is #FFF]]>
+            </description>
+            <name>background</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[(Optional) The viewport to render the zoom in]]>
+            </description>
+            <name>container</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[(Optional) The template element to display on zoom]]>
+            </description>
+            <name>template</name>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
     </tag>

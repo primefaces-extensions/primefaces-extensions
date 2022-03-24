@@ -6,31 +6,28 @@
 <ui:composition template="/templates/showcaseLayout.xhtml">
     <ui:define name="centerContent">
         <f:facet name="header">
-            <h:outputText value="ImageAreaSelect"/>
+            <h:outputText value="ImageZoom"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            The basic configuration enables persisent and resizable selection of an area.
+            The basic configuration enables zooming in an Image. This component can also be used against Galleria.
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/imageAreaSelect/example-basicSelection.xhtml"/>
+            <ui:include src="/sections/imagezoom/example-basicZoom.xhtml"/>
         </h:panelGroup>
 
-        <ui:decorate template="/templates/twoTabsDecorator.xhtml">
+        <ui:decorate template="/templates/oneTabDecorator.xhtml">
             <ui:define name="contentTab1">
-                ${showcase:getFileContent('/sections/imageAreaSelect/example-basicZoom.xhtml')}
-            </ui:define>
-            <ui:define name="contentTab2">
-                ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/ImageController.java')}
+                ${showcase:getFileContent('/sections/imagezoom/example-basicZoom.xhtml')}
             </ui:define>
         </ui:decorate>
     </ui:define>
     <ui:define name="useCases">
-        <ui:include src="/sections/imageAreaSelect/useCasesChoice.xhtml"/>
+        <ui:include src="/sections/imagezoom/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
         <ui:include src="/sections/shared/documentation.xhtml">
-            <ui:param name="tagName" value="imageAreaSelect"/>
+            <ui:param name="tagName" value="imageZoom"/>
         </ui:include>
     </ui:define>
 </ui:composition>

@@ -83,6 +83,10 @@
         <component-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResize</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.ImageZoom</component-type>
+        <component-class>org.primefaces.extensions.component.imagezoom.ImageZoom</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.Legend</component-type>
         <component-class>org.primefaces.extensions.component.legend.Legend</component-class>
     </component>
@@ -309,6 +313,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.ImageRotateAndResizeRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.imagerotateandresize.ImageRotateAndResizeRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.ImageZoomRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.imagezoom.ImageZoomRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
