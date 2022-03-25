@@ -51,6 +51,10 @@
         <component-class>org.primefaces.extensions.component.creditcard.CreditCard</component-class>
     </component>
     <component>
+        <component-type>org.primefaces.extensions.component.CookiePolicy</component-type>
+        <component-class>org.primefaces.extensions.component.cookiepolicy.CookiePolicy</component-class>
+    </component>
+    <component>
         <component-type>org.primefaces.extensions.component.DynaForm</component-type>
         <component-class>org.primefaces.extensions.component.dynaform.DynaForm</component-class>
     </component>

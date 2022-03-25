@@ -10694,4 +10694,30 @@ See showcase for an example. Default null.]]>
         </attribute>
     </tag>
 
+    <tag>
+        <description>
+            <![CDATA[Cookie Policy component.]]>
+        </description>
+        <tag-name>cookiePolicy</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.CookiePolicy</component-type>
+        </component>
+    </tag>
+
+    <tag>
+        <tag-name>saveCookiePolicy</tag-name>
+        <handler-class>org.primefaces.extensions.component.cookiepolicy.CookiePolicySaveTagHandler</handler-class>
+        <attribute>
+            <description><![CDATA[The cookie policy to be saved.]]></description>
+            <name>policy</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Retention period in seconds.]]></description>
+            <name>retention</name>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
+
 </facelet-taglib>
