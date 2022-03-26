@@ -49,6 +49,7 @@ PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
      */
     _cleanup: function () {
         this.zoom.detach();// detach all images
+        this.zoom = null;
     },
 
     /**
@@ -63,7 +64,7 @@ PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
      * Emits an event open on animation start and opened when completed.
      */
     show: function () {
-        this.zoom.toggle();
+        this.zoom.open();
     },
 
     /**
@@ -71,7 +72,7 @@ PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
      * Emits an event close on animation start and closed when completed.
      */
     hide: function () {
-        this.zoom.toggle();
+        this.zoom.close();
     }
 
 });
