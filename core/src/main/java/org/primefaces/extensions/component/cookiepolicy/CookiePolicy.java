@@ -26,7 +26,9 @@ import java.io.IOException;
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseWriter;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.util.LangUtils;
 
@@ -54,6 +56,20 @@ public class CookiePolicy extends UIComponentBase {
     }
 
     @Override
+    public void encodeBegin(FacesContext context) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = getClientId(context);
+        writer.startElement("div", this);
+        writer.writeAttribute("id", clientId, "id");
+    }
+
+    @Override
+    public void encodeEnd(FacesContext context) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        writer.endElement("div");
+    }
+
+    @Override
     public void encodeChildren(final FacesContext context) throws IOException {
         final boolean cookiePresent = hasCookiePolicyCookie(context);
         if (!cookiePresent) {
@@ -63,6 +79,12 @@ public class CookiePolicy extends UIComponentBase {
 
     private boolean hasCookiePolicyCookie(final FacesContext context) {
         final ExternalContext externalContext = context.getExternalContext();
+        final HttpServletResponse httpServletResponse = (HttpServletResponse) externalContext.getResponse();
+        for (String setCookieHeaderValue : httpServletResponse.getHeaders("Set-Cookie")) {
+            if (setCookieHeaderValue.startsWith(COOKIE_POLICY_COOKIE_NAME)) {
+                return true;
+            }
+        }
         return externalContext.getRequestCookieMap().containsKey(COOKIE_POLICY_COOKIE_NAME);
     }
 

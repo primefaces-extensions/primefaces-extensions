@@ -1,0 +1,24 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <!-- EXAMPLE-SOURCE-START -->
+
+    <pe:cookiePolicy id="cookiePolicy">
+        <p:panel header="PrimeFaces Extensions Cookie Policy">
+            Do you agree with our cookie policy for about 10 seconds?
+            <h:panelGrid columns="2">
+                <p:commandButton value="Only essential cookies" update="cookiePolicy">
+                    <pe:saveCookiePolicy policy="essential" retention="#{10}"/>
+                </p:commandButton>
+                <p:commandButton value="Accept all cookies" update="cookiePolicy">
+                    <pe:saveCookiePolicy policy="essential,statistics" retention="#{10}"/>
+                </p:commandButton>
+            </h:panelGrid>
+        </p:panel>
+    </pe:cookiePolicy>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
