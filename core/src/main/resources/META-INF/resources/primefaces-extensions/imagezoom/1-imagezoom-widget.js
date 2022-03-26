@@ -8,7 +8,13 @@ PrimeFaces.widget.ImageZoom = PrimeFaces.widget.BaseWidget.extend({
 
     init: function (cfg) {
         this._super(cfg);
-        
+
+        // default background to theme background if not user defined
+        if (this.cfg.background) {
+            var isDarkOS = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            this.cfg.background = isDarkOS ? '#000' : '#fff';
+        }
+
         var selector = PrimeFaces.escapeClientId(this.cfg.target);
         var targetWidget = PrimeFaces.getWidgetById(this.cfg.target);
         if (targetWidget && targetWidget instanceof PrimeFaces.widget.Galleria) {
