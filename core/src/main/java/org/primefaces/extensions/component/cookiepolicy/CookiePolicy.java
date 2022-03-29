@@ -21,14 +21,11 @@
  */
 package org.primefaces.extensions.component.cookiepolicy;
 
-import java.io.IOException;
-
 import javax.faces.component.UIComponentBase;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.util.LangUtils;
 
@@ -42,6 +39,8 @@ public class CookiePolicy extends UIComponentBase {
 
     public static final String COOKIE_POLICY_COOKIE_NAME = "CookiePolicy";
 
+    public static final String COOKIE_POLICY_REQUEST_ATTRIBUTE = CookiePolicy.class.getName() + ".CookiePolicy";
+
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.CookiePolicy";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
@@ -50,48 +49,31 @@ public class CookiePolicy extends UIComponentBase {
         return COMPONENT_FAMILY;
     }
 
-    @Override
-    public boolean getRendersChildren() {
-        return true;
-    }
-
-    @Override
-    public void encodeBegin(FacesContext context) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = getClientId(context);
-        writer.startElement("div", this);
-        writer.writeAttribute("id", clientId, "id");
-    }
-
-    @Override
-    public void encodeEnd(FacesContext context) throws IOException {
-        final ResponseWriter writer = context.getResponseWriter();
-        writer.endElement("div");
-    }
-
-    @Override
-    public void encodeChildren(final FacesContext context) throws IOException {
-        final boolean cookiePresent = hasCookiePolicyCookie(context);
-        if (!cookiePresent) {
-            super.encodeChildren(context);
-        }
-    }
-
-    private boolean hasCookiePolicyCookie(final FacesContext context) {
+    public boolean hasCookiePolicyCookie(final FacesContext context) {
         final ExternalContext externalContext = context.getExternalContext();
-        final HttpServletResponse httpServletResponse = (HttpServletResponse) externalContext.getResponse();
-        for (String setCookieHeaderValue : httpServletResponse.getHeaders("Set-Cookie")) {
-            if (setCookieHeaderValue.startsWith(COOKIE_POLICY_COOKIE_NAME)) {
-                return true;
-            }
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
+        if (null != httpServletRequest.getAttribute(COOKIE_POLICY_REQUEST_ATTRIBUTE)) {
+            return true;
         }
         return externalContext.getRequestCookieMap().containsKey(COOKIE_POLICY_COOKIE_NAME);
     }
 
-    // this function serves as a kind of server-side API for this component
+    /**
+     * Checks whether the given cookie policy has been accepted.
+     *
+     * @param cookiePolicy the cookie policy to be verified.
+     * @return <code>true</code> if the cookie policy has been accepted, otherwise <code>false</code>.
+     */
     public static boolean hasCookiePolicy(final String cookiePolicy) {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
         final ExternalContext externalContext = facesContext.getExternalContext();
+
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
+        final String requestCookiePolicy = (String) httpServletRequest.getAttribute(COOKIE_POLICY_REQUEST_ATTRIBUTE);
+        if (null != requestCookiePolicy) {
+            return requestCookiePolicy.contains(cookiePolicy);
+        }
+
         final Cookie cookie = (Cookie) externalContext.getRequestCookieMap().get(COOKIE_POLICY_COOKIE_NAME);
         if (null == cookie) {
             return false;
@@ -100,7 +82,6 @@ public class CookiePolicy extends UIComponentBase {
         if (LangUtils.isBlank(policy)) {
             return false;
         }
-        // next should probably use a string tokenizer with ","
         return policy.contains(cookiePolicy);
     }
 

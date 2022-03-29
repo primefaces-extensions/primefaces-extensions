@@ -32,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.ResourceUtils;
@@ -118,5 +119,8 @@ public class CookiePolicySaveActionListener implements ActionListener, StateHold
         cookieOptions.put("maxAge", retention);
         cookieOptions.put("httpOnly", Boolean.TRUE);
         ResourceUtils.addResponseCookie(facesContext, CookiePolicy.COOKIE_POLICY_COOKIE_NAME, policy, cookieOptions);
+
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) externalContext.getRequest();
+        httpServletRequest.setAttribute(CookiePolicy.COOKIE_POLICY_REQUEST_ATTRIBUTE, policy);
     }
 }
