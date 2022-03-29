@@ -10701,6 +10701,7 @@ See showcase for an example. Default null.]]>
         <tag-name>cookiePolicy</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.CookiePolicy</component-type>
+            <renderer-type>org.primefaces.extensions.component.CookiePolicyRenderer</renderer-type>
         </component>
     </tag>
 
