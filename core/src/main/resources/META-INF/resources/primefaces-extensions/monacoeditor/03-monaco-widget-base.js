@@ -222,9 +222,9 @@ window.monacoModule = window.monacoModule || {};
      * @returns {Promise<void>}
      */
     async _onInitSuccess() {
+      this.jq.data("initialized", true);
       await this.setValue(this._editorValue || "");
       this._fireEvent("initialized");
-      this.jq.data("initialized", true);
       for (const { resolve } of this._onDone || []) {
         resolve(this);
       }
