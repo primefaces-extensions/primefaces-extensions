@@ -33,9 +33,11 @@ public class PrimeExtensionsEnvironment {
 
     public static final String INSTANCE_KEY = PrimeExtensionsEnvironment.class.getName();
 
+    private final boolean commonmarkAvailable;
     private final boolean libphonenumberAvailable;
 
     public PrimeExtensionsEnvironment() {
+        commonmarkAvailable = LangUtils.tryToLoadClassForName("org.commonmark.parser.Parser") != null;
         libphonenumberAvailable = LangUtils.tryToLoadClassForName("com.google.i18n.phonenumbers.Phonenumber") != null;
     }
 
@@ -63,6 +65,10 @@ public class PrimeExtensionsEnvironment {
         if (context.getExternalContext().getContext() instanceof ServletContext) {
             ((ServletContext) context.getExternalContext().getContext()).setAttribute(INSTANCE_KEY, pfeEnv);
         }
+    }
+
+    public boolean isCommonmarkAvailable() {
+        return commonmarkAvailable;
     }
 
     public boolean isLibphonenumberAvailable() {

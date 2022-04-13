@@ -768,6 +768,12 @@
             <artifactId>morphia-core</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Content -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>junit</groupId>
