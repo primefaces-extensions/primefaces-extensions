@@ -8,7 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>showcase</artifactId>
+    <artifactId>primefaces-extensions-showcase</artifactId>
     <packaging>war</packaging>
     <name>PrimeFaces Extensions Showcase</name>
     <description>
@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>documentViewer;monacoEditor</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components>fab;scaffolding</primefaces-extensions.deprecated-components>
 
@@ -320,6 +320,11 @@
         <dependency>
             <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
             <artifactId>owasp-java-html-sanitizer</artifactId>
+        </dependency>
+        <!-- InputPhone -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
         </dependency>
     </dependencies>
 

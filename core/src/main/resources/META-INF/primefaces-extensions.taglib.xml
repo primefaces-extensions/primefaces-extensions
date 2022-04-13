@@ -10720,4 +10720,79 @@ See showcase for an example. Default null.]]>
         </attribute>
     </tag>
 
+    <tag>
+        <description>
+            <![CDATA[Localized component reads file contents from the /WEB-INF/pfe-localized/ folder in the appropriate variant (context) and language, with opional EL and Markdown support.]]>
+        </description>
+        <tag-name>localized</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Localized</component-type>
+            <renderer-type>org.primefaces.extensions.component.LocalizedRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
+            </description>
+            <name>rendered</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute).]]>
+            </description>
+            <name>name</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Folder of the content file, relative to /WEB-INF/pfe-localized/ (optional, if `null` root will be used).]]>
+            </description>
+            <name>folder</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify if the content needs to be escaped. Escaping is done before Markdown is applied. Default is true.]]>
+            </description>
+            <name>escape</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify if the content needs to EL evaluated. Default is false.]]>
+            </description>
+            <name>evalEl</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Boolean value to specify if Markdown needs to be applied on the content. Default is false.]]>
+            </description>
+            <name>markdown</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+
 </facelet-taglib>

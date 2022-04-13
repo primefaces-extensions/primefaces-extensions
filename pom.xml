@@ -52,6 +52,7 @@
         <jakarta-faces.version>2.3.17</jakarta-faces.version>
         <libphonenumber.version>8.12.45</libphonenumber.version>
         <morphia.version>2.2.3</morphia.version>
+        <commonmark.version>0.18.2</commonmark.version>
 
         <primefaces.core.version>11.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.3.8</primefaces.optimizer.version>
@@ -101,7 +102,7 @@
         </developer>
         <developer>
             <id>Rapster</id>
-            <name>Sébastien Lepage</name>
+            <name>SÃ©bastien Lepage</name>
             <email>sebastien.lepage@outlook.com</email>
             <roles>
                 <role>Developer</role>
@@ -487,6 +488,14 @@
                 <groupId>dev.morphia.morphia</groupId>
                 <artifactId>morphia-core</artifactId>
                 <version>${morphia.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <!-- Content dependencies -->
+            <dependency>
+                <groupId>org.commonmark</groupId>
+                <artifactId>commonmark</artifactId>
+                <version>${commonmark.version}</version>
                 <optional>true</optional>
             </dependency>
 
