@@ -50,7 +50,7 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <gson.version>2.9.0</gson.version>
         <jakarta-faces.version>2.3.17</jakarta-faces.version>
-        <libphonenumber.version>8.12.45</libphonenumber.version>
+        <libphonenumber.version>8.12.46</libphonenumber.version>
         <morphia.version>2.2.3</morphia.version>
         <commonmark.version>0.18.2</commonmark.version>
 
@@ -156,7 +156,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -323,14 +323,14 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.0</version>
+                            <version>10.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>com.diffplug.spotless</groupId>
                     <artifactId>spotless-maven-plugin</artifactId>
-                    <version>2.21.0</version>
+                    <version>2.22.1</version>
                     <configuration>
                         <java>
                             <importOrder>
