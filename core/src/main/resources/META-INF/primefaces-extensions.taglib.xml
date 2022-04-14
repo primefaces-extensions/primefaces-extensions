@@ -10723,7 +10723,7 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
-            <![CDATA[Localized component reads file contents from the /WEB-INF/pfe-localized/ folder in the appropriate variant (context) and language, with opional EL and Markdown support.]]>
+            <![CDATA[Localized component reads file contents from the /WEB-INF/pfe-localized/ folder, or uses inline content, in the appropriate language (and country), with opional EL and Markdown support.]]>
         </description>
         <tag-name>localized</tag-name>
         <component>
@@ -10748,10 +10748,10 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute).]]>
+                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute). If `null`, inline content is expected.]]>
             </description>
             <name>name</name>
-            <required>true</required>
+            <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>

@@ -7,17 +7,17 @@
     <ui:define name="centerContent">
         <f:facet name="header">Localized</f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            Basic usage. These examples use the locale attribute. Normally you want to rely on the <code>Locale</code>
-            set in the <code>View</code>.
+            Inline. Not recommended, as it will be hard to add languages to an application, but could be useful if you
+            have a small set of languages. Also, facets allow you to use components.
         </h:panelGroup>
 
         <h:panelGroup layout="block" styleClass="centerExample">
-            <ui:include src="/sections/localized/example-basicUsage.xhtml"/>
+            <ui:include src="/sections/localized/example-inline.xhtml"/>
         </h:panelGroup>
 
         <ui:decorate template="/templates/oneTabDecorator.xhtml">
             <ui:define name="contentTab1">
-                ${showcase:getFileContent('/sections/localized/example-basicUsage.xhtml')}
+                ${showcase:getFileContent('/sections/localized/example-inline.xhtml')}
             </ui:define>
         </ui:decorate>
     </ui:define>

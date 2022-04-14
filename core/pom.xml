@@ -768,7 +768,7 @@
             <artifactId>morphia-core</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- Content -->
+        <!-- Localized -->
         <dependency>
             <groupId>org.commonmark</groupId>
             <artifactId>commonmark</artifactId>
