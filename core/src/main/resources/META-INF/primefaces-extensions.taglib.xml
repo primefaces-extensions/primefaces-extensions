@@ -10748,7 +10748,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute). If `null`, inline content is expected.]]>
+                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute). If `null`, content is expected in facets.]]>
             </description>
             <name>name</name>
             <required>false</required>
