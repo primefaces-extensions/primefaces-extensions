@@ -146,6 +146,18 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>ckeditor/0-ckeditor.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/ckeditor/ckeditor.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
                                 <include>ckeditor/0-ckeditor-helper.js</include>
                                 <include>ckeditor/1-ckeditor-widget.js</include>
                             </includes>
