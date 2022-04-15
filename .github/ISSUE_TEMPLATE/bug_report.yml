@@ -58,7 +58,7 @@ body:
     attributes:
       label: Affected browsers?
   - type: textarea
-    id: reproducer
+    id: reproduce-steps
     attributes:
       label: Steps to reproduce the behavior
       placeholder: >
