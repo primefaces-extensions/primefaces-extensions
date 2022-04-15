@@ -1,9 +1,8 @@
 name: Bug report
 description: Create a report to help us improve
 title: "Component: Title"
-labels: ["bug"]
-assignees:
-  - melloware
+labels: "bug"
+assignees: "melloware"
 body:
   - type: markdown
     attributes:
@@ -35,7 +34,6 @@ body:
     id: pfe-version
     attributes:
       label: PrimeFaces Extensions version
-      placeholder: 11.0.2
     validations:
       required: true
   - type: dropdown
@@ -50,7 +48,6 @@ body:
     id: jsf-version
     attributes:
       label: JSF version
-      placeholder: 11.0.2
     validations:
       required: false
   - type: input
@@ -62,9 +59,9 @@ body:
     attributes:
       label: Steps to reproduce the behavior
       placeholder: >
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
+        1. Go to '...'  
+        2. Click on '....'  
+        3. Scroll down to '....'  
         4. See error
     validations:
       required: false
@@ -80,9 +77,9 @@ body:
     attributes:
       label: Sample XHTML
       placeholder: >
-        ```xhtml
-        <h:form id="frmTest">
-        </h:form>
+        ```xhtml  
+        <h:form id="frmTest">  
+        </h:form>  
         ```
     validations:
       required: false
@@ -91,11 +88,11 @@ body:
     attributes:
       label: Sample Bean
       placeholder: >
-        ```java
-        @Named
-        @ViewScoped
-        public class TestView implements Serializable {
-        }
+        ```java  
+        @Named  
+        @ViewScoped  
+        public class TestView implements Serializable {  
+        }  
         ```
     validations:
       required: false
