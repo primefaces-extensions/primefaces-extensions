@@ -1,0 +1,101 @@
+name: Bug report
+description: Create a report to help us improve
+title: "Component: Title"
+labels: ["bug"]
+assignees:
+  - melloware
+body:
+  - type: markdown
+    attributes:
+      # yamllint disable rule:line-length
+      value: "
+        Thanks for taking the time to fill out this bug report!
+      "
+      # yamllint enable rule:line-length
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Reproducer
+      description: >
+        Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem,
+        you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your
+        reproducer here.
+        **NOTE:** PrimeFaces test can easily be set to use the latest `master-SNAPSHOT` of what is in GitHub.
+        Please test with that before reporting a bug that may already be fixed.
+    validations:
+      required: false
+  - type: input
+    id: pfe-version
+    attributes:
+      label: PrimeFaces Extensions version
+      placeholder: 11.0.2
+    validations:
+      required: true
+  - type: dropdown
+    id: jsf-implementation
+    attributes:
+      label: JSF implementation
+      multiple: false
+      options:
+        - Mojarra
+        - MyFaces
+  - type: input
+    id: jsf-version
+    attributes:
+      label: JSF version
+      placeholder: 11.0.2
+    validations:
+      required: false
+  - type: input
+    id: browsers
+    attributes:
+      label: Affected browsers?
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Steps to reproduce the behavior
+      placeholder: >
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: false
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: false
+  - type: textarea
+    id: sample-xhtml
+    attributes:
+      label: Sample XHTML
+      placeholder: >
+        ```xhtml
+        <h:form id="frmTest">
+        </h:form>
+        ```
+    validations:
+      required: false
+  - type: textarea
+    id: sample-bean
+    attributes:
+      label: Sample Bean
+      placeholder: >
+        ```java
+        @Named
+        @ViewScoped
+        public class TestView implements Serializable {
+        }
+        ```
+    validations:
+      required: false
