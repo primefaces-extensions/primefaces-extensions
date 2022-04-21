@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.localized;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 import javax.el.ExpressionFactory;
@@ -133,7 +134,7 @@ public class LocalizedRenderer extends CoreRenderer {
     }
 
     protected Path existingPath(final String first, final String... more) {
-        final Path path = Path.of(first, more);
+        final Path path = Paths.get(first, more);
         return path.toFile().exists() ? path : null;
     }
 
