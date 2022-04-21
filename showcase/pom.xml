@@ -33,6 +33,7 @@
         <jetty.version>9.4.46.v20220331</jetty.version>
         <omnifaces.version>3.13</omnifaces.version>
         <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
+        <font-awesome.version>6.1.0</font-awesome.version>
     </properties>
 
     <build>
@@ -56,6 +57,7 @@
                 <directory>src/main/webapp</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/resources-app.xhtml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -88,6 +90,11 @@
                     <webResources>
                         <resource>
                             <directory>${project.build.directory}/webapp-resources</directory>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>**/resources-app.xhtml</includes>
                         </resource>
                     </webResources>
                     <packagingExcludes>**/web-overwrite.xml,WEB-INF/web.xml</packagingExcludes>
@@ -292,7 +299,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-            <version>6.1.0</version>
+            <version>${font-awesome.version}</version>
         </dependency>
 
         <!-- GChart and Layout needs GSON-->

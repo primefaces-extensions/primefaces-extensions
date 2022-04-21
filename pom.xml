@@ -44,6 +44,7 @@
         <jsf.stage>Development</jsf.stage>
 
         <apache-faces.version>2.3.9</apache-faces.version>
+        <commonmark.version>0.18.2</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-io.version>2.11.0</commons-io.version>
@@ -52,7 +53,6 @@
         <jakarta-faces.version>2.3.17</jakarta-faces.version>
         <libphonenumber.version>8.12.47</libphonenumber.version>
         <morphia.version>2.2.3</morphia.version>
-        <commonmark.version>0.18.2</commonmark.version>
 
         <primefaces.core.version>11.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.3.8</primefaces.optimizer.version>
