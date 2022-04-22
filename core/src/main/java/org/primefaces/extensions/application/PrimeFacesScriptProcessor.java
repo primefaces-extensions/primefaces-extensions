@@ -52,9 +52,9 @@ import org.primefaces.util.LocaleUtils;
  * <pre>
  *     &lt;application&gt;
  *        &lt;system-event-listener&gt;
- *            &lt;system-event-listener-class>com.example.PrimeFacesScriptProcessor&lt;/system-event-listener-class&gt;
- *            &lt;system-event-class>javax.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
- *            &lt;source-class>javax.faces.component.UIViewRoot&lt;/source-class&gt;
+ *            &lt;system-event-listener-class&gt;com.example.PrimeFacesScriptProcessor&lt;/system-event-listener-class&gt;
+ *            &lt;system-event-class&gt;javax.faces.event.PostAddToViewEvent&lt;/system-event-class&gt;
+ *            &lt;source-class&gt;javax.faces.component.UIViewRoot&lt;/source-class&gt;
  *        &lt;/system-event-listener&gt;
  *     &lt;/application&gt;
  * </pre>
