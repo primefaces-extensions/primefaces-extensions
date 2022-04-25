@@ -18,12 +18,11 @@ body:
     id: reproducer
     attributes:
       label: Reproducer
+      # yamllint disable rule:line-length      
       description: |
-        Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem,
-        you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your
-        reproducer here.<br/>
-        **NOTE:** PrimeFaces test can easily be set to use the latest `master-SNAPSHOT` of what is in GitHub.
-        Please test with that before reporting a bug that may already be fixed.
+        Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem, you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your reproducer here.
+        
+        **NOTE:** PrimeFaces test can easily be set to use the latest `master-SNAPSHOT` of what is in GitHub. Please test with that before reporting a bug that may already be fixed.
 
         Please discibe the steps to take using your reproducer to encounter the issue. For example:
 
@@ -32,8 +31,8 @@ body:
           3. Scroll down to '...'
           4. See error
 
-        We encourage you provide a reproducer. If you are unable to, at least provide us with a sample
-        XHTML and bean.
+        We encourage you provide a reproducer. If you are unable to, at least provide us with a sample XHTML and bean.
+      # yamllint enable rule:line-length
     validations:
       required: false
   - type: textarea
