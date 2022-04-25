@@ -6,11 +6,7 @@ assignees: "melloware"
 body:
   - type: markdown
     attributes:
-      # yamllint disable rule:line-length
-      value: "
-        Thanks for taking the time to fill out this bug report!
-      "
-      # yamllint enable rule:line-length
+      value: Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: description
     attributes:
@@ -22,7 +18,7 @@ body:
     id: reproducer
     attributes:
       label: Reproducer
-      description: >
+      description: |
         Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem,
         you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your
         reproducer here.<br/>
@@ -31,10 +27,10 @@ body:
 
         Please discibe the steps to take using your reproducer to encounter the issue. For example:
 
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+          1. Go to '...'
+          2. Click on '....'
+          3. Scroll down to '....'
+          4. See error
 
         We encourage you provide a reproducer. If you are unable to, at least provide us with a sample
         XHTML and bean:
