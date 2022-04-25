@@ -28,24 +28,12 @@ body:
         Please discibe the steps to take using your reproducer to encounter the issue. For example:
 
           1. Go to '...'
-          2. Click on '....'
-          3. Scroll down to '....'
+          2. Click on '...'
+          3. Scroll down to '...'
           4. See error
 
         We encourage you provide a reproducer. If you are unable to, at least provide us with a sample
-        XHTML and bean:
-
-        ```xhtml
-        <h:form id="frmTest">
-        </h:form>
-        ```
-
-        ```java
-        @Named
-        @ViewScoped
-        public class TestView implements Serializable {
-        }
-        ```
+        XHTML and bean.
     validations:
       required: false
   - type: textarea
