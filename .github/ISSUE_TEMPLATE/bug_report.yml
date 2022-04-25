@@ -25,9 +25,38 @@ body:
       description: >
         Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem,
         you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your
-        reproducer here.
+        reproducer here.<br/>
         **NOTE:** PrimeFaces test can easily be set to use the latest `master-SNAPSHOT` of what is in GitHub.
         Please test with that before reporting a bug that may already be fixed.
+
+        Please discibe the steps to take using your reproducer to encounter the issue. For example:
+
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+
+        We encourage you provide a reproducer. If you are unable to, at least provide us with a sample
+        XHTML and bean:
+
+        ```xhtml
+        <h:form id="frmTest">
+        </h:form>
+        ```
+
+        ```java
+        @Named
+        @ViewScoped
+        public class TestView implements Serializable {
+        }
+        ```
+    validations:
+      required: false
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
     validations:
       required: false
   - type: input
@@ -53,46 +82,5 @@ body:
   - type: input
     id: browsers
     attributes:
-      label: Affected browsers?
-  - type: textarea
-    id: reproduce-steps
-    attributes:
-      label: Steps to reproduce the behavior
-      placeholder: >
-        1. Go to '...'  
-        2. Click on '....'  
-        3. Scroll down to '....'  
-        4. See error
-    validations:
-      required: false
-  - type: textarea
-    id: expected-behavior
-    attributes:
-      label: Expected behavior
-      description: A clear and concise description of what you expected to happen.
-    validations:
-      required: false
-  - type: textarea
-    id: sample-xhtml
-    attributes:
-      label: Sample XHTML
-      placeholder: >
-        ```xhtml  
-        <h:form id="frmTest">  
-        </h:form>  
-        ```
-    validations:
-      required: false
-  - type: textarea
-    id: sample-bean
-    attributes:
-      label: Sample Bean
-      placeholder: >
-        ```java  
-        @Named  
-        @ViewScoped  
-        public class TestView implements Serializable {  
-        }  
-        ```
-    validations:
-      required: false
+      label: Affected browsers
+      description: Is the issue occures in specific browsers (or versions) only, mention them here.
