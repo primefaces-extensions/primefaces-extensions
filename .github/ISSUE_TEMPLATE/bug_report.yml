@@ -4,9 +4,6 @@ title: "Component: Title"
 labels: "defect"
 assignees: "melloware"
 body:
-  - type: markdown
-    attributes:
-      value: Thanks for taking the time to fill out this bug report!
   - type: textarea
     id: description
     attributes:
@@ -20,11 +17,11 @@ body:
       label: Reproducer
       # yamllint disable rule:line-length      
       description: |
-        Clone repository https://github.com/primefaces/primefaces-test.git in order to reproduce your problem, you'll have better chance to receive an answer and a solution and attach the GitHub Link or zip file of your reproducer here.
+        You'll have better chance to receive an answer and a solution if you add a GitHub link or zip file of your reproducer. Clone https://github.com/primefaces/primefaces-test.git to create one.
         
-        **NOTE:** PrimeFaces test can easily be set to use the latest `master-SNAPSHOT` of what is in GitHub. Please test with that before reporting a bug that may already be fixed.
+        **NOTE:** Use the latest `master-SNAPSHOT` in your reproducer.
 
-        Please discibe the steps to take using your reproducer to encounter the issue. For example:
+        Discibe the steps to take using your reproducer to encounter the issue. For example:
 
           1. Go to '...'
           2. Click on '...'
@@ -46,6 +43,7 @@ body:
     id: pfe-version
     attributes:
       label: PrimeFaces Extensions version
+      placeholder: x.x.x
     validations:
       required: true
   - type: dropdown
@@ -56,14 +54,17 @@ body:
       options:
         - Mojarra
         - MyFaces
+        - All
   - type: input
     id: jsf-version
     attributes:
       label: JSF version
     validations:
       required: false
+      placeholder: x.x
   - type: input
     id: browsers
     attributes:
-      label: Affected browsers
-      description: Is the issue occures in specific browsers (or versions) only, mention them here.
+      label: Browser(s)
+      description: Is the issue only occures in specific browsers (or versions), mention them here.
+      placeholder: eg. Chrome 100.0.4896.127 (Official Build) (arm64) macOS
