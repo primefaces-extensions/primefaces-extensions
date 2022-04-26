@@ -59,9 +59,9 @@ body:
     id: jsf-version
     attributes:
       label: JSF version
+      placeholder: x.x
     validations:
       required: false
-      placeholder: x.x
   - type: input
     id: browsers
     attributes:
