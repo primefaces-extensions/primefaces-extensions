@@ -1,0 +1,16 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" showDetail="true"/>
+
+    <pe:ckEditor id="editor"
+                 value="#{editorController.content}"
+                 customConfig="#{request.contextPath}/javax.faces.resource/ckeditorExtender.js.jsf?ln=js">
+    </pe:ckEditor>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
