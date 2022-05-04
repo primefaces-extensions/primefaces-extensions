@@ -55,6 +55,7 @@ body:
         - Mojarra
         - MyFaces
         - All
+      value: All
   - type: input
     id: jsf-version
     attributes:
