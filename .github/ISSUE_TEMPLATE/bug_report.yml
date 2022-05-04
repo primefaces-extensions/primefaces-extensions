@@ -48,7 +48,6 @@ body:
       required: true
   - type: dropdown
     id: jsf-implementation
-    value: All
     attributes:
       label: JSF implementation
       multiple: false
