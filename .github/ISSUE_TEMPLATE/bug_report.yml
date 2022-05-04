@@ -48,6 +48,7 @@ body:
       required: true
   - type: dropdown
     id: jsf-implementation
+    value: All
     attributes:
       label: JSF implementation
       multiple: false
@@ -55,7 +56,6 @@ body:
         - Mojarra
         - MyFaces
         - All
-      value: All
   - type: input
     id: jsf-version
     attributes:
