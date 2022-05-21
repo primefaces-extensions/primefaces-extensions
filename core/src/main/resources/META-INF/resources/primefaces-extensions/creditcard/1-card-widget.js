@@ -27,18 +27,56 @@ PrimeFaces.widget.ExtCreditCard = PrimeFaces.widget.BaseWidget.extend({
      * after AJAX postback.
      */
     bindListeners: function () {
-        let $this = this;
+        var $this = this;
         this.addRefreshListener(function () {
             $(document).ready(function () {
-                const blur = new Event('blur');
-                const change = new Event('change');
+                var blur = new Event('blur');
+                var change = new Event('change');
                 $this.form.find('.ui-state-filled').each(function () {
-                    if (this.name === "number" || this.name === "name" || this.name === "expiry" || this.name === "cvc") {
+                    if ($this.isInput(this, 'number') ||
+                        $this.isInput(this, 'name') ||
+                        $this.isInput(this, 'expiry') ||
+                        $this.isInput(this, 'cvc')) {
                         this.dispatchEvent(blur);
                         this.dispatchEvent(change);
                     }
-                })
+                });
             });
+        });
+    },
+
+    /**
+     * Checks if this input has the name we are looking for.
+     *
+     * @param input the input field
+     * @param name the name of the input to look for
+     * @returns {boolean|*} true if the field matches the name
+     */
+    isInput: function (input, name) {
+        return input.name === name;
+    },
+
+    /**
+     * Flips the card to the back of the card.
+     */
+    flipToBack: function () {
+        this.form.find('input[name="name"]').each(function () {
+            this.dispatchEvent(new Event('blur'));
+        });
+        this.form.find('input[name="cvc"]').each(function () {
+            this.dispatchEvent(new Event('focus'));
+        });
+    },
+
+    /**
+     * Flips the card to the front of the card.
+     */
+    flipToFront: function () {
+        this.form.find('input[name="cvc"]').each(function () {
+            this.dispatchEvent(new Event('blur'));
+        });
+        this.form.find('input[name="name"]').each(function () {
+            this.dispatchEvent(new Event('focus'));
         });
     }
 });
