@@ -339,3 +339,8 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
+
+/* PFE #840: https://github.com/primefaces-extensions/primefaces-extensions/issues/840 */
+.CodeMirror-hints {
+   z-index:9999999 !important;
+}
