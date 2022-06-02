@@ -89,7 +89,9 @@ public class LocalizedRenderer extends CoreRenderer {
     }
 
     protected void encodeFromFile(final FacesContext context, final Localized localized) throws IOException {
-        String value = Files.readString(resolvePath(context, localized));
+        Path filePath = resolvePath(context, localized);
+        byte[] bytes = Files.readAllBytes(filePath);
+        String value = new String(bytes);
         if (localized.isEvalEl()) {
             value = evaluateEl(context, value);
         }
@@ -119,7 +121,8 @@ public class LocalizedRenderer extends CoreRenderer {
         return path;
     }
 
-    protected Path resolvePath(final String base, final String folder, final String name, final String language, final String country) {
+    protected Path resolvePath(final String base, final String folder, final String name, final String language,
+                final String country) {
         final String baseFolder = LangUtils.isBlank(folder)
                     ? base
                     : base + "/" + folder;
@@ -150,5 +153,4 @@ public class LocalizedRenderer extends CoreRenderer {
                     .createValueExpression(context.getELContext(), value, String.class)
                     .getValue(context.getELContext());
     }
-
 }
