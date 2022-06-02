@@ -89,8 +89,8 @@ public class LocalizedRenderer extends CoreRenderer {
     }
 
     protected void encodeFromFile(final FacesContext context, final Localized localized) throws IOException {
-        Path filePath = resolvePath(context, localized);
-        byte[] bytes = Files.readAllBytes(filePath);
+        final Path filePath = resolvePath(context, localized);
+        final byte[] bytes = Files.readAllBytes(filePath);
         String value = new String(bytes);
         if (localized.isEvalEl()) {
             value = evaluateEl(context, value);
