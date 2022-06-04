@@ -821,7 +821,7 @@ public class Sheet extends SheetBase {
 
         localValues.clear();
         if (restoredLocalValues != null) {
-            localValues.putAll ((Map<SheetRowColIndex, Object>) restoredLocalValues);
+            localValues.putAll((Map<SheetRowColIndex, Object>) restoredLocalValues);
         }
 
         if (restoredInvalidUpdates == null) {
