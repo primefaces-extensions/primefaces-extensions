@@ -33,7 +33,7 @@
         <jetty.version>9.4.46.v20220331</jetty.version>
         <omnifaces.version>3.13.3</omnifaces.version>
         <hibernate-validator.version>7.0.4.Final</hibernate-validator.version>
-        <font-awesome.version>6.1.0</font-awesome.version>
+        <font-awesome.version>6.1.1</font-awesome.version>
     </properties>
 
     <build>
