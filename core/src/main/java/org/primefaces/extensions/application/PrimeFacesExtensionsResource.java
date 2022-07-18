@@ -23,6 +23,10 @@ package org.primefaces.extensions.application;
 
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceWrapper;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.util.Constants;
 
 /**
  * {@link ResourceWrapper} which appends the version of PrimeFaces Extensions to the URL.
@@ -39,7 +43,9 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
     public PrimeFacesExtensionsResource(final Resource resource) {
         super();
         wrapped = resource;
-        version = "&e=" + getClass().getPackage().getImplementationVersion();
+        version = PrimeRequestContext.getCurrentInstance(FacesContext.getCurrentInstance()).isHideResourceVersion() ?
+                    Constants.EMPTY_STRING :
+                    "&e=" + getClass().getPackage().getImplementationVersion();
     }
 
     @Override
