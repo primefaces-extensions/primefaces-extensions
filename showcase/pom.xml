@@ -27,7 +27,7 @@
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
         <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>documentViewer;monacoEditor</primefaces-extensions.updated-components>
-        <primefaces-extensions.deprecated-components>fab;scaffolding</primefaces-extensions.deprecated-components>
+        <primefaces-extensions.deprecated-components>renderers;</primefaces-extensions.deprecated-components>
 
         <owb.version>2.0.25</owb.version>
         <jetty.version>9.4.48.v20220622</jetty.version>
