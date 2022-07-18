@@ -92,7 +92,6 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>counter/**</include>
-                                <include>fab/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
@@ -100,7 +99,6 @@
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
-                                <include>scaffolding/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
                                 <include>speedtest/**</include>
