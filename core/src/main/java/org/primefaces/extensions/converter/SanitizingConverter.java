@@ -69,7 +69,7 @@ public class SanitizingConverter implements Converter<Object>, Serializable {
         }
         String result = getPolicy().sanitize(value);
         if (isDecodeHtml()) {
-            result = org.owasp.html.Encoding.decodeHtml(result);
+            result = org.owasp.html.Encoding.decodeHtml(result, false);
         }
         return result.trim();
     }

@@ -1222,10 +1222,7 @@ function hasHorizontalScrollbar(element) {
 
 
 function setOverlayPosition(overlayElem, left, top) {
-  if ((0, _browser.isIE8)() || (0, _browser.isIE9)()) {
-    overlayElem.style.top = top;
-    overlayElem.style.left = left;
-  } else if ((0, _browser.isSafari)()) {
+  if ((0, _browser.isSafari)()) {
     overlayElem.style['-webkit-transform'] = 'translate3d(' + left + ',' + top + ',0)';
   } else {
     overlayElem.style.transform = 'translate3d(' + left + ',' + top + ',0)';
@@ -6745,9 +6742,6 @@ exports.__esModule = true;
 exports.setBrowserMeta = setBrowserMeta;
 exports.isChrome = isChrome;
 exports.isEdge = isEdge;
-exports.isIE = isIE;
-exports.isIE8 = isIE8;
-exports.isIE9 = isIE9;
 exports.isMSBrowser = isMSBrowser;
 exports.isMobileBrowser = isMobileBrowser;
 exports.isSafari = isSafari;
@@ -6811,18 +6805,6 @@ function isChrome() {
 
 function isEdge() {
   return browsers.edge.value;
-}
-
-function isIE() {
-  return browsers.ie.value;
-}
-
-function isIE8() {
-  return browsers.ie8.value;
-}
-
-function isIE9() {
-  return browsers.ie9.value;
 }
 
 function isMSBrowser() {

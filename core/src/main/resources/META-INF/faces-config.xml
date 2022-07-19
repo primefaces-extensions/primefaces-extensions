@@ -207,10 +207,6 @@
         <component-class>org.primefaces.extensions.component.timeago.TimeAgo</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.FloatingActionButton</component-type>
-        <component-class>org.primefaces.extensions.component.fab.FloatingActionButton</component-class>
-    </component>
-    <component>
         <component-type>org.primefaces.extensions.component.CodeScanner</component-type>
         <component-class>org.primefaces.extensions.component.codescanner.CodeScanner</component-class>
     </component>
@@ -233,10 +229,6 @@
     <component>
         <component-type>org.primefaces.extensions.component.MonacoDiffEditorFramed</component-type>
         <component-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramed</component-class>
-    </component>
-    <component>
-        <component-type>org.primefaces.extensions.component.Scaffolding</component-type>
-        <component-class>org.primefaces.extensions.component.scaffolding.Scaffolding</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.Localized</component-type>
@@ -434,11 +426,6 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.FloatingActionButtonRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.fab.FloatingActionButtonRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.CodeScannerRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.codescanner.CodeScannerRenderer</renderer-class>
         </renderer>
@@ -466,11 +453,6 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.MonacoDiffEditorFramedRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.monacoeditor.MonacoDiffEditorFramedRenderer</renderer-class>
-        </renderer>
-        <renderer>
-            <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.ScaffoldingRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.scaffolding.ScaffoldingRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
