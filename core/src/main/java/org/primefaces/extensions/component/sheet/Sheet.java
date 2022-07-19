@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -98,12 +99,12 @@ public class Sheet extends SheetBase {
     /**
      * Map of submitted values by row index and column index
      */
-    private Map<SheetRowColIndex, String> submittedValues = new HashMap<>();
+    private final Map<SheetRowColIndex, String> submittedValues = new ConcurrentHashMap<>();
 
     /**
      * Map of local values by row index and column index
      */
-    private Map<SheetRowColIndex, Object> localValues = new HashMap<>();
+    private final Map<SheetRowColIndex, Object> localValues = new ConcurrentHashMap<>();
 
     /**
      * The selection data
@@ -290,7 +291,11 @@ public class Sheet extends SheetBase {
      * Updates a local value.
      */
     public void setLocalValue(final String rowKey, final int col, final Object value) {
-        localValues.put(new SheetRowColIndex(rowKey, col), value);
+        final SheetRowColIndex key = new SheetRowColIndex(rowKey, col);
+        if (value!=null)
+            localValues.put(key, value);
+        else
+            localValues.remove(key);
     }
 
     /**
@@ -813,18 +818,14 @@ public class Sheet extends SheetBase {
         final Object restoredRowMap = values[6];
         final Object restoredRowNumbers = values[7];
 
-        if (restoredSubmittedValues == null) {
-            submittedValues.clear();
-        }
-        else {
-            submittedValues = (Map<SheetRowColIndex, String>) restoredSubmittedValues;
+        submittedValues.clear();
+        if (restoredSubmittedValues != null) {
+            submittedValues.putAll((Map<SheetRowColIndex, String>) restoredSubmittedValues);
         }
 
-        if (restoredLocalValues == null) {
-            localValues.clear();
-        }
-        else {
-            localValues = (Map<SheetRowColIndex, Object>) restoredLocalValues;
+        localValues.clear();
+        if (restoredLocalValues != null) {
+            localValues.putAll((Map<SheetRowColIndex, Object>) restoredLocalValues);
         }
 
         if (restoredInvalidUpdates == null) {
@@ -901,11 +902,9 @@ public class Sheet extends SheetBase {
      */
     @Override
     public void setSubmittedValue(final Object submittedValue) {
-        if (submittedValue == null) {
-            submittedValues.clear();
-        }
-        else {
-            submittedValues = (Map<SheetRowColIndex, String>) submittedValue;
+        submittedValues.clear();
+        if (submittedValue != null) {
+            submittedValues.putAll((Map<SheetRowColIndex, String>) submittedValue);
         }
 
     }

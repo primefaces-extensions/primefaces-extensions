@@ -26,8 +26,9 @@
         <ui:include src="/sections/cookiePolicy/useCasesChoice.xhtml"/>
     </ui:define>
     <ui:define name="docuTable">
-        <ui:include src="/sections/shared/documentation.xhtml">
-            <ui:param name="tagName" value="cookiePolicy"/>
+        <ui:include src="/sections/shared/twoTabsDocumentation.xhtml">
+            <ui:param name="tagName2" value="saveCookiePolicy"/>
+            <ui:param name="tagName1" value="cookiePolicy"/>
         </ui:include>
     </ui:define>
 </ui:composition>

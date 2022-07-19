@@ -61,7 +61,7 @@ public class BasicDocumentViewerController implements Serializable {
 
             document.close();
             content = DefaultStreamedContent.builder().stream(() -> new ByteArrayInputStream(out.toByteArray()))
-                        .contentType("application/pdf").build();
+                        .contentType("application/pdf").name("jack.pdf").build();
         }
         catch (final Exception e) {
 

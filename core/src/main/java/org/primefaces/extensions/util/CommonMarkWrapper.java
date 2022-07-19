@@ -19,33 +19,29 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.showcase.controller.scaffolding;
+package org.primefaces.extensions.util;
 
-import java.io.Serializable;
-
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 /**
+ * CommonMark (Markdown) wrapper.
+ *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
+ * @since 11.0.3
  */
-@Named
-@ViewScoped
-public class ScaffoldingController implements Serializable {
+public class CommonMarkWrapper {
 
-    private String data;
-
-    public void fetchData(final long sleep) throws InterruptedException {
-        Thread.sleep(sleep);
-        data = "Hello!";
+    private CommonMarkWrapper() {
+        // private constructor to prevent instantiation
     }
 
-    public void resetData() {
-        data = null;
-    }
-
-    public String getData() {
-        return data;
+    public static String toHTML(final String markdown) {
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
     }
 
 }

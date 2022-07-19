@@ -10290,105 +10290,6 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
-            <![CDATA[Floating Action Button holds menu items which pop out on click.]]>
-        </description>
-        <tag-name>fab</tag-name>
-        <component>
-            <component-type>org.primefaces.extensions.component.FloatingActionButton</component-type>
-            <renderer-type>org.primefaces.extensions.component.FloatingActionButtonRenderer</renderer-type>
-        </component>
-        <attribute>
-            <description>
-                <![CDATA[Unique identifier of the component in a namingContainer.]]>
-            </description>
-            <name>id</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Boolean value to specify the rendering of the component, when set to false component will not be rendered.]]>
-            </description>
-            <name>rendered</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
-            </description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[MenuModel instance to create menus programmatically.]]>
-            </description>
-            <name>model</name>
-            <required>false</required>
-            <type>org.primefaces.model.menu.MenuModel</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Position of the items in the tabbing order. Default is 0.]]>
-            </description>
-            <name>tabindex</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Icon for the main button. Default value is "pi pi-plus".]]>
-            </description>
-            <name>icon</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Active variant of the icon for the main button. Default value is null.]]>
-            </description>
-            <name>iconActive</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Keep the menu open when an item is clicked. Default value is false.]]>
-            </description>
-            <name>keepOpen</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Name of the client side widget.]]>
-            </description>
-            <name>widgetVar</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Style class of the main container element. Default value is null.]]>
-            </description>
-            <name>styleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Style of the main button element. Default value is null.]]>
-            </description>
-            <name>style</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-    </tag>
-
-    <tag>
-        <description>
             <![CDATA[CodeScanner allows you to scan bar and QR codes using a device camera.
      Client behavior events: codeScanned - fires when a code is scanned (org.primefaces.event.SelectEvent).]]>
         </description>
@@ -10594,15 +10495,50 @@ See showcase for an example. Default null.]]>
             <type>boolean</type>
         </attribute>
     </tag>
+    
+    <tag>
+        <description>
+            <![CDATA[Cookie Policy component.]]>
+        </description>
+        <tag-name>cookiePolicy</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.CookiePolicy</component-type>
+            <renderer-type>org.primefaces.extensions.component.CookiePolicyRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description>
+                <![CDATA[Unique identifier of the component in a namingContainer.]]>
+            </description>
+            <name>id</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+
+    <tag>
+        <tag-name>saveCookiePolicy</tag-name>
+        <handler-class>org.primefaces.extensions.component.cookiepolicy.CookiePolicySaveTagHandler</handler-class>
+        <attribute>
+            <description><![CDATA[The cookie policy to be saved.]]></description>
+            <name>policy</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Retention period in seconds.]]></description>
+            <name>retention</name>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
 
     <tag>
         <description>
-            <![CDATA[Scaffolding allows you to show skeletons while data is loading.]]>
+            <![CDATA[Localized component reads file contents from the /WEB-INF/pfe-localized/ folder, or uses inline content, in the appropriate language (and country), with opional EL and Markdown support.]]>
         </description>
-        <tag-name>scaffolding</tag-name>
+        <tag-name>localized</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.Scaffolding</component-type>
-            <renderer-type>org.primefaces.extensions.component.ScaffoldingRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.Localized</component-type>
+            <renderer-type>org.primefaces.extensions.component.LocalizedRenderer</renderer-type>
         </component>
         <attribute>
             <description>
@@ -10622,73 +10558,49 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[An el expression referring to a server side UIComponent instance in a backing bean.]]>
+                <![CDATA[Name of the content file, relative to /WEB-INF/pfe-localized/ and optional folder (attribute). If `null`, content is expected in facets.]]>
             </description>
-            <name>binding</name>
-            <required>false</required>
-            <type>javax.faces.component.UIComponent</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Inline style of the component.]]>
-            </description>
-            <name>style</name>
+            <name>name</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Style class of the component.]]>
+                <![CDATA[Folder of the content file, relative to /WEB-INF/pfe-localized/ (optional, if `null` root will be used).]]>
             </description>
-            <name>styleClass</name>
+            <name>folder</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of the client side widget.]]>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
             </description>
-            <name>widgetVar</name>
+            <name>locale</name>
             <required>false</required>
-            <type>java.lang.String</type>
+            <type>java.lang.Object</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Flag indicating whether the data required to render the "ready" facet has been loaded.]]>
+                <![CDATA[Boolean value to specify if the content needs to be escaped. Escaping is done before Markdown is applied. Default is true.]]>
             </description>
-            <name>ready</name>
-            <required>true</required>
-            <type>boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[A method expression to process when the component is rendered.]]>
-            </description>
-            <name>loader</name>
-            <required>false</required>
-            <type>javax.el.MethodExpression</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Global ajax requests are listened by ajaxStatus component, setting global to false will not trigger ajaxStatus. Default value: true.]]>
-            </description>
-            <name>global</name>
+            <name>escape</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[When set to true, ajax requests are not queued. Default value: true.]]>
+                <![CDATA[Boolean value to specify if the content needs to EL evaluated. Default is false.]]>
             </description>
-            <name>async</name>
+            <name>evalEl</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[When set to true and a loader is set, load when this component is scrolled into view. Default value: false.]]>
+                <![CDATA[Boolean value to specify if Markdown needs to be applied on the content. Default is false.]]>
             </description>
-            <name>loadWhenVisible</name>
+            <name>markdown</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

@@ -3,7 +3,7 @@ CKEditor JSF Component
 
 CKEditor resources for PrimeFaces Extensions
 
-( Based on CKEditor v4.14.1 )
+( Based on CKEditor v4.18.0 )
 
 ## License (IMPORTANT!!!)
 

@@ -30,8 +30,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.PrimeClientBehaviorHolder;
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.model.monacoeditor.EditorOptions;
-import org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -40,7 +38,8 @@ import org.primefaces.util.LocaleUtils;
  * @since 11.1.0
  */
 @SuppressWarnings("java:S110")
-public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea implements ClientBehaviorHolder, PrimeClientBehaviorHolder, Widget {
+public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea
+            implements ClientBehaviorHolder, PrimeClientBehaviorHolder, Widget {
 
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
@@ -59,7 +58,7 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea 
     private Locale appropriateLocale;
     private final Class<TEditorOpts> editorOptionsClass;
 
-    protected MonacoEditorCommon(String rendererType, Class<TEditorOpts> editorOptionsClass) {
+    protected MonacoEditorCommon(final String rendererType, final Class<TEditorOpts> editorOptionsClass) {
         this.editorOptionsClass = editorOptionsClass;
         setRendererType(rendererType);
     }
@@ -77,8 +76,9 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea 
     }
 
     @SuppressWarnings("unchecked")
-    public final Map<String, EditorStandaloneTheme> getCustomThemes() {
-        return (Map<String, EditorStandaloneTheme>) getStateHelper().eval(BaseEditorPropertyKeys.customThemes, null);
+    public final Map<String, org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme> getCustomThemes() {
+        return (Map<String, org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme>) getStateHelper().eval(
+                    BaseEditorPropertyKeys.customThemes, null);
     }
 
     public final String getDirectory() {
@@ -86,7 +86,8 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea 
     }
 
     public final TEditorOpts getEditorOptions() {
-        final TEditorOpts editorOptions = editorOptionsClass.cast(getStateHelper().eval(BaseEditorPropertyKeys.editorOptions, null));
+        final TEditorOpts editorOptions = editorOptionsClass.cast(
+                    getStateHelper().eval(BaseEditorPropertyKeys.editorOptions, null));
         return editorOptions != null ? editorOptions : newEditorOptions();
     }
 
@@ -135,64 +136,65 @@ public abstract class MonacoEditorCommon<TEditorOpts> extends HtmlInputTextarea 
         return (Boolean) getStateHelper().eval(BaseEditorPropertyKeys.autoResize, DEFAULT_AUTO_RESIZE);
     }
 
-    public final void setAutoResize(boolean autoResize) {
+    public final void setAutoResize(final boolean autoResize) {
         getStateHelper().put(BaseEditorPropertyKeys.autoResize, autoResize);
     }
 
-    public final void setBasename(String basename) {
+    public final void setBasename(final String basename) {
         getStateHelper().put(BaseEditorPropertyKeys.basename, basename);
     }
 
-    public final void setCustomThemes(Map<String, EditorStandaloneTheme> customThemes) {
+    public final void setCustomThemes(
+                final Map<String, org.primefaces.extensions.model.monacoeditor.EditorStandaloneTheme> customThemes) {
         getStateHelper().put(BaseEditorPropertyKeys.customThemes, customThemes);
     }
 
-    public final void setDirectory(String directory) {
+    public final void setDirectory(final String directory) {
         getStateHelper().put(BaseEditorPropertyKeys.directory, directory);
     }
 
-    public final void setEditorOptions(EditorOptions editorOptions) {
+    public final void setEditorOptions(final org.primefaces.extensions.model.monacoeditor.EditorOptions editorOptions) {
         getStateHelper().put(BaseEditorPropertyKeys.editorOptions, editorOptions);
     }
 
-    public final void setExtension(String extension) {
+    public final void setExtension(final String extension) {
         getStateHelper().put(BaseEditorPropertyKeys.extension, extension);
     }
 
-    public final void setHeight(String height) {
+    public final void setHeight(final String height) {
         getStateHelper().put(BaseEditorPropertyKeys.height, height);
     }
 
-    public final void setOninitialized(String oninitialized) {
+    public final void setOninitialized(final String oninitialized) {
         getStateHelper().put(BaseEditorPropertyKeys.oninitialized, oninitialized);
     }
 
-    public final void setOnpaste(String onpaste) {
+    public final void setOnpaste(final String onpaste) {
         getStateHelper().put(BaseEditorPropertyKeys.onpaste, onpaste);
     }
 
-    public final void setScheme(String scheme) {
+    public final void setScheme(final String scheme) {
         getStateHelper().put(BaseEditorPropertyKeys.scheme, scheme);
     }
 
-    public final void setLocale(Object locale) {
+    public final void setLocale(final Object locale) {
         getStateHelper().put(BaseEditorPropertyKeys.locale, locale);
     }
 
-    public final void setLocaleUrl(String localeUrl) {
+    public final void setLocaleUrl(final String localeUrl) {
         getStateHelper().put(BaseEditorPropertyKeys.localeUrl, localeUrl);
     }
 
-    public final void setWidgetVar(String widgetVar) {
+    public final void setWidgetVar(final String widgetVar) {
         getStateHelper().put(BaseEditorPropertyKeys.widgetVar, widgetVar);
     }
 
-    public final void setWidth(String width) {
+    public final void setWidth(final String width) {
         getStateHelper().put(BaseEditorPropertyKeys.width, width);
     }
 
     @Override
-    public Object saveState(FacesContext context) {
+    public Object saveState(final FacesContext context) {
         // reset component for MyFaces view pooling
         appropriateLocale = null;
 

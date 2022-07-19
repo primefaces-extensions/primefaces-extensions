@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>11.0.3-SNAPSHOT</version>
+        <version>12.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -92,7 +92,6 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>counter/**</include>
-                                <include>fab/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
@@ -100,7 +99,6 @@
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
-                                <include>scaffolding/**</include>
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
                                 <include>speedtest/**</include>
@@ -141,6 +139,18 @@
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/creditcard/creditcard.css</outputFile>
                                     <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>ckeditor/0-ckeditor.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/ckeditor/ckeditor.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
@@ -409,13 +419,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.12.0</version>
             </plugin>
             <!-- Jakarta EE shading -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>jakarta</id>
@@ -515,7 +525,7 @@
                     <dependency>
                         <groupId>io.yupiik.maven</groupId>
                         <artifactId>maven-shade-transformers</artifactId>
-                        <version>0.0.1</version>
+                        <version>0.0.3</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -567,7 +577,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.4.0</version>
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                     <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
@@ -614,14 +624,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.2.0</version>
                 <configuration>
                     <linkJavadoc>true</linkJavadoc>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M7</version>
                 <configuration>
                     <aggregate>false</aggregate>
                 </configuration>
@@ -652,7 +662,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.15.0</version>
+                <version>3.17.0</version>
                 <configuration>
                     <linkXref>true</linkXref>
                     <aggregate>true</aggregate>
@@ -685,7 +695,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.5.3.0</version>
+                <version>4.7.1.0</version>
                 <configuration>
                     <effort>Max</effort>
                     <threshold>Default</threshold>
@@ -768,6 +778,12 @@
             <artifactId>morphia-core</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Localized -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- TEST -->
         <dependency>
             <groupId>junit</groupId>
@@ -794,7 +810,7 @@
                     <plugin>
                         <groupId>org.owasp</groupId>
                         <artifactId>dependency-check-maven</artifactId>
-                        <version>6.5.3</version>
+                        <version>7.1.1</version>
                         <configuration>
                             <skipProvidedScope>false</skipProvidedScope>
                             <skipRuntimeScope>false</skipRuntimeScope>

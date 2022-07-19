@@ -33,8 +33,7 @@ import org.primefaces.extensions.converter.JsonExposeAwareConverter;
 /**
  * Builder for request parameters.
  *
- * @author Oleg Varaksin / last modified by $Author$
- * @version $Revision$
+ * @author Oleg Varaksin
  * @since 1.1.0
  */
 public class RequestParameterBuilder {
@@ -57,10 +56,11 @@ public class RequestParameterBuilder {
      *
      * @param useCurrentRequest boolean flag if the current request URL should be used or not
      */
-    public RequestParameterBuilder(boolean useCurrentRequest) {
+    public RequestParameterBuilder(final boolean useCurrentRequest) {
         this(useCurrentRequest
-                    ? ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL()
-                                .toString()
+                    ? ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+                                .getRequest()).getRequestURL()
+                                            .toString()
                     : null);
     }
 
@@ -69,7 +69,7 @@ public class RequestParameterBuilder {
      *
      * @param url URL
      */
-    public RequestParameterBuilder(String url) {
+    public RequestParameterBuilder(final String url) {
         this(url, null);
     }
 
@@ -80,7 +80,7 @@ public class RequestParameterBuilder {
      * @param jsonConverter specific JsonConverter. It should extends {@link JsonConverter} from PrimeFaces Extensions. If null, the default implementation
      *            {@link JsonExposeAwareConverter} is used.
      */
-    public RequestParameterBuilder(String url, JsonConverter jsonConverter) {
+    public RequestParameterBuilder(final String url, final JsonConverter jsonConverter) {
         buffer = new StringBuilder(url != null ? url : org.primefaces.util.Constants.EMPTY_STRING);
         originalUrl = url != null ? url : org.primefaces.util.Constants.EMPTY_STRING;
 
@@ -101,7 +101,8 @@ public class RequestParameterBuilder {
      * @return RequestParameterBuilder updated this instance which can be reused
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public RequestParameterBuilder paramJson(String name, Object value) throws UnsupportedEncodingException {
+    public RequestParameterBuilder paramJson(final String name, final Object value)
+                throws UnsupportedEncodingException {
         return paramJson(name, value, null);
     }
 
@@ -114,13 +115,14 @@ public class RequestParameterBuilder {
      * @param value value of the request parameter
      * @param type data type of the value object. Any primitive type, array, non generic or generic type is supported. Data type is sometimes required to
      *            convert a value to a JSON representation. All data types should be fully qualified. Examples: "boolean" "int" "long[]" "java.lang.String"
-     *            "java.util.Date" "java.util.Collection<java.lang.Integer>" "java.util.Map<java.lang.String, com.durr.FooPair<java.lang.Integer,
-     *            java.util.Date>>" "com.durr.FooNonGenericClass" "com.durr.FooGenericClass<java.lang.String, java.lang.Integer>"
-     *            "com.durr.FooGenericClass<int[], com.durr.FooGenericClass<com.durr.FooNonGenericClass, java.lang.Boolean>>".
+     *            "java.util.Date" "java.util.Collection&lt;java.lang.Integer&gt;" "java.util.Map&lt;java.lang.String, com.durr.FooPair&lt;java.lang.Integer,
+     *            java.util.Date&gt;&gt;" "com.durr.FooNonGenericClass" "com.durr.FooGenericClass&lt;java.lang.String, java.lang.Integer&gt;"
+     *            "com.durr.FooGenericClass&lt;int[], com.durr.FooGenericClass&lt;com.durr.FooNonGenericClass, java.lang.Boolean&gt;&gt;".
      * @return RequestParameterBuilder updated this instance which can be reused
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public RequestParameterBuilder paramJson(String name, Object value, String type) throws UnsupportedEncodingException {
+    public RequestParameterBuilder paramJson(final String name, final Object value, final String type)
+                throws UnsupportedEncodingException {
         final String encodedJsonValue = encodeJson(value, type);
 
         if (added || originalUrl.contains("?")) {
@@ -149,7 +151,7 @@ public class RequestParameterBuilder {
      * @return RequestParameterBuilder updated this instance which can be reused
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public RequestParameterBuilder param(String name, Object value) throws UnsupportedEncodingException {
+    public RequestParameterBuilder param(final String name, final Object value) throws UnsupportedEncodingException {
         final String encodedValue = encode(value);
 
         if (encodedValue == null) {
@@ -181,7 +183,7 @@ public class RequestParameterBuilder {
      * @return String encoded value
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public String encode(Object value) throws UnsupportedEncodingException {
+    public String encode(final Object value) throws UnsupportedEncodingException {
         if (value == null) {
             return null;
         }
@@ -196,16 +198,16 @@ public class RequestParameterBuilder {
      * @param value value to be converted and encoded
      * @param type data type of the value object. Any primitive type, array, non generic or generic type is supported. Data type is sometimes required to
      *            convert a value to a JSON representation. All data types should be fully qualified. Examples: "boolean" "int" "long[]" "java.lang.String"
-     *            "java.util.Date" "java.util.Collection<java.lang.Integer>" "java.util.Map<java.lang.String, com.durr.FooPair<java.lang.Integer,
-     *            java.util.Date>>" "com.durr.FooNonGenericClass" "com.durr.FooGenericClass<java.lang.String, java.lang.Integer>"
-     *            "com.durr.FooGenericClass<int[], com.durr.FooGenericClass<com.durr.FooNonGenericClass, java.lang.Boolean>>".
+     *            "java.util.Date" "java.util.Collection&lt;java.lang.Integer&gt;" "java.util.Map&lt;java.lang.String, com.durr.FooPair&lt;java.lang.Integer,
+     *            java.util.Date&gt;&gt;" "com.durr.FooNonGenericClass" "com.durr.FooGenericClass&lt;java.lang.String, java.lang.Integer&gt;"
+     *            "com.durr.FooGenericClass&lt;int[], com.durr.FooGenericClass&lt;com.durr.FooNonGenericClass, java.lang.Boolean&gt;&gt;".
      * @return String converted and encoded value
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public String encodeJson(Object value, String type) throws UnsupportedEncodingException {
+    public String encodeJson(final Object value, final String type) throws UnsupportedEncodingException {
         jsonConverter.setType(type);
 
-        String jsonValue;
+        final String jsonValue;
         if (value == null) {
             jsonValue = "null";
         }
@@ -223,7 +225,7 @@ public class RequestParameterBuilder {
      * @return String converted and encoded value
      * @throws UnsupportedEncodingException DOCUMENT_ME
      */
-    public String encodeJson(Object value) throws UnsupportedEncodingException {
+    public String encodeJson(final Object value) throws UnsupportedEncodingException {
         return encodeJson(value, null);
     }
 

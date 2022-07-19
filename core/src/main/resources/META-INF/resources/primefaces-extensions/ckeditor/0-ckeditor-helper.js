@@ -45,16 +45,6 @@ CKEditorExtension = {
 CKEDITOR_GETURL = function (resource) {
     var facesResource;
 
-    // GitHub #545 IE11 support
-    if (PrimeFaces.env.isIE()) {
-        if (!String.prototype.startsWith) {
-            String.prototype.startsWith = function (searchString, position) {
-                position = position || 0;
-                return this.indexOf(searchString, position) === position;
-            };
-        }
-    }
-
     //do not resolve
     if (resource.indexOf('?resolve=false') !== -1) {
         facesResource = resource.replace('?resolve=false', '');
