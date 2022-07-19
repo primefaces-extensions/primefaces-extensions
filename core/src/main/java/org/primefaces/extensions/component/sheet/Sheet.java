@@ -294,7 +294,8 @@ public class Sheet extends SheetBase {
         final SheetRowColIndex key = new SheetRowColIndex(rowKey, col);
         if (value != null) {
             localValues.put(key, value);
-        } else {
+        }
+        else {
             localValues.remove(key);
         }
     }
