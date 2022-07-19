@@ -36,7 +36,9 @@ import org.primefaces.util.Constants;
  *
  * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
  * @since 8.0
+ * @deprecated PF12 has a disableOnAjax attribute
  */
+@Deprecated
 public class CommandButtonSingleClickRenderer extends CommandButtonRenderer {
 
     @Override

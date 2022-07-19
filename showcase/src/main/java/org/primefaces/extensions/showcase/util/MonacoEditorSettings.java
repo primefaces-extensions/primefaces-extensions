@@ -51,8 +51,10 @@ public class MonacoEditorSettings {
                     .setBase(ETheme.VS) //
                     .setInherit(true) //
                     .setRules(Arrays.asList( //
-                                new EditorTokenThemeRule().setToken("comment").setForeground("ffa500").setFontStyle("italic underline"), //
-                                new EditorTokenThemeRule().setToken("comment.js").setForeground("008800").setFontStyle("bold"), //
+                                new EditorTokenThemeRule().setToken("comment").setForeground("ffa500")
+                                            .setFontStyle("italic underline"), //
+                                new EditorTokenThemeRule().setToken("comment.js").setForeground("008800")
+                                            .setFontStyle("bold"), //
                                 new EditorTokenThemeRule().setToken("comment.css").setForeground("0000ff") //
                     ));
     }
@@ -62,13 +64,15 @@ public class MonacoEditorSettings {
      */
     public static List<Locale> getBuiltInLocales() {
         return Arrays.asList( //
-                    new Locale("cs"), new Locale("de"), new Locale("en"), new Locale("es"), new Locale("fr"), new Locale("it"), new Locale("ja"),
+                    new Locale("cs"), new Locale("de"), new Locale("en"), new Locale("es"), new Locale("fr"),
+                    new Locale("it"), new Locale("ja"),
                     new Locale("ko"),
-                    new Locale("pl"), new Locale("pt", "BR"), new Locale("ru"), new Locale("tr"), new Locale("zh", "CN"), new Locale("zh", "TW"));
+                    new Locale("pl"), new Locale("pt", "BR"), new Locale("ru"), new Locale("tr"),
+                    new Locale("zh", "CN"), new Locale("zh", "TW"));
     }
 
     public static EditorOptions createEditorOptionsExtender() {
-        EditorOptions opts = new EditorOptions();
+        final EditorOptions opts = new EditorOptions();
         opts.setLanguage(ELanguage.JAVASCRIPT);
         opts.setFontSize(12);
         opts.setTheme(ETheme.VS);
@@ -84,7 +88,7 @@ public class MonacoEditorSettings {
     }
 
     public static EditorOptions createEditorOptionsCss() {
-        EditorOptions opts = new EditorOptions();
+        final EditorOptions opts = new EditorOptions();
         opts.setLanguage(ELanguage.CSS);
         opts.setFontSize(12);
         opts.setTheme(ETheme.VS);
@@ -100,7 +104,7 @@ public class MonacoEditorSettings {
     }
 
     public static DiffEditorOptions createEditorOptionsExtenderDiff() {
-        DiffEditorOptions opts = new DiffEditorOptions();
+        final DiffEditorOptions opts = new DiffEditorOptions();
         opts.setFontSize(12);
         opts.setTheme(ETheme.VS);
         opts.setCursorStyle(ECursorStyle.BLOCK);
@@ -139,24 +143,28 @@ public class MonacoEditorSettings {
 
     /**
      * Applies random modifications to the original, for showcasing the diff editor.
-     * 
+     *
      * @param original Original string.
      * @return A modified string with random modifications.
      */
+    @SuppressWarnings("java:S2245")
     public static String deriveModifiedContent(String original) {
         if (original == null || original.isEmpty()) {
             return original;
         }
-        original = replaceRandomOccurence(original, 20, Pattern.compile("[0-9]"), //
+        original = replaceRandomOccurence(original, 20, Pattern.compile("\\d"), //
                     () -> String.valueOf((char) RandomUtils.nextInt(48, 58)) //
         );
+
         original = replaceRandomOccurence(original, 20, Pattern.compile(" "), //
                     () -> StringUtils.repeat(" ", RandomUtils.nextInt(2, 5)) //
         );
         return original;
     }
 
-    private static String replaceRandomOccurence(String value, int count, Pattern search, Supplier<String> replacement) {
+    @SuppressWarnings("java:S2245")
+    private static String replaceRandomOccurence(String value, int count, Pattern search,
+                final Supplier<String> replacement) {
         for (int i = 1; i <= count; i += 1) {
             final int pos = (int) Math.floor(Math.random() * value.length());
             final Matcher matcher = search.matcher(value);
@@ -172,8 +180,8 @@ public class MonacoEditorSettings {
             final int end = matcher.end();
             final String repl = replacement.get();
             value = end >= value.length() //
-                        ? value.substring(0, start) + String.valueOf(repl) //
-                        : value.substring(0, start) + String.valueOf(repl) + value.substring(end);
+                        ? value.substring(0, start) + repl //
+                        : value.substring(0, start) + repl + value.substring(end);
         }
         return value;
     }
