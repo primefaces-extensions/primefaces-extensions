@@ -292,10 +292,11 @@ public class Sheet extends SheetBase {
      */
     public void setLocalValue(final String rowKey, final int col, final Object value) {
         final SheetRowColIndex key = new SheetRowColIndex(rowKey, col);
-        if (value!=null)
+        if (value != null) {
             localValues.put(key, value);
-        else
+        } else {
             localValues.remove(key);
+        }
     }
 
     /**
