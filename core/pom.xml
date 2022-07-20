@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <name>PrimeFaces Extensions</name>
     <description>
-        <![CDATA[PrimeFaces Extensions Project for Maven.]]>
+        <![CDATA[PrimeFaces Extensions components and utilities for PrimeFaces.]]>
     </description>
 
     <properties>
