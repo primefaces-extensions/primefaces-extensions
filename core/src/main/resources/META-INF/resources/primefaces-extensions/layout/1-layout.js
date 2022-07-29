@@ -106,7 +106,7 @@ PrimeFaces.widget.ExtLayout = PrimeFaces.widget.DeferredWidget.extend({
         }).on("layoutpaneonresize", function () {
             var layoutPane = $(this).data("layoutPane");
 
-            if (!layoutPane.state.isClosed && !layoutPane.state.isHidden) {
+            if (layoutPane && !layoutPane.state.isClosed && !layoutPane.state.isHidden) {
                 var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['resize'] : null;
                 if (behavior) {
                     var combinedPosition = $(this).data('combinedposition');
