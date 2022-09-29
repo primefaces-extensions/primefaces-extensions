@@ -320,7 +320,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
         return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
     }
 
-    public void setAutoCompleteTrimDropdown(final Boolean value) {
+    public void setAutoCompleteTrimDropdown(final boolean value) {
         getStateHelper().put(PropertyKeys.autoCompleteTrimDropdown, value);
     }
 
