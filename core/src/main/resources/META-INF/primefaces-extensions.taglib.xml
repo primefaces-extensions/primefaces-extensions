@@ -10605,5 +10605,32 @@ See showcase for an example. Default null.]]>
             <type>java.lang.Boolean</type>
         </attribute>
     </tag>
+    
+    <tag>
+        <description><![CDATA[Gives client-side Javascript events when session will expire.]]></description>
+        <tag-name>session</tag-name>
+        <component>
+            <component-type>org.primefaces.extensions.component.Session</component-type>
+            <renderer-type>org.primefaces.extensions.component.SessionRenderer</renderer-type>
+        </component>
+        <attribute>
+            <description><![CDATA[Client-side Javascript invoked when the session is about to expire.]]></description>
+            <name>onexpire</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Client-side Javascript invoked when the session has expired.]]></description>
+            <name>onexpired</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Optional reaction period in seconds for the user to extend the session. Defaults to 60 seconds.]]></description>
+            <name>reactionPeriod</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
 
 </facelet-taglib>

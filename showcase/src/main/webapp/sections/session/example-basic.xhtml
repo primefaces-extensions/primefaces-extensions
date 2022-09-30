@@ -1,0 +1,29 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <!-- EXAMPLE-SOURCE-START -->
+
+    <pe:session onexpire="PF('sessionDialog').show()"
+                onexpired="PF('sessionDialog').hide();PF('sessionExpiredDialog').show()"
+                reactionPeriod="60"/>
+
+    <p:dialog widgetVar="sessionDialog" header="Session Warning">
+        <p>
+            Your session is about to expire.
+        </p>
+        <h:form>
+            <p:commandButton value="Keep my session alive." onsuccess="PF('sessionDialog').hide()"/>
+        </h:form>
+    </p:dialog>
+
+    <p:dialog widgetVar="sessionExpiredDialog" header="Session Expired">
+        <p>
+            Your session has expired.
+        </p>
+    </p:dialog>
+
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
