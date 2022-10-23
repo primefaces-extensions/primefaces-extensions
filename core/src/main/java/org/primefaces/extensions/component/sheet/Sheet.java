@@ -296,7 +296,7 @@ public class Sheet extends SheetBase {
             localValues.put(key, value);
         }
         else {
-            localValues.remove(key);
+            localValues.put(key, ToBeRemoved.class);
         }
     }
 
@@ -761,7 +761,7 @@ public class Sheet extends SheetBase {
         while (entries.hasNext()) {
             final Entry<SheetRowColIndex, Object> entry = entries.next();
 
-            final Object newValue = entry.getValue();
+            final Object newValue = ToBeRemoved.class.equals(entry.getValue()) ? null : entry.getValue();
             final String rowKey = entry.getKey().getRowKey();
             final int col = entry.getKey().getColIndex();
             final SheetColumn column = getColumns().get(col);
