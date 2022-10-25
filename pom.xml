@@ -49,7 +49,7 @@
         <commons-fileupload.version>1.4</commons-fileupload.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <gson.version>2.9.1</gson.version>
+        <gson.version>2.10</gson.version>
         <jakarta-faces.version>2.3.17</jakarta-faces.version>
         <libphonenumber.version>8.12.57</libphonenumber.version>
         <morphia.version>2.2.3</morphia.version>
