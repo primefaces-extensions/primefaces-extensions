@@ -5683,6 +5683,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[If true show the breadcrumb at level 1, if false hide it at level 1. Default is true.]]>
+            </description>
+            <name>showBreadcrumbFirstLevel</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Boolean flag to allow rendering of breadcrumb above or below header facet. Default is true.]]>
             </description>
             <name>breadcrumbAboveHeader</name>

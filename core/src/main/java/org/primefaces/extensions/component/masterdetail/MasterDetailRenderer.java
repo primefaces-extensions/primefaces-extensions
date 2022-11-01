@@ -209,6 +209,16 @@ public class MasterDetailRenderer extends CoreRenderer {
         // update breadcrumb items
         updateBreadcrumb(fc, breadcrumb, masterDetail, mdl);
 
+        if (!masterDetail.isShowBreadcrumbFirstLevel()) {
+            final int levelToRender = mdl.getLevel();
+            if (levelToRender == 1) {
+                breadcrumb.setStyleClass("ui-helper-hidden");
+            }
+            else {
+                breadcrumb.setStyleClass("");
+            }
+        }
+
         // render breadcrumb
         breadcrumb.encodeAll(fc);
     }
@@ -360,7 +370,7 @@ public class MasterDetailRenderer extends CoreRenderer {
                 return renderer.getConvertedValue(fc, component, submittedValue);
             }
             else if (submittedValue instanceof String) {
-                // convert submitted value by registred (implicit or explicit)
+                // convert submitted value by registered (implicit or explicit)
                 // converter
                 final Converter converter = ComponentUtils.getConverter(fc, component);
                 if (converter != null) {
@@ -369,7 +379,7 @@ public class MasterDetailRenderer extends CoreRenderer {
             }
         }
         catch (final Exception e) {
-            // an conversion error occured
+            // a conversion error occurred
             return null;
         }
 
