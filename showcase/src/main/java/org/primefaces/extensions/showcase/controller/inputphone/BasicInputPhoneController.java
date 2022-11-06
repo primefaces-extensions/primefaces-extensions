@@ -22,7 +22,10 @@
 package org.primefaces.extensions.showcase.controller.inputphone;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -40,6 +43,15 @@ public class BasicInputPhoneController implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String phoneNumber;
+    private Map<String, String> localizedCountries;
+
+    @PostConstruct
+    protected void init() {
+        localizedCountries = new HashMap<>();
+        localizedCountries.put("nl", "Nederland");
+        localizedCountries.put("be", "België");
+        localizedCountries.put("de", "Duitsland");
+    }
 
     public void onCountrySelect(final SelectEvent<Country> event) {
         final Country country = event.getObject();
@@ -58,6 +70,10 @@ public class BasicInputPhoneController implements Serializable {
 
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Map<String, String> getLocalizedCountries() {
+        return localizedCountries;
     }
 
 }

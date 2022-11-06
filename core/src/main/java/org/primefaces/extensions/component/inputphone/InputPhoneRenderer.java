@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.inputphone;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.faces.FacesException;
@@ -38,6 +39,7 @@ import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.PhoneNumberUtilWrapper;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONArray;
+import org.primefaces.shaded.json.JSONObject;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
@@ -214,6 +216,9 @@ public class InputPhoneRenderer extends InputRenderer {
                                     .createResource("inputphone/utils.js", "primefaces-extensions")
                                     .getRequestPath());
         }
+        if (inputPhone.getLocalizedCountries() != null) {
+            wb.nativeAttr("localizedCountries", objectToJsonString(inputPhone.getLocalizedCountries()));
+        }
 
         encodeClientBehaviors(context, inputPhone);
 
@@ -233,9 +238,17 @@ public class InputPhoneRenderer extends InputRenderer {
             final String string = ((String) object).replace(' ', ',').toLowerCase();
             return Arrays.asList(string.split(","));
         }
-        else {
-            return (Collection<String>) object;
+        return (Collection<String>) object;
+    }
+
+    private String objectToJsonString(final Object object) {
+        if (object == null || object instanceof String) {
+            return (String) object;
         }
+        Map<String, String> map = (Map) object;
+        JSONObject jsonObj = new JSONObject();
+        map.entrySet().forEach(entry -> jsonObj.put(entry.getKey(), entry.getValue()));
+        return jsonObj.toString();
     }
 
 }

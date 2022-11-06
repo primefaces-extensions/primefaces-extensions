@@ -9804,6 +9804,15 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Localized countries map (key ISO 2 code, value name), or JSON string, example
+"{'de':'Deutschland'}". Default null.]]>
+            </description>
+            <name>localizedCountries</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
     </tag>
 
     <tag>

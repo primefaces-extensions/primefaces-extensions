@@ -7,11 +7,15 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/inputphone/basicUsage.jsf"/>
+        <p:menuitem value="Localized Countries"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('localizedCountries')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/inputphone/localizedCountries.jsf"/>
         <p:menuitem value="Geo IP Lookup"
                     styleClass="#{navigationContext.getMenuitemStyleClass('geoIpLookup')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/inputphone/geoIpLookup.jsf"/>
-        <p:menuitem value="Standalone flags"
+        <p:menuitem value="Standalone Flags"
                     styleClass="#{navigationContext.getMenuitemStyleClass('flags')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/inputphone/flags.jsf"/>
