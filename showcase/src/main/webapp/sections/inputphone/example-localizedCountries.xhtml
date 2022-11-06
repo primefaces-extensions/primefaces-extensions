@@ -1,0 +1,13 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<!-- EXAMPLE-SOURCE-START -->
+    <pe:inputPhone id="txtPhone" 
+                   initialCountry="nl"
+                   onlyCountries="nl,be,de"
+                   localizedCountries="{'nl':'Nederland','be':'België','de':'Duitsland'}"
+                   value="#{basicInputPhoneController.phoneNumber}"/>
+<!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

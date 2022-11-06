@@ -87,7 +87,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         separateDialCode,
         inputStyle,
         inputStyleClass,
-        geoIpLookup
+        geoIpLookup,
+        localizedCountries
     }
 
     @SuppressWarnings("java:S115")
@@ -288,6 +289,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setGeoIpLookup(final String geoIpLookup) {
         getStateHelper().put(PropertyKeys.geoIpLookup, geoIpLookup);
+    }
+
+    public Object getLocalizedCountries() {
+        return getStateHelper().eval(PropertyKeys.localizedCountries, null);
+    }
+
+    public void setLocalizedCountries(final Object localizedCountries) {
+        getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
     }
 
     public boolean isUtilsScriptRequired() {
