@@ -48,8 +48,8 @@ import dev.morphia.Datastore;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.Query;
 import dev.morphia.query.Sort;
-import dev.morphia.query.experimental.filters.Filters;
-import dev.morphia.query.experimental.filters.RegexFilter;
+import dev.morphia.query.filters.Filters;
+import dev.morphia.query.filters.RegexFilter;
 
 /**
  * Basic {@link LazyDataModel} implementation for MongoDB using Morphia.
