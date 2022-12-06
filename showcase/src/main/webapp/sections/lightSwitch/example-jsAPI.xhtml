@@ -1,15 +1,14 @@
 <ui:composition
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
 
-<!-- EXAMPLE-SOURCE-START -->
-<p><p:toggleSwitch onchange="PF('lightSwitch').toggle()"/></p>
+    <!-- EXAMPLE-SOURCE-START -->
+    <p><p:toggleSwitch onchange="PF('lightSwitch').toggle()"/></p>
 
-<p><p:button value="Dark" onclick="PF('lightSwitch').dark();return false"/></p>
+    <p><p:button value="Dark" onclick="PF('lightSwitch').dark();return false"/></p>
 
-<p><p:button value="Light" onclick="PF('lightSwitch').light();return false"/></p>
+    <p><p:button value="Light" onclick="PF('lightSwitch').light();return false"/></p>
 
-<p><p:button value="Is dark OS?" onclick="alert(PF('lightSwitch').isDarkOS())"/></p>
-<!-- EXAMPLE-SOURCE-END -->
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
