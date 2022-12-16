@@ -85,7 +85,8 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         if (themeParamValue != null) {
             final ELContext elContext = context.getELContext();
             final ExpressionFactory expressionFactory = context.getApplication().getExpressionFactory();
-            final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue, String.class);
+            final ValueExpression ve = expressionFactory.createValueExpression(elContext, themeParamValue,
+                        String.class);
             theme = (String) ve.getValue(elContext);
         }
         else {
@@ -144,7 +145,8 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
-        context.getViewRoot().addComponentResource(context, js, "head");
+        js.getAttributes().put("target", "head");
+        context.getViewRoot().addComponentResource(context, js, "body");
     }
 
 }
