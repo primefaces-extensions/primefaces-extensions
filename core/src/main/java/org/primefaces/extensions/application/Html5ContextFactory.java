@@ -44,28 +44,15 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public class Html5ContextFactory extends FacesContextFactory {
 
-    private FacesContextFactory wrapped;
-
-    // #6212 - don't remove it
-    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
-    public Html5ContextFactory() {
-
-    }
-
-    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public Html5ContextFactory(FacesContextFactory wrapped) {
-        this.wrapped = wrapped;
+        super(wrapped);
     }
 
     @Override
     public FacesContext getFacesContext(Object context, Object request, Object response, Lifecycle lifecycle)
                 throws FacesException {
-        FacesContext wrappedContext = wrapped.getFacesContext(context, request, response, lifecycle);
+        FacesContext wrappedContext = getWrapped().getFacesContext(context, request, response, lifecycle);
         return wrappedContext instanceof Html5Context ? wrappedContext : new Html5Context(wrappedContext);
     }
 
-    @Override
-    public FacesContextFactory getWrapped() {
-        return wrapped;
-    }
 }
