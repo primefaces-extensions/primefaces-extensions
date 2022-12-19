@@ -40,10 +40,8 @@ public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
     public PrimeFacesExtensionsResource(final Resource resource) {
         super(resource);
-        version = PrimeRequestContext.getCurrentInstance(FacesContext.getCurrentInstance()).isHideResourceVersion() ?
-                    Constants.EMPTY_STRING
-                    :
-                    "&e=" + getClass().getPackage().getImplementationVersion();
+        version = PrimeRequestContext.getCurrentInstance(FacesContext.getCurrentInstance()).isHideResourceVersion() ? Constants.EMPTY_STRING
+                    : "&e=" + getClass().getPackage().getImplementationVersion();
     }
 
     @Override
