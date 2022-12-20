@@ -56,10 +56,11 @@ public class ThemeAccentColorResource extends ResourceWrapper {
         // @formatter:on
     }
 
+    private final Resource wrapped;
     private final String charEncoding;
 
     public ThemeAccentColorResource(final Resource wrapped) {
-        super(wrapped);
+        this.wrapped = wrapped;
         String encoding = FacesContext.getCurrentInstance().getExternalContext().getRequestCharacterEncoding();
         if (LangUtils.isBlank(encoding)) {
             encoding = StandardCharsets.UTF_8.name();
@@ -69,10 +70,10 @@ public class ThemeAccentColorResource extends ResourceWrapper {
 
     @Override
     public InputStream getInputStream() throws IOException {
-        final String library = getWrapped().getLibraryName();
+        final String library = wrapped.getLibraryName();
         final List<String> accentColors = ACCENT_COLORS.get(library);
         if (accentColors == null || accentColors.isEmpty()) {
-            return getWrapped().getInputStream();
+            return wrapped.getInputStream();
         }
 
         if (CACHE.containsKey(library)) {
@@ -94,11 +95,16 @@ public class ThemeAccentColorResource extends ResourceWrapper {
     protected String getContent() throws IOException {
         final ByteArrayOutputStream result = new ByteArrayOutputStream();
         final byte[] buffer = new byte[1024];
-        final InputStream inputStream = getWrapped().getInputStream();
+        final InputStream inputStream = wrapped.getInputStream();
         for (int length; (length = inputStream.read(buffer)) != -1;) {
             result.write(buffer, 0, length);
         }
         return result.toString(charEncoding);
+    }
+
+    @Override
+    public Resource getWrapped() {
+        return wrapped;
     }
 
 }

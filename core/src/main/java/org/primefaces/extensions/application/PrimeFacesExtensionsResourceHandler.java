@@ -37,8 +37,17 @@ import javax.faces.application.ResourceHandlerWrapper;
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
+    private final ResourceHandler wrapped;
+
+    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
-        super(resourceHandler);
+        super();
+        wrapped = resourceHandler;
+    }
+
+    @Override
+    public ResourceHandler getWrapped() {
+        return wrapped;
     }
 
     @Override
@@ -56,8 +65,7 @@ public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper 
     private static Resource wrapResource(Resource resource, String libraryName) {
         // libs starting with "primefaces" will get "&e=9.0" extension version appended
         if (resource != null && libraryName != null
-                    &&
-                    (libraryName.toLowerCase(Locale.getDefault()).startsWith(org.primefaces.util.Constants.LIBRARY))) {
+                    && (libraryName.toLowerCase(Locale.getDefault()).startsWith(org.primefaces.util.Constants.LIBRARY))) {
             return new PrimeFacesExtensionsResource(resource);
         }
         else {
