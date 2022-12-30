@@ -193,7 +193,7 @@
                     <version>3.3.0</version>
                     <configuration>
                         <archive>
-                            <addMavenDescriptor>false</addMavenDescriptor>
+                            <addMavenDescriptor>true</addMavenDescriptor>
                             <manifest>
                                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
