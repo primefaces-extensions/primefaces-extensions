@@ -109,23 +109,6 @@ async function replaceInFile(file, ...replacements) {
 }
 
 /**
- * @param {string} dir 
- * @returns {Promise<void>}
- */
-function removeDir(dir) {
-    return new Promise((resolve, reject) => {
-        rimraf(dir, (/** @type {unknown} */ error) => {
-            if (error) {
-                reject(error);
-            }
-            else {
-                resolve();
-            }
-        })
-    });
-}
-
-/**
  * @param {string} source 
  * @param {string} target 
  * @returns {Promise<void>}
@@ -156,7 +139,7 @@ function copyDir(source, target) {
  * > nls.localize("source/file.js", "my.key", args)
  */
 async function injectSourcePath() {
-    await removeDir(monacoModDir);
+    await rimraf(monacoModDir);
     await copyDir(monacoDir, monacoModDir);
     const files = await recursive(monacoModEsmDir);
     for (const file of files) {
