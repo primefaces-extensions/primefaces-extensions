@@ -259,18 +259,9 @@ function createAddMapEntryDoc(docString, deprecationNotice) {
 /**
  * @returns {Promise<void>}
  */
-export function cleanJavaDescriptors() {
-  return new Promise((resolve, reject) => {
-    rimraf(javaDescriptorPath, (/** @type {unknown} */ err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      mkdirp(javaDescriptorPath)
-        .then(() => resolve())
-        .catch((/** @type {unknown} */ err) => reject(err));
-    });
-  });
+export async function cleanJavaDescriptors() {
+  await rimraf(javaDescriptorPath);
+  await mkdirp(javaDescriptorPath);  
 }
 
 /**
