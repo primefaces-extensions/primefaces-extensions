@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized;session</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>documentViewer;monacoEditor</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components>renderers;</primefaces-extensions.deprecated-components>
 
