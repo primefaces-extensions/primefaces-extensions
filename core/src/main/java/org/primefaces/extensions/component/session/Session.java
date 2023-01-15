@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 PrimeFaces Extensions
+ * Copyright (c) 2011-2023 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,12 @@ import javax.faces.component.UIComponentBase;
 
 import org.primefaces.component.api.Widget;
 
+/**
+ * <code>Session</code> component.
+ *
+ * @author Frank Cornelis
+ * @since 12.0.4
+ */
 @FacesComponent(Session.COMPONENT_TYPE)
 @ResourceDependency(library = "javax.faces", name = "jsf.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")

@@ -2,9 +2,8 @@
  * PrimeFaces Extensions Session Widget.
  *
  * @author Frank Cornelis
- * @since 12.0
+ * @since 12.0.4
  */
-
 PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
 
     init: function (cfg) {
@@ -30,13 +29,12 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
     },
 
-    configureTimer() {
+    configureTimer: function () {
         this.cancelTimers();
         if (typeof this.cfg.max_inactive_interval !== "undefined") {
             let timeout = (Number(this.cfg.max_inactive_interval) - this.cfg.reactionPeriod) * 1000;
             if (timeout > 0) {
                 let _this = this;
-                console.log("setting timeout for: " + timeout + " ms.");
                 this.timer = window.setTimeout(() => {
                     _this.timeoutCallback();
                 }, timeout);
@@ -44,32 +42,49 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    timeoutCallback() {
-        this.timer = null;
-        eval(this.cfg.onexpire);
+    timeoutCallback: function () {
+        this.deleteExpireTimeout();
+        if (this.cfg.onexpire) {
+            this.cfg.onexpire.call();
+        }
         let _this = this;
         this.expiredTimer = window.setTimeout(() => {
             _this.expiredTimeoutCallback();
         }, this.cfg.reactionPeriod * 1000);
     },
 
-    expiredTimeoutCallback() {
-        this.expiredTimer = null;
-        eval(this.cfg.onexpired);
+    expiredTimeoutCallback: function () {
+        this.deleteReactionTimeout();
+        if (this.cfg.onexpired) {
+            this.cfg.onexpired.call();
+        }
     },
 
-    jsfAjaxEventCallback() {
+    jsfAjaxEventCallback: function () {
         this.configureTimer();
     },
 
-    cancelTimers() {
-        if (this.timer) {
-            window.clearTimeout(this.timer);
-            this.timer = null;
-        }
-        if (this.expiredTimer) {
-            window.clearTimeout(this.expiredTimer);
-            this.expiredTimer = null;
-        }
+    cancelTimers: function () {
+        this.deleteExpireTimeout();
+        this.deleteReactionTimeout();
+    },
+
+    /**
+     * Clears timer checking for expiration.
+     * @private
+     */
+    deleteExpireTimeout: function () {
+        window.clearTimeout(this.timer);
+        this.timer = null;
+    },
+
+    /**
+     * Clears the timer that fires after expiration + reaction period.
+     * @private
+     */
+    deleteReactionTimeout: function () {
+        window.clearTimeout(this.expiredTimer);
+        this.expiredTimer = null;
     }
+
 });

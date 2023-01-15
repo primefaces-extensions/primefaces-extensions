@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 PrimeFaces Extensions
+ * Copyright (c) 2011-2023 PrimeFaces Extensions
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,12 @@ import org.primefaces.util.WidgetBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Renderer for the {@link Session} component.
+ *
+ * @author Frank Cornelis
+ * @since 12.0.4
+ */
 @FacesRenderer(componentFamily = Session.COMPONENT_FAMILY, rendererType = SessionRenderer.RENDERER_TYPE)
 public class SessionRenderer extends CoreRenderer {
 
@@ -45,15 +51,14 @@ public class SessionRenderer extends CoreRenderer {
     @Override
     public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
         Session sessionComponent = (Session) component;
-        WidgetBuilder widgetBuilder = getWidgetBuilder(facesContext);
-        widgetBuilder.init("Session", sessionComponent);
-        widgetBuilder.attr("onexpire", sessionComponent.getOnexpire());
-        widgetBuilder.attr("onexpired", sessionComponent.getOnexpired());
         Integer reactionPeriod = sessionComponent.getReactionPeriod();
         if (null == reactionPeriod) {
             reactionPeriod = 60;
         }
-        widgetBuilder.attr("reactionPeriod", reactionPeriod);
+
+        WidgetBuilder wb = getWidgetBuilder(facesContext);
+        wb.init("Session", sessionComponent);
+        wb.attr("reactionPeriod", reactionPeriod);
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpSession httpSession = (HttpSession) externalContext.getSession(false);
         if (httpSession != null) {
@@ -61,9 +66,17 @@ public class SessionRenderer extends CoreRenderer {
             LOGGER.debug("last accessed time: {}", new Date(httpSession.getLastAccessedTime()));
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
             if (maxInactiveInterval > 0) {
-                widgetBuilder.attr("max_inactive_interval", maxInactiveInterval);
+                wb.attr("max_inactive_interval", maxInactiveInterval);
             }
         }
-        widgetBuilder.finish();
+
+        if (sessionComponent.getOnexpire() != null) {
+            wb.callback("onexpire", "function(e)", sessionComponent.getOnexpire());
+        }
+        if (sessionComponent.getOnexpired() != null) {
+            wb.callback("onexpired", "function(e)", sessionComponent.getOnexpired());
+        }
+
+        wb.finish();
     }
 }
