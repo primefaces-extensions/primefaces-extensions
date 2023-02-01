@@ -84,29 +84,22 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
         var $this = this;
         this.prevTime = this.currentTimeInSecs();
 
+        // GitHub #1047 stop timer if timer was originally set to 0
+        if ($this.originalTimeout <= 0) {
+            $this.stop(false, true);
+            return;
+        }
+
         if (!this.interval) {
             this.interval = setInterval(function () {
                 $this.doStep();
 
                 var end = $this.forward ? $this.currentTimeout >= $this.originalTimeout : $this.currentTimeout <= 0;
-
                 if (end) {
-                    if ($this.cfg.listener) {
-                        $this.cfg.listener();
-                    }
-                    if ($this.cfg.ontimercomplete) {
-                        $this.cfg.ontimercomplete();
-                    }
-                    if ($this.cfg.singleRun) {
-                        $this.pause();
-                    } else {
-                        $this.currentTimeout = $this.forward ? 0 : $this.originalTimeout;
-                        $this.print();
-                    }
+                    $this.stop(false, end);
                 }
             }, $this.cfg.interval);
         }
-
     },
 
     /**
@@ -123,18 +116,23 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
      * Stop the timer.
      *
      * @param {boolean} silent true if you don't want to fire any AJAX events
+     * @param {boolean} end true if you want to check the singleRun before stopping
      */
-    stop: function (silent) {
+    stop: function (silent, end) {
         if (!silent && this.cfg.listener) {
             this.cfg.listener();
         }
         if (this.cfg.ontimercomplete) {
             this.cfg.ontimercomplete();
         }
-
-        this.pause();
-        this.currentTimeout = this.forward ? 0 : this.originalTimeout;
-        this.print();
+        var singleRun = end === true && this.cfg.singleRun;
+        if (!end || singleRun) {
+            this.pause();
+        }
+        if (!end || !singleRun) {
+            this.currentTimeout = this.forward ? 0 : this.originalTimeout;
+            this.print();
+        }
     },
 
     /**
@@ -143,7 +141,7 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
      * @param {boolean} silent true if you don't want to fire any AJAX events
      */
     restart: function (silent) {
-        this.stop(silent);
+        this.stop(silent, false);
         this.start();
     }
 
