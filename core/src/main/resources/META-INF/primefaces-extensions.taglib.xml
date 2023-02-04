@@ -9105,7 +9105,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Using font awesome icon to imply that the node has child nodes. Default is "fa-users"]]>
+                <![CDATA[Using customized orgchart icon to imply that the node has child nodes. Default is "oci-leader"]]>
             </description>
             <name>parentNodeSymbol</name>
             <required>false</required>
