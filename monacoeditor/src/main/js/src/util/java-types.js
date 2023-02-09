@@ -86,6 +86,14 @@ undefined;
 undefined;
 
 /**
+ * @param {string | undefined | null} value 
+ * @returns {value is string}
+ */
+function notEmpty(value) {
+  return typeof value === "string" && value.length > 0;
+}
+
+/**
  * @param {string} [data] 
  * @returns {string}
  */
@@ -261,7 +269,7 @@ function createAddMapEntryDoc(docString, deprecationNotice) {
  */
 export async function cleanJavaDescriptors() {
   await rimraf(javaDescriptorPath);
-  await mkdirp(javaDescriptorPath);  
+  await mkdirp(javaDescriptorPath);
 }
 
 /**
@@ -356,9 +364,10 @@ function toJavaName(name) {
  * @param {string} name 
  * @param {DocComment} docComment
  * @param {JavaTypeDescriptor} type 
+ * @param {(name: string) => string} [converter] 
  * @returns {string}
  */
-function createSimpleGetter(asField, name, docComment, type) {
+function createSimpleGetter(asField, name, docComment, type, converter) {
   const { description, deprecatedNotice } = docComment;
   /** @type {string[]} */
   const lines = [];
@@ -374,12 +383,18 @@ function createSimpleGetter(asField, name, docComment, type) {
   }
   if (asField) {
     lines.push(`    public ${type.value} ${getterName(name, type)}() {`);
-    lines.push(`        return ${name};`);
+    lines.push(`        return ${converter ? converter(fieldName(name)) : fieldName(name)};`);
     lines.push(`    }`);
   }
   else {
     lines.push(`    public ${type.value} ${getterName(name, type)}() {`);
-    lines.push(`        return (${type.value}) (has("${escapeString(name)}") ? get("${escapeString(name)}") : null);`);
+    if (converter) {
+      lines.push(`        final Object tmp = (has("${escapeString(name)}") ? get("${escapeString(name)}") : null);`);
+      lines.push(`        return (${type.value}) (${converter("tmp")});`);
+    }
+    else {
+      lines.push(`        return (${type.value}) (has("${escapeString(name)}") ? get("${escapeString(name)}") : null);`);
+    }
     lines.push(`    }`);
   }
   return lines.join("\n");
@@ -406,13 +421,13 @@ function createSimpleSetter(asField, className, name, docComment, type, converte
   }
   if (asField) {
     lines.push(`    public ${className} ${setterName(name)}(final ${type.value} ${varName(name)}) {`);
-    lines.push(`        this.${fieldName(name)} = ${converter ? converter(name) : varName(name)};`)
+    lines.push(`        this.${fieldName(name)} = ${converter ? converter(varName(name)) : varName(name)};`)
     lines.push(`        return this;`);
     lines.push(`    }`);
   }
   else {
     lines.push(`    public ${className} ${setterName(name)}(final ${type.value} ${varName(name)}) {`);
-    lines.push(`        put("${escapeString(name)}", ${converter ? converter(name) : varName(name)});`);
+    lines.push(`        put("${escapeString(name)}", ${converter ? converter(varName(name)) : varName(name)});`);
     lines.push(`        return this;`);
     lines.push(`    }`);
   }
@@ -441,7 +456,7 @@ function createEnumGetter(asField, name, docComment, type) {
  */
 function createEnumSetter(asField, className, name, docComment, type) {
   const lines = [];
-  lines.push(createSimpleSetter(asField, className, name, docComment, type, val => `${varName(val)} != null ? ${varName(val)}.toString() : null`));
+  lines.push(createSimpleSetter(asField, className, name, docComment, type, val => `${val} != null ? ${val}.toString() : null`));
   lines.push("");
   lines.push(createSimpleSetter(asField, className, name, docComment, T_String(asField)));
   return lines.join("\n");
@@ -573,6 +588,7 @@ function createEnum(className, typeDoc, ...data) {
   return `${HeaderComment}
 
 package ${javaDescriptorPackage};
+${GeneratedComment}
 
 ${createTypeDoc(typeDoc?.substring(4))}
 public enum ${className} {
@@ -668,7 +684,7 @@ export function T_Array(itemType, asField = false) {
         if (deprecatedNotice !== undefined) {
           lines.push("    @Deprecated");
         }
-        lines.push(`    public ${clazz} add${stripPlural(capitalize(name))}(final ${type?.generics?.[0].value} ...items) {`);
+        lines.push(`    public ${clazz} add${stripPlural(capitalize(name))}(final ${type?.generics?.[0].value} ... items) {`);
         lines.push(`        ${type.value} x = ${getterName(name, type)}();`);
         lines.push(`        if (x == null) {`);
         lines.push(`            x = new JSONArray();`);
@@ -830,7 +846,6 @@ export function T_Number(asField = false) {
 }
 
 /**
- * 
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
@@ -848,8 +863,71 @@ export function T_CssSize(asField = false) {
     },
     setter: (clazz, name, type) => {
       const setterString = createSimpleSetter(asField, clazz, name, docComment, T_String(asField));
-      const setterNumber = createSimpleSetter(asField, clazz, name, docComment, T_Number(asField), value => `${varName(value)} != null ? ${varName(value)}.toString() + "px" : null`);
+      const setterNumber = createSimpleSetter(asField, clazz, name, docComment, T_Number(asField), value => `${value} != null ? ${value}.toString() + "px" : null`);
       return setterNumber + "\n\n" + setterString;
+    },
+  };
+};
+
+/**
+ * @param {boolean} [asField] 
+ * @returns {JavaTypeDescriptor}
+ */
+export function T_BooleanOrString(asField = false) {
+  /** @type {DocComment} */
+  const docComment = {
+    deprecatedNotice: undefined,
+    description: undefined,
+  };
+  return {
+    type: "Union<Boolean, String>",
+    value: "Union<Boolean, String>",
+    getter: (name, type) => {
+      const getterString = createSimpleGetter(asField, name, docComment, T_String(asField), name => `${name} instanceof String ? ${name} : null`);
+      const getterBoolean = createSimpleGetter(asField, name, docComment, T_Boolean(asField), name => `${name} instanceof Boolean ? ${name} : null`);
+      return getterBoolean + "\n\n" + getterString;
+    },
+    setter: (clazz, name, type) => {
+      const setterString = createSimpleSetter(asField, clazz, name, docComment, T_String(asField));
+      const setterBoolean = createSimpleSetter(asField, clazz, name, docComment, T_Boolean(asField));
+      return setterBoolean + "\n\n" + setterString;
+    },
+  };
+};
+
+/**
+ * @param {string} className 
+ * @param {string} typeDoc
+ * @param {boolean} asField
+ * @param {(string | AnnotationAsParameter)[]} constants
+ * @returns {JavaTypeDescriptor}
+ */
+export function T_BooleanOrEnum(className, typeDoc, asField, ...constants) {
+  /** @type {DocComment} */
+  const docComment = {
+    deprecatedNotice: undefined,
+    description: undefined,
+  };
+  const typeBoolean = T_Boolean(asField);
+  const typeEnum = T_Enum(className, typeDoc, asField, ...constants);
+  return {
+    type: `Union<Boolean, ${className}>`,
+    value: `Union<Boolean, ${className}>`,
+    getter: (name, type) => {
+      const getterEnum = createSimpleGetter(
+        asField, name, docComment, typeEnum,
+        name => `${name} instanceof ${className} ? ${name} : null`
+      );
+      const getterBoolean = createSimpleGetter(
+        asField, name, docComment, typeBoolean,
+        name => `${name} instanceof Boolean ? ${name} : null`
+      );
+      return getterBoolean + "\n\n" + getterEnum;
+    },
+    setter: (clazz, name, type) => {
+      const setterEnum = createSimpleSetter(asField, clazz, name, docComment, typeEnum);
+      const setterBoolean = createSimpleSetter(asField, clazz, name, docComment, typeBoolean);
+      return setterBoolean + "\n\n" + setterEnum;
     },
   };
 };

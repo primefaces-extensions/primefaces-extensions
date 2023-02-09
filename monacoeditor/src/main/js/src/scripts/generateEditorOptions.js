@@ -1,7 +1,7 @@
 // @ts-check
 
 // This file contains the editor options from the official API docs
-// https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandaloneeditorconstructionoptions.html
+// https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
 // 
 // This is used to create corresponding Java classes for configuring the monaco editor widget
 
@@ -11,6 +11,8 @@ import {
     Doc,
     T_Array,
     T_Boolean,
+    T_BooleanOrEnum,
+    T_BooleanOrString,
     T_Class,
     T_CssSize,
     T_Enum,
@@ -131,7 +133,10 @@ async function main() {
         fontFamily: T_String(),
 
         [Doc()]: "Font size of inline hints. Default to 90% of the editor font size.",
-        fontSize: T_Number()
+        fontSize: T_Number(),
+
+        [Doc()]: "Enables the padding around the inlay hint. Defaults to {@code false}.",
+        padding: T_Boolean(),
     }, "Control the behavior and rendering of the inline hints.");
 
     const EditorInlineSuggestOptions = T_Class("EditorInlineSuggestOptions", {
@@ -144,6 +149,13 @@ async function main() {
             false,
             "prefix", "subword", "subwordSmart"
         ),
+
+        [Doc()]: "Configures whether to show the inline suggest toolbar.",
+        showToolbar: T_Enum("EShowToolbarMode",
+            "Configures whether to show the inline suggest toolbar.",
+            false,
+            "always", "onHover"
+        ),
     }, "Control the behavior and rendering of the inline completions.");
 
     const EditorLightbulbOptions = T_Class("EditorLightbulbOptions", {
@@ -152,6 +164,9 @@ async function main() {
     }, "Configuration options for editor lightbulb");
 
     const EditorMinimapOptions = T_Class("EditorMinimapOptions", {
+        [Doc()]: "Control the rendering of minimap.",
+        autohide: T_Boolean(),
+
         [Doc()]: "Enable the rendering of the minimap. Defaults to {@code true}.",
         enabled: T_Boolean(),
 
@@ -206,6 +221,14 @@ async function main() {
         selectLeadingAndTrailingWhitespace: T_Boolean(),
     }, "Smart select options.");
 
+    const EditorStickyScrollOptions = T_Class("EditorStickyScrollOptions", {
+        [Doc()]: "Enable the sticky scroll",
+        enabled: T_Boolean(),
+
+        [Doc()]: "Maximum number of sticky lines to show",
+        maxLineCount: T_Number(),
+    }, "Control the behavior of sticky scroll options");
+
     const EditorScrollbarOptions = T_Class("EditorScrollbarOptions", {
         [Doc()]: "Always consume mouse wheel events (always call {@code preventDefault()} and {@code stopPropagation()} on the browser events). Defaults to {@code true}.",
         alwaysConsumeMouseWheel: T_Boolean(),
@@ -258,10 +281,24 @@ async function main() {
     const EditorUnicodeHighlightOptions = T_Class("EditorUnicodeHighlightOptions", {
         [Doc()]: "A map of allowed characters ({@code true}: allowed).",
         allowedCharacters: T_Map(T_String(), T_Boolean()),
+
+        [Doc()]: "Unicode characters that are common in allowed locales are not being highlighted. ({@code true}: allowed).",
+        allowedLocales: T_Map(T_String(), T_Boolean()),
+
+        [Doc()]: "Controls whether characters are highlighted that can be confused with basic ASCII characters, except those that are common in the current user locale.",
         ambiguousCharacters: T_Boolean(),
-        includeComments: T_Boolean(),
+
+        [Doc()]: "Controls whether characters in comments should also be subject to unicode highlighting. Supported string constants: {@code inUntrustedWorkspace}.",
+        includeComments: T_BooleanOrString(),
+
+        [Doc()]: "Controls whether characters in strings should also be subject to unicode highlighting. Supported string constants: {@code inUntrustedWorkspace}.",
+        includeStrings: T_BooleanOrString(),
+
+        [Doc()]: "Controls whether characters that just reserve space or have no width at all are highlighted.",
         invisibleCharacters: T_Boolean(),
-        nonBasicASCII: T_Boolean(),
+
+        [Doc()]: "Controls whether all non-basic ASCII characters are highlighted. Only characters between U+0020 and U+007E, tab, line-feed and carriage-return are considered basic ASCII. Supported string constants: {@code inUntrustedWorkspace}.",
+        nonBasicASCII: T_BooleanOrString(),
     }, "Defines how Unicode characters should be highlighted.");
 
     const EditorSuggestOptions = T_Class("EditorSuggestOptions", {
@@ -278,6 +315,9 @@ async function main() {
         [Doc()]: "Favours words that appear close to the cursor.",
         localityBonus: T_Boolean(),
 
+        [Doc()]: "Controls whether suggestions allow matches in the middle of the word instead of only at the beginning.",
+        matchOnWordStartOnly: T_Boolean(),
+
         [Doc()]: "Enable or disable the rendering of the suggestion preview.",
         preview: T_Boolean(),
 
@@ -286,6 +326,13 @@ async function main() {
             "Configures the mode of the preview.",
             false,
             "prefix", "subword", "subwordSmart"
+        ),
+
+        [Doc()]: "Select suggestions when triggered via quick suggest or trigger characters.",
+        selectionMode: T_Enum("ESuggestSelectionMode",
+            "Select suggestions when triggered via quick suggest or trigger characters.",
+            false,
+            "always", "never", "whenTriggerCharacter", "whenQuickSuggestion"
         ),
 
         [Doc()]: "Enable using global storage for remembering suggestions.",
@@ -393,6 +440,14 @@ async function main() {
         width: T_Number(),
     }, "The initial editor dimension (to avoid measuring the container).");
 
+    const EditorBracketPairColorizationOptions = T_Class("EditorBracketPairColorizationOptions", {
+        [Doc()]: "Enable or disable bracket pair colorization.",
+        enabled: T_Boolean(),
+
+        [Doc()]: "Use independent color pool per bracket type.",
+        independentColorPoolPerBracketType: T_Boolean(),
+    }, "Configures bracket pair colorization (disabled by default).");
+
     const EditorCommentsOptions = T_Class("EditorCommentsOptions", {
         [Doc()]: "Ignore empty lines when inserting line comments. Defaults to {@code} true.",
         ignoreEmptyLines: T_Boolean(),
@@ -401,20 +456,43 @@ async function main() {
         insertSpace: T_Boolean(),
     }, "Configuration options for editor comments");
 
+    const EditorDropIntoEditorOptions = T_Class("EditorDropIntoEditorOptions", {
+        [Doc()]: "Enable the dropping into editor. Defaults to {@code true}.",
+        enabled: T_Boolean(),
+    }, "Configuration options for editor drop into behavior");
+
+    const QuickSuggestionsValue = T_BooleanOrEnum(
+        "EQuickSuggestionsValue",
+        "Whether to include comments in quick suggestions (shadow suggestions)",
+        false,
+        "on", "inline", "off"
+    );
+
     const EditorQuickSuggestionsOptions = T_Class("EditorQuickSuggestionsOptions", {
         [Doc()]: "Whether to include comments in quick suggestions (shadow suggestions)",
-        comments: T_Boolean(),
+        comments: QuickSuggestionsValue,
 
         [Doc()]: "Whether to include other types in quick suggestions (shadow suggestions)",
-        other: T_Boolean(),
+        other: QuickSuggestionsValue,
 
         [Doc()]: "Whether to include strings in quick suggestions (shadow suggestions)",
-        strings: T_Boolean(),
+        strings: QuickSuggestionsValue,
     }, "Configuration options for quick suggestions");
 
     const DiffEditorSpecificOptions = {
         [Doc()]: "The initial editor dimension (to avoid measuring the container).",
         dimension: EditorDimension,
+
+        diffAlgorithm: T_Enum("EDiffAlgorithm",
+            "Controls the diff algorithm.",
+            false,
+
+            [Doc("The default algorithm.")],
+            "smart",
+
+            [Doc("An improved experimental algorithm.")],
+            "experimental",
+        ),
 
         [Doc()]: "Controls the wrapping of the diff editor.",
         diffWordWrap: T_Enum("EDiffWordWrap",
@@ -446,6 +524,9 @@ async function main() {
         [Doc()]: "Render +/- indicators for added/deleted changes. Defaults to {@code true}.",
         renderIndicators: T_Boolean(),
 
+        [Doc()]: "Shows icons in the glyph margin to revert changes. Default to {@code true}.",
+        renderMarginRevertIcon: T_Boolean(),
+
         [Doc()]: "Is the diff editor should render overview ruler Defaults to {@code true}",
         renderOverviewRuler: T_Boolean(),
 
@@ -457,9 +538,6 @@ async function main() {
 
         [Doc()]: "Maximum supported file size in MB. Defaults to {@code 50}.",
         maxFileSize: T_Number(),
-
-        [Doc()]: "If enabled, will automatically change to high contrast theme if the OS is using a high contrast theme. Defaults to {@code true}.",
-        autoDetectHighContrast: T_String(),
 
         [Doc()]: "Aria label for modified editor.",
         modifiedAriaLabel: T_String(),
@@ -482,6 +560,7 @@ async function main() {
             "apex",
             "azcli",
             "bat",
+            "bicep",
             "c",
             "cameligo",
             "clojure",
@@ -490,9 +569,11 @@ async function main() {
             "csharp",
             "csp",
             "css",
+            "cypher",
             "dart",
             "dockerfile",
             "ecl",
+            "elixir",
             "flow9",
             "freemarker2",
             "freemarker2.tag-angle.interpolation-bracket",
@@ -515,6 +596,7 @@ async function main() {
             "kotlin",
             "less",
             "lexon",
+            "liquid",
             "lua",
             "m3",
             "markdown",
@@ -535,6 +617,7 @@ async function main() {
             "proto",
             "pug",
             "python",
+            "qsharp",
             "r",
             "razor",
             "redis",
@@ -548,6 +631,7 @@ async function main() {
             "scss",
             "shell",
             "sol",
+            "sparql",
             "sql",
             "st",
             "swift",
@@ -570,9 +654,6 @@ async function main() {
             false,
             "true", "false", "configuredByTheme"
         ),
-
-        [Doc()]: "If enabled, will automatically change to high contrast theme if the OS is using a high contrast theme. Defaults to {@code true}.",
-        autoDetectHighContrast: T_Boolean(),
 
         [Doc()]: "Controls whether {@code tabSize} and {@code insertSpaces} will be automatically detected when a file is opened based on the file contents. Defaults to {@code true}.",
         detectIndentation: T_Boolean(),
@@ -603,8 +684,14 @@ async function main() {
     };
 
     const BaseEditorOptions = {
+        [Doc()]: "Configures bracket pair colorization (disabled by default).",
+        bracketPairColorization: EditorBracketPairColorizationOptions,
+
         [Doc()]: "Control the behavior of comments in the editor.",
         comments: EditorCommentsOptions,
+
+        [Doc()]: "Controls dropping into the editor from an external source. When enabled, this shows a preview of the drop location and triggers an onDropIntoEditor event.",
+        dropIntoEditor: EditorDropIntoEditorOptions,
 
         [Doc()]: "Control the behavior of the find widget.",
         find: EditorFindOptions,
@@ -643,6 +730,9 @@ async function main() {
 
         [Doc()]: "Smart select options.",
         smartSelect: EditorSmartSelectOptions,
+
+        [Doc()]: "Control the behavior of sticky scroll options",
+        stickyScroll: EditorStickyScrollOptions,
 
         [Doc()]: "Suggest options.",
         suggest: EditorSuggestOptions,
@@ -721,6 +811,13 @@ async function main() {
             "blink", "smooth", "phase", "expand", "solid"
         ),
 
+        [Doc()]: "Enable smooth caret animation. Defaults to {@code off}.",
+        cursorSmoothCaretAnimation: T_Enum("ECursorSmoothCaretAnimation",
+            "Enable smooth caret animation. Defaults to {@code off}.",
+            false,
+            "on", "off", "explicit"
+        ),
+
         [Doc()]: "Control the cursor style, either {@code block} or {@code line}. Defaults to {@code line}.",
         cursorStyle: T_Enum("ECursorStyle",
             "Control the cursor style, either {@code block} or {@code line}. Defaults to {@code line}.",
@@ -733,6 +830,13 @@ async function main() {
             "Controls when {@code cursorSurroundingLines} should be enforced Defaults to {@code default}, {@code cursorSurroundingLines} is not enforced when cursor position is changed by mouse.",
             false,
             "default", "all"
+        ),
+
+        [Doc()]: "Enable experimental whitespace rendering. Defaults to {@code svg}.",
+        experimentalWhitespaceRendering: T_Enum("EFoldingStrategy",
+            "Enable experimental whitespace rendering. Defaults to {@code svg}.",
+            false,
+            "off", "svg", "font"
         ),
 
         [Doc()]: "Selects the folding strategy. 'auto' uses the strategies contributed for the current document, 'indentation' uses the indentation based folding strategy. Defaults to 'auto'.",
@@ -792,6 +896,13 @@ async function main() {
             "tree", "editor"
         ),
 
+        [Doc()]: "Render last line number when the file ends with a newline. Defaults to {@code on} for Windows and macOS and {@code dimmed} for Linux.",
+        renderFinalNewline: T_Enum("ERenderFinalNewline",
+            "Render last line number when the file ends with a newline. Defaults to {@code on} for Windows and macOS and {@code dimmed} for Linux.",
+            false,
+            "on", "off", "dimmed"
+        ),
+
         [Doc()]: "Enable rendering of current line highlight. Defaults to {@code all}.",
         renderLineHighlight: T_Enum("ERenderLineHighlight",
             "Enable rendering of current line highlight. Defaults to {@code all}.",
@@ -817,7 +928,7 @@ async function main() {
         showFoldingControls: T_Enum("EShowFoldingControls",
             "Controls whether the fold actions in the gutter stay always visible or hide unless the mouse is over the gutter. Defaults to {@code mouseover}.",
             false,
-            "always", "mouseover"
+            "always", "never", "mouseover"
         ),
 
         [Doc()]: "Enable snippet suggestions. Defaults to 'inline'.",
@@ -846,6 +957,13 @@ async function main() {
             "Remove unusual line terminators like LINE SEPARATOR (LS), PARAGRAPH SEPARATOR (PS). Defaults to {@code prompt}.",
             false,
             "off", "prompt", "auto"
+        ),
+
+        [Doc()]: "Sets whether line breaks appear wherever the text would otherwise overflow its content box. When wordBreak = {@code normal}, Use the default line break rule. When wordBreak = {@code keepAll}, word breaks should not be used for Chinese/Japanese/Korean (CJK) text. Non-CJK text behavior is the same as for normal.",
+        wordBreak: T_Enum("EWordBreak",
+            "Sets whether line breaks appear wherever the text would otherwise overflow its content box. When wordBreak = {@code normal}, Use the default line break rule. When wordBreak = {@code keepAll}, word breaks should not be used for Chinese/Japanese/Korean (CJK) text. Non-CJK text behavior is the same as for normal.",
+            false,
+            "normal", "keepAll"
         ),
 
         [Doc()]: "Control the wrapping of the editor. When {@code wordWrap} = {@code off}, the lines will never wrap. When {@code wordWrap} = {@code on}, the lines will wrap at the viewport width. When {@code wordWrap} = {@code wordWrapColumn}, the lines will wrap at {@code wordWrapColumn}. When {@code wordWrap} = {@code bounded}, the lines will wrap at {@code min(viewport width, wordWrapColumn)}. Defaults to {@code off}.",
@@ -889,6 +1007,9 @@ async function main() {
         [Doc()]: "Accept suggestions on provider defined characters. Defaults to {@code true}.",
         acceptSuggestionOnCommitCharacter: T_Boolean(),
 
+        [Doc()]: "If enabled, will automatically change to high contrast theme if the OS is using a high contrast theme. Defaults to {@code true}.",
+        autoDetectHighContrast: T_Boolean(),
+
         [Doc()]: "Enable that the editor will install an interval to check if its container dom node size has changed. Enabling this might have a severe performance impact. Defaults to {@code false}.",
         automaticLayout: T_Boolean(),
 
@@ -898,6 +1019,9 @@ async function main() {
         [Doc()]: "Enable inline color decorators and color picker rendering.",
         colorDecorators: T_Boolean(),
 
+        [Doc()]: "Controls the max number of color decorators that can be rendered in an editor at once.",
+        colorDecoratorsLimit: T_Boolean(),
+
         [Doc()]: "Enable that the selection with the mouse and keys is doing column selection. Defaults to {@code false}.",
         columnSelection: T_Boolean(),
 
@@ -906,9 +1030,6 @@ async function main() {
 
         [Doc()]: "Syntax highlighting is copied.",
         copyWithSyntaxHighlighting: T_Boolean(),
-
-        [Doc()]: "Enable smooth caret animation. Defaults to {@code false}.",
-        cursorSmoothCaretAnimation: T_Boolean(),
 
         [Doc()]: "Controls whether the definition link opens element in the peek widget. Defaults to {@code false}.",
         definitionLinkOpensInPeek: T_Boolean(),
@@ -938,7 +1059,10 @@ async function main() {
         foldingImportsByDefault: T_Boolean(),
 
         [Doc()]: "Enable font ligatures. Defaults to {@code false}",
-        fontLigatures: T_Boolean(),
+        fontLigatures: T_BooleanOrString(),
+
+        [Doc()]: "Enable font variations. Defaults to {@code false}",
+        fontVariations: T_BooleanOrString(),
 
         [Doc()]: "Enable format on paste. Defaults to {@code false}",
         formatOnPaste: T_Boolean(),
@@ -961,6 +1085,9 @@ async function main() {
         [Doc()]: "Enable detecting links and making them clickable. Defaults to {@code true}.",
         links: T_Boolean(),
 
+        [Doc()]: "Controls whether suggestions allow matches in the middle of the word instead of only at the beginning",
+        matchOnWordStartOnly: T_Boolean(),
+
         [Doc()]: "Zoom the font in the editor when using the mouse wheel in combination with holding Ctrl. Defaults to {@code false}",
         mouseWheelZoom: T_Boolean(),
 
@@ -982,9 +1109,6 @@ async function main() {
 
         [Doc()]: "Enable rendering of control characters. Defaults to {@code true}.",
         renderControlCharacters: T_Boolean(),
-
-        [Doc()]: "Render last line number when the file ends with a newline. Defaults to {@code true}.",
-        renderFinalNewline: T_Boolean(),
 
         [Doc()]: "Control if the current line highlight should be rendered only the editor is focused. Defaults to {@code false}.",
         renderLineHighlightOnlyWhenFocus: T_Boolean(),
@@ -1052,6 +1176,9 @@ async function main() {
         [Doc()]: "Fast scrolling multiplier speed when pressing {@code Alt} Defaults to {@code 5}.",
         fastScrollSensitivity: T_Number(),
 
+        [Doc()]: "Maximum number of foldable regions. Defaults to {@code 5000}.",
+        foldingMaximumRegions: T_Number(),
+
         [Doc()]: "The font size",
         fontSize: T_Number(),
 
@@ -1072,6 +1199,9 @@ async function main() {
 
         [Doc()]: "A multiplier to be used on the {@code deltaX} and {@code deltaY} of mouse wheel scroll events. Defaults to {@code 1}.",
         mouseWheelScrollSensitivity: T_Number(),
+
+        [Doc()]: "Controls the max number of text cursors that can be in an active editor at once.",
+        multiCursorLimit: T_Number(),
 
         [Doc()]: "The number of vertical lanes the overview ruler should render. Defaults to {@code 3}.",
         overviewRulerLanes: T_Number(),
