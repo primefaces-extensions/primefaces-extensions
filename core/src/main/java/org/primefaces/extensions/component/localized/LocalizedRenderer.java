@@ -48,7 +48,8 @@ import org.primefaces.util.LangUtils;
  */
 public class LocalizedRenderer extends CoreRenderer {
 
-    public static final String FOLDER = "WEB-INF/pfe-localized";
+    public static final String WEB_FOLDER = "WEB-INF/pfe-localized";
+    public static final String QUARKUS_FOLDER = "pfe-localized";
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
@@ -105,15 +106,23 @@ public class LocalizedRenderer extends CoreRenderer {
     }
 
     protected Path resolvePath(final FacesContext context, final Localized localized) {
-        final String base = ((ServletContext) context.getExternalContext().getContext()).getRealPath(FOLDER);
+        final ServletContext servletContext = ((ServletContext) context.getExternalContext().getContext());
+        final String web = servletContext.getRealPath(WEB_FOLDER);
+        final String meta = servletContext.getRealPath(QUARKUS_FOLDER);
         final Locale locale = localized.calculateLocale(context);
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
         final String folder = localized.getFolder();
         final String name = localized.getName();
-        Path path = resolvePath(base, folder, name, language, country);
+        Path path = resolvePath(web, folder, name, language, country);
         if (path == null) {
-            path = resolvePath(base, null, name, language, country);
+            path = resolvePath(web, null, name, language, country);
+        }
+        if (path == null) {
+            path = resolvePath(meta, folder, name, language, country);
+        }
+        if (path == null) {
+            path = resolvePath(meta, null, name, language, country);
         }
         if (path == null) {
             throw new IllegalStateException("Cannot find Localized file for: " + localized.getClientId(context));
