@@ -68,7 +68,6 @@ public abstract class MonacoDiffEditorBase
     static final boolean DEFAULT_ORIGINAL_DISABLED = true;
     static final boolean DEFAULT_ORIGINAL_READONLY = false;
     static final boolean DEFAULT_ORIGINAL_REQUIRED = false;
-    static final String DEFAULT_ORIGINAL_TABINDEX = "";
     static final String DEFAULT_ORIGINAL_BASENAME = "";
     static final String DEFAULT_ORIGINAL_EXTENSION = "";
     static final String DEFAULT_ORIGINAL_DIRECTORY = "";
@@ -233,8 +232,8 @@ public abstract class MonacoDiffEditorBase
 
     @Override
     protected void validateValue(final FacesContext context, final Object newValue) {
-        final org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel model;
-        model = (org.primefaces.extensions.model.monacoeditor.MonacoDiffEditorModel) newValue;
+        final org.primefaces.extensions.model.monaco.MonacoDiffEditorModel model;
+        model = (org.primefaces.extensions.model.monaco.MonacoDiffEditorModel) newValue;
         // If our value is valid, enforce the required property if present for the modified editor
         if (isValid() && isRequired() && (model == null || isEmpty(model.getModifiedValue()))) {
             final String requiredMessageStr = getRequiredMessage();
