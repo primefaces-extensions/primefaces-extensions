@@ -145,8 +145,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
-        js.getAttributes().put("target", "head");
-        context.getViewRoot().addComponentResource(context, js, "body");
+        context.getViewRoot().addComponentResource(context, js, "head");
     }
 
 }
