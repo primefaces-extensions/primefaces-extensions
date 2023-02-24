@@ -38,6 +38,7 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -61,6 +62,9 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
     private static final String LIBRARY = "primefaces";
+
+    private static final boolean IS_QUARKUS = LangUtils.tryToLoadClassForName("io.quarkus.arc.ClientProxy") != null;
+    private static final String TARGET = IS_QUARKUS ? "body" : "head";
 
     @Override
     public PhaseId getPhaseId() {
@@ -145,7 +149,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
-        context.getViewRoot().addComponentResource(context, js, "head");
+        context.getViewRoot().addComponentResource(context, js, TARGET);
     }
 
 }
