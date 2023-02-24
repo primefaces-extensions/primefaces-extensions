@@ -30,6 +30,7 @@ import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.application.Resource;
 import javax.faces.component.UIOutput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
@@ -38,7 +39,6 @@ import javax.faces.event.PhaseListener;
 import org.primefaces.config.PrimeConfiguration;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.context.PrimeRequestContext;
-import org.primefaces.util.LangUtils;
 import org.primefaces.util.LocaleUtils;
 
 /**
@@ -62,9 +62,6 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
     private static final String LIBRARY = "primefaces";
-
-    private static final boolean IS_QUARKUS = LangUtils.tryToLoadClassForName("io.quarkus.arc.ClientProxy") != null;
-    private static final String TARGET = IS_QUARKUS ? "body" : "head";
 
     @Override
     public PhaseId getPhaseId() {
@@ -135,7 +132,8 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         css.setRendererType("javax.faces.resource.Stylesheet");
         css.getAttributes().put("library", library);
         css.getAttributes().put("name", name);
-        context.getViewRoot().addComponentResource(context, css, "head");
+        final String target = getTarget(context.getExternalContext(), "css");
+        context.getViewRoot().addComponentResource(context, css, target);
     }
 
     private void encodeJS(final FacesContext context, final String name) {
@@ -149,7 +147,22 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         js.setRendererType("javax.faces.resource.Script");
         js.getAttributes().put("library", LIBRARY);
         js.getAttributes().put("name", name);
-        context.getViewRoot().addComponentResource(context, js, TARGET);
+        final String target = getTarget(context.getExternalContext(), "js");
+        context.getViewRoot().addComponentResource(context, js, target);
+    }
+
+    /**
+     * Return "head" to capture in Omnifaces CombinedResourceHandler or "body" to not capture it.
+     *
+     * @param externalContext the Faces external context
+     * @param type the type either "css" or "js"
+     * @return either "head" or "body"
+     */
+    private String getTarget(final ExternalContext externalContext, final String type) {
+        final String parameter = String.format("primefaces.%.COMBINED_RESOURCE_HANDLER_DISABLED", type);
+        final String value = externalContext.getInitParameter(parameter);
+        final boolean disabled = Boolean.parseBoolean(value);
+        return disabled ? "body" : "head";
     }
 
 }
