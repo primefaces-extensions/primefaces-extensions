@@ -49,7 +49,7 @@ import org.primefaces.util.LangUtils;
 public class LocalizedRenderer extends CoreRenderer {
 
     public static final String WEB_FOLDER = "WEB-INF/pfe-localized";
-    public static final String QUARKUS_FOLDER = "pfe-localized";
+    public static final String QUARKUS_FOLDER = "META-INF/pfe-localized";
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
