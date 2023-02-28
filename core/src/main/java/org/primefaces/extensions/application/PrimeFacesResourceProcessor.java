@@ -159,7 +159,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
      * @return either "head" or "body"
      */
     private String getTarget(final ExternalContext externalContext, final String type) {
-        final String parameter = String.format("primefaces.%.COMBINED_RESOURCE_HANDLER_DISABLED", type);
+        final String parameter = String.format("primefaces.%s.COMBINED_RESOURCE_HANDLER_DISABLED", type);
         final String value = externalContext.getInitParameter(parameter);
         final boolean disabled = Boolean.parseBoolean(value);
         return disabled ? "body" : "head";
