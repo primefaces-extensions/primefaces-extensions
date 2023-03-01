@@ -22,6 +22,8 @@
 package org.primefaces.extensions.component.localized;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -145,9 +147,23 @@ public class LocalizedRenderer extends CoreRenderer {
         return path;
     }
 
-    protected Path existingPath(final String first, final String... more) {
+    protected Path existingPath(final String first, final String more) {
         final Path path = Paths.get(first, more);
-        return path.toFile().exists() ? path : null;
+        Path existingPath = path.toFile().exists() ? path : null;
+        if (existingPath == null) {
+            final String resourcePath = first + "/" + more;
+            try {
+                // Quarkus
+                final URL url = Thread.currentThread().getContextClassLoader().getResource(resourcePath);
+                if (url != null) {
+                    existingPath = Paths.get(url.toURI());
+                }
+            }
+            catch (final URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return existingPath;
     }
 
     protected String toHTML(final FacesContext context, final String value) {
