@@ -43,7 +43,7 @@
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>
 
-        <apache-faces.version>2.3.10</apache-faces.version>
+        <apache-faces.version>4.0.0</apache-faces.version>
         <commonmark.version>0.21.0</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
