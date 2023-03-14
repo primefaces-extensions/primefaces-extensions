@@ -60,7 +60,7 @@ public class RequestParameterBuilder {
         this(useCurrentRequest
                     ? ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
                                 .getRequest()).getRequestURL()
-                                            .toString()
+                                .toString()
                     : null);
     }
 
