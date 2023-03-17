@@ -62,7 +62,6 @@
 
     <modules>
         <module>core</module>
-        <module>ckeditor</module>
         <module>monacoeditor</module>
         <module>showcase</module>
     </modules>

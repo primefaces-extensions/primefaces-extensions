@@ -283,11 +283,6 @@
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
-            <artifactId>resources-ckeditor</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces.extensions</groupId>
             <artifactId>resources-monacoeditor</artifactId>
         </dependency>
         <dependency>

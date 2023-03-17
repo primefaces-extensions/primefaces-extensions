@@ -24,11 +24,6 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 </dependency>
 <dependency>
    <groupId>org.primefaces.extensions</groupId>
-   <artifactId>resources-ckeditor</artifactId>
-   <version>${primefaces-extensions.version}</version>
-</dependency>
-<dependency>
-   <groupId>org.primefaces.extensions</groupId>
    <artifactId>resources-monacoeditor</artifactId>
    <version>${primefaces-extensions.version}</version>
 </dependency>
@@ -114,7 +109,3 @@ Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
 `SPDX-License-Identifier: MIT`
 
-### CKEditor
-
-Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.<br>
-For licensing see: [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license)

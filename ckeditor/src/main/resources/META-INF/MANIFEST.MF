@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Created-By: PrimeFaces Extensions
-Bundle-ManifestVersion: 2
-Bundle-Name: primefaces.extensions.resources.ckeditor
-Bundle-Description: PrimeFaces Extensions CKEditor Resources
-Bundle-SymbolicName: org.primefaces.extensions.resources.ckeditor

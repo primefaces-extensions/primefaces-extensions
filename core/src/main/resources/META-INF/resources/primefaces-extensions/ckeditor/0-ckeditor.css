@@ -1,4 +1,0 @@
-/* Fix #804 issue with CKeditor in dialogs.*/
-body div.cke_dialog_body  {
-  z-index: 9999 !important;
-}
