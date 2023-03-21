@@ -22,7 +22,6 @@
 package org.primefaces.extensions.component.session;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -32,8 +31,6 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Renderer for the {@link Session} component.
@@ -45,8 +42,6 @@ import org.slf4j.LoggerFactory;
 public class SessionRenderer extends CoreRenderer {
 
     public static final String RENDERER_TYPE = "org.primefaces.extensions.component.SessionRenderer";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SessionRenderer.class);
 
     @Override
     public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
@@ -62,8 +57,6 @@ public class SessionRenderer extends CoreRenderer {
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpSession httpSession = (HttpSession) externalContext.getSession(false);
         if (httpSession != null) {
-            LOGGER.debug("creation time: {}", new Date(httpSession.getCreationTime()));
-            LOGGER.debug("last accessed time: {}", new Date(httpSession.getLastAccessedTime()));
             int maxInactiveInterval = httpSession.getMaxInactiveInterval();
             if (maxInactiveInterval > 0) {
                 wb.attr("max_inactive_interval", maxInactiveInterval);
