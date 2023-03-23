@@ -24,7 +24,7 @@
     "mkdirp": "^2.1.5",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.2.3",
-    "rimraf": "^4.4.0",
+    "rimraf": "^4.4.1",
     "style-loader": "^3.3.2",
     "terser-webpack-plugin": "^5.3.7",
     "typescript": "^5.0.2",
