@@ -14,5 +14,10 @@
     <pe:timeAgo value="#{basicTimeAgoController.firstRelease}"
                 titlePattern="MMMM dd yyyy" style="font-weight:bold"/>.
 </p>
+<p>
+    The next month is
+    <pe:timeAgo value="#{basicTimeAgoController.nextMonth}"
+                titlePattern="MMMM dd yyyy" style="font-weight:bold"/>.
+</p>
 <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
