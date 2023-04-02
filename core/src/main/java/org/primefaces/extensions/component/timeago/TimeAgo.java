@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.timeago;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -141,11 +142,18 @@ public class TimeAgo extends UIComponentBase implements Widget {
     }
 
     public final String formattedForTitle() {
+        return format(getTitlePattern(), getValueZoneId());
+    }
+
+    protected final ZoneId getValueZoneId() {
         final Object value = getValue();
-        final ZoneId zone = (value instanceof ZonedDateTime)
-                    ? ((ZonedDateTime) value).getZone()
-                    : ZoneId.systemDefault();
-        return format(getTitlePattern(), zone);
+        if (value instanceof ZonedDateTime) {
+            return ((ZonedDateTime) value).getZone();
+        }
+        if (value instanceof OffsetDateTime) {
+            return ((OffsetDateTime) value).getOffset();
+        }
+        return ZoneId.systemDefault();
     }
 
     protected String format(final String pattern, final ZoneId zone) {
@@ -158,6 +166,9 @@ public class TimeAgo extends UIComponentBase implements Widget {
         }
         if (value instanceof LocalDateTime) {
             return format((LocalDateTime) value, pattern, zone);
+        }
+        if (value instanceof OffsetDateTime) {
+            return format((OffsetDateTime) value, pattern, zone);
         }
         throw new IllegalArgumentException("Unsupported type");
     }
@@ -175,6 +186,11 @@ public class TimeAgo extends UIComponentBase implements Widget {
 
     protected String format(final LocalDateTime dateTime, final String pattern, final ZoneId zone) {
         return format(dateTime.atZone(ZoneId.systemDefault()), pattern, zone);
+    }
+
+    protected String format(final OffsetDateTime dateTime, final String pattern, final ZoneId zone) {
+        return dateTime.atZoneSameInstant(zone)
+                    .format(DateTimeFormatter.ofPattern(pattern));
     }
 
     @Override

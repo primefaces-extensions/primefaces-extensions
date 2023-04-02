@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
 import javax.faces.view.ViewScoped;
@@ -39,13 +40,16 @@ public class BasicTimeAgoController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final LocalDateTime created = LocalDateTime.now();
+    private final OffsetDateTime created = OffsetDateTime.now();
 
     private final LocalDateTime firstRelease = LocalDate.of(2012, Month.JANUARY, 23).atStartOfDay();
 
-    private final LocalDateTime nextMonth = LocalDateTime.now().plusMonths(1).truncatedTo(ChronoUnit.DAYS);
+    private final LocalDateTime nextMonth = LocalDateTime.now()
+                .plusMonths(1)
+                .withDayOfMonth(1)
+                .truncatedTo(ChronoUnit.DAYS);
 
-    public LocalDateTime getCreated() {
+    public OffsetDateTime getCreated() {
         return created;
     }
 
