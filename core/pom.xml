@@ -102,6 +102,7 @@
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
                                 <include>speedtest/**</include>
+                                <include>suneditor/**</include>
                                 <include>timeago/*.js</include>
                                 <include>timepicker/**</include>
                                 <include>timer/**</include>
