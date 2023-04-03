@@ -230,6 +230,10 @@
         <component-type>org.primefaces.extensions.component.Localized</component-type>
         <component-class>org.primefaces.extensions.component.localized.Localized</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.SunEditor</component-type>
+        <component-class>org.primefaces.extensions.component.suneditor.SunEditor</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -454,6 +458,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.LocalizedRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.localized.LocalizedRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.SunEditorRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.suneditor.SunEditorRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>

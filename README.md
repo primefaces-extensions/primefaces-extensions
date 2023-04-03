@@ -101,9 +101,7 @@ Please report all issues [here](https://github.com/primefaces-extensions/primefa
 - In GitHub create a new Release titled `8.0.2` to tag this release
 - Run `mvn clean deploy -Prelease` to push to Maven Central
 
-## Licenses
-
-### Extensions
+## License
 
 Licensed under the [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
 
