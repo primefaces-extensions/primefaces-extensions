@@ -117,10 +117,10 @@ public class SunEditorRenderer extends InputRenderer {
                     .attr("height", editor.getHeight())
                     .attr("mode", editor.getMode(), "classic")
                     .attr("rtl", ComponentUtils.isRTL(context, editor), false)
-                    .attr("buttonListJSON", editor.getButtonListJSON())
                     .attr("locale", editor.calculateLocale().toString())
                     .attr("readOnly", editor.isReadonly(), false)
                     .attr("disabled", editor.isDisabled(), false)
+                    .attr("toolbar", editor.getToolbar())
                     .nativeAttr("extender", editor.getExtender());
 
         encodeClientBehaviors(context, editor);

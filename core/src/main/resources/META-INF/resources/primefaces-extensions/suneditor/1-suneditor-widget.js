@@ -11,7 +11,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @param {object} cfg The widget configuration.
      */
-    init: function(cfg) {
+    init: function (cfg) {
         this._super(cfg);
         this.input = $(this.jqId);
         this.disabled = (cfg.disabled === undefined) ? false : cfg.disabled;
@@ -22,8 +22,9 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             this.cfg.readOnly = true;
         }
 
-        if (this.cfg.buttonListJSON) {
-            this.cfg.buttonList = JSON.parse(this.cfg.buttonListJSON.replace(/'/g, "\""));
+        if (this.cfg.toolbar) {
+            this.cfg.buttonList = JSON.parse(this.cfg.toolbar.replace(/'/g, "\""));
+            this.cfg.toolbar = null;
         }
 
         // user extension to configure handsontable
@@ -45,7 +46,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      *
      * @private
      */
-    _render: function() {
+    _render: function () {
         var $this = this;
 
         //initialize
@@ -59,50 +60,50 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         //update input on change
-        this.editor.onChange = function(contents, core) {
-            $this.input.val([].map.call(core.context.element.wysiwyg.children, function(node) {
+        this.editor.onChange = function (contents, core) {
+            $this.input.val([].map.call(core.context.element.wysiwyg.children, function (node) {
                 return node.outerHTML || "";
             }).join(""));
             $this.callBehavior('change');
         };
 
-        this.editor.onScroll = function(contents, core) {
+        this.editor.onScroll = function (contents, core) {
             $this.callBehavior('scroll')
         };
-        this.editor.onMouseDown = function(contents, core) {
+        this.editor.onMouseDown = function (contents, core) {
             $this.callBehavior('mouseDown')
         };
-        this.editor.onClick = function(e, core) {
+        this.editor.onClick = function (e, core) {
             $this.callBehavior('click')
         }
-        this.editor.onInput = function(e, core) {
+        this.editor.onInput = function (e, core) {
             $this.callBehavior('input')
         }
-        this.editor.onKeyDown = function(e, core) {
+        this.editor.onKeyDown = function (e, core) {
             $this.callBehavior('keyDown')
         }
-        this.editor.onKeyUp = function(e, core) {
+        this.editor.onKeyUp = function (e, core) {
             $this.callBehavior('keyUp')
         }
-        this.editor.onFocus = function(e, core) {
+        this.editor.onFocus = function (e, core) {
             $this.callBehavior('focus')
         }
-        this.editor.onBlur = function(e, core) {
+        this.editor.onBlur = function (e, core) {
             $this.callBehavior('blur')
         }
-        this.editor.onPaste = function(e, cleanData, maxCharCount, core) {
+        this.editor.onPaste = function (e, cleanData, maxCharCount, core) {
             $this.callBehavior('paste')
         }
-        this.editor.onCopy = function(e, clipboardData, core) {
+        this.editor.onCopy = function (e, clipboardData, core) {
             $this.callBehavior('copy')
         }
-        this.editor.onCut = function(e, clipboardData, core) {
+        this.editor.onCut = function (e, clipboardData, core) {
             $this.callBehavior('cut')
         }
-        this.editor.onDrop = function(e, cleanData, maxCharCount, core) {
+        this.editor.onDrop = function (e, cleanData, maxCharCount, core) {
             $this.callBehavior('drop')
         }
-        this.editor.onSave = function(contents, core) {
+        this.editor.onSave = function (contents, core) {
             $this.callBehavior('save')
         };
     },
@@ -128,7 +129,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Calculates the correct language or defaults to English if not found.
      */
-    getLanguage: function() {
+    getLanguage: function () {
         var localeKey = this.cfg.locale ? this.cfg.locale : PrimeFaces.settings.locale;
         if (localeKey && window.SUNEDITOR_LANG) {
             var language = window.SUNEDITOR_LANG[localeKey];
@@ -138,7 +139,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             }
 
             // if all else fails default to US English
-            if(!language) {
+            if (!language) {
                 language = window.SUNEDITOR_LANG['en'];
             }
             this.cfg.lang = language;
@@ -148,15 +149,19 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Clears the entire text of the editor.
      */
-    clear: function() {
-        this.editor.setContents('');
+    clear: function () {
+        if (this.editor) {
+            this.editor.setContents('');
+        }
     },
 
     /**
      * Enables this text editor so that text can be entered.
      */
-    enable: function() {
-        this.editor.enable();
+    enable: function () {
+        if (this.editor) {
+            this.editor.enable();
+        }
         PrimeFaces.utils.enableInputWidget(this.jq, this.input);
         this.disabled = false;
     },
@@ -164,8 +169,10 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
     /**
      * Disables this text editor so that no text can be entered or removed.
      */
-    disable: function() {
-        this.editor.disable();
+    disable: function () {
+        if (this.editor) {
+            this.editor.disable();
+        }
         PrimeFaces.utils.disableInputWidget(this.jq, this.input);
         this.disabled = true;
     }
