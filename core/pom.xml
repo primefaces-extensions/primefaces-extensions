@@ -102,7 +102,6 @@
                                 <include>sheet/**</include>
                                 <include>slideout/**</include>
                                 <include>speedtest/**</include>
-                                <include>suneditor/**</include>
                                 <include>timeago/*.js</include>
                                 <include>timepicker/**</include>
                                 <include>timer/**</include>
@@ -139,6 +138,32 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/creditcard/creditcard.css</outputFile>
+                                    <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>suneditor/0-suneditor.min.js</include>
+                                <include>suneditor/1-suneditor-widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/suneditor/suneditor.js</outputFile>
+                                    <withoutCompress>true</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>suneditor/0-suneditor.min.css</include>
+                                <include>suneditor/1-suneditor-widget.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/suneditor/suneditor.css</outputFile>
                                     <withoutCompress>true</withoutCompress>
                                 </aggregation>
                             </aggregations>
