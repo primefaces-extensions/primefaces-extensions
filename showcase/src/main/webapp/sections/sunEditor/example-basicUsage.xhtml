@@ -32,8 +32,9 @@
         </p:selectBooleanCheckbox>
     </h:panelGrid>
 
-    <pe:sunEditor id="sunEditor" value="#{basicSunEditorController.html}" mode="#{basicSunEditorController.mode}"
-                  dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}" locale="#{basicSunEditorController.language}"
+    <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
+                  mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
+                  locale="#{basicSunEditorController.language}"
                   toolbar="[['font','fontSize','formatBlock'],['paragraphStyle','blockquote'],['bold','underline','italic'],'/',['outdent','indent'],['fullScreen','showBlocks','codeView']]">
         <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}"/>
         <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>
