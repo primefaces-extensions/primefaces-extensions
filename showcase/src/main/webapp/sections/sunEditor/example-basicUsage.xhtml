@@ -1,0 +1,45 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <p:growl id="growl" keepAlive="true">
+        <p:autoUpdate/>
+    </p:growl>
+
+    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4">
+        <p:outputLabel value="Mode:" for="@next"/>
+        <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" style="width:200px"
+                         required="true">
+            <f:selectItems value="#{basicSunEditorController.modes}"/>
+            <p:ajax update="sunEditor"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Locale:" for="@next"/>
+        <p:selectOneMenu id="cboLocale" value="#{basicSunEditorController.language}" style="width:200px"
+                         required="true">
+            <f:selectItems value="#{basicSunEditorController.languages}"/>
+            <p:ajax update="sunEditor"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="RTL:" for="@next"/>
+        <p:selectBooleanCheckbox id="chkRtl" value="#{basicSunEditorController.rtl}">
+            <p:ajax update="sunEditor"/>
+        </p:selectBooleanCheckbox>
+    </h:panelGrid>
+
+    <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
+                  mode="#{basicSunEditorController.mode}" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
+                  locale="#{basicSunEditorController.language}"
+                  toolbar="[['font','fontSize','formatBlock'],['paragraphStyle','blockquote'],['bold','underline','italic'],'/',['outdent','indent'],['fullScreen','showBlocks','codeView']]">
+        <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}"/>
+        <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>
+        <p:ajax event="cut" listener="#{basicSunEditorController.onCut}"/>
+        <p:ajax event="drop" listener="#{basicSunEditorController.onDrop}"/>
+    </pe:sunEditor>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

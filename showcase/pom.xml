@@ -25,9 +25,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.parent.basedir}</main.basedir>
         <primefaces-extensions.core.version>${project.version}</primefaces-extensions.core.version>
-        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized;session</primefaces-extensions.new-components>
+        <primefaces-extensions.new-components>keynote;utils;imagezoom;cookiePolicy;localized;session;sunEditor</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>documentViewer;monacoEditor</primefaces-extensions.updated-components>
-        <primefaces-extensions.deprecated-components>renderers;</primefaces-extensions.deprecated-components>
+        <primefaces-extensions.deprecated-components>renderers</primefaces-extensions.deprecated-components>
 
         <owb.version>2.0.25</owb.version>
         <jetty.version>9.4.51.v20230217</jetty.version>
