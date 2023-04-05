@@ -144,6 +144,7 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>suneditor/lang/*.js</include>
                                 <include>suneditor/0-suneditor.min.js</include>
                                 <include>suneditor/1-suneditor-widget.js</include>
                             </includes>

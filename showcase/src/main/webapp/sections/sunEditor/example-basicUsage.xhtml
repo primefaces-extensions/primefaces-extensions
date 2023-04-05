@@ -1,10 +1,34 @@
 <ui:composition
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:pe="http://primefaces.org/ui/extensions">
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
 
-<!-- EXAMPLE-SOURCE-START -->
-    <pe:sunEditor id="sunEditor"
-                  value="#{basicSunEditorController.html}"/>
-<!-- EXAMPLE-SOURCE-END -->
+    <!-- EXAMPLE-SOURCE-START -->
+    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4">
+        <p:outputLabel value="Mode:" for="@next"/>
+        <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" style="width:200px"
+                         required="true">
+            <f:selectItems value="#{basicSunEditorController.modes}"/>
+            <p:ajax update="sunEditor" process="@this"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Locale:" for="@next"/>
+        <p:selectOneMenu id="cboLocale" value="#{basicSunEditorController.language}" style="width:200px"
+                         required="true">
+            <f:selectItems value="#{basicSunEditorController.languages}"/>
+            <p:ajax update="sunEditor" process="@this"/>
+        </p:selectOneMenu>
+
+        <p:outputLabel value="RTL:" for="@next"/>
+        <p:selectBooleanCheckbox id="chkRtl" value="#{basicSunEditorController.rtl}">
+            <p:ajax update="sunEditor" process="@this"/>
+        </p:selectBooleanCheckbox>
+    </h:panelGrid>
+
+    <pe:sunEditor id="sunEditor" value="#{basicSunEditorController.html}" mode="#{basicSunEditorController.mode}"
+                  dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}" locale="#{basicSunEditorController.language}"/>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

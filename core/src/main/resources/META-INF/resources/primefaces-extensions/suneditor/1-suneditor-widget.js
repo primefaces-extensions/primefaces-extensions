@@ -131,19 +131,25 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      */
     getLanguage: function () {
         var localeKey = this.cfg.locale ? this.cfg.locale : PrimeFaces.settings.locale;
+        var language = 'en';
         if (localeKey && window.SUNEDITOR_LANG) {
+            localeKey = localeKey.toLowerCase();
             var language = window.SUNEDITOR_LANG[localeKey];
             // try and strip specific language from nl_BE to just nl
+            var splitLocale = localeKey.split('_');
             if (!language) {
-                language = window.SUNEDITOR_LANG[localeKey.split('_')[0]];
+                language = window.SUNEDITOR_LANG[splitLocale[0]];
             }
-
-            // if all else fails default to US English
-            if (!language) {
-                language = window.SUNEDITOR_LANG['en'];
+            // try and strip specific language from nl_BE to just BE
+            if (!language && splitLocale.length > 1) {
+                language = window.SUNEDITOR_LANG[splitLocale[1]];
             }
-            this.cfg.lang = language;
         }
+        // if all else fails default to US English
+        if (!language) {
+            language = window.SUNEDITOR_LANG['en'];
+        }
+        this.cfg.lang = language;
     },
 
     /**
