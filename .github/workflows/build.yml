@@ -2,6 +2,10 @@ name: Java CI
 
 on: [ push, pull_request ]
 
+env:
+    MAVEN_OPTS: >-
+        -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
+
 permissions:
   contents: read
 
@@ -26,13 +30,13 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-v3-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-v3
-      - name: Checkout PrimeFaces
-        uses: actions/checkout@v3
-        with:
-          repository: primefaces/primefaces
-          path: primefaces
-      - name: Build PrimeFaces
-        run: cd primefaces && mvn -U install -Pquick -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 && cd ..
+#      - name: Checkout PrimeFaces
+#        uses: actions/checkout@v3
+#        with:
+#          repository: primefaces/primefaces
+#          path: primefaces
+#      - name: Build PrimeFaces
+#        run: cd primefaces && mvn -U install -Pquick && cd ..
       - name: Log github.ref
         run: echo "${{ github.ref }}"
       - name: Build with Maven
