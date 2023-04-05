@@ -74,7 +74,6 @@ public class BasicSunEditorController implements Serializable {
 
     public List<SelectItem> getLanguages() {
         final List<SelectItem> results = new ArrayList<>();
-        results.add(new SelectItem("ckb", "Central Kurdish"));
         results.add(new SelectItem("da", "Dansk (Danish)"));
         results.add(new SelectItem("de", "Deutsch (German)"));
         results.add(new SelectItem("en", "English (US/UK)"));
@@ -98,9 +97,9 @@ public class BasicSunEditorController implements Serializable {
 
     public List<SelectItem> getModes() {
         final List<SelectItem> results = new ArrayList<>();
-        results.add(new SelectItem("'classic'", "Classic"));
-        results.add(new SelectItem("'inline'", "Inline"));
-        results.add(new SelectItem("'balloon'", "Balloon"));
+        results.add(new SelectItem("classic", "Classic"));
+        results.add(new SelectItem("inline", "Inline"));
+        results.add(new SelectItem("balloon", "Balloon"));
         results.add(new SelectItem("balloon-always", "Balloon (Always)"));
         return results;
     }
