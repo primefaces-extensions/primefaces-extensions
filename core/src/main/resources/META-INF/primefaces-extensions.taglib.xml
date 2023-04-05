@@ -10137,7 +10137,22 @@ See showcase for an example. Default null.]]>
 
     <tag>
         <description>
-            <![CDATA[SunEditor component, wysiwyg html editor in js.]]></description>
+            <![CDATA[SunEditor component, wysiwyg html editor in js.
+            Client behavior events:
+            change - on change (javax.faces.event.AjaxBehaviorEvent),
+            scroll - on scroll (javax.faces.event.AjaxBehaviorEvent),
+            mouseDown - on mouseDown (javax.faces.event.AjaxBehaviorEvent),
+            click - on click (javax.faces.event.AjaxBehaviorEvent),
+            input - on input (javax.faces.event.AjaxBehaviorEvent),
+            keyDown - on keyDown (javax.faces.event.AjaxBehaviorEvent),
+            keyUp - on keyUp (javax.faces.event.AjaxBehaviorEvent),
+            focus - on focus (javax.faces.event.AjaxBehaviorEvent),
+            blur - on blur (javax.faces.event.AjaxBehaviorEvent),
+            paste - on paste (javax.faces.event.AjaxBehaviorEvent),
+            copy - on copy (javax.faces.event.AjaxBehaviorEvent),
+            cut - on cut (javax.faces.event.AjaxBehaviorEvent),
+            drop - on drop (javax.faces.event.AjaxBehaviorEvent),
+            save - on save (javax.faces.event.AjaxBehaviorEvent).]]></description>
         <tag-name>sunEditor</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.SunEditor</component-type>

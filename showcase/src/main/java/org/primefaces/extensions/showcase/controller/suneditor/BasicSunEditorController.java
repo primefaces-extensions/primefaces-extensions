@@ -25,13 +25,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-/**
- * @author Jasper de Vries &lt;jepsar@gmail.com&gt;
- */
 @Named
 @ViewScoped
 public class BasicSunEditorController implements Serializable {
@@ -43,6 +43,26 @@ public class BasicSunEditorController implements Serializable {
 
     private String language = "fr";
     private boolean rtl = false;
+
+    public void addMessage(String message) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
+    }
+
+    public void onPaste(AjaxBehaviorEvent e) {
+        addMessage("Paste event.");
+    }
+
+    public void onCopy(AjaxBehaviorEvent e) {
+        addMessage("Copy event.");
+    }
+
+    public void onCut(AjaxBehaviorEvent e) {
+        addMessage("Cut event.");
+    }
+
+    public void onDrop(AjaxBehaviorEvent e) {
+        addMessage("Drop event.");
+    }
 
     public String getHtml() {
         return html;
