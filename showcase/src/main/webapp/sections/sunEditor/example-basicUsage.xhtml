@@ -33,7 +33,8 @@
     </h:panelGrid>
 
     <pe:sunEditor id="sunEditor" value="#{basicSunEditorController.html}" mode="#{basicSunEditorController.mode}"
-                  dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}" locale="#{basicSunEditorController.language}">
+                  dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}" locale="#{basicSunEditorController.language}"
+                  toolbar="[['font','fontSize','formatBlock'],['paragraphStyle','blockquote'],['bold','underline','italic'],'/',['outdent','indent'],['fullScreen','showBlocks','codeView']]">
         <p:ajax event="paste" listener="#{basicSunEditorController.onPaste}"/>
         <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>
         <p:ajax event="cut" listener="#{basicSunEditorController.onCut}"/>
