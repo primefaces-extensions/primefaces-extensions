@@ -1,3 +1,9 @@
+/* Use PF theme font */
+body .sun-editor,
+body .sun-editor-editable {
+  font-family: var(--font-family);
+}
+
 /* Ensure the editor can receive input in dialog */
 body .sun-editor .se-wrapper .se-wrapper-inner {
   position:relative;
