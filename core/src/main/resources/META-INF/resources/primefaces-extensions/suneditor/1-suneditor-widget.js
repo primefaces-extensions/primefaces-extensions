@@ -71,7 +71,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             $this.callBehavior('scroll')
         };
         this.editor.onMouseDown = function (contents, core) {
-            $this.callBehavior('mouseDown')
+            $this.callBehavior('mousedown')
         };
         this.editor.onClick = function (e, core) {
             $this.callBehavior('click')
@@ -80,10 +80,10 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             $this.callBehavior('input')
         }
         this.editor.onKeyDown = function (e, core) {
-            $this.callBehavior('keyDown')
+            $this.callBehavior('keydown')
         }
         this.editor.onKeyUp = function (e, core) {
-            $this.callBehavior('keyUp')
+            $this.callBehavior('keyup')
         }
         this.editor.onFocus = function (e, core) {
             $this.callBehavior('focus')

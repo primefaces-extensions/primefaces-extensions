@@ -10141,11 +10141,11 @@ See showcase for an example. Default null.]]>
             Client behavior events:
             change - on change (javax.faces.event.AjaxBehaviorEvent),
             scroll - on scroll (javax.faces.event.AjaxBehaviorEvent),
-            mouseDown - on mouseDown (javax.faces.event.AjaxBehaviorEvent),
+            mousedown - on mouseDown (javax.faces.event.AjaxBehaviorEvent),
             click - on click (javax.faces.event.AjaxBehaviorEvent),
             input - on input (javax.faces.event.AjaxBehaviorEvent),
-            keyDown - on keyDown (javax.faces.event.AjaxBehaviorEvent),
-            keyUp - on keyUp (javax.faces.event.AjaxBehaviorEvent),
+            keydown - on keyDown (javax.faces.event.AjaxBehaviorEvent),
+            keyup - on keyUp (javax.faces.event.AjaxBehaviorEvent),
             focus - on focus (javax.faces.event.AjaxBehaviorEvent),
             blur - on blur (javax.faces.event.AjaxBehaviorEvent),
             paste - on paste (javax.faces.event.AjaxBehaviorEvent),
@@ -10251,35 +10251,35 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to allow formatting to be included.]]></description>
+                <![CDATA[Whether to allow formatting to be included. Default true.]]></description>
             <name>allowFormatting</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to allow blocks to be included.]]></description>
+                <![CDATA[Whether to allow blocks to be included. Default true.]]></description>
             <name>allowBlocks</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to allow styles to be included.]]></description>
+                <![CDATA[Whether to allow styles to be included. Default true.]]></description>
             <name>allowStyles</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to allow links to be included.]]></description>
+                <![CDATA[Whether to allow links to be included. Default true.]]></description>
             <name>allowLinks</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Whether to allow images to be included.]]></description>
+                <![CDATA[Whether to allow images to be included. Default true.]]></description>
             <name>allowImages</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
@@ -10330,7 +10330,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[editor mode : classic, inline, balloon, balloon-always.]]></description>
+                <![CDATA[Editor mode : classic, inline, balloon, balloon-always. Default classic.]]></description>
             <name>mode</name>
             <required>false</required>
             <type>java.lang.String</type>

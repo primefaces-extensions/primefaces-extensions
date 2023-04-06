@@ -53,7 +53,7 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SunEditorRenderer";
 
-    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("change", "scroll", "mouseDown", "click", "input", "keyDown", "keyUp",
+    private static final Collection<String> EVENT_NAMES = LangUtils.unmodifiableList("change", "scroll", "mousedown", "click", "input", "keydown", "keyup",
                 "focus", "blur", "paste", "copy", "cut", "drop", "save");
 
     @SuppressWarnings("java:S115")
