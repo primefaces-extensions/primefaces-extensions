@@ -11,23 +11,23 @@
         <p:autoUpdate/>
     </p:growl>
 
-    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4">
-        <p:outputLabel value="Mode:" for="@next"/>
-        <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" style="width:200px"
+    <h:panelGrid columns="6" id="pnlDetails" styleClass="p-4" >
+        <p:outputLabel value="Mode:" for="@next" styleClass="mr-2"/>
+        <p:selectOneMenu id="cboMode" value="#{basicSunEditorController.mode}" styleClass="w-12rem mr-2"
                          required="true">
             <f:selectItems value="#{basicSunEditorController.modes}"/>
             <p:ajax update="sunEditor"/>
         </p:selectOneMenu>
 
-        <p:outputLabel value="Locale:" for="@next"/>
-        <p:selectOneMenu id="cboLocale" value="#{basicSunEditorController.language}" style="width:200px"
+        <p:outputLabel value="Locale:" for="@next" styleClass="mr-2"/>
+        <p:selectOneMenu id="cboLocale" value="#{basicSunEditorController.language}" styleClass="w-12rem mr-2"
                          required="true">
             <f:selectItems value="#{basicSunEditorController.languages}"/>
             <p:ajax update="sunEditor"/>
         </p:selectOneMenu>
 
-        <p:outputLabel value="RTL:" for="@next"/>
-        <p:selectBooleanCheckbox id="chkRtl" value="#{basicSunEditorController.rtl}">
+        <p:outputLabel value="RTL:" for="@next" styleClass="mr-2"/>
+        <p:selectBooleanCheckbox id="chkRtl" value="#{basicSunEditorController.rtl}" styleClass="mr-2">
             <p:ajax update="sunEditor"/>
         </p:selectBooleanCheckbox>
     </h:panelGrid>

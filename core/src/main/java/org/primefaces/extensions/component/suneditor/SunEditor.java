@@ -203,4 +203,12 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
         return appropriateLocale;
     }
 
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
+    }
+
 }
