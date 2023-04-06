@@ -10152,7 +10152,8 @@ See showcase for an example. Default null.]]>
             copy - on copy (javax.faces.event.AjaxBehaviorEvent),
             cut - on cut (javax.faces.event.AjaxBehaviorEvent),
             drop - on drop (javax.faces.event.AjaxBehaviorEvent),
-            save - on save (javax.faces.event.AjaxBehaviorEvent).]]></description>
+            save - on save (javax.faces.event.AjaxBehaviorEvent).
+            initialize - when editor is initialized (javax.faces.event.AjaxBehaviorEvent).]]></description>
         <tag-name>sunEditor</tag-name>
         <component>
             <component-type>org.primefaces.extensions.component.SunEditor</component-type>

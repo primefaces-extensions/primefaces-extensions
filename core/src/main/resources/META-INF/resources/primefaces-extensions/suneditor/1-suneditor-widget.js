@@ -52,6 +52,9 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         //initialize
         this.getLanguage();
         this.editor = SUNEDITOR.create(this.id, this.cfg);
+        this.editor.onload = function (core, reload) {
+            $this.callBehavior('initialize');
+        }
         if (this.cfg.readOnly) {
             this.editor.readOnly(true);
         }
