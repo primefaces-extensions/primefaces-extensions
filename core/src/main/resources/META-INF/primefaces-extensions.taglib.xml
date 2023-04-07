@@ -10287,6 +10287,13 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Whether to allow tables to be included. Default true.]]></description>
+            <name>allowTables</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Message to display when required field validation fails.]]></description>
             <name>requiredMessage</name>
             <required>false</required>

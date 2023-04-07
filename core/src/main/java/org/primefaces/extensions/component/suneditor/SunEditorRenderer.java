@@ -32,10 +32,10 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 
 import org.primefaces.context.PrimeApplicationContext;
+import org.primefaces.extensions.util.HtmlSanitizer;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
-import org.primefaces.util.HtmlSanitizer;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -172,11 +172,11 @@ public class SunEditorRenderer extends InputRenderer {
         if (editor.isSecure()
                     && PrimeApplicationContext.getCurrentInstance(context).getEnvironment().isHtmlSanitizerAvailable()) {
             result = HtmlSanitizer.sanitizeHtml(value, editor.isAllowBlocks(), editor.isAllowFormatting(),
-                        editor.isAllowLinks(), editor.isAllowStyles(), editor.isAllowImages());
+                        editor.isAllowLinks(), editor.isAllowStyles(), editor.isAllowImages(), editor.isAllowTables());
         }
         else {
             if (!editor.isAllowBlocks() || !editor.isAllowFormatting() || !editor.isAllowLinks()
-                        || !editor.isAllowStyles() || !editor.isAllowImages()) {
+                        || !editor.isAllowStyles() || !editor.isAllowImages() || !editor.isAllowTables()) {
                 LOGGER.warning("HTML sanitizer not available - skip sanitizing....");
             }
         }
