@@ -3,10 +3,10 @@
 import { promises as fs } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 
-import mkdirp from "mkdirp";
+import { mkdirpNative } from "mkdirp";
 import ncp from "ncp";
 import recursive from "recursive-readdir";
-import rimraf from "rimraf";
+import { rimraf } from "rimraf";
 
 import { gitUpdateToTheirs } from "../util/git-clone-or-pull.js";
 
@@ -246,7 +246,7 @@ function extractLocaleCode(dir) {
 }
 
 async function main() {
-    await mkdirp.native(gitDir);
+    await mkdirpNative(gitDir);
     await injectSourcePath();
 
     // Fetch the locale data from the github repo
@@ -267,7 +267,7 @@ async function main() {
             continue;
         }
         const locale = await createLocale(lang, transPath);
-        await mkdirp.native(generatedSourceLocaleDir)
+        await mkdirpNative(generatedSourceLocaleDir)
         const mappedLang = lang;
         const path = join(generatedSourceLocaleDir, mappedLang + ".js");
         const content = createScript(mappedLang, locale);
