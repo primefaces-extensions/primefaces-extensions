@@ -3,7 +3,7 @@
 import { promises as fs } from "node:fs";
 import { join } from "node:path";
 import rimraf from "rimraf";
-import mkdirp from "mkdirp";
+import { mkdirp } from "mkdirp";
 
 import { javaDescriptorPackage, javaDescriptorPath } from "./paths.js";
 
