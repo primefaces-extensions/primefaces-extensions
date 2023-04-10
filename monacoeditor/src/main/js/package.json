@@ -24,10 +24,10 @@
     "mkdirp": "^3.0.0",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.2.3",
-    "rimraf": "^4.4.1",
+    "rimraf": "^5.0.0",
     "style-loader": "^3.3.2",
     "terser-webpack-plugin": "^5.3.7",
-    "typescript": "^5.0.3",
+    "typescript": "^5.0.4",
     "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1"
   }
