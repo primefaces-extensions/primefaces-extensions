@@ -21,7 +21,7 @@
     "@types/cross-spawn": "^6.0.2",
     "@types/jquery": "^3.5.16",
     "css-loader": "^6.7.1",
-    "mkdirp": "^2.1.6",
+    "mkdirp": "^3.0.0",
     "ncp": "^2.0.0",
     "recursive-readdir": "^2.2.3",
     "rimraf": "^4.4.1",
