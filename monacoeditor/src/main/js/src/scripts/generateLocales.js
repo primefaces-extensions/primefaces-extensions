@@ -6,7 +6,7 @@ import { basename, dirname, join, relative } from "node:path";
 import { mkdirpNative } from "mkdirp";
 import ncp from "ncp";
 import recursive from "recursive-readdir";
-import rimraf from "rimraf";
+import { rimraf } from "rimraf";
 
 import { gitUpdateToTheirs } from "../util/git-clone-or-pull.js";
 
