@@ -18,6 +18,7 @@
         </el-resolver>
         <resource-handler>org.primefaces.extensions.application.ThemeAccentColorResourceHandler</resource-handler>
         <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+        <resource-handler>org.omnifaces.resourcehandler.CDNResourceHandler</resource-handler>
         <system-event-listener>
             <system-event-listener-class>org.primefaces.extensions.application.PrimeFacesScriptProcessor</system-event-listener-class>
             <system-event-class>javax.faces.event.PostAddToViewEvent</system-event-class>

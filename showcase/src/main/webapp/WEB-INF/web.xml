@@ -123,6 +123,13 @@
         <param-name>org.omnifaces.COMBINED_RESOURCE_HANDLER_DISABLED</param-name>
         <param-value>#{facesContext.application.projectStage eq 'Development'}</param-value>
     </context-param>
+    <context-param>
+        <param-name>org.omnifaces.CDN_RESOURCE_HANDLER_URLS</param-name>
+        <param-value>
+            cdn:katex.css=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css,
+            cdn:katex.js=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js
+        </param-value>
+    </context-param>
 
     <!-- Enable PostConstruct on JSF ManagedBeans on Jetty -->
     <context-param>
