@@ -64,6 +64,10 @@ public class BasicSunEditorController implements Serializable {
         addMessage("Drop event.");
     }
 
+    public void onSave(AjaxBehaviorEvent e) {
+        addMessage("Save event.");
+    }
+
     public String getHtml() {
         return html;
     }

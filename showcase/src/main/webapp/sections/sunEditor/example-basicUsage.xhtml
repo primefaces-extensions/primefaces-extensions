@@ -43,6 +43,7 @@
         <p:ajax event="copy" listener="#{basicSunEditorController.onCopy}"/>
         <p:ajax event="cut" listener="#{basicSunEditorController.onCut}"/>
         <p:ajax event="drop" listener="#{basicSunEditorController.onDrop}"/>
+        <p:ajax event="save" listener="#{basicSunEditorController.onSave}" update="@this"/>
     </pe:sunEditor>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
