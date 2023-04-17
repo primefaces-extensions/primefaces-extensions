@@ -172,7 +172,7 @@ public class SunEditorRenderer extends InputRenderer {
         if (editor.isSecure()
                     && PrimeApplicationContext.getCurrentInstance(context).getEnvironment().isHtmlSanitizerAvailable()) {
             result = HtmlSanitizer.sanitizeHtml(value, editor.isAllowBlocks(), editor.isAllowFormatting(),
-                        editor.isAllowLinks(), editor.isAllowStyles(), editor.isAllowImages(), editor.isAllowTables());
+                        editor.isAllowLinks(), editor.isAllowStyles(), editor.isAllowImages(), editor.isAllowTables(), editor.isAllowMedia());
         }
         else {
             if (!editor.isAllowBlocks() || !editor.isAllowFormatting() || !editor.isAllowLinks()

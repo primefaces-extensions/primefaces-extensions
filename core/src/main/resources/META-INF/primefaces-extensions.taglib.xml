@@ -10287,6 +10287,13 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Whether to allow audio/video to be included when secure=true and the HTML is sanitized. Default true.]]></description>
+            <name>allowMedia</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Whether to allow tables to be included when secure=true and the HTML is sanitized. Default true.]]></description>
             <name>allowTables</name>
             <required>false</required>

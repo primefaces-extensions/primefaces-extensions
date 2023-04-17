@@ -38,6 +38,14 @@ public class HtmlSanitizer {
                 .onElements("img")
                 .toFactory();
 
+    private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
+                .allowElements("video", "audio", "source")
+                .allowAttributes("controls", "width", "height")
+                .onElements("video").allowAttributes("controls")
+                .onElements("audio").allowAttributes("src", "type")
+                .onElements("source").allowTextIn("video", "audio")
+                .toFactory();
+
     private static final PolicyFactory HTML_LINKS_SANITIZER = Sanitizers.LINKS
                 .and(new HtmlPolicyBuilder()
                             .allowElements("a")
@@ -59,7 +67,13 @@ public class HtmlSanitizer {
     }
 
     public static String sanitizeHtml(String value,
-                boolean allowBlocks, boolean allowFormatting, boolean allowLinks, boolean allowStyles, boolean allowImages, boolean allowTables) {
+                boolean allowBlocks,
+                boolean allowFormatting,
+                boolean allowLinks,
+                boolean allowStyles,
+                boolean allowImages,
+                boolean allowTables,
+                boolean allowMedia) {
 
         if (LangUtils.isBlank(value)) {
             return value;
@@ -80,6 +94,9 @@ public class HtmlSanitizer {
         }
         if (allowImages) {
             sanitizer = sanitizer.and(HTML_IMAGES_SANITIZER);
+        }
+        if (allowMedia) {
+            sanitizer = sanitizer.and(HTML_MEDIA_SANITIZER);
         }
         if (allowTables) {
             sanitizer = sanitizer.and(Sanitizers.TABLES);

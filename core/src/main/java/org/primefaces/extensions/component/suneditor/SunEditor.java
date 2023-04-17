@@ -58,7 +58,24 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
 
     @SuppressWarnings("java:S115")
     protected enum PropertyKeys {
-        widgetVar, dir, width, height, allowBlocks, allowFormatting, allowLinks, allowStyles, allowImages, allowTables, secure, mode, locale, extender, toolbar
+        // @formatter:off
+        widgetVar,
+        dir,
+        width,
+        height,
+        allowBlocks,
+        allowFormatting,
+        allowLinks,
+        allowStyles,
+        allowImages,
+        allowTables,
+        allowMedia,
+        secure,
+        mode,
+        locale,
+        extender,
+        toolbar
+        // @formatter:on
     }
 
     private Locale appropriateLocale;
@@ -165,6 +182,14 @@ public class SunEditor extends AbstractPrimeHtmlInputTextArea implements ClientB
 
     public boolean isAllowTables() {
         return (Boolean) getStateHelper().eval(PropertyKeys.allowTables, true);
+    }
+
+    public void setAllowMedia(boolean allowMedia) {
+        getStateHelper().put(PropertyKeys.allowMedia, allowMedia);
+    }
+
+    public boolean isAllowMedia() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.allowMedia, true);
     }
 
     public void setAllowTables(boolean allowTables) {
