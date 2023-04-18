@@ -40,9 +40,9 @@ public class HtmlSanitizer {
 
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
                 .allowUrlProtocols("data", "http", "https")
-                .allowElements("video", "audio", "source", "iframe")
-                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen")
-                .onElements("video", "audio", "source", "iframe")
+                .allowElements("video", "audio", "source", "iframe", "figure")
+                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen", "class", "style")
+                .onElements("video", "audio", "source", "iframe", "figure")
                 .toFactory();
 
     private static final PolicyFactory HTML_LINKS_SANITIZER = Sanitizers.LINKS
