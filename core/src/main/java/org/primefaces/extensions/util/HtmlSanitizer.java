@@ -39,11 +39,10 @@ public class HtmlSanitizer {
                 .toFactory();
 
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
-                .allowElements("video", "audio", "source")
-                .allowAttributes("controls", "width", "height")
-                .onElements("video").allowAttributes("controls")
-                .onElements("audio").allowAttributes("src", "type")
-                .onElements("source").allowTextIn("video", "audio")
+                .allowUrlProtocols("data", "http", "https")
+                .allowElements("video", "audio", "source", "iframe")
+                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen")
+                .onElements("video", "audio", "source", "iframe")
                 .toFactory();
 
     private static final PolicyFactory HTML_LINKS_SANITIZER = Sanitizers.LINKS
