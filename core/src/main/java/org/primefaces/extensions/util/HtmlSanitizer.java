@@ -56,7 +56,7 @@ public class HtmlSanitizer {
                 .and(new HtmlPolicyBuilder()
                             .allowElements("span", "li", "p", "pre", "div")
                             .allowAttributes("class", "style", "contenteditable")
-                            .onElements("span", "li", "p", "pre")
+                            .onElements("span", "li", "p", "pre", "div")
                             .toFactory());
 
     private static final PolicyFactory HTML_DENY_ALL_SANITIZER = new HtmlPolicyBuilder().toFactory();
