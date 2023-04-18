@@ -41,7 +41,8 @@ public class HtmlSanitizer {
     private static final PolicyFactory HTML_MEDIA_SANITIZER = new HtmlPolicyBuilder()
                 .allowUrlProtocols("data", "http", "https")
                 .allowElements("video", "audio", "source", "iframe", "figure")
-                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen", "class", "style")
+                .allowAttributes("controls", "width", "height", "origin-size", "src", "allowfullscreen", "class", "style", "data-proportion", "data-align",
+                            "data-percentage", " data-size", "data-file-name", "data-file-size", "data-origin", "data-rotate", "data-index")
                 .onElements("video", "audio", "source", "iframe", "figure")
                 .toFactory();
 
