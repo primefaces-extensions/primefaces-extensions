@@ -12,7 +12,8 @@
     <pe:inputPhone id="txtPhone" 
                    initialCountry="us"
                    value="#{basicInputPhoneController.phoneNumber}"
-                   formatOnDisplay="true" dir="rtl">
+                   formatOnDisplay="true"
+                   dir="ltr">
         <p:ajax event="countrySelect" listener="#{basicInputPhoneController.onCountrySelect}"/>
     </pe:inputPhone>
     <p:commandButton value="Submit" update="txtPhone" actionListener="#{basicInputPhoneController.submit}" styleClass="ml-2" />
