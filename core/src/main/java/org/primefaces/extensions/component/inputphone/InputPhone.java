@@ -33,6 +33,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.MixedClientBehaviorHolder;
+import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.extensions.model.inputphone.Country;
@@ -51,7 +52,7 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.css")
 @ResourceDependency(library = "primefaces-extensions", name = "inputphone/inputphone.js")
-public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder {
+public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, InputHolder, MixedClientBehaviorHolder, RTLAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPhone";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -74,6 +75,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         placeholder,
         widgetVar,
         type,
+        dir,
         allowDropdown,
         autoHideDialCode,
         autoPlaceholder,
@@ -145,6 +147,15 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    public void setDir(final String _dir) {
+        getStateHelper().put(PropertyKeys.dir, _dir);
+    }
+
+    @Override
+    public String getDir() {
+        return (String) getStateHelper().eval(PropertyKeys.dir, "ltr");
     }
 
     public String getPlaceholder() {

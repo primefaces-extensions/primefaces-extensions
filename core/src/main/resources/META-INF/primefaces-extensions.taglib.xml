@@ -8795,7 +8795,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Direction indication for text that does not inherit directionality.]]>
+                 <![CDATA[Defines text direction, valid values are "ltr" (default) and "rtl".]]>
             </description>
             <name>dir</name>
             <required>false</required>

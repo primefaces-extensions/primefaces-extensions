@@ -129,6 +129,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
         writer.startElement("span", inputPhone);
         writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("dir", ComponentUtils.isRTL(context, inputPhone) ? "rtl" : "ltr", null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
         if (inputPhone.getStyle() != null) {
