@@ -12,6 +12,12 @@
     <h:outputStylesheet library="cdn" name="katex.css" />
     <h:outputScript library="cdn" name="katex.js" />
 
+    <!-- Google Fonts can be used "Roboto", "Bruno Ace SC"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&amp;family=Roboto&amp;display=swap" rel="stylesheet" />
+    -->
+
     <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
                   extender="editorExtender" toolbar="[['font','fontSize','formatBlock'],['math']]">
     </pe:sunEditor>
@@ -21,7 +27,7 @@
             // this = widget
             // this.cfg = JSON configuration
             this.cfg.katex = window.katex;
-            this.cfg.font = ["Serif", "Sans-Serif", "Monospace"];
+            this.cfg.font = ["Serif", "Sans-Serif", "Monospace", "Roboto", "Bruno Ace SC"];
             this.cfg.defaultStyle = "font-family:Serif;";
         };
     </script>
