@@ -7074,7 +7074,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Timeout in seconds to do the ajax ajax requests. Default is 10.]]>
+                <![CDATA[Timeout in seconds to do the Ajax request(s). Default is 10.]]>
             </description>
             <name>timeout</name>
             <required>false</required>
