@@ -23,11 +23,14 @@ package org.primefaces.extensions.application;
 
 import java.util.Locale;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.FacesException;
+import javax.faces.application.ProjectStage;
 import javax.faces.application.Resource;
 import javax.faces.component.UIOutput;
 import javax.faces.context.ExternalContext;
@@ -61,6 +64,7 @@ import org.primefaces.util.LocaleUtils;
 public class PrimeFacesResourceProcessor implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(PrimeFacesResourceProcessor.class.getName());
     private static final String LIBRARY = "primefaces";
 
     @Override
@@ -108,8 +112,16 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
 
         if (configuration.isClientSideLocalizationEnabled()) {
-            final Locale locale = LocaleUtils.getCurrentLocale(context);
-            encodeJS(context, "locales/locale-" + locale.getLanguage() + ".js");
+            try {
+                final Locale locale = LocaleUtils.getCurrentLocale(context);
+                encodeJS(context, "locales/locale-" + locale.getLanguage() + ".js");
+            }
+            catch (FacesException e) {
+                if (context.isProjectStage(ProjectStage.Development)) {
+                    LOGGER.log(Level.WARNING,
+                            "Failed to load client side locale.js. {0}", e.getMessage());
+                }
+            }
         }
     }
 
