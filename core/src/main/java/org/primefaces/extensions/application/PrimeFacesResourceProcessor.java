@@ -119,7 +119,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
             catch (FacesException e) {
                 if (context.isProjectStage(ProjectStage.Development)) {
                     LOGGER.log(Level.WARNING,
-                            "Failed to load client side locale.js. {0}", e.getMessage());
+                                "Failed to load client side locale.js. {0}", e.getMessage());
                 }
             }
         }
