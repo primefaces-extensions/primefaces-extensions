@@ -110,7 +110,7 @@ public class SpeedtestRenderer extends CoreRenderer {
      */
     private void encodeScript(final FacesContext context, final Speedtest speedtest) throws IOException {
         final String clientId = speedtest.getClientId(context);
-        final UIComponent form = ComponentTraversalUtils.closestForm(context, speedtest);
+        final UIComponent form = ComponentTraversalUtils.closestForm(speedtest);
         if (form == null) {
             throw new FacesException("Speedtest:" + clientId + " needs to be enclosed in a form component");
         }

@@ -91,7 +91,7 @@ public class TimerRenderer extends CoreRenderer {
     protected void encodeScript(final FacesContext context, final Timer timer) throws IOException {
         final String clientId = timer.getClientId(context);
 
-        final UIForm form = ComponentTraversalUtils.closestForm(context, timer);
+        final UIForm form = ComponentTraversalUtils.closestForm(timer);
         if (form == null) {
             throw new FacesException("Timer:" + clientId + " needs to be enclosed in a form component");
         }

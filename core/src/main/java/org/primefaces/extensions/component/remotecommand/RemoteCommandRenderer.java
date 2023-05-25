@@ -94,7 +94,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final UIForm form = ComponentTraversalUtils.closestForm(context, component);
+        final UIForm form = ComponentTraversalUtils.closestForm(component);
         if (form == null) {
             throw new FacesException("Component " + component.getClientId(context)
                         + " must be enclosed in a form.");
