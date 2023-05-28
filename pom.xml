@@ -200,6 +200,7 @@
                             <manifestEntries>
                                 <X-Compile-Source>${maven.compiler.source}</X-Compile-Source>
                                 <X-Compile-Target>${maven.compiler.target}</X-Compile-Target>
+                                <Automatic-Module-Name>org.primefaces.extensions</Automatic-Module-Name>
                             </manifestEntries>
                         </archive>
                     </configuration>
