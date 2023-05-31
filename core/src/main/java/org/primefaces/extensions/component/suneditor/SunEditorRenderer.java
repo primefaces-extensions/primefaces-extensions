@@ -107,7 +107,6 @@ public class SunEditorRenderer extends InputRenderer {
 
         writer.endElement("textarea");
         writer.endElement("div");
-
     }
 
     protected void encodeScript(final FacesContext context, final SunEditor editor) throws IOException {
