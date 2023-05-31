@@ -3088,7 +3088,7 @@
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Width of the  card image in pixels. Default is 350px.]]>
+                <![CDATA[Width of the card image in pixels. Default is 350px.]]>
             </description>
             <name>width</name>
             <required>false</required>
@@ -10196,14 +10196,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Height of the editor. Default value: 200px.]]></description>
+                <![CDATA[Height of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Default value: auto]]></description>
             <name>height</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[width of the editor. Default value: 100%.]]></description>
+                <![CDATA[Width of the editor with CSS units, set as an inline style. For example <code>500px</code> or <code>100%/code>. Default value: 100%.]]></description>
             <name>width</name>
             <required>false</required>
             <type>java.lang.String</type>
