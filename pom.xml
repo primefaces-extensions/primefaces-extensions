@@ -47,7 +47,7 @@
         <commonmark.version>0.21.0</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
-        <commons-io.version>2.12.0</commons-io.version>
+        <commons-io.version>2.13.0</commons-io.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <gson.version>2.10.1</gson.version>
         <jakarta-faces.version>2.3.19</jakarta-faces.version>
