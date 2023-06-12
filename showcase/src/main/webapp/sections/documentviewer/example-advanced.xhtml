@@ -7,7 +7,7 @@
         xmlns:pe="http://primefaces.org/ui/extensions">
     <!-- EXAMPLE-SOURCE-START -->
     <p:outputPanel layout="block" id="container" deferred="true">
-        <p:panelGrid columns="2">
+        <p:panelGrid columns="2" layout="tabular">
             <h:outputLabel value="Page"/>
             <p:spinner min="1" max="69" value="#{advancedDocumentViewerController.page}">
                 <p:ajax update="container"/>

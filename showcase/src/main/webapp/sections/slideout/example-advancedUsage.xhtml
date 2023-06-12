@@ -15,7 +15,7 @@
         <p:ajax event="open" listener="#{slideOutController.openListener}" update="growl"/> 
         <p:ajax event="close" listener="#{slideOutController.closeListener}" update="growl"/> 
         
-        <p:panelGrid styleClass="ui-noborder">
+        <p:panelGrid styleClass="ui-noborder" layout="tabular" columns="0">
             <p:row>
                 <p:column styleClass="ui-widget-header">
                     <p:outputLabel for="txtMessage" value="Message"></p:outputLabel>
