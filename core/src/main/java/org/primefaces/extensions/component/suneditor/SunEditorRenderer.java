@@ -82,18 +82,13 @@ public class SunEditorRenderer extends InputRenderer {
         String style = editor.getStyle();
         String styleClass = createStyleClass(editor, SunEditor.EDITOR_CLASS);
 
-        // main component div
-        writer.startElement("div", null);
-        writer.writeAttribute("id", clientId + "_div", null);
+        writer.startElement("textarea", editor);
+        writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("name", clientId, null);
         writer.writeAttribute("class", styleClass, null);
         if (style != null) {
             writer.writeAttribute("style", style, null);
         }
-
-        writer.startElement("textarea", editor);
-        writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("name", clientId, null);
 
         renderAccessibilityAttributes(context, editor);
         renderPassThruAttributes(context, editor, HTML.TEXTAREA_ATTRS_WITHOUT_EVENTS);
@@ -106,7 +101,6 @@ public class SunEditorRenderer extends InputRenderer {
         }
 
         writer.endElement("textarea");
-        writer.endElement("div");
     }
 
     protected void encodeScript(final FacesContext context, final SunEditor editor) throws IOException {
