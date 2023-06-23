@@ -5,6 +5,6 @@ body .sun-editor-editable {
 }
 
 /* Ensure the editor can receive input in dialog */
-body .sun-editor .se-wrapper .se-wrapper-inner {
-  z-index: 9999;
+.sun-editor .se-wrapper {
+   z-index: 9999 !important;
 }
