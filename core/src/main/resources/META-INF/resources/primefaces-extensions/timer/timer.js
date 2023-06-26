@@ -90,8 +90,8 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
             return;
         }
 
-        if (!this.interval) {
-            this.interval = setInterval(function () {
+        if (!this.intervalId) {
+            this.intervalId = PrimeFacesExt.timers.setInterval(function () {
                 $this.doStep();
 
                 var end = $this.forward ? $this.currentTimeout >= $this.originalTimeout : $this.currentTimeout <= 0;
@@ -106,9 +106,9 @@ PrimeFaces.widget.ExtTimer = PrimeFaces.widget.BaseWidget.extend({
      * Pause the timer.
      */
     pause: function () {
-        if (this.interval) {
-            clearInterval(this.interval);
-            this.interval = null;
+        if (this.intervalId) {
+            PrimeFacesExt.timers.clearInterval(this.intervalId);
+            this.intervalId = null;
         }
     },
 
