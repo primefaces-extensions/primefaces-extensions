@@ -58,7 +58,8 @@ if (!PrimeFacesExt.timers) {
         },
 
         generateId: function () {
-            return this.currentId++;
+            // use an empty setTimeout to generate a real global id
+            return window.setTimeout(function() {}, 0);
         },
 
         setInterval: function (callback, delay) {
@@ -113,7 +114,6 @@ if (!PrimeFacesExt.timers) {
         init: function () {
             this.worker = this.createWorker();
             this.idToCallback = {};
-            this.currentId = 1;
 
             this.worker.onmessage = function (e) {
                 if (e.data.type === 'fire' && PrimeFacesExt.timers.idToCallback[e.data.id] != null) {
