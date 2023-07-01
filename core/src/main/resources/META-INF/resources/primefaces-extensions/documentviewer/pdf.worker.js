@@ -32394,8 +32394,8 @@ var PartialEvaluator = /*#__PURE__*/function () {
                   _context.next = 19;
                   break;
                 }
-
-                url = "".concat(this.options.cMapUrl).concat(name, ".bcmap");
+                
+                url = this.options.cMapUrl.replace("{0}", "".concat(name, ".bcmap"));
                 _context.next = 7;
                 return fetch(url);
 

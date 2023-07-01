@@ -9670,7 +9670,9 @@ var BaseCMapReaderFactory = /*#__PURE__*/function () {
                 throw new Error("CMap name must be specified.");
 
               case 5:
-                url = this.baseUrl + name + (this.isCompressed ? ".bcmap" : "");
+                url = window.parent.PrimeFaces.resources.getFacesResource('documentviewer/cmaps/' + name + (this.isCompressed ? ".bcmap" : ""),
+                    window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                    window.parent.PrimeFacesExt.VERSION);
                 compressionType = this.isCompressed ? _util.CMapCompressionType.BINARY : _util.CMapCompressionType.NONE;
                 return _context.abrupt("return", this._fetchData(url, compressionType)["catch"](function (reason) {
                   throw new Error("Unable to load ".concat(_this.isCompressed ? "binary " : "", "CMap at: ").concat(url));
@@ -27138,7 +27140,9 @@ var defaultOptions = {
     kind: OptionKind.API
   },
   cMapUrl: {
-    value: "../web/cmaps/",
+    value: window.parent.PrimeFaces.resources.getFacesResource('documentviewer/cmaps/{0}',
+                    window.parent.PrimeFacesExt.RESOURCE_LIBRARY,
+                    window.parent.PrimeFacesExt.VERSION),
     kind: OptionKind.API
   },
   disableAutoFetch: {
