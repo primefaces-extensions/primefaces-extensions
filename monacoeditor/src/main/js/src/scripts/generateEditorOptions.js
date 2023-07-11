@@ -2,8 +2,9 @@
 
 // This file contains the editor options from the official API docs
 // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
+// https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneDiffEditorConstructionOptions.html#experimental
 // 
-// This is used to create corresponding Java classes for configuring the monaco editor widget
+// This is used to create corresponding Java classes for configuring the monaco editor widget.
 
 import {
     cleanJavaDescriptors,
@@ -126,8 +127,12 @@ async function main() {
     }, "Configuration options for editor hover");
 
     const EditorInlayHintOptions = T_Class("EditorInlayHintOptions", {
-        [Doc()]: "Enable the inline hints. Defaults to {@code true}.",
-        enabled: T_Boolean(),
+        [Doc()]: "Enable the inline hints. Defaults to {@code on}.",
+        enabled: T_Enum("EInlineSuggestMode",
+            "Enable or disable the inline hints.",
+            false,
+            "on", "off", "offUnlessPressed", "onUnlessPressed"
+        ),
 
         [Doc()]: "Font family of inline hints. Defaults to editor font family.",
         fontFamily: T_String(),
@@ -143,6 +148,9 @@ async function main() {
         [Doc()]: "Enable or disable the rendering of automatic inline completions.",
         enabled: T_Boolean(),
 
+        [Doc()]: "Does not clear active inline suggestions when the editor loses focus.",
+        keepOnBlur: T_Boolean(),
+
         [Doc()]: "Configures the mode. Use prefix to only show ghost text if the text to replace is a prefix of the suggestion text. Use {@link subword} to only show ghost text if the replace text is a sub word of the suggestion text. Use {@link subwordSmart} to only show ghost text if the replace text is a sub word of the suggestion text, but the sub word must start after the cursor position. Defaults to {@code prefix}.",
         mode: T_Enum("EInlineSuggestMode",
             "Configures the mode. Use prefix to only show ghost text if the text to replace is a prefix of the suggestion text. Use {@link subword} to only show ghost text if the replace text is a sub word of the suggestion text. Use {@link subwordSmart} to only show ghost text if the replace text is a sub word of the suggestion text, but the sub word must start after the cursor position. Defaults to {@code prefix}.",
@@ -156,6 +164,8 @@ async function main() {
             false,
             "always", "onHover"
         ),
+
+        suppressSuggestions: T_Boolean(),
     }, "Control the behavior and rendering of the inline completions.");
 
     const EditorLightbulbOptions = T_Class("EditorLightbulbOptions", {
@@ -219,9 +229,18 @@ async function main() {
 
     const EditorSmartSelectOptions = T_Class("EditorSmartSelectOptions", {
         selectLeadingAndTrailingWhitespace: T_Boolean(),
+
+        selectSubwords: T_Boolean(),
     }, "Smart select options.");
 
     const EditorStickyScrollOptions = T_Class("EditorStickyScrollOptions", {
+        [Doc()]: "Model to choose for sticky scroll by default.",
+        defaultModel: T_Enum("EStickDefaultModelMode",
+            "Model to choose for sticky scroll by default.",
+            false,
+            "outlineModel", "foldingProviderModel", "indentationModel"
+        ),
+
         [Doc()]: "Enable the sticky scroll",
         enabled: T_Boolean(),
 
@@ -299,7 +318,7 @@ async function main() {
 
         [Doc()]: "Controls whether all non-basic ASCII characters are highlighted. Only characters between U+0020 and U+007E, tab, line-feed and carriage-return are considered basic ASCII. Supported string constants: {@code inUntrustedWorkspace}.",
         nonBasicASCII: T_BooleanOrString(),
-    }, "Defines how Unicode characters should be highlighted.");
+    }, "Controls the behavior of the unicode highlight feature (by default, ambiguous and invisible characters are highlighted).");
 
     const EditorSuggestOptions = T_Class("EditorSuggestOptions", {
         [Doc()]: "Enable graceful matching. Defaults to {@code true}.",
@@ -459,6 +478,18 @@ async function main() {
     const EditorDropIntoEditorOptions = T_Class("EditorDropIntoEditorOptions", {
         [Doc()]: "Enable the dropping into editor. Defaults to {@code true}.",
         enabled: T_Boolean(),
+
+        [Doc()]: "Controls if a widget is shown after a drop. Defaults to {@code afterDrop}.",
+        showDropSelector: T_Enum("EShowDropSelectorMode",
+            "Controls if a widget is shown after a drop.",
+            false,
+
+            [Doc("Never show a widget.")],
+            "never",
+
+            [Doc("Show widget after a drop.")],
+            "afterDrop",
+        ),
     }, "Configuration options for editor drop into behavior");
 
     const QuickSuggestionsValue = T_BooleanOrEnum(
@@ -479,19 +510,37 @@ async function main() {
         strings: QuickSuggestionsValue,
     }, "Configuration options for quick suggestions");
 
+    const EditorPasteAsOptions = T_Class("EditorPasteAsOptions", {
+        [Doc()]: "Enable paste as functionality in editors. Defaults to {@code true}.",
+        enabled: T_Boolean(),
+
+        [Doc()]: "Controls if a widget is shown after a paste. Defaults to {@code afterPaste}.",
+        showPasteSelector: T_Enum("EShowPasteSelectorMode",
+            "Controls if a widget is shown after a drop.",
+            false,
+
+            [Doc("Never show a widget.")],
+            "never",
+
+            [Doc("Show widget after a paste.")],
+            "afterPaste",
+        ),
+    }, "Configuration options for editor pasting as into behavior");
+
     const DiffEditorSpecificOptions = {
         [Doc()]: "The initial editor dimension (to avoid measuring the container).",
         dimension: EditorDimension,
 
+        [Doc()]: "Controls the diff algorithm.",
         diffAlgorithm: T_Enum("EDiffAlgorithm",
             "Controls the diff algorithm.",
             false,
 
-            [Doc("The default algorithm.")],
-            "smart",
-
             [Doc("An improved experimental algorithm.")],
-            "experimental",
+            "advanced",
+
+            [Doc("The default algorithm.")],
+            "legacy",
         ),
 
         [Doc()]: "Controls the wrapping of the diff editor.",
@@ -511,6 +560,9 @@ async function main() {
 
         [Doc()]: "Initial theme to be used for rendering. The current out-of-the-box available themes are: {@code vs} (default), {@code vs-dark}, {@code hc-black}. You can create custom themes via {@code monaco.editor.defineTheme}. To switch a theme, use {@code monaco.editor.setTheme}",
         theme: ETheme,
+
+        [Doc()]: "Whether the diff editor aria label should be verbose.",
+        accessibilityVerbose: T_Boolean(),
 
         [Doc()]: "Should the diff editor enable code lens? Defaults to {@code false}.",
         diffCodeLens: T_Boolean(),
@@ -679,7 +731,7 @@ async function main() {
         [Doc()]: "The number of spaces a tab is equal to. This setting is overridden based on the file contents when {@code detectIndentation} is on. Defaults to {@code 4}.",
         tabSize: T_Number(),
 
-        [Doc()]: "An URL to open when Ctrl+H (Windows and Linux) or Cmd+H (OSX) is pressed in the accessibility help dialog in the editor.",
+        [Doc()]: "A URL to open when Ctrl+H (Windows and Linux) or Cmd+H (OSX) is pressed in the accessibility help dialog in the editor.",
         accessibilityHelpUrl: T_String(),
     };
 
@@ -725,6 +777,9 @@ async function main() {
         [Doc()]: "Enable quick suggestions (shadow suggestions) Defaults to {@code true}.",
         quickSuggestions: EditorQuickSuggestionsOptions,
 
+        [Doc()]: "Controls support for changing how content is pasted into the editor.",
+        pasteAs: EditorPasteAsOptions,
+
         [Doc()]: "Control the behavior and rendering of the scrollbars.",
         scrollbar: EditorScrollbarOptions,
 
@@ -737,7 +792,7 @@ async function main() {
         [Doc()]: "Suggest options.",
         suggest: EditorSuggestOptions,
 
-        [Doc()]: "Defines how Unicode characters should be highlighted.",
+        [Doc()]: "Controls the behavior of the unicode highlight feature (by default, ambiguous and invisible characters are highlighted).",
         unicodeHighlight: EditorUnicodeHighlightOptions,
 
         [Doc()]: "Options for typing over closing quotes or brackets.",
@@ -802,6 +857,13 @@ async function main() {
             "Options for auto surrounding. Defaults to always allowing auto surrounding.",
             false,
             "languageDefined", "quotes", "brackets", "never"
+        ),
+
+        [Doc()]: "Controls what is the condition to spawn a color picker from a color decorator.",
+        colorDecoratorsActivatedOn: T_Enum("EColorDecoratorsActivatedOnMode",
+            "Controls what is the condition to spawn a color picker from a color decorator.",
+            false,
+            "clickAndHover", "click", "hover"
         ),
 
         [Doc()]: "Control the cursor animation style, possible values are {@code blink}, {@code smooth}, {@code phase}, {@code expand} and {@code solid}. Defaults to {@code blink}.",
@@ -1031,6 +1093,9 @@ async function main() {
         [Doc()]: "Syntax highlighting is copied.",
         copyWithSyntaxHighlighting: T_Boolean(),
 
+        [Doc()]: "Controls whether to use default color decorations or not using the default document color provider",
+        defaultColorDecorators: T_Boolean(),
+
         [Doc()]: "Controls whether the definition link opens element in the peek widget. Defaults to {@code false}.",
         definitionLinkOpensInPeek: T_Boolean(),
 
@@ -1116,6 +1181,9 @@ async function main() {
         [Doc()]: "Render the editor selection with rounded borders. Defaults to {@code true}.",
         roundedSelection: T_Boolean(),
 
+        [Doc()]: "Control whether a screen reader announces inline suggestion content immediately.",
+        screenReaderAnnounceInlineSuggestion: T_Boolean(),
+
         [Doc()]: "Enable that scrolling can go one screen size after the last line. Defaults to {@code true}.",
         scrollBeyondLastLine: T_Boolean(),
 
@@ -1145,6 +1213,9 @@ async function main() {
 
         [Doc()]: "Enable the suggestion box to pop-up on trigger characters. Defaults to {@code true}.",
         suggestOnTriggerCharacters: T_Boolean(),
+
+        [Doc()]: "Controls whether the editor receives tabs or defers them to the workbench for navigation.",
+        tabFocusMode: T_Boolean(),
 
         [Doc()]: "Controls whether clicking on the empty content after a folded line will unfold the line. Defaults to {@code false}.",
         unfoldOnClickAfterEndOfLine: T_Boolean(),
