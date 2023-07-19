@@ -54,7 +54,7 @@
         <libphonenumber.version>8.13.16</libphonenumber.version>
         <morphia.version>2.3.5</morphia.version>
 
-        <primefaces.core.version>13.0.0-RC2</primefaces.core.version>
+        <primefaces.core.version>13.0.0</primefaces.core.version>
         <primefaces.optimizer.version>2.6.0</primefaces.optimizer.version>
 
         <withoutCompress>true</withoutCompress>
