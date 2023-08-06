@@ -652,6 +652,7 @@ async function main() {
             "lua",
             "m3",
             "markdown",
+            "mdx",
             "mips",
             "msdax",
             "mysql",
