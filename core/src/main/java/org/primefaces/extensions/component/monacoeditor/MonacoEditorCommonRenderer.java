@@ -31,6 +31,7 @@ import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.shaded.json.JSONWriter;
 import org.primefaces.shaded.owasp.encoder.Encode;
+import org.primefaces.util.Constants;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -68,6 +69,11 @@ abstract class MonacoEditorCommonRenderer<TEditor extends MonacoEditorCommon<TEd
 
     @Override
     public final void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        boolean hideResourceVersion = PrimeRequestContext.getCurrentInstance(context).isHideResourceVersion();
+        if (hideResourceVersion) {
+            logDevelopmentWarning(context, "Monaco Editor requires a resource version to work properly and '" +
+                        Constants.ContextParams.HIDE_RESOURCE_VERSION + "' is currently configured.");
+        }
         final TEditor monacoEditor = componentClass.cast(component);
         encodeMarkup(context, monacoEditor);
         encodeScript(context, monacoEditor);
