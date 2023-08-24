@@ -55,7 +55,7 @@
         <morphia.version>2.4.2</morphia.version>
 
         <primefaces.core.version>13.0.0</primefaces.core.version>
-        <primefaces.optimizer.version>2.6.0</primefaces.optimizer.version>
+        <primefaces.optimizer.version>2.6.1</primefaces.optimizer.version>
 
         <withoutCompress>true</withoutCompress>
     </properties>
