@@ -3,8 +3,3 @@ body .sun-editor,
 body .sun-editor-editable {
   font-family: var(--font-family);
 }
-
-/* Ensure the editor can receive input in dialog */
-.ui-dialog-content .sun-editor .se-wrapper {
-    z-index: 1002 !important;
-}
