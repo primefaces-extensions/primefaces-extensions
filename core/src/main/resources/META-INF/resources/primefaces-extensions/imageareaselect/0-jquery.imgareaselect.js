@@ -362,12 +362,15 @@
 
             /* Set the dimensions and border styles of the outer area */
             $outer.css({
-                left: l,
-                top: t,
+                left: left,
+                top: top,
                 width: w,
                 height: h,
                 borderStyle: 'solid',
-                borderWidth: h + 'px ' + w + 'px ' +'0px ' + '0px'
+                borderWidth: selection.y1 + 'px ' +
+                    (imgWidth - selection.x2) + 'px ' +
+                    (imgHeight - selection.y2) + 'px ' +
+                    selection.x1 + 'px'
             });
 
             w -= $handles.outerWidth();
