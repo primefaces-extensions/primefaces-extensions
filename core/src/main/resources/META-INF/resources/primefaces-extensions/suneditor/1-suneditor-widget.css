@@ -1,5 +1,10 @@
 /* Use PF theme font */
 body .sun-editor,
 body .sun-editor-editable {
-  font-family: var(--font-family);
+    font-family: var(--font-family);
+}
+
+/* Inline mode in dialogs */
+.ui-dialog div.se-toolbar.sun-editor-common.se-toolbar-inline {
+    top: 0px !important;
 }
