@@ -366,8 +366,9 @@
                 top: top,
                 width: w,
                 height: h,
+                boxSizing: 'content-box',
                 borderStyle: 'solid',
-                borderWidth: selection.y1 + 'px ' +
+                borderWidth:  selection.y1 + 'px ' +
                     (imgWidth - selection.x2) + 'px ' +
                     (imgHeight - selection.y2) + 'px ' +
                     selection.x1 + 'px'
