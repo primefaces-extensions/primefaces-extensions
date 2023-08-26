@@ -136,7 +136,7 @@
          * @return Viewport X
          */
         function viewX(x) {
-            return x + imgOfs.left - parOfs.left;
+            return x + imgOfs.left - parOfs.left - document.body.scrollLeft;
         }
 
         /**
@@ -147,7 +147,7 @@
          * @return Viewport Y
          */
         function viewY(y) {
-            return y + imgOfs.top - parOfs.top;
+            return y + imgOfs.top - parOfs.top - document.body.scrollTop;
         }
 
         /*
@@ -162,7 +162,7 @@
          * @return Selection X
          */
         function selX(x) {
-            return x - imgOfs.left + parOfs.left;
+            return x - imgOfs.left + parOfs.left + document.body.scrollLeft;
         }
 
         /**
@@ -173,7 +173,7 @@
          * @return Selection Y
          */
         function selY(y) {
-            return y - imgOfs.top + parOfs.top;
+            return y - imgOfs.top + parOfs.top + document.body.scrollTop;
         }
 
         /*
@@ -192,7 +192,7 @@
             var coords = touchCoords(event) || event, x;
 
             if (x = parseInt(coords.pageX))
-                return x - parOfs.left;
+                return x - parOfs.left - document.body.scrollLeft;
         }
 
         /**
@@ -206,7 +206,7 @@
             var coords = touchCoords(event) || event, y;
 
             if (y = parseInt(coords.pageY))
-                return y - parOfs.top;
+                return y - parOfs.top - document.body.scrollTop;
         }
 
         /**
@@ -282,7 +282,7 @@
              * positive number. The latter might happen when imgAreaSelect is put
              * on a parent element which is then hidden.
              */
-            if (!imgLoaded || !$img.width())
+            if (!imgLoaded || !round($img.width()))
                 return;
 
             /*
@@ -292,11 +292,11 @@
             imgOfs = {left: round($img.offset().left), top: round($img.offset().top)};
 
             /* Get image dimensions */
-            imgWidth = $img.innerWidth();
-            imgHeight = $img.innerHeight();
+            imgWidth = round($img.innerWidth());
+            imgHeight = round($img.innerHeight());
 
-            imgOfs.top += ($img.outerHeight() - imgHeight) >> 1;
-            imgOfs.left += ($img.outerWidth() - imgWidth) >> 1;
+            imgOfs.top += round(($img.outerHeight() - imgHeight)) >> 1;
+            imgOfs.left += round(($img.outerWidth() - imgWidth)) >> 1;
 
             /* Set minimum and maximum selection area dimensions */
             minWidth = round(options.minWidth / scaleX) || 0;
@@ -305,7 +305,7 @@
             maxHeight = round(min(options.maxHeight / scaleY || 1 << 24, imgHeight));
 
             /* Determine parent element offset */
-            parOfs = position == 'fixed' ?
+            parOfs = position === 'fixed' ?
                 /* Plugin elements position set to fixed */
                 {left: $(document).scrollLeft(), top: $(document).scrollTop()} :
                 /* Check parent element position */
@@ -344,7 +344,9 @@
              * Set the position and size of the container box and the selection area
              * inside it
              */
-            $box.css({left: viewX(selection.x1), top: viewY(selection.y1)})
+            var l = viewX(selection.x1);
+            var t = viewY(selection.y1);
+            $box.css({left: l, top: t})
                 .add($area).width(w = selection.width).height(h = selection.height);
 
             /*
@@ -355,8 +357,8 @@
 
             /* Set border dimensions */
             $border.add($outer)
-                .width(max(w - $border.outerWidth() + $border.innerWidth(), 0))
-                .height(max(h - $border.outerHeight() + $border.innerHeight(), 0));
+                .width(round(max(w - $border.outerWidth() + $border.innerWidth(), 0)))
+                .height(round(max(h - $border.outerHeight() + $border.innerHeight(), 0)));
 
             /* Set the dimensions and border styles of the outer area */
             $outer.css({
@@ -364,10 +366,12 @@
                 top: top,
                 width: w,
                 height: h,
+                boxSizing: 'content-box',
                 borderStyle: 'solid',
-                borderWidth: selection.y1 + 'px ' +
-                    (imgWidth - selection.x2) + 'px ' + (imgHeight - selection.y2) +
-                    'px ' + selection.x1 + 'px'
+                borderWidth:  selection.y1 + 'px ' +
+                    (imgWidth - selection.x2) + 'px ' +
+                    (imgHeight - selection.y2) + 'px ' +
+                    selection.x1 + 'px'
             });
 
             w -= $handles.outerWidth();
@@ -380,9 +384,11 @@
                     $($handles[5]).css({left: w, top: h >> 1});
                     $($handles[6]).css({left: w >> 1, top: h});
                     $($handles[7]).css({top: h >> 1});
+                    break;
                 case 4:
                     $handles.slice(1, 3).css({left: w});
                     $handles.slice(2, 4).css({top: h});
+                    break;
             }
 
             if (resetKeyPress !== false) {
@@ -430,7 +436,7 @@
          *            Callback function to be called when fadeOut() completes
          */
         function hide($elem, fn) {
-            options.fadeDuration ? $elem.fadeOut(options.fadeDuration, fn) : $elem.hide();
+            options.fadeSpeed ? $elem.fadeOut(options.fadeSpeed, fn) : $elem.hide();
         }
 
         /**
@@ -556,7 +562,7 @@
                 /* This is a start of a touch action */
                 touch = true;
 
-                /* 
+                /*
                  * Normally, checkResize() is called by the mousemove event handler
                  * triggered just before mousedown, but with a touch action there
                  * is no mousemove, so we need to call it explicitly.
@@ -774,7 +780,7 @@
 
             if (!$outer.is(':visible'))
                 /* Show the plugin elements */
-                $box.add($outer).hide().fadeIn(options.fadeDuration || 0)
+                $box.add($outer).hide().fadeIn(options.fadeSpeed || 0)
 
             shown = true;
 
@@ -868,7 +874,7 @@
                 shown = true;
                 adjust();
                 update();
-                $box.add($outer).hide().fadeIn(options.fadeDuration || 0)
+                $box.add($outer).hide().fadeIn(options.fadeSpeed || 0)
             }
 
             /*
@@ -1027,18 +1033,11 @@
             /* Append all the selection area elements to the container box */
             $box.append($area.add($border)).append($handles);
 
-            if (msie) {
-                if (o = ($outer.css('filter') || '').match(/opacity=(\d+)/))
-                    $outer.css('opacity', o[1] / 100);
-                if (o = ($border.css('filter') || '').match(/opacity=(\d+)/))
-                    $border.css('opacity', o[1] / 100);
-            }
-
             if (newOptions.hide)
                 hide($box.add($outer));
             else if (newOptions.show && imgLoaded) {
                 shown = true;
-                $box.add($outer).fadeIn(options.fadeDuration || 0)
+                $box.add($outer).fadeIn(options.fadeSpeed || 0)
                 doUpdate();
             }
 
@@ -1147,10 +1146,9 @@
         this.update = doUpdate;
 
         /* Do the dreaded browser detection */
-        var msie = (/msie ([\w.]+)/i.exec(ua) || [])[1],
-            safari = /webkit/i.test(ua);
+        var safari = /webkit/i.test(ua) && !/chrome/i.test(ua);
 
-        /* 
+        /*
          * Traverse the image's parent elements (up to <body>) and find the
          * highest z-index
          */
@@ -1176,9 +1174,9 @@
         zIndex = options.zIndex || zIndex;
 
         /*
-         * In MSIE and WebKit, we need to use the keydown event instead of keypress
+         * In WebKit, we need to use the keydown event instead of keypress
          */
-        $.imgAreaSelect.keyPress = msie || safari ? 'keydown' : 'keypress';
+        $.imgAreaSelect.keyPress = safari ? 'keydown' : 'keypress';
 
         $box.add($outer).hide().css({
             position: position, overflow: 'hidden',
@@ -1194,14 +1192,6 @@
          */
         img.complete || img.readyState == 'complete' || !$img.is('img') ?
             imgLoad() : $img.one('load', imgLoad);
-
-        /* 
-         * MSIE 9.0 doesn't always fire the image load event -- resetting the src
-         * attribute seems to trigger it. The check is for version 7 and above to
-         * accommodate for MSIE 9 running in compatibility mode.
-         */
-        if (!imgLoaded && msie && msie >= 7)
-            img.src = img.src;
     };
 
     /**
