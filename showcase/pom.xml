@@ -30,7 +30,7 @@
         <primefaces-extensions.deprecated-components></primefaces-extensions.deprecated-components>
 
         <owb.version>2.0.25</owb.version>
-        <jetty.version>9.4.51.v20230217</jetty.version>
+        <jetty.version>9.4.52.v20230823</jetty.version>
         <omnifaces.version>3.14.2</omnifaces.version>
         <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
         <font-awesome.version>6.4.0</font-awesome.version>
