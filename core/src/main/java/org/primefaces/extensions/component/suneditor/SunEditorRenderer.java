@@ -160,7 +160,7 @@ public class SunEditorRenderer extends InputRenderer {
      * @param value the value to sanitize
      * @return the sanitized value
      */
-    private String sanitizeHtml(FacesContext context, SunEditor editor, String value) {
+    protected String sanitizeHtml(FacesContext context, SunEditor editor, String value) {
         String result = value;
         if (editor.isSecure()
                     && PrimeApplicationContext.getCurrentInstance(context).getEnvironment().isHtmlSanitizerAvailable()) {
