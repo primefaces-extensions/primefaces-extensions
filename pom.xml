@@ -5,7 +5,7 @@
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
     <packaging>pom</packaging>
-    <version>13.0.1</version>
+    <version>13.0.2-SNAPSHOT</version>
     <name>PrimeFaces Extensions Parent</name>
     <description>
         <![CDATA[PrimeFaces Extensions Parent Project for Maven multi-module build.]]>
