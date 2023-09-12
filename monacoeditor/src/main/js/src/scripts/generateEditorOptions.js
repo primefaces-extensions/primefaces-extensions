@@ -591,6 +591,9 @@ async function main() {
         [Doc()]: "Maximum supported file size in MB. Defaults to {@code 50}.",
         maxFileSize: T_Number(),
 
+        [Doc()]: "When <code>renderSideBySide</code> is enabled, <code>useInlineViewWhenSpaceIsLimited</code> is set, and the diff editor has a width less than <code>renderSideBySideInlineBreakpoint</code>, the inline view is used.",
+        renderSideBySideInlineBreakpoint: T_Number(),
+
         [Doc()]: "Aria label for modified editor.",
         modifiedAriaLabel: T_String(),
 
@@ -652,6 +655,7 @@ async function main() {
             "lua",
             "m3",
             "markdown",
+            "mdx",
             "mips",
             "msdax",
             "mysql",
