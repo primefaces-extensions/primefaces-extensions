@@ -15,7 +15,7 @@
         <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlg').show()"/>
     </h:panelGrid>
 
-    <p:dialog header="Header" widgetVar="dlg" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true">
+    <p:dialog header="Header" widgetVar="dlg" minHeight="40" width="60vw" showEffect="fade" closable="true" closeOnEscape="true" modal="true">
         <pe:sunEditor id="sunEditor" widgetVar="sunEditor" value="#{basicSunEditorController.html}"
                       mode="classic" dir="#{basicSunEditorController.rtl ? 'rtl' : 'ltr'}"
                       locale="#{basicSunEditorController.language}"
