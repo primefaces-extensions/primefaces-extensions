@@ -532,6 +532,10 @@
                                     <shadedPattern>faces.ajax</shadedPattern>
                                 </relocation>
                                 <relocation>
+                                    <pattern>jsf.js</pattern>
+                                    <shadedPattern>faces.js</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>/javax.faces</pattern>
                                     <shadedPattern>/jakarta.faces</shadedPattern>
                                     <rawString>true</rawString>
