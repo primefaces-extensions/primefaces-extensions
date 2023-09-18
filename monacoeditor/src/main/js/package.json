@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.3",
-    "@types/jquery": "^3.5.18",
+    "@types/jquery": "^3.5.19",
     "css-loader": "^6.7.1",
     "mkdirp": "^3.0.1",
     "ncp": "^2.0.0",
