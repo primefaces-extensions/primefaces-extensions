@@ -139,7 +139,8 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
     setupDialogSupport: function() {
         var dialog = this.input[0].closest('.ui-dialog');
         if (dialog) {
-            $(dialog).find('.sun-editor .se-wrapper').zIndex(9999);
+            $(dialog).find('.sun-editor .se-toolbar').zIndex(9999);
+            $(dialog).find('.sun-editor .se-wrapper').zIndex(9998);
         }
     },
 
