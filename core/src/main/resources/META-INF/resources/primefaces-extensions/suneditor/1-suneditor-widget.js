@@ -109,6 +109,9 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         this.editor.onSave = function (contents, core) {
             $this.callBehavior('save')
         };
+
+        // check if being used in dialog
+        this.setupDialogSupport();
     },
 
     // @override
@@ -126,6 +129,18 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         if (this.editor) {
             this.editor.destroy();
             this.editor = null;
+        }
+    },
+
+    /**
+     * Sets up support for using the editor within an overlay dialog.
+     * @private
+     */
+    setupDialogSupport: function() {
+        var dialog = this.input[0].closest('.ui-dialog');
+        if (dialog) {
+            $(dialog).find('.sun-editor .se-toolbar').zIndex(9999);
+            $(dialog).find('.sun-editor .se-wrapper').zIndex(9998);
         }
     },
 
