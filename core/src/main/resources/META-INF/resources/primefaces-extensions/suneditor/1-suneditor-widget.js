@@ -28,7 +28,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         // user extension to configure handsontable
-        var extender = this.cfg.extender
+        const extender = this.cfg.extender
         if (extender) {
             if (typeof extender === "function") {
                 extender.call(this);
@@ -47,7 +47,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     _render: function () {
-        var $this = this;
+        const $this = this;
 
         //initialize
         this.getLanguage();
@@ -137,10 +137,11 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * @private
      */
     setupDialogSupport: function() {
-        var dialog = this.input[0].closest('.ui-dialog');
-        if (dialog) {
-            $(dialog).find('.sun-editor .se-toolbar').zIndex(9999);
-            $(dialog).find('.sun-editor .se-wrapper').zIndex(9998);
+        const dlg = this.input[0].closest('.ui-dialog');
+        if (dlg) {
+            const dialog = $(dlg);
+            dialog.find('.sun-editor .se-toolbar').zIndex(9999);
+            dialog.find('.sun-editor .se-wrapper').zIndex(9998);
         }
     },
 
@@ -148,13 +149,13 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
      * Calculates the correct language or defaults to English if not found.
      */
     getLanguage: function () {
-        var localeKey = this.cfg.locale ? this.cfg.locale : PrimeFaces.settings.locale;
-        var language = 'en';
+        let localeKey = this.cfg.locale ? this.cfg.locale : PrimeFaces.settings.locale;
+        let language = 'en';
         if (localeKey && window.SUNEDITOR_LANG) {
             localeKey = localeKey.toLowerCase();
-            var language = window.SUNEDITOR_LANG[localeKey];
+            language = window.SUNEDITOR_LANG[localeKey];
             // try and strip specific language from nl_BE to just nl
-            var splitLocale = localeKey.split('_');
+            let splitLocale = localeKey.split('_');
             if (!language) {
                 language = window.SUNEDITOR_LANG[splitLocale[0]];
             }
