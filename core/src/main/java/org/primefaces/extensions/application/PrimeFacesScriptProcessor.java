@@ -21,6 +21,7 @@
  */
 package org.primefaces.extensions.application;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.application.ProjectStage;
@@ -71,6 +72,15 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
 
     @Override
     public void processEvent(final SystemEvent event) throws AbortProcessingException {
+        // Get the current stack trace
+        // https://github.com/primefaces-extensions/primefaces-extensions/issues/517
+        boolean shouldDiscard = Arrays.stream(Thread.currentThread().getStackTrace())
+                    .anyMatch(element -> "org.apache.myfaces.lifecycle.RestoreViewExecutor".equals(element.getClassName()));
+        if (shouldDiscard) {
+            // Discard this as it is also processed in RenderResponseExecutor
+            return; // Exit
+        }
+
         final FacesContext context = event.getFacesContext();
         final StringBuilder script = new StringBuilder(4000);
 
