@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>13.0.2-SNAPSHOT</version>
+        <version>13.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
