@@ -134,7 +134,6 @@ public class MonacoEditorSettings {
     public static List<SelectItem> createEditorExamplesDiff() {
         return Arrays.asList( //
                     new SelectItem("options", "Adjust editor options"), //
-                    new SelectItem("diffnavi", "Diff navigator"), //
                     new SelectItem("localstorage", "Editor overrides (Storage service)"), //
                     new SelectItem("jsonschema", "JSON Schema"), //
                     new SelectItem("jquery", "Type declarations (JQuery)") //
