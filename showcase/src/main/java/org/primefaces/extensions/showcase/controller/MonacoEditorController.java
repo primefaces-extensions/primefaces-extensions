@@ -1103,7 +1103,7 @@ public class MonacoEditorController implements Serializable {
             extenderExample = StringUtils.defaultIfBlank(requested, "jquery");
         }
         else {
-            extenderExample = StringUtils.defaultIfBlank(requested, "diffnavi");
+            extenderExample = StringUtils.defaultIfBlank(requested, "jquery");
         }
         loadExtenderExample(extenderExample);
     }
