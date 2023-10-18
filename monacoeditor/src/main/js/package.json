@@ -18,7 +18,7 @@
     "monaco-editor": "^0.44.0"
   },
   "devDependencies": {
-    "@types/cross-spawn": "^6.0.3",
+    "@types/cross-spawn": "^6.0.4",
     "@types/jquery": "^3.5.22",
     "css-loader": "^6.7.1",
     "mkdirp": "^3.0.1",
