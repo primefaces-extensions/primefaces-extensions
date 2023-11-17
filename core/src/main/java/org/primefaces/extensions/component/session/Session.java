@@ -51,7 +51,7 @@ public class Session extends UIComponentBase implements Widget {
     }
 
     enum PropertyKeys {
-        onexpire, onexpired, reactionPeriod,
+        onexpire, onexpired, reactionPeriod, multiWindowSupport
     }
 
     public String getOnexpire() {
@@ -77,4 +77,13 @@ public class Session extends UIComponentBase implements Widget {
     public void setReactionPeriod(Integer reactionPeriod) {
         getStateHelper().put(PropertyKeys.reactionPeriod, reactionPeriod);
     }
+
+    public boolean isMultiWindowSupport() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.multiWindowSupport, false);
+    }
+
+    public void setMultiWindowSupport(boolean multiWindowSupport) {
+        getStateHelper().put(PropertyKeys.multiWindowSupport, multiWindowSupport);
+    }
+
 }

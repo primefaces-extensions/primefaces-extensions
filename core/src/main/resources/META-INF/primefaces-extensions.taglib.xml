@@ -10133,6 +10133,14 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Integer</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When set to true, the lastAccessed state will be shared between all browser windows for the same servlet context.]]>
+            </description>
+            <name>multiWindowSupport</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
     <tag>

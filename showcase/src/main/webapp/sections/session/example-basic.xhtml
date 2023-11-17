@@ -8,7 +8,8 @@
 
     <pe:session onexpire="PF('sessionDialog').show()"
                 onexpired="PF('sessionDialog').hide();PF('sessionExpiredDialog').show()"
-                reactionPeriod="60"/>
+                reactionPeriod="60"
+                multiWindowSupport="true" />
 
     <p:dialog widgetVar="sessionDialog" header="Session Warning">
         <p>

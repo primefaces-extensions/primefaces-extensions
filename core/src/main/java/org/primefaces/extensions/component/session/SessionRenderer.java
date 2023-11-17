@@ -54,6 +54,7 @@ public class SessionRenderer extends CoreRenderer {
         WidgetBuilder wb = getWidgetBuilder(facesContext);
         wb.init("Session", sessionComponent);
         wb.attr("reactionPeriod", reactionPeriod);
+        wb.attr("multiWindowSupport", sessionComponent.isMultiWindowSupport());
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpSession httpSession = (HttpSession) externalContext.getSession(false);
         if (httpSession != null) {

@@ -8,25 +8,65 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
 
     init: function (cfg) {
         this._super(cfg);
+        this.registerMultipleWindowSupport();
         this.configureTimer();
         this.registerAjaxCallbacks();
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     * @param {PrimeFaces.PartialWidgetCfg<TCfg>} cfg
+     */
+    refresh: function(cfg) {
+        this.cancelTimers();
+        this._super(cfg);
+    },
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    destroy: function() {
+        this._super();
+        this.cancelTimers();
+    },
+
+    /**
+     * If multiple window support is true activity for this app in any browser tab resets the timer.
+     */
+    registerMultipleWindowSupport() {
+        if (!this.cfg.multiWindowSupport) {
+            return;
+        }
+
+        // create the key and set an initial value
+        this.cfg.storageKey = PrimeFaces.createStorageKey("PrimeFaces", 'Session_lastActive', true);
+        this.notifyOtherWindows();
+
+        let _this = this;
+
+        // Add an event listener to listen for changes in localStorage
+        window.addEventListener('storage', function(event) {
+            if (event.key === _this.cfg.storageKey) {
+                // reset the timers when the value changes
+                _this.jsfAjaxEventCallback();
+            }
+        });
     },
 
     registerAjaxCallbacks() {
         let _this = this;
         jsf.ajax.addOnEvent(() => {
             _this.jsfAjaxEventCallback();
+            _this.notifyOtherWindows();
         });
         // PrimeFaces does its own client-side lifecycle.
         let doc = $(document);
         doc.on('pfAjaxComplete', () => {
             _this.jsfAjaxEventCallback();
+            _this.notifyOtherWindows();
         });
-    },
-
-    refresh: function (cfg) {
-        this.cancelTimers();
-        this._super(cfg);
     },
 
     configureTimer: function () {
@@ -40,6 +80,26 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
                 }, timeout);
             }
         }
+    },
+
+    /**
+     * Set the local storage value and trigger and event to notify other windows.
+     */
+    notifyOtherWindows: function() {
+        if (!this.cfg.multiWindowSupport) {
+            return;
+        }
+        let key = this.cfg.storageKey;
+        let value = Date.now().toString();
+        localStorage.setItem(key, value);
+
+        // Trigger a custom event to notify other tabs/windows about the change
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: key,
+            oldValue: null,
+            newValue: value,
+            storageArea: localStorage,
+        }));
     },
 
     timeoutCallback: function () {
@@ -60,13 +120,20 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    jsfAjaxEventCallback: function () {
-        this.configureTimer();
-    },
-
+    /**
+     * Cancels all current timers.
+     */
     cancelTimers: function () {
         this.deleteExpireTimeout();
         this.deleteReactionTimeout();
+    },
+
+    /**
+     * Callback when any JSF AJAX event completes resetting the timers.
+     * @private
+     */
+    jsfAjaxEventCallback: function () {
+        this.configureTimer();
     },
 
     /**
