@@ -79,7 +79,7 @@ public class Session extends UIComponentBase implements Widget {
     }
 
     public boolean isMultiWindowSupport() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.multiWindowSupport, false);
+        return (Boolean) getStateHelper().eval(PropertyKeys.multiWindowSupport, true);
     }
 
     public void setMultiWindowSupport(boolean multiWindowSupport) {

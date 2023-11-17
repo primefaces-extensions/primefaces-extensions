@@ -10135,7 +10135,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[When set to true, the lastAccessed state will be shared between all browser windows for the same servlet context.]]>
+                <![CDATA[When set to true, the lastAccessed state will be shared between all browser windows for the same servlet context. Default true.]]>
             </description>
             <name>multiWindowSupport</name>
             <required>false</required>
