@@ -98,23 +98,26 @@ public class TimerRenderer extends CoreRenderer {
 
         final AjaxRequestBuilder builder = PrimeRequestContext.getCurrentInstance().getAjaxRequestBuilder();
 
-        final String request = builder.init()
-                    .source(clientId)
-                    .form(timer, timer, form)
-                    .process(timer, timer.getProcess())
-                    .update(timer, timer.getUpdate())
-                    .async(timer.isAsync())
-                    .global(timer.isGlobal())
-                    .delay(timer.getDelay())
-                    .partialSubmit(timer.isPartialSubmit(), timer.isPartialSubmitSet(), timer.getPartialSubmitFilter())
-                    .resetValues(timer.isResetValues(), timer.isResetValuesSet())
-                    .ignoreAutoUpdate(timer.isIgnoreAutoUpdate())
-                    .onstart(timer.getOnstart())
-                    .onerror(timer.getOnerror())
-                    .onsuccess(timer.getOnsuccess())
-                    .oncomplete(timer.getOncomplete())
-                    .params(timer)
-                    .build();
+        String request = null;
+        if (timer.getListener() != null) {
+            request = builder.init()
+                        .source(clientId)
+                        .form(timer, timer, form)
+                        .process(timer, timer.getProcess())
+                        .update(timer, timer.getUpdate())
+                        .async(timer.isAsync())
+                        .global(timer.isGlobal())
+                        .delay(timer.getDelay())
+                        .partialSubmit(timer.isPartialSubmit(), timer.isPartialSubmitSet(), timer.getPartialSubmitFilter())
+                        .resetValues(timer.isResetValues(), timer.isResetValuesSet())
+                        .ignoreAutoUpdate(timer.isIgnoreAutoUpdate())
+                        .onstart(timer.getOnstart())
+                        .onerror(timer.getOnerror())
+                        .onsuccess(timer.getOnsuccess())
+                        .oncomplete(timer.getOncomplete())
+                        .params(timer)
+                        .build();
+        }
 
         final WidgetBuilder wb = getWidgetBuilder(context);
 
@@ -122,8 +125,11 @@ public class TimerRenderer extends CoreRenderer {
                     .attr("timeout", timer.getTimeout()).attr("interval", timer.getInterval())
                     .attr("singleRun", timer.isSingleRun()).attr("format", timer.getFormat())
                     .attr("autoStart", timer.isAutoStart()).attr("forward", timer.isForward())
-                    .attr("locale", timer.calculateLocale().toString())
-                    .callback("listener", "function()", request);
+                    .attr("locale", timer.calculateLocale().toString());
+
+        if (request != null) {
+            wb.callback("listener", "function()", request);
+        }
 
         if (LangUtils.isNotBlank(timer.getOntimerstep())) {
             wb.callback("ontimerstep", "function(intervalData)", timer.getOntimerstep());
