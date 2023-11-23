@@ -51,7 +51,7 @@
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <gson.version>2.10.1</gson.version>
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.25</libphonenumber.version>
+        <libphonenumber.version>8.13.26</libphonenumber.version>
         <morphia.version>2.4.8</morphia.version>
 
         <primefaces.core.version>13.0.3</primefaces.core.version>
