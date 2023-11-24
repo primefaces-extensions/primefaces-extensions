@@ -824,34 +824,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>security-checks</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.owasp</groupId>
-                        <artifactId>dependency-check-maven</artifactId>
-                        <version>8.4.3</version>
-                        <configuration>
-                            <skipProvidedScope>false</skipProvidedScope>
-                            <skipRuntimeScope>false</skipRuntimeScope>
-                            <failBuildOnCVSS>11</failBuildOnCVSS>
-                            <suppressionFiles>
-                                <suppressionFile>${project.basedir}/src/conf/owasp-suppressions.xml</suppressionFile>
-                            </suppressionFiles>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
