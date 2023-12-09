@@ -21,16 +21,18 @@
  */
 package org.primefaces.extensions.orgchart;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartHelper;
 import org.primefaces.extensions.component.orgchart.OrgChartNode;
@@ -57,18 +59,18 @@ public class OrgChartHelperTest {
         this.root = root;
     }
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
 
     }
 
-    @After
-    public void after() {
+    @AfterEach
+    void after() {
         root.clearChildren();
     }
 
     @Test
-    public void testGetAllNodesTraverseFromRoot() {
+    void getAllNodesTraverseFromRoot() {
 
         final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
         final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
@@ -82,15 +84,15 @@ public class OrgChartHelperTest {
 
         final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
 
-        assertEquals(true, orgChartNodes.contains(child1));
-        assertEquals(true, orgChartNodes.contains(child2));
-        assertEquals(false, orgChartNodes.contains(child3));
-        assertEquals(true, orgChartNodes.contains(root));
+        assertTrue(orgChartNodes.contains(child1));
+        assertTrue(orgChartNodes.contains(child2));
+        assertFalse(orgChartNodes.contains(child3));
+        assertTrue(orgChartNodes.contains(root));
         assertEquals(3, orgChartNodes.size());
     }
 
     @Test
-    public void testGetAllNodesTraverseFromRootTwo() {
+    void getAllNodesTraverseFromRootTwo() {
 
         final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
         final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
@@ -106,16 +108,16 @@ public class OrgChartHelperTest {
         child1.addChild(grandChild1);
 
         final List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
-        assertEquals(true, orgChartNodes.contains(child1));
-        assertEquals(true, orgChartNodes.contains(child2));
-        assertEquals(false, orgChartNodes.contains(child3));
-        assertEquals(true, orgChartNodes.contains(root));
-        assertEquals(true, orgChartNodes.contains(grandChild1));
+        assertTrue(orgChartNodes.contains(child1));
+        assertTrue(orgChartNodes.contains(child2));
+        assertFalse(orgChartNodes.contains(child3));
+        assertTrue(orgChartNodes.contains(root));
+        assertTrue(orgChartNodes.contains(grandChild1));
         assertEquals(4, orgChartNodes.size());
     }
 
     @Test
-    public void testParseOrgChartNodesIntoHashMap() {
+    void parseOrgChartNodesIntoHashMap() {
         final List<OrgChartNode> orgChartNodes = new ArrayList<>();
         final OrgChartNode node1 = new DefaultOrgChartNode("id1", "name1", "title1");
         final OrgChartNode node2 = new DefaultOrgChartNode("id2", "name2", "title2");
@@ -135,7 +137,7 @@ public class OrgChartHelperTest {
     }
 
     @Test
-    public void testBuildNodesFromJSON() {
+    void buildNodesFromJSON() {
 
         final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
@@ -163,7 +165,7 @@ public class OrgChartHelperTest {
     }
 
     @Test
-    public void testBuildNodesFromJSONTwo() {
+    void buildNodesFromJSONTwo() {
 
         final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
@@ -197,7 +199,7 @@ public class OrgChartHelperTest {
     }
 
     @Test
-    public void testBuildNodesFromJSONThree() {
+    void buildNodesFromJSONThree() {
 
         final OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 

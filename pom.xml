@@ -1,17 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.primefaces.extensions</groupId>
     <artifactId>primefaces-extensions-parent</artifactId>
-    <packaging>pom</packaging>
     <version>13.0.4-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>PrimeFaces Extensions Parent</name>
     <description>
-        <![CDATA[PrimeFaces Extensions Parent Project for Maven multi-module build.]]>
-    </description>
+    <![CDATA[PrimeFaces Extensions Parent Project for Maven multi-module build.]]></description>
     <url>https://github.com/primefaces-extensions</url>
-
+    <inceptionYear>2011</inceptionYear>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -19,53 +16,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/primefaces-extensions/primefaces-extensions/issues</url>
-    </issueManagement>
-
-    <inceptionYear>2011</inceptionYear>
-
-    <scm>
-        <connection>scm:git:git@github.com:primefaces-extensions/primefaces-extensions.git</connection>
-        <developerConnection>scm:git:git@github.com:primefaces-extensions/primefaces-extensions.git</developerConnection>
-        <url>https://github.com/primefaces-extensions/primefaces-extensions</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <properties>
-        <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.release>8</maven.compiler.release>
-        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-        <main.basedir>${project.basedir}</main.basedir>
-        <jsf.stage>Development</jsf.stage>
-
-        <apache-faces.version>2.3.10</apache-faces.version>
-        <commonmark.version>0.21.0</commonmark.version>
-        <commons-collections.version>4.4</commons-collections.version>
-        <commons-fileupload.version>1.5</commons-fileupload.version>
-        <commons-io.version>2.15.1</commons-io.version>
-        <commons-lang3.version>3.14.0</commons-lang3.version>
-        <gson.version>2.10.1</gson.version>
-        <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.27</libphonenumber.version>
-        <morphia.version>2.4.9</morphia.version>
-
-        <primefaces.core.version>13.0.3</primefaces.core.version>
-        <primefaces.optimizer.version>2.6.2</primefaces.optimizer.version>
-
-        <withoutCompress>true</withoutCompress>
-    </properties>
-
-    <modules>
-        <module>core</module>
-        <module>monacoeditor</module>
-        <module>showcase</module>
-    </modules>
-
     <developers>
         <developer>
             <id>tandraschko</id>
@@ -118,7 +68,166 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
-
+    <modules>
+        <module>core</module>
+        <module>monacoeditor</module>
+        <module>showcase</module>
+    </modules>
+    <scm>
+        <connection>scm:git:git@github.com:primefaces-extensions/primefaces-extensions.git</connection>
+        <developerConnection>scm:git:git@github.com:primefaces-extensions/primefaces-extensions.git</developerConnection>
+        <url>https://github.com/primefaces-extensions/primefaces-extensions</url>
+        <tag>HEAD</tag>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/primefaces-extensions/primefaces-extensions/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <properties>
+        <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+        <main.basedir>${project.basedir}</main.basedir>
+        <jsf.stage>Development</jsf.stage>
+        <apache-faces.version>2.3.10</apache-faces.version>
+        <commonmark.version>0.21.0</commonmark.version>
+        <commons-collections.version>4.4</commons-collections.version>
+        <commons-fileupload.version>1.5</commons-fileupload.version>
+        <commons-io.version>2.15.1</commons-io.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <gson.version>2.10.1</gson.version>
+        <jakarta-faces.version>2.3.21</jakarta-faces.version>
+        <libphonenumber.version>8.13.27</libphonenumber.version>
+        <morphia.version>2.4.9</morphia.version>
+        <junit.version>5.10.1</junit.version>
+        <primefaces.core.version>13.0.3</primefaces.core.version>
+        <primefaces.optimizer.version>2.6.2</primefaces.optimizer.version>
+        <withoutCompress>true</withoutCompress>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- PrimeFaces -->
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>${primefaces.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>resources-monacoeditor</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- Java API's -->
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.faces</artifactId>
+                <version>${jakarta-faces.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>el-api</artifactId>
+                <version>2.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>jsr250-api</artifactId>
+                <version>1.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- GSON -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <!-- InputPhone dependencies -->
+            <dependency>
+                <groupId>com.googlecode.libphonenumber</groupId>
+                <artifactId>libphonenumber</artifactId>
+                <version>${libphonenumber.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- OWASP optional dependencies -->
+            <dependency>
+                <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+                <artifactId>owasp-java-html-sanitizer</artifactId>
+                <version>20220608.1</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- MongoDB optional dependencies -->
+            <dependency>
+                <groupId>dev.morphia.morphia</groupId>
+                <artifactId>morphia-core</artifactId>
+                <version>${morphia.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- Content dependencies -->
+            <dependency>
+                <groupId>org.commonmark</groupId>
+                <artifactId>commonmark</artifactId>
+                <version>${commonmark.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- Test -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
@@ -354,7 +463,6 @@
                         </execution>
                     </executions>
                 </plugin>
-
                 <!-- dependencies to own plugins -->
                 <plugin>
                     <groupId>org.primefaces.extensions</groupId>
@@ -370,7 +478,6 @@
                         </execution>
                     </executions>
                 </plugin>
-
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
@@ -381,7 +488,6 @@
                         <installDirectory>${main.basedir}/target/node</installDirectory>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
@@ -390,136 +496,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- PrimeFaces -->
-            <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>${primefaces.core.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.primefaces.extensions</groupId>
-                <artifactId>resources-monacoeditor</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <!-- Commons -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${commons-fileupload.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-
-            <!-- Java API's -->
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>jakarta.faces</artifactId>
-                <version>${jakarta-faces.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>el-api</artifactId>
-                <version>2.2</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.annotation</groupId>
-                <artifactId>jsr250-api</artifactId>
-                <version>1.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>jstl</artifactId>
-                <version>1.2</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- GSON -->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${gson.version}</version>
-            </dependency>
-
-            <!-- InputPhone dependencies -->
-            <dependency>
-                <groupId>com.googlecode.libphonenumber</groupId>
-                <artifactId>libphonenumber</artifactId>
-                <version>${libphonenumber.version}</version>
-                <optional>true</optional>
-            </dependency>
-
-            <!-- OWASP optional dependencies -->
-            <dependency>
-                <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
-                <artifactId>owasp-java-html-sanitizer</artifactId>
-                <version>20220608.1</version>
-                <optional>true</optional>
-            </dependency>
-
-            <!-- MongoDB optional dependencies -->
-            <dependency>
-                <groupId>dev.morphia.morphia</groupId>
-                <artifactId>morphia-core</artifactId>
-                <version>${morphia.version}</version>
-                <optional>true</optional>
-            </dependency>
-
-            <!-- Content dependencies -->
-            <dependency>
-                <groupId>org.commonmark</groupId>
-                <artifactId>commonmark</artifactId>
-                <version>${commonmark.version}</version>
-                <optional>true</optional>
-            </dependency>
-
-            <!-- Test -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.13.2</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
     <profiles>
         <profile>
             <id>release</id>

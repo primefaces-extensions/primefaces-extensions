@@ -21,11 +21,11 @@
  */
 package org.primefaces.extensions.orgchart;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartRenderer;
@@ -59,8 +59,8 @@ public class OrgChartRendererTest {
         this.root = root;
     }
 
-    @Before
-    public void before() {
+    @BeforeEach
+    void before() {
         final OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
         final OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
 
@@ -71,13 +71,13 @@ public class OrgChartRendererTest {
         root.addChild(child2);
     }
 
-    @After
-    public void after() {
+    @AfterEach
+    void after() {
 
     }
 
     @Test
-    public void testParent() {
+    void parent() {
 
         assertEquals(root, root.getChildren().get(0).getParent());
     }

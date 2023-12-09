@@ -1,51 +1,26 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
         <version>13.0.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>resources-monacoeditor</artifactId>
     <packaging>jar</packaging>
     <name>PrimeFaces Extensions Resources MonacoEditor</name>
     <description>
-        <![CDATA[Monaco Editor Resources for PrimeFaces Extensions Project for Maven.]]>
-    </description>
-
-    <properties>
-        <main.basedir>${project.parent.basedir}</main.basedir>
-        <node.arguments>--env production</node.arguments>
-    </properties>
-
+    <![CDATA[Monaco Editor Resources for PrimeFaces Extensions Project for Maven.]]></description>
     <licenses>
         <license>
             <name>The MIT License (MIT)</name>
             <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
-
-    <profiles>
-        <!-- Don't run frontend-maven-plugin with m2e (Eclipse Maven integration) -->
-        <!-- This prevents Eclipse from slowing down. -->
-        <profile>
-            <id>m2e</id>
-            <activation>
-                <property>
-                    <name>m2e.version</name>
-                </property>
-            </activation>
-            <properties>
-                <skip.node>true</skip.node>
-                <skip.npm>true</skip.npm>
-                <skip.webpack>true</skip.webpack>
-            </properties>
-        </profile>
-    </profiles>
-
+    <properties>
+        <main.basedir>${project.parent.basedir}</main.basedir>
+        <node.arguments>--env production</node.arguments>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -53,7 +28,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <build>
         <!-- Include generated Java and JavaScript files in the JAR package -->
         <resources>
@@ -69,7 +43,6 @@
                 <targetPath>META-INF/resources/primefaces-extensions/monacoeditor</targetPath>
             </resource>
         </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -82,7 +55,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -92,7 +64,6 @@
                     </archive>
                 </configuration>
             </plugin>
-
             <!-- Make generated Java files available -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -112,7 +83,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <!-- Minify monaco editor sources -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -199,7 +169,6 @@
                 </executions>
             </plugin>
         </plugins>
-
         <pluginManagement>
             <plugins>
                 <!--This plugin's configuration is used to store Eclipse -->
@@ -215,13 +184,13 @@
                                 <pluginExecution>
                                     <pluginExecutionFilter>
                                         <groupId>
-                                            com.github.eirslett
+                      com.github.eirslett
                                         </groupId>
                                         <artifactId>
-                                            frontend-maven-plugin
+                      frontend-maven-plugin
                                         </artifactId>
                                         <versionRange>
-                                            [1.11.1,)
+                      [1.11.1,)
                                         </versionRange>
                                         <goals>
                                             <goal>install-node-and-npm</goal>
@@ -230,7 +199,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore />
+                                        <ignore/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -240,4 +209,21 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+        <!-- Don't run frontend-maven-plugin with m2e (Eclipse Maven integration) -->
+        <!-- This prevents Eclipse from slowing down. -->
+        <profile>
+            <id>m2e</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <properties>
+                <skip.node>true</skip.node>
+                <skip.npm>true</skip.npm>
+                <skip.webpack>true</skip.webpack>
+            </properties>
+        </profile>
+    </profiles>
 </project>

@@ -21,8 +21,10 @@
  */
 package org.primefaces.extensions.converter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.*;
 
@@ -30,8 +32,8 @@ import javax.faces.convert.ConverterException;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * JsonConverterTest
@@ -39,64 +41,76 @@ import org.junit.Test;
  * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
-public class JsonConverterTest {
+class JsonConverterTest {
 
     private JsonConverter jsonConverter;
 
-    @Before
-    public void createConverter() {
+    @BeforeEach
+    void createConverter() {
         jsonConverter = new JsonConverter();
     }
 
-    @Test(expected = ConverterException.class)
-    public void testClassNotFoundSimple() {
-        jsonConverter.setType("java.lang.WrongClasDates");
-        jsonConverter.getAsString(null, null, "WrongClass");
-    }
-
-    @Test(expected = ConverterException.class)
-    public void testClassNotFoundComplex() {
-        jsonConverter.setType("java.lang.wrong.package.String");
-        jsonConverter.getAsString(null, null, "WrongPackage");
-    }
-
-    @Test(expected = ConverterException.class)
-    public void testClassNotFoundGenericSimple() {
-        jsonConverter.setType("java.util.CrazyCollection<java.lang.Integer>");
-        jsonConverter.getAsString(null, null, new ArrayList<Integer>());
-    }
-
-    @Test(expected = ConverterException.class)
-    public void testClassNotFoundGenericComplex() {
-        jsonConverter.setType("java.util.Map<java.lang.Integer, java.toolang.Date>");
-        jsonConverter.getAsString(null, null, new HashMap<Integer, Date>());
-    }
-
-    @Test(expected = ConverterException.class)
-    public void testPrimitiveTypeArgument() {
-        jsonConverter.setType("java.util.Map<java.lang.Integer, char>");
-        jsonConverter.getAsString(null, null, new HashMap<Integer, Character>());
-    }
-
-    @Test(expected = ConverterException.class)
-    public void testClassNotFoundArray() {
-        jsonConverter.setType("java.lang.Abc[]");
-        jsonConverter.getAsString(null, null, new Integer[] {1, 2, 3});
+    @Test
+    void classNotFoundSimple() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.lang.WrongClasDates");
+            jsonConverter.getAsString(null, null, "WrongClass");
+        });
     }
 
     @Test
-    public void testBoolean() {
+    void classNotFoundComplex() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.lang.wrong.package.String");
+            jsonConverter.getAsString(null, null, "WrongPackage");
+        });
+    }
+
+    @Test
+    void classNotFoundGenericSimple() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.util.CrazyCollection<java.lang.Integer>");
+            jsonConverter.getAsString(null, null, new ArrayList<Integer>());
+        });
+    }
+
+    @Test
+    void classNotFoundGenericComplex() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.util.Map<java.lang.Integer, java.toolang.Date>");
+            jsonConverter.getAsString(null, null, new HashMap<Integer, Date>());
+        });
+    }
+
+    @Test
+    void primitiveTypeArgument() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.util.Map<java.lang.Integer, char>");
+            jsonConverter.getAsString(null, null, new HashMap<Integer, Character>());
+        });
+    }
+
+    @Test
+    void classNotFoundArray() {
+        assertThrows(ConverterException.class, () -> {
+            jsonConverter.setType("java.lang.Abc[]");
+            jsonConverter.getAsString(null, null, new Integer[] {1, 2, 3});
+        });
+    }
+
+    @Test
+    void testBoolean() {
         jsonConverter.setType("boolean");
 
         final String json = jsonConverter.getAsString(null, null, true);
         assertEquals("true", json);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertEquals(true, obj);
+        assertEquals(Boolean.TRUE, obj);
     }
 
     @Test
-    public void testInt() {
+    void testInt() {
         jsonConverter.setType("int");
 
         final String json = jsonConverter.getAsString(null, null, 5);
@@ -107,7 +121,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testDouble() {
+    void testDouble() {
         jsonConverter.setType("double");
 
         final String json = jsonConverter.getAsString(null, null, 10.99);
@@ -118,7 +132,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testIntArray() {
+    void intArray() {
         jsonConverter.setType("int[]");
 
         final int[] ints = {1, 2, 3, 4, 5};
@@ -126,11 +140,11 @@ public class JsonConverterTest {
         assertEquals("[1,2,3,4,5]", json);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(Arrays.equals(ints, (int[]) obj));
+        assertArrayEquals(ints, (int[]) obj);
     }
 
     @Test
-    public void testLongArray() {
+    void longArray() {
         jsonConverter.setType("long[]");
 
         final long[] longs = {100, 255, 399, 401, 59999};
@@ -138,22 +152,22 @@ public class JsonConverterTest {
         assertEquals("[100,255,399,401,59999]", json);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(Arrays.equals(longs, (long[]) obj));
+        assertArrayEquals(longs, (long[]) obj);
     }
 
     @Test
-    public void testStringArray() {
+    void stringArray() {
         jsonConverter.setType("java.lang.String[]");
 
         final String[] strings = {"abc", "def", "ghi"};
         final String json = jsonConverter.getAsString(null, null, strings);
 
         final Object obj = jsonConverter.getAsObject(null, null, json);
-        assertTrue(Arrays.equals(strings, (String[]) obj));
+        assertArrayEquals(strings, (String[]) obj);
     }
 
     @Test
-    public void testString() {
+    void string() {
         jsonConverter.setType("java.lang.String");
 
         final String string = "Hello World";
@@ -165,7 +179,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testInteger() {
+    void integer() {
         jsonConverter.setType("java.lang.Integer");
 
         final Integer integer = 60;
@@ -177,7 +191,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testDate() {
+    void date() {
         jsonConverter.setType("java.util.Date");
 
         final Date now = new Date();
@@ -189,7 +203,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testCollection() {
+    void collection() {
         jsonConverter.setType("java.util.Collection<java.lang.Integer>");
 
         final Collection<Integer> list = new ArrayList<>();
@@ -205,16 +219,16 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testComplexMap() {
+    void complexMap() {
         jsonConverter.setType(
                     "java.util.Map<java.lang.String, org.apache.commons.lang3.tuple.ImmutablePair<java.lang.Integer, java.util.Date>>");
 
         final Map<String, ImmutablePair<Integer, Date>> map = new HashMap<>();
-        GregorianCalendar calendar = new GregorianCalendar(2012, 1, 20);
+        GregorianCalendar calendar = new GregorianCalendar(2012, Calendar.FEBRUARY, 20);
         map.put("cat", new ImmutablePair<>(1, calendar.getTime()));
-        calendar = new GregorianCalendar(2011, 6, 1);
+        calendar = new GregorianCalendar(2011, Calendar.JULY, 1);
         map.put("dog", new ImmutablePair<>(2, calendar.getTime()));
-        calendar = new GregorianCalendar(1999, 10, 15);
+        calendar = new GregorianCalendar(1999, Calendar.NOVEMBER, 15);
         map.put("unknow", new ImmutablePair<>(3, calendar.getTime()));
 
         final String json = jsonConverter.getAsString(null, null, map);
@@ -225,7 +239,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testPojoNonGeneric() {
+    void pojoNonGeneric() {
         jsonConverter.setType("org.primefaces.extensions.converter.FooNonGeneric");
 
         final FooNonGeneric fooNonGeneric = new FooNonGeneric();
@@ -236,7 +250,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testPojoGenericSimple() {
+    void pojoGenericSimple() {
         jsonConverter.setType("org.primefaces.extensions.converter.FooGeneric<java.lang.String, java.lang.Integer>");
 
         final FooGeneric<String, Integer> fooGeneric = new FooGeneric<>();
@@ -250,7 +264,7 @@ public class JsonConverterTest {
     }
 
     @Test
-    public void testPojoGenericComplex() {
+    void pojoGenericComplex() {
         jsonConverter.setType(
                     "org.primefaces.extensions.converter.FooGeneric<int[], "
                                 + "org.primefaces.extensions.converter.FooGeneric<org.primefaces.extensions.converter.FooNonGeneric, java.lang.Boolean>>");

@@ -1,22 +1,96 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
         <version>13.0.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <artifactId>primefaces-extensions</artifactId>
     <packaging>jar</packaging>
     <name>PrimeFaces Extensions</name>
     <description>
-        <![CDATA[PrimeFaces Extensions components and utilities for PrimeFaces.]]>
-    </description>
-
+    <![CDATA[PrimeFaces Extensions components and utilities for PrimeFaces.]]></description>
     <properties>
         <main.basedir>${project.parent.basedir}</main.basedir>
     </properties>
+    <dependencies>
+        <!-- PrimeFaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>resources-monacoeditor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- PROVIDED Java API's -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.faces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+        </dependency>
+        <!-- GChart and Layout needs GSON-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- InputPhone -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Sanitizing Converter -->
+        <dependency>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Mongo Lazy Datatable -->
+        <dependency>
+            <groupId>dev.morphia.morphia</groupId>
+            <artifactId>morphia-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Localized -->
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- TEST -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <resources>
             <resource>
@@ -653,6 +727,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
@@ -750,78 +825,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <dependencies>
-        <!-- PrimeFaces -->
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>resources-monacoeditor</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- PROVIDED Java API's -->
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.faces</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-        </dependency>
-        <!-- GChart and Layout needs GSON-->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- InputPhone -->
-        <dependency>
-            <groupId>com.googlecode.libphonenumber</groupId>
-            <artifactId>libphonenumber</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- Sanitizing Converter -->
-        <dependency>
-            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
-            <artifactId>owasp-java-html-sanitizer</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- Mongo Lazy Datatable -->
-        <dependency>
-            <groupId>dev.morphia.morphia</groupId>
-            <artifactId>morphia-core</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- Localized -->
-        <dependency>
-            <groupId>org.commonmark</groupId>
-            <artifactId>commonmark</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- TEST -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>
