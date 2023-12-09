@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v18.1.4
+ * International Telephone Input v18.3.3
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -156,6 +156,11 @@
             separateDialCode: false,
             // option to hide the flags - must be used with separateDialCode, or allowDropdown=false
             showFlags: true,
+            // use full screen popup instead of dropdown for country list
+            useFullscreenPopup: // we cannot just test screen size as some smartphones/website meta tags will report desktop
+            // resolutions
+            // Note: to target Android Mobiles (and not Tablets), we must find 'Android' and 'Mobile'
+            /Android.+Mobile|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 500,
             // specify the path to the libphonenumber script to enable validation/formatting
             utilsScript: ""
         };
@@ -212,20 +217,16 @@
                     if (!this.options.showFlags && forceShowFlags) {
                         this.options.showFlags = true;
                     }
-                    // we cannot just test screen size as some smartphones/website meta tags will report desktop
-                    // resolutions
-                    // Note: for some reason jasmine breaks if you put this in the main Plugin function with the
-                    // rest of these declarations
-                    // Note: to target Android Mobiles (and not Tablets), we must find 'Android' and 'Mobile'
-                    this.isMobile = /Android.+Mobile|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    if (this.isMobile) {
+                    if (this.options.useFullscreenPopup) {
                         // trigger the mobile dropdown css
-                        document.body.classList.add("iti-mobile");
+                        document.body.classList.add("iti-fullscreen-popup");
                         // on mobile, we want a full screen dropdown, so we must append it to the body
                         if (!this.options.dropdownContainer) {
                             this.options.dropdownContainer = document.body;
                         }
                     }
+                    // check if input has one parent with RTL
+                    this.isRTL = !!this.telInput.closest("[dir=rtl]");
                     // these promises get resolved when their individual requests complete
                     // this way the dev can do something like iti.promise.then(...) to know when all requests are
                     // complete
@@ -451,7 +452,6 @@
                             role: "combobox",
                             "aria-haspopup": "listbox",
                             "aria-controls": "iti-".concat(this.id, "__country-listbox"),
-                            "aria-owns": "iti-".concat(this.id, "__country-listbox"),
                             "aria-expanded": "false",
                             "aria-label": "Telephone country code"
                         }), this.flagsContainer);
@@ -488,8 +488,7 @@
                             this._appendListItems(this.preferredCountries, "iti__preferred", true);
                             this._createEl("li", {
                                 "class": "iti__divider",
-                                role: "separator",
-                                "aria-disabled": "true"
+                                "aria-hidden": "true"
                             }, this.countryList);
                         }
                         this._appendListItems(this.countries, "iti__standard");
@@ -819,7 +818,7 @@
                     if (this.options.dropdownContainer) {
                         this.options.dropdownContainer.appendChild(this.dropdown);
                     }
-                    if (!this.isMobile) {
+                    if (!this.options.useFullscreenPopup) {
                         var pos = this.telInput.getBoundingClientRect();
                         // windowTop from https://stackoverflow.com/a/14384091/217866
                         var windowTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -1074,6 +1073,7 @@
             }, {
                 key: "_setFlag",
                 value: function _setFlag(countryCode) {
+                    var _this$options3 = this.options, allowDropdown = _this$options3.allowDropdown, separateDialCode = _this$options3.separateDialCode, showFlags = _this$options3.showFlags;
                     var prevCountry = this.selectedCountryData.iso2 ? this.selectedCountryData : {};
                     // do this first as it will throw an error and stop if countryCode is invalid
                     this.selectedCountryData = countryCode ? this._getCountryData(countryCode, false, false) : {};
@@ -1081,26 +1081,26 @@
                     if (this.selectedCountryData.iso2) {
                         this.defaultCountry = this.selectedCountryData.iso2;
                     }
-                    if (this.options.showFlags) {
+                    if (showFlags) {
                         this.selectedFlagInner.setAttribute("class", "iti__flag iti__".concat(countryCode));
                     }
-                    // update the selected country's title attribute
-                    if (this.selectedFlag) {
-                        var title = countryCode ? "".concat(this.selectedCountryData.name, ": +").concat(this.selectedCountryData.dialCode) : "Unknown";
-                        this.selectedFlag.setAttribute("title", title);
-                    }
-                    if (this.options.separateDialCode) {
+                    this._setSelectedCountryFlagTitleAttribute(countryCode, separateDialCode);
+                    if (separateDialCode) {
                         var dialCode = this.selectedCountryData.dialCode ? "+".concat(this.selectedCountryData.dialCode) : "";
                         this.selectedDialCode.innerHTML = dialCode;
                         // offsetWidth is zero if input is in a hidden container during initialisation
                         var selectedFlagWidth = this.selectedFlag.offsetWidth || this._getHiddenSelectedFlagWidth();
                         // add 6px of padding after the grey selected-dial-code box, as this is what we use in the css
-                        this.telInput.style.paddingLeft = "".concat(selectedFlagWidth + 6, "px");
+                        if (this.isRTL) {
+                            this.telInput.style.paddingRight = "".concat(selectedFlagWidth + 6, "px");
+                        } else {
+                            this.telInput.style.paddingLeft = "".concat(selectedFlagWidth + 6, "px");
+                        }
                     }
                     // and the input's placeholder
                     this._updatePlaceholder();
                     // update the active list item
-                    if (this.options.allowDropdown) {
+                    if (allowDropdown) {
                         var prevItem = this.activeItem;
                         if (prevItem) {
                             prevItem.classList.remove("iti__active");
@@ -1116,6 +1116,24 @@
                     }
                     // return if the flag has changed or not
                     return prevCountry.iso2 !== countryCode;
+                }
+            }, {
+                key: "_setSelectedCountryFlagTitleAttribute",
+                value: function _setSelectedCountryFlagTitleAttribute(countryCode, separateDialCode) {
+                    if (!this.selectedFlag) {
+                        return;
+                    }
+                    var title;
+                    if (countryCode && !separateDialCode) {
+                        title = "".concat(this.selectedCountryData.name, ": +").concat(this.selectedCountryData.dialCode);
+                    } else if (countryCode) {
+                        // For screen reader output, we don't want to include the dial code in the reader output twice
+                        // so just use the selected country name here:
+                        title = this.selectedCountryData.name;
+                    } else {
+                        title = "Unknown";
+                    }
+                    this.selectedFlag.setAttribute("title", title);
                 }
             }, {
                 key: "_getHiddenSelectedFlagWidth",
@@ -1179,7 +1197,7 @@
                     this.countryList.removeEventListener("click", this._handleClickCountryList);
                     // remove menu from container
                     if (this.options.dropdownContainer) {
-                        if (!this.isMobile) {
+                        if (!this.options.useFullscreenPopup) {
                             window.removeEventListener("scroll", this._handleWindowScroll);
                         }
                         if (this.dropdown.parentNode) {
@@ -1432,6 +1450,12 @@
                     return window.intlTelInputUtils ? intlTelInputUtils.isValidNumber(val, this.selectedCountryData.iso2) : null;
                 }
             }, {
+                key: "isPossibleNumber",
+                value: function isPossibleNumber() {
+                    var val = this._getFullNumber().trim();
+                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
+                }
+            }, {
                 key: "setCountry",
                 value: function setCountry(originalCountryCode) {
                     var countryCode = originalCountryCode.toLowerCase();
@@ -1512,7 +1536,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "18.1.4";
+        intlTelInputGlobals.version = "18.3.3";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
