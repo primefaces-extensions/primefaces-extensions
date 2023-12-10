@@ -274,6 +274,9 @@ async function main() {
         [Doc()]: "Height in pixels for the horizontal slider. Defaults to {@code horizontalScrollbarSize}.",
         horizontalSliderSize: T_Number(),
 
+        [Doc()]: "When set, the horizontal scrollbar will not increase content height. Defaults to {@code false}.",
+        ignoreHorizontalScrollbarInContentHeight: T_Boolean(),
+
         [Doc()]: "Scroll gutter clicks move by page vs jump to position. Defaults to {@code false}.",
         scrollByPage: T_Boolean(),
 
@@ -704,6 +707,24 @@ async function main() {
         [Doc()]: "Initial theme to be used for rendering. The current out-of-the-box available themes are: {@code vs} (default), {@code vs-dark}, {@code hc-black}. You can create custom themes via {@code monaco.editor.defineTheme}. To switch a theme, use {@code monaco.editor.setTheme}",
         theme: ETheme,
 
+        [Doc()]: "Controls whether completions should be computed based on words in the document. Defaults to {@code currentDocument}.",
+        wordBasedSuggestions: T_Enum("EWordBasedSuggestions",
+            "Controls whether completions should be computed based on words in the document. Defaults to {@code currentDocument}.",
+            false,
+
+            [Doc("Do not compute suggestions.")],
+            "off",
+
+            [Doc("Compute suggestions from words in the current document.")],
+            "currentDocument",
+
+            [Doc("Compute suggestions from words in the current and other matching documents.")],
+            "matchingDocuments",
+
+            [Doc("Compute suggestions from words across all documents.")],
+            "allDocuments"
+        ),
+
         [Doc()]: "Controls whether the semanticHighlighting is shown for the languages that support it. {@code true}: Semantic highlighting is enabled for all themes {@code false}: Semantic highlighting is disabled for all themes. {@code configuredByTheme}: Semantic highlighting is controlled by the current color theme's {@code semanticHighlighting} setting. Defaults to {@code configuredByTheme}.",
         "semanticHighlighting.enabled": T_Enum("ESemanticHighlightingEnabled",
             "Controls whether the semanticHighlighting is shown for the languages that support it. {@code true}: Semantic highlighting is enabled for all themes {@code false}: Semantic highlighting is disabled for all themes. {@code configuredByTheme}: Semantic highlighting is controlled by the current color theme's {@code semanticHighlighting} setting. Defaults to {@code configuredByTheme}.",
@@ -722,9 +743,6 @@ async function main() {
 
         [Doc()]: "Remove trailing auto inserted whitespace. Defaults to {@code true}.",
         trimAutoWhitespace: T_Boolean(),
-
-        [Doc()]: "Controls whether completions should be computed based on words in the document. Defaults to {@code true}.",
-        wordBasedSuggestions: T_Boolean(),
 
         [Doc()]: "Controls whether word based completions should be included from opened documents of the same language or any language.",
         wordBasedSuggestionsOnlySameLanguage: T_Boolean(),
@@ -955,6 +973,20 @@ async function main() {
             "spread", "full"
         ),
 
+        [Doc()]: "Enable semantic occurrences highlight. Defaults to {@code singleFile}.",
+        occurrencesHighlight: T_Enum("EOccurrencesHighlight",
+            "Enable semantic occurrences highlight. Defaults to {@code singleFile}.",
+            false,
+            [Doc("Disables occurrence highlighting.")],
+            "off",
+
+            [Doc("Triggers occurrence highlighting in the current document.")],
+            "singleFile",
+
+            [Doc("Triggers occurrence highlighting across valid open documents.")],
+            "multiFile"
+        ),
+
         [Doc()]: "Controls whether to focus the inline editor in the peek widget by default. Defaults to {@code false}.",
         peekWidgetDefaultFocus: T_Enum("EPeekWidgetDefaultFocus",
             "Controls whether to focus the inline editor in the peek widget by default. Defaults to {@code false}.",
@@ -1162,9 +1194,6 @@ async function main() {
 
         [Doc()]: "Merge overlapping selections. Defaults to {@code true}.",
         multiCursorMergeOverlapping: T_Boolean(),
-
-        [Doc()]: "Enable semantic occurrences highlight. Defaults to {@code true}.",
-        occurrencesHighlight: T_Boolean(),
 
         [Doc()]: "Controls if a border should be drawn around the overview ruler. Defaults to {@code true}.",
         overviewRulerBorder: T_Boolean(),
