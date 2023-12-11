@@ -155,6 +155,14 @@ async function injectSourcePath() {
                     /localize\.apply\(\s*([^,]+)\s*,\s*\[/g,
                     `localize.apply($1, ['${transPath}', `,
                 ],
+                [
+                    /(?<!function\s+)localize2\(/g,
+                    `localize2('${transPath}', `,
+                ],
+                [
+                    /localize2\.apply\(\s*([^,]+)\s*,\s*\[/g,
+                    `localize2.apply($1, ['${transPath}', `,
+                ],
             );
         }
     }
