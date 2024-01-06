@@ -1,11 +1,14 @@
 // @ts-check
 
-import { promises as fs } from "node:fs";
-import { join } from "node:path";
-import { rimraf } from "rimraf";
-import { mkdirp } from "mkdirp";
+/// <reference types="node" />
 
-import { javaDescriptorPackage, javaDescriptorPath } from "./paths.js";
+const { promises: fs } = require("node:fs");
+const { join } = require("node:path");
+
+const projectDir = join(__dirname, "..", "..", "..", "..", "..", "..", "..", "..");
+const targetDir = join(projectDir, "target");
+const javaDescriptorPackage = "org.primefaces.extensions.model.monacoeditor";
+const javaDescriptorPath = join(targetDir, "generated-sources", "java", "org", "primefaces", "extensions", "model", "monacoeditor");
 
 /** {@type string} */
 const HeaderComment = `
@@ -97,7 +100,7 @@ function notEmpty(value) {
  * @param {string} [data] 
  * @returns {string}
  */
-export function Doc(data) {
+function Doc(data) {
   if (data) {
     return `@Doc${data}`;
   }
@@ -110,7 +113,7 @@ export function Doc(data) {
  * @param {string} [data]
  * @returns {string}
  */
-export function Deprecated(data) {
+function Deprecated(data) {
   if (data) {
     return `@Deprecated${data}`;
   }
@@ -267,9 +270,9 @@ function createAddMapEntryDoc(docString, deprecationNotice) {
 /**
  * @returns {Promise<void>}
  */
-export async function cleanJavaDescriptors() {
-  await rimraf(javaDescriptorPath);
-  await mkdirp(javaDescriptorPath);
+async function cleanJavaDescriptors() {
+  await fs.rm(javaDescriptorPath, { recursive: true, force: true });
+  await fs.mkdir(javaDescriptorPath, { recursive: true });
 }
 
 /**
@@ -666,7 +669,7 @@ function stripPlural(name) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_Array(itemType, asField = false) {
+function T_Array(itemType, asField = false) {
   return {
     type: "JSONArray",
     value: `JSONArray`,
@@ -720,7 +723,7 @@ export function T_Array(itemType, asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_Map(keyType, valueType, asField = false) {
+function T_Map(keyType, valueType, asField = false) {
   return {
     type: "JSONObject",
     value: `JSONObject`,
@@ -775,7 +778,7 @@ export function T_Map(keyType, valueType, asField = false) {
  * @param {(string | AnnotationAsParameter)[]} constants
  * @returns {JavaTypeDescriptor} 
  */
-export function T_Enum(className, typeDoc, asField, ...constants) {
+function T_Enum(className, typeDoc, asField, ...constants) {
   const code = createEnum(className, typeDoc, ...constants);
   const file = join(javaDescriptorPath, className + ".java");
   fs.writeFile(file, code, { encoding: "latin1" }).then(() => console.log("Wrote", file));
@@ -794,7 +797,7 @@ export function T_Enum(className, typeDoc, asField, ...constants) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor} 
  */
-export function T_Class(clazz, fields, classDoc, asField = false) {
+function T_Class(clazz, fields, classDoc, asField = false) {
   const code = createClass(clazz, fields, classDoc);
   const file = join(javaDescriptorPath, clazz + ".java");
   fs.writeFile(file, code, { encoding: "latin1" }).then(() => console.log("Wrote", file));
@@ -810,7 +813,7 @@ export function T_Class(clazz, fields, classDoc, asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_Boolean(asField = false) {
+function T_Boolean(asField = false) {
   return {
     type: "class",
     value: "Boolean",
@@ -823,7 +826,7 @@ export function T_Boolean(asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_String(asField = false) {
+function T_String(asField = false) {
   return {
     type: "class",
     value: "String",
@@ -836,7 +839,7 @@ export function T_String(asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_Number(asField = false) {
+function T_Number(asField = false) {
   return {
     type: "class",
     value: "Number",
@@ -849,7 +852,7 @@ export function T_Number(asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_CssSize(asField = false) {
+function T_CssSize(asField = false) {
   /** @type {DocComment} */
   const docComment = {
     deprecatedNotice: undefined,
@@ -873,7 +876,7 @@ export function T_CssSize(asField = false) {
  * @param {boolean} [asField] 
  * @returns {JavaTypeDescriptor}
  */
-export function T_BooleanOrString(asField = false) {
+function T_BooleanOrString(asField = false) {
   /** @type {DocComment} */
   const docComment = {
     deprecatedNotice: undefined,
@@ -902,7 +905,7 @@ export function T_BooleanOrString(asField = false) {
  * @param {(string | AnnotationAsParameter)[]} constants
  * @returns {JavaTypeDescriptor}
  */
-export function T_BooleanOrEnum(className, typeDoc, asField, ...constants) {
+function T_BooleanOrEnum(className, typeDoc, asField, ...constants) {
   /** @type {DocComment} */
   const docComment = {
     deprecatedNotice: undefined,
@@ -930,4 +933,20 @@ export function T_BooleanOrEnum(className, typeDoc, asField, ...constants) {
       return setterBoolean + "\n\n" + setterEnum;
     },
   };
+};
+
+module.exports = {
+  cleanJavaDescriptors,
+  Deprecated,
+  Doc,
+  T_Array,
+  T_Boolean,
+  T_BooleanOrEnum,
+  T_BooleanOrString,
+  T_Class,
+  T_CssSize,
+  T_Enum,
+  T_Map,
+  T_Number,
+  T_String,
 };
