@@ -5,7 +5,7 @@
 // 
 // This is used to create corresponding Java classes for configuring the monaco editor widget
 
-import {
+const {
     cleanJavaDescriptors,
     Deprecated,
     Doc,
@@ -19,7 +19,7 @@ import {
     T_Map,
     T_Number,
     T_String
-} from "../util/java-types.js";
+} = require("./java-types.js");
 
 async function main() {
     await cleanJavaDescriptors();

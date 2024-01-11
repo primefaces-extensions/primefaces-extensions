@@ -7,8 +7,7 @@
   "scripts": {
     "verify": "tsc --project jsconfig.json --noEmit",
     "generate-locales": "node src/scripts/generateLocales.js",
-    "generate-extras": "node src/scripts/generateExtras.js",
-    "generate-editor-options": "node src/scripts/generateEditorOptions.js"
+    "generate-extras": "node src/scripts/generateExtras.js"
   },
   "author": "Andre Wachsmuth",
   "license": "MIT",

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.primefaces.extensions</groupId>
         <artifactId>primefaces-extensions-parent</artifactId>
-        <version>12.0.10</version>
+        <version>12.0.11</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -92,27 +92,6 @@
                     </archive>
                 </configuration>
             </plugin>
-
-            <!-- Make generated Java files available -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>include-generated-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.basedir}/target/generated-sources/java/</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Minify monaco editor sources -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -172,17 +151,6 @@
                         <phase>generate-resources</phase>
                         <configuration>
                             <arguments>run generate-extras</arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Generate editor options -->
-                    <execution>
-                        <id>generate editor options</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run generate-editor-options</arguments>
                         </configuration>
                     </execution>
                     <!-- Run build -->
