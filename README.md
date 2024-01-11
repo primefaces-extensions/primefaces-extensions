@@ -14,7 +14,7 @@ This is an overview page, please visit [primefaces-extensions.github.io](http://
 
 ## Versioning
 
-There are multiple versions available please check which one for your Quarkus release version.
+There are multiple versions available please check which one for your PrimeFaces release version.
 
 | Version | Explanation |
 | --- | --- |
