@@ -1,3 +1,10 @@
+<div align="center">
+<img src="http://primefaces-extensions.github.io/reports/images/title.png" width="560" height="76" >
+
+# PrimeFaces Extensions
+</div>
+<br>
+
 [![Maven](https://img.shields.io/maven-central/v/org.primefaces.extensions/primefaces-extensions.svg)](https://repo1.maven.org/maven2/org/primefaces/extensions/primefaces-extensions/)
 [![Actions Status](https://github.com/primefaces-extensions/primefaces-extensions/workflows/Java%20CI/badge.svg)](https://github.com/primefaces-extensions/primefaces-extensions/actions)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=org.primefaces.extensions%3Aprimefaces-extensions-parent&metric=security_rating)](https://sonarcloud.io/dashboard?id=org.primefaces.extensions%3Aprimefaces-extensions-parent)
@@ -5,12 +12,7 @@
 [![Stackoverflow](https://img.shields.io/badge/StackOverflow-primefaces-chocolate.svg)](https://stackoverflow.com/questions/tagged/primefaces-extensions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-
-# PrimeFaces Extensions
-
-This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) for more information.
-
-[![PrimeFaces Extensions Logo](http://primefaces-extensions.github.io/reports/images/title.png)](https://www.primefaces.org/showcase-ext/)
+This is an overview page, please visit [primefaces-extensions.github.io](http://primefaces-extensions.github.io/) or the [showcase](https://www.primefaces.org/showcase-ext/) for more information.
 
 ## Versioning
 
