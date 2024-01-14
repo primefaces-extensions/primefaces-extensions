@@ -44,39 +44,48 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
         this.cfg.storageKey = PrimeFaces.createStorageKey("PrimeFaces", 'Session_lastActive', true);
         this.notifyOtherWindows();
 
-        let _this = this;
+        let $this = this;
 
         // Add an event listener to listen for changes in localStorage
         window.addEventListener('storage', function(event) {
-            if (event.key === _this.cfg.storageKey) {
+            if (event.key === $this.cfg.storageKey) {
                 // reset the timers when the value changes
-                _this.jsfAjaxEventCallback();
+                $this.jsfAjaxEventCallback();
             }
         });
     },
 
     registerAjaxCallbacks() {
-        let _this = this;
-        jsf.ajax.addOnEvent(() => {
-            _this.jsfAjaxEventCallback();
-            _this.notifyOtherWindows();
-        });
+        let $this = this;
+
+        // bind to JSF (f:ajax) events
+        if (window.jsf && jsf.ajax) {
+            jsf.ajax.addOnEvent(() => {
+                $this.jsfAjaxEventCallback();
+                $this.notifyOtherWindows();
+            });
+        }
+
         // PrimeFaces does its own client-side lifecycle.
-        let doc = $(document);
-        doc.on('pfAjaxComplete', () => {
-            _this.jsfAjaxEventCallback();
-            _this.notifyOtherWindows();
+        $(document).on('pfAjaxComplete', () => {
+            $this.jsfAjaxEventCallback();
+            $this.notifyOtherWindows();
         });
     },
 
     configureTimer: function () {
+        let $this = this;
+        let maxInactiveInterval = this.cfg.max_inactive_interval;
+        let reactionPeriod = this.cfg.reactionPeriod;
+
         this.cancelTimers();
-        if (typeof this.cfg.max_inactive_interval !== "undefined") {
-            let timeout = (Number(this.cfg.max_inactive_interval) - this.cfg.reactionPeriod) * 1000;
+
+        if (maxInactiveInterval !== undefined) {
+            let timeout = (Number(maxInactiveInterval) - reactionPeriod) * 1000;
+
             if (timeout > 0) {
-                let _this = this;
                 this.timer = window.setTimeout(() => {
-                    _this.timeoutCallback();
+                    $this.timeoutCallback();
                 }, timeout);
             }
         }
@@ -107,9 +116,9 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
         if (this.cfg.onexpire) {
             this.cfg.onexpire.call();
         }
-        let _this = this;
+        let $this = this;
         this.expiredTimer = window.setTimeout(() => {
-            _this.expiredTimeoutCallback();
+            $this.expiredTimeoutCallback();
         }, this.cfg.reactionPeriod * 1000);
     },
 
