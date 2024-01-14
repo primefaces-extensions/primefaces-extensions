@@ -9217,6 +9217,14 @@ Either a comma separated string or collection of ISO 2 country codes. Default is
         </attribute>
         <attribute>
             <description>
+                <![CDATA[Fix the dropdown width to the input width (rather than being as wide as the longest country name). Defaul false.]]>
+            </description>
+            <name>fixDropdownWidth</name>
+            <required>false</required>
+            <type>boolean</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Format the input value (according to the nationalMode option) during initialisation, and on setNumber.
 Loads the utils script.]]>
             </description>

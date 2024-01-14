@@ -177,18 +177,14 @@ public class InputPhoneRenderer extends InputRenderer {
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPhone", inputPhone);
-        if (!inputPhone.isAllowDropdown()) {
-            wb.attr("allowDropdown", inputPhone.isAllowDropdown());
-        }
-        if (!inputPhone.isAutoHideDialCode()) {
-            wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode());
-        }
+        encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
+        wb.attr("allowDropdown", inputPhone.isAllowDropdown(), true);
+        wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode(), true);
+        wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), false);
+        wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
+        wb.attr("nationalMode", inputPhone.isNationalMode(), true);
         if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
             wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
-        }
-        encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
-        if (!inputPhone.isFormatOnDisplay()) {
-            wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay());
         }
         if (LangUtils.isNotBlank(inputPhone.getInitialCountry())) {
             wb.attr("initialCountry", inputPhone.getInitialCountry());
@@ -198,9 +194,6 @@ public class InputPhoneRenderer extends InputRenderer {
                 throw new FacesException("InputPhone geoIpLookup property is required when initialCountry is 'auto'.");
             }
             wb.nativeAttr("geoIpLookup", inputPhone.getGeoIpLookup());
-        }
-        if (!inputPhone.isNationalMode()) {
-            wb.attr("nationalMode", inputPhone.isNationalMode());
         }
         encodeCountries(wb, "onlyCountries", inputPhone.getOnlyCountries());
         if (inputPhone.getPlaceholderNumberTypeEnum() != InputPhone.PlaceholderNumberType.mobile) {

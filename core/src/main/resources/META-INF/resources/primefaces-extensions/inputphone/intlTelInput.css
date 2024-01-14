@@ -61,7 +61,6 @@
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   background-color: white;
   border: 1px solid #ccc;
-  white-space: nowrap;
   max-height: 200px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -74,6 +73,9 @@
   .iti__country-list {
     white-space: normal;
   }
+}
+.iti--flexible-dropdown-width .iti__country-list {
+  white-space: nowrap;
 }
 .iti__flag-box {
   display: inline-block;
@@ -135,12 +137,12 @@
 .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag {
   background-color: rgba(0, 0, 0, 0.05);
 }
-.iti--allow-dropdown input[disabled] + .iti__flag-container:hover,
-.iti--allow-dropdown input[readonly] + .iti__flag-container:hover {
+.iti--allow-dropdown .iti__flag-container:has(+ input[disabled]):hover,
+.iti--allow-dropdown .iti__flag-container:has(+ input[readonly]):hover {
   cursor: default;
 }
-.iti--allow-dropdown input[disabled] + .iti__flag-container:hover .iti__selected-flag,
-.iti--allow-dropdown input[readonly] + .iti__flag-container:hover .iti__selected-flag {
+.iti--allow-dropdown .iti__flag-container:has(+ input[disabled]):hover .iti__selected-flag,
+.iti--allow-dropdown .iti__flag-container:has(+ input[readonly]):hover .iti__selected-flag {
   background-color: transparent;
 }
 .iti--separate-dial-code .iti__selected-flag {
@@ -164,18 +166,23 @@
   cursor: pointer;
 }
 
-.iti-fullscreen-popup .iti--container {
-  top: 30px;
-  bottom: 30px;
-  left: 30px;
-  right: 30px;
+.iti--fullscreen-popup.iti--container {
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   position: fixed;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.iti-fullscreen-popup .iti__country-list {
+.iti--fullscreen-popup .iti__country-list {
   max-height: 100%;
-  width: 100%;
+  position: relative;
 }
-.iti-fullscreen-popup .iti__country {
+.iti--fullscreen-popup .iti__country {
   padding: 10px 10px;
   line-height: 1.5em;
 }
@@ -201,7 +208,7 @@
 .iti__flag.iti__va {
   width: 15px;
 }
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-resolution: 2x) {
   .iti__flag {
     background-size: 5762px 15px;
   }
@@ -1267,7 +1274,7 @@
   background-color: #dbdbdb;
   background-position: 20px 0;
 }
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-resolution: 2x) {
   .iti__flag {
     background-image: url("#{resource['primefaces-extensions:inputphone/flags@2x.png']}");
   }
