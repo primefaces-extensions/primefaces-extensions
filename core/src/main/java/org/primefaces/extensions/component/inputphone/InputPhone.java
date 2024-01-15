@@ -221,7 +221,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     public boolean isFixDropdownWidth() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.fixDropdownWidth, false);
+        return (Boolean) getStateHelper().eval(PropertyKeys.fixDropdownWidth, true);
     }
 
     public void setFixDropdownWidth(final boolean fixDropdownWidth) {
@@ -321,7 +321,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     public boolean isCountrySearch() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.countrySearch, false);
+        return (Boolean) getStateHelper().eval(PropertyKeys.countrySearch, true);
     }
 
     public void setCountrySearch(final boolean countrySearch) {

@@ -126,13 +126,24 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     },
 
     /**
-     * Validate the current number
+     * Check if the current number is possible.
+     *
+     * @return true if valid, false if not
+     */
+    isPossibleNumber: function () {
+        if (this.iti) {
+            return this.iti.isValidNumber();
+        }
+    },
+
+    /**
+     * Validate the current number.
      *
      * @return true if valid, false if not
      */
     isValidNumber: function () {
         if (this.iti) {
-            return this.iti.isValidNumber();
+            return this.iti.isValidNumberPrecise();
         }
     },
 

@@ -180,10 +180,11 @@ public class InputPhoneRenderer extends InputRenderer {
         encodeCountries(wb, "excludeCountries", inputPhone.getExcludeCountries());
         wb.attr("allowDropdown", inputPhone.isAllowDropdown(), true);
         wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode(), true);
-        wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), false);
+        wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), true);
         wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
         wb.attr("nationalMode", inputPhone.isNationalMode(), true);
-        wb.attr("countrySearch", inputPhone.isCountrySearch(), false);
+        wb.attr("countrySearch", inputPhone.isCountrySearch(), true);
+        wb.attr("showSelectedDialCode", inputPhone.isSeparateDialCode(), false);
         if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
             wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
         }
@@ -201,9 +202,7 @@ public class InputPhoneRenderer extends InputRenderer {
             wb.attr("placeholderNumberType", inputPhone.getPlaceholderNumberType().toUpperCase());
         }
         encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
-        if (inputPhone.isSeparateDialCode()) {
-            wb.attr("separateDialCode", inputPhone.isSeparateDialCode());
-        }
+
         if (inputPhone.isUtilsScriptRequired()) {
             wb.attr("utilsScript",
                         context.getApplication()
@@ -212,7 +211,7 @@ public class InputPhoneRenderer extends InputRenderer {
                                     .getRequestPath());
         }
         if (inputPhone.getLocalizedCountries() != null) {
-            wb.nativeAttr("localizedCountries", objectToJsonString(inputPhone.getLocalizedCountries()));
+            wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
         }
 
         encodeClientBehaviors(context, inputPhone);

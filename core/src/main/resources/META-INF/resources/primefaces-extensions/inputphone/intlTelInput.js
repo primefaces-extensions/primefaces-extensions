@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v18.5.3
+ * International Telephone Input v19.0.1
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -66,6 +66,52 @@
             }
             return obj;
         }
+        function _slicedToArray(arr, i) {
+            return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+        }
+        function _nonIterableRest() {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+        }
+        function _unsupportedIterableToArray(o, minLen) {
+            if (!o) return;
+            if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+            var n = Object.prototype.toString.call(o).slice(8, -1);
+            if (n === "Object" && o.constructor) n = o.constructor.name;
+            if (n === "Map" || n === "Set") return Array.from(o);
+            if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+        }
+        function _arrayLikeToArray(arr, len) {
+            if (len == null || len > arr.length) len = arr.length;
+            for (var i = 0, arr2 = new Array(len); i < len; i++) {
+                arr2[i] = arr[i];
+            }
+            return arr2;
+        }
+        function _iterableToArrayLimit(arr, i) {
+            var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+            if (null != _i) {
+                var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1;
+                try {
+                    if (_x = (_i = _i.call(arr)).next, 0 === i) {
+                        if (Object(_i) !== _i) return;
+                        _n = !1;
+                    } else for (;!(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) {
+                    }
+                } catch (err) {
+                    _d = !0, _e = err;
+                } finally {
+                    try {
+                        if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return;
+                    } finally {
+                        if (_d) throw _e;
+                    }
+                }
+                return _arr;
+            }
+        }
+        function _arrayWithHoles(arr) {
+            if (Array.isArray(arr)) return arr;
+        }
         function _classCallCheck(instance, Constructor) {
             if (!(instance instanceof Constructor)) {
                 throw new TypeError("Cannot call a class as a function");
@@ -127,9 +173,9 @@
             // add a placeholder in the input with an example number for the selected country
             autoPlaceholder: "polite",
             // add a country search input at the top of the dropdown
-            countrySearch: false,
+            countrySearch: true,
             // modify the parentClass
-            customContainer: "",
+            containerClass: "",
             // modify the auto placeholder
             customPlaceholder: null,
             // append menu to specified element
@@ -137,29 +183,29 @@
             // don't display these countries
             excludeCountries: [],
             // fix the dropdown width to the input width (rather than being as wide as the longest country name)
-            fixDropdownWidth: false,
+            fixDropdownWidth: true,
             // format the input value during initialisation and on setNumber
             formatOnDisplay: true,
             // geoIp lookup function
             geoIpLookup: null,
             // inject a hidden input with this name, and on submit, populate it with the result of getNumber
-            hiddenInput: "",
+            hiddenInput: null,
+            // internationalise the plugin text e.g. search input placeholder, country names
+            i18n: {},
             // initial country
             initialCountry: "",
-            // localized country names e.g. { 'de': 'Deutschland' }
-            localizedCountries: null,
             // national vs international formatting for numbers e.g. placeholders and displaying existing numbers
             nationalMode: true,
             // display only these countries
             onlyCountries: [],
             // number type to use for placeholders
             placeholderNumberType: "MOBILE",
-            // the countries at the top of the list. defaults to united states and united kingdom
-            preferredCountries: [ "us", "gb" ],
-            // display the country dial code next to the selected flag
-            separateDialCode: false,
-            // option to hide the flags - must be used with separateDialCode, or allowDropdown=false
+            // the countries at the top of the list
+            preferredCountries: [],
+            // option to hide the flags - must be used with showSelectedDialCode, or allowDropdown=false
             showFlags: true,
+            // display the international dial code next to the selected flag
+            showSelectedDialCode: false,
             // use full screen popup instead of dropdown for country list
             useFullscreenPopup: typeof navigator !== "undefined" && typeof window !== "undefined" ? // we cannot just test screen size as some smartphones/website meta tags will report desktop
             // resolutions
@@ -170,43 +216,31 @@
         };
         // https://en.wikipedia.org/wiki/List_of_North_American_Numbering_Plan_area_codes#Non-geographic_area_codes
         var regionlessNanpNumbers = [ "800", "822", "833", "844", "855", "866", "877", "880", "881", "882", "883", "884", "885", "886", "887", "888", "889" ];
-        // utility function to iterate over an object. can't use Object.entries or native forEach because
-        // of IE11
-        var forEachProp = function forEachProp(obj, callback) {
-            var keys = Object.keys(obj);
-            for (var i = 0; i < keys.length; i++) {
-                callback(keys[i], obj[keys[i]]);
-            }
-        };
         // run a method on each instance of the plugin
         var forEachInstance = function forEachInstance(method) {
-            forEachProp(window.intlTelInputGlobals.instances, function(key) {
-                window.intlTelInputGlobals.instances[key][method]();
+            var instances = window.intlTelInputGlobals.instances;
+            Object.values(instances).forEach(function(instance) {
+                return instance[method]();
             });
         };
         // this is our plugin class that we will create an instance of
         // eslint-disable-next-line no-unused-vars
         var Iti = /*#__PURE__*/ function() {
-            function Iti(input, options) {
-                var _this = this;
+            function Iti(input) {
+                var customOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
                 _classCallCheck(this, Iti);
                 this.id = id++;
                 this.telInput = input;
                 this.activeItem = null;
                 this.highlightedItem = null;
                 // process specified options / defaults
-                // alternative to Object.assign, which isn't supported by IE11
-                var customOptions = options || {};
-                this.options = {};
-                forEachProp(defaults, function(key, value) {
-                    _this.options[key] = customOptions.hasOwnProperty(key) ? customOptions[key] : value;
-                });
+                this.options = Object.assign({}, defaults, customOptions);
                 this.hadInitialPlaceholder = Boolean(input.getAttribute("placeholder"));
             }
             _createClass(Iti, [ {
                 key: "_init",
                 value: function _init() {
-                    var _this2 = this;
+                    var _this = this;
                     // if showing fullscreen popup, do not fix the width
                     if (this.options.useFullscreenPopup) {
                         this.options.fixDropdownWidth = false;
@@ -219,13 +253,13 @@
                     if (this.options.nationalMode) {
                         this.options.autoInsertDialCode = false;
                     }
-                    // if separateDialCode enabled, do not insert dial codes
-                    if (this.options.separateDialCode) {
+                    // if showSelectedDialCode enabled, do not insert dial codes
+                    if (this.options.showSelectedDialCode) {
                         this.options.autoInsertDialCode = false;
                     }
                     // force showFlags=true if there's a dropdown and we're not displaying the dial code,
                     // as otherwise you just have a down arrow on it's own which doesn't make sense
-                    var forceShowFlags = this.options.allowDropdown && !this.options.separateDialCode;
+                    var forceShowFlags = this.options.allowDropdown && !this.options.showSelectedDialCode;
                     if (!this.options.showFlags && forceShowFlags) {
                         this.options.showFlags = true;
                     }
@@ -240,12 +274,12 @@
                     // complete
                     if (typeof Promise !== "undefined") {
                         var autoCountryPromise = new Promise(function(resolve, reject) {
-                            _this2.resolveAutoCountryPromise = resolve;
-                            _this2.rejectAutoCountryPromise = reject;
+                            _this.resolveAutoCountryPromise = resolve;
+                            _this.rejectAutoCountryPromise = reject;
                         });
                         var utilsScriptPromise = new Promise(function(resolve, reject) {
-                            _this2.resolveUtilsScriptPromise = resolve;
-                            _this2.rejectUtilsScriptPromise = reject;
+                            _this.resolveUtilsScriptPromise = resolve;
+                            _this.rejectUtilsScriptPromise = reject;
                         });
                         this.promise = Promise.all([ autoCountryPromise, utilsScriptPromise ]);
                     } else {
@@ -276,12 +310,10 @@
                     this._processCountryCodes();
                     // process the preferredCountries
                     this._processPreferredCountries();
-                    // translate countries according to localizedCountries option
-                    if (this.options.localizedCountries) {
-                        this._translateCountriesByLocale();
-                    }
+                    // translate country names according to i18n option
+                    this._translateCountryNames();
                     // sort countries by name
-                    if (this.options.onlyCountries.length || this.options.localizedCountries) {
+                    if (this.options.onlyCountries.length || this.options.i18n) {
                         this.countries.sort(this._countryNameSort);
                     }
                 }
@@ -326,12 +358,12 @@
                     }
                 }
             }, {
-                key: "_translateCountriesByLocale",
-                value: function _translateCountriesByLocale() {
+                key: "_translateCountryNames",
+                value: function _translateCountryNames() {
                     for (var i = 0; i < this.countries.length; i++) {
                         var iso = this.countries[i].iso2.toLowerCase();
-                        if (this.options.localizedCountries.hasOwnProperty(iso)) {
-                            this.countries[i].name = this.options.localizedCountries[iso];
+                        if (this.options.i18n.hasOwnProperty(iso)) {
+                            this.countries[i].name = this.options.i18n[iso];
                         }
                     }
                 }
@@ -404,7 +436,8 @@
                 value: function _createEl(name, attrs, container) {
                     var el = document.createElement(name);
                     if (attrs) {
-                        forEachProp(attrs, function(key, value) {
+                        Object.entries(attrs).forEach(function(_ref) {
+                            var _ref2 = _slicedToArray(_ref, 2), key = _ref2[0], value = _ref2[1];
                             return el.setAttribute(key, value);
                         });
                     }
@@ -424,27 +457,30 @@
                     if (!this.telInput.hasAttribute("autocomplete") && !(this.telInput.form && this.telInput.form.hasAttribute("autocomplete"))) {
                         this.telInput.setAttribute("autocomplete", "off");
                     }
-                    var _this$options = this.options, allowDropdown = _this$options.allowDropdown, separateDialCode = _this$options.separateDialCode, showFlags = _this$options.showFlags, customContainer = _this$options.customContainer, hiddenInput = _this$options.hiddenInput, dropdownContainer = _this$options.dropdownContainer, fixDropdownWidth = _this$options.fixDropdownWidth, useFullscreenPopup = _this$options.useFullscreenPopup, countrySearch = _this$options.countrySearch;
+                    var _this$options = this.options, allowDropdown = _this$options.allowDropdown, showSelectedDialCode = _this$options.showSelectedDialCode, showFlags = _this$options.showFlags, containerClass = _this$options.containerClass, hiddenInput = _this$options.hiddenInput, dropdownContainer = _this$options.dropdownContainer, fixDropdownWidth = _this$options.fixDropdownWidth, useFullscreenPopup = _this$options.useFullscreenPopup, countrySearch = _this$options.countrySearch;
                     // containers (mostly for positioning)
                     var parentClass = "iti";
                     if (allowDropdown) {
                         parentClass += " iti--allow-dropdown";
                     }
-                    if (separateDialCode) {
-                        parentClass += " iti--separate-dial-code";
+                    if (showSelectedDialCode) {
+                        parentClass += " iti--show-selected-dial-code";
                     }
                     if (showFlags) {
                         parentClass += " iti--show-flags";
                     }
-                    if (customContainer) {
-                        parentClass += " ".concat(customContainer);
+                    if (containerClass) {
+                        parentClass += " ".concat(containerClass);
+                    }
+                    if (!useFullscreenPopup) {
+                        parentClass += " iti--inline-dropdown";
                     }
                     var wrapper = this._createEl("div", {
                         "class": parentClass
                     });
                     this.telInput.parentNode.insertBefore(wrapper, this.telInput);
-                    // only hide the flagsContainer if allowDropdown, showFlags and separateDialCode are all false
-                    var showFlagsContainer = allowDropdown || showFlags || separateDialCode;
+                    // only hide the flagsContainer if allowDropdown, showFlags and showSelectedDialCode are all false
+                    var showFlagsContainer = allowDropdown || showFlags || showSelectedDialCode;
                     if (showFlagsContainer) {
                         this.flagsContainer = this._createEl("div", {
                             "class": "iti__flag-container"
@@ -462,7 +498,7 @@
                             "aria-haspopup": "listbox",
                             "aria-controls": "iti-".concat(this.id, "__country-listbox"),
                             "aria-expanded": "false",
-                            "aria-label": "Telephone country code"
+                            "aria-label": this.options.i18n.selectedCountryAriaLabel || "Selected country"
                         }), this.flagsContainer);
                     }
                     if (showFlags) {
@@ -473,7 +509,7 @@
                     if (this.selectedFlag && this.telInput.disabled) {
                         this.selectedFlag.setAttribute("aria-disabled", "true");
                     }
-                    if (separateDialCode) {
+                    if (showSelectedDialCode) {
                         this.selectedDialCode = this._createEl("div", {
                             "class": "iti__selected-dial-code"
                         }, this.selectedFlag);
@@ -494,7 +530,7 @@
                             this.searchInput = this._createEl("input", {
                                 type: "text",
                                 "class": "iti__search-input",
-                                placeholder: "Search"
+                                placeholder: this.options.i18n.searchPlaceholder || "Search"
                             }, this.dropdownContent);
                         }
                         // country list: preferred countries, then divider, then all countries
@@ -502,7 +538,7 @@
                             "class": "iti__country-list",
                             id: "iti-".concat(this.id, "__country-listbox"),
                             role: "listbox",
-                            "aria-label": "List of countries"
+                            "aria-label": this.options.i18n.countryListAriaLabel || "List of countries"
                         }, this.dropdownContent);
                         if (this.preferredCountries.length && !countrySearch) {
                             this._appendListItems(this.preferredCountries, "iti__preferred", true);
@@ -517,6 +553,8 @@
                             var dropdownClasses = "iti iti--container";
                             if (useFullscreenPopup) {
                                 dropdownClasses += " iti--fullscreen-popup";
+                            } else {
+                                dropdownClasses += " iti--inline-dropdown";
                             }
                             if (countrySearch) {
                                 dropdownClasses += " iti--country-search";
@@ -530,16 +568,8 @@
                         }
                     }
                     if (hiddenInput) {
-                        var hiddenInputName = hiddenInput;
-                        var name = this.telInput.getAttribute("name");
-                        if (name) {
-                            var i = name.lastIndexOf("[");
-                            // if input name contains square brackets, then give the hidden input the same name,
-                            // replacing the contents of the last set of brackets with the given hiddenInput name
-                            if (i !== -1) {
-                                hiddenInputName = "".concat(name.substr(0, i), "[").concat(hiddenInputName, "]");
-                            }
-                        }
+                        var telInputName = this.telInput.getAttribute("name");
+                        var hiddenInputName = hiddenInput(telInputName);
                         this.hiddenInput = this._createEl("input", {
                             type: "hidden",
                             name: hiddenInputName
@@ -637,39 +667,30 @@
             }, {
                 key: "_initHiddenInputListener",
                 value: function _initHiddenInputListener() {
-                    var _this3 = this;
+                    var _this2 = this;
                     this._handleHiddenInputSubmit = function() {
-                        _this3.hiddenInput.value = _this3.getNumber();
+                        _this2.hiddenInput.value = _this2.getNumber();
                     };
                     if (this.telInput.form) {
                         this.telInput.form.addEventListener("submit", this._handleHiddenInputSubmit);
                     }
                 }
             }, {
-                key: "_getClosestLabel",
-                value: function _getClosestLabel() {
-                    var el = this.telInput;
-                    while (el && el.tagName !== "LABEL") {
-                        el = el.parentNode;
-                    }
-                    return el;
-                }
-            }, {
                 key: "_initDropdownListeners",
                 value: function _initDropdownListeners() {
-                    var _this4 = this;
+                    var _this3 = this;
                     // hack for input nested inside label (which is valid markup): clicking the selected-flag to
                     // open the dropdown would then automatically trigger a 2nd click on the input which would
                     // close it again
                     this._handleLabelClick = function(e) {
                         // if the dropdown is closed, then focus the input, else ignore the click
-                        if (_this4.dropdownContent.classList.contains("iti__hide")) {
-                            _this4.telInput.focus();
+                        if (_this3.dropdownContent.classList.contains("iti__hide")) {
+                            _this3.telInput.focus();
                         } else {
                             e.preventDefault();
                         }
                     };
-                    var label = this._getClosestLabel();
+                    var label = this.telInput.closest("label");
                     if (label) {
                         label.addEventListener("click", this._handleLabelClick);
                     }
@@ -678,24 +699,24 @@
                         // only intercept this event if we're opening the dropdown
                         // else let it bubble up to the top ("click-off-to-close" listener)
                         // we cannot just stopPropagation as it may be needed to close another instance
-                        if (_this4.dropdownContent.classList.contains("iti__hide") && !_this4.telInput.disabled && !_this4.telInput.readOnly) {
-                            _this4._showDropdown();
+                        if (_this3.dropdownContent.classList.contains("iti__hide") && !_this3.telInput.disabled && !_this3.telInput.readOnly) {
+                            _this3._showDropdown();
                         }
                     };
                     this.selectedFlag.addEventListener("click", this._handleClickSelectedFlag);
                     // open dropdown if selected flag is focused and they press up/down/space/enter
                     this._handleFlagsContainerKeydown = function(e) {
-                        var isDropdownHidden = _this4.dropdownContent.classList.contains("iti__hide");
+                        var isDropdownHidden = _this3.dropdownContent.classList.contains("iti__hide");
                         if (isDropdownHidden && [ "ArrowUp", "ArrowDown", " ", "Enter" ].includes(e.key)) {
                             // prevent form from being submitted if "ENTER" was pressed
                             e.preventDefault();
                             // prevent event from being handled again by document
                             e.stopPropagation();
-                            _this4._showDropdown();
+                            _this3._showDropdown();
                         }
                         // allow navigation from dropdown to input on TAB
                         if (e.key === "Tab") {
-                            _this4._closeDropdown();
+                            _this3._closeDropdown();
                         }
                     };
                     this.flagsContainer.addEventListener("keydown", this._handleFlagsContainerKeydown);
@@ -703,7 +724,7 @@
             }, {
                 key: "_initRequests",
                 value: function _initRequests() {
-                    var _this5 = this;
+                    var _this4 = this;
                     // if the user has specified the path to the utils script, fetch it on window.load, else resolve
                     if (this.options.utilsScript && !window.intlTelInputUtils) {
                         // if the plugin is being initialised after the window.load event has already been fired
@@ -712,7 +733,7 @@
                         } else {
                             // wait until the load event so we don't block any other requests e.g. the flags image
                             window.addEventListener("load", function() {
-                                window.intlTelInputGlobals.loadUtils(_this5.options.utilsScript);
+                                window.intlTelInputGlobals.loadUtils(_this4.options.utilsScript);
                             });
                         }
                     } else {
@@ -757,18 +778,18 @@
             }, {
                 key: "_initKeyListeners",
                 value: function _initKeyListeners() {
-                    var _this6 = this;
+                    var _this5 = this;
                     // update flag on keyup
                     this._handleKeyupEvent = function() {
-                        if (_this6._updateFlagFromNumber(_this6.telInput.value)) {
-                            _this6._triggerCountryChange();
+                        if (_this5._updateFlagFromNumber(_this5.telInput.value)) {
+                            _this5._triggerCountryChange();
                         }
                     };
                     this.telInput.addEventListener("keyup", this._handleKeyupEvent);
                     // update flag on cut/paste events (now supported in all major browsers)
                     this._handleClipboardEvent = function() {
                         // hack because "paste" event is fired before input is updated
-                        setTimeout(_this6._handleKeyupEvent);
+                        setTimeout(_this5._handleKeyupEvent);
                     };
                     this.telInput.addEventListener("cut", this._handleClipboardEvent);
                     this.telInput.addEventListener("paste", this._handleClipboardEvent);
@@ -782,10 +803,10 @@
             }, {
                 key: "_initBlurListeners",
                 value: function _initBlurListeners() {
-                    var _this7 = this;
+                    var _this6 = this;
                     // on blur or form submit: if just a dial code then remove it
                     this._handleSubmitOrBlurEvent = function() {
-                        _this7._removeEmptyDialCode();
+                        _this6._removeEmptyDialCode();
                     };
                     if (this.telInput.form) {
                         this.telInput.form.addEventListener("submit", this._handleSubmitOrBlurEvent);
@@ -811,10 +832,10 @@
             }, {
                 key: "_trigger",
                 value: function _trigger(name) {
-                    // have to use old school document.createEvent as IE11 doesn't support `new Event()` syntax
-                    var e = document.createEvent("Event");
-                    e.initEvent(name, true, true);
-                    // can bubble, and is cancellable
+                    var e = new Event(name, {
+                        bubbles: true,
+                        cancelable: true
+                    });
                     this.telInput.dispatchEvent(e);
                 }
             }, {
@@ -853,14 +874,14 @@
             }, {
                 key: "_setDropdownPosition",
                 value: function _setDropdownPosition() {
-                    var _this8 = this;
+                    var _this7 = this;
                     if (this.options.dropdownContainer) {
                         this.options.dropdownContainer.appendChild(this.dropdown);
                     }
                     if (!this.options.useFullscreenPopup) {
                         var pos = this.telInput.getBoundingClientRect();
                         // windowTop from https://stackoverflow.com/a/14384091/217866
-                        var windowTop = window.pageYOffset || document.documentElement.scrollTop;
+                        var windowTop = document.documentElement.scrollTop;
                         var inputTop = pos.top + windowTop;
                         var dropdownHeight = this.dropdownContent.offsetHeight;
                         // dropdownFitsBelow = (dropdownBottom < windowBottom)
@@ -881,41 +902,31 @@
                             this.dropdown.style.left = "".concat(pos.left + document.body.scrollLeft, "px");
                             // close menu on window scroll
                             this._handleWindowScroll = function() {
-                                return _this8._closeDropdown();
+                                return _this7._closeDropdown();
                             };
                             window.addEventListener("scroll", this._handleWindowScroll);
                         }
                     }
                 }
             }, {
-                key: "_getClosestListItem",
-                value: function _getClosestListItem(target) {
-                    var el = target;
-                    while (el && el !== this.countryList && !el.classList.contains("iti__country")) {
-                        el = el.parentNode;
-                    }
-                    // if we reached the countryList element, then return null
-                    return el === this.countryList ? null : el;
-                }
-            }, {
                 key: "_bindDropdownListeners",
                 value: function _bindDropdownListeners() {
-                    var _this9 = this;
+                    var _this8 = this;
                     // when mouse over a list item, just highlight that one
                     // we add the class "highlight", so if they hit "enter" we know which one to select
                     this._handleMouseoverCountryList = function(e) {
                         // handle event delegation, as we're listening for this event on the countryList
-                        var listItem = _this9._getClosestListItem(e.target);
+                        var listItem = e.target.closest(".iti__country");
                         if (listItem) {
-                            _this9._highlightListItem(listItem, false);
+                            _this8._highlightListItem(listItem, false);
                         }
                     };
                     this.countryList.addEventListener("mouseover", this._handleMouseoverCountryList);
                     // listen for country selection
                     this._handleClickCountryList = function(e) {
-                        var listItem = _this9._getClosestListItem(e.target);
+                        var listItem = e.target.closest(".iti__country");
                         if (listItem) {
-                            _this9._selectListItem(listItem);
+                            _this8._selectListItem(listItem);
                         }
                     };
                     this.countryList.addEventListener("click", this._handleClickCountryList);
@@ -925,7 +936,7 @@
                     var isOpening = true;
                     this._handleClickOffToClose = function() {
                         if (!isOpening) {
-                            _this9._closeDropdown();
+                            _this8._closeDropdown();
                         }
                         isOpening = false;
                     };
@@ -944,23 +955,23 @@
                             e.stopPropagation();
                             // up and down to navigate
                             if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                                _this9._handleUpDownKey(e.key);
+                                _this8._handleUpDownKey(e.key);
                             } else if (e.key === "Enter") {
-                                _this9._handleEnterKey();
+                                _this8._handleEnterKey();
                             } else if (e.key === "Escape") {
-                                _this9._closeDropdown();
+                                _this8._closeDropdown();
                             }
                         }
                         // alpha chars to perform search
                         // regex allows one latin alpha char or space, based on https://stackoverflow.com/a/26900132/217866)
-                        if (!_this9.options.countrySearch && /^[a-zA-ZÀ-ÿа-яА-Я ]$/.test(e.key)) {
+                        if (!_this8.options.countrySearch && /^[a-zA-ZÀ-ÿа-яА-Я ]$/.test(e.key)) {
                             e.stopPropagation();
                             // jump to countries that start with the query string
                             if (queryTimer) {
                                 clearTimeout(queryTimer);
                             }
                             query += e.key.toLowerCase();
-                            _this9._searchForCountry(query);
+                            _this8._searchForCountry(query);
                             // if the timer hits 1 second, reset the query
                             queryTimer = setTimeout(function() {
                                 query = "";
@@ -970,11 +981,11 @@
                     document.addEventListener("keydown", this._handleKeydownOnDropdown);
                     if (this.options.countrySearch) {
                         var doFilter = function doFilter() {
-                            var inputQuery = _this9.searchInput.value.trim();
+                            var inputQuery = _this8.searchInput.value.trim();
                             if (inputQuery) {
-                                _this9._filterCountries(inputQuery.toLowerCase());
+                                _this8._filterCountries(inputQuery.toLowerCase());
                             } else {
-                                _this9._filterCountries(null, true);
+                                _this8._filterCountries(null, true);
                             }
                         };
                         var keyupTimer = null;
@@ -1005,7 +1016,7 @@
                         var c = this.countries[i];
                         var nameLower = c.name.toLowerCase();
                         var fullDialCode = "+".concat(c.dialCode);
-                        if (isReset || nameLower.includes(query) || fullDialCode.includes(query)) {
+                        if (isReset || nameLower.includes(query) || fullDialCode.includes(query) || c.iso2.includes(query)) {
                             this.countryList.appendChild(c.node);
                             // highlight the first item
                             if (isFirst) {
@@ -1067,7 +1078,7 @@
                 value: function _updateValFromNumber(fullNumber) {
                     var number = fullNumber;
                     if (this.options.formatOnDisplay && window.intlTelInputUtils && this.selectedCountryData) {
-                        var useNational = this.options.nationalMode || number.charAt(0) !== "+" && !this.options.separateDialCode;
+                        var useNational = this.options.nationalMode || number.charAt(0) !== "+" && !this.options.showSelectedDialCode;
                         var _intlTelInputUtils$nu = intlTelInputUtils.numberFormat, NATIONAL = _intlTelInputUtils$nu.NATIONAL, INTERNATIONAL = _intlTelInputUtils$nu.INTERNATIONAL;
                         var format = useNational ? NATIONAL : INTERNATIONAL;
                         number = intlTelInputUtils.formatNumber(number, this.selectedCountryData.iso2, format);
@@ -1096,8 +1107,8 @@
                         }
                         number = "+".concat(number);
                     }
-                    // if separateDialCode enabled, then consider the selected dial code to be part of the number
-                    if (this.options.separateDialCode && selectedDialCode && number.charAt(0) !== "+") {
+                    // if showSelectedDialCode enabled, then consider the selected dial code to be part of the number
+                    if (this.options.showSelectedDialCode && selectedDialCode && number.charAt(0) !== "+") {
                         number = "+".concat(selectedDialCode).concat(number);
                     }
                     // try and extract valid dial code from input
@@ -1181,7 +1192,7 @@
             }, {
                 key: "_setFlag",
                 value: function _setFlag(countryCode) {
-                    var _this$options3 = this.options, allowDropdown = _this$options3.allowDropdown, separateDialCode = _this$options3.separateDialCode, showFlags = _this$options3.showFlags;
+                    var _this$options3 = this.options, allowDropdown = _this$options3.allowDropdown, showSelectedDialCode = _this$options3.showSelectedDialCode, showFlags = _this$options3.showFlags;
                     var prevCountry = this.selectedCountryData.iso2 ? this.selectedCountryData : {};
                     // do this first as it will throw an error and stop if countryCode is invalid
                     this.selectedCountryData = countryCode ? this._getCountryData(countryCode, false, false) : {};
@@ -1192,8 +1203,8 @@
                     if (showFlags) {
                         this.selectedFlagInner.setAttribute("class", "iti__flag iti__".concat(countryCode));
                     }
-                    this._setSelectedCountryFlagTitleAttribute(countryCode, separateDialCode);
-                    if (separateDialCode) {
+                    this._setSelectedCountryFlagTitleAttribute(countryCode, showSelectedDialCode);
+                    if (showSelectedDialCode) {
                         var dialCode = this.selectedCountryData.dialCode ? "+".concat(this.selectedCountryData.dialCode) : "";
                         this.selectedDialCode.innerHTML = dialCode;
                         // offsetWidth is zero if input is in a hidden container during initialisation
@@ -1227,12 +1238,12 @@
                 }
             }, {
                 key: "_setSelectedCountryFlagTitleAttribute",
-                value: function _setSelectedCountryFlagTitleAttribute(countryCode, separateDialCode) {
+                value: function _setSelectedCountryFlagTitleAttribute(countryCode, showSelectedDialCode) {
                     if (!this.selectedFlag) {
                         return;
                     }
                     var title;
-                    if (countryCode && !separateDialCode) {
+                    if (countryCode && !showSelectedDialCode) {
                         title = "".concat(this.selectedCountryData.name, ": +").concat(this.selectedCountryData.dialCode);
                     } else if (countryCode) {
                         // For screen reader output, we don't want to include the dial code in the reader output twice
@@ -1282,10 +1293,6 @@
                     this._updateDialCode(listItem.getAttribute("data-dial-code"));
                     // focus the input
                     this.telInput.focus();
-                    // put cursor at end - this fix is required for FF and IE11 (with auto inserting dial code),
-                    // who try to put the cursor at the beginning the first time
-                    var len = this.telInput.value.length;
-                    this.telInput.setSelectionRange(len, len);
                     if (flagChanged) {
                         this._triggerCountryChange();
                     }
@@ -1322,7 +1329,7 @@
                 value: function _scrollTo(element, middle) {
                     var container = this.dropdownContent;
                     // windowTop from https://stackoverflow.com/a/14384091/217866
-                    var windowTop = window.pageYOffset || document.documentElement.scrollTop;
+                    var windowTop = document.documentElement.scrollTop;
                     var containerHeight = container.offsetHeight;
                     var containerTop = container.getBoundingClientRect().top + windowTop;
                     var containerBottom = containerTop + containerHeight;
@@ -1417,8 +1424,8 @@
                     var dialCode = this.selectedCountryData.dialCode;
                     var prefix;
                     var numericVal = this._getNumeric(val);
-                    if (this.options.separateDialCode && val.charAt(0) !== "+" && dialCode && numericVal) {
-                        // when using separateDialCode, it is visible so is effectively part of the typed number
+                    if (this.options.showSelectedDialCode && val.charAt(0) !== "+" && dialCode && numericVal) {
+                        // when using showSelectedDialCode, it is visible so is effectively part of the typed number
                         prefix = "+".concat(dialCode);
                     } else {
                         prefix = "";
@@ -1429,7 +1436,7 @@
                 key: "_beforeSetNumber",
                 value: function _beforeSetNumber(fullNumber) {
                     var number = fullNumber;
-                    if (this.options.separateDialCode) {
+                    if (this.options.showSelectedDialCode) {
                         var dialCode = this._getDialCode(number);
                         // if there is a valid dial code
                         if (dialCode) {
@@ -1487,7 +1494,7 @@
                         this.selectedFlag.removeEventListener("click", this._handleClickSelectedFlag);
                         this.flagsContainer.removeEventListener("keydown", this._handleFlagsContainerKeydown);
                         // label click hack
-                        var label = this._getClosestLabel();
+                        var label = this.telInput.closest("label");
                         if (label) {
                             label.removeEventListener("click", this._handleLabelClick);
                         }
@@ -1558,13 +1565,13 @@
                 key: "isValidNumber",
                 value: function isValidNumber() {
                     var val = this._getFullNumber().trim();
-                    return window.intlTelInputUtils ? intlTelInputUtils.isValidNumber(val, this.selectedCountryData.iso2) : null;
+                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
                 }
             }, {
-                key: "isPossibleNumber",
-                value: function isPossibleNumber() {
+                key: "isValidNumberPrecise",
+                value: function isValidNumberPrecise() {
                     var val = this._getFullNumber().trim();
-                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
+                    return window.intlTelInputUtils ? intlTelInputUtils.isValidNumber(val, this.selectedCountryData.iso2) : null;
                 }
             }, {
                 key: "setCountry",
@@ -1647,7 +1654,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "18.5.3";
+        intlTelInputGlobals.version = "19.0.1";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
