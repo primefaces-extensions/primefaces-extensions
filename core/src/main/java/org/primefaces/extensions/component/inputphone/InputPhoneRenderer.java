@@ -183,6 +183,7 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), false);
         wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
         wb.attr("nationalMode", inputPhone.isNationalMode(), true);
+        wb.attr("countrySearch", inputPhone.isCountrySearch(), false);
         if (inputPhone.getAutoPlaceholderEnum() != InputPhone.AutoPlaceholder.polite) {
             wb.attr("autoPlaceholder", inputPhone.getAutoPlaceholder());
         }

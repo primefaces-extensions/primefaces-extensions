@@ -91,7 +91,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         inputStyle,
         inputStyleClass,
         geoIpLookup,
-        localizedCountries
+        localizedCountries,
+        countrySearch
     }
 
     @SuppressWarnings("java:S115")
@@ -317,6 +318,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setLocalizedCountries(final Object localizedCountries) {
         getStateHelper().put(PropertyKeys.localizedCountries, localizedCountries);
+    }
+
+    public boolean isCountrySearch() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.countrySearch, false);
+    }
+
+    public void setCountrySearch(final boolean countrySearch) {
+        getStateHelper().put(PropertyKeys.countrySearch, countrySearch);
     }
 
     public boolean isUtilsScriptRequired() {
