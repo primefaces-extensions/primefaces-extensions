@@ -182,6 +182,7 @@ public class InputPhoneRenderer extends InputRenderer {
         wb.attr("autoHideDialCode", inputPhone.isAutoHideDialCode(), true);
         wb.attr("fixDropdownWidth", inputPhone.isFixDropdownWidth(), true);
         wb.attr("formatOnDisplay", inputPhone.isFormatOnDisplay(), true);
+        wb.attr("formatAsYouType", inputPhone.isFormatAsYouType(), true);
         wb.attr("nationalMode", inputPhone.isNationalMode(), true);
         wb.attr("countrySearch", inputPhone.isCountrySearch(), true);
         wb.attr("showSelectedDialCode", inputPhone.isSeparateDialCode(), false);

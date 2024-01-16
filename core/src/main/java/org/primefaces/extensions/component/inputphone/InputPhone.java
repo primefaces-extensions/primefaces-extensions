@@ -82,6 +82,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         excludeCountries,
         fixDropdownWidth,
         formatOnDisplay,
+        formatAsYouType,
         initialCountry,
         nationalMode,
         onlyCountries,
@@ -236,6 +237,14 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         getStateHelper().put(PropertyKeys.formatOnDisplay, formatOnDisplay);
     }
 
+    public boolean isFormatAsYouType() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.formatAsYouType, true);
+    }
+
+    public void setFormatAsYouType(final boolean formatAsYouType) {
+        getStateHelper().put(PropertyKeys.formatAsYouType, formatAsYouType);
+    }
+
     public String getInitialCountry() {
         return (String) getStateHelper().eval(PropertyKeys.initialCountry, "us");
     }
@@ -329,7 +338,7 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     }
 
     public boolean isUtilsScriptRequired() {
-        return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay();
+        return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay() || isFormatAsYouType();
     }
 
     @Override
