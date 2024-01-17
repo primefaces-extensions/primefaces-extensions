@@ -1,8 +1,8 @@
 /**
  * @preserve
- * jquery.layout 1.8.5
- * $Date: 2020-08-22 $
- * $Rev: 1.8.5 $
+ * jquery.layout 1.9.0
+ * $Date: 2024-01-17 $
+ * $Rev: 1.9.0 $
  *
  * Copyright (c) 2014 Kevin Dalman (http://jquery-dev.com)
  * Based on work by Fabrizio Balliano (http://www.fabrizioballiano.net)
@@ -85,8 +85,8 @@
      * GENERIC $.layout METHODS - used by all layouts
      */
             $.layout = {
-                version: "1.8.4"
-                , revision: 1.8004 // eg: ver 1.4.4 = rev 1.0404 - major(n+).minor(nn)+patch(nn+)
+                version: "1.9.0"
+                , revision: 1.9004 // eg: ver 1.4.4 = rev 1.0404 - major(n+).minor(nn)+patch(nn+)
 
                 // $.layout.browser REPLACES $.browser
                 , browser: {} // set below
@@ -593,7 +593,7 @@
                         , y = evt.pageY // evt.clientY ?
                     ;
                     // if X & Y are < 0, probably means is over an open SELECT
-                    return ($.layout.browser.msie && x < 0 && y < 0) || ((x >= L && x <= R) && (y >= T && y <= B));
+                    return ((x >= L && x <= R) && (y >= T && y <= B));
                 }
 
                 /**
@@ -664,22 +664,18 @@
                     , m = /(chrome)[ \/]([\w.]+)/.exec(u)
                     || /(webkit)[ \/]([\w.]+)/.exec(u)
                     || /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(u)
-                    || /(msie) ([\w.]+)/.exec(u)
                     || u.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(u)
                     || []
                     , b = m[1] || ""
                     , v = m[2] || 0
-                    , ie = b === "msie"
                     , cm = document.compatMode
                     , $s = $.support
                     , bs = $s.boxSizing !== undefined ? $s.boxSizing : $s.boxSizingReliable
-                    , bm = !ie || !cm || cm === "CSS1Compat" || $s.boxModel || false
+                    , bm = !cm || cm === "CSS1Compat" || $s.boxModel || false
                     , lb = $.layout.browser = {
                     version: v
                     , safari: b === "webkit" // webkit (NOT chrome) = safari
                     , webkit: b === "chrome" // chrome = webkit
-                    , msie: ie
-                    , isIE6: ie && v == 6
                     // ONLY IE reverts to old box-model - Note that compatMode was deprecated as of IE8
                     , boxModel: bm
                     , boxSizing: !!(typeof bs === "function" ? bs() : bs)
@@ -2042,29 +2038,14 @@
                                     , margin: 0
                                 });
                                 // BODY
-                                if (browser.isIE6) {
-                                    // IE6 CANNOT use the trick of setting absolute positioning on all 4 sides - must have 'height'
-                                    $N.css({
-                                        width: "100%"
-                                        , height: "100%"
-                                        , border: "none" // no border or padding allowed when using height = 100%
-                                        , padding: 0  // ditto
-                                        , margin: 0
-                                        , position: "relative"
-                                    });
-                                    // convert body padding to an inset option - the border cannot be measured in IE6!
-                                    if (!o.inset)
-                                        o.inset = elDims($N).inset;
-                                } else { // use absolute positioning for BODY to allow borders & padding without overflow
-                                    $N.css({
+                                $N.css({
                                         width: "auto"
                                         , height: "auto"
                                         , margin: 0
                                         , position: "absolute" // allows for border and padding on BODY
                                     });
                                     // apply edge-positioning created above
-                                    $N.css(o.outset);
-                                }
+                                $N.css(o.outset);
                                 // set current layout-container dimensions
                                 $.extend(sC, elDims($N, o.inset)); // passing inset means DO NOT include insetX values
                             } else {
@@ -3917,9 +3898,6 @@
                             // if pane is positioned 'off-screen', then DO NOT screw with it!
                             else if (pane == "east" && !$P.css("left").match(/\-99999/))
                                 $P.css({left: "auto"});
-                            // fix anti-aliasing in IE - only needed for animations that change opacity
-                            if (browser.msie && o.fxOpacityFix && o.fxName_open != "slide" && $P.css("filter") && $P.css("opacity") == 1)
-                                $P[0].style.removeAttribute('filter');
                         }
                     }
 
@@ -4444,7 +4422,7 @@
                  * TODO: Sounds like a job for $P.outerWidth( sC.innerWidth ) SETTER METHOD
                  */
                             if (pane === "center") { // finished processing midPanes
-                                var fix = browser.isIE6 || !browser.boxModel;
+                                var fix = !browser.boxModel;
                                 if ($Ps.north && (fix || state.north.tagName == "IFRAME"))
                                     $Ps.north.css("width", cssW($Ps.north, sC.innerWidth));
                                 if ($Ps.south && (fix || state.south.tagName == "IFRAME"))
@@ -6036,9 +6014,6 @@
                     , v = b.version
                     , r, sW, cW
                 ;
-                // we can ignore all browsers that fire window.resize event onZoom
-                if (!b.msie || v > 8)
-                    return false; // don't need to track zoom
                 if (s.deviceXDPI && s.systemXDPI) // syntax compiler hack
                     return calc(s.deviceXDPI, s.systemXDPI);
                 // everything below is just for future reference!
