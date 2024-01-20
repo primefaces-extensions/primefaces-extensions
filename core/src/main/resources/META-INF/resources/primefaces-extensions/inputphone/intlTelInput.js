@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.2.7
+ * International Telephone Input v19.2.11
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -896,7 +896,10 @@
                     this._setDropdownPosition();
                     if (this.options.countrySearch) {
                         // start by highlighting the first item in the list
-                        this._highlightListItem(this.countryList.firstElementChild, false);
+                        var firstElementChild = this.countryList.firstElementChild;
+                        if (firstElementChild) {
+                            this._highlightListItem(firstElementChild, false);
+                        }
                         this.searchInput.focus();
                     } else if (this.activeItem) {
                         // update highlighting and scroll to active list item
@@ -1714,7 +1717,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.2.7";
+        intlTelInputGlobals.version = "19.2.11";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
