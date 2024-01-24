@@ -79,7 +79,6 @@ public class ClockPickerRenderer extends CoreRenderer {
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", "text", null);
-        // writer.writeAttribute("class", "form_control", null);
         writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
         writer.writeAttribute("size", 5, null);
         writer.writeAttribute("maxlength", 5, null);
@@ -159,8 +158,6 @@ public class ClockPickerRenderer extends CoreRenderer {
             }
         }
         catch (ConverterException e) {
-            // clockPicker.setConversionFailed(true);
-
             throw e;
         }
 
@@ -178,21 +175,16 @@ public class ClockPickerRenderer extends CoreRenderer {
             }
         }
         catch (ConverterException e) {
-            // clockPicker.setConversionFailed(true);
-
             throw e;
         }
 
         // Use built-in converter
         format = new SimpleDateFormat("HH:mm", clockPicker.calculateLocale());
         format.setLenient(false);
-        // format.setTimeZone(clockPicker.calculateTimeZone());
         try {
             return format.parse(submittedValue);
         }
         catch (ParseException e) {
-            // clockPicker.setConversionFailed(true);
-
             String message = null;
             Object[] params = new Object[3];
             params[0] = submittedValue;
