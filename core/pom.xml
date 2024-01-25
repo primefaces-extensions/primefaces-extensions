@@ -491,31 +491,6 @@
                                 </aggregation>
                             </aggregations>
                         </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>clockpicker/0-clockpicker.js</include>
-                                <include>clockpicker/1-clockpicker-widget.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/clockpicker/clockpicker.js</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>clockpicker/0-clockpicker.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/clockpicker/clockpicker.css</outputFile>
-                                    <withoutCompress>true</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
                     </resourcesSets>
                 </configuration>
             </plugin>
