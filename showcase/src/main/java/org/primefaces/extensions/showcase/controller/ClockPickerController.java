@@ -23,9 +23,6 @@ package org.primefaces.extensions.showcase.controller;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -44,20 +41,16 @@ public class ClockPickerController implements Serializable {
 
     private static final long serialVersionUID = 897540091000342926L;
 
-    private Date time;
+    private LocalTime time;
 
     public ClockPickerController() {
-        final Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.AM_PM, Calendar.AM);
-        calendar.set(Calendar.HOUR, 8);
-        calendar.set(Calendar.MINUTE, 15);
-        time = calendar.getTime();
+        // Initialize time to 8:15 AM
+        time = LocalTime.of(8, 15);
     }
 
     public void showTime() {
-        LocalTime localTime = time.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-        int hour = localTime.getHour();
-        int min = localTime.getMinute();
+        int hour = time.getHour();
+        int min = time.getMinute();
 
         String message = String.format("Selected hour: %d, Selected min: %d", hour, min);
         addMessage(FacesMessage.SEVERITY_INFO, "Info Message", message);
@@ -67,11 +60,11 @@ public class ClockPickerController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public Date getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 

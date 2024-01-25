@@ -22,12 +22,10 @@
 package org.primefaces.extensions.component.clockpicker;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.el.ValueExpression;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -36,7 +34,6 @@ import javax.faces.convert.ConverterException;
 
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.LangUtils;
-import org.primefaces.util.MessageFactory;
 import org.primefaces.util.WidgetBuilder;
 
 public class ClockPickerRenderer extends CoreRenderer {
@@ -131,12 +128,13 @@ public class ClockPickerRenderer extends CoreRenderer {
             }
             else {
                 // use built-in converter
-                SimpleDateFormat timeFormat;
-                timeFormat = new SimpleDateFormat("HH:mm", clockPicker.calculateLocale());
-
-                return timeFormat.format(value);
+                if (value instanceof LocalTime) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                    return formatter.format((LocalTime) value);
+                }
             }
         }
+        return "";
     }
 
     @Override
@@ -144,7 +142,6 @@ public class ClockPickerRenderer extends CoreRenderer {
                 Object value) throws ConverterException {
         final ClockPicker clockPicker = (ClockPicker) component;
         String submittedValue = (String) value;
-        SimpleDateFormat format = null;
 
         if (isValueBlank(submittedValue)) {
             return null;
@@ -165,36 +162,19 @@ public class ClockPickerRenderer extends CoreRenderer {
         try {
             ValueExpression ve = clockPicker.getValueExpression("value");
             if (ve != null) {
-                Class type = ve.getType(context.getELContext());
-                if (type != null && type != Object.class && type != Date.class) {
-                    Converter converter = context.getApplication().createConverter(type);
-                    if (converter != null) {
-                        return converter.getAsObject(context, clockPicker, submittedValue);
-                    }
+                Class<?> type = ve.getType(context.getELContext());
+                if (type != null && type != Object.class && type.isAssignableFrom(LocalTime.class)) {
+                    // Use built-in converter for LocalTime
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                    return LocalTime.parse(submittedValue, formatter);
                 }
             }
         }
         catch (ConverterException e) {
             throw e;
         }
+        return null;
 
-        // Use built-in converter
-        format = new SimpleDateFormat("HH:mm", clockPicker.calculateLocale());
-        format.setLenient(false);
-        try {
-            return format.parse(submittedValue);
-        }
-        catch (ParseException e) {
-            String message = null;
-            Object[] params = new Object[3];
-            params[0] = submittedValue;
-            params[1] = format.format(new Date());
-            params[2] = MessageFactory.getLabel(context, clockPicker);
-
-            message = MessageFactory.getMessage("javax.faces.converter.DateTimeConverter.DATE", FacesMessage.SEVERITY_ERROR, params);
-
-            throw new ConverterException(message);
-        }
     }
 
 }
