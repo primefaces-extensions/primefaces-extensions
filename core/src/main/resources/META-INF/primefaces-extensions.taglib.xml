@@ -10471,7 +10471,7 @@ See showcase for an example. Default null.]]>
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
-            <description><![CDATA[	vibrate the device when dragging clock hand. Default is true]]></description>
+            <description><![CDATA[vibrate the device when dragging clock hand. Default is true]]></description>
             <name>vibrate</name>
             <required>false</required>
             <type>java.lang.Boolean</type>

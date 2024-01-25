@@ -35,9 +35,8 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/0-clockpicker.css")
-@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/0-clockpicker.js")
-@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/1-clockpicker-widget.js")
+@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.css")
+@ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.js")
 public class ClockPicker extends HtmlInputText implements Widget {
     public static final String CONTAINER_CLASS = "pe-clockpicker ui-widget ui-corner-all input-group clockpicker";
 
