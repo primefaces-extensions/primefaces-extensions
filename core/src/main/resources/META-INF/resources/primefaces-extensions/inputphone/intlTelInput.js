@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.2.14
+ * International Telephone Input v19.2.15
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -1481,7 +1481,7 @@
                     var dialCode = this.selectedCountryData.dialCode;
                     var prefix;
                     var numericVal = this._getNumeric(val);
-                    if (this.options.showSelectedDialCode && val.charAt(0) !== "+" && dialCode && numericVal) {
+                    if (this.options.showSelectedDialCode && !this.options.nationalMode && val.charAt(0) !== "+" && dialCode && numericVal) {
                         // when using showSelectedDialCode, it is visible so is effectively part of the typed number
                         prefix = "+".concat(dialCode);
                     } else {
@@ -1517,11 +1517,11 @@
             }, {
                 key: "_formatNumberAsYouType",
                 value: function _formatNumberAsYouType() {
-                    var val = this._getFullNumber().trim();
+                    var val = this._getFullNumber();
                     var result = window.intlTelInputUtils ? intlTelInputUtils.formatNumberAsYouType(val, this.selectedCountryData.iso2) : val;
                     // if showSelectedDialCode and they haven't (re)typed the dial code in the input as well, then remove the dial code
-                    if (this.options.showSelectedDialCode && this.telInput.value.charAt(0) !== "+") {
-                        var dialCode = this.selectedCountryData.dialCode;
+                    var dialCode = this.selectedCountryData.dialCode;
+                    if (this.options.showSelectedDialCode && !this.options.nationalMode && this.telInput.value.charAt(0) !== "+" && result.includes("+".concat(dialCode))) {
                         var afterDialCode = result.split("+".concat(dialCode))[1] || "";
                         return afterDialCode.trim();
                     }
@@ -1634,13 +1634,13 @@
             }, {
                 key: "isValidNumber",
                 value: function isValidNumber() {
-                    var val = this._getFullNumber().trim();
+                    var val = this._getFullNumber();
                     return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
                 }
             }, {
                 key: "isValidNumberPrecise",
                 value: function isValidNumberPrecise() {
-                    var val = this._getFullNumber().trim();
+                    var val = this._getFullNumber();
                     return window.intlTelInputUtils ? intlTelInputUtils.isValidNumber(val, this.selectedCountryData.iso2) : null;
                 }
             }, {
@@ -1724,7 +1724,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.2.14";
+        intlTelInputGlobals.version = "19.2.15";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
