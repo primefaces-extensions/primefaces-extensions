@@ -42,10 +42,12 @@ public class ClockPickerController implements Serializable {
     private static final long serialVersionUID = 897540091000342926L;
 
     private LocalTime time;
+    private LocalTime time2;
 
     public ClockPickerController() {
         // Initialize time to 8:15 AM
         time = LocalTime.of(8, 15);
+        time2 = LocalTime.of(9, 28);
     }
 
     public void showTime() {
@@ -71,6 +73,14 @@ public class ClockPickerController implements Serializable {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public LocalTime getTime2() {
+        return time2;
+    }
+
+    public void setTime2(LocalTime time2) {
+        this.time2 = time2;
     }
 
 }

@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.clockpicker;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import javax.el.ValueExpression;
 import javax.faces.component.UIComponent;
@@ -37,6 +38,8 @@ import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 public class ClockPickerRenderer extends CoreRenderer {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -61,7 +64,7 @@ public class ClockPickerRenderer extends CoreRenderer {
 
         final String value = getValueAsString(context, clockPicker);
         encodeMarkup(context, clockPicker, value);
-        encodeScript(context, clockPicker, value);
+        encodeScript(context, clockPicker);
     }
 
     private void encodeMarkup(FacesContext context, ClockPicker clockPicker, final String value) throws IOException {
@@ -95,19 +98,15 @@ public class ClockPickerRenderer extends CoreRenderer {
         writer.endElement("div");
     }
 
-    private void encodeScript(final FacesContext context, final ClockPicker clockPicker, final String value) throws IOException {
+    private void encodeScript(final FacesContext context, final ClockPicker clockPicker) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        final String clientId = clockPicker.getClientId(context);
+        wb.init("ExtClockPicker", clockPicker);
+        wb.attr("placement", clockPicker.getPlacement(), "bottom");
+        wb.attr("align", clockPicker.getAlign(), "left");
+        wb.attr("autoclose", clockPicker.getAutoclose(), false);
+        wb.attr("vibrate", clockPicker.getVibrate(), true);
 
-        wb.init("ExtClockPicker", clockPicker.resolveWidgetVar(), clientId);
         encodeClientBehaviors(context, clockPicker);
-
-        wb.attr("placement", clockPicker.getPlacement());
-        wb.attr("align", clockPicker.getAlign());
-        wb.attr("donetext", clockPicker.getDonetext());
-        wb.attr("autoclose", clockPicker.getAutoclose());
-        wb.attr("vibrate", clockPicker.getVibrate());
-
         wb.finish();
     }
 
@@ -127,8 +126,7 @@ public class ClockPickerRenderer extends CoreRenderer {
                 return clockPicker.getConverter().getAsString(context, clockPicker, value);
             }
             else if (value instanceof LocalTime) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                return formatter.format((LocalTime) value);
+                return FORMATTER.format((LocalTime) value);
             }
         }
         catch (Exception e) {
@@ -142,7 +140,7 @@ public class ClockPickerRenderer extends CoreRenderer {
     public Object getConvertedValue(FacesContext context, UIComponent component,
                 Object value) throws ConverterException {
         final ClockPicker clockPicker = (ClockPicker) component;
-        String submittedValue = (String) value;
+        String submittedValue = Objects.toString(value, null);
 
         if (isValueBlank(submittedValue)) {
             return null;
@@ -156,7 +154,7 @@ public class ClockPickerRenderer extends CoreRenderer {
             }
         }
         catch (ConverterException e) {
-            return null;
+            return submittedValue;
         }
 
         // Delegate to global defined converter (e.g. joda or java8)
@@ -166,14 +164,13 @@ public class ClockPickerRenderer extends CoreRenderer {
                 Class<?> type = ve.getType(context.getELContext());
                 if (type != null && type != Object.class && type.isAssignableFrom(LocalTime.class)) {
                     // Use built-in converter for LocalTime
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                    return LocalTime.parse(submittedValue, formatter);
+                    return LocalTime.parse(submittedValue, FORMATTER);
                 }
             }
         }
         catch (Exception e) {
-            return null;
+            return submittedValue;
         }
-        return null;
+        return submittedValue;
     }
 }

@@ -21,15 +21,10 @@
  */
 package org.primefaces.extensions.component.clockpicker;
 
-import java.util.Locale;
-
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.html.HtmlInputText;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.Widget;
-import org.primefaces.util.Constants;
-import org.primefaces.util.LocaleUtils;
 
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
@@ -44,42 +39,18 @@ public class ClockPicker extends HtmlInputText implements Widget {
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ClockPickerRenderer";
 
-    private Locale appropriateLocale;
-
     protected enum PropertyKeys {
 
         //@formatter:off
         widgetVar,
         placement,
         align,
-        donetext,
         autoclose,
-        locale,
         vibrate;
-
-        private String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
-
-        PropertyKeys() {
-        }
-
-        @Override
-        public String toString() {
-            return toString != null ? toString : super.toString();
-        }
     }
     
     public ClockPicker() {
         setRendererType(DEFAULT_RENDERER);
-    }
-    
-    
-    private boolean isSelfRequest(final FacesContext fc) {
-        return this.getClientId(fc).equals(
-                    fc.getExternalContext().getRequestParameterMap().get(Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     @Override
@@ -111,14 +82,6 @@ public class ClockPicker extends HtmlInputText implements Widget {
         getStateHelper().put(PropertyKeys.align, align);
     }
     
-    public String getDonetext() {
-        return (String) getStateHelper().eval(PropertyKeys.donetext, "Done");
-    }
-    
-    public void setDonetext(final String donetext) {
-        getStateHelper().put(PropertyKeys.donetext, donetext);
-    }
-    
     public Boolean getAutoclose() {
         return (Boolean) getStateHelper().eval(PropertyKeys.autoclose, false);
     }
@@ -134,20 +97,5 @@ public class ClockPicker extends HtmlInputText implements Widget {
     public void setVibrate(final Boolean vibrate) {
         getStateHelper().put(PropertyKeys.vibrate, vibrate);
     }
-    
-    public Object getLocale() {
-        return getStateHelper().eval(PropertyKeys.locale, null);
-    }
 
-    public void setLocale(final Object locale) {
-        getStateHelper().put(PropertyKeys.locale, locale);
-    }
-    
-    public Locale calculateLocale() {
-        if (appropriateLocale == null) {
-            final FacesContext fc = FacesContext.getCurrentInstance();
-            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
-        }
-        return appropriateLocale;
-    }
 }

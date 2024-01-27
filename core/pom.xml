@@ -708,7 +708,6 @@
                 <version>3.5.0</version>
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
-                    <dependencyLocationsEnabled>true</dependencyLocationsEnabled>
                 </configuration>
                 <reportSets>
                     <reportSet>
