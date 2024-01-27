@@ -112,29 +112,30 @@ public class ClockPickerRenderer extends CoreRenderer {
     }
 
     protected static String getValueAsString(final FacesContext context, final ClockPicker clockPicker) {
-        final Object submittedValue = clockPicker.getSubmittedValue();
+        Object submittedValue = clockPicker.getSubmittedValue();
         if (submittedValue != null) {
             return submittedValue.toString();
         }
 
-        final Object value = clockPicker.getValue();
+        Object value = clockPicker.getValue();
         if (value == null) {
             return null;
         }
-        else {
+
+        try {
             if (clockPicker.getConverter() != null) {
-                // convert via registered converter
                 return clockPicker.getConverter().getAsString(context, clockPicker, value);
             }
-            else {
-                // use built-in converter
-                if (value instanceof LocalTime) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                    return formatter.format((LocalTime) value);
-                }
+            else if (value instanceof LocalTime) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                return formatter.format((LocalTime) value);
             }
         }
-        return "";
+        catch (Exception e) {
+            return null;
+        }
+
+        return null;
     }
 
     @Override
@@ -155,7 +156,7 @@ public class ClockPickerRenderer extends CoreRenderer {
             }
         }
         catch (ConverterException e) {
-            throw e;
+            return null;
         }
 
         // Delegate to global defined converter (e.g. joda or java8)
@@ -170,11 +171,9 @@ public class ClockPickerRenderer extends CoreRenderer {
                 }
             }
         }
-        catch (ConverterException e) {
-            throw e;
+        catch (Exception e) {
+            return null;
         }
         return null;
-
     }
-
 }

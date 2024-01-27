@@ -7,7 +7,7 @@
     </p:growl>  
 
 <!-- EXAMPLE-SOURCE-START -->
-    <pe:clockpicker autoclose="true" value="#{clockPickerController.time}"></pe:clockpicker>
+    <pe:clockpicker id="clockpicker" autoclose="true" value="#{clockPickerController.time}" widgetVar="clockpickerWidget"></pe:clockpicker>
     <p:commandButton actionListener="#{clockPickerController.showTime}" update="growl" value="Show Time" />
 <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

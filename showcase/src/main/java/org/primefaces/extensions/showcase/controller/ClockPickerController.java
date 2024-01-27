@@ -49,11 +49,16 @@ public class ClockPickerController implements Serializable {
     }
 
     public void showTime() {
-        int hour = time.getHour();
-        int min = time.getMinute();
+        if (time != null) {
+            int hour = time.getHour();
+            int min = time.getMinute();
 
-        String message = String.format("Selected hour: %d, Selected min: %d", hour, min);
-        addMessage(FacesMessage.SEVERITY_INFO, "Info Message", message);
+            String message = String.format("Selected hour: %d, Selected min: %d", hour, min);
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", message);
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Time is not selected.");
+        }
     }
 
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
