@@ -10926,6 +10926,12 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
+        <attribute>
+            <description><![CDATA[enables twelve hour mode with AM & PM buttons. Default is false]]></description>
+            <name>twelvehour</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>

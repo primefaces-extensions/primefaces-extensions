@@ -47,7 +47,8 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         placement,
         align,
         autoclose,
-        vibrate;
+        vibrate,
+        twelvehour;
     }
     
     public ClockPicker() {
@@ -117,6 +118,14 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
     
     public void setVibrate(final Boolean vibrate) {
         getStateHelper().put(PropertyKeys.vibrate, vibrate);
+    }
+    
+    public Boolean getTwelvehour() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.twelvehour, false); 
+    }
+    
+    public void setTwelvehour(final Boolean twelvehour) {
+        getStateHelper().put(PropertyKeys.twelvehour, twelvehour);
     }
 
 }
