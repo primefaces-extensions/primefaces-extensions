@@ -166,8 +166,9 @@ div.source {
     text-align: left;
 }
 
-body .ui-panelgrid .ui-panelgrid-cell {
-    padding: 0.571rem 1rem;
+html body .ui-panelgrid .ui-panelgrid-cell,
+html body .ui-panel.ui-layout-south .ui-panel-content {
+    padding: .25rem;
 }
 
 body .ui-menu .ui-menu-list .ui-menuitem .ui-menuitem-link .ui-menuitem-icon.ui-icon-none {
