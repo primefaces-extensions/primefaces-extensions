@@ -23,7 +23,7 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.jq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.jq.val();
 
-        PrimeFaces.skinInput(this.inputJq);
+        PrimeFaces.skinInput(this.jq);
     },
 
     // @override
