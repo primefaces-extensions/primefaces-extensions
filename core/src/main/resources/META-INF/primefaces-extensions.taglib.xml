@@ -10459,12 +10459,6 @@ See showcase for an example. Default null.]]>
             <type>java.lang.String</type>
         </attribute>
         <attribute>
-            <description><![CDATA[done button text. Default is "done"]]></description>
-            <name>donetext</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
             <description><![CDATA[auto close when minute is selected. Default is false]]></description>
             <name>autoclose</name>
             <required>false</required>
