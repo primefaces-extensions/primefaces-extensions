@@ -19,7 +19,7 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
 
         this.clockpicker = this.jq.clockpicker(this.cfg);
         // pfs metadata
-        $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
+        this.jq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.jq.val();
 
     },
@@ -46,8 +46,8 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      * @function hide
      */
     hide: function () {
-        if (this.clockpicker) {
-            this.clockpicker.hide()
+        if (this.jq) {
+            this.jq.clockpicker("hide");
         }
     },
 
@@ -56,8 +56,8 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      * @function show
      */
     show: function () {
-        if (this.clockpicker) {
-            this.clockpicker.show()
+        if (this.jq) {
+            this.jq.clockpicker("show");
         }
     },
     /**
@@ -65,8 +65,24 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      * @function remove
      */
     remove: function () {
-        if (this.clockpicker) {
-            this.clockpicker.remove()
+        if (this.jq) {
+            this.jq.clockpicker("remove");
         }
+    },
+
+    /**
+     * Disables this input so that the user cannot enter a value anymore.
+     */
+    disable: function() {
+        this.remove();
+        PrimeFaces.utils.disableInputWidget(this.jq);
+    },
+
+    /**
+     * Enables this input so that the user can enter a value.
+     */
+    enable: function() {
+        PrimeFaces.utils.enableInputWidget(this.jq);
+        this.clockpicker = this.jq.clockpicker(this.cfg);
     }
 });

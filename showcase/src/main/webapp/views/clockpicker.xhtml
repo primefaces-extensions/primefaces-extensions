@@ -8,9 +8,14 @@
             <h:outputText value="ClockPicker"/>
         </f:facet>
         <h:panelGroup layout="block" styleClass="centerContent">
-            Based on <h:outputLink id="lnkClockpicker" value="https://weareoutman.github.io/clockpicker/">clockpicker</h:outputLink> by weareoutman.
-        </h:panelGroup>
 
+        </h:panelGroup>
+        <h:panelGroup layout="block" styleClass="centerContent">
+            <h:graphicImage library="images" name="timepicker.png" alt="ClockPicker"/>
+            ClockPicker is a highly configurable component to integrate time inputs (hours / minutes) in a convenient way.
+            <p/>
+            Based on <h:outputLink id="lnkClockpicker" value="https://weareoutman.github.io/clockpicker/"  target="_blank" style="font-weight: bold; text-decoration: none; border-bottom: 1px dotted;">clockpicker</h:outputLink> by weareoutman.
+        </h:panelGroup>
     </ui:define>
     <ui:define name="useCases">
         <ui:include src="/sections/clockpicker/useCasesChoice.xhtml"/>

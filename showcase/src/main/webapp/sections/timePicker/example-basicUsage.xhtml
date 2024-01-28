@@ -47,17 +47,17 @@
     </p>
 </h:panelGroup>
 
-<p:commandButton type="button" value="Disable time pickers" style="margin-top:10px;"
+<p:commandButton type="button" value="Disable time pickers" styleClass="mt-2 mr-2"
                  onclick="PF('inlineTimeWidget').disable();PF('popupTimeWidget').disable();
                      PF('spinnerTimeWidget').disable();PF('customTimeWidget').disable();
                      PF('popupBtnTimeWidget').disable();PF('spinnerBtnTimeWidget').disable();"/>
-<p:commandButton type="button" value="Enable time pickers" style="margin-top:10px;"
+<p:commandButton type="button" value="Enable time pickers" styleClass="mt-2 mr-2"
                  onclick="PF('inlineTimeWidget').enable();PF('popupTimeWidget').enable();
                      PF('spinnerTimeWidget').enable();PF('customTimeWidget').enable();
                      PF('popupBtnTimeWidget').enable();PF('spinnerBtnTimeWidget').enable();"/>
 <p:commandButton id="submitButton" value="Submit" actionListener="#{timePickerController.showTime}"
                  process="@this timePickerGroup" update="messages timeDialog timePickerGroup"
-                 style="margin-top:10px;" icon="pi pi-save"/>
+                 styleClass="mt-2 mr-2" icon="pi pi-save"/>
 
 <p:dialog id="timeDialog" header="Selected Values" visible="#{timePickerController.showTimeDialog}">
     <h:panelGrid columns="1" style="margin: 10px;">
