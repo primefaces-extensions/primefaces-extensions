@@ -18,10 +18,13 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.cfg.donetext = PrimeFaces.getAriaLabel('close') || 'Close';
 
         this.clockpicker = this.jq.clockpicker(this.cfg);
-        // pfs metadata
-        $(this.jqId + '_input').data(PrimeFaces.CLIENT_ID_DATA, this.id);
-        this.originalValue = this.jq.val();
 
+        this.inputJq = $(this.jqEl);
+        this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+        
+        PrimeFaces.skinInput(this.inputJq);
+
+        this.originalValue = this.jq.val();
     },
 
     // @override

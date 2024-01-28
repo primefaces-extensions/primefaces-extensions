@@ -7,12 +7,15 @@
     </p:growl>  
 
 <!-- EXAMPLE-SOURCE-START -->
-    <div class="card">
-    <pe:clockpicker id="autoclose" autoclose="true" value="#{clockPickerController.time}" widgetVar="autocloseWidget"></pe:clockpicker>
-    <p:commandButton actionListener="#{clockPickerController.showTime}" update="growl" value="Show Time" styleClass="mt-2" />
-    </div>
+<p>
+<pe:clockpicker id="autoclose" autoclose="true" value="#{clockPickerController.time}" widgetVar="autocloseWidget"></pe:clockpicker>
+<p:commandButton actionListener="#{clockPickerController.showTime}" update="growl" value="Show Time" styleClass="mt-2" />
+</p>
 
-    <pe:clockpicker id="closeable" autoclose="false" value="#{clockPickerController.time2}" widgetVar="closeableWidget"></pe:clockpicker>
+<hr/>
 
+<p>
+<pe:clockpicker id="closeable" autoclose="false" value="#{clockPickerController.time2}" widgetVar="closeableWidget"></pe:clockpicker>
+</p>
 <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
