@@ -18,10 +18,6 @@
     --vela4: hsl(29, 44%, 92%);
 }
 
-* {
-    font-size: 12px;
-}
-
 html {
     overflow: auto !important;
     visibility: hidden;

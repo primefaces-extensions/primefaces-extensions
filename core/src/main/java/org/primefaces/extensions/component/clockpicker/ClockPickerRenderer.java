@@ -74,6 +74,7 @@ public class ClockPickerRenderer extends InputRenderer {
         String inputId = clientId + "_input";
 
         writer.startElement("div", clockPicker);
+        writer.writeAttribute("id", clientId, null);
         writer.writeAttribute("class", ClockPicker.CONTAINER_CLASS, null);
 
         writer.startElement("input", null);

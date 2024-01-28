@@ -7,24 +7,22 @@
     </p:growl>
 
     <!-- EXAMPLE-SOURCE-START -->
-    <h:panelGroup id="timePickerGroup" layout="block">
-        <p>Auto-Close Mode</p>
-        <pe:clockpicker id="autoclose" autoclose="true" value="#{clockPickerController.time}"
-                            widgetVar="autocloseWidget" />
+<h:panelGroup id="timePickerGroup" layout="block">
+    <p>Auto-Close Mode</p>
+    <pe:clockpicker id="autoclose" autoclose="true" value="#{clockPickerController.time}"
+                        widgetVar="autocloseWidget" />
 
+    <p>Manual Close Mode</p>
+    <pe:clockpicker id="closeable" autoclose="false" value="#{clockPickerController.time2}"
+                        widgetVar="closeableWidget" />
 
-        <p>Manual Close Mode</p>
-        <pe:clockpicker id="closeable" autoclose="false" value="#{clockPickerController.time2}"
-                            widgetVar="closeableWidget" />
+</h:panelGroup>
 
-    </h:panelGroup>
-
-    <p:commandButton type="button" value="Disable clock pickers" styleClass="mt-2 mr-2"
-                     onclick="PF('autocloseWidget').disable();PF('closeableWidget').disable();"/>
-    <p:commandButton type="button" value="Enable clock pickers" styleClass="mt-2 mr-2"
-                     onclick="PF('autocloseWidget').enable();PF('closeableWidget').enable();"/>
-    <p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime}" update="timePickerGroup"
-                     styleClass="mt-2 mr-2" icon="pi pi-save"/>
-
+<p:commandButton type="button" value="Disable clock pickers" styleClass="mt-2 mr-2"
+                 onclick="PF('autocloseWidget').disable();PF('closeableWidget').disable();"/>
+<p:commandButton type="button" value="Enable clock pickers" styleClass="mt-2 mr-2"
+                 onclick="PF('autocloseWidget').enable();PF('closeableWidget').enable();"/>
+<p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime}" update="timePickerGroup"
+                 styleClass="mt-2 mr-2" icon="pi pi-save"/>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
