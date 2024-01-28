@@ -22,8 +22,9 @@
 package org.primefaces.extensions.component.clockpicker;
 
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.html.HtmlInputText;
 
+import org.primefaces.component.api.AbstractPrimeHtmlInputText;
+import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 
 @ResourceDependency(library = "primefaces", name = "components.css")
@@ -32,7 +33,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.css")
 @ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.js")
-public class ClockPicker extends HtmlInputText implements Widget {
+public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
     public static final String CONTAINER_CLASS = "pe-clockpicker ui-widget ui-corner-all input-group clockpicker";
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ClockPicker";
@@ -56,6 +57,26 @@ public class ClockPicker extends HtmlInputText implements Widget {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public String getInputClientId() {
+        return getClientId(getFacesContext()) + "_input";
+    }
+
+    @Override
+    public String getValidatableInputClientId() {
+        return getInputClientId();
+    }
+
+    @Override
+    public String getLabelledBy() {
+        return (String) getStateHelper().get("labelledby");
+    }
+
+    @Override
+    public void setLabelledBy(String labelledBy) {
+        getStateHelper().put("labelledby", labelledBy);
     }
     
     public String getWidgetVar() {

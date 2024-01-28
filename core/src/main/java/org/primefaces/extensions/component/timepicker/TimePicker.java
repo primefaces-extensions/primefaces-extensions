@@ -34,6 +34,7 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
+import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.BeforeShowEvent;
 import org.primefaces.extensions.event.CloseEvent;
@@ -56,7 +57,7 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces-extensions", name = "primefaces-extensions.js")
 @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.css")
 @ResourceDependency(library = "primefaces-extensions", name = "timepicker/timepicker.js")
-public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
+public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
 
     public static final String CONTAINER_CLASS = "pe-timepicker ui-widget ui-corner-all";
     public static final String INPUT_CLASS = "ui-inputfield ui-state-default ui-corner-all";
@@ -123,6 +124,26 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public String getInputClientId() {
+        return getClientId(getFacesContext()) + "_input";
+    }
+
+    @Override
+    public String getValidatableInputClientId() {
+        return getInputClientId();
+    }
+
+    @Override
+    public String getLabelledBy() {
+        return (String) getStateHelper().get("labelledby");
+    }
+
+    @Override
+    public void setLabelledBy(String labelledBy) {
+        getStateHelper().put("labelledby", labelledBy);
     }
 
     public String getWidgetVar() {

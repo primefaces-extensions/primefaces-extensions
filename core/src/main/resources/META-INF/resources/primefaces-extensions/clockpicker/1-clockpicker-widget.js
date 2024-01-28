@@ -17,14 +17,13 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.jq = $(this.jqEl);
         this.cfg.donetext = PrimeFaces.getAriaLabel('close') || 'Close';
 
-        this.clockpicker = this.jq.clockpicker(this.cfg);
+        this.clockpicker = this.createClockPicker();
 
-        this.inputJq = $(this.jqEl);
-        this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
-        
-        PrimeFaces.skinInput(this.inputJq);
-
+        // pfs metadata
+        this.jq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.jq.val();
+
+        PrimeFaces.skinInput(this.inputJq);
     },
 
     // @override
@@ -44,13 +43,35 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.remove()
     },
 
+    createClockPicker: function () {
+        this.clockpicker = this.jq.clockpicker(this.cfg);
+        this.bindConstantEvents();
+        return this.clockpicker;
+    },
+
+    /**
+     * Sets up the event listeners that only need to be set up once.
+     * @private
+     */
+    bindConstantEvents: function () {
+        var $this = this;
+
+        PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', undefined, function () {
+            $this.hide();
+        });
+
+        PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
+            $this.hide();
+        });
+    },
+
     /**
      * Hides the clockpicker if it exists.
      * @function hide
      */
     hide: function () {
-        if (this.clockpicker) {
-            this.clockpicker.hide()
+        if (this.jq) {
+            this.jq.clockpicker("hide");
         }
     },
 
@@ -59,8 +80,8 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      * @function show
      */
     show: function () {
-        if (this.clockpicker) {
-            this.clockpicker.show()
+        if (this.jq) {
+            this.jq.clockpicker("show");
         }
     },
     /**
@@ -68,8 +89,24 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      * @function remove
      */
     remove: function () {
-        if (this.clockpicker) {
-            this.clockpicker.remove()
+        if (this.jq) {
+            this.jq.clockpicker("remove");
         }
+    },
+
+    /**
+     * Disables this input so that the user cannot enter a value anymore.
+     */
+    disable: function() {
+        this.remove();
+        PrimeFaces.utils.disableInputWidget(this.jq);
+    },
+
+    /**
+     * Enables this input so that the user can enter a value.
+     */
+    enable: function() {
+        PrimeFaces.utils.enableInputWidget(this.jq);
+        this.clockpicker = this.createClockPicker();
     }
 });

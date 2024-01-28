@@ -917,7 +917,7 @@ async function main() {
         ),
 
         [Doc()]: "Enable experimental whitespace rendering. Defaults to {@code svg}.",
-        experimentalWhitespaceRendering: T_Enum("EFoldingStrategy",
+        experimentalWhitespaceRendering: T_Enum("EExperimentalWhitespaceRendering",
             "Enable experimental whitespace rendering. Defaults to {@code svg}.",
             false,
             "off", "svg", "font"

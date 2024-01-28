@@ -33,11 +33,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import org.primefaces.renderkit.CoreRenderer;
+import org.primefaces.renderkit.InputRenderer;
+import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
-public class ClockPickerRenderer extends CoreRenderer {
+public class ClockPickerRenderer extends InputRenderer {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -87,6 +88,11 @@ public class ClockPickerRenderer extends CoreRenderer {
         if (LangUtils.isNotBlank(value)) {
             writer.writeAttribute("value", value, null);
         }
+
+        renderAccessibilityAttributes(context, clockPicker);
+        renderPassThruAttributes(context, clockPicker, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+        renderDomEvents(context, clockPicker, HTML.INPUT_TEXT_EVENTS);
+        renderValidationMetadata(context, clockPicker);
 
         writer.endElement("input");
 

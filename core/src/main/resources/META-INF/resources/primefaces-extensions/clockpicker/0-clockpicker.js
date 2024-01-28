@@ -162,7 +162,7 @@
 		if (! options.autoclose) {
 			// If autoclose is not setted, append a button
 			$('<button type="button" class="btn btn-sm btn-default btn-block clockpicker-button">' + options.donetext + '</button>')
-				.click($.proxy(this.done, this))
+				.on("click.clockpicker", $.proxy(this.done, this))
 				.appendTo(popover);
 		}
 
@@ -173,8 +173,8 @@
 		popover.addClass(options.placement);
 		popover.addClass('clockpicker-align-' + options.align);
 
-		this.spanHours.click($.proxy(this.toggleView, this, 'hours'));
-		this.spanMinutes.click($.proxy(this.toggleView, this, 'minutes'));
+		this.spanHours.on("click.clockpicker",$.proxy(this.toggleView, this, 'hours'));
+		this.spanMinutes.on("click.clockpicker",$.proxy(this.toggleView, this, 'minutes'));
 
 		// Show or toggle
 		input.on('focus.clockpicker click.clockpicker', $.proxy(this.show, this));
