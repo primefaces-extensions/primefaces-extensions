@@ -17,11 +17,11 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.jq = $(this.jqEl);
         this.cfg.donetext = PrimeFaces.getAriaLabel('close') || 'Close';
 
-        this.clockpicker = this.jq.clockpicker(this.cfg);
+        this.clockpicker = this.createClockPicker();
+
         // pfs metadata
         this.jq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.originalValue = this.jq.val();
-
     },
 
     // @override
@@ -39,6 +39,28 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this._super();
         // Destroy instance
         this.remove()
+    },
+
+    createClockPicker: function () {
+        this.clockpicker = this.jq.clockpicker(this.cfg);
+        this.bindConstantEvents();
+        return this.clockpicker;
+    },
+
+    /**
+     * Sets up the event listeners that only need to be set up once.
+     * @private
+     */
+    bindConstantEvents: function () {
+        var $this = this;
+
+        PrimeFaces.utils.registerResizeHandler(this, 'resize.' + this.id + '_hide', undefined, function () {
+            $this.hide();
+        });
+
+        PrimeFaces.utils.registerScrollHandler(this, 'scroll.' + this.id + '_hide', function () {
+            $this.hide();
+        });
     },
 
     /**
@@ -83,6 +105,6 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
      */
     enable: function() {
         PrimeFaces.utils.enableInputWidget(this.jq);
-        this.clockpicker = this.jq.clockpicker(this.cfg);
+        this.clockpicker = this.createClockPicker();
     }
 });
