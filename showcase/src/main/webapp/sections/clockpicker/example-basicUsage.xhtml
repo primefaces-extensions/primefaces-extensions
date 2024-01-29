@@ -15,7 +15,9 @@
 
 
     <p>24 Hour with Manual Close Mode</p>
-    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" showOn="button"/>
+    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" showOn="button">
+        <p:ajax listener="#{clockPickerController.showTime2}" />
+    </pe:clockpicker>
 
 </h:panelGroup>
 
@@ -23,7 +25,7 @@
                  onclick="PF('autocloseWidget').disable();PF('closeableWidget').disable();"/>
 <p:commandButton type="button" value="Enable clock pickers" styleClass="mt-2 mr-2"
                  onclick="PF('autocloseWidget').enable();PF('closeableWidget').enable();"/>
-<p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime}" update="timePickerGroup"
+<p:commandButton id="submitButton" value="Submit" actionListener="#{clockPickerController.showTime1}" update="timePickerGroup"
                  styleClass="mt-2 mr-2" icon="pi pi-save"/>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

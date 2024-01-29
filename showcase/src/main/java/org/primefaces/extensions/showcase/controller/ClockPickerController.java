@@ -50,13 +50,22 @@ public class ClockPickerController implements Serializable {
         time2 = LocalTime.of(9, 28);
     }
 
-    public void showTime() {
+    public void showTime1() {
         if (time != null) {
             int hour = time.getHour();
             int min = time.getMinute();
 
             String message = String.format("Selected hour: %d, Selected min: %d", hour, min);
             addMessage(FacesMessage.SEVERITY_INFO, "Info Message", message);
+        }
+        else {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Time is not selected.");
+        }
+    }
+
+    public void showTime2() {
+        if (time2 != null) {
+            addMessage(FacesMessage.SEVERITY_INFO, "Info Message", String.format("Ajax Event: %s", time2));
         }
         else {
             addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Time is not selected.");
