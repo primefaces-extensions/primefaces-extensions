@@ -21,11 +21,15 @@
  */
 package org.primefaces.extensions.component.clockpicker;
 
+import java.util.Locale;
+
 import javax.faces.application.ResourceDependency;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.util.LocaleUtils;
 
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
@@ -40,15 +44,18 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.ClockPickerRenderer";
 
+    private Locale appropriateLocale;
+
     protected enum PropertyKeys {
 
         //@formatter:off
         widgetVar,
+        locale,
         placement,
         align,
-        autoclose,
+        autoClose,
         vibrate,
-        twelvehour;
+        twelveHour;
     }
     
     public ClockPicker() {
@@ -104,12 +111,12 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         getStateHelper().put(PropertyKeys.align, align);
     }
     
-    public Boolean getAutoclose() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.autoclose, false);
+    public Boolean isAutoClose() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.autoClose, false);
     }
     
-    public void setAutoclose(final Boolean autoclose) {
-        getStateHelper().put(PropertyKeys.autoclose, autoclose);
+    public void setAutoClose(final Boolean autoClose) {
+        getStateHelper().put(PropertyKeys.autoClose, autoClose);
     }
     
     public Boolean getVibrate() {
@@ -120,12 +127,34 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         getStateHelper().put(PropertyKeys.vibrate, vibrate);
     }
     
-    public Boolean getTwelvehour() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.twelvehour, false); 
+    public Boolean isTwelveHour() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.twelveHour, false);
     }
     
-    public void setTwelvehour(final Boolean twelvehour) {
-        getStateHelper().put(PropertyKeys.twelvehour, twelvehour);
+    public void setTwelveHour(final Boolean twelveHour) {
+        getStateHelper().put(PropertyKeys.twelveHour, twelveHour);
     }
 
+    public Object getLocale() {
+        return getStateHelper().eval(PropertyKeys.locale, null);
+    }
+
+    public void setLocale(final Object locale) {
+        getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
+    public Locale calculateLocale(FacesContext fc) {
+        if (appropriateLocale == null) {
+            appropriateLocale = LocaleUtils.resolveLocale(fc, getLocale(), getClientId(fc));
+        }
+        return appropriateLocale;
+    }
+
+    @Override
+    public Object saveState(FacesContext context) {
+        // reset component for MyFaces view pooling
+        appropriateLocale = null;
+
+        return super.saveState(context);
+    }
 }

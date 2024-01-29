@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.clockpicker;
 
 import java.io.IOException;
+import java.text.DateFormatSymbols;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -42,10 +43,6 @@ import org.primefaces.util.WidgetBuilder;
 public class ClockPickerRenderer extends InputRenderer {
 
     private static final DateTimeFormatter FORMATTER_24_HOUR = DateTimeFormatter.ofPattern("HH:mm");
-    // Note: We specify Locale.ENGLISH in the DateTimeFormatter to ensure consistent formatting, especially when interfacing with clockpicker.js.
-    // The JavaScript library generates time in the AM/PM format based on English conventions.
-    // Without this specification, different locales might cause errors during conversion, as clockpicker.js relies on the English-style AM/PM markers.
-    private static final DateTimeFormatter FORMATTER_12_HOUR = DateTimeFormatter.ofPattern("hh:mma").withLocale(Locale.ENGLISH);
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
@@ -67,16 +64,20 @@ public class ClockPickerRenderer extends InputRenderer {
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         final ClockPicker clockPicker = (ClockPicker) component;
+        final Locale locale = clockPicker.calculateLocale(context);
+        final DateFormatSymbols symbols = new DateFormatSymbols(locale);
 
         final String value = getValueAsString(context, clockPicker);
-        encodeMarkup(context, clockPicker, value);
-        encodeScript(context, clockPicker);
+        encodeMarkup(context, clockPicker, value, symbols);
+        encodeScript(context, clockPicker, symbols);
     }
 
-    private void encodeMarkup(FacesContext context, ClockPicker clockPicker, final String value) throws IOException {
-        ResponseWriter writer = context.getResponseWriter();
-        String clientId = clockPicker.getClientId();
-        String inputId = clientId + "_input";
+    private void encodeMarkup(FacesContext context, ClockPicker clockPicker, final String value, DateFormatSymbols symbols) throws IOException {
+        final ResponseWriter writer = context.getResponseWriter();
+        final String clientId = clockPicker.getClientId();
+        final String inputId = clientId + "_input";
+        final String[] ampm = symbols.getAmPmStrings();
+        final int inputSize = clockPicker.isTwelveHour() ? 5 + ampm[0].length() : 5;
 
         writer.startElement("div", clockPicker);
         writer.writeAttribute("id", clientId, null);
@@ -87,8 +88,8 @@ public class ClockPickerRenderer extends InputRenderer {
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", "text", null);
         writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
-        writer.writeAttribute("size", 5, null);
-        writer.writeAttribute("maxlength", 5, null);
+        writer.writeAttribute("size", inputSize, null);
+        writer.writeAttribute("maxlength", inputSize, null);
 
         if (LangUtils.isNotBlank(value)) {
             writer.writeAttribute("value", value, null);
@@ -110,14 +111,18 @@ public class ClockPickerRenderer extends InputRenderer {
         writer.endElement("div");
     }
 
-    private void encodeScript(final FacesContext context, final ClockPicker clockPicker) throws IOException {
+    private void encodeScript(final FacesContext context, final ClockPicker clockPicker, DateFormatSymbols symbols) throws IOException {
+        final String[] ampm = symbols.getAmPmStrings();
+
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtClockPicker", clockPicker);
         wb.attr("placement", clockPicker.getPlacement(), "bottom");
         wb.attr("align", clockPicker.getAlign(), "left");
-        wb.attr("autoclose", clockPicker.getAutoclose(), false);
+        wb.attr("autoclose", clockPicker.isAutoClose(), false);
         wb.attr("vibrate", clockPicker.getVibrate(), true);
-        wb.attr("twelvehour", clockPicker.getTwelvehour(), false);
+        wb.attr("twelvehour", clockPicker.isTwelveHour(), false);
+        wb.attr("amtext", ampm[0], "AM");
+        wb.attr("pmtext", ampm[1], "PM");
 
         encodeClientBehaviors(context, clockPicker);
         wb.finish();
@@ -139,7 +144,9 @@ public class ClockPickerRenderer extends InputRenderer {
                 return clockPicker.getConverter().getAsString(context, clockPicker, value);
             }
             else if (value instanceof LocalTime) {
-                return clockPicker.getTwelvehour() ? ((LocalTime) value).format(FORMATTER_12_HOUR) : ((LocalTime) value).format(FORMATTER_24_HOUR);
+                return clockPicker.isTwelveHour()
+                            ? ((LocalTime) value).format(DateTimeFormatter.ofPattern("hh:mma").withLocale(clockPicker.calculateLocale(context)))
+                            : ((LocalTime) value).format(FORMATTER_24_HOUR);
             }
         }
         catch (Exception e) {
@@ -177,7 +184,8 @@ public class ClockPickerRenderer extends InputRenderer {
                 Class<?> type = ve.getType(context.getELContext());
                 if (type != null && submittedValue != null && type.isAssignableFrom(LocalTime.class)) {
                     // Use built-in converter for LocalTime
-                    return clockPicker.getTwelvehour() ? LocalTime.parse(submittedValue, FORMATTER_12_HOUR)
+                    return clockPicker.isTwelveHour()
+                                ? LocalTime.parse(submittedValue, DateTimeFormatter.ofPattern("hh:mma").withLocale(clockPicker.calculateLocale(context)))
                                 : LocalTime.parse(submittedValue, FORMATTER_24_HOUR);
                 }
             }

@@ -10916,7 +10916,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description><![CDATA[auto close when minute is selected. Default is false]]></description>
-            <name>autoclose</name>
+            <name>autoClose</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
@@ -10928,9 +10928,17 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description><![CDATA[enables twelve hour mode with AM & PM buttons. Default is false]]></description>
-            <name>twelvehour</name>
+            <name>twelveHour</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[String or java.util.Locale representing user locale. Default is a locale specified in view root.]]>
+            </description>
+            <name>locale</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
         </attribute>
     </tag>
 

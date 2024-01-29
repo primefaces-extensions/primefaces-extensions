@@ -8,14 +8,14 @@
 
     <!-- EXAMPLE-SOURCE-START -->
 <h:panelGroup id="timePickerGroup" layout="block">
-    <p>Auto-Close Mode</p>
-    <pe:clockpicker id="autoclose" autoclose="true" value="#{clockPickerController.time}"
-                        twelvehour="true"
-                        widgetVar="autocloseWidget" />
 
-    <p>Manual Close Mode</p>
-    <pe:clockpicker id="closeable" autoclose="false" value="#{clockPickerController.time2}"
-                        widgetVar="closeableWidget" />
+    <p>AM/PM with Auto-Close</p>
+    <pe:clockpicker id="autoclose" widgetVar="autocloseWidget" autoClose="true" value="#{clockPickerController.time}"
+                        twelveHour="true" locale="es"/>
+
+
+    <p>24 Hour with Manual Close Mode</p>
+    <pe:clockpicker id="closeable" widgetVar="closeableWidget" autoClose="false" value="#{clockPickerController.time2}" />
 
 </h:panelGroup>
 
