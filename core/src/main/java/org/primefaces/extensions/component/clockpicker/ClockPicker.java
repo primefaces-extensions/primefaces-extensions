@@ -38,7 +38,10 @@ import org.primefaces.util.LocaleUtils;
 @ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.css")
 @ResourceDependency(library = "primefaces-extensions", name = "clockpicker/clockpicker.js")
 public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
-    public static final String CONTAINER_CLASS = "pe-clockpicker ui-widget ui-corner-all input-group clockpicker";
+    public static final String CONTAINER_CLASS = "pe-clockpicker ui-widget ui-corner-all clockpicker";
+    public static final String BUTTON_TRIGGER_CLASS = "pe-clockpicker-trigger ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only input-group-addon";
+    public static final String BUTTON_TRIGGER_ICON_CLASS = "ui-button-icon-left ui-icon ui-icon-clock";
+    public static final String BUTTON_TRIGGER_TEXT_CLASS = "ui-button-text";
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.ClockPicker";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -55,7 +58,8 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         align,
         autoClose,
         vibrate,
-        twelveHour;
+        twelveHour,
+        showOn;
     }
     
     public ClockPicker() {
@@ -141,6 +145,18 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
 
     public void setLocale(final Object locale) {
         getStateHelper().put(PropertyKeys.locale, locale);
+    }
+
+    public String getShowOn() {
+        return (String) getStateHelper().eval(PropertyKeys.showOn, "focus");
+    }
+
+    public void setShowOn(final String showOn) {
+        getStateHelper().put(PropertyKeys.showOn, showOn);
+    }
+
+    public boolean isShowOnButton() {
+        return !"focus".equals(getShowOn());
     }
 
     public Locale calculateLocale(FacesContext fc) {

@@ -1,1 +1,18 @@
 /* TODO support theme colors and dark mode here */
+body .pe-clockpicker .ui-icon,
+body .pe-clockpicker .ui-icon {
+    font-family: 'primeicons', sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body .pe-clockpicker-trigger .ui-icon-clock:before {
+    content: "\e940";
+}

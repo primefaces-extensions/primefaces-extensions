@@ -155,8 +155,12 @@
 		this.spanMinutes.on("click.clockpicker",$.proxy(this.toggleView, this, 'minutes'));
 
 		// Show or toggle
-		input.on('focus.clockpicker click.clockpicker', $.proxy(this.show, this));
-		addon.on('click.clockpicker', $.proxy(this.toggle, this));
+		if (addon.length) {
+			addon.on('click.clockpicker', $.proxy(this.toggle, this));
+		}
+		else {
+			input.on('focus.clockpicker click.clockpicker', $.proxy(this.show, this));
+		}
 
 		// Build ticks
 		let tickTpl = $('<div class="clockpicker-tick"></div>'),
@@ -379,8 +383,7 @@
 			height = element.outerHeight(),
 			placement = this.options.placement,
 			align = this.options.align,
-			styles = {},
-			self = this;
+			styles = {};
 
 		popover.show();
 
@@ -402,6 +405,9 @@
 
 		// Align the popover arrow
 		switch (align) {
+			case 'center':
+				styles.left = offset.left - ((popover.outerWidth() - element.outerWidth())/2);
+				break;
 			case 'left':
 				styles.left = offset.left;
 				break;
@@ -452,7 +458,7 @@
 		this.spanMinutes.html(leadingZero(this.minutes));
 
 		if (this.options.twelvehour) {
-			if (this.hours == 12) {
+			if (this.hours === 12) {
 				this.amOrPm = this.options.pmtext;
 			}
 			else if (this.hours > 12) {

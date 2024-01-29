@@ -10940,6 +10940,14 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.Object</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[When to display the calculator: 'focus' for popup on focus, 'button' for trigger button, 'both' for either, 'operator' for non-numeric character entered, 'opbutton' for operator/button combination.]]>
+            </description>
+            <name>showOn</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>

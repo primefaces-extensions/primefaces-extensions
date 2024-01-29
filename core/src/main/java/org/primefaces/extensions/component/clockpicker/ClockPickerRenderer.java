@@ -35,6 +35,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.LangUtils;
@@ -81,7 +82,11 @@ public class ClockPickerRenderer extends InputRenderer {
 
         writer.startElement("div", clockPicker);
         writer.writeAttribute("id", clientId, null);
-        writer.writeAttribute("class", ClockPicker.CONTAINER_CLASS, null);
+        String containerClass = ClockPicker.CONTAINER_CLASS;
+        if (clockPicker.isShowOnButton()) {
+            containerClass += " ui-inputgroup";
+        }
+        writer.writeAttribute("class", containerClass, null);
 
         writer.startElement("input", null);
         writer.writeAttribute("id", inputId, null);
@@ -102,12 +107,23 @@ public class ClockPickerRenderer extends InputRenderer {
 
         writer.endElement("input");
 
-        writer.startElement("span", null);
-        writer.writeAttribute("class", "input-group-addon", null);
-        writer.startElement("span", null);
-        writer.writeAttribute("class", "glyphicon glyphicon-time", null);
-        writer.endElement("span");
-        writer.endElement("span");
+        if (clockPicker.isShowOnButton()) {
+            writer.startElement("button", null);
+            writer.writeAttribute(Attrs.CLASS, ClockPicker.BUTTON_TRIGGER_CLASS, null);
+            writer.writeAttribute("type", "button", null);
+            writer.writeAttribute("role", "button", null);
+
+            writer.startElement("span", null);
+            writer.writeAttribute(Attrs.CLASS, ClockPicker.BUTTON_TRIGGER_ICON_CLASS, null);
+            writer.endElement("span");
+
+            writer.startElement("span", null);
+            writer.writeAttribute(Attrs.CLASS, ClockPicker.BUTTON_TRIGGER_TEXT_CLASS, null);
+            writer.write("ui-button");
+            writer.endElement("span");
+            writer.endElement("button");
+        }
+
         writer.endElement("div");
     }
 
