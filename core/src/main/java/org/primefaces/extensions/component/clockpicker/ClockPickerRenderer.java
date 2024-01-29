@@ -140,6 +140,34 @@ public class ClockPickerRenderer extends InputRenderer {
         wb.attr("amtext", ampm[0], "AM");
         wb.attr("pmtext", ampm[1], "PM");
 
+        if (clockPicker.getOnbeforehourselect() != null) {
+            wb.callback("beforeHourSelect", "function()", clockPicker.getOnbeforehourselect());
+        }
+        if (clockPicker.getOnbeforedone() != null) {
+            wb.callback("beforeDone", "function()", clockPicker.getOnbeforedone());
+        }
+        if (clockPicker.getOnbeforeshow() != null) {
+            wb.callback("beforeShow", "function()", clockPicker.getOnbeforeshow());
+        }
+        if (clockPicker.getOnbeforehide() != null) {
+            wb.callback("beforeHide", "function()", clockPicker.getOnbeforehide());
+        }
+        if (clockPicker.getOnafterhourselect() != null) {
+            wb.callback("afterHourSelect", "function()", clockPicker.getOnafterhourselect());
+        }
+        if (clockPicker.getOnafterdone() != null) {
+            wb.callback("afterDone", "function()", clockPicker.getOnafterdone());
+        }
+        if (clockPicker.getOnaftershow() != null) {
+            wb.callback("afterShow", "function()", clockPicker.getOnaftershow());
+        }
+        if (clockPicker.getOnafterhide() != null) {
+            wb.callback("afterHide", "function()", clockPicker.getOnafterhide());
+        }
+        if (clockPicker.getOnafterampmselect() != null) {
+            wb.callback("afterAmPmSelect", "function()", clockPicker.getOnafterampmselect());
+        }
+
         encodeClientBehaviors(context, clockPicker);
         wb.finish();
     }

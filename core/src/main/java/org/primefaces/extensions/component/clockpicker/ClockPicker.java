@@ -59,7 +59,16 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         autoClose,
         vibrate,
         twelveHour,
-        showOn;
+        showOn,
+        onbeforeshow,
+        onaftershow,
+        onbeforehide,
+        onafterhide,
+        onbeforehourselect,
+        onafterhourselect,
+        onafterampmselect,
+        onbeforedone,
+        onafterdone
     }
     
     public ClockPicker() {
@@ -153,6 +162,78 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
 
     public void setShowOn(final String showOn) {
         getStateHelper().put(PropertyKeys.showOn, showOn);
+    }
+
+    public String getOnbeforeshow() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforeshow, null);
+    }
+
+    public void setOnbeforeshow(final String beforeshow) {
+        getStateHelper().put(PropertyKeys.onbeforeshow, beforeshow);
+    }
+
+    public String getOnaftershow() {
+        return (String) getStateHelper().eval(PropertyKeys.onaftershow, null);
+    }
+
+    public void setOnaftershow(final String aftershow) {
+        getStateHelper().put(PropertyKeys.onaftershow, aftershow);
+    }
+
+    public String getOnbeforehide() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforehide, null);
+    }
+
+    public void setOnbeforehide(final String beforehide) {
+        getStateHelper().put(PropertyKeys.onbeforehide, beforehide);
+    }
+
+    public String getOnafterhide() {
+        return (String) getStateHelper().eval(PropertyKeys.onafterhide, null);
+    }
+
+    public void setOnafterhide(final String afterhide) {
+        getStateHelper().put(PropertyKeys.onafterhide, afterhide);
+    }
+
+    public String getOnbeforedone() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforedone, null);
+    }
+
+    public void setOnbeforedone(final String beforedone) {
+        getStateHelper().put(PropertyKeys.onbeforedone, beforedone);
+    }
+
+    public String getOnafterdone() {
+        return (String) getStateHelper().eval(PropertyKeys.onafterdone, null);
+    }
+
+    public void setOnafterdone(final String afterdone) {
+        getStateHelper().put(PropertyKeys.onafterdone, afterdone);
+    }
+
+    public String getOnafterampmselect() {
+        return (String) getStateHelper().eval(PropertyKeys.onafterampmselect, null);
+    }
+
+    public void setOnafterampmselect(final String afterampmselect) {
+        getStateHelper().put(PropertyKeys.onafterampmselect, afterampmselect);
+    }
+
+    public String getOnafterhourselect() {
+        return (String) getStateHelper().eval(PropertyKeys.onafterhourselect, null);
+    }
+
+    public void setOnafterhourselect(final String afterhourselect) {
+        getStateHelper().put(PropertyKeys.onafterhourselect, afterhourselect);
+    }
+
+    public String getOnbeforehourselect() {
+        return (String) getStateHelper().eval(PropertyKeys.onbeforehourselect, null);
+    }
+
+    public void setOnbeforehourselect(final String beforehourselect) {
+        getStateHelper().put(PropertyKeys.onbeforehourselect, beforehourselect);
     }
 
     public boolean isShowOnButton() {

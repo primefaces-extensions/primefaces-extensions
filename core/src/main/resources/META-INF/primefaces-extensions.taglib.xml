@@ -10948,6 +10948,78 @@ See showcase for an example. Default null.]]>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before popup is shown.]]>
+            </description>
+            <name>onbeforeshow</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered after popup is shown.]]>
+            </description>
+            <name>onaftershow</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before popup is hidden. Note:will be triggered between a beforeDone and afterDone]]>
+            </description>
+            <name>onbeforehide</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered after popup is hidden. Note:will be triggered between a beforeDone and afterDone]]>
+            </description>
+            <name>onafterhide</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before time is written to input.]]>
+            </description>
+            <name>onbeforedone</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before time is written to input.]]>
+            </description>
+            <name>onafterdone</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before user makes an hour selection.]]>
+            </description>
+            <name>onbeforehourselect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered before user makes an hour selection.]]>
+            </description>
+            <name>onafterhourselect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Javascript handler callback function triggered after user makes an Am/PM selection.]]>
+            </description>
+            <name>onafterampmselect</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
     </tag>
 
 </facelet-taglib>
