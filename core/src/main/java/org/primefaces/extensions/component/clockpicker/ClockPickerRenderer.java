@@ -92,9 +92,15 @@ public class ClockPickerRenderer extends InputRenderer {
         writer.writeAttribute("id", inputId, null);
         writer.writeAttribute("name", inputId, null);
         writer.writeAttribute("type", "text", null);
-        writer.writeAttribute("class", "ui-inputfield ui-widget ui-state-default ui-corner-all", null);
         writer.writeAttribute("size", inputSize, null);
         writer.writeAttribute("maxlength", inputSize, null);
+
+        final String styleClass = createStyleClass(clockPicker, "ui-inputfield ui-widget ui-state-default ui-corner-all");
+        writer.writeAttribute(Attrs.CLASS, styleClass, null);
+
+        if (clockPicker.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, clockPicker.getStyle(), null);
+        }
 
         if (LangUtils.isNotBlank(value)) {
             writer.writeAttribute("value", value, null);
