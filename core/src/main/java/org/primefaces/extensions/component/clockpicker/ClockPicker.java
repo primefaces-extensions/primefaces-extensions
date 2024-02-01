@@ -68,7 +68,8 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
         onafterhourselect,
         onafterampmselect,
         onbeforedone,
-        onafterdone
+        onafterdone,
+        appendTo
     }
     
     public ClockPicker() {
@@ -238,6 +239,14 @@ public class ClockPicker extends AbstractPrimeHtmlInputText implements Widget, I
 
     public boolean isShowOnButton() {
         return !"focus".equals(getShowOn());
+    }
+
+    public String getAppendTo() {
+        return (String) getStateHelper().eval(PropertyKeys.appendTo, "@(body)");
+    }
+
+    public void setAppendTo(String appendTo) {
+        getStateHelper().put(PropertyKeys.appendTo, appendTo);
     }
 
     public Locale calculateLocale(FacesContext fc) {

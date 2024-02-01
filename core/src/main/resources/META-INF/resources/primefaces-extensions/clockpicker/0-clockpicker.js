@@ -366,7 +366,8 @@
 		pmtext: 'PM',    // PM text
 		autoclose: false,    // auto close when minute is selected
 		twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
-		vibrate: true        // vibrate the device when dragging clock hand
+		vibrate: true,        // vibrate the device when dragging clock hand
+		appendTo: $(document.body), // object to append popover
 	};
 
 	// Show or hide popover
@@ -383,9 +384,14 @@
 			height = element.outerHeight(),
 			placement = this.options.placement,
 			align = this.options.align,
+			appendToOffset = this.options.appendTo.offset(),
 			styles = {};
 
 		popover.show();
+
+		// Remove the referential offset
+		offset.left -= appendToOffset.left;
+		offset.top -= appendToOffset.top;
 
 		// Place the popover
 		switch (placement) {
@@ -438,8 +444,8 @@
 
 		// Initialize
 		if (! this.isAppended) {
-			// Append popover to body
-			$body = $(document.body).append(this.popover);
+			// Append popover to body or appendTo
+			$body = this.options.appendTo.append(this.popover);
 			this.isAppended = true;
 		}
 

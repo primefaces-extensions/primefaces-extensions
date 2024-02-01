@@ -35,6 +35,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.HTML;
@@ -138,6 +139,7 @@ public class ClockPickerRenderer extends InputRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtClockPicker", clockPicker);
+        wb.attr("appendTo", SearchExpressionUtils.resolveClientId(clockPicker.getAppendTo(), clockPicker));
         wb.attr("placement", clockPicker.getPlacement(), "bottom");
         wb.attr("align", clockPicker.getAlign(), "left");
         wb.attr("autoclose", clockPicker.isAutoClose(), false);

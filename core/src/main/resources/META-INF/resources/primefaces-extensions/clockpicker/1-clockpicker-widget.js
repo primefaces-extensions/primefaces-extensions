@@ -14,11 +14,18 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
         this.jqId = PrimeFaces.escapeClientId(cfg.id);
         this.container = $(this.jqId);
         this.jqEl = this.jqId + '_input';
-        this.input = $(this.jqEl);
         this.jq = $(this.jqEl);
         this.cfg.donetext = PrimeFaces.getAriaLabel('close') || 'Close';
+        this.cfg.appendTo = PrimeFaces.utils.resolveDynamicOverlayContainer(this);
 
+        // setup input
+        this.input = $(this.jqEl);
         PrimeFaces.skinInput(this.input);
+
+        // check if being used in dialog and set the parent
+        this.setupDialogSupport();
+
+        // create the clock picker
         this.clockpicker = this.createClockPicker();
 
         // pfs metadata
@@ -38,6 +45,17 @@ PrimeFaces.widget.ExtClockPicker = PrimeFaces.widget.BaseWidget.extend({
     destroy: function () {
         this._super();
         this.remove();
+    },
+
+    /**
+     * Sets up support for using the overlay color picker within an overlay dialog.
+     * @private
+     */
+    setupDialogSupport: function() {
+        var dialog = this.input[0].closest('.ui-dialog');
+        if (dialog) {
+            this.cfg.appendTo = $(PrimeFaces.escapeClientId(dialog.id));
+        }
     },
 
     /**

@@ -19,6 +19,15 @@
         <p:ajax listener="#{clockPickerController.showTime2}" />
     </pe:clockpicker>
 
+    <p>Open In Dialog</p>
+    <p:commandButton value="Open Dialog" type="button" icon="pi pi-external-link" onclick="PF('dlg1').show()"/>
+    <p:dialog header="ClockPicker" widgetVar="dlg1" height="350" width="350" showEffect="fade" closeOnEscape="true">
+        <pe:clockpicker id="dlgClockPicker" widgetVar="dialogClockPickerWidget" autoClose="false" value="#{clockPickerController.time3}" showOn="button">
+            <p:ajax listener="#{clockPickerController.showTime3}" />
+        </pe:clockpicker>
+    </p:dialog>
+
+
 </h:panelGroup>
 
 <p:commandButton type="button" value="Disable clock pickers" styleClass="mt-2 mr-2"
