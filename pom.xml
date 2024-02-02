@@ -101,7 +101,7 @@
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
         <jsf.stage>Development</jsf.stage>
-        <apache-faces.version>2.3.10</apache-faces.version>
+        <apache-faces.version>4.0.2</apache-faces.version>
         <commonmark.version>0.21.0</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
