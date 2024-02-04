@@ -1,4 +1,3 @@
-/* TODO support theme colors and dark mode here */
 body .pe-clockpicker .ui-icon,
 body .pe-clockpicker .ui-icon {
     font-family: 'primeicons', sans-serif;
@@ -15,4 +14,61 @@ body .pe-clockpicker .ui-icon {
 
 body .pe-clockpicker-trigger .ui-icon-clock:before {
     content: "\e940";
+}
+
+body .popover,
+body .btn-default,
+body .clockpicker-plate {
+    border-color: var(--surface-d, #ddd);
+}
+
+body .popover,
+body .clockpicker-popover .popover-title,
+body .clockpicker-button,
+body .btn-default {
+    background-color: var(--surface-d, #eee);
+}
+
+body .clockpicker-plate {
+    background-color: var(--surface-d, #ddd);
+}
+
+body .popover.bottom > .arrow:after {
+    border-bottom-color: var(--surface-d, #fff);
+}
+
+body .btn-default,
+body .popover-title .text-primary,
+body .clockpicker-tick {
+    color: var(--text-color, #333) !important;
+}
+body .clockpicker-popover .popover-title {
+    color: var(--text-color-secondary, #888);
+}
+
+body .clockpicker-popover .popover-content {
+    background-color: var(--surface-b, #ddd);
+}
+
+body .popover-title {
+    border-color: var(--surface-d, #eee);
+}
+
+body .btn-default:hover, body .btn-default:focus, body .btn-default:active, body .btn-default.active,
+body .open .dropdown-toggle.btn-default {
+    border-color: var(--surface-d, #eee);
+    background-color: var(--surface-d, #eee);
+}
+
+body .clockpicker-canvas-bg,
+body .clockpicker-canvas-bearing, body .clockpicker-canvas-fg {
+    fill: var(--surface-b, #888);
+}
+body .clockpicker-canvas line {
+    stroke: var(--surface-b, #888);
+}
+
+body .clockpicker-tick.active, body .clockpicker-tick:hover {
+    background-color: var(--surface-b, #888);
+    opacity: .7;
 }
