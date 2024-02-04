@@ -36,11 +36,12 @@ body .clockpicker-plate {
 body .popover.bottom > .arrow:after {
     border-bottom-color: var(--surface-d, #fff);
 }
-
 body .btn-default,
-body .popover-title .text-primary,
 body .clockpicker-tick {
     color: var(--text-color, #333) !important;
+}
+body .popover-title .text-primary{
+    color: var(--primary-color, #333) !important;
 }
 body .clockpicker-popover .popover-title {
     color: var(--text-color-secondary, #888);
