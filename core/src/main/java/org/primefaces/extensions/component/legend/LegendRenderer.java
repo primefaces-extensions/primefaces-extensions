@@ -31,7 +31,7 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.FacetUtils;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
 
@@ -109,7 +109,7 @@ public class LegendRenderer extends CoreRenderer {
         final String title = legend.getTitle();
         writer.startElement("div", null);
         writer.writeAttribute(Attrs.CLASS, Legend.TITLE_STYLE, null);
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(context);
         }
         else if (title != null) {
@@ -127,7 +127,7 @@ public class LegendRenderer extends CoreRenderer {
         final String footer = legend.getFooter();
         writer.startElement("div", null);
         writer.writeAttribute(Attrs.CLASS, Legend.FOOTER_STYLE, null);
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             facet.encodeAll(context);
         }
         else if (footer != null) {

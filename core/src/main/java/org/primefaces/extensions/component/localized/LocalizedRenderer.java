@@ -38,8 +38,8 @@ import javax.servlet.ServletContext;
 import org.primefaces.extensions.config.PrimeExtensionsEnvironment;
 import org.primefaces.extensions.util.CommonMarkWrapper;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.EscapeUtils;
+import org.primefaces.util.FacetUtils;
 import org.primefaces.util.LangUtils;
 
 /**
@@ -77,15 +77,15 @@ public class LocalizedRenderer extends CoreRenderer {
 
     protected UIComponent resolveFacet(final Localized localized, final String language, final String country) {
         UIComponent facet = localized.getFacet(language + "_" + country);
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
         facet = localized.getFacet(language);
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
         facet = localized.getFacet("default");
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             return facet;
         }
         throw new FacesException("No facet found for " + language + "_" + country + ", nor a 'default' facet");
