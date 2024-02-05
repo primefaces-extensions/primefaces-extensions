@@ -36,20 +36,12 @@ import org.primefaces.util.Constants;
  */
 public class PrimeFacesExtensionsResource extends ResourceWrapper {
 
-    private final Resource wrapped;
     private final String version;
 
-    @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResource(final Resource resource) {
-        super();
-        wrapped = resource;
+        super(resource);
         version = PrimeRequestContext.getCurrentInstance(FacesContext.getCurrentInstance()).isHideResourceVersion() ? Constants.EMPTY_STRING
                     : "&e=" + getClass().getPackage().getImplementationVersion();
-    }
-
-    @Override
-    public Resource getWrapped() {
-        return wrapped;
     }
 
     @Override

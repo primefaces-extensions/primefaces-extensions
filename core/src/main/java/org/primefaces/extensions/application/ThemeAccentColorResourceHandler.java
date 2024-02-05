@@ -37,10 +37,8 @@ public class ThemeAccentColorResourceHandler extends ResourceHandlerWrapper {
     protected static final String RESOURCE_NAME = "theme.css";
     protected static final String LIBRARY_PREFIX = "primefaces-";
 
-    private final ResourceHandler wrapped;
-
     public ThemeAccentColorResourceHandler(final ResourceHandler wrapped) {
-        this.wrapped = wrapped;
+        super(wrapped);
     }
 
     protected boolean isPrimeFacesTheme(final String resourceName, final String libraryName) {
@@ -58,10 +56,4 @@ public class ThemeAccentColorResourceHandler extends ResourceHandlerWrapper {
             return getWrapped().createResource(resourceName, libraryName);
         }
     }
-
-    @Override
-    public ResourceHandler getWrapped() {
-        return wrapped;
-    }
-
 }
