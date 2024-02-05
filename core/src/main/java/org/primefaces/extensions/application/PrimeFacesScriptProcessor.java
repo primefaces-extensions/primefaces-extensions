@@ -134,8 +134,7 @@ public class PrimeFacesScriptProcessor implements SystemEventListener {
             writer.append("PrimeFaces.settings.projectStage='").append(projectStage.toString()).append("';");
         }
 
-        if (applicationContext.getEnvironment().isAtLeastJsf22() &&
-                    context.getExternalContext().getClientWindow() != null) {
+        if (context.getExternalContext().getClientWindow() != null) {
 
             final ClientWindow clientWindow = context.getExternalContext().getClientWindow();
             if (clientWindow instanceof PrimeClientWindow) {

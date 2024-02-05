@@ -130,7 +130,7 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
 
         // BV CSV is optional and must be enabled by config
         if (configuration.isClientSideValidationEnabled()
-                && configuration.isBeanValidationEnabled()) {
+                    && configuration.isBeanValidationEnabled()) {
             encodeJS(context, "validation/validation.bv.js");
         }
     }

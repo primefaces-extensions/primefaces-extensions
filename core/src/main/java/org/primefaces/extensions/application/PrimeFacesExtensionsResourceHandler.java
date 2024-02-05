@@ -37,7 +37,6 @@ import javax.faces.application.ResourceHandlerWrapper;
  */
 public class PrimeFacesExtensionsResourceHandler extends ResourceHandlerWrapper {
 
-
     @SuppressWarnings("deprecation") // the default constructor is deprecated in JSF 2.3
     public PrimeFacesExtensionsResourceHandler(final ResourceHandler resourceHandler) {
         super(resourceHandler);
