@@ -65,8 +65,14 @@ public class MessageFactory {
         return message;
     }
 
-    public static Object getLabel(final FacesContext facesContext, final UIComponent component) {
-        return org.primefaces.util.MessageFactory.getLabel(facesContext, component);
+    public static Object getLabel(FacesContext facesContext, UIComponent component) {
+        String label = (String) component.getAttributes().get("label");
+
+        if (label == null) {
+            label = component.getClientId(facesContext);
+        }
+
+        return label;
     }
 
     private static void populateMessageFromExtensions(final FacesMessage message,

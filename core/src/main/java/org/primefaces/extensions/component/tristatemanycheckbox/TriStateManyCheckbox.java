@@ -34,8 +34,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.Constants;
-import org.primefaces.util.MessageFactory;
 
 /**
  * TriStateManyCheckbox
@@ -227,7 +227,8 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
             params[0] = MessageFactory.getLabel(context, this);
 
             // Enqueue an error message if an invalid value was specified
-            final FacesMessage message = MessageFactory.getFacesMessage(UISelectMany.INVALID_MESSAGE_ID, FacesMessage.SEVERITY_ERROR, params);
+            final FacesMessage message = org.primefaces.util.MessageFactory.getFacesMessage(UISelectMany.INVALID_MESSAGE_ID,
+                        FacesMessage.SEVERITY_ERROR, params);
             context.addMessage(getClientId(context), message);
             setValid(false);
         }

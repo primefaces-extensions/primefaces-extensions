@@ -242,7 +242,7 @@ public abstract class MonacoDiffEditorBase
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
             }
             else {
-                final Object label = MessageFactory.getLabel(context, this);
+                final Object label = org.primefaces.extensions.util.MessageFactory.getLabel(context, this);
                 message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
                             label.toString());
             }
@@ -258,7 +258,7 @@ public abstract class MonacoDiffEditorBase
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, requiredMessageStr, requiredMessageStr);
             }
             else {
-                final Object label = MessageFactory.getLabel(context, this);
+                final Object label = org.primefaces.extensions.util.MessageFactory.getLabel(context, this);
                 message = MessageFactory.getFacesMessage(REQUIRED_MESSAGE_ID, FacesMessage.SEVERITY_ERROR,
                             label.toString());
             }
