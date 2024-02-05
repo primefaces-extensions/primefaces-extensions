@@ -139,7 +139,7 @@ public class ClockPickerRenderer extends InputRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtClockPicker", clockPicker);
-        wb.attr("appendTo", SearchExpressionUtils.resolveClientId(clockPicker.getAppendTo(), clockPicker));
+        wb.attr("appendTo", SearchExpressionUtils.resolveOptionalClientIdForClientSide(context, clockPicker, clockPicker.getAppendTo()));
         wb.attr("placement", clockPicker.getPlacement(), "bottom");
         wb.attr("align", clockPicker.getAlign(), "left");
         wb.attr("autoclose", clockPicker.isAutoClose(), false);
