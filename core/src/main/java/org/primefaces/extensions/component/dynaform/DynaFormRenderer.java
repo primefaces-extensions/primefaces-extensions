@@ -34,13 +34,18 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.row.Row;
-import org.primefaces.extensions.model.dynaform.*;
+import org.primefaces.extensions.model.dynaform.AbstractDynaFormElement;
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormLabel;
+import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
+import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.CompositeUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.FacetUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -169,7 +174,7 @@ public class DynaFormRenderer extends CoreRenderer {
                 final String role,
                 final boolean extended, final boolean visible) throws IOException {
         final UIComponent facet = dynaForm.getFacet(name);
-        if (ComponentUtils.shouldRenderFacet(facet)) {
+        if (FacetUtils.shouldRenderFacet(facet)) {
             final ResponseWriter writer = fc.getResponseWriter();
             writer.startElement("tr", null);
             if (extended) {
