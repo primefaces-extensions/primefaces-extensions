@@ -28,7 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.api.InputHolder;
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -114,7 +114,7 @@ public class CodeScannerRenderer extends CoreRenderer {
     }
 
     protected String getForInputClientId(final FacesContext context, final CodeScanner codeScanner) {
-        UIComponent forComponent = SearchExpressionFacade.resolveComponent(context, codeScanner, codeScanner.getFor());
+        UIComponent forComponent = SearchExpressionUtils.resolveComponent(codeScanner.getFor(), codeScanner);
         if (forComponent == null) {
             return null;
         }

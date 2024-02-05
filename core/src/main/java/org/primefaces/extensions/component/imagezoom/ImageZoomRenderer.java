@@ -26,7 +26,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -43,7 +43,7 @@ public class ImageZoomRenderer extends CoreRenderer {
         final ImageZoom imageZoom = (ImageZoom) component;
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ImageZoom", imageZoom);
-        wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageZoom, imageZoom.getFor()))
+        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, imageZoom, imageZoom.getFor()))
                     .attr("margin", imageZoom.getMargin(), 0)
                     .attr("scrollOffset", imageZoom.getScrollOffset(), 40)
                     .attr("background", imageZoom.getBackground(), "#fff")

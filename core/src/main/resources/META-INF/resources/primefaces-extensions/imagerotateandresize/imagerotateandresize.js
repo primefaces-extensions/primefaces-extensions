@@ -26,7 +26,7 @@ PrimeFaces.widget.ExtImageRotateAndResize = PrimeFaces.widget.BaseWidget.extend(
      */
     initializeLazy: function () {
         if (!this.initialized) {
-            this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target)[0];
+            this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target)[0];
             this.imageSrc = this.target.src;
             this.imageWidth = this.target.width;
             this.imageHeight = this.target.height;

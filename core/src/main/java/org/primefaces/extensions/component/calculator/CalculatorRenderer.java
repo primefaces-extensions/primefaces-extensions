@@ -28,7 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -54,12 +54,12 @@ public class CalculatorRenderer extends CoreRenderer {
     }
 
     private void encodeScript(final FacesContext context, final Calculator calculator) throws IOException {
-        String target = SearchExpressionFacade.resolveClientIds(context, calculator, calculator.getFor());
+        String target = SearchExpressionUtils.resolveClientIdsForClientSide(context, calculator, calculator.getFor());
         if (isValueBlank(target)) {
             target = calculator.getParent().getClientId(context);
         }
 
-        final UIComponent targetComponent = SearchExpressionFacade.resolveComponent(context, calculator, target);
+        final UIComponent targetComponent = SearchExpressionUtils.resolveComponent(target, calculator);
         if (!(targetComponent instanceof UIInput)) {
             throw new FacesException("Calculator must use for=\"target\" or be nested inside an input!");
         }

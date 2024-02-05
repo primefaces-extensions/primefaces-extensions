@@ -27,7 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
@@ -56,7 +56,7 @@ public class TooltipRenderer extends CoreRenderer {
         String target = null;
 
         if (!global || tooltip.getFor() != null) {
-            target = SearchExpressionFacade.resolveClientIds(context, tooltip, tooltip.getFor());
+            target = SearchExpressionUtils.resolveClientIdsForClientSide(context, component, tooltip.getFor());
         }
 
         final ResponseWriter writer = context.getResponseWriter();

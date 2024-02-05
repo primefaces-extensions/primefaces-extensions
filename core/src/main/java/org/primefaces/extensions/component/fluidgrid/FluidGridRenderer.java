@@ -29,7 +29,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
@@ -142,7 +142,7 @@ public class FluidGridRenderer extends CoreRenderer {
             wb.append(",gutter:" + fluidGrid.gethGutter());
         }
 
-        final String stamp = SearchExpressionFacade.resolveClientIds(fc, fluidGrid, fluidGrid.getStamp());
+        final String stamp = SearchExpressionUtils.resolveClientIdsForClientSide(fc, fluidGrid, fluidGrid.getStamp());
         if (stamp != null) {
             wb.append(",stamp:'" + stamp + "'");
         }

@@ -20,7 +20,7 @@ PrimeFaces.widget.ExtTooltip = PrimeFaces.widget.BaseWidget.extend({
 
         if (this.cfg.forTarget) {
             this.targetSelectors = PrimeFaces.expressions.CssSelectorResolver.resolveCssSelectors(this.cfg.forTarget);
-            this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.forTarget);
+            this.cfg.forTarget = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.forTarget);
         }
 
         if (this.cfg.global) {

@@ -26,7 +26,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
 
@@ -50,7 +50,7 @@ public class ImageAreaSelectRenderer extends CoreRenderer {
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtImageAreaSelect", imageAreaSelect);
-        wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageAreaSelect, imageAreaSelect.getFor()))
+        wb.attr("target", SearchExpressionUtils.resolveClientIdsForClientSide(context, imageAreaSelect, imageAreaSelect.getFor()))
                     .attr("aspectRatio", imageAreaSelect.getAspectRatio())
                     .attr("autoHide", imageAreaSelect.isAutoHide())
                     .attr("fadeSpeed", imageAreaSelect.getFadeSpeed())

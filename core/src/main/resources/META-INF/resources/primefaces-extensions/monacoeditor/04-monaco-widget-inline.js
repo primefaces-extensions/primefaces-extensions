@@ -389,7 +389,8 @@ window.monacoModule = window.monacoModule || {};
       const { custom, options } = await this._createInitData(extender, wasLibLoaded);
       this._editorOptions = options;
       if (this.cfg.overflowWidgetsDomNode !== undefined && this.cfg.overflowWidgetsDomNode.length > 0) {
-        const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.overflowWidgetsDomNode);
+        // @ts-ignore
+        const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.overflowWidgetsDomNode);
         if (target !== undefined && target.length > 0) {
           this._setOverflowWidgetsDomNode(options, target.get(0));
         }

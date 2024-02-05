@@ -16,7 +16,7 @@ PrimeFaces.widget.ExtCalculator = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target);
+        this.target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target);
 
         var input = this.target;
         if (this.target.is(':input')) {

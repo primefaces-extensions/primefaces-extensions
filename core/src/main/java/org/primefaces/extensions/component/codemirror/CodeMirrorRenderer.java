@@ -31,7 +31,7 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
@@ -156,7 +156,7 @@ public class CodeMirrorRenderer extends InputRenderer {
             wb.attr("async", true);
         }
         if (codeMirror.getProcess() != null) {
-            wb.attr("process", SearchExpressionFacade.resolveClientIds(context, codeMirror, codeMirror.getProcess()));
+            wb.attr("process", SearchExpressionUtils.resolveClientIdsForClientSide(context, codeMirror, codeMirror.getProcess()));
         }
         if (codeMirror.getOnstart() != null) {
             wb.callback("onstart", "function(request)", codeMirror.getOnstart());

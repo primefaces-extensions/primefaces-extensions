@@ -29,7 +29,7 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.Constants;
@@ -73,7 +73,7 @@ public class BlockUIRenderer extends CoreRenderer {
             source = blockUI.getParent().getClientId(fc);
         }
         else {
-            source = SearchExpressionFacade.resolveClientIds(fc, blockUI, source);
+            source = SearchExpressionUtils.resolveClientIdForClientSide(fc, blockUI, source);
         }
 
         if (source == null) {
@@ -83,7 +83,7 @@ public class BlockUIRenderer extends CoreRenderer {
         // get target
         String target = blockUI.getTarget();
         if (target != null) {
-            target = SearchExpressionFacade.resolveClientIds(fc, blockUI, target);
+            target = SearchExpressionUtils.resolveClientIdForClientSide(fc, blockUI, target);
         }
 
         // get content

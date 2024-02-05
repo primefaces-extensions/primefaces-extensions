@@ -26,7 +26,6 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.util.WidgetBuilder;
 
@@ -46,12 +45,10 @@ public class MonacoDiffEditorInlineRenderer extends MonacoDiffEditorBaseRenderer
 
     @Override
     protected void addWidgetProperties(FacesContext context, WidgetBuilder wb, MonacoDiffEditorInline monacoEditor) throws IOException {
-        final String overflowWidgetsDomNode = SearchExpressionFacade.resolveClientId( //
+        final String overflowWidgetsDomNode = SearchExpressionUtils.resolveClientIdForClientSide( //
                     context, //
                     monacoEditor, //
-                    monacoEditor.getOverflowWidgetsDomNode(), //
-                    SearchExpressionUtils.SET_RESOLVE_CLIENT_SIDE //
-        );
+                    monacoEditor.getOverflowWidgetsDomNode());
         wb.attr("overflowWidgetsDomNode", overflowWidgetsDomNode, null);
         wb.returnCallback("extender", "function()", monacoEditor.getExtender());
     }

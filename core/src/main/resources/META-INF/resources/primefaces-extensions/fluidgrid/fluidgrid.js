@@ -21,7 +21,7 @@ PrimeFaces.widget.ExtFluidGrid = PrimeFaces.widget.DeferredWidget.extend({
 
         if (this.cfg.opts.stamp) {
             this.cfg.opts.stamp = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(
-                    this.cfg.opts.stamp).get();
+                    this.jq, this.cfg.opts.stamp).get();
         }
 
         this.renderDeferred();

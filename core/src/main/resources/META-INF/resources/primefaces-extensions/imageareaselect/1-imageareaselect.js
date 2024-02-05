@@ -68,7 +68,7 @@ PrimeFaces.widget.ExtImageAreaSelect = PrimeFaces.widget.BaseWidget.extend({
         this.bindSelectChangeCallback();
         this.bindSelectEndCallback();
 
-        this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.target).imgAreaSelect(this.options);
+        this.instance = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.target).imgAreaSelect(this.options);
 
         this.removeScriptElement(this.id);
     },

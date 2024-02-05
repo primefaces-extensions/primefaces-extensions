@@ -74,7 +74,7 @@ PrimeFaces.widget.ExtBlockUI = PrimeFaces.widget.BaseWidget.extend({
         var opt;
 
         if (this.target) {
-            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.target);
+            var targetEl = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.target);
 
             // second, check if the target element has been found
             if (targetEl.length > 0) {

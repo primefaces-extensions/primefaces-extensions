@@ -26,7 +26,7 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.expression.SearchExpressionFacade;
+import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -51,12 +51,12 @@ public class ClipboardRenderer extends CoreRenderer {
     }
 
     private void encodeScript(final FacesContext context, final Clipboard clipboard) throws IOException {
-        String trigger = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTrigger());
+        String trigger = SearchExpressionUtils.resolveClientIdsForClientSide(context, clipboard, clipboard.getTrigger());
         if (isValueBlank(trigger)) {
             trigger = clipboard.getParent().getClientId(context);
         }
 
-        final String target = SearchExpressionFacade.resolveClientIds(context, clipboard, clipboard.getTarget());
+        final String target = SearchExpressionUtils.resolveClientIdsForClientSide(context, clipboard, clipboard.getTarget());
 
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtClipboard", clipboard);

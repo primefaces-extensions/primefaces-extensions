@@ -26,7 +26,6 @@ import java.io.IOException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.expression.SearchExpressionUtils;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -51,9 +50,8 @@ public class WaypointRenderer extends CoreRenderer {
     }
 
     private void encodeScript(final FacesContext fc, final Waypoint waypoint) throws IOException {
-        final String context = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getForContext());
-        final String target = SearchExpressionFacade.resolveClientIds(fc, waypoint, waypoint.getFor(),
-                    SearchExpressionUtils.SET_PARENT_FALLBACK);
+        final String context = SearchExpressionUtils.resolveClientIdsForClientSide(fc, waypoint, waypoint.getForContext());
+        final String target = SearchExpressionUtils.resolveClientIdsForClientSide(fc, waypoint, waypoint.getFor());
 
         final WidgetBuilder wb = getWidgetBuilder(fc);
         wb.init("ExtWaypoint", waypoint);

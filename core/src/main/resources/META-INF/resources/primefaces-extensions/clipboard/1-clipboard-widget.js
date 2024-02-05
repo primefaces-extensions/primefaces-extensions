@@ -16,7 +16,7 @@ PrimeFaces.widget.ExtClipboard = PrimeFaces.widget.BaseWidget.extend({
         this._super(cfg);
         this.id = cfg.id;
         this.cfg = cfg;
-        this.trigger = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.cfg.trigger);
+        this.trigger = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.trigger);
 
         this._applyClipboard(this.trigger, cfg);
     },
