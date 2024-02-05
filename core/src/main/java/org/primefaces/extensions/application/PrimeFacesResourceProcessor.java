@@ -107,9 +107,8 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
             encodeCSS(context, LIBRARY, "primeicons/primeicons.css");
         }
 
-        if (configuration.isClientSideValidationEnabled()) {
-            encodeValidationResources(context, configuration.isBeanValidationEnabled());
-        }
+        // normal CSV is a required dependency for some special components like fileupload
+        encodeValidationResources(context, configuration);
 
         if (configuration.isClientSideLocalizationEnabled()) {
             try {
@@ -125,10 +124,13 @@ public class PrimeFacesResourceProcessor implements PhaseListener {
         }
     }
 
-    protected void encodeValidationResources(final FacesContext context, final boolean beanValidationEnabled) {
+    protected void encodeValidationResources(final FacesContext context, final PrimeConfiguration configuration) {
+        // normal CSV is a required dependency for some special components like fileupload
         encodeJS(context, "validation/validation.js");
 
-        if (beanValidationEnabled) {
+        // BV CSV is optional and must be enabled by config
+        if (configuration.isClientSideValidationEnabled()
+                && configuration.isBeanValidationEnabled()) {
             encodeJS(context, "validation/validation.bv.js");
         }
     }
