@@ -44,7 +44,6 @@ import javax.faces.lifecycle.Lifecycle;
  */
 public class Html5ContextFactory extends FacesContextFactory {
 
-
     public Html5ContextFactory(FacesContextFactory wrapped) {
         super(wrapped);
     }
