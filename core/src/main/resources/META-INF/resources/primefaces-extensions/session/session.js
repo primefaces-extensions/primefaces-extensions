@@ -84,7 +84,7 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
             let timeout = (Number(maxInactiveInterval) - reactionPeriod) * 1000;
 
             if (timeout > 0) {
-                this.timer = window.setTimeout(() => {
+                this.timer = PrimeFaces.queueTask(() => {
                     $this.timeoutCallback();
                 }, timeout);
             }
@@ -117,7 +117,7 @@ PrimeFaces.widget.Session = PrimeFaces.widget.BaseWidget.extend({
             this.cfg.onexpire.call();
         }
         let $this = this;
-        this.expiredTimer = window.setTimeout(() => {
+        this.expiredTimer = PrimeFaces.queueTask(() => {
             $this.expiredTimeoutCallback();
         }, this.cfg.reactionPeriod * 1000);
     },

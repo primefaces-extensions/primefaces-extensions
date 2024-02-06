@@ -185,7 +185,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
             },
             afterUnlisten: function () {
                 // turn on the keyboard trap once sheet no longer has keyboard control
-                setTimeout(function () {
+                PrimeFaces.queueTask(() => {
                     var tabIndex = $this.keyboardTrap.data("tabindex");
                     if (tabIndex) {
                         $this.keyboardTrap.attr("tabindex", tabIndex).data("tabindex", "");
@@ -464,7 +464,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.DeferredWidget.extend({
         sheet.ht.destroyEditor(true);
         sheet.ht.deselectCell();
         // for some reason does not work when focused immediately,
-        setTimeout(function () {
+        PrimeFaces.queueTask(() => {
             $(inp).focus();
             sheet.focusing = false;
         }, 150);
