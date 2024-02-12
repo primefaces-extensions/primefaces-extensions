@@ -14,7 +14,7 @@
   "dependencies": {
     "cross-spawn": "^7.0.3",
     "insane": "^2.6.2",
-    "monaco-editor": "^0.45.0"
+    "monaco-editor": "^0.46.0"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
