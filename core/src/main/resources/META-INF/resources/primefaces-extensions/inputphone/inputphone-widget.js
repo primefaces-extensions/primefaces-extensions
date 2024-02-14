@@ -21,6 +21,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         // JQuery inputs
         this.inputJq = $(this.jqId + '_input');
         this.inputIso2Jq = $(this.jqId + '_iso2');
+        this.inputHiddenJq = $(this.jqId + '_hidden');
 
         // pfs metadata
         this.inputJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
@@ -30,6 +31,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
             this.inputJq.attr("disabled", "disabled");
             this.inputJq.addClass("ui-state-disabled");
             this.inputIso2Jq.attr("disabled", "disabled");
+            this.inputHiddenJq.attr("disabled", "disabled");
         }
 
         // visual effects
@@ -48,6 +50,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
         this.input.addEventListener('countrychange', function () {
             var country = $this.iti.getSelectedCountryData();
             $this.inputIso2Jq.val(country.iso2);
+            $this.inputHiddenJq.val($this.getNumber());
             if ($this.hasBehavior('countrySelect')) {
                 var ext = {
                     params: [{
@@ -63,6 +66,9 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
                 };
                 $this.callBehavior('countrySelect', ext);
             }
+        });
+        this.input.addEventListener('input', function () {
+            $this.inputHiddenJq.val($this.getNumber());
         });
     },
 
@@ -171,6 +177,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     enable: function () {
         PrimeFaces.utils.enableInputWidget(this.inputJq);
         PrimeFaces.utils.enableInputWidget(this.inputIso2Jq);
+        PrimeFaces.utils.enableInputWidget(this.inputHiddenJq);
         this.disabled = false;
     },
 
@@ -180,6 +187,7 @@ PrimeFaces.widget.ExtInputPhone = PrimeFaces.widget.BaseWidget.extend({
     disable: function () {
         PrimeFaces.utils.disableInputWidget(this.inputJq);
         PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
+        PrimeFaces.utils.disableInputWidget(this.inputHiddenJq);
         this.disabled = true;
     },
 
