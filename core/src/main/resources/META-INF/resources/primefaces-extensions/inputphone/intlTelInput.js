@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.2.15
+ * International Telephone Input v19.2.17
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -944,8 +944,7 @@
                         this._toggleClass(this.dropdownContent, "iti__dropdown-content--dropup", positionDropdownAboveInput);
                         // if dropdownContainer is enabled, calculate postion
                         if (this.options.dropdownContainer) {
-                            // by default the dropdown will be directly over the input because it's not in the flow.
-                            // If we want to position it below, we need to add some extra top value.
+                            // if we want to position the dropdown below the input, we need to add the input height to the top value
                             var extraTop = positionDropdownAboveInput ? 0 : this.telInput.offsetHeight;
                             // calculate placement
                             this.dropdown.style.top = "".concat(inputTop + extraTop, "px");
@@ -1724,7 +1723,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.2.15";
+        intlTelInputGlobals.version = "19.2.17";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
