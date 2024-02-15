@@ -23,7 +23,7 @@
         <primefaces-extensions.new-components>clockPicker;sunEditor</primefaces-extensions.new-components>
         <primefaces-extensions.updated-components>inputPhone;monacoEditor;session</primefaces-extensions.updated-components>
         <primefaces-extensions.deprecated-components/>
-        <owb.version>2.0.27</owb.version>
+        <owb.version>4.0.2</owb.version>
         <jetty.version>9.4.54.v20240208</jetty.version>
         <omnifaces.version>3.14.4</omnifaces.version>
         <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
