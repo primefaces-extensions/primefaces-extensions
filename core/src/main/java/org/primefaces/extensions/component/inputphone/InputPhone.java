@@ -61,7 +61,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String STYLE_CLASS = "ui-inputphone ui-widget";
     public static final String EVENT_COUNTRY_SELECT = "countrySelect";
     public static final String COUNTRY_AUTO = "auto";
-    public static final String INPUT_SUFFIX = "_input";
 
     private static final Collection<String> EVENT_NAMES = LangUtils
                 .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
@@ -135,12 +134,12 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     @Override
     public String getInputClientId() {
-        return getClientId() + INPUT_SUFFIX;
+        return getClientId() + "_input";
     }
 
     @Override
     public String getValidatableInputClientId() {
-        return getClientId() + INPUT_SUFFIX;
+        return getClientId() + "_input";
     }
 
     @Override
@@ -153,7 +152,6 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
         getStateHelper().put("labelledby", labelledBy);
     }
 
-    @Override
     public void setDir(final String _dir) {
         getStateHelper().put(PropertyKeys.dir, _dir);
     }
@@ -337,6 +335,10 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
 
     public void setCountrySearch(final boolean countrySearch) {
         getStateHelper().put(PropertyKeys.countrySearch, countrySearch);
+    }
+
+    public boolean isUtilsScriptRequired() {
+        return !AutoPlaceholder.off.name().equals(getAutoPlaceholder()) || isFormatOnDisplay() || isFormatAsYouType();
     }
 
     @Override

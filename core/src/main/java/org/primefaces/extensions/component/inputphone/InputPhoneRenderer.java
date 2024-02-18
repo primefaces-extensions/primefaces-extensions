@@ -55,8 +55,7 @@ import org.primefaces.util.WidgetBuilder;
 public class InputPhoneRenderer extends InputRenderer {
 
     private static final Logger LOGGER = Logger.getLogger(InputPhoneRenderer.class.getName());
-    private static final String HIDDEN_ID = "_hidden";
-    private static final String ISO2_ID = "_iso2";
+    private static final String HIDDEN_ID = "_iso2";
 
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
@@ -68,7 +67,7 @@ public class InputPhoneRenderer extends InputRenderer {
 
         decodeBehaviors(context, inputPhone);
 
-        final String inputId = inputPhone.getClientId(context) + HIDDEN_ID;
+        final String inputId = inputPhone.getClientId(context) + "_input";
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
@@ -106,7 +105,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         String country = context.getExternalContext().getRequestParameterMap()
-                    .get(inputPhone.getClientId() + ISO2_ID);
+                    .get(inputPhone.getClientId() + HIDDEN_ID);
         if (country == null || InputPhone.COUNTRY_AUTO.equals(country)) {
             country = Constants.EMPTY_STRING;
         }
@@ -138,7 +137,7 @@ public class InputPhoneRenderer extends InputRenderer {
         }
 
         encodeInput(context, inputPhone, clientId, valueToRender);
-        encodeHiddenInputs(context, inputPhone, clientId, valueToRender);
+        encodeHiddenInput(context, inputPhone, clientId);
 
         writer.endElement("span");
     }
@@ -148,7 +147,7 @@ public class InputPhoneRenderer extends InputRenderer {
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String inputId = clientId + InputPhone.INPUT_SUFFIX;
+        final String inputId = clientId + "_input";
         final String inputStyle = inputPhone.getInputStyle();
 
         writer.startElement("input", null);
@@ -170,10 +169,9 @@ public class InputPhoneRenderer extends InputRenderer {
         writer.endElement("input");
     }
 
-    protected void encodeHiddenInputs(final FacesContext context, final InputPhone inputPhone, final String clientId, final String valueToRender)
+    protected void encodeHiddenInput(final FacesContext context, final InputPhone inputPhone, final String clientId)
                 throws IOException {
-        renderHiddenInput(context, clientId + ISO2_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
-        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, inputPhone.isDisabled());
+        renderHiddenInput(context, clientId + HIDDEN_ID, inputPhone.getInitialCountry(), inputPhone.isDisabled());
     }
 
     protected void encodeScript(final FacesContext context, final InputPhone inputPhone) throws IOException {
@@ -206,11 +204,13 @@ public class InputPhoneRenderer extends InputRenderer {
         }
         encodeCountries(wb, "preferredCountries", inputPhone.getPreferredCountries());
 
-        wb.attr("utilsScript",
-                    context.getApplication()
-                                .getResourceHandler()
-                                .createResource("inputphone/utils.js", "primefaces-extensions")
-                                .getRequestPath());
+        if (inputPhone.isUtilsScriptRequired()) {
+            wb.attr("utilsScript",
+                        context.getApplication()
+                                    .getResourceHandler()
+                                    .createResource("inputphone/utils.js", "primefaces-extensions")
+                                    .getRequestPath());
+        }
         if (inputPhone.getLocalizedCountries() != null) {
             wb.nativeAttr("i18n", objectToJsonString(inputPhone.getLocalizedCountries()));
         }
