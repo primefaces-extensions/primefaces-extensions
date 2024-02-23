@@ -3,6 +3,6 @@
     text-align: center;
 }
 
-.ui-inputphone > .ui-inputtext:not(:last-child) {
+.ui-inputpin > .ui-inputtext:not(:last-child) {
     margin-right: 0.25rem;
 }

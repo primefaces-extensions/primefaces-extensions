@@ -98,6 +98,7 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("name", inputId, null);
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
+            writer.writeAttribute("autocomplete", "off", null);
             writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPin, InputText.STYLE_CLASS), "styleClass");
 
             if (!isValueBlank(inputStyle)) {
