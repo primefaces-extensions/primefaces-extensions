@@ -273,6 +273,30 @@
                         </resourcesSet>
                         <resourcesSet>
                             <includes>
+                                <include>inputpin/inputpin-widget.js</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/inputpin/inputpin.js</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
+                                <include>inputpin/inputpin.css</include>
+                            </includes>
+                            <aggregations>
+                                <aggregation>
+                                    <inputDir>${resources.dir.compressed}</inputDir>
+                                    <outputFile>${resources.dir.compressed}/inputpin/inputpin.css</outputFile>
+                                    <withoutCompress>${withoutCompress}</withoutCompress>
+                                </aggregation>
+                            </aggregations>
+                        </resourcesSet>
+                        <resourcesSet>
+                            <includes>
                                 <include>codemirror/lib/codemirror.js</include>
                                 <include>codemirror/widget.js</include>
                             </includes>

@@ -1,0 +1,8 @@
+.ui-inputpin > .ui-inputtext {
+    width: 2rem;
+    text-align: center;
+}
+
+.ui-inputphone > .ui-inputtext:not(:last-child) {
+    margin-right: 0.25rem;
+}
