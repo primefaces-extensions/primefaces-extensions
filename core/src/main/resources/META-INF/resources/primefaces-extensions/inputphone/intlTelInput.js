@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.2.20
+ * International Telephone Input v19.4.0
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -169,7 +169,6 @@
             // whether or not to allow the dropdown
             allowDropdown: true,
             // auto insert dial code (A) on init, (B) on user selecting a country, (C) on calling setCountry
-            // also listen for blur/submit and auto remove dial code if that's all there is
             autoInsertDialCode: false,
             // add a placeholder in the input with an example number for the selected country
             autoPlaceholder: "polite",
@@ -179,6 +178,8 @@
             containerClass: "",
             // modify the auto placeholder
             customPlaceholder: null,
+            // by default, initialise with the first country in the list selected (if no country set via the initial value or initialCountry option)
+            defaultToFirstCountry: true,
             // append menu to specified element
             dropdownContainer: null,
             // don't display these countries
@@ -572,17 +573,32 @@
                     }
                     if (hiddenInput) {
                         var telInputName = this.telInput.getAttribute("name");
-                        var hiddenInputName = hiddenInput(telInputName);
+                        var result = hiddenInput(telInputName);
+                        var isObject = result !== null && typeof result === "object";
+                        var hiddenInputPhoneName;
+                        var hiddenInputCountryName;
+                        if (isObject) {
+                            hiddenInputPhoneName = result.phone || telInputName;
+                            hiddenInputCountryName = result.country || "".concat(hiddenInputPhoneName, "_country");
+                        } else {
+                            hiddenInputPhoneName = result || telInputName;
+                            hiddenInputCountryName = "".concat(hiddenInputPhoneName, "_country");
+                        }
+                        // Check if a name has been determined for the phone input field after all conditions
+                        if (!hiddenInputPhoneName) {
+                            return;
+                        }
+                        // Create hidden input for the full international number
                         this.hiddenInput = this._createEl("input", {
                             type: "hidden",
-                            name: hiddenInputName
+                            name: hiddenInputPhoneName
                         });
-                        wrapper.appendChild(this.hiddenInput);
-                        // add a 2nd hidden input for the selected country code - this is useful for handling invalid numbers with server-side validation, as getNumber does not always include the international dial code for invalid numbers
+                        // Create hidden input for the selected country code
                         this.hiddenInputCountry = this._createEl("input", {
                             type: "hidden",
-                            name: "".concat(hiddenInputName, "_country")
+                            name: hiddenInputCountryName
                         });
+                        wrapper.appendChild(this.hiddenInput);
                         wrapper.appendChild(this.hiddenInputCountry);
                     }
                 }
@@ -627,7 +643,7 @@
                     var val = useAttribute ? attributeValue : inputValue;
                     var dialCode = this._getDialCode(val);
                     var isRegionlessNanp = this._isRegionlessNanp(val);
-                    var _this$options2 = this.options, initialCountry = _this$options2.initialCountry, autoInsertDialCode = _this$options2.autoInsertDialCode;
+                    var _this$options2 = this.options, initialCountry = _this$options2.initialCountry, autoInsertDialCode = _this$options2.autoInsertDialCode, defaultToFirstCountry = _this$options2.defaultToFirstCountry;
                     // if we already have a dial code, and it's not a regionlessNanp, we can go ahead and set the
                     // flag, else fall back to the default country
                     if (dialCode && !isRegionlessNanp) {
@@ -642,7 +658,7 @@
                             if (dialCode && isRegionlessNanp) {
                                 // has intl dial code, is regionless nanp, and no initialCountry, so default to US
                                 this._setFlag("us");
-                            } else {
+                            } else if (defaultToFirstCountry) {
                                 // no dial code and no initialCountry, so default to first in list
                                 this.defaultCountry = this.preferredCountries.length ? this.preferredCountries[0].iso2 : this.countries[0].iso2;
                                 if (!val) {
@@ -1741,7 +1757,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.2.20";
+        intlTelInputGlobals.version = "19.4.0";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
