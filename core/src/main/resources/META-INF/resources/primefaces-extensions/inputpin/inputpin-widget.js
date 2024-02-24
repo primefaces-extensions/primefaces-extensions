@@ -18,7 +18,8 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         this.disabled = cfg.disabled;
 
         // JQuery inputs
-        this.inputsJq = $(this.jqId + ' > input');
+        this.inputsJq = $(this.jqId + ' > .ui-inputfield');
+        this.inputHiddenJq = $(this.jqId + '_hidden');
 
         // pfs metadata
         // this.inputsJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
@@ -26,6 +27,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         // style disabled if necessary
         if (this.disabled) {
             PrimeFaces.utils.disableInputWidget(this.inputsJq);
+            this.inputHiddenJq.attr("disabled", "disabled");
         }
 
         // visual effects
@@ -35,6 +37,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
     },
 
     bindEvents: function () {
+        var $this = this;
         var inputs = this.inputsJq.get();
 
         for (let i = 0; i < inputs.length; i++) {
@@ -42,7 +45,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
             input.addEventListener('input', function () {
                 // handling normal input
-                if (input.value.length == 1 && i + 1 < inputs.length) {
+                if (input.value.length === 1 && i + 1 < inputs.length) {
                     inputs[i + 1].focus();
                 }
 
@@ -67,7 +70,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                     let focus_index = Math.min(inputs.length - 1, i + chars.length);
                     inputs[focus_index].focus();
                 }
-                updateInput();
+                $this.updateInput();
             });
 
             input.addEventListener('keydown', function (e) {
@@ -82,7 +85,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                             // clear previous box and focus on it
                             inputs[i - 1].value = '';
                             inputs[i - 1].focus();
-                            updateInput();
+                            $this.updateInput();
                             return;
                         }
                         break;
@@ -97,7 +100,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                             inputs[inputs.length - 1].value = '';
                             input.select();
                             e.preventDefault();
-                            updateInput();
+                            $this.updateInput();
                             return;
                         }
                         break;
@@ -121,7 +124,12 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
     },
 
     updateInput: function () {
-
+        var inputs = this.inputsJq.get();
+        var currentValue = '';
+        for (var i = 0; i < inputs.length; i++) {
+            currentValue += inputs[i].value;
+        }
+        this.inputHiddenJq.val(currentValue);
     },
 
     /**
@@ -136,6 +144,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      */
     enable: function () {
         PrimeFaces.utils.enableInputWidget(this.inputsJq);
+        PrimeFaces.utils.enableInputWidget(this.inputHiddenJq);
         this.disabled = false;
     },
 
@@ -144,6 +153,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      */
     disable: function () {
         PrimeFaces.utils.disableInputWidget(this.inputsJq);
+        PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
         this.disabled = true;
     }
 

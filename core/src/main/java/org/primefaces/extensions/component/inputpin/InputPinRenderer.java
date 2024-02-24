@@ -43,6 +43,26 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class InputPinRenderer extends InputRenderer {
 
+    private static final String HIDDEN_ID = "_hidden";
+
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        final InputPin inputPin = (InputPin) component;
+
+        if (!shouldDecode(inputPin)) {
+            return;
+        }
+
+        decodeBehaviors(context, inputPin);
+
+        final String inputId = inputPin.getClientId(context) + HIDDEN_ID;
+        final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
+
+        if (submittedValue != null) {
+            inputPin.setSubmittedValue(submittedValue);
+        }
+    }
+
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
         final InputPin inputPin = (InputPin) component;
@@ -78,6 +98,7 @@ public class InputPinRenderer extends InputRenderer {
         }
 
         encodeInput(context, inputPin, clientId, valueToRender);
+        encodeHiddenInput(context, inputPin, clientId, valueToRender);
 
         writer.endElement("span");
     }
@@ -116,6 +137,11 @@ public class InputPinRenderer extends InputRenderer {
 
             writer.endElement("input");
         }
+    }
+
+    protected void encodeHiddenInput(final FacesContext context, final InputPin inputPin, final String clientId, final String valueToRender)
+                throws IOException {
+        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, inputPin.isDisabled());
     }
 
     protected void encodeScript(final FacesContext context, final InputPin inputPin) throws IOException {
