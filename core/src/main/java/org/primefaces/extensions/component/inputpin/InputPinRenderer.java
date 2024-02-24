@@ -105,6 +105,10 @@ public class InputPinRenderer extends InputRenderer {
                 writer.writeAttribute(Attrs.STYLE, inputStyle, null);
             }
 
+            if ("password".equalsIgnoreCase(inputPin.getType())) {
+                writer.writeAttribute("type", inputPin.getType(), null);
+            }
+
             renderAccessibilityAttributes(context, inputPin);
             renderPassThruAttributes(context, inputPin, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
             renderDomEvents(context, inputPin, HTML.INPUT_TEXT_EVENTS);

@@ -25,8 +25,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
         // style disabled if necessary
         if (this.disabled) {
-            this.inputsJq.attr("disabled", "disabled");
-            this.inputsJq.addClass("ui-state-disabled");
+            PrimeFaces.utils.disableInputWidget(this.inputsJq);
         }
 
         // visual effects
@@ -144,7 +143,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      * Disable the input
      */
     disable: function () {
-        PrimeFaces.utils.enableInputWidget(this.inputsJq);
+        PrimeFaces.utils.disableInputWidget(this.inputsJq);
         this.disabled = true;
     }
 

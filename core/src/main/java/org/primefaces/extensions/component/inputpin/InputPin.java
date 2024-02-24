@@ -24,6 +24,7 @@ package org.primefaces.extensions.component.inputpin;
 import javax.faces.application.ResourceDependency;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
+import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 
 /**
@@ -37,7 +38,7 @@ import org.primefaces.component.api.Widget;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = "primefaces-extensions", name = "inputpin/inputpin.css")
 @ResourceDependency(library = "primefaces-extensions", name = "inputpin/inputpin.js")
-public class InputPin extends AbstractPrimeHtmlInputText implements Widget {
+public class InputPin extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPin";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
@@ -51,6 +52,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget {
     public enum PropertyKeys {
         placeholder,
         widgetVar,
+        type,
         inputStyle,
         inputStyleClass
     }
@@ -63,6 +65,34 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget {
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public String getInputClientId() {
+        return getClientId() + INPUT_SUFFIX + 1;
+    }
+
+    @Override
+    public String getValidatableInputClientId() {
+        return getClientId();
+    }
+
+    @Override
+    public String getLabelledBy() {
+        return (String) getStateHelper().get("labelledby");
+    }
+
+    @Override
+    public void setLabelledBy(final String labelledBy) {
+        getStateHelper().put("labelledby", labelledBy);
+    }
+
+    public String getType() {
+        return (String) getStateHelper().eval(PropertyKeys.type, "text");
+    }
+
+    public void setType(final String type) {
+        getStateHelper().put(PropertyKeys.type, type);
     }
 
     public String getInputStyle() {

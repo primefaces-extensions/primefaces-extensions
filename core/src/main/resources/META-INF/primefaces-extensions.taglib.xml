@@ -9817,7 +9817,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Input field type. Default "tel".]]>
+                <![CDATA[Input field type. Can be "text" (default) or password.]]>
             </description>
             <name>type</name>
             <required>false</required>
