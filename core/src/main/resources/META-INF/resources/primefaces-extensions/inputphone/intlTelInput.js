@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.4.0
+ * International Telephone Input v19.5.0
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -507,7 +507,7 @@
                     }
                     if (showFlags) {
                         this.selectedFlagInner = this._createEl("div", {
-                            "class": "iti__flag"
+                            "class": "iti__flag iti__globe"
                         }, this.selectedFlag);
                     }
                     if (this.selectedFlag && this.telInput.disabled) {
@@ -1291,7 +1291,8 @@
                         this.defaultCountry = this.selectedCountryData.iso2;
                     }
                     if (showFlags) {
-                        this.selectedFlagInner.setAttribute("class", "iti__flag iti__".concat(countryCode));
+                        var flagClass = countryCode ? "iti__".concat(countryCode) : "iti__globe";
+                        this.selectedFlagInner.setAttribute("class", "iti__flag ".concat(flagClass));
                     }
                     this._setSelectedCountryFlagTitleAttribute(countryCode, showSelectedDialCode);
                     if (showSelectedDialCode) {
@@ -1757,7 +1758,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.4.0";
+        intlTelInputGlobals.version = "19.5.0";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);

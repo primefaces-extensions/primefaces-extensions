@@ -1303,6 +1303,15 @@
   }
 }
 
-.iti__flag.iti__np {
-  background-color: transparent;
+.iti__globe {
+  background-image: url("#{resource['primefaces-extensions:inputphone/globe.png']}");
+  background-size: contain;
+  background-position: right;
+  box-shadow: none;
+  height: 19px;
+}
+@media (min-resolution: 2x) {
+  .iti__globe {
+     background-image: url("#{resource['primefaces-extensions:inputphone/globe@2x.png']}");
+  }
 }
