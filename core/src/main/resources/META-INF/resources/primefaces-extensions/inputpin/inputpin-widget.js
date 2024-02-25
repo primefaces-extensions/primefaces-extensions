@@ -43,105 +43,132 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
     bindEvents: function () {
         var $this = this;
-        var inputs = this.inputsJq.get();
+        var inputsJq = this.inputsJq;
 
-        for (let i = 0; i < inputs.length; i++) {
-            const input = inputs[i];
+        // get the current attached events if using CSP
+        var events = this.inputsJq[0] ? $._data(this.inputsJq[0], "events") : null;
 
-            input.addEventListener('input', function () {
+        // use DOM if non-CSP and JQ event if CSP
+        var originalOninput = this.inputsJq.prop('oninput');
+        if (!originalOninput && events && events.input) {
+            originalOninput = events.input[0].handler;
+        }
+        var originalOnkeydown = this.inputsJq.prop('onkeydown');
+        if (!originalOnkeydown && events && events.keydown) {
+            originalOnkeydown = events.keydown[0].handler;
+        }
+
+        for (let i = 0; i < inputsJq.length; i++) {
+
+            let inputJq = $(inputsJq[i]);
+
+            inputJq.prop('oninput', null).off('input').on('input', function (e) {
                 // handling normal input
-                if (input.value.length === 1 && i + 1 < inputs.length) {
-                    inputs[i + 1].focus();
+                if (inputJq.val().length === 1 && i + 1 < inputsJq.length) {
+                    inputsJq[i + 1].focus();
                 }
 
                 // if a value is pasted, put each character to each of the next input
-                if (input.value.length > 1) {
+                if (inputJq.val().length > 1) {
                     // sanitise input
                     // TODO
 
                     // split characters to array
-                    const chars = input.value.split('');
+                    const chars = inputJq.val().split('');
 
                     for (let pos = 0; pos < chars.length; pos++) {
                         // if length exceeded the number of inputs, stop
-                        if (pos + i >= inputs.length)
+                        if (pos + i >= inputsJq.length)
                             break;
 
                         // paste value
-                        inputs[pos + i].value = chars[pos];
+                        inputsJq[pos + i].value = chars[pos];
                     }
 
                     // focus the input next to the last pasted character
-                    let focus_index = Math.min(inputs.length - 1, i + chars.length);
-                    inputs[focus_index].focus();
+                    let focus_index = Math.min(inputsJq.length - 1, i + chars.length);
+                    inputsJq[focus_index].focus();
                 }
                 $this.updateInput();
+
+                if (originalOninput && originalOninput.call(this, e) === false) {
+                    return false;
+                }
             });
 
-            input.addEventListener('keydown', function (e) {
+            inputJq.prop('onkeydown', null).off('keydown').on('keydown', function (e) {
                 switch (e.keyCode) {
                     case 8: // backspace button
-                        if (input.value === '' && i > 0) {
+                        if (inputJq.val() === '' && i > 0) {
                             // shift next values towards the left
-                            for (let pos = i; pos < inputs.length - 1; pos++) {
-                                inputs[pos].value = inputs[pos + 1].value;
+                            for (let pos = i; pos < inputsJq.length - 1; pos++) {
+                                inputsJq[pos].value = inputsJq[pos + 1].value;
                             }
 
                             // clear previous box and focus on it
-                            inputs[i - 1].value = '';
-                            inputs[i - 1].focus();
-                            $this.updateInput();
+                            inputsJq[i - 1].value = '';
+                            inputsJq[i - 1].focus();
+                            inputsJq[i - 1].dispatchEvent(new Event("input"));
                             return;
                         }
                         break;
                     case 46: // delete button
-                        if (i < inputs.length - 1) {
+                        if (i < inputsJq.length - 1) {
                             // shift next values towards the left
-                            for (let pos = i; pos < inputs.length - 1; pos++) {
-                                inputs[pos].value = inputs[pos + 1].value;
+                            for (let pos = i; pos < inputsJq.length - 1; pos++) {
+                                inputsJq[pos].value = inputsJq[pos + 1].value;
                             }
 
                             // clear the last box
-                            inputs[inputs.length - 1].value = '';
-                            input.select();
+                            inputsJq[inputsJq.length - 1].value = '';
+                            inputsJq[i].select();
                             e.preventDefault();
-                            $this.updateInput();
+                            inputsJq[inputsJq.length - 1].dispatchEvent(new Event("input"));
                             return;
                         }
                         break;
                     case 37: // left button
                         if (i > 0) {
                             e.preventDefault();
-                            inputs[i - 1].focus();
-                            inputs[i - 1].select();
+                            inputsJq[i - 1].focus();
+                            inputsJq[i - 1].select();
                         }
                         return;
                     case 39: // right button
-                        if (i + 1 < inputs.length) {
+                        if (i + 1 < inputsJq.length) {
                             e.preventDefault();
-                            inputs[i + 1].focus();
-                            inputs[i + 1].select();
+                            inputsJq[i + 1].focus();
+                            inputsJq[i + 1].select();
                         }
                         return;
+                }
+
+                if (originalOnkeydown && originalOnkeydown.call(this, e) === false) {
+                    return false;
                 }
             });
         }
     },
 
+    /**
+     * 
+     * @returns {string} The original value of the hidden input.
+     */
     updateInput: function () {
-        var inputs = this.inputsJq.get();
-        var currentValue = '';
-        for (var i = 0; i < inputs.length; i++) {
-            currentValue += inputs[i].value;
+        var oldValue = this.hinput.val();
+        var newValue = '';
+        for (var i = 0; i < this.inputsJq.length; i++) {
+            newValue += this.inputsJq[i].value;
         }
-        this.hinput.val(currentValue);
+        this.hinput.val(newValue);
+        return oldValue;
     },
 
     /**
      * Focus the component by focusing on the correct input box.
      */
     focus: function () {
-        this.inputsJq[0].focus();
+        this.inputsJq[0].trigger('focus');
     },
 
     /**

@@ -13,7 +13,7 @@
             </h:panelGroup>
 
             <h:panelGroup layout="block" styleClass="centerExample">
-                <ui:include src="/sections/inputphone/example-basicUsage.xhtml"/>
+                <ui:include src="/sections/inputpin/example-basicUsage.xhtml"/>
             </h:panelGroup>
 
             <ui:decorate template="/templates/twoTabsDecorator.xhtml">
@@ -21,12 +21,12 @@
                     ${showcase:getFileContent('/sections/inputpin/example-basicUsage.xhtml')}
                 </ui:define>
                 <ui:define name="contentTab2">
-                    ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/inputphone/BasicInputPhoneController.java')}
+                    ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/inputpin/BasicInputPinController.java')}
                 </ui:define>
             </ui:decorate>
         </ui:define>
         <ui:define name="useCases">
-            <ui:include src="/sections/inputphone/useCasesChoice.xhtml"/>
+            <ui:include src="/sections/inputpin/useCasesChoice.xhtml"/>
         </ui:define>
         <ui:define name="docuTable">
             <ui:include src="/sections/shared/documentation.xhtml">
