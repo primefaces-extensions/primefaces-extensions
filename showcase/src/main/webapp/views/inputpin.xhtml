@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="/templates/showcaseLayout.xhtml">
+
+            <ui:define name="centerContent">
+                <f:facet name="header">
+                    <h:outputText value="InputPin"/>
+                </f:facet>
+            </ui:define>
+
+            <ui:define name="useCases">
+                useCases
+            </ui:define>
+
+            <ui:define name="docuTable">
+                <ui:include src="/sections/shared/documentation.xhtml">
+                    <ui:param name="tagName" value="inputPin"/>
+                </ui:include>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

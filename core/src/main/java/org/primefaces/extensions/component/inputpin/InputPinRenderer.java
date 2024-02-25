@@ -53,14 +53,14 @@ public class InputPinRenderer extends InputRenderer {
             return;
         }
 
-        decodeBehaviors(context, inputPin);
-
         final String inputId = inputPin.getClientId(context) + HIDDEN_ID;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
             inputPin.setSubmittedValue(submittedValue);
         }
+
+        decodeBehaviors(context, inputPin);
     }
 
     @Override
@@ -71,8 +71,7 @@ public class InputPinRenderer extends InputRenderer {
             throw new FacesException("InputPin size property is required.");
         }
 
-        final Object value = inputPin.getValue();
-        String valueToRender = ComponentUtils.getValueToRender(context, inputPin, value);
+        String valueToRender = ComponentUtils.getValueToRender(context, inputPin, inputPin.getValue());
         if (valueToRender == null) {
             valueToRender = Constants.EMPTY_STRING;
         }

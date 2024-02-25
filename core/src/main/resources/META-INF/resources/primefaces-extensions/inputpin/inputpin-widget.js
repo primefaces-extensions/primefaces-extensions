@@ -19,21 +19,26 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
         // JQuery inputs
         this.inputsJq = $(this.jqId + ' > .ui-inputfield');
-        this.inputHiddenJq = $(this.jqId + '_hidden');
+        this.hinput = $(this.jqId + '_hidden');
 
         // pfs metadata
-        // this.inputsJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
+        this.hinput.data(PrimeFaces.CLIENT_ID_DATA, this.id);
 
         // style disabled if necessary
         if (this.disabled) {
             PrimeFaces.utils.disableInputWidget(this.inputsJq);
-            this.inputHiddenJq.attr("disabled", "disabled");
+            this.hinput.attr("disabled", "disabled");
         }
 
         // visual effects
         PrimeFaces.skinInput(this.inputsJq);
 
         this.bindEvents();
+
+        //client Behaviors
+        if (this.cfg.behaviors) {
+            PrimeFaces.attachBehaviors(this.inputsJq, this.cfg.behaviors);
+        }
     },
 
     bindEvents: function () {
@@ -129,7 +134,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         for (var i = 0; i < inputs.length; i++) {
             currentValue += inputs[i].value;
         }
-        this.inputHiddenJq.val(currentValue);
+        this.hinput.val(currentValue);
     },
 
     /**
@@ -144,7 +149,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      */
     enable: function () {
         PrimeFaces.utils.enableInputWidget(this.inputsJq);
-        PrimeFaces.utils.enableInputWidget(this.inputHiddenJq);
+        PrimeFaces.utils.enableInputWidget(this.hinput);
         this.disabled = false;
     },
 
