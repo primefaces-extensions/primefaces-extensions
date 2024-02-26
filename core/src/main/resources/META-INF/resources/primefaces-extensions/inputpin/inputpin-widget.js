@@ -1,7 +1,8 @@
 /**
  * PrimeFaces Extensions InputPin Widget.
+ * Inspired from https://github.com/shuqikhor/Vanilla-OTP-Input
  *
- * @since 14.0
+ * @since 14.0.0
  */
 PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
@@ -18,7 +19,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         this.disabled = cfg.disabled;
 
         // JQuery inputs
-        this.inputsJq = $(this.jqId + ' > .ui-inputfield');
+        this.inputsJq = $(this.jqId + ' > .ui-inputpin-cell');
         this.hinput = $(this.jqId + '_hidden');
 
         // pfs metadata
@@ -33,7 +34,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         // visual effects
         PrimeFaces.skinInput(this.inputsJq);
 
-        this.bindEvents();
+        this.wrapEvents();
 
         //client Behaviors
         if (this.cfg.behaviors) {
@@ -41,7 +42,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    bindEvents: function () {
+    wrapEvents: function () {
         var $this = this;
         var inputsJq = this.inputsJq;
 
@@ -60,21 +61,26 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
         for (let i = 0; i < inputsJq.length; i++) {
 
-            let inputJq = $(inputsJq[i]);
+            let input = inputsJq[i];
 
-            inputJq.prop('oninput', null).off('input').on('input', function (e) {
+            $(input).prop('oninput', null).off('input').on('input', function (e) {
+                if ($this.cfg.numeric && input.value.length > 0 && isNaN(input.value)) {
+                    input.value = '';
+                    $this.updateInput();
+                    return false;
+                }
                 // handling normal input
-                if (inputJq.val().length === 1 && i + 1 < inputsJq.length) {
+                if (input.value.length === 1 && i + 1 < inputsJq.length) {
                     inputsJq[i + 1].focus();
                 }
 
                 // if a value is pasted, put each character to each of the next input
-                if (inputJq.val().length > 1) {
+                if (input.value.length > 1) {
                     // sanitise input
                     // TODO
 
                     // split characters to array
-                    const chars = inputJq.val().split('');
+                    const chars = input.value.split('');
 
                     for (let pos = 0; pos < chars.length; pos++) {
                         // if length exceeded the number of inputs, stop
@@ -96,10 +102,10 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                 }
             });
 
-            inputJq.prop('onkeydown', null).off('keydown').on('keydown', function (e) {
+            $(input).prop('onkeydown', null).off('keydown').on('keydown', function (e) {
                 switch (e.keyCode) {
                     case 8: // backspace button
-                        if (inputJq.val() === '' && i > 0) {
+                        if (input.value === '' && i > 0) {
                             // shift next values towards the left
                             for (let pos = i; pos < inputsJq.length - 1; pos++) {
                                 inputsJq[pos].value = inputsJq[pos + 1].value;
@@ -185,7 +191,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      */
     disable: function () {
         PrimeFaces.utils.disableInputWidget(this.inputsJq);
-        PrimeFaces.utils.disableInputWidget(this.inputIso2Jq);
+        PrimeFaces.utils.disableInputWidget(this.hinput);
         this.disabled = true;
     }
 

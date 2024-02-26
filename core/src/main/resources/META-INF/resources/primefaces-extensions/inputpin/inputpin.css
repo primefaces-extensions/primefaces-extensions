@@ -1,8 +1,8 @@
-.ui-inputpin > .ui-inputtext {
+.ui-inputpin > .ui-inputpin-cell {
     width: 2rem;
     text-align: center;
 }
 
-.ui-inputpin > .ui-inputtext:not(:last-child) {
+.ui-inputpin > .ui-inputpin-cell:not(:last-child) {
     margin-right: 0.25rem;
 }

@@ -9449,14 +9449,6 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Controls browser autocomplete behavior.]]>
-            </description>
-            <name>autocomplete</name>
-            <required>false</required>
-            <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
                  <![CDATA[Defines text direction, valid values are "ltr" (default) and "rtl".]]>
             </description>
             <name>dir</name>
@@ -9494,14 +9486,6 @@ See showcase for an example. Default null.]]>
             <name>lang</name>
             <required>false</required>
             <type>java.lang.String</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[Maximum number of characters that may be entered in this field.]]>
-            </description>
-            <name>maxlength</name>
-            <required>false</required>
-            <type>int</type>
         </attribute>
         <attribute>
             <description>
@@ -9822,6 +9806,14 @@ See showcase for an example. Default null.]]>
             <name>type</name>
             <required>false</required>
             <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Wheter the input accepts only numeric chars. Defaults to false.]]>
+            </description>
+            <name>numeric</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>

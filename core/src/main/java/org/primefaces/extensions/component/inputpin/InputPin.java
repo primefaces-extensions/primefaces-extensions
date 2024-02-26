@@ -30,7 +30,7 @@ import org.primefaces.component.api.Widget;
 /**
  * <code>InputPin</code> component.
  *
- * @since 14.0
+ * @since 14.0.0
  */
 @ResourceDependency(library = "primefaces", name = "components.css")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
@@ -45,6 +45,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPinRenderer";
 
     public static final String STYLE_CLASS = "ui-inputpin ui-widget";
+    public static final String CELL_STYLE_CLASS = "ui-inputpin-cell";
     public static final String INPUT_SUFFIX = "_input";
 
     // @formatter:off
@@ -53,6 +54,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         placeholder,
         widgetVar,
         type,
+        numeric,
         inputStyle,
         inputStyleClass
     }
@@ -93,6 +95,14 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
 
     public void setType(final String type) {
         getStateHelper().put(PropertyKeys.type, type);
+    }
+
+    public boolean isNumeric() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.numeric, false);
+    }
+
+    public void setNumeric(final boolean numeric) {
+        getStateHelper().put(PropertyKeys.numeric, numeric);
     }
 
     public String getInputStyle() {

@@ -39,7 +39,7 @@ import org.primefaces.util.WidgetBuilder;
 /**
  * Renderer for the {@link InputPin} component.
  *
- * @since 14.0
+ * @since 14.0.0
  */
 public class InputPinRenderer extends InputRenderer {
 
@@ -108,6 +108,10 @@ public class InputPinRenderer extends InputRenderer {
 
         final ResponseWriter writer = context.getResponseWriter();
         final String inputStyle = inputPin.getInputStyle();
+        final String inputStyleClass = getStyleClassBuilder(context)
+                    .add(InputText.STYLE_CLASS, InputPin.CELL_STYLE_CLASS)
+                    .add(inputPin.getInputStyleClass())
+                    .build();
         final char[] chars = valueToRender.toCharArray();
         for (int i = 1; i <= inputPin.getSize(); i++) {
             final String inputId = clientId + InputPin.INPUT_SUFFIX + i;
@@ -119,7 +123,7 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
             writer.writeAttribute("autocomplete", "off", null);
-            writer.writeAttribute(Attrs.CLASS, createStyleClass(inputPin, InputText.STYLE_CLASS), "styleClass");
+            writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
             if (!isValueBlank(inputStyle)) {
                 writer.writeAttribute(Attrs.STYLE, inputStyle, null);
@@ -127,6 +131,10 @@ public class InputPinRenderer extends InputRenderer {
 
             if ("password".equalsIgnoreCase(inputPin.getType())) {
                 writer.writeAttribute("type", inputPin.getType(), null);
+            }
+
+            if (inputPin.isNumeric()) {
+                writer.writeAttribute("inputmode", "numeric", null);
             }
 
             renderAccessibilityAttributes(context, inputPin);
@@ -146,6 +154,7 @@ public class InputPinRenderer extends InputRenderer {
     protected void encodeScript(final FacesContext context, final InputPin inputPin) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPin", inputPin);
+        wb.attr("numeric", inputPin.isNumeric(), false);
 
         encodeClientBehaviors(context, inputPin);
 
