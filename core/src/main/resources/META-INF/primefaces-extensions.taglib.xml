@@ -9326,8 +9326,7 @@ See showcase for an example. Default null.]]>
     
     <tag>
         <description>
-            <![CDATA[InputPhone is an extension to the inputText with optimized handling for phone numbers.
-     Client behavior events: countrySelect - fires when a country is selected (org.primefaces.event.SelectEvent).]]>
+            <![CDATA[InputPin is an input component suitable for inserting fixed-size PINs or OTPs.]]>
         </description>
         <tag-name>inputPin</tag-name>
         <component>
@@ -9462,14 +9461,6 @@ See showcase for an example. Default null.]]>
             <name>disabled</name>
             <required>false</required>
             <type>boolean</type>
-        </attribute>
-        <attribute>
-            <description>
-                <![CDATA[HTML5 inputmode attribute for hinting at the type of data this control has for touch devices to display appropriate virtual keyboard.]]>
-            </description>
-            <name>inputmode</name>
-            <required>false</required>
-            <type>java.lang.String</type>
         </attribute>
         <attribute>
             <description>

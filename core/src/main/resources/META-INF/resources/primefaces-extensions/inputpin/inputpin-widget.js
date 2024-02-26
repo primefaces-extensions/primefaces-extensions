@@ -20,9 +20,11 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
         // JQuery inputs
         this.inputsJq = $(this.jqId + ' > .ui-inputpin-cell');
+        this.inputCount = this.inputsJq.length;
         this.hinput = $(this.jqId + '_hidden');
 
         // pfs metadata
+        this.inputsJq.data(PrimeFaces.CLIENT_ID_DATA, this.id);
         this.hinput.data(PrimeFaces.CLIENT_ID_DATA, this.id);
 
         // style disabled if necessary
@@ -103,8 +105,8 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
             });
 
             $(input).prop('onkeydown', null).off('keydown').on('keydown', function (e) {
-                switch (e.keyCode) {
-                    case 8: // backspace button
+                switch (e.code) {
+                    case 'Backspace':
                         if (input.value === '' && i > 0) {
                             // shift next values towards the left
                             for (let pos = i; pos < inputsJq.length - 1; pos++) {
@@ -118,7 +120,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                             return;
                         }
                         break;
-                    case 46: // delete button
+                    case 'Delete':
                         if (i < inputsJq.length - 1) {
                             // shift next values towards the left
                             for (let pos = i; pos < inputsJq.length - 1; pos++) {
@@ -133,14 +135,14 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                             return;
                         }
                         break;
-                    case 37: // left button
+                    case 'ArrowLeft':
                         if (i > 0) {
                             e.preventDefault();
                             inputsJq[i - 1].focus();
                             inputsJq[i - 1].select();
                         }
                         return;
-                    case 39: // right button
+                    case 'ArrowRight':
                         if (i + 1 < inputsJq.length) {
                             e.preventDefault();
                             inputsJq[i + 1].focus();
@@ -168,6 +170,32 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         }
         this.hinput.val(newValue);
         return oldValue;
+    },
+
+    getValue: function () {
+        this.hinput.val();
+    },
+
+    /**
+     * Sets the value of this input number widget to the given value.
+     * @param {number | string} value The new value to set.
+     */
+    setValue: function (value) {
+        if (value.length > this.inputCount || (this.cfg.numeric && isNaN(value))) {
+            return;
+        }
+        const chars = value.split('');
+
+        for (let pos = 0; pos < chars.length; pos++) {
+            // if length exceeded the number of inputs, empty the field
+            if (pos + i >= this.inputCount) {
+                this.inputsJq[pos + i].value = '';
+            } else {
+                // paste value
+                this.inputsJq[pos + i].value = chars[pos];
+            }
+        }
+        this.updateInput();
     },
 
     /**

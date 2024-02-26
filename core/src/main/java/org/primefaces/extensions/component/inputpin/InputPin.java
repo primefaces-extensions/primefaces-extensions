@@ -26,6 +26,7 @@ import javax.faces.application.ResourceDependency;
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
+import org.primefaces.component.inputtext.InputText;
 
 /**
  * <code>InputPin</code> component.
@@ -45,7 +46,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPinRenderer";
 
     public static final String STYLE_CLASS = "ui-inputpin ui-widget";
-    public static final String CELL_STYLE_CLASS = "ui-inputpin-cell";
+    public static final String CELL_STYLE_CLASS = "ui-inputpin-cell " + InputText.STYLE_CLASS;
     public static final String INPUT_SUFFIX = "_input";
 
     // @formatter:off

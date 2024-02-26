@@ -2,17 +2,25 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:pe="http://primefaces.org/ui/extensions">
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-<!-- EXAMPLE-SOURCE-START -->
+    <!-- EXAMPLE-SOURCE-START -->
     <p:growl id="growl" showDetail="true" showSummary="true" globalOnly="false">
         <p:autoUpdate />
     </p:growl>
 
-    <pe:inputPin id="txtPin" 
-                   size="4"
-                   value="#{basicInputPinController.pin}">
-    </pe:inputPin>
-    <p:commandButton value="Submit" update="txtPin" actionListener="#{basicInputPinController.submit}" styleClass="ml-2" />
-<!-- EXAMPLE-SOURCE-END -->
+    <h:panelGrid columns="2" rowClasses="mb-2">
+        <p:outputLabel for="@next" value="Normal"/>
+        <pe:inputPin id="txtNormal" size="6" value="#{basicInputPinController.normal}"/>
+        <p:outputLabel for="@next" value="Password"/>
+        <pe:inputPin id="txtPassword" size="6" type="password" value="#{basicInputPinController.password}"/>
+        <p:outputLabel for="@next" value="Number"/>
+        <pe:inputPin id="txtNumber" size="6" numeric="true" value="#{basicInputPinController.number}"/>
+    </h:panelGrid>
+    <div>
+        <p:commandButton value="Submit" actionListener="#{basicInputPinController.submit}" />
+    </div>
+    <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>

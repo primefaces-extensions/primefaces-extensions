@@ -33,19 +33,43 @@ import javax.inject.Named;
 public class BasicInputPinController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String pin;
+
+    private String normal;
+    private String password;
+    private Integer number;
 
     public void submit() {
-        FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Pin:  " + pin, null));
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Normal: " + normal, null));
+        context.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Password: " + password, null));
+        context.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Number: " + number, null));
     }
 
-    public String getPin() {
-        return pin;
+    public String getNormal() {
+        return normal;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setNormal(String normal) {
+        this.normal = normal;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
 }

@@ -171,6 +171,7 @@
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>
                                 <include>imagezoom/**</include>
+                                <include>inputpin/**</include>
                                 <include>layout/**</include>
                                 <include>legend/**</include>
                                 <include>qrcode/**</include>
@@ -267,30 +268,6 @@
                                 <aggregation>
                                     <inputDir>${resources.dir.compressed}</inputDir>
                                     <outputFile>${resources.dir.compressed}/inputphone/inputphone.css</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>inputpin/inputpin-widget.js</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/inputpin/inputpin.js</outputFile>
-                                    <withoutCompress>${withoutCompress}</withoutCompress>
-                                </aggregation>
-                            </aggregations>
-                        </resourcesSet>
-                        <resourcesSet>
-                            <includes>
-                                <include>inputpin/inputpin.css</include>
-                            </includes>
-                            <aggregations>
-                                <aggregation>
-                                    <inputDir>${resources.dir.compressed}</inputDir>
-                                    <outputFile>${resources.dir.compressed}/inputpin/inputpin.css</outputFile>
                                     <withoutCompress>${withoutCompress}</withoutCompress>
                                 </aggregation>
                             </aggregations>

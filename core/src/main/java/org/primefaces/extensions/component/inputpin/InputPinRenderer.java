@@ -28,7 +28,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.util.Attrs;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
@@ -108,10 +107,7 @@ public class InputPinRenderer extends InputRenderer {
 
         final ResponseWriter writer = context.getResponseWriter();
         final String inputStyle = inputPin.getInputStyle();
-        final String inputStyleClass = getStyleClassBuilder(context)
-                    .add(InputText.STYLE_CLASS, InputPin.CELL_STYLE_CLASS)
-                    .add(inputPin.getInputStyleClass())
-                    .build();
+        final String inputStyleClass = createStyleClass(inputPin, "inputStyleClass", InputPin.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
         for (int i = 1; i <= inputPin.getSize(); i++) {
             final String inputId = clientId + InputPin.INPUT_SUFFIX + i;
