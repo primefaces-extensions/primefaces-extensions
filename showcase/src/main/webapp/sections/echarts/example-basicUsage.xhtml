@@ -1,0 +1,21 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="false" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <style>
+    </style>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <pe:echart style="width: 50vw; height: 400px;" value="#{eChartController.json}" widgetVar="jsonEChart">
+        <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" />
+        <p:autoUpdate on="eventTheme"/>
+    </pe:echart>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

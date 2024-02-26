@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menu id="useCaseList">
+        <p:menuitem value="Basic Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('basicUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/echarts/basicUsage.jsf"/>
+        <p:menuitem value="Facet Usage"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('facetUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/echarts/facetUsage.jsf"/>
+        <p:menuitem value="Custom Theme"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('facetUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/echarts/themeUsage.jsf"/>
+    </p:menu>
+</ui:composition>
+</html>

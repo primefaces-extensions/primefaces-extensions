@@ -166,6 +166,7 @@
                                 <include>calculator/**</include>
                                 <include>clipboard/**</include>
                                 <include>counter/**</include>
+                                <include>echarts/**</include>
                                 <include>fluidgrid/**</include>
                                 <include>fuzzysearch/**</include>
                                 <include>imageareaselect/**</include>

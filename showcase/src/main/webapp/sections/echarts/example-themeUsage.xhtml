@@ -1,0 +1,48 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions" xmlns:f="http://java.sun.com/jsf/core">
+
+    <p:messages id="messages" showSummary="false" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts-themes-js@1.0.2/src/vintage.min.js"></script>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <pe:echart style="width: 50vw; height: 400px;"  widgetVar="themeEChart" theme="vintage">
+        <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" />
+        <f:facet name="value">
+{
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    top: '5%',
+    left: 'center'
+  },
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      center: ['50%', '70%'],
+      // adjust the start and end angle
+      startAngle: 180,
+      endAngle: 360,
+      data: [
+        { value: 1048, name: 'Search Engine' },
+        { value: 735, name: 'Direct' },
+        { value: 580, name: 'Email' },
+        { value: 484, name: 'Union Ads' },
+        { value: 300, name: 'Video Ads' }
+      ]
+    }
+  ]
+}
+        </f:facet>
+    </pe:echart>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>

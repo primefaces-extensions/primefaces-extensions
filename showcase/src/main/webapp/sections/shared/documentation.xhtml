@@ -13,7 +13,7 @@
         Attributes (move mouse over the names to see data types)
     </h:panelGroup>
     <p:dataTable id="docuDataTable" var="attribute" value="#{docuPreparer.getDocuAttributes(tagName)}"
-                 emptyMessage="No attributes available for this component." styleClass="docuTable">
+                 emptyMessage="No attributes available for this component." styleClass="docuTable" lazy="false">
         <p:column>
             <f:facet name="header">
                 Name
@@ -34,13 +34,13 @@
     </h:panelGroup>
     <p:dataTable id="docuEventsDataTable" var="event" value="#{docuPreparer.getDocuEvents(tagName)}"
                  emptyMessage="No events available for this component." styleClass="docuEventTable"
-                 rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}">
+                 rendered="#{docuPreparer.getDocuEvents(tagName).size() > 0}" lazy="false">
         <p:column>
             <f:facet name="header">
                 Name
             </f:facet>
-            <h:outputText id="name" value="#{event.name}"/>
-            <pe:tooltip for="name" value="#{event.eventClass}" styleClass="qtip-default"/>
+            <h:outputText id="eventname" value="#{event.name}"/>
+            <pe:tooltip for="eventname" value="#{event.eventClass}" styleClass="qtip-default"/>
         </p:column>
         <p:column>
             <f:facet name="header">

@@ -26,7 +26,7 @@
                     <h:outputText value="Theme"/>
                     <p:selectOneMenu id="themeSelectMenu" value="#{userSettings.currentTheme}" var="theme" effect="drop"
                                      converter="themeConverter">
-                        <p:ajax process="@this" oncomplete="PrimeFacesExt.changeTheme($('#themeSelectMenu_label').text());"/>
+                        <p:ajax process="@this" onstart="PrimeFacesExt.changeTheme($('#themeSelectMenu_label').text());" update="@obs(eventTheme)"/>
                         <f:selectItems var="t" value="#{userSettings.availableThemes}" itemLabel="#{t.name}" itemValue="#{t}"/>
                         <p:column>
                             #{theme.name}
