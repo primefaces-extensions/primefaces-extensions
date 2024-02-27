@@ -21,6 +21,22 @@
  */
 package org.primefaces.extensions.model.mongo;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.logging.Logger;
+
+import javax.faces.FacesException;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+
 import dev.morphia.Datastore;
 import dev.morphia.query.FindOptions;
 import dev.morphia.query.MorphiaCursor;
@@ -38,21 +54,6 @@ import org.primefaces.util.Constants;
 import org.primefaces.util.PropertyDescriptorResolver;
 import org.primefaces.util.SerializableFunction;
 import org.primefaces.util.SerializableSupplier;
-
-import javax.faces.FacesException;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 /**
  * Basic {@link LazyDataModel} implementation for MongoDB using Morphia.
@@ -329,7 +330,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             return ComponentUtils.convertToType(value, declaredField.getType(), LOGGER);
         }
         catch (final ReflectiveOperationException e) {
-            throw new FacesException("Failed to convert " + field + " to its corresponding data type", e);
+            throw new FacesException(e);
         }
     }
 
