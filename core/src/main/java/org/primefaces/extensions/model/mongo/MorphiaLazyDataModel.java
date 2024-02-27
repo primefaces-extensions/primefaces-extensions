@@ -37,13 +37,6 @@ import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-import dev.morphia.Datastore;
-import dev.morphia.query.FindOptions;
-import dev.morphia.query.MorphiaCursor;
-import dev.morphia.query.Query;
-import dev.morphia.query.Sort;
-import dev.morphia.query.filters.Filters;
-import dev.morphia.query.filters.RegexFilter;
 import org.primefaces.context.PrimeApplicationContext;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
@@ -54,6 +47,14 @@ import org.primefaces.util.Constants;
 import org.primefaces.util.PropertyDescriptorResolver;
 import org.primefaces.util.SerializableFunction;
 import org.primefaces.util.SerializableSupplier;
+
+import dev.morphia.Datastore;
+import dev.morphia.query.FindOptions;
+import dev.morphia.query.MorphiaCursor;
+import dev.morphia.query.Query;
+import dev.morphia.query.Sort;
+import dev.morphia.query.filters.Filters;
+import dev.morphia.query.filters.RegexFilter;
 
 /**
  * Basic {@link LazyDataModel} implementation for MongoDB using Morphia.
@@ -92,7 +93,6 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * @param datastore the {@link Datastore}
      * @param entityClass The entity class
      * @param rowKeyField The name of the rowKey property (e.g. "id")
-     *
      * @deprecated use {@link MorphiaLazyDataModel#builder()} instead
      */
     @Deprecated
@@ -109,7 +109,6 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      *
      * @param datastore the {@link Datastore}
      * @param entityClass The entity class
-     *
      * @deprecated use {@link MorphiaLazyDataModel#builder()} instead
      */
     @Deprecated
@@ -305,7 +304,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     }
 
     /**
-     * use {@link Builder#overrideFieldQuery(String, BiConsumer)}  instead
+     * use {@link Builder#overrideFieldQuery(String, BiConsumer)} instead
      */
     @Deprecated
     public MorphiaLazyDataModel<T> overrideFieldQuery(final String field,
@@ -406,8 +405,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                         model.rowKeyProvider = model::getRowKeyFromConverter;
                     }
                     else {
-                        PropertyDescriptorResolver propResolver =
-                                PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance()).getPropertyDescriptorResolver();
+                        PropertyDescriptorResolver propResolver = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance())
+                                    .getPropertyDescriptorResolver();
                         model.rowKeyProvider = obj -> propResolver.getValue(obj, model.rowKeyField);
                     }
                 }
