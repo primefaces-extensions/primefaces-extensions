@@ -15,6 +15,10 @@
                     styleClass="#{navigationContext.getMenuitemStyleClass('facetUsage')}"
                     onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
                     url="#{request.contextPath}/sections/echarts/themeUsage.jsf"/>
+        <p:menuitem value="Export + Print"
+                    styleClass="#{navigationContext.getMenuitemStyleClass('exportUsage')}"
+                    onclick="Showcase.selectUseCaseLink(this)" ajax="false" icon="pi pi-play"
+                    url="#{request.contextPath}/sections/echarts/exportUsage.jsf"/>
     </p:menu>
 </ui:composition>
 </html>

@@ -126,4 +126,26 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
             $this.callBehavior("itemSelect", {params});
         });
     },
+
+    /**
+     * Return this chart as an image with a data source URL (`<img src="data:url" />`)
+     * @return {HTMLImageElement} The content of this chart as an HTML IMAGE.
+     */
+    exportAsImage: function() {
+        let img = new Image();
+        img.src = this.chart.getDataURL();
+        return img;
+    },
+
+    /**
+     * Send this chart to the printer.
+     */
+    print: function() {
+        // Create a new image element
+        let img = `<html><head><script>function s1(){setTimeout('s2()',10);}function s2(){window.print();window.close()}</script></head><body onload='s1()'><img src='${this.chart.getDataURL()}'/></body></html>`;
+        let pwa = window.open("about:blank", "_new");
+        pwa.document.open();
+        pwa.document.write(img);
+        pwa.document.close();
+    },
 });

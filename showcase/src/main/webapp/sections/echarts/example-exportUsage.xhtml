@@ -1,0 +1,36 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <p:messages id="messages" showSummary="false" showDetail="true">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <!-- EXAMPLE-SOURCE-START -->
+    <script>
+        //<![CDATA[
+        function exportChart() {
+            //export image
+            $('#output').empty().append(PF('exportEChart').exportAsImage());
+
+            //show the dialog
+            PF('dlg').show();
+        };
+
+        //]]>
+    </script>
+
+    <pe:echart style="width: 50vw; height: 400px;"  id="echart" widgetVar="exportEChart" value="#{eChartController.json}">
+        <p:ajax event="itemSelect" listener="#{eChartController.itemSelect}" />
+    </pe:echart>
+
+    <p:commandButton type="button" value="Export" icon="pi pi-home" onclick="exportChart()" styleClass="mr-2 mb-2"/>
+    <p:commandButton type="button" value="Print"  icon="pi pi-print" onclick="PF('exportEChart').print()" styleClass="mr-2 mb-2"/>
+
+    <p:dialog widgetVar="dlg" showEffect="fade" modal="true" header="Chart as an Image" resizable="false">
+        <p:outputPanel id="output" layout="block" style="width: 50vw; height: 400px;"/>
+    </p:dialog>
+    <!-- EXAMPLE-SOURCE-END -->
+</ui:composition>
