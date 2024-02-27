@@ -19,7 +19,7 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
     init: function (cfg) {
         this._super(cfg);
 
-        // user extension to configure gchart
+        // user extension to configure chart
         let extender = this.cfg.extender;
         if (extender) {
             if (typeof extender === "function") {
@@ -39,6 +39,7 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
      */
     refresh: function (cfg) {
         if (this.chart) {
+            this.unbindWindowResizeListener();
             this.chart.dispose();
         }
 
@@ -53,6 +54,7 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
         this._super();
 
         if (this.chart) {
+            this.unbindWindowResizeListener();
             this.chart.dispose();
         }
     },
@@ -75,20 +77,27 @@ PrimeFaces.widget.ExtEChart = PrimeFaces.widget.DeferredWidget.extend({
         this.chart = echarts.init(document.getElementById(this.id), theme);
         this.chart.setOption(options);
 
-        this.setupResponsive();
+        this.bindWindowResizeListener();
         this.bindItemSelect();
     },
 
     /**
-     * Setups the window resize listener to make the chart responsive.
+     * Sets up the window resize listener to make the chart responsive.
      * @private
      */
-    setupResponsive: function () {
+    bindWindowResizeListener: function() {
         let $this = this;
-        // make responsive
-        window.addEventListener('resize', function () {
+        $(window).on('resize.' + this.id, function() {
             $this.chart.resize();
         });
+    },
+
+    /**
+     * Tears down the window resize listener.
+     * @private
+     */
+    unbindWindowResizeListener: function() {
+        $(window).off('resize.' + this.id);
     },
 
     /**

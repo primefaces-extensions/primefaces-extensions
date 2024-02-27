@@ -11096,7 +11096,7 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Name of javascript function to extend the options of the underlying fullcalendar plugin.]]>
+                <![CDATA[Name of javascript function to extend the options of the underlying EChart plugin.]]>
             </description>
             <name>extender</name>
             <required>false</required>

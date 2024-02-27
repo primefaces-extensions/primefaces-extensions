@@ -117,5 +117,8 @@ public class EChart extends EChartBase {
 
             super.queueEvent(eChartEvent);
         }
+        else {
+            super.queueEvent(event);
+        }
     }
 }
