@@ -9448,9 +9448,9 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                 <![CDATA[Defines text direction, valid values are "ltr" (default) and "rtl".]]>
+                <![CDATA[Controls browser autocomplete behavior. Default value: "off".]]>
             </description>
-            <name>dir</name>
+            <name>autocomplete</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
@@ -9819,6 +9819,14 @@ See showcase for an example. Default null.]]>
                 <![CDATA[Style class of the input elements.]]>
             </description>
             <name>inputStyleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[Optional separator text rendered between cells.]]>
+            </description>
+            <name>separator</name>
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>

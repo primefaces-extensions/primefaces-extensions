@@ -65,6 +65,17 @@ public class MessageFactory {
         return message;
     }
 
+    public static String getMessageString(final FacesContext facesContext,
+                final String messageId,
+                final Object... params) {
+        Locale locale = LocaleUtils.getCurrentLocale(facesContext);
+        String message = org.primefaces.util.MessageFactory.getMessage(locale, messageId, params);
+        if (message == null) {
+            message = getFormattedText(locale, getExtensionsBundle(locale).getString(messageId), params);
+        }
+        return message;
+    }
+
     public static Object getLabel(FacesContext facesContext, UIComponent component) {
         String label = (String) component.getAttributes().get("label");
 

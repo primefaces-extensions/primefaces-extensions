@@ -52,12 +52,12 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
-        placeholder,
-        widgetVar,
+        autocomplete,
         type,
         numeric,
         inputStyle,
-        inputStyleClass
+        inputStyleClass,
+        separator
     }
     // @formatter:on
 
@@ -90,6 +90,11 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         getStateHelper().put("labelledby", labelledBy);
     }
 
+    @Override
+    public String getAutocomplete() {
+        return (String) getStateHelper().eval(PropertyKeys.autocomplete, "off");
+    }
+
     public String getType() {
         return (String) getStateHelper().eval(PropertyKeys.type, "text");
     }
@@ -120,6 +125,14 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
 
     public void setInputStyleClass(final String inputStyleClass) {
         getStateHelper().put(PropertyKeys.inputStyleClass, inputStyleClass);
+    }
+
+    public String getSeparator() {
+        return (String) getStateHelper().eval(PropertyKeys.separator, null);
+    }
+
+    public void setSeparator(final String separator) {
+        getStateHelper().put(PropertyKeys.separator, separator);
     }
 
 }

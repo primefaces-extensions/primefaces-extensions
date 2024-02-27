@@ -4,5 +4,9 @@
 }
 
 .ui-inputpin > .ui-inputpin-cell:not(:last-child) {
-    margin-right: 0.25rem;
+    margin-right: 0.2rem;
+}
+
+.ui-inputpin > .ui-inputpin-cell:not(:first-child) {
+    margin-left: 0.2rem;
 }

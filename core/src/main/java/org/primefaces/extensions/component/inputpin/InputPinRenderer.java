@@ -29,10 +29,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
+import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 import org.primefaces.util.HTML;
+import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -43,6 +45,7 @@ import org.primefaces.util.WidgetBuilder;
 public class InputPinRenderer extends InputRenderer {
 
     private static final String HIDDEN_ID = "_hidden";
+    private static final String MESSAGE_ARIA_LABEL_KEY = "primefaces.extensions.inputpin.ARIA_LABEL";
 
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
@@ -110,6 +113,11 @@ public class InputPinRenderer extends InputRenderer {
         final String inputStyleClass = createStyleClass(inputPin, "inputStyleClass", InputPin.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
         for (int i = 1; i <= inputPin.getSize(); i++) {
+
+            if (i > 1 && !LangUtils.isBlank(inputPin.getSeparator())) {
+                writer.writeText(inputPin.getSeparator(), InputPin.PropertyKeys.separator.name());
+            }
+
             final String inputId = clientId + InputPin.INPUT_SUFFIX + i;
             final String inputValue = chars.length >= i ? String.valueOf(chars[i - 1]) : "";
 
@@ -118,7 +126,6 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("name", inputId, null);
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
-            writer.writeAttribute("autocomplete", "off", null);
             writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
             if (!isValueBlank(inputStyle)) {
@@ -132,6 +139,8 @@ public class InputPinRenderer extends InputRenderer {
             if (inputPin.isNumeric()) {
                 writer.writeAttribute("inputmode", "numeric", null);
             }
+
+            writer.writeAttribute(HTML.ARIA_LABEL, MessageFactory.getMessageString(context, MESSAGE_ARIA_LABEL_KEY, i), null);
 
             renderAccessibilityAttributes(context, inputPin);
             renderPassThruAttributes(context, inputPin, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
