@@ -17,6 +17,11 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.disabled = cfg.disabled;
+        this.ariaLabel = this.cfg.ariaLabel
+                || PrimeFaces.getAriaLabel('inputpin.LABEL');
+        if (this.ariaLabel === '???inputpin.LABEL???') {
+            this.ariaLabel = 'Please enter OTP/PIN character {0}';
+        }
 
         // JQuery inputs
         this.inputsJq = $(this.jqId + ' > .ui-inputpin-cell');
@@ -35,6 +40,12 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
         // visual effects
         PrimeFaces.skinInput(this.inputsJq);
+
+        // aria-label
+        let ariaLabel = this.ariaLabel;
+        this.inputsJq.each(function(index, elem) {
+            $(elem).attr('aria-label', ariaLabel.replace('{0}', (index + 1)));
+        });
 
         this.wrapEvents();
 
@@ -187,11 +198,9 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         const chars = value.split('');
 
         for (let pos = 0; pos < chars.length; pos++) {
-            // if length exceeded the number of inputs, empty the field
             if (pos + i >= this.inputCount) {
                 this.inputsJq[pos + i].value = '';
             } else {
-                // paste value
                 this.inputsJq[pos + i].value = chars[pos];
             }
         }

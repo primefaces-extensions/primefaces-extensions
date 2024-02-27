@@ -21,12 +21,20 @@
  */
 package org.primefaces.extensions.component.inputpin;
 
+import java.util.Collections;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependency;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.NumberConverter;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.extensions.util.ExtLangUtils;
+import org.primefaces.extensions.util.MessageFactory;
+import org.primefaces.util.LangUtils;
 
 /**
  * <code>InputPin</code> component.
@@ -48,6 +56,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String STYLE_CLASS = "ui-inputpin ui-widget";
     public static final String CELL_STYLE_CLASS = "ui-inputpin-cell " + InputText.STYLE_CLASS;
     public static final String INPUT_SUFFIX = "_input";
+    public static final String HIDDEN_SUFFIX = "_hidden";
 
     // @formatter:off
     @SuppressWarnings("java:S115")
@@ -57,7 +66,8 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         numeric,
         inputStyle,
         inputStyleClass,
-        separator
+        separator,
+        ariaLabel
     }
     // @formatter:on
 
@@ -77,7 +87,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
 
     @Override
     public String getValidatableInputClientId() {
-        return getClientId();
+        return getClientId() + HIDDEN_SUFFIX;
     }
 
     @Override
@@ -133,6 +143,48 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
 
     public void setSeparator(final String separator) {
         getStateHelper().put(PropertyKeys.separator, separator);
+    }
+
+    public String getAriaLabel() {
+        return (String) getStateHelper().eval(PropertyKeys.ariaLabel, null);
+    }
+
+    public void setAriaLabel(final String ariaLabel) {
+        getStateHelper().put(PropertyKeys.ariaLabel, ariaLabel);
+    }
+
+    @Override
+    protected void validateValue(FacesContext context, Object newValue) {
+        super.validateValue(context, newValue);
+        if (!isValid()) {
+            return;
+        }
+        String submittedValue = (String) getSubmittedValue();
+        if (LangUtils.isEmpty(submittedValue)) {
+            return;
+        }
+        if (isNumeric()) {
+            boolean isDigit = ExtLangUtils.isDigitsOnly(submittedValue);
+            if (!isDigit) {
+                setValid(false);
+                String validatorMessage = getValidatorMessage();
+                FacesMessage message;
+                if (validatorMessage != null) {
+                    message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                validatorMessage,
+                                validatorMessage);
+                }
+                else {
+                    String exampleValue = String.join("", Collections.nCopies(getSize(), "9"));
+                    message = MessageFactory.getMessage(NumberConverter.NUMBER_ID,
+                                FacesMessage.SEVERITY_ERROR,
+                                getSubmittedValue(),
+                                exampleValue,
+                                MessageFactory.getLabel(context, this));
+                }
+                context.addMessage(getClientId(context), message);
+            }
+        }
     }
 
 }

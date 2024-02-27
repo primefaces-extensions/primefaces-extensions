@@ -29,7 +29,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import org.primefaces.extensions.util.Attrs;
-import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.renderkit.InputRenderer;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
@@ -44,9 +43,6 @@ import org.primefaces.util.WidgetBuilder;
  */
 public class InputPinRenderer extends InputRenderer {
 
-    private static final String HIDDEN_ID = "_hidden";
-    private static final String MESSAGE_ARIA_LABEL_KEY = "primefaces.extensions.inputpin.ARIA_LABEL";
-
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
         final InputPin inputPin = (InputPin) component;
@@ -55,7 +51,7 @@ public class InputPinRenderer extends InputRenderer {
             return;
         }
 
-        final String inputId = inputPin.getClientId(context) + HIDDEN_ID;
+        final String inputId = inputPin.getClientId(context) + InputPin.HIDDEN_SUFFIX;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
@@ -110,7 +106,7 @@ public class InputPinRenderer extends InputRenderer {
 
         final ResponseWriter writer = context.getResponseWriter();
         final String inputStyle = inputPin.getInputStyle();
-        final String inputStyleClass = createStyleClass(inputPin, "inputStyleClass", InputPin.CELL_STYLE_CLASS);
+        final String inputStyleClass = createStyleClass(inputPin, InputPin.PropertyKeys.inputStyleClass.name(), InputPin.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
         for (int i = 1; i <= inputPin.getSize(); i++) {
 
@@ -140,8 +136,6 @@ public class InputPinRenderer extends InputRenderer {
                 writer.writeAttribute("inputmode", "numeric", null);
             }
 
-            writer.writeAttribute(HTML.ARIA_LABEL, MessageFactory.getMessageString(context, MESSAGE_ARIA_LABEL_KEY, i), null);
-
             renderAccessibilityAttributes(context, inputPin);
             renderPassThruAttributes(context, inputPin, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
             renderDomEvents(context, inputPin, HTML.INPUT_TEXT_EVENTS);
@@ -153,13 +147,16 @@ public class InputPinRenderer extends InputRenderer {
 
     protected void encodeHiddenInput(final FacesContext context, final InputPin inputPin, final String clientId, final String valueToRender)
                 throws IOException {
-        renderHiddenInput(context, clientId + HIDDEN_ID, valueToRender, inputPin.isDisabled());
+        renderHiddenInput(context, clientId + InputPin.HIDDEN_SUFFIX, valueToRender, inputPin.isDisabled());
     }
 
     protected void encodeScript(final FacesContext context, final InputPin inputPin) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
         wb.init("ExtInputPin", inputPin);
         wb.attr("numeric", inputPin.isNumeric(), false);
+        if (LangUtils.isNotBlank(inputPin.getAriaLabel())) {
+            wb.attr("ariaLabel", inputPin.getAriaLabel());
+        }
 
         encodeClientBehaviors(context, inputPin);
 
