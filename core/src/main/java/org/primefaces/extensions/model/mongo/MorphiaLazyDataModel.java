@@ -388,8 +388,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                 else {
                     Objects.requireNonNull(model.rowKeyField, "rowKeyField is mandatory if neither rowKeyProvider nor converter is provided");
 
-                    PropertyDescriptorResolver propResolver =
-                            PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance()).getPropertyDescriptorResolver();
+                    PropertyDescriptorResolver propResolver = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance())
+                                .getPropertyDescriptorResolver();
                     model.rowKeyProvider = obj -> propResolver.getValue(obj, model.rowKeyField);
                 }
             }
