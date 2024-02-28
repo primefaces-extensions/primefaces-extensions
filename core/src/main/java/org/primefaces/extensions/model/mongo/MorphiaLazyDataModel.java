@@ -357,7 +357,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             return this;
         }
 
-        public Builder<T> entityManager(SerializableSupplier<Datastore> datastore) {
+        public Builder<T> datastore(SerializableSupplier<Datastore> datastore) {
             model.datastore = datastore;
             return this;
         }
