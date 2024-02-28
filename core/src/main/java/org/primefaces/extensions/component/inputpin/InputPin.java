@@ -22,6 +22,7 @@
 package org.primefaces.extensions.component.inputpin;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependency;
@@ -32,6 +33,7 @@ import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.extensions.component.inputphone.InputPhone;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.LangUtils;
@@ -58,9 +60,21 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 
+    // disabled, readonly, style, styleClass, size, placeholder, maxlength handled by component renderer
+    public static final List<String> INPUT_PIN_ATTRS_WITHOUT_EVENTS = LangUtils.unmodifiableList(
+                "accesskey",
+                "alt",
+                "autocomplete",
+                "dir",
+                "lang",
+                "inputmode",
+                "tabindex",
+                "title");
+
     // @formatter:off
     @SuppressWarnings("java:S115")
     public enum PropertyKeys {
+        placeholder,
         autocomplete,
         type,
         numeric,
@@ -98,6 +112,14 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     @Override
     public void setLabelledBy(final String labelledBy) {
         getStateHelper().put("labelledby", labelledBy);
+    }
+
+    public String getPlaceholder() {
+        return (String) getStateHelper().eval(InputPhone.PropertyKeys.placeholder, null);
+    }
+
+    public void setPlaceholder(final String placeholder) {
+        getStateHelper().put(InputPhone.PropertyKeys.placeholder, placeholder);
     }
 
     @Override

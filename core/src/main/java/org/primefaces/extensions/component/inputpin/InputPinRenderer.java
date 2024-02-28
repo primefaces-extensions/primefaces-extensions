@@ -124,7 +124,7 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("size", 1, null);
             writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
-            if (!isValueBlank(inputStyle)) {
+            if (LangUtils.isNotBlank(inputStyle)) {
                 writer.writeAttribute(Attrs.STYLE, inputStyle, null);
             }
 
@@ -132,8 +132,13 @@ public class InputPinRenderer extends InputRenderer {
                 writer.writeAttribute("type", inputPin.getType(), null);
             }
 
-            if (inputPin.isNumeric()) {
-                writer.writeAttribute("inputmode", "numeric", null);
+            if (inputPin.isNumeric() && LangUtils.isBlank(inputPin.getInputmode())) {
+                inputPin.setInputmode("numeric");
+            }
+
+            if (LangUtils.isNotBlank(inputPin.getPlaceholder())) {
+                char placeholder = inputPin.getPlaceholder().charAt((i - 1) % inputPin.getPlaceholder().length());
+                writer.writeAttribute("placeholder", placeholder, null);
             }
 
             renderAccessibilityAttributes(context, inputPin);
