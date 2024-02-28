@@ -21,7 +21,6 @@
  */
 package org.primefaces.extensions.component.inputpin;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -34,6 +33,7 @@ import org.primefaces.component.api.InputHolder;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.component.inputphone.InputPhone;
+import org.primefaces.extensions.util.Constants;
 import org.primefaces.extensions.util.ExtLangUtils;
 import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.LangUtils;
@@ -47,8 +47,8 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = "primefaces-extensions", name = "inputpin/inputpin.css")
-@ResourceDependency(library = "primefaces-extensions", name = "inputpin/inputpin.js")
+@ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.js")
 public class InputPin extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPin";
@@ -60,7 +60,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 
-    // disabled, readonly, style, styleClass, size, placeholder, maxlength handled by component renderer
+    // disabled, readonly, style, styleClass, size, placeholder handled by component renderer
     public static final List<String> INPUT_PIN_ATTRS_WITHOUT_EVENTS = LangUtils.unmodifiableList(
                 "accesskey",
                 "alt",
@@ -197,7 +197,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
                                 validatorMessage);
                 }
                 else {
-                    String exampleValue = String.join("", Collections.nCopies(getSize(), "9"));
+                    String exampleValue = "9".repeat(getSize());
                     message = MessageFactory.getMessage(NumberConverter.NUMBER_ID,
                                 FacesMessage.SEVERITY_ERROR,
                                 getSubmittedValue(),

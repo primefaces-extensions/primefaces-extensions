@@ -22,13 +22,14 @@
 package org.primefaces.extensions.util;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class ExtLangUtils {
 
     public static final int INDEX_NOT_FOUND = -1;
 
-    private static final Pattern DIGITS_ONLY_PATTERN = Pattern.compile("\\d+");
+    private static final Predicate<String> IS_DIGITS_ONLY = Pattern.compile("\\d+").asMatchPredicate();
 
     private ExtLangUtils() {
         // prevent instantiation
@@ -170,7 +171,7 @@ public class ExtLangUtils {
     }
 
     public static boolean isDigitsOnly(String string) {
-        return DIGITS_ONLY_PATTERN.matcher(string).matches();
+        return IS_DIGITS_ONLY.test(string);
     }
 
 }
