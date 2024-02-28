@@ -21,8 +21,8 @@
  */
 package org.primefaces.extensions.model.mongo;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +33,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import javax.faces.FacesException;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
@@ -130,8 +129,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
 
     @Override
     public String getRowKey(final T object) {
-        Object rowKey = rowKeyProvider.apply(object);
-        return rowKey == null ? null : String.valueOf(rowKey);
+        return String.valueOf(rowKeyProvider.apply(object));
     }
 
     @Override
@@ -156,6 +154,8 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
     }
 
     public Query<T> applyFilters(final Query<T> q, final Map<String, FilterMeta> filters) {
+        PrimeApplicationContext primeAppContext = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance());
+
         filters.forEach((field, metadata) -> {
 
             if (metadata.getFilterValue() != null) {
@@ -180,7 +180,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 q.filter(Filters.regex(field, val + "").caseInsensitive());
                                 break;
                             case EXACT:
-                                final Object castedValueEx = castedValue(field, val);
+                                final Object castedValueEx = convertToDataType(primeAppContext, field, val);
                                 if (castedValueEx != null) {
                                     q.filter(Filters.eq(field, castedValueEx));
                                 }
@@ -189,7 +189,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 }
                                 break;
                             case LESS_THAN:
-                                final Object castedValueLt = castedValue(field, val);
+                                final Object castedValueLt = convertToDataType(primeAppContext, field, val);
                                 if (castedValueLt != null) {
                                     q.filter(Filters.lt(field, castedValueLt));
                                 }
@@ -198,7 +198,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 }
                                 break;
                             case LESS_THAN_EQUALS:
-                                final Object castedValueLte = castedValue(field, val);
+                                final Object castedValueLte = convertToDataType(primeAppContext, field, val);
                                 if (castedValueLte != null) {
                                     q.filter(Filters.lte(field, castedValueLte));
                                 }
@@ -207,7 +207,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 }
                                 break;
                             case GREATER_THAN:
-                                final Object castedValueGt = castedValue(field, val);
+                                final Object castedValueGt = convertToDataType(primeAppContext, field, val);
                                 if (castedValueGt != null) {
                                     q.filter(Filters.gt(field, castedValueGt));
                                 }
@@ -217,7 +217,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 break;
                             case GREATER_THAN_EQUALS:
 
-                                final Object castedValueGte = castedValue(field, val);
+                                final Object castedValueGte = convertToDataType(primeAppContext, field, val);
                                 if (castedValueGte != null) {
                                     q.filter(Filters.gte(field, castedValueGte));
                                 }
@@ -246,7 +246,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 q.filter(Filters.regex(field, val + Constants.EMPTY_STRING).caseInsensitive().not());
                                 break;
                             case NOT_EQUALS:
-                                final Object castedValueNe = castedValue(field, val);
+                                final Object castedValueNe = convertToDataType(primeAppContext, field, val);
                                 if (castedValueNe != null) {
                                     q.filter(Filters.eq(field, castedValueNe).not());
                                 }
@@ -275,8 +275,7 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
                                 break;
 
                             default:
-                                throw new UnsupportedOperationException(
-                                            "MatchMode " + metadata.getMatchMode() + " not supported");
+                                throw new UnsupportedOperationException("MatchMode " + metadata.getMatchMode() + " not supported");
                         }
                     }
                 }
@@ -307,30 +306,15 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
      * use {@link Builder#overrideFieldQuery(String, BiConsumer)} instead
      */
     @Deprecated
-    public MorphiaLazyDataModel<T> overrideFieldQuery(final String field,
-                final BiConsumer<Query<T>, FilterMeta> consumer) {
+    public MorphiaLazyDataModel<T> overrideFieldQuery(final String field, final BiConsumer<Query<T>, FilterMeta> consumer) {
         this.overrides.put(field, consumer);
         return this;
     }
 
-    /**
-     * checks the data type of the field on the corresponding class and tries to convert the string value to its data type (only handles basic primitive types,
-     * for more complex data types the field query should be overridden with the overrideFieldQuery method) for example this can be useful when filtering for
-     * fields which are numbers like ints,floats,doubles and longs where the filterValue will be a string and thus the query wont find any matches since it's
-     * comparing a string with a number
-     *
-     * @param field the field on the entity to cast
-     * @param value the value to cast based on the field
-     * @return the newly cast object
-     */
-    private Object castedValue(final String field, final Object value) {
-        try {
-            final Field declaredField = entityClass.getDeclaredField(field);
-            return ComponentUtils.convertToType(value, declaredField.getType(), LOGGER);
-        }
-        catch (final ReflectiveOperationException e) {
-            throw new FacesException(e);
-        }
+    private Object convertToDataType(PrimeApplicationContext primeAppContext, final String field, final Object value) {
+        PropertyDescriptorResolver propResolver = primeAppContext.getPropertyDescriptorResolver();
+        final PropertyDescriptor propertyDescriptor = propResolver.get(entityClass, field);
+        return ComponentUtils.convertToType(value, propertyDescriptor.getPropertyType(), LOGGER);
     }
 
     private Query<T> buildQuery() {
@@ -396,19 +380,17 @@ public class MorphiaLazyDataModel<T> extends LazyDataModel<T> implements Seriali
             Objects.requireNonNull(model.entityClass, "entityClass not set");
             Objects.requireNonNull(model.datastore, "datastore not set");
 
-            boolean selectionEnabled = model.rowKeyProvider != null || model.rowKeyConverter != null || model.rowKeyField != null;
-            if (selectionEnabled) {
-                Objects.requireNonNull(model.rowKeyField, "rowKeyField is mandatory for selection");
+            boolean requiresRowKeyProvider = model.rowKeyProvider == null && (model.rowKeyConverter != null || model.rowKeyField != null);
+            if (requiresRowKeyProvider) {
+                if (model.rowKeyConverter != null) {
+                    model.rowKeyProvider = model::getRowKeyFromConverter;
+                }
+                else {
+                    Objects.requireNonNull(model.rowKeyField, "rowKeyField is mandatory if neither rowKeyProvider nor converter is provided");
 
-                if (model.rowKeyProvider == null) {
-                    if (model.rowKeyConverter != null) {
-                        model.rowKeyProvider = model::getRowKeyFromConverter;
-                    }
-                    else {
-                        PropertyDescriptorResolver propResolver = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance())
-                                    .getPropertyDescriptorResolver();
-                        model.rowKeyProvider = obj -> propResolver.getValue(obj, model.rowKeyField);
-                    }
+                    PropertyDescriptorResolver propResolver = PrimeApplicationContext.getCurrentInstance(FacesContext.getCurrentInstance())
+                                .getPropertyDescriptorResolver();
+                    model.rowKeyProvider = obj -> propResolver.getValue(obj, model.rowKeyField);
                 }
             }
             return model;
