@@ -71,6 +71,10 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         if (!originalOnkeydown && events && events.keydown) {
             originalOnkeydown = events.keydown[0].handler;
         }
+        var originalOnfocus = this.inputsJq.prop('onfocus');
+        if (!originalOnfocus && events && events.focus) {
+            originalOnfocus = events.focus[0].handler;
+        }
 
         for (let i = 0; i < inputsJq.length; i++) {
 
@@ -167,6 +171,13 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                 }
             });
         }
+		
+		inputsJq.prop('onfocus', null).off('focus').on('focus', function (e) {
+			if (originalOnfocus && originalOnfocus.call(this, e) === false) {
+                return false;
+            }
+			this.select();
+		});
     },
 
     /**

@@ -122,6 +122,7 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("name", inputId, null);
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
+            writer.writeAttribute("maxlength", inputPin.getSize(), null);
             writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
             if (LangUtils.isNotBlank(inputStyle)) {
