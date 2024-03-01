@@ -9456,6 +9456,14 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
+                 <![CDATA[Defines text direction, valid values are "ltr" (default) and "rtl".]]>
+            </description>
+            <name>dir</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Disables the input element, default is false.]]>
             </description>
             <name>disabled</name>

@@ -84,6 +84,7 @@ public class InputPinRenderer extends InputRenderer {
         final String clientId = inputPin.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(InputPin.STYLE_CLASS, inputPin.getStyleClass())
+                    .add(inputPin.isRTL(), InputPin.RTL_STYLE_CLASS)
                     .build();
 
         writer.startElement("span", inputPin);

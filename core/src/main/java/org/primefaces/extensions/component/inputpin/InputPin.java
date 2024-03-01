@@ -30,6 +30,7 @@ import javax.faces.convert.NumberConverter;
 
 import org.primefaces.component.api.AbstractPrimeHtmlInputText;
 import org.primefaces.component.api.InputHolder;
+import org.primefaces.component.api.RTLAware;
 import org.primefaces.component.api.Widget;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.extensions.component.inputphone.InputPhone;
@@ -49,13 +50,14 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "core.js")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.css")
 @ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.js")
-public class InputPin extends AbstractPrimeHtmlInputText implements Widget, InputHolder {
+public class InputPin extends AbstractPrimeHtmlInputText implements Widget, InputHolder, RTLAware {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPin";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPinRenderer";
 
     public static final String STYLE_CLASS = "ui-inputpin ui-widget";
+    public static final String RTL_STYLE_CLASS = "ui-inputpin-rtl";
     public static final String CELL_STYLE_CLASS = "ui-inputpin-cell " + InputText.STYLE_CLASS;
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
