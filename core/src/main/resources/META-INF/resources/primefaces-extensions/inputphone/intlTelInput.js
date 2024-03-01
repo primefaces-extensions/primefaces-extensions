@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.5.3
+ * International Telephone Input v19.5.4
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -517,7 +517,7 @@
                     }
                     if (showFlags) {
                         this.selectedFlagInner = this._createEl("div", {
-                            "class": "iti__flag iti__globe"
+                            "class": "iti__flag"
                         }, this.selectedFlag);
                     }
                     if (this.selectedFlag && this.telInput.disabled) {
@@ -668,12 +668,13 @@
                             if (dialCode && isRegionlessNanp) {
                                 // has intl dial code, is regionless nanp, and no initialCountry, so default to US
                                 this._setFlag("us");
-                            } else if (defaultToFirstCountry) {
+                            } else if (defaultToFirstCountry && !val) {
                                 // no dial code and no initialCountry, so default to first in list
                                 this.defaultCountry = this.preferredCountries.length ? this.preferredCountries[0].iso2 : this.countries[0].iso2;
-                                if (!val) {
-                                    this._setFlag(this.defaultCountry);
-                                }
+                                this._setFlag(this.defaultCountry);
+                            } else {
+                                // display the empty state (globe icon)
+                                this._setFlag();
                             }
                         }
                         // if empty and autoInsertDialCode then insert the dial code
@@ -1768,7 +1769,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.5.3";
+        intlTelInputGlobals.version = "19.5.4";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
