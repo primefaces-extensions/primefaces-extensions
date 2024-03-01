@@ -94,13 +94,6 @@
         </repository>
     </distributionManagement>
     <properties>
-        <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.release>8</maven.compiler.release>
-        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-        <main.basedir>${project.basedir}</main.basedir>
-        <jsf.stage>Development</jsf.stage>
         <apache-faces.version>2.3.10</apache-faces.version>
         <commonmark.version>0.21.0</commonmark.version>
         <commons-collections.version>4.4</commons-collections.version>
@@ -109,11 +102,18 @@
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <gson.version>2.10.1</gson.version>
         <jakarta-faces.version>2.3.21</jakarta-faces.version>
-        <libphonenumber.version>8.13.29</libphonenumber.version>
-        <morphia.version>2.4.11</morphia.version>
+        <jsf.stage>Development</jsf.stage>
         <junit.version>5.10.2</junit.version>
-        <primefaces.core.version>13.0.6</primefaces.core.version>
+        <libphonenumber.version>8.13.29</libphonenumber.version>
+        <main.basedir>${project.basedir}</main.basedir>
+        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <morphia.version>2.4.11</morphia.version>
+        <primefaces.core.version>13.0.7</primefaces.core.version>
         <primefaces.optimizer.version>2.6.3</primefaces.optimizer.version>
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+        <resources.dir.compressed>${project.build.directory}/classes/META-INF/resources/primefaces-extensions</resources.dir.compressed>
         <withoutCompress>true</withoutCompress>
     </properties>
     <dependencyManagement>
