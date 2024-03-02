@@ -27,7 +27,7 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
             this.cfg.toolbar = null;
         }
 
-        // user extension to configure handsontable
+        // user extension to configure SunEditor
         const extender = this.cfg.extender
         if (extender) {
             if (typeof extender === "function") {
@@ -61,6 +61,10 @@ PrimeFaces.widget.ExtSunEditor = PrimeFaces.widget.DeferredWidget.extend({
         if (this.disabled) {
             this.editor.disable();
         }
+
+        // do not alter HTML
+        this.editor.core.cleanHTML = function (html) {return html;}
+        this.editor.core.convertContentsForEditor = function (html) {return html;}
 
         //update input on change
         this.editor.onChange = function (contents, core) {
