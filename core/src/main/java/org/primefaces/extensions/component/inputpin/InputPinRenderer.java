@@ -144,7 +144,7 @@ public class InputPinRenderer extends InputRenderer {
             }
 
             renderAccessibilityAttributes(context, inputPin);
-            renderPassThruAttributes(context, inputPin, HTML.INPUT_TEXT_ATTRS_WITHOUT_EVENTS);
+            renderPassThruAttributes(context, inputPin, InputPin.INPUT_PIN_ATTRS_WITHOUT_EVENTS);
             renderDomEvents(context, inputPin, HTML.INPUT_TEXT_EVENTS);
             renderValidationMetadata(context, inputPin);
 

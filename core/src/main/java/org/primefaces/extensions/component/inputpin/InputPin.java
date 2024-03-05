@@ -63,7 +63,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public static final String HIDDEN_SUFFIX = "_hidden";
 
     // disabled, readonly, style, styleClass, size, placeholder handled by component renderer
-    public static final List<String> INPUT_PIN_ATTRS_WITHOUT_EVENTS = LangUtils.unmodifiableList(
+    public static final List<String> INPUT_PIN_ATTRS_WITHOUT_EVENTS = List.of(
                 "accesskey",
                 "alt",
                 "autocomplete",

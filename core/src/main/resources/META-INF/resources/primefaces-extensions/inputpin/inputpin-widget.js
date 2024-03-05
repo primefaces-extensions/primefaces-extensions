@@ -81,6 +81,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
             let input = inputsJq[i];
 
             $(input).prop('oninput', null).off('input').on('input', function (e) {
+                // sanitise input
                 if ($this.cfg.numeric && input.value.length > 0 && isNaN(input.value)) {
                     input.value = '';
                     $this.updateInput();
@@ -93,9 +94,6 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
                 // if a value is pasted, put each character to each of the next input
                 if (input.value.length > 1) {
-                    // sanitise input
-                    // TODO
-
                     // split characters to array
                     const chars = input.value.split('');
 
@@ -112,9 +110,10 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
                     let focus_index = Math.min(inputsJq.length - 1, i + chars.length);
                     inputsJq[focus_index].focus();
                 }
-                $this.updateInput();
+                var originalValue = $this.updateInput();
 
                 if (originalOninput && originalOninput.call(this, e) === false) {
+                    setValue(originalValue);
                     return false;
                 }
             });
