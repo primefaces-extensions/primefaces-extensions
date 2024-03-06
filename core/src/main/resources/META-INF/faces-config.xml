@@ -195,8 +195,8 @@
         <component-class>org.primefaces.extensions.component.inputphone.InputPhone</component-class>
     </component>
     <component>
-        <component-type>org.primefaces.extensions.component.InputPin</component-type>
-        <component-class>org.primefaces.extensions.component.inputpin.InputPin</component-class>
+        <component-type>org.primefaces.extensions.component.InputOtp</component-type>
+        <component-class>org.primefaces.extensions.component.inputotp.InputOtp</component-class>
     </component>
     <component>
         <component-type>org.primefaces.extensions.component.Keynote</component-type>
@@ -423,8 +423,8 @@
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>
-            <renderer-type>org.primefaces.extensions.component.InputPinRenderer</renderer-type>
-            <renderer-class>org.primefaces.extensions.component.inputpin.InputPinRenderer</renderer-class>
+            <renderer-type>org.primefaces.extensions.component.InputOtpRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.inputotp.InputOtpRenderer</renderer-class>
         </renderer>
         <renderer>
             <component-family>org.primefaces.extensions.component</component-family>

@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.inputpin;
+package org.primefaces.extensions.component.inputotp;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ import org.primefaces.extensions.util.MessageFactory;
 import org.primefaces.util.LangUtils;
 
 /**
- * <code>InputPin</code> component.
+ * <code>InputOtp</code> component.
  *
  * @since 14.0.0
  */
@@ -48,22 +48,22 @@ import org.primefaces.util.LangUtils;
 @ResourceDependency(library = "primefaces", name = "jquery/jquery.js")
 @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js")
 @ResourceDependency(library = "primefaces", name = "core.js")
-@ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.css")
-@ResourceDependency(library = Constants.LIBRARY, name = "inputpin/inputpin.js")
-public class InputPin extends AbstractPrimeHtmlInputText implements Widget, InputHolder, RTLAware {
+@ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.css")
+@ResourceDependency(library = Constants.LIBRARY, name = "inputotp/inputotp.js")
+public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, InputHolder, RTLAware {
 
-    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputPin";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.InputOtp";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
-    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputPinRenderer";
+    public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.InputOtpRenderer";
 
-    public static final String STYLE_CLASS = "ui-inputpin ui-widget";
-    public static final String RTL_STYLE_CLASS = "ui-inputpin-rtl";
-    public static final String CELL_STYLE_CLASS = "ui-inputpin-cell " + InputText.STYLE_CLASS;
+    public static final String STYLE_CLASS = "ui-inputotp ui-widget";
+    public static final String RTL_STYLE_CLASS = "ui-inputotp-rtl";
+    public static final String CELL_STYLE_CLASS = "ui-inputotp-input " + InputText.STYLE_CLASS;
     public static final String INPUT_SUFFIX = "_input";
     public static final String HIDDEN_SUFFIX = "_hidden";
 
     // disabled, readonly, style, styleClass, size, placeholder handled by component renderer
-    public static final List<String> INPUT_PIN_ATTRS_WITHOUT_EVENTS = List.of(
+    public static final List<String> INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS = List.of(
                 "accesskey",
                 "alt",
                 "autocomplete",
@@ -79,15 +79,17 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         placeholder,
         autocomplete,
         type,
-        numeric,
+        integerOnly,
         inputStyle,
         inputStyleClass,
         separator,
-        ariaLabel
+        ariaLabel,
+        length,
+        mask
     }
     // @formatter:on
 
-    public InputPin() {
+    public InputOtp() {
         setRendererType(DEFAULT_RENDERER);
     }
 
@@ -137,12 +139,12 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         getStateHelper().put(PropertyKeys.type, type);
     }
 
-    public boolean isNumeric() {
-        return (Boolean) getStateHelper().eval(PropertyKeys.numeric, false);
+    public boolean isIntegerOnly() {
+        return (Boolean) getStateHelper().eval(PropertyKeys.integerOnly, false);
     }
 
-    public void setNumeric(final boolean numeric) {
-        getStateHelper().put(PropertyKeys.numeric, numeric);
+    public void setIntegerOnly(final boolean integerOnly) {
+        getStateHelper().put(PropertyKeys.integerOnly, integerOnly);
     }
 
     public String getInputStyle() {
@@ -177,6 +179,22 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         getStateHelper().put(PropertyKeys.ariaLabel, ariaLabel);
     }
 
+    public int getLength() {
+        return (int) getStateHelper().eval(PropertyKeys.length, 4);
+    }
+
+    public void setAriaLabel(final int length) {
+        getStateHelper().put(PropertyKeys.length, length);
+    }
+
+    public boolean isMask() {
+        return (boolean) getStateHelper().eval(PropertyKeys.mask, false);
+    }
+
+    public void setMask(final boolean mask) {
+        getStateHelper().put(PropertyKeys.mask, mask);
+    }
+
     @Override
     protected void validateValue(FacesContext context, Object newValue) {
         super.validateValue(context, newValue);
@@ -187,7 +205,7 @@ public class InputPin extends AbstractPrimeHtmlInputText implements Widget, Inpu
         if (LangUtils.isEmpty(submittedValue)) {
             return;
         }
-        if (isNumeric()) {
+        if (isIntegerOnly()) {
             boolean isDigit = ExtLangUtils.isDigitsOnly(submittedValue);
             if (!isDigit) {
                 setValid(false);

@@ -10,21 +10,21 @@
 
             <ui:define name="centerContent">
                 <f:facet name="header">
-                    <h:outputText value="InputPin"/>
+                    <h:outputText value="InputOtp"/>
                 </f:facet>
-                InputPin is an input component suitable for inserting fixed-size PINs or OTPs.
+                InputOtp is an input component suitable for inserting fixed-size PINs or one time passwords (OTP).
                 <p>
                     Based on <h:outputLink id="githubLink" value="https://github.com/shuqikhor/Vanilla-OTP-Input">Vanilla OTP Input</h:outputLink> by Shuqi Khor.
                 </p>
             </ui:define>
 
             <ui:define name="useCases">
-                <ui:include src="/sections/inputpin/useCasesChoice.xhtml"/>
+                <ui:include src="/sections/inputotp/useCasesChoice.xhtml"/>
             </ui:define>
 
             <ui:define name="docuTable">
                 <ui:include src="/sections/shared/documentation.xhtml">
-                    <ui:param name="tagName" value="inputPin"/>
+                    <ui:param name="tagName" value="inputOtp"/>
                 </ui:include>
             </ui:define>
 

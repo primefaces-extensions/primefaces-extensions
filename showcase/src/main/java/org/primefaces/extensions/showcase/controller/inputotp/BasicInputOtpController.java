@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.showcase.controller.inputpin;
+package org.primefaces.extensions.showcase.controller.inputotp;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class BasicInputPinController implements Serializable {
+public class BasicInputOtpController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

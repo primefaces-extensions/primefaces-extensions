@@ -1,10 +1,10 @@
 /**
- * PrimeFaces Extensions InputPin Widget.
+ * PrimeFaces Extensions InputOtp Widget.
  * Inspired from https://github.com/shuqikhor/Vanilla-OTP-Input
  *
  * @since 14.0.0
  */
-PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
+PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
 
     /**
      * Initializes the widget.
@@ -18,13 +18,13 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.disabled = cfg.disabled;
         this.ariaLabel = this.cfg.ariaLabel
-                || PrimeFaces.getAriaLabel('inputpin.LABEL');
-        if (this.ariaLabel === '???inputpin.LABEL???') {
+                || PrimeFaces.getAriaLabel('inputotp.LABEL');
+        if (this.ariaLabel === '???inputotp.LABEL???') {
             this.ariaLabel = 'Please enter OTP/PIN character {0}';
         }
 
         // JQuery inputs
-        this.inputsJq = $(this.jqId + ' > .ui-inputpin-cell');
+        this.inputsJq = $(this.jqId + ' > .ui-inputotp-input');
         this.inputCount = this.inputsJq.length;
         this.hinput = $(this.jqId + '_hidden');
 
@@ -82,7 +82,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
 
             $(input).prop('oninput', null).off('input').on('input', function (e) {
                 // sanitise input
-                if ($this.cfg.numeric && input.value.length > 0 && isNaN(input.value)) {
+                if ($this.cfg.integerOnly && input.value.length > 0 && isNaN(input.value)) {
                     input.value = '';
                     $this.updateInput();
                     return false;
@@ -202,7 +202,7 @@ PrimeFaces.widget.ExtInputPin = PrimeFaces.widget.BaseWidget.extend({
      * @param {number | string} value The new value to set.
      */
     setValue: function (value) {
-        if (value.length > this.inputCount || (this.cfg.numeric && isNaN(value))) {
+        if (value.length > this.inputCount || (this.cfg.integerOnly && isNaN(value))) {
             return;
         }
         const chars = value.split('');

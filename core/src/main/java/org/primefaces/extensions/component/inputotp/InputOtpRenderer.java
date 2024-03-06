@@ -19,7 +19,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.component.inputpin;
+package org.primefaces.extensions.component.inputotp;
 
 import java.io.IOException;
 
@@ -37,85 +37,85 @@ import org.primefaces.util.LangUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
- * Renderer for the {@link InputPin} component.
+ * Renderer for the {@link InputOtp} component.
  *
  * @since 14.0.0
  */
-public class InputPinRenderer extends InputRenderer {
+public class InputOtpRenderer extends InputRenderer {
 
     @Override
     public void decode(final FacesContext context, final UIComponent component) {
-        final InputPin inputPin = (InputPin) component;
+        final InputOtp inputOtp = (InputOtp) component;
 
-        if (!shouldDecode(inputPin)) {
+        if (!shouldDecode(inputOtp)) {
             return;
         }
 
-        final String inputId = inputPin.getClientId(context) + InputPin.HIDDEN_SUFFIX;
+        final String inputId = inputOtp.getClientId(context) + InputOtp.HIDDEN_SUFFIX;
         final String submittedValue = context.getExternalContext().getRequestParameterMap().get(inputId);
 
         if (submittedValue != null) {
-            inputPin.setSubmittedValue(submittedValue);
+            inputOtp.setSubmittedValue(submittedValue);
         }
 
-        decodeBehaviors(context, inputPin);
+        decodeBehaviors(context, inputOtp);
     }
 
     @Override
     public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-        final InputPin inputPin = (InputPin) component;
+        final InputOtp inputOtp = (InputOtp) component;
 
-        if (inputPin.getSize() < 1) {
-            throw new FacesException("InputPin size property is required.");
+        if (inputOtp.getLength() < 1) {
+            throw new FacesException("InputOtp length property should be > 0.");
         }
 
-        String valueToRender = ComponentUtils.getValueToRender(context, inputPin, inputPin.getValue());
+        String valueToRender = ComponentUtils.getValueToRender(context, inputOtp, inputOtp.getValue());
         if (valueToRender == null) {
             valueToRender = Constants.EMPTY_STRING;
         }
 
-        encodeMarkup(context, inputPin, valueToRender);
-        encodeScript(context, inputPin);
+        encodeMarkup(context, inputOtp, valueToRender);
+        encodeScript(context, inputOtp);
     }
 
-    protected void encodeMarkup(final FacesContext context, final InputPin inputPin, final String valueToRender)
+    protected void encodeMarkup(final FacesContext context, final InputOtp inputOtp, final String valueToRender)
                 throws IOException {
         final ResponseWriter writer = context.getResponseWriter();
-        final String clientId = inputPin.getClientId(context);
+        final String clientId = inputOtp.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
-                    .add(InputPin.STYLE_CLASS, inputPin.getStyleClass())
-                    .add(inputPin.isRTL(), InputPin.RTL_STYLE_CLASS)
+                    .add(InputOtp.STYLE_CLASS, inputOtp.getStyleClass())
+                    .add(inputOtp.isRTL(), InputOtp.RTL_STYLE_CLASS)
                     .build();
 
-        writer.startElement("span", inputPin);
+        writer.startElement("span", inputOtp);
         writer.writeAttribute("id", clientId, null);
         writer.writeAttribute(Attrs.CLASS, styleClass, "styleClass");
 
-        if (inputPin.getStyle() != null) {
-            writer.writeAttribute(Attrs.STYLE, inputPin.getStyle(), Attrs.STYLE);
+        if (inputOtp.getStyle() != null) {
+            writer.writeAttribute(Attrs.STYLE, inputOtp.getStyle(), Attrs.STYLE);
         }
 
-        encodeInput(context, inputPin, clientId, valueToRender);
-        encodeHiddenInput(context, inputPin, clientId, valueToRender);
+        encodeInput(context, inputOtp, clientId, valueToRender);
+        encodeHiddenInput(context, inputOtp, clientId, valueToRender);
 
         writer.endElement("span");
     }
 
-    protected void encodeInput(final FacesContext context, final InputPin inputPin, final String clientId,
+    protected void encodeInput(final FacesContext context, final InputOtp inputOtp, final String clientId,
                 final String valueToRender)
                 throws IOException {
 
         final ResponseWriter writer = context.getResponseWriter();
-        final String inputStyle = inputPin.getInputStyle();
-        final String inputStyleClass = createStyleClass(inputPin, InputPin.PropertyKeys.inputStyleClass.name(), InputPin.CELL_STYLE_CLASS);
+        final String inputStyle = inputOtp.getInputStyle();
+        final String inputStyleClass = createStyleClass(inputOtp, InputOtp.PropertyKeys.inputStyleClass.name(), InputOtp.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
-        for (int i = 1; i <= inputPin.getSize(); i++) {
+        for (int i = 1; i <= inputOtp.getSize(); i++) {
 
-            if (i > 1 && !LangUtils.isBlank(inputPin.getSeparator())) {
-                writer.writeText(inputPin.getSeparator(), InputPin.PropertyKeys.separator.name());
+            if (i > 1 && !LangUtils.isBlank(inputOtp.getSeparator())) {
+                writer.writeText(inputOtp.getSeparator(), InputOtp.PropertyKeys.separator.name());
             }
 
-            final String inputId = clientId + InputPin.INPUT_SUFFIX + i;
+            final String inputId = clientId + InputOtp.INPUT_SUFFIX + i;
             final String inputValue = chars.length >= i ? String.valueOf(chars[i - 1]) : "";
 
             writer.startElement("input", null);
@@ -123,49 +123,49 @@ public class InputPinRenderer extends InputRenderer {
             writer.writeAttribute("name", inputId, null);
             writer.writeAttribute("value", inputValue, null);
             writer.writeAttribute("size", 1, null);
-            writer.writeAttribute("maxlength", inputPin.getSize(), null);
+            writer.writeAttribute("maxlength", inputOtp.getLength(), null);
             writer.writeAttribute(Attrs.CLASS, inputStyleClass, null);
 
             if (LangUtils.isNotBlank(inputStyle)) {
                 writer.writeAttribute(Attrs.STYLE, inputStyle, null);
             }
 
-            if ("password".equalsIgnoreCase(inputPin.getType())) {
-                writer.writeAttribute("type", inputPin.getType(), null);
+            if (inputOtp.isMask()) {
+                writer.writeAttribute("type", "password", null);
             }
 
-            if (inputPin.isNumeric() && LangUtils.isBlank(inputPin.getInputmode())) {
-                inputPin.setInputmode("numeric");
+            if (inputOtp.isIntegerOnly() && LangUtils.isBlank(inputOtp.getInputmode())) {
+                inputOtp.setInputmode("numeric");
             }
 
-            if (LangUtils.isNotBlank(inputPin.getPlaceholder())) {
-                char placeholder = inputPin.getPlaceholder().charAt((i - 1) % inputPin.getPlaceholder().length());
+            if (LangUtils.isNotBlank(inputOtp.getPlaceholder())) {
+                char placeholder = inputOtp.getPlaceholder().charAt((i - 1) % inputOtp.getPlaceholder().length());
                 writer.writeAttribute("placeholder", placeholder, null);
             }
 
-            renderAccessibilityAttributes(context, inputPin);
-            renderPassThruAttributes(context, inputPin, InputPin.INPUT_PIN_ATTRS_WITHOUT_EVENTS);
-            renderDomEvents(context, inputPin, HTML.INPUT_TEXT_EVENTS);
-            renderValidationMetadata(context, inputPin);
+            renderAccessibilityAttributes(context, inputOtp);
+            renderPassThruAttributes(context, inputOtp, InputOtp.INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS);
+            renderDomEvents(context, inputOtp, HTML.INPUT_TEXT_EVENTS);
+            renderValidationMetadata(context, inputOtp);
 
             writer.endElement("input");
         }
     }
 
-    protected void encodeHiddenInput(final FacesContext context, final InputPin inputPin, final String clientId, final String valueToRender)
+    protected void encodeHiddenInput(final FacesContext context, final InputOtp inputOtp, final String clientId, final String valueToRender)
                 throws IOException {
-        renderHiddenInput(context, clientId + InputPin.HIDDEN_SUFFIX, valueToRender, inputPin.isDisabled());
+        renderHiddenInput(context, clientId + InputOtp.HIDDEN_SUFFIX, valueToRender, inputOtp.isDisabled());
     }
 
-    protected void encodeScript(final FacesContext context, final InputPin inputPin) throws IOException {
+    protected void encodeScript(final FacesContext context, final InputOtp inputOtp) throws IOException {
         final WidgetBuilder wb = getWidgetBuilder(context);
-        wb.init("ExtInputPin", inputPin);
-        wb.attr("numeric", inputPin.isNumeric(), false);
-        if (LangUtils.isNotBlank(inputPin.getAriaLabel())) {
-            wb.attr("ariaLabel", inputPin.getAriaLabel());
+        wb.init("ExtInputOtp", inputOtp);
+        wb.attr("integerOnly", inputOtp.isIntegerOnly(), false);
+        if (LangUtils.isNotBlank(inputOtp.getAriaLabel())) {
+            wb.attr("ariaLabel", inputOtp.getAriaLabel());
         }
 
-        encodeClientBehaviors(context, inputPin);
+        encodeClientBehaviors(context, inputOtp);
 
         wb.finish();
     }

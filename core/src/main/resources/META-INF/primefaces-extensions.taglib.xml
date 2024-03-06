@@ -9326,12 +9326,12 @@ See showcase for an example. Default null.]]>
     
     <tag>
         <description>
-            <![CDATA[InputPin is an input component suitable for inserting fixed-size PINs or OTPs.]]>
+            <![CDATA[InputOtp is an input component suitable for inserting fixed-size PINs or OTPs.]]>
         </description>
-        <tag-name>inputPin</tag-name>
+        <tag-name>inputOtp</tag-name>
         <component>
-            <component-type>org.primefaces.extensions.component.InputPin</component-type>
-            <renderer-type>org.primefaces.extensions.component.InputPinRenderer</renderer-type>
+            <component-type>org.primefaces.extensions.component.InputOtp</component-type>
+            <renderer-type>org.primefaces.extensions.component.InputOtpRenderer</renderer-type>
         </component>
         <attribute>
             <description>
@@ -9752,10 +9752,9 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Number of characters used to determine the width of the input element.]]>
+                <![CDATA[Number of characters used to determine the width of the input element. Default is 4.]]>
             </description>
-            <name>size</name>
-            <required>true</required>
+            <name>length</name>
             <type>int</type>
         </attribute>
         <attribute>
@@ -9808,17 +9807,17 @@ See showcase for an example. Default null.]]>
         </attribute>
         <attribute>
             <description>
-                <![CDATA[Input field type. Can be "text" (default) or password.]]>
+                <![CDATA[Mask the value. Default is false.]]>
             </description>
-            <name>type</name>
+            <name>mask</name>
             <required>false</required>
-            <type>java.lang.String</type>
+            <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
             <description>
                 <![CDATA[Wheter the input accepts only numeric chars. Defaults to false.]]>
             </description>
-            <name>numeric</name>
+            <name>integerOnly</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>
@@ -9849,7 +9848,7 @@ See showcase for an example. Default null.]]>
         <attribute>
             <description>
                 <![CDATA[The aria-label attribute is used to define a string that labels the current element for accessibility.
-'{0}' can be used as a placeholder for the index of the cell.]]>
+'{0}' can be used as a placeholder for the index of the input.]]>
             </description>
             <name>ariaLabel</name>
             <required>false</required>

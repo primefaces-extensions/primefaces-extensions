@@ -6,31 +6,31 @@
     <ui:composition template="/templates/showcaseLayout.xhtml">
         <ui:define name="centerContent">
             <f:facet name="header">
-                <h:outputText value="InputPin"/>
+                <h:outputText value="InputOtp"/>
             </f:facet>
             <h:panelGroup layout="block" styleClass="centerContent">
                 
             </h:panelGroup>
 
             <h:panelGroup layout="block" styleClass="centerExample">
-                <ui:include src="/sections/inputpin/example-basicUsage.xhtml"/>
+                <ui:include src="/sections/inputotp/example-basicUsage.xhtml"/>
             </h:panelGroup>
 
             <ui:decorate template="/templates/twoTabsDecorator.xhtml">
                 <ui:define name="contentTab1">
-                    ${showcase:getFileContent('/sections/inputpin/example-basicUsage.xhtml')}
+                    ${showcase:getFileContent('/sections/inputotp/example-basicUsage.xhtml')}
                 </ui:define>
                 <ui:define name="contentTab2">
-                    ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/inputpin/BasicInputPinController.java')}
+                    ${showcase:getFileContent('/org/primefaces/extensions/showcase/controller/inputotp/BasicInputOtpController.java')}
                 </ui:define>
             </ui:decorate>
         </ui:define>
         <ui:define name="useCases">
-            <ui:include src="/sections/inputpin/useCasesChoice.xhtml"/>
+            <ui:include src="/sections/inputotp/useCasesChoice.xhtml"/>
         </ui:define>
         <ui:define name="docuTable">
             <ui:include src="/sections/shared/documentation.xhtml">
-                <ui:param name="tagName" value="inputPin"/>
+                <ui:param name="tagName" value="inputOtp"/>
             </ui:include>
         </ui:define>
     </ui:composition>

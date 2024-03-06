@@ -13,14 +13,14 @@
 
     <h:panelGrid columns="2" rowClasses="mb-2">
         <p:outputLabel for="@next" value="Normal"/>
-        <pe:inputPin id="txtNormal" size="6" value="#{basicInputPinController.normal}"/>
+        <pe:inputOtp id="txtNormal" length="6" value="#{basicInputOtpController.normal}"/>
         <p:outputLabel for="@next" value="Password"/>
-        <pe:inputPin id="txtPassword" size="6" type="password" value="#{basicInputPinController.password}"/>
+        <pe:inputOtp id="txtPassword" length="6" mask="true" value="#{basicInputOtpController.password}"/>
         <p:outputLabel for="@next" value="Number"/>
-        <pe:inputPin id="txtNumber" size="6" numeric="true" value="#{basicInputPinController.number}"/>
+        <pe:inputOtp id="txtNumber" length="6" integerOnly="true" value="#{basicInputOtpController.number}"/>
     </h:panelGrid>
     <div>
-        <p:commandButton value="Submit" actionListener="#{basicInputPinController.submit}" />
+        <p:commandButton value="Submit" actionListener="#{basicInputOtpController.submit}" />
     </div>
     <!-- EXAMPLE-SOURCE-END -->
 </ui:composition>
