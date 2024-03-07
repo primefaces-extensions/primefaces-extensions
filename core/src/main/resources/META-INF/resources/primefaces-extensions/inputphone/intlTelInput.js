@@ -1,5 +1,5 @@
 /*
- * International Telephone Input v19.5.4
+ * International Telephone Input v19.5.6
  * https://github.com/jackocnr/intl-tel-input.git
  * Licensed under the MIT license
  */
@@ -1678,9 +1678,9 @@
                 }
             }, {
                 key: "isValidNumber",
-                value: function isValidNumber() {
+                value: function isValidNumber(mobileOnly) {
                     var val = this._getFullNumber();
-                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2) : null;
+                    return window.intlTelInputUtils ? intlTelInputUtils.isPossibleNumber(val, this.selectedCountryData.iso2, mobileOnly) : null;
                 }
             }, {
                 key: "isValidNumberPrecise",
@@ -1769,7 +1769,7 @@
         // default options
         intlTelInputGlobals.defaults = defaults;
         // version
-        intlTelInputGlobals.version = "19.5.4";
+        intlTelInputGlobals.version = "19.5.6";
         // convenience wrapper
         return function(input, options) {
             var iti = new Iti(input, options);
