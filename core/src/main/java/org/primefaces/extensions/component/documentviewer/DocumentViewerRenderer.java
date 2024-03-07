@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.documentviewer;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -78,7 +79,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
     private String generateSrc(final FacesContext context, final DocumentViewer documentViewer) throws IOException {
         final String imageSrc;
         try {
-            imageSrc = URLEncoder.encode(getDocumentSource(context, documentViewer), "UTF-8");
+            imageSrc = URLEncoder.encode(getDocumentSource(context, documentViewer), StandardCharsets.UTF_8);
         }
         catch (final Exception ex) {
             throw new IOException(ex);
@@ -115,12 +116,7 @@ public class DocumentViewerRenderer extends CoreRenderer {
             params.add("pagemode=" + documentViewer.getPagemode());
         }
 
-        if (!params.isEmpty()) {
-            return "#" + String.join("&", params.toArray(new String[params.size()]));
-        }
-        else {
-            return Constants.EMPTY_STRING;
-        }
+        return "#" + String.join("&", params.toArray(new String[0]));
     }
 
     private String getResourceURL(final FacesContext context) {
