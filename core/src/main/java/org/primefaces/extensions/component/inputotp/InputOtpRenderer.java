@@ -66,7 +66,7 @@ public class InputOtpRenderer extends InputRenderer {
         final InputOtp inputOtp = (InputOtp) component;
 
         if (inputOtp.getLength() < 1) {
-            throw new FacesException("InputOtp length property should be > 0.");
+            throw new FacesException("InputOtp length property should be > 0");
         }
 
         String valueToRender = ComponentUtils.getValueToRender(context, inputOtp, inputOtp.getValue());
@@ -109,7 +109,7 @@ public class InputOtpRenderer extends InputRenderer {
         final String inputStyle = inputOtp.getInputStyle();
         final String inputStyleClass = createStyleClass(inputOtp, InputOtp.PropertyKeys.inputStyleClass.name(), InputOtp.CELL_STYLE_CLASS);
         final char[] chars = valueToRender.toCharArray();
-        for (int i = 1; i <= inputOtp.getSize(); i++) {
+        for (int i = 1; i <= inputOtp.getLength(); i++) {
 
             if (i > 1 && !LangUtils.isBlank(inputOtp.getSeparator())) {
                 writer.writeText(inputOtp.getSeparator(), InputOtp.PropertyKeys.separator.name());

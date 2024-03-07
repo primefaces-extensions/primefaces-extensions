@@ -18,8 +18,8 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         this.cfg = cfg;
         this.disabled = cfg.disabled;
         this.ariaLabel = this.cfg.ariaLabel
-                || PrimeFaces.getAriaLabel('inputotp.LABEL');
-        if (this.ariaLabel === '???inputotp.LABEL???') {
+                || PrimeFaces.getAriaLabel('otpLabel');
+        if (this.ariaLabel === '???otpLabel???') {
             this.ariaLabel = 'Please enter OTP/PIN character {0}';
         }
 

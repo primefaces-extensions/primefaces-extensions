@@ -1,6 +1,7 @@
 .ui-inputotp {
     display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
 .ui-inputotp-rtl {
@@ -10,20 +11,4 @@
 .ui-inputotp > .ui-inputotp-input {
     width: 2rem;
     text-align: center;
-}
-
-.ui-inputotp:not(.ui-inputotp-rtl) > .ui-inputotp-input:not(:last-child) {
-    margin-right: 0.2rem;
-}
-
-.ui-inputotp:not(.ui-inputotp-rtl) > .ui-inputotp-input:not(:first-child) {
-    margin-left: 0.2rem;
-}
-
-.ui-inputotp-rtl > .ui-inputotp-input:not(:first-child) {
-    margin-right: 0.2rem;
-}
-
-.ui-inputotp-rtl > .ui-inputotp-input:not(:last-child) {
-    margin-left: 0.2rem;
 }

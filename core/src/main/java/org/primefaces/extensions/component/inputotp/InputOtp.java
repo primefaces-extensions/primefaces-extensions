@@ -78,7 +78,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
     public enum PropertyKeys {
         placeholder,
         autocomplete,
-        type,
         integerOnly,
         inputStyle,
         inputStyleClass,
@@ -131,14 +130,6 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
         return (String) getStateHelper().eval(PropertyKeys.autocomplete, "off");
     }
 
-    public String getType() {
-        return (String) getStateHelper().eval(PropertyKeys.type, "text");
-    }
-
-    public void setType(final String type) {
-        getStateHelper().put(PropertyKeys.type, type);
-    }
-
     public boolean isIntegerOnly() {
         return (Boolean) getStateHelper().eval(PropertyKeys.integerOnly, false);
     }
@@ -183,7 +174,7 @@ public class InputOtp extends AbstractPrimeHtmlInputText implements Widget, Inpu
         return (int) getStateHelper().eval(PropertyKeys.length, 4);
     }
 
-    public void setAriaLabel(final int length) {
+    public void setLength(final int length) {
         getStateHelper().put(PropertyKeys.length, length);
     }
 
