@@ -84,7 +84,7 @@ public class InputOtpRenderer extends InputRenderer {
         final String clientId = inputOtp.getClientId(context);
         final String styleClass = getStyleClassBuilder(context)
                     .add(InputOtp.STYLE_CLASS, inputOtp.getStyleClass())
-                    .add(inputOtp.isRTL(), InputOtp.RTL_STYLE_CLASS)
+                    .add(ComponentUtils.isRTL(context, inputOtp), InputOtp.RTL_STYLE_CLASS)
                     .build();
 
         writer.startElement("span", inputOtp);
@@ -144,6 +144,7 @@ public class InputOtpRenderer extends InputRenderer {
             }
 
             renderAccessibilityAttributes(context, inputOtp);
+            renderRTLDirection(context, inputOtp);
             renderPassThruAttributes(context, inputOtp, InputOtp.INPUT_OTP_ATTRIBUTES_WITHOUT_EVENTS);
             renderDomEvents(context, inputOtp, HTML.INPUT_TEXT_EVENTS);
             renderValidationMetadata(context, inputOtp);
