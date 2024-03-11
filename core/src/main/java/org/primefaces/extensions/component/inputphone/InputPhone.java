@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.inputphone;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.ResourceDependency;
@@ -63,12 +64,8 @@ public class InputPhone extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String COUNTRY_AUTO = "auto";
     public static final String INPUT_SUFFIX = "_input";
 
-    private static final Collection<String> EVENT_NAMES = LangUtils
-                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
-                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
-                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_COUNTRY_SELECT);
-
-    private static final Collection<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
+    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_COUNTRY_SELECT);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
 
     // @formatter:off
     @SuppressWarnings("java:S115")
