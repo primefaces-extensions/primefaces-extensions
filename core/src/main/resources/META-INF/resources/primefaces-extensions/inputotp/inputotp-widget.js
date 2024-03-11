@@ -17,11 +17,8 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.disabled = cfg.disabled;
-        this.ariaLabel = this.cfg.ariaLabel
-                || PrimeFaces.getAriaLabel('otpLabel');
-        if (this.ariaLabel === '???otpLabel???') {
-            this.ariaLabel = 'Please enter OTP/PIN character {0}';
-        }
+        this.ariaLabel = this.cfg.ariaLabel ||
+            PrimeFaces.getAriaLabel('otpLabel', 'Please enter OTP/PIN character {0}');
 
         // JQuery inputs
         this.inputsJq = $(this.jqId + ' > .ui-inputotp-input');
@@ -43,7 +40,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
 
         // aria-label
         let ariaLabel = this.ariaLabel;
-        this.inputsJq.each(function(index, elem) {
+        this.inputsJq.each(function (index, elem) {
             $(elem).attr('aria-label', ariaLabel.replace('{0}', (index + 1)));
         });
 
@@ -56,22 +53,22 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
     },
 
     wrapEvents: function () {
-        var $this = this;
-        var inputsJq = this.inputsJq;
+        let $this = this;
+        let inputsJq = this.inputsJq;
 
         // get the current attached events if using CSP
-        var events = this.inputsJq[0] ? $._data(this.inputsJq[0], "events") : null;
+        let events = this.inputsJq[0] ? $._data(this.inputsJq[0], "events") : null;
 
         // use DOM if non-CSP and JQ event if CSP
-        var originalOninput = this.inputsJq.prop('oninput');
+        let originalOninput = this.inputsJq.prop('oninput');
         if (!originalOninput && events && events.input) {
             originalOninput = events.input[0].handler;
         }
-        var originalOnkeydown = this.inputsJq.prop('onkeydown');
+        let originalOnkeydown = this.inputsJq.prop('onkeydown');
         if (!originalOnkeydown && events && events.keydown) {
             originalOnkeydown = events.keydown[0].handler;
         }
-        var originalOnfocus = this.inputsJq.prop('onfocus');
+        let originalOnfocus = this.inputsJq.prop('onfocus');
         if (!originalOnfocus && events && events.focus) {
             originalOnfocus = events.focus[0].handler;
         }
@@ -110,7 +107,7 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                     let focus_index = Math.min(inputsJq.length - 1, i + chars.length);
                     inputsJq[focus_index].focus();
                 }
-                var originalValue = $this.updateInput();
+                let originalValue = $this.updateInput();
 
                 if (originalOninput && originalOninput.call(this, e) === false) {
                     setValue(originalValue);
@@ -170,23 +167,23 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
                 }
             });
         }
-		
-		inputsJq.prop('onfocus', null).off('focus').on('focus', function (e) {
-			if (originalOnfocus && originalOnfocus.call(this, e) === false) {
+
+        inputsJq.prop('onfocus', null).off('focus').on('focus', function (e) {
+            if (originalOnfocus && originalOnfocus.call(this, e) === false) {
                 return false;
             }
-			this.select();
-		});
+            this.select();
+        });
     },
 
     /**
-     * 
+     *
      * @returns {string} The original value of the hidden input.
      */
     updateInput: function () {
-        var oldValue = this.hinput.val();
-        var newValue = '';
-        for (var i = 0; i < this.inputsJq.length; i++) {
+        let oldValue = this.hinput.val();
+        let newValue = '';
+        for (let i = 0; i < this.inputsJq.length; i++) {
             newValue += this.inputsJq[i].value;
         }
         this.hinput.val(newValue);
