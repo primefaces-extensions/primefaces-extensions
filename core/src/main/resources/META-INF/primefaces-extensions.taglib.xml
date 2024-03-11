@@ -8818,6 +8818,14 @@
         </attribute>
         <attribute>
             <description>
+                <![CDATA[HTML5 inputmode attribute for hinting at the type of data this control has for touch devices to display appropriate virtual keyboard.]]>
+            </description>
+            <name>inputmode</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
                 <![CDATA[Code describing the language used in the generated markup.]]>
             </description>
             <name>lang</name>
