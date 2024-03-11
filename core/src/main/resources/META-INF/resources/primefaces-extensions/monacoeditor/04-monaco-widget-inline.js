@@ -3,21 +3,7 @@
 window.monacoModule = window.monacoModule || {};
 
 (function () {
-
-  const {
-    createDiffEditorInitData,
-    createEditorConstructionOptions,
-    defineCustomThemes,
-    getMonacoResource,
-    getScriptName,
-    InlineDiffEditorDefaults,
-    InlineEditorDefaults,
-    invokeMonaco,
-    invokeMonacoScript,
-    loadEditorLib,
-    loadExtender,
-    loadLanguage,
-  } = window.monacoModule.helper;
+  const { createDiffEditorInitData, createEditorConstructionOptions, defineCustomThemes, getMonacoResource, getScriptName, InlineDiffEditorDefaults, InlineEditorDefaults, invokeMonaco, invokeMonacoScript, loadEditorLib, loadExtender, loadLanguage } = window.monacoModule.helper;
 
   const PromiseQueue = window.monacoModule.PromiseQueue;
 
@@ -78,7 +64,7 @@ window.monacoModule = window.monacoModule || {};
       if (!("Locale" in MonacoEnvironment)) {
         MonacoEnvironment.Locale = {
           data: {},
-          language: ""
+          language: "",
         };
       }
 
@@ -92,9 +78,9 @@ window.monacoModule = window.monacoModule || {};
       // Begin loading the editor, but only load one editor at a time
       // when there are multiple editor components in the page
       GenericPromiseQueue.add(() => this._setup())
-        .then(args => this._renderDeferredAsync(args))
+        .then((args) => this._renderDeferredAsync(args))
         .then(() => this._onInitSuccess())
-        .catch(error => this._onInitError(error));
+        .catch((error) => this._onInitError(error));
     }
 
     // === PUBLIC API, see primefaces-monaco.d.ts for docs
@@ -140,8 +126,7 @@ window.monacoModule = window.monacoModule || {};
     getValueNow() {
       if (this._isReady()) {
         return this._getStandaloneEditor(this._editor).getValue();
-      }
-      else {
+      } else {
         return this._editorValue || "";
       }
     }
@@ -152,8 +137,7 @@ window.monacoModule = window.monacoModule || {};
     setValueNow(value) {
       if (this._isReady()) {
         this._getStandaloneEditor(this._editor).setValue(value);
-      }
-      else {
+      } else {
         this._editorValue = value;
       }
     }
@@ -177,8 +161,7 @@ window.monacoModule = window.monacoModule || {};
     withMonaco(handler, defaultReturnValue) {
       if (this._editor) {
         return handler(this._editor);
-      }
-      else {
+      } else {
         return defaultReturnValue;
       }
     }
@@ -192,8 +175,7 @@ window.monacoModule = window.monacoModule || {};
     tryWithMonaco(handler, defaultReturnValue) {
       try {
         return this.withMonaco(handler, defaultReturnValue);
-      }
-      catch (e) {
+      } catch (e) {
         console.error("[MonacoEditor] Handler failed to process Monaco editor", e);
         return defaultReturnValue;
       }
@@ -232,7 +214,7 @@ window.monacoModule = window.monacoModule || {};
       if (!this._isReady()) {
         throw new Error(`IllegalState: Cannot invoke Monaco as the editor is not ready yet. Use isReady / whenReady to check.`);
       }
-      return invokeMonacoScript(this._editor, script, args, s => PrimeFaces.csp.eval(s));
+      return invokeMonacoScript(this._editor, script, args, (s) => PrimeFaces.csp.eval(s));
     }
 
     // === PROTECTED
@@ -259,7 +241,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @abstract
      * @protected
-     * @param {HTMLElement} domElement
+     * @param {HTMLElement | undefined} domElement
      * @param {EditorInitData<TEditorOpts, TCustomInitData>} data
      * @param {import("monaco-editor").editor.IEditorOverrideServices | undefined} override
      * @returns {TEditor}
@@ -283,7 +265,7 @@ window.monacoModule = window.monacoModule || {};
      * @abstract
      * @protected
      * @param {TEditorOpts} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement | undefined} target
      */
     _setOverflowWidgetsDomNode(options, target) {
       throw new Error("Must override abstract method");
@@ -315,8 +297,8 @@ window.monacoModule = window.monacoModule || {};
       if (editor !== undefined) {
         // Change event.
         // Set the value of the editor on the hidden textarea.
-        this._getStandaloneEditor(editor).onDidChangeModelContent(event => {
-          this.tryWithMonaco(monaco => {
+        this._getStandaloneEditor(editor).onDidChangeModelContent((event) => {
+          this.tryWithMonaco((monaco) => {
             const model = this._getStandaloneEditor(monaco).getModel();
             const value = model !== null ? model.getValue() : "";
             this.getInput().val(value);
@@ -329,33 +311,32 @@ window.monacoModule = window.monacoModule || {};
         this._getStandaloneEditor(editor).onDidBlurEditorWidget(() => this._fireEvent("blur"));
 
         // Paste
-        this._getStandaloneEditor(editor).onDidPaste(pasteEvent => this._fireEvent("paste", pasteEvent));
+        this._getStandaloneEditor(editor).onDidPaste((pasteEvent) => this._fireEvent("paste", pasteEvent));
 
         // Mouse / Key
         // These are potentially computationally intensive, so register
         // only when there are server-side or client-side listeners
         if (this._supportsEvent("mousedown")) {
-          this._getStandaloneEditor(editor).onMouseDown(mouseEvent => this._fireEvent("mousedown", mouseEvent));
+          this._getStandaloneEditor(editor).onMouseDown((mouseEvent) => this._fireEvent("mousedown", mouseEvent));
         }
 
         if (this._supportsEvent("mousemove")) {
-          this._getStandaloneEditor(editor).onMouseMove(mouseEvent => this._fireEvent("mousemove", mouseEvent));
+          this._getStandaloneEditor(editor).onMouseMove((mouseEvent) => this._fireEvent("mousemove", mouseEvent));
         }
 
         if (this._supportsEvent("mouseup")) {
-          this._getStandaloneEditor(editor).onMouseUp(mouseEvent => this._fireEvent("mouseup", mouseEvent));
+          this._getStandaloneEditor(editor).onMouseUp((mouseEvent) => this._fireEvent("mouseup", mouseEvent));
         }
 
         if (this._supportsEvent("keydown")) {
-          this._getStandaloneEditor(editor).onKeyDown(keyboardEvent => this._fireEvent("keydown", keyboardEvent));
+          this._getStandaloneEditor(editor).onKeyDown((keyboardEvent) => this._fireEvent("keydown", keyboardEvent));
         }
 
         if (this._supportsEvent("keyup")) {
-          this._getStandaloneEditor(editor).onKeyUp(keyboardEvent => this._fireEvent("keyup", keyboardEvent));
+          this._getStandaloneEditor(editor).onKeyUp((keyboardEvent) => this._fireEvent("keyup", keyboardEvent));
         }
       }
     }
-
 
     // === PRIVATE
 
@@ -381,7 +362,7 @@ window.monacoModule = window.monacoModule || {};
      * @returns {Promise<RenderArgs<TEditor, TEditorOpts, TContext, Partial<TExtender>, TCustomInitData>>}
      */
     async _setup() {
-      const extender = this._extenderInstance = loadExtender(this._editor, this.cfg, this.getContext());
+      const extender = (this._extenderInstance = loadExtender(this._editor, this.cfg, this.getContext()));
       const { forceLibReload, localeUrl: localeUrl } = await loadLanguage(this.cfg);
       this._resolvedLocaleUrl = localeUrl;
       const wasLibLoaded = await loadEditorLib(this.cfg, forceLibReload);
@@ -389,12 +370,10 @@ window.monacoModule = window.monacoModule || {};
       const { custom, options } = await this._createInitData(extender, wasLibLoaded);
       this._editorOptions = options;
       if (this.cfg.overflowWidgetsDomNode !== undefined && this.cfg.overflowWidgetsDomNode.length > 0) {
-        // @ts-ignore
         const target = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(this.jq, this.cfg.overflowWidgetsDomNode);
         if (target !== undefined && target.length > 0) {
           this._setOverflowWidgetsDomNode(options, target.get(0));
-        }
-        else {
+        } else {
           console.warn(`Target '${this.cfg.overflowWidgetsDomNode}' for option overflowWidgetsDomNode was not found in the DOM`);
         }
       }
@@ -431,8 +410,7 @@ window.monacoModule = window.monacoModule || {};
       try {
         const editor = this._doRender(args);
         resolve({ editor, ...args });
-      }
-      catch (e) {
+      } catch (e) {
         reject(e);
       }
     }
@@ -445,11 +423,9 @@ window.monacoModule = window.monacoModule || {};
     _doRender(args) {
       const { custom, extender, options, wasLibLoaded } = args;
 
-      const override = extender && typeof extender.createEditorOverrideServices === "function"
-        ? extender.createEditorOverrideServices(this.getContext(), options)
-        : undefined;
+      const override = extender && typeof extender.createEditorOverrideServices === "function" ? extender.createEditorOverrideServices(this.getContext(), options) : undefined;
 
-      // Register all custom themes that we were given. 
+      // Register all custom themes that we were given.
       defineCustomThemes(this.cfg.customThemes);
 
       // Create a new editor instance.
@@ -462,9 +438,9 @@ window.monacoModule = window.monacoModule || {};
       if (this.cfg.autoResize) {
         if (typeof ResizeObserver === "function") {
           this._resizeObserver = new ResizeObserver(this._onResize.bind(this));
+          // @ts-ignore
           this._resizeObserver.observe(this.jq.get(0));
-        }
-        else {
+        } else {
           console.warn("[MonacoEditor] Browser environment does not support auto resize: window.ResizeObserver is not available.");
         }
       }
@@ -483,13 +459,13 @@ window.monacoModule = window.monacoModule || {};
      * @private
      */
     _onResize() {
-      this.tryWithMonaco(monaco => (window.requestAnimationFrame || setTimeout)(() => monaco.layout()), undefined);
+      this.tryWithMonaco((monaco) => (window.requestAnimationFrame || setTimeout)(() => monaco.layout()), undefined);
     }
 
     /**
      * Callback invoked when the widgets was refreshed after an AJAX call. Saves the current
      * scroll position so that it can be restored later, then destroys the widgets, so
-     * that it can be created again. 
+     * that it can be created again.
      * @private
      */
     _onRefresh() {
@@ -513,25 +489,22 @@ window.monacoModule = window.monacoModule || {};
       if (extender && typeof extender.beforeDestroy === "function") {
         try {
           extender.beforeDestroy(this.getContext());
-        }
-        catch (e) {
+        } catch (e) {
           console.error("[MonacoEditor] Error in extender.beforeDestroy callback", e);
         }
       }
       if (this._resizeObserver !== undefined) {
         try {
           this._resizeObserver.disconnect();
-        }
-        catch (e) {
+        } catch (e) {
           console.error("[MonacoEditor] Could not disconnect resize observer", e);
         }
       }
-      this.tryWithMonaco(monaco => monaco.dispose(), undefined);
+      this.tryWithMonaco((monaco) => monaco.dispose(), undefined);
       if (extender && typeof extender.afterDestroy === "function") {
         try {
           extender.afterDestroy(this.getContext());
-        }
-        catch (e) {
+        } catch (e) {
           console.error("[MonacoEditor] Error in extender.afterDestroy callback", e);
         }
       }
@@ -551,8 +524,7 @@ window.monacoModule = window.monacoModule || {};
         const extender = this._extenderInstance;
         if (typeof extender === "object" && typeof extender.createWorker === "function") {
           return extender.createWorker(this.getContext(), moduleId, label);
-        }
-        else {
+        } else {
           const workerUrl = getMonacoResource(getScriptName(moduleId, label));
           const interceptWorkerUrl = getMonacoResource("worker.js");
           return new Worker(interceptWorkerUrl + "&worker=" + encodeURIComponent(workerUrl) + "&locale=" + encodeURIComponent(this._resolvedLocaleUrl || ""));
@@ -586,7 +558,7 @@ window.monacoModule = window.monacoModule || {};
 
     /**
      * @protected
-     * @param {import("monaco-editor").editor.IStandaloneCodeEditor} editor 
+     * @param {import("monaco-editor").editor.IStandaloneCodeEditor} editor
      * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
      */
     _getStandaloneEditor(editor) {
@@ -628,7 +600,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @protected
      * @param {import("monaco-editor").editor.IStandaloneEditorConstructionOptions} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement | undefined} target
      */
     _setOverflowWidgetsDomNode(options, target) {
       options.overflowWidgetsDomNode = target;
@@ -638,7 +610,7 @@ window.monacoModule = window.monacoModule || {};
      * @protected
      */
     _storeScrollPosition() {
-      this._scrollTop = this.tryWithMonaco(monaco => monaco.getScrollTop(), 0);
+      this._scrollTop = this.tryWithMonaco((monaco) => monaco.getScrollTop(), 0);
     }
 
     /**
@@ -647,7 +619,7 @@ window.monacoModule = window.monacoModule || {};
     _restoreScrollPosition() {
       const scrollTop = this._scrollTop;
       if (typeof scrollTop === "number" && scrollTop > 0) {
-        this.tryWithMonaco(monaco => monaco.setScrollTop(scrollTop), undefined);
+        this.tryWithMonaco((monaco) => monaco.setScrollTop(scrollTop), undefined);
       }
     }
   }
@@ -673,7 +645,7 @@ window.monacoModule = window.monacoModule || {};
     }
 
     /**
-     * @param {PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg} cfg 
+     * @param {PrimeFaces.widget.ExtMonacoDiffEditorInlineCfg} cfg
      */
     init(cfg) {
       super.init(cfg);
@@ -717,8 +689,7 @@ window.monacoModule = window.monacoModule || {};
     getOriginalValueNow() {
       if (this._isReady()) {
         return this._editor.getOriginalEditor().getValue();
-      }
-      else {
+      } else {
         return this._originalEditorValue || "";
       }
     }
@@ -729,8 +700,7 @@ window.monacoModule = window.monacoModule || {};
     setOriginalValueNow(value) {
       if (this._isReady()) {
         this._editor.getOriginalEditor().setValue(value);
-      }
-      else {
+      } else {
         this._originalEditorValue = value;
       }
     }
@@ -749,7 +719,7 @@ window.monacoModule = window.monacoModule || {};
 
     /**
      * @protected
-     * @param {import("monaco-editor").editor.IStandaloneDiffEditor} editor 
+     * @param {import("monaco-editor").editor.IStandaloneDiffEditor} editor
      * @returns {import("monaco-editor").editor.IStandaloneCodeEditor}
      */
     _getStandaloneEditor(editor) {
@@ -793,7 +763,7 @@ window.monacoModule = window.monacoModule || {};
     /**
      * @protected
      * @param {import("monaco-editor").editor.IStandaloneDiffEditorConstructionOptions} options
-     * @param {HTMLElement} target 
+     * @param {HTMLElement} target
      */
     _setOverflowWidgetsDomNode(options, target) {
       options.overflowWidgetsDomNode = target;
@@ -803,10 +773,13 @@ window.monacoModule = window.monacoModule || {};
      * @protected
      */
     _storeScrollPosition() {
-      this._scrollTop = this.tryWithMonaco(monaco => ({
-        modified: monaco.getModifiedEditor().getScrollTop(),
-        original: monaco.getOriginalEditor().getScrollTop(),
-      }), { modified: 0, original: 0 });
+      this._scrollTop = this.tryWithMonaco(
+        (monaco) => ({
+          modified: monaco.getModifiedEditor().getScrollTop(),
+          original: monaco.getOriginalEditor().getScrollTop(),
+        }),
+        { modified: 0, original: 0 }
+      );
     }
 
     /**
@@ -814,7 +787,7 @@ window.monacoModule = window.monacoModule || {};
      */
     _restoreScrollPosition() {
       if (typeof this._scrollTop === "object" && (this._scrollTop.modified > 0 || this._scrollTop.original > 0)) {
-        this.tryWithMonaco(monaco => {
+        this.tryWithMonaco((monaco) => {
           if (typeof this._scrollTop === "object" && this._scrollTop.modified > 0) {
             monaco.getModifiedEditor().setScrollTop(this._scrollTop.modified);
           }
@@ -839,8 +812,8 @@ window.monacoModule = window.monacoModule || {};
       if (editor !== undefined) {
         // Change event.
         // Set the value of the editor on the hidden textarea.
-        editor.getOriginalEditor().onDidChangeModelContent(event => {
-          this.tryWithMonaco(monaco => {
+        editor.getOriginalEditor().onDidChangeModelContent((event) => {
+          this.tryWithMonaco((monaco) => {
             const model = monaco.getOriginalEditor().getModel();
             const value = model !== null ? model.getValue() : "";
             this.getOriginalInput().val(value);
@@ -853,29 +826,29 @@ window.monacoModule = window.monacoModule || {};
         editor.getOriginalEditor().onDidBlurEditorWidget(() => this._fireEvent("originalBlur"));
 
         // Paste
-        editor.getOriginalEditor().onDidPaste(pasteEvent => this._fireEvent("originalPaste", pasteEvent));
+        editor.getOriginalEditor().onDidPaste((pasteEvent) => this._fireEvent("originalPaste", pasteEvent));
 
         // Mouse / Key
         // These are potentially computationally intensive, so register
         // only when there are server-side or client-side listeners
         if (this._supportsEvent("originalMousedown")) {
-          editor.getOriginalEditor().onMouseDown(mouseEvent => this._fireEvent("originalMousedown", mouseEvent));
+          editor.getOriginalEditor().onMouseDown((mouseEvent) => this._fireEvent("originalMousedown", mouseEvent));
         }
 
         if (this._supportsEvent("originalMousemove")) {
-          editor.getOriginalEditor().onMouseMove(mouseEvent => this._fireEvent("originalMousemove", mouseEvent));
+          editor.getOriginalEditor().onMouseMove((mouseEvent) => this._fireEvent("originalMousemove", mouseEvent));
         }
 
         if (this._supportsEvent("originalMouseup")) {
-          editor.getOriginalEditor().onMouseUp(mouseEvent => this._fireEvent("originalMouseup", mouseEvent));
+          editor.getOriginalEditor().onMouseUp((mouseEvent) => this._fireEvent("originalMouseup", mouseEvent));
         }
 
         if (this._supportsEvent("originalKeydown")) {
-          editor.getOriginalEditor().onKeyDown(keyboardEvent => this._fireEvent("originalKeydown", keyboardEvent));
+          editor.getOriginalEditor().onKeyDown((keyboardEvent) => this._fireEvent("originalKeydown", keyboardEvent));
         }
 
         if (this._supportsEvent("originalKeyup")) {
-          editor.getOriginalEditor().onKeyUp(keyboardEvent => this._fireEvent("originalKeyup", keyboardEvent));
+          editor.getOriginalEditor().onKeyUp((keyboardEvent) => this._fireEvent("originalKeyup", keyboardEvent));
         }
       }
     }
@@ -887,6 +860,5 @@ window.monacoModule = window.monacoModule || {};
 
   // TODO remove in one of the next major releases
   // @ts-expect-error legacy, will be removed soon
-  PrimeFaces.widget.ExtMonacoEditorInline
-    = InlineEditorImpl;
+  PrimeFaces.widget.ExtMonacoEditorInline = InlineEditorImpl;
 })();
