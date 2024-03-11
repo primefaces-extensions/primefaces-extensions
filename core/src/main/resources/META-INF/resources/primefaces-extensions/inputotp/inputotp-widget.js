@@ -17,8 +17,6 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         this.id = cfg.id;
         this.cfg = cfg;
         this.disabled = cfg.disabled;
-        this.ariaLabel = this.cfg.ariaLabel ||
-            PrimeFaces.getAriaLabel('otpLabel', 'Please enter OTP/PIN character {0}');
 
         // JQuery inputs
         this.inputsJq = $(this.jqId + ' > .ui-inputotp-input');
@@ -53,6 +51,8 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
      */
     setupARIA: function () {
         let $this = this;
+        this.ariaLabel = this.cfg.ariaLabel ||
+            PrimeFaces.getAriaLabel('otpLabel', 'Please enter OTP/PIN character {0}');
         this.inputsJq.each(function (index, elem) {
             $(elem).attr('aria-label', $this.ariaLabel.replace('{0}', (index + 1)));
         });
