@@ -23,6 +23,7 @@ package org.primefaces.extensions.component.timepicker;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -74,11 +75,9 @@ public class TimePicker extends AbstractPrimeHtmlInputText implements Widget, In
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     public static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.TimePickerRenderer";
 
-    static final Collection<String> EVENT_NAMES = LangUtils
-                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
-                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
-                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", BeforeShowEvent.NAME,
-                            TimeSelectEvent.NAME, CloseEvent.NAME);
+    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(BeforeShowEvent.NAME,
+                TimeSelectEvent.NAME, CloseEvent.NAME);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputText.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
 
     private final Map<String, AjaxBehaviorEvent> customEvents = new HashMap<>();
     private Locale appropriateLocale;

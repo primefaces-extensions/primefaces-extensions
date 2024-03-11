@@ -56,10 +56,8 @@ public class CodeMirror extends AbstractPrimeHtmlInputTextArea implements Client
     public static final String EVENT_HIGHLIGHT_COMPLETE = "highlightComplete";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.CodeMirrorRenderer";
 
-    private static final Collection<String> EVENT_NAMES = LangUtils
-                .unmodifiableList("blur", "change", "valueChange", "select", "click", "dblclick", "focus", "keydown", "keypress", "keyup", "mousedown",
-                            "mousemove", "mouseout", "mouseover", "mouseup", "wheel", "cut", "copy", "paste", "contextmenu", "input", "invalid", "reset",
-                            "search", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "scroll", EVENT_HIGHLIGHT_COMPLETE);
+    private static final List<String> UNOBSTRUSIVE_EVENT_NAMES = LangUtils.unmodifiableList(EVENT_HIGHLIGHT_COMPLETE);
+    private static final Collection<String> EVENT_NAMES = LangUtils.concat(AbstractPrimeHtmlInputTextArea.EVENT_NAMES, UNOBSTRUSIVE_EVENT_NAMES);
 
     private List<String> suggestions = null;
 
