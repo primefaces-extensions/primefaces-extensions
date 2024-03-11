@@ -1,0 +1,14 @@
+.ui-inputotp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ui-inputotp-rtl {
+    flex-direction: row-reverse;
+}
+
+.ui-inputotp > .ui-inputotp-input {
+    width: 2rem;
+    text-align: center;
+}
