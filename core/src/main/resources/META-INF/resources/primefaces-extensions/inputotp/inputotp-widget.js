@@ -38,13 +38,9 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         // visual effects
         PrimeFaces.skinInput(this.inputsJq);
 
-        // aria-label
-        let ariaLabel = this.ariaLabel;
-        this.inputsJq.each(function (index, elem) {
-            $(elem).attr('aria-label', ariaLabel.replace('{0}', (index + 1)));
-        });
-
-        this.wrapEvents();
+        // ARIA and events
+        this.setupARIA();
+        this.bindEvents();
 
         //client Behaviors
         if (this.cfg.behaviors) {
@@ -52,7 +48,17 @@ PrimeFaces.widget.ExtInputOtp = PrimeFaces.widget.BaseWidget.extend({
         }
     },
 
-    wrapEvents: function () {
+    /**
+     * Set up the ARIA accessibility.
+     */
+    setupARIA: function () {
+        let $this = this;
+        this.inputsJq.each(function (index, elem) {
+            $(elem).attr('aria-label', $this.ariaLabel.replace('{0}', (index + 1)));
+        });
+    },
+
+    bindEvents: function () {
         let $this = this;
         let inputsJq = this.inputsJq;
 
